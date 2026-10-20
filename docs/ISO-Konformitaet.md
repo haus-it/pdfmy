@@ -89,6 +89,8 @@ Prüfwerkzeuge: **veraPDF 1.30.3** (PDF/A, PDF/UA) und **qpdf 11 über pikepdf 9
 
 Wiederholung der Prüfung: bei jeder Änderung an der PDF-Erzeugung (`buildPdf`, `makePdfA`, `buildInvoicePdf`) bzw. am E-Rechnungs-Generator (`js/einvoice-out.js`) und mindestens vierteljährlich.
 
+Nachtrag 21.10.2026 (Word/Excel in PDF): Umwandlung lokal im Browser ohne Fremdbibliothek (ISO 27001 A.5.21: keine zusätzliche Lieferkette; XML-Verarbeitung ohne externe Entitäten/DTD – XXE ausgeschlossen, A.8.28). Ergebnis-PDF mit eingebetteten Schriften (ISO 32000-1), Text mit pypdf (strict) geprüft.
+
 Nachtrag 20.10.2026 (Zusammenfassen/Fragen): KI ausschließlich über die im Browser eingebaute, lokal laufende Summarizer-/Prompt-API (Gemini Nano auf dem Gerät; keine Übertragung von Dokumentinhalten an PDFMy oder Dritte, DSGVO Art. 25). Ergebnisse als „maschinell erstellt“ gekennzeichnet, Antworten nur aus dem Dokument (ISO 9001, 8.5.1; EU-KI-Verordnung Art. 50: Kennzeichnung KI-erzeugter Inhalte).
 
 Nachtrag 20.10.2026 (weitere Schriften): Textebene für Zeichen ohne Glyphe in der eingebetteten Schrift über eine eingebettete Platzhalterschrift (CIDFontType2, Identity-H, CIDToGIDMap-Stream, ToUnicode nach ISO 32000-1, 9.10); PDF/A-Ausgabe mit chinesischer und arabischer Seite: veraPDF PDF/A-2b PASS, PDF/UA-1 PASS, qpdf ohne Befund.

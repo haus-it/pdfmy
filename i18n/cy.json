@@ -2458,5 +2458,8 @@
  "Dokument: \"\"\" {0} \"\"\" Frage: {1}": "Dokument: \"\"\" {0} \"\"\" Frage: {1}",
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
- "Summarizer": "Summarizer"
+ "Summarizer": "Summarizer",
+ "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: wedi’i drosi. Nid yw PDFMy yn cadw penynnau a throedynnau, blychau testun na ffontiau arbennig – am gopi union, defnyddiwch ‘Cadw fel PDF’ yn Word.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: ni all PDFMy drosi’r fformat hwn eto – cadwch y ffeil yn Word neu Excel fel .docx/.xlsx neu dewiswch ‘Cadw fel PDF’ yno.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, delwedd, Word, Excel, testun, Markdown, CSV neu e-anfoneb fel XML)"
 }

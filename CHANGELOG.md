@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-21
+
+### Word und Excel in PDF
+- **.docx und .xlsx** öffnen jetzt direkt als PDF (wie „Word/Excel to PDF“ bei iLovePDF, Smallpdf, PDF24 – aber ohne Upload): neues Modul `js/office.js` ohne Fremdbibliothek (ZIP über DecompressionStream, eigener XML-Parser). Word: Überschriften (Formatvorlagen „heading n“/Gliederungsebene), Absätze mit Ausrichtung und Fettdruck, Aufzählungen und Nummerierungen (numbering.xml, auch a)/i.), Tabellen (mit Kopfzeile, verbundene Zellen), PNG/JPEG-Bilder in Originalgröße, Seitenumbrüche, Seitenformat und Rand aus der Datei; versteckter und gelöschter Text entfällt. Excel: sichtbare Blätter als Tabellen, gemeinsame Zeichenfolgen, Zahlen-/Währungs-/Prozentformat, Datumswerte. Satz über `js/textpdf.js` (neu: Bausteine, Bilder, Ausrichtung, Seitenformat).
+- Ältere Formate (.doc, .xls, .ppt, .odt): verständlicher Hinweis statt Fehler.
+- Getestet: `tests/office.test.js` (3 Fälle: Word mit allen Bausteinen inkl. Deflate-ZIP, US-Letter, Text mit pypdf strict; Excel mit Formaten, verstecktem und leerem Blatt; Fehlerfälle), im Browser Word- und Excel-Export von PDFMy zurück in PDF umgewandelt.
+
 ## 2026-10-20
 
 ### Zusammenfassen und fragen ohne Upload

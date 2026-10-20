@@ -70,19 +70,21 @@
   }
 
   // Satz: A4 hoch (Tabellen mit vielen Spalten: quer), Ränder 2 cm, Umbruch nach Wortbreite, Seitenzahl unten
-  async function build(L, { text, kind = 'txt', title = '', fonts }) {
+  /* blocks: fertige Bausteine (z. B. aus js/office.js) statt text; page: { size: [w, h] in pt, margin } (sonst A4, 2 cm) */
+  async function build(L, { text, kind = 'txt', title = '', fonts, blocks: given = null, page: pg = null }) {
     const doc = await L.PDFDocument.create();
     if (fonts.fontkit) doc.registerFontkit(fonts.fontkit);
     const F = { r: await doc.embedFont(fonts.regular, { subset: true }), b: await doc.embedFont(fonts.bold, { subset: true }), m: await doc.embedFont(fonts.mono, { subset: true }) };
     const sets = {}; for (const k in F) sets[k] = new Set(F[k].getCharacterSet());
     const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => ch === '\n' || sets[k].has(ch.codePointAt(0)) ? ch : '?').join('');
     let blocks;
-    if (kind === 'csv') blocks = [{ type: 'table', rows: parseCsv(text), head: true }];
+    if (given) blocks = given;
+    else if (kind === 'csv') blocks = [{ type: 'table', rows: parseCsv(text), head: true }];
     else if (kind === 'md') blocks = parseMarkdown(text);
     else blocks = [{ type: 'pre', text: String(text).replace(/^﻿/, '').replace(/\r\n?/g, '\n') }];
     const cols = Math.max(0, ...blocks.filter(b => b.type === 'table').map(b => b.rows[0]?.length || 0));
-    const land = cols > 6;
-    const PW = land ? 841.89 : 595.28, PH = land ? 595.28 : 841.89, M = 56.7, W = PW - 2 * M, gray = L.rgb(0.45, 0.45, 0.45);
+    const sz = pg?.size && pg.size[0] > 100 && pg.size[1] > 100 ? pg.size : null, land = !sz && cols > 6;
+    const PW = sz ? sz[0] : land ? 841.89 : 595.28, PH = sz ? sz[1] : land ? 595.28 : 841.89, M = pg?.margin || 56.7, W = PW - 2 * M, gray = L.rgb(0.45, 0.45, 0.45);
     let page, y;
     const newPage = () => { page = doc.addPage([PW, PH]); y = PH - M; };
     newPage();
@@ -106,9 +108,13 @@
       }
       return out;
     };
-    const text1 = (s, { k = 'r', size = 10.5, x = M, width = W, color, lead = 1.38 } = {}) => {
+    const text1 = (s, { k = 'r', size = 10.5, x = M, width = W, color, lead = 1.38, align } = {}) => {
       const font = F[k];
-      for (const ln of wrap(safe(s, k), font, size, width)) { need(size * lead); y -= size * lead; page.drawText(ln, { x, y: y + size * 0.25, size, font, color }); }
+      for (const ln of wrap(safe(s, k), font, size, width)) {
+        need(size * lead); y -= size * lead;
+        const tw = align ? font.widthOfTextAtSize(ln, size) : 0, lx = align === 'center' ? x + (width - tw) / 2 : align === 'right' ? x + width - tw : x;
+        page.drawText(ln, { x: lx, y: y + size * 0.25, size, font, color });
+      }
     };
     const table = (rows, head) => {
       if (!rows.length) return;
@@ -140,10 +146,19 @@
       }
       y -= 8;
     };
-    if (title && kind !== 'md') { text1(title, { k: 'b', size: 15 }); y -= 6; }
+    if (title && kind !== 'md' && !given) { text1(title, { k: 'b', size: 15 }); y -= 6; }
     for (const b of blocks) {
       if (b.type === 'h') { const size = [0, 20, 16, 13.5, 12, 11, 10.5][b.level]; y -= b.level <= 2 ? 10 : 6; need(size * 2.4); text1(b.text, { k: 'b', size, lead: 1.25 }); y -= 4; }
-      else if (b.type === 'p') { text1(b.text); y -= 6; }
+      else if (b.type === 'p') { text1(b.text, { k: b.bold ? 'b' : 'r', align: b.align }); y -= 6; }
+      else if (b.type === 'gap') { y -= 10.5 * 1.1; if (y < M) newPage(); }
+      else if (b.type === 'pagebreak') { if (y < PH - M - 1) newPage(); }
+      else if (b.type === 'img') {
+        // Bild (PNG/JPEG) in Originalgröße, höchstens Satzbreite bzw. -höhe
+        let im; try { im = b.mime === 'image/png' ? await doc.embedPng(b.bytes) : await doc.embedJpg(b.bytes); } catch { text1('[Bild]', { color: gray }); continue; }
+        const k = Math.min(1, W / b.w, (PH - 2 * M) / b.h), w = b.w * k, h = b.h * k;
+        need(h + 4); y -= h + 2;
+        page.drawImage(im, { x: b.align === 'center' ? M + (W - w) / 2 : b.align === 'right' ? M + W - w : M, y, width: w, height: h }); y -= 4;
+      }
       else if (b.type === 'li') { const ind = 14 + b.depth * 16; need(16); page.drawText(safe(b.label, 'r'), { x: M + ind - (b.ordered ? 14 : 9), y: y - 10.5 * 1.38 + 10.5 * 0.25, size: 10.5, font: F.r }); text1(b.text, { x: M + ind, width: W - ind }); y -= 2; }   // Aufzählungszeichen zuerst (Lesereihenfolge)
       else if (b.type === 'quote') { const y0 = y, p0 = page; text1(b.text, { x: M + 14, width: W - 14, color: gray }); if (page === p0) page.drawLine({ start: { x: M + 4, y: y0 - 2 }, end: { x: M + 4, y: y + 2 }, thickness: 2, color: L.rgb(0.75, 0.75, 0.75) }); y -= 6; }
       else if (b.type === 'code' || b.type === 'pre') { text1(b.text, { k: 'm', size: b.type === 'pre' ? 9.5 : 9, lead: 1.3 }); y -= 6; }

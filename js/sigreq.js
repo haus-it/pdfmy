@@ -170,6 +170,40 @@
     }
     return out;
   }
-  const api = { reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
+  /* Serienversand: Empfängerliste lesen – eingefügte Zeilen („Name; E-Mail“, „Name <E-Mail>“, nur E-Mail) oder CSV aus Excel/Outlook
+     (Trennzeichen ; , Tab; Kopfzeile mit Spalten wie „Name“/„E-Mail“ wird erkannt). Doppelte Adressen entfallen. → { list, bad } */
+  function recipients(text, max = 200) {
+    const lines = String(text || '').replace(/^﻿/, '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    const first = lines[0] || '', delim = [';', '\t', ','].find(d => first.includes(d)) || ';';
+    const cells = l => l.split(delim).map(c => c.trim().replace(/^"(.*)"$/, '$1').replace(/""/g, '"').trim());
+    let nameCol = -1, mailCol = -1, start = 0;
+    const head = cells(first).map(c => c.toLowerCase());
+    if (!head.some(isMail)) {
+      mailCol = head.findIndex(c => /e-?mail|mail|adresse|address/.test(c));
+      nameCol = head.findIndex(c => /^(name|vollständiger name|anzeigename|display name|full name|kontakt|empfänger)$/.test(c));
+      const first2 = head.findIndex(c => /vorname|first name|given/.test(c)), last2 = head.findIndex(c => /^nachname|last name|surname|family/.test(c));
+      if (nameCol < 0 && (first2 >= 0 || last2 >= 0)) nameCol = { first: first2, last: last2 };
+      if (mailCol >= 0) start = 1;
+    }
+    const list = [], bad = [], seen = new Set();
+    for (const l of lines.slice(start)) {
+      let name = '', email = '';
+      const ang = /^(.*?)<([^>]+)>\s*$/.exec(l);
+      if (ang && !l.includes(delim)) { name = ang[1].replace(/["',;]+/g, ' ').trim(); email = ang[2].trim(); }
+      else {
+        const c = cells(l);
+        email = mailCol >= 0 ? c[mailCol] || '' : c.find(isMail) || '';
+        if (typeof nameCol === 'object') name = [c[nameCol.first], c[nameCol.last]].filter(Boolean).join(' ');
+        else name = nameCol >= 0 ? c[nameCol] || '' : c.filter(x => x && x !== email).join(' ');
+      }
+      email = email.replace(/^mailto:/i, '').trim();
+      if (!isMail(email)) { bad.push(l); continue; }
+      const k = email.toLowerCase(); if (seen.has(k)) continue; seen.add(k);
+      list.push({ name: name.replace(/\s+/g, ' ').trim() || email.split('@')[0], email });
+      if (list.length >= max) break;
+    }
+    return { list, bad };
+  }
+  const api = { recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.SigReq = api;
 })(typeof self !== 'undefined' ? self : globalThis);

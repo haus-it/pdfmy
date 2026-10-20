@@ -2458,5 +2458,8 @@
  "Dokument: \"\"\" {0} \"\"\" Frage: {1}": "Dokument: \"\"\" {0} \"\"\" Frage: {1}",
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
- "Summarizer": "Summarizer"
+ "Summarizer": "Summarizer",
+ "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: konverterad. Sidhuvuden och sidfötter, textrutor och särskilda teckensnitt överför PDFMy inte – använd ”Spara som PDF” i Word för en exakt kopia.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: Det här formatet kan PDFMy ännu inte konvertera – spara filen i Word eller Excel som .docx/.xlsx eller välj ”Spara som PDF” där.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, bild, Word, Excel, text, Markdown, CSV eller e-faktura som XML)"
 }

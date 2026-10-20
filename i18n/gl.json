@@ -2458,5 +2458,8 @@
  "Dokument: \"\"\" {0} \"\"\" Frage: {1}": "Dokument: \"\"\" {0} \"\"\" Frage: {1}",
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
- "Summarizer": "Summarizer"
+ "Summarizer": "Summarizer",
+ "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: convertido. PDFMy non conserva cabeceiras e pés de páxina, caixas de texto nin tipos de letra especiais; para unha copia exacta, use «Gardar como PDF» en Word.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy aínda non pode converter este formato; gárdeo en Word ou Excel como .docx/.xlsx ou escolla alí «Gardar como PDF».",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato non compatible: {0} (use PDF, imaxe, Word, Excel, texto, Markdown, CSV ou factura electrónica en XML)"
 }

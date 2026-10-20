@@ -2458,5 +2458,8 @@
  "Dokument: \"\"\" {0} \"\"\" Frage: {1}": "Dokument: \"\"\" {0} \"\"\" Frage: {1}",
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
- "Summarizer": "Summarizer"
+ "Summarizer": "Summarizer",
+ "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: преобразуван. Горните и долните колонтитули, текстовите полета и специалните шрифтове PDFMy не пренася – за точно копие използвайте в Word „Запиши като PDF“.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: този формат PDFMy все още не може да преобразува – моля, запишете в Word или Excel като .docx/.xlsx или изберете там „Запиши като PDF“.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, Word, Excel, текст, Markdown, CSV или е-фактура като XML)"
 }

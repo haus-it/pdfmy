@@ -141,3 +141,14 @@ test('E-Mails übersetzbar: tr bekommt Sätze mit Platzhaltern, Werte werden dan
   assert.ok(seen.every(s => !s.includes('Max') && !s.includes('30.10.2026')), 'nur Vorlagen an tr, keine Werte');
   assert.match(R.reminder({ title: 'X', name: 'Max', tr }).body, /^Hello Max,/);
 });
+
+test('Serienversand: Empfängerliste aus Zeilen, Outlook-Format und CSV mit Kopfzeile', () => {
+  const a = R.recipients('Anna Muster; anna@example.de\nBernd <bernd@example.de>\ncarl@example.de\nkaputt\nANNA@example.de');
+  assert.deepEqual(a.list, [{ name: 'Anna Muster', email: 'anna@example.de' }, { name: 'Bernd', email: 'bernd@example.de' }, { name: 'carl', email: 'carl@example.de' }]);
+  assert.deepEqual(a.bad, ['kaputt']);
+  const b = R.recipients('\uFEFFVorname;Nachname;E-Mail-Adresse;Ort\nDora;Klein;dora@example.de;Paderborn\n"Emil";"Groß";emil@example.de;Bielefeld');
+  assert.deepEqual(b.list, [{ name: 'Dora Klein', email: 'dora@example.de' }, { name: 'Emil Groß', email: 'emil@example.de' }]);
+  const c = R.recipients('Name,Email\n"Fritz Meier",fritz@example.de');
+  assert.deepEqual(c.list, [{ name: 'Fritz Meier', email: 'fritz@example.de' }]);
+  assert.equal(R.recipients(Array.from({ length: 300 }, (_, i) => `p${i}@example.de`).join('\n')).list.length, 200);
+});

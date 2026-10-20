@@ -2458,5 +2458,8 @@
  "Dokument: \"\"\" {0} \"\"\" Frage: {1}": "Dokument: \"\"\" {0} \"\"\" Frage: {1}",
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
- "Summarizer": "Summarizer"
+ "Summarizer": "Summarizer",
+ "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: ikkonvertit. PDFMy ma jieħux l-intestaturi u l-qiegħ tal-paġna, il-kaxxi tat-test u t-tipi ta’ tipa speċjali – għal kopja eżatta, uża “Issejvja bħala PDF” f’Word.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy għadu ma jistax jikkonverti dan il-format – jekk jogħġbok issejvja f’Word jew Excel bħala .docx/.xlsx jew agħżel hemm “Issejvja bħala PDF”.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, stampa, Word, Excel, test, Markdown, CSV jew fattura elettronika bħala XML)"
 }
