@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ conservada sense canvis",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "No es pot annexar – el PDF es reescriurà:",
  "Echtheit": "Autenticitat",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Podeu veure l'estat al registre d'entrada.",
+ "Alle haben unterschrieben. {0}": "Tothom ha signat. {0}",
+ "Danke! {0}": "Gràcies! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "El correu per a {0} és obert al vostre programa de correu: reviseu-lo i envieu-lo.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Correu per a {0} preparat: obriu el fitxer .eml i envieu-lo.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "El recordatori per a {0} és obert al vostre programa de correu: reviseu-lo i envieu-lo.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "L'informe d'error és obert al vostre programa de correu: feu clic a «Envia» (a {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Hi ha un correu nou amb el PDF obert al vostre programa de correu: indiqueu el destinatari i envieu-lo."
 }

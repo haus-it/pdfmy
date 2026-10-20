@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ contenuta invariata",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Impossibile accodare – il PDF verrà riscritto:",
  "Echtheit": "Autenticità",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Lo stato è visibile nel registro posta in arrivo.",
+ "Alle haben unterschrieben. {0}": "Tutti hanno firmato. {0}",
+ "Danke! {0}": "Grazie! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "L’e-mail a {0} è aperta nel suo programma di posta – la controlli e la invii.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail a {0} preparata – apra il file .eml e lo invii.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Il promemoria per {0} è aperto nel suo programma di posta – lo controlli e lo invii.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Il rapporto di errore è aperto nel suo programma di posta – faccia clic su «Invia» (a {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Una nuova e-mail con il PDF è aperta nel suo programma di posta – inserisca il destinatario e la invii."
 }

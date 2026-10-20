@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ sisältyy muuttumattomana",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Liittäminen ei onnistu – PDF kirjoitetaan uudelleen:",
  "Echtheit": "Aitous",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Tilanteen näet saapuneen postin kirjasta.",
+ "Alle haben unterschrieben. {0}": "Kaikki ovat allekirjoittaneet. {0}",
+ "Danke! {0}": "Kiitos! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Sähköposti henkilölle {0} on avattu sähköpostiohjelmaasi – tarkista ja lähetä.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Sähköposti henkilölle {0} valmisteltu – avaa .eml-tiedosto ja lähetä.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Muistutus henkilölle {0} on avattu sähköpostiohjelmaasi – tarkista ja lähetä.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Virheraportti on avattu sähköpostiohjelmaasi – napsauta ”Lähetä” (osoitteeseen {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Uusi sähköposti PDF:n kanssa on avattu sähköpostiohjelmaasi – lisää vastaanottaja ja lähetä."
 }

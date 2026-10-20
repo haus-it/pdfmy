@@ -707,10 +707,22 @@ async function reqIncremental(audit) {
   } catch (e) { console.warn('Anhängen nicht möglich – die PDF wird neu geschrieben:', e); return null; }
 }
 const reqFile = (r, suffix) => `${r.title.replace(/[\\/:*?"<>|]+/g, '_').slice(0, 80)}${suffix}`;
-function reqMail(r, bytes, pdfName) {
+// E-Mail-Entwurf öffnen: mit pdfmy Scan unter Windows (ab 1.8.8) direkt im Mail-Programm – Outlook zeigt ihn als neue,
+// sendebereite Nachricht mit Anhang –, sonst wie bisher als .eml-Datei herunterladen. true = direkt geöffnet.
+async function openEml(bytes, name) {
+  if (state.scanVersion && !state.scanMac) try {
+    let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    const r = await scanApi('/maildraft', { method: 'POST', body: JSON.stringify({ name, data: btoa(bin) }) }, 20000);
+    if (r.ok) return true;
+  } catch {}
+  download(bytes, name, 'message/rfc822'); return false;
+}
+window.openEml = openEml;
+const emlDone = (opened, to) => opened ? `E-Mail an ${to} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `E-Mail an ${to} vorbereitet – die .eml-Datei öffnen und senden.`;
+async function reqMail(r, bytes, pdfName) {
   const m = SigReq.mail(r, { from: S.author });
   const eml = Journal.emlDraft({ to: m.to, cc: m.cc, subject: m.subject, body: m.body, attachments: [{ name: pdfName, mime: 'application/pdf', bytes }] });
-  download(new TextEncoder().encode(eml), pdfName.replace(/\.pdf$/i, '') + '.eml', 'message/rfc822');
+  m.opened = await openEml(new TextEncoder().encode(eml), pdfName.replace(/\.pdf$/i, '') + '.eml');
   return m;
 }
 // Posteingangsbuch: Eintrag beim Senden anlegen, beim Öffnen einer zurückgekommenen Fassung fortschreiben
@@ -736,8 +748,8 @@ async function reqRemind(e) {
   if (!+e.sigN && e.file && state.outDir) try { bytes = new Uint8Array(await (await archiveFile(e.file)).arrayBuffer()); } catch {}
   const m = SigReq.reminder({ title: e.subject, to: e.sigTo, name: e.sigName, due: e.deadline, from: S.author, attached: !!bytes });
   const name = (e.file || 'Dokument.pdf').split('\\').pop();
-  download(new TextEncoder().encode(Journal.emlDraft({ ...m, attachments: bytes ? [{ name, mime: 'application/pdf', bytes }] : [] })), `Erinnerung – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`, 'message/rfc822');
-  status(`Erinnerung an ${e.sigName || e.sigTo} vorbereitet – die .eml-Datei öffnen und senden.`);
+  const opened = await openEml(new TextEncoder().encode(Journal.emlDraft({ ...m, attachments: bytes ? [{ name, mime: 'application/pdf', bytes }] : [] })), `Erinnerung – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`);
+  status(opened ? `Erinnerung an ${e.sigName || e.sigTo} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `Erinnerung an ${e.sigName || e.sigTo} vorbereitet – die .eml-Datei öffnen und senden.`);
 }
 async function reqSend() {
   const miss = req.signers.filter((s, i) => !req.fields.some(f => f.s === i && f.pg));
@@ -747,10 +759,10 @@ async function reqSend() {
     const bytes = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
     let rel = '', sha = '';
     if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(bytes); }
-    const m = reqMail(req, bytes, name);
+    const m = await reqMail(req, bytes, name);
     await reqJournal(req, { rel, sha });
     reqDraft = false; reqArm = -1; renderReqBar(); renderAnns();
-    status(`E-Mail an ${m.to} vorbereitet – die .eml-Datei öffnen und senden.${rel ? ` Kopie in der Ablage: ${rel}.` : ''} Den Stand sehen Sie im Posteingangsbuch.`);
+    status(`${emlDone(m.opened, m.to)}${rel ? ` Kopie in der Ablage: ${rel}.` : ''} Den Stand sehen Sie im Posteingangsbuch.`);
   } catch (e) { console.error(e); status('Senden nicht möglich: ' + e.message); }
 }
 async function reqForward(ext = false) {
@@ -763,9 +775,9 @@ async function reqForward(ext = false) {
     let bytes = await reqIncremental(done);
     if (!bytes) { reqAudit = done; try { bytes = await reqPdf(); } finally { reqAudit = false; } }
     const name = reqFile(req, done ? ' – unterschrieben.pdf' : ' – zur Unterschrift.pdf');
-    const m = reqMail(req, bytes, name);
+    const m = await reqMail(req, bytes, name);
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
-    status(done ? `Alle haben unterschrieben. E-Mail an ${m.to} vorbereitet – die .eml-Datei öffnen und senden.` : `Danke! E-Mail an ${m.to} vorbereitet – die .eml-Datei öffnen und senden.`);
+    status(done ? `Alle haben unterschrieben. ${emlDone(m.opened, m.to)}` : `Danke! ${emlDone(m.opened, m.to)}`);
   } catch (e) { console.error(e); status('Weitersenden nicht möglich: ' + e.message); }
 }
 $('#reqDecCancel').onclick = () => $('#reqDecDlg').close();
@@ -775,9 +787,9 @@ $('#reqDecForm').onsubmit = async ev => {
   try {
     req = SigReq.decline(req, i, { reason: $('#reqDecWhy').value });
     for (const p of docPages()) p.annots = p.annots.filter(a => !reqSignedIds.has(a.id));   // eigene, noch nicht versendete Unterschrift wieder entfernen
-    const bytes = await reqIncremental(false) || await reqPdf(), m = reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
+    const bytes = await reqIncremental(false) || await reqPdf(), m = await reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
-    status(`Abgelehnt. E-Mail an ${m.to} vorbereitet – die .eml-Datei öffnen und senden.`);
+    status(`Abgelehnt. ${emlDone(m.opened, m.to)}`);
   } catch (e) { console.error(e); status('Ablehnen nicht möglich: ' + e.message); }
 };
 const reqSignedIds = new Set();
@@ -1074,14 +1086,14 @@ $('#shSystem').onclick = async () => {
   try { await navigator.share({ files: [shareFile.file], title: shareFile.name.replace(/\.pdf$/i, '') }); $('#shareDlg').close(); status(`Geteilt: ${shareFile.name}`); }
   catch (e) { if (e.name !== 'AbortError') status('Teilen nicht möglich: ' + e.message); }
 };
-$('#shMail').onclick = () => {
+$('#shMail').onclick = async () => {
   const f = shareFile, m = f.meta || {};
   const subject = [m.type, m.sender, m.subject].filter(Boolean).join(' – ') || f.name.replace(/\.pdf$/i, '');
   const body = `Guten Tag,\n\nanbei ${m.type ? 'die ' + m.type : 'das Dokument'}${m.sender ? ' von ' + m.sender : ''}${m.date ? ' vom ' + m.date.split('-').reverse().join('.') : ''}.\n\nViele Grüße${S.author ? '\n' + S.author : ''}`;
   const eml = Journal.emlDraft({ subject, body, attachments: [{ name: f.name, mime: 'application/pdf', bytes: f.bytes }] });
-  download(new TextEncoder().encode(eml), f.name.replace(/\.pdf$/i, '') + '.eml', 'message/rfc822');
   $('#shareDlg').close();
-  status('E-Mail-Entwurf mit Anhang gespeichert – die .eml-Datei öffnen (unten im Browser), dann erscheint eine neue Outlook-Nachricht mit dem PDF.');
+  const opened = await openEml(new TextEncoder().encode(eml), f.name.replace(/\.pdf$/i, '') + '.eml');
+  status(opened ? 'Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.' : 'E-Mail-Entwurf mit Anhang gespeichert – die .eml-Datei öffnen (unten im Browser), dann erscheint eine neue Outlook-Nachricht mit dem PDF.');
 };
 $('#shSave').onclick = async () => { $('#shareDlg').close(); const w = await deliver(shareFile.bytes, shareFile.name, 'application/pdf', null, true); if (w) status(`Gespeichert: ${w}`); };
 $('#shCancel').onclick = () => $('#shareDlg').close();
@@ -1463,12 +1475,12 @@ const repShown = () => $('#repMask').checked ? maskReport(repBase) : repBase;
 $('#repMask').onchange = () => { $('#repText').textContent = repShown(); };
 const reportText = () => ($('#repWhat').value.trim() ? 'Beschreibung: ' + $('#repWhat').value.trim() + '\n\n' : '') + repShown();
 const reportSubject = () => `${APP.name} ${repKind} – ${state.scanVersion ? 'pdfmy Scan ' + state.scanVersion + ' – ' : ''}${new Date().toLocaleDateString('de-DE')}`;
-$('#repOutlook').onclick = () => {
+$('#repOutlook').onclick = async () => {
   const txt = reportText(), enc = new TextEncoder();
   const eml = Journal.emlDraft({ to: SUPPORT, subject: reportSubject(), body: txt.split('\n--- Letzte Meldungen')[0] + '\n\nDas vollständige Protokoll ist angehängt.\n\nViele Grüße' + (S.author ? '\n' + S.author : ''),
     attachments: [{ name: `Protokoll_${new Date().toISOString().slice(0, 16).replace(/\D/g, '')}.txt`, mime: 'text/plain', bytes: enc.encode(txt) }] });
-  download(enc.encode(eml), 'Fehlerbericht_PDFMy.eml', 'message/rfc822');
   $('#reportDlg').close();
+  if (await openEml(enc.encode(eml), 'Fehlerbericht_PDFMy.eml')) return status(`Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an ${SUPPORT}).`);
   status(`Fehlerbericht als E-Mail vorbereitet – die heruntergeladene Datei öffnen, in Outlook auf „Senden“ klicken (an ${SUPPORT}).`);
   toast('E-Mail vorbereitet: Datei „Fehlerbericht_PDFMy.eml“ öffnen und senden.', 8000);
 };

@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ onverännert enthalen",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Uhänken net méiglech – d'PDF gëtt nei geschriwwen:",
  "Echtheit": "Echtheet",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} De Stand gesitt Dir am Postentréesbuch.",
+ "Alle haben unterschrieben. {0}": "Jiddereen huet ënnerschriwwen. {0}",
+ "Danke! {0}": "Merci! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "E-Mail un {0} ass an Ärem Mail-Programm op – iwwerpréiwen a schécken.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-Mail un {0} virbereet – de .eml-Fichier opmaachen a schécken.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Erënnerung un {0} ass an Ärem Mail-Programm op – iwwerpréiwen a schécken.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "De Feelerbericht ass an Ärem Mail-Programm op – w.e.g. op „Schécken“ klicken (un {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nei E-Mail mam PDF ass an Ärem Mail-Programm op – Empfänger aginn a schécken."
 }

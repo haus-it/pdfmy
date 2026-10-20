@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ wedi’i chynnwys heb newid",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Methu atodi – bydd y PDF yn cael ei ailysgrifennu:",
  "Echtheit": "Dilysrwydd",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Gallwch weld y statws yn y gofrestr post.",
+ "Alle haben unterschrieben. {0}": "Mae pawb wedi llofnodi. {0}",
+ "Danke! {0}": "Diolch! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Mae’r e-bost at {0} ar agor yn eich rhaglen e-bost – gwiriwch ef a’i anfon.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-bost at {0} yn barod – agorwch y ffeil .eml a’i hanfon.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Mae’r nodyn atgoffa i {0} ar agor yn eich rhaglen e-bost – gwiriwch ef a’i anfon.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Mae’r adroddiad gwall ar agor yn eich rhaglen e-bost – cliciwch ‘Anfon’ (at {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Mae e-bost newydd gyda’r PDF ar agor yn eich rhaglen e-bost – rhowch y derbynnydd a’i anfon."
 }

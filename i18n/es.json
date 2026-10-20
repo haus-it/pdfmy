@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ contenida sin cambios",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "No es posible anexar – el PDF se reescribirá:",
  "Echtheit": "Autenticidad",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Puede ver el estado en el registro de entrada.",
+ "Alle haben unterschrieben. {0}": "Todos han firmado. {0}",
+ "Danke! {0}": "¡Gracias! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "El correo para {0} está abierto en su programa de correo: revíselo y envíelo.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Correo para {0} preparado: abra el archivo .eml y envíelo.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "El recordatorio para {0} está abierto en su programa de correo: revíselo y envíelo.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "El informe de errores está abierto en su programa de correo: haga clic en «Enviar» (a {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Hay un correo nuevo con el PDF abierto en su programa de correo: indique el destinatario y envíelo."
 }

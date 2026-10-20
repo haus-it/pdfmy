@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ obsažena beze změny",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Připojení není možné – PDF bude přepsáno:",
  "Echtheit": "Pravost",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Stav uvidíte v knize došlé pošty.",
+ "Alle haben unterschrieben. {0}": "Všichni podepsali. {0}",
+ "Danke! {0}": "Děkujeme! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "E-mail pro {0} je otevřen ve vašem e-mailovém programu – zkontrolujte jej a odešlete.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail pro {0} je připraven – otevřete soubor .eml a odešlete jej.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Připomínka pro {0} je otevřena ve vašem e-mailovém programu – zkontrolujte ji a odešlete.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Hlášení chyby je otevřeno ve vašem e-mailovém programu – klikněte prosím na „Odeslat“ (na {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nový e-mail s PDF je otevřen ve vašem e-mailovém programu – zadejte příjemce a odešlete."
 }

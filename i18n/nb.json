@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ uendret inneholdt",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Kan ikke legge til – PDF-en skrives på nytt:",
  "Echtheit": "Ekthet",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Statusen ser du i postjournalen.",
+ "Alle haben unterschrieben. {0}": "Alle har signert. {0}",
+ "Danke! {0}": "Takk! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "E-post til {0} er åpnet i e-postprogrammet ditt – kontroller og send den.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-post til {0} er forberedt – åpne .eml-filen og send den.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Påminnelse til {0} er åpnet i e-postprogrammet ditt – kontroller og send den.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Feilrapporten er åpnet i e-postprogrammet ditt – klikk på «Send» (til {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "En ny e-post med PDF-en er åpnet i e-postprogrammet ditt – fyll inn mottaker og send den."
 }

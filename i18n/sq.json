@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ përmbahet i pandryshuar",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Shtimi nuk është i mundur – PDF-ja do të rishkruhet:",
  "Echtheit": "Autenticiteti",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Gjendjen e shihni në Regjistrin e postës hyrëse.",
+ "Alle haben unterschrieben. {0}": "Të gjithë kanë nënshkruar. {0}",
+ "Danke! {0}": "Faleminderit! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Email-i për {0} është hapur në programin tuaj të email-it – kontrollojeni dhe dërgojeni.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Email-i për {0} u përgatit – hapni skedarin .eml dhe dërgojeni.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Kujtesa për {0} është hapur në programin tuaj të email-it – kontrollojeni dhe dërgojeni.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Raporti i gabimit është hapur në programin tuaj të email-it – klikoni „Dërgo“ (te {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Një email i ri me PDF-në është hapur në programin tuaj të email-it – shkruani marrësin dhe dërgojeni."
 }

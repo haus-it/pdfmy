@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ запазена непроменена",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Добавянето не е възможно – PDF файлът ще бъде записан наново:",
  "Echtheit": "Автентичност",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Състоянието виждате във входящия дневник.",
+ "Alle haben unterschrieben. {0}": "Всички подписаха. {0}",
+ "Danke! {0}": "Благодарим! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Имейлът до {0} е отворен във вашата имейл програма – проверете го и го изпратете.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Имейлът до {0} е подготвен – отворете файла .eml и го изпратете.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Напомнянето до {0} е отворено във вашата имейл програма – проверете го и го изпратете.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Докладът за грешка е отворен във вашата имейл програма – моля, щракнете върху „Изпращане“ (до {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Нов имейл с PDF файла е отворен във вашата имейл програма – въведете получател и го изпратете."
 }

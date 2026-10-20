@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ збережено без змін",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Додавання неможливе – PDF буде перезаписано:",
  "Echtheit": "Автентичність",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Стан видно в журналі вхідної пошти.",
+ "Alle haben unterschrieben. {0}": "Усі підписали. {0}",
+ "Danke! {0}": "Дякуємо! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Лист для {0} відкрито у вашій поштовій програмі – перевірте й надішліть.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Лист для {0} підготовлено – відкрийте файл .eml і надішліть.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Нагадування для {0} відкрито у вашій поштовій програмі – перевірте й надішліть.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Звіт про помилку відкрито у вашій поштовій програмі – натисніть «Надіслати» (на {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Новий лист із PDF відкрито у вашій поштовій програмі – вкажіть одержувача й надішліть."
 }

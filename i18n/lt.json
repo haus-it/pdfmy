@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ išlikusi nepakitusi",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Pridėti neįmanoma – PDF bus perrašytas:",
  "Echtheit": "Autentiškumas",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Būseną matote gaunamųjų registre.",
+ "Alle haben unterschrieben. {0}": "Visi pasirašė. {0}",
+ "Danke! {0}": "Ačiū! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "El. laiškas gavėjui {0} atidarytas jūsų el. pašto programoje – patikrinkite ir išsiųskite.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "El. laiškas gavėjui {0} paruoštas – atidarykite .eml failą ir išsiųskite.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Priminimas adresatui {0} atidarytas jūsų el. pašto programoje – patikrinkite ir išsiųskite.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Klaidos ataskaita atidaryta jūsų el. pašto programoje – spustelėkite „Siųsti“ (adresu {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Naujas el. laiškas su PDF atidarytas jūsų el. pašto programoje – įveskite gavėją ir išsiųskite."
 }

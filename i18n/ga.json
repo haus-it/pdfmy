@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ ann gan athrú",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ní féidir ceangal – athscríobhfar an PDF:",
  "Echtheit": "Barántúlacht",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Feicfidh tú an stádas i leabhar an phoist isteach.",
+ "Alle haben unterschrieben. {0}": "Shínigh gach duine. {0}",
+ "Danke! {0}": "Go raibh maith agat! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Tá an ríomhphost chuig {0} oscailte i do ríomhchlár ríomhphoist – seiceáil é agus seol é.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Ríomhphost chuig {0} ullmhaithe – oscail an comhad .eml agus seol é.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Tá an meabhrúchán chuig {0} oscailte i do ríomhchlár ríomhphoist – seiceáil é agus seol é.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Tá an tuairisc earráide oscailte i do ríomhchlár ríomhphoist – cliceáil “Seol” (chuig {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Tá ríomhphost nua leis an PDF oscailte i do ríomhchlár ríomhphoist – cuir isteach an faighteoir agus seol é."
 }

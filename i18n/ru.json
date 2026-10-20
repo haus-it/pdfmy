@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ сохранена без изменений",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Добавление невозможно – PDF будет перезаписан:",
  "Echtheit": "Подлинность",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Статус виден в журнале входящей почты.",
+ "Alle haben unterschrieben. {0}": "Все подписали. {0}",
+ "Danke! {0}": "Спасибо! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Письмо для {0} открыто в вашей почтовой программе – проверьте и отправьте.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Письмо для {0} подготовлено – откройте файл .eml и отправьте.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Напоминание для {0} открыто в вашей почтовой программе – проверьте и отправьте.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Отчёт об ошибке открыт в вашей почтовой программе – нажмите «Отправить» (на {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Новое письмо с PDF открыто в вашей почтовой программе – укажите получателя и отправьте."
 }

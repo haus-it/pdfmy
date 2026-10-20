@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ óbreytt til staðar",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ekki hægt að bæta við – PDF-skráin verður skrifuð upp á nýtt:",
  "Echtheit": "Ósvikni",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Stöðuna sjáið þér í póstskránni.",
+ "Alle haben unterschrieben. {0}": "Allir hafa undirritað. {0}",
+ "Danke! {0}": "Takk fyrir! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Tölvupóstur til {0} er opinn í póstforritinu – yfirfarið hann og sendið.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Tölvupóstur til {0} undirbúinn – opnið .eml-skrána og sendið.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Áminning til {0} er opin í póstforritinu – yfirfarið hana og sendið.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Villuskýrslan er opin í póstforritinu – smellið á „Senda“ (til {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nýr tölvupóstur með PDF-skjalinu er opinn í póstforritinu – sláið inn viðtakanda og sendið."
 }

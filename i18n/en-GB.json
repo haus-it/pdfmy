@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ contained unchanged",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Cannot append – the PDF will be rewritten:",
  "Echtheit": "Authenticity",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} You can see the status in the post log.",
+ "Alle haben unterschrieben. {0}": "Everyone has signed. {0}",
+ "Danke! {0}": "Thank you! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Email to {0} is open in your email program – check it and send it.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Email to {0} prepared – open the .eml file and send it.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Reminder to {0} is open in your email program – check it and send it.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "The error report is open in your email program – please click ‘Send’ (to {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "A new email with the PDF is open in your email program – enter the recipient and send it."
 }

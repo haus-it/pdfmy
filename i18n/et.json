@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ muutmata kujul olemas",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Lisamine pole võimalik – PDF kirjutatakse uuesti:",
  "Echtheit": "Ehtsus",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Olekut näete sissetuleva posti registris.",
+ "Alle haben unterschrieben. {0}": "Kõik on allkirjastanud. {0}",
+ "Danke! {0}": "Aitäh! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "E-kiri adressaadile {0} on teie e-posti programmis avatud – kontrollige ja saatke ära.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-kiri adressaadile {0} on ette valmistatud – avage .eml-fail ja saatke see ära.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Meeldetuletus isikule {0} on teie e-posti programmis avatud – kontrollige ja saatke ära.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Veaaruanne on teie e-posti programmis avatud – klõpsake palun „Saada“ (aadressile {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Uus PDF-iga e-kiri on teie e-posti programmis avatud – sisestage saaja ja saatke ära."
 }

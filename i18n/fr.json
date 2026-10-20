@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ contenue inchangée",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ajout impossible – le PDF sera réécrit :",
  "Echtheit": "Authenticité",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Vous voyez l’état d’avancement dans le registre du courrier.",
+ "Alle haben unterschrieben. {0}": "Tout le monde a signé. {0}",
+ "Danke! {0}": "Merci ! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "L’e-mail à {0} est ouvert dans votre programme de messagerie – vérifiez-le et envoyez-le.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail à {0} préparé – ouvrez le fichier .eml et envoyez-le.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Le rappel à {0} est ouvert dans votre programme de messagerie – vérifiez-le et envoyez-le.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Le rapport d’erreur est ouvert dans votre programme de messagerie – veuillez cliquer sur « Envoyer » (à {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Un nouvel e-mail avec le PDF est ouvert dans votre programme de messagerie – saisissez le destinataire et envoyez-le."
 }

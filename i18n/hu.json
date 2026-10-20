@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ változatlanul megvan",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Hozzáfűzés nem lehetséges – a PDF újraíródik:",
  "Echtheit": "Hitelesség",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Az állást a beérkező posta naplójában látja.",
+ "Alle haben unterschrieben. {0}": "Mindenki aláírta. {0}",
+ "Danke! {0}": "Köszönjük! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "A(z) {0} részére szóló e-mail meg van nyitva a levelezőprogramjában – ellenőrizze, és küldje el.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "A(z) {0} részére szóló e-mail előkészítve – nyissa meg az .eml fájlt, és küldje el.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "A(z) {0} részére szóló emlékeztető meg van nyitva a levelezőprogramjában – ellenőrizze, és küldje el.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "A hibajelentés meg van nyitva a levelezőprogramjában – kattintson a „Küldés” gombra (címzett: {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Új e-mail a PDF-fel meg van nyitva a levelezőprogramjában – adja meg a címzettet, és küldje el."
 }

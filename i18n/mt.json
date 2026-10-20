@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ inkluża mingħajr tibdil",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ma jistax jiżdied – il-PDF se jinkiteb mill-ġdid:",
  "Echtheit": "Awtentiċità",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} L-istatus tarah fir-reġistru tal-posta.",
+ "Alle haben unterschrieben. {0}": "Kulħadd iffirma. {0}",
+ "Danke! {0}": "Grazzi! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "L-email lil {0} hija miftuħa fil-programm tal-email tiegħek – iċċekkjaha u ibgħatha.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Email lil {0} ippreparata – iftaħ il-fajl .eml u ibgħatha.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "It-tfakkira lil {0} hija miftuħa fil-programm tal-email tiegħek – iċċekkjaha u ibgħatha.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Ir-rapport tal-iżball huwa miftuħ fil-programm tal-email tiegħek – ikklikkja “Ibgħat” (lil {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Email ġdida bil-PDF hija miftuħa fil-programm tal-email tiegħek – daħħal ir-riċevitur u ibgħatha."
 }

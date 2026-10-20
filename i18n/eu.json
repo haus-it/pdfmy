@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ aldaketarik gabe jasota",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ezin da erantsi – PDFa berriro idatziko da:",
  "Echtheit": "Benetakotasuna",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Egoera sarrera-erregistroan ikus dezakezu.",
+ "Alle haben unterschrieben. {0}": "Guztiek sinatu dute. {0}",
+ "Danke! {0}": "Eskerrik asko! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "{0}(r)entzako mezua zure posta-programan irekita dago: egiaztatu eta bidali.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Mezua prest ({0}): ireki .eml fitxategia eta bidali.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "{0}(r)entzako oroigarria zure posta-programan irekita dago: egiaztatu eta bidali.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Errore-txostena zure posta-programan irekita dago: egin klik «Bidali» botoian ({0} helbidera).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "PDFa duen mezu berri bat zure posta-programan irekita dago: idatzi hartzailea eta bidali."
 }

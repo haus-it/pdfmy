@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.8.7";
+        public const string Version = "1.8.8";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1540,7 +1540,7 @@ namespace PdfmyScan
                     var h = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     foreach (var l in lines.Skip(1)) { int i = l.IndexOf(':'); if (i > 0) h[l.Substring(0, i).Trim()] = l.Substring(i + 1).Trim(); }
                     byte[] body = new byte[0];
-                    if (h.TryGetValue("Content-Length", out var cl) && int.TryParse(cl, out int n) && n > 0 && n < (path.StartsWith("/sign") ? 300_000_000 : 1_000_000))
+                    if (h.TryGetValue("Content-Length", out var cl) && int.TryParse(cl, out int n) && n > 0 && n < (path.StartsWith("/sign") || path.StartsWith("/maildraft") ? 300_000_000 : 1_000_000))
                     { body = new byte[n]; int r = 0; while (r < n) { int k = s.Read(body, r, n - r); if (k <= 0) break; r += k; } }
 
                     h.TryGetValue("Origin", out var origin);
@@ -1575,6 +1575,26 @@ namespace PdfmyScan
                 cors["Access-Control-Expose-Headers"] = "X-Pdfmy-Name";
                 cors["X-Pdfmy-Name"] = Uri.EscapeDataString(fname);
                 Send(s, 200, "application/pdf", data, cors); return;
+            }
+            if (p == "/maildraft" && method == "POST")   // E-Mail-Entwurf (.eml mit „X-Unsent: 1“) direkt im Mail-Programm öffnen – Outlook zeigt ihn als neue, sendebereite Nachricht
+            {
+                var o = json.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(body));
+                byte[] eml; try { eml = Convert.FromBase64String(Convert.ToString(o["data"])); } catch { SendJson(s, 400, new { error = "Ungültige Daten" }, cors); return; }
+                string name = new string(Path.GetFileName(Convert.ToString(o.ContainsKey("name") ? o["name"] : "E-Mail")).Select(ch => Path.GetInvalidFileNameChars().Contains(ch) ? '_' : ch).ToArray()).Trim();
+                if (name.Length == 0) name = "E-Mail"; if (!name.EndsWith(".eml", StringComparison.OrdinalIgnoreCase)) name += ".eml";
+                string root = Path.Combine(Program.DataDir, "mail");
+                try
+                {
+                    Directory.CreateDirectory(root);
+                    foreach (var old in Directory.GetDirectories(root)) try { if (Directory.GetLastWriteTimeUtc(old) < DateTime.UtcNow.AddDays(-1)) Directory.Delete(old, true); } catch { }
+                    string dir = Path.Combine(root, DateTime.UtcNow.Ticks.ToString()); Directory.CreateDirectory(dir);
+                    string f = Path.Combine(dir, name); File.WriteAllBytes(f, eml);
+                    if (Environment.GetEnvironmentVariable("PDFMY_TEST_NOBROWSER") != "1") Process.Start(new ProcessStartInfo(f) { UseShellExecute = true });
+                    Program.Log("E-Mail-Entwurf geöffnet: " + name);
+                    SendJson(s, 200, new { ok = true }, cors);
+                }
+                catch (Exception e) { Program.Log("E-Mail-Entwurf: " + e.Message); SendJson(s, 500, new { error = e.Message }, cors); }
+                return;
             }
             if (p == "/attachment" && method == "GET")   // PDFMy durfte eine übergebene Datei nicht lesen (z. B. Outlook-Anhang): hier nachreichen
             {

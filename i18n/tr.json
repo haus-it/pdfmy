@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ değişmeden mevcut",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ekleme yapılamıyor – PDF yeniden yazılacak:",
  "Echtheit": "Orijinallik",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Durumu gelen evrak defterinde görebilirsiniz.",
+ "Alle haben unterschrieben. {0}": "Herkes imzaladı. {0}",
+ "Danke! {0}": "Teşekkürler! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "{0} için e-posta, e-posta programınızda açıldı – kontrol edip gönderin.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "{0} için e-posta hazırlandı – .eml dosyasını açıp gönderin.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "{0} için hatırlatma e-posta programınızda açıldı – kontrol edip gönderin.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Hata raporu e-posta programınızda açıldı – lütfen “Gönder” düğmesine tıklayın ({0} adresine).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "PDF’li yeni bir e-posta, e-posta programınızda açıldı – alıcıyı girip gönderin."
 }

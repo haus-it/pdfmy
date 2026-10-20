@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ ongewijzigd aanwezig",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Toevoegen niet mogelijk – de pdf wordt opnieuw geschreven:",
  "Echtheit": "Echtheid",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} De stand van zaken ziet u in het postregister.",
+ "Alle haben unterschrieben. {0}": "Iedereen heeft ondertekend. {0}",
+ "Danke! {0}": "Bedankt! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "E-mail aan {0} is geopend in uw e-mailprogramma – controleer en verzend het.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail aan {0} voorbereid – open het .eml-bestand en verzend het.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Herinnering aan {0} is geopend in uw e-mailprogramma – controleer en verzend het.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Het foutrapport is geopend in uw e-mailprogramma – klik op „Verzenden” (aan {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nieuwe e-mail met de pdf is geopend in uw e-mailprogramma – vul de ontvanger in en verzend het."
 }

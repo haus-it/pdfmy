@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ περιέχεται αμετάβλητη",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Δεν είναι δυνατή η προσάρτηση – το PDF θα επανεγγραφεί:",
  "Echtheit": "Γνησιότητα",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Την κατάσταση τη βλέπετε στο βιβλίο εισερχομένων.",
+ "Alle haben unterschrieben. {0}": "Όλοι υπέγραψαν. {0}",
+ "Danke! {0}": "Ευχαριστούμε! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Το email προς {0} είναι ανοιχτό στο πρόγραμμα email σας – ελέγξτε το και στείλτε το.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Το email προς {0} είναι έτοιμο – ανοίξτε το αρχείο .eml και στείλτε το.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Η υπενθύμιση προς {0} είναι ανοιχτή στο πρόγραμμα email σας – ελέγξτε την και στείλτε την.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Η αναφορά σφάλματος είναι ανοιχτή στο πρόγραμμα email σας – κάντε κλικ στην «Αποστολή» (προς {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Ένα νέο email με το PDF είναι ανοιχτό στο πρόγραμμα email σας – συμπληρώστε τον παραλήπτη και στείλτε το."
 }

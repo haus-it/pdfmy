@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### pdfmy Scan 1.8.8 (Windows): E-Mails öffnen sich direkt im Mail-Programm
+- Vorbereitete E-Mails (Zur Unterschrift senden, Weitersenden, Ablehnen, Erinnern, Teilen → E-Mail, Fehlerbericht) öffnet PDFMy mit pdfmy Scan direkt als neue, sendebereite Nachricht mit Anhang (Outlook: .eml mit „X-Unsent: 1“) – kein Umweg mehr über den Download-Ordner. Neuer Endpunkt `POST /maildraft` (Herkunftsprüfung, Pflicht-Header; Entwürfe im eigenen Ordner, nach einem Tag entfernt).
+- Ohne pdfmy Scan (und am Mac/unter Linux) wie bisher als .eml-Datei; Meldungen in der Statuszeile sagen, was passiert ist.
+- Getestet: Endpunkt (200, Datei mit Umlaut-Namen angelegt, 403 für fremde Herkunft); PDFMy öffnet den Entwurf über pdfmy Scan ohne Download, Unterschriftsanfrage mit passender Meldung; Unit-Tests.
+
 ### Zur Unterschrift senden: Echtheit nachweisbar
 - Unterschriften werden an die empfangene PDF **angehängt** statt sie neu zu schreiben (inkrementelles Speichern, ISO 32000-2 7.5.6; neues Modul `js/pdfinc.js`, Querverweis-Tabelle oder -Strom passend zur Datei). Jede Fassung bleibt Byte für Byte erhalten; neue Objekte bekommen freie Nummern oberhalb aller vorhandenen (auch Objekt-Container).
 - **Echtheit prüfen:** „Übersicht“ rechnet für jede Person nach, ob die Fassung, die sie unterschrieben hat (SHA-256), unverändert in der Datei steckt – „✓ unverändert enthalten“ bzw. Hinweis „nicht nachweisbar“, wenn die Datei dazwischen neu gespeichert wurde. Prüfprotokoll mit Hinweis darauf.

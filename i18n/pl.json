@@ -2158,5 +2158,13 @@
  "✓ unverändert enthalten": "✓ zachowana bez zmian",
  "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Dołączenie niemożliwe – plik PDF zostanie zapisany od nowa:",
  "Echtheit": "Autentyczność",
- "Kids": "Kids"
+ "Kids": "Kids",
+ "{0}{1} Den Stand sehen Sie im Posteingangsbuch.": "{0}{1} Stan sprawdzisz w dzienniku korespondencji.",
+ "Alle haben unterschrieben. {0}": "Wszyscy podpisali. {0}",
+ "Danke! {0}": "Dziękujemy! {0}",
+ "E-Mail an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "E-mail do {0} jest otwarty w twoim programie pocztowym – sprawdź go i wyślij.",
+ "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Przygotowano e-mail do {0} – otwórz plik .eml i wyślij.",
+ "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Przypomnienie dla {0} jest otwarte w twoim programie pocztowym – sprawdź je i wyślij.",
+ "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Raport błędu jest otwarty w twoim programie pocztowym – kliknij „Wyślij” (do {0}).",
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nowy e-mail z plikiem PDF jest otwarty w twoim programie pocztowym – wpisz odbiorcę i wyślij."
 }
