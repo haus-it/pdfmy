@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Outlook-Anhänge: dauerhafte Lösung anbieten; Qualitätsrundgang über das Menü
+- Ist ein übergebener Anhang nicht lesbar und ist „PDFMy (pdfmy Scan)“ nicht Standard für PDFs (sondern z. B. die Chrome-App), fragt PDFMy, ob es das jetzt einstellen soll – dann läuft das Öffnen immer über pdfmy Scan, das die Datei sofort sichert (Windows: Einstellungen öffnen sich; Mac/Linux: direkt).
+- Automatischer Rundgang über alle 24 Funktionen im Menü „… Mehr“ (mit Testdokument): ohne Befund.
+
 ### pdfmy Scan 1.8.9 (Windows) und 1.1.8 (Mac/Linux): Anhänge auch aus dem Internet-Cache
 - Rückmeldung: Ein Outlook-Anhang („… Logistik[76].pdf“) war nicht lesbar und wurde auch nicht nachgereicht. Der Name mit „[n]“ zeigt den Windows-Internet-Cache (INetCacheIE…), den pdfmy Scan bisher nicht durchsucht hat (nur Content.Outlook).
 - Suche jetzt im gesamten INetCache (klassisches Outlook, Outlook im Web-Modus, Webmail), in „Temporary Internet Files“, beim neuen Outlook (Olk, App-Paket), in Temp und – nur Dateien der letzten 30 Minuten mit genau diesem Namen – im Download-Ordner; Mac/Linux zusätzlich Downloads.

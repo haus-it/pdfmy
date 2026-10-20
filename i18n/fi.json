@@ -2176,5 +2176,6 @@
  "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Allekirjoitukset sähköpostilla</b> – määräaika, muistutus, mallipohjat ja ”Tiedoksi”; toimii myös ohjelmissa Adobe Reader &amp; co.",
  "Alle Neuerungen": "Kaikki uudistukset",
  "Neu in PDFMy": "Uutta PDFMy:ssä",
- "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· Tiedosto oli jo optimaalisesti pakattu – alkuperäinen tallennettiin muuttamattomana."
+ "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· Tiedosto oli jo optimaalisesti pakattu – alkuperäinen tallennettiin muuttamattomana.",
+ "Damit sich Anhänge aus Outlook künftig zuverlässig öffnen, sollte „PDFMy (pdfmy Scan)“ das Standardprogramm für PDF-Dateien sein. Jetzt einstellen?": "Jotta Outlookin liitteet avautuvat jatkossa luotettavasti, ”PDFMy (pdfmy Scan)” kannattaa asettaa PDF-tiedostojen oletusohjelmaksi. Asetetaanko nyt?"
 }

@@ -2176,5 +2176,6 @@
  "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Solicitar firmas por correo electrónico</b> – con plazo, recordatorio, plantillas y «Para conocimiento»; también en Adobe Reader &amp; Co.",
  "Alle Neuerungen": "Todas las novedades",
  "Neu in PDFMy": "Novedades en PDFMy",
- "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· El archivo ya estaba comprimido de forma óptima: se ha guardado el original sin cambios."
+ "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· El archivo ya estaba comprimido de forma óptima: se ha guardado el original sin cambios.",
+ "Damit sich Anhänge aus Outlook künftig zuverlässig öffnen, sollte „PDFMy (pdfmy Scan)“ das Standardprogramm für PDF-Dateien sein. Jetzt einstellen?": "Para que los adjuntos de Outlook se abran de forma fiable, «PDFMy (pdfmy Scan)» debería ser el programa predeterminado para archivos PDF. ¿Configurarlo ahora?"
 }

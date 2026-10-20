@@ -3358,7 +3358,14 @@ if ('launchQueue' in window) launchQueue.setConsumer(async params => {
   if (!params.files?.length) return;
   let files;
   try { files = await Promise.all(params.files.map(readLaunched)); }
-  catch (e) { console.warn('Datei übernehmen', e); return status(unreadable(params.files[0]?.name || 'Datei', e)); }
+  catch (e) {
+    console.warn('Datei übernehmen', e); status(unreadable(params.files[0]?.name || 'Datei', e));
+    // Dauerhafte Lösung anbieten: Ist nicht „PDFMy (pdfmy Scan)“ Standard (sondern z. B. die Chrome-App), gibt Outlook die Datei
+    // direkt an den Browser – ohne den Umweg über pdfmy Scan, der sie sichern könnte
+    if (noRead(e) && !state.pdfDefault && typeof scanHelperRunning === 'function' && await scanHelperRunning() && !state.pdfDefault &&
+      confirm('Damit sich Anhänge aus Outlook künftig zuverlässig öffnen, sollte „PDFMy (pdfmy Scan)“ das Standardprogramm für PDF-Dateien sein.\n\nJetzt einstellen?')) $('#btnDefaultPdf')?.click();
+    return;
+  }
   files.forEach((f, i) => window.pdfmyHandles?.set(f, params.files[i]));
   window.rememberRecent?.(params.files);
   if (window.openWithChoice) return window.openWithChoice(files);

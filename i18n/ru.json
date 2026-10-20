@@ -2176,5 +2176,6 @@
  "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Подписание по электронной почте</b> – со сроком, напоминанием, шаблонами и «К сведению»; также в Adobe Reader &amp; Co.",
  "Alle Neuerungen": "Все новинки",
  "Neu in PDFMy": "Новое в PDFMy",
- "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· Файл уже был оптимально сжат – оригинал сохранён без изменений."
+ "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· Файл уже был оптимально сжат – оригинал сохранён без изменений.",
+ "Damit sich Anhänge aus Outlook künftig zuverlässig öffnen, sollte „PDFMy (pdfmy Scan)“ das Standardprogramm für PDF-Dateien sein. Jetzt einstellen?": "Чтобы вложения из Outlook надёжно открывались, «PDFMy (pdfmy Scan)» должна быть программой по умолчанию для PDF-файлов. Настроить сейчас?"
 }

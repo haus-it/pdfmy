@@ -2176,5 +2176,6 @@
  "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Request signatures by email</b> – with deadline, reminder, templates and “For information”; works in Adobe Reader &amp; Co. too",
  "Alle Neuerungen": "All new features",
  "Neu in PDFMy": "New in PDFMy",
- "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· The file was already optimally compressed – the original was saved unchanged."
+ "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· The file was already optimally compressed – the original was saved unchanged.",
+ "Damit sich Anhänge aus Outlook künftig zuverlässig öffnen, sollte „PDFMy (pdfmy Scan)“ das Standardprogramm für PDF-Dateien sein. Jetzt einstellen?": "So that attachments from Outlook open reliably in the future, “PDFMy (pdfmy Scan)” should be the default program for PDF files. Set it up now?"
 }
