@@ -11,7 +11,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.1.7';
+our $VERSION = '1.1.8';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
@@ -629,12 +629,12 @@ sub find_recent {
   # Nur Ordner, in denen Mail-Programme Anhänge zum Öffnen ablegen – nicht das Postfach selbst (zu groß); [Ordner, Tiefe]
   my $O = "$H/Library/Containers/com.microsoft.Outlook/Data";
   my @roots = (["$DIR/open-copies", 2]);
-  if ($IS_MAC) { push @roots, ["$O/tmp", 6], ["$O/Library/Caches", 6], ["$O/Downloads", 3], ["$H/Library/Containers/com.apple.mail/Data/Library/Mail Downloads", 3], ["$H/Library/Mail Downloads", 3], [$ENV{TMPDIR} // '', 4]; }
+  if ($IS_MAC) { push @roots, ["$O/tmp", 6], ["$O/Library/Caches", 6], ["$O/Downloads", 3], ["$H/Library/Containers/com.apple.mail/Data/Library/Mail Downloads", 3], ["$H/Library/Mail Downloads", 3], [$ENV{TMPDIR} // '', 4], ["$H/Downloads", 1]; }
   else { push @roots, (map { [$_, 4] } glob('/tmp/mozilla_*')), ["$H/.cache/thunderbird", 4], [$ENV{TMPDIR} // '', 3], ['/tmp', 3]; }
-  my $cut = time - 1800; my ($best, $bt); my %seen; my $stop = time + 8; my $n = 0;   # Zeitgrenze: höchstens 8 Sekunden suchen
+  my $cut = time - 1800; my ($best, $bt); my %seen; my %denied; my $stop = time + 8; my $n = 0;   # Zeitgrenze: höchstens 8 Sekunden suchen
   my $walk; $walk = sub {
     my ($d, $left) = @_; return if time > $stop || ++$n > 100000;
-    opendir(my $dh, $d) or return; my @e = grep { $_ ne '.' && $_ ne '..' } readdir $dh; closedir $dh;
+    opendir(my $dh, $d) or do { $denied{$d} = 1 if $!{EPERM} || $!{EACCES}; return }; my @e = grep { $_ ne '.' && $_ ne '..' } readdir $dh; closedir $dh;
     for my $e (@e) {
       last if time > $stop;
       next if $left <= 0 && $nfc->($e) ne $want;   # unterste Ebene: nur der gesuchte Name zählt (spart Dateiabfragen)
@@ -645,7 +645,8 @@ sub find_recent {
     }
   };
   for my $r (grep { length $_->[0] && -d $_->[0] && !$seen{ $_->[0] }++ } @roots) { $walk->(@$r); last if $best; }   # Ordner nach Wahrscheinlichkeit: erster Treffer genügt
-  logl("Anhang für PDFMy nachgereicht: $best") if $best;
+  if ($best) { logl("Anhang für PDFMy nachgereicht: $best"); }
+  else { logl("Anhang nicht gefunden: $name – gesucht in " . join('; ', grep { -d } map { $_->[0] } @roots) . (%denied ? ' – kein Zugriff (macOS-Datenschutz) auf: ' . join('; ', sort keys %denied) : '')); }   # fürs Protokoll / „Problem melden“
   return $best;
 }
 sub open_local {

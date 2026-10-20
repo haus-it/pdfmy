@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### pdfmy Scan 1.8.9 (Windows) und 1.1.8 (Mac/Linux): Anhänge auch aus dem Internet-Cache
+- Rückmeldung: Ein Outlook-Anhang („… Logistik[76].pdf“) war nicht lesbar und wurde auch nicht nachgereicht. Der Name mit „[n]“ zeigt den Windows-Internet-Cache (INetCacheIE…), den pdfmy Scan bisher nicht durchsucht hat (nur Content.Outlook).
+- Suche jetzt im gesamten INetCache (klassisches Outlook, Outlook im Web-Modus, Webmail), in „Temporary Internet Files“, beim neuen Outlook (Olk, App-Paket), in Temp und – nur Dateien der letzten 30 Minuten mit genau diesem Namen – im Download-Ordner; Mac/Linux zusätzlich Downloads.
+- Protokoll: Wird eine Datei nicht gefunden, steht im Protokoll (und damit in „Problem melden“), wo gesucht wurde – am Mac auch, wenn macOS den Zugriff auf einen Ordner verweigert.
+- Getestet: Datei mit dem gemeldeten Namen im INetCacheIE gefunden (0,2 s), Protokolleintrag bei „nicht gefunden“, Perl-Syntaxprüfung.
+
 ### Qualitätsrundgang: alle 20 Werkzeuge automatisch geprüft, zwei Fehler behoben
 - Automatischer Rundgang über alle Kacheln der Startseite (Datei laden, Werkzeug ausführen, speichern, Fehler/Konsole prüfen): 18 ohne Befund.
 - **Formular ausfüllen** blieb bei „Formularfelder werden gesucht …“ stehen: Die Suche nach Schreiblinien startete, bevor die Seiten geladen waren. Jetzt startet sie, wenn die Datei vollständig geöffnet ist (erkennt z. B. „Name“, „Datum“ und macht daraus ein ausfüllbares Formular). Dabei Suchmuster für Felder einer Unterschriftsanfrage korrigiert.

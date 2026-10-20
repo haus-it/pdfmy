@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.8.8";
+        public const string Version = "1.8.9";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1206,9 +1206,13 @@ namespace PdfmyScan
             if (name.Length == 0 || !System.Text.RegularExpressions.Regex.IsMatch(name, @"\.(pdf|jpe?g|png|tiff?|webp|bmp)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase)) return null;
             string la = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             // [Ordner, Suchtiefe] – nur dort, wo Outlook Anhänge zum Öffnen ablegt; höchstens 8 Sekunden suchen
-            var roots = new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(copies, 2), new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\INetCache\Content.Outlook"), 2),
-                new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Olk"), 6), new KeyValuePair<string, int>(Path.GetTempPath(), 3) };
+            // INetCache: klassisches Outlook (Content.Outlook) und Internet-Cache (IE\…\name[n].pdf – Outlook im Web-Modus, Webmail);
+            // Olk/Paket: neues Outlook; zuletzt Temp und Downloads (nur Dateien der letzten 30 Minuten mit genau diesem Namen)
+            var roots = new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(copies, 2), new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\INetCache"), 4),
+                new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Olk"), 6), new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\Temporary Internet Files"), 4) };
             try { foreach (var d in Directory.GetDirectories(Path.Combine(la, "Packages"), "Microsoft.OutlookForWindows_*")) roots.Add(new KeyValuePair<string, int>(d, 7)); } catch { }
+            roots.Add(new KeyValuePair<string, int>(Path.GetTempPath(), 3));
+            try { roots.Add(new KeyValuePair<string, int>(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"), 1)); } catch { }
             DateTime cutoff = DateTime.UtcNow.AddMinutes(-30), stop = DateTime.UtcNow.AddSeconds(8); FileInfo best = null;
             void Walk(string dir, int left)
             {
@@ -1217,8 +1221,10 @@ namespace PdfmyScan
                 if (left > 0) try { foreach (var d in Directory.GetDirectories(dir)) Walk(d, left - 1); } catch { }
             }
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var r in roots) { if (seen.Add(r.Key) && Directory.Exists(r.Key)) Walk(r.Key, r.Value); if (best != null) break; }   // erster Treffer genügt
+            var searched = new List<string>();
+            foreach (var r in roots) { if (seen.Add(r.Key) && Directory.Exists(r.Key)) { Walk(r.Key, r.Value); searched.Add(r.Key); } if (best != null) break; }   // erster Treffer genügt
             if (best != null) Program.Log("Anhang für PDFMy nachgereicht: " + best.FullName);
+            else Program.Log($"Anhang nicht gefunden: {name} – gesucht in {string.Join("; ", searched)}{(DateTime.UtcNow > stop ? " (Zeitgrenze erreicht)" : "")}");   // fürs Protokoll / „Problem melden“
             return best?.FullName;
         }
         // Ist PDFMy als App in Chrome oder Edge installiert, hat der Browser dafür eine Dateizuordnung angelegt
