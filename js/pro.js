@@ -640,7 +640,7 @@ window.reqAfterImport = docIdx => {
 };
 // Prüfprotokoll-Seite (A4) nach der letzten Unterschrift: Personen, Zeitpunkte, Prüfsummen, Ablauf
 async function reqAuditPage(out) {
-  out.registerFontkit(fontkit);
+  out.registerFontkit(await loadFontkit());
   const font = await out.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), bold = await out.embedFont(await asset('fontB', 'vendor/dejavu/DejaVuSans-Bold.ttf'), { subset: true });
   const W = 595.28, H = 841.89, L = 56, RW = W - 2 * L, cs = new Set(font.getCharacterSet()), safe = x => [...String(x ?? '')].filter(ch => cs.has(ch.codePointAt(0))).join('');
   let page = out.addPage([W, H]), y = H - 64;
@@ -883,7 +883,7 @@ $('#jVerify').onclick = async () => {
 };
 /* ---------- GoBD-Prüfprotokoll: Dateien (SHA-256), Siegel der Einträge, Lücken der Eingangsnummern, Verfahrensbeschreibung ---------- */
 async function auditPdf(r) {
-  const doc = await PDFDocument.create(); doc.registerFontkit(fontkit);
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
   const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
   const safe = s => [...String(s)].filter(ch => cs.has(ch.codePointAt(0))).join('');
   const W = 595.28, H = 841.89, L = mm(20), R = W - mm(20), dark = rgb(0.1, 0.1, 0.1);
@@ -1691,10 +1691,10 @@ $('#setAuto').onchange = e => { S.autopilot = e.target.checked; saveSettings(); 
 /* ---------- Trennblatt drucken: QR-Code „PDFMY:TRENNBLATT“ – zwischen die Briefe legen, ganzen Stapel scannen ---------- */
 $('#btnSeparator').onclick = async () => {
   closeMenu();
-  const doc = await PDFDocument.create(); doc.registerFontkit(fontkit);
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
   const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
   const page = doc.addPage([595.28, 841.89]);
-  qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+  await loadQrcode(); qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
   const q = qrcode(0, 'H'); q.addData(QR.SEPARATOR, 'Byte'); q.make();
   const n = q.getModuleCount(), size = 260, cell = size / n, x0 = (595.28 - size) / 2, y0 = 420;
   for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) page.drawRectangle({ x: x0 + c * cell, y: y0 + size - (r + 1) * cell, width: cell + 0.2, height: cell + 0.2, color: rgb(0, 0, 0) });
@@ -1805,7 +1805,7 @@ $('#rpLhFile').onchange = async e => { const f = e.target.files[0]; e.target.val
 $('#rpLhOff').onclick = () => { letterhead = null; idb.set('letterhead', null); renderLh(); };
 const mm = v => v * 72 / 25.4;
 async function buildLetterPdf({ to, subject, body, from, name }) {
-  const doc = await PDFDocument.create(); doc.registerFontkit(fontkit);
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
   const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
   const safe = s => [...String(s)].filter(ch => cs.has(ch.codePointAt(0))).join('');
   const W = 595.28, H = 841.89, L = mm(25), R = W - mm(20), dark = rgb(0.1, 0.1, 0.1);
@@ -2039,7 +2039,7 @@ $('#btnAnl').onclick = () => {
 ['anlPre', 'anlStart'].forEach(id => $('#' + id).oninput = anlRender);
 $('#anlCancel').onclick = () => $('#anlDlg').close();
 async function anlIndexPdf(rows) {
-  const doc = await PDFDocument.create(); doc.registerFontkit(fontkit);
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
   const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
   const safe = s => [...String(s)].filter(ch => cs.has(ch.codePointAt(0))).join('');
   const W = 595.28, H = 841.89, L = mm(25), dark = rgb(0.1, 0.1, 0.1);
@@ -2275,7 +2275,7 @@ $('#einvForm').onsubmit = async e => {
 };
 // Lesbare Rechnung (DIN 5008, Briefbogen) als PDF/A-3b mit eingebetteter factur-x.xml
 async function buildInvoicePdf(inv, t, xmlBytes) {
-  const doc = await PDFDocument.create(); doc.registerFontkit(fontkit);
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
   const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
   const safe = x => [...String(x ?? '')].filter(ch => cs.has(ch.codePointAt(0))).join('');
   const W = 595.28, H = 841.89, L = mm(25), R = W - mm(20), dark = rgb(0.1, 0.1, 0.1), grey = rgb(0.4, 0.4, 0.4), s = inv.seller, b = inv.buyer;
@@ -2323,7 +2323,7 @@ async function buildInvoicePdf(inv, t, xmlBytes) {
   try {
     const pl = Letter.epcPayload({ sender: s.name, iban: s.iban, amount: money(t.gross) + ' EUR', invoiceNo: inv.number });
     if (pl) {
-      qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+      await loadQrcode(); qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
       const q = qrcode(0, 'M'); q.addData(pl, 'Byte'); q.make();
       const n = q.getModuleCount(), size = 82, cell = size / n, x0 = R - size, y0 = H - (y - 12.5 * notes.length) - size + 20;
       for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) page.drawRectangle({ x: x0 + c * cell, y: y0 + size - (r + 1) * cell, width: cell + 0.15, height: cell + 0.15, color: rgb(0, 0, 0) });

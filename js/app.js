@@ -6,7 +6,23 @@ const { setCharacterSqueeze, PDFDocument, PDFName, PDFString, PDFHexString, PDFN
   setFillingRgbColor, concatTransformationMatrix, drawObject } = PDFLib;
 const abs = p => new URL(p, location.href).href;
 // pdf.js kommt als ES-Modul (vendor/pdfjs/loader.js) – vor der ersten Nutzung darauf warten
-const pdfjsReady = () => window.pdfjsLib ? Promise.resolve() : new Promise(r => addEventListener('pdfjs-ready', r, { once: true }));
+// erst beim ersten Öffnen einer PDF laden (bzw. im Leerlauf nach dem Seitenaufbau, siehe unten)
+let pdfjsP = null;
+const pdfjsReady = () => window.pdfjsLib ? Promise.resolve() : (pdfjsP ||= import(abs('vendor/pdfjs/loader.js')).then(() => {}, e => { pdfjsP = null; throw e; }));
+// Selten oder erst später gebrauchte Bibliotheken nicht beim Start laden (schnellerer Seitenaufbau): fontkit (Schriften einbetten),
+// jsQR (QR-Codes lesen), qrcode (QR-Codes erzeugen). Der Service Worker hält sie trotzdem offline bereit.
+const scriptP = {};
+const loadScript = src => scriptP[src] ||= new Promise((ok, no) => {
+  const s = Object.assign(document.createElement('script'), { src, async: true });
+  s.onload = () => ok(); s.onerror = () => { delete scriptP[src]; no(new Error(`${src} konnte nicht geladen werden`)); };
+  document.head.append(s);
+});
+const loadFontkit = () => window.fontkit ? Promise.resolve(window.fontkit) : loadScript('vendor/fontkit.umd.min.js').then(() => window.fontkit);
+const loadQrcode = () => typeof qrcode === 'function' ? Promise.resolve() : loadScript('vendor/qrcode.js');
+const loadJsQR = () => typeof jsQR === 'function' ? Promise.resolve() : loadScript('vendor/jsqr.js');
+window.loadFontkit = loadFontkit; window.loadQrcode = loadQrcode;
+// Nach dem Seitenaufbau im Leerlauf vorladen – beim ersten Scan oder Speichern ist dann alles da
+addEventListener('load', () => (window.requestIdleCallback || (f => setTimeout(f, 1500)))(() => { pdfjsReady().catch(() => {}); loadJsQR().catch(() => {}); loadQrcode().catch(() => {}); loadFontkit().catch(() => {}); }, { timeout: 4000 }));
 // Eingebettete Dateien: pdf.js ≥ 5 liefert eine Map ohne Inhalt – den Inhalt je Datei nachladen (ältere Versionen: Objekt mit content)
 async function pdfAttachments(js) {
   const att = await js.getAttachments(); if (!att) return [];
@@ -129,7 +145,7 @@ async function importMail(file) {
   }
   if (n) return status(`E-Mail „${m.subject || file.name}“: ${n > 1 ? `${n} Anhänge` : `${n} Anhang`} übernommen.`);
   // Keine Anhänge: E-Mail selbst als lesbare Seite (Von, Datum, Betreff, Text)
-  const doc = await PDFDocument.create(); doc.registerFontkit(fontkit);
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
   const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
   const safe = s => [...s].filter(ch => cs.has(ch.codePointAt(0))).join('');
   let page = doc.addPage([595.28, 841.89]), y = 790;
@@ -150,7 +166,7 @@ async function importMail(file) {
 async function importXml(file) {
   const xml = await file.text(), d = EInvoice.parse(xml);
   if (!d) throw new Error('keine E-Rechnung (XRechnung/ZUGFeRD) erkannt');
-  const doc = await PDFDocument.create(); doc.registerFontkit(fontkit);
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
   const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
   const safe = s => [...s].filter(ch => cs.has(ch.codePointAt(0))).join('');
   let page = doc.addPage([595.28, 841.89]), y = 790;
@@ -1676,6 +1692,7 @@ function renderGiro() {
   const pl = state.pages.length ? Letter.epcPayload(state.meta) : null;
   $('#giro').hidden = !pl || /gutschrift/i.test(state.meta.type);
   if (!pl || pl === giroLast) return;
+  if (typeof qrcode !== 'function') { loadQrcode().then(() => { if (typeof qrcode === 'function') renderGiro(); }, () => { $('#giro').hidden = true; }); return; }   // erst laden, dann zeichnen
   giroLast = pl;
   try {
     qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
@@ -1951,6 +1968,8 @@ async function replaceOnPage(p, q, repl, only = null) {
 /* QR-Codes einer Seite: PDFMy-Trennblatt (Seite wird zur Trennstelle) oder GiroCode/QR-Rechnung (exakte Zahldaten) */
 function readQr(p, img) {
   if (typeof QR === 'undefined') return;
+  // jsQR noch nicht geladen (Datei direkt beim Start geöffnet): nachladen, dann diese Seite prüfen und die Briefdaten aktualisieren
+  if (typeof jsQR !== 'function') { loadJsQR().then(() => { if (typeof jsQR !== 'function') return; const had = !!(p.payQr || p.separator); readQr(p, img); if (!had && (p.payQr || p.separator)) { analyze(); refresh(); } }).catch(() => {}); return; }
   for (const t of QR.scan(img)) {
     if (t === QR.SEPARATOR) { p.blank = true; p.separator = true; p.label += ' (Trennblatt)'; }
     else { const pay = Letter.parsePaymentQr(t); if (pay && !p.payQr) p.payQr = pay; }
@@ -2177,7 +2196,7 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
   const preset = SIZES[size] || SIZES.balanced, stamps = { pageNumbers, watermark: (watermark || '').trim(), header, footer, bates, docName, date };
   const hasStamps = hasStamp(stamps);
   const out = await PDFDocument.create({ updateMetadata: false });
-  out.registerFontkit(fontkit);
+  out.registerFontkit(await loadFontkit());
   const font = await out.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
   const charset = new Set(font.getCharacterSet());
   const safe = s => [...s].filter(ch => charset.has(ch.codePointAt(0))).join('');
@@ -3535,7 +3554,7 @@ function renderForm() {
 async function applyForm(d) {
   try {
     const lib = await PDFDocument.load(d.base || d.bytes, { ignoreEncryption: true, updateMetadata: false });   // base: ohne übernommene Markierungen
-    lib.registerFontkit(fontkit);
+    lib.registerFontkit(await loadFontkit());
     const font = await lib.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
     const form = lib.getForm(), L = PDFLib;
     for (const [name, v] of Object.entries(d.values)) {

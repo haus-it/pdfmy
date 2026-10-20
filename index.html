@@ -371,7 +371,6 @@ details.sec[open] > summary::after{content:" ▾"}
 #overlay.t-ink{cursor:crosshair} #overlay.t-stamp{cursor:copy}
 /* ---------- Mentor-Group-Design (nur interne Edition, aktiviert über js/config.js) ---------- */
 @font-face{font-family:"Archivo";src:url(vendor/fonts/archivo-latin-standard-normal.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
-@font-face{font-family:"Archivo";src:url(vendor/fonts/archivo-latin-standard-italic.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:italic;font-display:swap}
 @font-face{font-family:"Source Sans 3";src:url(vendor/fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-style:normal;font-display:swap}
 :root[data-brand="mentor"]{--bg:#F5F6F8;--panel:#FFFFFF;--panel-2:#F5F6F8;--line:#E3E4E8;--text:#1B1D23;--muted:#50545F;--accent:#4A5280;--accent-text:#FFFFFF;--accent-soft:#EEF0F6;--sel:#4A5280;--danger:#B42318}
 @media (prefers-color-scheme: dark){
@@ -1851,12 +1850,9 @@ html.i18n-wait body{visibility:hidden}
 </dialog>
 
 <script src="vendor/pdf-lib.min.js"></script>
-<script src="vendor/fontkit.umd.min.js"></script>
-<script type="module" src="vendor/pdfjs/loader.js"></script>
 <script src="vendor/tesseract/tesseract.min.js"></script>
 <script src="js/tools.js"></script>
 <script src="js/letter.js"></script>
-<script src="vendor/jsqr.js"></script>
 <script src="js/qr.js"></script>
 <script src="js/formdetect.js"></script>
 <script src="js/a11ycheck.js"></script>
@@ -1868,7 +1864,6 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/docdetect.js"></script>
 <script src="js/imaging.js"></script>
 <script src="js/camera.js"></script>
-<script src="vendor/qrcode.js"></script>
 <script src="js/einvoice.js"></script>
 <script src="js/einvoice-out.js"></script>
 <script src="js/email.js"></script>

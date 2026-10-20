@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### pdfmy.de lädt schneller
+- Messung vorher (20.10.2026, ohne Cache): Startseite 41 Anfragen, 1.421 KB bis zum Seitenaufbau, bedienbar nach 4–7 s.
+- **Bibliotheken bei Bedarf:** fontkit (Schriften einbetten, 338 KB), pdf.js (PDFs anzeigen, 148 KB), jsQR (QR-Codes lesen, 57 KB) und qrcode (QR-Codes erzeugen, 12 KB) werden nicht mehr beim Start geladen, sondern beim ersten Gebrauch bzw. im Leerlauf nach dem Seitenaufbau. Wird eine Datei direkt beim Start geöffnet, lädt PDFMy sie nach und ergänzt GiroCode/Trennblatt-Erkennung anschließend. Offline-Betrieb unverändert (Service Worker hält alles vor).
+- **Logo** „powered by Mentor Group“ in passender Größe (408 × 96 statt 900 × 212 Pixel): 115 KB → 6 KB.
+- **Schrift:** kursive Archivo (100 KB) entfällt, Kursivschrift wird aus der normalen Schrift erzeugt.
+- Ergebnis: rund 760 KB (gut die Hälfte) weniger beim ersten Laden.
+- Getestet: 144 Unit-Tests; Funktionsprobe direkt nach dem Start (Bibliotheken noch nicht geladen): Brief-Foto mit Texterkennung, PDF/A speichern mit eingebetteter Schrift und wieder öffnen, GiroCode lesen und anzeigen, Trennblatt erzeugen, kompletter Unterschriftsablauf; axe ohne Befund (hell, dunkel, mobil).
+
 ### pdfmy Scan 1.8.7 (Windows) und 1.1.7 (Mac/Linux): Anhänge aus Outlook öffnen sich zuverlässig
 - Rückmeldung vom Mac: Doppelklick auf einen Outlook-Anhang meldete „… ist nicht mehr lesbar“. Ursache: Ist die Chrome-App „PDFMy“ selbst Standard für PDFs, bekommt Chrome den Pfad im geschützten Outlook-Ordner (~/Library/Containers/com.microsoft.Outlook/…), den es nicht lesen darf. Geprüft für alle Systeme: neues Outlook unter Windows legt Anhänge kurzlebig unter Olk bzw. im App-Paket ab, Chromium als Snap darf Thunderbird-Anhänge in /tmp nicht lesen.
 - **Sofort sichern:** pdfmy Scan kopiert Dateien aus Outlook-/Temp-Ordnern beim Öffnen in den eigenen Ordner (je Kopie ein Unterordner, Dateiname bleibt; nach einem Tag entfernt) – Windows: INetCacheContent.Outlook, Olk, Outlook-App-Paket, Temp; Mac/Linux: App-Container, Temp.
