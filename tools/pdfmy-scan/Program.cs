@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.8.6";
+        public const string Version = "1.8.7";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1162,6 +1162,7 @@ namespace PdfmyScan
             {
                 file = Path.GetFullPath(file);
                 if (!File.Exists(file)) { Program.Log("Öffnen: Datei nicht gefunden: " + file); return; }
+                file = Secure(file);
                 if (Environment.GetEnvironmentVariable("PDFMY_TEST_NOBROWSER") != "1" && OpenInApp(file)) return;   // installierte PDFMy-App (Chrome/Edge): eigenes Fenster
                 var b = new byte[16]; using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create()) rng.GetBytes(b);
                 string tok = BitConverter.ToString(b).Replace("-", "").ToLowerInvariant();
@@ -1173,6 +1174,52 @@ namespace PdfmyScan
                 Process.Start(url);
             }
             catch (Exception e) { Program.Log("Öffnen: " + e.Message); }
+        }
+        // Anhänge aus Outlook (klassisch: INetCache\Content.Outlook, neues Outlook: Olk bzw. Paket-Ordner) und Temp-Dateien:
+        // sofort eine Kopie im eigenen Ordner – Outlook entfernt oder sperrt die Datei wieder, bevor PDFMy sie liest.
+        static readonly string copies = Path.Combine(Program.DataDir, "open-copies");
+        static bool IsVolatile(string file)
+        {
+            string f = file.ToLowerInvariant();
+            return f.Contains(@"\inetcache\") || f.Contains(@"\content.outlook\") || f.Contains(@"\microsoft\olk\") || f.Contains(@"\microsoft.outlookforwindows_") || f.StartsWith(Path.GetTempPath().ToLowerInvariant());
+        }
+        static string Secure(string file)
+        {
+            if (!IsVolatile(file) || file.StartsWith(copies, StringComparison.OrdinalIgnoreCase)) return file;
+            try
+            {
+                Directory.CreateDirectory(copies);
+                foreach (var old in Directory.GetDirectories(copies)) try { if (Directory.GetLastWriteTimeUtc(old) < DateTime.UtcNow.AddDays(-1)) Directory.Delete(old, true); } catch { }
+                string dir = Path.Combine(copies, DateTime.UtcNow.Ticks.ToString()); Directory.CreateDirectory(dir);   // eigener Unterordner: Dateiname bleibt gleich
+                string dst = Path.Combine(dir, Path.GetFileName(file));
+                File.Copy(file, dst, true);
+                Program.Log("Kopie für PDFMy: " + dst);
+                return dst;
+            }
+            catch (Exception e) { Program.Log("Kopie nicht möglich: " + e.Message); return file; }
+        }
+        // PDFMy (Browser-App) konnte eine übergebene Datei nicht lesen: frisch abgelegte Datei gleichen Namens in den
+        // Anhang-Ordnern suchen (eigene Kopien, Outlook klassisch und neu, Temp) – nur PDF/Bilder, höchstens 30 Minuten alt.
+        public static string FindRecent(string name)
+        {
+            name = Path.GetFileName(name ?? "");
+            if (name.Length == 0 || !System.Text.RegularExpressions.Regex.IsMatch(name, @"\.(pdf|jpe?g|png|tiff?|webp|bmp)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase)) return null;
+            string la = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            // [Ordner, Suchtiefe] – nur dort, wo Outlook Anhänge zum Öffnen ablegt; höchstens 8 Sekunden suchen
+            var roots = new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(copies, 2), new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\INetCache\Content.Outlook"), 2),
+                new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Olk"), 6), new KeyValuePair<string, int>(Path.GetTempPath(), 3) };
+            try { foreach (var d in Directory.GetDirectories(Path.Combine(la, "Packages"), "Microsoft.OutlookForWindows_*")) roots.Add(new KeyValuePair<string, int>(d, 7)); } catch { }
+            DateTime cutoff = DateTime.UtcNow.AddMinutes(-30), stop = DateTime.UtcNow.AddSeconds(8); FileInfo best = null;
+            void Walk(string dir, int left)
+            {
+                if (DateTime.UtcNow > stop) return;
+                try { foreach (var f in Directory.GetFiles(dir, name)) { var fi = new FileInfo(f); if (fi.LastWriteTimeUtc >= cutoff && fi.Length > 0 && (best == null || fi.LastWriteTimeUtc > best.LastWriteTimeUtc)) best = fi; } } catch { }
+                if (left > 0) try { foreach (var d in Directory.GetDirectories(dir)) Walk(d, left - 1); } catch { }
+            }
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var r in roots) { if (seen.Add(r.Key) && Directory.Exists(r.Key)) Walk(r.Key, r.Value); if (best != null) break; }   // erster Treffer genügt
+            if (best != null) Program.Log("Anhang für PDFMy nachgereicht: " + best.FullName);
+            return best?.FullName;
         }
         // Ist PDFMy als App in Chrome oder Edge installiert, hat der Browser dafür eine Dateizuordnung angelegt
         // („Öffnen mit“ → PDFMy, Befehl mit --app-id). Dieselbe Zeile starten – die Datei öffnet sich im App-Fenster wie beim Doppelklick dort.
@@ -1528,6 +1575,18 @@ namespace PdfmyScan
                 cors["Access-Control-Expose-Headers"] = "X-Pdfmy-Name";
                 cors["X-Pdfmy-Name"] = Uri.EscapeDataString(fname);
                 Send(s, 200, "application/pdf", data, cors); return;
+            }
+            if (p == "/attachment" && method == "GET")   // PDFMy durfte eine übergebene Datei nicht lesen (z. B. Outlook-Anhang): hier nachreichen
+            {
+                int qi = path.IndexOf("name=", StringComparison.Ordinal);
+                string want = qi < 0 ? "" : Uri.UnescapeDataString(path.Substring(qi + 5).Split('&')[0]);
+                string f = FileOpen.FindRecent(want);
+                if (f == null) { SendJson(s, 404, new { error = "Datei nicht gefunden" }, cors); return; }
+                var fi = new FileInfo(f);
+                if (fi.Length > 300L * 1024 * 1024) { SendJson(s, 413, new { error = "Die Datei ist zu groß (über 300 MB)." }, cors); return; }
+                cors["Access-Control-Expose-Headers"] = "X-Pdfmy-Name";
+                cors["X-Pdfmy-Name"] = Uri.EscapeDataString(fi.Name);
+                Send(s, 200, "application/octet-stream", File.ReadAllBytes(f), cors); return;
             }
             if (p == "/open-local" && method == "POST" && !cors.ContainsKey("Access-Control-Allow-Origin"))   // nur vom eigenen Programm (ohne Origin)
             {

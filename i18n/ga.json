@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "An teimpléad “{0}” a scriosadh?",
  "Vorlage löschen": "Scrios an teimpléad",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Socraigh réimsí ar dtús – sábhálann an teimpléad daoine, réimsí, teachtaireacht agus spriocdháta.",
- "Quellcode (GitHub)": "Cód foinseach (GitHub)"
+ "Quellcode (GitHub)": "Cód foinseach (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Níorbh fhéidir “{0}” a léamh – sábhálann Outlook ceangaltáin i bhfillteán cosanta nach bhfuil cead ag an mbrabhsálaí a léamh. Le pdfmy Scan (Windows ó 1.8.7, Mac agus Linux ó 1.1.7) osclaíonn PDFMy ceangaltáin dá leithéid go huathoibríoch. Seachas sin, sábháil an ceangaltán in Outlook (“Sábháil Mar”) agus oscail ansin é."
 }

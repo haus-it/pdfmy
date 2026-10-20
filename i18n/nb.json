@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Slette malen «{0}»?",
  "Vorlage löschen": "Slett mal",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Plasser felt først – malen lagrer personer, felt, melding og frist.",
- "Quellcode (GitHub)": "Kildekode (GitHub)"
+ "Quellcode (GitHub)": "Kildekode (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» kunne ikke leses – Outlook lagrer vedlegg i en beskyttet mappe som nettleseren ikke har lov til å lese. Med pdfmy Scan (Windows fra 1.8.7, Mac og Linux fra 1.1.7) åpner PDFMy slike vedlegg automatisk. Ellers lagrer du vedlegget i Outlook («Lagre som») og åpner det deretter."
 }

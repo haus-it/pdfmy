@@ -3080,7 +3080,7 @@ async function openRecent(i) {
     let perm = await e.handle.queryPermission({ mode: 'read' });
     if (perm !== 'granted') perm = await e.handle.requestPermission({ mode: 'read' });
     if (perm !== 'granted') return toast('Ohne Ihre Erlaubnis kann PDFMy die Datei nicht öffnen.', 5000);
-    const file = await window.readNow(e.handle);   // sofort lesen (Outlook-Anhänge sind nur kurz verfügbar)
+    const file = await (window.readLaunched || window.readNow)(e.handle);   // sofort lesen (Outlook-Anhänge sind nur kurz verfügbar)
     window.pdfmyHandles.set(file, e.handle);
     state.intent = null;
     await window.openWithChoice([file]);

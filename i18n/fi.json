@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Poistetaanko mallipohja ”{0}”?",
  "Vorlage löschen": "Poista mallipohja",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Aseta ensin kentät – mallipohja tallentaa henkilöt, kentät, viestin ja määräajan.",
- "Quellcode (GitHub)": "Lähdekoodi (GitHub)"
+ "Quellcode (GitHub)": "Lähdekoodi (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "”{0}” ei voitu lukea – Outlook tallentaa liitteet suojattuun kansioon, jota selain ei saa lukea. pdfmy Scanin avulla (Windows versiosta 1.8.7, Mac ja Linux versiosta 1.1.7) PDFMy avaa tällaiset liitteet automaattisesti. Muuten tallenna liite Outlookissa (”Tallenna nimellä”) ja avaa se sitten."
 }

@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### pdfmy Scan 1.8.7 (Windows) und 1.1.7 (Mac/Linux): Anhänge aus Outlook öffnen sich zuverlässig
+- Rückmeldung vom Mac: Doppelklick auf einen Outlook-Anhang meldete „… ist nicht mehr lesbar“. Ursache: Ist die Chrome-App „PDFMy“ selbst Standard für PDFs, bekommt Chrome den Pfad im geschützten Outlook-Ordner (~/Library/Containers/com.microsoft.Outlook/…), den es nicht lesen darf. Geprüft für alle Systeme: neues Outlook unter Windows legt Anhänge kurzlebig unter Olk bzw. im App-Paket ab, Chromium als Snap darf Thunderbird-Anhänge in /tmp nicht lesen.
+- **Sofort sichern:** pdfmy Scan kopiert Dateien aus Outlook-/Temp-Ordnern beim Öffnen in den eigenen Ordner (je Kopie ein Unterordner, Dateiname bleibt; nach einem Tag entfernt) – Windows: INetCacheContent.Outlook, Olk, Outlook-App-Paket, Temp; Mac/Linux: App-Container, Temp.
+- **Nachreichen:** Kann PDFMy eine übergebene Datei nicht lesen, holt es sie über pdfmy Scan (`GET /attachment?name=…`): Suche nach der frisch abgelegten Datei gleichen Namens nur in den Anhang-Ordnern von Outlook, Apple Mail, Thunderbird und Temp, nur PDF/Bilder, höchstens 30 Minuten alt, höchstens 8 Sekunden; nur für PDFMy (Herkunftsprüfung, Pflicht-Header). Das hilft auch, wenn die Chrome-App als Standard eingestellt ist.
+- Verständlichere Meldung, wenn es ohne pdfmy Scan nicht geht.
+- Getestet: Windows-Build, /attachment mit Datei im Olk-Ordner (gefunden in 0,1 s, Umlaute), 404 ohne Treffer, 403 für fremde Herkunft; Kopie aus INetCacheContent.Outlook beim Öffnen; Perl-Dienst (Linux-Modus) findet Datei in Temp, Umlaute, 403 ohne Header/fremde Herkunft, unzulässige Dateitypen abgewiesen; PDFMy lädt eine nicht lesbare Datei über pdfmy Scan nach (Name, Größe, Typ).
+
 ### Offener Quellcode auf GitHub (haus-it/pdfmy)
 - PDFMy steht zur freien Weiterentwicklung auf https://github.com/haus-it/pdfmy – © Mentor GmbH, Lizenz AGPL-3.0-or-later.
 - Zusätzliche Bedingungen nach § 7 b AGPLv3 (NOTICE): Banner Haus iT / Mentor GmbH unten auf der Startseite und „powered by Mentor Group“ bleiben sichtbar; wer den Code nutzt, weist sichtbar auf „Basiert auf PDFMy – www.pdfmy.de“ hin. Name und Logo sind nicht lizenziert.

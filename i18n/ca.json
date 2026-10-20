@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Voleu suprimir la plantilla «{0}»?",
  "Vorlage löschen": "Suprimeix la plantilla",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Primer col·loqueu els camps: la plantilla desa les persones, els camps, el missatge i el termini.",
- "Quellcode (GitHub)": "Codi font (GitHub)"
+ "Quellcode (GitHub)": "Codi font (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "No s’ha pogut llegir «{0}»: l’Outlook desa els adjunts en una carpeta protegida que el navegador no pot llegir. Amb pdfmy Scan (Windows a partir de 1.8.7, Mac i Linux a partir de 1.1.7), PDFMy obre aquests adjunts automàticament. Si no, deseu l’adjunt a l’Outlook («Anomena i desa») i després obriu-lo."
 }

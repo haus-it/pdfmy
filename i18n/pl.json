@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Usunąć szablon „{0}”?",
  "Vorlage löschen": "Usuń szablon",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Najpierw ustaw pola – szablon zapisuje osoby, pola, wiadomość i termin.",
- "Quellcode (GitHub)": "Kod źródłowy (GitHub)"
+ "Quellcode (GitHub)": "Kod źródłowy (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Nie udało się odczytać „{0}” – Outlook zapisuje załączniki w chronionym folderze, którego przeglądarka nie może odczytać. Z pdfmy Scan (Windows od 1.8.7, Mac i Linux od 1.1.7) PDFMy otwiera takie załączniki automatycznie. W przeciwnym razie zapisz załącznik w Outlooku („Zapisz jako”), a następnie go otwórz."
 }

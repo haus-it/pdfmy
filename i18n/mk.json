@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Да се избрише шаблонот „{0}“?",
  "Vorlage löschen": "Избриши шаблон",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Прво поставете полиња – шаблонот ги зачувува лицата, полињата, пораката и рокот.",
- "Quellcode (GitHub)": "Изворен код (GitHub)"
+ "Quellcode (GitHub)": "Изворен код (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ не можеше да се прочита – Outlook ги зачувува прилозите во заштитена папка што прелистувачот не смее да ја чита. Со pdfmy Scan (Windows од 1.8.7, Mac и Linux од 1.1.7) PDFMy ваквите прилози ги отвора автоматски. Во спротивно зачувајте го прилогот во Outlook („Зачувај како“) и потоа отворете го."
 }

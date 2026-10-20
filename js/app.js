@@ -2990,8 +2990,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.8.6';
-const SCAN_MAC_LATEST = '1.1.6';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.8.7';
+const SCAN_MAC_LATEST = '1.1.7';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
@@ -3303,14 +3303,31 @@ async function readNow(h) {
   }
 }
 window.readNow = readNow;
-const unreadable = (name, e) => e?.name === 'NotReadableError' || e?.name === 'NotFoundError'
-  ? `„${name}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.`
+const noRead = e => ['NotReadableError', 'NotFoundError', 'SecurityError'].includes(e?.name);
+// Darf der Browser die übergebene Datei nicht lesen (Outlook-Anhang im geschützten Ordner am Mac, neues Outlook unter Windows,
+// Thunderbird-Anhang in /tmp bei Chromium als Snap): pdfmy Scan sucht die frisch abgelegte Datei gleichen Namens
+// und reicht sie über 127.0.0.1 nach (ab Windows 1.8.7, Mac/Linux 1.1.7). Die Datei verlässt das Gerät nicht.
+async function readLaunched(h) {
+  try { return await readNow(h); }
+  catch (e) {
+    if (!noRead(e)) throw e;
+    try {
+      const r = await scanApi('/attachment?name=' + encodeURIComponent(h.name), {}, 20000);
+      const ext = (h.name.match(/\.(\w+)$/) || [])[1]?.toLowerCase(), type = { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', bmp: 'image/bmp', tif: 'image/tiff', tiff: 'image/tiff' }[ext] || '';
+      if (r.ok) { const b = await r.blob(); if (b.size) return new File([b], h.name, { type }); }
+    } catch {}
+    throw e;
+  }
+}
+window.readLaunched = readLaunched;
+const unreadable = (name, e) => noRead(e)
+  ? `„${name}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.`
   : `Fehler bei ${name}: ${e?.message || e}`;
 window.unreadable = unreadable;
 if ('launchQueue' in window) launchQueue.setConsumer(async params => {
   if (!params.files?.length) return;
   let files;
-  try { files = await Promise.all(params.files.map(readNow)); }
+  try { files = await Promise.all(params.files.map(readLaunched)); }
   catch (e) { console.warn('Datei übernehmen', e); return status(unreadable(params.files[0]?.name || 'Datei', e)); }
   files.forEach((f, i) => window.pdfmyHandles?.set(f, params.files[i]));
   window.rememberRecent?.(params.files);

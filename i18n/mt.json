@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Tħassar il-mudell “{0}”?",
  "Vorlage löschen": "Ħassar il-mudell",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "L-ewwel issettja l-oqsma – il-mudell jissejvja l-persuni, l-oqsma, il-messaġġ u l-iskadenza.",
- "Quellcode (GitHub)": "Kodiċi sors (GitHub)"
+ "Quellcode (GitHub)": "Kodiċi sors (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "“{0}” ma setax jinqara – Outlook jaħżen l-annessi f’folder protett li l-browser m’għandux permess jaqra. B’pdfmy Scan (Windows minn 1.8.7, Mac u Linux minn 1.1.7) PDFMy jiftaħ annessi bħal dawn awtomatikament. Inkella ssejvja l-anness f’Outlook (“Issejvja Bħala”) u mbagħad iftħu."
 }

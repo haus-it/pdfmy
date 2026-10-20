@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Supprimer le modèle « {0} » ?",
  "Vorlage löschen": "Supprimer le modèle",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Placez d’abord des champs – le modèle enregistre les personnes, les champs, le message et l’échéance.",
- "Quellcode (GitHub)": "Code source (GitHub)"
+ "Quellcode (GitHub)": "Code source (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Impossible de lire « {0} » – Outlook enregistre les pièces jointes dans un dossier protégé que le navigateur n’a pas le droit de lire. Avec pdfmy Scan (Windows à partir de 1.8.7, Mac et Linux à partir de 1.1.7), PDFMy ouvre automatiquement ces pièces jointes. Sinon, enregistrez la pièce jointe dans Outlook (« Enregistrer sous »), puis ouvrez-la."
 }

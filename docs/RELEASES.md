@@ -125,3 +125,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-10-19 15:21 | pdfmy-202610191321 | 1.8.6 | e0ae74825e47582b… | 141/141 Tests bestanden | 89 | Administrator |
 | 2026-10-19 15:46 | pdfmy-202610191345 | 1.8.6 | e0ae74825e47582b… | 144/144 Tests bestanden | 85 | Administrator |
 | 2026-10-20 10:27 | pdfmy-202610200827 | 1.8.6 | dd4357b333b263ab… | 144/144 Tests bestanden | 118 | Administrator |
+| 2026-10-20 11:28 | pdfmy-202610200928 | 1.8.7 | 550b1f8e6b4fd1f1… | 144/144 Tests bestanden | 89 | Administrator |

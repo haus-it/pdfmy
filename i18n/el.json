@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Διαγραφή του προτύπου «{0}»;",
  "Vorlage löschen": "Διαγραφή προτύπου",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Τοποθετήστε πρώτα πεδία – το πρότυπο αποθηκεύει άτομα, πεδία, μήνυμα και προθεσμία.",
- "Quellcode (GitHub)": "Πηγαίος κώδικας (GitHub)"
+ "Quellcode (GitHub)": "Πηγαίος κώδικας (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Δεν ήταν δυνατή η ανάγνωση του «{0}» – το Outlook αποθηκεύει τα συνημμένα σε προστατευμένο φάκελο, τον οποίο ο browser δεν επιτρέπεται να διαβάσει. Με το pdfmy Scan (Windows από 1.8.7, Mac και Linux από 1.1.7) το PDFMy ανοίγει αυτόματα τέτοια συνημμένα. Διαφορετικά, αποθηκεύστε το συνημμένο στο Outlook («Αποθήκευση ως») και στη συνέχεια ανοίξτε το."
 }

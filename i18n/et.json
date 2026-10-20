@@ -2144,5 +2144,6 @@
  "Vorlage „{0}“ löschen?": "Kas kustutada mall „{0}“?",
  "Vorlage löschen": "Kustuta mall",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Paigutage esmalt väljad – mall salvestab isikud, väljad, sõnumi ja tähtaja.",
- "Quellcode (GitHub)": "Lähtekood (GitHub)"
+ "Quellcode (GitHub)": "Lähtekood (GitHub)",
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ ei õnnestunud lugeda – Outlook salvestab manused kaitstud kausta, mida brauser lugeda ei tohi. pdfmy Scaniga (Windows alates 1.8.7, Mac ja Linux alates 1.1.7) avab PDFMy sellised manused automaatselt. Muul juhul salvestage manus Outlookis („Salvesta nimega“) ja avage seejärel."
 }

@@ -6,12 +6,12 @@
 # Protokolle: eSCL/AirScan (fast alle Geräte ab ca. 2015) und WSD-Scan (z. B. Dell Color MFP E525w, viele ältere Geräte) – ohne Treiber.
 # Linux zusätzlich: SANE (scanimage) für USB- und ältere Geräte, sofern installiert.
 # Nutzt nur Bordmittel: Perl, curl, dns-sd (Mac) bzw. avahi-browse (Linux). Scans gehen direkt an PDFMy im Browser – nichts ins Internet.
-use File::Copy ();
+use File::Copy (); use Unicode::Normalize ();
 use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.1.6';
+our $VERSION = '1.1.7';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
@@ -605,20 +605,55 @@ sub pwa_app {
   for my $d ('Chrome Apps.localized', 'Microsoft Edge Apps.localized', 'Edge Apps.localized', 'Chromium Apps.localized') { my $a = "$ENV{HOME}/Applications/$d/PDFMy.app"; return $a if -d $a; }
   return undef;
 }
+# Anhänge aus Outlook/Mail liegen im geschützten Ordner der jeweiligen App (~/Library/Containers/…, den Chrome nicht lesen darf)
+# oder in Temp-Ordnern, die die App bald wieder leert. Sofort eine Kopie im eigenen Ordner anlegen
+# (je Kopie ein Unterordner, der Dateiname bleibt; nach einem Tag entfernt).
+sub volatile { my $p = shift; return $p =~ m{/Library/(?:Group )?Containers/|^(?:/private)?/var/folders/|^(?:/private)?/tmp/} || (length($ENV{TMPDIR} // '') && index($p, $ENV{TMPDIR}) == 0); }
+sub secure_copy {
+  my $path = shift; my $base = "$DIR/open-copies";
+  return $path if !volatile($path) || index($path, "$base/") == 0;
+  make_path($base); for my $old (glob "\"$base\"/*") { remove_tree($old) if -M $old > 1; }
+  my $dir = "$base/" . int(time) . "-$$"; make_path($dir);
+  my ($nm) = $path =~ m{([^/]+)$}; my $dst = "$dir/$nm";
+  if (File::Copy::copy($path, $dst) && -s $dst) { logl("Kopie für PDFMy: $dst"); return $dst; }
+  logl("Kopie nicht möglich: $path ($!)"); return $path;
+}
+# PDFMy (Browser-App) durfte eine übergebene Datei nicht lesen – z. B. weil die Chrome-App „PDFMy“ selbst Standard für PDFs ist und
+# Outlook ihr den Pfad im geschützten Ordner gibt: frisch abgelegte Datei gleichen Namens in den Anhang-Ordnern suchen
+# (eigene Kopien, Outlook, Apple Mail, Thunderbird, Temp) – nur PDF/Bilder, höchstens 30 Minuten alt.
+sub find_recent {
+  my $name = shift // ''; $name =~ s{.*/}{};
+  return undef unless length $name && $name =~ /\.(?:pdf|jpe?g|png|tiff?|webp|bmp)$/i;
+  my $nfc = sub { my $s = shift; utf8::decode($s); return Unicode::Normalize::NFC($s); };   # macOS legt Namen oft zerlegt (NFD) ab
+  my $want = $nfc->($name); my $H = $ENV{HOME} // '';
+  # Nur Ordner, in denen Mail-Programme Anhänge zum Öffnen ablegen – nicht das Postfach selbst (zu groß); [Ordner, Tiefe]
+  my $O = "$H/Library/Containers/com.microsoft.Outlook/Data";
+  my @roots = (["$DIR/open-copies", 2]);
+  if ($IS_MAC) { push @roots, ["$O/tmp", 6], ["$O/Library/Caches", 6], ["$O/Downloads", 3], ["$H/Library/Containers/com.apple.mail/Data/Library/Mail Downloads", 3], ["$H/Library/Mail Downloads", 3], [$ENV{TMPDIR} // '', 4]; }
+  else { push @roots, (map { [$_, 4] } glob('/tmp/mozilla_*')), ["$H/.cache/thunderbird", 4], [$ENV{TMPDIR} // '', 3], ['/tmp', 3]; }
+  my $cut = time - 1800; my ($best, $bt); my %seen; my $stop = time + 8; my $n = 0;   # Zeitgrenze: höchstens 8 Sekunden suchen
+  my $walk; $walk = sub {
+    my ($d, $left) = @_; return if time > $stop || ++$n > 100000;
+    opendir(my $dh, $d) or return; my @e = grep { $_ ne '.' && $_ ne '..' } readdir $dh; closedir $dh;
+    for my $e (@e) {
+      last if time > $stop;
+      next if $left <= 0 && $nfc->($e) ne $want;   # unterste Ebene: nur der gesuchte Name zählt (spart Dateiabfragen)
+      my $p = "$d/$e"; next if -l $p;
+      if (-d _) { $walk->($p, $left - 1) if $left > 0; next; }
+      next unless $nfc->($e) eq $want;
+      my @s = stat $p; ($best, $bt) = ($p, $s[9]) if @s && $s[9] >= $cut && $s[7] > 0 && (!$bt || $s[9] > $bt);
+    }
+  };
+  for my $r (grep { length $_->[0] && -d $_->[0] && !$seen{ $_->[0] }++ } @roots) { $walk->(@$r); last if $best; }   # Ordner nach Wahrscheinlichkeit: erster Treffer genügt
+  logl("Anhang für PDFMy nachgereicht: $best") if $best;
+  return $best;
+}
 sub open_local {
   my $path = shift;
   return 0 unless defined $path && -f $path && -r _;
+  $path = secure_copy($path);
   if ($IS_MAC && -x '/usr/bin/open' && !$ENV{PDFMY_TEST_NOBROWSER} and my $app = pwa_app()) {
-    # Anhänge aus Outlook u. a. liegen im geschützten Ordner der jeweiligen App (~/Library/Containers/…); den darf Chrome nicht lesen.
-    # Dann eine Kopie im eigenen Ordner übergeben (alte Kopien nach einem Tag entfernen).
-    my $src = $path;
-    if ($path =~ m{/Library/(?:Group )?Containers/}) {
-      make_path("$DIR/open-copies"); for my $old (glob "\"$DIR/open-copies\"/*") { unlink $old if -M $old > 1; }
-      my ($nm) = $path =~ m{([^/]+)$}; my $dst = "$DIR/open-copies/$nm";
-      $src = $dst if File::Copy::copy($path, $dst) && -s $dst;
-      logl($src eq $dst ? "Kopie für die PDFMy-App: $dst" : "Kopie nicht möglich: $path ($!)");
-    }
-    if (system('/usr/bin/open', '-a', $app, $src) == 0) { logl("Öffnen in der PDFMy-App: $src"); return 'app'; }
+    if (system('/usr/bin/open', '-a', $app, $path) == 0) { logl("Öffnen in der PDFMy-App: $path"); return 'app'; }
   }
   make_path("$DIR/open");
   for my $old (glob "$DIR/open/*") { unlink $old if -M $old > 0.0035; }   # älter als 5 Minuten
@@ -734,6 +769,14 @@ sub handle {
     return send_json($c, 404, { error => $name }, \%cors) unless defined $data;
     my $enc = $name; utf8::encode($enc); $enc =~ s/([^A-Za-z0-9._~-])/sprintf '%%%02X', ord $1/ge;
     return send_resp($c, 200, 'application/pdf', $data, { %cors, 'Access-Control-Expose-Headers' => 'X-Pdfmy-Name', 'X-Pdfmy-Name' => $enc });
+  }
+  if ($p eq '/attachment' && $method eq 'GET') {   # PDFMy durfte eine übergebene Datei nicht lesen (z. B. Outlook-Anhang): hier nachreichen
+    my ($q) = $path =~ /[?&]name=([^&]*)/; $q //= ''; $q =~ s/\+/ /g; $q =~ s/%([0-9A-Fa-f]{2})/chr hex $1/ge;
+    my $f = safe(sub { find_recent($q) });
+    return send_json($c, 404, { error => 'Datei nicht gefunden' }, \%cors) unless $f;
+    return send_json($c, 413, { error => 'Die Datei ist zu groß (über 300 MB).' }, \%cors) if -s $f > 300 * 1024 * 1024;
+    my ($name) = $f =~ m{([^/]+)$}; my $enc = $name; $enc =~ s/([^A-Za-z0-9._~-])/sprintf '%%%02X', ord $1/ge;
+    return send_resp($c, 200, 'application/octet-stream', slurp($f), { %cors, 'Access-Control-Expose-Headers' => 'X-Pdfmy-Name', 'X-Pdfmy-Name' => $enc });
   }
   if ($p eq '/defaultapps' && $method eq 'POST') { my $ok = set_pdf_default(); return send_json($c, 200, { ok => JSON::PP::true, registered => $ok ? JSON::PP::true : JSON::PP::false, isDefault => $ok ? JSON::PP::true : JSON::PP::false }, \%cors); }
   if ($p eq '/wake' && $method eq 'POST') {   # „Scanner aufwecken“: wecken, kurz warten, neu suchen
