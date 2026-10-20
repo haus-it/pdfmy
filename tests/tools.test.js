@@ -84,3 +84,21 @@ test('Tabellen nach Excel: Zeilen/Spalten aus Wortpositionen, Beträge als Zahle
   const py = require('node:child_process').spawnSync('python', ['-I', '-c', `import openpyxl,sys\nws=openpyxl.load_workbook(sys.argv[1]).active\nprint(ws['B2'].value, ws['D2'].value, ws['D2'].number_format)`, f], { encoding: 'utf8' });
   if (py.status === 0) assert.equal(py.stdout.trim(), 'Stromlieferung September 1501.34 #,##0.00');
 });
+
+test('pixelDiff: Überlagerung zeigt neu (grün) und entfernt (rot), Rauschen zählt nicht', () => {
+  const { pixelDiff } = require('../js/tools.js');
+  const w = 10, h = 10, img = () => new Uint8ClampedArray(w * h * 4).fill(255);
+  const a = img(), b = img(), set = (p, x, y, v) => { const o = (y * w + x) * 4; p[o] = p[o + 1] = p[o + 2] = v; };
+  for (const [x, y] of [[2, 2], [3, 2], [2, 3]]) set(b, x, y, 0);   // neu in B
+  for (const [x, y] of [[7, 7], [7, 8]]) set(a, x, y, 0);           // entfernt (nur in A)
+  set(b, 0, 9, 0);                                                    // einzelnes Pixel → Rauschen
+  set(b, 5, 5, 230);                                                  // leichte Helligkeit → gleich
+  const r = pixelDiff(a, b, w, h);
+  assert.equal(r.changed, 5);
+  const px = (x, y) => [...r.data.slice((y * w + x) * 4, (y * w + x) * 4 + 3)];
+  assert.deepEqual(px(2, 2), [0, 150, 60]);
+  assert.deepEqual(px(7, 7), [215, 30, 30]);
+  assert.deepEqual(r.box, { x: 2, y: 2, w: 6, h: 7 });
+  assert.equal(pixelDiff(a, b, w, h, 60, 3).regions.length, 2);   // zwei getrennte Stellen
+  assert.equal(pixelDiff(a, a, w, h).changed, 0);
+});

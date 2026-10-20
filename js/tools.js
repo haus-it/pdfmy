@@ -99,6 +99,42 @@
   }
 
   /* Wortweiser Vergleich zweier Texte (Myers-Diff). Ergebnis: [{op:'='|'+'|'-', t:'…'}], Leerraum bleibt beim Wort. */
+  /* Visueller Vergleich (wie „Dateien vergleichen“ in Acrobat Pro): zwei gleich große RGBA-Bilder → Überlagerung.
+     Unverändertes blass grau, nur in der zweiten Fassung (neu) grün, nur in der ersten (entfernt) rot.
+     Kleine Helligkeitsunterschiede (Kantenglättung, JPEG) unter thr zählen nicht; einzelne Pixel ohne geänderten Nachbarn ebenso. */
+  function pixelDiff(a, b, w, h, thr = 60, cs = 24) {
+    const n = w * h, d = new Int8Array(n), out = new Uint8ClampedArray(n * 4);
+    const lum = (p, o) => p[o] * 0.299 + p[o + 1] * 0.587 + p[o + 2] * 0.114;
+    for (let i = 0; i < n; i++) { const la = lum(a, i * 4), lb = lum(b, i * 4); d[i] = lb < la - thr ? 1 : la < lb - thr ? -1 : 0; }
+    let changed = 0, x0 = w, y0 = h, x1 = -1, y1 = -1;
+    const gw = Math.ceil(w / cs), gh = Math.ceil(h / cs), cell = new Uint8Array(gw * gh);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const i = y * w + x, o = i * 4;
+      let v = d[i];
+      if (v && !((x > 0 && d[i - 1]) || (x < w - 1 && d[i + 1]) || (y > 0 && d[i - w]) || (y < h - 1 && d[i + w]))) v = 0;
+      if (v > 0) { out[o] = 0; out[o + 1] = 150; out[o + 2] = 60; }
+      else if (v < 0) { out[o] = 215; out[o + 1] = 30; out[o + 2] = 30; }
+      else { const g = 255 - (255 - Math.min(lum(a, o), lum(b, o))) * 0.28; out[o] = out[o + 1] = out[o + 2] = g; }
+      out[o + 3] = 255;
+      if (v) { changed++; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; cell[Math.floor(y / cs) * gw + Math.floor(x / cs)] = 1; }
+    }
+    // Geänderte Stellen zu Bereichen zusammenfassen (Raster cs × cs, benachbarte Zellen gehören zusammen) – je Bereich ein Rahmen
+    const regions = [];
+    for (let s = 0; s < cell.length; s++) {
+      if (cell[s] !== 1) continue;
+      const st = [s]; cell[s] = 2; let cx0 = gw, cy0 = gh, cx1 = -1, cy1 = -1;
+      while (st.length) {
+        const c = st.pop(), cx = c % gw, cy = (c - cx) / gw;
+        cx0 = Math.min(cx0, cx); cx1 = Math.max(cx1, cx); cy0 = Math.min(cy0, cy); cy1 = Math.max(cy1, cy);
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          const nx = cx + dx, ny = cy + dy, k = ny * gw + nx;
+          if (nx >= 0 && ny >= 0 && nx < gw && ny < gh && cell[k] === 1) { cell[k] = 2; st.push(k); }
+        }
+      }
+      const rx = cx0 * cs, ry = cy0 * cs; regions.push({ x: rx, y: ry, w: Math.min(w, (cx1 + 1) * cs) - rx, h: Math.min(h, (cy1 + 1) * cs) - ry });
+    }
+    return { data: out, changed, share: changed / n, regions, box: x1 < 0 ? null : { x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 } };
+  }
   function diffWords(a, b, maxD = 4000) {
     const tok = s => String(s || '').match(/\s*\S+/g) || [];
     const A = tok(a), B = tok(b), key = t => t.trim();
@@ -199,6 +235,6 @@
     ];
     return zip(files);
   }
-  const api = { crc32, zip, parseRange, formatBytes, docx, diffWords, fillStamp, bates, tableRows, deNumber, xlsx };
+  const api = { crc32, zip, parseRange, formatBytes, docx, diffWords, pixelDiff, fillStamp, bates, tableRows, deNumber, xlsx };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Tools = api;
 })(typeof self !== 'undefined' ? self : this);

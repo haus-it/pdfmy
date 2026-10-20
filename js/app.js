@@ -60,7 +60,7 @@ const META_KEYS = ['date', 'type', 'sender', 'subject', 'deadline', 'amount', 'i
 const emptyMeta = () => Object.fromEntries(META_KEYS.map(k => [k, '']));
 
 const state = {
-  pages: [], docs: [], sel: -1, tool: 'select', zoom: 1, annSel: null, editing: null, query: '', crop: null, undo: [],
+  files: [], filesDirty: false, pages: [], docs: [], sel: -1, tool: 'select', zoom: 1, annSel: null, editing: null, query: '', crop: null, undo: [],
   meta: emptyMeta(), touched: {}, signature: LS.get('signature', null),
   outDir: null, inDir: null, seen: new Set(), sizes: {}, dirty: false,
   picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0,
@@ -356,6 +356,13 @@ async function importPdf(file) {
     }
   } catch (e) { console.warn('E-Rechnung:', e); }
   try { for (const a of await pdfAttachments(js)) if (a.filename === window.SigReq?.FILE && a.content) window.reqLoad?.(new TextDecoder().decode(a.content), docIdx, bytes); } catch (e) { console.warn('Unterschriftsanfrage:', e); }
+  // Dateianhänge der Vorlage (Tabellen, Fotos, XML …) reisen beim Speichern mit – anzeigen, speichern, entfernen: Menü → Dateianhänge
+  try {
+    const own = (await pdfAttachments(js)).filter(a => a.content && a.filename && a.filename !== window.SigReq?.FILE);
+    for (const a of own) state.files.push({ name: a.filename, data: new Uint8Array(a.content), desc: a.description || '', from: docIdx });
+    if (own.length) setTimeout(() => status(own.length === 1 ? 'Die PDF enthält einen Dateianhang – Menü → Dateianhänge.' : `Die PDF enthält ${own.length} Dateianhänge – Menü → Dateianhänge.`), 1200);
+    window.attRefresh?.();
+  } catch (e) { console.warn('Dateianhänge:', e); }
   for (let i = 1; i <= js.numPages; i++) {
     const pg = await js.getPage(i);
     const tc = await pg.getTextContent();
@@ -774,7 +781,8 @@ function renderAnns() {
     el.className = `ann ${a.type}${a.id === state.annSel ? ' sel' : ''}`; el.dataset.id = a.id;
     el.setAttribute('translate', 'no');   // Inhalt des Dokuments (Stempel, Notiz, Text) – nicht in die Oberflächensprache übersetzen
     placeEl(el, a);
-    if (a.type === 'sign') el.style.backgroundImage = `url(${a.img})`;
+    if (a.type === 'sign' || a.type === 'img') el.style.backgroundImage = `url(${a.img})`;
+    if (a.type === 'shape') el.innerHTML = shapeSvg(a, W, ov.clientHeight);
     if (a.type === 'wo' && a.fill) { el.style.background = a.fill; el.style.boxShadow = 'none'; }
     if (a.type === 'wo' && a.mark) el.classList.add('mark');
     if (a.type === 'link') { const l = document.createElement('span'); l.className = 'fl'; l.textContent = linkLabel(a); el.append(l); el.title = `Link: ${linkLabel(a)} – Doppelklick zum Ändern`; }
@@ -815,6 +823,24 @@ function wrapLines(text, maxW, meas) {
     out.push(line.trimEnd());
   }
   return out;
+}
+/* Formen (Rechteck, Ellipse, Linie, Pfeil): a.fx/a.fy = Linie beginnt rechts bzw. unten. Pfeilspitze am Ende. */
+function shapeEnds(a) { return [[a.fx ? 1 : 0, a.fy ? 1 : 0], [a.fx ? 0 : 1, a.fy ? 0 : 1]]; }
+function arrowHead(x0, y0, x1, y1, lw) {
+  const L = Math.max(lw * 5, 10), ang = Math.atan2(y1 - y0, x1 - x0), sp = 0.42;
+  return [[x1, y1], [x1 - L * Math.cos(ang - sp), y1 - L * Math.sin(ang - sp)], [x1 - L * Math.cos(ang + sp), y1 - L * Math.sin(ang + sp)]];
+}
+function shapeSvg(a, pw, ph) {
+  const w = a.w * pw, h = a.h * ph, lw = Math.max(1, a.lw * pw), c = a.color, f = a.fill ? `fill="${c}" fill-opacity="0.2"` : 'fill="none"';
+  let body;
+  if (a.kind === 'rect') body = `<rect x="${lw / 2}" y="${lw / 2}" width="${Math.max(0, w - lw)}" height="${Math.max(0, h - lw)}" ${f} stroke="${c}" stroke-width="${lw}"/>`;
+  else if (a.kind === 'ellipse') body = `<ellipse cx="${w / 2}" cy="${h / 2}" rx="${Math.max(0, (w - lw) / 2)}" ry="${Math.max(0, (h - lw) / 2)}" ${f} stroke="${c}" stroke-width="${lw}"/>`;
+  else {
+    const [[sx, sy], [ex, ey]] = shapeEnds(a), x0 = sx * w, y0 = sy * h, x1 = ex * w, y1 = ey * h;
+    body = `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="${c}" stroke-width="${lw}" stroke-linecap="round"/>`;
+    if (a.kind === 'arrow') body += `<polygon points="${arrowHead(x0, y0, x1, y1, lw).map(q => q.join(',')).join(' ')}" fill="${c}"/>`;
+  }
+  return `<svg width="${Math.max(1, w)}" height="${Math.max(1, h)}" aria-hidden="true">${body}</svg>`;
 }
 function inkSvg(a, W) {
   const pts = a.pts.map(([x, y]) => `${(x * 1000).toFixed(1)},${(y * 1000).toFixed(1)}`).join(' ');
@@ -898,9 +924,10 @@ $('#overlay').addEventListener('pointerdown', e => {
       if (!moved) { pushUndo(p); moved = true; }
       if (resize) {
         a.w = Math.max(0.01, o.w + q.x - s.x);
-        a.h = a.type === 'sign' ? a.w * a.ar * p.w / p.h : Math.max(0.005, o.h + q.y - s.y);
+        a.h = a.type === 'sign' || a.type === 'img' ? a.w * a.ar * p.w / p.h : Math.max(a.type === 'shape' ? 0 : 0.005, o.h + q.y - s.y);
       } else { a.x = o.x + q.x - s.x; a.y = o.y + q.y - s.y; }
       placeEl(el, a); state.dirty = true;
+      if (a.type === 'shape') { el.querySelector('svg')?.remove(); el.insertAdjacentHTML('afterbegin', shapeSvg(a, ov.clientWidth, ov.clientHeight)); }
     });
   } else if (state.tool === 'hl') {
     e.preventDefault();
@@ -946,6 +973,22 @@ $('#overlay').addEventListener('pointerdown', e => {
         status(`${a.type === 'rd' ? 'Schwärzung' : 'Abdeckung'}: Die Seite wird beim Speichern als Bild übernommen, der verdeckte Text wird entfernt.`);
       }
       renderAnns();
+    });
+  } else if (state.tool === 'shape') {
+    // Form aufziehen: Rechteck/Ellipse im Rahmen, Linie/Pfeil vom Startpunkt zum Endpunkt (Umschalt: waagerecht/senkrecht)
+    e.preventDefault(); pushUndo(p);
+    const a = { id: ++uid, type: 'shape', kind: $('#shapeKind').value, color: $('#shapeColor').value, lw: +$('#shapeLw').value, fill: $('#shapeFill').checked, x: s.x, y: s.y, w: 0, h: 0, fx: false, fy: false };
+    p.annots.push(a); renderAnns();
+    const el = ov.querySelector(`[data-id="${a.id}"]`);
+    drag(e, ev => {
+      let q = pt(ev);
+      if (ev.shiftKey && (a.kind === 'line' || a.kind === 'arrow')) q = Math.abs(q.x - s.x) * r.width > Math.abs(q.y - s.y) * r.height ? { x: q.x, y: s.y } : { x: s.x, y: q.y };
+      a.x = Math.min(s.x, q.x); a.y = Math.min(s.y, q.y); a.w = Math.abs(q.x - s.x); a.h = Math.abs(q.y - s.y); a.fx = q.x < s.x; a.fy = q.y < s.y;
+      placeEl(el, a); el.innerHTML = shapeSvg(a, ov.clientWidth, ov.clientHeight);
+    }, () => {
+      if (a.w < 0.008 && a.h < 0.008) { p.annots.splice(p.annots.indexOf(a), 1); state.undo.pop(); status('Form aufziehen: Maustaste gedrückt halten und ziehen.'); return renderAnns(); }
+      state.dirty = true; state.annSel = a.id; renderAnns();
+      status('Form gesetzt – Art, Farbe und Strichstärke oben ändern, zum Verschieben ziehen, Entf löscht.');
     });
   } else if (state.tool === 'edit') {
     e.preventDefault();
@@ -1066,12 +1109,14 @@ function updateToolbar() {
   const p = cur(), a = p?.annots.find(x => x.id === state.annSel);
   $('#textOpts').hidden = !(['text', 'ink'].includes(state.tool) || ['text', 'ink'].includes(a?.type));
   $('#stampOpts').hidden = state.tool !== 'stamp';
+  $('#shapeOpts').hidden = !(state.tool === 'shape' || a?.type === 'shape');
+  if (a?.type === 'shape') { $('#shapeKind').value = a.kind; $('#shapeColor').value = a.color; $('#shapeLw').value = String(a.lw); $('#shapeFill').checked = !!a.fill; }
   $('#fieldOpts').hidden = state.tool !== 'field';
   $('#signOpts').hidden = state.tool !== 'sign';
   $('#hlOpts').hidden = !(state.tool === 'hl' || a?.type === 'hl');
   if (!$('#hlOpts').hidden) hlSync(a?.type === 'hl' ? a : null);
   // Optionen des gewählten Werkzeugs sichtbar machen (die Leiste ist breiter als schmale Fenster)
-  const og = ['#signOpts', '#fieldOpts', '#stampOpts', '#rdOpts', '#hlOpts', '#textOpts'].map(id => $(id)).find(g => g && !g.hidden);
+  const og = ['#signOpts', '#fieldOpts', '#stampOpts', '#shapeOpts', '#rdOpts', '#hlOpts', '#textOpts'].map(id => $(id)).find(g => g && !g.hidden);
   if (og && state.tool !== updateToolbar.last) requestAnimationFrame(() => og.scrollIntoView({ block: 'nearest', inline: 'nearest' }));
   updateToolbar.last = state.tool;
   $('#rdOpts').hidden = state.tool !== 'rd';
@@ -1099,6 +1144,27 @@ document.querySelectorAll('.hlsw button').forEach(b => {
   };
 });
 $('#hlStyle').onchange = e => hlSet('hlStyle', e.target.value);
+// Formen: Änderungen gelten für neue Formen und für die gewählte
+['shapeKind', 'shapeColor', 'shapeLw', 'shapeFill'].forEach(id => $('#' + id).onchange = () => {
+  const p = cur(), a = p?.annots.find(x => x.id === state.annSel && x.type === 'shape'); if (!a) return;
+  pushUndo(p); Object.assign(a, { kind: $('#shapeKind').value, color: $('#shapeColor').value, lw: +$('#shapeLw').value, fill: $('#shapeFill').checked }); state.dirty = true; renderAnns();
+});
+// Bild oder Logo einfügen (PNG mit Transparenz bleibt PNG, Fotos als JPEG) – mittig auf die aktuelle Seite, dann verschieben/skalieren
+$('#btnImgIns').onclick = () => { if (cur()) $('#imgIn').click(); };
+$('#imgIn').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; const p = cur(); if (!f || !p) return;
+  try {
+    const url = URL.createObjectURL(f), im = new Image(); im.src = url; await im.decode(); URL.revokeObjectURL(url);
+    const k = Math.min(1, 2000 / Math.max(im.naturalWidth, im.naturalHeight)), c = Imaging.canvas(Math.max(1, Math.round(im.naturalWidth * k)), Math.max(1, Math.round(im.naturalHeight * k)));
+    const jpg = /jpe?g/i.test(f.type), x = c.getContext('2d'); if (jpg) { x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); } x.drawImage(im, 0, 0, c.width, c.height);
+    const img = await new Promise(res => { const fr = new FileReader(); c.toBlob(b => { fr.onload = () => res(fr.result); fr.readAsDataURL(b); }, jpg ? 'image/jpeg' : 'image/png', 0.9); });
+    pushUndo(p);
+    const ar = c.height / c.width, w = Math.min(0.4, 0.4 / Math.max(1, ar * p.h / p.w * 0.9)), h = w * ar * p.w / p.h;
+    const a = { id: ++uid, type: 'img', img, ar, x: (1 - w) / 2, y: clamp(0.35 - h / 2, 0, 1 - h), w, h, alt: f.name.replace(/\.[a-z0-9]+$/i, '') };
+    p.annots.push(a); state.annSel = a.id; state.dirty = true; setTool('select');
+    status('Bild eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.');
+  } catch (err) { console.warn(err); status('Das Bild konnte nicht gelesen werden – bitte PNG oder JPG wählen.'); }
+};
 ['fs', 'color'].forEach(id => $('#' + id).onchange = () => {
   const p = cur(), a = p?.annots.find(x => x.id === state.annSel && (x.type === 'text' || x.type === 'ink'));
   if (a) { pushUndo(p); if (a.type === 'text') a.fs = +$('#fs').value; a.color = $('#color').value; renderAnns(); }
@@ -1722,6 +1788,11 @@ document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
 });
 $('#fname').addEventListener('input', () => { state.touched.fname = true; });
 $('#copyText').onclick = async () => { try { await navigator.clipboard.writeText($('#ptext').value); status('Text kopiert.'); } catch { $('#ptext').select(); document.execCommand('copy'); } };
+const MIMES = { pdf: 'application/pdf', xml: 'text/xml', txt: 'text/plain', csv: 'text/csv', json: 'application/json', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', zip: 'application/zip', eml: 'message/rfc822', msg: 'application/vnd.ms-outlook' };
+const mimeOf = name => MIMES[(/\.([a-z0-9]+)$/i.exec(name || '') || [])[1]?.toLowerCase()] || 'application/octet-stream';
+// PDF/A-Datei? (Kennung pdfaid:part in den XMP-Metadaten)
+const isPdfA = b => { if (!b || b[0] !== 0x25 || b[1] !== 0x50) return false; const s = new TextDecoder('latin1').decode(b.subarray(0, Math.min(b.length, 4 << 20))); return /pdfaid:part\s*(>|=)\s*["']?[1-4]/.test(s); };
 function download(data, name, type) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type }));
   a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 5000);
@@ -2017,7 +2088,30 @@ function stampTexts(i, n, o) {
   const v = { seite: i + 1, seiten: n, datum: o.date || new Date().toLocaleDateString('de-DE'), datei: o.docName || '', bates: o.bates ? Tools.bates(o.bates.prefix, o.bates.start + i) : '' };
   return { head: Tools.fillStamp(o.header, v).trim(), foot: Tools.fillStamp(o.footer, v).trim(), bates: v.bates };
 }
-const hasStamp = o => (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates || !!o.letterhead || !!o.clean;
+const hasStamp = o => !!o.filesDirty || (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates || !!o.letterhead || !!o.clean || !!o.trim || !!o.a4 || (!!o.sheet && o.sheet !== '1');
+// Bereich mit Inhalt je Seite (PDF-Koordinaten) für „Weiße Ränder entfernen“: die fertige PDF grob zeichnen und dunkle Pixel suchen.
+// Einzelne Staubkörner (Scans) zählen nicht – eine Zeile/Spalte gilt erst ab einigen dunklen Pixeln als Inhalt.
+async function inkBoxes(bytes) {
+  const js = await openPdf(bytes.slice()), res = [];
+  try {
+    for (let i = 1; i <= js.numPages; i++) {
+      const pg = await js.getPage(i), sc = 0.6, vp = pg.getViewport({ scale: sc, rotation: 0 });
+      const c = Imaging.canvas(Math.max(1, Math.round(vp.width)), Math.max(1, Math.round(vp.height))), x = c.getContext('2d', { willReadFrequently: true });
+      x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+      await pg.render({ canvasContext: x, viewport: vp, intent: 'print' }).promise;
+      const { data } = x.getImageData(0, 0, c.width, c.height), W = c.width, H = c.height, rows = new Uint32Array(H), cols = new Uint32Array(W);
+      for (let y = 0; y < H; y++) for (let k = 0; k < W; k++) { const o = (y * W + k) * 4; if (data[o] * 0.299 + data[o + 1] * 0.587 + data[o + 2] * 0.114 < 225) { rows[y]++; cols[k]++; } }
+      c.width = 0;
+      const minR = Math.max(1, W * 0.004), minC = Math.max(1, H * 0.004);
+      let y0 = rows.findIndex(v => v >= minR), x0 = cols.findIndex(v => v >= minC);
+      const y1 = H - 1 - [...rows].reverse().findIndex(v => v >= minR), x1 = W - 1 - [...cols].reverse().findIndex(v => v >= minC);
+      if (y0 < 0 || x0 < 0) { res.push(null); continue; }
+      const v = pg.view;   // [x0, y0, x1, y1] des sichtbaren Bereichs
+      res.push([v[0] + x0 / sc, v[3] - (y1 + 1) / sc, v[0] + (x1 + 1) / sc, v[3] - y0 / sc]);
+    }
+  } finally { js.destroy?.(); }
+  return res;
+}
 // Briefbogen unter jede Seite (wie „PDF Overlay“ bei PDF24): Seite 1 des Briefbogens unter die erste Seite, Seite 2 (falls vorhanden)
 // unter alle weiteren. Als eigener Inhaltsstrom VOR dem Seiteninhalt und als Artefakt markiert (PDF/UA: kein Inhalt fürs Vorlesen).
 async function underlay(out, lhBytes) {
@@ -2225,7 +2319,7 @@ function textLines(words) {
 }
 
 async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
-  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false } = {}) {
+  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null } = {}) {
   const preset = SIZES[size] || SIZES.balanced, stamps = { pageNumbers, watermark: (watermark || '').trim(), header, footer, bates, docName, date };
   const hasStamps = hasStamp(stamps);
   const out = await PDFDocument.create({ updateMetadata: false });
@@ -2324,6 +2418,17 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
       else if (a.type === 'link') linkQ.push({ page, x, y, w, h, a });
       else if (a.type === 'hl') hlQ.push({ page, x, y, w, h, a });
       else if (a.type === 'sign') { const img = await out.embedPng(a.img); await tagged('Figure', () => page.drawImage(img, { x, y, width: w, height: h }), { Alt: PDFHexString.fromText({ initials: 'Kürzel', stamp: 'Firmenstempel' }[a.kind] || 'Unterschrift') }); }
+      else if (a.type === 'img') { const img = a.img.startsWith('data:image/jpeg') ? await out.embedJpg(a.img) : await out.embedPng(a.img); await tagged('Figure', () => page.drawImage(img, { x, y, width: w, height: h }), { Alt: PDFHexString.fromText(a.alt || 'Bild') }); }
+      else if (a.type === 'shape') await tagged('Artifact', () => {
+        const col = hexRgb(a.color), lw = Math.max(0.5, a.lw * W), fill = a.fill ? { color: col, opacity: 0.2 } : {};
+        if (a.kind === 'rect') page.drawRectangle({ x: x + lw / 2, y: y + lw / 2, width: Math.max(0, w - lw), height: Math.max(0, h - lw), borderColor: col, borderWidth: lw, ...fill });
+        else if (a.kind === 'ellipse') page.drawEllipse({ x: x + w / 2, y: y + h / 2, xScale: Math.max(0.1, (w - lw) / 2), yScale: Math.max(0.1, (h - lw) / 2), borderColor: col, borderWidth: lw, ...fill });
+        else {
+          const [[sx, sy], [ex, ey]] = shapeEnds(a), P = (u, v) => ({ x: x + u * w, y: y + h - v * h }), s0 = P(sx, sy), e0 = P(ex, ey);
+          page.drawLine({ start: s0, end: e0, thickness: lw, color: col, lineCap: PDFLib.LineCapStyle?.Round });
+          if (a.kind === 'arrow') { const t = arrowHead(s0.x, s0.y, e0.x, e0.y, lw); page.drawSvgPath(`M${t[0][0]} ${-t[0][1]} L${t[1][0]} ${-t[1][1]} L${t[2][0]} ${-t[2][1]} Z`, { x: 0, y: 0, color: col, borderWidth: 0 }); }
+        }
+      });
       else if (a.type === 'ink') {
         const d = a.pts.map(([px, py], k) => `${k ? 'L' : 'M'}${((a.x + px * a.w) * W).toFixed(2)} ${((a.y + py * a.h) * H).toFixed(2)}`).join(' ');
         await tagged('Artifact', () => page.drawSvgPath(d, { x: ox, y: oy + H, borderColor: hexRgb(a.color), borderWidth: a.lw * W, borderLineCap: PDFLib.LineCapStyle?.Round }));
@@ -2369,6 +2474,12 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
   if (fieldQ.length) addFormFields(out, fieldQ, T, font);
   if (linkQ.length) addLinks(out, linkQ, pages, T);
   if (hlQ.length) addHighlights(out, hlQ, T);
+  // Seitenformat: weiße Ränder entfernen und/oder alles auf A4 (js/layout.js) – nach Links, Markierungen, Feldern, damit alles mitwandert
+  if (trim || a4) Layout.fit(out, { trim, a4, boxes: trim ? await inkBoxes(await out.save()) : [] });
+  // Dateianhänge (Menü → Dateianhänge): nicht beim Bereinigen; PDF/A-2b erlaubt nur PDF/A-Dateien als Anhang (ISO 19005-2, 6.8)
+  for (const f of clean ? [] : (files ?? state.files ?? []).filter(f => !pdfa || isPdfA(f.data))) {
+    await out.attach(f.data, f.name, { mimeType: mimeOf(f.name), description: f.desc || undefined, modificationDate: f.date || undefined });
+  }
   if (bookmarks) { const marks = outlineFor(pages); if (marks.length > 1 || marks[0]?.children.length || (state.marks && marks.length)) addOutline(out, marks); }
   // Metadaten (Info und XMP identisch, sekundengenau)
   const now = new Date(Math.floor(Date.now() / 1000) * 1000);
@@ -2631,7 +2742,17 @@ async function drawAnnotsInner(x, p, W, H) {
         else { x.fillStyle = hlRgba(a.color, 0.42); x.fillRect(rx, ry, rw, rh); } }
       x.restore(); }
     else if (a.type === 'rd' || a.type === 'wo') { x.fillStyle = a.type === 'rd' ? '#000' : a.fill || '#fff'; x.fillRect(ax - 1, ay - 1, aw + 2, ah + 2); }
-    else if (a.type === 'sign') { const im = new Image(); im.src = a.img; await im.decode(); x.drawImage(im, ax, ay, aw, ah); }
+    else if (a.type === 'sign' || a.type === 'img') { const im = new Image(); im.src = a.img; await im.decode(); x.drawImage(im, ax, ay, aw, ah); }
+    else if (a.type === 'shape') {
+      const lw = Math.max(1, a.lw * W); x.save(); x.strokeStyle = x.fillStyle = a.color; x.lineWidth = lw; x.lineCap = 'round'; x.beginPath();
+      if (a.kind === 'rect') x.rect(ax + lw / 2, ay + lw / 2, Math.max(0, aw - lw), Math.max(0, ah - lw));
+      else if (a.kind === 'ellipse') x.ellipse(ax + aw / 2, ay + ah / 2, Math.max(0.1, (aw - lw) / 2), Math.max(0.1, (ah - lw) / 2), 0, 0, Math.PI * 2);
+      else { const [[sx, sy], [ex, ey]] = shapeEnds(a); x.moveTo(ax + sx * aw, ay + sy * ah); x.lineTo(ax + ex * aw, ay + ey * ah); }
+      if (a.fill && (a.kind === 'rect' || a.kind === 'ellipse')) { x.globalAlpha = 0.2; x.fill(); x.globalAlpha = 1; }
+      x.stroke();
+      if (a.kind === 'arrow') { const [[sx, sy], [ex, ey]] = shapeEnds(a), t = arrowHead(ax + sx * aw, ay + sy * ah, ax + ex * aw, ay + ey * ah, lw); x.beginPath(); x.moveTo(...t[0]); x.lineTo(...t[1]); x.lineTo(...t[2]); x.closePath(); x.fill(); }
+      x.restore();
+    }
     else if (a.type === 'ink') {
       x.save(); x.strokeStyle = a.color; x.lineWidth = Math.max(1, a.lw * W); x.lineCap = x.lineJoin = 'round'; x.beginPath();
       a.pts.forEach(([px, py], k) => (k ? x.lineTo : x.moveTo).call(x, ax + px * aw, ay + py * ah)); x.stroke(); x.restore();
@@ -2685,7 +2806,7 @@ const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.doc
 // Stempel-Optionen aus dem Export-Dialog für PDF und Bilder
 const stampOpts = (o, base) => ({ pageNumbers: o.pageNumbers, watermark: o.watermark, header: o.header, footer: o.footer,
   bates: o.batesOn ? { prefix: o.batesPrefix, start: o.batesStart } : null, docName: base, date: new Date().toLocaleDateString('de-DE'),
-  clean: !!o.clean, letterhead: o.letterhead && o.format === 'pdf' && typeof letterhead !== 'undefined' && letterhead?.bytes ? letterhead.bytes : null });
+  clean: !!o.clean, filesDirty: !!state.filesDirty, trim: !!o.trim, a4: !!o.a4, letterhead: o.letterhead && o.format === 'pdf' && typeof letterhead !== 'undefined' && letterhead?.bytes ? letterhead.bytes : null });
 // Kleiner Dialog „fertig – jetzt speichern“: Der Klick darauf darf das Speichern-Fenster öffnen
 function readyToSave(name, pick) {
   return new Promise(resolve => {
@@ -2789,6 +2910,7 @@ async function doExport(o) {
       const u = !o.password && !o.sign ? untouchedOriginal(pages, st) : null;
       if (u && u.length <= data.length) { data = u.slice(); keptOrig = true; }
     }
+    if (o.format === 'pdf' && o.sheet && o.sheet !== '1' && !keptOrig) { status('Seiten auf Bögen verteilen …'); data = await sheetLayout(data, o.sheet); }
     if (o.password) { status('Verschlüsseln …'); data = await encryptPdf(data, o); }
     if (o.sign) { const sd = await signFlow(data); if (!sd) { status('Nicht gespeichert – Signieren abgebrochen.'); return; } data = sd; }
     name = o.name || filename(); mime = 'application/pdf';
@@ -2844,6 +2966,7 @@ function readExport() {
     batesPrefix: $('#x-bpre').value.trim(), batesStart: Math.max(1, parseInt($('#x-bstart').value, 10) || 1),
     password: $('#x-pw').value, allowPrint: $('#x-print').checked, allowCopy: $('#x-copy').checked, sign: $('#x-sign').checked,
     orig: !$('#x-orig-row').hidden && $('#x-orig').checked, letterhead: $('#x-lh').checked, clean: $('#x-clean').checked,
+    trim: $('#x-trim').checked, a4: $('#x-a4').checked, sheet: $('#x-sheet').value,
   };
 }
 function setRadio(name, v) { const r = document.querySelector(`#expForm [name="${name}"][value="${v}"]`); if (r) r.checked = true; }
@@ -2860,6 +2983,7 @@ function openExport(pre = {}) {
   $('#x-pnum').value = last.pageNumbers || 'none'; $('#x-wm').value = '';
   $('#x-head').value = last.header || ''; $('#x-foot').value = last.footer || ''; $('#x-bates').checked = !!pre.bates;
   $('#x-bpre').value = last.batesPrefix ?? ''; $('#x-bstart').value = LS.get('batesNext', 1);
+  $('#x-trim').checked = $('#x-a4').checked = false; $('#x-sheet').value = '1';
   $('#x-pw').value = ''; $('#x-pw2').value = ''; $('#x-print').checked = true; $('#x-copy').checked = false;
   const blanks = state.pages.filter(p => p.blank && !p.keepBlank).length;
   $('#x-blank').checked = blanks > 0; $('#x-blank-n').textContent = blanks; $('#x-blank-row').hidden = !blanks;
@@ -2880,9 +3004,11 @@ function updateExportUi() {
   const o = readExport(), isPdf = o.format === 'pdf' || o.format === 'pdfa', textOnly = o.format === 'txt' || o.format === 'docx' || o.format === 'xlsx';
   $('#x-size-row').hidden = textOnly;
   $('#x-sec-pdf').hidden = !isPdf;
-  $('#x-lh-row').hidden = o.format !== 'pdf';   // Briefbogen nur für normale PDF (bei PDF/A wird die Seite als Bild neu aufgebaut)
+  $('#x-lh-row').hidden = o.format !== 'pdf';
+  $('#x-sheet-wrap').hidden = o.format !== 'pdf';   // Bögen (2/4 pro Blatt, Broschüre) nur für normale PDF – zum Drucken gedacht   // Briefbogen nur für normale PDF (bei PDF/A wird die Seite als Bild neu aufgebaut)
   if (origDoc()) $('#x-orig-row').hidden = !isPdf;
   for (const id of ['#x-stamp-row', '#x-hf-row', '#x-bates-row', '#x-ph']) $(id).hidden = textOnly;
+  $('#x-fmt-row').hidden = !isPdf;   // Ränder, A4 und Bögen nur für PDF
   $('#x-range').disabled = false;
   let err = '';
   if (!o.pages) err = 'Seitenbereich ungültig – z. B. „1-3, 5“.';
@@ -2901,6 +3027,7 @@ function updateExportUi() {
     try {
       const opts = { pdfa: o.format === 'pdfa', size: o.size, ...stampOpts(o, o.name), noOcr: true, onPage: () => {} };
       let b = await buildPdf(o.pages, state.meta, opts);
+      if (o.format === 'pdf' && o.sheet && o.sheet !== '1') b = await sheetLayout(b, o.sheet);
       if (o.size === 'small') { const alt = await buildPdf(o.pages, state.meta, { ...opts, size: 'balanced' }); if (alt.length < b.length) b = alt; }
       if (seq === estSeq) $('#x-est').textContent = `≈ ${Tools.formatBytes(b.length)}` + (state.inputBytes ? ` (Original: ${Tools.formatBytes(state.inputBytes)})` : '');
     } catch (e) { if (seq === estSeq) $('#x-est').textContent = ''; console.warn(e); }
@@ -3399,7 +3526,7 @@ addEventListener('drop', e => {
 function resetDoc() {
   $('#assignee').value = ''; $('#akte').value = ''; state.akteTouched = false; $('#tags').value = '';
   $('#formHint').hidden = true;
-  Object.assign(state, { marks: null, einv: null, assignee: '', akte: '', fromArchive: null, tags: '', cf: {}, cfTouched: false, pages: [], docs: [], sel: -1, annSel: null, editing: null, crop: null, undo: [], touched: {}, dirty: false, meta: emptyMeta(),
+  Object.assign(state, { files: [], filesDirty: false, marks: null, einv: null, assignee: '', akte: '', fromArchive: null, tags: '', cf: {}, cfTouched: false, pages: [], docs: [], sel: -1, annSel: null, editing: null, crop: null, undo: [], touched: {}, dirty: false, meta: emptyMeta(),
     picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0, fromScanner: false, scanDone: false, autoArmed: null, wv: '' });
   if ($('#m-wv')) $('#m-wv').value = '';
   window.cfRender?.(); window.reqReset?.();
@@ -3703,7 +3830,7 @@ $('#viewer').addEventListener('wheel', e => {
 const docPages = () => state.pages.filter(p => !(p.blank && !p.keepBlank));
 async function quickPdf(pages = docPages()) {
   status('Bereite Dokument vor …');
-  return buildPdf(pages, state.meta, { noOcr: true, onPage: () => {}, bookmarks: false });
+  return buildPdf(pages, state.meta, { noOcr: true, onPage: () => {}, bookmarks: false, files: [] });
 }
 // Drucken: erst fragen, welche Seiten (alle, diese, bestimmte), dann den Druckdialog des Browsers öffnen
 function printDoc() {
@@ -3715,9 +3842,13 @@ function printDoc() {
   document.querySelector('input[name=prWhat][value=all]').checked = true;
   $('#printDlg').showModal();
 }
-async function printPages(pages) {
+// 2 oder 4 Seiten pro Blatt bzw. Broschüre (js/layout.js)
+const sheetLayout = (bytes, sheet) => sheet === 'booklet' ? Layout.booklet(bytes) : Layout.nup(bytes, +sheet);
+async function printPages(pages, sheet = '1') {
   try {
-    const url = URL.createObjectURL(new Blob([await quickPdf(pages)], { type: 'application/pdf' }));
+    let bytes = await quickPdf(pages);
+    if (sheet !== '1') bytes = await sheetLayout(bytes, sheet);
+    const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
     let f = $('#printFrame');
     if (!f) { f = document.createElement('iframe'); f.id = 'printFrame'; f.title = 'Druckvorschau'; f.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0'; document.body.append(f); }
     f.onload = () => {
@@ -3755,7 +3886,7 @@ $('#printForm').addEventListener('submit', e => {
     if (!idx) { $('#prErr').textContent = `Bitte Seiten von 1 bis ${n} angeben, z. B. „1-3, 5“.`; $('#prErr').hidden = false; $('#prRange').focus(); return; }
   }
   $('#printDlg').close();
-  printPages(idx ? idx.map(i => state.pages[i]) : docPages());
+  printPages(idx ? idx.map(i => state.pages[i]) : docPages(), $('#prSheet').value);
 });
 $('#btnShare').onclick = shareDoc;
 $('#btnHelp').onclick = () => $('#helpDlg').showModal();

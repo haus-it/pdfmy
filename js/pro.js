@@ -1152,15 +1152,64 @@ async function textOfFile(f, label) {
   }
   return parts.join('\n\n');
 }
+// Seiten einer Fassung als Bild zeichnen – für den visuellen Vergleich (offenes Dokument oder Datei)
+const CMP_DPI = 96;
+function cmpPagesOfOpen() { return docPages().map(p => async () => p.kind === 'pdf' ? renderPdf(p, CMP_DPI) : p.processed); }
+async function cmpPagesOfFile(f) {
+  if (!(f.type === 'application/pdf' || /\.pdf$/i.test(f.name))) {
+    const bmp = await loadBitmap(f), k = Math.min(1, 1400 / Math.max(bmp.width, bmp.height)), c = Imaging.canvas(Math.round(bmp.width * k), Math.round(bmp.height * k));
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height); return [async () => c];
+  }
+  const js = await openPdf(new Uint8Array(await f.arrayBuffer()));
+  return Array.from({ length: js.numPages }, (_, i) => async () => {
+    const pg = await js.getPage(i + 1), vp = pg.getViewport({ scale: CMP_DPI / 72 }), c = Imaging.canvas(Math.round(vp.width), Math.round(vp.height)), x = c.getContext('2d');
+    x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); await pg.render({ canvasContext: x, viewport: vp, intent: 'print' }).promise; return c;
+  });
+}
+let cmpSrc = null, cmpPage = 0, cmpShares = [];
+async function cmpDiffPage(i, maxW = 900) {
+  const A = cmpSrc.a[i] ? await cmpSrc.a[i]() : null, B = cmpSrc.b[i] ? await cmpSrc.b[i]() : null, ref = A || B;
+  const k = Math.min(1, maxW / ref.width), w = Math.max(1, Math.round(ref.width * k)), h = Math.max(1, Math.round(ref.height * k));
+  const px = src => { const c = Imaging.canvas(w, h), x = c.getContext('2d', { willReadFrequently: true }); x.fillStyle = '#fff'; x.fillRect(0, 0, w, h); if (src) x.drawImage(src, 0, 0, w, h); return x.getImageData(0, 0, w, h).data; };
+  return { w, h, ...Tools.pixelDiff(px(A), px(B), w, h) };
+}
+async function cmpShowPage(i) {
+  const n = Math.max(cmpSrc.a.length, cmpSrc.b.length); cmpPage = Math.max(0, Math.min(n - 1, i));
+  $('#cmpPg').textContent = `Seite ${cmpPage + 1} von ${n}`; $('#cmpPrev').disabled = cmpPage === 0; $('#cmpNextPg').disabled = cmpPage >= n - 1;
+  const r = await cmpDiffPage(cmpPage), c = $('#cmpCanvas'); c.width = r.w; c.height = r.h;
+  const x = c.getContext('2d'); x.putImageData(new ImageData(r.data, r.w, r.h), 0, 0);
+  x.strokeStyle = '#d97706'; x.lineWidth = 2; x.setLineDash([6, 4]); for (const b of r.regions) x.strokeRect(b.x - 3, b.y - 3, b.w + 6, b.h + 6);
+  const miss = !cmpSrc.a[cmpPage] ? ' – fehlt in der ersten Fassung' : !cmpSrc.b[cmpPage] ? ' – fehlt in der zweiten Fassung' : '';
+  $('#cmpVisSum').textContent = r.changed ? (r.regions.length === 1 ? `1 geänderte Stelle auf dieser Seite${miss}` : `${r.regions.length} geänderte Stellen auf dieser Seite${miss}`) : 'Diese Seite sieht gleich aus.';
+  c.setAttribute('aria-label', $('#cmpVisSum').textContent);
+}
+async function cmpVisual() {
+  $('#cmpText').hidden = true; $('#cmpVis').hidden = false; $('#cmpModeText').setAttribute('aria-pressed', 'false'); $('#cmpModeVis').setAttribute('aria-pressed', 'true');
+  await cmpShowPage(cmpPage);
+  // Überblick: auf welchen Seiten gibt es Unterschiede? (grob, bis 60 Seiten)
+  const n = Math.min(60, Math.max(cmpSrc.a.length, cmpSrc.b.length)), seq = cmpSrc;
+  if (cmpShares.length) return;
+  for (let i = 0; i < n; i++) { if (cmpSrc !== seq || $('#cmpVis').hidden) return; cmpShares[i] = (await cmpDiffPage(i, 300)).changed > 0; }
+  const pages = cmpShares.map((v, i) => v ? i + 1 : 0).filter(Boolean);
+  $('#cmpVisAll').textContent = pages.length ? `Unterschiede auf Seite ${pages.join(', ')}` : 'Alle Seiten sehen gleich aus.';
+}
+function cmpTextMode() { $('#cmpText').hidden = false; $('#cmpVis').hidden = true; $('#cmpModeText').setAttribute('aria-pressed', 'true'); $('#cmpModeVis').setAttribute('aria-pressed', 'false'); }
+$('#cmpModeText').onclick = cmpTextMode;
+$('#cmpModeVis').onclick = () => cmpVisual().catch(e => { console.error(e); status('Visueller Vergleich nicht möglich: ' + e.message); });
+$('#cmpPrev').onclick = () => cmpShowPage(cmpPage - 1);
+$('#cmpNextPg').onclick = () => cmpShowPage(cmpPage + 1);
 async function compareFiles(files) {
   try {
     let a, b, nameA, nameB;
+    cmpSrc = null; cmpPage = 0; cmpShares = []; $('#cmpVisAll').textContent = '';
     if (files.length === 1 && state.pages.length) {
+      cmpSrc = { a: cmpPagesOfOpen(), b: await cmpPagesOfFile(files[0]) };
       status('Lese das offene Dokument …'); await waitForOcr(docPages());
       a = docPages().map(pageText).join('\n\n'); nameA = filename(); nameB = files[0].name;
       b = await textOfFile(files[0], nameB);
     } else if (files.length === 2) {
       [nameA, nameB] = files.map(f => f.name);
+      cmpSrc = { a: await cmpPagesOfFile(files[0]), b: await cmpPagesOfFile(files[1]) };
       a = await textOfFile(files[0], nameA); b = await textOfFile(files[1], nameB);
     } else return status('Zum Vergleichen bitte genau zwei Dateien wählen (alte und neue Fassung).');
     showCompare(Tools.diffWords(a, b), nameA, nameB);
@@ -1172,7 +1221,7 @@ function showCompare(d, nameA, nameB) {
   $('#cmpSum').textContent = ins + del ? `${ins + del} Änderung(en): ${ins} × eingefügt, ${del} × entfernt` : 'Keine inhaltlichen Unterschiede gefunden.';
   $('#cmpOut').innerHTML = d.map(x => x.op === '=' ? esc(x.t) : `<${x.op === '+' ? 'ins' : 'del'}>${esc(x.t)}</${x.op === '+' ? 'ins' : 'del'}>`).join('');
   $('#cmpOnly').checked = false; $('#cmpOut').classList.remove('only');
-  state.cmpAt = -1; $('#cmpDlg').showModal(); status('Vergleich fertig.');
+  state.cmpAt = -1; cmpTextMode(); $('#cmpModeVis').disabled = !cmpSrc; $('#cmpDlg').showModal(); status('Vergleich fertig.');
 }
 $('#cmpOnly').onchange = e => $('#cmpOut').classList.toggle('only', e.target.checked);
 $('#cmpNext').onclick = () => {
@@ -2742,7 +2791,7 @@ $('#sigCosign').onclick = () => {
 };
 
 /* ---------- Kommentare und Markierungen (wie die Kommentarleiste in Acrobat): alle Anmerkungen auf einen Blick ---------- */
-const CMT_KIND = { link: 'Link', note: 'Notiz', hl: 'Markierung', text: 'Text', stamp: 'Stempel', sign: 'Unterschrift', ink: 'Freihand', field: 'Formularfeld', rd: 'Schwärzung', wo: 'Abdeckung' };
+const CMT_KIND = { link: 'Link', note: 'Notiz', hl: 'Markierung', text: 'Text', stamp: 'Stempel', sign: 'Unterschrift', ink: 'Freihand', shape: 'Form', img: 'Bild', field: 'Formularfeld', rd: 'Schwärzung', wo: 'Abdeckung' };
 let cmtRows = [];
 async function cmtCollect() {
   const rows = [];
@@ -3460,3 +3509,27 @@ addEventListener('keydown', e => {
   else if (k === 'b' || k === 'B' || k === '.') $('#presBlack').hidden = !$('#presBlack').hidden;
   else if (k === 'Escape' || k === 'F5') endPresent();
 }, true);
+
+/* ---------- Dateianhänge (wie „Anhänge“ in Acrobat): eingebettete Dateien anzeigen, speichern, entfernen, hinzufügen ---------- */
+function attRender() {
+  const list = state.files || [];
+  $('#attNone').hidden = list.length > 0;
+  $('#attList').hidden = !list.length;
+  $('#attList').innerHTML = list.map((f, i) => `<li><span class="tocgo attname" id="attN${i}">${esc(f.name)} <small class="hint">${Tools.formatBytes(f.data.length)}</small></span>` +
+    `<button type="button" class="linkbtn" data-att-save="${i}" aria-describedby="attN${i}">Speichern</button><button type="button" class="linkbtn" data-att-del="${i}" aria-describedby="attN${i}">Entfernen</button></li>`).join('');
+  const n = list.length; $('#btnAttach .attn').textContent = n ? ` (${n})` : '';
+}
+window.attRefresh = () => { if ($('#attDlg').open) attRender(); else { const n = state.files?.length || 0; $('#btnAttach .attn').textContent = n ? ` (${n})` : ''; } };
+$('#btnAttach').onclick = () => { if (!state.pages.length) return; closeMenu?.(); attRender(); $('#attDlg').showModal(); };
+$('#attClose').onclick = () => $('#attDlg').close();
+$('#attAdd').onclick = () => $('#attIn').click();
+$('#attIn').onchange = async e => {
+  for (const f of e.target.files) state.files.push({ name: f.name, data: new Uint8Array(await f.arrayBuffer()), desc: '', date: new Date(f.lastModified || Date.now()) });
+  e.target.value = ''; state.filesDirty = true; state.dirty = true; attRender();
+  status('Datei angehängt – sie wird beim Speichern in die PDF eingebettet.');
+};
+$('#attList').addEventListener('click', e => {
+  const s = e.target.closest('[data-att-save]'), d = e.target.closest('[data-att-del]');
+  if (s) { const f = state.files[+s.dataset.attSave]; download(f.data, f.name, mimeOf(f.name)); }
+  if (d) { state.files.splice(+d.dataset.attDel, 1); state.filesDirty = true; state.dirty = true; attRender(); $('#attAdd').focus(); status('Anhang entfernt – wird beim nächsten Speichern nicht mehr eingebettet.'); }
+});

@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Weitere Lücken aus dem Wettbewerbsvergleich: Format, Bögen, Anhänge, Formen, visueller Vergleich
+- **Weiße Ränder entfernen / Alle Seiten auf A4** (Speichern-Dialog, wie „Zuschneiden“ und „Seitengröße ändern“ in Acrobat, Sejda, PDF24): Inhaltsbereich jeder Seite wird aus der fertigen PDF ermittelt (Staub auf Scans zählt nicht) und als CropBox gesetzt; „auf A4“ legt jede Seite maßstabsgetreu und mittig auf A4 hoch/quer – ohne Neurastern, Links, Markierungen und Formularfelder wandern mit. Neues Modul `js/layout.js`.
+- **2 oder 4 Seiten pro Blatt, Broschüre** (Drucken und Speichern): Seiten verkleinert auf A4; Broschüre in Heftreihenfolge (A4 quer, je Seite zwei A5-Seiten, auf Vielfache von 4 aufgefüllt), gedrehte Seiten richtig ausgerichtet.
+- **Dateianhänge** (Menü → Dateianhänge): eingebettete Dateien anzeigen, speichern, entfernen, neue anhängen. **Fehler behoben:** Anhänge der Vorlage gingen beim Speichern bisher verloren – jetzt bleiben sie erhalten. PDF/A-2b: nur Anhänge, die selbst PDF/A sind (ISO 19005-2, 6.8); „Versteckte Daten entfernen“ entfernt alle.
+- **Formen und Bilder** (Werkzeugleiste): Rechteck, Ellipse, Linie, Pfeil mit Farbe, Strichstärke und Füllung (Umschalt: gerade Linie); „Bild“ fügt Logo oder Foto ein (PNG mit Transparenz, Fotos als JPEG). Vektor in der PDF, als Artefakt bzw. Abbildung mit Alternativtext getaggt; auch im Bild-Export und in der Kommentarliste.
+- **Visueller Vergleich** (Mit anderer Fassung vergleichen → „Bild (Überlagerung)“): Seiten werden übereinandergelegt, rot = nur erste, grün = nur zweite Fassung, Rahmen um jede geänderte Stelle, Überblick „Unterschiede auf Seite …“; Kantenglättung und einzelne Pixel zählen nicht.
+- Getestet: Unit-Tests (`tests/layout.test.js`: Heftreihenfolge, CropBox, A4 inkl. Link-Rechteck, 2/4 pro Blatt, Broschüre; `pixelDiff`), im Browser Letter/A5/klein auf A4, Ränder entfernt, Broschüre und 4 pro Blatt sichtbar geprüft, Formen in PDF und Bild-Export deckungsgleich, Anhang erhalten/entfernt/neu, PDF/A ohne Nicht-PDF/A-Anhang, Vergleich findet zwei Stellen auf Seite 2.
+
 ### Mehr Leistungsumfang nach Wettbewerbsvergleich: Aufteilen, Briefbogen, Bereinigen
 - Wettbewerbsanalyse (Acrobat, Smallpdf, iLovePDF, PDF24, Sejda, PDFgear, Stirling-PDF, Foxit, Xodo, PDF-XChange, Nitro, DocuSign, DocuSeal) – die drei wichtigsten Lücken umgesetzt:
 - **PDF aufteilen** (Kachel und Menü): alle N Seiten, an den Lesezeichen (Kapitelname im Dateinamen), nach Dateigröße (z. B. höchstens 5 MB für E-Mail) oder nach Seitenbereichen; Vorschau „Ergibt n Datei(en)“, Ausgabe als ZIP oder in die Ablage.

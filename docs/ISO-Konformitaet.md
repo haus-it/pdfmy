@@ -89,6 +89,8 @@ Prüfwerkzeuge: **veraPDF 1.30.3** (PDF/A, PDF/UA) und **qpdf 11 über pikepdf 9
 
 Wiederholung der Prüfung: bei jeder Änderung an der PDF-Erzeugung (`buildPdf`, `makePdfA`, `buildInvoicePdf`) bzw. am E-Rechnungs-Generator (`js/einvoice-out.js`) und mindestens vierteljährlich.
 
+Nachtrag 20.10.2026: Seitenformat (CropBox, Normierung auf A4 per Transformationsmatrix, Anmerkungs-Rechtecke mitverschoben), Formen und Bilder (Artefakt bzw. Figure mit Alt-Text), Dateianhänge (PDF/A-2b: nur PDF/A-Anhänge, ISO 19005-2 Abschnitt 6.8) – PDF/A-Ausgabe mit veraPDF geprüft (siehe CHANGELOG).
+
 Nachtrag 16.10.2026: PDF/A-Ausgabe mit übernommener, mehrstufiger Lesezeichen-Gliederung (Inhalt) mit veraPDF geprüft: PDF/A-2b PASS, PDF/UA-1 PASS.
 
 Nachtrag 16.10.2026: PDF/A-Ausgabe einer reparierten, abgeschnittenen PDF mit veraPDF geprüft: PDF/A-2b PASS, PDF/UA-1 PASS.
