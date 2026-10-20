@@ -435,7 +435,24 @@ $('#btnSigReq').onclick = () => {
   $('#reqMe').value = cur?.requester.name || S.author || ''; $('#reqMeMail').value = cur?.requester.email || LS.get('reqMail', '') || team[S.author] || '';
   $('#reqMsg').value = cur?.message || ''; $('#reqDue').value = cur?.due || ''; $('#reqCc').value = (cur?.cc || []).join(', '); $('#reqErr').textContent = '';
   reqTplFill(cur ? '' : null);
+  $('#reqSerial').checked = !!cur?.serial; $('#reqList').value = cur?.serial ? cur.serial.map(s => `${s.name}; ${s.email}`).join('\n') : ''; reqSerialUi();
   $('#reqDlg').showModal(); $('#reqRows input').focus();
+};
+// Serienversand: Empfängerliste statt Reihenfolge
+function reqSerialUi() {
+  const on = $('#reqSerial').checked; $('#reqSerialBox').hidden = !on; document.querySelector('#reqDlg .reqsig').hidden = on;
+  if (!on) { $('#reqListInfo').textContent = ''; return; }
+  const { list, bad } = SigReq.recipients($('#reqList').value);
+  $('#reqListInfo').textContent = !$('#reqList').value.trim() ? '' : `${list.length} Empfänger erkannt${bad.length ? ` · ${bad.length} Zeile(n) ohne gültige E-Mail-Adresse: ${bad.slice(0, 3).join(' | ')}` : ''}`;
+}
+$('#reqSerial').onchange = reqSerialUi;
+$('#reqList').addEventListener('input', reqSerialUi);
+$('#reqListFile').onclick = () => $('#reqListIn').click();
+$('#reqListIn').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  const raw = new Uint8Array(await f.arrayBuffer());
+  let t; try { t = new TextDecoder('utf-8', { fatal: true }).decode(raw); } catch { t = new TextDecoder('windows-1252').decode(raw); }   // ältere Excel-CSV
+  $('#reqList').value = t; reqSerialUi();
 };
 // Vorlagen für wiederkehrende Dokumente (Personen, Felder, Nachricht, Frist in Tagen) – nur auf diesem Gerät
 const reqTpls = () => LS.get('reqTpl', []);
@@ -469,7 +486,9 @@ $('#reqRows').addEventListener('change', ev => { if (!ev.target.matches('[data-r
 $('#reqCancel').onclick = () => $('#reqDlg').close();
 $('#reqForm').onsubmit = ev => {
   ev.preventDefault();
-  const signers = [...$('#reqRows').children].map(r => ({ name: r.querySelector('[data-rn]').value, email: r.querySelector('[data-rm]').value }));
+  const serial = $('#reqSerial').checked ? SigReq.recipients($('#reqList').value).list : null;
+  if (serial && !serial.length) { $('#reqErr').textContent = 'Bitte mindestens einen Empfänger mit E-Mail-Adresse eintragen.'; return; }
+  const signers = serial ? [serial[0]] : [...$('#reqRows').children].map(r => ({ name: r.querySelector('[data-rn]').value, email: r.querySelector('[data-rm]').value }));
   const r = SigReq.create({ title: $('#reqTitle').value, requester: { name: $('#reqMe').value, email: $('#reqMeMail').value }, signers, message: $('#reqMsg').value, due: $('#reqDue').value, cc: $('#reqCc').value, id: reqDraft && req ? req.id : undefined });
   const pr = SigReq.problems(r); if (pr.length) { $('#reqErr').textContent = pr.join(' '); return; }
   // Felder behalten, soweit die Person noch dabei ist
@@ -477,6 +496,7 @@ $('#reqForm').onsubmit = ev => {
   // Vorlage gewählt: ihre Felder übernehmen (Seiten, die es im Dokument nicht gibt, entfallen; Personen über die Reihenfolge)
   const tpl = reqTpls()[+$('#reqTpl').value];
   if (tpl && !r.fields.length) { const pages = docPages(); r.fields = tpl.fields.filter(f => f.page < pages.length && f.s < r.signers.length).map(f => ({ ...f, v: '', pg: pages[f.page] })); }
+  if (serial) r.serial = serial;   // Felder werden für die erste Person gesetzt und für alle übernommen
   req = r; reqDraft = true; reqDoc = -1; LS.set('reqMail', r.requester.email);
   $('#reqDlg').close();
   reqSuggest().then(n => {
@@ -767,7 +787,42 @@ async function reqRemind(e) {
   const opened = await openEml(new TextEncoder().encode(Journal.emlDraft({ ...m, attachments: bytes ? [{ name, mime: 'application/pdf', bytes }] : [] })), `Erinnerung – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`);
   status(opened ? `Erinnerung an ${e.sigName || e.sigTo} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `Erinnerung an ${e.sigName || e.sigTo} vorbereitet – die .eml-Datei öffnen und senden.`);
 }
+// Serienversand: je Empfänger eine eigene Anfrage (eigene Kennung, gleiche Felder), E-Mail-Entwurf und Eintrag im Posteingangsbuch.
+// Bis 10 Empfänger mit pdfmy Scan direkt im Mail-Programm, sonst alle Entwürfe als ZIP (in Outlook per Doppelklick öffnen).
+async function reqSendSerial() {
+  const base = req, list = base.serial, direct = state.scanVersion && !state.scanMac && list.length <= 10;
+  if (!base.fields.some(f => f.s === 0 && f.pg)) return status('Bitte zuerst das Unterschriftsfeld für die Empfänger setzen.');
+  if (!confirm(`Für ${list.length} Empfänger je ein eigenes Exemplar mit E-Mail-Entwurf vorbereiten?`)) return;
+  const files = [], rows = [['Name', 'E-Mail', 'Datei']], safe = s => s.replace(/[\\/:*?"<>|]+/g, '_').slice(0, 40);
+  let opened = 0;
+  try {
+    for (const [i, rc] of list.entries()) {
+      status(`Serienversand: ${i + 1} von ${list.length} – ${rc.name} …`, i / list.length);
+      const r = SigReq.create({ title: base.title, requester: base.requester, signers: [rc], message: base.message, due: base.due, cc: (base.cc || []).join(', ') });
+      r.fields = base.fields.filter(f => f.s === 0).map(f => ({ ...f, v: '', s: 0 }));
+      req = r;
+      const bytes = await reqPdf(), name = reqFile(r, ` – ${safe(rc.name)} – zur Unterschrift.pdf`);
+      const m = SigReq.mail(r, { from: S.author, tr: s => I18N.t(s) });
+      const eml = new TextEncoder().encode(Journal.emlDraft({ to: m.to, cc: m.cc, subject: m.subject, body: m.body, attachments: [{ name, mime: 'application/pdf', bytes }] }));
+      let rel = '', sha = '';
+      if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(bytes); }
+      const emlName = name.replace(/\.pdf$/i, '') + '.eml';
+      if (direct && await openEml(eml, emlName)) opened++; else files.push({ name: emlName, data: eml });
+      rows.push([rc.name, rc.email, emlName]);
+      await reqJournal(r, { rel, sha });
+    }
+  } catch (e) { console.error(e); req = base; return status('Serienversand abgebrochen: ' + e.message); }
+  req = base;
+  let zipName = '';
+  if (files.length) {
+    files.push({ name: 'Empfänger.csv', data: new TextEncoder().encode('\uFEFF' + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n')) });
+    zipName = `Serienversand – ${reqFile(base, '')}.zip`; download(Tools.zip(files), zipName, 'application/zip');
+  }
+  window.reqReset(); renderAnns();
+  status(`Serienversand vorbereitet: ${list.length} Exemplare.${opened ? ` ${opened} E-Mail(s) sind im Mail-Programm geöffnet – prüfen und senden.` : ''}${zipName ? ` Die E-Mail-Entwürfe liegen in „${zipName}“ – entpacken und jede .eml-Datei öffnen und senden.` : ''} Den Stand je Person zeigt das Posteingangsbuch.`);
+}
 async function reqSend() {
+  if (req.serial) return reqSendSerial();
   const miss = req.signers.filter((s, i) => !req.fields.some(f => f.s === i && f.pg));
   if (miss.length) return status(`Für ${miss.map(s => s.name).join(', ')} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.`);
   try {
@@ -828,8 +883,8 @@ function renderReqBar() {
   let text, btns;
   const di = SigReq.declined(req);
   if (reqDraft) {
-    text = `Unterschriftsanfrage „${req.title}“: Felder setzen`;
-    btns = `<label class="hint">Feldart <select id="reqType">${Object.entries(SigReq.TYPES).map(([k, v]) => `<option value="${k}"${k === reqType ? ' selected' : ''}>${v}</option>`).join('')}</select></label>` + req.signers.map((s, k) => { const c = req.fields.filter(f => f.s === k).length; return `<button type="button" class="linkbtn" data-rarm="${k}"${k === reqArm ? ' aria-pressed="true"' : ''}>${k === reqArm ? '➜ ' : ''}Feld für ${esc(s.name)}${c ? ` (${c})` : ''}</button>`; }).join('') + b('send', 'Senden …') + b('edit', 'Ändern …') + b('tpl', 'Als Vorlage speichern …') + b('cancel', 'Abbrechen');
+    text = req.serial ? `Serienversand „${req.title}“ an ${req.serial.length} Empfänger: Felder setzen` : `Unterschriftsanfrage „${req.title}“: Felder setzen`;
+    btns = `<label class="hint">Feldart <select id="reqType">${Object.entries(SigReq.TYPES).map(([k, v]) => `<option value="${k}"${k === reqType ? ' selected' : ''}>${v}</option>`).join('')}</select></label>` + req.signers.map((s, k) => { const c = req.fields.filter(f => f.s === k).length; return `<button type="button" class="linkbtn" data-rarm="${k}"${k === reqArm ? ' aria-pressed="true"' : ''}>${k === reqArm ? '➜ ' : ''}${req.serial ? 'Feld für Empfänger' : `Feld für ${esc(s.name)}`}${c ? ` (${c})` : ''}</button>`; }).join('') + b('send', req.serial ? `An ${req.serial.length} Empfänger senden …` : 'Senden …') + b('edit', 'Ändern …') + b('tpl', 'Als Vorlage speichern …') + b('cancel', 'Abbrechen');
   } else if (di >= 0) {
     text = `„${req.title}“ wurde von ${req.signers[di].name} abgelehnt${req.signers[di].reason ? `: ${req.signers[di].reason}` : ''}`;
     btns = b('info', 'Übersicht');

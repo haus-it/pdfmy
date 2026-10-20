@@ -179,7 +179,7 @@
     let nameCol = -1, mailCol = -1, start = 0;
     const head = cells(first).map(c => c.toLowerCase());
     if (!head.some(isMail)) {
-      mailCol = head.findIndex(c => /e-?mail|mail|adresse|address/.test(c));
+      mailCol = head.findIndex(c => /mail|adresse|address|courriel|correo|posta|poczta|почта|пошта|пошта|sähköposti|e-?post|ηλεκτρονικ/.test(c));   // auch Kopfzeilen anderer Sprachen
       nameCol = head.findIndex(c => /^(name|vollständiger name|anzeigename|display name|full name|kontakt|empfänger)$/.test(c));
       const first2 = head.findIndex(c => /vorname|first name|given/.test(c)), last2 = head.findIndex(c => /^nachname|last name|surname|family/.test(c));
       if (nameCol < 0 && (first2 >= 0 || last2 >= 0)) nameCol = { first: first2, last: last2 };

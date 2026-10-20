@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Serienversand von Unterschriftsanfragen
+- „Zur Unterschrift senden“ → **„Serienversand“** (wie Bulk Send bei DocuSign und DocuSeal): Empfängerliste als Zeilen („Name; E-Mail“), aus Outlook („Name <E-Mail>“) oder als CSV aus Excel/Outlook (Trennzeichen ; , Tab, Kopfzeile mit Name/Vorname/Nachname/E-Mail erkannt, UTF-8 oder Windows-1252), doppelte Adressen entfallen, ungültige Zeilen werden genannt; höchstens 200. Felder einmal setzen – jede Person bekommt eine eigene Anfrage (eigene Kennung, eigenes Prüfprotokoll), E-Mail-Entwurf und Eintrag im Posteingangsbuch (mit „Erinnern“). Bis 10 Empfänger direkt in Outlook (pdfmy Scan), sonst ZIP mit allen .eml-Entwürfen und Empfänger.csv. Neue Funktion `SigReq.recipients`.
+- Getestet: `tests/sigreq.test.js` (neuer Fall: Zeilen, Outlook-Format, CSV mit Kopfzeile, Höchstzahl); im Browser 3 Empfänger → ZIP mit 3 Entwürfen an die richtigen Adressen, 3 Einträge im Posteingangsbuch; PDF aus Annas Entwurf geöffnet: „Anna Muster ist dran“; axe ohne Befund.
+
 ### Word und Excel in PDF
 - **.docx und .xlsx** öffnen jetzt direkt als PDF (wie „Word/Excel to PDF“ bei iLovePDF, Smallpdf, PDF24 – aber ohne Upload): neues Modul `js/office.js` ohne Fremdbibliothek (ZIP über DecompressionStream, eigener XML-Parser). Word: Überschriften (Formatvorlagen „heading n“/Gliederungsebene), Absätze mit Ausrichtung und Fettdruck, Aufzählungen und Nummerierungen (numbering.xml, auch a)/i.), Tabellen (mit Kopfzeile, verbundene Zellen), PNG/JPEG-Bilder in Originalgröße, Seitenumbrüche, Seitenformat und Rand aus der Datei; versteckter und gelöschter Text entfällt. Excel: sichtbare Blätter als Tabellen, gemeinsame Zeichenfolgen, Zahlen-/Währungs-/Prozentformat, Datumswerte. Satz über `js/textpdf.js` (neu: Bausteine, Bilder, Ausrichtung, Seitenformat).
 - Ältere Formate (.doc, .xls, .ppt, .odt): verständlicher Hinweis statt Fehler.
