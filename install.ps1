@@ -1,5 +1,5 @@
 ﻿# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # Legt Verknüpfungen "mentor PDF" und "Brief scannen" auf dem Desktop und im Startmenü an.
 $root = $PSScriptRoot
 $shell = New-Object -ComObject WScript.Shell

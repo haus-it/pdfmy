@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Geräteliste: Sofortsuche nach Modell (lokal im Browser). Bindestriche/Leerzeichen egal: „MFC L2710“ findet „MFC-L2710DW“.
 (() => {
   const q = document.getElementById('gq'), count = document.getElementById('gcount'), none = document.getElementById('gnone');

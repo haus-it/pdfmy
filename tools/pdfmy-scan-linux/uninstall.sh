@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # pdfmy Scan für Linux – entfernen (Scan-Dienst, Eintrag „PDFMy“, Standard für PDFs, Einstellungen und Protokoll).
 DATA="${XDG_DATA_HOME:-$HOME/.local/share}"
 CONF="${XDG_CONFIG_HOME:-$HOME/.config}"

@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Préparation de la demande de signature …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Veuillez d’abord signer dans le champ marqué.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Merci ! E-mail à {0} préparé – ouvrez le fichier .eml et envoyez-le.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Les personnes signent l’une après l’autre. Chacune reçoit un e-mail préparé avec le PDF, l’ouvre dans PDFMy, signe dans le champ marqué et le transmet – à la fin, le PDF vous revient signé. Sans serveur et sans envoi en ligne.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-mail à {0} préparé – ouvrez le fichier .eml et envoyez-le.{1} Vous voyez l’état d’avancement dans le registre du courrier.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Champ placé. Cliquez maintenant sur l’emplacement pour {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Il manque encore un champ de signature pour {0} – cliquez sur le nom dans la barre, puis sur l’emplacement.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Ne pas signer",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Texte à cocher (p. ex. « J’ai lu les conditions générales »)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Que doit saisir la personne ici ? (p. ex. adresse, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "« {0} » n’est plus lisible – Outlook a déjà supprimé la copie temporaire de la pièce jointe. Veuillez double-cliquer à nouveau sur la pièce jointe ou l’enregistrer dans Outlook (« Enregistrer sous »), puis l’ouvrir.",
  "Datei übernehmen": "Importer le fichier",
  "Der Eintrag wurde aus der Liste entfernt.": "L’entrée a été supprimée de la liste.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Versions installées – cliquez pour rechercher des mises à jour",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Champ {0} sur {1} : {2}",
  "Nächstes Feld →": "Champ suivant →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p. ex. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Pour information (facultatif) – reçoit une copie du résultat"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Pour information (facultatif) – reçoit une copie du résultat",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Authenticité vérifiable</b> – chaque version signée reste contrôlable dans le fichier",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Les pièces jointes Outlook</b> s’ouvrent de manière fiable – sous Windows, Mac et Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Réveiller les scanners</b> et recherche réseau étendue",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Faire signer par e-mail</b> – avec échéance, rappel, modèles et « Pour information » ; fonctionne aussi dans Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Toutes les nouveautés",
+ "Neu in PDFMy": "Nouveau dans PDFMy"
 }

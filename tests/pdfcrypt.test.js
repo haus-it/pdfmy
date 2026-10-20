@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Passwortschutz AES-256, ISO 32000-2 Revision 6
 const test = require('node:test'), assert = require('node:assert/strict');
 const P = require('../js/pdfcrypt.js');

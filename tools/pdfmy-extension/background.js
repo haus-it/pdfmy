@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // PDFMy-Erweiterung (Manifest V3): PDFs aus dem Browser in PDFMy öffnen – ohne Upload.
 // Ablauf: PDF-Aufruf erkennen → Datei hier im Browser laden → PDFMy-Tab öffnen → pdfmy-bridge.js holt die Bytes
 // über einen Port ab und reicht sie per postMessage an die Seite. Kein Server außer der Quelle der PDF ist beteiligt.

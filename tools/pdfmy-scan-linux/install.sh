@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # pdfmy Scan für Linux – Einrichtung. Im Terminal:  sh pdfmy-scan-linux.sh   (oder: curl -fsSL https://pdfmy.de/download/pdfmy-scan-linux.sh | sh)
 # Richtet ein: den Scan-Dienst (systemd-Benutzerdienst, startet mit der Anmeldung), den Eintrag „PDFMy“ im Anwendungsmenü
 # (öffnet PDFs per Doppelklick in PDFMy) und auf Wunsch PDFMy als Standard für PDF-Dateien.

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # pdfmy Scan für Mac – Einrichtung. Einmal doppelklicken, fertig.
 # Richtet ein: den Scan-Dienst (läuft unauffällig im Hintergrund, startet mit dem Mac),
 # die App „PDFMy“ (öffnet PDFs per Doppelklick in PDFMy) und auf Wunsch PDFMy als Standard für PDF-Dateien.

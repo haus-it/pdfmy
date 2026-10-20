@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Passwortschutz mit AES-256 nach ISO 32000-2 (Standard-Sicherheitsverfahren, Revision 6) – lokal im Browser (WebCrypto).
    Die Dateiverschlüsselung (AESV3, zufälliger 256-Bit-Dateischlüssel) übernimmt pdf-lib; hier entstehen die Passwort-Einträge
    U/UE/O/OE mit dem iterierten Hash-Verfahren 2.B (SHA-256/384/512). Revision 5 (nur SHA-256) gilt seit ISO 32000-2 als veraltet. */

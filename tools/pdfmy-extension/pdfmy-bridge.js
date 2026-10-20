@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Läuft nur auf https://pdfmy.de/*: holt die vom Browser geladene PDF bei der Erweiterung ab und übergibt sie
 // per postMessage an PDFMy (Import-Schnittstelle in js/app.js). Ohne Token in der Adresse tut das Skript nichts.
 'use strict';

@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Valmistellaan allekirjoituspyyntöä …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Allekirjoita ensin merkittyyn kenttään.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Kiitos! Sähköposti henkilölle {0} valmisteltu – avaa .eml-tiedosto ja lähetä.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Henkilöt allekirjoittavat vuorotellen. Kukin saa valmistellun sähköpostin, jonka liitteenä on PDF, avaa sen PDFMyssä, allekirjoittaa merkittyyn kenttään ja lähettää sen eteenpäin – lopuksi se palaa allekirjoitettuna sinulle. Ilman palvelinta ja ilman latausta palvelimelle.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Sähköposti henkilölle {0} valmisteltu – avaa .eml-tiedosto ja lähetä.{1} Tilanteen näet saapuneen postin kirjasta.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Kenttä asetettu. Napsauta nyt kohtaa henkilölle {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Henkilöltä {0} puuttuu vielä allekirjoituskenttä – napsauta nimeä palkissa ja sitten kohtaa.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Älä allekirjoita",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Valittava teksti (esim. ”Olen lukenut käyttöehdot”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Mitä henkilön pitää kirjoittaa tähän? (esim. osoite, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "”{0}” ei ole enää luettavissa – Outlook on jo poistanut liitteen väliaikaisen kopion. Kaksoisnapsauta liitettä uudelleen tai tallenna se Outlookissa (”Tallenna nimellä”) ja avaa se sitten.",
  "Datei übernehmen": "Tuo tiedosto",
  "Der Eintrag wurde aus der Liste entfernt.": "Merkintä poistettiin luettelosta.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Asennetut versiot – tarkista päivitykset napsauttamalla",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Kenttä {0}/{1}: {2}",
  "Nächstes Feld →": "Seuraava kenttä →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "esim. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Tiedoksi (valinnainen) – saa tuloksen kopiona"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Tiedoksi (valinnainen) – saa tuloksen kopiona",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Todennettava aitous</b> – jokainen allekirjoitettu versio pysyy tarkistettavana tiedostossa",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook-liitteet</b> avautuvat luotettavasti – käyttöjärjestelmissä Windows, Mac ja Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Herätä skannerit</b> ja laajennettu verkkohaku",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Allekirjoitukset sähköpostilla</b> – määräaika, muistutus, mallipohjat ja ”Tiedoksi”; toimii myös ohjelmissa Adobe Reader &amp; co.",
+ "Alle Neuerungen": "Kaikki uudistukset",
+ "Neu in PDFMy": "Uutta PDFMy:ssä"
 }

@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de -->
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0 -->
 <html lang="de">
 <head>
 <meta charset="utf-8">
@@ -795,6 +795,7 @@ body:not(.has-doc) .docbtn{display:none}
 .fb-body p{margin:0;font-size:14px;line-height:1.5}
 .fb-go{height:40px;padding:0 16px;gap:8px;white-space:nowrap}
 .fb-go .ic{width:16px;height:16px}
+.fb.news{border-style:solid;margin-top:16px}.news-list{margin:2px 0 0;padding-left:18px;font-size:14px;line-height:1.55}.news-list li{margin:1px 0}
 @media (max-width:760px){ .fb{grid-template-columns:1fr;gap:10px;padding:16px} .fb-icon{display:none} .fb-go{justify-self:start} }
 /* Barrierefreiheit (WCAG 2.1 AA) */
 .skiplink{position:absolute;left:12px;top:-60px;z-index:100;padding:10px 16px;border-radius:8px;background:var(--accent);color:var(--accent-text);font-weight:600;text-decoration:none}
@@ -1153,6 +1154,20 @@ html.i18n-wait body{visibility:hidden}
         <button class="tile" id="tileTax"><i><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg></i><b>Belege für Steuerberater</b><span>Monat als ZIP mit Belegliste und DATEV-Importdatei</span></button>
         <button class="tile" data-intent="text"><i><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg></i><b>Text extrahieren</b><span>Text aus PDF oder Scan als .txt</span></button>
       </div>
+      <!-- Neu in PDFMy: die neuesten Funktionen sichtbar machen (bei neuen Versionen hier und im CHANGELOG pflegen) -->
+      <section class="fb news" aria-labelledby="newsTitle">
+        <div class="fb-icon" aria-hidden="true"><svg class="ic"><use href="#i-signature"/></svg></div>
+        <div class="fb-body">
+          <h2 class="fb-title" id="newsTitle">Neu in PDFMy</h2>
+          <ul class="news-list">
+            <li><b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.</li>
+            <li><b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei</li>
+            <li><b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux</li>
+            <li><b>Scanner aufwecken</b> und erweiterte Netzwerksuche</li>
+          </ul>
+        </div>
+        <a class="btn fb-go" href="https://github.com/haus-it/pdfmy/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Alle Neuerungen<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+      </section>
       <section class="fb" aria-labelledby="fbTitle">
         <div class="fb-icon" aria-hidden="true"><svg class="ic"><use href="#i-sparkles"/></svg></div>
         <div class="fb-body">
@@ -1161,7 +1176,7 @@ html.i18n-wait body{visibility:hidden}
         </div>
         <button type="button" class="btn fb-go" id="fbReport"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Herausforderung melden</button>
       </section>
-      <!-- Urheberhinweis und Banner der Mentor GmbH / Haus iT: muss nach den Lizenzbedingungen (NOTICE, AGPLv3 § 7 b) sichtbar und unverändert erhalten bleiben -->
+      <!-- Urheberhinweis und Banner der Mentor GmbH / Haus iT: muss nach den Lizenzbedingungen (NOTICE) sichtbar und unverändert erhalten bleiben -->
       <aside class="promo" aria-label="Anzeige: Haus iT">
         <span class="promo-tag">Anzeige</span>
         <div class="promo-icon" aria-hidden="true"><svg class="ic"><use href="#i-phone-call"/></svg></div>

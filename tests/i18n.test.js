@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Sprachen: Erkennung der Dokumentsprache (Texterkennung) und Übersetzung der Oberfläche
 const test = require('node:test'), assert = require('node:assert');
 const fs = require('fs'), path = require('path');

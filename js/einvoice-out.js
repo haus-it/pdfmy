@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Ausgehende E-Rechnungen nach EN 16931 (CII-Syntax): ZUGFeRD 2.3 / Factur-X 1.07 (Profil EN 16931) und XRechnung 3.0.
    build(inv, { xrechnung }) → { xml, totals, errors }. Reine Funktion – auch in Node-Tests nutzbar. */
 (function (root) {

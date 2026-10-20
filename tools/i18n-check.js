@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Prüft und erzeugt die Wörterbücher i18n/<code>.json.
 //   node tools/i18n-check.js split            → i18n/parts/_keys.<n>.json (Schlüssel in Teilen zum Übersetzen)
 //   node tools/i18n-check.js merge <code>     → i18n/parts/<code>.<n>.json zusammenführen → i18n/<code>.json

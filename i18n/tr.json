@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "İmza talebi hazırlanıyor …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Lütfen önce işaretli alanı imzalayın.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Teşekkürler! {0} için e-posta hazırlandı – .eml dosyasını açıp gönderin.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Kişiler sırayla imzalar. Her biri PDF’yi içeren hazır bir e-posta alır, PDF’yi PDFMy’de açar, işaretli alanı imzalar ve iletir – sonunda imzalı belge size geri döner. Sunucu ve yükleme olmadan.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "{0} için e-posta hazırlandı – .eml dosyasını açıp gönderin.{1} Durumu gelen evrak defterinde görebilirsiniz.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Alan yerleştirildi. Şimdi {0} için yere tıklayın.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "{0} için henüz imza alanı yok – çubukta ada, ardından yere tıklayın.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "İmzalamayın",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "İşaretlenecek metin (ör. “Genel koşulları okudum”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Kişi buraya ne girmeli? (ör. adres, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "“{0}” artık okunamıyor – Outlook ekin geçici kopyasını zaten kaldırdı. Lütfen eke yeniden çift tıklayın veya Outlook’ta kaydedin (“Farklı Kaydet”) ve ardından açın.",
  "Datei übernehmen": "Dosyayı al",
  "Der Eintrag wurde aus der Liste entfernt.": "Giriş listeden kaldırıldı.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Yüklü sürümler – güncellemeleri denetlemek için tıklayın",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Alan {0}/{1}: {2}",
  "Nächstes Feld →": "Sonraki alan →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "ör. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Bilgi için (isteğe bağlı) – sonucu kopya olarak alır"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Bilgi için (isteğe bağlı) – sonucu kopya olarak alır",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Kanıtlanabilir özgünlük</b> – imzalanan her sürüm dosyada doğrulanabilir kalır",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook ekleri</b> güvenilir şekilde açılır – Windows, Mac ve Linux'ta",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Tarayıcıları uyandır</b> ve genişletilmiş ağ araması",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>E-postayla imzalatma</b> – süre, hatırlatma, şablonlar ve “Bilgi için” ile; Adobe Reader &amp; Co. içinde de",
+ "Alle Neuerungen": "Tüm yenilikler",
+ "Neu in PDFMy": "PDFMy'de yenilikler"
 }

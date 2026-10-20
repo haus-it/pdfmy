@@ -1,5 +1,5 @@
 ﻿# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # Einmalig: SFTP-Zugang für das automatische Hochladen nach pdfmy.de hinterlegen.
 # Das Passwort wird mit Windows-DPAPI verschlüsselt gespeichert – nur dieses Windows-Konto auf diesem PC kann es lesen.
 param([string]$User = '')

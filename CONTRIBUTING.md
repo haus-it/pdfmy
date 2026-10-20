@@ -20,16 +20,16 @@ Schön, dass Sie PDFMy weiterentwickeln möchten – wir freuen uns über jeden 
 7. **Copyright-Kopf** in neuen Dateien:
    ```
    // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-   // SPDX-License-Identifier: AGPL-3.0-or-later
+   // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
    ```
 
 ## Eigene Projekte auf Basis von PDFMy
 
-Gern! Bedingungen (siehe [NOTICE](NOTICE)): Copyright-Hinweise und den Banner der Mentor GmbH / Haus iT erhalten, Änderungen unter der AGPL veröffentlichen und sichtbar auf das Original hinweisen: **„Basiert auf PDFMy – [www.pdfmy.de](https://www.pdfmy.de)“**.
+Gern – **für nicht-kommerzielle Zwecke** (PolyForm Noncommercial 1.0.0, siehe [LICENSE](LICENSE)). Bedingungen (siehe [NOTICE](NOTICE)): Copyright-Hinweise und den Banner der Mentor GmbH / Haus iT erhalten und sichtbar auf das Original hinweisen: **„Basiert auf PDFMy – [www.pdfmy.de](https://www.pdfmy.de)“**. Für kommerzielle Nutzung: schriftliche Lizenz der Mentor GmbH ([wumertens@mentor-group.de](mailto:wumertens@mentor-group.de)).
 
 ## Lizenz der Beiträge
 
-Mit einem Pull Request stimmen Sie zu, dass Ihr Beitrag unter der Lizenz des Projekts (AGPL-3.0-or-later, siehe [LICENSE](LICENSE)) veröffentlicht wird. Das Copyright am Gesamtprojekt liegt bei der Mentor GmbH.
+Mit einem Pull Request stimmen Sie zu, dass Ihr Beitrag unter der Lizenz des Projekts veröffentlicht wird, und räumen der Mentor GmbH ein einfaches, zeitlich und räumlich unbeschränktes, unwiderrufliches Recht ein, Ihren Beitrag zu nutzen, zu ändern und auch unter anderen Lizenzen (einschließlich kommerzieller) weiterzugeben. Sie bestätigen, dass Sie die Rechte an Ihrem Beitrag haben. Das Copyright am Gesamtprojekt liegt bei der Mentor GmbH.
 
 ## Kontakt
 

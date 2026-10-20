@@ -1,28 +1,29 @@
-PDFMy – https://pdfmy.de
+PDFMy – https://www.pdfmy.de
 Copyright (c) 2026 Mentor GmbH, Am Hoppenhof 30a, 33104 Paderborn, Deutschland
 (Amtsgericht Paderborn, HRB 9975)
 
-Dieses Programm ist freie Software: Sie können es unter den Bedingungen der
-GNU Affero General Public License, Version 3 oder (nach Ihrer Wahl) jeder
-späteren Version, weitergeben und/oder verändern (siehe LICENSE).
+Lizenz: PolyForm Noncommercial License 1.0.0 (siehe LICENSE)
+Der Quellcode ist ausschließlich für NICHT-KOMMERZIELLE Zwecke freigegeben –
+z. B. private Nutzung, Lernen, Forschung, Schulen und Hochschulen, gemeinnützige
+Organisationen und Behörden im Rahmen der Lizenz. Jede kommerzielle Nutzung
+(auch das Anbieten als Dienst, der Weiterverkauf oder der Einsatz in einem
+gewinnorientierten Unternehmen) braucht eine gesonderte, schriftliche Lizenz der
+Mentor GmbH: wumertens@mentor-group.de.
+Die Nutzung von www.pdfmy.de selbst bleibt für alle kostenlos.
 
-Der Copyright-Hinweis in den Quelldateien und dieser Hinweis müssen in allen
-Kopien und abgeleiteten Werken erhalten bleiben.
-
-Zusätzliche Bedingungen nach § 7 Abs. 1 Buchst. b AGPLv3 (Urheberhinweis):
-Die freie Nutzung setzt voraus, dass in jeder Fassung, die Nutzerinnen und
-Nutzern angezeigt wird, folgende Urheberhinweise der Mentor GmbH sichtbar und
-unverändert erhalten bleiben:
-  1. der Banner unten auf der Startseite (Haus iT, ein Geschäftsbereich der
-     Mentor GmbH; index.html, Element <aside class="promo">) samt Verweis auf
-     https://www.haus-it.de,
-  2. der Hinweis „powered by Mentor Group“ neben dem Namen in der Kopfzeile.
-  3. ein gut sichtbarer Hinweis auf das Original: „Basiert auf PDFMy –
-     www.pdfmy.de“ mit Link auf https://www.pdfmy.de – in der Oberfläche
-     (z. B. Fußzeile oder „Über“) sowie in Dokumentation, README und
-     Beschreibung jedes Werks, das den Quellcode ganz oder teilweise nutzt.
-Wer diese Hinweise entfernen oder ersetzen möchte, braucht eine gesonderte
-Erlaubnis der Mentor GmbH (wumertens@mentor-group.de).
+Zusätzliche Bedingungen der Mentor GmbH für die Nutzung des Quellcodes:
+  1. Der Copyright-Hinweis in den Quelldateien und diese Datei bleiben in allen
+     Kopien und abgeleiteten Werken erhalten.
+  2. Jedes Werk, das den Quellcode ganz oder teilweise nutzt, weist in der
+     Oberfläche (z. B. Fußzeile oder „Über“) sowie in Dokumentation, README und
+     Beschreibung sichtbar auf das Original hin: „Basiert auf PDFMy –
+     www.pdfmy.de“ mit Link auf https://www.pdfmy.de.
+  3. In jeder Fassung, die Nutzerinnen und Nutzern angezeigt wird, bleiben der
+     Banner unten auf der Startseite (Haus iT, ein Geschäftsbereich der Mentor
+     GmbH; index.html, Element <aside class="promo">, mit Verweis auf
+     https://www.haus-it.de) und der Hinweis „powered by Mentor Group“ neben dem
+     Namen in der Kopfzeile sichtbar und unverändert.
+Wer davon abweichen möchte, braucht eine gesonderte Erlaubnis der Mentor GmbH.
 
 Marken: Der Name „PDFMy“, „pdfmy Scan“ und das PDFMy-Logo sind Kennzeichen der
 Mentor GmbH und nicht Gegenstand der Lizenz. Abgeleitete Werke dürfen sie nicht
@@ -32,11 +33,16 @@ ein von der Mentor GmbH unterstütztes Angebot.
 Fremdbestandteile (Verzeichnis vendor/) stehen unter ihren eigenen Lizenzen,
 siehe vendor/licenses und docs/ISO-Konformitaet.md, Abschnitt 5.
 
-English: Copyright (c) 2026 Mentor GmbH. Licensed under the GNU Affero General
-Public License v3.0 or later. The names "PDFMy", "pdfmy Scan" and the PDFMy logo
-are trademarks of Mentor GmbH and are not covered by the license.
-Additional term under AGPLv3 section 7(b): the Mentor GmbH / Haus iT banner at
-the bottom of the start page and the "powered by Mentor Group" notice must be
-kept visible and unchanged in every version shown to users, and every work using
-this source code in whole or in part must visibly state "Based on PDFMy –
-www.pdfmy.de" with a link to https://www.pdfmy.de (user interface and docs).
+Frühere Fassungen: Bis zum 20.10.2026 war der Quellcode auf GitHub unter der
+GNU AGPL 3.0 veröffentlicht. Ab dieser Fassung gilt die PolyForm Noncommercial
+License 1.0.0 mit den obigen Bedingungen.
+
+English: Copyright (c) 2026 Mentor GmbH. Licensed under the PolyForm
+Noncommercial License 1.0.0 – NON-COMMERCIAL USE ONLY. Commercial use requires a
+separate written license from Mentor GmbH (wumertens@mentor-group.de). Using
+www.pdfmy.de itself stays free for everyone. Additional conditions: keep the
+copyright notices; every work using this code must visibly state "Based on
+PDFMy – www.pdfmy.de" with a link (UI and docs); the Mentor GmbH / Haus iT banner
+and the "powered by Mentor Group" notice must stay visible and unchanged.
+"PDFMy", "pdfmy Scan" and the PDFMy logo are trademarks of Mentor GmbH and are
+not covered by the license.

@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Se pregătește solicitarea de semnătură …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Semnați mai întâi în câmpul marcat.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Mulțumim! E-mailul către {0} este pregătit – deschideți fișierul .eml și trimiteți-l.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Persoanele semnează pe rând. Fiecare primește un e-mail pregătit cu PDF-ul, îl deschide în PDFMy, semnează în câmpul marcat și îl trimite mai departe – la final, documentul semnat revine la dumneavoastră. Fără server și fără încărcare.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-mailul către {0} este pregătit – deschideți fișierul .eml și trimiteți-l.{1} Stadiul îl vedeți în registrul de intrări.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Câmp plasat. Acum faceți clic pe locul pentru {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Pentru {0} lipsește încă un câmp de semnătură – faceți clic pe nume în bară, apoi pe loc.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Nu semnați",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Text de bifat (de ex. „Am citit termenii și condițiile”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Ce trebuie să introducă persoana aici? (de ex. adresă, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}” nu mai poate fi citit – Outlook a eliminat deja copia temporară a atașamentului. Vă rugăm faceți din nou dublu clic pe atașament sau salvați-l în Outlook („Salvare ca”) și apoi deschideți-l.",
  "Datei übernehmen": "Preluare fișier",
  "Der Eintrag wurde aus der Liste entfernt.": "Intrarea a fost eliminată din listă.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Versiuni instalate – faceți clic pentru a căuta actualizări",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Câmpul {0} din {1}: {2}",
  "Nächstes Feld →": "Câmpul următor →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "de ex. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Spre informare (opțional) – primește rezultatul în copie"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Spre informare (opțional) – primește rezultatul în copie",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Autenticitate demonstrabilă</b> – fiecare versiune semnată rămâne verificabilă în fișier",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Atașamentele Outlook</b> se deschid fiabil – pe Windows, Mac și Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Trezire scanere</b> și căutare extinsă în rețea",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Semnare prin e-mail</b> – cu termen, memento, șabloane și „Spre informare”; și în Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Toate noutățile",
+ "Neu in PDFMy": "Noutăți în PDFMy"
 }

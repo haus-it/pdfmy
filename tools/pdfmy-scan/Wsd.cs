@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // pdfmy Scan – WSD-Scan (Web Services for Devices) ohne Treiber, wie pdfmy Scan für Mac/Linux.
 // Viele Epson-, Dell-, Brother- und Kyocera-Geräte scannen im Netzwerk über WSD statt (oder zusätzlich zu) eSCL.
 // Ablauf: WS-Discovery (UDP 3702, Multicast über jede Netzwerkkarte oder direkt an eine IP) → Gerätebeschreibung (WS-Transfer Get)

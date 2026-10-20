@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Kontoauszug abgleichen: Umsätze aus dem Online-Banking (CAMT.053/.052 als XML oder CSV) lesen und offenen Rechnungen
    im Posteingangsbuch zuordnen – bezahlte Rechnungen werden erkannt. Lokal, ohne Server. Auch in Node-Tests nutzbar. */
 (function (root) {

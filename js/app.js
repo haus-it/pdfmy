@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Hauptanwendung (Branding/Edition aus js/config.js) */
 'use strict';
 const { setCharacterSqueeze, PDFDocument, PDFName, PDFString, PDFHexString, PDFNumber, PDFOperator, PDFOperatorNames, rgb, degrees, pushGraphicsState, popGraphicsState, setTextRenderingMode, TextRenderingMode,

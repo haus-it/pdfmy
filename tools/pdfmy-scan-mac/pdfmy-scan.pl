@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # pdfmy Scan für Mac und Linux – macht Scanner für PDFMy (pdfmy.de) im Browser verfügbar.
 # Spricht dieselbe Schnittstelle wie pdfmy Scan für Windows (http://127.0.0.1:52880), nur vom eigenen Rechner erreichbar.
 # Protokolle: eSCL/AirScan (fast alle Geräte ab ca. 2015) und WSD-Scan (z. B. Dell Color MFP E525w, viele ältere Geräte) – ohne Treiber.

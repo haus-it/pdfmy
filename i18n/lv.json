@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Sagatavo paraksta pieprasījumu …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Lūdzu, vispirms parakstiet atzīmētajā laukā.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Paldies! E-pasts adresātam {0} sagatavots – atveriet .eml failu un nosūtiet.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Personas paraksta cita pēc citas. Katra saņem sagatavotu e-pastu ar PDF, atver to PDFMy, paraksta atzīmētajā laukā un nosūta tālāk – beigās tas parakstīts atgriežas pie Jums. Bez servera un bez augšupielādes.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-pasts adresātam {0} sagatavots – atveriet .eml failu un nosūtiet.{1} Statusu redzat ienākošā pasta žurnālā.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Lauks iestatīts. Tagad noklikšķiniet uz vietas personai {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Personai {0} vēl trūkst paraksta lauka – noklikšķiniet uz vārda joslā, pēc tam uz vietas.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Neparakstīt",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Atzīmējamais teksts (piem., „Esmu izlasījis vispārīgos noteikumus”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Ko personai šeit jāieraksta? (piem., adrese, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}” vairs nav nolasāms – Outlook jau ir noņēmis pielikuma pagaidu kopiju. Lūdzu, vēlreiz veiciet dubultklikšķi uz pielikuma vai saglabājiet to programmā Outlook („Saglabāt kā”) un pēc tam atveriet.",
  "Datei übernehmen": "Pārņemt failu",
  "Der Eintrag wurde aus der Liste entfernt.": "Ieraksts ir noņemts no saraksta.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Instalētās versijas – noklikšķiniet, lai meklētu atjauninājumus",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Lauks {0} no {1}: {2}",
  "Nächstes Feld →": "Nākamais lauks →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "piem., steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Zināšanai (neobligāti) – saņem rezultātu kopijā"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Zināšanai (neobligāti) – saņem rezultātu kopijā",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Pierādāms autentiskums</b> – katra parakstītā versija failā paliek pārbaudāma",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook pielikumi</b> atveras droši – Windows, Mac un Linux vidē",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Pamodināt skenerus</b> un paplašināta tīkla meklēšana",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Parakstīšana pa e-pastu</b> – ar termiņu, atgādinājumu, veidnēm un „Zināšanai“; arī Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Visi jaunumi",
+ "Neu in PDFMy": "Jaunumi PDFMy"
 }

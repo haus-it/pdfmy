@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Sinadura-eskaera prestatzen…",
  "Bitte zuerst im markierten Feld unterschreiben.": "Lehenik, sinatu markatutako eremuan.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Eskerrik asko! Mezua prest ({0}): ireki .eml fitxategia eta bidali.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Pertsonek bata bestearen atzetik sinatzen dute. Bakoitzak PDFa duen mezu prestatu bat jasotzen du, PDFMy-n irekitzen du, markatutako eremuan sinatzen du eta aurrera bidaltzen du; amaieran sinatuta itzultzen zaizu. Zerbitzaririk gabe eta igoerarik gabe.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Mezua prest ({0}): ireki .eml fitxategia eta bidali.{1} Egoera sarrera-erregistroan ikus dezakezu.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Eremua jarrita. Orain egin klik {0}(r)en lekuan.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "{0}(r)entzat sinadura-eremu bat falta da oraindik: egin klik barrako izenean eta gero lekuan.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Ez sinatu",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Markatzeko testua (adib. «Baldintza orokorrak irakurri ditut»)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Zer idatzi behar du pertsonak hemen? (adib. helbidea, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» ezin da gehiago irakurri: Outlook-ek dagoeneko kendu du eranskinaren aldi baterako kopia. Egin klik bikoitza berriro eranskinean, edo gorde Outlook-en («Gorde honela») eta ireki ondoren.",
  "Datei übernehmen": "Inportatu fitxategia",
  "Der Eintrag wurde aus der Liste entfernt.": "Sarrera zerrendatik kendu da.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Instalatutako bertsioak: egin klik eguneratzeak bilatzeko",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "{0}/{1} eremua: {2}",
  "Nächstes Feld →": "Hurrengo eremua →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "adib. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Jakinaren gainean (aukerakoa) – emaitzaren kopia jasotzen du"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Jakinaren gainean (aukerakoa) – emaitzaren kopia jasotzen du",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Benetakotasun frogagarria</b> – sinatutako bertsio bakoitza fitxategian egiaztagarri geratzen da",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook-eko eranskinak</b> modu fidagarrian irekitzen dira – Windows, Mac eta Linux-en",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Esnatu eskanerrak</b> eta sare-bilaketa hedatua",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Sinadurak posta elektronikoz eskatu</b> – epearekin, gogorarazpenarekin, txantiloiekin eta «Jakinaren gainean» aukerarekin; Adobe Reader &amp; Co.-n ere bai",
+ "Alle Neuerungen": "Berritasun guztiak",
+ "Neu in PDFMy": "PDFMy-ren berritasunak"
 }

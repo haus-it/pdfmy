@@ -1,5 +1,5 @@
 ﻿# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # Signiert pdfmy-Scan.exe (Release) mit Microsoft Artifact Signing (Konto hausit-signatur, Profil mentor-public-trust)
 # Voraussetzung: Azure-CLI angemeldet (az login) mit Rolle "Artifact Signing Certificate Profile Signer".
 # Aufruf: powershell -File tools\sign.ps1 [Datei ...]   – danach node tools\build-web.js

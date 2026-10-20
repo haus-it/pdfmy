@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* beA-/ERVV-Prüfung: Erfüllt eine PDF die technischen Vorgaben für die Einreichung bei Gericht?
    Grundlage: Elektronischer-Rechtsverkehr-Bekanntmachung 2025 (ERVB 2025, BAnz AT 29.07.2025 B2) zu § 5 ERVV:
    – PDF einschließlich PDF 2.0, PDF/A-1, PDF/A-2, PDF/UA; keine eingebundenen Objekte (Inline-Signaturen erlaubt);

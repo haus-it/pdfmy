@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Pripremam zahtjev za potpis …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Najprije se potpišite u označenom polju.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Hvala! E-poruka za {0} pripremljena – otvorite .eml datoteku i pošaljite.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Osobe potpisuju jedna za drugom. Svaka dobiva pripremljenu e-poruku s PDF-om, otvara ga u PDFMy-u, potpisuje se u označenom polju i šalje ga dalje – na kraju Vam se vraća potpisan. Bez poslužitelja i bez prijenosa.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-poruka za {0} pripremljena – otvorite .eml datoteku i pošaljite.{1} Stanje vidite u knjizi ulazne pošte.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Polje postavljeno. Sada kliknite mjesto za {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Za {0} još nedostaje polje za potpis – kliknite ime na traci, zatim mjesto.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Ne potpisuj",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Tekst za označavanje (npr. „Pročitao/la sam opće uvjete“)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Što osoba ovdje treba upisati? (npr. adresa, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}” više nije čitljiv – Outlook je već uklonio privremenu kopiju privitka. Ponovno dvaput kliknite privitak ili ga spremite u Outlooku („Spremi kao”) i zatim otvorite.",
  "Datei übernehmen": "Preuzmi datoteku",
  "Der Eintrag wurde aus der Liste entfernt.": "Unos je uklonjen s popisa.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Instalirane verzije – kliknite za provjeru ažuriranja",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Polje {0} od {1}: {2}",
  "Nächstes Feld →": "Sljedeće polje →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "npr. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Na znanje (neobavezno) – dobiva rezultat u kopiji"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Na znanje (neobavezno) – dobiva rezultat u kopiji",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Dokaziva vjerodostojnost</b> – svaka potpisana verzija ostaje provjerljiva u datoteci",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook privici</b> otvaraju se pouzdano – na sustavima Windows, Mac i Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Probudi skenere</b> i proširena mrežna pretraga",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Potpisivanje e-poštom</b> – s rokom, podsjetnikom, predlošcima i „Na znanje”; i u Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Sve novosti",
+ "Neu in PDFMy": "Novo u PDFMy"
 }

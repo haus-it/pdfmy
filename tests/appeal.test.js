@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Einspruchsfrist bei Bescheiden: 4 Tage Bekanntgabe (§ 122 AO), 1 Monat (§ 355 AO), Wochenende/Feiertag (§ 108 Abs. 3 AO)
 const test = require('node:test'), assert = require('node:assert/strict');
 const L = require('../js/letter.js');

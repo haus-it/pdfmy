@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Ënnerschrëftufro gëtt virbereet …",
  "Bitte zuerst im markierten Feld unterschreiben.": "W.e.g. fir d'éischt am markéierte Feld ënnerschreiwen.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Merci! E-Mail un {0} virbereet – de .eml-Fichier opmaachen a schécken.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "D'Persounen ënnerschreiwen eng no der anerer. Jidderee kritt eng virbereet E-Mail mam PDF, mécht en am PDFMy op, ënnerschreift am markéierte Feld a schéckt en weider – um Enn kënnt en ënnerschriwwen bei Iech zréck. Ouni Server an ouni Upload.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-Mail un {0} virbereet – de .eml-Fichier opmaachen a schécken.{1} De Stand gesitt Dir am Postentréesbuch.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Feld gesat. Elo d'Plaz fir {0} uklicken.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Fir {0} feelt nach en Ënnerschrëftsfeld – Numm an der Leescht uklicken, dann d'Plaz.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Net ënnerschreiwen",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Text zum Ukräizen (z. B. „Ech hunn d'AGB gelies“)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Wat soll d'Persoun hei aginn? (z. B. Adress, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ ass net méi liesbar – Outlook huet déi temporär Kopie vum Unhang scho rëm ewechgeholl. W.e.g. den Unhang nach eng Kéier duebel uklicken oder en an Outlook späicheren („Späicheren ënner“) an dann opmaachen.",
  "Datei übernehmen": "Fichier iwwerhuelen",
  "Der Eintrag wurde aus der Liste entfernt.": "Den Entrée gouf aus der Lëscht ewechgeholl.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Installéiert Versiounen – klicken, fir no Updates ze sichen",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Feld {0} vun {1}: {2}",
  "Nächstes Feld →": "Nächst Feld →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "z. B. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Fir Informatioun (optional) – kritt d'Resultat als Kopie"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Fir Informatioun (optional) – kritt d'Resultat als Kopie",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Echtheet nowäisbar</b> – all ënnerschriwwe Versioun bleift an der Datei iwwerpréifbar",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook-Unhäng</b> maachen zouverlässeg op – ënner Windows, um Mac an ënner Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Scanner erwächen</b> an erweidert Netzwierksich",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Ënnerschreiwe loossen per E-Mail</b> – mat Frist, Erënnerung, Virlagen an „Fir Informatioun“; och an Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "All Neierungen",
+ "Neu in PDFMy": "Nei am PDFMy"
 }

@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* E-Mails ablegen: Anhänge (PDF, Bilder, E-Rechnungs-XML) aus gespeicherten E-Mails holen – lokal, ohne Server.
    .eml (MIME, z. B. Outlook im Web, Thunderbird, Apple Mail) und .msg (klassisches Outlook, OLE-Verbunddatei).
    Reine Funktionen auf Uint8Array, auch in Node-Tests nutzbar. */

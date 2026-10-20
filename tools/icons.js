@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Baut den Symbol-Sprite (Lucide, ISC-Lizenz) aus vendor/lucide/*.svg in index.html ein – zwischen <!--icons--> und <!--/icons-->.
 // Aufruf: node tools/icons.js   (nach dem Hinzufügen eines Symbols nach vendor/lucide)
 'use strict';

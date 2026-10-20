@@ -1,5 +1,5 @@
 ﻿# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # Startet mentor PDF lokal unter http://localhost:8765 (keine Installation nötig).
 # Der Server ist nur von diesem Rechner aus erreichbar. Läuft er bereits, wird nur das App-Fenster geöffnet.
 param([int]$Port = 8765, [switch]$NoBrowser)

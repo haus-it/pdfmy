@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Allkirjataotluse ettevalmistamine …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Palun allkirjastage esmalt märgitud väljal.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Aitäh! E-kiri adressaadile {0} on ette valmistatud – avage .eml-fail ja saatke see ära.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Isikud allkirjastavad üksteise järel. Igaüks saab ettevalmistatud e-kirja PDF-iga, avab selle PDFMy-s, allkirjastab märgitud väljal ja saadab edasi – lõpuks jõuab see allkirjastatuna teieni tagasi. Ilma serverita ja üleslaadimiseta.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-kiri adressaadile {0} on ette valmistatud – avage .eml-fail ja saatke see ära.{1} Olekut näete sissetuleva posti registris.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Väli paigutatud. Nüüd klõpsake kohta isikule {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Isikul {0} puudub veel allkirjaväli – klõpsake nime ribal, seejärel kohta.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Ära allkirjasta",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Märgitav tekst (nt „Olen tingimustega tutvunud“)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Mida peab isik siia sisestama? (nt aadress, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ ei ole enam loetav – Outlook on manuse ajutise koopia juba eemaldanud. Topeltklõpsake palun manust uuesti või salvestage see Outlookis („Salvesta nimega“) ja avage seejärel.",
  "Datei übernehmen": "Võta fail üle",
  "Der Eintrag wurde aus der Liste entfernt.": "Kirje eemaldati loendist.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Installitud versioonid – klõpsake värskenduste otsimiseks",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Väli {0} {1}-st: {2}",
  "Nächstes Feld →": "Järgmine väli →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "nt steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Teadmiseks (valikuline) – saab tulemuse koopiana"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Teadmiseks (valikuline) – saab tulemuse koopiana",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Tõendatav ehtsus</b> – iga allkirjastatud versioon jääb failis kontrollitavaks",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlooki manused</b> avanevad usaldusväärselt – platvormidel Windows, Mac ja Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Ärata skannerid</b> ja laiendatud võrguotsing",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Allkirjastamine e-posti teel</b> – tähtaja, meeldetuletuse, mallide ja „Teadmiseks“ valikuga; ka programmides Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Kõik uuendused",
+ "Neu in PDFMy": "Uut PDFMy-s"
 }

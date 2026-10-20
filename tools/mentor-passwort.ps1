@@ -1,5 +1,5 @@
 ﻿# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # Legt das Passwort für pdfmy.de/mentor fest (interne Mentor-Version).
 # Das Passwort wird nur als bcrypt-Hash gespeichert (.deploy\htpasswd-mentor) – im Klartext steht es nirgends.
 param([string]$User = 'mentor')

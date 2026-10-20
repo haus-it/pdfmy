@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Sprachen von PDFMy: Oberfläche und Texterkennung.
    Oberfläche: Die App ist auf Deutsch geschrieben; andere Sprachen übersetzen die angezeigten Texte im DOM.
    Schlüssel ist der deutsche Originaltext (Leerraum zusammengefasst), Platzhalter {0}, {1} … stehen für wechselnde Teile.

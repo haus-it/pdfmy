@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Undirbý beiðni um undirskrift …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Undirritið fyrst í merkta reitinn.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Takk fyrir! Tölvupóstur til {0} undirbúinn – opnið .eml-skrána og sendið.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Aðilarnir undirrita hver á eftir öðrum. Hver og einn fær undirbúinn tölvupóst með PDF-skjalinu, opnar það í PDFMy, undirritar í merkta reitinn og sendir það áfram – að lokum berst það yður aftur undirritað. Án netþjóns og án upphleðslu.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Tölvupóstur til {0} undirbúinn – opnið .eml-skrána og sendið.{1} Stöðuna sjáið þér í póstskránni.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Reitur settur. Smellið nú á staðinn fyrir {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Enn vantar undirskriftarreit fyrir {0} – smellið á nafnið á stikunni, síðan á staðinn.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Ekki undirrita",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Texti til að haka við (t.d. „Ég hef lesið skilmálana“)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Hvað á aðilinn að slá inn hér? (t.d. heimilisfang, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "Ekki er lengur hægt að lesa „{0}“ – Outlook hefur þegar fjarlægt tímabundið afrit viðhengisins. Vinsamlegast tvísmellið aftur á viðhengið eða vistið það í Outlook („Vista sem“) og opnið það síðan.",
  "Datei übernehmen": "Flytja inn skrá",
  "Der Eintrag wurde aus der Liste entfernt.": "Færslan hefur verið fjarlægð af listanum.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Uppsettar útgáfur – smellið til að leita að uppfærslum",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Reitur {0} af {1}: {2}",
  "Nächstes Feld →": "Næsti reitur →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "t.d. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Til upplýsingar (valfrjálst) – fær niðurstöðuna í afriti"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Til upplýsingar (valfrjálst) – fær niðurstöðuna í afriti",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Sannanleg ósvikni</b> – hver undirrituð útgáfa er áfram sannreynanleg í skránni",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook-viðhengi</b> opnast áreiðanlega – á Windows, Mac og Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Vekja skanna</b> og víðtækari netleit",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Fá undirritun með tölvupósti</b> – með fresti, áminningu, sniðmátum og „Til upplýsingar“; einnig í Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Allar nýjungar",
+ "Neu in PDFMy": "Nýtt í PDFMy"
 }

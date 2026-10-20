@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Förbereder underskriftsbegäran …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Skriv först under i det markerade fältet.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Tack! E-post till {0} förberett – öppna .eml-filen och skicka.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Personerna skriver under i tur och ordning. Var och en får ett förberett e-postmeddelande med PDF:en, öppnar den i PDFMy, skriver under i det markerade fältet och skickar den vidare – till slut kommer den underskriven tillbaka till dig. Utan server och utan uppladdning.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-post till {0} förberett – öppna .eml-filen och skicka.{1} Läget ser du i postjournalen.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Fält placerat. Klicka nu på platsen för {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "För {0} saknas fortfarande ett underskriftsfält – klicka på namnet i listen och sedan på platsen.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Skriv inte under",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Text att kryssa i (t.ex. ”Jag har läst villkoren”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Vad ska personen fylla i här? (t.ex. adress, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "”{0}” kan inte längre läsas – Outlook har redan tagit bort den tillfälliga kopian av bilagan. Dubbelklicka på bilagan igen eller spara den i Outlook (”Spara som”) och öppna den sedan.",
  "Datei übernehmen": "Överta fil",
  "Der Eintrag wurde aus der Liste entfernt.": "Posten har tagits bort från listan.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Installerade versioner – klicka för att söka efter uppdateringar",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Fält {0} av {1}: {2}",
  "Nächstes Feld →": "Nästa fält →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "t.ex. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "För kännedom (valfritt) – får resultatet som kopia"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "För kännedom (valfritt) – får resultatet som kopia",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Bevisbar äkthet</b> – varje signerad version förblir kontrollerbar i filen",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook-bilagor</b> öppnas pålitligt – på Windows, Mac och Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Väck skannrar</b> och utökad nätverkssökning",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Få underskrifter via e-post</b> – med deadline, påminnelse, mallar och ”För kännedom”; även i Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Alla nyheter",
+ "Neu in PDFMy": "Nytt i PDFMy"
 }

@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Formularfelder auf „flachen“ Formularen erkennen (Scan oder PDF ohne Felder) – wie „Formular vorbereiten“ in Acrobat.
    Findet Schreiblinien (____), leere Eingabekästen und Ankreuzfelder; benennt sie nach der Beschriftung daneben.
    gray: Graustufen (0–255) W×H, words: [{ t, x, y, w, h }] normiert 0..1. Ergebnis normiert: [{ type: 'text'|'check', x, y, w, h, name }] */

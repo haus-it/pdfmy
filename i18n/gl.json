@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Preparando a solicitude de sinatura …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Asine primeiro no campo marcado.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Grazas! Correo para {0} preparado – abra o ficheiro .eml e envíeo.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "As persoas asinan unha despois doutra. Cada unha recibe un correo preparado co PDF, ábreo en PDFMy, asina no campo marcado e reenvíao – ao final volve a vostede asinado. Sen servidor e sen subir ficheiros.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Correo para {0} preparado – abra o ficheiro .eml e envíeo.{1} O estado pódeo ver no rexistro de entrada.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Campo colocado. Agora prema no lugar para {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Aínda falta un campo de sinatura para {0} – prema no nome da barra e despois no lugar.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Non asinar",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Texto para marcar (p. ex. «Lin as condicións xerais»)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Que debe introducir aquí a persoa? (p. ex. enderezo, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» xa non se pode ler: Outlook xa eliminou a copia temporal do anexo. Faga dobre clic de novo no anexo ou gárdeo en Outlook («Gardar como») e despois ábrao.",
  "Datei übernehmen": "Importar ficheiro",
  "Der Eintrag wurde aus der Liste entfernt.": "A entrada eliminouse da lista.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Versións instaladas: prema para buscar actualizacións",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Campo {0} de {1}: {2}",
  "Nächstes Feld →": "Campo seguinte →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p. ex. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Para coñecemento (opcional) – recibe unha copia do resultado"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Para coñecemento (opcional) – recibe unha copia do resultado",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Autenticidade demostrable</b> – cada versión asinada segue sendo verificable no ficheiro",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Os anexos de Outlook</b> ábrense de forma fiable – en Windows, Mac e Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Espertar escáneres</b> e busca de rede ampliada",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Solicitar sinaturas por correo electrónico</b> – con prazo, lembranza, modelos e «Para coñecemento»; tamén en Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Todas as novidades",
+ "Neu in PDFMy": "Novidades en PDFMy"
 }

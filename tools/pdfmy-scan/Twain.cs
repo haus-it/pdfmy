@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // TWAIN-Anbindung (32 Bit, TWAIN 1.x-Protokoll mit Ereignisschleife): beidseitig scannen bei Geräten,
 // deren WIA-Treiber Duplex ablehnt (z. B. Epson DS-730N mit Epson Scan 2). Ohne Dialog des Herstellers.
 using System;

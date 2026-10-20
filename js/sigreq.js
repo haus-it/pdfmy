@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Unterschriftsanfrage per E-Mail – ohne Server. Die Anfrage reist in der PDF mit (eingebettete Datei „pdfmy-unterschriften.json“):
    Unterzeichner in Reihenfolge, ihre Unterschriftsfelder (Seite und Lage, relativ 0..1), Status und ein Protokoll.
    Je Unterschrift wird die SHA-256-Prüfsumme der empfangenen Datei festgehalten – so ist nachvollziehbar, auf welcher Fassung unterschrieben wurde.

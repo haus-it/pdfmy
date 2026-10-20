@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Digitale Signatur mit eigenem Zertifikat (.p12/.pfx) – lokal im Browser, ohne Server. Eigene Umsetzung nach den offenen Normen
    ISO 32000-2 (PDF-Signaturen) und ETSI EN 319 142 (PAdES, europäischer Standard, eIDAS): SubFilter ETSI.CAdES.detached,
    CMS mit SHA-256 und signiertem Attribut signing-certificate-v2 (PAdES-Baseline B-B); das PDF bleibt PDF/A.

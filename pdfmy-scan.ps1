@@ -1,5 +1,5 @@
 ﻿# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # pdfmy Scan-Helfer: findet Scanner und scannt alle Seiten in den Scan-Ordner – mit oder ohne Treiber.
 #  - Netzwerkgeräte werden direkt per eSCL ("AirScan"/"Mopria") angesprochen: KEIN Treiber nötig.
 #  - Über Windows eingerichtete Scanner (USB/Netzwerk mit Treiber) werden per WIA genutzt.

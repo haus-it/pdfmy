@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Handy-Scan: Kamera mit Live-Kantenerkennung und automatischer Aufnahme, mehrseitig am Stück.
    Oben die reine Logik (auch in Node-Tests), unten die Kamera-Ansicht (nur im Browser). */
 (function (root) {

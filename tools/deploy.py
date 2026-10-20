@@ -1,5 +1,5 @@
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 """SFTP-Upload für pdfmy.de: lädt nur geänderte Dateien hoch (SHA-256-Manifest auf dem Server).
 
 Zugangsdaten kommen aus den Umgebungsvariablen PDFMY_SFTP_USER / PDFMY_SFTP_PASS (gesetzt von deploy.ps1).

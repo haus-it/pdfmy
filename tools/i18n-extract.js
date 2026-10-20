@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Sammelt die deutschen Texte der Oberfläche für die Übersetzung (Schlüssel = deutscher Text, Platzhalter {0}, {1} …).
 //   1. Statische Texte (index.html): im Browser `I18N.collect()` ausführen und als i18n/_html.json speichern
 //      (gleiches Verfahren wie die Übersetzung zur Laufzeit – siehe js/i18n.js).

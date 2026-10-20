@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Forbereder anmodningen om underskrift …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Underskriv venligst først i det markerede felt.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Tak! E-mail til {0} er klar – åbn .eml-filen, og send den.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Personerne underskriver efter tur. Hver får en forberedt e-mail med PDF'en, åbner den i PDFMy, underskriver i det markerede felt og sender den videre – til sidst kommer den underskrevet tilbage til Dem. Uden server og uden upload.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-mail til {0} er klar – åbn .eml-filen, og send den.{1} Status kan De se i postjournalen.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Felt placeret. Klik nu på stedet for {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Der mangler stadig et underskriftsfelt til {0} – klik på navnet i bjælken, derefter på stedet.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Underskriv ikke",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Tekst til afkrydsning (f.eks. »Jeg har læst handelsbetingelserne«)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Hvad skal personen indtaste her? (f.eks. adresse, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "»{0}« kan ikke længere læses – Outlook har allerede fjernet den midlertidige kopi af vedhæftningen. Dobbeltklik venligst på vedhæftningen igen, eller gem den i Outlook (»Gem som«), og åbn den derefter.",
  "Datei übernehmen": "Overtag fil",
  "Der Eintrag wurde aus der Liste entfernt.": "Posten er fjernet fra listen.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Installerede versioner – klik for at søge efter opdateringer",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Felt {0} af {1}: {2}",
  "Nächstes Feld →": "Næste felt →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "f.eks. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Til orientering (valgfrit) – modtager resultatet som kopi"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Til orientering (valgfrit) – modtager resultatet som kopi",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Dokumenterbar ægthed</b> – hver underskrevet version kan stadig kontrolleres i filen",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Outlook-vedhæftninger</b> åbner pålideligt – på Windows, Mac og Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Væk scannere</b> og udvidet netværkssøgning",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Få underskrevet via e-mail</b> – med frist, påmindelse, skabeloner og »Til orientering«; også i Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Alle nyheder",
+ "Neu in PDFMy": "Nyt i PDFMy"
 }

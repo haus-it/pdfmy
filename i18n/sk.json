@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Pripravuje sa žiadosť o podpis …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Najprv sa podpíšte v označenom poli.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Ďakujeme! E-mail pre {0} je pripravený – otvorte súbor .eml a odošlite ho.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Osoby podpisujú postupne. Každá dostane pripravený e-mail s PDF, otvorí ho v PDFMy, podpíše sa v označenom poli a pošle ho ďalej – na konci sa podpísaný dokument vráti k vám. Bez servera a bez nahrávania.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "E-mail pre {0} je pripravený – otvorte súbor .eml a odošlite ho.{1} Stav uvidíte v knihe došlej pošty.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Pole je umiestnené. Teraz kliknite na miesto pre {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Pre {0} ešte chýba podpisové pole – kliknite na meno na lište, potom na miesto.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Nepodpísať",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Text na zaškrtnutie (napr. „Oboznámil(a) som sa s obchodnými podmienkami“)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Čo má osoba sem zadať? (napr. adresa, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ už nie je čitateľný – Outlook už odstránil dočasnú kópiu prílohy. Dvakrát kliknite, prosím, na prílohu znova alebo ju uložte v Outlooku („Uložiť ako“) a potom otvorte.",
  "Datei übernehmen": "Prevziať súbor",
  "Der Eintrag wurde aus der Liste entfernt.": "Položka bola odstránená zo zoznamu.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Nainštalované verzie – kliknutím vyhľadáte aktualizácie",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Pole {0} z {1}: {2}",
  "Nächstes Feld →": "Ďalšie pole →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "napr. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Na vedomie (voliteľné) – dostane výsledok v kópii"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Na vedomie (voliteľné) – dostane výsledok v kópii",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Preukázateľná pravosť</b> – každá podpísaná verzia zostáva v súbore overiteľná",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Prílohy Outlook</b> sa otvárajú spoľahlivo – v systémoch Windows, Mac aj Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Prebudiť skenery</b> a rozšírené vyhľadávanie v sieti",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Podpisovanie e-mailom</b> – s termínom, pripomienkou, šablónami a „Na vedomie“; funguje aj v Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Všetky novinky",
+ "Neu in PDFMy": "Novinky v PDFMy"
 }

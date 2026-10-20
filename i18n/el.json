@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Προετοιμασία αιτήματος υπογραφής …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Υπογράψτε πρώτα στο επισημασμένο πεδίο.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Ευχαριστούμε! Το email προς {0} είναι έτοιμο – ανοίξτε το αρχείο .eml και στείλτε το.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Τα άτομα υπογράφουν το ένα μετά το άλλο. Το καθένα λαμβάνει ένα έτοιμο email με το PDF, το ανοίγει στο PDFMy, υπογράφει στο επισημασμένο πεδίο και το προωθεί – στο τέλος επιστρέφει σε εσάς υπογεγραμμένο. Χωρίς διακομιστή και χωρίς μεταφόρτωση.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Το email προς {0} είναι έτοιμο – ανοίξτε το αρχείο .eml και στείλτε το.{1} Την κατάσταση τη βλέπετε στο βιβλίο εισερχομένων.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Το πεδίο τοποθετήθηκε. Τώρα κάντε κλικ στο σημείο για {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Για {0} λείπει ακόμη πεδίο υπογραφής – κάντε κλικ στο όνομα στη γραμμή, μετά στο σημείο.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Άρνηση υπογραφής",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Κείμενο για επιλογή (π.χ. «Έχω διαβάσει τους όρους χρήσης»)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Τι πρέπει να συμπληρώσει εδώ το άτομο; (π.χ. διεύθυνση, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "Το «{0}» δεν είναι πλέον αναγνώσιμο – το Outlook έχει ήδη αφαιρέσει το προσωρινό αντίγραφο του συνημμένου. Κάντε ξανά διπλό κλικ στο συνημμένο ή αποθηκεύστε το στο Outlook («Αποθήκευση ως») και στη συνέχεια ανοίξτε το.",
  "Datei übernehmen": "Εισαγωγή αρχείου",
  "Der Eintrag wurde aus der Liste entfernt.": "Η καταχώριση αφαιρέθηκε από τη λίστα.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Εγκατεστημένες εκδόσεις – κάντε κλικ για έλεγχο ενημερώσεων",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Πεδίο {0} από {1}: {2}",
  "Nächstes Feld →": "Επόμενο πεδίο →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "π.χ. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Προς ενημέρωση (προαιρετικά) – λαμβάνει αντίγραφο του αποτελέσματος"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Προς ενημέρωση (προαιρετικά) – λαμβάνει αντίγραφο του αποτελέσματος",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Αποδείξιμη γνησιότητα</b> – κάθε υπογεγραμμένη έκδοση παραμένει επαληθεύσιμη στο αρχείο",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Τα συνημμένα του Outlook</b> ανοίγουν αξιόπιστα – σε Windows, Mac και Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Αφύπνιση σαρωτών</b> και διευρυμένη αναζήτηση δικτύου",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Υπογραφή μέσω email</b> – με προθεσμία, υπενθύμιση, πρότυπα και «Προς ενημέρωση»· και στο Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Όλες οι νέες λειτουργίες",
+ "Neu in PDFMy": "Νέα στο PDFMy"
 }

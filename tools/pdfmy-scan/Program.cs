@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // pdfmy Scan – macht Scanner für pdfmy.de im Browser verfügbar.
 // Läuft im Infobereich, lauscht nur auf 127.0.0.1:52880 und akzeptiert nur Anfragen von pdfmy.
 // Netzwerkgeräte: eSCL ("AirScan"/"Mopria", ohne Treiber). USB/Treiber-Geräte: Windows WIA.

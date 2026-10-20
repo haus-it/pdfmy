@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Подготвяне на заявката за подпис …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Моля, първо подпишете в маркираното поле.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Благодарим! Имейлът до {0} е подготвен – отворете файла .eml и го изпратете.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Хората подписват един след друг. Всеки получава подготвен имейл с PDF файла, отваря го в PDFMy, подписва в маркираното поле и го препраща – накрая документът се връща подписан при вас. Без сървър и без качване.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Имейлът до {0} е подготвен – отворете файла .eml и го изпратете.{1} Състоянието виждате във входящия дневник.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Полето е поставено. Сега щракнете върху мястото за {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "За {0} все още липсва поле за подпис – щракнете върху името в лентата, след това върху мястото.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Не подписвай",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Текст за отметка (напр. „Прочетох общите условия“)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Какво трябва да въведе човекът тук? (напр. адрес, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ вече не може да бъде прочетен – Outlook вече е премахнал временното копие на прикачения файл. Моля, щракнете отново двукратно върху прикачения файл или го запишете в Outlook („Запиши като“) и след това го отворете.",
  "Datei übernehmen": "Поемане на файла",
  "Der Eintrag wurde aus der Liste entfernt.": "Записът беше премахнат от списъка.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Инсталирани версии – щракнете, за да проверите за актуализации",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Поле {0} от {1}: {2}",
  "Nächstes Feld →": "Следващо поле →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "напр. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "За сведение (по избор) – получава копие от резултата"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "За сведение (по избор) – получава копие от резултата",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Доказуема автентичност</b> – всяка подписана версия остава проверима във файла",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Прикачените файлове от Outlook</b> се отварят надеждно – под Windows, Mac и Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Събуди скенерите</b> и разширено търсене в мрежата",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Подписване по имейл</b> – със срок, напомняне, шаблони и „За сведение“; и в Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Всички новости",
+ "Neu in PDFMy": "Ново в PDFMy"
 }

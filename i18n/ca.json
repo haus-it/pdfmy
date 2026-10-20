@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "S'està preparant la sol·licitud de signatura…",
  "Bitte zuerst im markierten Feld unterschreiben.": "Primer signeu al camp marcat.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Gràcies! Correu per a {0} preparat: obriu el fitxer .eml i envieu-lo.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Les persones signen una rere l'altra. Cadascuna rep un correu preparat amb el PDF, l'obre a PDFMy, signa al camp marcat i el reenvia; al final us torna signat. Sense servidor i sense pujar res.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Correu per a {0} preparat: obriu el fitxer .eml i envieu-lo.{1} Podeu veure l'estat al registre d'entrada.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Camp col·locat. Ara feu clic al lloc per a {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Encara falta un camp de signatura per a {0}: feu clic al nom de la barra i després al lloc.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "No signis",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Text per marcar (p. ex. «He llegit les condicions generals»)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Què ha d'introduir aquí la persona? (p. ex. adreça, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» ja no es pot llegir: l’Outlook ja ha eliminat la còpia temporal de l’adjunt. Feu doble clic de nou a l’adjunt o deseu-lo a l’Outlook («Anomena i desa») i després obriu-lo.",
  "Datei übernehmen": "Importa el fitxer",
  "Der Eintrag wurde aus der Liste entfernt.": "L’entrada s’ha suprimit de la llista.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Versions instal·lades: feu clic per cercar actualitzacions",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Camp {0} de {1}: {2}",
  "Nächstes Feld →": "Camp següent →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p. ex. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Per a coneixement (opcional) – rep una còpia del resultat"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Per a coneixement (opcional) – rep una còpia del resultat",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Autenticitat demostrable</b> – cada versió signada es pot verificar dins del fitxer",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Els adjunts d’Outlook</b> s’obren de manera fiable – a Windows, Mac i Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Desperta els escàners</b> i cerca de xarxa ampliada",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Demanar signatures per correu electrònic</b> – amb termini, recordatori, plantilles i «Per a coneixement»; també a Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Totes les novetats",
+ "Neu in PDFMy": "Novetats a PDFMy"
 }

@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Inkrementelles Speichern (ISO 32000-2, 7.5.6) und Nachweis früherer Fassungen.
    Statt die PDF neu zu schreiben, werden nur neue und geänderte Objekte hinten angehängt (mit eigenem Querverweis und /Prev).
    Jede frühere Fassung bleibt so Byte für Byte am Anfang der Datei erhalten – ihre SHA-256-Prüfsumme lässt sich später

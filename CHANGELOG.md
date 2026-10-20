@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Quellcode nur zur nicht-kommerziellen Nutzung
+- Lizenz des Quellcodes auf GitHub von AGPL-3.0 auf **PolyForm Noncommercial License 1.0.0** umgestellt: frei für private Nutzung, Lernen, Forschung, Bildung und Gemeinnützige; kommerzielle Nutzung nur mit schriftlicher Lizenz der Mentor GmbH. Die Nutzung von pdfmy.de bleibt für alle kostenlos.
+- Zusätzliche Bedingungen bleiben (NOTICE): Copyright-Hinweise, „Basiert auf PDFMy – www.pdfmy.de“, Banner Haus iT / „powered by Mentor Group“. LICENSE mit „Required Notice“-Zeilen, SPDX-Kennung in allen Quelldateien (PolyForm-Noncommercial-1.0.0), README/CONTRIBUTING/Hilfe angepasst; Beiträge räumen der Mentor GmbH ein einfaches Nutzungsrecht ein.
+
+### Startseite: „Neu in PDFMy“; Wörterbücher aufgeräumt
+- Neuer Kasten „Neu in PDFMy“ über „helfen Sie mit“: die neuesten Funktionen (Unterschreiben lassen per E-Mail, Echtheit nachweisbar, Outlook-Anhänge, Scanner aufwecken) mit Link „Alle Neuerungen“ auf das Änderungsprotokoll auf GitHub. In allen Sprachen, axe ohne Befund (hell, dunkel, mobil).
+- Wörterbücher: verwaiste Einträge (alte Fassungen geänderter Texte) entfernt – nur solche, deren Text nachweislich nirgends mehr im Quelltext steht.
+
 ### Zur Unterschrift senden: „Zur Kenntnis“ und geführtes Ausfüllen
 - **Zur Kenntnis:** Adressen, die nicht unterschreiben, bekommen das Ergebnis (Abschluss oder Ablehnung) in Kopie – nicht die Zwischenschritte. Bereinigt (klein, ohne Doppelte, Komma/Semikolon/Leerzeichen), geprüft, im Prüfprotokoll, in Vorlagen und in der Anlage der PDF.
 - **Geführt ausfüllen:** Leiste zeigt „x von y Angaben ausgefüllt“ (aktualisiert beim Tippen); „Nächstes Feld →“ springt in Lesereihenfolge von Feld zu Feld, zuerst zu offenen Pflichtangaben, fokussiert Eingabe bzw. „Hier unterschreiben“; Enter im Textfeld springt weiter.

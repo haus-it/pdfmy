@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Qed tiġi ppreparata t-talba għall-firma …",
  "Bitte zuerst im markierten Feld unterschreiben.": "L-ewwel iffirma fil-qasam immarkat.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Grazzi! Email lil {0} ippreparata – iftaħ il-fajl .eml u ibgħatha.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Il-persuni jiffirmaw wara xulxin. Kull waħda tirċievi email ippreparata bil-PDF, tiftaħha f’PDFMy, tiffirma fil-qasam immarkat u tibgħatha 'l quddiem – fl-aħħar tiġi lura għandek iffirmata. Mingħajr server u mingħajr upload.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Email lil {0} ippreparata – iftaħ il-fajl .eml u ibgħatha.{1} L-istatus tarah fir-reġistru tal-posta.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Qasam issettjat. Issa kklikkja l-post għal {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Għal {0} għadu nieqes qasam tal-firma – ikklikkja l-isem fil-bar, imbagħad il-post.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Tiffirmax",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Test biex jiġi mmarkat (eż. “Qrajt it-termini u l-kundizzjonijiet”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "X’għandha ddaħħal hawn il-persuna? (eż. indirizz, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "“{0}” ma tistax tinqara aktar – Outlook diġà neħħa l-kopja temporanja tal-anness. Jekk jogħġbok erġa’ kklikkja darbtejn fuq l-anness jew issejvjah f’Outlook (“Issejvja Bħala”) u mbagħad iftħu.",
  "Datei übernehmen": "Importa fajl",
  "Der Eintrag wurde aus der Liste entfernt.": "L-entrata tneħħiet mil-lista.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Verżjonijiet installati – ikklikkja biex tfittex aġġornamenti",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Qasam {0} minn {1}: {2}",
  "Nächstes Feld →": "Il-qasam li jmiss →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "eż. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Għall-informazzjoni (mhux obbligatorju) – jirċievi kopja tar-riżultat"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Għall-informazzjoni (mhux obbligatorju) – jirċievi kopja tar-riżultat",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Awtentiċità li tista’ tiġi ppruvata</b> – kull verżjoni ffirmata tibqa’ verifikabbli fil-fajl",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>L-annessi ta’ Outlook</b> jinfetħu b’mod affidabbli – fuq Windows, Mac u Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Qajjem l-iscanners</b> u tfittxija estiża fin-netwerk",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Iffirmar bl-email</b> – b’data tal-għeluq, tfakkira, mudelli u “Għall-informazzjoni”; anke f’Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "L-aġġornamenti kollha",
+ "Neu in PDFMy": "Ġdid f’PDFMy"
 }

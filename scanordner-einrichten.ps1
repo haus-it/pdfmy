@@ -1,5 +1,5 @@
 ﻿# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # Richtet auf dem Büro-PC einen Scan-Ordner ein, in den das Multifunktionsgerät per SMB ("Scan to Folder") scannt.
 # Ausführen als Administrator:  Rechtsklick auf scanordner-einrichten.bat > "Als Administrator ausführen"
 #

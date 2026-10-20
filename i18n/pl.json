@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Przygotowywanie prośby o podpis …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Najpierw złóż podpis w zaznaczonym polu.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Dziękujemy! Przygotowano e-mail do {0} – otwórz plik .eml i wyślij.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Osoby podpisują po kolei. Każda otrzymuje przygotowany e-mail z plikiem PDF, otwiera go w PDFMy, podpisuje w zaznaczonym polu i przesyła dalej – na końcu podpisany dokument wraca do Ciebie. Bez serwera i bez przesyłania plików.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Przygotowano e-mail do {0} – otwórz plik .eml i wyślij.{1} Stan sprawdzisz w dzienniku korespondencji.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Pole ustawione. Teraz kliknij miejsce dla: {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Dla {0} brakuje jeszcze pola podpisu – kliknij nazwisko na pasku, a potem miejsce.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Nie podpisuj",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Tekst do zaznaczenia (np. „Zapoznałem się z regulaminem”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Co ta osoba ma tu wpisać? (np. adres, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}” nie jest już czytelny – Outlook usunął już tymczasową kopię załącznika. Proszę ponownie kliknąć dwukrotnie załącznik lub zapisać go w Outlooku („Zapisz jako”), a następnie otworzyć.",
  "Datei übernehmen": "Przejmij plik",
  "Der Eintrag wurde aus der Liste entfernt.": "Wpis został usunięty z listy.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Zainstalowane wersje – kliknij, aby wyszukać aktualizacje",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Pole {0} z {1}: {2}",
  "Nächstes Feld →": "Następne pole →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "np. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Do wiadomości (opcjonalnie) – otrzymuje wynik w kopii"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Do wiadomości (opcjonalnie) – otrzymuje wynik w kopii",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Potwierdzona autentyczność</b> – każda podpisana wersja pozostaje w pliku do sprawdzenia",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Załączniki Outlook</b> otwierają się niezawodnie – w systemach Windows, Mac i Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Wybudź skanery</b> i rozszerzone wyszukiwanie w sieci",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Podpisywanie przez e-mail</b> – z terminem, przypomnieniem, szablonami i „Do wiadomości”; także w Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Wszystkie nowości",
+ "Neu in PDFMy": "Nowości w PDFMy"
 }

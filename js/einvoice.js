@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* E-Rechnungen lesen: ZUGFeRD/Factur-X (CII-XML, in PDF eingebettet) und XRechnung (CII oder UBL).
    Die Daten aus dem XML sind verbindlich – genauer als jede Texterkennung. Ohne DOM, auch in Node-Tests nutzbar. */
 (function (root) {

@@ -1,5 +1,5 @@
 /* Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de */
-/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0 */
 /* Mentor-Design wie pdfmy.de: Archivo (kursiv, Logo/Überschriften), Source Sans 3, Akzent #4A5280 */
 @font-face{font-family:"Archivo";src:url(fonts/archivo-latin-standard-italic.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:italic}
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900}

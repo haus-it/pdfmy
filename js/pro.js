@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Pro-Funktionen: Posteingangsbuch mit Fristen, "Ablegen & nächster", Dokumente vergleichen, Stapelverarbeitung.
    Läuft nach app.js und nutzt dessen Zustand und Funktionen (state, buildPdf, recognize …). */
 'use strict';

@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "An t-iarratas sínithe á ullmhú …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Sínigh sa réimse marcáilte ar dtús.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Go raibh maith agat! Ríomhphost chuig {0} ullmhaithe – oscail an comhad .eml agus seol é.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Síníonn na daoine i ndiaidh a chéile. Faigheann gach duine ríomhphost ullmhaithe leis an PDF, osclaíonn sé in PDFMy é, síníonn sa réimse marcáilte agus seolann ar aghaidh é – ag an deireadh tagann sé ar ais chugat sínithe. Gan freastalaí agus gan uaslódáil.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Ríomhphost chuig {0} ullmhaithe – oscail an comhad .eml agus seol é.{1} Feicfidh tú an stádas i leabhar an phoist isteach.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Réimse socraithe. Anois cliceáil an áit do {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Tá réimse sínithe fós in easnamh do {0} – cliceáil an t-ainm sa bharra, ansin an áit.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Ná sínigh",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Téacs le ticeáil (m.sh. “Léigh mé na téarmaí agus coinníollacha”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Cad ba cheart don duine a iontráil anseo? (m.sh. seoladh, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "Ní féidir “{0}” a léamh a thuilleadh – tá an chóip shealadach den cheangaltán bainte ag Outlook cheana. Cliceáil faoi dhó ar an gceangaltán arís, nó sábháil in Outlook é (“Sábháil Mar”) agus oscail ansin é, le do thoil.",
  "Datei übernehmen": "Iompórtáil comhad",
  "Der Eintrag wurde aus der Liste entfernt.": "Baineadh an iontráil den liosta.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Leaganacha suiteáilte – cliceáil chun nuashonruithe a lorg",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Réimse {0} as {1}: {2}",
  "Nächstes Feld →": "An chéad réimse eile →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "m.sh. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Mar eolas (roghnach) – faigheann sé cóip den toradh"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Mar eolas (roghnach) – faigheann sé cóip den toradh",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Barántúlacht inchruthaithe</b> – fanann gach leagan sínithe infhíoraithe sa chomhad",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Osclaíonn ceangaltáin Outlook</b> go hiontaofa – ar Windows, Mac agus Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Dúisigh na scanóirí</b> agus cuardach líonra leathnaithe",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Síniú a iarraidh trí ríomhphost</b> – le spriocdháta, meabhrúchán, teimpléid agus “Mar eolas”; in Adobe Reader &amp; Co. freisin",
+ "Alle Neuerungen": "Na nuálaíochtaí go léir",
+ "Neu in PDFMy": "Nua in PDFMy"
 }

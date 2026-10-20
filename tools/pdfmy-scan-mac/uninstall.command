@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # pdfmy Scan für Mac – entfernen (Scan-Dienst, App „PDFMy“, Einstellungen und Protokoll).
 DIR="$HOME/Library/Application Support/pdfmy-scan"
 AGENT="$HOME/Library/LaunchAgents/de.pdfmy.scan.plist"

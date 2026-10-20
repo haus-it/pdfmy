@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Digitale Signaturen in PDFs prüfen – lokal im Browser (wie die Signaturleiste in Acrobat).
    Unterstützt CMS/PKCS#7 (adbe.pkcs7.detached, ETSI.CAdES.detached, adbe.pkcs7.sha1) mit RSA (PKCS#1 v1.5) und ECDSA.
    Prüft: (1) signierte Bytes unverändert (Prüfsumme = messageDigest), (2) kryptografische Signatur mit dem Zertifikat (WebCrypto),

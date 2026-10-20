@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Inkrementelles Speichern und Nachweis früherer Fassungen (js/pdfinc.js)
 const test = require('node:test'), assert = require('node:assert/strict'), crypto = require('node:crypto');
 globalThis.window = globalThis; globalThis.self = globalThis;

@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Падрыхтоўка запыту на подпіс …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Спачатку падпішыце ў пазначаным полі.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Дзякуй! Ліст для {0} падрыхтаваны – адкрыйце файл .eml і адпраўце яго.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Асобы падпісваюць па чарзе. Кожная атрымлівае падрыхтаваны ліст з PDF, адкрывае яго ў PDFMy, падпісвае ў пазначаным полі і перасылае далей – у канцы дакумент вяртаецца да вас падпісаным. Без сервера і без загрузкі.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Ліст для {0} падрыхтаваны – адкрыйце файл .eml і адпраўце яго.{1} Стан можна паглядзець у журнале ўваходнай пошты.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Поле пастаўлена. Цяпер націсніце на месца для {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Для {0} яшчэ няма поля подпісу – націсніце імя на панэлі, потым месца.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Не падпісваць",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Тэкст для сцяжка (напр. «З умовамі азнаёмлены»)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Што асоба павінна тут увесці? (напр. адрас, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» больш немагчыма прачытаць – Outlook ужо выдаліў часовую копію ўкладання. Двойчы пстрыкніце па ўкладанні яшчэ раз або захавайце яго ў Outlook («Захаваць як») і потым адкрыйце.",
  "Datei übernehmen": "Перанесці файл",
  "Der Eintrag wurde aus der Liste entfernt.": "Запіс выдалены са спісу.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Усталяваныя версіі – пстрыкніце, каб праверыць наяўнасць абнаўленняў",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Поле {0} з {1}: {2}",
  "Nächstes Feld →": "Наступнае поле →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "напр. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Да ведама (неабавязкова) – атрымлівае вынік у копіі"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Да ведама (неабавязкова) – атрымлівае вынік у копіі",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Даказальная сапраўднасць</b> – кожная падпісаная версія застаецца правяральнай у файле",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Укладанні Outlook</b> адкрываюцца надзейна – у Windows, на Mac і ў Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Абудзіць сканеры</b> і пашыраны пошук у сетцы",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Подпіс па электроннай пошце</b> – з тэрмінам, напамінам, шаблонамі і «Да ведама»; таксама ў Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Усе навінкі",
+ "Neu in PDFMy": "Новае ў PDFMy"
 }

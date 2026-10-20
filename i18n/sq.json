@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Po përgatitet kërkesa për nënshkrim …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Fillimisht nënshkruani në fushën e shënuar.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Faleminderit! Email-i për {0} u përgatit – hapni skedarin .eml dhe dërgojeni.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "Personat nënshkruajnë njëri pas tjetrit. Secili merr një email të përgatitur me PDF-në, e hap në PDFMy, nënshkruan në fushën e shënuar dhe e dërgon më tej – në fund dokumenti i nënshkruar kthehet te ju. Pa server dhe pa ngarkim.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "Email-i për {0} u përgatit – hapni skedarin .eml dhe dërgojeni.{1} Gjendjen e shihni në Regjistrin e postës hyrëse.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Fusha u vendos. Tani klikoni vendin për {0}.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "Për {0} mungon ende një fushë nënshkrimi – klikoni emrin në shirit, pastaj vendin.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Mos nënshkruani",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Teksti për t’u shënuar (p.sh. „Kam lexuar kushtet e përgjithshme“)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Çfarë duhet të shkruajë personi këtu? (p.sh. adresa, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ nuk lexohet më – Outlook e ka hequr tashmë kopjen e përkohshme të shtojcës. Ju lutemi klikoni sërish dy herë mbi shtojcën ose ruajeni në Outlook („Ruaj si“) dhe pastaj hapeni.",
  "Datei übernehmen": "Merr skedarin",
  "Der Eintrag wurde aus der Liste entfernt.": "Hyrja u hoq nga lista.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Versionet e instaluara – klikoni për të kërkuar përditësime",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "Fusha {0} nga {1}: {2}",
  "Nächstes Feld →": "Fusha tjetër →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p.sh. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Për dijeni (opsionale) – merr rezultatin në kopje"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Për dijeni (opsionale) – merr rezultatin në kopje",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Vërtetësi e provueshme</b> – çdo version i nënshkruar mbetet i verifikueshëm në skedar",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Bashkëngjitjet e Outlook</b> hapen me besueshmëri – në Windows, Mac dhe Linux",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Zgjo skanerët</b> dhe kërkim i zgjeruar në rrjet",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Nënshkrim me email</b> – me afat, kujtesë, shabllone dhe “Për dijeni”; edhe në Adobe Reader &amp; Co.",
+ "Alle Neuerungen": "Të gjitha risitë",
+ "Neu in PDFMy": "Risi në PDFMy"
 }

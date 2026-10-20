@@ -2053,7 +2053,6 @@
  "Bereite die Unterschriftsanfrage vor …": "Az aláírási kérelem előkészítése …",
  "Bitte zuerst im markierten Feld unterschreiben.": "Először írja alá a megjelölt mezőben.",
  "Danke! E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Köszönjük! A(z) {0} részére szóló e-mail előkészítve – nyissa meg az .eml fájlt, és küldje el.",
- "Die Personen unterschreiben nacheinander. Jede bekommt eine vorbereitete E-Mail mit der PDF, öffnet sie in PDFMy, unterschreibt im markierten Feld und sendet sie weiter – am Ende kommt sie unterschrieben zu Ihnen zurück. Ohne Server und ohne Upload.": "A személyek egymás után írják alá. Mindenki kap egy előkészített e-mailt a PDF-fel, megnyitja a PDFMy-ban, aláírja a megjelölt mezőben, és továbbküldi – a végén aláírva érkezik vissza Önhöz. Szerver és feltöltés nélkül.",
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.{1} Den Stand sehen Sie im Posteingangsbuch.": "A(z) {0} részére szóló e-mail előkészítve – nyissa meg az .eml fájlt, és küldje el.{1} Az állást a beérkező posta naplójában látja.",
  "Feld gesetzt. Jetzt die Stelle für {0} anklicken.": "Mező elhelyezve. Most kattintson a(z) {0} helyére.",
  "Für {0} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.": "A(z) {0} személynek még hiányzik az aláírási mezője – kattintson a névre a sávban, majd a helyre.",
@@ -2104,7 +2103,6 @@
  "Nicht unterschreiben": "Nem írom alá",
  "Text zum Ankreuzen (z. B. „Ich habe die AGB gelesen“)": "Bejelölendő szöveg (pl. „Elolvastam az ÁSZF-et”)",
  "Was soll die Person hier eintragen? (z. B. Anschrift, IBAN)": "Mit írjon ide a személy? (pl. cím, IBAN)",
- "„{0}“ ist nicht mehr lesbar – Outlook hat die vorübergehende Kopie des Anhangs schon wieder entfernt. Bitte den Anhang erneut doppelt anklicken oder in Outlook sichern („Speichern unter“) und dann öffnen.": "A(z) „{0}” már nem olvasható – az Outlook már eltávolította a melléklet ideiglenes másolatát. Kérjük, kattintson ismét duplán a mellékletre, vagy mentse az Outlookban („Mentés másként”), majd nyissa meg.",
  "Datei übernehmen": "Fájl átvétele",
  "Der Eintrag wurde aus der Liste entfernt.": "A bejegyzés el lett távolítva a listáról.",
  "Installierte Versionen – klicken, um nach Updates zu suchen": "Telepített verziók – kattintson a frissítések kereséséhez",
@@ -2171,5 +2169,11 @@
  "Feld {0} von {1}: {2}": "{0}/{1}. mező: {2}",
  "Nächstes Feld →": "Következő mező →",
  "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "pl. steuer@kanzlei.de, buchhaltung@firma.de",
- "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Tájékoztatásul (nem kötelező) – másolatban megkapja az eredményt"
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Tájékoztatásul (nem kötelező) – másolatban megkapja az eredményt",
+ "<b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei": "<b>Igazolható hitelesség</b> – minden aláírt változat ellenőrizhető marad a fájlban",
+ "<b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux": "<b>Az Outlook-mellékletek</b> megbízhatóan megnyílnak – Windows, Mac és Linux alatt",
+ "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Szkennerek ébresztése</b> és bővített hálózati keresés",
+ "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Aláíratás e-mailben</b> – határidővel, emlékeztetővel, sablonokkal és „Tájékoztatásul” opcióval; az Adobe Reader &amp; Co. programokban is",
+ "Alle Neuerungen": "Az összes újdonság",
+ "Neu in PDFMy": "Újdonságok a PDFMy-ban"
 }
