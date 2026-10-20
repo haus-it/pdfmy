@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Qualitätsrundgang: alle 20 Werkzeuge automatisch geprüft, zwei Fehler behoben
+- Automatischer Rundgang über alle Kacheln der Startseite (Datei laden, Werkzeug ausführen, speichern, Fehler/Konsole prüfen): 18 ohne Befund.
+- **Formular ausfüllen** blieb bei „Formularfelder werden gesucht …“ stehen: Die Suche nach Schreiblinien startete, bevor die Seiten geladen waren. Jetzt startet sie, wenn die Datei vollständig geöffnet ist (erkennt z. B. „Name“, „Datum“ und macht daraus ein ausfüllbares Formular). Dabei Suchmuster für Felder einer Unterschriftsanfrage korrigiert.
+- **PDF verkleinern** konnte bereits schlanke PDFs größer machen. Wird nichts kleiner und wurde nichts geändert, speichert PDFMy jetzt das Original unverändert und sagt das in der Statuszeile; Dateien mit großen Bildern werden weiter verkleinert (Test: 448 KB → 45 KB).
+
 ### Quellcode nur zur nicht-kommerziellen Nutzung
 - Lizenz des Quellcodes auf GitHub von AGPL-3.0 auf **PolyForm Noncommercial License 1.0.0** umgestellt: frei für private Nutzung, Lernen, Forschung, Bildung und Gemeinnützige; kommerzielle Nutzung nur mit schriftlicher Lizenz der Mentor GmbH. Die Nutzung von pdfmy.de bleibt für alle kostenlos.
 - Zusätzliche Bedingungen bleiben (NOTICE): Copyright-Hinweise, „Basiert auf PDFMy – www.pdfmy.de“, Banner Haus iT / „powered by Mentor Group“. LICENSE mit „Required Notice“-Zeilen, SPDX-Kennung in allen Quelldateien (PolyForm-Noncommercial-1.0.0), README/CONTRIBUTING/Hilfe angepasst; Beiträge räumen der Mentor GmbH ein einfaches Nutzungsrecht ein.

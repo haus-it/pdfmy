@@ -2175,5 +2175,6 @@
  "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Herätä skannerit</b> ja laajennettu verkkohaku",
  "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Allekirjoitukset sähköpostilla</b> – määräaika, muistutus, mallipohjat ja ”Tiedoksi”; toimii myös ohjelmissa Adobe Reader &amp; co.",
  "Alle Neuerungen": "Kaikki uudistukset",
- "Neu in PDFMy": "Uutta PDFMy:ssä"
+ "Neu in PDFMy": "Uutta PDFMy:ssä",
+ "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· Tiedosto oli jo optimaalisesti pakattu – alkuperäinen tallennettiin muuttamattomana."
 }

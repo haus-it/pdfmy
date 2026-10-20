@@ -193,6 +193,13 @@ function einvOriginal(pages, o = {}) {
 }
 // Digital signiertes PDF unverändert gespeichert (keine Anmerkungen, Drehungen, Umsortierungen, Stempel, Formulareingaben):
 // Original-Bytes übernehmen – so bleiben vorhandene Signaturen gültig und eine weitere wird angehängt (Mitunterzeichnen)
+// Unverändert geöffnete PDF (eine Datei, alle Seiten in Reihenfolge, keine Anmerkungen, Drehungen, Stempel, Formulareingaben, nicht repariert)
+function untouchedOriginal(pages, o = {}) {
+  const d = pages[0]?.kind === 'pdf' ? state.docs[pages[0].docIdx] : null;
+  if (!d?.bytes || d.filled || d.repaired || d.unlocked || o.password || hasStamp(o)) return null;
+  const same = pages.length === d.js?.numPages && pages.every((p, i) => p.kind === 'pdf' && state.docs[p.docIdx] === d && p.pageIdx === i && !p.rotation && !p.annots.length);
+  return same ? d.bytes : null;
+}
 function signedOriginal(pages, o = {}) {
   const d = pages[0]?.kind === 'pdf' ? state.docs[pages[0].docIdx] : null;
   if (!d?.sigs?.some(r => !r.usageRights) || d.filled || o.password || hasStamp(o)) return null;
@@ -2705,7 +2712,7 @@ async function doExport(o) {
   if (o.dropBlank) pages = pages.filter(p => !(p.blank && !p.keepBlank));
   if (!pages.length) { status('Keine Seiten zum Speichern.'); return; }
   const meta = state.meta, t0 = performance.now(), base = (o.name || baseName()).replace(/\.pdf$/i, '');
-  let data, name, mime;
+  let data, name, mime, keptOrig = false;
   const st = stampOpts(o, base);
   if (o.format === 'docx') {
     await waitForOcr(pages);
@@ -2750,6 +2757,9 @@ async function doExport(o) {
       // "Klein" darf nie größer werden als "Ausgewogen" (z. B. bei reinen Text-PDFs)
       const alt = await buildPdf(pages, meta, { ...opts, size: 'balanced' });
       if (alt.length < data.length) data = alt;
+      // Schon optimal (z. B. schlanke Text-PDF): wird nichts kleiner und wurde nichts geändert, das Original unverändert behalten
+      const u = !o.password && !o.sign ? untouchedOriginal(pages, st) : null;
+      if (u && u.length <= data.length) { data = u.slice(); keptOrig = true; }
     }
     if (o.password) { status('Verschlüsseln …'); data = await encryptPdf(data, o); }
     if (o.sign) { const sd = await signFlow(data); if (!sd) { status('Nicht gespeichert – Signieren abgebrochen.'); return; } data = sd; }
@@ -2778,7 +2788,8 @@ async function doExport(o) {
   const secs = I18N.fmtNum((performance.now() - t0) / 1000, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const before = state.inputBytes ? ` · vorher ${Tools.formatBytes(state.inputBytes)}` : '';
   status(`Gespeichert: ${where} (${Tools.formatBytes(data.length)}${before}, ${secs} s)` +
-    (o.password ? ' · passwortgeschützt' : '') + (o.sign ? ` · digital signiert (${state.signer?.name || ''})` : '') + (state.outDir && S.saveIcs && meta.deadline && mime === 'application/pdf' ? ' + Fristtermin' : ''));
+    (o.password ? ' · passwortgeschützt' : '') + (o.sign ? ` · digital signiert (${state.signer?.name || ''})` : '') + (state.outDir && S.saveIcs && meta.deadline && mime === 'application/pdf' ? ' + Fristtermin' : '') +
+    (keptOrig ? ' · Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.' : ''));
 }
 
 /* ---------- Export-Dialog ---------- */
@@ -3404,7 +3415,12 @@ function applyIntent() {
     case 'repair': status(state.docs.some(d => d.repaired) ? 'Reparierte Seiten prüfen, dann speichern.' : 'Die Datei ist in Ordnung – keine Reparatur nötig. Beim Speichern wird sie sauber neu geschrieben.'); openExport({ format: 'pdf' }); break;
     case 'redact': setTool('rd'); status('Bereiche aufziehen – oder „Persönliche Daten finden“ für Vorschläge. Der Inhalt darunter wird beim Speichern entfernt.'); break;
     case 'sign': setTool('sign'); status('Auf die Stelle klicken, an der die Unterschrift stehen soll.'); break;
-    case 'form': status('Formularfelder werden gesucht …'); break;
+    case 'form': {
+      const d = state.docs[state.pages[0]?.docIdx];
+      if (d?.fields?.length) { status(`Formular mit ${d.fields.length} Feldern erkannt – rechts ausfüllen, dann speichern.`); $('#formSec')?.scrollIntoView({ behavior: 'smooth' }); }
+      else { status('Keine ausfüllbaren Felder – PDFMy sucht Schreiblinien und Kästchen …'); window.autoForm?.(true); }
+      break;
+    }
     case 'protect': openExport({ format: 'pdf', focus: 'password' }); break;
     case 'unlock':
       status(state.docs.some(d => d.unlocked) ? 'Entsperrt. Jetzt ohne Passwort speichern.' : 'Diese Datei war nicht passwortgeschützt.');
@@ -3493,7 +3509,7 @@ async function detectForm(docIdx) {
     const L = PDFLib, fields = [];
     for (const f of lib.getForm().getFields()) {
       const name = f.getName(), ro = f.isReadOnly();
-      if (/^pdfmy_[a-z0-9]+_d+$/.test(name)) continue;   // Felder einer Unterschriftsanfrage (js/pro.js) – nicht als eigenes Formular zeigen
+      if (/^pdfmy_[a-z0-9]+_\d+$/.test(name)) continue;   // Felder einer Unterschriftsanfrage (js/pro.js) – nicht als eigenes Formular zeigen
       if (f instanceof L.PDFTextField) fields.push({ name, kind: 'text', value: f.getText() || '', multi: f.isMultiline(), max: f.getMaxLength(), ro });
       else if (f instanceof L.PDFCheckBox) fields.push({ name, kind: 'check', value: f.isChecked(), ro });
       else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected()[0] || '', ro });
@@ -3505,8 +3521,7 @@ async function detectForm(docIdx) {
   if (d.fields.length) {
     status(`Formular mit ${d.fields.length} Feldern erkannt – rechts ausfüllen, dann speichern.`);
     if (state.intent === 'form') $('#formSec').scrollIntoView({ behavior: 'smooth' });
-  } else if (state.intent === 'form') { status('Keine ausfüllbaren Felder – PDFMy sucht Schreiblinien und Kästchen …'); window.autoForm?.(true); }
-  else formHint(docIdx);
+  } else if (state.intent !== 'form') formHint(docIdx);   // Kachel „Formular“: Suche nach Schreiblinien startet in applyIntent, wenn die Seiten da sind
 }
 /* Nicht ausfüllbares Formular (nur gedruckte Linien): typische Feld-Beschriftungen auf den ersten Seiten → Angebot „Felder erkennen“ */
 const FORM_LABEL = /^(firma|firmenname|name|nachname|vorname|straße|strasse|straße,\s*hausnummer|hausnummer|postleitzahl|plz|ort|wohnort|e-?mail(\s*adresse)?|telefon|telefax|fax|mobil|geburtsdatum|geburtsort|kundennummer|vertragsnummer|iban|bic|kontoinhaber|steuernummer|anschrift)\b/i;

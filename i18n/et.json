@@ -2175,5 +2175,6 @@
  "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Ärata skannerid</b> ja laiendatud võrguotsing",
  "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Allkirjastamine e-posti teel</b> – tähtaja, meeldetuletuse, mallide ja „Teadmiseks“ valikuga; ka programmides Adobe Reader &amp; Co.",
  "Alle Neuerungen": "Kõik uuendused",
- "Neu in PDFMy": "Uut PDFMy-s"
+ "Neu in PDFMy": "Uut PDFMy-s",
+ "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· Fail oli juba optimaalselt tihendatud – originaal salvestati muutmata kujul."
 }

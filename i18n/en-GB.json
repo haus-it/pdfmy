@@ -2175,5 +2175,6 @@
  "<b>Scanner aufwecken</b> und erweiterte Netzwerksuche": "<b>Wake scanners</b> and extended network search",
  "<b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.": "<b>Request signatures by email</b> – with deadline, reminder, templates and “For information”; works in Adobe Reader &amp; Co. too",
  "Alle Neuerungen": "All new features",
- "Neu in PDFMy": "New in PDFMy"
+ "Neu in PDFMy": "New in PDFMy",
+ "· Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.": "· The file was already optimally compressed – the original was saved unchanged."
 }
