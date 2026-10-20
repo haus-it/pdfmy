@@ -651,7 +651,7 @@ async function rotateTargets(dir) {
 function refresh() {
   renderThumbs(); renderStage(); renderSide();
   const n = state.pages.length;
-  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = $('#btnTranslate').disabled = !n;
+  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = $('#btnTranslate').disabled = $('#btnSummary').disabled = !n;
   $('#btnFile').hidden = !n;
   // Statuszeile: „Seite 2 von 11“ (wie in Word); Klick oder Strg+G springt zu einer Seite
   $('#pageNav').hidden = !n;

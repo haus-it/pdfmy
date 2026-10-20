@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Zusammenfassen und fragen ohne Upload
+- Menü → **„Zusammenfassen und fragen …“** (wie „AI Summarizer“/„Chat mit PDF“ bei Acrobat, Smallpdf, iLovePDF, PDFgear – aber lokal): eingebaute KI des Browsers (Summarizer-API und Prompt-API, Chrome ab 138, Gemini Nano auf dem Gerät). Arten Kernpunkte, Kurzfassung, „Worum geht es?“, Überschrift; Länge kurz/mittel/ausführlich; Ausgabe in der Sprache der Oberfläche (sonst Englisch). Lange Dokumente abschnittsweise (an Absatz-, Zeilen- und Satzgrenzen, nichts geht verloren), dann Gesamtzusammenfassung. Fragen werden nur aus dem Dokument beantwortet (Systemanweisung: nichts erfinden). Ergebnis als „maschinell erstellt“ gekennzeichnet, kopierbar.
+- Getestet im Browser mit nachgebildeter KI (Abschnitte, Gesamtzusammenfassung, Frage, Hinweis bei zu langem Dokument), axe ohne Befund; andere Browser: Hinweis statt Funktion.
+
 ### Texterkennung für Arabisch, Persisch, Hebräisch, Chinesisch, Japanisch, Koreanisch
 - 7 weitere Sprachen der Texterkennung (Tesseract 4.0.0_best_int über @tesseract.js-data 1.0.0, je 0,4–2 MB, Laden bei Bedarf; gzip geprüft): ara, fas, heb, chi_sim, chi_tra, jpn, kor – wählbar unter „Dokumentsprache“; Arabisch und Chinesisch erkennt die Automatik selbst (die sicherste Schrift gewinnt).
 - **Unsichtbare Textebene für jede Schrift:** neue Platzhalterschrift `js/glyphless.js` (564 Byte TrueType, CIDFontType2/Identity-H, ToUnicode) wie GlyphLessFont in Tesseract/OCRmyPDF – Zeichen, die die eingebettete DejaVu-Schrift nicht hat, bleiben durchsuchbar und kopierbar, ohne große CJK-Schrift. Chinesisch/Japanisch: Zeichen einer Zeile als ein Textstück, im erkannten Text und in Markdown/HTML ohne Leerzeichen dazwischen.

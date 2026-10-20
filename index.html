@@ -116,6 +116,7 @@ select{border:1px solid var(--line);background:var(--panel);border-radius:7px;pa
 .ann.field{background:rgba(74,82,128,.10);border:1.5px dashed #4A5280;border-radius:2px;overflow:hidden}
 .ann.field .fl{position:absolute;left:3px;top:50%;transform:translateY(-50%);font:600 11px/1.1 system-ui,sans-serif;color:#2c3260;white-space:nowrap;pointer-events:none;max-width:calc(100% - 6px);overflow:hidden;text-overflow:ellipsis}
 .ann.field.check .fl{display:none}
+.sumout{white-space:pre-wrap;margin:12px 0;padding:10px 12px;border:1px solid var(--line);border-radius:6px;min-height:3em;max-height:min(45vh,360px);overflow:auto;font-size:14.5px;line-height:1.5}.sumout:empty{display:none}
 .ann.field.radio{border-radius:50%;overflow:visible}.ann.field.radio .fl{left:calc(100% + 4px);max-width:none;transform:translateY(-50%)}
 .ann.text{white-space:pre;line-height:1.2;font-family:"DejaVu Sans",Verdana,sans-serif;min-width:6px;padding:0;outline:none}
 .ann.text[contenteditable="true"]{outline:1px dashed var(--sel);background:rgba(255,255,255,.6);cursor:text;user-select:text}
@@ -1006,6 +1007,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnSplitAdv" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>PDF aufteilen …</span></button>
           <button class="mi doc" id="btnHalve" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Seiten halbieren …</span></button>
           <button class="mi doc" id="btnTranslate" disabled title="Text des Dokuments in eine andere Sprache übersetzen – auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Übersetzen …</span></button>
+          <button class="mi doc" id="btnSummary" disabled title="Kernpunkte des Dokuments zusammenfassen oder Fragen dazu stellen – mit der KI auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>Zusammenfassen und fragen …</span></button>
           <button class="mi doc" id="btnComments" title="Alle Notizen, Markierungen, Stempel, Unterschriften und Formularfelder auf einen Blick"><svg class="ic" aria-hidden="true"><use href="#i-sticky-note"/></svg><span>Kommentare und Markierungen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -1606,6 +1608,22 @@ html.i18n-wait body{visibility:hidden}
     <p class="hint" id="sp-info" aria-live="polite"></p>
     <div class="dlgrow"><button type="button" id="spCancel">Abbrechen</button><button type="submit" class="primary" id="spGo">Aufteilen</button></div>
   </form>
+</dialog>
+<dialog id="sumDlg" class="sharedlg" aria-labelledby="sumT">
+  <h3 class="dlgtitle" id="sumT">Zusammenfassen und fragen</h3>
+  <p class="hint">Mit der eingebauten KI des Browsers – sie läuft auf diesem Gerät, das Dokument wird nicht hochgeladen. Beim ersten Mal lädt der Browser das KI-Modell (einmalig, mehrere GB).</p>
+  <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap;gap:8px">
+    <label>Art <select id="sumType"><option value="key-points">Kernpunkte</option><option value="tldr">Kurzfassung</option><option value="teaser">Worum geht es?</option><option value="headline">Überschrift</option></select></label>
+    <label>Länge <select id="sumLen"><option value="short">kurz</option><option value="medium" selected>mittel</option><option value="long">ausführlich</option></select></label>
+    <button type="button" class="primary" id="sumGo">Zusammenfassen</button>
+  </div>
+  <form id="sumForm" class="dlgrow" style="justify-content:flex-start;gap:8px;margin-top:10px">
+    <label for="sumQ" class="sr-only">Frage zum Dokument</label>
+    <input id="sumQ" placeholder="Frage zum Dokument, z. B. Bis wann muss ich zahlen?" style="flex:1;min-width:200px">
+    <button type="submit" id="sumAsk">Fragen</button>
+  </form>
+  <div id="sumOut" class="sumout" role="status" aria-live="polite" tabindex="0"></div>
+  <div class="dlgrow"><button type="button" id="sumCopy" hidden>Kopieren</button><button type="button" id="sumClose">Schließen</button></div>
 </dialog>
 <dialog id="trDlg" aria-labelledby="trT">
   <form id="trForm" method="dialog">

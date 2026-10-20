@@ -1413,9 +1413,85 @@ $('#trForm').addEventListener('submit', async e => {
 });
 $('#btnTranslate').onclick = () => { closeMenu(); openTranslate(); };
 
+/* ---------- Zusammenfassen und Fragen ohne Upload: eingebaute KI des Browsers (Summarizer- und Prompt-API, Chrome ab 138) ----------
+   Wie „AI Summarizer“ und „Chat mit PDF“ bei Acrobat, Smallpdf, iLovePDF und PDFgear – aber das Modell läuft auf dem Gerät,
+   der Text verlässt den Computer nicht. Lange Dokumente: abschnittsweise zusammenfassen, dann die Teilergebnisse zusammenfassen. */
+const aiLang = () => { const l = I18N.lang.split('-')[0]; return ['de', 'en', 'es', 'ja', 'fr', 'it', 'pt', 'nl', 'pl'].includes(l) ? l : 'en'; };
+let aiText = '', aiBusy = false;
+async function aiDocText() {
+  const pages = docPages(); await waitForOcr(pages);
+  return pages.map(p => pageText(p).trim()).filter(Boolean).join('\n\n').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n');
+}
+// Text in Abschnitte von höchstens n Zeichen – an Absatz-, Zeilen- oder Satzgrenzen; nichts geht verloren
+const aiChunks = (t, n) => {
+  const out = []; let cur = '';
+  const pieces = t.split(/\n\n/).flatMap(p => { if (p.length <= n) return [p]; const r = []; let s = ''; for (const part of p.split(/(?<=[.!?\n])\s+/)) { if ((s + ' ' + part).length > n && s) { r.push(s); s = ''; } s = s ? s + ' ' + part : part; while (s.length > n) { r.push(s.slice(0, n)); s = s.slice(n); } } if (s) r.push(s); return r; });
+  for (const p of pieces) { if ((cur + '\n\n' + p).length > n && cur) { out.push(cur); cur = ''; } cur = cur ? cur + '\n\n' + p : p; }
+  if (cur) out.push(cur); return out;
+};
+const aiOut = (txt, busy) => { $('#sumOut').textContent = txt; $('#sumCopy').hidden = busy || !txt; };
+const aiProgress = m => (ev => { aiOut(`KI-Modell wird geladen … ${Math.round(ev.loaded * 100)} % (einmalig, vom Browser)`, true); });
+function openSummary() {
+  if (!state.pages.length) return;
+  if (!('Summarizer' in self) && !('LanguageModel' in self)) {
+    alert('Zusammenfassen ohne Upload nutzt die eingebaute KI des Browsers. Sie steht in Google Chrome ab Version 138 am Computer zur Verfügung (Windows, macOS, Linux; mindestens 16 GB Arbeitsspeicher oder eine Grafikkarte mit 4 GB). Ihr Dokument wird dabei nicht hochgeladen.');
+    return;
+  }
+  aiText = ''; aiOut('', false); $('#sumAsk').disabled = !('LanguageModel' in self); $('#sumQ').disabled = !('LanguageModel' in self);
+  $('#sumDlg').showModal();
+}
+$('#sumClose').onclick = () => $('#sumDlg').close();
+$('#sumCopy').onclick = async () => { try { await navigator.clipboard.writeText($('#sumOut').textContent); toast('In die Zwischenablage kopiert.'); } catch { toast('Kopieren nicht möglich.'); } };
+$('#sumGo').onclick = async () => {
+  if (aiBusy) return; aiBusy = true; $('#sumGo').disabled = true; aiOut('Wird zusammengefasst …', true);
+  let sm;
+  try {
+    if (!('Summarizer' in self)) throw new Error('Diese Chrome-Version kann noch nicht zusammenfassen.');
+    const opts = { type: $('#sumType').value, length: $('#sumLen').value, format: 'plain-text', outputLanguage: aiLang(), expectedInputLanguages: [docLang(state.pages).split('-')[0]], sharedContext: 'Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.' };
+    if (await Summarizer.availability(opts) === 'unavailable') throw new Error('Die eingebaute KI ist auf diesem Gerät nicht verfügbar (zu wenig Arbeitsspeicher oder Grafikleistung).');
+    sm = await Summarizer.create({ ...opts, monitor(m) { m.addEventListener('downloadprogress', aiProgress()); } });   // Klick zählt als Bestätigung für das Herunterladen
+    aiOut('Text wird gelesen …', true);
+    aiText ||= await aiDocText();
+    if (!aiText.trim()) throw new Error('Das Dokument enthält keinen lesbaren Text.');
+    const size = Math.max(2000, Math.min(12000, (sm.inputQuota || 6000) * 2.5));   // grob 2,5 Zeichen je Token
+    const parts = aiChunks(aiText, size);
+    let res;
+    if (parts.length === 1) res = await sm.summarize(parts[0]);
+    else {
+      const sums = [];
+      for (const [i, p] of parts.entries()) { aiOut(`Fasse Abschnitt ${i + 1} von ${parts.length} zusammen …`, true); sums.push(await sm.summarize(p)); }
+      res = await sm.summarize(sums.join('\n\n'));
+    }
+    aiOut(res.trim() + '\n\n— Maschinell erstellt (KI auf diesem Gerät): bitte mit dem Dokument abgleichen.', false);
+  } catch (e) { console.error(e); aiOut('Zusammenfassen nicht möglich: ' + e.message, false); }
+  finally { sm?.destroy?.(); aiBusy = false; $('#sumGo').disabled = false; }
+};
+$('#sumForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const q = $('#sumQ').value.trim(); if (!q || aiBusy) return;
+  aiBusy = true; $('#sumAsk').disabled = true; aiOut('Denke nach …', true);
+  let lm;
+  try {
+    const lang = aiLang();
+    if (await LanguageModel.availability({ expectedOutputs: [{ type: 'text', languages: [lang] }] }) === 'unavailable') throw new Error('Die eingebaute KI ist auf diesem Gerät nicht verfügbar.');
+    aiOut('Text wird gelesen …', true);
+    aiText ||= await aiDocText();
+    if (!aiText.trim()) throw new Error('Das Dokument enthält keinen lesbaren Text.');
+    lm = await LanguageModel.create({ expectedOutputs: [{ type: 'text', languages: [lang] }], monitor(m) { m.addEventListener('downloadprogress', aiProgress()); },
+      initialPrompts: [{ role: 'system', content: `Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „${lang}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.` }] });
+    const room = Math.max(1500, ((lm.inputQuota || 6000) - 600) * 2.5), doc = aiText.length > room ? aiText.slice(0, room) + '\n[… gekürzt]' : aiText;
+    aiOut('Denke nach …', true);
+    const a = await lm.prompt(`Dokument:\n"""\n${doc}\n"""\n\nFrage: ${q}`);
+    aiOut(a.trim() + (aiText.length > room ? '\n\n(Das Dokument war zu lang – nur der Anfang wurde berücksichtigt.)' : '') + '\n\n— Maschinell erstellt (KI auf diesem Gerät): bitte mit dem Dokument abgleichen.', false);
+  } catch (err) { console.error(err); aiOut('Antwort nicht möglich: ' + err.message, false); }
+  finally { lm?.destroy?.(); aiBusy = false; $('#sumAsk').disabled = false; }
+});
+$('#btnSummary').onclick = () => { closeMenu(); openSummary(); };
+
+
 /* ---------- Befehlssuche (Strg+K): jede Funktion per Tastatur finden – Kacheln, Werkzeuge, Menü, Kopfzeile ---------- */
 const CMD_SYNONYMS = { scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
-  protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
+  protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', btnSummary: 'ki zusammenfassung zusammenfassen frage chat kernpunkte ai', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
   bates: 'nummerieren akte', btnCam: 'foto handy smartphone kamera abfotografieren', tileCam: 'foto handy smartphone kamera abfotografieren', btnTax: 'datev buchhaltung steuer belege monat export', tileTax: 'datev buchhaltung steuer belege monat export', pdfa: 'archiv revisionssicher', btnJournal: 'fristen post liste', btnSettings: 'optionen kürzel', btnFile: 'ablage archivieren' };
 function commands() {
   const out = [], seen = new Set();
