@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-bestand bevat geen leesbare afbeelding",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, JPG, PNG, HEIC, TIFF of e-factuur als XML)",
  "{0} wird in PDF umgewandelt …": "{0} wordt geconverteerd naar PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, afbeelding, tekst, Markdown, CSV of e-factuur als XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, afbeelding, tekst, Markdown, CSV of e-factuur als XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} pagina('s) gehalveerd – het document heeft nu {1} pagina's.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Voor scans van dubbele pagina's (opengeslagen boek, schrift) of A3-vellen: elke pagina wordt in twee pagina's verdeeld – zonder kwaliteitsverlies.",
+ "Halbieren": "Halveren",
+ "Halbieren nicht möglich:": "Halveren niet mogelijk:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Geen liggende pagina gevonden – kies voor staande pagina's „Alle pagina's”.",
+ "Keine Seiten zum Halbieren.": "Geen pagina's om te halveren.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Alleen liggende pagina's (dubbele pagina's)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Rechterhelft eerst (bijv. voor Arabische of Hebreeuwse boeken)",
+ "Seiten halbieren": "Pagina's halveren",
+ "Seiten halbieren …": "Pagina's halveren …",
+ "Seiten werden halbiert …": "Pagina's worden gehalveerd …",
+ "Senkrecht – linke und rechte Hälfte": "Verticaal – linker- en rechterhelft",
+ "Waagerecht – obere und untere Hälfte": "Horizontaal – boven- en onderhelft",
+ "Rotate": "Rotate"
 }

@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "A TIFF-fájl nem tartalmaz olvasható képet",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, JPG, PNG, HEIC, TIFF vagy XML e-számla)",
  "{0} wird in PDF umgewandelt …": "{0} átalakítása PDF-be …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, szöveg, Markdown, CSV vagy XML e-számla)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, szöveg, Markdown, CSV vagy XML e-számla)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} oldal kettévágva – a dokumentum most {1} oldalas.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Kétoldalas szkennekhez (kinyitott könyv, füzet) vagy A3-as ívekhez: minden oldal két oldalra oszlik – minőségromlás nélkül.",
+ "Halbieren": "Kettévágás",
+ "Halbieren nicht möglich:": "A kettévágás nem lehetséges:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nem található fekvő oldal – álló oldalakhoz válassza a „Minden oldal” lehetőséget.",
+ "Keine Seiten zum Halbieren.": "Nincs kettévágható oldal.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Csak fekvő oldalak (kétoldalas szkennek)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Jobb oldali fél elöl (pl. arab vagy héber könyvekhez)",
+ "Seiten halbieren": "Oldalak kettévágása",
+ "Seiten halbieren …": "Oldalak kettévágása …",
+ "Seiten werden halbiert …": "Oldalak kettévágása folyamatban …",
+ "Senkrecht – linke und rechte Hälfte": "Függőlegesen – bal és jobb fél",
+ "Waagerecht – obere und untere Hälfte": "Vízszintesen – felső és alsó fél",
+ "Rotate": "Rotate"
 }

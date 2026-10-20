@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Skedari TIFF nuk përmban asnjë imazh të lexueshëm",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, JPG, PNG, HEIC, TIFF ose e-faturë si XML)",
  "{0} wird in PDF umgewandelt …": "Po konvertohet {0} në PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, tekst, Markdown, CSV ose e-faturë si XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, tekst, Markdown, CSV ose e-faturë si XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} faqe u përgjysmuan – dokumenti tani ka {1} faqe.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Për skanime të faqeve të dyfishta (libër i hapur, fletore) ose fletë A3: çdo faqe ndahet në dy faqe – pa humbje cilësie.",
+ "Halbieren": "Përgjysmo",
+ "Halbieren nicht möglich:": "Përgjysmimi nuk është i mundur:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nuk u gjet asnjë faqe horizontale – për faqet vertikale zgjidhni „Të gjitha faqet“.",
+ "Keine Seiten zum Halbieren.": "Nuk ka faqe për t’u përgjysmuar.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Vetëm faqet horizontale (faqe të dyfishta)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Fillimisht gjysma e djathtë (p.sh. për libra arabë ose hebraikë)",
+ "Seiten halbieren": "Përgjysmo faqet",
+ "Seiten halbieren …": "Përgjysmo faqet …",
+ "Seiten werden halbiert …": "Faqet po përgjysmohen …",
+ "Senkrecht – linke und rechte Hälfte": "Vertikalisht – gjysma e majtë dhe e djathtë",
+ "Waagerecht – obere und untere Hälfte": "Horizontalisht – gjysma e sipërme dhe e poshtme",
+ "Rotate": "Rotate"
 }

@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Fișierul TIFF nu conține nicio imagine lizibilă",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, JPG, PNG, HEIC, TIFF sau factură electronică ca XML)",
  "{0} wird in PDF umgewandelt …": "Se convertește {0} în PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, text, Markdown, CSV sau factură electronică ca XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, text, Markdown, CSV sau factură electronică ca XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} pagină/pagini înjumătățite – documentul are acum {1} pagini.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Pentru scanări de pagini duble (carte deschisă, caiet) sau coli A3: fiecare pagină este împărțită în două pagini – fără pierderi de calitate.",
+ "Halbieren": "Înjumătățire",
+ "Halbieren nicht möglich:": "Înjumătățirea nu este posibilă:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nu a fost găsită nicio pagină peisaj – pentru paginile portret alegeți „Toate paginile”.",
+ "Keine Seiten zum Halbieren.": "Nicio pagină de înjumătățit.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Doar pagini peisaj (pagini duble)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Mai întâi jumătatea dreaptă (de ex. pentru cărți în arabă sau ebraică)",
+ "Seiten halbieren": "Înjumătățire pagini",
+ "Seiten halbieren …": "Înjumătățire pagini …",
+ "Seiten werden halbiert …": "Se înjumătățesc paginile …",
+ "Senkrecht – linke und rechte Hälfte": "Vertical – jumătatea stângă și dreaptă",
+ "Waagerecht – obere und untere Hälfte": "Orizontal – jumătatea de sus și de jos",
+ "Rotate": "Rotate"
 }

@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "The TIFF file contains no readable image",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, JPG, PNG, HEIC, TIFF or an e-invoice as XML)",
  "{0} wird in PDF umgewandelt …": "Converting {0} to PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, text, Markdown, CSV or an e-invoice as XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, text, Markdown, CSV or an e-invoice as XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} page(s) halved – the document now has {1} pages.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "For double-page scans (open book, booklet) or A3 sheets: each page is split into two pages – without loss of quality.",
+ "Halbieren": "Halve",
+ "Halbieren nicht möglich:": "Cannot halve:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "No landscape page found – choose ‘All pages’ for portrait pages.",
+ "Keine Seiten zum Halbieren.": "No pages to halve.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Landscape pages only (double pages)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Right half first (e.g. for Arabic or Hebrew books)",
+ "Seiten halbieren": "Halve pages",
+ "Seiten halbieren …": "Halve pages …",
+ "Seiten werden halbiert …": "Halving pages …",
+ "Senkrecht – linke und rechte Hälfte": "Vertically – left and right half",
+ "Waagerecht – obere und untere Hälfte": "Horizontally – top and bottom half",
+ "Rotate": "Rotate"
 }

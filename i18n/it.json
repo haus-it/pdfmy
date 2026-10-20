@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Il file TIFF non contiene immagini leggibili",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, JPG, PNG, HEIC, TIFF o fattura elettronica come XML)",
  "{0} wird in PDF umgewandelt …": "Conversione di {0} in PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, immagine, testo, Markdown, CSV o fattura elettronica come XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, immagine, testo, Markdown, CSV o fattura elettronica come XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} pagina/e divisa/e a metà – il documento ha ora {1} pagine.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Per scansioni di doppie pagine (libro aperto, quaderno) o fogli A3: ogni pagina viene divisa in due pagine – senza perdita di qualità.",
+ "Halbieren": "Dividi a metà",
+ "Halbieren nicht möglich:": "Impossibile dividere a metà:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nessuna pagina orizzontale trovata – per le pagine verticali selezionare «Tutte le pagine».",
+ "Keine Seiten zum Halbieren.": "Nessuna pagina da dividere a metà.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Solo pagine orizzontali (doppie pagine)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Prima la metà destra (ad es. per libri arabi o ebraici)",
+ "Seiten halbieren": "Dividi pagine a metà",
+ "Seiten halbieren …": "Dividi pagine a metà …",
+ "Seiten werden halbiert …": "Divisione delle pagine a metà …",
+ "Senkrecht – linke und rechte Hälfte": "In verticale – metà sinistra e destra",
+ "Waagerecht – obere und untere Hälfte": "In orizzontale – metà superiore e inferiore",
+ "Rotate": "Rotate"
 }

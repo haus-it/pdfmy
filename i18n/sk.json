@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Súbor TIFF neobsahuje čitateľný obrázok",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formát nie je podporovaný: {0} (použite, prosím, PDF, JPG, PNG, HEIC, TIFF alebo e-faktúru ako XML)",
  "{0} wird in PDF umgewandelt …": "{0} sa konvertuje do PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formát nie je podporovaný: {0} (použite, prosím, PDF, obrázok, text, Markdown, CSV alebo e-faktúru ako XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formát nie je podporovaný: {0} (použite, prosím, PDF, obrázok, text, Markdown, CSV alebo e-faktúru ako XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Rozpolené strany: {0} – dokument má teraz {1} strán.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Pre skeny dvojstrán (otvorená kniha, zošit) alebo hárky A3: každá strana sa rozdelí na dve – bez straty kvality.",
+ "Halbieren": "Rozpoliť",
+ "Halbieren nicht möglich:": "Rozpolenie nie je možné:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nenašla sa žiadna strana na šírku – pre strany na výšku zvoľte „Všetky strany“.",
+ "Keine Seiten zum Halbieren.": "Žiadne strany na rozpolenie.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Iba strany na šírku (dvojstrany)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Najprv pravá polovica (napr. pre arabské alebo hebrejské knihy)",
+ "Seiten halbieren": "Rozpoliť strany",
+ "Seiten halbieren …": "Rozpoliť strany …",
+ "Seiten werden halbiert …": "Strany sa rozpoľujú …",
+ "Senkrecht – linke und rechte Hälfte": "Zvislo – ľavá a pravá polovica",
+ "Waagerecht – obere und untere Hälfte": "Vodorovne – horná a dolná polovica",
+ "Rotate": "Rotate"
 }

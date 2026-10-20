@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-filen innehåller ingen läsbar bild",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, JPG, PNG, HEIC, TIFF eller e-faktura som XML)",
  "{0} wird in PDF umgewandelt …": "{0} konverteras till PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, bild, text, Markdown, CSV eller e-faktura som XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, bild, text, Markdown, CSV eller e-faktura som XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} sida/sidor halverade – dokumentet har nu {1} sidor.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "För skanningar av dubbelsidor (uppslagen bok, häfte) eller A3-ark: Varje sida delas i två sidor – utan kvalitetsförlust.",
+ "Halbieren": "Halvera",
+ "Halbieren nicht möglich:": "Det gick inte att halvera:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Ingen liggande sida hittades – välj ”Alla sidor” för stående sidor.",
+ "Keine Seiten zum Halbieren.": "Inga sidor att halvera.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Endast liggande sidor (dubbelsidor)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Höger halva först (t.ex. för arabiska eller hebreiska böcker)",
+ "Seiten halbieren": "Halvera sidor",
+ "Seiten halbieren …": "Halvera sidor …",
+ "Seiten werden halbiert …": "Sidorna halveras …",
+ "Senkrecht – linke und rechte Hälfte": "Lodrätt – vänster och höger halva",
+ "Waagerecht – obere und untere Hälfte": "Vågrätt – övre och nedre halva",
+ "Rotate": "Rotate"
 }

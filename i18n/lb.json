@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-Datei enthält kee liesbart Bild",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)",
  "{0} wird in PDF umgewandelt …": "{0} gëtt an PDF ëmgewandelt …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} Säit(en) halbéiert – d'Dokument huet elo {1} Säiten.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Fir Duebelsäiten-Scans (opgeschloe Buch, Heft) oder A3-Bogen: All Säit gëtt an zwou Säiten gedeelt – ouni Qualitéitsverloscht.",
+ "Halbieren": "Halbéieren",
+ "Halbieren nicht möglich:": "Halbéieren net méiglech:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Keng Säit am Querformat fonnt – fir Héichformat-Säiten „All Säiten“ wielen.",
+ "Keine Seiten zum Halbieren.": "Keng Säiten zum Halbéieren.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Nëmme Säiten am Querformat (Duebelsäiten)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Riets Hälschent als éischt (z. B. fir arabesch oder hebräesch Bicher)",
+ "Seiten halbieren": "Säiten halbéieren",
+ "Seiten halbieren …": "Säiten halbéieren …",
+ "Seiten werden halbiert …": "Säite ginn halbéiert …",
+ "Senkrecht – linke und rechte Hälfte": "Senkrecht – lénks a riets Hälschent",
+ "Waagerecht – obere und untere Hälfte": "Waagerecht – iewescht an ënnescht Hälschent",
+ "Rotate": "Rotate"
 }

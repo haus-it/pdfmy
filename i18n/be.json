@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Файл TIFF не змяшчае чытэльнай выявы",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Фармат не падтрымліваецца: {0} (выкарыстайце PDF, JPG, PNG, HEIC, TIFF або электронны рахунак у XML)",
  "{0} wird in PDF umgewandelt …": "{0}: пераўтварэнне ў PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Фармат не падтрымліваецца: {0} (выкарыстайце PDF, выяву, тэкст, Markdown, CSV або электронны рахунак у XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Фармат не падтрымліваецца: {0} (выкарыстайце PDF, выяву, тэкст, Markdown, CSV або электронны рахунак у XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Старонак разрэзана напалову: {0} – цяпер у дакуменце {1} старонак.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Для сканаў развароту (раскрытая кніга, сшытак) або аркушаў A3: кожная старонка дзеліцца на дзве – без страты якасці.",
+ "Halbieren": "Разрэзаць напалову",
+ "Halbieren nicht möglich:": "Разрэзаць напалову немагчыма:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Не знойдзена ніводнай альбомнай старонкі – для кніжных старонак выберыце «Усе старонкі».",
+ "Keine Seiten zum Halbieren.": "Няма старонак для разразання напалову.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Толькі альбомныя старонкі (развароты)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Спачатку правая палова (напрыклад, для арабскіх або іўрыцкіх кніг)",
+ "Seiten halbieren": "Разрэзаць старонкі напалову",
+ "Seiten halbieren …": "Разрэзаць старонкі напалову …",
+ "Seiten werden halbiert …": "Старонкі разразаюцца напалову …",
+ "Senkrecht – linke und rechte Hälfte": "Вертыкальна – левая і правая палова",
+ "Waagerecht – obere und untere Hälfte": "Гарызантальна – верхняя і ніжняя палова",
+ "Rotate": "Rotate"
 }

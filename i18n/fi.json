@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-tiedosto ei sisällä luettavaa kuvaa",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, JPG-, PNG-, HEIC- tai TIFF-tiedostoa tai XML-muotoista e-laskua)",
  "{0} wird in PDF umgewandelt …": "{0} muunnetaan PDF:ksi …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, teksti-, Markdown- tai CSV-tiedostoa tai XML-muotoista e-laskua)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, teksti-, Markdown- tai CSV-tiedostoa tai XML-muotoista e-laskua)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Puolitettu {0} sivua – asiakirjassa on nyt {1} sivua.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Aukeamaskannauksille (avattu kirja, vihko) tai A3-arkeille: jokainen sivu jaetaan kahdeksi sivuksi – laatu säilyy.",
+ "Halbieren": "Puolita",
+ "Halbieren nicht möglich:": "Puolittaminen ei onnistu:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Vaakasivua ei löytynyt – valitse pystysivuille ”Kaikki sivut”.",
+ "Keine Seiten zum Halbieren.": "Ei puolitettavia sivuja.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Vain vaakasivut (aukeamat)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Oikea puolisko ensin (esim. arabian- tai hepreankielisille kirjoille)",
+ "Seiten halbieren": "Puolita sivut",
+ "Seiten halbieren …": "Puolita sivut …",
+ "Seiten werden halbiert …": "Sivuja puolitetaan …",
+ "Senkrecht – linke und rechte Hälfte": "Pystysuunnassa – vasen ja oikea puolisko",
+ "Waagerecht – obere und untere Hälfte": "Vaakasuunnassa – ylä- ja alapuolisko",
+ "Rotate": "Rotate"
 }

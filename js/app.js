@@ -651,7 +651,7 @@ async function rotateTargets(dir) {
 function refresh() {
   renderThumbs(); renderStage(); renderSide();
   const n = state.pages.length;
-  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2;
+  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = !n;
   $('#btnFile').hidden = !n;
   // Statuszeile: „Seite 2 von 11“ (wie in Word); Klick oder Strg+G springt zu einer Seite
   $('#pageNav').hidden = !n;
@@ -3260,6 +3260,25 @@ $('#splitForm').addEventListener('input', splitInfo);
 $('#splitForm').addEventListener('change', splitInfo);
 $('#spCancel').onclick = () => $('#splitDlg').close();
 $('#btnSplitAdv').onclick = () => { closeMenu(); openSplit(); };
+// Seiten halbieren (js/layout.js halve): aktuelles Dokument als PDF erzeugen, Seiten teilen und neu laden – Briefdaten bleiben
+$('#btnHalve').onclick = () => { closeMenu(); if (state.pages.length) $('#halveDlg').showModal(); };
+$('#hvCancel').onclick = () => $('#halveDlg').close();
+$('#halveForm').addEventListener('submit', async e => {
+  e.preventDefault(); $('#halveDlg').close();
+  const o = { dir: document.querySelector('[name=hv-dir]:checked').value, only: document.querySelector('[name=hv-only]:checked').value, rtl: $('#hv-rtl').checked };
+  try {
+    status('Seiten werden halbiert …', 0.1);
+    const name = filename(), meta = state.meta, files = state.files;
+    const doc = await PDFDocument.load(await buildPdf(state.pages, meta, { noOcr: true, onPage: () => {}, bookmarks: false }));
+    const n = await Layout.halve(doc, o);
+    if (!n) { status(o.only === 'landscape' ? 'Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.' : 'Keine Seiten zum Halbieren.'); return; }
+    const total = doc.getPageCount(), bytes = await doc.save();
+    resetDoc(); state.meta = meta; state.files = files;
+    await importFiles([new File([bytes], /\.pdf$/i.test(name) ? name : name + '.pdf', { type: 'application/pdf' })]);
+    state.dirty = true; renderForm?.();
+    status(`${n} Seite(n) halbiert – das Dokument hat jetzt ${total} Seiten.`);
+  } catch (err) { console.error(err); status('Halbieren nicht möglich: ' + err.message); }
+});
 $('#splitForm').addEventListener('submit', async ev => {
   ev.preventDefault(); $('#splitDlg').close();
   try {
@@ -3398,8 +3417,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.8.9';
-const SCAN_MAC_LATEST = '1.1.8';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.9.0';
+const SCAN_MAC_LATEST = '1.1.9';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());

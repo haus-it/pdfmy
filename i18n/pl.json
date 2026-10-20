@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Plik TIFF nie zawiera czytelnego obrazu",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, JPG, PNG, HEIC, TIFF lub e-faktury w formacie XML)",
  "{0} wird in PDF umgewandelt …": "Konwertowanie {0} do PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, tekstu, Markdown, CSV lub e-faktury w formacie XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, tekstu, Markdown, CSV lub e-faktury w formacie XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Podzielono na pół stron: {0} – dokument ma teraz {1} stron(y).",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Do skanów rozkładówek (otwarta książka, zeszyt) lub arkuszy A3: każda strona zostaje podzielona na dwie – bez utraty jakości.",
+ "Halbieren": "Podziel na pół",
+ "Halbieren nicht möglich:": "Nie można podzielić na pół:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nie znaleziono strony w orientacji poziomej – dla stron pionowych wybierz „Wszystkie strony”.",
+ "Keine Seiten zum Halbieren.": "Brak stron do podzielenia na pół.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Tylko strony poziome (rozkładówki)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Najpierw prawa połowa (np. dla książek arabskich lub hebrajskich)",
+ "Seiten halbieren": "Podziel strony na pół",
+ "Seiten halbieren …": "Podziel strony na pół …",
+ "Seiten werden halbiert …": "Dzielenie stron na pół …",
+ "Senkrecht – linke und rechte Hälfte": "Pionowo – lewa i prawa połowa",
+ "Waagerecht – obere und untere Hälfte": "Poziomo – górna i dolna połowa",
+ "Rotate": "Rotate"
 }

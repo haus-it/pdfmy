@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-fail ei sisalda loetavat pilti",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, JPG, PNG, HEIC, TIFF või e-arve XML-ina)",
  "{0} wird in PDF umgewandelt …": "{0} teisendatakse PDF-iks …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, tekst, Markdown, CSV või e-arve XML-ina)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, tekst, Markdown, CSV või e-arve XML-ina)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Poolitatud lehekülgi: {0} – dokumendis on nüüd {1} lehekülge.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Kaksiklehekülgede skannide (avatud raamat, vihik) või A3-lehtede jaoks: iga lehekülg jagatakse kaheks – kvaliteeti kaotamata.",
+ "Halbieren": "Poolita",
+ "Halbieren nicht möglich:": "Poolitamine pole võimalik:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Rõhtpaigutusega lehekülge ei leitud – püstpaigutusega lehekülgede jaoks valige „Kõik leheküljed“.",
+ "Keine Seiten zum Halbieren.": "Pole lehekülgi poolitamiseks.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Ainult rõhtpaigutusega leheküljed (kaksikleheküljed)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Parem pool enne (nt araabia- või heebreakeelsete raamatute jaoks)",
+ "Seiten halbieren": "Poolita leheküljed",
+ "Seiten halbieren …": "Poolita leheküljed …",
+ "Seiten werden halbiert …": "Lehekülgi poolitatakse …",
+ "Senkrecht – linke und rechte Hälfte": "Vertikaalselt – vasak ja parem pool",
+ "Waagerecht – obere und untere Hälfte": "Horisontaalselt – ülemine ja alumine pool",
+ "Rotate": "Rotate"
 }

@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Nid oes delwedd ddarllenadwy yn y ffeil TIFF",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, JPG, PNG, HEIC, TIFF neu e-anfoneb fel XML)",
  "{0} wird in PDF umgewandelt …": "Yn trosi {0} i PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, delwedd, testun, Markdown, CSV neu e-anfoneb fel XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, delwedd, testun, Markdown, CSV neu e-anfoneb fel XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} tudalen wedi’u haneru – mae gan y ddogfen {1} tudalen bellach.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Ar gyfer sganiau tudalen ddwbl (llyfr agored, llyfryn) neu ddalennau A3: caiff pob tudalen ei rhannu’n ddwy dudalen – heb golli ansawdd.",
+ "Halbieren": "Haneru",
+ "Halbieren nicht möglich:": "Methu haneru:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Heb ddod o hyd i dudalen dirlun – ar gyfer tudalennau portread dewiswch “Pob tudalen”.",
+ "Keine Seiten zum Halbieren.": "Dim tudalennau i’w haneru.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Tudalennau tirlun yn unig (tudalennau dwbl)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Hanner de yn gyntaf (e.e. ar gyfer llyfrau Arabeg neu Hebraeg)",
+ "Seiten halbieren": "Haneru tudalennau",
+ "Seiten halbieren …": "Haneru tudalennau …",
+ "Seiten werden halbiert …": "Wrthi’n haneru tudalennau …",
+ "Senkrecht – linke und rechte Hälfte": "Yn fertigol – hanner chwith a de",
+ "Waagerecht – obere und untere Hälfte": "Yn llorweddol – hanner uchaf ac isaf",
+ "Rotate": "Rotate"
 }

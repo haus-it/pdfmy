@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Le fichier TIFF ne contient aucune image lisible",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format non pris en charge : {0} (veuillez utiliser PDF, JPG, PNG, HEIC, TIFF ou une facture électronique en XML)",
  "{0} wird in PDF umgewandelt …": "Conversion de {0} en PDF…",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format non pris en charge : {0} (veuillez utiliser PDF, une image, du texte, Markdown, CSV ou une facture électronique en XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format non pris en charge : {0} (veuillez utiliser PDF, une image, du texte, Markdown, CSV ou une facture électronique en XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} page(s) coupée(s) en deux – le document compte désormais {1} pages.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Pour les numérisations de doubles pages (livre ouvert, cahier) ou les feuilles A3 : chaque page est divisée en deux pages – sans perte de qualité.",
+ "Halbieren": "Couper en deux",
+ "Halbieren nicht möglich:": "Impossible de couper en deux :",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Aucune page en paysage trouvée – pour les pages en portrait, choisissez « Toutes les pages ».",
+ "Keine Seiten zum Halbieren.": "Aucune page à couper en deux.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Uniquement les pages en paysage (doubles pages)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Moitié droite en premier (p. ex. pour les livres arabes ou hébreux)",
+ "Seiten halbieren": "Couper les pages en deux",
+ "Seiten halbieren …": "Couper les pages en deux…",
+ "Seiten werden halbiert …": "Découpage des pages en deux…",
+ "Senkrecht – linke und rechte Hälfte": "Verticalement – moitié gauche et droite",
+ "Waagerecht – obere und untere Hälfte": "Horizontalement – moitié supérieure et inférieure",
+ "Rotate": "Rotate"
 }

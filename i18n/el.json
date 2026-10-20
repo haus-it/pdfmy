@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Το αρχείο TIFF δεν περιέχει αναγνώσιμη εικόνα",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, JPG, PNG, HEIC, TIFF ή ηλεκτρονικό τιμολόγιο ως XML)",
  "{0} wird in PDF umgewandelt …": "Μετατροπή του {0} σε PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, κείμενο, Markdown, CSV ή ηλεκτρονικό τιμολόγιο ως XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, κείμενο, Markdown, CSV ή ηλεκτρονικό τιμολόγιο ως XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Διχοτομήθηκαν {0} σελίδες – το έγγραφο έχει τώρα {1} σελίδες.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Για σαρώσεις διπλών σελίδων (ανοιχτό βιβλίο, τετράδιο) ή φύλλα A3: κάθε σελίδα χωρίζεται σε δύο σελίδες – χωρίς απώλεια ποιότητας.",
+ "Halbieren": "Διχοτόμηση",
+ "Halbieren nicht möglich:": "Δεν είναι δυνατή η διχοτόμηση:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Δεν βρέθηκε οριζόντια σελίδα – για κατακόρυφες σελίδες επιλέξτε «Όλες οι σελίδες».",
+ "Keine Seiten zum Halbieren.": "Δεν υπάρχουν σελίδες για διχοτόμηση.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Μόνο οριζόντιες σελίδες (διπλές σελίδες)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Πρώτα το δεξί μισό (π.χ. για αραβικά ή εβραϊκά βιβλία)",
+ "Seiten halbieren": "Διχοτόμηση σελίδων",
+ "Seiten halbieren …": "Διχοτόμηση σελίδων …",
+ "Seiten werden halbiert …": "Διχοτόμηση σελίδων σε εξέλιξη …",
+ "Senkrecht – linke und rechte Hälfte": "Κάθετα – αριστερό και δεξί μισό",
+ "Waagerecht – obere und untere Hälfte": "Οριζόντια – πάνω και κάτω μισό",
+ "Rotate": "Rotate"
 }

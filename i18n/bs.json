@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF datoteka ne sadrži čitljivu sliku",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format nije podržan: {0} (molimo PDF, JPG, PNG, HEIC, TIFF ili e-račun kao XML)",
  "{0} wird in PDF umgewandelt …": "{0} se pretvara u PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format nije podržan: {0} (molimo PDF, sliku, tekst, Markdown, CSV ili e-račun kao XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format nije podržan: {0} (molimo PDF, sliku, tekst, Markdown, CSV ili e-račun kao XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Prepolovljeno stranica: {0} – dokument sada ima {1} stranica.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Za skenove dvostranica (otvorena knjiga, sveska) ili A3 tabake: svaka stranica se dijeli na dvije – bez gubitka kvaliteta.",
+ "Halbieren": "Prepolovi",
+ "Halbieren nicht möglich:": "Prepolovljavanje nije moguće:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nije pronađena nijedna položena stranica – za uspravne stranice odaberite „Sve stranice“.",
+ "Keine Seiten zum Halbieren.": "Nema stranica za prepolovljavanje.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Samo položene stranice (dvostranice)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Prvo desna polovina (npr. za arapske ili hebrejske knjige)",
+ "Seiten halbieren": "Prepolovi stranice",
+ "Seiten halbieren …": "Prepolovi stranice …",
+ "Seiten werden halbiert …": "Stranice se prepolovljavaju …",
+ "Senkrecht – linke und rechte Hälfte": "Okomito – lijeva i desna polovina",
+ "Waagerecht – obere und untere Hälfte": "Vodoravno – gornja i donja polovina",
+ "Rotate": "Rotate"
 }

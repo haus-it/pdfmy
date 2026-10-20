@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### pdfmy Scan 1.9.0 (Windows) / 1.1.9 (Mac, Linux): Weiterleitung für Zeitstempel
+- Neuer Endpunkt `/tsa`: leitet Zeitstempel-Anfragen (RFC 3161) an öffentliche Zeitstempeldienste weiter – Browser dürfen diese nicht direkt abfragen (kein CORS). Nur feste Liste bekannter Dienste (DigiCert, Sectigo, DFN, FreeTSA, GlobalSign, SSL.com, Entrust, IdenTrust, SwissSign), Anfrage höchstens 4 KB, Antwort höchstens 64 KB – kein offener Proxy. Grundlage für signierte PDFs mit Zeitstempel (folgt). Getestet: Perl-Fassung lokal gegen DigiCert (Antwort 5,9 KB), fremde Adresse abgelehnt.
+
+### Seiten halbieren
+- Menü → **„Seiten halbieren …“** (wie bei PDF24 und Sejda): Doppelseiten-Scans und A3-Bögen werden in zwei Seiten geteilt – senkrecht oder waagerecht, nur Querformat oder alle Seiten, optional rechte Hälfte zuerst. Verlustfrei über MediaBox (flache Seitenkopie: Inhalt, Schriften und Bilder werden geteilt, die Datei wird nicht doppelt so groß); Drehung wird berücksichtigt, Links und Markierungen bleiben auf ihrer Hälfte. Briefdaten bleiben erhalten. `Layout.halve` in `js/layout.js`.
+- Getestet: `tests/layout.test.js` (2 neue Fälle: quer/hoch, 90°-Drehung, Anmerkungen, oben/unten, rechts zuerst), im Browser mit Doppelseite + Hochformatseite, axe ohne Befund.
+
 ### Text, Markdown und CSV in PDF
 - **.txt, .md, .csv** öffnen jetzt direkt als PDF (wie „TXT/Markdown/CSV to PDF“ bei PDF24, Smallpdf): neues Modul `js/textpdf.js` – A4 mit eingebetteten DejaVu-Schriften; Markdown mit Überschriften, Absätzen, Listen (auch Aufgaben ☐/☑, verschachtelt), Zitaten, Code-Blöcken, Tabellen und Trennlinien; CSV mit erkanntem Trennzeichen (; , Tab |), Anführungszeichen, Kopfzeile auf jeder Seite, Querformat ab 7 Spalten, Zahlen rechtsbündig. Kodierung UTF-8, sonst Windows-1252 (ältere Excel-CSV). Seitenzahlen bei mehreren Seiten.
 - Getestet: `tests/textpdf.test.js` (5 Fälle, Text mit pypdf strict geprüft), im Browser .md/.csv (Windows-1252, 3 Seiten)/.txt importiert; Zeilenumbrüche in TXT wurden zunächst zu „?“ – behoben.

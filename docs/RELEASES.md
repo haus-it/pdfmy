@@ -144,3 +144,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-10-20 21:34 | pdfmy-202610201934 | 1.8.9 | 9f151044662c912c… | 160/160 Tests bestanden | 86 | Administrator |
 | 2026-10-20 21:45 | pdfmy-202610201944 | 1.8.9 | fc73c4629c432ef8… | 165/165 Tests bestanden | 94 | Administrator |
 | 2026-10-20 21:56 | pdfmy-202610201956 | 1.8.9 | 58c8911bc0092a3e… | 167/167 Tests bestanden | 88 | Administrator |
+| 2026-10-20 22:06 | pdfmy-202610202006 | 1.9.0 | 1a2322b2462a076b… | 167/167 Tests bestanden | 90 | Administrator |

@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "O ficheiro TIFF non contén ningunha imaxe lexible",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formato non compatible: {0} (use PDF, JPG, PNG, HEIC, TIFF ou factura electrónica en XML)",
  "{0} wird in PDF umgewandelt …": "Convertendo {0} a PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato non compatible: {0} (use PDF, imaxe, texto, Markdown, CSV ou factura electrónica en XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato non compatible: {0} (use PDF, imaxe, texto, Markdown, CSV ou factura electrónica en XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} páxina(s) partida(s) pola metade – o documento ten agora {1} páxinas.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Para dixitalizacións de dobre páxina (libro aberto, caderno) ou follas A3: cada páxina divídese en dúas páxinas – sen perda de calidade.",
+ "Halbieren": "Partir pola metade",
+ "Halbieren nicht möglich:": "Non se pode partir pola metade:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Non se atopou ningunha páxina horizontal – para páxinas verticais, escolla «Todas as páxinas».",
+ "Keine Seiten zum Halbieren.": "Non hai páxinas que partir.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Só páxinas horizontais (dobres páxinas)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Primeiro a metade dereita (p. ex. para libros árabes ou hebreos)",
+ "Seiten halbieren": "Partir páxinas pola metade",
+ "Seiten halbieren …": "Partir páxinas pola metade…",
+ "Seiten werden halbiert …": "Partindo páxinas pola metade…",
+ "Senkrecht – linke und rechte Hälfte": "Vertical – metade esquerda e dereita",
+ "Waagerecht – obere und untere Hälfte": "Horizontal – metade superior e inferior",
+ "Rotate": "Rotate"
 }

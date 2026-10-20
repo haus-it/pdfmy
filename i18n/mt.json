@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Il-fajl TIFF ma fih l-ebda stampa li tinqara",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, JPG, PNG, HEIC, TIFF jew fattura elettronika bħala XML)",
  "{0} wird in PDF umgewandelt …": "Qed jiġi kkonvertit {0} f’PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, stampa, test, Markdown, CSV jew fattura elettronika bħala XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, stampa, test, Markdown, CSV jew fattura elettronika bħala XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} paġna/paġni maqsuma min-nofs – id-dokument issa għandu {1} paġni.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Għal skens ta’ paġni doppji (ktieb miftuħ, kitba) jew folji A3: kull paġna tinqasam f’żewġ paġni – mingħajr telf ta’ kwalità.",
+ "Halbieren": "Aqsam min-nofs",
+ "Halbieren nicht möglich:": "Ma jistax jinqasam min-nofs:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Ma nstabet l-ebda paġna orizzontali – għal paġni vertikali agħżel “Il-paġni kollha”.",
+ "Keine Seiten zum Halbieren.": "M’hemmx paġni x’jinqasmu min-nofs.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Paġni orizzontali biss (paġni doppji)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "In-nofs tal-lemin l-ewwel (eż. għal kotba Għarab jew Ebrajki)",
+ "Seiten halbieren": "Aqsam il-paġni min-nofs",
+ "Seiten halbieren …": "Aqsam il-paġni min-nofs …",
+ "Seiten werden halbiert …": "Il-paġni qed jinqasmu min-nofs …",
+ "Senkrecht – linke und rechte Hälfte": "Vertikalment – nofs tax-xellug u tal-lemin",
+ "Waagerecht – obere und untere Hälfte": "Orizzontalment – nofs ta’ fuq u ta’ isfel",
+ "Rotate": "Rotate"
 }

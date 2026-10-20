@@ -11,6 +11,7 @@
   // forge wird erst beim ersten Signieren geladen – darum bei jedem Aufruf nachsehen
   let forge, PL; const libs = (needForge = true) => { forge = root.forge; PL = root.PDFLib; if (needForge && !forge) throw new Error('Signatur-Baustein nicht geladen.'); };
   const SIG_HEX = 24576;   // Platz für die Signatur (12 KB: Zertifikatskette + Signatur)
+  const SIG_HEX_TS = 49152;   // mit Zeitstempel (24 KB: zusätzlich Token und Zertifikate des Zeitstempeldienstes)
   const bin = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 8192) s += String.fromCharCode.apply(null, u8.subarray(i, i + 8192)); return s; };
   const OID_SIGNING_CERT_V2 = '1.2.840.113549.1.9.16.2.47';   // id-aa-signingCertificateV2 (RFC 5035)
   /* SigningCertificateV2 ::= SEQUENCE { certs SEQUENCE OF ESSCertIDv2 }
@@ -62,6 +63,55 @@
     return A.create(U, T.SEQUENCE, true, [A.create(U, T.SEQUENCE, true, [A.create(U, T.SEQUENCE, true, [A.create(U, T.OCTETSTRING, false, hash), issuerSerial])])]);
   }
 
+  /* Zeitstempel nach RFC 3161 als unsigniertes Attribut signature-time-stamp (RFC 3161 Anh. A, id-aa-timeStampToken) → PAdES-Baseline B-T
+     (ETSI EN 319 142-1, 5.3). Der Zeitstempel gilt dem Hashwert des Signaturwerts; die Signatur selbst bleibt unverändert.
+     fetchTs: async (TimeStampReq als Uint8Array) → TimeStampResp als Uint8Array (im Browser über pdfmy Scan, da Zeitstempeldienste kein CORS erlauben) */
+  const OID_TST = '1.2.840.113549.1.9.16.2.14';
+  // nur diese Dienste leitet pdfmy Scan weiter (gleiche Liste in Program.cs und pdfmy-scan.pl)
+  const TSA = ['http://timestamp.digicert.com', 'http://timestamp.sectigo.com', 'http://zeitstempel.dfn.de', 'https://freetsa.org/tsr'];
+  const u8 = s => Uint8Array.from(s, c => c.charCodeAt(0));
+  function tsRequest(hashBin) {
+    const A = forge.asn1, T = A.Type, U = A.Class.UNIVERSAL, O = forge.pki.oids;
+    const seq = v => A.create(U, T.SEQUENCE, true, v);
+    const r = forge.random.getBytesSync(8), nonce = String.fromCharCode((r.charCodeAt(0) & 0x7f) | 0x01) + r.slice(1);   // positive Zufallszahl
+    const der = A.toDer(seq([
+      A.create(U, T.INTEGER, false, '\x01'),
+      seq([seq([A.create(U, T.OID, false, A.oidToDer(O.sha256).getBytes()), A.create(U, T.NULL, false, '')]), A.create(U, T.OCTETSTRING, false, hashBin)]),
+      A.create(U, T.INTEGER, false, nonce),
+      A.create(U, T.BOOLEAN, false, '\xff'),   // certReq: Zertifikat des Dienstes mitliefern (für die Prüfung)
+    ])).getBytes();
+    return { der, nonce };
+  }
+  // Antwort prüfen: Status „granted“, Hashwert und Nonce stimmen → TimeStampToken (ContentInfo) und Zeitpunkt
+  function tsToken(respBin, hashBin, nonce) {
+    const A = forge.asn1, resp = A.fromDer(respBin, { strict: false, decodeBitStrings: false });
+    const st = resp.value[0].value[0].value.charCodeAt(0);
+    if (st > 1 || !resp.value[1]) throw new Error('Der Zeitstempeldienst hat die Anfrage abgelehnt (Status ' + st + ').');
+    const token = resp.value[1], sd = token.value[1].value[0], encap = sd.value[2];
+    let content = encap.value[1].value[0]; if (content.constructed) content = { value: content.value.map(x => x.value).join('') };
+    const tst = A.fromDer(content.value, { decodeBitStrings: false });
+    const imprint = tst.value[2].value[1].value;
+    if (imprint !== hashBin) throw new Error('Der Zeitstempel passt nicht zur Signatur.');
+    const n = tst.value.find((x, i) => i > 4 && x.tagClass === A.Class.UNIVERSAL && x.type === A.Type.INTEGER);
+    if (n && n.value.replace(/^\x00/, '') !== nonce.replace(/^\x00/, '')) throw new Error('Der Zeitstempel gehört nicht zu dieser Anfrage.');
+    const g = tst.value[4].value, time = new Date(Date.UTC(+g.slice(0, 4), +g.slice(4, 6) - 1, +g.slice(6, 8), +g.slice(8, 10), +g.slice(10, 12), +g.slice(12, 14)));
+    return { token, time };
+  }
+  async function addTimestamp(cmsBin, fetchTs) {
+    libs();
+    const A = forge.asn1, T = A.Type, U = A.Class.UNIVERSAL;
+    const ci = A.fromDer(cmsBin, { strict: false, decodeBitStrings: false }), sd = ci.value[1].value[0], si = sd.value[sd.value.length - 1].value[0];
+    const sig = [...si.value].reverse().find(v => v.tagClass === U && v.type === T.OCTETSTRING);
+    if (!sig) throw new Error('Signaturwert nicht gefunden.');
+    const hash = forge.md.sha256.create().update(sig.value).digest().getBytes();
+    const q = tsRequest(hash);
+    const { token, time } = tsToken(bin(await fetchTs(u8(q.der))), hash, q.nonce);
+    const attr = A.create(U, T.SEQUENCE, true, [A.create(U, T.OID, false, A.oidToDer(OID_TST).getBytes()), A.create(U, T.SET, true, [token])]);
+    si.value = si.value.filter(v => !(v.tagClass === A.Class.CONTEXT_SPECIFIC && v.type === 1));   // vorhandene unsignierte Attribute ersetzen
+    si.value.push(A.create(A.Class.CONTEXT_SPECIFIC, 1, true, [attr]));
+    return { der: A.toDer(ci).getBytes(), time };
+  }
+
   /* Zertifikatsdatei öffnen: Schlüssel, Zertifikat (passend zum Schlüssel) und Kette */
   function readP12(bytes, password) {
     libs();
@@ -86,23 +136,24 @@
     };
   }
 
-  /* PDF signieren. signer = readP12(...); o: { reason, location, contact } */
+  /* PDF signieren. signer = readP12(...); o: { reason, location, contact, tsa: fetchTs (Zeitstempel, siehe addTimestamp) } */
   /* signer: aus readP12 (Schlüssel im Browser) – oder { name, notAfter, pades, cms: async bytes → CMS-DER } (z. B. Windows-Zertifikat/Signaturkarte über pdfmy Scan) */
   async function signPdf(pdfBytes, signer, o = {}) {
-    libs(!signer.cms);
+    libs(!signer.cms || !!o.tsa);
+    o.sigHex = o.tsa ? SIG_HEX_TS : SIG_HEX;   // Platz je Vorgang (nicht global: zwei Signaturen gleichzeitig dürfen sich nicht stören)
     const now = new Date();
     if (now > signer.notAfter) throw new Error(`Das Zertifikat ist am ${typeof I18N !== 'undefined' && I18N.fmtDate ? I18N.fmtDate(signer.notAfter) : signer.notAfter.toLocaleDateString('de-DE')} abgelaufen.`);
     // Schon signiert (andere Person): neue Signatur ANHÄNGEN (inkrementelles Update) – die vorhandenen Bytes bleiben unverändert,
     // damit frühere Signaturen gültig bleiben. Sonst wie bisher: Datei neu schreiben.
     const already = bin(pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes)).includes('/ByteRange');
     const out = already ? await appendSigField(pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes), signer, o, now) : await newSigField(pdfBytes, signer, o, now);
-    return finishSig(out, signer);
+    return finishSig(out, signer, o);
   }
   function sigDict(ctx, signer, o, now) {
     return ctx.obj({
       Type: 'Sig', Filter: 'Adobe.PPKLite', SubFilter: signer.cms && !signer.pades ? 'adbe.pkcs7.detached' : 'ETSI.CAdES.detached',
       ByteRange: [0, 1111111111, 2222222222, 3333333333],
-      Contents: PL.PDFHexString.of('0'.repeat(SIG_HEX)),
+      Contents: PL.PDFHexString.of('0'.repeat(o.sigHex || SIG_HEX)),
       M: PL.PDFString.fromDate(now), Name: PL.PDFHexString.fromText(signer.name),
       ...(o.reason ? { Reason: PL.PDFHexString.fromText(o.reason) } : {}),
       ...(o.location ? { Location: PL.PDFHexString.fromText(o.location) } : {}),
@@ -176,33 +227,33 @@
     return doc.save({ useObjectStreams: false });
   }
   // Bytebereiche eintragen und den Signaturwert (CMS) in den Platzhalter schreiben
-  async function finishSig(out, signer) {
+  async function finishSig(out, signer, o = {}) {
+    const sigHex = o.sigHex || SIG_HEX;
 
     // Platzhalter finden, Bytebereiche eintragen
     const s = bin(out), ph = '/ByteRange [ 0 1111111111 2222222222 3333333333 ]';
     const brAt = s.indexOf(ph); if (brAt < 0) throw new Error('Signatur-Platzhalter nicht gefunden.');
     const cStart = s.indexOf('<' + '0'.repeat(64), brAt > 0 ? s.lastIndexOf('obj', brAt) : 0);
     const cEnd = s.indexOf('>', cStart) + 1;
-    if (cStart < 0 || cEnd - cStart !== SIG_HEX + 2) throw new Error('Signatur-Platzhalter beschädigt.');
+    if (cStart < 0 || cEnd - cStart !== sigHex + 2) throw new Error('Signatur-Platzhalter beschädigt.');
     const br = `/ByteRange [ 0 ${cStart} ${cEnd} ${out.length - cEnd} ]`;
     if (br.length > ph.length) throw new Error('Datei zu groß für die Signatur.');
     const final = out.slice();
     for (let i = 0; i < ph.length; i++) final[brAt + i] = (br + ' '.repeat(ph.length - br.length)).charCodeAt(i);
 
     // CMS-Signatur über beide Bereiche (alles außer dem Signaturwert)
-    let hex;
+    let der;
     if (signer.cms) {
       const covered = new Uint8Array(cStart + final.length - cEnd); covered.set(final.subarray(0, cStart)); covered.set(final.subarray(cEnd), cStart);
-      const der = await signer.cms(covered); hex = Array.from(der, b => b.toString(16).padStart(2, '0')).join('');
-    } else {
-    const data = bin(final.subarray(0, cStart)) + bin(final.subarray(cEnd));
-    hex = forge.util.bytesToHex(cadesDetached(data, signer));
-    }
-    if (hex.length > SIG_HEX) throw new Error('Zertifikatskette zu groß für den Signaturplatz.');
-    const padded = hex + '0'.repeat(SIG_HEX - hex.length);
+      der = bin(await signer.cms(covered));
+    } else der = cadesDetached(bin(final.subarray(0, cStart)) + bin(final.subarray(cEnd)), signer);
+    if (o.tsa) { const t = await addTimestamp(der, o.tsa); der = t.der; o.tsTime = t.time; }   // PAdES B-T
+    const hex = Array.from(der, c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
+    if (hex.length > sigHex) throw new Error('Zertifikatskette zu groß für den Signaturplatz.');
+    const padded = hex + '0'.repeat(sigHex - hex.length);
     for (let i = 0; i < padded.length; i++) final[cStart + 1 + i] = padded.charCodeAt(i);
     return final;
   }
-  const api = { readP12, signPdf };
+  const api = { readP12, signPdf, addTimestamp, TSA };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfSign = api;
 })(typeof self !== 'undefined' ? self : globalThis);

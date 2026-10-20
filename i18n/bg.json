@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Файлът TIFF не съдържа четимо изображение",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, JPG, PNG, HEIC, TIFF или е-фактура като XML)",
  "{0} wird in PDF umgewandelt …": "{0} се преобразува в PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, текст, Markdown, CSV или е-фактура като XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, текст, Markdown, CSV или е-фактура като XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} страници са разделени наполовина – документът вече има {1} страници.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "За сканирания на разтвори (отворена книга, брошура) или листове A3: всяка страница се разделя на две – без загуба на качество.",
+ "Halbieren": "Разполовяване",
+ "Halbieren nicht möglich:": "Разполовяването не е възможно:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Не е намерена пейзажна страница – за портретни страници изберете „Всички страници“.",
+ "Keine Seiten zum Halbieren.": "Няма страници за разполовяване.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Само пейзажни страници (разтвори)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Първо дясната половина (напр. за арабски или еврейски книги)",
+ "Seiten halbieren": "Разполовяване на страници",
+ "Seiten halbieren …": "Разполовяване на страници …",
+ "Seiten werden halbiert …": "Страниците се разполовяват …",
+ "Senkrecht – linke und rechte Hälfte": "Вертикално – лява и дясна половина",
+ "Waagerecht – obere und untere Hälfte": "Хоризонтално – горна и долна половина",
+ "Rotate": "Rotate"
 }

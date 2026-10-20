@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF failā nav nolasāma attēla",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, JPG, PNG, HEIC, TIFF vai e-rēķins kā XML)",
  "{0} wird in PDF umgewandelt …": "{0} tiek konvertēts uz PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, teksts, Markdown, CSV vai e-rēķins kā XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, teksts, Markdown, CSV vai e-rēķins kā XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Uz pusēm sadalītas lapas: {0} – dokumentā tagad ir {1} lapas.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Atvērumu skenējumiem (atvērta grāmata, burtnīca) vai A3 loksnēm: katra lapa tiek sadalīta divās lapās – bez kvalitātes zuduma.",
+ "Halbieren": "Sadalīt uz pusēm",
+ "Halbieren nicht möglich:": "Sadalīt uz pusēm nav iespējams:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nav atrasta neviena lapa ainavā – portreta lapām izvēlieties „Visas lapas”.",
+ "Keine Seiten zum Halbieren.": "Nav lapu, ko sadalīt uz pusēm.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Tikai lapas ainavā (atvērumi)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Vispirms labā puse (piem., arābu vai ivrita grāmatām)",
+ "Seiten halbieren": "Sadalīt lapas uz pusēm",
+ "Seiten halbieren …": "Sadalīt lapas uz pusēm …",
+ "Seiten werden halbiert …": "Lapas tiek sadalītas uz pusēm …",
+ "Senkrecht – linke und rechte Hälfte": "Vertikāli – kreisā un labā puse",
+ "Waagerecht – obere und untere Hälfte": "Horizontāli – augšējā un apakšējā puse",
+ "Rotate": "Rotate"
 }

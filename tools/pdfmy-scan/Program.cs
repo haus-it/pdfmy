@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.8.9";
+        public const string Version = "1.9.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1117,6 +1117,16 @@ namespace PdfmyScan
     // ---------------- PDFs per Doppelklick in PDFMy öffnen ----------------
     // Windows ruft "pdfmy-Scan.exe --open <Datei>" auf. Die Datei bekommt ein Einmal-Kennwort (5 Minuten gültig);
     // PDFMy im Browser holt sie damit über 127.0.0.1 ab. Die Datei verlässt den Rechner nicht.
+    // Zeitstempeldienste (RFC 3161), an die /tsa weiterleiten darf – gleiche Liste in js/pdfsign.js und pdfmy-scan.pl
+    static class Tsa
+    {
+        static readonly string[] Hosts = { "timestamp.digicert.com", "timestamp.sectigo.com", "zeitstempel.dfn.de", "freetsa.org", "timestamp.globalsign.com", "ts.ssl.com", "timestamp.entrust.net", "timestamp.identrust.com", "tsa.swisssign.net" };
+        public static bool Allowed(string url)
+        {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var u) || (u.Scheme != "http" && u.Scheme != "https") || !u.IsDefaultPort) return false;
+            return Hosts.Contains(u.Host.ToLowerInvariant());
+        }
+    }
     static class FileOpen
     {
         static readonly ConcurrentDictionary<string, KeyValuePair<string, DateTime>> tokens = new ConcurrentDictionary<string, KeyValuePair<string, DateTime>>();
@@ -1632,8 +1642,30 @@ namespace PdfmyScan
                 catch (Exception e) { Program.Log("Signatur: " + e.Message); SendJson(s, 400, new { error = e is OperationCanceledException ? "Signatur abgelehnt." : e.Message }, cors); }
                 return;
             }
+            if (p == "/tsa" && method == "POST")   // Zeitstempel (RFC 3161) für Signaturen: Browser dürfen Zeitstempeldienste nicht direkt abfragen (kein CORS)
+            {
+                var o = json.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(body));
+                string url = Convert.ToString(o.ContainsKey("url") ? o["url"] : "");
+                // nur bekannte, öffentliche Zeitstempeldienste – kein offener Proxy
+                if (!Tsa.Allowed(url)) { SendJson(s, 400, new { error = "Unbekannter Zeitstempeldienst" }, cors); return; }
+                byte[] req; try { req = Convert.FromBase64String(Convert.ToString(o["data"])); } catch { SendJson(s, 400, new { error = "Ungültige Daten" }, cors); return; }
+                if (req.Length > 4096) { SendJson(s, 400, new { error = "Anfrage zu groß" }, cors); return; }
+                try
+                {
+                    using (var h = new HttpClient { Timeout = TimeSpan.FromSeconds(20) })
+                    {
+                        var c = new ByteArrayContent(req); c.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/timestamp-query");
+                        var r = h.PostAsync(url, c).Result; var d = r.Content.ReadAsByteArrayAsync().Result;
+                        if (!r.IsSuccessStatusCode || d.Length > 65536) throw new Exception("Zeitstempeldienst antwortet mit " + (int)r.StatusCode);
+                        Program.Log("Zeitstempel von " + new Uri(url).Host + " (" + d.Length + " Bytes)");
+                        SendJson(s, 200, new { data = Convert.ToBase64String(d) }, cors);
+                    }
+                }
+                catch (Exception e) { var m = (e is AggregateException a ? a.InnerException ?? e : e).Message; Program.Log("Zeitstempel: " + m); SendJson(s, 502, new { error = m }, cors); }
+                return;
+            }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, pades = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault() }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault() }, cors); return; }
             if (p == "/wake" && method == "POST")   // „Scanner aufwecken“: wecken, kurz warten, neu suchen
             {
                 hub.RefreshAsync().Wait(40000);   // die Suche weckt zuerst alle bekannten Geräte

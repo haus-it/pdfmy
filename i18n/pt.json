@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "O ficheiro TIFF não contém nenhuma imagem legível",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formato não suportado: {0} (utilize PDF, JPG, PNG, HEIC, TIFF ou fatura eletrónica em XML)",
  "{0} wird in PDF umgewandelt …": "A converter {0} em PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato não suportado: {0} (utilize PDF, imagem, texto, Markdown, CSV ou fatura eletrónica em XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato não suportado: {0} (utilize PDF, imagem, texto, Markdown, CSV ou fatura eletrónica em XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} página(s) dividida(s) ao meio – o documento tem agora {1} páginas.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Para digitalizações de páginas duplas (livro aberto, caderno) ou folhas A3: cada página é dividida em duas páginas – sem perda de qualidade.",
+ "Halbieren": "Dividir ao meio",
+ "Halbieren nicht möglich:": "Não é possível dividir ao meio:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nenhuma página horizontal encontrada – para páginas verticais, escolha «Todas as páginas».",
+ "Keine Seiten zum Halbieren.": "Nenhuma página para dividir ao meio.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Apenas páginas horizontais (páginas duplas)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Metade direita primeiro (p. ex. para livros árabes ou hebraicos)",
+ "Seiten halbieren": "Dividir páginas ao meio",
+ "Seiten halbieren …": "Dividir páginas ao meio …",
+ "Seiten werden halbiert …": "A dividir páginas ao meio …",
+ "Senkrecht – linke und rechte Hälfte": "Na vertical – metade esquerda e direita",
+ "Waagerecht – obere und untere Hälfte": "Na horizontal – metade superior e inferior",
+ "Rotate": "Rotate"
 }

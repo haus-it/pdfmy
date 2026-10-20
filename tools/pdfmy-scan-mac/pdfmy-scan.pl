@@ -11,7 +11,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.1.8';
+our $VERSION = '1.1.9';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
@@ -763,7 +763,7 @@ sub handle {
     # /status muss sofort antworten: Standard-PDF-Programm nur aus dem Zwischenspeicher, Auffrischen im Hintergrund
     my $cf = "$DIR/pdfdefault.txt"; my $def = -f $cf && trim(slurp($cf)) eq '1';
     if (!-f $cf || -M $cf >= 0.0007) { my $k = fork(); if (defined $k && $k == 0) { pdf_default(); POSIX::_exit(0); } }
-    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, platform => lc $OS, searching => JSON::PP::false, devices => scalar(@$l), pdfDefault => $def ? JSON::PP::true : JSON::PP::false }, \%cors);
+    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, platform => lc $OS, tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), pdfDefault => $def ? JSON::PP::true : JSON::PP::false }, \%cors);
   }
   if ($p =~ m{^/file/(\w+)$} && $method eq 'GET') {
     my ($data, $name) = take_file($1);
@@ -778,6 +778,22 @@ sub handle {
     return send_json($c, 413, { error => 'Die Datei ist zu groß (über 300 MB).' }, \%cors) if -s $f > 300 * 1024 * 1024;
     my ($name) = $f =~ m{([^/]+)$}; my $enc = $name; $enc =~ s/([^A-Za-z0-9._~-])/sprintf '%%%02X', ord $1/ge;
     return send_resp($c, 200, 'application/octet-stream', slurp($f), { %cors, 'Access-Control-Expose-Headers' => 'X-Pdfmy-Name', 'X-Pdfmy-Name' => $enc });
+  }
+  if ($p eq '/tsa' && $method eq 'POST') {   # Zeitstempel (RFC 3161) für Signaturen: Browser dürfen Zeitstempeldienste nicht direkt abfragen (kein CORS)
+    my $o = $in->(); my $url = $o->{url} // '';
+    # nur bekannte, öffentliche Zeitstempeldienste – kein offener Proxy (gleiche Liste wie im Windows-Programm)
+    my ($host) = $url =~ m{^https?://([^/:?#]+)(?:/[^\s]*)?$}i;
+    return send_json($c, 400, { error => 'Unbekannter Zeitstempeldienst' }, \%cors)
+      unless $host && grep { lc $host eq $_ } qw(timestamp.digicert.com timestamp.sectigo.com zeitstempel.dfn.de freetsa.org timestamp.globalsign.com ts.ssl.com timestamp.entrust.net timestamp.identrust.com tsa.swisssign.net);
+    my $req = eval { decode_base64($o->{data} // '') } // '';
+    return send_json($c, 400, { error => 'Ungültige Daten' }, \%cors) if !length $req || length $req > 4096;
+    my ($fh, $qf) = tempfile(DIR => $DIR, SUFFIX => '.tsq', UNLINK => 1); binmode $fh; print $fh $req; close $fh;
+    my ($rh, $rf) = tempfile(DIR => $DIR, SUFFIX => '.tsr', UNLINK => 1); close $rh;
+    my $code = system('curl', '-s', '-f', '-m', '20', '--max-filesize', '65536', '-H', 'Content-Type: application/timestamp-query', '--data-binary', "\@$qf", '-o', $rf, $url);
+    my $d = slurp($rf) // ''; unlink $qf, $rf;
+    if ($code != 0 || !length $d) { logl("Zeitstempel: Dienst $host antwortet nicht"); return send_json($c, 502, { error => "Zeitstempeldienst $host antwortet nicht" }, \%cors); }
+    logl("Zeitstempel von $host (" . length($d) . ' Bytes)');
+    return send_json($c, 200, { data => encode_base64($d, '') }, \%cors);
   }
   if ($p eq '/defaultapps' && $method eq 'POST') { my $ok = set_pdf_default(); return send_json($c, 200, { ok => JSON::PP::true, registered => $ok ? JSON::PP::true : JSON::PP::false, isDefault => $ok ? JSON::PP::true : JSON::PP::false }, \%cors); }
   if ($p eq '/wake' && $method eq 'POST') {   # „Scanner aufwecken“: wecken, kurz warten, neu suchen

@@ -1004,6 +1004,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnShare"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg><span>Teilen …</span></button>
           <button class="mi doc" id="btnSplit" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Stapel in einzelne Briefe trennen</span></button>
           <button class="mi doc" id="btnSplitAdv" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>PDF aufteilen …</span></button>
+          <button class="mi doc" id="btnHalve" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Seiten halbieren …</span></button>
           <button class="mi doc" id="btnComments" title="Alle Notizen, Markierungen, Stempel, Unterschriften und Formularfelder auf einen Blick"><svg class="ic" aria-hidden="true"><use href="#i-sticky-note"/></svg><span>Kommentare und Markierungen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -1597,6 +1598,22 @@ html.i18n-wait body{visibility:hidden}
     </fieldset>
     <p class="hint" id="sp-info" aria-live="polite"></p>
     <div class="dlgrow"><button type="button" id="spCancel">Abbrechen</button><button type="submit" class="primary" id="spGo">Aufteilen</button></div>
+  </form>
+</dialog>
+<dialog id="halveDlg" aria-labelledby="halveT">
+  <form id="halveForm" method="dialog">
+    <h3 class="dlgtitle" id="halveT">Seiten halbieren</h3>
+    <p class="hint">Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.</p>
+    <fieldset class="spopts"><legend>Teilen</legend>
+      <label><input type="radio" name="hv-dir" value="v" checked> Senkrecht – linke und rechte Hälfte</label>
+      <label><input type="radio" name="hv-dir" value="h"> Waagerecht – obere und untere Hälfte</label>
+    </fieldset>
+    <fieldset class="spopts"><legend>Welche Seiten?</legend>
+      <label><input type="radio" name="hv-only" value="landscape" checked> Nur Seiten im Querformat (Doppelseiten)</label>
+      <label><input type="radio" name="hv-only" value="all"> Alle Seiten</label>
+    </fieldset>
+    <label class="cb"><input id="hv-rtl" type="checkbox"> Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)</label>
+    <div class="dlgrow"><button type="button" id="hvCancel">Abbrechen</button><button type="submit" class="primary" id="hvGo">Halbieren</button></div>
   </form>
 </dialog>
 <dialog id="attDlg" class="sharedlg" aria-labelledby="attT">

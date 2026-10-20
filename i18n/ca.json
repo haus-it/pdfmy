@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "El fitxer TIFF no conté cap imatge llegible",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, JPG, PNG, HEIC, TIFF o factura electrònica en XML)",
  "{0} wird in PDF umgewandelt …": "S’està convertint {0} a PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, text, Markdown, CSV o factura electrònica en XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, text, Markdown, CSV o factura electrònica en XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "S’han partit {0} pàgines per la meitat – el document té ara {1} pàgines.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Per a escaneigs de doble pàgina (llibre obert, quadern) o fulls A3: cada pàgina es divideix en dues – sense pèrdua de qualitat.",
+ "Halbieren": "Parteix per la meitat",
+ "Halbieren nicht möglich:": "No es pot partir per la meitat:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "No s’ha trobat cap pàgina horitzontal – per a pàgines verticals, trieu «Totes les pàgines».",
+ "Keine Seiten zum Halbieren.": "No hi ha pàgines per partir.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Només pàgines horitzontals (dobles pàgines)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Primer la meitat dreta (p. ex. per a llibres àrabs o hebreus)",
+ "Seiten halbieren": "Parteix pàgines per la meitat",
+ "Seiten halbieren …": "Parteix pàgines per la meitat…",
+ "Seiten werden halbiert …": "S’estan partint les pàgines per la meitat…",
+ "Senkrecht – linke und rechte Hälfte": "Vertical – meitat esquerra i dreta",
+ "Waagerecht – obere und untere Hälfte": "Horitzontal – meitat superior i inferior",
+ "Rotate": "Rotate"
 }

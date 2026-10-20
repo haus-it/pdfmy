@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Níl íomhá inléite sa chomhad TIFF",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, JPG, PNG, HEIC, TIFF nó r-shonrasc mar XML le do thoil)",
  "{0} wird in PDF umgewandelt …": "{0} á thiontú go PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, téacs, Markdown, CSV nó r-shonrasc mar XML le do thoil)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, téacs, Markdown, CSV nó r-shonrasc mar XML le do thoil)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Leathanaigh roinnte ina dhá leath: {0} – tá {1} leathanach sa doiciméad anois.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Le haghaidh scananna leathanach dúbailte (leabhar oscailte, leabhrán) nó bileoga A3: roinntear gach leathanach ina dhá leathanach – gan cailliúint cáilíochta.",
+ "Halbieren": "Roinn ina dhá leath",
+ "Halbieren nicht möglich:": "Ní féidir roinnt ina dhá leath:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Níor aimsíodh aon leathanach cothrománach – le haghaidh leathanach ingearach roghnaigh “Gach leathanach”.",
+ "Keine Seiten zum Halbieren.": "Níl aon leathanach le roinnt ina dhá leath.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Leathanaigh chothrománacha amháin (leathanaigh dhúbailte)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "An leath dheis ar dtús (m.sh. le haghaidh leabhar Araibise nó Eabhraise)",
+ "Seiten halbieren": "Roinn leathanaigh ina dhá leath",
+ "Seiten halbieren …": "Roinn leathanaigh ina dhá leath …",
+ "Seiten werden halbiert …": "Leathanaigh á roinnt ina dhá leath …",
+ "Senkrecht – linke und rechte Hälfte": "Go hingearach – leath chlé agus leath dheis",
+ "Waagerecht – obere und untere Hälfte": "Go cothrománach – leath uachtair agus leath íochtair",
+ "Rotate": "Rotate"
 }

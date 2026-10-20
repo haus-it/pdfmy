@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF fitxategiak ez du irudi irakurgarririk",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, JPG, PNG, HEIC, TIFF edo e-faktura XML gisa)",
  "{0} wird in PDF umgewandelt …": "{0} PDF bihurtzen …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, testua, Markdown, CSV edo e-faktura XML gisa)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, testua, Markdown, CSV edo e-faktura XML gisa)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} orrialde erdibitu dira – dokumentuak {1} orrialde ditu orain.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Orrialde bikoitzeko eskaneatzeetarako (liburu irekia, koadernoa) edo A3 orrietarako: orrialde bakoitza bi orrialdetan zatitzen da – kalitaterik galdu gabe.",
+ "Halbieren": "Erdibitu",
+ "Halbieren nicht möglich:": "Ezin da erdibitu:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Ez da orrialde horizontalik aurkitu – orrialde bertikaletarako, aukeratu «Orrialde guztiak».",
+ "Keine Seiten zum Halbieren.": "Ez dago erdibitzeko orrialderik.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Orrialde horizontalak soilik (orrialde bikoitzak)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Eskuineko erdia lehenik (adib. liburu arabiar edo hebrearretarako)",
+ "Seiten halbieren": "Erdibitu orrialdeak",
+ "Seiten halbieren …": "Erdibitu orrialdeak …",
+ "Seiten werden halbiert …": "Orrialdeak erdibitzen …",
+ "Senkrecht – linke und rechte Hälfte": "Bertikalean – ezkerreko eta eskuineko erdia",
+ "Waagerecht – obere und untere Hälfte": "Horizontalean – goiko eta beheko erdia",
+ "Rotate": "Rotate"
 }

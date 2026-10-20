@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Файл TIFF не містить читабельного зображення",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, JPG, PNG, HEIC, TIFF або електронний рахунок у форматі XML)",
  "{0} wird in PDF umgewandelt …": "Перетворення {0} у PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, зображення, текст, Markdown, CSV або електронний рахунок у форматі XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, зображення, текст, Markdown, CSV або електронний рахунок у форматі XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Сторінок розрізано навпіл: {0} – тепер у документі {1} стор.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Для сканів розворотів (розгорнута книга, зошит) або аркушів A3: кожна сторінка ділиться на дві – без втрати якості.",
+ "Halbieren": "Розрізати навпіл",
+ "Halbieren nicht möglich:": "Розрізати навпіл неможливо:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Не знайдено жодної альбомної сторінки – для книжкових сторінок виберіть «Усі сторінки».",
+ "Keine Seiten zum Halbieren.": "Немає сторінок для розрізання навпіл.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Лише альбомні сторінки (розвороти)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Спочатку права половина (наприклад, для арабських або єврейських книг)",
+ "Seiten halbieren": "Розрізати сторінки навпіл",
+ "Seiten halbieren …": "Розрізати сторінки навпіл…",
+ "Seiten werden halbiert …": "Сторінки розрізаються навпіл…",
+ "Senkrecht – linke und rechte Hälfte": "Вертикально – ліва й права половина",
+ "Waagerecht – obere und untere Hälfte": "Горизонтально – верхня й нижня половина",
+ "Rotate": "Rotate"
 }

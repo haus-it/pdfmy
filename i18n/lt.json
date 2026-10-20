@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF faile nėra skaitomo vaizdo",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, JPG, PNG, HEIC, TIFF arba e. sąskaitą XML formatu)",
  "{0} wird in PDF umgewandelt …": "{0} konvertuojamas į PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, vaizdą, tekstą, Markdown, CSV arba e. sąskaitą XML formatu)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, vaizdą, tekstą, Markdown, CSV arba e. sąskaitą XML formatu)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Perpusinta puslapių: {0} – dabar dokumente yra {1} puslapių.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Atverstinių skenavimams (atversta knyga, sąsiuvinis) ar A3 lapams: kiekvienas puslapis padalijamas į du puslapius – neprarandant kokybės.",
+ "Halbieren": "Perpusinti",
+ "Halbieren nicht möglich:": "Perpusinti neįmanoma:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Nerasta nė vieno gulsčio puslapio – stačiems puslapiams pasirinkite „Visi puslapiai“.",
+ "Keine Seiten zum Halbieren.": "Nėra puslapių perpusinti.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Tik gulsti puslapiai (atverstinės)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Pirmiau dešinė pusė (pvz., arabiškoms ar hebrajiškoms knygoms)",
+ "Seiten halbieren": "Perpusinti puslapius",
+ "Seiten halbieren …": "Perpusinti puslapius …",
+ "Seiten werden halbiert …": "Puslapiai perpusinami …",
+ "Senkrecht – linke und rechte Hälfte": "Vertikaliai – kairė ir dešinė pusė",
+ "Waagerecht – obere und untere Hälfte": "Horizontaliai – viršutinė ir apatinė pusė",
+ "Rotate": "Rotate"
 }

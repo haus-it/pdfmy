@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-skráin inniheldur enga læsilega mynd",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, JPG, PNG, HEIC, TIFF eða rafrænn reikningur sem XML)",
  "{0} wird in PDF umgewandelt …": "{0} umbreytt í PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, texti, Markdown, CSV eða rafrænn reikningur sem XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, texti, Markdown, CSV eða rafrænn reikningur sem XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} síða/síðum skipt í tvennt – skjalið er nú {1} síður.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Fyrir skönnun á opnum (opin bók, hefti) eða A3-blöðum: hverri síðu er skipt í tvær síður – án gæðataps.",
+ "Halbieren": "Helminga",
+ "Halbieren nicht möglich:": "Ekki hægt að helminga:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Engin síða í þversniði fannst – veljið „Allar síður“ fyrir síður í langsniði.",
+ "Keine Seiten zum Halbieren.": "Engar síður til að helminga.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Aðeins síður í þversniði (opnur)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Hægri helmingur fyrst (t.d. fyrir arabískar eða hebreskar bækur)",
+ "Seiten halbieren": "Helminga síður",
+ "Seiten halbieren …": "Helminga síður …",
+ "Seiten werden halbiert …": "Síður helmingaðar …",
+ "Senkrecht – linke und rechte Hälfte": "Lóðrétt – vinstri og hægri helmingur",
+ "Waagerecht – obere und untere Hälfte": "Lárétt – efri og neðri helmingur",
+ "Rotate": "Rotate"
 }

@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "TIFF dosyası okunabilir bir görüntü içermiyor",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, JPG, PNG, HEIC, TIFF veya XML olarak e-fatura)",
  "{0} wird in PDF umgewandelt …": "{0} PDF’e dönüştürülüyor …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, görüntü, metin, Markdown, CSV veya XML olarak e-fatura)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, görüntü, metin, Markdown, CSV veya XML olarak e-fatura)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "{0} sayfa ikiye bölündü – belge artık {1} sayfa.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Çift sayfa taramaları (açık kitap, defter) veya A3 yapraklar için: Her sayfa iki sayfaya bölünür – kalite kaybı olmadan.",
+ "Halbieren": "İkiye böl",
+ "Halbieren nicht möglich:": "İkiye bölme mümkün değil:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Yatay sayfa bulunamadı – dikey sayfalar için “Tüm sayfalar”ı seçin.",
+ "Keine Seiten zum Halbieren.": "İkiye bölünecek sayfa yok.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Yalnızca yatay sayfalar (çift sayfalar)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Önce sağ yarı (ör. Arapça veya İbranice kitaplar için)",
+ "Seiten halbieren": "Sayfaları ikiye böl",
+ "Seiten halbieren …": "Sayfaları ikiye böl …",
+ "Seiten werden halbiert …": "Sayfalar ikiye bölünüyor …",
+ "Senkrecht – linke und rechte Hälfte": "Dikey – sol ve sağ yarı",
+ "Waagerecht – obere und untere Hälfte": "Yatay – üst ve alt yarı",
+ "Rotate": "Rotate"
 }

@@ -2365,5 +2365,19 @@
  "TIFF-Datei enthält kein lesbares Bild": "Файл TIFF не содержит читаемого изображения",
  "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Формат не поддерживается: {0} (используйте PDF, JPG, PNG, HEIC, TIFF или электронный счёт в XML)",
  "{0} wird in PDF umgewandelt …": "Преобразование {0} в PDF …",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Формат не поддерживается: {0} (используйте PDF, изображение, текст, Markdown, CSV или электронный счёт в XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Формат не поддерживается: {0} (используйте PDF, изображение, текст, Markdown, CSV или электронный счёт в XML)",
+ "{0} Seite(n) halbiert – das Dokument hat jetzt {1} Seiten.": "Страниц разрезано пополам: {0} – теперь в документе {1} стр.",
+ "Für Doppelseiten-Scans (aufgeschlagenes Buch, Heft) oder A3-Bögen: Jede Seite wird in zwei Seiten geteilt – ohne Qualitätsverlust.": "Для сканов разворотов (открытая книга, тетрадь) или листов A3: каждая страница делится на две – без потери качества.",
+ "Halbieren": "Разрезать пополам",
+ "Halbieren nicht möglich:": "Разрезать пополам невозможно:",
+ "Keine Seite im Querformat gefunden – für Hochformat-Seiten „Alle Seiten“ wählen.": "Не найдено ни одной альбомной страницы – для книжных страниц выберите «Все страницы».",
+ "Keine Seiten zum Halbieren.": "Нет страниц для разрезания пополам.",
+ "Nur Seiten im Querformat (Doppelseiten)": "Только альбомные страницы (развороты)",
+ "Rechte Hälfte zuerst (z. B. für arabische oder hebräische Bücher)": "Сначала правая половина (например, для арабских или еврейских книг)",
+ "Seiten halbieren": "Разрезать страницы пополам",
+ "Seiten halbieren …": "Разрезать страницы пополам …",
+ "Seiten werden halbiert …": "Страницы разрезаются пополам …",
+ "Senkrecht – linke und rechte Hälfte": "Вертикально – левая и правая половина",
+ "Waagerecht – obere und untere Hälfte": "Горизонтально – верхняя и нижняя половина",
+ "Rotate": "Rotate"
 }
