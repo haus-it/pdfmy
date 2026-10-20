@@ -11,8 +11,8 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 - Getestet: Unit-Tests (Anhängen mit Querverweis-Strom und -Tabelle, Original bleibt vorn, frühere Fassungen nachweisbar, neu geschriebene nicht, neue Seite/Anlage, freie Objektnummern); Ende-zu-Ende mit zwei Personen bis zur fertigen PDF mit Prüfprotokoll (beide Fassungen nachweisbar, Gegenprobe neu gespeichert: 0 von 2); unabhängig geprüft mit qpdf/pikepdf (keine Fehler), pypdf (strikt), pdf.js, pdf-lib; bisherige Abläufe (Ablehnen, Text-/Ankreuzfelder, anderes PDF-Programm) unverändert.
 
 ### Startseite: „Verfügbar in 40 Sprachen“ sofort sichtbar
-- Direkt unter der Überschrift steht jetzt „Verfügbar in 40 Sprachen“ mit Sprachauswahl – Umschalten mit einem Klick, ohne Menü. Übersetzt in alle Sprachen, Handy-Ansicht kompakt, axe ohne Befund (hell, dunkel, mobil).
-- Hilfe ergänzt; fehlende Übersetzung der Ladefehler-Meldung nachgetragen.
+- „Verfügbar in 40 Sprachen“ steht als Punkt in der Häkchen-Zeile unter „Dateien wählen“ (nach Rückmeldung statt eigener Sprachauswahl unter der Überschrift). Übersetzt in alle Sprachen.
+- Fehlende Übersetzung der Ladefehler-Meldung nachgetragen.
 
 ### pdfmy.de lädt schneller
 - Messung vorher (20.10.2026, ohne Cache): Startseite 41 Anfragen, 1.421 KB bis zum Seitenaufbau, bedienbar nach 4–7 s.
