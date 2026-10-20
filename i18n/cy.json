@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Methu datgodio’r ddelwedd HEIC",
  "HEIC-Bild konnte nicht gelesen werden": "Methu darllen y ddelwedd HEIC",
  "TIFF-Datei enthält kein lesbares Bild": "Nid oes delwedd ddarllenadwy yn y ffeil TIFF",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, JPG, PNG, HEIC, TIFF neu e-anfoneb fel XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, JPG, PNG, HEIC, TIFF neu e-anfoneb fel XML)",
+ "{0} wird in PDF umgewandelt …": "Yn trosi {0} i PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, delwedd, testun, Markdown, CSV neu e-anfoneb fel XML)"
 }

@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Nepavyko iškoduoti HEIC vaizdo",
  "HEIC-Bild konnte nicht gelesen werden": "Nepavyko perskaityti HEIC vaizdo",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF faile nėra skaitomo vaizdo",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, JPG, PNG, HEIC, TIFF arba e. sąskaitą XML formatu)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, JPG, PNG, HEIC, TIFF arba e. sąskaitą XML formatu)",
+ "{0} wird in PDF umgewandelt …": "{0} konvertuojamas į PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, vaizdą, tekstą, Markdown, CSV arba e. sąskaitą XML formatu)"
 }

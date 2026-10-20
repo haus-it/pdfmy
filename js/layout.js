@@ -5,6 +5,7 @@
    fit(doc, …)   weiße Ränder abschneiden und/oder jede Seite auf A4 bringen (Inhalt mittig, maßstabsgetreu; Links,
                  Markierungen und Formularfelder wandern mit)
    nup(bytes, n) 2 oder 4 Seiten verkleinert auf ein A4-Blatt
+   halve(doc, …) Seiten halbieren (Doppelseiten-Scans, A3) – links/rechts oder oben/unten
    booklet(bytes) Broschüre zum Falten: A4 quer, je Blattseite zwei A5-Seiten in Heftreihenfolge (beidseitig drucken,
                  an der kurzen Kante wenden)
    Braucht pdf-lib (PDFLib). */
@@ -137,6 +138,54 @@
     return out.save();
   }
 
-  const api = { fit, nup, booklet, bookletOrder, padBox, fitMatrix, A4 };
+
+  // Seiten halbieren (wie „Seiten halbieren“ bei PDF24, „Split in half“ bei Sejda): Doppelseiten-Scans oder A3-Bögen in zwei Seiten.
+  // dir 'v' = senkrecht teilen (links | rechts), 'h' = waagerecht (oben / unten) – bezogen auf die Seite, wie sie angezeigt wird
+  // (Drehung berücksichtigt). only 'landscape' / 'portrait': nur Seiten dieser Lage teilen; rtl: rechte Hälfte zuerst.
+  // Ohne Neurastern: beide Hälften behalten Vektor und Text, nur Media-/CropBox ändern sich. Gibt die Zahl geteilter Seiten zurück.
+  function halfBoxes(b, rot, dir) {
+    const [x0, y0, x1, y1] = b, mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+    const L = [x0, y0, mx, y1], R = [mx, y0, x1, y1], B = [x0, y0, x1, my], T = [x0, my, x1, y1];
+    const r = ((rot % 360) + 360) % 360;
+    // erste Hälfte in Leserichtung: links bzw. oben, so wie die Seite angezeigt wird
+    if (dir === 'v') return { 0: [L, R], 90: [B, T], 180: [R, L], 270: [T, B] }[r];
+    return { 0: [T, B], 90: [L, R], 180: [B, T], 270: [R, L] }[r];
+  }
+  async function halve(doc, { dir = 'v', only = 'landscape', rtl = false } = {}) {
+    const L = PL(), N = L.PDFName.of;
+    let done = 0;
+    for (let i = doc.getPageCount() - 1; i >= 0; i--) {
+      const page = doc.getPage(i), b = boxOf(page), rot = page.getRotation().angle;
+      const w = b[2] - b[0], h = b[3] - b[1], shown = rot % 180 ? [h, w] : [w, h], land = shown[0] > shown[1];
+      if ((only === 'landscape' && !land) || (only === 'portrait' && land)) continue;
+      let [first, second] = halfBoxes(b, rot, dir);
+      if (rtl && dir === 'v') [first, second] = [second, first];
+      // flache Kopie des Seitenobjekts: Inhalt, Schriften und Bilder werden geteilt (Datei wird nicht doppelt so groß)
+      // geerbte Angaben (Ressourcen, Drehung) fest an die Seite schreiben, damit die Kopie sie behält
+      const res = page.node.Resources(); if (res) page.node.set(N('Resources'), res);
+      page.node.set(N('Rotate'), L.PDFNumber.of(rot));
+      const node = page.node.clone(doc.context), ref = doc.context.register(node), copy = L.PDFPage.of(node, ref, doc);
+      doc.insertPage(i + 1, copy);
+      for (const [p, box] of [[page, first], [copy, second]]) {
+        const a = doc.context.obj(box.map(v => +v.toFixed(3)));
+        p.node.set(N('MediaBox'), a); clearBoxes(p);
+        // Anmerkungen (Links, Markierungen …) nur auf der Hälfte behalten, in der sie liegen
+        const annots = p.node.lookup(N('Annots'));
+        if (annots instanceof L.PDFArray) {
+          const keep = annots.asArray().filter(ref => {
+            const d = doc.context.lookup(ref), r = d?.lookup?.(N('Rect'))?.asArray?.().map(num);
+            if (!r) return true;
+            const cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
+            return cx >= box[0] && cx <= box[2] && cy >= box[1] && cy <= box[3];
+          });
+          if (keep.length) p.node.set(N('Annots'), doc.context.obj(keep)); else p.node.delete(N('Annots'));
+        }
+      }
+      done++;
+    }
+    return done;
+  }
+
+  const api = { fit, nup, booklet, bookletOrder, padBox, fitMatrix, A4, halve, halfBoxes };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Layout = api;
 })(typeof self !== 'undefined' ? self : globalThis);

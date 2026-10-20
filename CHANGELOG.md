@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Text, Markdown und CSV in PDF
+- **.txt, .md, .csv** öffnen jetzt direkt als PDF (wie „TXT/Markdown/CSV to PDF“ bei PDF24, Smallpdf): neues Modul `js/textpdf.js` – A4 mit eingebetteten DejaVu-Schriften; Markdown mit Überschriften, Absätzen, Listen (auch Aufgaben ☐/☑, verschachtelt), Zitaten, Code-Blöcken, Tabellen und Trennlinien; CSV mit erkanntem Trennzeichen (; , Tab |), Anführungszeichen, Kopfzeile auf jeder Seite, Querformat ab 7 Spalten, Zahlen rechtsbündig. Kodierung UTF-8, sonst Windows-1252 (ältere Excel-CSV). Seitenzahlen bei mehreren Seiten.
+- Getestet: `tests/textpdf.test.js` (5 Fälle, Text mit pypdf strict geprüft), im Browser .md/.csv (Windows-1252, 3 Seiten)/.txt importiert; Zeilenumbrüche in TXT wurden zunächst zu „?“ – behoben.
+
 ### iPhone-Fotos (HEIC) und TIFF in jedem Browser
 - **HEIC/HEIF** (iPhone-Fotos) und **TIFF** (auch mehrseitig, Fax G3/G4, LZW, Deflate, JPEG) öffnen jetzt auch in Chrome, Edge und Firefox – bisher konnte das nur Safari. Lokal dekodiert mit libheif 1.23.5 (WebAssembly, LGPL-3.0) bzw. UTIF.js 3.1.0 und pako 2.1.0 (MIT), erst beim ersten Bedarf geladen. Jede TIFF-Seite wird eine Seite; Vorschaubilder im TIFF werden übersprungen, ungleiche Fax-Auflösung (204 × 98 dpi) wird entzerrt.
 - Getestet im Browser: HEIC-Beispiel von libheif (1280 × 854, Bild korrekt), zweiseitiges LZW-TIFF, Fax G3 mit 204 × 98 dpi (Höhe verdoppelt), Deflate-TIFF.

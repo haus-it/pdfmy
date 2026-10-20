@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "HEIC attēlu neizdevās dekodēt",
  "HEIC-Bild konnte nicht gelesen werden": "HEIC attēlu neizdevās nolasīt",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF failā nav nolasāma attēla",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, JPG, PNG, HEIC, TIFF vai e-rēķins kā XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, JPG, PNG, HEIC, TIFF vai e-rēķins kā XML)",
+ "{0} wird in PDF umgewandelt …": "{0} tiek konvertēts uz PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, teksts, Markdown, CSV vai e-rēķins kā XML)"
 }

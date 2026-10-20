@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "HEIC-сликата не можеше да се декодира",
  "HEIC-Bild konnte nicht gelesen werden": "HEIC-сликата не можеше да се прочита",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-датотеката не содржи читлива слика",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Форматот не е поддржан: {0} (користете PDF, JPG, PNG, HEIC, TIFF или е-фактура како XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Форматот не е поддржан: {0} (користете PDF, JPG, PNG, HEIC, TIFF или е-фактура како XML)",
+ "{0} wird in PDF umgewandelt …": "{0} се конвертира во PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Форматот не е поддржан: {0} (користете PDF, слика, текст, Markdown, CSV или е-фактура како XML)"
 }

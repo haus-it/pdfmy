@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Imazhi HEIC nuk mund të dekodohej",
  "HEIC-Bild konnte nicht gelesen werden": "Imazhi HEIC nuk mund të lexohej",
  "TIFF-Datei enthält kein lesbares Bild": "Skedari TIFF nuk përmban asnjë imazh të lexueshëm",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, JPG, PNG, HEIC, TIFF ose e-faturë si XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, JPG, PNG, HEIC, TIFF ose e-faturë si XML)",
+ "{0} wird in PDF umgewandelt …": "Po konvertohet {0} në PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, tekst, Markdown, CSV ose e-faturë si XML)"
 }

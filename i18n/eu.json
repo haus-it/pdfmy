@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Ezin izan da HEIC irudia deskodetu",
  "HEIC-Bild konnte nicht gelesen werden": "Ezin izan da HEIC irudia irakurri",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF fitxategiak ez du irudi irakurgarririk",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, JPG, PNG, HEIC, TIFF edo e-faktura XML gisa)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, JPG, PNG, HEIC, TIFF edo e-faktura XML gisa)",
+ "{0} wird in PDF umgewandelt …": "{0} PDF bihurtzen …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, testua, Markdown, CSV edo e-faktura XML gisa)"
 }

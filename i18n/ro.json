@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Imaginea HEIC nu a putut fi decodificată",
  "HEIC-Bild konnte nicht gelesen werden": "Imaginea HEIC nu a putut fi citită",
  "TIFF-Datei enthält kein lesbares Bild": "Fișierul TIFF nu conține nicio imagine lizibilă",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, JPG, PNG, HEIC, TIFF sau factură electronică ca XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, JPG, PNG, HEIC, TIFF sau factură electronică ca XML)",
+ "{0} wird in PDF umgewandelt …": "Se convertește {0} în PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, text, Markdown, CSV sau factură electronică ca XML)"
 }

@@ -75,7 +75,7 @@
     if (fonts.fontkit) doc.registerFontkit(fonts.fontkit);
     const F = { r: await doc.embedFont(fonts.regular, { subset: true }), b: await doc.embedFont(fonts.bold, { subset: true }), m: await doc.embedFont(fonts.mono, { subset: true }) };
     const sets = {}; for (const k in F) sets[k] = new Set(F[k].getCharacterSet());
-    const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => sets[k].has(ch.codePointAt(0)) ? ch : '?').join('');
+    const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => ch === '\n' || sets[k].has(ch.codePointAt(0)) ? ch : '?').join('');
     let blocks;
     if (kind === 'csv') blocks = [{ type: 'table', rows: parseCsv(text), head: true }];
     else if (kind === 'md') blocks = parseMarkdown(text);

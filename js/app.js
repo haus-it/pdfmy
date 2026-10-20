@@ -127,9 +127,10 @@ async function importFiles(files, { fromCamera = false } = {}) {
       status(`Importiere ${f.name} …`);
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
       else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
+      else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)`); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)`); continue; }
       state.inputBytes += f.size;
     } catch (e) {
       console.error(e);
@@ -263,6 +264,16 @@ async function tiffCanvases(file) {
   }
   if (!out.length) throw new Error('TIFF-Datei enthält kein lesbares Bild');
   return out;
+}
+// Text, Markdown und CSV → PDF (js/textpdf.js), dann wie eine PDF weiterverarbeiten. Kodierung: UTF-8, sonst Windows-1252 (ältere Excel-CSV)
+async function importText(file) {
+  const raw = new Uint8Array(await file.arrayBuffer());
+  let text; try { text = new TextDecoder('utf-8', { fatal: true }).decode(raw); } catch { text = new TextDecoder('windows-1252').decode(raw); }
+  const n = file.name.toLowerCase(), kind = /\.csv$/.test(n) || /csv/.test(file.type) ? 'csv' : /\.(md|markdown)$/.test(n) || /markdown/.test(file.type) ? 'md' : 'txt';
+  status(`${file.name} wird in PDF umgewandelt …`);
+  const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
+  const bytes = await TextPdf.build(PDFLib, { text, kind, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono } });
+  await importPdf(new File([bytes], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
 }
 async function importImage(file, fromCamera) {
   if (isTiff(file) || isHeic(file)) {

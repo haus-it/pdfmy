@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "HEIC-kuvaa ei voitu purkaa",
  "HEIC-Bild konnte nicht gelesen werden": "HEIC-kuvaa ei voitu lukea",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-tiedosto ei sisällä luettavaa kuvaa",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, JPG-, PNG-, HEIC- tai TIFF-tiedostoa tai XML-muotoista e-laskua)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, JPG-, PNG-, HEIC- tai TIFF-tiedostoa tai XML-muotoista e-laskua)",
+ "{0} wird in PDF umgewandelt …": "{0} muunnetaan PDF:ksi …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, teksti-, Markdown- tai CSV-tiedostoa tai XML-muotoista e-laskua)"
 }

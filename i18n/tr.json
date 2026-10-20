@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "HEIC görüntüsünün kodu çözülemedi",
  "HEIC-Bild konnte nicht gelesen werden": "HEIC görüntüsü okunamadı",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF dosyası okunabilir bir görüntü içermiyor",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, JPG, PNG, HEIC, TIFF veya XML olarak e-fatura)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, JPG, PNG, HEIC, TIFF veya XML olarak e-fatura)",
+ "{0} wird in PDF umgewandelt …": "{0} PDF’e dönüştürülüyor …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, görüntü, metin, Markdown, CSV veya XML olarak e-fatura)"
 }

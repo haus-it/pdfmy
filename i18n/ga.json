@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Níorbh fhéidir an íomhá HEIC a dhíchódú",
  "HEIC-Bild konnte nicht gelesen werden": "Níorbh fhéidir an íomhá HEIC a léamh",
  "TIFF-Datei enthält kein lesbares Bild": "Níl íomhá inléite sa chomhad TIFF",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, JPG, PNG, HEIC, TIFF nó r-shonrasc mar XML le do thoil)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, JPG, PNG, HEIC, TIFF nó r-shonrasc mar XML le do thoil)",
+ "{0} wird in PDF umgewandelt …": "{0} á thiontú go PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, téacs, Markdown, CSV nó r-shonrasc mar XML le do thoil)"
 }

@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "The HEIC image could not be decoded",
  "HEIC-Bild konnte nicht gelesen werden": "The HEIC image could not be read",
  "TIFF-Datei enthält kein lesbares Bild": "The TIFF file contains no readable image",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, JPG, PNG, HEIC, TIFF or an e-invoice as XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, JPG, PNG, HEIC, TIFF or an e-invoice as XML)",
+ "{0} wird in PDF umgewandelt …": "Converting {0} to PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, text, Markdown, CSV, or an e-invoice as XML)"
 }

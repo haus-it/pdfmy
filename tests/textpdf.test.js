@@ -58,5 +58,6 @@ test('Text → PDF: Leerzeichen und Umlaute bleiben, lange Zeilen werden umbroch
   const bytes = await TP.build(L, { kind: 'txt', fonts, text: 'Grüße aus Paderborn – ÄÖÜß €\n' + long });
   const t = pdfText(bytes);
   assert.ok(t.includes('Grüße aus Paderborn – ÄÖÜß €'));
+  assert.ok(!t.includes('?'), 'Zeilenumbruch darf kein Ersatzzeichen werden');
   assert.equal((t.match(/Wort/g) || []).length, 60);
 });

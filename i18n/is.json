@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Ekki tókst að afkóða HEIC-myndina",
  "HEIC-Bild konnte nicht gelesen werden": "Ekki tókst að lesa HEIC-myndina",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-skráin inniheldur enga læsilega mynd",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, JPG, PNG, HEIC, TIFF eða rafrænn reikningur sem XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, JPG, PNG, HEIC, TIFF eða rafrænn reikningur sem XML)",
+ "{0} wird in PDF umgewandelt …": "{0} umbreytt í PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, texti, Markdown, CSV eða rafrænn reikningur sem XML)"
 }

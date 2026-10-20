@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "L-istampa HEIC ma setgħetx tiġi dekodifikata",
  "HEIC-Bild konnte nicht gelesen werden": "L-istampa HEIC ma setgħetx tinqara",
  "TIFF-Datei enthält kein lesbares Bild": "Il-fajl TIFF ma fih l-ebda stampa li tinqara",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, JPG, PNG, HEIC, TIFF jew fattura elettronika bħala XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, JPG, PNG, HEIC, TIFF jew fattura elettronika bħala XML)",
+ "{0} wird in PDF umgewandelt …": "Qed jiġi kkonvertit {0} f’PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, stampa, test, Markdown, CSV jew fattura elettronika bħala XML)"
 }

@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Nie udało się zdekodować obrazu HEIC",
  "HEIC-Bild konnte nicht gelesen werden": "Nie udało się odczytać obrazu HEIC",
  "TIFF-Datei enthält kein lesbares Bild": "Plik TIFF nie zawiera czytelnego obrazu",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, JPG, PNG, HEIC, TIFF lub e-faktury w formacie XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, JPG, PNG, HEIC, TIFF lub e-faktury w formacie XML)",
+ "{0} wird in PDF umgewandelt …": "Konwertowanie {0} do PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, tekstu, Markdown, CSV lub e-faktury w formacie XML)"
 }

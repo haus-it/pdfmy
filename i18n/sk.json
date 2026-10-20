@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Obrázok HEIC sa nepodarilo dekódovať",
  "HEIC-Bild konnte nicht gelesen werden": "Obrázok HEIC sa nepodarilo načítať",
  "TIFF-Datei enthält kein lesbares Bild": "Súbor TIFF neobsahuje čitateľný obrázok",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formát nie je podporovaný: {0} (použite, prosím, PDF, JPG, PNG, HEIC, TIFF alebo e-faktúru ako XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formát nie je podporovaný: {0} (použite, prosím, PDF, JPG, PNG, HEIC, TIFF alebo e-faktúru ako XML)",
+ "{0} wird in PDF umgewandelt …": "{0} sa konvertuje do PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Formát nie je podporovaný: {0} (použite, prosím, PDF, obrázok, text, Markdown, CSV alebo e-faktúru ako XML)"
 }

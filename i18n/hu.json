@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "A HEIC-kép nem dekódolható",
  "HEIC-Bild konnte nicht gelesen werden": "A HEIC-kép nem olvasható",
  "TIFF-Datei enthält kein lesbares Bild": "A TIFF-fájl nem tartalmaz olvasható képet",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, JPG, PNG, HEIC, TIFF vagy XML e-számla)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, JPG, PNG, HEIC, TIFF vagy XML e-számla)",
+ "{0} wird in PDF umgewandelt …": "{0} átalakítása PDF-be …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, szöveg, Markdown, CSV vagy XML e-számla)"
 }

@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "Δεν ήταν δυνατή η αποκωδικοποίηση της εικόνας HEIC",
  "HEIC-Bild konnte nicht gelesen werden": "Δεν ήταν δυνατή η ανάγνωση της εικόνας HEIC",
  "TIFF-Datei enthält kein lesbares Bild": "Το αρχείο TIFF δεν περιέχει αναγνώσιμη εικόνα",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, JPG, PNG, HEIC, TIFF ή ηλεκτρονικό τιμολόγιο ως XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, JPG, PNG, HEIC, TIFF ή ηλεκτρονικό τιμολόγιο ως XML)",
+ "{0} wird in PDF umgewandelt …": "Μετατροπή του {0} σε PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, κείμενο, Markdown, CSV ή ηλεκτρονικό τιμολόγιο ως XML)"
 }

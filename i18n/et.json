@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "HEIC-pilti ei õnnestunud dekodeerida",
  "HEIC-Bild konnte nicht gelesen werden": "HEIC-pilti ei õnnestunud lugeda",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-fail ei sisalda loetavat pilti",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, JPG, PNG, HEIC, TIFF või e-arve XML-ina)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, JPG, PNG, HEIC, TIFF või e-arve XML-ina)",
+ "{0} wird in PDF umgewandelt …": "{0} teisendatakse PDF-iks …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, tekst, Markdown, CSV või e-arve XML-ina)"
 }

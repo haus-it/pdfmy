@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "No s’ha pogut descodificar la imatge HEIC",
  "HEIC-Bild konnte nicht gelesen werden": "No s’ha pogut llegir la imatge HEIC",
  "TIFF-Datei enthält kein lesbares Bild": "El fitxer TIFF no conté cap imatge llegible",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, JPG, PNG, HEIC, TIFF o factura electrònica en XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, JPG, PNG, HEIC, TIFF o factura electrònica en XML)",
+ "{0} wird in PDF umgewandelt …": "S’està convertint {0} a PDF …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, text, Markdown, CSV o factura electrònica en XML)"
 }

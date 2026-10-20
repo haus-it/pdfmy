@@ -62,3 +62,34 @@ test('2 und 4 Seiten pro Blatt, Broschüre', async () => {
   assert.equal(bk.getPageCount(), 4);   // 5 Seiten → 8 → 2 Bogen à 2 Seiten
   assert.deepEqual(arr(bk.getPage(0), 'MediaBox'), [0, 0, 841.89, 595.28]);
 });
+
+test('Seiten halbieren: Querformat links/rechts, Hochformat bleibt, Drehung und Anmerkungen', async () => {
+  const d = await sample([[842, 595], [595, 842], [595, 842]], [0, 0, 90]);
+  // Link rechts auf Seite 1
+  const link = d.context.register(d.context.obj({ Type: 'Annot', Subtype: 'Link', Rect: [600, 100, 700, 120] }));
+  d.getPage(0).node.set(N('Annots'), d.context.obj([link]));
+  const n = await Layout.halve(d, { dir: 'v', only: 'landscape' });
+  assert.equal(n, 2);   // Seite 1 (quer) und Seite 3 (hoch, aber um 90° gedreht = quer angezeigt)
+  assert.equal(d.getPageCount(), 5);
+  assert.deepEqual(arr(d.getPage(0), 'MediaBox'), [0, 0, 421, 595]);
+  assert.deepEqual(arr(d.getPage(1), 'MediaBox'), [421, 0, 842, 595]);
+  assert.equal(d.getPage(0).node.lookup(N('Annots')), undefined);
+  assert.equal(d.getPage(1).node.lookup(N('Annots')).size(), 1);
+  assert.deepEqual(arr(d.getPage(2), 'MediaBox'), [0, 0, 595, 842]);   // Hochformat unverändert
+  // 90° gedreht: links in der Anzeige = untere Hälfte der Originalseite
+  assert.deepEqual(arr(d.getPage(3), 'MediaBox'), [0, 0, 595, 421]);
+  assert.deepEqual(arr(d.getPage(4), 'MediaBox'), [0, 421, 595, 842]);
+  assert.equal(d.getPage(4).getRotation().angle, 90);
+  const bytes = await d.save(), again = await L.PDFDocument.load(bytes);
+  assert.equal(again.getPageCount(), 5);
+});
+
+test('Seiten halbieren: oben/unten und rechts zuerst', async () => {
+  const d = await sample([[595, 842]]);
+  await Layout.halve(d, { dir: 'h', only: 'all' });
+  assert.deepEqual(arr(d.getPage(0), 'MediaBox'), [0, 421, 595, 842]);
+  assert.deepEqual(arr(d.getPage(1), 'MediaBox'), [0, 0, 595, 421]);
+  const e = await sample([[842, 595]]);
+  await Layout.halve(e, { rtl: true });
+  assert.deepEqual(arr(e.getPage(0), 'MediaBox'), [421, 0, 842, 595]);
+});

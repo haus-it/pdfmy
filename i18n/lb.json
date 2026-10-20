@@ -2363,5 +2363,7 @@
  "HEIC-Bild konnte nicht dekodiert werden": "HEIC-Bild konnt net dekodéiert ginn",
  "HEIC-Bild konnte nicht gelesen werden": "HEIC-Bild konnt net gelies ginn",
  "TIFF-Datei enthält kein lesbares Bild": "TIFF-Datei enthält kee liesbart Bild",
- "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)"
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)",
+ "{0} wird in PDF umgewandelt …": "{0} gëtt an PDF ëmgewandelt …",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Text, Markdown, CSV oder E-Rechnung als XML)"
 }
