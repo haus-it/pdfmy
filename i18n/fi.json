@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Teksti otsikoineen, luetteloineen ja taulukoineen Markdown-muodossa – esim. tekoälyavustajille, wikeihin tai muistiinpanosovelluksiin",
- "Webseite (HTML)": "Verkkosivu (HTML)"
+ "Webseite (HTML)": "Verkkosivu (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Kaikki sivut, leimat, korostukset, allekirjoitukset ja kuvat harmaasävyinä – säästää värivärijauhetta ja näyttää mustavalkokopiolta. Sivut tallennetaan kuvana, jossa on haettava tekstikerros.",
+ "In Graustufen": "Harmaasävyinä"
 }

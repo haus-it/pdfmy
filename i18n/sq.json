@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst me tituj, lista dhe tabela si Markdown – p.sh. për asistentë IA, wiki ose aplikacione shënimesh",
- "Webseite (HTML)": "Faqe uebi (HTML)"
+ "Webseite (HTML)": "Faqe uebi (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Të gjitha faqet, vulat, shënjimet, nënshkrimet dhe imazhet në shkallë gri – kursen tonerin me ngjyra dhe duket si një kopje bardhë e zi. Faqet ruhen si imazh me një shtresë teksti të kërkueshme.",
+ "In Graustufen": "Në shkallë gri"
 }

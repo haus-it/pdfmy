@@ -89,6 +89,8 @@ Prüfwerkzeuge: **veraPDF 1.30.3** (PDF/A, PDF/UA) und **qpdf 11 über pikepdf 9
 
 Wiederholung der Prüfung: bei jeder Änderung an der PDF-Erzeugung (`buildPdf`, `makePdfA`, `buildInvoicePdf`) bzw. am E-Rechnungs-Generator (`js/einvoice-out.js`) und mindestens vierteljährlich.
 
+Nachtrag 20.10.2026 (Graustufen): Graustufen-Ausgabe (Seitenbild in Grauwerten, Vektor-Elemente DeviceGray) mit veraPDF geprüft: PDF/A-2b PASS, PDF/UA-1 PASS; Kontrolle per Rendering (keine Pixel mit Farbsättigung).
+
 Nachtrag 20.10.2026 (Markdown/HTML): Ausgabe als Markdown (CommonMark) und HTML5 mit lang-Attribut, Titel, Überschriftenhierarchie und Tabellenköpfen (th scope=col); erzeugte Datei mit axe-core (WCAG 2.1 AA) ohne Befund. Inhalte werden maskiert (kein HTML-/Markdown-Einschleusen aus dem PDF-Text).
 
 Nachtrag 20.10.2026 (Formular-Designer): Auswahlliste (/Ch, Combo), Optionsfelder (/Btn, Radio, eine Gruppe je Name und Seite) und Pflichtfeld-Kennzeichen (/Ff Required) nach ISO 32000-1, 12.7; Widgets mit eingebetteter Schrift, nur Normal-Erscheinungsbild, Tooltip (TU) als Zugänglichkeitsname. PDF/A-Ausgabe mit veraPDF geprüft: PDF/A-2b PASS, PDF/UA-1 PASS; Feldstruktur mit pypdf (strict) bestätigt.

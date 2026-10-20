@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Téacs le ceannteidil, liostaí agus táblaí mar Markdown – m.sh. do chúntóirí IS, vicithe nó aipeanna nótaí",
- "Webseite (HTML)": "Leathanach gréasáin (HTML)"
+ "Webseite (HTML)": "Leathanach gréasáin (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Gach leathanach, stampa, marcáil, síniú agus íomhá i liathscála – sábhálann sé tonóir datha agus breathnaíonn sé cosúil le cóip dhubh agus bhán. Sábháiltear na leathanaigh mar íomhá le ciseal téacs inchuardaithe.",
+ "In Graustufen": "I liathscála"
 }

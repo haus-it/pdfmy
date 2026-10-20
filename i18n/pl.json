@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst z nagłówkami, wypunktowaniami i tabelami jako Markdown – np. dla asystentów AI, wiki lub aplikacji do notatek",
- "Webseite (HTML)": "Strona internetowa (HTML)"
+ "Webseite (HTML)": "Strona internetowa (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Wszystkie strony, pieczątki, zaznaczenia, podpisy i obrazy w skali szarości – oszczędza kolorowy toner i wygląda jak kopia czarno-biała. Strony są przy tym zapisywane jako obraz z przeszukiwalną warstwą tekstu.",
+ "In Graustufen": "W skali szarości"
 }

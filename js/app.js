@@ -2,8 +2,25 @@
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Hauptanwendung (Branding/Edition aus js/config.js) */
 'use strict';
-const { setCharacterSqueeze, PDFDocument, PDFName, PDFString, PDFHexString, PDFNumber, PDFOperator, PDFOperatorNames, rgb, degrees, pushGraphicsState, popGraphicsState, setTextRenderingMode, TextRenderingMode,
-  setFillingRgbColor, concatTransformationMatrix, drawObject } = PDFLib;
+const { setCharacterSqueeze, PDFDocument, PDFName, PDFString, PDFHexString, PDFNumber, PDFOperator, PDFOperatorNames, degrees, pushGraphicsState, popGraphicsState, setTextRenderingMode, TextRenderingMode,
+  concatTransformationMatrix, drawObject } = PDFLib;
+// Graustufen-Speichern (buildPdf gray): rgb() liefert dann Grauwerte nach ITU-R BT.601 (wie Schwarzweiß-Druck)
+let GRAY = false;
+const lum = (r, g, b) => 0.299 * r + 0.587 * g + 0.114 * b;
+const rgb = (r, g, b) => GRAY ? PDFLib.grayscale(lum(r, g, b)) : PDFLib.rgb(r, g, b);
+const setFillingRgbColor = (r, g, b) => GRAY ? PDFLib.setFillingGrayscaleColor(lum(r, g, b)) : PDFLib.setFillingRgbColor(r, g, b);
+// Leinwand in Graustufen umrechnen (in place)
+function grayCanvas(c) {
+  const x = c.getContext('2d'), d = x.getImageData(0, 0, c.width, c.height), a = d.data;
+  for (let i = 0; i < a.length; i += 4) { const v = Math.round(0.299 * a[i] + 0.587 * a[i + 1] + 0.114 * a[i + 2]); a[i] = a[i + 1] = a[i + 2] = v; }
+  x.putImageData(d, 0, 0); return c;
+}
+// Bild (Daten-URL) in Graustufen – Unterschriften, Stempel, Logos; Transparenz bleibt (PNG)
+async function grayDataUrl(url) {
+  const img = new Image(); img.src = url; await img.decode();
+  const c = Imaging.canvas(img.naturalWidth, img.naturalHeight); c.getContext('2d').drawImage(img, 0, 0);
+  return grayCanvas(c).toDataURL(url.startsWith('data:image/jpeg') ? 'image/jpeg' : 'image/png', 0.9);
+}
 const abs = p => new URL(p, location.href).href;
 // pdf.js kommt als ES-Modul (vendor/pdfjs/loader.js) – vor der ersten Nutzung darauf warten
 // erst beim ersten Öffnen einer PDF laden (bzw. im Leerlauf nach dem Seitenaufbau, siehe unten)
@@ -2104,7 +2121,7 @@ function stampTexts(i, n, o) {
   const v = { seite: i + 1, seiten: n, datum: o.date || new Date().toLocaleDateString('de-DE'), datei: o.docName || '', bates: o.bates ? Tools.bates(o.bates.prefix, o.bates.start + i) : '' };
   return { head: Tools.fillStamp(o.header, v).trim(), foot: Tools.fillStamp(o.footer, v).trim(), bates: v.bates };
 }
-const hasStamp = o => !!o.filesDirty || (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates || !!o.letterhead || !!o.clean || !!o.trim || !!o.a4 || (!!o.sheet && o.sheet !== '1');
+const hasStamp = o => !!o.filesDirty || (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates || !!o.letterhead || !!o.clean || !!o.trim || !!o.a4 || !!o.gray || (!!o.sheet && o.sheet !== '1');
 // Bereich mit Inhalt je Seite (PDF-Koordinaten) für „Weiße Ränder entfernen“: die fertige PDF grob zeichnen und dunkle Pixel suchen.
 // Einzelne Staubkörner (Scans) zählen nicht – eine Zeile/Spalte gilt erst ab einigen dunklen Pixeln als Inhalt.
 async function inkBoxes(bytes) {
@@ -2385,7 +2402,12 @@ function textLines(words) {
 }
 
 async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
-  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null } = {}) {
+  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false } = {}) {
+  GRAY = gray;
+  try { return await buildPdfInner(...arguments); } finally { GRAY = false; }
+}
+async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
+  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false } = {}) {
   const preset = SIZES[size] || SIZES.balanced, stamps = { pageNumbers, watermark: (watermark || '').trim(), header, footer, bates, docName, date };
   const hasStamps = hasStamp(stamps);
   const out = await PDFDocument.create({ updateMetadata: false });
@@ -2408,7 +2430,7 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
   for (const [i, p] of pages.entries()) {
     onPage ? onPage(i) : status(`Erzeuge Seite ${i + 1} von ${pages.length} …`, i / pages.length);
     const cover = p.annots.filter(a => a.type === 'rd' || a.type === 'wo');
-    const raster = p.kind === 'image' || cover.length > 0 || pdfa || preset.rasterAll ||
+    const raster = p.kind === 'image' || cover.length > 0 || pdfa || preset.rasterAll || gray ||
       (p.rotation !== 0 && (p.annots.length > 0 || !!p.ocr || hasStamps));
     let page, W, H, ox = 0, oy = 0, words = null;
     if (raster) {
@@ -2423,6 +2445,7 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
       // Kompakt (1-Bit-Schrift) nur bei ausreichender Auflösung – sehr kleine Fotos würden klumpig
       const compact = p.kind === 'image' && S.compact && size !== 'original' && effMode(p) !== 'original' && !p.lowRes;
       let c = p.kind === 'image' ? (compact ? p.processed : scaleToDpi(p.processed, preset.dpi)) : await renderPdf(p, preset.dpi);
+      if (gray) { const k = Imaging.canvas(c.width, c.height); k.getContext('2d').drawImage(c, 0, 0); c = grayCanvas(k); }
       if (cover.length) {
         const k = Imaging.canvas(c.width, c.height), x = k.getContext('2d');
         x.drawImage(c, 0, 0);
@@ -2483,8 +2506,8 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
       if (a.type === 'field') fieldQ.push({ page, x, y, w, h, a });
       else if (a.type === 'link') linkQ.push({ page, x, y, w, h, a });
       else if (a.type === 'hl') hlQ.push({ page, x, y, w, h, a });
-      else if (a.type === 'sign') { const img = await out.embedPng(a.img); await tagged('Figure', () => page.drawImage(img, { x, y, width: w, height: h }), { Alt: PDFHexString.fromText({ initials: 'Kürzel', stamp: 'Firmenstempel' }[a.kind] || 'Unterschrift') }); }
-      else if (a.type === 'img') { const img = a.img.startsWith('data:image/jpeg') ? await out.embedJpg(a.img) : await out.embedPng(a.img); await tagged('Figure', () => page.drawImage(img, { x, y, width: w, height: h }), { Alt: PDFHexString.fromText(a.alt || 'Bild') }); }
+      else if (a.type === 'sign') { const img = await out.embedPng(gray ? await grayDataUrl(a.img) : a.img); await tagged('Figure', () => page.drawImage(img, { x, y, width: w, height: h }), { Alt: PDFHexString.fromText({ initials: 'Kürzel', stamp: 'Firmenstempel' }[a.kind] || 'Unterschrift') }); }
+      else if (a.type === 'img') { const src = gray ? await grayDataUrl(a.img) : a.img, img = src.startsWith('data:image/jpeg') ? await out.embedJpg(src) : await out.embedPng(src); await tagged('Figure', () => page.drawImage(img, { x, y, width: w, height: h }), { Alt: PDFHexString.fromText(a.alt || 'Bild') }); }
       else if (a.type === 'shape') await tagged('Artifact', () => {
         const col = hexRgb(a.color), lw = Math.max(0.5, a.lw * W), fill = a.fill ? { color: col, opacity: 0.2 } : {};
         if (a.kind === 'rect') page.drawRectangle({ x: x + lw / 2, y: y + lw / 2, width: Math.max(0, w - lw), height: Math.max(0, h - lw), borderColor: col, borderWidth: lw, ...fill });
@@ -2872,7 +2895,7 @@ const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.doc
 // Stempel-Optionen aus dem Export-Dialog für PDF und Bilder
 const stampOpts = (o, base) => ({ pageNumbers: o.pageNumbers, watermark: o.watermark, header: o.header, footer: o.footer,
   bates: o.batesOn ? { prefix: o.batesPrefix, start: o.batesStart } : null, docName: base, date: new Date().toLocaleDateString('de-DE'),
-  clean: !!o.clean, filesDirty: !!state.filesDirty, trim: !!o.trim, a4: !!o.a4, letterhead: o.letterhead && o.format === 'pdf' && typeof letterhead !== 'undefined' && letterhead?.bytes ? letterhead.bytes : null });
+  clean: !!o.clean, gray: !!o.gray && (o.format === 'pdf' || o.format === 'pdfa'), filesDirty: !!state.filesDirty, trim: !!o.trim, a4: !!o.a4, letterhead: o.letterhead && o.format === 'pdf' && typeof letterhead !== 'undefined' && letterhead?.bytes ? letterhead.bytes : null });
 // Kleiner Dialog „fertig – jetzt speichern“: Der Klick darauf darf das Speichern-Fenster öffnen
 function readyToSave(name, pick) {
   return new Promise(resolve => {
@@ -3040,7 +3063,7 @@ function readExport() {
     batesPrefix: $('#x-bpre').value.trim(), batesStart: Math.max(1, parseInt($('#x-bstart').value, 10) || 1),
     password: $('#x-pw').value, allowPrint: $('#x-print').checked, allowCopy: $('#x-copy').checked, sign: $('#x-sign').checked,
     orig: !$('#x-orig-row').hidden && $('#x-orig').checked, letterhead: $('#x-lh').checked, clean: $('#x-clean').checked,
-    trim: $('#x-trim').checked, a4: $('#x-a4').checked, sheet: $('#x-sheet').value,
+    trim: $('#x-trim').checked, a4: $('#x-a4').checked, gray: $('#x-gray').checked, sheet: $('#x-sheet').value,
   };
 }
 function setRadio(name, v) { const r = document.querySelector(`#expForm [name="${name}"][value="${v}"]`); if (r) r.checked = true; }

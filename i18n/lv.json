@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Teksts ar virsrakstiem, sarakstiem un tabulām Markdown formātā – piem., MI asistentiem, wiki vai piezīmju lietotnēm",
- "Webseite (HTML)": "Tīmekļa lapa (HTML)"
+ "Webseite (HTML)": "Tīmekļa lapa (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Visas lapas, zīmogi, iezīmes, paraksti un attēli pelēktoņos – taupa krāsu toneri un izskatās kā melnbalta kopija. Lapas tiek saglabātas kā attēls ar meklējamu teksta slāni.",
+ "In Graustufen": "Pelēktoņos"
 }

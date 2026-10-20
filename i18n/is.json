@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Texti með fyrirsögnum, upptalningum og töflum sem Markdown – t.d. fyrir gervigreindaraðstoðarmenn, wiki-síður eða glósuforrit",
- "Webseite (HTML)": "Vefsíða (HTML)"
+ "Webseite (HTML)": "Vefsíða (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Allar síður, stimplar, merkingar, undirskriftir og myndir í grátóna – sparar litatóner og lítur út eins og svarthvítt afrit. Síðurnar eru vistaðar sem mynd með leitanlegu textalagi.",
+ "In Graustufen": "Í grátóna"
 }

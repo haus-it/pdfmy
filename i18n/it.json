@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Testo con titoli, elenchi puntati e tabelle in Markdown – ad es. per assistenti IA, wiki o app per appunti",
- "Webseite (HTML)": "Pagina web (HTML)"
+ "Webseite (HTML)": "Pagina web (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Tutte le pagine, timbri, evidenziazioni, firme e immagini in scala di grigi: risparmia toner a colori e sembra una copia in bianco e nero. Le pagine vengono salvate come immagine con un livello di testo ricercabile.",
+ "In Graustufen": "In scala di grigi"
 }

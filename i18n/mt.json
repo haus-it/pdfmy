@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Test b’intestaturi, listi u tabelli bħala Markdown – eż. għal assistenti tal-IA, wikis jew apps tan-noti",
- "Webseite (HTML)": "Paġna web (HTML)"
+ "Webseite (HTML)": "Paġna web (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Il-paġni, it-timbri, l-immarkar, il-firem u l-istampi kollha fi skala tal-griż – jiffranka t-toner tal-kulur u jidher qisu kopja iswed u abjad. Il-paġni jiġu ssejvjati bħala stampa b’saff ta’ test li jista’ jiġi mfittex.",
+ "In Graustufen": "Fi skala tal-griż"
 }

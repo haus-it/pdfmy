@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Testun gyda phenawdau, rhestrau a thablau fel Markdown – e.e. ar gyfer cynorthwywyr AI, wicis neu apiau nodiadau",
- "Webseite (HTML)": "Tudalen we (HTML)"
+ "Webseite (HTML)": "Tudalen we (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Pob tudalen, stamp, marc, llofnod a delwedd mewn graddlwyd – yn arbed arlliw lliw ac yn edrych fel copi du a gwyn. Caiff tudalennau eu cadw fel delwedd gyda haen destun y gellir ei chwilio.",
+ "In Graustufen": "Mewn graddlwyd"
 }

@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Izenburu, zerrenda eta taulak dituen testua Markdown formatuan – adib. AA laguntzaileentzat, wikientzat edo ohar-aplikazioentzat",
- "Webseite (HTML)": "Web orria (HTML)"
+ "Webseite (HTML)": "Web orria (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Orrialde, zigilu, marka, sinadura eta irudi guztiak gris-eskalan: kolorezko tonerra aurrezten du eta zuri-beltzeko kopia baten itxura du. Orrialdeak irudi gisa gordetzen dira, testu-geruza bilagarri batekin.",
+ "In Graustufen": "Gris-eskalan"
 }

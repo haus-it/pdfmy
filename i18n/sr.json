@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Текст са насловима, набрајањима и табелама као Markdown – нпр. за AI асистенте, викије или апликације за белешке",
- "Webseite (HTML)": "Веб-страница (HTML)"
+ "Webseite (HTML)": "Веб-страница (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Све странице, печати, ознаке, потписи и слике у нијансама сиве – штеди тонер у боји и изгледа као црно-бела копија. Странице се при томе чувају као слика са текстуалним слојем који се може претраживати.",
+ "In Graustufen": "У нијансама сиве"
 }

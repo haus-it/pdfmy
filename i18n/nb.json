@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst med overskrifter, punktlister og tabeller som Markdown – f.eks. for KI-assistenter, wikier eller notatapper",
- "Webseite (HTML)": "Nettside (HTML)"
+ "Webseite (HTML)": "Nettside (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Alle sider, stempler, markeringer, signaturer og bilder i gråtoner – sparer fargetoner og ser ut som en svart-hvitt-kopi. Sidene lagres som bilde med et søkbart tekstlag.",
+ "In Graustufen": "I gråtoner"
 }

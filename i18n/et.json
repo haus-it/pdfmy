@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst pealkirjade, loetelude ja tabelitega Markdownina – nt tehisintellekti assistentide, vikide või märkmerakenduste jaoks",
- "Webseite (HTML)": "Veebileht (HTML)"
+ "Webseite (HTML)": "Veebileht (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Kõik leheküljed, templid, märgistused, allkirjad ja pildid halltoonides – säästab värvitoonerit ja näeb välja nagu mustvalge koopia. Leheküljed salvestatakse pildina, millel on otsitav tekstikiht.",
+ "In Graustufen": "Halltoonides"
 }

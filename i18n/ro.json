@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text cu titluri, liste și tabele ca Markdown – de ex. pentru asistenți AI, wiki-uri sau aplicații de notițe",
- "Webseite (HTML)": "Pagină web (HTML)"
+ "Webseite (HTML)": "Pagină web (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Toate paginile, ștampilele, marcajele, semnăturile și imaginile în tonuri de gri – economisește tonerul color și arată ca o copie alb-negru. Paginile sunt salvate ca imagine cu un strat de text în care se poate căuta.",
+ "In Graustufen": "În tonuri de gri"
 }

@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst met koppen, opsommingen en tabellen als Markdown – bijv. voor AI-assistenten, wiki’s of notitie-apps",
- "Webseite (HTML)": "Webpagina (HTML)"
+ "Webseite (HTML)": "Webpagina (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Alle pagina's, stempels, markeringen, handtekeningen en afbeeldingen in grijstinten – bespaart kleurtoner en ziet eruit als een zwart-witkopie. Pagina’s worden daarbij als afbeelding met een doorzoekbare tekstlaag opgeslagen.",
+ "In Graustufen": "In grijstinten"
 }

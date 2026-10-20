@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Szöveg címsorokkal, felsorolásokkal és táblázatokkal Markdown formátumban – pl. MI-asszisztensekhez, wikikhez vagy jegyzetalkalmazásokhoz",
- "Webseite (HTML)": "Weboldal (HTML)"
+ "Webseite (HTML)": "Weboldal (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Minden oldal, bélyegző, jelölés, aláírás és kép szürkeárnyalatosan – spórol a színes tonerrel, és fekete-fehér másolatnak tűnik. Az oldalak ilyenkor képként, kereshető szövegréteggel kerülnek mentésre.",
+ "In Graustufen": "Szürkeárnyalatosan"
 }

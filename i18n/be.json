@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Тэкст з загалоўкамі, спісамі і табліцамі ў фармаце Markdown – напрыклад, для ШІ-асістэнтаў, вікі або праграм для нататак",
- "Webseite (HTML)": "Вэб-старонка (HTML)"
+ "Webseite (HTML)": "Вэб-старонка (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Усе старонкі, штампы, пазнакі, подпісы і выявы ў адценнях шэрага – эканоміць каляровы тонер і выглядае як чорна-белая копія. Старонкі пры гэтым захоўваюцца як выява з тэкставым пластом для пошуку.",
+ "In Graustufen": "У адценнях шэрага"
 }

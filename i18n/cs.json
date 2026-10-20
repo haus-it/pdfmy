@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text s nadpisy, odrážkami a tabulkami jako Markdown – např. pro AI asistenty, wiki nebo aplikace na poznámky",
- "Webseite (HTML)": "Webová stránka (HTML)"
+ "Webseite (HTML)": "Webová stránka (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Všechny strany, razítka, označení, podpisy a obrázky v odstínech šedi – šetří barevný toner a vypadá jako černobílá kopie. Strany se přitom uloží jako obrázek s prohledávatelnou textovou vrstvou.",
+ "In Graustufen": "V odstínech šedi"
 }

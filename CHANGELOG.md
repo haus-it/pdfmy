@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### In Graustufen speichern
+- Speichern-Dialog → Farbe → **„In Graustufen“** (wie „Graustufen“ bei PDF24, Sejda, Stirling-PDF): Seiten werden gerastert und in Grauwerte (ITU-R BT.601) umgerechnet; Stempel, Text, Markierungen, Kopf-/Fußzeilen über DeviceGray, Unterschriften und Bilder ebenfalls grau. Textebene bleibt durchsuchbar; für PDF und PDF/A.
+- Getestet: Browser (gerenderte Seite ohne einzige farbige Stelle, Text weiter auffindbar, nächstes Speichern wieder farbig), veraPDF PDF/A-2b und PDF/UA-1 PASS, axe ohne Befund, 160/160 Unit-Tests.
+
 ### PDF in Markdown und HTML
 - Speichern-Dialog: neue Formate **Markdown** (.md) und **HTML** – wie „PDF to Markdown“ bei iLovePDF (07/2026) und PDF24. Gliederung aus der Textlage: Überschriften (Schriftgröße/fett), Absätze mit Silbentrennung, Aufzählungen (• – 1.), Tabellen (gleiche Spalten über mehrere Zeilen); Seitenwechsel als Kommentar bzw. Trennlinie. HTML mit Sprache, Titel und Tabellenköpfen (barrierefrei). Neue Funktionen `docBlocks`, `toMarkdown`, `toHtml` in `js/tools.js`.
 - Getestet: `tests/markdown.test.js` (4 Fälle), im Browser mit Angebots-PDF (Überschrift, Absatz, Liste, Tabelle), erzeugtes HTML mit axe ohne Befund.

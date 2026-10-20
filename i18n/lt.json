@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekstas su antraštėmis, sąrašais ir lentelėmis Markdown formatu – pvz., DI asistentams, vikiams ar užrašų programėlėms",
- "Webseite (HTML)": "Tinklalapis (HTML)"
+ "Webseite (HTML)": "Tinklalapis (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Visi puslapiai, antspaudai, žymėjimai, parašai ir paveikslėliai pilkais atspalviais – taupo spalvotą dažiklį ir atrodo kaip nespalvota kopija. Puslapiai įrašomi kaip paveikslėlis su ieškomu teksto sluoksniu.",
+ "In Graustufen": "Pilkais atspalviais"
 }

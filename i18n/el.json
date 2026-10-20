@@ -2355,5 +2355,7 @@
  "HTML": "HTML",
  "Markdown": "Markdown",
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Κείμενο με επικεφαλίδες, λίστες και πίνακες ως Markdown – π.χ. για βοηθούς ΤΝ, wiki ή εφαρμογές σημειώσεων",
- "Webseite (HTML)": "Ιστοσελίδα (HTML)"
+ "Webseite (HTML)": "Ιστοσελίδα (HTML)",
+ "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Όλες οι σελίδες, σφραγίδες, επισημάνσεις, υπογραφές και εικόνες σε αποχρώσεις του γκρι – εξοικονομεί έγχρωμο τόνερ και μοιάζει με ασπρόμαυρο αντίγραφο. Οι σελίδες αποθηκεύονται ως εικόνα με επίπεδο κειμένου με δυνατότητα αναζήτησης.",
+ "In Graustufen": "Σε αποχρώσεις του γκρι"
 }
