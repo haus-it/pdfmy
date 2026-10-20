@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Código fonte (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Non se puido ler «{0}»: Outlook garda os anexos nun cartafol protexido que o navegador non pode ler. Con pdfmy Scan (Windows a partir de 1.8.7, Mac e Linux a partir de 1.1.7), PDFMy abre estes anexos automaticamente. Se non, garde o anexo en Outlook («Gardar como») e despois ábrao.",
  "Verfügbar in 40 Sprachen": "Dispoñible en 40 idiomas",
- "{0} konnte nicht geladen werden": "Non se puido cargar {0}"
+ "{0} konnte nicht geladen werden": "Non se puido cargar {0}",
+ "– nicht nachweisbar": "– non verificable",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} de {1} versións están contidas sen cambios. As demais non se poden verificar – o ficheiro gardouse de novo entrementes (p. ex., noutro programa PDF) ou modificouse.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Autenticidade comprobada: as {0} versións asinadas están todas contidas sen cambios neste ficheiro – os pasos posteriores só engadiron contido.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} de {1} versións están contidas sen cambios. As demais non se poden verificar – o ficheiro gardouse de novo entrementes (p. ex., noutro programa PDF) ou modificouse.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1} de {2} asinaron</p>{3}<table class=\"reqtab\"><thead><tr><th>Persoa</th><th>Estado</th><th>Data e hora</th>{4}<th>Suma de verificación (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Autenticidade</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Autenticidade comprobada: as {0} versións asinadas están todas contidas sen cambios neste ficheiro – os pasos posteriores só engadiron contido.",
+ "✓ unverändert enthalten": "✓ contida sen cambios",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Non é posible anexar – o PDF vai ser reescrito:",
+ "Echtheit": "Autenticidade",
+ "Kids": "Kids"
 }

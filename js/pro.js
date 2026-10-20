@@ -422,7 +422,7 @@ cfRender(); cfLoad();
 let req = null, reqDoc = -1, reqArm = -1, reqDraft = false, reqHash = '', reqSigned = false, reqStart = 0, reqType = 'sign', reqAudit = false, reqExt = false;
 const RQ_ICON = { sign: '✍', initials: '✍', date: '📅', name: '👤', text: '✎', check: '☑' };
 const reqMine = () => req && !reqDraft ? SigReq.next(req) : -1;
-window.reqReset = () => { req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; renderReqBar(); };
+window.reqReset = () => { req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
 function reqRow(s = {}, i = 0) {
   return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button></div>`;
 }
@@ -585,6 +585,9 @@ async function reqFormFields(out, pages) {
     const an = pg.node.lookup(N('Annots')); if (!(an instanceof L.PDFArray)) continue;
     for (let k = an.size() - 1; k >= 0; k--) { const d = an.lookup(k), t = d instanceof L.PDFDict ? d.lookup(N('T')) : null; if (t?.decodeText && /^pdfmy_/.test(t.decodeText())) an.remove(k); }
   }
+  // … und aus dem Formularverzeichnis (beim Anhängen an die empfangene Fassung bleibt es sonst bestehen)
+  const af = out.catalog.lookup(N('AcroForm')), flds = af instanceof L.PDFDict ? af.lookup(N('Fields')) : null;
+  if (flds instanceof L.PDFArray) for (let k = flds.size() - 1; k >= 0; k--) { const d = flds.lookup(k), t = d instanceof L.PDFDict ? d.lookup(N('T')) : null; if (t?.decodeText && /^pdfmy_/.test(t.decodeText())) flds.remove(k); }
   const i = SigReq.next(req); if (i < 0) return;
   const mine = req.fields.map((f, k) => ({ f, k })).filter(({ f }) => f.s === i && pages.indexOf(f.pg) >= 0); if (!mine.length) return;
   const form = out.getForm(), helv = await out.embedFont(L.StandardFonts.Helvetica), who = req.signers[i].name, red = [0.78, 0.06, 0.18];
@@ -625,6 +628,7 @@ async function reqReadForm(r, bytes) {
 window.reqLoad = (json, docIdx, bytes) => {
   const r = SigReq.parse(json); if (!r) return;
   req = r; reqDoc = docIdx; reqDraft = false; reqArm = -1; reqSigned = false; reqHash = ''; reqStart = state.pages.length;   // Seiten dieses Dokuments folgen ab hier (auch als Scan aufbereitete)
+  reqBytes = new Uint8Array(bytes);   // empfangene Fassung: Unterschriften werden daran angehängt (js/pdfinc.js)
   sha256(bytes).then(h => { reqHash = h; });
   reqExt = false;
   reqReadForm(r, bytes).then(ext => { if (req === r && ext) { reqExt = true; renderReqBar(); renderAnns(); toast(`${r.signers[SigReq.next(r)]?.name || 'Die Person'} hat offenbar in einem anderen PDF-Programm unterschrieben – bitte prüfen und „Als unterschrieben übernehmen …“.`, 9000); } }).catch(e => console.warn('Formularfelder lesen:', e));
@@ -634,6 +638,7 @@ window.reqAfterImport = docIdx => {
   if (!req || reqDoc !== docIdx) return;
   const pages = state.pages.slice(reqStart);
   req.fields.forEach(f => { f.pg = pages[f.page]; });
+  reqBase = { pages: pages.slice(), rot: pages.map(p => p.rotation), ids: new Set(pages.flatMap(p => p.annots.map(a => a.id))) };   // Stand beim Öffnen
   renderReqBar(); renderAnns();
   const i = reqMine();
   if (i >= 0) { const f = req.fields.find(x => x.s === i && x.pg); if (f) reqGoto(f); }
@@ -655,6 +660,52 @@ async function reqAuditPage(out) {
   }
 }
 async function reqPdf() { if (ocrRunning) await runOcrAll(); return buildPdf(docPages(), state.meta, { noOcr: true, onPage: () => {} }); }
+/* Nachweisbare Echtheit: Die Unterschrift wird an die empfangene Fassung ANGEHÄNGT statt die PDF neu zu schreiben (inkrementelles
+   Speichern, ISO 32000). So bleibt jede Fassung Byte für Byte erhalten, und die Prüfsumme, die jede Person beim Unterschreiben
+   festhält, lässt sich in der fertigen PDF nachrechnen. Nur wenn am Dokument sonst nichts geändert wurde (gleiche Seiten, gleiche
+   Drehung, keine weiteren Anmerkungen) – sonst wie bisher neu schreiben. */
+let reqBytes = null, reqBase = null;
+function reqIncOk() {
+  if (!reqBytes || !reqBase || !window.PdfInc) return false;
+  const pages = docPages();
+  if (pages.length !== reqBase.pages.length || pages.some((p, i) => p !== reqBase.pages[i] || p.rotation !== reqBase.rot[i])) return false;
+  return pages.every(p => p.annots.every(a => reqBase.ids.has(a.id) || reqSignedIds.has(a.id)));
+}
+// Vorhandene Anlage der Anfrage entfernen (sonst stünde die alte neben der neuen)
+function reqDropJson(doc) {
+  const L = PDFLib, N = n => L.PDFName.of(n), names = doc.catalog.lookup(N('Names'));
+  const ef = names instanceof L.PDFDict ? names.lookup(N('EmbeddedFiles')) : null; if (!(ef instanceof L.PDFDict)) return;
+  const walk = node => {
+    const arr = node.lookup(N('Names'));
+    if (arr instanceof L.PDFArray) for (let i = arr.size() - 2; i >= 0; i -= 2) if (arr.lookup(i)?.decodeText?.() === SigReq.FILE) { arr.remove(i + 1); arr.remove(i); }
+    const kids = node.lookup(N('Kids')); if (kids instanceof L.PDFArray) for (let i = 0; i < kids.size(); i++) walk(kids.lookup(i));
+  };
+  walk(ef);
+}
+async function reqIncremental(audit) {
+  if (!reqIncOk()) return null;
+  try {
+    const L = PDFLib, doc = await PdfInc.load(reqBytes), pages = docPages(), lp = doc.getPages();
+    if (lp.length !== pages.length) return null;
+    doc.registerFontkit(await loadFontkit());
+    const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });   // auch ✓ und Namen in kyrillischer Schrift
+    for (const [k, p] of pages.entries()) {
+      const page = lp[k], mb = page.getMediaBox(), W = mb.width, H = mb.height, ox = mb.x, oy = mb.y;
+      for (const a of p.annots) {
+        if (!reqSignedIds.has(a.id)) continue;
+        const x = ox + a.x * W, y = oy + H - (a.y + a.h) * H;
+        if (a.type === 'sign') page.drawImage(await doc.embedPng(a.img), { x, y, width: a.w * W, height: a.h * H });
+        else if (a.type === 'text') {
+          const sz = a.fs * W, [r, g, b] = [1, 3, 5].map(i => parseInt(a.color.slice(i, i + 2), 16) / 255);
+          a.text.split('\n').forEach((t, li) => { if (t) page.drawText(t, { x, y: oy + H - (a.y * H + sz * (0.95 + (a.lh || 1.2) * li)), size: sz, font, color: L.rgb(r, g, b) }); });
+        }
+      }
+    }
+    reqDropJson(doc);
+    reqAudit = audit; try { await window.reqInfo(doc, pages, new Date()); } finally { reqAudit = false; }   // Prüfprotokoll, Formularfelder, neue Anlage
+    return await PdfInc.save(reqBytes, doc);
+  } catch (e) { console.warn('Anhängen nicht möglich – die PDF wird neu geschrieben:', e); return null; }
+}
 const reqFile = (r, suffix) => `${r.title.replace(/[\\/:*?"<>|]+/g, '_').slice(0, 80)}${suffix}`;
 function reqMail(r, bytes, pdfName) {
   const m = SigReq.mail(r, { from: S.author });
@@ -709,7 +760,8 @@ async function reqForward(ext = false) {
     req = SigReq.markSigned(req, i, { hash: reqHash, ext: ext === true });
     reqExt = false;
     const done = SigReq.complete(req);
-    reqAudit = done; let bytes; try { bytes = await reqPdf(); } finally { reqAudit = false; }
+    let bytes = await reqIncremental(done);
+    if (!bytes) { reqAudit = done; try { bytes = await reqPdf(); } finally { reqAudit = false; } }
     const name = reqFile(req, done ? ' – unterschrieben.pdf' : ' – zur Unterschrift.pdf');
     const m = reqMail(req, bytes, name);
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
@@ -723,15 +775,22 @@ $('#reqDecForm').onsubmit = async ev => {
   try {
     req = SigReq.decline(req, i, { reason: $('#reqDecWhy').value });
     for (const p of docPages()) p.annots = p.annots.filter(a => !reqSignedIds.has(a.id));   // eigene, noch nicht versendete Unterschrift wieder entfernen
-    const bytes = await reqPdf(), m = reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
+    const bytes = await reqIncremental(false) || await reqPdf(), m = reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
     status(`Abgelehnt. E-Mail an ${m.to} vorbereitet – die .eml-Datei öffnen und senden.`);
   } catch (e) { console.error(e); status('Ablehnen nicht möglich: ' + e.message); }
 };
 const reqSignedIds = new Set();
-function reqInfoShow() {
+async function reqInfoShow() {
   if (!req) return;
-  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p><table class="reqtab"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th><th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map(s => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td>${s.status === SigReq.DONE ? '✓ unterschrieben' : s.status === SigReq.DECLINED ? `✕ abgelehnt${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}` : 'offen'}</td><td>${esc(SigReq.fmt(s.signedAt))}</td><td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table>`;
+  // Echtheit: Steckt die Fassung, die jede Person bekommen hat, unverändert in dieser Datei? (nur bei einer geöffneten Fassung)
+  const ok = reqBytes && !reqDraft && window.PdfInc ? await PdfInc.contains(reqBytes, req.signers.map(s => s.hash)) : null;
+  const signed = req.signers.filter(s => s.hash), good = ok ? req.signers.filter((s, i) => s.hash && ok[i]).length : 0;
+  const head = !ok || !signed.length ? '' : good === signed.length
+    ? `<p class="reqok">✓ Echtheit geprüft: Alle ${signed.length} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>`
+    : `<p class="reqwarn">${good} von ${signed.length} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>`;
+  const cell = i => !ok || !req.signers[i].hash ? '–' : ok[i] ? '✓ unverändert enthalten' : '– nicht nachweisbar';
+  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${head}<table class="reqtab"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td>${s.status === SigReq.DONE ? '✓ unterschrieben' : s.status === SigReq.DECLINED ? `✕ abgelehnt${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}` : 'offen'}</td><td>${esc(SigReq.fmt(s.signedAt))}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table>`;
   $('#reqInfoDlg').showModal();
 }
 $('#reqInfoClose').onclick = () => $('#reqInfoDlg').close();

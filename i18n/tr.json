@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Kaynak kodu (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "“{0}” okunamadı – Outlook ekleri tarayıcının okumasına izin verilmeyen korumalı bir klasöre kaydeder. pdfmy Scan ile (Windows 1.8.7, Mac ve Linux 1.1.7 sürümünden itibaren) PDFMy bu tür ekleri otomatik olarak açar. Aksi takdirde eki Outlook’ta kaydedin (“Farklı Kaydet”) ve ardından açın.",
  "Verfügbar in 40 Sprachen": "40 dilde kullanılabilir",
- "{0} konnte nicht geladen werden": "{0} yüklenemedi"
+ "{0} konnte nicht geladen werden": "{0} yüklenemedi",
+ "– nicht nachweisbar": "– kanıtlanamıyor",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{1} sürümden {0} tanesi değişmeden mevcut. Diğerleri kanıtlanamıyor – dosya bu arada yeniden kaydedilmiş (ör. başka bir PDF programında) veya değiştirilmiş.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Orijinallik doğrulandı: imzalanan {0} sürümün tümü bu dosyada değişmeden mevcut – sonraki adımlar yalnızca ekleme yaptı.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{1} sürümden {0} tanesi değişmeden mevcut. Diğerleri kanıtlanamıyor – dosya bu arada yeniden kaydedilmiş (ör. başka bir PDF programında) veya değiştirilmiş.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {2} kişiden {1} kişi imzaladı</p>{3}<table class=\"reqtab\"><thead><tr><th>Kişi</th><th>Durum</th><th>Zaman</th>{4}<th>Sağlama toplamı (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Orijinallik</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Orijinallik doğrulandı: imzalanan {0} sürümün tümü bu dosyada değişmeden mevcut – sonraki adımlar yalnızca ekleme yaptı.",
+ "✓ unverändert enthalten": "✓ değişmeden mevcut",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ekleme yapılamıyor – PDF yeniden yazılacak:",
+ "Echtheit": "Orijinallik",
+ "Kids": "Kids"
 }

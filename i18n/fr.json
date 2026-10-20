@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Code source (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Impossible de lire « {0} » – Outlook enregistre les pièces jointes dans un dossier protégé que le navigateur n’a pas le droit de lire. Avec pdfmy Scan (Windows à partir de 1.8.7, Mac et Linux à partir de 1.1.7), PDFMy ouvre automatiquement ces pièces jointes. Sinon, enregistrez la pièce jointe dans Outlook (« Enregistrer sous »), puis ouvrez-la.",
  "Verfügbar in 40 Sprachen": "Disponible en 40 langues",
- "{0} konnte nicht geladen werden": "Impossible de charger {0}"
+ "{0} konnte nicht geladen werden": "Impossible de charger {0}",
+ "– nicht nachweisbar": "– non vérifiable",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} des {1} versions sont contenues sans modification. Les autres ne peuvent pas être vérifiées – le fichier a été réenregistré entre-temps (p. ex. dans un autre programme PDF) ou modifié.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Authenticité vérifiée : les {0} versions signées sont toutes contenues sans modification dans ce fichier – les étapes suivantes n’ont fait qu’ajouter du contenu.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} des {1} versions sont contenues sans modification. Les autres ne peuvent pas être vérifiées – le fichier a été réenregistré entre-temps (p. ex. dans un autre programme PDF) ou modifié.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1} sur {2} ont signé</p>{3}<table class=\"reqtab\"><thead><tr><th>Personne</th><th>Statut</th><th>Date et heure</th>{4}<th>Somme de contrôle (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Authenticité</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Authenticité vérifiée : les {0} versions signées sont toutes contenues sans modification dans ce fichier – les étapes suivantes n’ont fait qu’ajouter du contenu.",
+ "✓ unverändert enthalten": "✓ contenue inchangée",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ajout impossible – le PDF sera réécrit :",
+ "Echtheit": "Authenticité",
+ "Kids": "Kids"
 }

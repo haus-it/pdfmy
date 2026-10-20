@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Lähdekoodi (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "”{0}” ei voitu lukea – Outlook tallentaa liitteet suojattuun kansioon, jota selain ei saa lukea. pdfmy Scanin avulla (Windows versiosta 1.8.7, Mac ja Linux versiosta 1.1.7) PDFMy avaa tällaiset liitteet automaattisesti. Muuten tallenna liite Outlookissa (”Tallenna nimellä”) ja avaa se sitten.",
  "Verfügbar in 40 Sprachen": "Saatavilla 40 kielellä",
- "{0} konnte nicht geladen werden": "{0} ei latautunut"
+ "{0} konnte nicht geladen werden": "{0} ei latautunut",
+ "– nicht nachweisbar": "– ei todennettavissa",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "Versioista {0}/{1} sisältyy muuttumattomana. Muita ei voida todentaa – tiedosto on välillä tallennettu uudelleen (esim. toisessa PDF-ohjelmassa) tai sitä on muutettu.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Aitous tarkistettu: kaikki {0} allekirjoitettua versiota sisältyvät muuttumattomina tähän tiedostoon – myöhemmät vaiheet ovat vain lisänneet sisältöä.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">Versioista {0}/{1} sisältyy muuttumattomana. Muita ei voida todentaa – tiedosto on välillä tallennettu uudelleen (esim. toisessa PDF-ohjelmassa) tai sitä on muutettu.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1}/{2} allekirjoitettu</p>{3}<table class=\"reqtab\"><thead><tr><th>Henkilö</th><th>Tila</th><th>Ajankohta</th>{4}<th>Tarkistussumma (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Aitous</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Aitous tarkistettu: kaikki {0} allekirjoitettua versiota sisältyvät muuttumattomina tähän tiedostoon – myöhemmät vaiheet ovat vain lisänneet sisältöä.",
+ "✓ unverändert enthalten": "✓ sisältyy muuttumattomana",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Liittäminen ei onnistu – PDF kirjoitetaan uudelleen:",
+ "Echtheit": "Aitous",
+ "Kids": "Kids"
 }

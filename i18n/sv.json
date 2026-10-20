@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Källkod (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "”{0}” kunde inte läsas – Outlook sparar bilagor i en skyddad mapp som webbläsaren inte får läsa. Med pdfmy Scan (Windows från 1.8.7, Mac och Linux från 1.1.7) öppnar PDFMy sådana bilagor automatiskt. Annars sparar du bilagan i Outlook (”Spara som”) och öppnar den sedan.",
  "Verfügbar in 40 Sprachen": "Tillgängligt på 40 språk",
- "{0} konnte nicht geladen werden": "{0} kunde inte läsas in"
+ "{0} konnte nicht geladen werden": "{0} kunde inte läsas in",
+ "– nicht nachweisbar": "– kan inte styrkas",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} av {1} versioner finns kvar oförändrade. Övriga kan inte styrkas – filen har sparats om under tiden (t.ex. i ett annat PDF-program) eller ändrats.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Äkthet kontrollerad: Alla {0} underskrivna versioner finns kvar oförändrade i den här filen – senare steg har bara lagt till.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} av {1} versioner finns kvar oförändrade. Övriga kan inte styrkas – filen har sparats om under tiden (t.ex. i ett annat PDF-program) eller ändrats.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1} av {2} har skrivit under</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Tidpunkt</th>{4}<th>Kontrollsumma (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Äkthet</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Äkthet kontrollerad: Alla {0} underskrivna versioner finns kvar oförändrade i den här filen – senare steg har bara lagt till.",
+ "✓ unverändert enthalten": "✓ finns kvar oförändrad",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Det går inte att lägga till – PDF:en skrivs om:",
+ "Echtheit": "Äkthet",
+ "Kids": "Kids"
 }

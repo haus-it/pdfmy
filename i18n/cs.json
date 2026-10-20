@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Zdrojový kód (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ nelze přečíst – Outlook ukládá přílohy do chráněné složky, kterou prohlížeč nesmí číst. S pdfmy Scan (Windows od 1.8.7, Mac a Linux od 1.1.7) otevírá PDFMy takové přílohy automaticky. Jinak přílohu v Outlooku uložte („Uložit jako“) a poté otevřete.",
  "Verfügbar in 40 Sprachen": "K dispozici ve 40 jazycích",
- "{0} konnte nicht geladen werden": "{0} se nepodařilo načíst"
+ "{0} konnte nicht geladen werden": "{0} se nepodařilo načíst",
+ "– nicht nachweisbar": "– nelze prokázat",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} z {1} verzí je obsaženo beze změny. Ostatní nelze prokázat – soubor byl mezitím znovu uložen (např. v jiném programu pro PDF) nebo změněn.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Pravost ověřena: všech {0} podepsaných verzí je v tomto souboru obsaženo beze změny – pozdější kroky pouze doplňovaly.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} z {1} verzí je obsaženo beze změny. Ostatní nelze prokázat – soubor byl mezitím znovu uložen (např. v jiném programu pro PDF) nebo změněn.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · podepsáno {1} z {2}</p>{3}<table class=\"reqtab\"><thead><tr><th>Osoba</th><th>Stav</th><th>Čas</th>{4}<th>Kontrolní součet (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Pravost</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Pravost ověřena: všech {0} podepsaných verzí je v tomto souboru obsaženo beze změny – pozdější kroky pouze doplňovaly.",
+ "✓ unverändert enthalten": "✓ obsažena beze změny",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Připojení není možné – PDF bude přepsáno:",
+ "Echtheit": "Pravost",
+ "Kids": "Kids"
 }

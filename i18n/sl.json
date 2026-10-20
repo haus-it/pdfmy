@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Izvorna koda (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ ni bilo mogoče prebrati – Outlook shranjuje priloge v zaščiteno mapo, ki je brskalnik ne sme brati. S pdfmy Scan (Windows od 1.8.7, Mac in Linux od 1.1.7) PDFMy take priloge odpre samodejno. Sicer prilogo shranite v Outlooku („Shrani kot“) in jo nato odprite.",
  "Verfügbar in 40 Sprachen": "Na voljo v 40 jezikih",
- "{0} konnte nicht geladen werden": "{0} ni bilo mogoče naložiti"
+ "{0} konnte nicht geladen werden": "{0} ni bilo mogoče naložiti",
+ "– nicht nachweisbar": "– ni dokazljivo",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} od {1} različic je vsebovanih nespremenjenih. Ostalih ni mogoče dokazati – datoteka je bila vmes znova shranjena (npr. v drugem programu za PDF) ali spremenjena.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Pristnost preverjena: vseh {0} podpisanih različic je v tej datoteki nespremenjenih – poznejši koraki so samo dopolnjevali.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} od {1} različic je vsebovanih nespremenjenih. Ostalih ni mogoče dokazati – datoteka je bila vmes znova shranjena (npr. v drugem programu za PDF) ali spremenjena.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · podpisalo {1} od {2}</p>{3}<table class=\"reqtab\"><thead><tr><th>Oseba</th><th>Stanje</th><th>Čas</th>{4}<th>Kontrolna vsota (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Pristnost</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Pristnost preverjena: vseh {0} podpisanih različic je v tej datoteki nespremenjenih – poznejši koraki so samo dopolnjevali.",
+ "✓ unverändert enthalten": "✓ vsebovana nespremenjena",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Pripenjanje ni mogoče – PDF bo na novo zapisan:",
+ "Echtheit": "Pristnost",
+ "Kids": "Kids"
 }

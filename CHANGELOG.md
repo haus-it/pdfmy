@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Zur Unterschrift senden: Echtheit nachweisbar
+- Unterschriften werden an die empfangene PDF **angehängt** statt sie neu zu schreiben (inkrementelles Speichern, ISO 32000-2 7.5.6; neues Modul `js/pdfinc.js`, Querverweis-Tabelle oder -Strom passend zur Datei). Jede Fassung bleibt Byte für Byte erhalten; neue Objekte bekommen freie Nummern oberhalb aller vorhandenen (auch Objekt-Container).
+- **Echtheit prüfen:** „Übersicht“ rechnet für jede Person nach, ob die Fassung, die sie unterschrieben hat (SHA-256), unverändert in der Datei steckt – „✓ unverändert enthalten“ bzw. Hinweis „nicht nachweisbar“, wenn die Datei dazwischen neu gespeichert wurde. Prüfprotokoll mit Hinweis darauf.
+- Rückfall: Wurde am Dokument sonst etwas geändert (Seiten, Drehung, weitere Anmerkungen), schreibt PDFMy wie bisher neu. Formularfelder der vorigen Person werden auch aus dem Formularverzeichnis entfernt; die Anfrage-Anlage steht nur einmal in der Datei.
+- Getestet: Unit-Tests (Anhängen mit Querverweis-Strom und -Tabelle, Original bleibt vorn, frühere Fassungen nachweisbar, neu geschriebene nicht, neue Seite/Anlage, freie Objektnummern); Ende-zu-Ende mit zwei Personen bis zur fertigen PDF mit Prüfprotokoll (beide Fassungen nachweisbar, Gegenprobe neu gespeichert: 0 von 2); unabhängig geprüft mit qpdf/pikepdf (keine Fehler), pypdf (strikt), pdf.js, pdf-lib; bisherige Abläufe (Ablehnen, Text-/Ankreuzfelder, anderes PDF-Programm) unverändert.
+
 ### Startseite: „Verfügbar in 40 Sprachen“ sofort sichtbar
 - Direkt unter der Überschrift steht jetzt „Verfügbar in 40 Sprachen“ mit Sprachauswahl – Umschalten mit einem Klick, ohne Menü. Übersetzt in alle Sprachen, Handy-Ansicht kompakt, axe ohne Befund (hell, dunkel, mobil).
 - Hilfe ergänzt; fehlende Übersetzung der Ladefehler-Meldung nachgetragen.

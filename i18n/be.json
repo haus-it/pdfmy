@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Зыходны код (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» не ўдалося прачытаць – Outlook захоўвае ўкладанні ў абароненай папцы, якую браўзеру нельга чытаць. З pdfmy Scan (Windows пачынаючы з 1.8.7, Mac і Linux пачынаючы з 1.1.7) PDFMy адкрывае такія ўкладанні аўтаматычна. Інакш захавайце ўкладанне ў Outlook («Захаваць як») і потым адкрыйце.",
  "Verfügbar in 40 Sprachen": "Даступна на 40 мовах",
- "{0} konnte nicht geladen werden": "Не ўдалося загрузіць {0}"
+ "{0} konnte nicht geladen werden": "Не ўдалося загрузіць {0}",
+ "– nicht nachweisbar": "– не пацвярджаецца",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} з {1} версій захаваны без змен. Астатнія пацвердзіць немагчыма – файл тым часам быў перазахаваны (напрыклад, у іншай PDF-праграме) або зменены.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Сапраўднасць праверана: усе {0} падпісаныя версіі захаваны ў гэтым файле без змен – наступныя крокі толькі дапаўнялі яго.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} з {1} версій захаваны без змен. Астатнія пацвердзіць немагчыма – файл тым часам быў перазахаваны (напрыклад, у іншай PDF-праграме) або зменены.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1} з {2} падпісалі</p>{3}<table class=\"reqtab\"><thead><tr><th>Асоба</th><th>Статус</th><th>Час</th>{4}<th>Кантрольная сума (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Сапраўднасць</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Сапраўднасць праверана: усе {0} падпісаныя версіі захаваны ў гэтым файле без змен – наступныя крокі толькі дапаўнялі яго.",
+ "✓ unverändert enthalten": "✓ захавана без змен",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Далучэнне немагчыма – PDF будзе перазапісаны:",
+ "Echtheit": "Сапраўднасць",
+ "Kids": "Kids"
 }

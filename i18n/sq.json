@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Kodi burimor (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ nuk mund të lexohej – Outlook i ruan shtojcat në një dosje të mbrojtur që shfletuesi nuk lejohet ta lexojë. Me pdfmy Scan (Windows nga 1.8.7, Mac dhe Linux nga 1.1.7) PDFMy i hap automatikisht shtojca të tilla. Përndryshe ruajeni shtojcën në Outlook („Ruaj si“) dhe pastaj hapeni.",
  "Verfügbar in 40 Sprachen": "E disponueshme në 40 gjuhë",
- "{0} konnte nicht geladen werden": "{0} nuk mund të ngarkohej"
+ "{0} konnte nicht geladen werden": "{0} nuk mund të ngarkohej",
+ "– nicht nachweisbar": "– nuk vërtetohet",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} nga {1} versione përmbahen të pandryshuara. Të tjerat nuk mund të vërtetohen – skedari është ruajtur sërish ndërkohë (p.sh. në një program tjetër PDF) ose është ndryshuar.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Autenticiteti u verifikua: të gjitha {0} versionet e nënshkruara përmbahen të pandryshuara në këtë skedar – hapat e mëvonshëm vetëm kanë shtuar.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} nga {1} versione përmbahen të pandryshuara. Të tjerat nuk mund të vërtetohen – skedari është ruajtur sërish ndërkohë (p.sh. në një program tjetër PDF) ose është ndryshuar.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1} nga {2} kanë nënshkruar</p>{3}<table class=\"reqtab\"><thead><tr><th>Personi</th><th>Statusi</th><th>Koha</th>{4}<th>Shuma e kontrollit (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Autenticiteti</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Autenticiteti u verifikua: të gjitha {0} versionet e nënshkruara përmbahen të pandryshuara në këtë skedar – hapat e mëvonshëm vetëm kanë shtuar.",
+ "✓ unverändert enthalten": "✓ përmbahet i pandryshuar",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Shtimi nuk është i mundur – PDF-ja do të rishkruhet:",
+ "Echtheit": "Autenticiteti",
+ "Kids": "Kids"
 }

@@ -966,6 +966,8 @@ html.i18n-wait body{visibility:hidden}
 .reqf input[type=text]{flex:1;min-width:0;font:inherit;font-size:12px;border:1px solid currentColor;border-radius:3px;padding:0 4px;background:var(--panel);color:var(--text)}.reqf label{display:flex;gap:4px;align-items:center}.reqf .rfl{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#reqType{font:inherit;font-size:13px;padding:1px 4px}
 .reqf button{font:inherit;font-weight:700;border:1px solid currentColor;background:var(--panel);color:inherit;border-radius:4px;padding:1px 6px;cursor:pointer}
 @keyframes reqpulse{50%{box-shadow:0 0 0 4px rgba(200,16,46,.25)}}@media (prefers-reduced-motion:reduce){.reqf.mine{animation:none}}
+.reqok{color:#1d6b3a;font-weight:600}.reqwarn{color:#8a5a00;font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .reqok{color:#7fd39b}:root:not([data-theme="light"]) .reqwarn{color:#f0c060}}[data-theme="dark"] .reqok{color:#7fd39b}[data-theme="dark"] .reqwarn{color:#f0c060}
 .reqtab{width:100%;border-collapse:collapse;font-size:13.5px}.reqtab th,.reqtab td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}.reqtab code{font-size:11px;word-break:break-all}
 .cfrow{margin:-4px 0 10px}.jcf{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .jtags input[data-tags]{font-size:12px;width:9em;min-height:24px!important;height:24px!important;border:1px dashed var(--line);border-radius:999px;padding:0 8px;background:transparent}
@@ -1874,6 +1876,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/email.js"></script>
 <script src="js/journal.js"></script>
 <script src="js/sigreq.js"></script>
+<script src="js/pdfinc.js"></script>
 <script src="js/app.js"></script>
 <script src="js/pro.js"></script>
 </body>

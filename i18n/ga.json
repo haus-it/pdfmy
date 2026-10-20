@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Cód foinseach (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Níorbh fhéidir “{0}” a léamh – sábhálann Outlook ceangaltáin i bhfillteán cosanta nach bhfuil cead ag an mbrabhsálaí a léamh. Le pdfmy Scan (Windows ó 1.8.7, Mac agus Linux ó 1.1.7) osclaíonn PDFMy ceangaltáin dá leithéid go huathoibríoch. Seachas sin, sábháil an ceangaltán in Outlook (“Sábháil Mar”) agus oscail ansin é.",
  "Verfügbar in 40 Sprachen": "Ar fáil i 40 teanga",
- "{0} konnte nicht geladen werden": "Níorbh fhéidir {0} a lódáil"
+ "{0} konnte nicht geladen werden": "Níorbh fhéidir {0} a lódáil",
+ "– nicht nachweisbar": "– ní féidir a chruthú",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "Tá {0} as {1} leagan ann gan athrú. Ní féidir na cinn eile a chruthú – sábháladh an comhad arís idir an dá linn (m.sh. i ríomhchlár PDF eile) nó athraíodh é.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Barántúlacht seiceáilte: tá na {0} leagan sínithe go léir ann gan athrú sa chomhad seo – níor rinne céimeanna níos déanaí ach cur leis.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">Tá {0} as {1} leagan ann gan athrú. Ní féidir na cinn eile a chruthú – sábháladh an comhad arís idir an dá linn (m.sh. i ríomhchlár PDF eile) nó athraíodh é.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1} as {2} sínithe</p>{3}<table class=\"reqtab\"><thead><tr><th>Duine</th><th>Stádas</th><th>Am</th>{4}<th>Suim seiceála (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Barántúlacht</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Barántúlacht seiceáilte: tá na {0} leagan sínithe go léir ann gan athrú sa chomhad seo – níor rinne céimeanna níos déanaí ach cur leis.",
+ "✓ unverändert enthalten": "✓ ann gan athrú",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "Ní féidir ceangal – athscríobhfar an PDF:",
+ "Echtheit": "Barántúlacht",
+ "Kids": "Kids"
 }

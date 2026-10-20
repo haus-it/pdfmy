@@ -129,7 +129,7 @@
     L.push(['g', ''], ['s', 'Ablauf']);
     for (const l of r.log) L.push(['p', `${fmt(l.at)} – ${l.what}${l.by ? ` – ${l.by}` : ''}${l.reason ? ` („${l.reason}“)` : ''}`]);
     if (docHash) L.push(['g', ''], ['m', `SHA-256 der letzten Fassung vor dieser Seite: ${docHash}`]);
-    L.push(['g', ''], ['n', 'Erstellt mit PDFMy (pdfmy.de) – ohne Server: Die Angaben stehen auch als Anlage „pdfmy-unterschriften.json“ in dieser PDF. Gezeichnete Unterschriften sind einfache elektronische Signaturen (eIDAS Art. 3 Nr. 10); die Prüfsummen machen spätere Änderungen erkennbar.']);
+    L.push(['g', ''], ['n', 'Erstellt mit PDFMy (pdfmy.de) – ohne Server: Die Angaben stehen auch als Anlage „pdfmy-unterschriften.json“ in dieser PDF. Gezeichnete Unterschriften sind einfache elektronische Signaturen (eIDAS Art. 3 Nr. 10); die Prüfsummen machen spätere Änderungen erkennbar. PDFMy hängt jede Unterschrift an, statt die Datei neu zu schreiben – unter „Übersicht“ prüft PDFMy, dass jede unterschriebene Fassung unverändert enthalten ist.']);
     return L;
   }
   // Vorschlag für Felder aus erkannten Unterschriftsstellen: Unterschriften der Reihe nach den Personen zuordnen,

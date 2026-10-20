@@ -2147,5 +2147,16 @@
  "Quellcode (GitHub)": "Codi font (GitHub)",
  "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "No s’ha pogut llegir «{0}»: l’Outlook desa els adjunts en una carpeta protegida que el navegador no pot llegir. Amb pdfmy Scan (Windows a partir de 1.8.7, Mac i Linux a partir de 1.1.7), PDFMy obre aquests adjunts automàticament. Si no, deseu l’adjunt a l’Outlook («Anomena i desa») i després obriu-lo.",
  "Verfügbar in 40 Sprachen": "Disponible en 40 idiomes",
- "{0} konnte nicht geladen werden": "No s’ha pogut carregar {0}"
+ "{0} konnte nicht geladen werden": "No s’ha pogut carregar {0}",
+ "– nicht nachweisbar": "– no verificable",
+ "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} de {1} versions es conserven sense canvis. Les altres no es poden verificar – el fitxer s'ha tornat a desar mentrestant (p. ex., en un altre programa PDF) o s'ha modificat.",
+ "<p class=\"reqok\">✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>": "<p class=\"reqok\">✓ Autenticitat comprovada: totes les {0} versions signades es conserven sense canvis en aquest fitxer – els passos posteriors només hi han afegit contingut.</p>",
+ "<p class=\"reqwarn\">{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>": "<p class=\"reqwarn\">{0} de {1} versions es conserven sense canvis. Les altres no es poden verificar – el fitxer s'ha tornat a desar mentrestant (p. ex., en un altre programa PDF) o s'ha modificat.</p>",
+ "<p><b translate=\"no\">{0}</b> · {1} von {2} unterschrieben</p>{3}<table class=\"reqtab\"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>{4}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>": "<p><b translate=\"no\">{0}</b> · {1} de {2} han signat</p>{3}<table class=\"reqtab\"><thead><tr><th>Persona</th><th>Estat</th><th>Data i hora</th>{4}<th>Suma de verificació (SHA-256)</th></tr></thead><tbody>{5}</tbody></table>",
+ "<th>Echtheit</th>": "<th>Autenticitat</th>",
+ "✓ Echtheit geprüft: Alle {0} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.": "✓ Autenticitat comprovada: totes les {0} versions signades es conserven sense canvis en aquest fitxer – els passos posteriors només hi han afegit contingut.",
+ "✓ unverändert enthalten": "✓ conservada sense canvis",
+ "Anhängen nicht möglich – die PDF wird neu geschrieben:": "No es pot annexar – el PDF es reescriurà:",
+ "Echtheit": "Autenticitat",
+ "Kids": "Kids"
 }
