@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Teksti otsikoineen, luetteloineen ja taulukoineen Markdown-muodossa – esim. tekoälyavustajille, wikeihin tai muistiinpanosovelluksiin",
  "Webseite (HTML)": "Verkkosivu (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Kaikki sivut, leimat, korostukset, allekirjoitukset ja kuvat harmaasävyinä – säästää värivärijauhetta ja näyttää mustavalkokopiolta. Sivut tallennetaan kuvana, jossa on haettava tekstikerros.",
- "In Graustufen": "Harmaasävyinä"
+ "In Graustufen": "Harmaasävyinä",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone-kuvaa (HEIC) muunnetaan …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF-tiedostoa muunnetaan …",
+ "HEIC-Bild konnte nicht dekodiert werden": "HEIC-kuvaa ei voitu purkaa",
+ "HEIC-Bild konnte nicht gelesen werden": "HEIC-kuvaa ei voitu lukea",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF-tiedosto ei sisällä luettavaa kuvaa",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, JPG-, PNG-, HEIC- tai TIFF-tiedostoa tai XML-muotoista e-laskua)"
 }

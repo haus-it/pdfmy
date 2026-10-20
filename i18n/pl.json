@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst z nagłówkami, wypunktowaniami i tabelami jako Markdown – np. dla asystentów AI, wiki lub aplikacji do notatek",
  "Webseite (HTML)": "Strona internetowa (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Wszystkie strony, pieczątki, zaznaczenia, podpisy i obrazy w skali szarości – oszczędza kolorowy toner i wygląda jak kopia czarno-biała. Strony są przy tym zapisywane jako obraz z przeszukiwalną warstwą tekstu.",
- "In Graustufen": "W skali szarości"
+ "In Graustufen": "W skali szarości",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: konwertowanie zdjęcia z iPhone’a (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: konwertowanie pliku TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Nie udało się zdekodować obrazu HEIC",
+ "HEIC-Bild konnte nicht gelesen werden": "Nie udało się odczytać obrazu HEIC",
+ "TIFF-Datei enthält kein lesbares Bild": "Plik TIFF nie zawiera czytelnego obrazu",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, JPG, PNG, HEIC, TIFF lub e-faktury w formacie XML)"
 }

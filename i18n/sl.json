@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Besedilo z naslovi, seznami in tabelami kot Markdown – npr. za pomočnike UI, wikije ali aplikacije za zapiske",
  "Webseite (HTML)": "Spletna stran (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Vse strani, žigi, označbe, podpisi in slike v sivinah – prihrani barvni toner in je videti kot črno-bela kopija. Strani se pri tem shranijo kot slika z iskalno plastjo besedila.",
- "In Graustufen": "V sivinah"
+ "In Graustufen": "V sivinah",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: pretvarjanje fotografije iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: pretvarjanje datoteke TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Slike HEIC ni bilo mogoče dekodirati",
+ "HEIC-Bild konnte nicht gelesen werden": "Slike HEIC ni bilo mogoče prebrati",
+ "TIFF-Datei enthält kein lesbares Bild": "Datoteka TIFF ne vsebuje berljive slike",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format ni podprt: {0} (uporabite PDF, JPG, PNG, HEIC, TIFF ali e-račun kot XML)"
 }

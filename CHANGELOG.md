@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### iPhone-Fotos (HEIC) und TIFF in jedem Browser
+- **HEIC/HEIF** (iPhone-Fotos) und **TIFF** (auch mehrseitig, Fax G3/G4, LZW, Deflate, JPEG) öffnen jetzt auch in Chrome, Edge und Firefox – bisher konnte das nur Safari. Lokal dekodiert mit libheif 1.23.5 (WebAssembly, LGPL-3.0) bzw. UTIF.js 3.1.0 und pako 2.1.0 (MIT), erst beim ersten Bedarf geladen. Jede TIFF-Seite wird eine Seite; Vorschaubilder im TIFF werden übersprungen, ungleiche Fax-Auflösung (204 × 98 dpi) wird entzerrt.
+- Getestet im Browser: HEIC-Beispiel von libheif (1280 × 854, Bild korrekt), zweiseitiges LZW-TIFF, Fax G3 mit 204 × 98 dpi (Höhe verdoppelt), Deflate-TIFF.
+
 ### In Graustufen speichern
 - Speichern-Dialog → Farbe → **„In Graustufen“** (wie „Graustufen“ bei PDF24, Sejda, Stirling-PDF): Seiten werden gerastert und in Grauwerte (ITU-R BT.601) umgerechnet; Stempel, Text, Markierungen, Kopf-/Fußzeilen über DeviceGray, Unterschriften und Bilder ebenfalls grau. Textebene bleibt durchsuchbar; für PDF und PDF/A.
 - Getestet: Browser (gerenderte Seite ohne einzige farbige Stelle, Text weiter auffindbar, nächstes Speichern wieder farbig), veraPDF PDF/A-2b und PDF/UA-1 PASS, axe ohne Befund, 160/160 Unit-Tests.

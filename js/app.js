@@ -126,10 +126,10 @@ async function importFiles(files, { fromCamera = false } = {}) {
     try {
       status(`Importiere ${f.name} …`);
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
-      else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif)$/.test(n)) await importImage(f, fromCamera);
+      else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, JPG, PNG oder E-Rechnung als XML)`); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)`); continue; }
       state.inputBytes += f.size;
     } catch (e) {
       console.error(e);
@@ -223,7 +223,59 @@ function signedOriginal(pages, o = {}) {
   const same = pages.length === d.js.numPages && pages.every((p, i) => p.kind === 'pdf' && state.docs[p.docIdx] === d && p.pageIdx === i && !p.rotation && !p.annots.length);
   return same ? d.bytes : null;
 }
+// iPhone-Fotos (HEIC/HEIF) und TIFF (Fax, Scanner, mehrseitig) kann nur Safari selbst anzeigen – in Chrome, Edge und Firefox
+// dekodiert PDFMy sie lokal (libheif als WebAssembly bzw. UTIF.js), erst beim ersten Bedarf geladen. Nichts wird hochgeladen.
+const isHeic = f => /\.(heic|heif)$/i.test(f.name) || /^image\/hei[cf]/i.test(f.type);
+const isTiff = f => /\.tiff?$/i.test(f.name) || /^image\/tiff/i.test(f.type);
+let heifLoading = null, tiffLoading = null;
+const loadHeif = () => heifLoading ||= (async () => {
+  await loadScript('vendor/libheif/libheif.js');
+  const wasmBinary = new Uint8Array(await (await fetch(abs('vendor/libheif/libheif.wasm'))).arrayBuffer());
+  return await new Promise((res, rej) => { let m = null; m = libheif({ wasmBinary, onRuntimeInitialized: () => setTimeout(() => res(m)), onAbort: rej }); });   // Rückruf kann noch während libheif() kommen
+})().catch(e => { heifLoading = null; throw e; });
+const loadTiff = () => tiffLoading ||= (async () => { if (!self.pako) await loadScript('vendor/utif/pako_inflate.min.js'); await loadScript('vendor/utif/UTIF.js'); return self.UTIF; })().catch(e => { tiffLoading = null; throw e; });
+// RGBA-Pixel → Leinwand (verkleinert auf MAX_SIDE)
+function rgbaCanvas(rgba, w, h, sy = 1) {   // sy: Höhenfaktor bei ungleicher Auflösung (Fax 204×98/196 dpi)
+  const src = Imaging.canvas(w, h); src.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(rgba.buffer, rgba.byteOffset, w * h * 4), w, h), 0, 0);
+  const k = Math.min(1, MAX_SIDE / Math.max(w, h * sy)); if (k === 1 && sy === 1) return src;
+  const c = Imaging.canvas(Math.round(w * k), Math.round(h * sy * k)); c.getContext('2d').drawImage(src, 0, 0, c.width, c.height); freeCanvas(src); return c;
+}
+async function heicCanvases(file) {
+  const lib = await loadHeif(), dec = new lib.HeifDecoder(), imgs = dec.decode(new Uint8Array(await file.arrayBuffer()));
+  if (!imgs?.length) throw new Error('HEIC-Bild konnte nicht gelesen werden');
+  const out = [];
+  for (const im of imgs.slice(0, 1)) {   // Hauptbild (Live-Photo-/Serienbilder: nur das erste)
+    const w = im.get_width(), h = im.get_height(), buf = { data: new Uint8ClampedArray(w * h * 4), width: w, height: h };
+    const d = await new Promise((res, rej) => im.display(buf, x => x ? res(x) : rej(new Error('HEIC-Bild konnte nicht dekodiert werden'))));
+    out.push(rgbaCanvas(d.data, w, h)); im.free?.();
+  }
+  dec.decoder?.delete?.();
+  return out;
+}
+async function tiffCanvases(file) {
+  const U = await loadTiff(), buf = await file.arrayBuffer(), ifds = U.decode(buf), out = [];
+  for (const ifd of ifds) {
+    if (ifd.t254 && (ifd.t254[0] & 1)) continue;   // Vorschaubild (reduced-resolution image)
+    U.decodeImage(buf, ifd, ifds);
+    if (!ifd.width || !ifd.height) continue;
+    const rx = ifd.t282?.[0], ry = ifd.t283?.[0], sy = rx > 0 && ry > 0 && Math.abs(rx / ry - 1) > 0.05 ? rx / ry : 1;
+    out.push(rgbaCanvas(U.toRGBA8(ifd), ifd.width, ifd.height, sy));
+  }
+  if (!out.length) throw new Error('TIFF-Datei enthält kein lesbares Bild');
+  return out;
+}
 async function importImage(file, fromCamera) {
+  if (isTiff(file) || isHeic(file)) {
+    let bmp = null;
+    if (isHeic(file)) try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); } catch {}   // Safari kann HEIC selbst
+    if (!bmp) {
+      status(isHeic(file) ? `${file.name}: iPhone-Foto (HEIC) wird umgewandelt …` : `${file.name}: TIFF-Datei wird umgewandelt …`);
+      const cs = isHeic(file) ? await heicCanvases(file) : await tiffCanvases(file);
+      cs.forEach((c, i) => addScan(c, cs.length > 1 ? `${file.name} (${i + 1}/${cs.length})` : file.name, fromCamera));
+      return;
+    }
+    bmp.close?.();
+  }
   const bmp = await loadBitmap(file);
   const k = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
   const c = Imaging.canvas(Math.round(bmp.width * k), Math.round(bmp.height * k));

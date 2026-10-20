@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Testun gyda phenawdau, rhestrau a thablau fel Markdown – e.e. ar gyfer cynorthwywyr AI, wicis neu apiau nodiadau",
  "Webseite (HTML)": "Tudalen we (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Pob tudalen, stamp, marc, llofnod a delwedd mewn graddlwyd – yn arbed arlliw lliw ac yn edrych fel copi du a gwyn. Caiff tudalennau eu cadw fel delwedd gyda haen destun y gellir ei chwilio.",
- "In Graustufen": "Mewn graddlwyd"
+ "In Graustufen": "Mewn graddlwyd",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: yn trosi llun iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: yn trosi ffeil TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Methu datgodio’r ddelwedd HEIC",
+ "HEIC-Bild konnte nicht gelesen werden": "Methu darllen y ddelwedd HEIC",
+ "TIFF-Datei enthält kein lesbares Bild": "Nid oes delwedd ddarllenadwy yn y ffeil TIFF",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, JPG, PNG, HEIC, TIFF neu e-anfoneb fel XML)"
 }

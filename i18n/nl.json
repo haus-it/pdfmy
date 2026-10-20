@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst met koppen, opsommingen en tabellen als Markdown – bijv. voor AI-assistenten, wiki’s of notitie-apps",
  "Webseite (HTML)": "Webpagina (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Alle pagina's, stempels, markeringen, handtekeningen en afbeeldingen in grijstinten – bespaart kleurtoner en ziet eruit als een zwart-witkopie. Pagina’s worden daarbij als afbeelding met een doorzoekbare tekstlaag opgeslagen.",
- "In Graustufen": "In grijstinten"
+ "In Graustufen": "In grijstinten",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone-foto (HEIC) wordt geconverteerd …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF-bestand wordt geconverteerd …",
+ "HEIC-Bild konnte nicht dekodiert werden": "HEIC-afbeelding kon niet worden gedecodeerd",
+ "HEIC-Bild konnte nicht gelesen werden": "HEIC-afbeelding kon niet worden gelezen",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF-bestand bevat geen leesbare afbeelding",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, JPG, PNG, HEIC, TIFF of e-factuur als XML)"
 }

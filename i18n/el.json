@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Κείμενο με επικεφαλίδες, λίστες και πίνακες ως Markdown – π.χ. για βοηθούς ΤΝ, wiki ή εφαρμογές σημειώσεων",
  "Webseite (HTML)": "Ιστοσελίδα (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Όλες οι σελίδες, σφραγίδες, επισημάνσεις, υπογραφές και εικόνες σε αποχρώσεις του γκρι – εξοικονομεί έγχρωμο τόνερ και μοιάζει με ασπρόμαυρο αντίγραφο. Οι σελίδες αποθηκεύονται ως εικόνα με επίπεδο κειμένου με δυνατότητα αναζήτησης.",
- "In Graustufen": "Σε αποχρώσεις του γκρι"
+ "In Graustufen": "Σε αποχρώσεις του γκρι",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: μετατροπή φωτογραφίας iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: μετατροπή αρχείου TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Δεν ήταν δυνατή η αποκωδικοποίηση της εικόνας HEIC",
+ "HEIC-Bild konnte nicht gelesen werden": "Δεν ήταν δυνατή η ανάγνωση της εικόνας HEIC",
+ "TIFF-Datei enthält kein lesbares Bild": "Το αρχείο TIFF δεν περιέχει αναγνώσιμη εικόνα",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, JPG, PNG, HEIC, TIFF ή ηλεκτρονικό τιμολόγιο ως XML)"
 }

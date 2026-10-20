@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Teksts ar virsrakstiem, sarakstiem un tabulām Markdown formātā – piem., MI asistentiem, wiki vai piezīmju lietotnēm",
  "Webseite (HTML)": "Tīmekļa lapa (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Visas lapas, zīmogi, iezīmes, paraksti un attēli pelēktoņos – taupa krāsu toneri un izskatās kā melnbalta kopija. Lapas tiek saglabātas kā attēls ar meklējamu teksta slāni.",
- "In Graustufen": "Pelēktoņos"
+ "In Graustufen": "Pelēktoņos",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: tiek konvertēts iPhone foto (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: tiek konvertēts TIFF fails …",
+ "HEIC-Bild konnte nicht dekodiert werden": "HEIC attēlu neizdevās dekodēt",
+ "HEIC-Bild konnte nicht gelesen werden": "HEIC attēlu neizdevās nolasīt",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF failā nav nolasāma attēla",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, JPG, PNG, HEIC, TIFF vai e-rēķins kā XML)"
 }

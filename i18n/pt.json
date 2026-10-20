@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Texto com títulos, listas e tabelas em Markdown – p. ex. para assistentes de IA, wikis ou aplicações de notas",
  "Webseite (HTML)": "Página web (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Todas as páginas, carimbos, marcações, assinaturas e imagens em tons de cinzento – poupa toner de cor e parece uma cópia a preto e branco. As páginas são guardadas como imagem com uma camada de texto pesquisável.",
- "In Graustufen": "Em tons de cinzento"
+ "In Graustufen": "Em tons de cinzento",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: a converter fotografia do iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: a converter ficheiro TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Não foi possível descodificar a imagem HEIC",
+ "HEIC-Bild konnte nicht gelesen werden": "Não foi possível ler a imagem HEIC",
+ "TIFF-Datei enthält kein lesbares Bild": "O ficheiro TIFF não contém nenhuma imagem legível",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formato não suportado: {0} (utilize PDF, JPG, PNG, HEIC, TIFF ou fatura eletrónica em XML)"
 }

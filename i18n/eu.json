@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Izenburu, zerrenda eta taulak dituen testua Markdown formatuan – adib. AA laguntzaileentzat, wikientzat edo ohar-aplikazioentzat",
  "Webseite (HTML)": "Web orria (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Orrialde, zigilu, marka, sinadura eta irudi guztiak gris-eskalan: kolorezko tonerra aurrezten du eta zuri-beltzeko kopia baten itxura du. Orrialdeak irudi gisa gordetzen dira, testu-geruza bilagarri batekin.",
- "In Graustufen": "Gris-eskalan"
+ "In Graustufen": "Gris-eskalan",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone argazkia (HEIC) bihurtzen …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF fitxategia bihurtzen …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Ezin izan da HEIC irudia deskodetu",
+ "HEIC-Bild konnte nicht gelesen werden": "Ezin izan da HEIC irudia irakurri",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF fitxategiak ez du irudi irakurgarririk",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, JPG, PNG, HEIC, TIFF edo e-faktura XML gisa)"
 }

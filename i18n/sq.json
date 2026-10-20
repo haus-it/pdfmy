@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst me tituj, lista dhe tabela si Markdown – p.sh. për asistentë IA, wiki ose aplikacione shënimesh",
  "Webseite (HTML)": "Faqe uebi (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Të gjitha faqet, vulat, shënjimet, nënshkrimet dhe imazhet në shkallë gri – kursen tonerin me ngjyra dhe duket si një kopje bardhë e zi. Faqet ruhen si imazh me një shtresë teksti të kërkueshme.",
- "In Graustufen": "Në shkallë gri"
+ "In Graustufen": "Në shkallë gri",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: po konvertohet fotoja e iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: po konvertohet skedari TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Imazhi HEIC nuk mund të dekodohej",
+ "HEIC-Bild konnte nicht gelesen werden": "Imazhi HEIC nuk mund të lexohej",
+ "TIFF-Datei enthält kein lesbares Bild": "Skedari TIFF nuk përmban asnjë imazh të lexueshëm",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, JPG, PNG, HEIC, TIFF ose e-faturë si XML)"
 }

@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text med rubriker, punktlistor och tabeller som Markdown – t.ex. för AI-assistenter, wikis eller anteckningsappar",
  "Webseite (HTML)": "Webbsida (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Alla sidor, stämplar, markeringar, underskrifter och bilder i gråskala – sparar färgtoner och ser ut som en svartvit kopia. Sidorna sparas som bild med ett sökbart textlager.",
- "In Graustufen": "I gråskala"
+ "In Graustufen": "I gråskala",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone-foto (HEIC) konverteras …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF-fil konverteras …",
+ "HEIC-Bild konnte nicht dekodiert werden": "HEIC-bilden kunde inte avkodas",
+ "HEIC-Bild konnte nicht gelesen werden": "HEIC-bilden kunde inte läsas",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF-filen innehåller ingen läsbar bild",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, JPG, PNG, HEIC, TIFF eller e-faktura som XML)"
 }

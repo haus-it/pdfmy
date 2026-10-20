@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Текст со наслови, набројувања и табели како Markdown – на пр. за асистенти со ВИ, викија или апликации за белешки",
  "Webseite (HTML)": "Веб-страница (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Сите страници, печати, ознаки, потписи и слики во сиви тонови – штеди тонер во боја и изгледа како црно-бела копија. Страниците се зачувуваат како слика со текстуален слој што може да се пребарува.",
- "In Graustufen": "Во сиви тонови"
+ "In Graustufen": "Во сиви тонови",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: се конвертира фотографија од iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: се конвертира TIFF-датотека …",
+ "HEIC-Bild konnte nicht dekodiert werden": "HEIC-сликата не можеше да се декодира",
+ "HEIC-Bild konnte nicht gelesen werden": "HEIC-сликата не можеше да се прочита",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF-датотеката не содржи читлива слика",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Форматот не е поддржан: {0} (користете PDF, JPG, PNG, HEIC, TIFF или е-фактура како XML)"
 }

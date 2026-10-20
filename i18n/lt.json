@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekstas su antraštėmis, sąrašais ir lentelėmis Markdown formatu – pvz., DI asistentams, vikiams ar užrašų programėlėms",
  "Webseite (HTML)": "Tinklalapis (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Visi puslapiai, antspaudai, žymėjimai, parašai ir paveikslėliai pilkais atspalviais – taupo spalvotą dažiklį ir atrodo kaip nespalvota kopija. Puslapiai įrašomi kaip paveikslėlis su ieškomu teksto sluoksniu.",
- "In Graustufen": "Pilkais atspalviais"
+ "In Graustufen": "Pilkais atspalviais",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: konvertuojama iPhone nuotrauka (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: konvertuojamas TIFF failas …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Nepavyko iškoduoti HEIC vaizdo",
+ "HEIC-Bild konnte nicht gelesen werden": "Nepavyko perskaityti HEIC vaizdo",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF faile nėra skaitomo vaizdo",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, JPG, PNG, HEIC, TIFF arba e. sąskaitą XML formatu)"
 }

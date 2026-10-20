@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text s nadpismi, odrážkami a tabuľkami ako Markdown – napr. pre AI asistentov, wiki alebo aplikácie na poznámky",
  "Webseite (HTML)": "Webová stránka (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Všetky strany, pečiatky, označenia, podpisy a obrázky v odtieňoch sivej – šetrí farebný toner a vyzerá ako čiernobiela kópia. Strany sa pritom uložia ako obrázok s prehľadávateľnou textovou vrstvou.",
- "In Graustufen": "V odtieňoch sivej"
+ "In Graustufen": "V odtieňoch sivej",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: konvertuje sa fotografia z iPhonu (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: konvertuje sa súbor TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Obrázok HEIC sa nepodarilo dekódovať",
+ "HEIC-Bild konnte nicht gelesen werden": "Obrázok HEIC sa nepodarilo načítať",
+ "TIFF-Datei enthält kein lesbares Bild": "Súbor TIFF neobsahuje čitateľný obrázok",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formát nie je podporovaný: {0} (použite, prosím, PDF, JPG, PNG, HEIC, TIFF alebo e-faktúru ako XML)"
 }

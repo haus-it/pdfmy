@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Текст с заголовками, списками и таблицами в формате Markdown – например, для ИИ-ассистентов, вики или приложений для заметок",
  "Webseite (HTML)": "Веб-страница (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Все страницы, штампы, пометки, подписи и изображения в оттенках серого – экономит цветной тонер и выглядит как чёрно-белая копия. Страницы при этом сохраняются как изображение с текстовым слоем для поиска.",
- "In Graustufen": "В оттенках серого"
+ "In Graustufen": "В оттенках серого",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: преобразование фото с iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: преобразование файла TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Не удалось декодировать изображение HEIC",
+ "HEIC-Bild konnte nicht gelesen werden": "Не удалось прочитать изображение HEIC",
+ "TIFF-Datei enthält kein lesbares Bild": "Файл TIFF не содержит читаемого изображения",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Формат не поддерживается: {0} (используйте PDF, JPG, PNG, HEIC, TIFF или электронный счёт в XML)"
 }

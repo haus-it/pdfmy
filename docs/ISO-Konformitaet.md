@@ -131,6 +131,9 @@ Nachtrag 17.10.2026: „Text ändern“ mit originalgetreuen Schriften (DejaVu S
 | Tesseract-Sprachdaten (40 Sprachen: alle europäischen Amtssprachen und weitere inkl. Türkisch, Russisch, Ukrainisch, Belarussisch, Serbisch kyrillisch/lateinisch; 4.0.0_best_int über @tesseract.js-data, gzip-Prüfung beim Einspielen am 18.10.2026) | 4.0.0 | Apache-2.0 | lokal, Laden bei Bedarf |
 | qrcode-generator | 1.4.4 | MIT | – |
 | jsQR (QR-Codes lesen) | 1.4.0 | Apache-2.0 | lokal, keine Netzwerkzugriffe |
+| libheif-js (HEIC/HEIF lesen, WebAssembly) | 1.23.5 | LGPL-3.0 (eigenständige, austauschbare Datei unter vendor/libheif) | wird nur bei HEIC-Dateien geladen, keine Netzwerkzugriffe |
+| UTIF.js (TIFF lesen) | 3.1.0 | MIT | wird nur bei TIFF-Dateien geladen |
+| pako (nur Entpacken, für Deflate-TIFF) | 2.1.0 | MIT AND Zlib | – |
 | node-forge (Signatur, Zertifikate) | 1.4.0 | BSD-3-Clause | aktuelle Version; wird nur beim Signieren geladen |
 | Lucide (Symbole) | 0.460.0 | ISC | – |
 | DejaVu Sans, Sans fett/kursiv, Serif (4 Schnitte), Sans Mono; Archivo, Source Sans 3 | DejaVu 2.37 | frei (Bitstream Vera/DejaVu) / OFL | – |

@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text with headings, bullet points and tables as Markdown – e.g. for AI assistants, wikis or note-taking apps",
  "Webseite (HTML)": "Web page (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "All pages, stamps, highlights, signatures and images in greyscale – saves colour toner and looks like a black-and-white copy. Pages are saved as an image with a searchable text layer.",
- "In Graustufen": "In greyscale"
+ "In Graustufen": "In greyscale",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: converting iPhone photo (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: converting TIFF file …",
+ "HEIC-Bild konnte nicht dekodiert werden": "The HEIC image could not be decoded",
+ "HEIC-Bild konnte nicht gelesen werden": "The HEIC image could not be read",
+ "TIFF-Datei enthält kein lesbares Bild": "The TIFF file contains no readable image",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, JPG, PNG, HEIC, TIFF or an e-invoice as XML)"
 }

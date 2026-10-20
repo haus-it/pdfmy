@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Téacs le ceannteidil, liostaí agus táblaí mar Markdown – m.sh. do chúntóirí IS, vicithe nó aipeanna nótaí",
  "Webseite (HTML)": "Leathanach gréasáin (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Gach leathanach, stampa, marcáil, síniú agus íomhá i liathscála – sábhálann sé tonóir datha agus breathnaíonn sé cosúil le cóip dhubh agus bhán. Sábháiltear na leathanaigh mar íomhá le ciseal téacs inchuardaithe.",
- "In Graustufen": "I liathscála"
+ "In Graustufen": "I liathscála",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: grianghraf iPhone (HEIC) á thiontú …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: comhad TIFF á thiontú …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Níorbh fhéidir an íomhá HEIC a dhíchódú",
+ "HEIC-Bild konnte nicht gelesen werden": "Níorbh fhéidir an íomhá HEIC a léamh",
+ "TIFF-Datei enthält kein lesbares Bild": "Níl íomhá inléite sa chomhad TIFF",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, JPG, PNG, HEIC, TIFF nó r-shonrasc mar XML le do thoil)"
 }

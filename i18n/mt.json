@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Test b’intestaturi, listi u tabelli bħala Markdown – eż. għal assistenti tal-IA, wikis jew apps tan-noti",
  "Webseite (HTML)": "Paġna web (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Il-paġni, it-timbri, l-immarkar, il-firem u l-istampi kollha fi skala tal-griż – jiffranka t-toner tal-kulur u jidher qisu kopja iswed u abjad. Il-paġni jiġu ssejvjati bħala stampa b’saff ta’ test li jista’ jiġi mfittex.",
- "In Graustufen": "Fi skala tal-griż"
+ "In Graustufen": "Fi skala tal-griż",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: qed jiġi kkonvertit ritratt tal-iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: qed jiġi kkonvertit fajl TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "L-istampa HEIC ma setgħetx tiġi dekodifikata",
+ "HEIC-Bild konnte nicht gelesen werden": "L-istampa HEIC ma setgħetx tinqara",
+ "TIFF-Datei enthält kein lesbares Bild": "Il-fajl TIFF ma fih l-ebda stampa li tinqara",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, JPG, PNG, HEIC, TIFF jew fattura elettronika bħala XML)"
 }

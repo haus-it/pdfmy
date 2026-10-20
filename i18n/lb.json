@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text mat Iwwerschrëften, Opzielungen an Tabellen als Markdown – z. B. fir KI-Assistenten, Wikien oder Notiz-Apps",
  "Webseite (HTML)": "Websäit (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "All Säiten, Stempelen, Markéierungen, Ënnerschrëften a Biller a Grostufen – spuert Faarftoner a gesäit aus wéi eng Schwaarz-wäiss-Kopie. D’Säite ginn dobäi als Bild mat enger duerchsichbarer Textschicht gespäichert.",
- "In Graustufen": "A Grostufen"
+ "In Graustufen": "A Grostufen",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone-Foto (HEIC) gëtt ëmgewandelt …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF-Datei gëtt ëmgewandelt …",
+ "HEIC-Bild konnte nicht dekodiert werden": "HEIC-Bild konnt net dekodéiert ginn",
+ "HEIC-Bild konnte nicht gelesen werden": "HEIC-Bild konnt net gelies ginn",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF-Datei enthält kee liesbart Bild",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)"
 }

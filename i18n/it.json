@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Testo con titoli, elenchi puntati e tabelle in Markdown – ad es. per assistenti IA, wiki o app per appunti",
  "Webseite (HTML)": "Pagina web (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Tutte le pagine, timbri, evidenziazioni, firme e immagini in scala di grigi: risparmia toner a colori e sembra una copia in bianco e nero. Le pagine vengono salvate come immagine con un livello di testo ricercabile.",
- "In Graustufen": "In scala di grigi"
+ "In Graustufen": "In scala di grigi",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: conversione della foto iPhone (HEIC) …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: conversione del file TIFF …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Impossibile decodificare l’immagine HEIC",
+ "HEIC-Bild konnte nicht gelesen werden": "Impossibile leggere l’immagine HEIC",
+ "TIFF-Datei enthält kein lesbares Bild": "Il file TIFF non contiene immagini leggibili",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, JPG, PNG, HEIC, TIFF o fattura elettronica come XML)"
 }

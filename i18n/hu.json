@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Szöveg címsorokkal, felsorolásokkal és táblázatokkal Markdown formátumban – pl. MI-asszisztensekhez, wikikhez vagy jegyzetalkalmazásokhoz",
  "Webseite (HTML)": "Weboldal (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Minden oldal, bélyegző, jelölés, aláírás és kép szürkeárnyalatosan – spórol a színes tonerrel, és fekete-fehér másolatnak tűnik. Az oldalak ilyenkor képként, kereshető szövegréteggel kerülnek mentésre.",
- "In Graustufen": "Szürkeárnyalatosan"
+ "In Graustufen": "Szürkeárnyalatosan",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone-fotó (HEIC) átalakítása …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF-fájl átalakítása …",
+ "HEIC-Bild konnte nicht dekodiert werden": "A HEIC-kép nem dekódolható",
+ "HEIC-Bild konnte nicht gelesen werden": "A HEIC-kép nem olvasható",
+ "TIFF-Datei enthält kein lesbares Bild": "A TIFF-fájl nem tartalmaz olvasható képet",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, JPG, PNG, HEIC, TIFF vagy XML e-számla)"
 }

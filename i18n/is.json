@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Texti með fyrirsögnum, upptalningum og töflum sem Markdown – t.d. fyrir gervigreindaraðstoðarmenn, wiki-síður eða glósuforrit",
  "Webseite (HTML)": "Vefsíða (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Allar síður, stimplar, merkingar, undirskriftir og myndir í grátóna – sparar litatóner og lítur út eins og svarthvítt afrit. Síðurnar eru vistaðar sem mynd með leitanlegu textalagi.",
- "In Graustufen": "Í grátóna"
+ "In Graustufen": "Í grátóna",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone-mynd (HEIC) umbreytt …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF-skrá umbreytt …",
+ "HEIC-Bild konnte nicht dekodiert werden": "Ekki tókst að afkóða HEIC-myndina",
+ "HEIC-Bild konnte nicht gelesen werden": "Ekki tókst að lesa HEIC-myndina",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF-skráin inniheldur enga læsilega mynd",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, JPG, PNG, HEIC, TIFF eða rafrænn reikningur sem XML)"
 }

@@ -2357,5 +2357,11 @@
  "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Başlıklar, madde işaretleri ve tablolar içeren Markdown metni – ör. yapay zekâ asistanları, wikiler veya not uygulamaları için",
  "Webseite (HTML)": "Web sayfası (HTML)",
  "Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert.": "Tüm sayfalar, damgalar, işaretlemeler, imzalar ve görseller gri tonlamada – renkli toner tasarrufu sağlar ve siyah beyaz bir kopya gibi görünür. Sayfalar, aranabilir bir metin katmanıyla görsel olarak kaydedilir.",
- "In Graustufen": "Gri tonlamada"
+ "In Graustufen": "Gri tonlamada",
+ "{0}: iPhone-Foto (HEIC) wird umgewandelt …": "{0}: iPhone fotoğrafı (HEIC) dönüştürülüyor …",
+ "{0}: TIFF-Datei wird umgewandelt …": "{0}: TIFF dosyası dönüştürülüyor …",
+ "HEIC-Bild konnte nicht dekodiert werden": "HEIC görüntüsünün kodu çözülemedi",
+ "HEIC-Bild konnte nicht gelesen werden": "HEIC görüntüsü okunamadı",
+ "TIFF-Datei enthält kein lesbares Bild": "TIFF dosyası okunabilir bir görüntü içermiyor",
+ "Format nicht unterstützt: {0} (bitte PDF, JPG, PNG, HEIC, TIFF oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, JPG, PNG, HEIC, TIFF veya XML olarak e-fatura)"
 }
