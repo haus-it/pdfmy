@@ -2145,5 +2145,7 @@
  "Vorlage löschen": "Выдаліць шаблон",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Спачатку пастаўце палі – шаблон захоўвае асоб, палі, паведамленне і тэрмін.",
  "Quellcode (GitHub)": "Зыходны код (GitHub)",
- "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» не ўдалося прачытаць – Outlook захоўвае ўкладанні ў абароненай папцы, якую браўзеру нельга чытаць. З pdfmy Scan (Windows пачынаючы з 1.8.7, Mac і Linux пачынаючы з 1.1.7) PDFMy адкрывае такія ўкладанні аўтаматычна. Інакш захавайце ўкладанне ў Outlook («Захаваць як») і потым адкрыйце."
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "«{0}» не ўдалося прачытаць – Outlook захоўвае ўкладанні ў абароненай папцы, якую браўзеру нельга чытаць. З pdfmy Scan (Windows пачынаючы з 1.8.7, Mac і Linux пачынаючы з 1.1.7) PDFMy адкрывае такія ўкладанні аўтаматычна. Інакш захавайце ўкладанне ў Outlook («Захаваць як») і потым адкрыйце.",
+ "Verfügbar in 40 Sprachen": "Даступна на 40 мовах",
+ "{0} konnte nicht geladen werden": "Не ўдалося загрузіць {0}"
 }

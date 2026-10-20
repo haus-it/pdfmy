@@ -2145,5 +2145,7 @@
  "Vorlage löschen": "Delete template",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Set fields first – the template saves people, fields, message and deadline.",
  "Quellcode (GitHub)": "Source code (GitHub)",
- "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "‘{0}’ could not be read – Outlook stores attachments in a protected folder that the browser is not allowed to read. With pdfmy Scan (Windows from 1.8.7, Mac and Linux from 1.1.7), PDFMy opens such attachments automatically. Otherwise, save the attachment in Outlook (‘Save As’) and then open it."
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "‘{0}’ could not be read – Outlook stores attachments in a protected folder that the browser is not allowed to read. With pdfmy Scan (Windows from 1.8.7, Mac and Linux from 1.1.7), PDFMy opens such attachments automatically. Otherwise, save the attachment in Outlook (‘Save As’) and then open it.",
+ "Verfügbar in 40 Sprachen": "Available in 40 languages",
+ "{0} konnte nicht geladen werden": "{0} could not be loaded"
 }

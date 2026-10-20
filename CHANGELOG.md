@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Startseite: „Verfügbar in 40 Sprachen“ sofort sichtbar
+- Direkt unter der Überschrift steht jetzt „Verfügbar in 40 Sprachen“ mit Sprachauswahl – Umschalten mit einem Klick, ohne Menü. Übersetzt in alle Sprachen, Handy-Ansicht kompakt, axe ohne Befund (hell, dunkel, mobil).
+- Hilfe ergänzt; fehlende Übersetzung der Ladefehler-Meldung nachgetragen.
+
 ### pdfmy.de lädt schneller
 - Messung vorher (20.10.2026, ohne Cache): Startseite 41 Anfragen, 1.421 KB bis zum Seitenaufbau, bedienbar nach 4–7 s.
 - **Bibliotheken bei Bedarf:** fontkit (Schriften einbetten, 338 KB), pdf.js (PDFs anzeigen, 148 KB), jsQR (QR-Codes lesen, 57 KB) und qrcode (QR-Codes erzeugen, 12 KB) werden nicht mehr beim Start geladen, sondern beim ersten Gebrauch bzw. im Leerlauf nach dem Seitenaufbau. Wird eine Datei direkt beim Start geöffnet, lädt PDFMy sie nach und ergänzt GiroCode/Trennblatt-Erkennung anschließend. Offline-Betrieb unverändert (Service Worker hält alles vor).

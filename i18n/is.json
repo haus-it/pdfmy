@@ -2145,5 +2145,7 @@
  "Vorlage löschen": "Eyða sniðmáti",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Setjið fyrst reiti – sniðmátið vistar aðila, reiti, skilaboð og frest.",
  "Quellcode (GitHub)": "Frumkóði (GitHub)",
- "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Ekki tókst að lesa „{0}“ – Outlook vistar viðhengi í varinni möppu sem vafrinn má ekki lesa. Með pdfmy Scan (Windows frá 1.8.7, Mac og Linux frá 1.1.7) opnar PDFMy slík viðhengi sjálfkrafa. Annars skal vista viðhengið í Outlook („Vista sem“) og opna það síðan."
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Ekki tókst að lesa „{0}“ – Outlook vistar viðhengi í varinni möppu sem vafrinn má ekki lesa. Með pdfmy Scan (Windows frá 1.8.7, Mac og Linux frá 1.1.7) opnar PDFMy slík viðhengi sjálfkrafa. Annars skal vista viðhengið í Outlook („Vista sem“) og opna það síðan.",
+ "Verfügbar in 40 Sprachen": "Fáanlegt á 40 tungumálum",
+ "{0} konnte nicht geladen werden": "Ekki tókst að hlaða {0}"
 }

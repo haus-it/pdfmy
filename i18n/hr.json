@@ -2145,5 +2145,7 @@
  "Vorlage löschen": "Izbriši predložak",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Najprije postavite polja – predložak sprema osobe, polja, poruku i rok.",
  "Quellcode (GitHub)": "Izvorni kod (GitHub)",
- "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}” nije moguće pročitati – Outlook sprema privitke u zaštićenu mapu koju preglednik ne smije čitati. Uz pdfmy Scan (Windows od 1.8.7, Mac i Linux od 1.1.7) PDFMy takve privitke otvara automatski. U suprotnom spremite privitak u Outlooku („Spremi kao”) i zatim ga otvorite."
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}” nije moguće pročitati – Outlook sprema privitke u zaštićenu mapu koju preglednik ne smije čitati. Uz pdfmy Scan (Windows od 1.8.7, Mac i Linux od 1.1.7) PDFMy takve privitke otvara automatski. U suprotnom spremite privitak u Outlooku („Spremi kao”) i zatim ga otvorite.",
+ "Verfügbar in 40 Sprachen": "Dostupno na 40 jezika",
+ "{0} konnte nicht geladen werden": "{0} nije moguće učitati"
 }

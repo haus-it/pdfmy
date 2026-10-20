@@ -3800,5 +3800,6 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   } catch {}
 }
 $('#btnUpdate').onclick = () => checkUpdates(true);
+I18N.picker($('#homeLang'));   // Sprachauswahl auf der Startseite: sofort sichtbar, in wie vielen Sprachen PDFMy läuft
 I18N.ready().then(versionLabel).then(v => { if (v) { $('#verInfo').textContent = `${APP.name} · ${I18N.t(v)}`; $('#btnUpdate').title = `Nach einer neuen Version suchen – installiert: ${v}`; } });
 refresh();

@@ -2145,5 +2145,7 @@
  "Vorlage löschen": "Eliminar modelo",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Coloque primeiro os campos – o modelo guarda as pessoas, os campos, a mensagem e o prazo.",
  "Quellcode (GitHub)": "Código-fonte (GitHub)",
- "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Não foi possível ler «{0}» – o Outlook guarda os anexos numa pasta protegida que o browser não pode ler. Com o pdfmy Scan (Windows a partir de 1.8.7, Mac e Linux a partir de 1.1.7), o PDFMy abre esses anexos automaticamente. Caso contrário, guarde o anexo no Outlook («Guardar Como») e depois abra-o."
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Não foi possível ler «{0}» – o Outlook guarda os anexos numa pasta protegida que o browser não pode ler. Com o pdfmy Scan (Windows a partir de 1.8.7, Mac e Linux a partir de 1.1.7), o PDFMy abre esses anexos automaticamente. Caso contrário, guarde o anexo no Outlook («Guardar Como») e depois abra-o.",
+ "Verfügbar in 40 Sprachen": "Disponível em 40 idiomas",
+ "{0} konnte nicht geladen werden": "Não foi possível carregar {0}"
 }

@@ -2145,5 +2145,7 @@
  "Vorlage löschen": "Ištrinti šabloną",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Pirmiausia nustatykite laukus – šablonas įrašo asmenis, laukus, pranešimą ir terminą.",
  "Quellcode (GitHub)": "Šaltinio kodas (GitHub)",
- "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ nepavyko perskaityti – „Outlook“ priedus saugo apsaugotame aplanke, kurio naršyklei neleidžiama skaityti. Su pdfmy Scan (Windows nuo 1.8.7, Mac ir Linux nuo 1.1.7) PDFMy tokius priedus atidaro automatiškai. Kitu atveju įrašykite priedą „Outlook“ („Įrašyti kaip“) ir tada atidarykite."
+ "„{0}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "„{0}“ nepavyko perskaityti – „Outlook“ priedus saugo apsaugotame aplanke, kurio naršyklei neleidžiama skaityti. Su pdfmy Scan (Windows nuo 1.8.7, Mac ir Linux nuo 1.1.7) PDFMy tokius priedus atidaro automatiškai. Kitu atveju įrašykite priedą „Outlook“ („Įrašyti kaip“) ir tada atidarykite.",
+ "Verfügbar in 40 Sprachen": "Prieinama 40 kalbų",
+ "{0} konnte nicht geladen werden": "Nepavyko įkelti {0}"
 }
