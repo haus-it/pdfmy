@@ -77,35 +77,50 @@
   function summaryText(r) {
     return `${doneCount(r)}/${r.signers.length}: ` + r.signers.map(s => s.status === DONE ? `${s.name} ✓ ${fmt(s.signedAt)}` : s.status === DECLINED ? `${s.name} abgelehnt ${fmt(s.signedAt)}${s.reason ? ` („${s.reason}“)` : ''}` : `${s.name} offen`).join('; ');
   }
+  /* Texte der E-Mails in der Sprache der Oberfläche: tr übersetzt einen deutschen Satz mit Platzhaltern {0}, {1} … (in PDFMy: I18N.t);
+     die Werte (Namen, Titel, Daten) werden erst danach eingesetzt und nie übersetzt. Ohne tr bleibt alles Deutsch. */
+  const say = (tr, key, ...v) => String(tr(key)).replace(/\{(\d+)\}/g, (all, n) => v[n] != null ? v[n] : all);
+  const para = (...p) => p.filter(x => x != null && x !== '').join('\n\n');
+  const hello = (tr, name) => name ? say(tr, 'Guten Tag {0},', name) : say(tr, 'Guten Tag,');
+  const bye = (tr, sig) => say(tr, 'Viele Grüße') + (sig ? '\n' + sig : '');
   // E-Mail an die nächste Person bzw. – wenn alle unterschrieben haben – zurück an den Absender
-  function mail(r, { from = '' } = {}) {
-    const i = next(r), n = r.signers.length, sig = from || r.requester.name, di = declined(r);
+  function mail(r, { from = '', tr = s => s } = {}) {
+    const i = next(r), n = r.signers.length, sig = from || r.requester.name, di = declined(r), req = r.requester.name || r.requester.email;
     if (di >= 0) {
-      const d = r.signers[di];
-      return { to: r.requester.email, cc: [...r.signers.filter(s => s.status === DONE).map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: `Abgelehnt: ${r.title}`,
-        body: `Guten Tag,\n\n${d.name || d.email} hat „${r.title}“ nicht unterschrieben${d.reason ? `.\n\nBegründung: ${d.reason}` : ' (ohne Begründung).'}\n\nDie Anfrage ist damit beendet. Bereits unterschrieben: ${r.signers.filter(s => s.status === DONE).map(s => s.name).join(', ') || 'niemand'}.\n\nViele Grüße${sig ? '\n' + sig : ''}` };
+      const d = r.signers[di], done = r.signers.filter(s => s.status === DONE).map(s => s.name).join(', ');
+      return { to: r.requester.email, cc: [...r.signers.filter(s => s.status === DONE).map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: say(tr, 'Abgelehnt: {0}', r.title),
+        body: para(hello(tr), say(tr, '{0} hat „{1}“ nicht unterschrieben.', d.name || d.email, r.title), d.reason ? say(tr, 'Begründung: {0}', d.reason) : say(tr, 'Ohne Begründung.'),
+          say(tr, 'Die Anfrage ist damit beendet. Bereits unterschrieben: {0}.', done || say(tr, 'niemand')), bye(tr, sig)) };
     }
     if (i < 0) {
-      return { to: r.requester.email, cc: [...r.signers.map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: `Unterschrieben: ${r.title}`,
-        body: `Guten Tag,\n\nalle ${n} Personen haben „${r.title}“ unterschrieben:\n\n${r.signers.map(s => `• ${s.name} – ${fmt(s.signedAt)}`).join('\n')}\n\nDas unterschriebene Dokument ist angehängt. In PDFMy (https://pdfmy.de) zeigt es beim Öffnen die Übersicht mit Prüfsummen.\n\nViele Grüße${sig ? '\n' + sig : ''}` };
+      return { to: r.requester.email, cc: [...r.signers.map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: say(tr, 'Unterschrieben: {0}', r.title),
+        body: para(hello(tr), say(tr, 'Alle {0} Personen haben „{1}“ unterschrieben:', n, r.title), r.signers.map(s => `• ${s.name} – ${fmt(s.signedAt)}`).join('\n'),
+          say(tr, 'Das unterschriebene Dokument ist angehängt. In PDFMy (https://pdfmy.de) zeigt es beim Öffnen die Übersicht mit Prüfsummen.'), bye(tr, sig)) };
     }
     const s = r.signers[i], after = r.signers[i + 1];
     const cc = i > 0 && r.requester.email && r.requester.email !== s.email ? r.requester.email : '';
-    return { to: s.email, cc, subject: `Bitte unterschreiben: ${r.title}`,
-      body: `Guten Tag${s.name ? ' ' + s.name : ''},\n\n${r.requester.name || r.requester.email} bittet Sie, „${r.title}“ zu unterschreiben${n > 1 ? ` (Person ${i + 1} von ${n})` : ''}.` +
-        (r.due ? `\n\nBitte bis ${day(r.due)}.` : '') +
-        (r.message ? `\n\n${r.message}` : '') +
-        `\n\nSo geht’s – kostenlos, ohne Anmeldung, die Datei wird nicht hochgeladen:\n1. https://pdfmy.de öffnen und die angehängte PDF ins Fenster ziehen. Ihr Unterschriftsfeld ist markiert.\n2. Auf „Hier unterschreiben“ klicken und unterschreiben.\n3. Auf „Unterschrieben – weitersenden“ klicken. PDFMy bereitet die E-Mail ${after ? `an ${after.name || after.email}` : `zurück an ${r.requester.name || r.requester.email}`} vor.` +
-        `\n\nOhne PDFMy geht es auch: die PDF in Ihrem PDF-Programm öffnen (z. B. Adobe Acrobat Reader, Vorschau am Mac, Microsoft Edge), die markierten Felder ausfüllen und unterschreiben, speichern und an ${r.requester.name || r.requester.email}${r.requester.email ? ` (${r.requester.email})` : ''} zurücksenden.` +
-        (i > 0 ? `\n\nBereits unterschrieben: ${r.signers.slice(0, i).map(x => x.name).join(', ')}.` : '') +
-        `\n\nViele Grüße${sig ? '\n' + sig : ''}` };
+    return { to: s.email, cc, subject: say(tr, 'Bitte unterschreiben: {0}', r.title),
+      body: para(hello(tr, s.name),
+        n > 1 ? say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben (Person {2} von {3}).', req, r.title, i + 1, n) : say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben.', req, r.title),
+        r.due ? say(tr, 'Bitte bis {0}.', day(r.due)) : '',
+        r.message,
+        [say(tr, 'So geht’s – kostenlos, ohne Anmeldung, die Datei wird nicht hochgeladen:'),
+          say(tr, '1. https://pdfmy.de öffnen und die angehängte PDF ins Fenster ziehen. Ihr Unterschriftsfeld ist markiert.'),
+          say(tr, '2. Auf „Hier unterschreiben“ klicken und unterschreiben.'),
+          after ? say(tr, '3. Auf „Unterschrieben – weitersenden“ klicken. PDFMy bereitet die E-Mail an {0} vor.', after.name || after.email)
+            : say(tr, '3. Auf „Unterschrieben – weitersenden“ klicken. PDFMy bereitet die E-Mail zurück an {0} vor.', req)].join('\n'),
+        say(tr, 'Ohne PDFMy geht es auch: die PDF in Ihrem PDF-Programm öffnen (z. B. Adobe Acrobat Reader, Vorschau am Mac, Microsoft Edge), die markierten Felder ausfüllen und unterschreiben, speichern und an {0} zurücksenden.', req + (r.requester.email && r.requester.name ? ` (${r.requester.email})` : '')),
+        i > 0 ? say(tr, 'Bereits unterschrieben: {0}.', r.signers.slice(0, i).map(x => x.name).join(', ')) : '',
+        bye(tr, sig)) };
   }
   // Erinnerung an die Person, die gerade dran ist (aus dem Posteingangsbuch)
-  function reminder({ title = 'Dokument', to = '', name = '', due = '', from = '', attached = false } = {}) {
-    return { to, cc: '', subject: `Erinnerung: Bitte unterschreiben: ${title}`,
-      body: `Guten Tag${name ? ' ' + name : ''},\n\nich möchte freundlich an „${title}“ erinnern – Ihre Unterschrift fehlt noch.${isDay(due) ? ` Bitte bis ${day(due)}.` : ''}\n\n` +
-        (attached ? 'Das Dokument hänge ich zur Sicherheit noch einmal an.' : 'Das Dokument haben Sie mit der ersten E-Mail bekommen.') +
-        ' Zum Unterschreiben die PDF auf https://pdfmy.de öffnen (oder in Ihrem PDF-Programm), im markierten Feld unterschreiben und weitersenden.\n\nViele Grüße' + (from ? '\n' + from : '') };
+  function reminder({ title = 'Dokument', to = '', name = '', due = '', from = '', attached = false, tr = s => s } = {}) {
+    return { to, cc: '', subject: say(tr, 'Erinnerung: Bitte unterschreiben: {0}', title),
+      body: para(hello(tr, name),
+        say(tr, 'ich möchte freundlich an „{0}“ erinnern – Ihre Unterschrift fehlt noch.', title) + (isDay(due) ? ' ' + say(tr, 'Bitte bis {0}.', day(due)) : ''),
+        (attached ? say(tr, 'Das Dokument hänge ich zur Sicherheit noch einmal an.') : say(tr, 'Das Dokument haben Sie mit der ersten E-Mail bekommen.')) + ' ' +
+          say(tr, 'Zum Unterschreiben die PDF auf https://pdfmy.de öffnen (oder in Ihrem PDF-Programm), im markierten Feld unterschreiben und weitersenden.'),
+        bye(tr, from)) };
   }
   // Echte PDF-Formularfelder (für andere PDF-Programme): Name „pdfmy_<Anfrage>_<Feld>“
   const formName = (r, k) => `pdfmy_${r.id}_${k}`;
@@ -119,22 +134,27 @@
   }
   const dueIn = (days, today = new Date()) => days > 0 ? new Date(utcDay(today) + days * 86400000).toISOString().slice(0, 10) : '';
   // Zeilen der Prüfprotokoll-Seite (wird nach der letzten Unterschrift an die PDF angehängt)
-  function auditLines(r, docHash = '') {
-    const L = [['h', 'Prüfprotokoll – Unterschriftsanfrage'], ['p', `Dokument: ${r.title}`], ['p', `Anfrage-ID: ${r.id}`], ['p', `Erstellt: ${fmt(r.created)} von ${r.requester.name || ''}${r.requester.email ? ` <${r.requester.email}>` : ''}`],
-      ['p', `Status: ${complete(r) ? 'abgeschlossen – alle haben unterschrieben' : declined(r) >= 0 ? 'abgelehnt' : 'offen'}`], ...(r.cc?.length ? [['p', `Zur Kenntnis: ${r.cc.join(', ')}`]] : []), ['g', '']];
-    L.push(['s', 'Unterzeichner']);
+  // tr wie bei mail(): jede Zeile über eine Vorlage mit Platzhaltern; Namen, Titel, Prüfsummen, Daten werden nie übersetzt
+  const LOGW = { angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
+  function auditLines(r, docHash = '', tr = s => s) {
+    const L = [['h', say(tr, 'Prüfprotokoll – Unterschriftsanfrage')], ['p', say(tr, 'Dokument: {0}', r.title)], ['p', say(tr, 'Anfrage-ID: {0}', r.id)],
+      ['p', say(tr, 'Erstellt: {0} von {1}{2}', fmt(r.created), r.requester.name || '', r.requester.email ? ` <${r.requester.email}>` : '')],
+      ['p', say(tr, 'Status: {0}', complete(r) ? say(tr, 'abgeschlossen – alle haben unterschrieben') : declined(r) >= 0 ? say(tr, 'abgelehnt') : say(tr, 'offen'))],
+      ...(r.cc?.length ? [['p', say(tr, 'Zur Kenntnis: {0}', r.cc.join(', '))]] : []), ['g', '']];
+    L.push(['s', say(tr, 'Unterzeichner')]);
     r.signers.forEach((s, i) => {
       L.push(['b', `${i + 1}. ${s.name}${s.email ? ` <${s.email}>` : ''}`]);
-      L.push(['p', `${s.status === DONE ? (s.ext ? 'Unterschrieben in einem anderen PDF-Programm' : 'Unterschrieben') : s.status === DECLINED ? 'Abgelehnt' : 'Offen'}${s.signedAt ? ` am ${fmt(s.signedAt)}` : ''}${s.reason ? ` – Begründung: ${s.reason}` : ''}`]);
-      const vals = r.fields.filter(f => f.s === i && f.v && (f.t === 'text' || f.t === 'check')).map(f => `${f.label || TYPES[f.t]}: ${f.t === 'check' ? (f.v ? 'angekreuzt' : 'nicht angekreuzt') : f.v}`);
-      if (vals.length) L.push(['p', `Angaben: ${vals.join('; ')}`]);
-      if (s.hash) L.push(['m', `SHA-256 der erhaltenen Fassung: ${s.hash}`]);
+      const st = s.status === DONE ? (s.ext ? say(tr, 'Unterschrieben in einem anderen PDF-Programm') : say(tr, 'Unterschrieben')) : s.status === DECLINED ? say(tr, 'Abgelehnt') : say(tr, 'Offen');
+      L.push(['p', st + (s.signedAt ? ' ' + say(tr, 'am {0}', fmt(s.signedAt)) : '') + (s.reason ? ' – ' + say(tr, 'Begründung: {0}', s.reason) : '')]);
+      const vals = r.fields.filter(f => f.s === i && f.v && (f.t === 'text' || f.t === 'check')).map(f => `${f.label || say(tr, TYPES[f.t])}: ${f.t === 'check' ? (f.v ? say(tr, 'angekreuzt') : say(tr, 'nicht angekreuzt')) : f.v}`);
+      if (vals.length) L.push(['p', say(tr, 'Angaben: {0}', vals.join('; '))]);
+      if (s.hash) L.push(['m', say(tr, 'SHA-256 der erhaltenen Fassung: {0}', s.hash)]);
       L.push(['g', '']);
     });
-    L.push(['g', ''], ['s', 'Ablauf']);
-    for (const l of r.log) L.push(['p', `${fmt(l.at)} – ${l.what}${l.by ? ` – ${l.by}` : ''}${l.reason ? ` („${l.reason}“)` : ''}`]);
-    if (docHash) L.push(['g', ''], ['m', `SHA-256 der letzten Fassung vor dieser Seite: ${docHash}`]);
-    L.push(['g', ''], ['n', 'Erstellt mit PDFMy (pdfmy.de) – ohne Server: Die Angaben stehen auch als Anlage „pdfmy-unterschriften.json“ in dieser PDF. Gezeichnete Unterschriften sind einfache elektronische Signaturen (eIDAS Art. 3 Nr. 10); die Prüfsummen machen spätere Änderungen erkennbar. PDFMy hängt jede Unterschrift an, statt die Datei neu zu schreiben – unter „Übersicht“ prüft PDFMy, dass jede unterschriebene Fassung unverändert enthalten ist.']);
+    L.push(['g', ''], ['s', say(tr, 'Ablauf')]);
+    for (const l of r.log) L.push(['p', `${fmt(l.at)} – ${LOGW[l.what] ? say(tr, LOGW[l.what]) : l.what}${l.by ? ` – ${l.by}` : ''}${l.reason ? ` („${l.reason}“)` : ''}`]);
+    if (docHash) L.push(['g', ''], ['m', say(tr, 'SHA-256 der letzten Fassung vor dieser Seite: {0}', docHash)]);
+    L.push(['g', ''], ['n', say(tr, 'Erstellt mit PDFMy (pdfmy.de) – ohne Server: Die Angaben stehen auch als Anlage „pdfmy-unterschriften.json“ in dieser PDF. Gezeichnete Unterschriften sind einfache elektronische Signaturen (eIDAS Art. 3 Nr. 10); die Prüfsummen machen spätere Änderungen erkennbar. PDFMy hängt jede Unterschrift an, statt die Datei neu zu schreiben – unter „Übersicht“ prüft PDFMy, dass jede unterschriebene Fassung unverändert enthalten ist.')]);
     return L;
   }
   // Vorschlag für Felder aus erkannten Unterschriftsstellen: Unterschriften der Reihe nach den Personen zuordnen,

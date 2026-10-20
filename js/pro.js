@@ -666,7 +666,7 @@ async function reqAuditPage(out) {
   const W = 595.28, H = 841.89, L = 56, RW = W - 2 * L, cs = new Set(font.getCharacterSet()), safe = x => [...String(x ?? '')].filter(ch => cs.has(ch.codePointAt(0))).join('');
   let page = out.addPage([W, H]), y = H - 64;
   const style = { h: [16, bold, 26], s: [12, bold, 20], b: [10.5, bold, 15], p: [10, font, 14], m: [8, font, 11.5], n: [8.5, font, 12], g: [6, font, 6] };
-  for (const [k, text] of SigReq.auditLines(req)) {
+  for (const [k, text] of SigReq.auditLines(req, '', s => I18N.t(s))) {   // Prüfprotokoll in der Sprache der Oberfläche
     const [size, f, lh] = style[k] || style.p;
     for (const line of k === 'g' ? [''] : wrapLines(safe(text), RW, x => f.widthOfTextAtSize(x, size))) {
       if (y < 60) { page = out.addPage([W, H]); y = H - 64; }
@@ -736,7 +736,7 @@ async function openEml(bytes, name) {
 window.openEml = openEml;
 const emlDone = (opened, to) => opened ? `E-Mail an ${to} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `E-Mail an ${to} vorbereitet – die .eml-Datei öffnen und senden.`;
 async function reqMail(r, bytes, pdfName) {
-  const m = SigReq.mail(r, { from: S.author });
+  const m = SigReq.mail(r, { from: S.author, tr: s => I18N.t(s) });   // E-Mail in der Sprache der Oberfläche
   const eml = Journal.emlDraft({ to: m.to, cc: m.cc, subject: m.subject, body: m.body, attachments: [{ name: pdfName, mime: 'application/pdf', bytes }] });
   m.opened = await openEml(new TextEncoder().encode(eml), pdfName.replace(/\.pdf$/i, '') + '.eml');
   return m;
@@ -762,7 +762,7 @@ async function reqJournal(r, add) {
 async function reqRemind(e) {
   let bytes = null;
   if (!+e.sigN && e.file && state.outDir) try { bytes = new Uint8Array(await (await archiveFile(e.file)).arrayBuffer()); } catch {}
-  const m = SigReq.reminder({ title: e.subject, to: e.sigTo, name: e.sigName, due: e.deadline, from: S.author, attached: !!bytes });
+  const m = SigReq.reminder({ title: e.subject, to: e.sigTo, name: e.sigName, due: e.deadline, from: S.author, attached: !!bytes, tr: s => I18N.t(s) });
   const name = (e.file || 'Dokument.pdf').split('\\').pop();
   const opened = await openEml(new TextEncoder().encode(Journal.emlDraft({ ...m, attachments: bytes ? [{ name, mime: 'application/pdf', bytes }] : [] })), `Erinnerung – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`);
   status(opened ? `Erinnerung an ${e.sigName || e.sigTo} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `Erinnerung an ${e.sigName || e.sigTo} vorbereitet – die .eml-Datei öffnen und senden.`);

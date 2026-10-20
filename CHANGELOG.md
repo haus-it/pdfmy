@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Zur Unterschrift senden: E-Mails, Erinnerung und Prüfprotokoll in der Sprache der Oberfläche
+- Bisher waren diese Texte immer Deutsch, auch wenn PDFMy z. B. auf Türkisch lief. Jetzt nutzt PDFMy dafür die Wörterbücher (40 Sprachen); Namen, Titel, Daten und die eigene Nachricht werden nie übersetzt.
+- Auch Meldungen im Dialog (fehlende Namen, ungültige Adressen) sind jetzt übersetzt; `js/sigreq.js`, `js/pdfinc.js` und `js/pdfcrypt.js` gehören zur Textsammlung.
+- Getestet: Unit-Test (Übersetzungsfunktion bekommt nur Vorlagen mit Platzhaltern, Werte werden danach eingesetzt), Ende-zu-Ende auf Türkisch.
+
 ### Outlook-Anhänge: dauerhafte Lösung anbieten; Qualitätsrundgang über das Menü
 - Ist ein übergebener Anhang nicht lesbar und ist „PDFMy (pdfmy Scan)“ nicht Standard für PDFs (sondern z. B. die Chrome-App), fragt PDFMy, ob es das jetzt einstellen soll – dann läuft das Öffnen immer über pdfmy Scan, das die Datei sofort sichert (Windows: Einstellungen öffnen sich; Mac/Linux: direkt).
 - Automatischer Rundgang über alle 24 Funktionen im Menü „… Mehr“ (mit Testdokument): ohne Befund.

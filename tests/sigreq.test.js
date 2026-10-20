@@ -130,3 +130,14 @@ test('Zur Kenntnis: Adressen bereinigt und geprüft, Kopie nur beim Ergebnis, im
   assert.deepEqual(R.template(r, 'V').cc, ['steuer@kanzlei.de', 'buchhaltung@firma.de']);
   assert.deepEqual(R.parse(R.serialize(r)).cc, ['steuer@kanzlei.de', 'buchhaltung@firma.de']);
 });
+
+test('E-Mails übersetzbar: tr bekommt Sätze mit Platzhaltern, Werte werden danach eingesetzt und nicht übersetzt', () => {
+  const dict = { 'Bitte unterschreiben: {0}': 'Please sign: {0}', 'Guten Tag {0},': 'Hello {0},', 'Viele Grüße': 'Kind regards', 'Bitte bis {0}.': 'Please by {0}.' };
+  const seen = []; const tr = s => { seen.push(s); return dict[s] || s; };
+  const r = R.create({ title: 'Viele Grüße', requester: { name: 'Anna', email: 'a@b.de' }, signers: [{ name: 'Max', email: 'm@x.de' }], due: '2026-10-30' });
+  const m = R.mail(r, { tr });
+  assert.equal(m.subject, 'Please sign: Viele Grüße');   // Titel bleibt, obwohl er wie ein Satz aussieht
+  assert.match(m.body, /^Hello Max,/); assert.match(m.body, /Please by 30\.10\.2026\./); assert.match(m.body, /Kind regards\nAnna$/);
+  assert.ok(seen.every(s => !s.includes('Max') && !s.includes('30.10.2026')), 'nur Vorlagen an tr, keine Werte');
+  assert.match(R.reminder({ title: 'X', name: 'Max', tr }).body, /^Hello Max,/);
+});
