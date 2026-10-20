@@ -1,0 +1,16 @@
+{
+ "{0}{1} – Farbe und Art oben ändern, Entf löscht.": "{0}{1} – променете ја бојата и видот горе, Delete брише.",
+ "Art der Markierung": "Вид на обележување",
+ "Durchgestrichen": "Прецртано",
+ "Durchstreichen": "Прецртај",
+ "Farbe der Markierung": "Боја на обележување",
+ "Gelb": "Жолто",
+ "Grün": "Зелено",
+ "Markiert": "Обележано",
+ "Orange": "Портокалово",
+ "Rosa": "Розово",
+ "Text markieren: über die Wörter ziehen (oder ein Wort anklicken) – Farbe und Art daneben wählen": "Обележување текст: повлечете преку зборовите (или кликнете на збор) – изберете боја и вид до него",
+ "Unterstreichen": "Подвлечи",
+ "Unterstrichen": "Подвлечено",
+ "Zum Markieren einzelner Wörter zuerst die Texterkennung abwarten – oder einen Bereich aufziehen.": "За обележување поединечни зборови, прво почекајте препознавањето текст – или означете област."
+}

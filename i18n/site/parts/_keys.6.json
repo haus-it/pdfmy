@@ -1,0 +1,11 @@
+[
+ ". Jede Datei wird eine Anlage – Kennbuchstabe frei wählbar (K, B, AS, AG, BK, BB …), Beginn bei beliebiger Nummer, Bezeichnung änderbar. PDFMy setzt den Stempel „Anlage K 1“ oben rechts auf die erste Seite, erstellt ein Anlagenverzeichnis und speichert auf Wunsch jede Anlage als eigene, beA-taugliche Datei mit logischer Nummerierung (z. B.",
+ ") – als ZIP oder direkt in den Ablageordner.",
+ "<b>beA-tauglich speichern:</b> erzeugt eine PDF/A ohne JavaScript und Anhänge, schlägt einen zulässigen Dateinamen vor und prüft die gespeicherte Datei noch einmal. Ein E-Rechnungs-Anhang (XML) wird dabei nicht mitgegeben.",
+ "<b>Für beA prüfen:</b> <i>Mehr → Für beA prüfen …</i> zeigt, ob die PDF die technischen Vorgaben der Justiz erfüllt (Elektronischer-Rechtsverkehr-Bekanntmachung 2025): kein JavaScript, keine eingebetteten Dateien oder Medien, druckbar und nicht verschlüsselt, höchstens 200 MB, Dateiname höchstens 90 Zeichen nur mit Buchstaben (auch ä, ö, ü, ß), Ziffern, Unterstrich und Minus. Hinweise gibt es zu nicht eingebetteten Schriften und zu Seiten ohne Text (Texterkennung ist empfohlen, aber keine Pflicht).",
+ "<b>Vertraulichkeit:</b> Prüfung, Umwandlung und Nummerierung laufen vollständig auf Ihrem Gerät – Mandantenunterlagen werden nicht hochgeladen.",
+ "Anlagen nummerieren:",
+ "Kanzlei: beA und Anlagen",
+ "Mehr → Anlagen nummerieren …",
+ "Öffnen Sie Schriftsatz-Anlagen nacheinander (Hinzufügen), dann"
+]

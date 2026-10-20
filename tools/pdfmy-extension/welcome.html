@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PDFMy – Willkommen</title>
+<link rel="icon" href="icons/icon-32.png">
+<link rel="stylesheet" href="ui.css">
+<style>
+main{max-width:680px;margin:0 auto;padding:28px 16px 48px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:22px 24px;margin-bottom:16px}
+h1{font-size:26px;margin:0 0 6px;text-transform:uppercase} h2{font-size:17px;margin:0 0 8px}
+#go{font-size:17px;padding:12px 22px;margin-top:6px}
+#state{font-weight:600;margin:12px 0 0} #state.ok{color:var(--ok)}
+ol{padding-left:20px;margin:0} li{margin:4px 0}
+</style></head>
+<body>
+<header><img src="icons/icon-48.png" alt=""><span class="brand"><b>PDFMy</b><span>powered by <img src="icons/mentor-group.png" alt="Mentor Group"></span></span></header>
+<main>
+  <div class="card">
+    <h1>Fast fertig</h1>
+    <p>Ab jetzt öffnen sich PDFs, die Sie im Browser anklicken, direkt in <b>PDFMy</b> – zum Lesen, Unterschreiben, Schwärzen, Ablegen. Die Datei bleibt dabei auf Ihrem Gerät, es gibt <b>keinen Upload</b>.</p>
+    <p>Dafür braucht die Erweiterung einmalig Ihre Erlaubnis, PDFs von Webseiten zu laden. Der Browser fragt gleich nach.</p>
+    <button id="go" type="button">PDFs automatisch in PDFMy öffnen</button>
+    <p id="state" role="status"></p>
+  </div>
+  <div class="card">
+    <h2>So benutzen Sie PDFMy</h2>
+    <ol>
+      <li><b>PDF anklicken</b> – sie öffnet sich in PDFMy statt im Adobe- oder Browser-Viewer.</li>
+      <li><b>Rechtsklick auf einen Link</b> → „In PDFMy öffnen“ – auch wenn das automatische Öffnen aus ist.</li>
+      <li><b>Symbol „PDFMy“</b> oben rechts (ggf. unter dem Puzzle-Symbol anheften): automatisch öffnen an/aus, aktuelle PDF übernehmen.</li>
+      <li>Wollen Sie eine PDF doch im alten Viewer sehen: im Browser auf „Zurück“ klicken.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>Datenschutz</h2>
+    <p class="muted">Die Erweiterung lädt nur die PDF, die Sie öffnen, und übergibt sie direkt im Browser an pdfmy.de. Sie sendet keine Daten an Mentor Group oder Dritte, speichert keinen Verlauf und enthält keine Statistik. Den Zugriff auf Webseiten können Sie jederzeit im Symbol „PDFMy“ wieder ausschalten. Anbieter: Mentor GmbH, Paderborn – <a href="https://pdfmy.de/impressum.html" target="_blank" rel="noopener">Impressum</a>, <a href="https://pdfmy.de/datenschutz.html" target="_blank" rel="noopener">Datenschutz</a>.</p>
+  </div>
+</main>
+<script src="welcome.js"></script>
+</body></html>

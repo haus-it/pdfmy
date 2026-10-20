@@ -1,0 +1,24 @@
+{
+  "domain": "pdfmy.de",
+  "sftpHost": "access-5020953828.webspace-host.com",
+  "webRoot": "/home/www/public/pdfmy",
+  "operator": {
+    "name": "",
+    "company": "Mentor GmbH",
+    "street": "Am Hoppenhof 30a",
+    "zipCity": "33104 Paderborn",
+    "country": "Deutschland",
+    "email": "wumertens@mentor-group.de",
+    "phone": "+49 5251 2020811",
+    "register": "Amtsgericht Paderborn, HRB 9975",
+    "vatId": "DE275984213",
+    "representative": "Wolfgang-Udo Mertens (Geschäftsführer)",
+    "responsibleContent": "Wolfgang-Udo Mertens"
+  },
+  "stats": {
+    "_hinweis": "Öffentliche Zahl erscheint erst ab 1.000 (abgerundet auf volle Tausend). Nur belegte Zahlen eintragen, z. B. aus der IONOS-Statistik; label = was gezählt wurde.",
+    "count": 255,
+    "label": "Besucher",
+    "asOf": "16.10.2026 (IONOS WebAnalytics, 30 Tage)"
+  }
+}

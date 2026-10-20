@@ -1,0 +1,10 @@
+{
+  "name": "mentor-pdf",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Briefe scannen, als durchsuchbares PDF/A ablegen und bearbeiten – lokal im Browser.",
+  "scripts": {
+    "start": "powershell -NoProfile -ExecutionPolicy Bypass -File start.ps1",
+    "test": "node --test \"tests/*.test.js\""
+  }
+}

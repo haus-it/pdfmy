@@ -1,0 +1,8 @@
+{
+  "_hinweis": "Texte, die nur die Web-Version (tools/build-web.js) in index.html einsetzt. node tools/i18n-extract.js nimmt sie als Schlüssel auf; Übersetzungen in i18n/parts/<code>.6.json.",
+  "title": "PDFMy – powered by Mentor Group · PDF scannen, bearbeiten, zusammenfügen, verkleinern – ohne Upload",
+  "description": "Kostenlose PDF-Werkzeuge ohne Upload: scannen mit Texterkennung (OCR), zusammenfügen, verkleinern, schwärzen, unterschreiben, Formulare, Passwort, PDF/A. Ohne Anmeldung, ohne Limits.",
+  "ogTitle": "PDFMy – powered by Mentor Group: alle PDF-Werkzeuge, ohne Upload",
+  "ogDescription": "Scannen mit Texterkennung, zusammenfügen, verkleinern, schwärzen, unterschreiben, Passwort, PDF/A. Kostenlos, ohne Anmeldung, Dateien bleiben auf Ihrem Gerät.",
+  "nav": { "hilfe": "Hilfe", "werkzeuge": "Werkzeuge", "erweiterung": "Browser-Erweiterung", "presse": "Presse", "impressum": "Impressum", "datenschutz": "Datenschutz", "barrierefreiheit": "Barrierefreiheit" }
+}

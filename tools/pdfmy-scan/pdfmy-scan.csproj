@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- pdfmy Scan: kleiner Hintergrunddienst, der Scanner für pdfmy.de im Browser verfügbar macht.
+       .NET Framework 4.8 ist auf Windows 10/11 vorinstalliert – keine zusätzliche Laufzeit nötig. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>pdfmy-Scan</AssemblyName>
+    <RootNamespace>PdfmyScan</RootNamespace>
+    <ApplicationIcon>..\..\icons\mentor-pdf.ico</ApplicationIcon>
+    <Version>1.8.6</Version>
+    <!-- 32 Bit: der TWAIN-Manager von Windows (twain_32.dll / TWAINDSM.dll) und die meisten TWAIN-Treiber sind 32-Bit -->
+    <PlatformTarget>x86</PlatformTarget>
+    <Product>pdfmy Scan</Product>
+    <Company>Mentor GmbH</Company>
+    <Copyright>© 2026 Mentor GmbH</Copyright>
+    <Description>Verbindet Scanner mit pdfmy.de</Description>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <EmbeddedResource Include="..\..\icons\mentor-pdf.ico" LogicalName="app.ico" />
+    <EmbeddedResource Include="..\..\icons\pdfmy-app.ico" LogicalName="pdfmy-app.ico" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,82 @@
+[
+  {
+    "slug": "pdf-zusammenfuegen", "target": "merge", "label": "PDFs zusammenfügen",
+    "title": "PDF zusammenfügen – kostenlos und ohne Upload",
+    "description": "Mehrere PDF-Dateien kostenlos zu einer zusammenfügen – direkt im Browser, ohne Upload und ohne Anmeldung. Reihenfolge per Ziehen ändern, Lesezeichen bleiben erhalten.",
+    "intro": "Fügen Sie mehrere PDFs, Scans und Bilder zu einem einzigen Dokument zusammen. Die Dateien werden nicht hochgeladen – PDFMy arbeitet vollständig auf Ihrem Gerät.",
+    "steps": ["Auf „PDFs zusammenfügen“ klicken und die Dateien wählen (oder ins Fenster ziehen).", "Die Reihenfolge der Seiten per Ziehen anpassen, Seiten drehen oder löschen.", "Auf „Speichern“ klicken – fertig ist die gemeinsame PDF."],
+    "faq": [["Bleiben die Lesezeichen erhalten?", "Ja. Vorhandene Lesezeichen bleiben erhalten; beim Zusammenfügen stehen die Kapitel jeder Datei unter ihrem Dateinamen."], ["Gibt es eine Begrenzung?", "Nein. Keine Seitenlimits, keine Dateigrößen-Grenze außer dem Arbeitsspeicher Ihres Geräts."]]
+  },
+  {
+    "slug": "pdf-verkleinern", "target": "compress", "label": "PDF verkleinern",
+    "title": "PDF verkleinern – Dateigröße reduzieren ohne Upload",
+    "description": "PDF kostenlos verkleinern und komprimieren – mit Vorschau der neuen Größe. Ohne Upload, ohne Anmeldung, Schrift bleibt scharf.",
+    "intro": "Zu groß für die E-Mail oder das Portal? PDFMy verkleinert PDFs und Scans deutlich – Schrift bleibt scharf, Ihre Datei verlässt den Rechner nicht.",
+    "steps": ["Auf „PDF verkleinern“ klicken und die Datei wählen.", "Größe „Klein“ wählen – PDFMy zeigt vorab, wie groß die Datei wird.", "Speichern."],
+    "faq": [["Wie stark wird die Datei kleiner?", "Bei Scans oft um 80 bis 95 %. Typisch sind 30 bis 60 KB pro gescannter Briefseite."], ["Leidet die Lesbarkeit?", "Nein. Die Kompakt-Speicherung trennt Schrift und Hintergrund und hält die Schrift scharf."]]
+  },
+  {
+    "slug": "pdf-schwaerzen", "target": "redact", "label": "Schwärzen",
+    "title": "PDF schwärzen – Inhalte sicher entfernen",
+    "description": "PDF kostenlos schwärzen: Namen, IBAN, Adressen sicher entfernen – auch aus der Textebene, nicht nur übermalen. Ohne Upload, DSGVO-freundlich.",
+    "intro": "Beim Schwärzen in vielen Programmen bleibt der Text darunter lesbar. PDFMy entfernt die Inhalte wirklich – auch aus der unsichtbaren Textebene.",
+    "steps": ["Auf „Schwärzen“ klicken und die PDF öffnen.", "Bereiche aufziehen – oder einen Begriff suchen und „Alle Treffer schwärzen“.", "Speichern: Der Inhalt unter den Balken ist endgültig entfernt."],
+    "faq": [["Findet PDFMy persönliche Daten automatisch?", "Ja, auf Wunsch schlägt PDFMy IBAN, E-Mail-Adressen, Telefonnummern, Steuer-ID und Geburtsdaten zum Schwärzen vor."], ["Wird die Datei hochgeladen?", "Nein. Gerade bei vertraulichen Unterlagen wichtig: alles passiert auf Ihrem Gerät."]]
+  },
+  {
+    "slug": "pdf-unterschreiben", "target": "sign", "label": "Unterschreiben",
+    "title": "PDF unterschreiben – handschriftlich oder digital signieren",
+    "description": "PDF kostenlos unterschreiben: Unterschrift zeichnen und platzieren oder digital signieren mit Zertifikat bzw. Signaturkarte. Ohne Upload.",
+    "intro": "Unterschreiben Sie Verträge und Formulare direkt am PC, Tablet oder Handy – oder signieren Sie digital mit Ihrem Zertifikat.",
+    "steps": ["Auf „Unterschreiben“ klicken und die PDF öffnen.", "Unterschrift einmal zeichnen und an die richtige Stelle klicken.", "Speichern – auf Wunsch zusätzlich „Digital signieren“ anhaken."],
+    "faq": [["Ist eine digitale Signatur möglich?", "Ja, mit eigenem Zertifikat (.p12/.pfx) direkt im Browser, unter Windows auch mit Windows-Zertifikaten und Signaturkarten – auch qualifiziert."], ["Wird meine Unterschrift gespeichert?", "Nur wenn Sie es wünschen, und dann nur in Ihrem Browser."]]
+  },
+  {
+    "slug": "pdf-in-word", "target": "docx", "label": "PDF in Word",
+    "title": "PDF in Word umwandeln – auch Scans, ohne Upload",
+    "description": "PDF kostenlos in ein bearbeitbares Word-Dokument (.docx) umwandeln – auch gescannte Briefe dank Texterkennung. Ohne Upload, ohne Anmeldung.",
+    "intro": "Machen Sie aus PDFs und Scans bearbeitbare Word-Dokumente. Gescannte Seiten liest PDFMy mit Texterkennung – direkt auf Ihrem Gerät.",
+    "steps": ["Auf „PDF in Word“ klicken und die Datei wählen.", "PDFMy erkennt den Text, auch bei Scans.", "Als Word-Dokument speichern und in Word weiterbearbeiten."],
+    "faq": [["Funktioniert das auch mit Scans?", "Ja. Die Texterkennung liest gedruckten Text in acht Sprachen."], ["Brauche ich Word?", "Zum Umwandeln nicht. Die .docx-Datei öffnen Sie danach in Word, LibreOffice oder Pages."]]
+  },
+  {
+    "slug": "pdf-texterkennung-ocr", "target": "scan", "label": "Scannen & Text erkennen",
+    "title": "Texterkennung (OCR) – Scans durchsuchbar machen",
+    "description": "Kostenlose OCR: Scans und Fotos in durchsuchbare PDFs umwandeln – in 8 Sprachen, direkt im Browser, ohne Upload. Briefdaten werden automatisch erkannt.",
+    "intro": "Aus Fotos und Scans werden durchsuchbare PDFs. PDFMy erkennt den Text in acht Sprachen und liest gleich Absender, Betrag und Frist aus Briefen.",
+    "steps": ["Auf „Scannen & Text erkennen“ klicken – oder mit dem Handy bzw. Scanner scannen.", "PDFMy richtet die Seiten gerade und erkennt den Text automatisch.", "Als durchsuchbare PDF speichern oder direkt ablegen."],
+    "faq": [["Welche Sprachen erkennt PDFMy?", "Deutsch, Englisch, Französisch, Italienisch, Spanisch, Niederländisch, Polnisch und Türkisch – die Sprache wird automatisch erkannt."], ["Läuft die Texterkennung in der Cloud?", "Nein. Die Texterkennung läuft auf Ihrem Gerät; kein Dokument geht an einen Online-Dienst."]]
+  },
+  {
+    "slug": "e-rechnung-erstellen", "target": "#tileEinv", "label": "E-Rechnung schreiben",
+    "title": "E-Rechnung erstellen – ZUGFeRD und XRechnung kostenlos",
+    "description": "E-Rechnung kostenlos erstellen: ZUGFeRD-PDF oder XRechnung nach EN 16931, geprüft mit dem KoSIT-Validator. Ohne Abo, ohne Upload.",
+    "intro": "Seit 2025 müssen Unternehmen E-Rechnungen empfangen können, schrittweise folgt das Schreiben. Mit PDFMy erstellen Sie gültige E-Rechnungen ohne zusätzliche Software.",
+    "steps": ["Auf „E-Rechnung schreiben“ klicken.", "Ihre Firmendaten (werden gemerkt), Empfänger und Positionen eintragen.", "Als ZUGFeRD-PDF oder XRechnung speichern."],
+    "faq": [["Sind die Rechnungen gültig?", "Ja. Sie entsprechen EN 16931 und wurden mit dem offiziellen KoSIT-Validator geprüft."], ["Kann PDFMy E-Rechnungen auch lesen?", "Ja. ZUGFeRD-PDFs und XRechnungen einfach öffnen – PDFMy zeigt sie lesbar an und übernimmt Betrag, Frist und IBAN."]]
+  },
+  {
+    "slug": "pdf-reparieren", "target": "repair", "label": "PDF reparieren",
+    "title": "PDF reparieren – beschädigte Dateien retten",
+    "description": "Beschädigte oder abgeschnittene PDF kostenlos reparieren und lesbare Seiten retten – direkt im Browser, ohne Upload.",
+    "intro": "Abgebrochener Download, unvollständiger E-Mail-Anhang? PDFMy repariert beschädigte PDFs beim Öffnen und rettet alle noch lesbaren Seiten.",
+    "steps": ["Auf „PDF reparieren“ klicken und die Datei wählen.", "PDFMy repariert die Datei automatisch und meldet, wie viele Seiten gerettet wurden.", "Prüfen und neu speichern."],
+    "faq": [["Was kann PDFMy reparieren?", "Abgeschnittene Dateien, kaputte Querverweistabellen, fehlende Dateienden und Datenmüll vor der PDF."], ["Wird die Datei hochgeladen?", "Nein, die Reparatur läuft vollständig auf Ihrem Gerät."]]
+  },
+  {
+    "slug": "pdf-passwort-schuetzen", "target": "protect", "label": "Mit Passwort schützen",
+    "title": "PDF mit Passwort schützen – verschlüsseln ohne Upload",
+    "description": "PDF kostenlos mit Passwort schützen (AES-Verschlüsselung) und Rechte für Drucken und Kopieren festlegen. Ohne Upload, ohne Anmeldung.",
+    "intro": "Schützen Sie vertrauliche PDFs mit einem Passwort. PDFMy verschlüsselt mit AES – und das Passwort verlässt nie Ihr Gerät.",
+    "steps": ["Auf „Mit Passwort schützen“ klicken und die Datei wählen.", "Passwort eingeben und auf Wunsch Drucken oder Kopieren sperren.", "Speichern."],
+    "faq": [["Kann ich den Schutz wieder entfernen?", "Ja, mit „PDF entsperren“ – dafür brauchen Sie das Passwort."], ["Wo wird das Passwort gespeichert?", "Nirgends. Es wird nur zum Verschlüsseln verwendet."]]
+  },
+  {
+    "slug": "bilder-in-pdf", "target": "img2pdf", "label": "Bilder in PDF",
+    "title": "Bilder in PDF umwandeln – JPG und PNG zu einer PDF",
+    "description": "JPG- und PNG-Bilder kostenlos in eine PDF umwandeln – auch vom Handy, Fotos werden automatisch zugeschnitten. Ohne Upload.",
+    "intro": "Machen Sie aus Fotos, Belegen und Screenshots eine ordentliche PDF. Handyfotos von Dokumenten schneidet PDFMy automatisch zu und entzerrt sie.",
+    "steps": ["Auf „Bilder in PDF“ klicken und die Bilder wählen.", "Reihenfolge prüfen – Fotos von Blättern werden automatisch zugeschnitten.", "Speichern."],
+    "faq": [["Welche Formate gehen?", "JPG, PNG, TIFF, WebP, HEIC und weitere übliche Bildformate."], ["Geht das auf dem Handy?", "Ja – PDFMy läuft auch auf iPhone und Android, auf Wunsch als App."]]
+  }
+]

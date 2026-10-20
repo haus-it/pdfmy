@@ -1,0 +1,28 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<html lang="de"><head><meta charset="utf-8"><title>PDFMy</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+body{width:320px}
+main{padding:14px 16px 16px;display:grid;gap:14px}
+label.row{cursor:pointer}
+#state{min-height:1.2em}
+#state.ok{color:var(--ok)} #state.warn{color:var(--warn)}
+#open{width:100%}
+footer{display:flex;justify-content:space-between;padding:10px 16px;border-top:1px solid var(--line);background:var(--panel)}
+</style></head>
+<body>
+<header><img src="icons/icon-48.png" alt=""><span class="brand"><b>PDFMy</b><span>powered by <img src="icons/mentor-group.png" alt="Mentor Group"></span></span></header>
+<main>
+  <label class="row" for="auto"><span><b>PDFs automatisch in PDFMy öffnen</b><br><span class="muted">statt im Adobe- oder Browser-Viewer</span></span>
+    <span class="switch"><input type="checkbox" id="auto" role="switch"><span></span></span></label>
+  <p id="state" class="muted" role="status"></p>
+  <button id="open" type="button">Diese PDF in PDFMy öffnen</button>
+  <label class="row" for="target"><span>Öffnen in</span>
+    <select id="target"><option value="web">pdfmy.de</option><option value="mentor">PDFMy intern (Mentor)</option></select></label>
+  <p class="muted">Rechtsklick auf einen Link → „In PDFMy öffnen“. Die Datei bleibt auf Ihrem Gerät – kein Upload.</p>
+</main>
+<footer><a href="welcome.html" target="_blank">Hilfe</a><a href="https://pdfmy.de/datenschutz.html" target="_blank" rel="noopener">Datenschutz</a></footer>
+<script src="popup.js"></script>
+</body></html>

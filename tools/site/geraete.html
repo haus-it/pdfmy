@@ -1,0 +1,108 @@
+<style>
+.gsearch{position:sticky;top:0;z-index:5;background:var(--panel);padding:10px 0 8px}
+.gsearch input{width:100%;box-sizing:border-box;font:inherit;font-size:17px;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text)}
+.gsearch input:focus-visible{outline:none;border-color:var(--accent)}
+#gcount{color:var(--muted);font-size:14px;margin:4px 0 0;min-height:1.3em}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 0 14px}
+.gt{width:100%;border-collapse:collapse;font-size:14.5px;margin:6px 0 18px}
+.gt th{text-align:left;font-weight:600;border-bottom:2px solid var(--line);padding:6px 8px 6px 0;vertical-align:bottom}
+.gt td{border-top:1px solid var(--line);padding:7px 8px 7px 0;vertical-align:top}
+.gt td:first-child{font-weight:600;min-width:9em}
+.ok{color:#1d7a3a;font-weight:600}.mid{color:#8a5a00;font-weight:600}.no{color:#a12b2b;font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ok{color:#6fd18f}:root:not([data-theme="light"]) .mid{color:#f0c060}:root:not([data-theme="light"]) .no{color:#ff8f8f}}
+.gwrap{overflow-x:auto}
+.ghidden{display:none!important}
+.tip{border-left:4px solid var(--accent);padding:6px 12px;margin:12px 0;background:var(--bg)}
+mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
+</style>
+<p>Welche Drucker, Multifunktionsgeräte und Dokumentenscanner funktionieren mit PDFMy? Kurz gesagt: <b>fast alle Netzwerkgeräte der letzten Jahre – ohne Treiber</b>. pdfmy Scan (Windows, Mac, Linux) spricht die beiden Standards <b>AirScan/eSCL</b> und <b>WSD</b> direkt. USB-Geräte laufen unter Windows über den Herstellertreiber, unter Linux über SANE.</p>
+<div class="gsearch" role="search"><label for="gq" style="position:absolute;left:-9999px">Modell suchen</label><input id="gq" type="search" placeholder="Modell suchen, z. B. L5290, MFC-L2710, ScanSnap, Kyocera" autocomplete="off" aria-describedby="gcount"><p id="gcount" role="status" aria-live="polite"></p></div>
+<div class="legend"><span><span class="ok">●</span> ohne Treiber im Netzwerk</span><span><span class="mid">●</span> geht, mit Einstellung oder Treiber</span><span><span class="no">●</span> nur mit Herstellersoftware</span><span><b>Beidseitig:</b> „Duplex“ = in einem Durchgang; „Wenden“ = PDFMy-Funktion <i>Beidseitig durch Wenden</i> für Einzüge ohne Duplex</span></div>
+
+<div class="tip"><b>Beidseitig scannen ohne Duplex-Einzug:</b> Bei Geräten mit Einzug, aber ohne Duplex (z. B. Epson L5290, viele Brother DCP, Dell-Einstiegsgeräte) im Scan-Fenster <i>„Beidseitig durch Wenden“</i> anhaken. PDFMy scannt erst die Vorderseiten, bittet dann, den Stapel zu wenden, und sortiert alles richtig ein. Leere Rückseiten werden entfernt.</div>
+
+<section class="gsec" id="brother"><h2>Brother</h2>
+<div class="gwrap"><table class="gt">
+<tr><th>Modellreihe</th><th>Beispiele (2021–2026)</th><th>So scannt PDFMy</th><th>Beidseitig</th><th>Hinweis</th></tr>
+<tr><td>Laser schwarzweiß (DCP/MFC-L2000)</td><td translate="no">DCP-L2620DW, DCP-L2627DW, DCP-L2660DW, MFC-L2800DW, MFC-L2827DW, MFC-L2860DW, MFC-L2862DW; älter: DCP-L2530DW, DCP-L2550DN, MFC-L2710DW, MFC-L2750DW</td><td><span class="ok">●</span> eSCL, auch WSD</td><td>MFC-L2860DW/L2750DW Duplex · andere MFC: Wenden · DCP: nur Glas</td><td>Einzug: PDFMy wartet automatisch kurz zwischen den Seiten (Brother bricht sonst ab).</td></tr>
+<tr><td>Laser schwarzweiß Büro (L5000/L6000)</td><td translate="no">DCP-L5510DW, MFC-L5710DN/DW, MFC-L5715DN, MFC-L6710DW, MFC-L6910DN, MFC-L6915DN</td><td><span class="ok">●</span> eSCL / WSD</td><td>Duplex</td><td>Bei Problemen Firmware aktualisieren; „AirPrint-Scan“ in der Weboberfläche eingeschaltet lassen.</td></tr>
+<tr><td>Farblaser (DCP/MFC-L3000, L8000)</td><td translate="no">DCP-L3520CDW, DCP-L3555CDW, DCP-L3560CDW, MFC-L3740CDW, MFC-L3760CDW, MFC-L8340CDW, MFC-L8390CDW</td><td><span class="ok">●</span> eSCL / WSD</td><td>MFC-L3760/L8390 Duplex · andere MFC: Wenden · DCP-L3520: nur Glas</td><td>–</td></tr>
+<tr><td>Tinte A4 (DCP-J/MFC-J1000, J4000)</td><td translate="no">DCP-J1050DW, DCP-J1140DW, DCP-J1200W, DCP-J1800DW, MFC-J1010DW, MFC-J1012DW, MFC-J4335DW, MFC-J4340DW, MFC-J4540DW</td><td><span class="ok">●</span> eSCL</td><td>MFC: Wenden (MFC-J4540DW je nach Ausstattung Duplex)</td><td>–</td></tr>
+<tr><td>Tinte A3 (MFC-J5000/J6000)</td><td translate="no">MFC-J5340DW, MFC-J5345DW, MFC-J5740DW, MFC-J5955DW, MFC-J6540DW, MFC-J6940DW, MFC-J6955DW, MFC-J6957DW, MFC-J6959DW</td><td><span class="ok">●</span> eSCL / WSD</td><td>J59xx/J69xx Duplex · andere: Wenden</td><td>–</td></tr>
+<tr><td>Tintentank (DCP-T/MFC-T)</td><td translate="no">DCP-T430W, DCP-T435W, DCP-T530DW, DCP-T536DW, DCP-T580DW, DCP-T583DW, MFC-T930DW, MFC-T935DW</td><td><span class="ok">●</span> eSCL / WSD</td><td>MFC/T580: Wenden · andere: nur Glas</td><td><b>DCP-T230</b> (nur USB): Windows mit Brother-Treiber, Linux mit brscan.</td></tr>
+<tr><td>Dokumentenscanner Netzwerk (ADS)</td><td translate="no">ADS-1350W, ADS-1800W, ADS-3300W, ADS-4300N, ADS-4700W, ADS-4900W</td><td><span class="ok">●</span> eSCL / WSD</td><td>Duplex</td><td>„AirPrint-Scan“ in der Weboberfläche (Netzwerk → Protokoll) eingeschaltet lassen; neueste Firmware.</td></tr>
+<tr><td>Dokumentenscanner USB</td><td translate="no">ADS-1300, ADS-3100, ADS-4100, DS-640, DS-740D, DS-940DW</td><td><span class="mid">●</span> Windows: Brother-Treiber (WIA) · Linux: brscan5 · Mac: Scan-Ordner</td><td>ADS/DS-740D/940DW Duplex</td><td>Kein Netzwerk-Scan (DS-940DW: WLAN nur für Handy-Apps).</td></tr>
+</table></div></section>
+
+<section class="gsec" id="epson"><h2>Epson</h2>
+<div class="gwrap"><table class="gt">
+<tr><th>Modellreihe</th><th>Beispiele (2021–2026)</th><th>So scannt PDFMy</th><th>Beidseitig</th><th>Hinweis</th></tr>
+<tr><td>EcoTank mit Einzug</td><td translate="no">L5290, ET-3850, ET-4850, ET-4856, ET-5800, ET-5850, ET-5880, L6260, L6270, L6290, L6460, L6490, L6570</td><td><span class="ok">●</span> eSCL, auch WSD</td><td>ET-5800/5850/5880, L65xx Duplex · L5290, ET-3850, ET-4850, L62xx: Wenden</td><td>Wird nichts gefunden: Weboberfläche → Netzwerkdienste → Bonjour/AirPrint und WSD einschalten.</td></tr>
+<tr><td>EcoTank ohne Einzug</td><td translate="no">ET-2810, ET-2811, ET-2814, ET-2820, ET-2826, ET-2850, ET-2851, ET-2856, ET-2860, ET-2865, ET-2870, L3250, L3256, L3260, L3266, L3270</td><td><span class="ok">●</span> ET-2850: eSCL · <span class="mid">●</span> ET-2810, L3250 u. a.: nur WSD</td><td>nur Glas</td><td>Bei WSD-Modellen ist WSD ab Werk oft aus: Weboberfläche → Dienste → Protokoll → WSD-Einstellungen.</td></tr>
+<tr><td>EcoTank Foto / Mono</td><td translate="no">ET-8500, ET-8550, ET-M2170, ET-M3170</td><td><span class="ok">●</span> eSCL</td><td>ET-M3170: Wenden · andere: nur Glas</td><td>–</td></tr>
+<tr><td>Expression Home / Premium</td><td translate="no">XP-2200, XP-2205, XP-3200, XP-3205, XP-4200, XP-4205, XP-5200, XP-5205, XP-6100, XP-6105, XP-7100, XP-8700</td><td><span class="ok">●</span> XP-6100/7100/8700: eSCL · <span class="mid">●</span> XP-2200 bis XP-5200: eSCL oder WSD je nach Firmware</td><td>XP-7100, XP-5200: Wenden · andere: nur Glas</td><td>Ohne Netzwerk (USB): Windows mit Epson Scan 2.</td></tr>
+<tr><td>WorkForce / WorkForce Pro</td><td translate="no">WF-2910DWF, WF-2930DWF, WF-2950DWF, WF-2960DWF, WF-2965DWF, WF-4820DWF, WF-4830DTWF, WF-7830DTWF, WF-7840DTWF, WF-C4810DTWF, WF-C5810DWF, WF-C5890DWF</td><td><span class="ok">●</span> WSD, neuere auch eSCL</td><td>WF-4xxx/7xxx/C5xxx Duplex · WF-29xx: Wenden</td><td>–</td></tr>
+<tr><td>Dokumentenscanner Netzwerk</td><td translate="no">ES-C320W, ES-C380W, ES-500WII, ES-580W, DS-790WN, DS-800WN</td><td><span class="ok">●</span> ES-C380W: eSCL · <span class="mid">●</span> ES-580W, DS-790WN: WSD</td><td>Duplex</td><td>ES-580W: WSD in der Weboberfläche einschalten und am Gerät „WSD“ als Ziel wählen.</td></tr>
+<tr><td>Dokumentenscanner USB</td><td translate="no">ES-C220, DS-C330, DS-C490, DS-530II/III, DS-770II, ES-400II, DS-1660W, DS-1730, ES-50, ES-60W, DS-70, Perfection V39 II/V600/V850</td><td><span class="mid">●</span> Windows: Epson Scan 2 (WIA/TWAIN) · Linux: epsonds/Epson Scan 2 · Mac: Scan-Ordner</td><td>DS/ES mit Einzug: Duplex</td><td>Kein Netzwerk-Scan.</td></tr>
+</table></div></section>
+
+<section class="gsec" id="hp"><h2>HP</h2>
+<div class="gwrap"><table class="gt">
+<tr><th>Modellreihe</th><th>Beispiele</th><th>So scannt PDFMy</th><th>Beidseitig</th><th>Hinweis</th></tr>
+<tr><td>LaserJet / Color LaserJet MFP</td><td translate="no">LaserJet MFP M140w, M234, M282nw, M283fdw, M428fdw, M479fdw, 3000/4000-Serie, Laser MFP 135/137/138, Neverstop</td><td><span class="ok">●</span> eSCL</td><td>M283fdw, M428/479, 4000er Duplex · andere: Wenden oder Glas</td><td>M329/M428/M479: in der Weboberfläche „Scannen vom Computer erlauben“ einschalten.</td></tr>
+<tr><td>LaserJet Enterprise / Flow</td><td translate="no">M630, M578, E62655, E87650</td><td><span class="ok">●</span> eSCL</td><td>Duplex</td><td>PDFMy sendet automatisch die nötige Sonderkennung („localhost“).</td></tr>
+<tr><td>OfficeJet, ENVY, DeskJet, Smart Tank</td><td translate="no">OfficeJet Pro 8022e/9012e/9022e, ENVY 6020e/Inspire 7920e, DeskJet 2720e/4120e, Smart Tank 5105/7305</td><td><span class="ok">●</span> eSCL</td><td>OfficeJet Pro 9xxx Duplex · andere: Wenden oder Glas</td><td>–</td></tr>
+<tr><td>ScanJet Pro (Dokumentenscanner)</td><td translate="no">ScanJet Pro 2000 s2, 3500 f1, 4500 fn1, 2600 f1, 3600 f1, N4600 fnw1</td><td><span class="ok">●</span> 4500 fn1/N4600: eSCL im Netz · <span class="mid">●</span> USB: Windows-Treiber, Linux ipp-usb</td><td>Duplex</td><td>–</td></tr>
+</table></div></section>
+
+<section class="gsec" id="canon"><h2>Canon</h2>
+<div class="gwrap"><table class="gt">
+<tr><th>Modellreihe</th><th>Beispiele</th><th>So scannt PDFMy</th><th>Beidseitig</th><th>Hinweis</th></tr>
+<tr><td>PIXMA / MAXIFY</td><td translate="no">PIXMA TS3150–TS9550, TR4750i, TR8650, G3570/G4570, MAXIFY MB2150, MB5150, MB5450, GX6050/GX7050</td><td><span class="ok">●</span> eSCL (ältere wie MG5300, TR7500: WSD)</td><td>MAXIFY MB5xxx, GX7050 Duplex · TR4750i/MB2150: Wenden</td><td>–</td></tr>
+<tr><td>i-SENSYS (MF)</td><td translate="no">MF264dw II, MF267dw II, MF455dw, MF465dw, MF657Cdw, MF754Cdw</td><td><span class="mid">●</span> eSCL / WSD – oft erst einschalten</td><td>MF45x/46x, MF65x/75x Duplex · MF26x: Wenden</td><td>Netzwerkscan ist ab Werk häufig aus: Weboberfläche → Einstellungen → „Network Link Scan“/AirPrint-Scan bzw. WSD einschalten.</td></tr>
+<tr><td>imageRUNNER (ADVANCE)</td><td translate="no">iR 1643i, iR2625/2630, ADV DX C3826i, ADV C5550/5560</td><td><span class="ok">●</span> eSCL / WSD</td><td>Duplex</td><td>iR2625/2630: PDFMy begrenzt automatisch auf 300 dpi (Gerät kann nicht mehr).</td></tr>
+<tr><td>imageFORMULA DR (Dokumentenscanner)</td><td translate="no">DR-C225 II, DR-C230, DR-C240, DR-M260, DR-S130, DR-S150, DR-S250N, DR-S350NW, P-215II</td><td><span class="mid">●</span> Windows: Canon-Treiber (WIA/TWAIN) · DR-S350NW: Netzwerk-Scan (Mopria) wahrscheinlich</td><td>Duplex</td><td>DR-S250N: eigene Browser-Oberfläche – Scans in einen Ordner speichern und diesen in PDFMy verbinden.</td></tr>
+<tr><td>LiDE (Flachbett USB)</td><td translate="no">LiDE 300, LiDE 400</td><td><span class="mid">●</span> Windows: WIA · Linux: ipp-usb (ohne Treiber)</td><td>nur Glas</td><td>–</td></tr>
+</table></div></section>
+
+<section class="gsec" id="buero"><h2>Bürogeräte: Kyocera, Ricoh, Konica Minolta, Sharp, Xerox, Lexmark</h2>
+<div class="gwrap"><table class="gt">
+<tr><th>Marke</th><th>Beispiele</th><th>So scannt PDFMy</th><th>Beidseitig</th><th>Hinweis</th></tr>
+<tr><td>Kyocera ECOSYS / TASKalfa</td><td translate="no">ECOSYS M2040dn, M2540dn, M2640idw, M5526cdw, MA2100/MA4000/MA5500, TASKalfa 2554ci–7054ci</td><td><span class="ok">●</span> ECOSYS: eSCL · <span class="mid">●</span> WSD (TASKalfa)</td><td>Duplex (meist)</td><td><b>WSD:</b> am Bedienfeld <i>Senden → WSD-Scan → Vom Computer</i> wählen, dann in PDFMy „Scannen“. Alternativ „Scan to Folder“.</td></tr>
+<tr><td>Ricoh IM / IM C / SP</td><td translate="no">IM 2702, IM 350/430, IM C300–C6000, SP C261SFNw, M C251FW</td><td><span class="ok">●</span> SP/M C: eSCL · <span class="mid">●</span> IM: WSD</td><td>Duplex</td><td>WSD: in der Weboberfläche „WSD-Scan-Befehl verbieten“ auf „Nicht verbieten“ stellen. Sonst „Scan to Folder“.</td></tr>
+<tr><td>Konica Minolta bizhub</td><td translate="no">bizhub C250i–C750i, 4050i, 4752</td><td><span class="mid">●</span> WSD (je nach Firmware), sonst Scan to Folder</td><td>Duplex</td><td>Im Büro am zuverlässigsten: <a href="scanner.html#ordner">„Scan to Folder“ (SMB)</a> in einen Ordner, den PDFMy überwacht.</td></tr>
+<tr><td>Sharp MX / BP</td><td translate="no">MX-3060N, BP-50C26, BP-70C31</td><td><span class="ok">●</span> eSCL (AirScan einschalten) / WSD</td><td>Duplex</td><td>Systemeinstellungen → Netzwerk → AirPrint → AirScan aktivieren.</td></tr>
+<tr><td>Xerox</td><td translate="no">B205, B215, B225, B235, C235, C315, VersaLink B405/C405/C415, AltaLink; älter WorkCentre 3025/3225/6515</td><td><span class="ok">●</span> B/C-Serie, VersaLink: eSCL · <span class="mid">●</span> WorkCentre: WSD</td><td>B215/C315/VersaLink Duplex · B205: Wenden</td><td>WSD ist ab Werk oft aus (Weboberfläche → Konnektivität → WSD). B205/B215: PDFMy berücksichtigt deren Eigenheiten automatisch.</td></tr>
+<tr><td>Lexmark</td><td translate="no">MB2236adw, MC2535adwe, MC3224/3326adwe, CX331adwe, MX431adn</td><td><span class="ok">●</span> eSCL (ältere CX310: WSD)</td><td>MC33xx/CX331 Duplex · andere: Wenden</td><td>Bei wenig Gerätespeicher scannt Lexmark mit 400 statt 600 dpi – für Briefe ohne Bedeutung.</td></tr>
+<tr><td>OKI</td><td translate="no">MC853, MC363, MB472, MB562</td><td><span class="ok">●</span> MC853: eSCL · <span class="mid">●</span> andere: WSD</td><td>Duplex (meist)</td><td>–</td></tr>
+</table></div></section>
+
+<section class="gsec" id="dell"><h2>Dell und Samsung (Bestandsgeräte)</h2>
+<div class="gwrap"><table class="gt">
+<tr><th>Marke</th><th>Beispiele</th><th>So scannt PDFMy</th><th>Beidseitig</th><th>Hinweis</th></tr>
+<tr><td>Dell Drucker/MFP</td><td translate="no">Dell Color MFP E525w, E515dw, C1765nfw, C2665dnf, H625cdw, H825cdw, S2825cdn, B1265dnf</td><td><span class="ok">●</span> WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)</td><td>E525w/E515dw: Wenden · C2665dnf, H825cdw, S2825cdn: je nach Modell Duplex</td><td>Dell verkauft keine neuen Drucker mehr; die Geräte stammen von Xerox/Lexmark. WSD in der Weboberfläche einschalten. <a href="scanner.html#dell-e525w">E525w-Anleitung</a></td></tr>
+<tr><td>Samsung Xpress / SCX (heute HP)</td><td translate="no">Xpress M2070, M2675/M2885, M3375/M4075, C480FW, SCX-3400</td><td><span class="ok">●</span> eSCL (C480FW u. a.) oder WSD</td><td>M337x/407x Duplex · andere: Wenden</td><td>M337x: Firmware aktualisieren, ältere starten beim Einzug-Scan neu. PDFMy findet die Auftragsadresse auch ohne Angabe des Geräts.</td></tr>
+</table></div></section>
+
+<section class="gsec" id="dokumentenscanner"><h2>Dokumentenscanner anderer Hersteller</h2>
+<div class="gwrap"><table class="gt">
+<tr><th>Hersteller</th><th>Beispiele</th><th>So scannt PDFMy</th><th>Beidseitig</th><th>Hinweis</th></tr>
+<tr><td>Ricoh/Fujitsu ScanSnap</td><td translate="no">iX1300, iX1400, iX1600, iX2500</td><td><span class="no">●</span> nur über ScanSnap Home → Ordner</td><td>Duplex</td><td>ScanSnap hat weder WIA noch TWAIN. So geht es: in ScanSnap Home als Speicherort einen Ordner wählen (z. B. „Scans“) und diesen in PDFMy unter <i>Scanner verbinden → Ordner verbinden</i> wählen – jeder Scan erscheint sofort.</td></tr>
+<tr><td>Ricoh/Fujitsu fi-Serie</td><td translate="no">fi-7160, fi-8150, fi-8170, fi-8190, fi-8250, fi-800R</td><td><span class="mid">●</span> Windows: PaperStream-Treiber (WIA/TWAIN) · Linux: SANE fujitsu</td><td>Duplex</td><td>–</td></tr>
+<tr><td>Kodak Alaris</td><td translate="no">S2050, S2060w, S2070, S2080w, E1025, E1035</td><td><span class="mid">●</span> Windows: Kodak-Treiber (WIA/TWAIN)</td><td>Duplex</td><td>S2060w/S2080w im Netz: Ausgabe in einen Ordner, den PDFMy überwacht.</td></tr>
+<tr><td>Panasonic</td><td translate="no">KV-S1058Y, KV-S1028Y</td><td><span class="ok">●</span> KV-S1058Y: WSD · <span class="mid">●</span> sonst Treiber</td><td>Duplex</td><td>–</td></tr>
+<tr><td>Plustek, Avision</td><td translate="no">PS186, PS286, SmartOffice, AD215, AD240, AN240W</td><td><span class="mid">●</span> Windows: Herstellertreiber (WIA/TWAIN)</td><td>Duplex (meist)</td><td>–</td></tr>
+</table></div></section>
+
+<section class="gsec" id="nicht"><h2>Wenn Ihr Gerät nicht dabei ist oder nicht gefunden wird</h2>
+<ul>
+<li><b>Netzwerkgerät ab ca. 2015 mit AirPrint oder Mopria:</b> funktioniert so gut wie immer ohne Treiber. Im Scan-Fenster <i>„Gerät per IP-Adresse hinzufügen“</i> – IP oder Gerätename (z. B. <code>EPSON2CBBCB</code>).</li>
+<li><b>„Scanner nimmt keine Aufträge an“:</b> Bei Kyocera, Ricoh und manchen anderen Geräten am Bedienfeld <i>WSD-Scan → Vom Computer</i> wählen und dann in PDFMy scannen.</li>
+<li><b>Großes Bürogerät:</b> Am zuverlässigsten ist <a href="scanner.html">„Scan to Folder“</a> – das Gerät legt die PDF in einen Ordner, PDFMy übernimmt sie automatisch.</li>
+<li><b>Nur USB:</b> Windows: Herstellertreiber installieren, dann erscheint das Gerät in PDFMy als „Windows-Treiber“. Linux: <code>sudo apt install sane-utils sane-airscan ipp-usb</code>. Mac: mit „Digitale Bilder“ in einen Ordner scannen und diesen in PDFMy verbinden.</li>
+<li><b>Immer noch nichts?</b> Im Scan-Fenster auf <i>„Protokoll“</i> klicken und per E-Mail senden – wir ergänzen Ihr Gerät: <a href="mailto:wumertens@mentor-group.de?subject=Scanner%20f%C3%BCr%20PDFMy">wumertens@mentor-group.de</a>.</li>
+</ul>
+<p style="font-size:14px;color:var(--muted)">Stand: Oktober 2026. Angaben nach Herstellerunterlagen, Nutzerberichten und eigenen Tests mit nachgebildeten Geräten; Modellnamen können je nach Land abweichen. Grundlage für bekannte Geräte-Eigenheiten ist u. a. das freie Projekt sane-airscan.</p>
+<p id="gnone" hidden>Kein Modell gefunden. Meist funktioniert Ihr Gerät trotzdem, wenn es AirPrint oder Mopria unterstützt – siehe oben. Oder schreiben Sie uns: <a href="mailto:wumertens@mentor-group.de">wumertens@mentor-group.de</a>.</p>
+</section>
+<script src="geraete.js" defer></script>

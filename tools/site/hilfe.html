@@ -1,0 +1,291 @@
+<style>
+.hsearch{position:sticky;top:0;z-index:5;background:var(--panel);padding:10px 0 8px;margin:0 0 4px;border-bottom:1px solid transparent}
+.hsearch .hwrap{position:relative;display:flex;align-items:center}
+.hsearch svg{position:absolute;left:14px;width:20px;height:20px;color:var(--muted);pointer-events:none}
+.hsearch input{flex:1;min-width:0;font:inherit;font-size:17px;padding:13px 44px 13px 44px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text)}
+.hsearch input:focus-visible{outline:none;border-color:var(--accent)}
+.hsearch input::-webkit-search-cancel-button{display:none}
+#hclear{position:absolute;right:8px;border:0;background:transparent;color:var(--muted);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:16px}
+#hclear:hover,#hclear:focus-visible{color:var(--text);background:var(--panel)}
+.hkey{position:absolute;right:12px;font:12px/1 ui-monospace,Consolas,monospace;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:3px 6px;pointer-events:none}
+#hclear:not([hidden])+.hkey{display:none}
+#hcount{color:var(--muted);font-size:14px;min-height:1.4em;margin:4px 0 6px}
+.hchips[hidden]{display:none}
+.hchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.hchips span{color:var(--muted);font-size:14px;align-self:center;margin-right:2px}
+.hchips button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:4px 12px;cursor:pointer}
+.hchips button:hover,.hchips button:focus-visible{border-color:var(--accent);color:var(--accent)}
+.hres{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:10px}
+.hr{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.hr-t{display:block;text-decoration:none;color:var(--text)}
+.hr-t b{font-size:16px}.hr-t:hover b,.hr-t:focus-visible b{text-decoration:underline;color:var(--accent)}
+.hr-t small{display:block;color:var(--muted);font-size:13px}
+.hr-x{margin-top:4px}.hr-x p{margin:4px 0}
+.hflash{animation:hflash 2.4s ease-out}
+@keyframes hflash{0%,40%{background:#ffe58a55;box-shadow:0 0 0 6px #ffe58a55}100%{background:transparent;box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.hflash{animation:none;outline:3px solid var(--accent)}}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px 18px;margin:0 0 8px;padding:0;list-style:none}
+.toc a{text-decoration:none}.toc a:hover{text-decoration:underline}
+.hsec{border-top:1px solid var(--line);padding-top:4px;margin-top:22px}
+.hsec h2{scroll-margin-top:12px}
+.hsec h3{font-size:15.5px;margin:16px 0 4px}
+.hsec ul,.hsec ol{padding-left:1.3em}
+details.faq{border:1px solid var(--line);border-radius:6px;padding:8px 12px;margin:8px 0;background:var(--bg)}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq[open] summary{margin-bottom:6px}
+.keys{border-collapse:collapse;width:100%;font-size:15px}.keys td{border-top:1px solid var(--line);padding:6px 8px 6px 0;vertical-align:top}
+kbd{font:13px/1 ui-monospace,Consolas,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:2px 5px;background:var(--panel)}
+.tip{border-left:4px solid var(--accent);padding:6px 12px;margin:12px 0;background:var(--bg)}
+.hidden-by-search{display:none!important}
+mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
+</style>
+<div class="hsearch" role="search"><label for="hq" style="position:absolute;left:-9999px">Hilfe durchsuchen</label><div class="hwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="hq" type="search" placeholder="Wobei brauchen Sie Hilfe? z. B. Scanner, unterschreiben, Mac" autocomplete="off" enterkeyhint="search" aria-describedby="hcount"><button type="button" id="hclear" hidden aria-label="Suche leeren" title="Suche leeren">✕</button><kbd class="hkey" aria-hidden="true">/</kbd></div>
+<p id="hcount" role="status" aria-live="polite"></p></div>
+<div class="hchips" id="hchips"><span>Oft gesucht:</span><button type="button" data-q="Scanner einrichten">Scanner einrichten</button><button type="button" data-q="unterschreiben">Unterschreiben</button><button type="button" data-q="zusammenfügen">Zusammenfügen</button><button type="button" data-q="verkleinern">Verkleinern</button><button type="button" data-q="Standard PDF">Als Standard-PDF-Programm</button><button type="button" data-q="Mac">Mac</button><button type="button" data-q="Handy">Mit dem Handy</button><button type="button" data-q="Passwort">Passwort</button></div>
+<ol class="hres" id="hres" hidden aria-label="Suchergebnisse"></ol>
+<div id="hbody">
+<p>Hier finden Sie Anleitungen und Antworten zu PDFMy. Nichts gefunden? Schreiben Sie uns – Herausforderungen lösen wir schnell: <a href="mailto:wumertens@mentor-group.de">wumertens@mentor-group.de</a>.</p>
+<nav aria-label="Themen"><ul class="toc">
+<li><a href="#start">Schnellstart</a></li>
+<li><a href="#scannen">Scannen</a></li>
+<li><a href="#ablegen">Briefe ablegen und Fristen</a></li>
+<li><a href="#bearbeiten">PDFs bearbeiten</a></li>
+<li><a href="#unterschreiben">Unterschreiben und Signieren</a></li>
+<li><a href="#erechnung">E-Rechnung</a></li>
+<li><a href="#app">App und Standard-PDF-Programm</a></li>
+<li><a href="#sprachen">Sprachen</a></li>
+<li><a href="#kanzlei">Kanzlei: beA und Anlagen</a></li>
+<li><a href="#datenschutz">Datenschutz und Sicherheit</a></li>
+<li><a href="#faq">Häufige Fragen</a></li>
+<li><a href="#tasten">Tastenkürzel</a></li>
+<li><a href="#kontakt">Hilfe bekommen</a></li>
+</ul></nav>
+
+<section class="hsec" id="start"><h2>Schnellstart</h2>
+<p><b>PDFMy</b> ist ein kostenloses PDF-Programm. Es läuft im Browser oder als App – am PC, am Mac und auf dem Handy. Ihre Dokumente werden <b>nicht hochgeladen</b>: Alles passiert auf Ihrem Gerät.</p>
+<ol>
+<li><a href="./">pdfmy.de</a> öffnen (am besten in Chrome oder Edge).</li>
+<li>Beim ersten Start fragt PDFMy in vier Schritten nach Name/Kürzel, Ablageordner, Scanner und PDF-Standard. Alles ist freiwillig und später unter <i>Mehr → Einrichtung</i> änderbar.</li>
+<li>Eine PDF, ein Foto oder einen Scan öffnen – oder einfach ins Fenster ziehen. Auf der Startseite gibt es Kacheln für die häufigsten Aufgaben.</li>
+</ol>
+<p><b>Hilfe durchsuchen:</b> Tippen Sie oben ins Suchfeld (oder drücken Sie <kbd>/</kbd>), was Sie vorhaben – auch mit eigenen Worten wie „Unterschrift“, „komprimieren“ oder „iPhone“. Die passenden Antworten erscheinen sofort; ein Klick zeigt die Stelle im Zusammenhang. In PDFMy finden Sie das Suchfeld unter <i>Hilfe</i>.</p>
+<p><b>Absturzschutz:</b> PDFMy sichert ungespeicherte Änderungen alle paar Sekunden auf Ihrem Gerät. Stürzt der Browser ab oder schließen Sie PDFMy versehentlich, steht beim nächsten Start auf der Startseite <i>„Nicht gespeicherte Arbeit“</i> – ein Klick auf <i>„Wiederherstellen“</i> holt das Dokument zurück. Nach dem Speichern oder Schließen wird die Sicherung gelöscht, sonst spätestens nach 7 Tagen.</p>
+<p><b>Zuletzt geöffnet:</b> Auf der Startseite stehen Ihre letzten Dokumente – ein Klick öffnet sie wieder (Chrome und Edge). Gespeichert werden nur Name und ein Verweis, kein Inhalt; „Liste leeren“ entfernt alles.</p>
+<p class="tip">Tipp: Mit <kbd>Strg</kbd>+<kbd>K</kbd> (Mac: <kbd>⌘</kbd>+<kbd>K</kbd>) finden Sie jede Funktion per Suchwort.</p>
+</section>
+
+<section class="hsec" id="scannen"><h2>Scannen</h2>
+<h3>Mit dem Handy</h3>
+<p>Auf dem Handy steht ganz oben der große Knopf <i>„Mit der Kamera scannen“</i> (am PC: Kachel <i>„Mit dem Handy scannen“</i>). Die Kamera erkennt das Blatt, löst selbst aus, schneidet zu und entzerrt. Mehrere Seiten am Stück sind möglich. Für die beste Qualität bei Tageslicht und ohne Schatten fotografieren.</p>
+<p><b>Bedienung auf dem Handy:</b> Unten stehen <i>Teilen, Ablegen</i> und <i>Speichern</i>. Die Werkzeuge (Text, Markieren, Unterschrift …) stehen als Symbole in der Leiste über der Seite – zur Seite wischen für mehr. Alle weiteren Funktionen öffnet <i>⋯</i> oben rechts als Liste. Seiten sortieren und löschen: Seitenübersicht (Symbol mit den vier Kästchen).</p>
+<h3>Mit Scanner oder Multifunktionsgerät – Windows</h3>
+<p>Einmalig das kleine Programm <b>pdfmy Scan</b> installieren (Knopf <i>„Scanner verbinden“</i> in PDFMy). Danach heißt der Knopf <i>„Scannen“</i>: Scanner wählen, Papier einlegen, fertig. Netzwerkgeräte werden ohne Treiber gefunden (AirScan/eSCL und WSD, z. B. Epson, Dell, Brother), USB-Scanner über den Windows-Treiber. Beidseitig und Einzug werden unterstützt.</p>
+<h3>Mit Scanner oder Multifunktionsgerät – Mac</h3>
+<p>Einmalig <b>pdfmy Scan für Mac</b> herunterladen und <i>„pdfmy-Scan-Mac.command“</i> doppelklicken. Es findet Netzwerkscanner ohne Treiber (AirScan/eSCL und WSD, z. B. Dell Color MFP E525w). Ohne Zusatzprogramm geht es mit <i>„Digitale Bilder“</i> und einem Scan-Ordner. <a href="scanner.html#mac">Ausführliche Anleitung für den Mac →</a></p>
+<h3>Mit Scanner oder Multifunktionsgerät – Linux</h3>
+<p>Einmalig <b>pdfmy Scan für Linux</b> herunterladen und im Terminal starten: <code>sh ~/Downloads/pdfmy-scan-linux.sh</code> (ohne <code>sudo</code>). Netzwerkscanner funktionieren <b>ohne Treiber</b> (AirScan/eSCL und WSD). Für USB-Scanner und ältere Geräte nutzt pdfmy Scan <b>SANE</b>, z. B. <code>sudo apt install sane-utils sane-airscan ipp-usb</code>. Herstellertreiber (HP <code>hplip</code>, Brother <code>brscan</code>, Epson <code>epsonscan2</code>) braucht es nur bei sehr alten Geräten. <a href="scanner.html#linux">Ausführliche Anleitung für Linux →</a></p>
+<h3>Funktioniert mein Gerät?</h3>
+<p>In der <a href="scanner-geraete.html">Geräteliste</a> finden Sie Brother, Epson, HP, Canon, Kyocera, Ricoh, Konica Minolta, Sharp, Xerox, Lexmark, Dell, Samsung und Dokumentenscanner – mit Suche nach Modell und Angabe, ob beidseitig gescannt werden kann. Fast alle Netzwerkgeräte der letzten Jahre funktionieren ohne Treiber.</p>
+<h3>Beidseitig scannen</h3>
+<p>Hat Ihr Gerät einen <b>Duplex-Einzug</b>, im Scan-Fenster <i>„Beidseitig“</i> anhaken. Hat es einen Einzug <b>ohne Duplex</b> (z. B. Epson L5290, viele Brother DCP, Dell E525w), <i>„Beidseitig durch Wenden“</i> wählen: Erst die Vorderseiten scannen, dann den Stapel als Ganzes umdrehen und wieder einlegen – PDFMy sortiert Vorder- und Rückseiten richtig ein. Liegt die Reihenfolge einmal falsch, genügt ein Klick auf <i>„Rückseiten andersherum“</i>. Leere Rückseiten entfernt PDFMy automatisch.</p>
+<h3>Epson EcoTank L5290 (z. B. „EPSON2CBBCB“)</h3>
+<p>Wird unter Windows, Mac und Linux automatisch gefunden (AirScan/eSCL bzw. WSD, Glas und Einzug). Falls nicht: im Scan-Fenster <i>„Gerät per IP-Adresse hinzufügen“</i> und die IP <b>oder den Gerätenamen</b> eingeben, z. B. <code>EPSON2CBBCB</code> – auf Mac und Linux ergänzt pdfmy Scan dafür selbst „.local“. Mit WLAN und LAN oder VPN gleichzeitig wird über jede Netzwerkverbindung gesucht. Geräte im Energiesparmodus weckt pdfmy Scan vor jeder Suche selbst; sonst im Scan-Fenster <i>„Scanner aufwecken“</i> wählen. <a href="scanner.html#epson-l5290">Mehr zum Epson L5290 →</a></p>
+<h3>Scan-Ordner („Scan to Folder“)</h3>
+<p>Speichert Ihr Gerät Scans in einen Ordner, verbinden Sie diesen Ordner unter <i>„Scanner verbinden“</i>. Neue Scans erscheinen nach wenigen Sekunden – gerade gerichtet, mit Texterkennung. <a href="scanner.html">Scanner einrichten (alle Wege) →</a></p>
+<h3>Mehrere Briefe auf einmal</h3>
+<p><i>Mehr → Trennblatt drucken</i>: Das Blatt mit QR-Code zwischen die Briefe legen und den ganzen Stapel scannen. PDFMy trennt die Briefe und lässt die Trennblätter weg.</p>
+</section>
+
+<section class="hsec" id="ablegen"><h2>Briefe ablegen und Fristen</h2>
+<h3>Was will dieser Brief?</h3>
+<p>Über der Seite steht in einem Satz, worum es geht, z. B. <i>„Rechnung über 1.520,24 € – zahlbar bis 28.10. – in 13 Tagen“</i>, mit Knöpfen für Überweisen (GiroCode), Frist eintragen, Weiterleiten und Ablegen. Absender, Datum, Typ, Betrag und Frist stehen rechts in den Briefdaten und lassen sich korrigieren.</p>
+<h3>Ablegen</h3>
+<p>Einmal einen <b>Ablageordner</b> wählen (z. B. einen mit OneDrive oder SharePoint synchronisierten Ordner). Danach legt <i>„Ablegen“</i> jeden Brief mit sprechendem Namen ab und trägt ihn ins <b>Posteingangsbuch</b> ein. Auf Wunsch mit Eingangsstempel und fortlaufender Eingangsnummer. Mehrere Firmen? In den Einstellungen bekommt jede Firma einen eigenen Ordner.</p>
+<p><b>Vorschau:</b> Im Posteingangsbuch eine Zeile anklicken – rechts erscheint die erste Seite des Dokuments mit Dateiname und Seitenzahl, ohne es zu öffnen. Mit der Tastatur genügt es, mit <kbd>Tab</kbd> auf <i>„Öffnen“</i> einer Zeile zu gehen. Ein Klick auf das Vorschaubild oder <i>„Öffnen“</i> lädt das Dokument zum Bearbeiten. Die Vorschau gibt es ab einer Fensterbreite von etwa 900 Pixeln.</p>
+<p><b>Eigene Felder:</b> Unter den Schlagwörtern in den Briefdaten auf <i>„Eigene Felder festlegen …“</i> klicken und bis zu fünf Felder benennen, z. B. Mandant, Projekt oder Kostenstelle. Sie erscheinen dann bei jedem Brief. PDFMy schlägt die Werte des letzten Briefs mit gleichem Aktenzeichen bzw. Absender vor und bietet bisherige Werte zur Auswahl an. Die Werte stehen im Posteingangsbuch (Excel-Spalte „Eigene Felder“, in der Liste unter dem Betreff) und in den Stichwörtern der PDF; die Suche findet sie. Mit Ablageordner gelten die Feldnamen für das ganze Team (Datei <i>pdfmy-Felder.json</i>).</p>
+<h3>Akten (Mandanten- und Vorgangsakten)</h3>
+<p>In den Briefdaten gibt es das Feld <i>„Akte“</i>, z. B. „Müller ./. Schmidt“ oder „Meier – ESt 2025“. PDFMy schlägt die Akte selbst vor: Hat ein Brief dasselbe Aktenzeichen wie ein früher abgelegter, gehört er in dieselbe Akte – sonst gilt die letzte Akte dieses Absenders. Im <i>Posteingangsbuch &amp; Akten</i> (Mehr → Büro) zeigt die Ansicht <i>„Akten“</i> jede Akte mit Anzahl der Dokumente, offenen Vorgängen, nächster Frist und Zuständigen. <i>„Dokumente anzeigen“</i> filtert die Liste auf diese Akte, <i>„Akte öffnen“</i> öffnet alle Dokumente der Akte nach Datum als ein Dokument – zum Lesen, Drucken oder gemeinsamen Speichern (mit verbundenem Ablageordner). Früher abgelegte Briefe ordnen Sie in der Liste in der Spalte „Akte“ zu; Filter für Akte und Jahr helfen beim Suchen. Die Akte steht auch in der Excel-Datei des Posteingangsbuchs.</p>
+<h3>Schlagwörter</h3>
+<p>Im Feld <i>„Schlagwörter“</i> in den Briefdaten mehrere Begriffe durch Komma trennen, z. B. „Steuer 2025, Versicherung, dringend“. PDFMy schlägt beim Tippen bereits verwendete Schlagwörter vor. Beim Ablegen stehen sie im Posteingangsbuch und in den Stichwörtern der PDF – so finden auch die Windows-Suche und andere PDF-Programme das Dokument. Im Posteingangsbuch filtern Sie nach Schlagwort, ein Klick auf ein Schlagwort zeigt alle Dokumente damit; über „+ Schlagwort“ ergänzen und mit „×“ entfernen Sie Schlagwörter direkt in der Liste.</p>
+<h3>Versionen und GoBD-Prüfprotokoll</h3>
+<p><b>Versionen:</b> Öffnen Sie ein abgelegtes Dokument über das Posteingangsbuch, ändern es (z. B. Notiz „bezahlt“) und speichern, ersetzt PDFMy die Datei an derselben Stelle. Die bisherige Fassung bleibt unverändert im Ordner <i>„_Versionen“</i> erhalten (mit Datum und Uhrzeit im Namen); der Eintrag zeigt „v2“, „v3“ … und erhält die neue Prüfsumme – es entsteht kein doppelter Eintrag.</p>
+<p><b>GoBD-Prüfprotokoll:</b> Im Posteingangsbuch <i>„GoBD-Prüfprotokoll …“</i> prüft alle abgelegten Dateien (SHA-256-Prüfsumme), das Siegel jedes Eintrags (macht nachträgliche Änderungen am Buch erkennbar, z. B. in Excel) und Lücken in den Eingangsnummern. Das Ergebnis wird als PDF im Ordner <i>„_Protokolle“</i> gespeichert – mit einer Verfahrensbeschreibung als Grundlage für Ihre Verfahrensdokumentation. Prüfsumme und Siegel machen Änderungen erkennbar; die Unveränderbarkeit selbst muss der Speicherort sicherstellen (z. B. Aufbewahrungsrichtlinien in SharePoint/Microsoft 365).</p>
+<h3>Fristen, Wiedervorlage, Erinnerung</h3>
+<p><b>Einspruchsfrist bei Bescheiden:</b> Enthält ein Bescheid (z. B. Steuerbescheid) eine Rechtsbehelfsbelehrung mit Monatsfrist, berechnet PDFMy die Einspruchs- bzw. Widerspruchsfrist: Bekanntgabe vier Tage nach dem Bescheiddatum (§ 122 AO, seit 2025), dann ein Monat; fällt ein Tag auf ein Wochenende oder einen bundesweiten Feiertag, zählt der nächste Werktag. Die Frist erscheint in der Hinweiszeile und im Posteingangsbuch. Regionale Feiertage können die Frist zusätzlich verlängern – die angezeigte Frist ist also nie zu spät. Ist der Bescheid nachweislich später angekommen, beginnt die Frist später.</p>
+<p>Fristen und Wiedervorlagen erscheinen auf der Startseite. Mit <i>„Erinnern“</i> kommt einmal täglich eine Mitteilung, wenn etwas fällig ist. <i>„Frist eintragen“</i> erstellt einen Kalendereintrag für Outlook.</p>
+<h3>Autopilot</h3>
+<p>In der Einrichtung einschaltbar: Briefe von bekannten Absendern legt PDFMy nach einem kurzen Countdown selbst ab. Bei Unsicherheit wartet es und nennt den Grund.</p>
+<h3>Steuerberater, Kontoauszug, Aufbewahrung</h3>
+<ul>
+<li><i>Mehr → Belege für Steuerberater</i>: Belege eines Monats als ZIP mit Belegliste und DATEV-Importdatei.</li>
+<li>Im Posteingangsbuch den Kontoauszug (CAMT oder CSV) einlesen: Bezahlte Rechnungen werden erkannt.</li>
+<li>PDFMy weist auf Belege hin, deren Aufbewahrungsfrist abgelaufen ist. Gelöscht wird nichts automatisch.</li>
+</ul>
+<h3>Antworten</h3>
+<p><i>„Antworten“</i> schreibt einen Brief nach DIN 5008: Anschrift und Bezug sind schon eingetragen, dazu Textbausteine (z. B. Widerspruch, Zahlungsbestätigung). Auf Wunsch mit Ihrem eigenen Briefbogen.</p>
+</section>
+
+<section class="hsec" id="bearbeiten"><h2>PDFs bearbeiten</h2>
+<ul>
+<li><b>Zusammenfügen und Seiten organisieren:</b> mehrere Dateien öffnen, in der Seitenübersicht (<kbd>G</kbd>) sortieren, drehen, löschen, Leerseiten einfügen, aufteilen.</li>
+<li><b>In die Originaldatei speichern:</b> Haben Sie eine PDF geöffnet (Doppelklick, Öffnen, Ziehen oder „Zuletzt geöffnet“), bietet <kbd>Strg</kbd>+<kbd>S</kbd> in Chrome und Edge <i>„In Originaldatei speichern“</i> an – wie in Word. Beim ersten Mal fragt der Browser einmal um Erlaubnis. <i>„Speichern unter …“</i> legt immer eine neue Datei an.</li>
+<li><b>Viele Dateien auf einmal (Stapelverarbeitung):</b> Kachel <i>„Stapelverarbeitung“</i> auf der Startseite, Dateien auswählen, dann wählen: <i>Verkleinern</i>, <i>Archivieren (PDF/A, mit Texterkennung)</i>, <i>Durchsuchbar machen</i> oder <i>Briefe erkennen und ablegen</i>. Das Ergebnis kommt als ZIP-Datei oder direkt in einen Ordner; die Liste zeigt jede Datei mit Größe vorher/nachher. „Anhalten“ stoppt nach der aktuellen Datei. Ein geöffnetes Dokument bleibt dabei unverändert.</li>
+<li><b>Verkleinern:</b> beim Speichern „Klein“ wählen; die Größe wird vorab angezeigt.</li>
+<li><b>Schwärzen:</b> Bereiche aufziehen oder einen Suchbegriff überall schwärzen. Der Inhalt wird wirklich entfernt, auch aus der Textebene.</li>
+<li><b>Text ändern:</b> Werkzeug „Text ändern“, in eine Zeile klicken und überschreiben – oder schneller: im Werkzeug „Auswählen“ doppelt auf den Text klicken. Gehört die Zeile zu einem Absatz, wird der ganze Absatz bearbeitbar und beim Ändern automatisch neu umbrochen – mit dem Zeilenabstand des Originals; Silbentrennungen am Zeilenende werden zusammengezogen. Anschriften und Listen behalten ihre Zeilen. PDFMy übernimmt dabei das Aussehen des Originals: Schriftart (mit oder ohne Serifen, Festbreite), fett und kursiv, Schriftfarbe, Hintergrundfarbe (z. B. graue Felder) und Breite. Bei PDFs mit Text wird die Schrift genau erkannt, bei Scans Farbe, Hintergrund, fette Schrift und ob die Schrift Serifen hat (z. B. Times) – bei sehr kleiner Schrift wird eine Schrift ohne Serifen verwendet. Unveränderte Zeilen bleiben, wie sie sind.</li>
+<li><b>Schutz vor Fälschung:</b> Urkunden, Meister- und Gesellenbriefe, Zeugnisse, Ausweise, amtliche Bescheide (z. B. Steuerbescheid) und Gerichtsentscheidungen lassen sich mit „Text ändern“ und „Abdecken“ nicht verändern – Schwärzen, Markieren, Notizen und Unterschrift gehen weiterhin. Bei Kontoauszügen, Gehaltsabrechnungen, Rechnungen und ähnlichen Nachweisen sind Änderungen möglich, werden aber rot markiert, und die Seite erhält unten den Vermerk „nachträglich geändert“. Jede PDF mit ersetztem oder abgedecktem Text trägt außerdem das Stichwort „nachträglich geändert (PDFMy)“. So bleibt PDFMy ein Werkzeug für die eigenen Dokumente – nicht für Fälschungen.</li>
+<li><b>Digital signierte PDFs:</b> Bevor Sie in einer signierten PDF zum ersten Mal „Text ändern“, „Abdecken“ oder „Text“ benutzen, warnt PDFMy einmal deutlich: Die digitale Signatur wird durch die Änderung ungültig, die neue Datei trägt keine gültige Signatur mehr. „Nicht ändern“ lässt alles, wie es ist; „Verstanden, trotzdem ändern“ gibt das Bearbeiten für dieses Dokument frei. Die Originaldatei bleibt gültig.</li>
+<li><b>Formulare:</b> Felder ausfüllen und speichern. Flache Formulare oder Scans macht <i>Mehr → Formularfelder erkennen</i> ausfüllbar. Öffnen Sie ein nicht ausfüllbares Formular mit typischen Beschriftungen (Name, Straße, Telefon …), bietet PDFMy das über eine Leiste direkt an: <i>„Felder erkennen“</i>. Erkannt werden Schreiblinien – auch gezeichnete Linien mit der Beschriftung darunter –, Kästen und Ankreuzfelder; jedes Feld heißt wie seine Beschriftung (Zusätze wie „falls vorhanden“ entfallen).</li>
+<li><b>Formular erstellen:</b> Werkzeug <i>„Formularfeld“</i> wählen, daneben die Art – <i>Textfeld, Mehrzeilig, Datum</i> oder <i>Kontrollkästchen</i> – und auf der Seite ein Rechteck aufziehen (oder einfach klicken). Den Namen übernimmt PDFMy aus der Beschriftung daneben, z. B. „Vorname“; Doppelklick benennt um, <kbd>Entf</kbd> löscht. Beim Speichern entstehen echte Formularfelder, die jeder in einem PDF-Programm, im Browser oder in PDFMy ausfüllen kann – auch als PDF/A, barrierefrei (Screenreader lesen den Feldnamen vor).</li>
+<li><b>Seitenzahlen, Wasserzeichen, Bates-Nummern, Kopf- und Fußzeilen:</b> im Speichern-Dialog.</li>
+<li><b>Links einfügen:</b> Werkzeug <i>„Link“</i> wählen, einen Bereich aufziehen (z. B. über „Anlage 2“ oder eine Webadresse) und das Ziel eingeben: eine <b>Webadresse</b> (pdfmy.de), eine <b>E-Mail-Adresse</b> oder eine <b>Seitenzahl</b>. In der gespeicherten PDF ist die Stelle anklickbar – auch als PDF/A und barrierefrei. Seiten-Links wandern beim Umsortieren mit. Doppelklick ändert das Ziel. Aus Sicherheitsgründen sind nur Web- und E-Mail-Links möglich.</li>
+<li><b>Kommentare und Markierungen:</b> <i>Mehr → Kommentare und Markierungen</i> zeigt alle Notizen, Markierungen (mit dem markierten Text), Texte, Stempel, Unterschriften, Formularfelder und Schwärzungen des Dokuments – mit Seite, Filter und Suche. Ein Klick springt hin, ✕ löscht (<kbd>Strg</kbd>+<kbd>Z</kbd> macht es rückgängig). <i>„Als Text kopieren“</i> liefert eine Zusammenfassung für E-Mail oder Protokoll.</li>
+<li><b>Vergleichen:</b> <i>Mehr → Mit anderer Fassung vergleichen</i> zeigt, was sich geändert hat.</li>
+<li><b>Umwandeln:</b> PDF in Word, Excel, Text oder Bilder; Bilder in PDF; <b>Bilder aus der PDF</b> in Originalauflösung herausholen.</li>
+<li><b>Text markieren:</b> Werkzeug <i>„Markieren“</i>, dann mit der Maus über die Wörter ziehen – markiert wird genau der Text, auch über mehrere Zeilen; ein Klick markiert ein einzelnes Wort. Daneben Farbe wählen (Gelb, Grün, Blau, Rosa, Orange) und die Art: <i>Markieren</i>, <i>Unterstreichen</i> oder <i>Durchstreichen</i>. Eine gewählte Markierung lässt sich umfärben oder mit <kbd>Entf</kbd> löschen. Auf freier Fläche aufziehen markiert einen Bereich (z. B. ein Bild). <b>Alle Fundstellen auf einmal:</b> <kbd>Strg</kbd>+<kbd>F</kbd>, Begriff eingeben, <i>„Alle markieren“</i> – jede Fundstelle im ganzen Dokument wird markiert, auch Wortgruppen wie „15. November“; <kbd>Strg</kbd>+<kbd>Z</kbd> nimmt alle zurück. <b>Markierungen aus anderen Programmen:</b> Öffnen Sie eine PDF, die schon markiert ist, übernimmt PDFMy die Markierungen mit Kommentar und Autor – sie lassen sich umfärben und löschen (nicht bei digital signierten PDFs, damit die Signatur gültig bleibt). Beim Speichern werden daraus echte PDF-Markierungen: Andere PDF-Programme zeigen sie als Kommentar mit dem markierten Text und können sie entfernen.</li>
+<li><b>Im Dokument suchen:</b> <kbd>Strg</kbd>+<kbd>F</kbd> öffnet über der Seite eine Suchleiste – wie in Word. Sie zeigt „3 von 12“; <kbd>Enter</kbd> oder <kbd>F3</kbd> springt zum nächsten Treffer, <kbd>Umschalt</kbd>+<kbd>Enter</kbd> zum vorherigen, <kbd>Esc</kbd> schließt. Der aktuelle Treffer ist orange markiert. Bei Scans und Fotos funktioniert die Suche nach der Texterkennung (OCR). Alle Fundstellen auf einmal schwärzen: rechts unter <i>„Suche im Dokument“</i>.</li>
+<li><b>Suchen &amp; Ersetzen:</b> In der Suchleiste auf <i>Ersetzen …</i> klicken, den neuen Text eingeben und <i>Ersetzen</i> (aktueller Treffer, <kbd>Enter</kbd>) oder <i>Alle ersetzen</i> (<kbd>Strg</kbd>+<kbd>Enter</kbd>) wählen. Jede betroffene Zeile wird wie bei „Text ändern“ originalgetreu ersetzt – gleiche Schrift, Farbe und Breite; der alte Text wird beim Speichern entfernt. Urkunden, Zeugnisse und amtliche Bescheide werden übersprungen, bei Kontoauszügen und Rechnungen werden die Änderungen sichtbar markiert. Rückgängig mit <kbd>Strg</kbd>+<kbd>Z</kbd> – auch „Alle ersetzen“ über viele Seiten in einem Schritt.</li>
+<li><b>Dokumenteigenschaften:</b> <i>Mehr → Dokumenteigenschaften</i> (<kbd>Strg</kbd>+<kbd>D</kbd>) zeigt Titel, Autor, Thema, Stichwörter sowie PDF-Version, Seitengröße, Erstellungsdatum, Erzeugerprogramm und Passwortschutz. Titel, Autor, Thema und Stichwörter können Sie ändern – sie werden beim Speichern in die PDF geschrieben. Tipp: Gute Stichwörter machen PDFs in der Windows-Suche und im Finder schnell auffindbar. Die Angaben einer geöffneten PDF bleiben beim Speichern erhalten.</li>
+<li><b>Inhalt und Lesezeichen:</b> Der Knopf <i>„Inhalt“</i> (Taste <kbd>I</kbd>) zeigt alle Kapitel der PDF; ein Klick springt hin. <kbd>Strg</kbd>+<kbd>B</kbd> legt ein Lesezeichen für die aktuelle Seite an; PDFMy schlägt die erste Textzeile als Namen vor. Mit ✎ umbenennen, mit ⇥ als Unterpunkt einrücken, mit ✕ löschen. Lesezeichen werden beim Speichern in die PDF geschrieben und erscheinen in PDF-Programmen und Browsern als Inhaltsverzeichnis. Beim Zusammenfügen legt PDFMy für jede Datei automatisch ein Lesezeichen an.</li>
+<li><b>Blättern:</b> Mit dem Mausrad scrollen Sie durch das ganze Dokument wie in Word; unten links steht „Seite X von Y“ – ein Klick darauf (oder <kbd>Strg</kbd>+<kbd>G</kbd>) springt zu einer Seite. Die Leisten links und rechts lassen sich mit <kbd>[</kbd> und <kbd>]</kbd> einklappen.</li>
+<li><b>Mehrere Dokumente:</b> „Hinzufügen“ hängt weitere Dateien an das geöffnete Dokument an, „Neuer Reiter“ öffnet ein weiteres Dokument parallel – oben erscheint eine Reiterleiste, ein Klick wechselt zwischen den Dokumenten. Öffnen Sie eine Datei, während schon ein Dokument offen ist, fragt PDFMy, ob sie hinzugefügt, in einem neuen Reiter geöffnet oder ersetzt werden soll.</li>
+<li><b>Drucken:</b> Knopf „Drucken“ in der Werkzeugleiste (oder <kbd>Strg</kbd>+<kbd>P</kbd>): alle Seiten, diese Seite oder bestimmte Seiten wie „1-3, 5“.</li>
+<li><b>Präsentieren:</b> <kbd>F5</kbd> zeigt die Seiten bildschirmfüllend, weiter mit Pfeiltasten oder Presenter-Fernbedienung.</li>
+<li><b>Vorlesen:</b> Der erkannte Text wird mit einer Stimme Ihres Geräts vorgelesen – ohne Online-Dienst.</li>
+<li><b>Barrierefreiheit prüfen</b> und <b>PDF/A</b> (Langzeitarchiv) speichern.</li>
+</ul>
+</section>
+
+<section class="hsec" id="unterschreiben"><h2>Unterschreiben und Signieren</h2>
+<h3>Unterschrift, Kürzel und Firmenstempel</h3>
+<p>Ein Klick auf das Werkzeug <i>„Unterschrift“</i> öffnet die Auswahl mit Ihren gespeicherten Unterschriften als Bild (Unterschrift, Kürzel, Firmenstempel). Eine davon anklicken – sie hängt dann am Mauszeiger – und auf die gewünschte Stelle im Dokument klicken bzw. tippen. In der Auswahl wählen Sie unter <i>„Dazusetzen“</i>, ob unter der Unterschrift automatisch <b>nur das Datum</b> oder <b>Ort und Datum</b> erscheinen soll (z. B. „Paderborn, 17.10.2026“) – PDFMy merkt sich Ihre Wahl und den Ort; der Text lässt sich wie jeder andere verschieben, ändern oder löschen. Noch nichts angelegt? In der Auswahl auf <i>„Unterschrift anlegen“</i> – drei Wege:</p>
+<ul>
+<li><b>Zeichnen</b> mit Maus, Finger oder Stift (geglättete Linien, <i>„Letzten Strich zurück“</i>). Am Handy quer halten.</li>
+<li><b>Tippen</b>: Namen eingeben und einen von fünf Handschrift-Stilen wählen.</li>
+<li><b>Bild hochladen</b>: am Desktop über den Knopf <i>„Bild hochladen …“</i> in der Werkzeugleiste, per Ziehen einer Bilddatei ins Unterschrift-Fenster oder mit <kbd>Strg</kbd>+<kbd>V</kbd> (z. B. ein Ausschnitt aus dem Snipping-Tool) – Foto oder Scan Ihrer Unterschrift auf Papier (am Handy direkt <i>„Foto aufnehmen“</i>), ein Stempel oder ein Logo. PDFMy stellt automatisch frei – das Papier wird durchsichtig – und schneidet zu. Für farbige Stempel und Logos <i>„Originalfarben behalten“</i>.</li>
+</ul>
+<p>Farbe: Schwarz, Blau oder Dunkelblau. Oben wählen Sie, was Sie anlegen: <b>Unterschrift</b>, <b>Kürzel (Paraphe)</b> oder <b>Firmenstempel / Logo</b> – alle drei lassen sich getrennt speichern und in der Werkzeugleiste auswählen. <i>„Kürzel auf alle Seiten“</i> setzt Ihr Kürzel mit einem Klick unten rechts auf jede Seite, wie bei Verträgen üblich. Nach dem Anlegen hängt die Unterschrift halbdurchsichtig am Mauszeiger – einfach auf die gewünschte Stelle klicken (am Handy antippen); <kbd>Esc</kbd> bricht ab. Verschieben durch Ziehen, Größe am Anfasser unten rechts, löschen mit <kbd>Entf</kbd>. Unterschrift, Kürzel und Stempel werden auf diesem Gerät gemerkt (ab Werk eingeschaltet, nur in Ihrem Browser – nichts wird hochgeladen); im Unterschrift-Fenster sehen Sie das Gespeicherte und können es löschen.</p>
+<h3>Unterschriftsstellen automatisch finden</h3>
+<p>Beim Werkzeug <i>„Unterschrift“</i> sucht PDFMy im ganzen Dokument nach Stellen wie „Unterschrift …“, „Unterzeichner“, „Ort“, „Datum“ oder „Ort, Datum“ – mit einer Linie daneben, darüber oder darunter, auch wenn die Linie gezeichnet ist und die Beschriftung darunter steht. Dort erscheinen gelbe Schilder <i>„✍ Hier unterschreiben“</i> bzw. blaue <i>„📅 Datum einsetzen“</i> und <i>„📍 Ort einsetzen“</i> – ein Klick setzt Ihre Unterschrift passend auf die Linie (ohne in den Text darüber zu ragen), das Datum bzw. Ihren Ort (beim ersten Mal fragt PDFMy nach dem Ort und merkt ihn sich). <i>„Nächste Stelle“</i> in der Werkzeugleiste springt durch alle noch offenen Stellen, damit bei langen Verträgen keine vergessen wird. Bei Scans funktioniert das nach der Texterkennung.</p>
+<h3>Zur Unterschrift senden (mehrere Personen)</h3>
+<p>So lassen Sie ein Dokument von anderen unterschreiben – ohne Server und ohne Upload, ähnlich wie bei DocuSign:</p>
+<ol>
+<li><i>„… Mehr → Büro → Zur Unterschrift senden …“</i>: Namen und E-Mail-Adressen der Personen in der gewünschten Reihenfolge eintragen, dazu Ihre eigene Adresse für die Rückmeldung und auf Wunsch eine <b>Frist</b>. Haben Sie eine <b>Vorlage</b> gespeichert, oben auswählen – Personen, Felder, Nachricht und Frist werden übernommen.</li>
+<li>PDFMy schlägt an erkannten Stellen wie „Unterschrift …“ oder „Ort, Datum“ schon Felder vor – ein Klick auf den Namen im Feld ordnet es einer anderen Person zu. Weitere Felder: oben <i>„Feldart“</i> wählen (Unterschrift, Kürzel, Datum, Name, Text, Ankreuzfeld), dann den Namen der Person und die Stelle anklicken. Datum und Name setzt PDFMy beim Unterschreiben selbst ein; Textfelder (z. B. Anschrift) muss die Person vorher ausfüllen. Falsche Felder mit „✕“ entfernen. Für wiederkehrende Dokumente (Mietvertrag, Arbeitsvertrag …): <i>„Als Vorlage speichern …“</i>.</li>
+<li><i>„Senden …“</i>: PDFMy bereitet die E-Mail mit der PDF an die erste Person vor (die .eml-Datei öffnen und senden). Mit Ablageordner liegt eine Kopie in der Ablage, und im Posteingangsbuch steht der Stand.</li>
+<li>Die Person öffnet die PDF auf pdfmy.de, klickt in ihrem markierten Feld auf <i>„Hier unterschreiben“</i> und dann auf <i>„Unterschrieben – weitersenden“</i>. Die E-Mail an die nächste Person ist vorbereitet, mit Ihnen in Kopie.</li>
+<li><b>Ohne PDFMy:</b> Die Felder der Person stehen als echte PDF-Formularfelder in der Datei – sie kann auch in Adobe Acrobat Reader, Vorschau am Mac oder Edge ausfüllen und unterschreiben (z. B. mit „Ausfüllen &amp; unterschreiben“), speichert und schickt die PDF an Sie zurück. Öffnen Sie sie in PDFMy, übernimmt PDFMy die Eingaben und erkennt die Unterschrift: <i>„Als unterschrieben übernehmen …“</i> (sonst <i>„In anderem Programm unterschrieben …“</i>) – danach geht die E-Mail an die nächste Person. Im Prüfprotokoll steht „Unterschrieben in einem anderen PDF-Programm“.</li>
+<li>Wer nicht unterschreiben will, klickt auf <i>„Ablehnen …“</i> und kann eine Begründung angeben – Sie bekommen sie per vorbereiteter E-Mail, die Anfrage ist damit beendet.</li>
+<li>Nach der letzten Unterschrift kommt die PDF zu Ihnen zurück, mit einer angehängten Seite <b>„Prüfprotokoll“</b> (Personen, Zeitpunkte, Angaben, Prüfsummen, Ablauf). Beim Öffnen zeigt PDFMy <i>„Alle haben unterschrieben ✓“</i>, und das Posteingangsbuch steht auf „erledigt“.</li>
+</ol>
+<p><b>Frist und Erinnerung:</b> Die Frist steht im Posteingangsbuch und auf der Startseite unter „Fristen“ (mit der täglichen Erinnerung, falls eingeschaltet). In der Zeile der Anfrage bereitet <i>„Erinnern“</i> eine freundliche Erinnerungs-E-Mail an die Person vor, die gerade dran ist – hat noch niemand unterschrieben, mit der PDF aus der Ablage im Anhang.</p>
+<p><b>Wer hat unterschrieben?</b> Im Posteingangsbuch steht unter dem Betreff, wer schon unterschrieben hat und wann. In der geöffneten PDF zeigt <i>„Übersicht“</i> jede Person mit Zeitpunkt und der SHA-256-Prüfsumme der Fassung, die sie bekommen hat. Die Angaben reisen als Anlage „pdfmy-unterschriften.json“ in der PDF mit. Eine gezeichnete Unterschrift ist eine einfache elektronische Signatur; für mehr Beweiskraft das fertige Dokument zusätzlich digital signieren (<i>„Zusätzlich digital signieren …“</i>).</p>
+<h3>Signaturen prüfen</h3>
+<p>Öffnen Sie eine digital signierte PDF (Vertrag, Bescheid, Rechnung), zeigt PDFMy über dem Dokument eine Leiste: <b>grün</b> – signiert von …, seit der Signatur unverändert; <b>gelb</b> – gültig, aber danach wurde etwas angehängt; <b>rot</b> – Signatur ungültig, z. B. weil das Dokument verändert wurde. <i>„Signaturdetails“</i> zeigt Unterzeichner, Zeitpunkt, Grund, Ort, Aussteller, Gültigkeit des Zertifikats, Zeitstempel und ob es ein qualifiziertes Zertifikat (eIDAS) ist. Die Prüfung läuft auf Ihrem Gerät. Ob der Aussteller eine anerkannte Zertifizierungsstelle ist, prüft PDFMy nicht – dafür die kostenlosen amtlichen Prüfdienste nutzen, z. B. die eIDAS-Signaturprüfung der EU-Kommission (DSS) oder den Prüfdienst der Bundesnetzagentur. Wichtig: Speichern Sie die PDF mit Änderungen, entfällt die Signatur; das Original bleibt gültig. Vor der ersten Textänderung oder Abdeckung in einer signierten PDF fragt PDFMy deshalb einmal nach.</p>
+<h3>Digitale Signatur</h3>
+<p>Im Speichern-Dialog <i>„Digital signieren“</i> anhaken. Mit eigenem Zertifikat (.p12/.pfx) signiert PDFMy direkt im Browser nach dem europäischen Standard <b>PAdES</b> (ETSI EN 319 142, eIDAS); das Passwort wird nie gespeichert. <b>Mehrere Personen</b> können nacheinander signieren: Öffnet die nächste Person das signierte PDF unverändert in PDFMy, zeigt die Signaturleiste <i>„Mitunterzeichnen“</i> – ihre Signatur wird angehängt, die vorhandenen bleiben gültig. Unter Windows geht es mit pdfmy Scan auch mit Windows-Zertifikaten und Signaturkarten, auch qualifiziert – ab pdfmy Scan 1.8.0 ebenfalls nach <b>PAdES</b> (ältere Versionen signieren im bisherigen Format; pdfmy Scan meldet Updates selbst, sonst Rechtsklick auf sein Symbol neben der Uhr → „Nach Updates suchen“).</p>
+</section>
+
+<section class="hsec" id="erechnung"><h2>E-Rechnung</h2>
+<p><b>Lesen:</b> ZUGFeRD-PDFs und XRechnungen (XML) einfach öffnen – PDFMy zeigt die Rechnung lesbar an und übernimmt Betrag, Frist und IBAN exakt.</p>
+<p><b>Prüfen:</b> Beim Öffnen prüft PDFMy die E-Rechnung gleich mit: Pflichtangaben (Rechnungsnummer, Datum, Verkäufer mit USt-IdNr. oder Steuernummer, Käufer, Positionen) und Rechenregeln (Positionen, Netto, Umsatzsteuer, Brutto, Zahlbetrag) nach EN 16931, bei XRechnung zusätzlich Leitweg-ID, Ansprechpartner und Zahlungsart. In den Briefdaten steht „✓ geprüft“ oder die Zahl der Fehler; ein Klick zeigt die Einzelheiten. Andere Dateien prüfen Sie über <i>Mehr → E-Rechnung prüfen …</i>, ohne sie zu öffnen. Die vollständige amtliche Prüfung mit allen Regeln bietet das kostenlose Prüfwerkzeug der KoSIT.</p>
+<p><b>Schreiben:</b> Kachel <i>„E-Rechnung schreiben“</i>: Ausgangsrechnung nach EN 16931 als ZUGFeRD-PDF oder als XRechnung (z. B. für Behörden mit Leitweg-ID). Ihre Firmendaten werden gemerkt, fehlende Pflichtangaben verständlich gemeldet.</p>
+</section>
+
+<section class="hsec" id="app"><h2>App und Standard-PDF-Programm</h2>
+<ul>
+<li><b>Als App installieren:</b> Knopf <i>„App herunterladen“</i> oben in PDFMy. iPhone: in Safari <i>Teilen → Zum Home-Bildschirm</i>. Mac mit Safari: <i>Ablage → Zum Dock hinzufügen</i>.</li>
+<li><b>Windows – PDFs per Doppelklick:</b> mit pdfmy Scan unter <i>Mehr → Als Standard für PDFs festlegen</i>.</li>
+<li><b>Linux – PDFs per Doppelklick:</b> pdfmy Scan für Linux legt „PDFMy“ im Anwendungsmenü an und fragt, ob es Standard für PDFs werden soll. Später: im Dateimanager Rechtsklick auf eine PDF → <i>Öffnen mit → PDFMy</i> → als Standard festlegen, oder in PDFMy <i>Mehr → Als Standard für PDFs festlegen</i>.</li>
+<li><b>Mac – PDFs per Doppelklick:</b> pdfmy Scan für Mac legt die App „PDFMy“ an und fragt, ob sie Standard für PDFs werden soll. Später: im Finder <i>Informationen → Öffnen mit: PDFMy → Alle ändern</i>. Bitte die App „PDFMy“ aus <i>Programme</i> wählen (nicht die Chrome-App gleichen Namens) – nur dann öffnen sich auch Outlook-Anhänge zuverlässig. „Drucken“ im Finder sendet die PDF direkt an den Standarddrucker (ab pdfmy Scan für Mac 1.1.6).</li>
+<li><b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac. <a href="erweiterung.html">Zur Erweiterung →</a></li>
+</ul>
+</section>
+
+<section class="hsec" id="sprachen"><h2>Sprachen</h2>
+<ul>
+<li><b>Sprache der Oberfläche:</b> PDFMy gibt es in 40 Sprachen – Deutsch, Englisch (britisch und amerikanisch), Französisch, Italienisch, Spanisch, Portugiesisch, Niederländisch, Polnisch, Tschechisch, Slowakisch, Ungarisch, Rumänisch, Bulgarisch, Griechisch, Kroatisch, Slowenisch, Serbisch, Bosnisch, Mazedonisch, Albanisch, Dänisch, Schwedisch, Norwegisch, Finnisch, Estnisch, Lettisch, Litauisch, Irisch, Maltesisch, Isländisch, Katalanisch, Baskisch, Galicisch, Luxemburgisch, Walisisch, Türkisch, Russisch, Ukrainisch und Belarussisch. PDFMy startet in der Sprache Ihres Browsers; ändern unter <i>Mehr → Sprache</i>. Die Übersetzungen sind maschinell erstellt – maßgeblich ist die deutsche Fassung.</li>
+<li><b>Alle Seiten von pdfmy.de:</b> Hilfe, Scanner-Anleitung, Geräteliste, Werkzeug-Seiten, Browser-Erweiterung, Presse, Barrierefreiheit, Impressum und Datenschutzerklärung gibt es ebenfalls in allen 40 Sprachen – umschalten oben rechts auf der Seite. Die Wahl gilt auch für PDFMy und umgekehrt. Bei Impressum und Datenschutzerklärung ist die deutsche Fassung rechtlich maßgeblich.</li>
+<li><b>Datum und Zahlen:</b> PDFMy zeigt Datum, Uhrzeit, Beträge und Dateigrößen im Format Ihrer Sprache an (z. B. 18/10/2026 auf Englisch (UK), 10/18/2026 auf Englisch (US)). In Ihren Dokumenten (Stempel, Notizen, Unterschriftsdatum, Kopf- und Fußzeilen, E-Rechnungen) und in Dateinamen bleibt das Datum unverändert.</li>
+<li><b>Briefe in anderen Sprachen:</b> Die Texterkennung liest deutsche Briefe und erkennt die Sprache anderer Schreiben selbst – alle oben genannten Sprachen, auch in kyrillischer Schrift (Russisch, Ukrainisch, Bulgarisch, Serbisch, Mazedonisch, Belarussisch) und Griechisch. Die passende Sprachdatei (1–4 MB) lädt PDFMy beim ersten Mal, danach funktioniert sie auch offline.</li>
+<li><b>Feste Dokumentsprache:</b> Bekommen Sie überwiegend Post in einer anderen Sprache, stellen Sie sie unter <i>Einstellungen → Scannen → Dokumentsprache</i> ein – das spart den zweiten Durchgang.</li>
+<li><b>Gespeicherte PDFs</b> tragen die erkannte Dokumentsprache (wichtig für Screenreader und PDF/UA); <i>Vorlesen</i> nutzt eine Offline-Stimme dieser Sprache.</li>
+</ul>
+</section>
+
+<section class="hsec" id="kanzlei"><h2>Kanzlei: beA und Anlagen</h2>
+<ul>
+<li><b>Für beA prüfen:</b> <i>Mehr → Für beA prüfen …</i> zeigt, ob die PDF die technischen Vorgaben der Justiz erfüllt (Elektronischer-Rechtsverkehr-Bekanntmachung 2025): kein JavaScript, keine eingebetteten Dateien oder Medien, druckbar und nicht verschlüsselt, höchstens 200 MB, Dateiname höchstens 90 Zeichen nur mit Buchstaben (auch ä, ö, ü, ß), Ziffern, Unterstrich und Minus. Hinweise gibt es zu nicht eingebetteten Schriften und zu Seiten ohne Text (Texterkennung ist empfohlen, aber keine Pflicht).</li>
+<li><b>beA-tauglich speichern:</b> erzeugt eine PDF/A ohne JavaScript und Anhänge, schlägt einen zulässigen Dateinamen vor und prüft die gespeicherte Datei noch einmal. Ein E-Rechnungs-Anhang (XML) wird dabei nicht mitgegeben.</li>
+<li><b>Anlagen nummerieren:</b> Öffnen Sie Schriftsatz-Anlagen nacheinander (Hinzufügen), dann <i>Mehr → Anlagen nummerieren …</i>. Jede Datei wird eine Anlage – Kennbuchstabe frei wählbar (K, B, AS, AG, BK, BB …), Beginn bei beliebiger Nummer, Bezeichnung änderbar. PDFMy setzt den Stempel „Anlage K 1“ oben rechts auf die erste Seite, erstellt ein Anlagenverzeichnis und speichert auf Wunsch jede Anlage als eigene, beA-taugliche Datei mit logischer Nummerierung (z. B. <code>Anlage_K1_Kaufvertrag.pdf</code>) – als ZIP oder direkt in den Ablageordner.</li>
+<li><b>Vertraulichkeit:</b> Prüfung, Umwandlung und Nummerierung laufen vollständig auf Ihrem Gerät – Mandantenunterlagen werden nicht hochgeladen.</li>
+</ul>
+</section>
+
+<section class="hsec" id="datenschutz"><h2>Datenschutz und Sicherheit</h2>
+<ul>
+<li>Dokumente, erkannter Text und Briefdaten bleiben auf Ihrem Gerät. Keine Cookies, kein Tracking, keine Fremdserver. Auch die Texterkennung (KI) läuft lokal.</li>
+<li>Was der Browser speichert (Einstellungen, Suchindex, gemerkte Unterschrift …), löschen Sie unter <i>Einstellungen → Alle lokal gespeicherten Daten löschen</i>.</li>
+<li>PDFMy wird nach den Grundsätzen von ISO 27001 und ISO 9001 entwickelt; PDF/A und PDF/UA werden mit veraPDF geprüft.</li>
+<li>Details: <a href="datenschutz.html">Datenschutzerklärung</a> · <a href="barrierefreiheit.html">Barrierefreiheit</a></li>
+</ul>
+</section>
+
+<section class="hsec" id="faq"><h2>Häufige Fragen</h2>
+<details class="faq"><summary>Was kostet PDFMy?</summary><p>Nichts – und das bleibt so. Kein Abo, keine Testphase, keine Anmeldung, keine Seitenlimits.</p></details>
+<details class="faq"><summary>Werden meine Dokumente hochgeladen?</summary><p>Nein. Die Webseite liefert nur das Programm aus. Öffnen, Texterkennung, Bearbeiten und Speichern passieren in Ihrem Browser.</p></details>
+<details class="faq"><summary>Funktioniert PDFMy ohne Internet?</summary><p>Ja, nach dem ersten Aufruf. Am besten als App installieren. Sprachdateien für fremdsprachige Briefe lädt PDFMy einmal bei Bedarf.</p></details>
+<details class="faq"><summary>Welcher Browser ist am besten?</summary><p>Chrome oder Edge – dort funktionieren auch Ablage- und Scan-Ordner. Safari und Firefox können fast alles, aber keine Ordner verbinden.</p></details>
+<details class="faq"><summary>Mein Scanner wird nicht gefunden.</summary><p>Ist das Gerät eingeschaltet und im selben Netzwerk? Im Scan-Fenster „Neu suchen“ oder „Gerät per IP-Adresse hinzufügen“ (die IP steht am Gerätedisplay unter Netzwerk/TCP-IP). Statt der IP geht auch der Gerätename (z. B. <code>EPSON2CBBCB</code>) oder eine IPv6-Adresse. Am Gerät ggf. AirPrint/eSCL oder WSD einschalten. Fragt der Browser nach Zugriff auf Geräte im lokalen Netzwerk, „Zulassen“ wählen. Unter Linux und am Mac fragt pdfmy Scan (ab 1.1.3) zusätzlich jede Adresse im eigenen Netz direkt – das findet Geräte auch, wenn die Firewall die Suche per Rundruf blockiert oder avahi fehlt. Ab pdfmy Scan 1.8.6 (Windows) bzw. 1.1.6 (Mac/Linux) fragt die Netzsuche außerdem die Druckerports (IPP, WSD, RAW) – so werden auch Geräte gefunden, die nur per WSD scannen (z. B. Dell Color MFP E525w). Steht der Drucker in den Systemeinstellungen auf „inaktiv“ oder schläft er: <i>„Scanner aufwecken“</i> im Scan-Fenster – pdfmy Scan spricht die bekannten Geräte direkt an und sendet Wake-on-LAN, dann wird neu gesucht. Das Hinzufügen per IP geht immer. Ihr Gerät ist noch nicht dabei? <a href="scanner.html#geraet-fehlt">Kurz melden – wir machen den Rest</a> (dort steht, welche Angaben wir brauchen). Hilft nichts davon: im Scan-Fenster <i>„Protokoll“</i> öffnen und per E-Mail senden – dort steht, was die Suche versucht hat (Bonjour, WSD, Netzsuche, Windows-Scanner) und über welche Netzwerkkarten. <a href="scanner.html">Mehr in der Scanner-Anleitung</a>.</p></details>
+<details class="faq"><summary>Windows oder macOS warnt beim Öffnen von pdfmy Scan.</summary><p><b>Windows:</b> pdfmy Scan ist von der <b>Mentor GmbH</b> digital signiert (Microsoft Artifact Signing). Warnt Windows bei einer ganz neuen Version trotzdem, prüfen Sie, dass „Mentor GmbH“ als Herausgeber steht: beim Download <i>Behalten → Trotzdem behalten</i>, beim Öffnen <i>Weitere Informationen → Trotzdem ausführen</i>. Die Warnung verschwindet, sobald Microsoft die Version kennt. <b>Mac:</b> Die Zertifizierung bei Apple ist in Vorbereitung; bis dahin warnt macOS beim ersten Mal. Meldung schließen, dann <i>Systemeinstellungen → Datenschutz &amp; Sicherheit → Dennoch öffnen</i>, und beim lokalen Netzwerk <i>Erlauben</i>. <a href="scanner.html#zertifizierung">Schritt für Schritt mit Prüfsummen →</a></p></details>
+<details class="faq"><summary>Beim Einzug kommt keine Seite (z. B. Samsung, Dell).</summary><p>pdfmy Scan probiert automatisch weitere Wege. Klappt es trotzdem nicht: im Scan-Fenster „Protokoll“ öffnen und über „Problem melden“ an uns schicken – wir lösen das.</p></details>
+<details class="faq"><summary>Die Texterkennung liest Fehler.</summary><p>Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.</p></details>
+<details class="faq"><summary>Ist die Ablage revisionssicher (GoBD)?</summary><p>PDFMy speichert im Langzeitformat PDF/A, vergibt Eingangsnummern und Prüfsummen. Die Verfahrensdokumentation nach GoBD erstellt Ihr Unternehmen selbst bzw. Ihr Steuerberater.</p></details>
+<details class="faq"><summary>Können mehrere Personen im Team arbeiten?</summary><p>Ja: Legen alle in denselben (z. B. per OneDrive/SharePoint geteilten) Ablageordner ab, teilen sie das Posteingangsbuch. „Weiterleiten“ setzt eine Zuständigkeit und öffnet eine E-Mail an den Kollegen.</p></details>
+<details class="faq"><summary>Kommt PDFMy mit sehr großen PDFs zurecht?</summary><p>Ja. Auch Dokumente mit 1.000 Seiten öffnen in wenigen Sekunden: PDFMy zeichnet nur die Seiten, die Sie gerade sehen, und gibt nicht mehr benötigte Vorschaubilder wieder frei. Suche, Blättern und Speichern bleiben flüssig. Bei sehr großen Scans hilft beim Speichern die Einstellung „Klein“.</p></details>
+<details class="faq"><summary>Eine PDF lässt sich nicht öffnen oder ist beschädigt.</summary><p>Einfach in PDFMy öffnen (oder die Kachel <i>„PDF reparieren“</i>): PDFMy repariert beschädigte Dateien automatisch – etwa nach einem abgebrochenen Download oder bei einem unvollständigen E-Mail-Anhang – und rettet alle noch lesbaren Seiten. Danach prüfen und neu speichern.</p></details>
+<details class="faq"><summary>PDF-Dateien zeigen im Explorer nur ein weißes Blatt statt des PDFMy-Symbols.</summary><p><b>Mit pdfmy Scan als Standard-App:</b> ab Version <b>1.8.2</b> behoben, PDF-Dateien zeigen das PDFMy-Logo. In den Windows-Einstellungen heißt der Eintrag ab Version 1.8.3 <i>„PDFMy (pdfmy Scan)“</i>. Ab Version 1.8.5 blendet pdfmy Scan die Browser-App bei „Öffnen mit“ für PDF aus und meldet sich, wenn sie trotzdem als Standard eingestellt ist – ein Klick auf die Meldung öffnet die richtige Einstellung. pdfmy Scan meldet das Update selbst: Rechtsklick auf das pdfmy-Scan-Symbol im Infobereich → <i>Update installieren</i>. Oder <a href="scanner.html">pdfmy Scan neu herunterladen</a> und öffnen. <b>Mit der installierten Browser-App (Chrome, Edge):</b> seit 19.10.2026 behoben. Die App einmal öffnen und wieder schließen – der Browser übernimmt die Änderung bei seiner nächsten Aktualisierung. Bleibt das Blatt weiß: App deinstallieren, auf pdfmy.de neu installieren und bei „.pdf“ wieder PDFMy wählen. Eventuell erscheint das Symbol erst nach einer Abmeldung oder einem Neustart von Windows.</p></details>
+<details class="faq"><summary>Eine PDF öffnet sich im Browser-Tab statt im PDFMy-App-Fenster.</summary><p>Ist PDFMy in Chrome oder Edge als App installiert, öffnet pdfmy Scan ab Version <b>1.8.4</b> PDFs per Doppelklick direkt im App-Fenster – mit dem PDFMy-Logo im Explorer. Beim ersten Mal fragt der Browser: <i>„… in dieser Web-App öffnen und bearbeiten?“</i> Dann <i>„Meine Auswahl für diese Dateitypen merken“</i> anhaken und <i>„Öffnen“</i> klicken – danach ohne Rückfrage. Ohne installierte App öffnet pdfmy Scan die PDF wie bisher im Browser. Dasselbe gilt für pdfmy Scan für Mac und Linux ab Version <b>1.1.4</b>.</p></details>
+<details class="faq"><summary>Wie sicher ist der Passwortschutz?</summary><p>PDFMy verschlüsselt mit <b>AES-256</b> nach der aktuellen PDF-Norm ISO 32000-2 – dem stärksten Verfahren, das PDF kennt. Das Passwort wird mehrfach gehasht, damit Durchprobieren sehr lange dauert. Verschlüsselt wird nur in Ihrem Browser, Passwort und Datei werden nicht übertragen. Verwenden Sie ein langes Passwort (mindestens 12 Zeichen) und schicken Sie es auf einem anderen Weg als die Datei, z. B. per Telefon oder SMS. Öffnen lässt sich die Datei in allen gängigen PDF-Programmen (Adobe Reader, Browser, macOS-Vorschau).</p></details>
+<details class="faq"><summary>Ich habe das Passwort einer PDF vergessen.</summary><p>Ohne Passwort lässt sich eine verschlüsselte PDF nicht öffnen – das ist der Sinn der Verschlüsselung. Mit Passwort entfernt <i>„PDF entsperren“</i> den Schutz.</p></details>
+<details class="faq"><summary>Gibt es PDFMy für den Mac?</summary><p>Ja. PDFMy läuft im Browser oder als App. Für Scanner und „PDF per Doppelklick“ gibt es <a href="scanner.html#mac">pdfmy Scan für Mac</a>.</p></details>
+<details class="faq"><summary>Gibt es PDFMy für Linux?</summary><p>Ja. PDFMy läuft in Chrome, Edge, Firefox oder Chromium – auch als App. Für Scanner und „PDF per Doppelklick“ gibt es <a href="scanner.html#linux">pdfmy Scan für Linux</a> (Ubuntu, Debian, Mint, Fedora, openSUSE, Arch …). Es richtet sich ohne Administratorrechte nur für Ihren Benutzer ein.</p></details>
+<details class="faq"><summary>Funktioniert das Scannen in Netzwerken mit IPv6?</summary><p>Ja. pdfmy Scan nutzt IPv4, wenn der Scanner eine IPv4-Adresse hat – das ist in fast allen Netzwerken der Fall –, und sonst IPv6 (auch link-lokale Adressen wie fe80::…). Von Hand hinzufügen geht mit IPv6-Adresse, z. B. <code>2001:db8::25</code> oder <code>[2001:db8::25]:443</code>. pdfmy.de selbst ist über IPv4 und IPv6 erreichbar. Die Verbindung zwischen PDFMy im Browser und pdfmy Scan läuft immer über 127.0.0.1 auf Ihrem Rechner – unabhängig vom Netzwerk.</p></details>
+<details class="faq"><summary>Nutzt PDFMy künstliche Intelligenz?</summary><p>Die Texterkennung ist ein neuronales Netz und läuft auf Ihrem Gerät. Alles Weitere – Betrag, Frist, Ablage – sind nachvollziehbare Regeln. Kein Dokument geht an einen KI-Dienst im Internet.</p></details>
+</section>
+
+<section class="hsec" id="tasten"><h2>Tastenkürzel</h2>
+<p>Am Mac <kbd>⌘</kbd> statt <kbd>Strg</kbd>.</p>
+<table class="keys">
+<tr><td><kbd>Strg</kbd>+<kbd>K</kbd></td><td>Funktion suchen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>S</kbd> / <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>S</kbd></td><td>Speichern / Speichern unter</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>Enter</kbd></td><td>Ablegen und nächster Brief</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>Z</kbd> / <kbd>Strg</kbd>+<kbd>Y</kbd></td><td>Rückgängig / Wiederherstellen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>P</kbd></td><td>Drucken</td></tr>
+<tr><td><kbd>G</kbd></td><td>Seitenübersicht</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>F</kbd>, dann <kbd>Enter</kbd> / <kbd>F3</kbd></td><td>Im Dokument suchen, nächster Treffer (<kbd>Umschalt</kbd> = vorheriger)</td></tr>
+<tr><td>Im Feld „Ersetzen durch“: <kbd>Enter</kbd> / <kbd>Strg</kbd>+<kbd>Enter</kbd></td><td>Aktuellen Treffer ersetzen / alle Treffer ersetzen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>G</kbd></td><td>Zu Seite springen (oder unten links auf „Seite X von Y“ klicken)</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>D</kbd></td><td>Dokumenteigenschaften</td></tr>
+<tr><td><kbd>I</kbd></td><td>Inhalt (Kapitel der PDF)</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>B</kbd></td><td>Lesezeichen für die aktuelle Seite anlegen</td></tr>
+<tr><td><kbd>[</kbd> / <kbd>]</kbd></td><td>Seitenvorschau links / Briefdaten rechts ein- und ausblenden</td></tr>
+<tr><td><kbd>F5</kbd></td><td>Präsentieren (<kbd>Esc</kbd> beendet, <kbd>B</kbd> schwarz)</td></tr>
+<tr><td><kbd>Bild↑</kbd> / <kbd>Bild↓</kbd></td><td>Seite zurück / vor (oder mit dem Mausrad durchs Dokument)</td></tr>
+<tr><td><kbd>Strg</kbd>+Mausrad</td><td>Vergrößern / verkleinern</td></tr>
+<tr><td><kbd>Tab</kbd> bis zur Seite, dann <kbd>Enter</kbd></td><td>Werkzeug ohne Maus setzen; <kbd>N</kbd> wählt das nächste Element, Pfeiltasten verschieben es</td></tr>
+<tr><td><kbd>Entf</kbd></td><td>Auswahl löschen</td></tr>
+<tr><td><kbd>Esc</kbd></td><td>Werkzeug beenden</td></tr>
+</table>
+</section>
+
+<section class="hsec" id="kontakt"><h2>Hilfe bekommen</h2>
+<p>PDFMy wird ständig weiterentwickelt. Wenn etwas nicht klappt, melden Sie es bitte sofort – wir lösen es schnell.</p>
+<ul>
+<li>In PDFMy: <i>Mehr → Problem melden</i>. Der Bericht enthält Versionen und Protokoll, aber keine Dokumente; Dateinamen und Absender sind unkenntlich gemacht.</li>
+<li>Per E-Mail: <a href="mailto:wumertens@mentor-group.de">wumertens@mentor-group.de</a></li>
+<li>Für Presse und Medien: <a href="presse.html">Presseseite</a> mit Pressetexten, Bildern und Kontakt.</li>
+</ul>
+</section>
+</div>
+<script src="hilfe.js" defer></script>

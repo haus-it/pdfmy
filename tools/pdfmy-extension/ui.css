@@ -1,0 +1,34 @@
+/* Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Mentor-Design wie pdfmy.de: Archivo (kursiv, Logo/Überschriften), Source Sans 3, Akzent #4A5280 */
+@font-face{font-family:"Archivo";src:url(fonts/archivo-latin-standard-italic.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:italic}
+@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900}
+:root{--bg:#F5F6F8;--panel:#fff;--text:#1B1D23;--muted:#50545F;--accent:#4A5280;--accent-ink:#fff;--line:#E3E4E8;--ok:#1F7A4D;--warn:#9A5B00;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--bg:#15171C;--panel:#1D2027;--text:#E8E9ED;--muted:#A6AAB6;--accent:#9AA3D9;--accent-ink:#15171C;--line:#343842;--ok:#6FD3A0;--warn:#F2C26B;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "Source Sans 3","Segoe UI",system-ui,sans-serif}
+.brand{display:inline-flex;flex-direction:column;gap:3px;line-height:1;color:inherit;text-decoration:none}
+.brand b{font-family:"Archivo",sans-serif;font-style:italic;font-weight:900;font-stretch:125%;font-size:22px;letter-spacing:.3px;color:var(--accent)}
+.brand span{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)}
+.brand img{height:13px;width:auto}
+@media (prefers-color-scheme: dark){.brand img{background:#fff;padding:1px 3px;border-radius:2px}}
+header{display:flex;align-items:center;gap:10px;background:var(--panel);border-bottom:1px solid var(--line);padding:12px 16px}
+header>img{width:32px;height:32px}
+h1,h2{font-family:"Archivo","Segoe UI",sans-serif;font-style:italic;font-weight:900;font-stretch:125%}
+a{color:var(--accent)}
+button,.btn{font:inherit;font-weight:600;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:6px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+button.ghost{background:transparent;color:var(--accent)}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.muted{color:var(--muted);font-size:13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+/* Schalter */
+.switch{position:relative;display:inline-block;width:42px;height:24px;flex:none}
+.switch input{opacity:0;width:100%;height:100%;margin:0;position:absolute;cursor:pointer;z-index:1}
+.switch span{position:absolute;inset:0;background:var(--line);border-radius:12px;transition:background .15s}
+.switch span::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .15s}
+.switch input:checked+span{background:var(--accent)}
+.switch input:checked+span::after{transform:translateX(18px)}
+.switch input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+select{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+[hidden]{display:none!important}

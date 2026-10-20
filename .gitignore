@@ -1,0 +1,26 @@
+# Zugangsdaten und lokale Einrichtung – niemals hochladen
+.deploy/
+tools/signing/
+.claude/
+*.pfx
+*.p12
+*.pem
+*.key
+credential*.xml
+
+# Erzeugtes
+dist/
+tools/pdfmy-scan/bin/
+tools/pdfmy-scan/obj/
+**/__pycache__/
+node_modules/
+*.log
+
+# Lokale Daten
+Scan-Eingang/*
+!Scan-Eingang/.gitkeep
+
+# Interne Unterlagen und fremde Inhalte (Presseverteiler, gespeicherte Webseiten)
+p.html
+werbung/presse/
+docs/presse/
