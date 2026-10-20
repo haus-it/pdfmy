@@ -786,7 +786,7 @@ function renderAnns() {
     if (a.type === 'wo' && a.fill) { el.style.background = a.fill; el.style.boxShadow = 'none'; }
     if (a.type === 'wo' && a.mark) el.classList.add('mark');
     if (a.type === 'link') { const l = document.createElement('span'); l.className = 'fl'; l.textContent = linkLabel(a); el.append(l); el.title = `Link: ${linkLabel(a)} – Doppelklick zum Ändern`; }
-    if (a.type === 'field') { el.classList.add(a.ftype); const l = document.createElement('span'); l.className = 'fl'; l.textContent = (a.ftype === 'date' ? '📅 ' : a.ftype === 'multi' ? '¶ ' : '') + a.name; el.append(l); el.title = `Formularfeld „${a.name}“ – Doppelklick zum Umbenennen`; }
+    if (a.type === 'field') { el.classList.add(a.ftype); const l = document.createElement('span'); l.className = 'fl'; l.textContent = fieldLabel(a); el.append(l); el.title = `Formularfeld „${a.name}“${a.req ? ' (Pflichtfeld)' : ''} – Doppelklick zum Ändern`; }
     if (a.type === 'ink') el.innerHTML = inkSvg(a, W);
     if (a.type === 'hl') hlPaint(el, a);
     if (a.type === 'stamp') { el.textContent = a.text; el.style.color = a.color; el.style.fontSize = a.h * ov.clientHeight * 0.3 + 'px'; el.style.borderWidth = Math.max(2, a.h * ov.clientHeight * 0.06) + 'px'; }
@@ -955,7 +955,7 @@ $('#overlay').addEventListener('pointerdown', e => {
     if (state.tool === 'wo' && pageProt(p) !== 'urkunde' && sigWarn(p, () => status('Jetzt den Bereich zum Abdecken aufziehen.'))) { e.preventDefault(); return; }
     pushUndo(p);
     const a = { id: ++uid, type: state.tool, x: s.x, y: s.y, w: 0, h: 0 };
-    if (a.type === 'field') { a.ftype = $('#fieldType').value; a.name = $('#fieldName').value.trim(); }
+    if (a.type === 'field') { a.ftype = $('#fieldType').value; a.name = $('#fieldName').value.trim(); a.req = $('#fieldReq').checked; }
     p.annots.push(a); renderAnns();
     const el = ov.querySelector(`[data-id="${a.id}"]`);
     drag(e, ev => {
@@ -1059,12 +1059,28 @@ $('#overlay').addEventListener('pointermove', e => {
   g.style.width = w + 'px'; g.style.left = (e.clientX - r.left - w / 2) + 'px'; g.style.top = (e.clientY - r.top - (g.naturalHeight ? w * g.naturalHeight / g.naturalWidth : 0) / 2) + 'px';
 });
 $('#overlay').addEventListener('pointerleave', () => $('#overlay .sigghost')?.remove());
+// „Pflichtfeld“ wirkt auch auf das gerade markierte Formularfeld (bei Optionsfeldern auf die ganze Gruppe)
+$('#fieldReq').addEventListener('change', e => {
+  const p = cur(), a = p?.annots.find(x => x.id === state.annSel && x.type === 'field'); if (!a) return;
+  pushUndo(p); for (const x of p.annots) if (x === a || (a.ftype === 'radio' && x.type === 'field' && x.ftype === 'radio' && x.name === a.name)) x.req = e.target.checked;
+  state.dirty = true; renderAnns();
+});
 $('#overlay').addEventListener('dblclick', e => {
   const le = e.target.closest('.ann.link');
   if (le) { const p = cur(), a = p?.annots.find(x => x.id === +le.dataset.id); if (a) { pushUndo(p); if (!linkAsk(p, a)) state.undo.pop(); renderAnns(); } return; }
   const fe = e.target.closest('.ann.field');
   if (fe) {   // Formularfeld umbenennen
     const p = cur(), a = p?.annots.find(x => x.id === +fe.dataset.id); if (!a) return;
+    if (a.ftype === 'radio') {
+      const g = prompt('Gruppe des Optionsfelds (gleiche Gruppe = nur eine Auswahl möglich):', a.name); if (g == null || !g.trim()) return;
+      const v = prompt('Wert dieser Option:', a.val); if (v == null || !v.trim()) return;
+      pushUndo(p); a.name = g.trim().slice(0, 60); a.val = v.trim().slice(0, 40); state.dirty = true; renderAnns(); return;
+    }
+    if (a.ftype === 'select') {
+      const n = prompt('Name des Formularfelds:', a.name); if (n == null || !n.trim()) return;
+      const o = { opts: a.opts }; if (!fieldOpts(o)) return;
+      pushUndo(p); a.name = n.trim().slice(0, 60); a.opts = o.opts; state.dirty = true; renderAnns(); return;
+    }
     const n = prompt('Name des Formularfelds:', a.name); if (n == null || !n.trim() || n.trim() === a.name) return;
     pushUndo(p); a.name = n.trim().slice(0, 60); state.dirty = true; renderAnns(); return;
   }
@@ -2182,10 +2198,27 @@ function makeTagger(out) {
 function addFormFields(out, list, T, font) {
   const form = out.getForm(), used = new Map(), tabbed = new Set();
   const uniq = n => { n = String(n || 'Feld').replace(/[.]/g, ' ').trim().slice(0, 60) || 'Feld'; const k = (used.get(n) || 0) + 1; used.set(n, k); return k > 1 ? `${n} ${k}` : n; };
+  const radios = new Map(), pgs = out.getPages();   // Optionsfelder: eine Gruppe je Name und Seite
   for (const { page, x, y, w, h, a } of list) {
+    if (a.ftype === 'radio') {
+      const s = Math.min(w, h), key = a.name + '|' + pgs.indexOf(page);
+      let g = radios.get(key);
+      if (!g) {
+        g = form.createRadioGroup(uniq(a.name)); radios.set(key, g);
+        g.acroField.dict.set(PDFName.of('TU'), PDFHexString.fromText(a.name + (a.req ? ' (Pflichtfeld)' : '')));
+        if (a.req) g.enableRequired();
+      }
+      g.addOptionToPage(a.val || 'Option', page, { x, y, width: s, height: s, borderWidth: 0.75, borderColor: rgb(0.45, 0.48, 0.6), backgroundColor: rgb(0.95, 0.96, 1) });
+      const wds = g.acroField.getWidgets(), wd = wds[wds.length - 1];
+      wd.dict.set(PDFName.of('F'), PDFNumber.of(4));   // drucken
+      if (T) T.widget(wd.dict, page);
+      if (!tabbed.has(page)) { page.node.set(PDFName.of('Tabs'), PDFName.of('S')); tabbed.add(page); }
+      continue;
+    }
     const name = uniq(a.name), box = { x, y, width: w, height: h, borderWidth: 0.75, borderColor: rgb(0.45, 0.48, 0.6), backgroundColor: rgb(0.95, 0.96, 1) };
     let f;
     if (a.ftype === 'check') { const s = Math.min(w, h); f = form.createCheckBox(name); f.addToPage(page, { ...box, width: s, height: s }); }
+    else if (a.ftype === 'select') { f = form.createDropdown(name); f.setOptions(a.opts?.length ? a.opts : ['Ja', 'Nein']); f.addToPage(page, { ...box, font }); f.updateAppearances(font); }
     else {
       f = form.createTextField(name);
       if (a.ftype === 'multi') f.enableMultiline();
@@ -2193,7 +2226,8 @@ function addFormFields(out, list, T, font) {
       f.addToPage(page, { ...box, font });   // eingebettete Schrift im Erscheinungsbild (PDF/A)
       f.updateAppearances(font);
     }
-    const tip = a.ftype === 'date' ? `${name} (Datum, TT.MM.JJJJ)` : name;
+    if (a.req) f.enableRequired();
+    const tip = (a.ftype === 'date' ? `${name} (Datum, TT.MM.JJJJ)` : a.ftype === 'select' ? `${name} (Auswahl: ${(a.opts || []).join(', ')})` : name) + (a.req ? ' (Pflichtfeld)' : '');
     f.acroField.dict.set(PDFName.of('TU'), PDFHexString.fromText(tip));
     for (const wd of f.acroField.getWidgets()) {
       wd.dict.set(PDFName.of('F'), PDFNumber.of(4));   // drucken
@@ -2288,9 +2322,24 @@ function deepClean(out, page) {
   const arr = page.node.Annots(); if (!arr) return;
   for (let k = arr.size() - 1; k >= 0; k--) { const d = ctx.lookup(arr.get(k)); if (!(d instanceof PDFLib.PDFDict) || String(d.get(N('Subtype'))) !== '/Link') arr.remove(k); }
 }
+// Beschriftung des Felds in der Bearbeitungsansicht: Art, Name, Auswahlwerte, Pflichtfeld
+function fieldLabel(a) {
+  const ico = { date: '📅 ', multi: '¶ ', select: '▾ ' }[a.ftype] || '';
+  const tail = a.ftype === 'select' && a.opts?.length ? ` (${a.opts.join(' | ')})` : a.ftype === 'radio' ? `: ${a.val}` : '';
+  return ico + a.name + tail + (a.req ? ' *' : '');
+}
+// Auswahlliste: Einträge abfragen (durch Komma oder Semikolon getrennt)
+function fieldOpts(a) {
+  const v = prompt('Einträge der Auswahlliste, durch Komma getrennt (z. B. Herr, Frau, Divers):', (a.opts || []).join(', '));
+  if (v == null) return false;
+  const o = [...new Set(v.split(/[,;]/).map(s => s.trim().slice(0, 80)).filter(Boolean))];
+  if (!o.length) return false;
+  a.opts = o; return true;
+}
 // Neues Formularfeld fertigstellen: Klick ohne Ziehen → Standardgröße; Name aus der Beschriftung links daneben
 function fieldDone(p, a) {
   const ar = (p.w && p.h) ? p.w / p.h : 0.707;
+  if (a.ftype === 'radio') return radioDone(p, a, ar);
   if (a.ftype === 'check') { const s = Math.max(a.w, a.h * (1 / ar), 0.022); a.w = s; a.h = s * ar; }
   else if (a.w < 0.02 || a.h < 0.008) { a.w = a.ftype === 'date' ? 0.16 : 0.32; a.h = a.ftype === 'multi' ? 0.08 : 0.026; a.y = Math.max(0, a.y - a.h / 2); }
   a.x = Math.min(a.x, 1 - a.w); a.y = Math.min(a.y, 1 - a.h);
@@ -2302,10 +2351,27 @@ function fieldDone(p, a) {
     const pick = a.ftype === 'check' ? (right.length ? right.slice(0, 4) : left.slice(-4)) : (left.length ? left.slice(-4) : above.slice(0, 4));   // Ankreuzfeld: Beschriftung meist rechts
     const label = pick.map(w => w.t).join(' ').replace(/[:_.…]+$/, '').trim();
     const n = p.annots.filter(x => x.type === 'field').length;
-    a.name = label.slice(0, 40) || ({ text: 'Textfeld', multi: 'Text', date: 'Datum', check: 'Ankreuzfeld' }[a.ftype] + ' ' + n);
+    a.name = label.slice(0, 40) || ({ text: 'Textfeld', multi: 'Text', date: 'Datum', check: 'Ankreuzfeld', select: 'Auswahl' }[a.ftype] + ' ' + n);
   }
+  if (a.ftype === 'select' && !a.opts?.length && !fieldOpts(a)) a.opts = ['Ja', 'Nein'];
   state.dirty = true; state.annSel = a.id;
   status(`Formularfeld „${a.name}“ angelegt – Doppelklick zum Umbenennen. Beim Speichern wird es ein ausfüllbares Feld.`);
+}
+// Optionsfeld (Radiobutton): Felder mit gleichem Namen bilden eine Gruppe, von der nur eine Option gewählt werden kann.
+// Gruppenname: Eingabefeld „Name“ oder die letzte Gruppe auf dieser Seite; Wert der Option: Beschriftung rechts daneben.
+function radioDone(p, a, ar) {
+  const s = Math.max(a.w, a.h * (1 / ar), 0.022); a.w = s; a.h = s * ar;
+  a.x = Math.min(a.x, 1 - a.w); a.y = Math.min(a.y, 1 - a.h);
+  const others = p.annots.filter(x => x.type === 'field' && x.ftype === 'radio' && x !== a), prev = others[others.length - 1];
+  if (!a.name) a.name = prev?.name || 'Auswahl ' + (others.length + 1);
+  const words = p.ocr?.words || p.nwords || [], cy = a.y + a.h / 2;
+  const right = words.filter(w => Math.abs(w.y + w.h / 2 - cy) < Math.max(a.h, w.h) * 0.7 && w.x >= a.x + a.w - 0.01 && w.x - (a.x + a.w) < 0.05).sort((m, n) => m.x - n.x);
+  const same = others.filter(x => x.name === a.name).map(x => x.val);
+  let v = right.slice(0, 3).map(w => w.t).join(' ').replace(/[:_.…]+$/, '').trim().slice(0, 40) || 'Option ' + (same.length + 1);
+  while (same.includes(v)) v += ' 2';
+  a.val = v; if (prev?.name === a.name && prev.req) a.req = true;
+  state.dirty = true; state.annSel = a.id;
+  status(`Option „${a.val}“ der Gruppe „${a.name}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.`);
 }
 // Erkannte Wörter zu Zeilen in Lesereihenfolge gruppieren (Reihenfolge der Texterkennung beibehalten)
 function textLines(words) {

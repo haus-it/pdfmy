@@ -116,6 +116,7 @@ select{border:1px solid var(--line);background:var(--panel);border-radius:7px;pa
 .ann.field{background:rgba(74,82,128,.10);border:1.5px dashed #4A5280;border-radius:2px;overflow:hidden}
 .ann.field .fl{position:absolute;left:3px;top:50%;transform:translateY(-50%);font:600 11px/1.1 system-ui,sans-serif;color:#2c3260;white-space:nowrap;pointer-events:none;max-width:calc(100% - 6px);overflow:hidden;text-overflow:ellipsis}
 .ann.field.check .fl{display:none}
+.ann.field.radio{border-radius:50%;overflow:visible}.ann.field.radio .fl{left:calc(100% + 4px);max-width:none;transform:translateY(-50%)}
 .ann.text{white-space:pre;line-height:1.2;font-family:"DejaVu Sans",Verdana,sans-serif;min-width:6px;padding:0;outline:none}
 .ann.text[contenteditable="true"]{outline:1px dashed var(--sel);background:rgba(255,255,255,.6);cursor:text;user-select:text}
 .ann.note{background:#fff3a3;border:1px solid #e0b400;box-shadow:0 2px 6px rgba(0,0,0,.18);padding:.45em;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.25;font-family:"DejaVu Sans",Verdana,sans-serif;color:#3a2f00;min-height:2.4em;outline:none;cursor:move}
@@ -1087,8 +1088,9 @@ html.i18n-wait body{visibility:hidden}
       </div>
       <div class="grp" id="fieldOpts" hidden>
         <select id="fieldType" title="Art des Formularfelds" aria-label="Art des Formularfelds">
-          <option value="text">Textfeld</option><option value="multi">Mehrzeilig</option><option value="date">Datum</option><option value="check">Kontrollkästchen</option>
+          <option value="text">Textfeld</option><option value="multi">Mehrzeilig</option><option value="date">Datum</option><option value="check">Kontrollkästchen</option><option value="select">Auswahlliste</option><option value="radio">Optionsfeld</option>
         </select>
+        <label class="cb" title="Das Feld muss ausgefüllt werden – PDF-Programme weisen beim Absenden darauf hin"><input id="fieldReq" type="checkbox"> Pflichtfeld</label>
         <input id="fieldName" placeholder="Name (automatisch)" aria-label="Name des Formularfelds" title="Name des Felds, z. B. Vorname – leer lassen: PDFMy nimmt die Beschriftung daneben" style="width:170px">
       </div>
       <div class="grp" id="shapeOpts" hidden role="group" aria-label="Form">

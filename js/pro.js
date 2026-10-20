@@ -2805,7 +2805,7 @@ async function cmtCollect() {
       if (a.type === 'note' || a.type === 'text') t = a.text || '';
       else if (a.type === 'stamp') t = (a.text || '').replace(/\n/g, ' · ');
       else if (a.type === 'link') t = linkLabel(a);
-      else if (a.type === 'field') t = `${a.name} (${{ text: 'Textfeld', multi: 'mehrzeilig', date: 'Datum', check: 'Kontrollkästchen' }[a.ftype] || ''})`;
+      else if (a.type === 'field') t = `${a.name} (${{ text: 'Textfeld', multi: 'mehrzeilig', date: 'Datum', check: 'Kontrollkästchen', select: 'Auswahlliste', radio: 'Optionsfeld' }[a.ftype] || ''})`;
       else if (a.type === 'hl') t = a.text || (words || []).filter(w => { const cx = w.x + w.w / 2, cy = w.y + w.h / 2; return cx >= a.x && cx <= a.x + a.w && cy >= a.y && cy <= a.y + a.h; }).map(w => w.t).join(' ');
       t = t.replace(/\s+/g, ' ').trim();
       rows.push({ i, p, a, kind: a.type, label: a.type === 'sign' && a.kind ? SIG_KINDS[a.kind] : CMT_KIND[a.type], text: t, by: a.type === 'note' ? [a.at, a.by].filter(Boolean).join(' · ') : '' });

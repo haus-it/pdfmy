@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Formular-Designer: Auswahlliste, Optionsfelder, Pflichtfeld
+- Werkzeug „Formularfeld“ kann jetzt auch **Auswahllisten** (Dropdown mit eigenen Einträgen) und **Optionsfelder** (Radiobuttons; gleicher Name = eine Gruppe, Wert aus der Beschriftung rechts daneben) anlegen – wie der Formular-Designer in Acrobat, PDF24 und Sejda.
+- Neuer Haken **„Pflichtfeld“** (PDF-Kennzeichen Required, Hinweis im Tooltip); wirkt auch auf das markierte Feld bzw. die ganze Optionsgruppe. Doppelklick ändert Einträge, Gruppe und Wert.
+- Getestet: Feldtypen, Optionen und Pflichtkennzeichen im Browser und mit pypdf (strict); veraPDF PDF/A-2b und PDF/UA-1 PASS; axe ohne Befund (hell, dunkel, mobil).
+- GitHub-README: YouTube-Link auf den Kanal @haus-it korrigiert.
+
 ### Weitere Lücken aus dem Wettbewerbsvergleich: Format, Bögen, Anhänge, Formen, visueller Vergleich
 - **Weiße Ränder entfernen / Alle Seiten auf A4** (Speichern-Dialog, wie „Zuschneiden“ und „Seitengröße ändern“ in Acrobat, Sejda, PDF24): Inhaltsbereich jeder Seite wird aus der fertigen PDF ermittelt (Staub auf Scans zählt nicht) und als CropBox gesetzt; „auf A4“ legt jede Seite maßstabsgetreu und mittig auf A4 hoch/quer – ohne Neurastern, Links, Markierungen und Formularfelder wandern mit. Neues Modul `js/layout.js`.
 - **2 oder 4 Seiten pro Blatt, Broschüre** (Drucken und Speichern): Seiten verkleinert auf A4; Broschüre in Heftreihenfolge (A4 quer, je Seite zwei A5-Seiten, auf Vielfache von 4 aufgefüllt), gedrehte Seiten richtig ausgerichtet.
