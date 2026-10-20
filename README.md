@@ -5,7 +5,7 @@ Briefe scannen, Texterkennung (OCR), Briefdaten erkennen, ablegen, Fristen im Bl
 
 👉 **Live ausprobieren: [www.pdfmy.de](https://www.pdfmy.de)**
 
-Entwickelt von **Wolfgang-Udo Mertens** ([LinkedIn](https://www.linkedin.com/in/wolfgang-udo-mertens75)) · **Haus iT**, ein Geschäftsbereich der Mentor GmbH ([LinkedIn](https://www.linkedin.com/company/haus-it) · [YouTube](https://www.youtube.com/channel/UCcCSaQv0fccvMIPg0crMTkw) · [Facebook](https://www.facebook.com/hausit24) · [haus-it.de](https://www.haus-it.de))
+Entwickelt von **Wolfgang-Udo Mertens** ([LinkedIn](https://www.linkedin.com/in/wolfgang-udo-mertens75)) · **Haus iT**, ein Geschäftsbereich der Mentor GmbH ([LinkedIn](https://www.linkedin.com/company/haus-it) · [YouTube](https://www.youtube.com/@haus-it) · [Facebook](https://www.facebook.com/hausit24) · [haus-it.de](https://www.haus-it.de))
 
 > **Wir freuen uns, wenn Sie PDFMy weiterentwickeln!** Fehler melden, Ideen einbringen, Übersetzungen verbessern, Code beitragen – jeder Beitrag ist willkommen. Wie es geht, steht in [CONTRIBUTING.md](CONTRIBUTING.md).
 >
@@ -69,7 +69,7 @@ Die Nutzung von [www.pdfmy.de](https://www.pdfmy.de) selbst bleibt für alle kos
 **Mentor GmbH** · Am Hoppenhof 30a · 33104 Paderborn · [wumertens@mentor-group.de](mailto:wumertens@mentor-group.de)
 
 - LinkedIn: [Haus iT](https://www.linkedin.com/company/haus-it) · [Wolfgang-Udo Mertens](https://www.linkedin.com/in/wolfgang-udo-mertens75)
-- YouTube: [Kanal](https://www.youtube.com/channel/UCcCSaQv0fccvMIPg0crMTkw)
+- YouTube: [Kanal](https://www.youtube.com/@haus-it)
 - Facebook: [hausit24](https://www.facebook.com/hausit24)
 
 ---
