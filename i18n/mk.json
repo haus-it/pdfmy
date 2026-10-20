@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Е-пораката до {0} е подготвена – отворете ја датотеката .eml и испратете.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Потсетникот до {0} е отворен во вашата програма за е-пошта – проверете го и испратете го.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Извештајот за грешка е отворен во вашата програма за е-пошта – кликнете „Испрати“ (до {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Нова е-порака со PDF-от е отворена во вашата програма за е-пошта – внесете примач и испратете ја."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Нова е-порака со PDF-от е отворена во вашата програма за е-пошта – внесете примач и испратете ја.",
+ "– {0} von {1} Angaben ausgefüllt": "– пополнети {0} од {1} податоци",
+ "Feld {0} von {1}: {2}": "Поле {0} од {1}: {2}",
+ "Nächstes Feld →": "Следно поле →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "на пр. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "На знаење (по избор) – го добива резултатот во копија"
 }

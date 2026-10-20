@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-pasts adresātam {0} sagatavots – atveriet .eml failu un nosūtiet.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Atgādinājums adresātam {0} ir atvērts jūsu e-pasta programmā – pārbaudiet un nosūtiet.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Kļūdas ziņojums ir atvērts jūsu e-pasta programmā – lūdzu, noklikšķiniet uz „Sūtīt” (uz {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Jauns e-pasts ar PDF ir atvērts jūsu e-pasta programmā – ievadiet adresātu un nosūtiet."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Jauns e-pasts ar PDF ir atvērts jūsu e-pasta programmā – ievadiet adresātu un nosūtiet.",
+ "– {0} von {1} Angaben ausgefüllt": "– aizpildīti {0} no {1} datiem",
+ "Feld {0} von {1}: {2}": "Lauks {0} no {1}: {2}",
+ "Nächstes Feld →": "Nākamais lauks →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "piem., steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Zināšanai (neobligāti) – saņem rezultātu kopijā"
 }

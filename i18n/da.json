@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail til {0} er klar – åbn .eml-filen, og send den.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Påmindelse til {0} er åbnet i Deres e-mailprogram – kontrollér den, og send den.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Fejlrapporten er åbnet i Deres e-mailprogram – klik på »Send« (til {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "En ny e-mail med PDF’en er åbnet i Deres e-mailprogram – angiv modtager, og send den."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "En ny e-mail med PDF’en er åbnet i Deres e-mailprogram – angiv modtager, og send den.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} af {1} oplysninger udfyldt",
+ "Feld {0} von {1}: {2}": "Felt {0} af {1}: {2}",
+ "Nächstes Feld →": "Næste felt →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "f.eks. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Til orientering (valgfrit) – modtager resultatet som kopi"
 }

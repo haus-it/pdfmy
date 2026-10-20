@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mailul către {0} este pregătit – deschideți fișierul .eml și trimiteți-l.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Mementoul pentru {0} este deschis în programul dvs. de e-mail – verificați-l și trimiteți-l.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Raportul de eroare este deschis în programul dvs. de e-mail – faceți clic pe „Trimitere” (către {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Un e-mail nou cu PDF-ul este deschis în programul dvs. de e-mail – introduceți destinatarul și trimiteți-l."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Un e-mail nou cu PDF-ul este deschis în programul dvs. de e-mail – introduceți destinatarul și trimiteți-l.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} din {1} date completate",
+ "Feld {0} von {1}: {2}": "Câmpul {0} din {1}: {2}",
+ "Nächstes Feld →": "Câmpul următor →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "de ex. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Spre informare (opțional) – primește rezultatul în copie"
 }

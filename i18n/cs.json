@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail pro {0} je připraven – otevřete soubor .eml a odešlete jej.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Připomínka pro {0} je otevřena ve vašem e-mailovém programu – zkontrolujte ji a odešlete.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Hlášení chyby je otevřeno ve vašem e-mailovém programu – klikněte prosím na „Odeslat“ (na {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nový e-mail s PDF je otevřen ve vašem e-mailovém programu – zadejte příjemce a odešlete."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nový e-mail s PDF je otevřen ve vašem e-mailovém programu – zadejte příjemce a odešlete.",
+ "– {0} von {1} Angaben ausgefüllt": "– vyplněno {0} z {1} údajů",
+ "Feld {0} von {1}: {2}": "Pole {0} z {1}: {2}",
+ "Nächstes Feld →": "Další pole →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "např. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Na vědomí (volitelné) – obdrží výsledek v kopii"
 }

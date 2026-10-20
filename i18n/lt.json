@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "El. laiškas gavėjui {0} paruoštas – atidarykite .eml failą ir išsiųskite.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Priminimas adresatui {0} atidarytas jūsų el. pašto programoje – patikrinkite ir išsiųskite.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Klaidos ataskaita atidaryta jūsų el. pašto programoje – spustelėkite „Siųsti“ (adresu {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Naujas el. laiškas su PDF atidarytas jūsų el. pašto programoje – įveskite gavėją ir išsiųskite."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Naujas el. laiškas su PDF atidarytas jūsų el. pašto programoje – įveskite gavėją ir išsiųskite.",
+ "– {0} von {1} Angaben ausgefüllt": "– užpildyta {0} iš {1} duomenų",
+ "Feld {0} von {1}: {2}": "Laukas {0} iš {1}: {2}",
+ "Nächstes Feld →": "Kitas laukas →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "pvz., steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Susipažinti (neprivaloma) – gauna rezultato kopiją"
 }

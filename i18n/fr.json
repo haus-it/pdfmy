@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail à {0} préparé – ouvrez le fichier .eml et envoyez-le.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Le rappel à {0} est ouvert dans votre programme de messagerie – vérifiez-le et envoyez-le.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Le rapport d’erreur est ouvert dans votre programme de messagerie – veuillez cliquer sur « Envoyer » (à {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Un nouvel e-mail avec le PDF est ouvert dans votre programme de messagerie – saisissez le destinataire et envoyez-le."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Un nouvel e-mail avec le PDF est ouvert dans votre programme de messagerie – saisissez le destinataire et envoyez-le.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} sur {1} informations renseignées",
+ "Feld {0} von {1}: {2}": "Champ {0} sur {1} : {2}",
+ "Nächstes Feld →": "Champ suivant →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p. ex. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Pour information (facultatif) – reçoit une copie du résultat"
 }

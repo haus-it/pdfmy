@@ -16,11 +16,14 @@
 
   const isDay = d => /^\d{4}-\d{2}-\d{2}$/.test(String(d || '')) && !isNaN(new Date(d + 'T00:00:00Z'));
   const day = d => isDay(d) ? d.split('-').reverse().join('.') : '';
-  function create({ title, requester = {}, signers = [], message = '', id, due = '' } = {}) {
+  // „Zur Kenntnis“: Adressen, die nicht unterschreiben, aber das Ergebnis in Kopie bekommen (Komma, Semikolon oder Leerzeichen getrennt)
+  const ccList = v => [...new Set((Array.isArray(v) ? v : String(v || '').split(/[\s,;]+/)).map(x => clean(x).toLowerCase()).filter(Boolean))].slice(0, 20);
+  function create({ title, requester = {}, signers = [], message = '', id, due = '', cc = '' } = {}) {
     const list = signers.map(s => ({ name: clean(s.name), email: clean(s.email).toLowerCase() })).filter(s => s.name || s.email);
+    const kn = ccList(cc);
     return {
       v: 1, id: id || Date.now().toString(36) + Math.random().toString(36).slice(2, 8), title: clean(title) || 'Dokument', created: now(),
-      requester: { name: clean(requester.name), email: clean(requester.email).toLowerCase() }, message: String(message || '').slice(0, 2000), ...(isDay(due) ? { due } : {}),
+      requester: { name: clean(requester.name), email: clean(requester.email).toLowerCase() }, message: String(message || '').slice(0, 2000), ...(isDay(due) ? { due } : {}), ...(kn.length ? { cc: kn } : {}),
       signers: list.map(s => ({ ...s, status: 'offen', signedAt: '', hash: '' })), fields: [],
       log: [{ at: now(), what: 'angefragt', by: clean(requester.name) || clean(requester.email) }],
     };
@@ -31,6 +34,7 @@
     if (!r.signers.length) p.push('Mindestens eine Person eintragen, die unterschreiben soll.');
     r.signers.forEach((s, i) => { if (!s.name) p.push(`Name von Person ${i + 1} fehlt.`); if (!isMail(s.email)) p.push(`E-Mail-Adresse von ${s.name || 'Person ' + (i + 1)} fehlt oder ist ungültig.`); });
     if (!isMail(r.requester.email)) p.push('Ihre eigene E-Mail-Adresse fehlt – dorthin kommt das unterschriebene Dokument zurück.');
+    const bad = (r.cc || []).filter(x => !isMail(x)); if (bad.length) p.push(`Ungültige Adresse bei „Zur Kenntnis“: ${bad.join(', ')}.`);
     return p;
   }
   function parse(json) {
@@ -38,6 +42,7 @@
       const r = typeof json === 'string' ? JSON.parse(json) : json;
       if (!r || r.v !== 1 || !Array.isArray(r.signers) || !Array.isArray(r.fields) || !r.id) return null;
       r.log = Array.isArray(r.log) ? r.log : []; if (r.due && !isDay(r.due)) delete r.due;
+      if (r.cc) { r.cc = ccList(r.cc).filter(isMail); if (!r.cc.length) delete r.cc; }
       r.fields = r.fields.filter(f => Number.isInteger(f.s) && f.s >= 0 && f.s < r.signers.length && Number.isInteger(f.page) && [f.x, f.y, f.w, f.h].every(v => typeof v === 'number' && v >= 0 && v <= 1))
         .map(f => ({ ...f, t: TYPES[f.t] ? f.t : 'sign', label: clean(f.label).slice(0, 80), v: f.v == null ? '' : String(f.v).slice(0, 500) }));
       return r;
@@ -77,11 +82,11 @@
     const i = next(r), n = r.signers.length, sig = from || r.requester.name, di = declined(r);
     if (di >= 0) {
       const d = r.signers[di];
-      return { to: r.requester.email, cc: r.signers.filter(s => s.status === DONE).map(s => s.email).filter(Boolean).join(', '), subject: `Abgelehnt: ${r.title}`,
+      return { to: r.requester.email, cc: [...r.signers.filter(s => s.status === DONE).map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: `Abgelehnt: ${r.title}`,
         body: `Guten Tag,\n\n${d.name || d.email} hat „${r.title}“ nicht unterschrieben${d.reason ? `.\n\nBegründung: ${d.reason}` : ' (ohne Begründung).'}\n\nDie Anfrage ist damit beendet. Bereits unterschrieben: ${r.signers.filter(s => s.status === DONE).map(s => s.name).join(', ') || 'niemand'}.\n\nViele Grüße${sig ? '\n' + sig : ''}` };
     }
     if (i < 0) {
-      return { to: r.requester.email, cc: r.signers.map(s => s.email).filter(Boolean).join(', '), subject: `Unterschrieben: ${r.title}`,
+      return { to: r.requester.email, cc: [...r.signers.map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: `Unterschrieben: ${r.title}`,
         body: `Guten Tag,\n\nalle ${n} Personen haben „${r.title}“ unterschrieben:\n\n${r.signers.map(s => `• ${s.name} – ${fmt(s.signedAt)}`).join('\n')}\n\nDas unterschriebene Dokument ist angehängt. In PDFMy (https://pdfmy.de) zeigt es beim Öffnen die Übersicht mit Prüfsummen.\n\nViele Grüße${sig ? '\n' + sig : ''}` };
     }
     const s = r.signers[i], after = r.signers[i + 1];
@@ -109,14 +114,14 @@
   const utcDay = t => Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
   function template(r, name, pageIndex = f => f.page, today = new Date()) {
     const days = isDay(r.due) ? Math.max(0, Math.round((new Date(r.due + 'T00:00:00Z') - utcDay(today)) / 86400000)) : 0;
-    return { name: clean(name).slice(0, 80) || r.title, title: r.title, message: r.message, days, signers: r.signers.map(s => ({ name: s.name, email: s.email })),
+    return { name: clean(name).slice(0, 80) || r.title, title: r.title, message: r.message, days, ...(r.cc ? { cc: r.cc.slice() } : {}), signers: r.signers.map(s => ({ name: s.name, email: s.email })),
       fields: r.fields.map(f => ({ s: f.s, t: f.t || 'sign', label: f.label || '', page: pageIndex(f), x: f.x, y: f.y, w: f.w, h: f.h })).filter(f => f.page >= 0) };
   }
   const dueIn = (days, today = new Date()) => days > 0 ? new Date(utcDay(today) + days * 86400000).toISOString().slice(0, 10) : '';
   // Zeilen der Prüfprotokoll-Seite (wird nach der letzten Unterschrift an die PDF angehängt)
   function auditLines(r, docHash = '') {
     const L = [['h', 'Prüfprotokoll – Unterschriftsanfrage'], ['p', `Dokument: ${r.title}`], ['p', `Anfrage-ID: ${r.id}`], ['p', `Erstellt: ${fmt(r.created)} von ${r.requester.name || ''}${r.requester.email ? ` <${r.requester.email}>` : ''}`],
-      ['p', `Status: ${complete(r) ? 'abgeschlossen – alle haben unterschrieben' : declined(r) >= 0 ? 'abgelehnt' : 'offen'}`], ['g', '']];
+      ['p', `Status: ${complete(r) ? 'abgeschlossen – alle haben unterschrieben' : declined(r) >= 0 ? 'abgelehnt' : 'offen'}`], ...(r.cc?.length ? [['p', `Zur Kenntnis: ${r.cc.join(', ')}`]] : []), ['g', '']];
     L.push(['s', 'Unterzeichner']);
     r.signers.forEach((s, i) => {
       L.push(['b', `${i + 1}. ${s.name}${s.email ? ` <${s.email}>` : ''}`]);

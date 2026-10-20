@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Mezua prest ({0}): ireki .eml fitxategia eta bidali.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "{0}(r)entzako oroigarria zure posta-programan irekita dago: egiaztatu eta bidali.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Errore-txostena zure posta-programan irekita dago: egin klik «Bidali» botoian ({0} helbidera).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "PDFa duen mezu berri bat zure posta-programan irekita dago: idatzi hartzailea eta bidali."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "PDFa duen mezu berri bat zure posta-programan irekita dago: idatzi hartzailea eta bidali.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0}/{1} datu beteta",
+ "Feld {0} von {1}: {2}": "{0}/{1} eremua: {2}",
+ "Nächstes Feld →": "Hurrengo eremua →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "adib. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Jakinaren gainean (aukerakoa) – emaitzaren kopia jasotzen du"
 }

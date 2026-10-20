@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Zur Unterschrift senden: „Zur Kenntnis“ und geführtes Ausfüllen
+- **Zur Kenntnis:** Adressen, die nicht unterschreiben, bekommen das Ergebnis (Abschluss oder Ablehnung) in Kopie – nicht die Zwischenschritte. Bereinigt (klein, ohne Doppelte, Komma/Semikolon/Leerzeichen), geprüft, im Prüfprotokoll, in Vorlagen und in der Anlage der PDF.
+- **Geführt ausfüllen:** Leiste zeigt „x von y Angaben ausgefüllt“ (aktualisiert beim Tippen); „Nächstes Feld →“ springt in Lesereihenfolge von Feld zu Feld, zuerst zu offenen Pflichtangaben, fokussiert Eingabe bzw. „Hier unterschreiben“; Enter im Textfeld springt weiter.
+- Getestet: Unit-Test (Bereinigung, Prüfung, Kopie nur beim Ergebnis, Protokoll, Vorlage, JSON); Ende-zu-Ende (Fortschritt, „Nächstes Feld“, Enter, Kopie-Empfänger nur in der Abschluss-E-Mail, Protokollzeile); axe ohne Befund (hell, dunkel, mobil).
+
 ### pdfmy Scan 1.8.8 (Windows): E-Mails öffnen sich direkt im Mail-Programm
 - Vorbereitete E-Mails (Zur Unterschrift senden, Weitersenden, Ablehnen, Erinnern, Teilen → E-Mail, Fehlerbericht) öffnet PDFMy mit pdfmy Scan direkt als neue, sendebereite Nachricht mit Anhang (Outlook: .eml mit „X-Unsent: 1“) – kein Umweg mehr über den Download-Ordner. Neuer Endpunkt `POST /maildraft` (Herkunftsprüfung, Pflicht-Header; Entwürfe im eigenen Ordner, nach einem Tag entfernt).
 - Ohne pdfmy Scan (und am Mac/unter Linux) wie bisher als .eml-Datei; Meldungen in der Statuszeile sagen, was passiert ist.

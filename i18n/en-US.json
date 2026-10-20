@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Email to {0} prepared – open the .eml file and send it.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Reminder to {0} is open in your email program – check it and send it.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "The error report is open in your email program – please click “Send” (to {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "A new email with the PDF is open in your email program – enter the recipient and send it."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "A new email with the PDF is open in your email program – enter the recipient and send it.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} of {1} entries completed",
+ "Feld {0} von {1}: {2}": "Field {0} of {1}: {2}",
+ "Nächstes Feld →": "Next field →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "e.g., steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "For information (optional) – receives a copy of the result"
 }

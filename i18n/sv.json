@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-post till {0} förberett – öppna .eml-filen och skicka.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Påminnelse till {0} är öppnad i ditt e-postprogram – kontrollera och skicka.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Felrapporten är öppnad i ditt e-postprogram – klicka på ”Skicka” (till {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Ett nytt e-postmeddelande med PDF:en är öppnat i ditt e-postprogram – fyll i mottagare och skicka."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Ett nytt e-postmeddelande med PDF:en är öppnat i ditt e-postprogram – fyll i mottagare och skicka.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} av {1} uppgifter ifyllda",
+ "Feld {0} von {1}: {2}": "Fält {0} av {1}: {2}",
+ "Nächstes Feld →": "Nästa fält →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "t.ex. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "För kännedom (valfritt) – får resultatet som kopia"
 }

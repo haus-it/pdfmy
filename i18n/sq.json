@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Email-i për {0} u përgatit – hapni skedarin .eml dhe dërgojeni.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Kujtesa për {0} është hapur në programin tuaj të email-it – kontrollojeni dhe dërgojeni.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Raporti i gabimit është hapur në programin tuaj të email-it – klikoni „Dërgo“ (te {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Një email i ri me PDF-në është hapur në programin tuaj të email-it – shkruani marrësin dhe dërgojeni."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Një email i ri me PDF-në është hapur në programin tuaj të email-it – shkruani marrësin dhe dërgojeni.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} nga {1} të dhëna të plotësuara",
+ "Feld {0} von {1}: {2}": "Fusha {0} nga {1}: {2}",
+ "Nächstes Feld →": "Fusha tjetër →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p.sh. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Për dijeni (opsionale) – merr rezultatin në kopje"
 }

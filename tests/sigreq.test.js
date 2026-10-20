@@ -117,3 +117,16 @@ test('Vorlagen: Personen, Felder, Nachricht, Frist in Tagen; Frist wieder als Da
   assert.deepEqual(t.fields, [{ s: 0, t: 'date', label: '', page: 1, x: 0.1, y: 0.2, w: 0.2, h: 0.03 }]);   // Werte nicht in die Vorlage
   assert.equal(R.dueIn(11, today), '2026-10-30'); assert.equal(R.dueIn(0, today), '');
 });
+
+test('Zur Kenntnis: Adressen bereinigt und geprüft, Kopie nur beim Ergebnis, im Protokoll und in der Vorlage', () => {
+  let r = R.create({ title: 'Vertrag', requester: { name: 'A', email: 'a@b.de' }, signers: [{ name: 'Max', email: 'm@x.de' }], cc: ' Steuer@Kanzlei.de; buchhaltung@firma.de, steuer@kanzlei.de ' });
+  assert.deepEqual(r.cc, ['steuer@kanzlei.de', 'buchhaltung@firma.de']); assert.deepEqual(R.problems(r), []);
+  assert.match(R.problems(R.create({ requester: { email: 'a@b.de' }, signers: [{ name: 'M', email: 'm@x.de' }], cc: 'kaputt' })).join(), /Zur Kenntnis“: kaputt/);
+  assert.doesNotMatch(R.mail(r).cc, /kanzlei/);   // die unterschreibende Person bekommt keine Kopie-Empfänger
+  r = R.markSigned(r, 0, {}); assert.match(R.mail(r).cc, /m@x\.de, steuer@kanzlei\.de, buchhaltung@firma\.de/);
+  const d = R.decline(R.create({ requester: { email: 'a@b.de' }, signers: [{ name: 'M', email: 'm@x.de' }], cc: 'k@k.de' }), 0, {});
+  assert.match(R.mail(d).cc, /k@k\.de/);
+  assert.match(R.auditLines(r).map(l => l[1]).join('\n'), /Zur Kenntnis: steuer@kanzlei\.de, buchhaltung@firma\.de/);
+  assert.deepEqual(R.template(r, 'V').cc, ['steuer@kanzlei.de', 'buchhaltung@firma.de']);
+  assert.deepEqual(R.parse(R.serialize(r)).cc, ['steuer@kanzlei.de', 'buchhaltung@firma.de']);
+});

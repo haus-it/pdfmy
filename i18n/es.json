@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Correo para {0} preparado: abra el archivo .eml y envíelo.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "El recordatorio para {0} está abierto en su programa de correo: revíselo y envíelo.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "El informe de errores está abierto en su programa de correo: haga clic en «Enviar» (a {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Hay un correo nuevo con el PDF abierto en su programa de correo: indique el destinatario y envíelo."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Hay un correo nuevo con el PDF abierto en su programa de correo: indique el destinatario y envíelo.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} de {1} datos completados",
+ "Feld {0} von {1}: {2}": "Campo {0} de {1}: {2}",
+ "Nächstes Feld →": "Campo siguiente →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p. ej., steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Para conocimiento (opcional) – recibe una copia del resultado"
 }

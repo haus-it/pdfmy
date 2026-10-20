@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Το email προς {0} είναι έτοιμο – ανοίξτε το αρχείο .eml και στείλτε το.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Η υπενθύμιση προς {0} είναι ανοιχτή στο πρόγραμμα email σας – ελέγξτε την και στείλτε την.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Η αναφορά σφάλματος είναι ανοιχτή στο πρόγραμμα email σας – κάντε κλικ στην «Αποστολή» (προς {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Ένα νέο email με το PDF είναι ανοιχτό στο πρόγραμμα email σας – συμπληρώστε τον παραλήπτη και στείλτε το."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Ένα νέο email με το PDF είναι ανοιχτό στο πρόγραμμα email σας – συμπληρώστε τον παραλήπτη και στείλτε το.",
+ "– {0} von {1} Angaben ausgefüllt": "– συμπληρώθηκαν {0} από {1} στοιχεία",
+ "Feld {0} von {1}: {2}": "Πεδίο {0} από {1}: {2}",
+ "Nächstes Feld →": "Επόμενο πεδίο →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "π.χ. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Προς ενημέρωση (προαιρετικά) – λαμβάνει αντίγραφο του αποτελέσματος"
 }

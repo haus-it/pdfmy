@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-mail aan {0} voorbereid – open het .eml-bestand en verzend het.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Herinnering aan {0} is geopend in uw e-mailprogramma – controleer en verzend het.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Het foutrapport is geopend in uw e-mailprogramma – klik op „Verzenden” (aan {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nieuwe e-mail met de pdf is geopend in uw e-mailprogramma – vul de ontvanger in en verzend het."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nieuwe e-mail met de pdf is geopend in uw e-mailprogramma – vul de ontvanger in en verzend het.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} van {1} gegevens ingevuld",
+ "Feld {0} von {1}: {2}": "Veld {0} van {1}: {2}",
+ "Nächstes Feld →": "Volgend veld →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "bijv. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Ter informatie (optioneel) – ontvangt het resultaat in kopie"
 }

@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-kiri adressaadile {0} on ette valmistatud – avage .eml-fail ja saatke see ära.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Meeldetuletus isikule {0} on teie e-posti programmis avatud – kontrollige ja saatke ära.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Veaaruanne on teie e-posti programmis avatud – klõpsake palun „Saada“ (aadressile {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Uus PDF-iga e-kiri on teie e-posti programmis avatud – sisestage saaja ja saatke ära."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Uus PDF-iga e-kiri on teie e-posti programmis avatud – sisestage saaja ja saatke ära.",
+ "– {0} von {1} Angaben ausgefüllt": "– täidetud {0} andmet {1}-st",
+ "Feld {0} von {1}: {2}": "Väli {0} {1}-st: {2}",
+ "Nächstes Feld →": "Järgmine väli →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "nt steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Teadmiseks (valikuline) – saab tulemuse koopiana"
 }

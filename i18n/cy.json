@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-bost at {0} yn barod – agorwch y ffeil .eml a’i hanfon.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Mae’r nodyn atgoffa i {0} ar agor yn eich rhaglen e-bost – gwiriwch ef a’i anfon.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Mae’r adroddiad gwall ar agor yn eich rhaglen e-bost – cliciwch ‘Anfon’ (at {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Mae e-bost newydd gyda’r PDF ar agor yn eich rhaglen e-bost – rhowch y derbynnydd a’i anfon."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Mae e-bost newydd gyda’r PDF ar agor yn eich rhaglen e-bost – rhowch y derbynnydd a’i anfon.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} o {1} manylion wedi’u llenwi",
+ "Feld {0} von {1}: {2}": "Maes {0} o {1}: {2}",
+ "Nächstes Feld →": "Maes nesaf →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "e.e. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Er gwybodaeth (dewisol) – yn cael copi o’r canlyniad"
 }

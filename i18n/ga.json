@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Ríomhphost chuig {0} ullmhaithe – oscail an comhad .eml agus seol é.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Tá an meabhrúchán chuig {0} oscailte i do ríomhchlár ríomhphoist – seiceáil é agus seol é.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Tá an tuairisc earráide oscailte i do ríomhchlár ríomhphoist – cliceáil “Seol” (chuig {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Tá ríomhphost nua leis an PDF oscailte i do ríomhchlár ríomhphoist – cuir isteach an faighteoir agus seol é."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Tá ríomhphost nua leis an PDF oscailte i do ríomhchlár ríomhphoist – cuir isteach an faighteoir agus seol é.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} as {1} sonraí líonta",
+ "Feld {0} von {1}: {2}": "Réimse {0} as {1}: {2}",
+ "Nächstes Feld →": "An chéad réimse eile →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "m.sh. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Mar eolas (roghnach) – faigheann sé cóip den toradh"
 }

@@ -433,7 +433,7 @@ $('#btnSigReq').onclick = () => {
   $('#reqTitle').value = cur?.title || state.meta?.subject || filename().replace(/\.pdf$/i, '');
   $('#reqRows').innerHTML = (cur?.signers.length ? cur.signers : [{}]).map(reqRow).join('');
   $('#reqMe').value = cur?.requester.name || S.author || ''; $('#reqMeMail').value = cur?.requester.email || LS.get('reqMail', '') || team[S.author] || '';
-  $('#reqMsg').value = cur?.message || ''; $('#reqDue').value = cur?.due || ''; $('#reqErr').textContent = '';
+  $('#reqMsg').value = cur?.message || ''; $('#reqDue').value = cur?.due || ''; $('#reqCc').value = (cur?.cc || []).join(', '); $('#reqErr').textContent = '';
   reqTplFill(cur ? '' : null);
   $('#reqDlg').showModal(); $('#reqRows input').focus();
 };
@@ -447,7 +447,7 @@ function reqTplFill(sel) {
 $('#reqTpl').onchange = () => {
   const t = reqTpls()[+$('#reqTpl').value]; $('#reqTplDel').hidden = !t; if (!t) return;
   $('#reqTitle').value = t.title || $('#reqTitle').value; $('#reqMsg').value = t.message || '';
-  $('#reqDue').value = SigReq.dueIn(t.days);
+  $('#reqDue').value = SigReq.dueIn(t.days); $('#reqCc').value = (t.cc || []).join(', ');
   $('#reqRows').innerHTML = (t.signers.length ? t.signers : [{}]).map(reqRow).join('');
 };
 $('#reqTplDel').onclick = () => {
@@ -470,7 +470,7 @@ $('#reqCancel').onclick = () => $('#reqDlg').close();
 $('#reqForm').onsubmit = ev => {
   ev.preventDefault();
   const signers = [...$('#reqRows').children].map(r => ({ name: r.querySelector('[data-rn]').value, email: r.querySelector('[data-rm]').value }));
-  const r = SigReq.create({ title: $('#reqTitle').value, requester: { name: $('#reqMe').value, email: $('#reqMeMail').value }, signers, message: $('#reqMsg').value, due: $('#reqDue').value, id: reqDraft && req ? req.id : undefined });
+  const r = SigReq.create({ title: $('#reqTitle').value, requester: { name: $('#reqMe').value, email: $('#reqMeMail').value }, signers, message: $('#reqMsg').value, due: $('#reqDue').value, cc: $('#reqCc').value, id: reqDraft && req ? req.id : undefined });
   const pr = SigReq.problems(r); if (pr.length) { $('#reqErr').textContent = pr.join(' '); return; }
   // Felder behalten, soweit die Person noch dabei ist
   if (reqDraft && req) r.fields = req.fields.map(f => ({ ...f, s: r.signers.findIndex(s => s.email === req.signers[f.s]?.email) })).filter(f => f.s >= 0);
@@ -519,7 +519,7 @@ window.reqRender = (ov, p) => {
   req.fields.forEach((f, k) => {
     if (f.pg !== p) return;
     const sg = req.signers[f.s]; if (!sg || (!reqDraft && sg.status === SigReq.DONE)) return;
-    const t = f.t || 'sign', el = document.createElement('div'); el.className = 'reqf' + (f.s === mine ? ' mine' : ''); placeEl(el, f);
+    const t = f.t || 'sign', el = document.createElement('div'); el.className = 'reqf' + (f.s === mine ? ' mine' : ''); placeEl(el, f); el.dataset.rfk = k;
     const lb = document.createElement('span'); lb.className = 'rfl'; lb.setAttribute('translate', 'no');
     lb.textContent = `${RQ_ICON[t]} ${t === 'sign' ? '' : (f.label || SigReq.TYPES[t]) + ' – '}${sg.name}`;
     if (reqDraft) { lb.dataset.rfcycle = k; lb.title = 'Klick: anderer Person zuordnen'; }
@@ -532,7 +532,23 @@ window.reqRender = (ov, p) => {
   });
 };
 // Eingaben der Person in Text- und Ankreuzfeldern merken (überleben das Neuzeichnen)
-$('#overlay').addEventListener('input', ev => { const k = ev.target.dataset.rfval ?? ev.target.dataset.rfchk; if (k == null || !req) return; req.fields[+k].v = ev.target.type === 'checkbox' ? (ev.target.checked ? 'ja' : '') : ev.target.value; });
+// Geführtes Ausfüllen: Felder der Person in Lesereihenfolge (Seite, von oben nach unten, links nach rechts); zuerst offene Pflichtangaben
+const reqMyFields = () => { const i = reqMine(); return i < 0 ? [] : req.fields.map((f, k) => ({ f, k })).filter(x => x.f.s === i && x.f.pg).sort((a, b) => reqIdx(a.f) - reqIdx(b.f) || a.f.y - b.f.y || a.f.x - b.f.x); };
+let reqCursor = -1;
+function reqNextField() {
+  const list = reqMyFields(); if (!list.length) return;
+  const open = list.filter(x => x.f.t === 'text' && !String(x.f.v || '').trim());
+  const pick = open.length ? open.find(x => list.indexOf(x) > reqCursor) || open[0] : list[(reqCursor + 1) % list.length];
+  reqCursor = list.indexOf(pick); reqGoto(pick.f); renderAnns();
+  setTimeout(() => {
+    const el = document.querySelector(`#overlay [data-rfk="${pick.k}"]`); if (!el) return;
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' }); (el.querySelector('input') || el.querySelector('button'))?.focus({ preventScroll: true });
+  }, 80);
+  status(`Feld ${reqCursor + 1} von ${list.length}: ${pick.f.label || SigReq.TYPES[pick.f.t || 'sign']}`);
+}
+// Enter in einem Textfeld: weiter zum nächsten Feld
+$('#overlay').addEventListener('keydown', ev => { if (ev.key === 'Enter' && ev.target.matches?.('[data-rfval]') && req) { ev.preventDefault(); reqNextField(); } });
+$('#overlay').addEventListener('input', ev => { const k = ev.target.dataset.rfval ?? ev.target.dataset.rfchk; if (k == null || !req) return; req.fields[+k].v = ev.target.type === 'checkbox' ? (ev.target.checked ? 'ja' : '') : ev.target.value; renderReqBar(); });
 $('#overlay').addEventListener('change', ev => { if (ev.target.dataset.rfchk != null && req) req.fields[+ev.target.dataset.rfchk].v = ev.target.checked ? 'ja' : ''; });
 $('#overlay').addEventListener('click', ev => {
   const d = ev.target.closest('[data-rfdel]'); if (d && req) { req.fields.splice(+d.dataset.rfdel, 1); renderAnns(); renderReqBar(); return; }
@@ -628,7 +644,7 @@ async function reqReadForm(r, bytes) {
 window.reqLoad = (json, docIdx, bytes) => {
   const r = SigReq.parse(json); if (!r) return;
   req = r; reqDoc = docIdx; reqDraft = false; reqArm = -1; reqSigned = false; reqHash = ''; reqStart = state.pages.length;   // Seiten dieses Dokuments folgen ab hier (auch als Scan aufbereitete)
-  reqBytes = new Uint8Array(bytes);   // empfangene Fassung: Unterschriften werden daran angehängt (js/pdfinc.js)
+  reqBytes = new Uint8Array(bytes); reqCursor = -1;   // empfangene Fassung: Unterschriften werden daran angehängt (js/pdfinc.js)
   sha256(bytes).then(h => { reqHash = h; });
   reqExt = false;
   reqReadForm(r, bytes).then(ext => { if (req === r && ext) { reqExt = true; renderReqBar(); renderAnns(); toast(`${r.signers[SigReq.next(r)]?.name || 'Die Person'} hat offenbar in einem anderen PDF-Programm unterschrieben – bitte prüfen und „Als unterschrieben übernehmen …“.`, 9000); } }).catch(e => console.warn('Formularfelder lesen:', e));
@@ -819,8 +835,10 @@ function renderReqBar() {
     btns = b('info', 'Übersicht');
   } else if (i >= 0) {
     text = `${req.requester.name || req.requester.email} bittet um Unterschrift: ${req.signers[i].name} ist dran (${d} von ${n} unterschrieben)`;
+    const need = req.fields.filter(f => f.s === i && f.t === 'text' && f.pg);
+    if (need.length && !reqSigned) text += ` – ${need.filter(f => String(f.v || '').trim()).length} von ${need.length} Angaben ausgefüllt`;
     if (reqExt && !reqSigned) text += ` – ${req.signers[i].name} hat offenbar in einem anderen PDF-Programm unterschrieben`;
-    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + b('decline', 'Ablehnen …') + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
+    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + b('decline', 'Ablehnen …') + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
   } else {
     text = `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
     btns = b('info', 'Übersicht') + b('dsign', 'Zusätzlich digital signieren …');
@@ -837,6 +855,7 @@ $('#reqBtns').addEventListener('click', ev => {
   else if (k === 'sign') reqSignNow();
   else if (k === 'fwd') reqForward();
   else if (k === 'tpl') reqTplSave();
+  else if (k === 'nextf') reqNextField();
   else if (k === 'ext') {
     const s = req.signers[reqMine()]; if (!s) return;
     if (!confirm(`${s.name} hat diese Fassung in einem anderen PDF-Programm ausgefüllt und unterschrieben?\n\nBitte vorher auf der Seite prüfen. Danach bereitet PDFMy die E-Mail an die nächste Person vor.`)) return;

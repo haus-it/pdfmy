@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Sähköposti henkilölle {0} valmisteltu – avaa .eml-tiedosto ja lähetä.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Muistutus henkilölle {0} on avattu sähköpostiohjelmaasi – tarkista ja lähetä.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Virheraportti on avattu sähköpostiohjelmaasi – napsauta ”Lähetä” (osoitteeseen {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Uusi sähköposti PDF:n kanssa on avattu sähköpostiohjelmaasi – lisää vastaanottaja ja lähetä."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Uusi sähköposti PDF:n kanssa on avattu sähköpostiohjelmaasi – lisää vastaanottaja ja lähetä.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0}/{1} tietoa täytetty",
+ "Feld {0} von {1}: {2}": "Kenttä {0}/{1}: {2}",
+ "Nächstes Feld →": "Seuraava kenttä →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "esim. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Tiedoksi (valinnainen) – saa tuloksen kopiona"
 }

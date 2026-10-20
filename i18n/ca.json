@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Correu per a {0} preparat: obriu el fitxer .eml i envieu-lo.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "El recordatori per a {0} és obert al vostre programa de correu: reviseu-lo i envieu-lo.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "L'informe d'error és obert al vostre programa de correu: feu clic a «Envia» (a {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Hi ha un correu nou amb el PDF obert al vostre programa de correu: indiqueu el destinatari i envieu-lo."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Hi ha un correu nou amb el PDF obert al vostre programa de correu: indiqueu el destinatari i envieu-lo.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} de {1} dades emplenades",
+ "Feld {0} von {1}: {2}": "Camp {0} de {1}: {2}",
+ "Nächstes Feld →": "Camp següent →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "p. ex. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Per a coneixement (opcional) – rep una còpia del resultat"
 }

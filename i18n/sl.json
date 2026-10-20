@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "E-pošta za {0} je pripravljena – odprite datoteko .eml in jo pošljite.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Opomnik za {0} je odprt v vašem e-poštnem programu – preverite ga in pošljite.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Poročilo o napaki je odprto v vašem e-poštnem programu – kliknite „Pošlji“ (na {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Novo e-poštno sporočilo s PDF-jem je odprto v vašem e-poštnem programu – vnesite prejemnika in pošljite."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Novo e-poštno sporočilo s PDF-jem je odprto v vašem e-poštnem programu – vnesite prejemnika in pošljite.",
+ "– {0} von {1} Angaben ausgefüllt": "– izpolnjenih {0} od {1} podatkov",
+ "Feld {0} von {1}: {2}": "Polje {0} od {1}: {2}",
+ "Nächstes Feld →": "Naslednje polje →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "npr. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "V vednost (neobvezno) – prejme rezultat v kopiji"
 }

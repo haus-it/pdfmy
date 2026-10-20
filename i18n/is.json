@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Tölvupóstur til {0} undirbúinn – opnið .eml-skrána og sendið.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Áminning til {0} er opin í póstforritinu – yfirfarið hana og sendið.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Villuskýrslan er opin í póstforritinu – smellið á „Senda“ (til {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nýr tölvupóstur með PDF-skjalinu er opinn í póstforritinu – sláið inn viðtakanda og sendið."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Nýr tölvupóstur með PDF-skjalinu er opinn í póstforritinu – sláið inn viðtakanda og sendið.",
+ "– {0} von {1} Angaben ausgefüllt": "– {0} af {1} upplýsingum útfylltar",
+ "Feld {0} von {1}: {2}": "Reitur {0} af {1}: {2}",
+ "Nächstes Feld →": "Næsti reitur →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "t.d. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Til upplýsingar (valfrjálst) – fær niðurstöðuna í afriti"
 }

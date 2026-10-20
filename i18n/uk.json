@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "Лист для {0} підготовлено – відкрийте файл .eml і надішліть.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "Нагадування для {0} відкрито у вашій поштовій програмі – перевірте й надішліть.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Звіт про помилку відкрито у вашій поштовій програмі – натисніть «Надіслати» (на {0}).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Новий лист із PDF відкрито у вашій поштовій програмі – вкажіть одержувача й надішліть."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "Новий лист із PDF відкрито у вашій поштовій програмі – вкажіть одержувача й надішліть.",
+ "– {0} von {1} Angaben ausgefüllt": "– заповнено {0} з {1} відомостей",
+ "Feld {0} von {1}: {2}": "Поле {0} з {1}: {2}",
+ "Nächstes Feld →": "Наступне поле →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "напр. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "До відома (необов’язково) – отримує результат у копії"
 }

@@ -2166,5 +2166,10 @@
  "E-Mail an {0} vorbereitet – die .eml-Datei öffnen und senden.": "{0} için e-posta hazırlandı – .eml dosyasını açıp gönderin.",
  "Erinnerung an {0} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.": "{0} için hatırlatma e-posta programınızda açıldı – kontrol edip gönderin.",
  "Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an {0}).": "Hata raporu e-posta programınızda açıldı – lütfen “Gönder” düğmesine tıklayın ({0} adresine).",
- "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "PDF’li yeni bir e-posta, e-posta programınızda açıldı – alıcıyı girip gönderin."
+ "Neue E-Mail mit dem PDF ist in Ihrem Mail-Programm geöffnet – Empfänger eintragen und senden.": "PDF’li yeni bir e-posta, e-posta programınızda açıldı – alıcıyı girip gönderin.",
+ "– {0} von {1} Angaben ausgefüllt": "– {1} bilgiden {0} tanesi dolduruldu",
+ "Feld {0} von {1}: {2}": "Alan {0}/{1}: {2}",
+ "Nächstes Feld →": "Sonraki alan →",
+ "z. B. steuer@kanzlei.de, buchhaltung@firma.de": "ör. steuer@kanzlei.de, buchhaltung@firma.de",
+ "Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie": "Bilgi için (isteğe bağlı) – sonucu kopya olarak alır"
 }
