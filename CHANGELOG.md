@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Texterkennung für Arabisch, Persisch, Hebräisch, Chinesisch, Japanisch, Koreanisch
+- 7 weitere Sprachen der Texterkennung (Tesseract 4.0.0_best_int über @tesseract.js-data 1.0.0, je 0,4–2 MB, Laden bei Bedarf; gzip geprüft): ara, fas, heb, chi_sim, chi_tra, jpn, kor – wählbar unter „Dokumentsprache“; Arabisch und Chinesisch erkennt die Automatik selbst (die sicherste Schrift gewinnt).
+- **Unsichtbare Textebene für jede Schrift:** neue Platzhalterschrift `js/glyphless.js` (564 Byte TrueType, CIDFontType2/Identity-H, ToUnicode) wie GlyphLessFont in Tesseract/OCRmyPDF – Zeichen, die die eingebettete DejaVu-Schrift nicht hat, bleiben durchsuchbar und kopierbar, ohne große CJK-Schrift. Chinesisch/Japanisch: Zeichen einer Zeile als ein Textstück, im erkannten Text und in Markdown/HTML ohne Leerzeichen dazwischen.
+- **Fehler behoben:** Die automatische Drehungserkennung drehte Seiten in nichtlateinischer Schrift (lateinisches Modell → Zeichensalat) fälschlich um 90°; jetzt nur noch bei lesbarem Ergebnis (Sicherheit ≥ 60 %). Die Schriftprüfung lief nicht, wenn der Zeichensalat zufällig „deutsch“ aussah.
+- Getestet: im Browser chinesische und arabische Seite automatisch erkannt (89 % / 86 %), PDF/A: veraPDF PDF/A-2b und PDF/UA-1 PASS, qpdf ohne Befund, Text mit pypdf (strict) korrekt (Arabisch in logischer Reihenfolge); `tests/glyphless.test.js` (2 Fälle).
+
 ### Übersetzen ohne Upload
 - Menü → **„Übersetzen …“** (wie „PDF übersetzen“ bei iLovePDF, Smallpdf, PDFgear – aber ohne Upload): eingebauter Übersetzer des Browsers (Translator API, Chrome ab 138), läuft auf dem Gerät; Sprachpaket lädt der Browser einmalig. Gliederung über `Tools.docBlocks`, Satz mit `js/textpdf.js` – Ergebnis als neue PDF im eigenen Reiter (Dateiname mit Sprachkürzel). Tabellenzeilen werden im Zusammenhang übersetzt, Zahlen/Beträge bleiben. Andere Browser: Hinweis statt Funktion.
 - Getestet: im sichtbaren Chrome 155 (DE → EN, Sprachpaket geladen, Überschrift/Absatz/Liste/Tabelle übersetzt, neuer Reiter), headless ohne Sprachpaket: saubere Fehlermeldung; axe ohne Befund.

@@ -1651,7 +1651,7 @@ async function ocrPage(p) {
         if (r.conf > best.conf) best = { dir, conf: r.conf };
       }
       state.ocrLabel = lbl;
-      if (best.dir && best.conf > res.conf + 15) {
+      if (best.dir && best.conf > res.conf + 15 && best.conf >= 60) {   // nur bei wirklich lesbarem Ergebnis – Zeichensalat (z. B. chinesische Seite im lateinischen Modell) nicht drehen
         await rotatePage(p, best.dir); img = p.processed; res = await recognize(img);
         p.label += ` (${best.dir === 180 ? 'auf dem Kopf' : 'quer'} → gedreht)`;
       }
@@ -1660,7 +1660,7 @@ async function ocrPage(p) {
     const prim = ocrPrimary();
     let lang = Letter.detectLang(res.text, prim);
     // Kyrillisch oder Griechisch: Die erste Erkennung (lateinische Schrift) liefert dann nur Zeichensalat mit geringer Sicherheit
-    if (res.conf < 62 && !(Letter.detectLang(res.text, 'xxx') === prim)) {
+    if (res.conf < 62 && (!(Letter.detectLang(res.text, 'xxx') === prim) || res.conf < 45)) {   // sehr unsicher: auch wenn der Zeichensalat „deutsch“ aussieht
       const small = Imaging.scaled(img, 1400), lbl = state.ocrLabel; let best = null;
       state.ocrLabel = '';
       for (const c of scriptProbes(prim)) {
@@ -1672,6 +1672,17 @@ async function ocrPage(p) {
         } catch (e) { console.warn('Schrift', c, e); }
       }
       state.ocrLabel = lbl;
+      // Immer noch unsicher (auch Kyrillisch/Griechisch passt kaum): Arabisch und Chinesisch probieren, die sicherste Schrift gewinnt
+      if ((!best || best.conf < 70) && res.conf < 45 && res.text.replace(/\s/g, '').length > 15) {
+        for (const c of ocrHint && EXTRA_SCRIPTS.includes(ocrHint) ? [ocrHint, ...EXTRA_SCRIPTS.filter(x => x !== ocrHint)] : EXTRA_SCRIPTS) {
+          try {
+            status(`${lbl || 'Seite'}: prüfe ${I18N.ocrName(c)} …`);
+            const r = await recognizeLangs(small, [c]);
+            if (r.conf > res.conf + 15 && r.conf > 60 && (!best || r.conf > best.conf)) best = { c, conf: r.conf, text: r.text };
+            if (best?.c === c && best.conf >= 80) break;
+          } catch (e) { console.warn('Schrift', c, e); }
+        }
+      }
       if (best) lang = Letter.scriptOf(best.text) === 'cyrl' ? (Letter.cyrLang(best.text) || best.c) : best.c;
       else if (lang && res.conf < 45) lang = null;   // Zeichensalat: lieber keine Sprache raten
     }
@@ -1682,12 +1693,17 @@ async function ocrPage(p) {
         if (r2.conf >= res.conf - 3 || !LATIN_OCR.has(lang)) { res = r2; p.lang = lang; if (!LATIN_OCR.has(lang)) ocrHint = lang; }
       } catch (e) { console.warn('Sprache', lang, e); }
     } else if (prim !== 'deu') p.lang = prim;
+    // Chinesisch/Japanisch: Tesseract liefert jedes Zeichen als Wort – im Text ohne Leerzeichen dazwischen
+    if (/^(chi|jpn)/.test(p.lang || ocrPrimary())) res = { ...res, text: res.text.replace(new RegExp(`(${CJK_RE.source}) (?=${CJK_RE.source})`, 'g'), '$1') };
     p.ocr = res;
   } finally { p.busy = false; }
 }
 // Sprache der Texterkennung: Einstellung „Dokumentsprache“ (automatisch = Deutsch, weitere Sprachen werden erkannt)
-const NONLATIN_OCR = new Set(['rus', 'ukr', 'bel', 'bul', 'srp', 'mkd', 'ell']);
+const NONLATIN_OCR = new Set(['rus', 'ukr', 'bel', 'bul', 'srp', 'mkd', 'ell', 'ara', 'fas', 'heb', 'chi_sim', 'chi_tra', 'jpn', 'kor']);
+// Chinesisch und Japanisch: Wörter ohne Leerzeichen dazwischen (Koreanisch trennt Wörter mit Leerzeichen)
+const CJK_RE = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef]/;
 const LATIN_OCR = { has: l => !NONLATIN_OCR.has(l) };
+const EXTRA_SCRIPTS = ['ara', 'chi_sim'];   // automatisch geprüft; weitere (Persisch, Hebräisch, Japanisch, Koreanisch …) über die Einstellung „Dokumentsprache“
 const ocrPrimary = () => S.ocrLang && S.ocrLang !== 'auto' && I18N.byOcr(S.ocrLang) ? S.ocrLang : 'deu';
 // Zuletzt gefundene nichtlateinische Sprache – die nächsten Seiten probieren sie zuerst (sonst die Sprache der Oberfläche)
 let ocrHint = NONLATIN_OCR.has(I18N.info.ocr) ? I18N.info.ocr : null;
@@ -2477,6 +2493,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   out.registerFontkit(await loadFontkit());
   const font = await out.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
   const charset = new Set(font.getCharacterSet());
+  let glf = null;   // Platzhalterschrift für Zeichen ohne Glyphe (einmal je Dokument)
   const safe = s => [...s].filter(ch => charset.has(ch.codePointAt(0))).join('');
   stamps.watermark = safe(stamps.watermark); stamps.safe = safe;
   const T = pdfa ? makeTagger(out) : null;   // barrierefrei (PDF/UA-1) zusammen mit PDF/A
@@ -2552,13 +2569,32 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     // Unsichtbare Textebene (Render-Modus 3) → durchsuchbar und kopierbar
     if (words?.length) {
       page.pushOperators(pushGraphicsState(), setTextRenderingMode(TextRenderingMode.Invisible));
+      let glfName = null;
       for (const line of textLines(words)) {
-        const items = line.map(w => ({ w, t: safe(w.t) })).filter(o => o.t && font.widthOfTextAtSize(o.t, 1));
+        // Wörter mit Zeichen außerhalb der eingebetteten Schrift (Chinesisch, Japanisch, Koreanisch …) über die Platzhalterschrift (js/glyphless.js)
+        const items = line.map(w => { const t = safe(w.t); return t === w.t ? { w, t } : { w, t: w.t, g: true }; }).filter(o => o.t && (o.g ? Glyphless.hex(o.t) : font.widthOfTextAtSize(o.t, 1)))
+          // aufeinanderfolgende chinesische/japanische Zeichen (je ein „Wort“ von Tesseract) zu einem Textstück – sonst Leerzeichen beim Kopieren
+          .reduce((acc, o) => {
+            const prev = acc[acc.length - 1];
+            if (prev?.g && o.g && CJK_RE.test(prev.t.slice(-1)) && CJK_RE.test(o.t[0])) {
+              const x1 = Math.max(prev.w.x + prev.w.w, o.w.x + o.w.w), y0 = Math.min(prev.w.y, o.w.y), y1 = Math.max(prev.w.y + prev.w.h, o.w.y + o.w.h);
+              prev.w = { ...prev.w, w: x1 - prev.w.x, y: y0, h: y1 - y0 }; prev.t += o.t;
+            } else acc.push({ ...o });
+            return acc;
+          }, []);
         if (!items.length) continue;
         T?.open('P');
-        items.forEach(({ w, t }, k) => {
+        items.forEach(({ w, t, g }, k) => {
+          const last = k === items.length - 1, cjkPair = !last && CJK_RE.test(t.slice(-1)) && CJK_RE.test(items[k + 1].t[0]);   // CJK: keine Leerzeichen zwischen Wörtern
+          if (g) {
+            const hx = Glyphless.hex(last || cjkPair ? t : t + ' '), n = hx.length / 4, size = w.h * H; if (!n || !(size > 0.5)) return;
+            if (!glfName) { glf ||= Glyphless.embed(PDFLib, out); glfName = page.node.newFontDictionary('GLF', glf); }
+            page.pushOperators(PDFLib.beginText(), PDFLib.setFontAndSize(glfName, size), setCharacterSqueeze(Math.max(1, 100 * (w.w * W) / (n * 0.5 * size))),
+              PDFLib.moveText(ox + w.x * W, oy + H - (w.y + w.h) * H + w.h * H * 0.18), PDFLib.showText(PDFHexString.of(hx)), PDFLib.endText(), setCharacterSqueeze(100));
+            return;
+          }
           const unit = font.widthOfTextAtSize(t, 1), sz = Math.min((w.w * W) / unit, w.h * H * 1.6); if (!(sz > 0.5)) return;
-          page.drawText(k < items.length - 1 ? t + ' ' : t, { x: ox + w.x * W, y: oy + H - (w.y + w.h) * H + w.h * H * 0.18, size: sz, font });
+          page.drawText(last || cjkPair ? t : t + ' ', { x: ox + w.x * W, y: oy + H - (w.y + w.h) * H + w.h * H * 0.18, size: sz, font });
         });
         T?.close();
       }

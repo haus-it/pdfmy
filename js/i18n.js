@@ -50,7 +50,12 @@
     ['be', 'Беларуская', 'Belarussisch', 'bel', 'be-BY'],
   ].map(([code, name, de, ocr, bcp]) => ({ code, name, de, ocr, bcp }));
   // Texterkennung: zusätzlich Serbisch in lateinischer Schrift
-  const OCR_EXTRA = [{ code: 'sr-Latn', name: 'Srpski (latinica)', de: 'Serbisch (lateinisch)', ocr: 'srp_latn', bcp: 'sr-Latn-RS' }];
+  // weitere Sprachen nur für die Texterkennung (keine Oberflächensprache); Sprachdaten werden erst bei Bedarf geladen
+  const OCR_EXTRA = [{ code: 'sr-Latn', name: 'Srpski (latinica)', de: 'Serbisch (lateinisch)', ocr: 'srp_latn', bcp: 'sr-Latn-RS' },
+    { code: 'ar', name: 'العربية', de: 'Arabisch', ocr: 'ara', bcp: 'ar' }, { code: 'fa', name: 'فارسی', de: 'Persisch', ocr: 'fas', bcp: 'fa-IR' },
+    { code: 'he', name: 'עברית', de: 'Hebräisch', ocr: 'heb', bcp: 'he-IL' }, { code: 'zh-Hans', name: '中文（简体）', de: 'Chinesisch (vereinfacht)', ocr: 'chi_sim', bcp: 'zh-CN' },
+    { code: 'zh-Hant', name: '中文（繁體）', de: 'Chinesisch (traditionell)', ocr: 'chi_tra', bcp: 'zh-TW' }, { code: 'ja', name: '日本語', de: 'Japanisch', ocr: 'jpn', bcp: 'ja-JP' },
+    { code: 'ko', name: '한국어', de: 'Koreanisch', ocr: 'kor', bcp: 'ko-KR' }];
   const byCode = c => LANGS.find(l => l.code === c);
   const byOcr = o => LANGS.find(l => l.ocr === o) || OCR_EXTRA.find(l => l.ocr === o);
   const ocrName = o => (byOcr(o) || {}).de || o;

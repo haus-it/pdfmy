@@ -89,6 +89,8 @@ Prüfwerkzeuge: **veraPDF 1.30.3** (PDF/A, PDF/UA) und **qpdf 11 über pikepdf 9
 
 Wiederholung der Prüfung: bei jeder Änderung an der PDF-Erzeugung (`buildPdf`, `makePdfA`, `buildInvoicePdf`) bzw. am E-Rechnungs-Generator (`js/einvoice-out.js`) und mindestens vierteljährlich.
 
+Nachtrag 20.10.2026 (weitere Schriften): Textebene für Zeichen ohne Glyphe in der eingebetteten Schrift über eine eingebettete Platzhalterschrift (CIDFontType2, Identity-H, CIDToGIDMap-Stream, ToUnicode nach ISO 32000-1, 9.10); PDF/A-Ausgabe mit chinesischer und arabischer Seite: veraPDF PDF/A-2b PASS, PDF/UA-1 PASS, qpdf ohne Befund.
+
 Nachtrag 20.10.2026 (Übersetzen): Übersetzung ausschließlich über die im Browser eingebaute, lokal laufende Translator-API (keine Übertragung von Dokumentinhalten an PDFMy oder Dritte; Sprachmodell stellt der Browser-Hersteller bereit). Ergebnis als Hinweis „maschinell übersetzt“ gekennzeichnet (ISO 9001, 8.5.1 – Lenkung der Ausgabe).
 
 Nachtrag 20.10.2026 (Zeitstempel): Signaturen optional mit Zeitstempel nach RFC 3161 (öffentliche, nicht qualifizierte Dienste) (PAdES-Baseline B-T, ETSI EN 319 142-1); unabhängig geprüft mit pyHanko (Signatur und Zeitstempel intakt, ENTIRE_FILE) und veraPDF (PDF/A-2b, PDF/UA-1 PASS). ISO 27001 A.8.24/A.8.20: Weiterleitung über pdfmy Scan nur an eine feste Liste öffentlicher Zeitstempeldienste (kein offener Proxy), Anfrage ≤ 4 KB, Antwort ≤ 64 KB; übertragen wird nur ein Hashwert (keine Dokumentinhalte, DSGVO-neutral).
@@ -132,6 +134,7 @@ Nachtrag 17.10.2026: „Text ändern“ mit originalgetreuen Schriften (DejaVu S
 | @cantoo/pdf-lib (nur Verschlüsselung) | 2.4.2 | MIT | – |
 | pdf.js (pdfjs-dist, „legacy“-Build, ES-Modul) | 6.4.299 | Apache-2.0 | aktuell; CVE-2024-4367 (betraf ≤ 4.1.392) durch Update behoben. Bilddecoder (OpenJPEG, JBIG2, QCMS) als WebAssembly lokal; JavaScript in PDFs wird nicht ausgeführt (kein Scripting-Modul eingebunden) |
 | tesseract.js / -core | 5.1.1 | Apache-2.0 | – |
+| Tesseract-Sprachdaten, weitere Schriften (Arabisch, Persisch, Hebräisch, Chinesisch vereinfacht/traditionell, Japanisch, Koreanisch; @tesseract.js-data 1.0.0, 4.0.0_best_int, gzip-Prüfung am 20.10.2026) | 4.0.0 | Apache-2.0 (Daten), MIT (Paket) | lokal, Laden bei Bedarf |
 | Tesseract-Sprachdaten (40 Sprachen: alle europäischen Amtssprachen und weitere inkl. Türkisch, Russisch, Ukrainisch, Belarussisch, Serbisch kyrillisch/lateinisch; 4.0.0_best_int über @tesseract.js-data, gzip-Prüfung beim Einspielen am 18.10.2026) | 4.0.0 | Apache-2.0 | lokal, Laden bei Bedarf |
 | qrcode-generator | 1.4.4 | MIT | – |
 | jsQR (QR-Codes lesen) | 1.4.0 | Apache-2.0 | lokal, keine Netzwerkzugriffe |

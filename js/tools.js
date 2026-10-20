@@ -238,6 +238,9 @@
   // Gliederung aus Wortpositionen (pdf.js-Text oder Texterkennung): Überschriften (Schriftgröße/fett), Aufzählungen,
   // Absätze (Zeilenabstand, Silbentrennung) und Tabellen (mehrere Zeilen mit gleich vielen Spalten). Grundlage für Markdown und HTML.
   // pages: [[{ t, x, y, w, h, f?: { bold } }]] mit Koordinaten 0…1 (y von oben)
+  // Wörter verbinden – zwischen chinesischen/japanischen Zeichen ohne Leerzeichen
+  const CJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef]/;
+  const cat = (a, b) => CJK.test(a.slice(-1)) && CJK.test(b[0]) ? a + b : a + ' ' + b;
   function docBlocks(pages) {
     const all = pages.flat().filter(w => w && w.t && w.t.trim());
     const hs = all.map(w => w.h).sort((a, b) => a - b), body = hs.length ? hs[Math.floor(hs.length / 2)] : 0.012;
@@ -253,9 +256,9 @@
       }
       const lines = rows.map(r => {
         const s = r.words.sort((a, b) => a.x - b.x), cells = [];
-        for (const w of s) { const c = cells[cells.length - 1]; if (c && w.x - (c.x + c.w) < Math.max(r.h * 1.6, 0.02)) { c.t += ' ' + w.t; c.w = w.x + w.w - c.x; } else cells.push({ t: w.t, x: w.x, w: w.w }); }
+        for (const w of s) { const c = cells[cells.length - 1]; if (c && w.x - (c.x + c.w) < Math.max(r.h * 1.6, 0.02)) { c.t = cat(c.t, w.t); c.w = w.x + w.w - c.x; } else cells.push({ t: w.t, x: w.x, w: w.w }); }
         const hMed = r.words.map(w => w.h).sort((a, b) => a - b)[Math.floor(r.words.length / 2)];
-        return { cells, text: cells.map(c => c.t).join(' ').replace(/\s+/g, ' ').trim(), y: r.cy - r.h / 2, h: hMed, bottom: r.cy + r.h / 2, x: s[0].x,
+        return { cells, text: cells.map(c => c.t).reduce((a, t) => a ? cat(a, t) : t, '').replace(/\s+/g, ' ').trim(), y: r.cy - r.h / 2, h: hMed, bottom: r.cy + r.h / 2, x: s[0].x,
           bold: r.words.every(w => w.f?.bold) };
       });
       let i = 0;
