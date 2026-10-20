@@ -4,6 +4,15 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Übersetzen ohne Upload
+- Menü → **„Übersetzen …“** (wie „PDF übersetzen“ bei iLovePDF, Smallpdf, PDFgear – aber ohne Upload): eingebauter Übersetzer des Browsers (Translator API, Chrome ab 138), läuft auf dem Gerät; Sprachpaket lädt der Browser einmalig. Gliederung über `Tools.docBlocks`, Satz mit `js/textpdf.js` – Ergebnis als neue PDF im eigenen Reiter (Dateiname mit Sprachkürzel). Tabellenzeilen werden im Zusammenhang übersetzt, Zahlen/Beträge bleiben. Andere Browser: Hinweis statt Funktion.
+- Getestet: im sichtbaren Chrome 155 (DE → EN, Sprachpaket geladen, Überschrift/Absatz/Liste/Tabelle übersetzt, neuer Reiter), headless ohne Sprachpaket: saubere Fehlermeldung; axe ohne Befund.
+
+### Digitale Signatur mit Zeitstempel (PAdES B-T)
+- Speichern-Dialog: **„mit Zeitstempel“** neben „Digital signieren“ (wie Stirling-PDF, Acrobat): Zeitstempel nach RFC 3161 als unsigniertes Attribut signature-time-stamp – PAdES-Baseline B-T (ETSI EN 319 142-1). Gilt für eigene Zertifikate (.p12/.pfx) und Windows-Zertifikate/Signaturkarten. Anfrage über pdfmy Scan (`/tsa`, Zeitstempeldienste erlauben keine Browser-Anfragen), Dienste DigiCert → Sectigo → DFN → FreeTSA der Reihe nach; geprüft werden Status, Hashwert und Nonce der Antwort. Übertragen wird nur der SHA-256-Wert des Signaturwerts. Platz für die Signatur mit Zeitstempel 24 KB.
+- **Fehler behoben:** Die Platzhaltergröße der Signatur lag in einer gemeinsamen Variablen – zwei gleichzeitige Signiervorgänge hätten sich stören können; jetzt je Vorgang.
+- Getestet: `tests/pdfsign.test.js` (neuer Fall: Dienstfehler, gleichzeitige Vorgänge); live gegen DigiCert und Sectigo (`tests/_ts_live.js`); pyHanko: intakt, gültig, ganze Datei, Zeitstempel intakt mit Zeit; veraPDF PDF/A-2b und PDF/UA-1 PASS für signierte PDF/A mit Zeitstempel; Windows-CMS (SignedCms) bleibt beim Einbau Byte für Byte erhalten; im Browser über pdfmy Scan 1.9.0 signiert, PDFMy-Prüfung zeigt „Mit Zeitstempel“; axe ohne Befund.
+
 ### Abläufe speichern
 - Speichern-Dialog: **„Als Ablauf speichern …“** merkt Format, Größe, Seitenzahlen, Kopf-/Fußzeile, Wasserzeichen, Bates, Briefbogen, Bereinigen, Ränder/A4, Graustufen und Bögen unter einem Namen; Auswahl oben unter „Ablauf“ übernimmt alles mit einem Klick (wie „Workflows“ bei iLovePDF und Sejda). Eigene Abläufe für PDF/PDF/A erscheinen auch in der **Stapelverarbeitung**. Passwort und Signatur werden nie gespeichert; Speicherort nur im Browser des Geräts.
 - **Fehler behoben:** Graustufen-Speichern verlor in der Stapelverarbeitung die Textebene noch nicht angezeigter PDF-Seiten; „In Graustufen“ blieb beim nächsten Öffnen des Dialogs angehakt.

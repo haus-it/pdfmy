@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Service Worker: hÃ¤lt App, Bibliotheken und OCR-Daten offline vor.
    App-Dateien: zuerst Netz (damit Updates sofort greifen), sonst Cache. vendor/: Cache zuerst (Ã¤ndert sich nur mit VERSION). */
-const VERSION = 'app-v142';
+const VERSION = 'app-v144';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/qr.js', 'js/formdetect.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',

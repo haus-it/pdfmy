@@ -651,7 +651,7 @@ async function rotateTargets(dir) {
 function refresh() {
   renderThumbs(); renderStage(); renderSide();
   const n = state.pages.length;
-  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = !n;
+  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = $('#btnTranslate').disabled = !n;
   $('#btnFile').hidden = !n;
   // Statuszeile: „Seite 2 von 11“ (wie in Word); Klick oder Strg+G springt zu einer Seite
   $('#pageNav').hidden = !n;
@@ -3466,7 +3466,7 @@ async function scanHelperRunning() {
     const r = await fetch(SCAN_API + '/status', { signal: AbortSignal.timeout(1500), cache: 'no-store' });
     const d = r.ok && await r.json(); if (!d || d.app !== 'pdfmy-scan') return false;
     const changed = state.scanVersion !== d.version;
-    state.scanVersion = d.version; state.scanPades = d.pades === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux';
+    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll
     if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store' }).catch(() => {});
     if (changed && typeof renderVerBar === 'function') setTimeout(renderVerBar, 0);   // Statuszeile sofort nachziehen (z. B. nach einem Update)

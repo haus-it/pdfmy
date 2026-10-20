@@ -89,6 +89,10 @@ Prüfwerkzeuge: **veraPDF 1.30.3** (PDF/A, PDF/UA) und **qpdf 11 über pikepdf 9
 
 Wiederholung der Prüfung: bei jeder Änderung an der PDF-Erzeugung (`buildPdf`, `makePdfA`, `buildInvoicePdf`) bzw. am E-Rechnungs-Generator (`js/einvoice-out.js`) und mindestens vierteljährlich.
 
+Nachtrag 20.10.2026 (Übersetzen): Übersetzung ausschließlich über die im Browser eingebaute, lokal laufende Translator-API (keine Übertragung von Dokumentinhalten an PDFMy oder Dritte; Sprachmodell stellt der Browser-Hersteller bereit). Ergebnis als Hinweis „maschinell übersetzt“ gekennzeichnet (ISO 9001, 8.5.1 – Lenkung der Ausgabe).
+
+Nachtrag 20.10.2026 (Zeitstempel): Signaturen optional mit Zeitstempel nach RFC 3161 (öffentliche, nicht qualifizierte Dienste) (PAdES-Baseline B-T, ETSI EN 319 142-1); unabhängig geprüft mit pyHanko (Signatur und Zeitstempel intakt, ENTIRE_FILE) und veraPDF (PDF/A-2b, PDF/UA-1 PASS). ISO 27001 A.8.24/A.8.20: Weiterleitung über pdfmy Scan nur an eine feste Liste öffentlicher Zeitstempeldienste (kein offener Proxy), Anfrage ≤ 4 KB, Antwort ≤ 64 KB; übertragen wird nur ein Hashwert (keine Dokumentinhalte, DSGVO-neutral).
+
 Nachtrag 20.10.2026 (Graustufen): Graustufen-Ausgabe (Seitenbild in Grauwerten, Vektor-Elemente DeviceGray) mit veraPDF geprüft: PDF/A-2b PASS, PDF/UA-1 PASS; Kontrolle per Rendering (keine Pixel mit Farbsättigung).
 
 Nachtrag 20.10.2026 (Markdown/HTML): Ausgabe als Markdown (CommonMark) und HTML5 mit lang-Attribut, Titel, Überschriftenhierarchie und Tabellenköpfen (th scope=col); erzeugte Datei mit axe-core (WCAG 2.1 AA) ohne Befund. Inhalte werden maskiert (kein HTML-/Markdown-Einschleusen aus dem PDF-Text).

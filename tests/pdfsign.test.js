@@ -60,3 +60,16 @@ test('Windows-Zertifikat (pdfmy Scan): SubFilter je nach Fähigkeit des Helfers'
   assert.equal(await sub({ ...base, pades: true }), 'ETSI.CAdES.detached');   // ab pdfmy Scan 1.8.0 (signing-certificate-v2)
   assert.equal(await sub(base), 'adbe.pkcs7.detached');                      // ältere Helfer: bisheriges Format
 });
+
+test('Zeitstempel: Fehler des Dienstes bricht ab, gleichzeitige Signaturen stören sich nicht', async () => {
+  const s = Sign.readP12(p12, 'Geheim-123');
+  const doc = await PDFLib.PDFDocument.create(); doc.addPage([595, 842]);
+  const bytes = await doc.save();
+  await assert.rejects(Sign.signPdf(bytes, s, { tsa: async () => { throw new Error('TSA aus'); } }), /TSA aus/);
+  await assert.rejects(Sign.signPdf(bytes, s, { tsa: async () => new Uint8Array([0x30, 0x03, 0x30, 0x01, 0x02]) }), /./);
+  // ohne Zeitstempel neben einem laufenden Vorgang mit großem Platzhalter: beide bleiben in sich stimmig
+  const slow = Sign.signPdf(bytes, s, { tsa: () => new Promise((_, no) => setTimeout(() => no(new Error('langsam')), 50)) }).catch(e => e);
+  const plain = await Sign.signPdf(bytes, s, {});
+  assert.match(Buffer.from(plain).toString('latin1'), /\/ByteRange \[ 0 \d+ \d+ \d+ \]/);
+  assert.match((await slow).message, /langsam/);
+});

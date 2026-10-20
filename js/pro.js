@@ -1346,9 +1346,76 @@ async function batchConvert(files, { act, out }) {
   status($('#batchSum').textContent);
 }
 
+/* ---------- Übersetzen ohne Upload: eingebauter Übersetzer des Browsers (Translator API, Chrome ab 138) – läuft auf dem Gerät ----------
+   Wie „PDF übersetzen“ bei iLovePDF, Smallpdf und PDFgear, aber ohne den Text an einen Dienst zu schicken. Ergebnis: neue PDF in einem
+   eigenen Reiter mit Überschriften, Absätzen, Listen und Tabellen (Gliederung aus Tools.docBlocks, Satz mit js/textpdf.js). */
+// Sprachen der Oberfläche, je Sprache einmal (Englisch, Serbisch …): Kürzel nach BCP 47 ohne Region
+const trLangs = () => [...new Map(I18N.LANGS.map(l => [l.code.split('-')[0], l])).entries()].map(([code, l]) => ({ code, name: code === 'en' ? 'English' : l.name }));
+const trFill = (sel, v) => { sel.replaceChildren(...trLangs().map(l => { const o = new Option(l.name, l.code); o.setAttribute('translate', 'no'); return o; })); sel.value = [...sel.options].some(o => o.value === v) ? v : 'en'; };
+function openTranslate() {
+  if (!state.pages.length) return;
+  if (!('Translator' in self)) {
+    alert('Übersetzen ohne Upload nutzt den eingebauten Übersetzer des Browsers. Er steht in Google Chrome ab Version 138 am Computer zur Verfügung – bitte PDFMy dort öffnen. Ihr Dokument wird dabei nicht hochgeladen.');
+    return;
+  }
+  const from = docLang(state.pages).split('-')[0], ui = I18N.lang.split('-')[0];
+  trFill($('#trFrom'), from);
+  trFill($('#trTo'), LS.get('trTo', '') || (ui === from ? (from === 'en' ? 'de' : 'en') : ui));
+  $('#trInfo').textContent = ''; $('#trGo').disabled = false;
+  $('#trDlg').showModal();
+}
+$('#trCancel').onclick = () => $('#trDlg').close();
+$('#trForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const to = $('#trTo').value, from = $('#trFrom').value;
+  LS.set('trTo', to);
+  if (to === from) { $('#trInfo').textContent = 'Das Dokument ist bereits in dieser Sprache.'; return; }
+  $('#trGo').disabled = true;
+  let tr;
+  try {
+    const av = await Translator.availability({ sourceLanguage: from, targetLanguage: to });
+    if (av === 'unavailable') { $('#trInfo').textContent = 'Diese Sprachkombination kann der eingebaute Übersetzer nicht.'; $('#trGo').disabled = false; return; }
+    // Sprachpaket einmalig laden (vom Browser-Hersteller, nicht von PDFMy) – Klick zählt als Bestätigung
+    tr = await Translator.create({ sourceLanguage: from, targetLanguage: to, monitor(m) { m.addEventListener('downloadprogress', ev => { $('#trInfo').textContent = `Sprachpaket wird geladen … ${Math.round(ev.loaded * 100)} %`; }); } });
+  } catch (err) { console.error(err); $('#trInfo').textContent = 'Übersetzer nicht verfügbar: ' + err.message; $('#trGo').disabled = false; return; }
+  $('#trDlg').close();
+  try {
+    const pages = docPages(), name = baseName();
+    await waitForOcr(pages);
+    const words = [];
+    for (const p of pages) words.push(p.ocr?.words || (p.kind === 'pdf' && p.native !== false ? await nativeWords(p) : null) || []);
+    const blocks = Tools.docBlocks(words), cache = new Map();
+    let done = 0; const total = blocks.reduce((n, b) => n + (b.type === 'table' ? b.rows.flat().length : b.text ? 1 : 0), 0) || 1;
+    const t = async s => {
+      if (!s || !/\p{L}/u.test(s)) return s;   // Zahlen, Beträge, Daten bleiben
+      if (!cache.has(s)) cache.set(s, await tr.translate(s));
+      status(`Übersetze … ${Math.round(++done / total * 100)} %`, done / total);
+      return cache.get(s);
+    };
+    for (const b of blocks) {
+      // Tabellen zeilenweise im Zusammenhang übersetzen (einzelne Wörter ohne Kontext werden oft falsch), Zellen danach wieder trennen
+      if (b.type === 'table') b.rows = await Promise.all(b.rows.map(async r => {
+        if (r.filter(c => /\p{L}/u.test(c)).length < 2) return Promise.all(r.map(t));
+        const whole = await t(r.join(' | ')), parts = whole.split(/\s*\|\s*/);
+        return parts.length === r.length ? parts.map((x, i) => /\p{L}/u.test(r[i]) ? x : r[i]) : Promise.all(r.map(t));
+      }));
+      else if (b.text) b.text = await t(b.text);
+    }
+    const md = Tools.toMarkdown(blocks);
+    const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
+    const bytes = await TextPdf.build(PDFLib, { text: md, kind: 'md', title: name, fonts: { fontkit: fk, regular, bold, mono } });
+    newTab();
+    await importFiles([new File([bytes], `${name}_${to.toUpperCase()}.pdf`, { type: 'application/pdf' })]);
+    state.dirty = true;
+    status(`Übersetzung fertig (${from.toUpperCase()} → ${to.toUpperCase()}) – im neuen Reiter. Maschinell übersetzt: bitte vor dem Versand prüfen.`);
+  } catch (err) { console.error(err); status('Übersetzen nicht möglich: ' + err.message); }
+  finally { tr?.destroy?.(); }
+});
+$('#btnTranslate').onclick = () => { closeMenu(); openTranslate(); };
+
 /* ---------- Befehlssuche (Strg+K): jede Funktion per Tastatur finden – Kacheln, Werkzeuge, Menü, Kopfzeile ---------- */
 const CMD_SYNONYMS = { scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
-  protect: 'verschlüsseln sperren', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
+  protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
   bates: 'nummerieren akte', btnCam: 'foto handy smartphone kamera abfotografieren', tileCam: 'foto handy smartphone kamera abfotografieren', btnTax: 'datev buchhaltung steuer belege monat export', tileTax: 'datev buchhaltung steuer belege monat export', pdfa: 'archiv revisionssicher', btnJournal: 'fristen post liste', btnSettings: 'optionen kürzel', btnFile: 'ablage archivieren' };
 function commands() {
   const out = [], seen = new Set();
@@ -1879,7 +1946,25 @@ function renderSignInfo() {
   $('#x-sign-cert').textContent = signCert && signCert.type !== 'win' ? 'Andere Datei …' : 'Zertifikat wählen …';
   // Windows-Zertifikate nur mit pdfmy Scan ab 1.6.0 (am PC)
   $('#x-sign-win').hidden = IS_MOBILE || state.scanMac || !state.scanVersion || verLess(state.scanVersion, '1.6.0');
+  $('#x-sign-ts-l').hidden = !state.scanTsa;   // Zeitstempel nur über pdfmy Scan (ab 1.9.0 / 1.1.9)
+  $('#x-sign-ts').checked = !!state.scanTsa && LS.get('signTs', true);
 }
+$('#x-sign-ts').addEventListener('change', e => LS.set('signTs', e.target.checked));
+// Zeitstempel (RFC 3161) über pdfmy Scan – Zeitstempeldienste erlauben keine direkten Anfragen aus dem Browser (kein CORS).
+// Übertragen wird nur der Hashwert der Signatur (32 Byte in der Anfrage), nicht das Dokument. Bei Ausfall nächster Dienst.
+const tsaFetch = () => !$('#x-sign-ts').checked || !state.scanTsa ? undefined : async req => {
+  let s = ''; for (const b of req) s += String.fromCharCode(b);
+  let last = null;
+  for (const url of PdfSign.TSA) {
+    try {
+      const r = await scanApi('/tsa', { method: 'POST', body: JSON.stringify({ url, data: btoa(s) }) }, 30000), d = await r.json();
+      if (!r.ok) throw new Error(d.error || 'Zeitstempel nicht möglich');
+      return Uint8Array.from(atob(d.data), c => c.charCodeAt(0));
+    } catch (e) { last = e; }
+  }
+  throw new Error('Kein Zeitstempeldienst erreichbar' + (last ? ' (' + last.message + ')' : '') + ' – ohne Zeitstempel erneut speichern oder später versuchen.');
+};
+const tsNote = o => { if (o.tsTime) toast(`Signiert mit Zeitstempel vom ${I18N.fmtDate(o.tsTime)}, ${o.tsTime.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} Uhr.`, 5000); };
 $('#x-sign-win').onclick = async () => {
   let certs = [];
   try { certs = (await (await scanApi('/certs', {}, 15000)).json()).certs || []; } catch (e) { return toast('pdfmy Scan antwortet nicht – bitte starten.', 5000); }
@@ -1918,7 +2003,9 @@ async function signFlow(bytes) {
       return Uint8Array.from(atob(d.cms), c => c.charCodeAt(0));
     } };
     state.signer = signer;
-    try { return await PdfSign.signPdf(bytes, signer, { contact: S.author || '' }); }
+    const so = { contact: S.author || '', tsa: tsaFetch() };
+    if (so.tsa) await loadForge();   // Zeitstempel einbauen braucht den Signatur-Baustein
+    try { const out = await PdfSign.signPdf(bytes, signer, so); tsNote(so); return out; }
     catch (e) { if (/abgelehnt/.test(e.message)) return null; throw e; }
   }
   await loadForge();
@@ -1938,7 +2025,9 @@ async function signFlow(bytes) {
     renderSignInfo();
   } else $('#pwSignReason').value = $('#pwSignReason').value || '';
   status(`Signiere als ${state.signer.name} …`);
-  return PdfSign.signPdf(bytes, state.signer, { reason: $('#pwSignReason').value.trim(), contact: S.author || '' });
+  if (tsaFetch()) await loadForge();
+  const so = { reason: $('#pwSignReason').value.trim(), contact: S.author || '', tsa: tsaFetch() };
+  const out = await PdfSign.signPdf(bytes, state.signer, so); tsNote(so); return out;
 }
 
 

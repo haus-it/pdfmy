@@ -1005,6 +1005,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnSplit" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Stapel in einzelne Briefe trennen</span></button>
           <button class="mi doc" id="btnSplitAdv" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>PDF aufteilen …</span></button>
           <button class="mi doc" id="btnHalve" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Seiten halbieren …</span></button>
+          <button class="mi doc" id="btnTranslate" disabled title="Text des Dokuments in eine andere Sprache übersetzen – auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Übersetzen …</span></button>
           <button class="mi doc" id="btnComments" title="Alle Notizen, Markierungen, Stempel, Unterschriften und Formularfelder auf einen Blick"><svg class="ic" aria-hidden="true"><use href="#i-sticky-note"/></svg><span>Kommentare und Markierungen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -1176,14 +1177,14 @@ html.i18n-wait body{visibility:hidden}
       </div>
       <!-- Neu in PDFMy: die neuesten Funktionen sichtbar machen (bei neuen Versionen hier und im CHANGELOG pflegen) -->
       <section class="fb news" aria-labelledby="newsTitle">
-        <div class="fb-icon" aria-hidden="true"><svg class="ic"><use href="#i-signature"/></svg></div>
+        <div class="fb-icon" aria-hidden="true"><svg class="ic"><use href="#i-sparkles"/></svg></div>
         <div class="fb-body">
           <h2 class="fb-title" id="newsTitle">Neu in PDFMy</h2>
           <ul class="news-list">
-            <li><b>Unterschreiben lassen per E-Mail</b> – mit Frist, Erinnerung, Vorlagen und „Zur Kenntnis“; auch in Adobe Reader &amp; Co.</li>
-            <li><b>Echtheit nachweisbar</b> – jede unterschriebene Fassung bleibt prüfbar in der Datei</li>
-            <li><b>Outlook-Anhänge</b> öffnen sich zuverlässig – unter Windows, am Mac und unter Linux</li>
-            <li><b>Scanner aufwecken</b> und erweiterte Netzwerksuche</li>
+            <li><b>Übersetzen ohne Upload</b> – direkt auf Ihrem Gerät, in viele Sprachen</li>
+            <li><b>iPhone-Fotos, TIFF, Text, Markdown und CSV</b> öffnen – in jedem Browser</li>
+            <li><b>Speichern als Markdown, HTML oder in Graustufen</b>, Seiten halbieren, eigene Abläufe</li>
+            <li><b>Formulare mit Auswahllisten und Pflichtfeldern</b>, Signatur mit Zeitstempel</li>
           </ul>
         </div>
         <a class="btn fb-go" href="https://github.com/haus-it/pdfmy/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Alle Neuerungen<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
@@ -1489,6 +1490,7 @@ html.i18n-wait body{visibility:hidden}
           <label class="cb"><input id="x-sign" type="checkbox"> Digital signieren</label>
           <button type="button" id="x-sign-cert" class="linkbtn">Zertifikat wählen …</button><button type="button" id="x-sign-win" class="linkbtn" hidden title="Zertifikat aus Windows oder Signaturkarte (über pdfmy Scan) – auch qualifizierte Signatur">Windows-Zertifikat / Signaturkarte …</button><span class="hint" id="x-sign-info"></span>
           <input id="x-sign-file" type="file" accept=".p12,.pfx,application/x-pkcs12" hidden>
+          <label class="cb" id="x-sign-ts-l" hidden title="Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Benötigt pdfmy Scan ab 1.9.0 (Windows) bzw. 1.1.9 (Mac, Linux)."><input id="x-sign-ts" type="checkbox"> mit Zeitstempel</label>
         </div></div>
         <div class="xrow"><span class="xl" aria-hidden="true">Passwort</span><div class="chips" role="group" aria-label="Passwort">
           <input id="x-pw" type="password" placeholder="Passwort zum Öffnen (optional)" autocomplete="new-password" size="22">
@@ -1603,6 +1605,16 @@ html.i18n-wait body{visibility:hidden}
     </fieldset>
     <p class="hint" id="sp-info" aria-live="polite"></p>
     <div class="dlgrow"><button type="button" id="spCancel">Abbrechen</button><button type="submit" class="primary" id="spGo">Aufteilen</button></div>
+  </form>
+</dialog>
+<dialog id="trDlg" aria-labelledby="trT">
+  <form id="trForm" method="dialog">
+    <h3 class="dlgtitle" id="trT">Dokument übersetzen</h3>
+    <p class="hint">Die Übersetzung läuft mit dem eingebauten Übersetzer des Browsers auf diesem Gerät – der Text wird nicht hochgeladen. Beim ersten Mal lädt der Browser das Sprachpaket. Ergebnis: eine neue PDF im eigenen Reiter (Überschriften, Absätze, Listen, Tabellen; das ursprüngliche Seitenlayout wird nicht nachgebildet).</p>
+    <div class="field"><label for="trFrom">Von</label><select id="trFrom"></select></div>
+    <div class="field"><label for="trTo">Nach</label><select id="trTo"></select></div>
+    <p class="hint" id="trInfo" role="status" aria-live="polite"></p>
+    <div class="dlgrow"><button type="button" id="trCancel">Abbrechen</button><button type="submit" class="primary" id="trGo">Übersetzen</button></div>
   </form>
 </dialog>
 <dialog id="halveDlg" aria-labelledby="halveT">
