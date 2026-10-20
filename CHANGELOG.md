@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Abläufe speichern
+- Speichern-Dialog: **„Als Ablauf speichern …“** merkt Format, Größe, Seitenzahlen, Kopf-/Fußzeile, Wasserzeichen, Bates, Briefbogen, Bereinigen, Ränder/A4, Graustufen und Bögen unter einem Namen; Auswahl oben unter „Ablauf“ übernimmt alles mit einem Klick (wie „Workflows“ bei iLovePDF und Sejda). Eigene Abläufe für PDF/PDF/A erscheinen auch in der **Stapelverarbeitung**. Passwort und Signatur werden nie gespeichert; Speicherort nur im Browser des Geräts.
+- **Fehler behoben:** Graustufen-Speichern verlor in der Stapelverarbeitung die Textebene noch nicht angezeigter PDF-Seiten; „In Graustufen“ blieb beim nächsten Öffnen des Dialogs angehakt.
+- Getestet im Browser: Ablauf speichern (ohne Passwort), Auswahl übernimmt Einstellungen, Stapel mit Ablauf (2 Dateien, grau, Fußzeile, Seitenzahl, Text durchsuchbar), axe ohne Befund in Speichern- und Stapel-Dialog.
+
 ### pdfmy Scan 1.9.0 (Windows) / 1.1.9 (Mac, Linux): Weiterleitung für Zeitstempel
 - Neuer Endpunkt `/tsa`: leitet Zeitstempel-Anfragen (RFC 3161) an öffentliche Zeitstempeldienste weiter – Browser dürfen diese nicht direkt abfragen (kein CORS). Nur feste Liste bekannter Dienste (DigiCert, Sectigo, DFN, FreeTSA, GlobalSign, SSL.com, Entrust, IdenTrust, SwissSign), Anfrage höchstens 4 KB, Antwort höchstens 64 KB – kein offener Proxy. Grundlage für signierte PDFs mit Zeitstempel (folgt). Getestet: Perl-Fassung lokal gegen DigiCert (Antwort 5,9 KB), fremde Adresse abgelehnt.
 

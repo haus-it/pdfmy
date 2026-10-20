@@ -1426,6 +1426,11 @@ html.i18n-wait body{visibility:hidden}
 <dialog id="expDlg">
   <form method="dialog" id="expForm">
     <h3 class="dlgtitle">Speichern</h3>
+    <div class="xrow" id="x-flow-row"><span class="xl"><label for="x-flow">Gespeicherter Ablauf</label></span><div class="chips">
+      <select id="x-flow" title="Gespeicherte Einstellungen übernehmen (Format, Größe, Seitenzahlen, Briefbogen …)"><option value="">– keiner –</option></select>
+      <button type="button" id="x-flow-save" class="linkbtn" title="Die aktuellen Einstellungen unter einem Namen merken – auch für die Stapelverarbeitung. Passwort und Signatur werden nicht gespeichert.">Als Ablauf speichern …</button>
+      <button type="button" id="x-flow-del" class="linkbtn" hidden>Ablauf löschen</button>
+    </div></div>
     <div class="field"><label for="x-name">Dateiname</label><div class="withbtn"><input id="x-name" spellcheck="false"><span class="hint" id="x-ext">.pdf</span></div></div>
     <div class="xrow"><span class="xl" aria-hidden="true">Format</span><div class="chips" role="group" aria-label="Format">
       <label><input type="radio" name="x-format" value="pdf"><span>PDF</span></label>
@@ -1908,6 +1913,7 @@ html.i18n-wait body{visibility:hidden}
       <label class="prrow"><input type="radio" name="batchAct" value="small" checked> <span><b>Verkleinern</b> <small>– kleinere Dateien zum Mailen und Hochladen; ist das Original kleiner, bleibt es</small></span></label>
       <label class="prrow"><input type="radio" name="batchAct" value="pdfa"> <span><b>Archivieren (PDF/A)</b> <small>– Langzeitformat mit Texterkennung, barrierefrei</small></span></label>
       <label class="prrow"><input type="radio" name="batchAct" value="ocr"> <span><b>Durchsuchbar machen</b> <small>– Texterkennung für Scans, sonst unverändert</small></span></label>
+      <div id="batchFlows"></div>
       <label class="prrow"><input type="radio" name="batchAct" value="file"> <span><b>Briefe erkennen und ablegen</b> <small>– Briefdaten, Dateiname, Ablageordner, Posteingangsbuch</small></span></label>
     </fieldset>
     <fieldset class="prset" id="batchOutSet"><legend><b>Ergebnis</b></legend>

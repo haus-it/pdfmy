@@ -2499,7 +2499,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     if (raster) {
       // Als Bild übernommene PDF-Seiten brauchen eine Textebene: vorhandenen Text übernehmen, sonst OCR
       if (p.kind === 'pdf' && !p.ocr) {
-        if (p.native) words = await nativeWords(p);
+        if (p.native !== false) { const nw = await nativeWords(p); if (nw?.length) words = nw; }   // auch noch nicht angezeigte Seiten (Stapel)
         if (!words && !noOcr) { try { await ocrPage(p); } catch (e) { console.warn(e); } }
       }
       // Abdeckung ohne Text: immer erkennen – sonst greift der Fälschungsschutz (Urkunde/Kontoauszug/Nachweis) bei Scans nicht
@@ -3129,6 +3129,42 @@ function readExport() {
     trim: $('#x-trim').checked, a4: $('#x-a4').checked, gray: $('#x-gray').checked, sheet: $('#x-sheet').value,
   };
 }
+// Abläufe (wie „Workflows“ bei iLovePDF und Sejda): Speichern-Einstellungen unter einem Namen merken und mit einem Klick
+// wieder anwenden – im Speichern-Dialog und in der Stapelverarbeitung. Passwort und Signatur werden bewusst nicht gespeichert.
+const FLOW_KEYS = ['format', 'size', 'pageNumbers', 'watermark', 'dropBlank', 'header', 'footer', 'batesOn', 'batesPrefix', 'letterhead', 'clean', 'trim', 'a4', 'gray', 'sheet'];
+const flows = () => { const l = LS.get('flows', []); return Array.isArray(l) ? l.filter(f => f && f.name && f.o) : []; };
+const flowFrom = o => Object.fromEntries(FLOW_KEYS.map(k => [k, o[k]]));
+function flowApply(f) {
+  setRadio('x-format', f.format || 'pdf'); setRadio('x-size', f.size || 'balanced');
+  $('#x-pnum').value = f.pageNumbers || 'none'; $('#x-wm').value = f.watermark || ''; $('#x-head').value = f.header || ''; $('#x-foot').value = f.footer || '';
+  if (!$('#x-blank-row').hidden) $('#x-blank').checked = !!f.dropBlank;
+  $('#x-bates').checked = !!f.batesOn; $('#x-bpre').value = f.batesPrefix || '';
+  $('#x-lh').checked = !!f.letterhead && !$('#x-lh').disabled; $('#x-clean').checked = !!f.clean; $('#x-trim').checked = !!f.trim; $('#x-a4').checked = !!f.a4; $('#x-gray').checked = !!f.gray;
+  $('#x-sheet').value = f.sheet || '1';
+  $('#x-more').open = !!(f.pageNumbers && f.pageNumbers !== 'none') || !!f.header || !!f.footer || !!f.watermark || !!f.batesOn || !!f.letterhead || !!f.clean || !!f.trim || !!f.a4 || !!f.gray || (f.sheet && f.sheet !== '1');
+  updateExportUi();
+}
+function flowList(sel = '') {
+  const l = flows(), s = $('#x-flow');
+  s.replaceChildren(new Option('– keiner –', ''), ...l.map((f, i) => { const o = new Option(f.name, String(i)); o.setAttribute('translate', 'no'); return o; }));
+  s.value = sel; $('#x-flow-del').hidden = sel === '';
+}
+$('#x-flow').addEventListener('change', e => {
+  const f = flows()[e.target.value]; $('#x-flow-del').hidden = !f;
+  if (f) { flowApply(f.o); status(`Ablauf „${f.name}“ übernommen.`); }
+});
+$('#x-flow-save').onclick = () => {
+  const cur = flows()[$('#x-flow').value]?.name || '';
+  const n = prompt('Name des Ablaufs (z. B. „Rechnung an Kunden“ oder „Archiv“):', cur); if (!n?.trim()) return;
+  const name = n.trim().slice(0, 60), l = flows().filter(f => f.name !== name);
+  l.push({ name, o: flowFrom(readExport()) }); LS.set('flows', l); flowList(String(l.length - 1));
+  status(`Ablauf „${name}“ gespeichert – auch in der Stapelverarbeitung wählbar. Passwort und Signatur werden nicht gespeichert.`);
+};
+$('#x-flow-del').onclick = () => {
+  const i = +$('#x-flow').value, l = flows(), f = l[i];
+  if (!f || !confirm(`Ablauf „${f.name}“ löschen?`)) return;
+  l.splice(i, 1); LS.set('flows', l); flowList(); status(`Ablauf „${f.name}“ gelöscht.`);
+};
 function setRadio(name, v) { const r = document.querySelector(`#expForm [name="${name}"][value="${v}"]`); if (r) r.checked = true; }
 function openExport(pre = {}) {
   if (!state.pages.length) return;
@@ -3143,7 +3179,7 @@ function openExport(pre = {}) {
   $('#x-pnum').value = last.pageNumbers || 'none'; $('#x-wm').value = '';
   $('#x-head').value = last.header || ''; $('#x-foot').value = last.footer || ''; $('#x-bates').checked = !!pre.bates;
   $('#x-bpre').value = last.batesPrefix ?? ''; $('#x-bstart').value = LS.get('batesNext', 1);
-  $('#x-trim').checked = $('#x-a4').checked = false; $('#x-sheet').value = '1';
+  $('#x-trim').checked = $('#x-a4').checked = $('#x-gray').checked = false; $('#x-sheet').value = '1';
   $('#x-pw').value = ''; $('#x-pw2').value = ''; $('#x-print').checked = true; $('#x-copy').checked = false;
   const blanks = state.pages.filter(p => p.blank && !p.keepBlank).length;
   $('#x-blank').checked = blanks > 0; $('#x-blank-n').textContent = blanks; $('#x-blank-row').hidden = !blanks;
@@ -3153,6 +3189,7 @@ function openExport(pre = {}) {
   $('#x-dest').textContent = state.outDir ? `Ziel: ${state.outDir.name}${targetPath(state.meta) ? '\\' + targetPath(state.meta) : ''}` : '';
   $('#x-more').open = pre.focus === 'password' || pre.focus === 'stamp' || !!pre.bates || (!!last.pageNumbers && last.pageNumbers !== 'none') || !!last.header || !!last.footer;
   $('#x-go').textContent = state.outDir ? 'In Ablage speichern' : 'Speichern';
+  flowList();
   updateExportUi();
   $('#expDlg').showModal();
   if (pre.focus === 'password') $('#x-pw').focus(); else if (pre.focus === 'stamp') $('#x-pnum').focus();

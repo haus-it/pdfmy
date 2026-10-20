@@ -1242,7 +1242,14 @@ function batchAsk(files) {
     $('#batchSetup').hidden = false; $('#batchRun').hidden = true; $('#batchResult').hidden = true;
     $('#batchGo').hidden = false; $('#batchGo').textContent = 'Starten'; $('#batchCancel').textContent = 'Abbrechen';
     $('#batchDirRow').hidden = !window.showDirectoryPicker;
-    const last = LS.get('batchAct', 'small'); const r = d.querySelector(`[name=batchAct][value="${last}"]`); if (r) r.checked = true;
+    // eigene Abläufe (Speichern-Dialog → „Als Ablauf speichern“) – nur PDF und PDF/A
+    const fl = flows().map((f, i) => [f, i]).filter(([f]) => f.o.format === 'pdf' || f.o.format === 'pdfa');
+    $('#batchFlows').replaceChildren(...fl.map(([f, i]) => {
+      const l = document.createElement('label'); l.className = 'prrow';
+      l.innerHTML = `<input type="radio" name="batchAct" value="flow:${i}"> <span><b translate="no"></b> <small>– eigener Ablauf</small></span>`;
+      l.querySelector('b').textContent = f.name; return l;
+    }));
+    const last = LS.get('batchAct', 'small'); const r = d.querySelector(`[name=batchAct][value="${last}"]`) || d.querySelector('[name=batchAct][value=small]'); if (r) r.checked = true;
     const sync = () => { $('#batchOutSet').hidden = d.querySelector('[name=batchAct]:checked').value === 'file'; };
     d.querySelectorAll('[name=batchAct]').forEach(x => x.onchange = sync); sync();
     $('#batchGo').onclick = () => { const act = d.querySelector('[name=batchAct]:checked').value; LS.set('batchAct', act); res({ act, out: d.querySelector('[name=batchOut]:checked').value }); };
@@ -1286,8 +1293,10 @@ async function batchConvert(files, { act, out }) {
   $('#batchSetup').hidden = true; $('#batchRun').hidden = false; $('#batchGo').hidden = true; $('#batchCancel').textContent = 'Anhalten';
   const hadDoc = state.pages.length > 0;
   if (hadDoc) newTab();   // eigener Reiter: das geöffnete Dokument bleibt unangetastet
-  const results = [], suffix = { small: '_klein', pdfa: '_PDFA', ocr: '_durchsuchbar' }[act], used = new Set();
-  const label = { small: 'Verkleinern', pdfa: 'PDF/A', ocr: 'Texterkennung' }[act];
+  const flow = act.startsWith('flow:') ? flows()[+act.slice(5)] : null;   // eigener Ablauf aus dem Speichern-Dialog
+  if (act.startsWith('flow:') && !flow) { status('Dieser Ablauf existiert nicht mehr.'); return; }
+  const results = [], suffix = flow ? '_' + flow.name.replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').trim().replace(/\s+/g, '_').slice(0, 30) : { small: '_klein', pdfa: '_PDFA', ocr: '_durchsuchbar' }[act], used = new Set();
+  const label = flow ? flow.name : { small: 'Verkleinern', pdfa: 'PDF/A', ocr: 'Texterkennung' }[act];
   for (const [i, f] of files.entries()) {
     if (batchStop) break;
     const prog = k => { $('#batchBar').value = (i + (k || 0)) / files.length; $('#batchNow').textContent = `${label}: Datei ${i + 1} von ${files.length} – ${f.name}`; };
@@ -1295,7 +1304,20 @@ async function batchConvert(files, { act, out }) {
     resetDoc(); state.intent = null;
     try {
       await importFiles([f]);
-      const pages = docPages(); if (!pages.length) throw new Error('keine Seiten');
+      let pages = docPages(); if (!pages.length) throw new Error('keine Seiten');
+      if (flow) {
+        const fo = flow.o, base = f.name.replace(/\.[^.]+$/, '');
+        if (fo.dropBlank) pages = pages.filter(p => !(p.blank && !p.keepBlank));
+        if (fo.format === 'pdfa') await waitForOcr(pages);
+        let data = await buildPdf(pages, state.meta, { ...stampOpts({ ...fo, letterhead: fo.letterhead && fo.format === 'pdf' }, base), size: fo.size || 'balanced', pdfa: fo.format === 'pdfa', noOcr: fo.format !== 'pdfa', bookmarks: true, onPage: k => prog(k / Math.max(1, pages.length)) });
+        if (fo.sheet && fo.sheet !== '1' && fo.format === 'pdf') data = await sheetLayout(data, fo.sheet);
+        let name = base + suffix + '.pdf';
+        for (let k = 2; used.has(name.toLowerCase()); k++) name = base + suffix + ` (${k}).pdf`;
+        used.add(name.toLowerCase());
+        if (dir) { const h = await dir.getFileHandle(name, { create: true }); const w = await h.createWritable(); await w.write(data); await w.close(); }
+        results.push({ name, from: f.name, before: f.size, after: data.length, data: dir ? null : data });
+        continue;
+      }
       const opts = n => ({ onPage: k => prog(k / Math.max(1, pages.length)), size: n || (act === 'small' ? 'small' : 'balanced'), pdfa: act === 'pdfa', noOcr: act === 'small', bookmarks: true });
       if (act !== 'small') await waitForOcr(pages);
       let data = await buildPdf(pages, state.meta, opts());
