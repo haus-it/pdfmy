@@ -361,7 +361,7 @@ async function importPdf(file) {
     const tc = await pg.getTextContent();
     const text = tc.items.map(it => it.str + (it.hasEOL ? '\n' : ' ')).join('').trim();
     const p = { id: ++uid, kind: 'pdf', docIdx, pageIdx: i - 1, rotation: pg.rotate || 0, annots: [], ocr: null,
-      native: text.length > 20 ? text : null, label: `${file.name} S. ${i}` };
+      native: text.length > 20 ? text : null, hasText: /\S/.test(text), label: `${file.name} S. ${i}` };
     const mk = state.docs[docIdx].markup?.get(i - 1);
     if (mk) { const vp = pg.getViewport({ scale: 1, rotation: p.rotation }); for (const m of mk) { const an = markupAnnot(m, vp); if (an) p.annots.push(an); } }
     if (!p.native && S.scanPdf && await isScannedPage(pg)) {
@@ -374,7 +374,7 @@ async function importPdf(file) {
     }
     // Große Dokumente: nur die ersten Seiten sofort zeichnen, die übrigen erst, wenn sie sichtbar werden (Maße aus dem Seitenformat)
     if (i <= PREVIEW_EAGER) await renderPdfPreview(p);
-    else { const vp = pg.getViewport({ scale: 120 / 72, rotation: p.rotation }); p.w = Math.round(vp.width); p.h = Math.round(vp.height); if (p.native) p.blank = false; }
+    else { const vp = pg.getViewport({ scale: 120 / 72, rotation: p.rotation }); p.w = Math.round(vp.width); p.h = Math.round(vp.height); if (p.native || p.hasText) p.blank = false; }
     if (i % 25 === 0) status(`Öffne ${file.name}: Seite ${i} von ${js.numPages} …`, i / js.numPages);
     if (i <= 2) try { readQr(p, await renderPdf(p, 200)); } catch (e) { console.warn('QR', e); }   // Zahl-QR steht auf den ersten Seiten
     state.pages.push(p);
@@ -439,7 +439,8 @@ function previewUsed(p) {
     if (old.processed) { old.processed.width = 0; old.processed = null; }   // Bild freigeben – Vorschau (thumb) und Maße bleiben, neu zeichnen bei Bedarf
   }
 }
-async function renderPdfPreview(p) { p.processed = await renderPdf(p, 120); previewUsed(p); p.w = p.processed.width; p.h = p.processed.height; p.thumb = null; p.thumbL = null; p.blank = p.separator ? true : undefined; }
+// Seiten mit echtem Text (p.native, auch kurz: p.hasText) sind nie leer – auch wenn nur eine kurze Zeile darauf steht (sonst entfernte „Leerseiten weglassen“ sie)
+async function renderPdfPreview(p) { p.processed = await renderPdf(p, 120); previewUsed(p); p.w = p.processed.width; p.h = p.processed.height; p.thumb = null; p.thumbL = null; p.blank = p.separator ? true : p.native || p.hasText ? false : undefined; }
 
 const turn = (c, dir) => dir === 180 ? Imaging.rotate90(Imaging.rotate90(c, 90), 90) : Imaging.rotate90(c, dir);
 function rotRect(r, dir) {
@@ -563,7 +564,7 @@ async function rotateTargets(dir) {
 function refresh() {
   renderThumbs(); renderStage(); renderSide();
   const n = state.pages.length;
-  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2;
+  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2;
   $('#btnFile').hidden = !n;
   // Statuszeile: „Seite 2 von 11“ (wie in Word); Klick oder Strg+G springt zu einer Seite
   $('#pageNav').hidden = !n;
@@ -2016,7 +2017,23 @@ function stampTexts(i, n, o) {
   const v = { seite: i + 1, seiten: n, datum: o.date || new Date().toLocaleDateString('de-DE'), datei: o.docName || '', bates: o.bates ? Tools.bates(o.bates.prefix, o.bates.start + i) : '' };
   return { head: Tools.fillStamp(o.header, v).trim(), foot: Tools.fillStamp(o.footer, v).trim(), bates: v.bates };
 }
-const hasStamp = o => (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates;
+const hasStamp = o => (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates || !!o.letterhead || !!o.clean;
+// Briefbogen unter jede Seite (wie „PDF Overlay“ bei PDF24): Seite 1 des Briefbogens unter die erste Seite, Seite 2 (falls vorhanden)
+// unter alle weiteren. Als eigener Inhaltsstrom VOR dem Seiteninhalt und als Artefakt markiert (PDF/UA: kein Inhalt fürs Vorlesen).
+async function underlay(out, lhBytes) {
+  const L = PDFLib, N = n => L.PDFName.of(n), ctx = out.context;
+  const n = (await L.PDFDocument.load(lhBytes, { ignoreEncryption: true })).getPageCount();
+  const [first, rest] = await out.embedPdf(lhBytes, n > 1 ? [0, 1] : [0]);
+  for (const [i, page] of out.getPages().entries()) {
+    const e = i === 0 || !rest ? first : rest, mb = page.getMediaBox();
+    const name = page.node.newXObject('Lh', e.ref), sx = mb.width / e.width, sy = mb.height / e.height;
+    const ref = ctx.register(ctx.flateStream(`q\n/Artifact BMC\n${sx} 0 0 ${sy} ${mb.x} ${mb.y} cm\n/${name.asString().slice(1)} Do\nEMC\nQ\n`));
+    const raw = page.node.get(N('Contents')), cur = page.node.lookup(N('Contents'));
+    if (cur instanceof L.PDFArray) cur.insert(0, ref);
+    else page.node.set(N('Contents'), ctx.obj(raw ? [ref, raw] : [ref]));
+  }
+}
+
 function stampPdf(page, font, W, H, ox, oy, i, n, o) {
   const T = stampTexts(i, n, o), sf = o.safe || (t => t), size = 9, grey = rgb(0.3, 0.3, 0.3);
   if (T.head) { const t = sf(T.head), tw = font.widthOfTextAtSize(t, size); page.drawText(t, { x: ox + (W - tw) / 2, y: oy + H - 24, size, font, color: grey }); }
@@ -2168,6 +2185,15 @@ function beaClean(out, page) {
     const act = dict.lookup(N('A')); if (act instanceof PDFLib.PDFDict && badAct.test(String(act.get(N('S'))))) dict.delete(N('A'));
   }
 }
+// „Dokument bereinigen“ (wie „Bereinigen“ in Acrobat Pro): zusätzlich zu beaClean alle Anmerkungen der Vorlage außer Links
+// (Kommentare, Notizen, Markierungen, Formular-Widgets) sowie Seiten-Metadaten, Programmdaten (PieceInfo) und Vorschaubilder entfernen
+function deepClean(out, page) {
+  beaClean(out, page);
+  const ctx = out.context, N = PDFName.of;
+  for (const k of ['Metadata', 'PieceInfo', 'Thumb', 'LastModified']) page.node.delete(N(k));
+  const arr = page.node.Annots(); if (!arr) return;
+  for (let k = arr.size() - 1; k >= 0; k--) { const d = ctx.lookup(arr.get(k)); if (!(d instanceof PDFLib.PDFDict) || String(d.get(N('Subtype'))) !== '/Link') arr.remove(k); }
+}
 // Neues Formularfeld fertigstellen: Klick ohne Ziehen → Standardgröße; Name aus der Beschriftung links daneben
 function fieldDone(p, a) {
   const ar = (p.w && p.h) ? p.w / p.h : 0.707;
@@ -2199,7 +2225,7 @@ function textLines(words) {
 }
 
 async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
-  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true } = {}) {
+  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false } = {}) {
   const preset = SIZES[size] || SIZES.balanced, stamps = { pageNumbers, watermark: (watermark || '').trim(), header, footer, bates, docName, date };
   const hasStamps = hasStamp(stamps);
   const out = await PDFDocument.create({ updateMetadata: false });
@@ -2271,7 +2297,7 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
       const d = state.docs[p.docIdx];
       [page] = await out.copyPages(await libFor(d), [p.pageIdx]);
       out.addPage(page);
-      if (bea) beaClean(out, page);
+      if (clean) deepClean(out, page); else if (bea) beaClean(out, page);
       T?.page(page);
       page.setRotation(degrees(p.rotation));
       const mb = page.getMediaBox(); W = mb.width; H = mb.height; ox = mb.x; oy = mb.y;
@@ -2339,6 +2365,7 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
     if (hasStamps) await tagged('Artifact', () => stampPdf(page, font, W, H, ox, oy, i, pages.length, stamps));   // Seitenzahlen, Kopf-/Fußzeile, Bates, Wasserzeichen
   }
 
+  if (lhBytes) await underlay(out, lhBytes);   // Briefbogen unter alle Seiten
   if (fieldQ.length) addFormFields(out, fieldQ, T, font);
   if (linkQ.length) addLinks(out, linkQ, pages, T);
   if (hlQ.length) addHighlights(out, hlQ, T);
@@ -2350,12 +2377,12 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
   if (pages.some(p => p.annots.some(a => a.type === 'wo')) && !keywords.includes('nachträglich geändert (PDFMy)')) keywords.push('nachträglich geändert (PDFMy)');
   const lang = docLang(pages);
   out.setTitle(title); out.setLanguage(lang);
-  if (author) out.setAuthor(author);
-  if (subject) out.setSubject(subject);
-  out.setKeywords([keywords.join('; ')]);   // „;“ – Windows zeigt die Stichwörter so als einzelne Markierungen
+  if (author && !clean) out.setAuthor(author);   // bereinigt: keine Personen- und Inhaltsangaben in den Dokumenteigenschaften
+  if (subject && !clean) out.setSubject(subject);
+  out.setKeywords(clean ? [] : [keywords.join('; ')]);   // „;“ – Windows zeigt die Stichwörter so als einzelne Markierungen
   out.setCreator(APP.name); out.setProducer(APP.name + ' (pdf-lib)');
   out.setCreationDate(now); out.setModificationDate(now);
-  if (!pdfa) await window.reqInfo?.(out, pages, now);   // Unterschriftsanfrage reist in der PDF mit (js/pro.js, js/sigreq.js); nicht bei PDF/A-2b (keine solche Anlage erlaubt)
+  if (!pdfa && !clean) await window.reqInfo?.(out, pages, now);   // Unterschriftsanfrage reist in der PDF mit (js/pro.js, js/sigreq.js); nicht bei PDF/A-2b (keine solche Anlage erlaubt)
   if (T) T.finish();
   if (pdfa) await makePdfA(out, { title, author, subject, keywords: keywords.join('; '), now, ua: !!T, lang });
   return out.save();
@@ -2657,7 +2684,8 @@ const baseName = () => filename().replace(/\.pdf$/i, '');
 const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 // Stempel-Optionen aus dem Export-Dialog für PDF und Bilder
 const stampOpts = (o, base) => ({ pageNumbers: o.pageNumbers, watermark: o.watermark, header: o.header, footer: o.footer,
-  bates: o.batesOn ? { prefix: o.batesPrefix, start: o.batesStart } : null, docName: base, date: new Date().toLocaleDateString('de-DE') });
+  bates: o.batesOn ? { prefix: o.batesPrefix, start: o.batesStart } : null, docName: base, date: new Date().toLocaleDateString('de-DE'),
+  clean: !!o.clean, letterhead: o.letterhead && o.format === 'pdf' && typeof letterhead !== 'undefined' && letterhead?.bytes ? letterhead.bytes : null });
 // Kleiner Dialog „fertig – jetzt speichern“: Der Klick darauf darf das Speichern-Fenster öffnen
 function readyToSave(name, pick) {
   return new Promise(resolve => {
@@ -2815,7 +2843,7 @@ function readExport() {
     header: $('#x-head').value.trim(), footer: $('#x-foot').value.trim(), batesOn: $('#x-bates').checked,
     batesPrefix: $('#x-bpre').value.trim(), batesStart: Math.max(1, parseInt($('#x-bstart').value, 10) || 1),
     password: $('#x-pw').value, allowPrint: $('#x-print').checked, allowCopy: $('#x-copy').checked, sign: $('#x-sign').checked,
-    orig: !$('#x-orig-row').hidden && $('#x-orig').checked,
+    orig: !$('#x-orig-row').hidden && $('#x-orig').checked, letterhead: $('#x-lh').checked, clean: $('#x-clean').checked,
   };
 }
 function setRadio(name, v) { const r = document.querySelector(`#expForm [name="${name}"][value="${v}"]`); if (r) r.checked = true; }
@@ -2852,6 +2880,7 @@ function updateExportUi() {
   const o = readExport(), isPdf = o.format === 'pdf' || o.format === 'pdfa', textOnly = o.format === 'txt' || o.format === 'docx' || o.format === 'xlsx';
   $('#x-size-row').hidden = textOnly;
   $('#x-sec-pdf').hidden = !isPdf;
+  $('#x-lh-row').hidden = o.format !== 'pdf';   // Briefbogen nur für normale PDF (bei PDF/A wird die Seite als Bild neu aufgebaut)
   if (origDoc()) $('#x-orig-row').hidden = !isPdf;
   for (const id of ['#x-stamp-row', '#x-hf-row', '#x-bates-row', '#x-ph']) $(id).hidden = textOnly;
   $('#x-range').disabled = false;
@@ -2907,6 +2936,68 @@ async function exportEach() {
   else where = await deliver(Tools.zip(files), baseName() + '_Einzelseiten.zip', 'application/zip');
   status(where ? `${files.length} Einzel-PDFs gespeichert: ${where}` : 'Speichern abgebrochen.');
 }
+
+/* PDF aufteilen (wie bei Sejda, PDF24, iLovePDF): alle N Seiten, an den Lesezeichen, nach Dateigröße oder nach Seitenbereichen –
+   Ausgabe als ZIP bzw. einzeln in den Ablageordner */
+const spMode = () => document.querySelector('[name=sp-mode]:checked')?.value || 'n';
+const spLimit = () => Math.max(0.5, +$('#sp-mb').value || 5) * 1024 * 1024;
+const safeName = s => String(s || '').replace(/[\\/:*?"<>|\u0000-\u001f]+\s*/g, '_').replace(/\s+/g, ' ').trim().slice(0, 80);
+function splitGroups2(mode) {
+  const P = state.pages, n = P.length;
+  if (mode === 'n') { const k = Math.max(1, Math.floor(+$('#sp-n').value) || 1), g = []; for (let i = 0; i < n; i += k) g.push({ pages: P.slice(i, i + k) }); return g; }
+  if (mode === 'marks') {
+    const marks = outlineFor(P).filter(m => m.pageIndex >= 0);
+    if (!marks.length) return null;
+    const starts = [...new Map([[0, null], ...marks.map(m => [m.pageIndex, m.title])]).entries()].sort((x, y) => x[0] - y[0]);
+    return starts.map(([s, title], i) => ({ pages: P.slice(s, i + 1 < starts.length ? starts[i + 1][0] : n), title }));
+  }
+  if (mode === 'ranges') {
+    const parts = $('#sp-ranges').value.split(/[;,]/).map(x => x.trim()).filter(Boolean), g = [];
+    for (const part of parts) { const idx = Tools.parseRange(part, n); if (!idx || !idx.length) return null; g.push({ pages: idx.map(i => P[i]) }); }
+    return g.length ? g : null;
+  }
+  return null;   // Größe: erst beim Aufteilen (dafür werden die Seiten einzeln gemessen)
+}
+function splitInfo() {
+  const mode = spMode(), g = splitGroups2(mode);
+  $('#sp-info').textContent = mode === 'size' ? 'PDFMy misst die Seiten und füllt jede Datei bis zur gewählten Größe.'
+    : !g ? (mode === 'marks' ? 'Dieses Dokument hat keine Lesezeichen – „Inhalt“ im Menü legt welche an.' : 'Bitte Seitenbereiche angeben, z. B. 1-3, 4-7, 8-.')
+    : `Ergibt ${g.length} Datei(en).`;
+  $('#spGo').disabled = mode !== 'size' && !g;
+}
+function openSplit() {
+  if (state.pages.length < 2) return status('Zum Aufteilen braucht das Dokument mindestens zwei Seiten.');
+  splitInfo(); $('#splitDlg').showModal();
+}
+$('#splitForm').addEventListener('input', splitInfo);
+$('#splitForm').addEventListener('change', splitInfo);
+$('#spCancel').onclick = () => $('#splitDlg').close();
+$('#btnSplitAdv').onclick = () => { closeMenu(); openSplit(); };
+$('#splitForm').addEventListener('submit', async ev => {
+  ev.preventDefault(); $('#splitDlg').close();
+  try {
+    const mode = spMode(), base = baseName(), build = pages => buildPdf(pages, state.meta, { onPage: () => {}, noOcr: true });
+    let groups = splitGroups2(mode);
+    if (mode === 'size') {
+      const sizes = [];
+      for (const [i, p] of state.pages.entries()) { status(`Messe Seite ${i + 1} von ${state.pages.length} …`, i / state.pages.length); sizes.push((await build([p])).length); }
+      groups = []; let cur = [], sum = 0;
+      state.pages.forEach((p, i) => { if (cur.length && sum + sizes[i] > spLimit()) { groups.push({ pages: cur }); cur = []; sum = 0; } cur.push(p); sum += sizes[i]; });
+      if (cur.length) groups.push({ pages: cur });
+    }
+    if (!groups?.length) return status('Nichts aufzuteilen.');
+    const files = [], w = Math.max(2, String(groups.length).length);
+    for (const [i, g] of groups.entries()) {
+      status(`Erzeuge Datei ${i + 1} von ${groups.length} …`, i / groups.length);
+      files.push({ name: `${base}_Teil_${String(i + 1).padStart(w, '0')}${g.title ? '_' + safeName(g.title) : ''}.pdf`, data: await build(g.pages) });
+    }
+    let where;
+    if (state.outDir) { for (const f of files) await writeUnique(state.outDir, f.name, f.data); where = state.outDir.name; }
+    else where = await deliver(Tools.zip(files), base + '_aufgeteilt.zip', 'application/zip');
+    const big = mode === 'size' ? files.filter(f => f.data.length > spLimit()).length : 0;
+    status(where ? `${files.length} PDF-Dateien gespeichert: ${where}` + (big ? ` – ${big} davon größer als gewünscht (eine einzelne Seite ist zu groß; vorher „Verkleinern“ hilft).` : '') : 'Speichern abgebrochen.');
+  } catch (e) { console.error(e); status('Aufteilen nicht möglich: ' + e.message); }
+});
 
 /* Stapel trennen: Leerseiten oder ✂-Markierungen teilen den Scan in einzelne Briefe */
 function splitGroups() {
@@ -3397,7 +3488,7 @@ const INTENTS = {
   sign: 'application/pdf,.pdf,image/*', form: 'application/pdf,.pdf', protect: 'application/pdf,.pdf', unlock: 'application/pdf,.pdf',
   stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
   docx: 'application/pdf,.pdf,image/*', bates: 'application/pdf,.pdf,image/*',
-  compare: 'application/pdf,.pdf,image/*', batch: 'application/pdf,.pdf,image/*', imgout: 'application/pdf,.pdf', repair: 'application/pdf,.pdf',
+  compare: 'application/pdf,.pdf,image/*', split: 'application/pdf,.pdf', batch: 'application/pdf,.pdf,image/*', imgout: 'application/pdf,.pdf', repair: 'application/pdf,.pdf',
 };
 document.querySelectorAll('[data-intent]').forEach(b => b.onclick = () => {
   state.intent = b.dataset.intent;
@@ -3437,6 +3528,7 @@ function applyIntent() {
     case 'text': openExport({ format: 'txt' }); break;
     case 'docx': openExport({ format: 'docx' }); break;
     case 'bates': setView('grid'); openExport({ format: 'pdf', bates: true }); break;
+    case 'split': openSplit(); break;
   }
 }
 

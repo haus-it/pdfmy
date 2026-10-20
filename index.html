@@ -795,6 +795,7 @@ body:not(.has-doc) .docbtn{display:none}
 .fb-body p{margin:0;font-size:14px;line-height:1.5}
 .fb-go{height:40px;padding:0 16px;gap:8px;white-space:nowrap}
 .fb-go .ic{width:16px;height:16px}
+.spopts{display:flex;flex-direction:column;gap:10px;border:0;padding:0;margin:0 0 6px}.spopts label{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.spopts input[type=number]{width:5em}.spopts #sp-ranges{flex:1;min-width:10em}
 .fb.news{border-style:solid;margin-top:16px}.news-list{margin:2px 0 0;padding-left:18px;font-size:14px;line-height:1.55}.news-list li{margin:1px 0}
 @media (max-width:760px){ .fb{grid-template-columns:1fr;gap:10px;padding:16px} .fb-icon{display:none} .fb-go{justify-self:start} }
 /* Barrierefreiheit (WCAG 2.1 AA) */
@@ -997,6 +998,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnPrint"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg><span>Drucken</span><kbd>Strg+P</kbd></button>
           <button class="mi doc" id="btnShare"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg><span>Teilen …</span></button>
           <button class="mi doc" id="btnSplit" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Stapel in einzelne Briefe trennen</span></button>
+          <button class="mi doc" id="btnSplitAdv" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>PDF aufteilen …</span></button>
           <button class="mi doc" id="btnComments" title="Alle Notizen, Markierungen, Stempel, Unterschriften und Formularfelder auf einen Blick"><svg class="ic" aria-hidden="true"><use href="#i-sticky-note"/></svg><span>Kommentare und Markierungen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnImgOut" title="Fotos, Logos und Grafiken aus der PDF in Originalauflösung als Bilddateien speichern"><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg><span>Bilder aus der PDF speichern …</span></button>
@@ -1133,6 +1135,7 @@ html.i18n-wait body{visibility:hidden}
         <button class="tile" data-intent="scan"><i><svg class="ic" aria-hidden="true"><use href="#i-scan-text"/></svg></i><b>Scannen &amp; Text erkennen</b><span>Fotos und Scans → durchsuchbares PDF, Briefdaten automatisch</span></button>
         <button class="tile" id="tileCam"><i><svg class="ic" aria-hidden="true"><use href="#i-smartphone"/></svg></i><b>Mit dem Handy scannen</b><span>Kamera erkennt das Blatt und löst selbst aus – mehrere Seiten am Stück</span></button>
         <button class="tile" data-intent="merge"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>PDFs zusammenfügen</b><span>Mehrere Dateien zu einer, Reihenfolge per Ziehen</span></button>
+        <button class="tile" data-intent="split"><i><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg></i><b>PDF aufteilen</b><span>Alle N Seiten, an Lesezeichen oder nach Dateigröße</span></button>
         <button class="tile" data-intent="organize"><i><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg></i><b>Seiten organisieren</b><span>Sortieren, drehen, löschen, einfügen, teilen</span></button>
         <button class="tile" data-intent="compress"><i><svg class="ic" aria-hidden="true"><use href="#i-minimize-2"/></svg></i><b>PDF verkleinern</b><span>Dateigröße reduzieren, mit Vorschau der Größe</span></button>
         <button class="tile" data-intent="img2pdf"><i><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg></i><b>Bilder in PDF</b><span>JPG und PNG zu einem PDF, auch vom Handy</span></button>
@@ -1429,7 +1432,7 @@ html.i18n-wait body{visibility:hidden}
     </div></div>
     <details id="x-more"><summary>Seitenzahlen, Kopf-/Fußzeile, Bates, Wasserzeichen, Passwort</summary>
       <div class="xrow" id="x-stamp-row"><span class="xl" aria-hidden="true">Stempel</span><div class="chips" role="group" aria-label="Stempel">
-        <select id="x-pnum"><option value="none">Keine Seitenzahlen</option><option value="center">Seitenzahl unten mittig</option><option value="right">Seitenzahl unten rechts</option></select>
+        <select id="x-pnum" aria-label="Seitenzahlen"><option value="none">Keine Seitenzahlen</option><option value="center">Seitenzahl unten mittig</option><option value="right">Seitenzahl unten rechts</option></select>
         <input id="x-wm" list="x-wm-list" placeholder="Wasserzeichen, z. B. KOPIE" size="22">
         <datalist id="x-wm-list"><option>KOPIE</option><option>ENTWURF</option><option>VERTRAULICH</option><option>MUSTER</option><option>BEZAHLT</option></datalist>
       </div></div>
@@ -1439,10 +1442,17 @@ html.i18n-wait body{visibility:hidden}
       </div></div>
       <div class="xrow" id="x-bates-row"><span class="xl" aria-hidden="true">Bates</span><div class="chips" role="group" aria-label="Bates">
         <label class="cb" title="Fortlaufende Nummer auf jeder Seite (Akten, Gericht, Prüfung). Das nächste Dokument zählt automatisch weiter."><input id="x-bates" type="checkbox"> Bates-Nummer</label>
-        <input id="x-bpre" placeholder="Präfix, z. B. MG-" size="10"><span class="hint">ab</span><input id="x-bstart" type="number" min="1" value="1" style="width:96px">
+        <input id="x-bpre" placeholder="Präfix, z. B. MG-" size="10"><span class="hint">ab</span><input id="x-bstart" type="number" min="1" value="1" style="width:96px" aria-label="Bates-Nummer ab">
       </div></div>
       <p class="hint" id="x-ph" style="margin:2px 0 8px">Platzhalter: {seite} {seiten} {datum} {datei} {bates}</p>
       <div id="x-sec-pdf">
+        <div class="xrow" id="x-lh-row"><span class="xl" aria-hidden="true">Briefbogen</span><div class="chips" role="group" aria-label="Briefbogen">
+          <label class="cb" title="Legt Ihren Briefbogen (PDF) unter jede Seite – Seite 1 des Briefbogens unter die erste Seite, Seite 2 (falls vorhanden) unter alle weiteren"><input id="x-lh" type="checkbox"> Auf meinen Briefbogen legen</label>
+          <button type="button" id="x-lh-pick" class="linkbtn">Briefbogen wählen …</button><span class="hint" id="x-lh-info"></span>
+        </div></div>
+        <div class="xrow" id="x-clean-row"><span class="xl" aria-hidden="true">Bereinigen</span><div class="chips" role="group" aria-label="Bereinigen">
+          <label class="cb" title="Entfernt Kommentare, Notizen und Markierungen der Vorlage, Skripte, eingebettete Dateien und Mediendateien sowie Autor, Betreff und Stichwörter – vor dem Weitergeben an Dritte"><input id="x-clean" type="checkbox"> Versteckte Daten entfernen</label>
+        </div></div>
         <div class="xrow" id="x-sign-row"><span class="xl" aria-hidden="true">Signatur</span><div class="chips" role="group" aria-label="Digitale Signatur">
           <label class="cb"><input id="x-sign" type="checkbox"> Digital signieren</label>
           <button type="button" id="x-sign-cert" class="linkbtn">Zertifikat wählen …</button><button type="button" id="x-sign-win" class="linkbtn" hidden title="Zertifikat aus Windows oder Signaturkarte (über pdfmy Scan) – auch qualifizierte Signatur">Windows-Zertifikat / Signaturkarte …</button><span class="hint" id="x-sign-info"></span>
@@ -1550,6 +1560,19 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" id="scanErrMail" style="margin-right:auto"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Protokoll per E-Mail senden</button><button type="button" id="scanErrClose">Schließen</button><button type="button" class="primary" id="scanErrRetry">Erneut versuchen</button></div>
 </dialog>
 
+<dialog id="splitDlg" aria-labelledby="splitT">
+  <form id="splitForm" method="dialog">
+    <h3 class="dlgtitle" id="splitT">PDF aufteilen</h3>
+    <fieldset class="spopts"><legend>Wie aufteilen?</legend>
+      <label><input type="radio" name="sp-mode" value="n" checked> Gleich große Teile: <input id="sp-n" type="number" min="1" max="999" value="1" aria-label="Seiten je Datei"> Seiten je Datei</label>
+      <label><input type="radio" name="sp-mode" value="marks"> An den Lesezeichen (je Kapitel eine Datei)</label>
+      <label><input type="radio" name="sp-mode" value="size"> Höchstens <input id="sp-mb" type="number" min="0.5" step="0.5" value="5" aria-label="Megabyte je Datei"> MB je Datei (z. B. für E-Mail-Anhänge)</label>
+      <label><input type="radio" name="sp-mode" value="ranges"> Nach Seitenbereichen: <input id="sp-ranges" placeholder="z. B. 1-3, 4-7, 8-" aria-label="Seitenbereiche, durch Komma getrennt"></label>
+    </fieldset>
+    <p class="hint" id="sp-info" aria-live="polite"></p>
+    <div class="dlgrow"><button type="button" id="spCancel">Abbrechen</button><button type="submit" class="primary" id="spGo">Aufteilen</button></div>
+  </form>
+</dialog>
 <dialog id="cmtDlg" class="sharedlg" aria-labelledby="cmtT">
   <h3 class="dlgtitle" id="cmtT">Kommentare und Markierungen</h3>
   <div class="tocbar"><div class="field"><label for="cmtQ">Suchen</label><input id="cmtQ" type="search" autocomplete="off" placeholder="Text, Name, Stempel …"></div>

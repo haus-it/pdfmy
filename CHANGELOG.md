@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### Mehr Leistungsumfang nach Wettbewerbsvergleich: Aufteilen, Briefbogen, Bereinigen
+- Wettbewerbsanalyse (Acrobat, Smallpdf, iLovePDF, PDF24, Sejda, PDFgear, Stirling-PDF, Foxit, Xodo, PDF-XChange, Nitro, DocuSign, DocuSeal) – die drei wichtigsten Lücken umgesetzt:
+- **PDF aufteilen** (Kachel und Menü): alle N Seiten, an den Lesezeichen (Kapitelname im Dateinamen), nach Dateigröße (z. B. höchstens 5 MB für E-Mail) oder nach Seitenbereichen; Vorschau „Ergibt n Datei(en)“, Ausgabe als ZIP oder in die Ablage.
+- **Auf den eigenen Briefbogen legen** (Speichern-Dialog): Seite 1 des Briefbogens unter die erste, Seite 2 unter alle weiteren Seiten; als eigener Inhaltsstrom unter dem Seiteninhalt und als Artefakt markiert. Nur für normale PDF.
+- **Versteckte Daten entfernen** (Speichern-Dialog, wie „Bereinigen“ in Acrobat Pro): Kommentare/Notizen/Markierungen der Vorlage, Skripte (Seiten- und Link-Aktionen), eingebettete Dateien und Medien, Autor, Betreff, Stichwörter, Seiten-Metadaten; Links bleiben.
+- **Fehler behoben:** PDF-Seiten mit wenig Text (unter 20 Zeichen, z. B. nur eine Überschrift) galten als leer und wurden beim Speichern mit „Leerseiten weglassen“ entfernt. Seiten mit echtem Text sind jetzt nie leer.
+- Getestet: alle vier Arten des Aufteilens (ZIP-Inhalt geprüft), Briefbogen (Pixelprüfung Seite 1/Folgeseiten, Text darüber; Datei geprüft mit qpdf/pikepdf und pypdf), Bereinigen (Kommentar, JavaScript, Seitenaktion, Autor/Betreff entfernt, Link erhalten), Unit-Tests.
+
 ### Zur Unterschrift senden: E-Mails, Erinnerung und Prüfprotokoll in der Sprache der Oberfläche
 - Bisher waren diese Texte immer Deutsch, auch wenn PDFMy z. B. auf Türkisch lief. Jetzt nutzt PDFMy dafür die Wörterbücher (40 Sprachen); Namen, Titel, Daten und die eigene Nachricht werden nie übersetzt.
 - Auch Meldungen im Dialog (fehlende Namen, ungültige Adressen) sind jetzt übersetzt; `js/sigreq.js`, `js/pdfinc.js` und `js/pdfcrypt.js` gehören zur Textsammlung.

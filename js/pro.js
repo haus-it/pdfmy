@@ -1891,6 +1891,11 @@ function openReply() {
 $('#btnReply').onclick = openReply;
 $('#rpCancel').onclick = () => $('#replyDlg').close();
 $('#rpLh').onclick = () => $('#rpLhFile').click();
+// Speichern-Dialog: denselben Briefbogen unter jede Seite legen (js/app.js underlay)
+const lhInfo = () => { $('#x-lh-info').textContent = letterhead ? letterhead.name : 'noch keiner gewählt'; $('#x-lh').disabled = !letterhead; if (!letterhead) $('#x-lh').checked = false; };
+$('#x-lh-pick').onclick = () => { $('#rpLhFile').click(); };
+$('#expDlg').addEventListener('toggle', lhInfo); new MutationObserver(lhInfo).observe($('#expDlg'), { attributes: true, attributeFilter: ['open'] });
+$('#rpLhFile').addEventListener('change', () => setTimeout(() => { lhInfo(); if (letterhead) $('#x-lh').checked = true; }, 300));
 $('#rpLhFile').onchange = async e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; letterhead = { name: f.name, bytes: new Uint8Array(await f.arrayBuffer()) }; idb.set('letterhead', letterhead); renderLh(); };
 $('#rpLhOff').onclick = () => { letterhead = null; idb.set('letterhead', null); renderLh(); };
 const mm = v => v * 72 / 25.4;
