@@ -3,7 +3,9 @@
 **PDFMy** ist ein kostenloses PDF- und Posteingangs-Werkzeug, das komplett im Browser läuft – **ohne Upload, ohne Konto, ohne Abo**.
 Briefe scannen, Texterkennung (OCR), Briefdaten erkennen, ablegen, Fristen im Blick behalten, bearbeiten, schwärzen, unterschreiben und unterschreiben lassen, digital signieren, PDF/A und E-Rechnung.
 
-👉 **Live ausprobieren: [pdfmy.de](https://pdfmy.de)**
+👉 **Live ausprobieren: [www.pdfmy.de](https://www.pdfmy.de)**
+
+Entwickelt von **Wolfgang-Udo Mertens** ([LinkedIn](https://www.linkedin.com/in/wolfgang-udo-mertens75)) · **Haus iT**, ein Geschäftsbereich der Mentor GmbH ([LinkedIn](https://www.linkedin.com/company/haus-it) · [YouTube](https://www.youtube.com/channel/UCcCSaQv0fccvMIPg0crMTkw) · [Facebook](https://www.facebook.com/hausit24) · [haus-it.de](https://www.haus-it.de))
 
 > **Wir freuen uns, wenn Sie PDFMy weiterentwickeln!** Fehler melden, Ideen einbringen, Übersetzungen verbessern, Code beitragen – jeder Beitrag ist willkommen. Wie es geht, steht in [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -50,7 +52,7 @@ Zum Ausprobieren genügt ein lokaler Webserver im Projektordner, z. B. `python -
 
 **Copyright © 2026 Mentor GmbH, Paderborn.** Alle Quelldateien tragen diesen Hinweis.
 
-PDFMy steht unter der **GNU Affero General Public License v3.0 oder später** ([LICENSE](LICENSE)). Sie dürfen den Code nutzen, ändern und weitergeben – Änderungen müssen ebenfalls unter der AGPL veröffentlicht werden, auch wenn sie als Online-Dienst angeboten werden, und der Copyright-Hinweis bleibt erhalten. **Bedingung für die freie Nutzung:** Der Banner unten auf der Startseite (Haus iT / Mentor GmbH) und der Hinweis „powered by Mentor Group“ bleiben sichtbar und unverändert erhalten (zusätzliche Bedingung nach § 7 b AGPLv3). Der Name „PDFMy“ und das Logo sind nicht Teil der Lizenz – Details in [NOTICE](NOTICE).
+PDFMy steht unter der **GNU Affero General Public License v3.0 oder später** ([LICENSE](LICENSE)). Sie dürfen den Code nutzen, ändern und weitergeben – Änderungen müssen ebenfalls unter der AGPL veröffentlicht werden, auch wenn sie als Online-Dienst angeboten werden, und der Copyright-Hinweis bleibt erhalten. **Bedingung für die freie Nutzung:** Der Banner unten auf der Startseite (Haus iT / Mentor GmbH) und der Hinweis „powered by Mentor Group“ bleiben sichtbar und unverändert erhalten. Wer den Quellcode ganz oder teilweise nutzt, muss in Oberfläche und Dokumentation sichtbar auf das Original hinweisen: **„Basiert auf PDFMy – [www.pdfmy.de](https://www.pdfmy.de)“** (zusätzliche Bedingungen nach § 7 b AGPLv3). Der Name „PDFMy“ und das Logo sind nicht Teil der Lizenz – Details in [NOTICE](NOTICE).
 
 ## Kontakt und Kanäle
 
@@ -62,4 +64,4 @@ PDFMy steht unter der **GNU Affero General Public License v3.0 oder später** ([
 
 ---
 
-*English: PDFMy is a free, privacy-first PDF and mail-inbox tool that runs entirely in the browser (no upload, no account). Contributions are very welcome – see [CONTRIBUTING.md](CONTRIBUTING.md). Copyright © 2026 Mentor GmbH, licensed under AGPL-3.0-or-later; the Mentor GmbH / Haus iT banner and the "powered by Mentor Group" notice must remain visible (additional term, AGPLv3 §7b).*
+*English: PDFMy is a free, privacy-first PDF and mail-inbox tool that runs entirely in the browser (no upload, no account). Contributions are very welcome – see [CONTRIBUTING.md](CONTRIBUTING.md). Copyright © 2026 Mentor GmbH, licensed under AGPL-3.0-or-later; the Mentor GmbH / Haus iT banner and the "powered by Mentor Group" notice must remain visible, and any use of the code must credit "Based on PDFMy – www.pdfmy.de" with a link (additional terms, AGPLv3 §7b).*

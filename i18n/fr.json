@@ -2143,5 +2143,6 @@
  "Vorlage „{0}“ gespeichert – beim nächsten „Zur Unterschrift senden …“ oben auswählbar.": "Modèle « {0} » enregistré – sélectionnable en haut lors du prochain « Envoyer pour signature … ».",
  "Vorlage „{0}“ löschen?": "Supprimer le modèle « {0} » ?",
  "Vorlage löschen": "Supprimer le modèle",
- "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Placez d’abord des champs – le modèle enregistre les personnes, les champs, le message et l’échéance."
+ "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Placez d’abord des champs – le modèle enregistre les personnes, les champs, le message et l’échéance.",
+ "Quellcode (GitHub)": "Code source (GitHub)"
 }

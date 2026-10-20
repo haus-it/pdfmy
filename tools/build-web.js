@@ -54,7 +54,7 @@ rep('<title>PDFMy</title>', `<title>${esc(W.title)}</title>
 <meta property="og:image" content="https://${site.domain}/icons/mentor-512.png">`);
 rep('content="Briefe scannen, als durchsuchbares PDF ablegen und bearbeiten – lokal, ohne Upload."',
   `content="${esc(W.description)}"`);
-rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a href="hilfe.html">${N.hilfe}</a> · <a href="werkzeuge.html">${N.werkzeuge}</a> · <span class="ext"><a href="erweiterung.html">${N.erweiterung}</a> · </span><a href="presse.html">${N.presse}</a> · <a href="impressum.html">${N.impressum}</a> · <a href="datenschutz.html">${N.datenschutz}</a> · <a href="barrierefreiheit.html">${N.barrierefreiheit}</a></nav>`);
+rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a href="hilfe.html">${N.hilfe}</a> · <a href="werkzeuge.html">${N.werkzeuge}</a> · <span class="ext"><a href="erweiterung.html">${N.erweiterung}</a> · </span><a href="presse.html">${N.presse}</a> · <a href="impressum.html">${N.impressum}</a> · <a href="datenschutz.html">${N.datenschutz}</a> · <a href="barrierefreiheit.html">${N.barrierefreiheit}</a> · <a href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
 rep('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} @media (max-width:760px){footer .legal .ext{display:none}}\n</style>');
 // Suchmaschinen: kanonische Adresse und strukturierte Daten (schema.org) der Anwendung
 rep('</head>', `<link rel="canonical" href="https://${site.domain}/">
@@ -127,10 +127,12 @@ ${op.vatId ? `<h2>Umsatzsteuer-ID</h2><p>Umsatzsteuer-Identifikationsnummer gem�
 <h2>Verbraucherstreitbeilegung</h2><p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
 <h2>Haftung</h2><p>pdfmy wird kostenlos und ohne Gewähr bereitgestellt. Bitte prüfen Sie erzeugte Dokumente vor der Weitergabe. Für Inhalte externer Links sind deren Betreiber verantwortlich.</p>`));
 
+// Datum der letzten Barrierefreiheitsprüfung (axe-core, Tastatur) – bei neuer Prüfung anpassen
+const A11Y_DATE = '19.10.2026';
 write('barrierefreiheit.html', page('Erklärung zur Barrierefreiheit', `
 <p>Die Mentor GmbH ist bestrebt, PDFMy (${esc(site.domain)}) barrierefrei zugänglich zu machen – nach den Web Content Accessibility Guidelines (<b>WCAG 2.1, Stufe AA</b>) bzw. EN 301 549, im Sinne des Barrierefreiheitsstärkungsgesetzes (BFSG).</p>
 <h2>Stand der Vereinbarkeit</h2>
-<p>PDFMy ist <b>weitgehend vereinbar</b> mit WCAG 2.1 AA. Die Bewertung beruht auf einer Selbstbewertung vom ${new Date().toLocaleDateString('de-DE')}: automatisierte Prüfung mit axe-core (Hell- und Dunkelmodus, Handy-Ansicht, alle Dialoge – ohne Befund) und manuelle Prüfung der Tastaturbedienung.</p>
+<p>PDFMy ist <b>weitgehend vereinbar</b> mit WCAG 2.1 AA. Die Bewertung beruht auf einer Selbstbewertung vom ${A11Y_DATE}: automatisierte Prüfung mit axe-core (Hell- und Dunkelmodus, Handy-Ansicht, alle Dialoge – ohne Befund) und manuelle Prüfung der Tastaturbedienung.</p>
 <h2>Was wir umgesetzt haben</h2>
 <ul>
 <li>Vollständige Bedienung mit der Tastatur, sichtbarer Fokus, Sprunglink „Zum Inhalt springen“, Befehlssuche mit <kbd>Strg</kbd>+<kbd>K</kbd></li>
@@ -149,7 +151,7 @@ write('barrierefreiheit.html', page('Erklärung zur Barrierefreiheit', `
 <p>Sind Ihnen Mängel aufgefallen? Schreiben Sie uns: <a href="mailto:${esc(APPSUPPORT)}">${esc(APPSUPPORT)}</a> – oder in PDFMy unter „Mehr → Problem melden“. Wir antworten in der Regel innerhalb von zwei Wochen.</p>
 <h2>Durchsetzung</h2>
 <p>Erhalten Sie keine zufriedenstellende Antwort, können Sie sich an die für die Marktüberwachung nach dem BFSG zuständige Behörde wenden (Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen, MLBF).</p>
-<p>Erstellt am ${new Date().toLocaleDateString('de-DE')}. Diese Erklärung wird bei wesentlichen Änderungen aktualisiert.</p>`));
+<p>Erstellt am ${A11Y_DATE}. Diese Erklärung wird bei wesentlichen Änderungen aktualisiert.</p>`));
 
 write('datenschutz.html', page('Datenschutzerklärung', `
 <p class="lang-note">Übersetzung zur Information – rechtlich maßgeblich ist die deutsche Fassung.</p>

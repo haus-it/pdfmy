@@ -17,6 +17,10 @@ unverändert erhalten bleiben:
      Mentor GmbH; index.html, Element <aside class="promo">) samt Verweis auf
      https://www.haus-it.de,
   2. der Hinweis „powered by Mentor Group“ neben dem Namen in der Kopfzeile.
+  3. ein gut sichtbarer Hinweis auf das Original: „Basiert auf PDFMy –
+     www.pdfmy.de“ mit Link auf https://www.pdfmy.de – in der Oberfläche
+     (z. B. Fußzeile oder „Über“) sowie in Dokumentation, README und
+     Beschreibung jedes Werks, das den Quellcode ganz oder teilweise nutzt.
 Wer diese Hinweise entfernen oder ersetzen möchte, braucht eine gesonderte
 Erlaubnis der Mentor GmbH (wumertens@mentor-group.de).
 
@@ -33,4 +37,6 @@ Public License v3.0 or later. The names "PDFMy", "pdfmy Scan" and the PDFMy logo
 are trademarks of Mentor GmbH and are not covered by the license.
 Additional term under AGPLv3 section 7(b): the Mentor GmbH / Haus iT banner at
 the bottom of the start page and the "powered by Mentor Group" notice must be
-kept visible and unchanged in every version shown to users.
+kept visible and unchanged in every version shown to users, and every work using
+this source code in whole or in part must visibly state "Based on PDFMy –
+www.pdfmy.de" with a link to https://www.pdfmy.de (user interface and docs).

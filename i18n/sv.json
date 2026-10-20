@@ -2143,5 +2143,6 @@
  "Vorlage „{0}“ gespeichert – beim nächsten „Zur Unterschrift senden …“ oben auswählbar.": "Mallen ”{0}” har sparats – kan väljas överst nästa gång du använder ”Skicka för underskrift …”.",
  "Vorlage „{0}“ löschen?": "Ta bort mallen ”{0}”?",
  "Vorlage löschen": "Ta bort mall",
- "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Placera fält först – mallen sparar personer, fält, meddelande och frist."
+ "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Placera fält först – mallen sparar personer, fält, meddelande och frist.",
+ "Quellcode (GitHub)": "Källkod (GitHub)"
 }

@@ -4,5 +4,14 @@
   "description": "Kostenlose PDF-Werkzeuge ohne Upload: scannen mit Texterkennung (OCR), zusammenfügen, verkleinern, schwärzen, unterschreiben, Formulare, Passwort, PDF/A. Ohne Anmeldung, ohne Limits.",
   "ogTitle": "PDFMy – powered by Mentor Group: alle PDF-Werkzeuge, ohne Upload",
   "ogDescription": "Scannen mit Texterkennung, zusammenfügen, verkleinern, schwärzen, unterschreiben, Passwort, PDF/A. Kostenlos, ohne Anmeldung, Dateien bleiben auf Ihrem Gerät.",
-  "nav": { "hilfe": "Hilfe", "werkzeuge": "Werkzeuge", "erweiterung": "Browser-Erweiterung", "presse": "Presse", "impressum": "Impressum", "datenschutz": "Datenschutz", "barrierefreiheit": "Barrierefreiheit" }
+  "nav": {
+    "hilfe": "Hilfe",
+    "werkzeuge": "Werkzeuge",
+    "erweiterung": "Browser-Erweiterung",
+    "presse": "Presse",
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "barrierefreiheit": "Barrierefreiheit",
+    "quellcode": "Quellcode (GitHub)"
+  }
 }

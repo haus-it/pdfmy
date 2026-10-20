@@ -23,6 +23,10 @@ Schön, dass Sie PDFMy weiterentwickeln möchten – wir freuen uns über jeden 
    // SPDX-License-Identifier: AGPL-3.0-or-later
    ```
 
+## Eigene Projekte auf Basis von PDFMy
+
+Gern! Bedingungen (siehe [NOTICE](NOTICE)): Copyright-Hinweise und den Banner der Mentor GmbH / Haus iT erhalten, Änderungen unter der AGPL veröffentlichen und sichtbar auf das Original hinweisen: **„Basiert auf PDFMy – [www.pdfmy.de](https://www.pdfmy.de)“**.
+
 ## Lizenz der Beiträge
 
 Mit einem Pull Request stimmen Sie zu, dass Ihr Beitrag unter der Lizenz des Projekts (AGPL-3.0-or-later, siehe [LICENSE](LICENSE)) veröffentlicht wird. Das Copyright am Gesamtprojekt liegt bei der Mentor GmbH.

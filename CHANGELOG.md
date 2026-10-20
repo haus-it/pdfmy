@@ -2,6 +2,16 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-20
+
+### Offener Quellcode auf GitHub (haus-it/pdfmy)
+- PDFMy steht zur freien Weiterentwicklung auf https://github.com/haus-it/pdfmy – © Mentor GmbH, Lizenz AGPL-3.0-or-later.
+- Zusätzliche Bedingungen nach § 7 b AGPLv3 (NOTICE): Banner Haus iT / Mentor GmbH unten auf der Startseite und „powered by Mentor Group“ bleiben sichtbar; wer den Code nutzt, weist sichtbar auf „Basiert auf PDFMy – www.pdfmy.de“ hin. Name und Logo sind nicht lizenziert.
+- Copyright-Kopf (mit SPDX-Kennung) in allen eigenen Quelldateien; README, CONTRIBUTING, NOTICE mit Kontakt und Kanälen (LinkedIn, YouTube, Facebook).
+- Nicht veröffentlicht: Zugangsdaten (.deploy), Signier-Einrichtung, Build-Ausgaben, Presseverteiler; der Hosting-Benutzername ist aus Skripten und Doku entfernt.
+- Website: Link „Quellcode (GitHub)“ in der Fußzeile, Hinweis in der Hilfe.
+- Barrierefreiheitserklärung: festes Prüfdatum statt Build-Datum (vorher änderte sich „Erstellt am“ bei jedem Build).
+
 ## 2026-10-19
 
 ### Zur Unterschrift senden: andere PDF-Programme, Frist und Erinnerung, Vorlagen

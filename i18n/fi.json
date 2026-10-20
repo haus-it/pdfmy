@@ -2143,5 +2143,6 @@
  "Vorlage „{0}“ gespeichert – beim nächsten „Zur Unterschrift senden …“ oben auswählbar.": "Mallipohja ”{0}” tallennettu – valittavissa ylhäältä, kun seuraavan kerran käytät toimintoa ”Lähetä allekirjoitettavaksi …”.",
  "Vorlage „{0}“ löschen?": "Poistetaanko mallipohja ”{0}”?",
  "Vorlage löschen": "Poista mallipohja",
- "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Aseta ensin kentät – mallipohja tallentaa henkilöt, kentät, viestin ja määräajan."
+ "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Aseta ensin kentät – mallipohja tallentaa henkilöt, kentät, viestin ja määräajan.",
+ "Quellcode (GitHub)": "Lähdekoodi (GitHub)"
 }
