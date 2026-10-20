@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Optioun „{0}“ vun der Grupp „{1}“ ugeluecht – weider Optiounen dniewendrun setzen. Duebelklick ännert Wäert a Grupp.",
  "Optionsfeld": "Optiounsfeld",
  "Pflichtfeld": "Obligatorescht Feld",
- "Wert dieser Option:": "Wäert vun dëser Optioun:"
+ "Wert dieser Option:": "Wäert vun dëser Optioun:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Barrièrefräi Websäit (HTML) mat Iwwerschrëften, Abschnitter an Tabellen",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text mat Iwwerschrëften, Opzielungen an Tabellen als Markdown – z. B. fir KI-Assistenten, Wikien oder Notiz-Apps",
+ "Webseite (HTML)": "Websäit (HTML)"
 }

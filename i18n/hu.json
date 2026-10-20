@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "A(z) „{1}” csoport „{0}” lehetősége létrehozva – helyezzen el mellé további lehetőségeket. Dupla kattintással módosíthatja az értéket és a csoportot.",
  "Optionsfeld": "Választógomb",
  "Pflichtfeld": "Kötelező mező",
- "Wert dieser Option:": "E lehetőség értéke:"
+ "Wert dieser Option:": "E lehetőség értéke:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Akadálymentes weboldal (HTML) címsorokkal, bekezdésekkel és táblázatokkal",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Szöveg címsorokkal, felsorolásokkal és táblázatokkal Markdown formátumban – pl. MI-asszisztensekhez, wikikhez vagy jegyzetalkalmazásokhoz",
+ "Webseite (HTML)": "Weboldal (HTML)"
 }

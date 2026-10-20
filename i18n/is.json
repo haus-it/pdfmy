@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Valkostur „{0}“ í hópnum „{1}“ búinn til – setjið fleiri valkosti við hliðina. Tvísmellur breytir gildi og hópi.",
  "Optionsfeld": "Valhnappur",
  "Pflichtfeld": "Skyldureitur",
- "Wert dieser Option:": "Gildi þessa valkosts:"
+ "Wert dieser Option:": "Gildi þessa valkosts:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Aðgengileg vefsíða (HTML) með fyrirsögnum, efnisgreinum og töflum",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Texti með fyrirsögnum, upptalningum og töflum sem Markdown – t.d. fyrir gervigreindaraðstoðarmenn, wiki-síður eða glósuforrit",
+ "Webseite (HTML)": "Vefsíða (HTML)"
 }

@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Opsioni „{0}“ i grupit „{1}“ u krijua – vendosni opsione të tjera pranë tij. Klikimi i dyfishtë ndryshon vlerën dhe grupin.",
  "Optionsfeld": "Buton opsioni",
  "Pflichtfeld": "Fushë e detyrueshme",
- "Wert dieser Option:": "Vlera e këtij opsioni:"
+ "Wert dieser Option:": "Vlera e këtij opsioni:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Faqe uebi e aksesueshme (HTML) me tituj, paragrafë dhe tabela",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst me tituj, lista dhe tabela si Markdown – p.sh. për asistentë IA, wiki ose aplikacione shënimesh",
+ "Webseite (HTML)": "Faqe uebi (HTML)"
 }

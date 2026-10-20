@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Optie „{0}” van groep „{1}” aangemaakt – plaats ernaast meer opties. Dubbelklik wijzigt waarde en groep.",
  "Optionsfeld": "Keuzerondje",
  "Pflichtfeld": "Verplicht veld",
- "Wert dieser Option:": "Waarde van deze optie:"
+ "Wert dieser Option:": "Waarde van deze optie:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Toegankelijke webpagina (HTML) met koppen, alinea’s en tabellen",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst met koppen, opsommingen en tabellen als Markdown – bijv. voor AI-assistenten, wiki’s of notitie-apps",
+ "Webseite (HTML)": "Webpagina (HTML)"
 }

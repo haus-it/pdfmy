@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Alternativ «{0}» i gruppen «{1}» opprettet – plasser flere alternativer ved siden av. Dobbeltklikk endrer verdi og gruppe.",
  "Optionsfeld": "Alternativknapp",
  "Pflichtfeld": "Obligatorisk felt",
- "Wert dieser Option:": "Verdi for dette alternativet:"
+ "Wert dieser Option:": "Verdi for dette alternativet:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Universelt utformet nettside (HTML) med overskrifter, avsnitt og tabeller",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst med overskrifter, punktlister og tabeller som Markdown – f.eks. for KI-assistenter, wikier eller notatapper",
+ "Webseite (HTML)": "Nettside (HTML)"
 }

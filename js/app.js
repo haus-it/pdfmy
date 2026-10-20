@@ -2888,7 +2888,7 @@ function readyToSave(name, pick) {
 }
 // saveAs: immer nach Ort und Namen fragen (auch wenn ein Ablageordner eingestellt ist)
 async function deliver(data, name, mime, meta, saveAs = false) {
-  const kind = { [DOCX]: ['Word-Dokument', '.docx'], 'application/xml': ['XRechnung (XML)', '.xml'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['Excel-Tabelle', '.xlsx'], 'text/csv': ['CSV-Tabelle (Excel)', '.csv'], 'application/pdf': ['PDF-Dokument', '.pdf'], 'application/zip': ['ZIP-Archiv', '.zip'], 'image/jpeg': ['JPG-Bild', '.jpg'], 'image/png': ['PNG-Bild', '.png'], 'text/plain': ['Textdatei', '.txt'] }[mime];
+  const kind = { [DOCX]: ['Word-Dokument', '.docx'], 'application/xml': ['XRechnung (XML)', '.xml'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['Excel-Tabelle', '.xlsx'], 'text/csv': ['CSV-Tabelle (Excel)', '.csv'], 'application/pdf': ['PDF-Dokument', '.pdf'], 'application/zip': ['ZIP-Archiv', '.zip'], 'image/jpeg': ['JPG-Bild', '.jpg'], 'image/png': ['PNG-Bild', '.png'], 'text/plain': ['Textdatei', '.txt'], 'text/markdown': ['Markdown', '.md'], 'text/html': ['Webseite (HTML)', '.html'] }[mime];
   if (state.outDir && !saveAs) {
     const path = mime === 'application/pdf' && meta ? await saveToOutDir(data, name, meta) : await writeUnique(state.outDir, name, data);
     return `${state.outDir.name}\\${path}`;
@@ -2941,6 +2941,14 @@ async function doExport(o) {
       sheets.push({ name: `Seite ${i + 1}`, rows: Tools.tableRows(words) });
     }
     data = Tools.xlsx(sheets); name = base + '.xlsx'; mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  } else if (o.format === 'md' || o.format === 'html') {
+    // Markdown/HTML mit Gliederung (Überschriften, Absätze, Aufzählungen, Tabellen) – z. B. für KI-Werkzeuge oder Webseiten
+    await waitForOcr(pages);
+    const words = [];
+    for (const p of pages) words.push(p.ocr?.words || (p.kind === 'pdf' && p.native ? await nativeWords(p) : null) || []);
+    const blocks = Tools.docBlocks(words), title = meta.subject || '';
+    data = new TextEncoder().encode(o.format === 'md' ? Tools.toMarkdown(blocks, { title }) : Tools.toHtml(blocks, { title: title || base, lang: docLang(pages) }));
+    name = base + (o.format === 'md' ? '.md' : '.html'); mime = o.format === 'md' ? 'text/markdown' : 'text/html';
   } else if (o.format === 'txt') {
     await waitForOcr(pages);
     data = new TextEncoder().encode(pages.map((p, i) => `--- Seite ${i + 1} ---\n${pageText(p).trim()}\n`).join('\n').replace(/\n/g, '\r\n'));
@@ -2998,7 +3006,7 @@ async function doExport(o) {
   const where = await deliver(data, name, mime, mime === 'application/pdf' && !o.password ? meta : null, o.saveAs);
   if (!where) { status('Speichern abgebrochen.'); return; }
   state.dirty = false;
-  if (o.batesOn && o.format !== 'txt' && o.format !== 'docx') LS.set('batesNext', o.batesStart + pages.length);   // nächstes Dokument zählt weiter
+  if (o.batesOn && !['txt', 'docx', 'md', 'html'].includes(o.format)) LS.set('batesNext', o.batesStart + pages.length);   // nächstes Dokument zählt weiter
   if (mime === 'application/pdf' && !o.password) journalAdd(meta, where, pages.length);
   $('#btnNew').classList.add('next'); setTimeout(() => $('#btnNew').classList.remove('next'), 8000);
   const secs = I18N.fmtNum((performance.now() - t0) / 1000, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -3067,7 +3075,7 @@ function openExport(pre = {}) {
 $('#btnSaveAs').onclick = () => openExport({ saveAs: true });
 let estTimer = null, estSeq = 0;
 function updateExportUi() {
-  const o = readExport(), isPdf = o.format === 'pdf' || o.format === 'pdfa', textOnly = o.format === 'txt' || o.format === 'docx' || o.format === 'xlsx';
+  const o = readExport(), isPdf = o.format === 'pdf' || o.format === 'pdfa', textOnly = ['txt', 'docx', 'xlsx', 'md', 'html'].includes(o.format);
   $('#x-size-row').hidden = textOnly;
   $('#x-sec-pdf').hidden = !isPdf;
   $('#x-lh-row').hidden = o.format !== 'pdf';
@@ -3084,7 +3092,7 @@ function updateExportUi() {
   else if (o.sign && o.password) err = 'Signieren und Passwortschutz gleichzeitig geht nicht – bitte eines von beiden wählen.';
   else if (o.sign && !window.signCertName?.()) err = 'Zum Signieren zuerst „Zertifikat wählen …“ (.p12/.pfx).';
   $('#x-err').textContent = err; $('#x-go').disabled = $('#x-saveas').disabled = !!err;
-  $('#x-ext').textContent = { pdf: '.pdf', pdfa: '.pdf', img: o.pages?.length > 1 ? '_Bilder.zip' : '.jpg', txt: '.txt', docx: '.docx', xlsx: '.xlsx' }[o.format];
+  $('#x-ext').textContent = { pdf: '.pdf', pdfa: '.pdf', img: o.pages?.length > 1 ? '_Bilder.zip' : '.jpg', txt: '.txt', docx: '.docx', xlsx: '.xlsx', md: '.md', html: '.html' }[o.format];
   clearTimeout(estTimer); $('#x-est').textContent = '';
   if (err || !isPdf || o.pages.length > 40) return;
   const seq = ++estSeq;

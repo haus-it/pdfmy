@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Grupės „{1}“ parinktis „{0}“ sukurta – šalia dėkite daugiau parinkčių. Dukart spustelėjus keičiama reikšmė ir grupė.",
  "Optionsfeld": "Akutė",
  "Pflichtfeld": "Privalomas laukas",
- "Wert dieser Option:": "Šios parinkties reikšmė:"
+ "Wert dieser Option:": "Šios parinkties reikšmė:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Prieinamas tinklalapis (HTML) su antraštėmis, pastraipomis ir lentelėmis",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekstas su antraštėmis, sąrašais ir lentelėmis Markdown formatu – pvz., DI asistentams, vikiams ar užrašų programėlėms",
+ "Webseite (HTML)": "Tinklalapis (HTML)"
 }

@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Rühma „{1}“ valik „{0}“ on loodud – paigutage kõrvale täiendavaid valikuid. Topeltklõps muudab väärtust ja rühma.",
  "Optionsfeld": "Raadionupp",
  "Pflichtfeld": "Kohustuslik väli",
- "Wert dieser Option:": "Selle valiku väärtus:"
+ "Wert dieser Option:": "Selle valiku väärtus:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Ligipääsetav veebileht (HTML) pealkirjade, lõikude ja tabelitega",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst pealkirjade, loetelude ja tabelitega Markdownina – nt tehisintellekti assistentide, vikide või märkmerakenduste jaoks",
+ "Webseite (HTML)": "Veebileht (HTML)"
 }

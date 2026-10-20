@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Opcija „{0}“ grupe „{1}“ stvorena – postavite dodatne opcije pokraj nje. Dvostruki klik mijenja vrijednost i grupu.",
  "Optionsfeld": "Izborni gumb",
  "Pflichtfeld": "Obavezno polje",
- "Wert dieser Option:": "Vrijednost ove opcije:"
+ "Wert dieser Option:": "Vrijednost ove opcije:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Pristupačna web-stranica (HTML) s naslovima, odlomcima i tablicama",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst s naslovima, popisima i tablicama kao Markdown – npr. za AI asistente, wikije ili aplikacije za bilješke",
+ "Webseite (HTML)": "Web-stranica (HTML)"
 }

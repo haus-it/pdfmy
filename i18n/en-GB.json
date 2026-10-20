@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Option ‘{0}’ of group ‘{1}’ created – place further options next to it. Double-click changes value and group.",
  "Optionsfeld": "Radio button",
  "Pflichtfeld": "Required field",
- "Wert dieser Option:": "Value of this option:"
+ "Wert dieser Option:": "Value of this option:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Accessible web page (HTML) with headings, paragraphs and tables",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text with headings, bullet points and tables as Markdown – e.g. for AI assistants, wikis or note-taking apps",
+ "Webseite (HTML)": "Web page (HTML)"
 }

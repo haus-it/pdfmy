@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Opción «{0}» del grupo «{1}» creada: coloque más opciones al lado. Con doble clic se modifican el valor y el grupo.",
  "Optionsfeld": "Botón de opción",
  "Pflichtfeld": "Campo obligatorio",
- "Wert dieser Option:": "Valor de esta opción:"
+ "Wert dieser Option:": "Valor de esta opción:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Página web accesible (HTML) con títulos, párrafos y tablas",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Texto con títulos, listas y tablas en Markdown – p. ej. para asistentes de IA, wikis o aplicaciones de notas",
+ "Webseite (HTML)": "Página web (HTML)"
 }

@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Option « {0} » du groupe « {1} » créée – placez d’autres options à côté. Un double-clic modifie la valeur et le groupe.",
  "Optionsfeld": "Bouton radio",
  "Pflichtfeld": "Champ obligatoire",
- "Wert dieser Option:": "Valeur de cette option :"
+ "Wert dieser Option:": "Valeur de cette option :",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Page web accessible (HTML) avec titres, paragraphes et tableaux",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Texte avec titres, listes à puces et tableaux au format Markdown – p. ex. pour les assistants IA, les wikis ou les applications de notes",
+ "Webseite (HTML)": "Page web (HTML)"
 }

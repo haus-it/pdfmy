@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Opcija „{0}“ grupe „{1}“ kreirana – postavite dodatne opcije pored. Dvostruki klik mijenja vrijednost i grupu.",
  "Optionsfeld": "Radio dugme",
  "Pflichtfeld": "Obavezno polje",
- "Wert dieser Option:": "Vrijednost ove opcije:"
+ "Wert dieser Option:": "Vrijednost ove opcije:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Pristupačna web stranica (HTML) s naslovima, pasusima i tabelama",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst s naslovima, nabrajanjima i tabelama kao Markdown – npr. za AI asistente, wikije ili aplikacije za bilješke",
+ "Webseite (HTML)": "Web stranica (HTML)"
 }

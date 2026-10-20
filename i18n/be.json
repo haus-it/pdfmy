@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Варыянт «{0}» групы «{1}» створаны – стаўце побач іншыя варыянты. Падвойны клік змяняе значэнне і групу.",
  "Optionsfeld": "Пераключальнік",
  "Pflichtfeld": "Абавязковае поле",
- "Wert dieser Option:": "Значэнне гэтага варыянта:"
+ "Wert dieser Option:": "Значэнне гэтага варыянта:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Даступная вэб-старонка (HTML) з загалоўкамі, абзацамі і табліцамі",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Тэкст з загалоўкамі, спісамі і табліцамі ў фармаце Markdown – напрыклад, для ШІ-асістэнтаў, вікі або праграм для нататак",
+ "Webseite (HTML)": "Вэб-старонка (HTML)"
 }

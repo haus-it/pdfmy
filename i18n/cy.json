@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Crëwyd opsiwn ‘{0}’ yn y grŵp ‘{1}’ – gosodwch ragor o opsiynau wrth ei ymyl. Mae clic dwbl yn newid y gwerth a’r grŵp.",
  "Optionsfeld": "Botwm radio",
  "Pflichtfeld": "Maes gorfodol",
- "Wert dieser Option:": "Gwerth yr opsiwn hwn:"
+ "Wert dieser Option:": "Gwerth yr opsiwn hwn:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Tudalen we hygyrch (HTML) gyda phenawdau, paragraffau a thablau",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Testun gyda phenawdau, rhestrau a thablau fel Markdown – e.e. ar gyfer cynorthwywyr AI, wicis neu apiau nodiadau",
+ "Webseite (HTML)": "Tudalen we (HTML)"
 }

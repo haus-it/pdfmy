@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Ryhmän ”{1}” vaihtoehto ”{0}” luotu – sijoita muita vaihtoehtoja viereen. Kaksoisnapsautus muuttaa arvoa ja ryhmää.",
  "Optionsfeld": "Valintanappi",
  "Pflichtfeld": "Pakollinen kenttä",
- "Wert dieser Option:": "Tämän vaihtoehdon arvo:"
+ "Wert dieser Option:": "Tämän vaihtoehdon arvo:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Saavutettava verkkosivu (HTML) otsikoineen, kappaleineen ja taulukoineen",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Teksti otsikoineen, luetteloineen ja taulukoineen Markdown-muodossa – esim. tekoälyavustajille, wikeihin tai muistiinpanosovelluksiin",
+ "Webseite (HTML)": "Verkkosivu (HTML)"
 }

@@ -235,6 +235,99 @@
     ];
     return zip(files);
   }
-  const api = { crc32, zip, parseRange, formatBytes, docx, diffWords, pixelDiff, fillStamp, bates, tableRows, deNumber, xlsx };
+  // Gliederung aus Wortpositionen (pdf.js-Text oder Texterkennung): Überschriften (Schriftgröße/fett), Aufzählungen,
+  // Absätze (Zeilenabstand, Silbentrennung) und Tabellen (mehrere Zeilen mit gleich vielen Spalten). Grundlage für Markdown und HTML.
+  // pages: [[{ t, x, y, w, h, f?: { bold } }]] mit Koordinaten 0…1 (y von oben)
+  function docBlocks(pages) {
+    const all = pages.flat().filter(w => w && w.t && w.t.trim());
+    const hs = all.map(w => w.h).sort((a, b) => a - b), body = hs.length ? hs[Math.floor(hs.length / 2)] : 0.012;
+    const blocks = [];
+    pages.forEach((words, pi) => {
+      if (pi > 0) blocks.push({ type: 'page', n: pi + 1 });
+      const ws = (words || []).filter(w => w && w.t && w.t.trim()).slice().sort((a, b) => (a.y + a.h / 2) - (b.y + b.h / 2) || a.x - b.x);
+      const rows = [];
+      for (const w of ws) {
+        const r = rows[rows.length - 1];
+        if (r && Math.abs((w.y + w.h / 2) - r.cy) < Math.max(w.h, r.h) * 0.55) { r.words.push(w); r.h = Math.max(r.h, w.h); }
+        else rows.push({ cy: w.y + w.h / 2, h: w.h, words: [w] });
+      }
+      const lines = rows.map(r => {
+        const s = r.words.sort((a, b) => a.x - b.x), cells = [];
+        for (const w of s) { const c = cells[cells.length - 1]; if (c && w.x - (c.x + c.w) < Math.max(r.h * 1.6, 0.02)) { c.t += ' ' + w.t; c.w = w.x + w.w - c.x; } else cells.push({ t: w.t, x: w.x, w: w.w }); }
+        const hMed = r.words.map(w => w.h).sort((a, b) => a - b)[Math.floor(r.words.length / 2)];
+        return { cells, text: cells.map(c => c.t).join(' ').replace(/\s+/g, ' ').trim(), y: r.cy - r.h / 2, h: hMed, bottom: r.cy + r.h / 2, x: s[0].x,
+          bold: r.words.every(w => w.f?.bold) };
+      });
+      let i = 0;
+      while (i < lines.length) {
+        // Tabelle: mindestens 2 aufeinanderfolgende Zeilen mit je ≥ 2 Spalten, ähnlich vielen Spalten
+        let j = i;
+        while (j < lines.length && lines[j].cells.length >= 2 && Math.abs(lines[j].cells.length - lines[i].cells.length) <= 1) j++;
+        if (j - i >= 3 || (j - i >= 2 && lines[i].cells.length >= 3)) {
+          const n = Math.max(...lines.slice(i, j).map(l => l.cells.length));
+          const edges = lines[i].cells.length === n ? lines[i].cells.map(c => c.x) : lines.slice(i, j).find(l => l.cells.length === n).cells.map(c => c.x);
+          const col = x => { let b = 0, d = Infinity; edges.forEach((e, k) => { const dd = Math.abs(e - x); if (dd < d) { d = dd; b = k; } }); return b; };
+          const rowsT = lines.slice(i, j).map(l => { const r = Array(n).fill(''); for (const c of l.cells) { const k = col(c.x); r[k] = r[k] ? r[k] + ' ' + c.t : c.t; } return r; });
+          blocks.push({ type: 'table', rows: rowsT }); i = j; continue;
+        }
+        const l = lines[i], t = l.text;
+        const ratio = l.h / body;
+        if (t.length <= 120 && !/[.,;:]$/.test(t) && (ratio >= 1.3 || (l.bold && t.length <= 80 && !lines.slice(i + 1, i + 2).every(n => n.bold)))) {
+          blocks.push({ type: 'h', level: ratio >= 1.8 ? 1 : ratio >= 1.3 ? 2 : 3, text: t }); i++; continue;
+        }
+        const li = t.match(/^(?:[•●▪◦‣\-–*]|(\d{1,3})[.)])\s+(.+)$/);
+        if (li) { blocks.push({ type: 'li', ordered: !!li[1], n: li[1] ? +li[1] : 0, text: li[2] }); i++; continue; }
+        // Absatz: Folgezeilen mit normalem Zeilenabstand, keine Überschrift/Aufzählung/Tabelle
+        let text = t, k = i + 1;
+        while (k < lines.length) {
+          const prev = lines[k - 1], nx = lines[k];
+          if (nx.cells.length >= 2 || nx.y - prev.bottom > Math.max(prev.h, nx.h) * 0.9 || /^(?:[•●▪◦‣\-–*]|\d{1,3}[.)])\s/.test(nx.text) || nx.h / body >= 1.3) break;
+          text = /[A-Za-zÄÖÜäöüß]-$/.test(text) && /^[a-zäöüß]/.test(nx.text) ? text.slice(0, -1) + nx.text : text + ' ' + nx.text;
+          k++;
+        }
+        blocks.push({ type: 'p', text }); i = k;
+      }
+    });
+    return blocks;
+  }
+  function toMarkdown(blocks, { title = '' } = {}) {
+    const esc = s => String(s).replace(/\\/g, '\\\\').replace(/([*_`[\]<>])/g, '\\$1');
+    const lead = s => s.replace(/^(#|>|\+|-|=|\d+[.)])(?=\s|$)/, '\\$1');
+    const out = []; if (title) out.push('# ' + esc(title), '');
+    let prevLi = false;
+    for (const b of blocks) {
+      if (b.type !== 'li' && prevLi) out.push('');
+      if (b.type === 'page') out.push(`<!-- Seite ${b.n} -->`, '');
+      else if (b.type === 'h') out.push('#'.repeat(Math.min(6, b.level + (title ? 1 : 0))) + ' ' + esc(b.text), '');
+      else if (b.type === 'li') out.push((b.ordered ? b.n + '. ' : '- ') + esc(b.text));
+      else if (b.type === 'p') out.push(lead(esc(b.text)), '');
+      else if (b.type === 'table') {
+        const cell = s => esc(s).replace(/\|/g, '\\|');
+        out.push('| ' + b.rows[0].map(cell).join(' | ') + ' |', '|' + b.rows[0].map(() => ' --- ').join('|') + '|');
+        for (const r of b.rows.slice(1)) out.push('| ' + r.map(cell).join(' | ') + ' |');
+        out.push('');
+      }
+      prevLi = b.type === 'li';
+    }
+    return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+  }
+  function toHtml(blocks, { title = '', lang = 'de' } = {}) {
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const own = blocks[0]?.type === 'h', out = [], off = title && !own ? 1 : 0; let list = null;   // eigene Überschrift des Dokuments geht vor
+    const close = () => { if (list) { out.push(`</${list}>`); list = null; } };
+    if (off) out.push(`<h1>${esc(title)}</h1>`);
+    for (const b of blocks) {
+      if (b.type === 'li') { const t = b.ordered ? 'ol' : 'ul'; if (list !== t) { close(); out.push(`<${t}>`); list = t; } out.push(`<li>${esc(b.text)}</li>`); continue; }
+      close();
+      if (b.type === 'page') out.push(`<hr aria-label="Seite ${b.n}">`);
+      else if (b.type === 'h') { const l = Math.min(6, b.level + off); out.push(`<h${l}>${esc(b.text)}</h${l}>`); }
+      else if (b.type === 'p') out.push(`<p>${esc(b.text)}</p>`);
+      else if (b.type === 'table') out.push('<table>', '<thead><tr>' + b.rows[0].map(c => `<th scope="col">${esc(c)}</th>`).join('') + '</tr></thead>', '<tbody>', ...b.rows.slice(1).map(r => '<tr>' + r.map(c => `<td>${esc(c)}</td>`).join('') + '</tr>'), '</tbody>', '</table>');
+    }
+    close();
+    return `<!doctype html>\n<html lang="${esc(lang)}">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="generator" content="PDFMy (pdfmy.de)">\n<title>${esc(title || 'Dokument')}</title>\n` +
+      `<style>body{font:16px/1.55 system-ui,sans-serif;max-width:46rem;margin:2rem auto;padding:0 1rem;color:#1a1a1a;background:#fff}table{border-collapse:collapse;margin:1rem 0}th,td{border:1px solid #bbb;padding:.3rem .5rem;text-align:left;vertical-align:top}th{background:#f2f2f2}hr{border:0;border-top:1px dashed #bbb;margin:2rem 0}</style>\n</head>\n<body>\n<main>\n${out.join('\n')}\n</main>\n</body>\n</html>\n`;
+  }
+  const api = { crc32, zip, parseRange, formatBytes, docx, diffWords, pixelDiff, fillStamp, bates, tableRows, deNumber, xlsx, docBlocks, toMarkdown, toHtml };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Tools = api;
 })(typeof self !== 'undefined' ? self : this);

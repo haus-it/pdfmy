@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Grupas „{1}” opcija „{0}” izveidota – novietojiet blakus citas opcijas. Dubultklikšķis maina vērtību un grupu.",
  "Optionsfeld": "Radiopoga",
  "Pflichtfeld": "Obligāts lauks",
- "Wert dieser Option:": "Šīs opcijas vērtība:"
+ "Wert dieser Option:": "Šīs opcijas vērtība:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Piekļūstama tīmekļa lapa (HTML) ar virsrakstiem, rindkopām un tabulām",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Teksts ar virsrakstiem, sarakstiem un tabulām Markdown formātā – piem., MI asistentiem, wiki vai piezīmju lietotnēm",
+ "Webseite (HTML)": "Tīmekļa lapa (HTML)"
 }

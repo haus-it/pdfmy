@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Cruthaíodh rogha “{0}” sa ghrúpa “{1}” – cuir tuilleadh roghanna in aice léi. Athraíonn cliceáil dhúbailte an luach agus an grúpa.",
  "Optionsfeld": "Cnaipe raidió",
  "Pflichtfeld": "Réimse riachtanach",
- "Wert dieser Option:": "Luach na rogha seo:"
+ "Wert dieser Option:": "Luach na rogha seo:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Leathanach gréasáin inrochtana (HTML) le ceannteidil, ailt agus táblaí",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Téacs le ceannteidil, liostaí agus táblaí mar Markdown – m.sh. do chúntóirí IS, vicithe nó aipeanna nótaí",
+ "Webseite (HTML)": "Leathanach gréasáin (HTML)"
 }

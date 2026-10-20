@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Opzione «{0}» del gruppo «{1}» creata – posizionare altre opzioni accanto. Il doppio clic modifica valore e gruppo.",
  "Optionsfeld": "Pulsante di opzione",
  "Pflichtfeld": "Campo obbligatorio",
- "Wert dieser Option:": "Valore di questa opzione:"
+ "Wert dieser Option:": "Valore di questa opzione:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Pagina web accessibile (HTML) con titoli, paragrafi e tabelle",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Testo con titoli, elenchi puntati e tabelle in Markdown – ad es. per assistenti IA, wiki o app per appunti",
+ "Webseite (HTML)": "Pagina web (HTML)"
 }

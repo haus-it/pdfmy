@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Utworzono opcję „{0}” grupy „{1}” – umieść obok kolejne opcje. Dwukrotne kliknięcie zmienia wartość i grupę.",
  "Optionsfeld": "Przycisk opcji",
  "Pflichtfeld": "Pole obowiązkowe",
- "Wert dieser Option:": "Wartość tej opcji:"
+ "Wert dieser Option:": "Wartość tej opcji:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Dostępna strona internetowa (HTML) z nagłówkami, akapitami i tabelami",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Tekst z nagłówkami, wypunktowaniami i tabelami jako Markdown – np. dla asystentów AI, wiki lub aplikacji do notatek",
+ "Webseite (HTML)": "Strona internetowa (HTML)"
 }

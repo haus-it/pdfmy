@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Опцијата „{0}“ од групата „{1}“ е создадена – поставете дополнителни опции до неа. Двоен клик ги менува вредноста и групата.",
  "Optionsfeld": "Радио копче",
  "Pflichtfeld": "Задолжително поле",
- "Wert dieser Option:": "Вредност на оваа опција:"
+ "Wert dieser Option:": "Вредност на оваа опција:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Пристапна веб-страница (HTML) со наслови, пасуси и табели",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Текст со наслови, набројувања и табели како Markdown – на пр. за асистенти со ВИ, викија или апликации за белешки",
+ "Webseite (HTML)": "Веб-страница (HTML)"
 }

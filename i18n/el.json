@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Η επιλογή «{0}» της ομάδας «{1}» δημιουργήθηκε – τοποθετήστε περισσότερες επιλογές δίπλα. Με διπλό κλικ αλλάζετε τιμή και ομάδα.",
  "Optionsfeld": "Κουμπί επιλογής",
  "Pflichtfeld": "Υποχρεωτικό πεδίο",
- "Wert dieser Option:": "Τιμή αυτής της επιλογής:"
+ "Wert dieser Option:": "Τιμή αυτής της επιλογής:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Προσβάσιμη ιστοσελίδα (HTML) με επικεφαλίδες, παραγράφους και πίνακες",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Κείμενο με επικεφαλίδες, λίστες και πίνακες ως Markdown – π.χ. για βοηθούς ΤΝ, wiki ή εφαρμογές σημειώσεων",
+ "Webseite (HTML)": "Ιστοσελίδα (HTML)"
 }

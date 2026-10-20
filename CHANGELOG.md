@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-20
 
+### PDF in Markdown und HTML
+- Speichern-Dialog: neue Formate **Markdown** (.md) und **HTML** – wie „PDF to Markdown“ bei iLovePDF (07/2026) und PDF24. Gliederung aus der Textlage: Überschriften (Schriftgröße/fett), Absätze mit Silbentrennung, Aufzählungen (• – 1.), Tabellen (gleiche Spalten über mehrere Zeilen); Seitenwechsel als Kommentar bzw. Trennlinie. HTML mit Sprache, Titel und Tabellenköpfen (barrierefrei). Neue Funktionen `docBlocks`, `toMarkdown`, `toHtml` in `js/tools.js`.
+- Getestet: `tests/markdown.test.js` (4 Fälle), im Browser mit Angebots-PDF (Überschrift, Absatz, Liste, Tabelle), erzeugtes HTML mit axe ohne Befund.
+
 ### Formular-Designer: Auswahlliste, Optionsfelder, Pflichtfeld
 - Werkzeug „Formularfeld“ kann jetzt auch **Auswahllisten** (Dropdown mit eigenen Einträgen) und **Optionsfelder** (Radiobuttons; gleicher Name = eine Gruppe, Wert aus der Beschriftung rechts daneben) anlegen – wie der Formular-Designer in Acrobat, PDF24 und Sejda.
 - Neuer Haken **„Pflichtfeld“** (PDF-Kennzeichen Required, Hinweis im Tooltip); wirkt auch auf das markierte Feld bzw. die ganze Optionsgruppe. Doppelklick ändert Einträge, Gruppe und Wert.

@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "“{1}” grubunun “{0}” seçeneği oluşturuldu – yanına başka seçenekler yerleştirin. Çift tıklama değeri ve grubu değiştirir.",
  "Optionsfeld": "Seçenek düğmesi",
  "Pflichtfeld": "Zorunlu alan",
- "Wert dieser Option:": "Bu seçeneğin değeri:"
+ "Wert dieser Option:": "Bu seçeneğin değeri:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Başlıklar, paragraflar ve tablolar içeren erişilebilir web sayfası (HTML)",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Başlıklar, madde işaretleri ve tablolar içeren Markdown metni – ör. yapay zekâ asistanları, wikiler veya not uygulamaları için",
+ "Webseite (HTML)": "Web sayfası (HTML)"
 }

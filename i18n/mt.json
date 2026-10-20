@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "L-għażla “{0}” tal-grupp “{1}” inħolqot – poġġi aktar għażliet ħdejha. Double-click jibdel il-valur u l-grupp.",
  "Optionsfeld": "Buttuna tar-radju",
  "Pflichtfeld": "Qasam obbligatorju",
- "Wert dieser Option:": "Valur ta’ din l-għażla:"
+ "Wert dieser Option:": "Valur ta’ din l-għażla:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Paġna web aċċessibbli (HTML) b’intestaturi, paragrafi u tabelli",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Test b’intestaturi, listi u tabelli bħala Markdown – eż. għal assistenti tal-IA, wikis jew apps tan-noti",
+ "Webseite (HTML)": "Paġna web (HTML)"
 }

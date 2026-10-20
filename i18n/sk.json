@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Možnosť „{0}“ skupiny „{1}“ vytvorená – ďalšie možnosti umiestnite vedľa. Dvojklik zmení hodnotu a skupinu.",
  "Optionsfeld": "Prepínač",
  "Pflichtfeld": "Povinné pole",
- "Wert dieser Option:": "Hodnota tejto možnosti:"
+ "Wert dieser Option:": "Hodnota tejto možnosti:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Bezbariérová webová stránka (HTML) s nadpismi, odsekmi a tabuľkami",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text s nadpismi, odrážkami a tabuľkami ako Markdown – napr. pre AI asistentov, wiki alebo aplikácie na poznámky",
+ "Webseite (HTML)": "Webová stránka (HTML)"
 }

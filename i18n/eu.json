@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "«{1}» taldeko «{0}» aukera sortu da – jarri aukera gehiago ondoan. Klik bikoitzak balioa eta taldea aldatzen ditu.",
  "Optionsfeld": "Aukera-botoia",
  "Pflichtfeld": "Derrigorrezko eremua",
- "Wert dieser Option:": "Aukera honen balioa:"
+ "Wert dieser Option:": "Aukera honen balioa:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Web orri irisgarria (HTML) izenburu, paragrafo eta taulekin",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Izenburu, zerrenda eta taulak dituen testua Markdown formatuan – adib. AA laguntzaileentzat, wikientzat edo ohar-aplikazioentzat",
+ "Webseite (HTML)": "Web orria (HTML)"
 }

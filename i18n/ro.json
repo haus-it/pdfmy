@@ -2350,5 +2350,10 @@
  "Option „{0}“ der Gruppe „{1}“ angelegt – weitere Optionen daneben setzen. Doppelklick ändert Wert und Gruppe.": "Opțiunea „{0}” din grupul „{1}” a fost creată – plasați alte opțiuni alături. Dublu clic modifică valoarea și grupul.",
  "Optionsfeld": "Buton radio",
  "Pflichtfeld": "Câmp obligatoriu",
- "Wert dieser Option:": "Valoarea acestei opțiuni:"
+ "Wert dieser Option:": "Valoarea acestei opțiuni:",
+ "Barrierefreie Webseite (HTML) mit Überschriften, Absätzen und Tabellen": "Pagină web accesibilă (HTML) cu titluri, paragrafe și tabele",
+ "HTML": "HTML",
+ "Markdown": "Markdown",
+ "Text mit Überschriften, Aufzählungen und Tabellen als Markdown – z. B. für KI-Assistenten, Wikis oder Notiz-Apps": "Text cu titluri, liste și tabele ca Markdown – de ex. pentru asistenți AI, wiki-uri sau aplicații de notițe",
+ "Webseite (HTML)": "Pagină web (HTML)"
 }
