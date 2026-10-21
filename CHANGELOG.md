@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Outlook-Anhänge: genaue Ursache statt allgemeiner Meldung; pdfmy Scan für Mac/Linux 1.2.0
+- Rückmeldung (Mac, „Rahmenvertrag…pdf konnte nicht gelesen werden“): Kann PDFMy einen Anhang nicht lesen, unterscheidet die Meldung jetzt **pdfmy Scan läuft nicht**, **pdfmy Scan zu alt**, **macOS verweigert den Zugriff** (mit Lösung: PDFMy als PDF-Standardprogramm einstellen oder Festplattenvollzugriff für „perl“) und **Datei nicht gefunden** (Outlook hat die Kopie schon entfernt) – jeweils mit Sofort-Lösung „Speichern unter“.
+- pdfmy Scan für Mac/Linux **1.2.0**: `/attachment` meldet bei „nicht gefunden“ zusätzlich, ob der macOS-Datenschutz Ordner gesperrt hat (`denied`).
+- Getestet: alle fünf Fälle (nicht gestartet, zu alt, kein Zugriff, nicht gefunden, nachgereicht) im Browser mit nachgebildetem pdfmy Scan; Perl-Helfer lokal (`denied:false`, Version 1.2.0).
+
 ### PDF als PowerPoint speichern
 - Speichern-Dialog → **„PowerPoint“** (.pptx, wie „PDF to PowerPoint“ bei iLovePDF, Smallpdf, PDF24): je Seite eine Folie in Seitengröße mit dem Seitenbild (inkl. Stempel, Markierungen, Unterschriften, Kopf-/Fußzeile); erkannter Text als unsichtbare Textfelder an der Originalstelle (durchsuchbar, kopierbar). Seiten anderer Größe werden mittig eingepasst. Neues Modul `js/pptx.js` ohne Bibliothek (Office Open XML).
 - Getestet: `tests/pptx.test.js` (mit python-pptx gelesen: Foliengröße, Bild, Text, Einpassen), im Browser 2-seitige PDF → 2 Folien mit Text; axe ohne Befund. In Microsoft PowerPoint selbst nicht geprüft (auf dem Entwicklungsrechner nicht installiert).

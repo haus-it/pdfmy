@@ -3557,7 +3557,7 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
 const SCAN_LATEST = '1.9.0';
-const SCAN_MAC_LATEST = '1.1.9';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_MAC_LATEST = '1.2.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
@@ -3877,18 +3877,34 @@ async function readLaunched(h) {
   try { return await readNow(h); }
   catch (e) {
     if (!noRead(e)) throw e;
+    // Warum es nicht klappt, für eine genaue Meldung merken: pdfmy Scan fehlt/zu alt, kein Zugriff (macOS-Datenschutz) oder Datei nicht gefunden
+    let why = 'nohelper';
     try {
-      const r = await scanApi('/attachment?name=' + encodeURIComponent(h.name), {}, 20000);
-      const ext = (h.name.match(/\.(\w+)$/) || [])[1]?.toLowerCase(), type = { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', bmp: 'image/bmp', tif: 'image/tiff', tiff: 'image/tiff' }[ext] || '';
-      if (r.ok) { const b = await r.blob(); if (b.size) return new File([b], h.name, { type }); }
+      if (!state.scanVersion && typeof scanHelperRunning === 'function') await scanHelperRunning();
+      if (state.scanVersion && verLess(state.scanVersion, state.scanMac ? '1.1.7' : '1.8.7')) why = 'old';
+      else if (state.scanVersion) {
+        const r = await scanApi('/attachment?name=' + encodeURIComponent(h.name), {}, 20000);
+        const ext = (h.name.match(/\.(\w+)$/) || [])[1]?.toLowerCase(), type = { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', bmp: 'image/bmp', tif: 'image/tiff', tiff: 'image/tiff' }[ext] || '';
+        if (r.ok) { const b = await r.blob(); if (b.size) return new File([b], h.name, { type }); }
+        const j = await r.json().catch(() => ({}));
+        why = j.denied ? 'denied' : 'notfound';
+      }
     } catch {}
+    try { e.pdfmyWhy = why; } catch {}
     throw e;
   }
 }
 window.readLaunched = readLaunched;
-const unreadable = (name, e) => noRead(e)
-  ? `„${name}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf. Mit pdfmy Scan (Windows ab 1.8.7, Mac und Linux ab 1.1.7) öffnet PDFMy solche Anhänge automatisch. Sonst den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.`
-  : `Fehler bei ${name}: ${e?.message || e}`;
+// Meldung je nach Ursache – mit dem passenden Ausweg (Ursache aus readLaunched)
+const unreadable = (name, e) => {
+  if (!noRead(e)) return `Fehler bei ${name}: ${e?.message || e}`;
+  const head = `„${name}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf.`, save = 'Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.';
+  const why = e?.pdfmyWhy;
+  if (why === 'denied') return `${head} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. ${save}`;
+  if (why === 'notfound') return `${head} pdfmy Scan hat die Datei nicht gefunden – Outlook hat die vorübergehende Kopie vermutlich schon entfernt. Bitte den Anhang in Outlook noch einmal öffnen. ${save}`;
+  if (why === 'old') return `${head} Das installierte pdfmy Scan (${state.scanVersion}) ist zu alt, um solche Anhänge nachzureichen – bitte aktualisieren (Anleitung: pdfmy.de/scanner.html). ${save}`;
+  return `${head} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). ${save}`;
+};
 window.unreadable = unreadable;
 if ('launchQueue' in window) launchQueue.setConsumer(async params => {
   if (!params.files?.length) return;

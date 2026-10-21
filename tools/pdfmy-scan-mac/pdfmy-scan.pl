@@ -11,7 +11,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.1.9';
+our $VERSION = '1.2.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
@@ -645,6 +645,7 @@ sub find_recent {
     }
   };
   for my $r (grep { length $_->[0] && -d $_->[0] && !$seen{ $_->[0] }++ } @roots) { $walk->(@$r); last if $best; }   # Ordner nach Wahrscheinlichkeit: erster Treffer genügt
+  our %FIND_DENIED = %denied;   # für die Antwort an PDFMy (genaue Meldung bei macOS-Datenschutz)
   if ($best) { logl("Anhang für PDFMy nachgereicht: $best"); }
   else { logl("Anhang nicht gefunden: $name – gesucht in " . join('; ', grep { -d } map { $_->[0] } @roots) . (%denied ? ' – kein Zugriff (macOS-Datenschutz) auf: ' . join('; ', sort keys %denied) : '')); }   # fürs Protokoll / „Problem melden“
   return $best;
@@ -774,7 +775,7 @@ sub handle {
   if ($p eq '/attachment' && $method eq 'GET') {   # PDFMy durfte eine übergebene Datei nicht lesen (z. B. Outlook-Anhang): hier nachreichen
     my ($q) = $path =~ /[?&]name=([^&]*)/; $q //= ''; $q =~ s/\+/ /g; $q =~ s/%([0-9A-Fa-f]{2})/chr hex $1/ge;
     my $f = safe(sub { find_recent($q) });
-    return send_json($c, 404, { error => 'Datei nicht gefunden' }, \%cors) unless $f;
+    our %FIND_DENIED; return send_json($c, 404, { error => 'Datei nicht gefunden', denied => %FIND_DENIED ? JSON::PP::true : JSON::PP::false }, \%cors) unless $f;
     return send_json($c, 413, { error => 'Die Datei ist zu groß (über 300 MB).' }, \%cors) if -s $f > 300 * 1024 * 1024;
     my ($name) = $f =~ m{([^/]+)$}; my $enc = $name; $enc =~ s/([^A-Za-z0-9._~-])/sprintf '%%%02X', ord $1/ge;
     return send_resp($c, 200, 'application/octet-stream', slurp($f), { %cors, 'Access-Control-Expose-Headers' => 'X-Pdfmy-Name', 'X-Pdfmy-Name' => $enc });
