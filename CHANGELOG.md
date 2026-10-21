@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### E-Books (EPUB) in PDF
+- **.epub** öffnet jetzt direkt als PDF (wie bei PDF24 und Smallpdf): `Office.epub` liest container.xml → OPF → Lesereihenfolge (spine), XHTML-Kapitel mit Überschriften, Absätzen (Zeilenumbrüche), verschachtelten Listen, Tabellen, Bildern (Größe aus PNG/JPEG) und Trennlinien; Titel aus den Metadaten, jedes Kapitel auf neuer Seite, A5-Buchformat. Kopiergeschützte E-Books: verständliche Meldung.
+- Getestet: `tests/office.test.js` (neuer Fall), im Browser umgewandelt.
+
 ### Messwerkzeug
 - Werkzeug „Formen“ → **„Messen: Strecke“** und **„Messen: Fläche“** (wie das Messwerkzeug in Acrobat Pro und Xodo): Wert direkt an der Messung, Maßstab 1:1 bis 1:1000 oder „Aus bekannter Strecke“ (Kalibrieren an einer markierten Strecke; Messungen gleichen Maßstabs ziehen mit). Papiermaß aus der Seitengröße der PDF, bei Scans/Fotos A4. Bemaßungslinie mit Endstrichen, Fläche gestrichelt und leicht gefüllt; beim Speichern als Vektor (Artefakt) mit Messwert als echtem Text, auch im Bild-Export.
 - Getestet im Browser: 105 mm bei 1:100 = 10,50 m; kalibriert auf 5 m → 1:47,6; Fläche 105 × 74,25 mm bei 1:50 = 19,49 m²; Messwerte als Text in der PDF; veraPDF PDF/A-2b und PDF/UA-1 PASS; axe ohne Befund.

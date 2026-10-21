@@ -2550,5 +2550,8 @@
  "Wie lang ist die markierte Strecke in Wirklichkeit (in Metern, z. B. 4,25)?": "Qual é o comprimento real da distância marcada (em metros, p. ex. 4,25)?",
  "Zuerst eine Strecke mit bekannter Länge messen und markieren, dann „Aus bekannter Strecke“ wählen.": "Primeiro meça e selecione uma distância de comprimento conhecido e depois escolha «A partir de distância conhecida».",
  "{0} cm²": "{0} cm²",
- "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\""
+ "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\"",
+ "Das E-Book enthält keinen lesbaren Text (oder ist kopiergeschützt).": "O livro eletrónico não contém texto legível (ou está protegido contra cópia).",
+ "EPUB ohne Inhaltsverzeichnis (OPF).": "EPUB sem índice de conteúdos (OPF).",
+ "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Não é um ficheiro EPUB (falta META-INF/container.xml)."
 }

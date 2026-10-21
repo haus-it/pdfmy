@@ -2550,5 +2550,8 @@
  "Wie lang ist die markierte Strecke in Wirklichkeit (in Metern, z. B. 4,25)?": "Sa është gjatësia reale e distancës së shënuar (në metra, p.sh. 4,25)?",
  "Zuerst eine Strecke mit bekannter Länge messen und markieren, dann „Aus bekannter Strecke“ wählen.": "Fillimisht matni dhe shënoni një distancë me gjatësi të njohur, pastaj zgjidhni „Nga distanca e njohur“.",
  "{0} cm²": "{0} cm²",
- "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\""
+ "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\"",
+ "Das E-Book enthält keinen lesbaren Text (oder ist kopiergeschützt).": "Libri elektronik nuk përmban tekst të lexueshëm (ose është i mbrojtur nga kopjimi).",
+ "EPUB ohne Inhaltsverzeichnis (OPF).": "EPUB pa tryezë të lëndës (OPF).",
+ "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Nuk është skedar EPUB (mungon META-INF/container.xml)."
 }

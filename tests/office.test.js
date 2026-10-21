@@ -136,3 +136,24 @@ test('OpenDocument-Tabelle: Werte, Währung, Prozent, Datum, wiederholte Zeilen/
   assert.deepEqual(blocks[0].rows, [['Posten', 'Betrag', 'Anteil', 'Datum'], ['Beitrag', '1.250,50 €', '19 %', '21.10.2026']]);
   await assert.rejects(Office.ods(await zipDeflate({ mimetype: 'application/vnd.oasis.opendocument.text', 'content.xml': content })), /Keine OpenDocument-Tabelle/);
 });
+
+test('EPUB: Titel, Kapitel mit Seitenwechsel, Überschriften, Absätze mit Zeilenumbruch, Liste, Tabelle, Bild', async () => {
+  const x = (body, t = 'K') => `<?xml version="1.0" encoding="utf-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>${t}</title><style>p{}</style></head><body>${body}</body></html>`;
+  const z = await zipDeflate({
+    mimetype: 'application/epub+zip',
+    'META-INF/container.xml': '<container xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>',
+    'OEBPS/content.opf': '<package xmlns="http://www.idpf.org/2007/opf"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>Vereinschronik</dc:title></metadata><manifest><item id="c1" href="text/kap1.xhtml" media-type="application/xhtml+xml"/><item id="c2" href="text/kap2.xhtml" media-type="application/xhtml+xml"/><item id="css" href="s.css" media-type="text/css"/></manifest><spine><itemref idref="c1"/><itemref idref="c2"/></spine></package>',
+    'OEBPS/text/kap1.xhtml': x('<h1>Gründung</h1><p>Der Verein wurde<br/>1921 gegründet &amp; wuchs.</p><div><p>Im Container</p></div><ul><li>Fußball</li><li>Tennis<ul><li>Halle</li></ul></li></ul>'),
+    'OEBPS/text/kap2.xhtml': x('<h2>Heute</h2><table><tr><th>Jahr</th><th>Mitglieder</th></tr><tr><td>2026</td><td>412</td></tr></table><p><img src="../img/logo.png" alt="Logo"/></p>'),
+    'OEBPS/img/logo.png': PNG,
+  });
+  const { blocks, page, title } = await Office.epub(z);
+  assert.equal(title, 'Vereinschronik');
+  assert.deepEqual(blocks.map(b => b.type + (b.level || '') + (b.depth ? 'd' + b.depth : '')), ['h1', 'h2', 'p', 'p', 'li', 'li', 'lid1', 'pagebreak', 'h3', 'table', 'img']);
+  assert.equal(blocks[2].text, 'Der Verein wurde\n1921 gegründet & wuchs.');
+  assert.deepEqual(blocks[9].rows, [['Jahr', 'Mitglieder'], ['2026', '412']]);
+  assert.equal(Math.round(page.size[0]), 420);   // A5
+  const pdf = await TP.build(L, { blocks, page, fonts });
+  const t = pdfText(pdf); for (const w of ['Vereinschronik', 'Gründung', 'Fußball', 'Halle', 'Mitglieder']) assert.ok(t.includes(w), w);
+  await assert.rejects(Office.epub(await zipDeflate({ 'a.txt': 'x' })), /Keine EPUB-Datei/);
+});

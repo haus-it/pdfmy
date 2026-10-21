@@ -2550,5 +2550,8 @@
  "Wie lang ist die markierte Strecke in Wirklichkeit (in Metern, z. B. 4,25)?": "Zein da markatutako distantziaren benetako luzera (metrotan, adib. 4,25)?",
  "Zuerst eine Strecke mit bekannter Länge messen und markieren, dann „Aus bekannter Strecke“ wählen.": "Lehenik, neurtu eta hautatu luzera ezaguneko distantzia bat, eta gero aukeratu «Distantzia ezagun batetik».",
  "{0} cm²": "{0} cm²",
- "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\""
+ "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\"",
+ "Das E-Book enthält keinen lesbaren Text (oder ist kopiergeschützt).": "Liburu elektronikoak ez du testu irakurgarririk (edo kopien aurka babestuta dago).",
+ "EPUB ohne Inhaltsverzeichnis (OPF).": "EPUB aurkibiderik gabe (OPF).",
+ "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Ez da EPUB fitxategia (META-INF/container.xml falta da)."
 }

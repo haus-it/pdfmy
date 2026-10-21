@@ -2550,5 +2550,8 @@
  "Wie lang ist die markierte Strecke in Wirklichkeit (in Metern, z. B. 4,25)?": "Kolika je stvarna duljina označene udaljenosti (u metrima, npr. 4,25)?",
  "Zuerst eine Strecke mit bekannter Länge messen und markieren, dann „Aus bekannter Strecke“ wählen.": "Najprije izmjerite i označite udaljenost poznate duljine, zatim odaberite „Iz poznate udaljenosti“.",
  "{0} cm²": "{0} cm²",
- "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\""
+ "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\"",
+ "Das E-Book enthält keinen lesbaren Text (oder ist kopiergeschützt).": "E-knjiga ne sadrži čitljiv tekst (ili je zaštićena od kopiranja).",
+ "EPUB ohne Inhaltsverzeichnis (OPF).": "EPUB bez sadržaja (OPF).",
+ "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Nije EPUB datoteka (nedostaje META-INF/container.xml)."
 }

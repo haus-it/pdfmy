@@ -337,6 +337,67 @@
     return { blocks };
   }
 
-  const api = { readZip, parseXml, docx, xlsx, odt, ods };
+
+  // ---------- EPUB (E-Books): container.xml → OPF → Lesereihenfolge (spine) → XHTML-Kapitel ----------
+  const resolve = (base, href) => { const parts = (base.replace(/[^/]*$/, '') + href.split('#')[0]).split('/'), out = []; for (const p of parts) { if (p === '..') out.pop(); else if (p && p !== '.') out.push(p); } return out.join('/'); };
+  const tag = el => (el.name || '').replace(/^[^:]+:/, '').toLowerCase();
+  async function epub(bytes) {
+    const z = readZip(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes));
+    const cont = await z.text('META-INF/container.xml'); if (!cont) throw new Error('Keine EPUB-Datei (META-INF/container.xml fehlt).');
+    const opfPath = all(parseXml(cont), 'rootfile')[0]?.attrs['full-path']; if (!opfPath) throw new Error('EPUB ohne Inhaltsverzeichnis (OPF).');
+    const opf = parseXml(await z.text(opfPath) || ''), find = (el, n) => { const out = []; (function w(e) { for (const k of els(e)) { if (tag(k) === n) out.push(k); w(k); } })(el); return out; };
+    const items = new Map(find(opf, 'item').map(i => [i.attrs.id, i.attrs]));
+    const title = find(opf, 'title')[0] ? txt(find(opf, 'title')[0]).trim() : '';
+    const blocks = [];
+    if (title) blocks.push({ type: 'h', level: 1, text: title });
+    const textOf = el => {   // Text mit Zeilenumbrüchen (<br>) und ohne Skripte/Stile
+      let s = ''; (function w(e) { for (const k of e.kids) { if (typeof k === 'string') s += k.replace(/\s+/g, ' '); else if (tag(k) === 'br') s += '\n'; else if (!['script', 'style'].includes(tag(k))) w(k); } })(el);
+      return s.replace(/ ?\n ?/g, '\n').replace(/ {2,}/g, ' ').trim();
+    };
+    for (const ref of find(opf, 'itemref')) {
+      const it = items.get(ref.attrs.idref); if (!it || !/x?html/.test(it['media-type'] || 'xhtml')) continue;
+      const path = resolve(opfPath, it.href), xml = await z.text(path); if (!xml) continue;
+      const body = find(parseXml(xml), 'body')[0]; if (!body) continue;
+      if (blocks.length > (title ? 1 : 0)) blocks.push({ type: 'pagebreak' });   // jedes Kapitel auf neuer Seite
+      const walk = async (el, depth = 0, ordered = false) => {
+        for (const k of els(el)) {
+          const t = tag(k);
+          if (/^h[1-6]$/.test(t)) { const s = textOf(k); if (s) blocks.push({ type: 'h', level: Math.min(6, +t[1] + (title ? 1 : 0)), text: s }); }
+          else if (t === 'p') {
+            for (const im of find(k, 'img')) await img(im, path);
+            const s = textOf(k); if (s) blocks.push({ type: 'p', text: s, align: /center/.test(k.attrs.style || '') || /center/.test(k.attrs.class || '') ? 'center' : null });
+          }
+          else if (t === 'ul' || t === 'ol') { let n = 0; for (const li of els(k).filter(x => tag(x) === 'li')) { n++; const sub = els(li).filter(x => ['ul', 'ol'].includes(tag(x))); const clone = { ...li, kids: li.kids.filter(x => !sub.includes(x)) }; const s = textOf(clone); if (s) blocks.push({ type: 'li', ordered: t === 'ol', label: t === 'ol' ? n + '.' : '•', depth: Math.min(3, depth), text: s }); for (const sl of sub) await walk({ kids: [sl] }, depth + 1); } }
+          else if (t === 'table') { const rows = find(k, 'tr').map(tr => els(tr).filter(c => ['td', 'th'].includes(tag(c))).map(textOf)); const n = Math.max(0, ...rows.map(r => r.length)); if (n) blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: n }, (_, i) => r[i] ?? '')), head: !!find(k, 'th').length }); }
+          else if (t === 'blockquote') { const s = textOf(k); if (s) blocks.push({ type: 'p', text: s }); }
+          else if (t === 'pre') { const s = txt(k).replace(/\s+$/, ''); if (s) blocks.push({ type: 'p', text: s }); }
+          else if (t === 'img' || t === 'image') await img(k, path);
+          else if (t === 'hr') blocks.push({ type: 'gap' });
+          else if (['div', 'section', 'article', 'main', 'aside', 'header', 'footer', 'figure', 'nav', 'span', 'a', 'svg', 'body'].includes(t)) {
+            // Container mit direktem Text (ohne Absatz-Elemente) als eigener Absatz
+            const direct = k.kids.filter(x => typeof x === 'string').join('').trim();
+            if (direct && !els(k).some(x => ['p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'table'].includes(tag(x)))) { const s = textOf(k); if (s) blocks.push({ type: 'p', text: s }); }
+            else await walk(k, depth);
+          }
+        }
+      };
+      await walk(body);
+    }
+    async function img(el, base) {
+      const href = el.attrs.src || el.attrs['xlink:href'] || el.attrs.href; if (!href || /^(https?:|data:)/.test(href)) return;
+      const data = await z.get(resolve(base, decodeURIComponent(href))); if (!data) return;
+      const mime = data[0] === 0x89 && data[1] === 0x50 ? 'image/png' : data[0] === 0xff && data[1] === 0xd8 ? 'image/jpeg' : null; if (!mime) return;
+      // Größe aus dem Bild selbst (PNG: IHDR, JPEG: SOF), 96 dpi
+      let w = 300, h = 200;
+      if (mime === 'image/png') { const dv = new DataView(data.buffer, data.byteOffset); w = dv.getUint32(16); h = dv.getUint32(20); }
+      else for (let i = 2; i < data.length - 9;) { if (data[i] !== 0xff) break; const m = data[i + 1], l = (data[i + 2] << 8) | data[i + 3]; if (m >= 0xc0 && m <= 0xc3) { h = (data[i + 5] << 8) | data[i + 6]; w = (data[i + 7] << 8) | data[i + 8]; break; } i += 2 + l; }
+      blocks.push({ type: 'img', bytes: data, mime, w: w * 0.75, h: h * 0.75, align: 'center' });
+    }
+    const out = blocks.filter((b, i) => !(b.type === 'pagebreak' && blocks[i - 1]?.type === 'pagebreak'));
+    if (out.length <= (title ? 1 : 0)) throw new Error('Das E-Book enthält keinen lesbaren Text (oder ist kopiergeschützt).');
+    return { blocks: out, page: { size: [419.53, 595.28], margin: 42.5 }, title };   // A5 – handlich wie ein Buch
+  }
+
+  const api = { readZip, parseXml, docx, xlsx, odt, ods, epub };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Office = api;
 })(typeof self !== 'undefined' ? self : this);

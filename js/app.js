@@ -128,7 +128,7 @@ async function importFiles(files, { fromCamera = false } = {}) {
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
       else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
       else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
-      else if (/\.(docx|xlsx|odt|ods)$/.test(n)) await importOffice(f);
+      else if (/\.(docx|xlsx|odt|ods|epub)$/.test(n)) await importOffice(f);
       else if (/\.(doc|xls|ppt|pptx|odp)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.`); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
@@ -271,7 +271,7 @@ async function tiffCanvases(file) {
 async function importOffice(file) {
   status(`${file.name} wird in PDF umgewandelt …`);
   const bytes = new Uint8Array(await file.arrayBuffer()), ext = file.name.toLowerCase().split('.').pop(), word = ext === 'docx' || ext === 'odt', loc = { locale: I18N.info.bcp || 'de-DE' };
-  const r = ext === 'docx' ? await Office.docx(bytes) : ext === 'odt' ? await Office.odt(bytes) : ext === 'ods' ? await Office.ods(bytes, loc) : await Office.xlsx(bytes, loc);
+  const r = ext === 'docx' ? await Office.docx(bytes) : ext === 'odt' ? await Office.odt(bytes) : ext === 'ods' ? await Office.ods(bytes, loc) : ext === 'epub' ? await Office.epub(bytes) : await Office.xlsx(bytes, loc);
   const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
   const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono } });
   await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
