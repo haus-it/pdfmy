@@ -1609,6 +1609,51 @@ function aiSync() {
 $('#aiDlg').addEventListener('change', e => { if (e.target.name === 'aiMode') aiSync(); });
 $('#btnAi').onclick = () => openAi();
 $('#aiClose').onclick = () => $('#aiDlg').close();
+
+/* ---------- Datenschutz selbst prüfen: welche Verbindungen dieses Fenster aufgebaut hat und ob Daten gesendet wurden.
+   Abrufe liefert die Resource-Timing-Liste des Browsers; gesendete Daten zählt ein Mitschnitt von fetch und XMLHttpRequest. */
+const netSent = [];   // { host, local, bytes }
+(() => {
+  const size = b => b == null ? 0 : typeof b === 'string' ? new Blob([b]).size : b.byteLength ?? b.size ?? 0;
+  const note = (url, method, body) => {
+    try {
+      const u = new URL(url, location.href), m = String(method || 'GET').toUpperCase();
+      if (!/^https?:$/.test(u.protocol) || (m === 'GET' && body == null)) return;
+      netSent.push({ host: u.host, local: netLocal(u.hostname), same: u.origin === location.origin, bytes: size(body) });
+    } catch {}
+  };
+  const f = window.fetch; window.fetch = function (input, init) { note(input?.url || input, init?.method || input?.method, init?.body); return f.apply(this, arguments); };
+  const o = XMLHttpRequest.prototype.open, s = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.open = function (m, u) { this.netReq = [u, m]; return o.apply(this, arguments); };
+  XMLHttpRequest.prototype.send = function (b) { if (this.netReq) note(this.netReq[0], this.netReq[1], b); return s.apply(this, arguments); };
+})();
+function netLocal(h) { return ['127.0.0.1', 'localhost', '[::1]', '::1'].includes(h); }
+function netBytes(n) { return n < 1024 ? n + ' Byte' : n < 1048576 ? (n / 1024).toFixed(1).replace('.', ',') + ' KB' : (n / 1048576).toFixed(1).replace('.', ',') + ' MB'; }
+function netShow() {
+  const T = (k, ...v) => String(I18N.t(k)).replace(/\{(\d+)\}/g, (all, n) => v[n] != null ? v[n] : all);
+  $('#netOnline').textContent = navigator.onLine ? T('● Mit dem Internet verbunden.') : T('● Offline – PDFMy arbeitet trotzdem weiter.');
+  const hosts = new Map();
+  for (const e of [...performance.getEntriesByType('navigation'), ...performance.getEntriesByType('resource')]) {
+    let u; try { u = new URL(e.name); } catch { continue; }
+    if (!/^https?:$/.test(u.protocol)) continue;
+    hosts.set(u.host, (hosts.get(u.host) || 0) + 1);
+  }
+  const away = netSent.filter(x => !x.local).reduce((a, x) => a + x.bytes, 0), here = netSent.filter(x => x.local).reduce((a, x) => a + x.bytes, 0);
+  $('#netSent').textContent = T('Ins Internet gesendete Daten: {0}', netBytes(away)) + (here ? ' · ' + T('an Programme auf diesem PC: {0}', netBytes(here)) : '');
+  const list = $('#netList'); list.textContent = '';
+  for (const [h, n] of hosts) {
+    const li = document.createElement('li'), local = netLocal(h.replace(/:\d+$/, ''));
+    li.textContent = h === location.host ? T('{0} · {1}× geladen – Programmteile, Schriften, Sprachdateien', h, n)
+      : local ? T('{0} · {1}× – Programm auf diesem PC (pdfmy Scan oder lokale KI)', h, n) : T('{0} · {1}×', h, n);
+    list.append(li);
+  }
+  for (const x of netSent.filter(x => !x.local && !hosts.has(x.host))) { const li = document.createElement('li'); li.textContent = T('{0} · Daten gesendet', x.host); list.append(li); }
+}
+const netOpen = () => { closeMenu?.(); netShow(); $('#netDlg').showModal(); };
+$('#btnNet').onclick = netOpen; if ($('#trustNet')) $('#trustNet').onclick = netOpen;
+$('#netRefresh').onclick = netShow;
+addEventListener('online', () => $('#netDlg').open && netShow());
+addEventListener('offline', () => $('#netDlg').open && netShow());
 $('#aiForm').addEventListener('submit', e => {
   e.preventDefault();
   const m = $('#aiDlg').querySelector('[name=aiMode]:checked').value;
@@ -3996,7 +4041,7 @@ $('#attList').addEventListener('click', e => {
    Kein Server, kein Upload. Nur Nachrichten des öffnenden Fensters von diesen Herkünften werden angenommen;
    damit das Fenster überhaupt verbunden bleibt, sendet der Server für ?quelle=mysupermail kein COOP same-origin. */
 (() => {
-  const MSM_ORIGINS = ['https://app.mysupermail.app', 'https://tauri.localhost', 'http://localhost:5173'];
+  const MSM_ORIGINS = ['https://app.mysupermail.app', 'https://tauri.localhost'];
   if (new URLSearchParams(location.search).get('quelle') !== 'mysupermail' || !window.opener) return;
   let from = null;      // Herkunft, von der die Datei kam – nur dorthin geht das Ergebnis
   let got = false;

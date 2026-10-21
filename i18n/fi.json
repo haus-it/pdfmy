@@ -2809,5 +2809,22 @@
  "Ollama einmalig für PDFMy freigeben (ohne Konsole): In Windows „Umgebungsvariablen für dieses Konto bearbeiten“ öffnen, eine neue Variable OLLAMA_ORIGINS mit dem Wert {0} anlegen und Ollama neu starten. Ein Modell, z. B. „llama3.2“ oder „qwen3“, in der Ollama-App laden.": "Salli Ollama PDFMy:lle kerran (ilman konsolia): avaa Windowsissa ”Muokkaa tilisi ympäristömuuttujia”, luo uusi muuttuja OLLAMA_ORIGINS arvolla {0} ja käynnistä Ollama uudelleen. Lataa malli, esim. ”llama3.2” tai ”qwen3”, Ollama-sovelluksessa.",
  "Programm": "Ohjelma",
  "Verbindung prüfen": "Tarkista yhteys",
- "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Yhdistetty, mutta mallia ei ole vielä ladattu – lataa malli tekoälyohjelmassa."
+ "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Yhdistetty, mutta mallia ei ole vielä ladattu – lataa malli tekoälyohjelmassa.",
+ "{0} · {1}× – Programm auf diesem PC (pdfmy Scan oder lokale KI)": "{0} · {1}× – ohjelma tällä tietokoneella (pdfmy Scan tai paikallinen tekoäly)",
+ "{0} · {1}× geladen – Programmteile, Schriften, Sprachdateien": "{0} · {1}× ladattu – ohjelman osia, fontteja, kielitiedostoja",
+ "{0} · Daten gesendet": "{0} · tietoja lähetetty",
+ "● Mit dem Internet verbunden.": "● Yhdistetty internetiin.",
+ "● Offline – PDFMy arbeitet trotzdem weiter.": "● Offline-tilassa – PDFMy toimii silti edelleen.",
+ "Aktualisieren": "Päivitä",
+ "an Programme auf diesem PC: {0}": "tämän tietokoneen ohjelmille: {0}",
+ "Datenschutz selbst prüfen": "Tarkista tietosuoja itse",
+ "Datenschutz selbst prüfen …": "Tarkista tietosuoja itse …",
+ "Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.": "PDF:n avaaminen, muokkaaminen, tekstintunnistus ja tallentaminen – kaikki toimii edelleen.",
+ "Für Fachleute: Entwicklertools des Browsers (F12) → Reiter „Netzwerk“ zeigt jede einzelne Verbindung.": "Asiantuntijoille: selaimen kehittäjätyökalut (F12) → välilehti ”Verkko” näyttää jokaisen yksittäisen yhteyden.",
+ "Ins Internet gesendete Daten: {0}": "Internetiin lähetetyt tiedot: {0}",
+ "PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.": "PDFMy toimii selaimessasi. Tässä näet, mitä yhteyksiä tämä ikkuna on muodostanut avaamisensa jälkeen – ja onko tietoja lähetetty.",
+ "Selbst nachprüfen": "Tarkista itse",
+ "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Tarkista itse, etteivät asiakirjasi poistu tältä laitteelta",
+ "So prüfen Sie es selbst": "Näin tarkistat sen itse",
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Katkaise Wi-Fi tai irrota verkkokaapeli."
 }

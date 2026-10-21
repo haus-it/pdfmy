@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Datenschutz selbst prüfen (app-v165)
+- Neuer Dialog „… Mehr → Datenschutz selbst prüfen …“, auch per Klick auf „Dateien bleiben auf Ihrem Gerät“ auf der Startseite: zeigt live, welche Verbindungen das Fenster aufgebaut hat (je Adresse, Resource Timing), wie viele Daten ins Internet bzw. an Programme auf diesem PC gesendet wurden (Mitschnitt von fetch/XMLHttpRequest), den Online-/Offline-Zustand und eine Anleitung zum Selbsttest (WLAN aus, F12 → Netzwerk). Antwort auf die häufigste Forenfrage „Woher weiß ich, dass nichts hochgeladen wird?“.
+- Getestet: Zähler (0 Byte ins Internet; Testversand an 127.0.0.1 korrekt als „diesem PC“), Offline-Umschaltung per CDP, axe hell/dunkel 0.
+- mysupermail-Anbindung: Entwicklungsadresse http://localhost:5173 aus den erlaubten Herkünften entfernt (nur noch app.mysupermail.app und die Desktop-App tauri.localhost).
+- Prüfungen ohne Fremdprogramm: Formularskripte aus der PDF in nachgebauter Acrobat-Umgebung ausgeführt (3 × 12,50 = 37,50; Brutto 44,63 €; E-Mail/IBAN/PLZ-Prüfung; PDF/A ohne Skripte), PPTX-Struktur (Inhaltstypen, Verweise, Kennungen) ohne Fehler; Kantenerkennung mit Testfotos bei hellem/weißem Untergrund (max. 0,5 % Eckabweichung).
+- KONZEPT.md: Wettbewerbstabelle aktualisiert, Forenpunkte geprüft (Abschnitt 4). ISO: Entwurf Risikobeurteilung (docs/Risikobeurteilung-PDFMy.md), Empfehlung Datensicherung (M7), neue Maßnahmen M10/M11.
+
 ### KI-Assistent: lokale KI auf diesem PC (Ollama, LM Studio)
 - Dritte Wahl im Dialog „… Mehr → KI-Assistent“: lokale KI auf demselben Rechner (OpenAI-kompatible Schnittstelle, gestreamt). Programm wählen (Ollama, LM Studio, anderes), „Verbindung prüfen“ listet die Modelle, Modell wählen. Zusammenfassen (lange Dokumente abschnittsweise), Fragen und Übersetzen laufen dann lokal; Gedankengang von Denkmodellen wird ausgeblendet.
 - Nur localhost/127.0.0.1 – andere Adressen lehnt der Dialog ab, die CSP erlaubt zusätzlich nur den eigenen Rechner. Voreinstellung bleibt die KI des Browsers. Freigabe-Anleitung ohne Konsole im Dialog und in der Hilfe; Datenschutzerklärung Nr. 6d ergänzt; KONZEPT.md: Prüfung „passt“.

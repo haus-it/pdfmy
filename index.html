@@ -443,6 +443,8 @@ details.sec[open] > summary::after{content:" ▾"}
 .drop span{color:var(--muted);font-size:13px}
 .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;list-style:none;padding:0;margin:14px 0 26px;color:var(--muted);font-size:13px}
 .trust li::before{content:"✓ ";color:var(--accent);font-weight:700}
+.trust .linkbtn{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
+.netsent{font-weight:600;margin:4px 0 8px}.netlist{margin:0 0 12px;padding-left:18px;max-height:220px;overflow:auto}.netlist li{margin:3px 0}.nethow ol{margin:6px 0 0;padding-left:20px}.nethow li{margin:3px 0}
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;text-align:left}
 .tile{display:grid;grid-template-columns:40px 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:start;white-space:normal;padding:14px;border-radius:12px;background:var(--panel);box-shadow:var(--shadow);text-align:left}
 .tile:hover{border-color:var(--accent);transform:translateY(-1px)}
@@ -1061,6 +1063,7 @@ html.i18n-wait body{visibility:hidden}
           <label class="mi langmi" for="uiLang"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Sprache</span><select id="uiLang" translate="no" aria-label="Sprache der Oberfläche · Language"></select></label>
           <button class="mi" id="btnSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einstellungen</span></button>
           <button class="mi" id="btnAi" title="KI-Assistent einrichten: KI des Browsers auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>KI-Assistent …</span></button>
+          <button class="mi" id="btnNet" title="Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Datenschutz selbst prüfen …</span></button>
           <button class="mi" id="btnReport" title="Fehlerbericht mit Protokoll per E-Mail an den Support senden"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span>Problem melden …</span></button>
           <button class="mi" id="btnUpdate" title="Nach einer neuen Version suchen"><svg class="ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg><span>Updates suchen</span></button>
           <button class="mi" id="btnHelp"><svg class="ic" aria-hidden="true"><use href="#i-circle-help"/></svg><span>Hilfe &amp; Tastenkürzel</span><kbd>?</kbd></button>
@@ -1176,7 +1179,7 @@ html.i18n-wait body{visibility:hidden}
       <button type="button" class="camstart mobonly" id="homeCam"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Mit der Kamera scannen</button>
       <label class="drop" role="button" tabindex="0" aria-label="Dateien wählen – PDF, JPG, PNG oder E-Rechnung"><input id="dropIn" type="file" multiple accept="image/*,.heic,.heif,.tif,.tiff,application/pdf,.pdf,.xml,.eml,.msg,.txt,.md,.csv,text/plain,text/markdown,text/csv,.docx,.xlsx,.odt,.ods,.epub" hidden>
         <b>Dateien wählen</b><span>oder hierher ziehen · PDF, JPG, PNG, E-Mails (.eml/.msg) · beliebig viele</span></label>
-      <ul class="trust"><li>Dateien bleiben auf Ihrem Gerät</li><li>Keine Anmeldung</li><li>Kein Abo, kein Tracking, keine versteckten Kosten</li><li>Funktioniert auch offline</li><li>Verfügbar in 40 Sprachen</li></ul>
+      <ul class="trust"><li><button type="button" class="linkbtn" id="trustNet" title="Selbst nachprüfen">Dateien bleiben auf Ihrem Gerät</button></li><li>Keine Anmeldung</li><li>Kein Abo, kein Tracking, keine versteckten Kosten</li><li>Funktioniert auch offline</li><li>Verfügbar in 40 Sprachen</li></ul>
       <div id="deadlines" class="deadlines" hidden></div>
       <section id="rescue" class="deadlines recent rescue" hidden aria-labelledby="rescueT"></section>
       <section id="recent" class="deadlines recent" hidden aria-labelledby="recentT"></section>
@@ -1683,6 +1686,19 @@ html.i18n-wait body{visibility:hidden}
   </div>
   <div id="aiBrowserSet"><p class="hint" id="aiState" role="status" aria-live="polite"></p><button type="button" id="aiSetup" hidden>KI des Browsers einrichten …</button></div>
   <div class="dlgrow"><button type="button" id="aiClose">Abbrechen</button><button type="submit" class="primary" id="aiSave">Speichern</button></div>
+</form></dialog>
+<dialog id="netDlg" class="sharedlg" aria-labelledby="netT"><form method="dialog">
+  <h3 class="dlgtitle" id="netT">Datenschutz selbst prüfen</h3>
+  <p class="hint" style="margin:-6px 0 12px">PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.</p>
+  <p id="netOnline" role="status" aria-live="polite"></p>
+  <p id="netSent" class="netsent"></p>
+  <ul id="netList" class="netlist"></ul>
+  <details class="nethow"><summary>So prüfen Sie es selbst</summary><ol>
+    <li>WLAN ausschalten oder das Netzwerkkabel ziehen.</li>
+    <li>Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.</li>
+    <li>Für Fachleute: Entwicklertools des Browsers (F12) → Reiter „Netzwerk“ zeigt jede einzelne Verbindung.</li>
+  </ol></details>
+  <div class="dlgrow"><button type="button" id="netRefresh">Aktualisieren</button><button type="submit" class="primary">Schließen</button></div>
 </form></dialog>
 <dialog id="trDlg" aria-labelledby="trT">
   <form id="trForm" method="dialog">

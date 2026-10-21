@@ -2809,5 +2809,22 @@
  "Ollama einmalig für PDFMy freigeben (ohne Konsole): In Windows „Umgebungsvariablen für dieses Konto bearbeiten“ öffnen, eine neue Variable OLLAMA_ORIGINS mit dem Wert {0} anlegen und Ollama neu starten. Ein Modell, z. B. „llama3.2“ oder „qwen3“, in der Ollama-App laden.": "Ceadaigh Ollama do PDFMy uair amháin (gan chonsól): in Windows, oscail “Cuir athróga timpeallachta do chuntais in eagar”, cruthaigh athróg nua OLLAMA_ORIGINS leis an luach {0} agus atosaigh Ollama. Lódáil samhail, m.sh. “llama3.2” nó “qwen3”, san aip Ollama.",
  "Programm": "Ríomhchlár",
  "Verbindung prüfen": "Seiceáil an ceangal",
- "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Ceangailte, ach níl aon samhail lódáilte fós – lódáil samhail sa ríomhchlár IS, le do thoil."
+ "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Ceangailte, ach níl aon samhail lódáilte fós – lódáil samhail sa ríomhchlár IS, le do thoil.",
+ "{0} · {1}× – Programm auf diesem PC (pdfmy Scan oder lokale KI)": "{0} · {1}× – ríomhchlár ar an ríomhaire seo (pdfmy Scan nó IS áitiúil)",
+ "{0} · {1}× geladen – Programmteile, Schriften, Sprachdateien": "{0} · {1}× lódáilte – codanna den ríomhchlár, clónna, comhaid teanga",
+ "{0} · Daten gesendet": "{0} · sonraí seolta",
+ "● Mit dem Internet verbunden.": "● Ceangailte leis an idirlíon.",
+ "● Offline – PDFMy arbeitet trotzdem weiter.": "● As líne – leanann PDFMy ag obair mar sin féin.",
+ "Aktualisieren": "Athnuaigh",
+ "an Programme auf diesem PC: {0}": "chuig ríomhchláir ar an ríomhaire seo: {0}",
+ "Datenschutz selbst prüfen": "Seiceáil an phríobháideachas tú féin",
+ "Datenschutz selbst prüfen …": "Seiceáil an phríobháideachas tú féin …",
+ "Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.": "PDF a oscailt, a chur in eagar, téacs a aithint agus a shábháil – leanann gach rud ag obair.",
+ "Für Fachleute: Entwicklertools des Browsers (F12) → Reiter „Netzwerk“ zeigt jede einzelne Verbindung.": "Do shaineolaithe: taispeánann uirlisí forbróra an bhrabhsálaí (F12) → an cluaisín “Líonra” gach nasc ar leith.",
+ "Ins Internet gesendete Daten: {0}": "Sonraí seolta chuig an idirlíon: {0}",
+ "PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.": "Oibríonn PDFMy i do bhrabhsálaí. Anseo feiceann tú na naisc atá déanta ag an bhfuinneog seo ó osclaíodh í – agus ar seoladh sonraí.",
+ "Selbst nachprüfen": "Seiceáil tú féin",
+ "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Seiceáil tú féin nach bhfágann do dhoiciméid an gléas seo",
+ "So prüfen Sie es selbst": "Conas é a sheiceáil tú féin",
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Múch an Wi-Fi nó bain amach an cábla líonra."
 }

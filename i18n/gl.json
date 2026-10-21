@@ -2809,5 +2809,22 @@
  "Ollama einmalig für PDFMy freigeben (ohne Konsole): In Windows „Umgebungsvariablen für dieses Konto bearbeiten“ öffnen, eine neue Variable OLLAMA_ORIGINS mit dem Wert {0} anlegen und Ollama neu starten. Ein Modell, z. B. „llama3.2“ oder „qwen3“, in der Ollama-App laden.": "Permitir Ollama para PDFMy unha soa vez (sen consola): en Windows, abra «Editar as variables de contorno da súa conta», cree unha nova variable OLLAMA_ORIGINS co valor {0} e reinicie Ollama. Cargue un modelo, p. ex. «llama3.2» ou «qwen3», na aplicación Ollama.",
  "Programm": "Programa",
  "Verbindung prüfen": "Comprobar conexión",
- "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Conectado, pero aínda non hai ningún modelo cargado – cargue un modelo no programa de IA."
+ "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Conectado, pero aínda non hai ningún modelo cargado – cargue un modelo no programa de IA.",
+ "{0} · {1}× – Programm auf diesem PC (pdfmy Scan oder lokale KI)": "{0} · {1}× – programa neste PC (pdfmy Scan ou IA local)",
+ "{0} · {1}× geladen – Programmteile, Schriften, Sprachdateien": "{0} · {1}× cargado – compoñentes do programa, tipos de letra, ficheiros de idioma",
+ "{0} · Daten gesendet": "{0} · datos enviados",
+ "● Mit dem Internet verbunden.": "● Conectado a internet.",
+ "● Offline – PDFMy arbeitet trotzdem weiter.": "● Sen conexión – PDFMy segue funcionando igualmente.",
+ "Aktualisieren": "Actualizar",
+ "an Programme auf diesem PC: {0}": "a programas deste PC: {0}",
+ "Datenschutz selbst prüfen": "Comprobe vostede mesmo a privacidade",
+ "Datenschutz selbst prüfen …": "Comprobe vostede mesmo a privacidade …",
+ "Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.": "Abrir un PDF, editalo, recoñecer o texto e gardalo: todo segue funcionando.",
+ "Für Fachleute: Entwicklertools des Browsers (F12) → Reiter „Netzwerk“ zeigt jede einzelne Verbindung.": "Para expertos: as ferramentas para desenvolvedores do navegador (F12) → lapela «Rede» amosan cada conexión individual.",
+ "Ins Internet gesendete Daten: {0}": "Datos enviados a internet: {0}",
+ "PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.": "PDFMy funciona no seu navegador. Aquí ve que conexións estableceu esta xanela desde que se abriu e se se enviaron datos.",
+ "Selbst nachprüfen": "Compróbeo vostede mesmo",
+ "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Comprobe vostede mesmo que os seus documentos non saen deste dispositivo",
+ "So prüfen Sie es selbst": "Como comprobalo vostede mesmo",
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Desactive a wifi ou desconecte o cable de rede."
 }

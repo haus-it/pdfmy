@@ -27,7 +27,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 - **Cloud-Tools** scheiden für Geschäftspost aus, weil Briefe personenbezogene Daten enthalten und hochgeladen würden.
 - **Lücke im Markt:** Keines der Tools versteht, *was* ein Brief ist. Datum, Absender, Betreff und Dokumenttyp tippt man überall von Hand ab, um die Datei sinnvoll zu benennen. Genau das automatisieren wir.
 
-## 1b. Öffentliche Web-Version pdfmy.de – Wettbewerb online
+## 1b. Öffentliche Web-Version pdfmy.de – Wettbewerb online (Stand 21.10.2026)
 
 | | Smallpdf | iLovePDF | PDF24 Tools (online) | Adobe Acrobat online | Sejda | **pdfmy.de** |
 |---|---|---|---|---|---|---|
@@ -35,7 +35,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Kostenlos-Limits | wenige Aufgaben/Tag | Größen-/Stapel-Limits | kaum | Anmeldung nötig | 3 Aufgaben/Std., Größen-Limit | **keine** |
 | Anmeldung / Werbung | Upsell | Werbung, Upsell | Werbung | Konto | Upsell | **keine** |
 | Bedienkonzept | ein Werkzeug pro Seite: hochladen → warten → herunterladen | dito | dito | dito | dito | **ein Arbeitsplatz**: alles an derselben Datei, ohne Neu-Hochladen |
-| OCR deutsch | Pro | Premium | ja | Pro | begrenzt | **ja, unbegrenzt** |
+| OCR | Pro | Premium | ja | Pro | begrenzt | **ja, unbegrenzt, über 40 Sprachen** (auch Arabisch, Hebräisch, Chinesisch, Japanisch, Koreanisch) |
 | Scan-Aufbereitung, Entzerren von Fotos | App | App | ja | App | nein | **ja** |
 | Brief verstehen (Datum, Absender, Betrag, IBAN, Frist → Dateiname, Termin) | nein | nein | nein | KI (Pro) | nein | **ja, kostenlos** |
 | Echtes Schwärzen | Pro | ja | ja | Pro | ja | **ja** |
@@ -43,7 +43,13 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Komprimieren, Seiten organisieren, Bilder ↔ PDF, Seitenzahlen, Wasserzeichen, Passwort | ja | ja | ja | ja | ja | **ja** |
 | PDF/A | Pro | ja | ja | Pro | ja | **ja (veraPDF-geprüft)** |
 | Offline nutzbar / installierbar | Desktop-App kostenpflichtig | Desktop-App | Desktop-App | Desktop | Desktop-App | **ja, als App installierbar** |
-| Office ↔ PDF (Word, Excel) | ja | ja | ja | ja | ja | nein (bräuchte Server-Konvertierung → bewusst nicht) |
+| Office ↔ PDF | ja (Upload) | ja (Upload) | ja (Upload) | ja (Upload) | ja (Upload) | **ja, im Browser:** Word, Excel, LibreOffice, EPUB, Text, Markdown, CSV → PDF; PDF → PowerPoint, Word, Excel, Markdown, HTML |
+| Text in der PDF ändern | Pro | nein | begrenzt | Pro | ja | **ja, mit Originalschrift** bzw. breitengleicher Ersatzschrift |
+| Zur Unterschrift senden | Pro, Server | Premium, Server | nein | Konto, Server | nein | **ja, ohne Server** (per E-Mail; Gesendet/Empfangen/Gelesen, Erinnerung, Serienversand) |
+| Formulare mit Rechenfeldern und Prüfungen | nein | nein | nein | Acrobat Pro | nein | **ja** (Summen, MwSt., E-Mail/IBAN/PLZ; nie in PDF/A) |
+| KI (Zusammenfassen, Fragen, Übersetzen) | Cloud | Cloud | nein | Cloud, Abo | nein | **ohne Upload:** KI des Browsers oder lokale KI auf demselben PC; aus abschaltbar |
+| Ordner überwachen (Hot Folder) | nein | nein | Desktop-App | Desktop (Pro) | nein | **ja, im Browser** (Edge/Chrome) |
+| Prüfbar, dass nichts hochgeladen wird | nein | nein | nein | nein | nein | **ja:** Dialog „Datenschutz selbst prüfen“, CSP, offline nutzbar |
 
 **Wie pdfmy die Wettbewerber übertrifft:**
 1. **Datenschutz als Produkt:** Kein Upload. Das kann man prüfen, die App funktioniert sogar offline.
@@ -94,7 +100,17 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Lokale KI auf diesem PC (Ollama, LM Studio, localhost) | passt: der Text bleibt auf dem Rechner; nur localhost/127.0.0.1 erlaubt (Prüfung im Dialog + CSP); aus als Voreinstellung; Freigabe ohne Konsole (LM Studio: Häkchen, Ollama: Windows-Umgebungsvariable per Dialog) – umgesetzt 21.10.2026 |
 | Claude mit eigenem API-Schlüssel | **verworfen**: verletzt Punkt 1 und 2 (Text an Anthropic, CSP-Öffnung) und Punkt 3 (Konto/Schlüssel). Gebaut, getestet, vor dem Ausrollen zurückgenommen. |
 
-### Vorschlag in Prüfung: KI nach eigener Wahl verbinden (ChatGPT, Claude, lokale KI)
+### Prüfung 21.10.2026 (2): Was Foren und Testberichte noch vermissen
+| Kritik / Wunsch (Quelle) | Stand PDFMy | Ergebnis |
+|---|---|---|
+| „Woher weiß ich, dass nichts hochgeladen wird?“ (Foren zu Online-PDF-Diensten) | vorher nur Versprechen | **umgesetzt:** „… Mehr → Datenschutz selbst prüfen“ zeigt Verbindungen und gesendete Bytes live, Online/Offline-Zustand, Anleitung zum Selbsttest. Passt: Punkt 1, 2, 4 |
+| Kantenerkennung bei hellem Untergrund (Kritik an Adobe Scan) | eigene Kantenerkennung | **geprüft, kein Handlungsbedarf:** Testbilder dunkler Tisch, helles Holz, heller und weißer Tisch, Schatten, starkes Rauschen → max. 0,5 % Eckabweichung. Erst unter ca. 5 Helligkeitsstufen Unterschied versagt sie (wie jede Erkennung); dann Ecken von Hand ziehen |
+| Trennblätter für Stapel (Kodak/Fujitsu-Patchcode) | QR-Trennblatt + Erkennung am Inhalt | passt, vorhanden; Patchcode-Blätter (1D) bei Bedarf nachrüsten – lokal machbar |
+| Virtueller Drucker „Als PDF drucken in PDFMy“ (Kritik an PDFgear) | Windows hat „Microsoft Print to PDF“; Ordner überwachen nimmt die Datei auf | passt grundsätzlich (lokal über pdfmy Scan), aber Druckertreiber + Signatur = großer Aufwand; zurückgestellt, Entscheidung GF |
+| Handschrift erkennen | Tesseract liest Druckschrift | passt nur lokal; heute gibt es kein freies, lokal im Browser lauffähiges Modell mit brauchbarer Qualität für Deutsch → beobachten |
+| Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
+
+### Entschieden 21.10.2026: KI nach eigener Wahl verbinden (ChatGPT, Claude, lokale KI)
 Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederzeit ein- und ausschaltbar.
 
 | Variante | Daten bleiben … | Passt zu den Leitplanken? |
@@ -104,5 +120,5 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 | **KI-Server im eigenen Firmennetz** (selbst betrieben) | im Netz, aber nicht auf dem Rechner | nein – der Text verlässt den Rechner (oberstes Ziel, Punkt 1) |
 | **Cloud-KI mit eigenem Schlüssel** (ChatGPT/OpenAI, Claude/Anthropic, Gemini) | **beim Anbieter, meist USA** | nein – verletzt Punkt 1, 2 und 3; schwächt das prüfbare Versprechen „kein Upload“ für alle Nutzer (CSP muss die Anbieter dauerhaft zulassen), Schlüssel im Browser, Drittlandübermittlung |
 
-Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. Entscheidung durch die Geschäftsführung.
+Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 

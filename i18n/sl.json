@@ -2809,5 +2809,22 @@
  "Ollama einmalig für PDFMy freigeben (ohne Konsole): In Windows „Umgebungsvariablen für dieses Konto bearbeiten“ öffnen, eine neue Variable OLLAMA_ORIGINS mit dem Wert {0} anlegen und Ollama neu starten. Ein Modell, z. B. „llama3.2“ oder „qwen3“, in der Ollama-App laden.": "Enkrat dovolite Ollamo za PDFMy (brez konzole): v sistemu Windows odprite „Urejanje spremenljivk okolja za vaš račun“, ustvarite novo spremenljivko OLLAMA_ORIGINS z vrednostjo {0} in znova zaženite Ollamo. V aplikaciji Ollama naložite model, npr. „llama3.2“ ali „qwen3“.",
  "Programm": "Program",
  "Verbindung prüfen": "Preveri povezavo",
- "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Povezano, vendar še ni naložen noben model – naložite model v programu UI."
+ "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Povezano, vendar še ni naložen noben model – naložite model v programu UI.",
+ "{0} · {1}× – Programm auf diesem PC (pdfmy Scan oder lokale KI)": "{0} · {1}× – program v tem računalniku (pdfmy Scan ali lokalna UI)",
+ "{0} · {1}× geladen – Programmteile, Schriften, Sprachdateien": "{0} · {1}× naloženo – deli programa, pisave, jezikovne datoteke",
+ "{0} · Daten gesendet": "{0} · poslani podatki",
+ "● Mit dem Internet verbunden.": "● Povezano z internetom.",
+ "● Offline – PDFMy arbeitet trotzdem weiter.": "● Brez povezave – PDFMy vseeno deluje naprej.",
+ "Aktualisieren": "Osveži",
+ "an Programme auf diesem PC: {0}": "programom v tem računalniku: {0}",
+ "Datenschutz selbst prüfen": "Sami preverite varstvo podatkov",
+ "Datenschutz selbst prüfen …": "Sami preverite varstvo podatkov …",
+ "Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.": "Odpiranje PDF-ja, urejanje, prepoznavanje besedila in shranjevanje – vse deluje naprej.",
+ "Für Fachleute: Entwicklertools des Browsers (F12) → Reiter „Netzwerk“ zeigt jede einzelne Verbindung.": "Za strokovnjake: orodja za razvijalce v brskalniku (F12) → zavihek „Omrežje“ prikaže vsako posamezno povezavo.",
+ "Ins Internet gesendete Daten: {0}": "Podatki, poslani v internet: {0}",
+ "PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.": "PDFMy deluje v vašem brskalniku. Tukaj vidite, katere povezave je to okno vzpostavilo, odkar je odprto – in ali so bili pri tem poslani podatki.",
+ "Selbst nachprüfen": "Preverite sami",
+ "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Sami preverite, da vaši dokumenti ne zapustijo te naprave",
+ "So prüfen Sie es selbst": "Kako to preverite sami",
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Izklopite Wi-Fi ali izvlecite omrežni kabel."
 }

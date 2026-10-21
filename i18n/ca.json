@@ -2809,5 +2809,22 @@
  "Ollama einmalig für PDFMy freigeben (ohne Konsole): In Windows „Umgebungsvariablen für dieses Konto bearbeiten“ öffnen, eine neue Variable OLLAMA_ORIGINS mit dem Wert {0} anlegen und Ollama neu starten. Ein Modell, z. B. „llama3.2“ oder „qwen3“, in der Ollama-App laden.": "Permetre Ollama per a PDFMy una sola vegada (sense consola): al Windows, obriu «Edita les variables d'entorn del compte», creeu una variable nova OLLAMA_ORIGINS amb el valor {0} i reinicieu Ollama. Carregueu un model, p. ex. «llama3.2» o «qwen3», a l'aplicació Ollama.",
  "Programm": "Programa",
  "Verbindung prüfen": "Comprova la connexió",
- "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Connectat, però encara no hi ha cap model carregat – carregueu un model al programa d'IA."
+ "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Connectat, però encara no hi ha cap model carregat – carregueu un model al programa d'IA.",
+ "{0} · {1}× – Programm auf diesem PC (pdfmy Scan oder lokale KI)": "{0} · {1}× – programa en aquest PC (pdfmy Scan o IA local)",
+ "{0} · {1}× geladen – Programmteile, Schriften, Sprachdateien": "{0} · {1}× carregat – components del programa, tipus de lletra, fitxers d'idioma",
+ "{0} · Daten gesendet": "{0} · dades enviades",
+ "● Mit dem Internet verbunden.": "● Connectat a internet.",
+ "● Offline – PDFMy arbeitet trotzdem weiter.": "● Sense connexió – PDFMy continua funcionant igualment.",
+ "Aktualisieren": "Actualitza",
+ "an Programme auf diesem PC: {0}": "a programes d'aquest PC: {0}",
+ "Datenschutz selbst prüfen": "Comproveu vós mateix la privadesa",
+ "Datenschutz selbst prüfen …": "Comproveu vós mateix la privadesa …",
+ "Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.": "Obrir un PDF, editar-lo, reconèixer el text i desar-lo: tot continua funcionant.",
+ "Für Fachleute: Entwicklertools des Browsers (F12) → Reiter „Netzwerk“ zeigt jede einzelne Verbindung.": "Per a experts: les eines per a desenvolupadors del navegador (F12) → pestanya «Xarxa» mostren cada connexió individual.",
+ "Ins Internet gesendete Daten: {0}": "Dades enviades a internet: {0}",
+ "PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.": "PDFMy funciona al vostre navegador. Aquí veieu quines connexions ha establert aquesta finestra des que s'ha obert i si s'han enviat dades.",
+ "Selbst nachprüfen": "Comproveu-ho vós mateix",
+ "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Comproveu vós mateix que els vostres documents no surten d'aquest dispositiu",
+ "So prüfen Sie es selbst": "Com ho podeu comprovar vós mateix",
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Desactiveu el wifi o desconnecteu el cable de xarxa."
 }

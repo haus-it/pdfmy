@@ -2809,5 +2809,22 @@
  "Ollama einmalig für PDFMy freigeben (ohne Konsole): In Windows „Umgebungsvariablen für dieses Konto bearbeiten“ öffnen, eine neue Variable OLLAMA_ORIGINS mit dem Wert {0} anlegen und Ollama neu starten. Ein Modell, z. B. „llama3.2“ oder „qwen3“, in der Ollama-App laden.": "Lubage Ollama PDFMy jaoks ühe korra (ilma konsoolita): avage Windowsis „Konto keskkonnamuutujate redigeerimine“, looge uus muutuja OLLAMA_ORIGINS väärtusega {0} ja taaskäivitage Ollama. Laadige Ollama rakenduses mudel, nt „llama3.2“ või „qwen3“.",
  "Programm": "Programm",
  "Verbindung prüfen": "Kontrolli ühendust",
- "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Ühendatud, kuid ühtegi mudelit pole veel laaditud – laadige tehisintellekti programmis mudel."
+ "Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.": "Ühendatud, kuid ühtegi mudelit pole veel laaditud – laadige tehisintellekti programmis mudel.",
+ "{0} · {1}× – Programm auf diesem PC (pdfmy Scan oder lokale KI)": "{0} · {1}× – programm selles arvutis (pdfmy Scan või kohalik tehisintellekt)",
+ "{0} · {1}× geladen – Programmteile, Schriften, Sprachdateien": "{0} · {1}× laaditud – programmi osad, fondid, keelefailid",
+ "{0} · Daten gesendet": "{0} · andmeid saadeti",
+ "● Mit dem Internet verbunden.": "● Internetiga ühendatud.",
+ "● Offline – PDFMy arbeitet trotzdem weiter.": "● Võrguühenduseta – PDFMy töötab ikkagi edasi.",
+ "Aktualisieren": "Värskenda",
+ "an Programme auf diesem PC: {0}": "selle arvuti programmidele: {0}",
+ "Datenschutz selbst prüfen": "Kontrollige andmekaitset ise",
+ "Datenschutz selbst prüfen …": "Kontrollige andmekaitset ise …",
+ "Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.": "PDF-i avamine, muutmine, tekstituvastus ja salvestamine – kõik töötab edasi.",
+ "Für Fachleute: Entwicklertools des Browsers (F12) → Reiter „Netzwerk“ zeigt jede einzelne Verbindung.": "Asjatundjatele: brauseri arendajatööriistad (F12) → vahekaart „Võrk“ näitab iga üksikut ühendust.",
+ "Ins Internet gesendete Daten: {0}": "Internetti saadetud andmed: {0}",
+ "PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.": "PDFMy töötab teie brauseris. Siin näete, milliseid ühendusi see aken on pärast avamist loonud – ja kas seejuures saadeti andmeid.",
+ "Selbst nachprüfen": "Kontrollige ise",
+ "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Kontrollige ise, et teie dokumendid ei lahku sellest seadmest",
+ "So prüfen Sie es selbst": "Nii kontrollite seda ise",
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Lülitage wifi välja või tõmmake võrgukaabel välja."
 }
