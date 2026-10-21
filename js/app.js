@@ -2381,12 +2381,19 @@ async function nativeWords(p) {
   const pg = await state.docs[p.docIdx].js.getPage(p.pageIdx + 1);
   const vp = pg.getViewport({ scale: 1, rotation: p.rotation }), tc = await pg.getTextContent(), out = [], fonts = {};
   try { await pg.getOperatorList(); } catch {}   // lädt die Schriftobjekte (fett/kursiv)
+  let prevStr = '';
   for (const it of tc.items) {
-    const t = it.str.trim(); if (!t || !it.width) continue;
+    const t = it.str.trim(); if (!t || !it.width) { prevStr = it.str || ' '; continue; }
     const fs = Math.hypot(it.transform[2], it.transform[3]) || it.height || 10, tx = it.transform[4], ty = it.transform[5];
     const [x1, y1] = vp.convertToViewportPoint(tx, ty - fs * 0.2), [x2, y2] = vp.convertToViewportPoint(tx + it.width, ty + fs * 0.8);
-    out.push({ t, x: Math.min(x1, x2) / vp.width, y: Math.min(y1, y2) / vp.height, w: Math.abs(x2 - x1) / vp.width, h: Math.abs(y2 - y1) / vp.height,
-      f: fonts[it.fontName] ||= fontInfo(pg, tc.styles || {}, it.fontName) });
+    const wd = { t, x: Math.min(x1, x2) / vp.width, y: Math.min(y1, y2) / vp.height, w: Math.abs(x2 - x1) / vp.width, h: Math.abs(y2 - y1) / vp.height,
+      f: fonts[it.fontName] ||= fontInfo(pg, tc.styles || {}, it.fontName) };
+    // Ligaturen und Silbenstücke („Tre“ + „ff“ + „punkt“): Stücke ohne Abstand in derselben Zeile ohne Leerzeichen anhängen
+    const prev = out[out.length - 1], gapPt = prev ? (wd.x - prev.x - prev.w) * vp.width : 1e9;
+    if (prev && !/\s$/.test(prevStr) &&Math.abs(prev.y - wd.y) * vp.height < fs * 0.25 && gapPt > -fs * 0.1 && gapPt < fs * 0.06) {
+      prev.t += t; prev.w = wd.x + wd.w - prev.x; prev.h = Math.max(prev.h, wd.h);
+    } else out.push(wd);
+    prevStr = it.str;
   }
   return out;
 }

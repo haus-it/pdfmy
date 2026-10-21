@@ -9,6 +9,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 - Gemeinsamer Rechenkern Imaging.prepScan für Worker und Hauptprogramm: Ergebnisse identisch (Messreihe: Zuschnitt, Geraderichten, Trennblatt, Zahl-QR, Modus und Pixel-Prüfsumme je Seite ohne Abweichung). Ohne Worker-Unterstützung oder bei Worker-Fehlern wie bisher im Hauptprogramm; ein nicht ladbarer Worker schaltet den Pool ab, statt Seiten hängen zu lassen.
 - Messung (150 Scanseiten 2480×3508, gemischt normal/schief/Foto auf Tisch/Trennblatt/farbig, 8 Kerne): 130,7 s → 44,2 s (871 → 294 ms je Seite, etwa dreimal so schnell; gleicher Rechner, Vergleich ohne Worker). Auch Bilddateien und mehrseitige TIFF nutzen die Worker.
 
+### Presseseite: „Neu seit dem 17. Oktober“; Text ändern: Ligaturen
+- presse.html: Abschnitt mit den Neuerungen seit 17.10., Fakten aktualisiert (Texterkennung in über 40 Sprachen), zwei neue honorarfreie Bilder (Zustellstand einer Unterschriftsanfrage; Text ändern vorher/nachher).
+- Fehler behoben: Wörter mit Ligaturen (z. B. „ff“ in „Treffpunkt“) wurden beim Ändern auseinandergerissen („Tre ff punkt“), weil pdf.js die Ligatur als eigenes Textstück liefert. Stücke ohne Abstand in derselben Zeile werden jetzt ohne Leerzeichen zusammengefügt.
+
 ### Text ändern mit Originalschrift; große Dokumente schneller
 - Text ändern: Ist die Schrift in der PDF eingebettet (TrueType/OpenType) und enthält sie alle Zeichen, schreibt PDFMy mit der Originalschrift weiter (Gegenprobe der Breiten Browser ↔ PDF; die schon verkleinerte Schrift wird unverändert eingebettet). Sonst Schriften mit gleicher Laufweite: Liberation Sans/Serif/Mono (Arial/Helvetica, Times, Courier), PDFMy Sans C (aus Carlito, Calibri), Caladea (Cambria, Breite angeglichen); bei Zeichen außerhalb (z. B. Arabisch, CJK) DejaVu. Fehlt der Originalschrift später ein getipptes Zeichen, wechselt die ganze Zeile mit angeglichener Breite – keine Mischschrift.
 - Schriftnamen aus dem PDF werden jetzt gelesen (pdf.js fontExtraProperties) – damit greift auch die Erkennung fett/kursiv beim Ändern wieder.
