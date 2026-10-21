@@ -1117,7 +1117,7 @@ $('#overlay').addEventListener('pointerdown', e => {
     if (state.tool === 'wo' && pageProt(p) !== 'urkunde' && sigWarn(p, () => status('Jetzt den Bereich zum Abdecken aufziehen.'))) { e.preventDefault(); return; }
     pushUndo(p);
     const a = { id: ++uid, type: state.tool, x: s.x, y: s.y, w: 0, h: 0 };
-    if (a.type === 'field') { a.ftype = $('#fieldType').value; a.name = $('#fieldName').value.trim(); a.req = $('#fieldReq').checked; }
+    if (a.type === 'field') { a.ftype = $('#fieldType').value; a.name = $('#fieldName').value.trim(); a.req = $('#fieldReq').checked; if (CALC_TYPES.has(a.ftype) && $('#fieldCalc').value.trim()) a.calc = $('#fieldCalc').value.trim(); }
     p.annots.push(a); renderAnns();
     const el = ov.querySelector(`[data-id="${a.id}"]`);
     drag(e, ev => {
@@ -1237,6 +1237,22 @@ $('#fieldReq').addEventListener('change', e => {
   pushUndo(p); for (const x of p.annots) if (x === a || (a.ftype === 'radio' && x.type === 'field' && x.ftype === 'radio' && x.name === a.name)) x.req = e.target.checked;
   state.dirty = true; renderAnns();
 });
+/* Rechenfelder (js/formcalc.js): Zahl/Betrag mit Formel aus anderen Feldern – Eingabefeld „Berechnung“ nur bei diesen Arten */
+const CALC_TYPES = new Set(['number', 'amount']), SCRIPT_TYPES = new Set(['number', 'amount', 'email', 'iban', 'plz']);
+const allFieldNames = () => [...new Set(state.pages.flatMap(p => p.annots.filter(a => a.type === 'field').map(a => a.name)).filter(Boolean))];
+function calcCheck(formula) {
+  if (!formula) return '';
+  const r = FormCalc.parse(formula, allFieldNames());
+  return r.error ? `Berechnung: ${r.error}` : '';
+}
+const syncCalcUi = () => { const p = cur(), a = p?.annots.find(x => x.id === state.annSel && x.type === 'field'); $('#fieldCalc').hidden = !CALC_TYPES.has(a ? a.ftype : $('#fieldType').value); $('#fieldScriptHint').hidden = !SCRIPT_TYPES.has(a ? a.ftype : $('#fieldType').value); if (a && document.activeElement !== $('#fieldCalc')) $('#fieldCalc').value = a.calc || ''; };
+$('#fieldType').addEventListener('change', syncCalcUi);
+$('#fieldCalc').addEventListener('change', e => {
+  const v = e.target.value.trim(), p = cur(), a = p?.annots.find(x => x.id === state.annSel && x.type === 'field');
+  if (a && CALC_TYPES.has(a.ftype)) { pushUndo(p); if (v) a.calc = v; else delete a.calc; state.dirty = true; renderAnns(); }
+  const err = calcCheck(v);
+  status(err ? err + ' – Feldnamen prüfen (Feld zuerst anlegen) oder in eckige Klammern setzen.' : v ? `Berechnung „${v}“ übernommen – im PDF rechnet das Feld selbst (Acrobat, Foxit, Firefox).` : 'Berechnung entfernt.');
+});
 // Vieleck: Vorschau während des Klickens und Abschluss
 function polyPreview(ov) {
   ov.querySelector('.polyprev')?.remove(); const pp = state.poly; if (!pp?.pts.length) return;
@@ -1319,6 +1335,7 @@ function updateToolbar() {
   if (a?.type === 'shape') { $('#shapeKind').value = a.kind; $('#shapeColor').value = a.color; $('#shapeLw').value = String(a.lw); $('#shapeFill').checked = !!a.fill; }
   mscaleUi(a);
   $('#fieldOpts').hidden = state.tool !== 'field';
+  if (!$('#fieldOpts').hidden) syncCalcUi();
   $('#signOpts').hidden = state.tool !== 'sign';
   $('#hlOpts').hidden = !(state.tool === 'hl' || a?.type === 'hl');
   if (!$('#hlOpts').hidden) hlSync(a?.type === 'hl' ? a : null);
@@ -2510,6 +2527,7 @@ function addFormFields(out, list, T, font) {
   const form = out.getForm(), used = new Map(), tabbed = new Set();
   const uniq = n => { n = String(n || 'Feld').replace(/[.]/g, ' ').trim().slice(0, 60) || 'Feld'; const k = (used.get(n) || 0) + 1; used.set(n, k); return k > 1 ? `${n} ${k}` : n; };
   const radios = new Map(), pgs = out.getPages();   // Optionsfelder: eine Gruppe je Name und Seite
+  const made = [];   // Textfelder für Formate, Prüfungen und Berechnungen
   for (const { page, x, y, w, h, a } of list) {
     if (a.ftype === 'radio') {
       const s = Math.min(w, h), key = a.name + '|' + pgs.indexOf(page);
@@ -2534,11 +2552,13 @@ function addFormFields(out, list, T, font) {
       f = form.createTextField(name);
       if (a.ftype === 'multi') f.enableMultiline();
       if (a.ftype === 'date') f.setMaxLength(10);
+      if (a.ftype === 'plz') f.setMaxLength(5);
       f.addToPage(page, { ...box, font });   // eingebettete Schrift im Erscheinungsbild (PDF/A)
       f.updateAppearances(font);
     }
     if (a.req) f.enableRequired();
-    const tip = (a.ftype === 'date' ? `${name} (Datum, TT.MM.JJJJ)` : a.ftype === 'select' ? `${name} (Auswahl: ${(a.opts || []).join(', ')})` : name) + (a.req ? ' (Pflichtfeld)' : '');
+    const tip = (a.ftype === 'date' ? `${name} (Datum, TT.MM.JJJJ)` : a.ftype === 'select' ? `${name} (Auswahl: ${(a.opts || []).join(', ')})` : a.calc ? `${name} (wird berechnet: ${a.calc})` : { amount: `${name} (Betrag in Euro)`, number: `${name} (Zahl)`, email: `${name} (E-Mail-Adresse)`, iban: `${name} (IBAN)`, plz: `${name} (Postleitzahl, 5 Ziffern)` }[a.ftype] || name) + (a.req ? ' (Pflichtfeld)' : '');
+    made.push({ a, f, name });
     f.acroField.dict.set(PDFName.of('TU'), PDFHexString.fromText(tip));
     for (const wd of f.acroField.getWidgets()) {
       wd.dict.set(PDFName.of('F'), PDFNumber.of(4));   // drucken
@@ -2546,9 +2566,40 @@ function addFormFields(out, list, T, font) {
     }
     if (!tabbed.has(page)) { page.node.set(PDFName.of('Tabs'), PDFName.of('S')); tabbed.add(page); }   // Tab-Reihenfolge nach Struktur
   }
+  formScripts(out, form, made, !!T);
   form.updateFieldAppearances(font);
   // PDF/A: nur das normale Erscheinungsbild (N) – „gedrückt“ (D) entfernen, auch nach dem Neuaufbau oben
   for (const fld of form.getFields()) for (const wd of fld.acroField.getWidgets()) { const ap = wd.dict.lookup(PDFName.of('AP')); if (ap instanceof PDFLib.PDFDict) ap.delete(PDFName.of('D')); }
+}
+/* Formate, Prüfungen und Berechnungen als Acrobat-Formularskripte (js/formcalc.js) – Acrobat, Foxit, Firefox u. a. führen sie aus.
+   PDF/A verbietet Skripte: dort nur die Felder (mit Hinweis). Rechenfelder sind schreibgeschützt; /CO legt die Rechenreihenfolge fest. */
+function formScripts(out, form, made, pdfa) {
+  const names = made.map(m => m.a.name), real = new Map();
+  for (const m of made) if (!real.has(m.a.name)) real.set(m.a.name, m.name);   // Name im PDF (doppelte Namen wurden durchnummeriert)
+  // Skripte nur für Felder, die wirklich rechnen oder prüfen (Konzept: so wenig aktive Inhalte wie möglich; Datumsfelder bleiben ohne)
+  const want = made.filter(m => m.a.calc || SCRIPT_TYPES.has(m.a.ftype));
+  if (!want.length) return;
+  if (pdfa) { status('Hinweis: PDF/A erlaubt keine Formularskripte – Berechnungen und Eingabeprüfungen stehen nur im normalen PDF.'); return; }
+  const calcs = {}, js = t => out.context.obj({ S: 'JavaScript', JS: PDFHexString.fromText(t) });
+  for (const m of want) {
+    let ast = null;
+    if (m.a.calc) {
+      const r = FormCalc.parse(m.a.calc, names);
+      if (r.error) console.warn('Berechnung', m.name, r.error);
+      else {
+        const map = n => n.ref ? { ref: real.get(n.ref) || n.ref } : n.num != null ? n : { ...n, a: n.a && map(n.a), b: n.b && map(n.b), args: n.args && n.args.map(map) };
+        ast = map(r.ast); calcs[m.name] = { refs: r.refs.map(x => real.get(x) || x), f: m.f };
+      }
+    }
+    const s = FormCalc.scripts(m.a.ftype, m.a.calc, ast), aa = {};
+    for (const k of ['C', 'F', 'K', 'V']) if (s[k]) aa[k] = js(s[k]);
+    if (Object.keys(aa).length) m.f.acroField.dict.set(PDFName.of('AA'), out.context.obj(aa));
+    if (ast) m.f.enableReadOnly();
+  }
+  const o = FormCalc.order(calcs);
+  if (o.cycle) status(`Hinweis: Die Berechnungen beziehen sich im Kreis (${o.cycle.join(' → ')}) – bitte eine Formel ändern.`);
+  const co = o.order.filter(n => calcs[n]).map(n => calcs[n].f.ref);
+  if (co.length) form.acroForm.dict.set(PDFName.of('CO'), out.context.obj(co));
 }
 // Links (Werkzeug „Link“): Webadresse, E-Mail oder Seite im Dokument. Nur http(s) und mailto – keine anderen Aktionen (Sicherheit, PDF/A).
 function linkTarget(v) {
@@ -2635,8 +2686,8 @@ function deepClean(out, page) {
 }
 // Beschriftung des Felds in der Bearbeitungsansicht: Art, Name, Auswahlwerte, Pflichtfeld
 function fieldLabel(a) {
-  const ico = { date: '📅 ', multi: '¶ ', select: '▾ ' }[a.ftype] || '';
-  const tail = a.ftype === 'select' && a.opts?.length ? ` (${a.opts.join(' | ')})` : a.ftype === 'radio' ? `: ${a.val}` : '';
+  const ico = { date: '📅 ', multi: '¶ ', select: '▾ ', number: '# ', amount: '€ ', email: '@ ', iban: 'IBAN ', plz: 'PLZ ' }[a.ftype] || '';
+  const tail = a.ftype === 'select' && a.opts?.length ? ` (${a.opts.join(' | ')})` : a.ftype === 'radio' ? `: ${a.val}` : a.calc ? ` = ${a.calc}` : '';
   return ico + a.name + tail + (a.req ? ' *' : '');
 }
 // Auswahlliste: Einträge abfragen (durch Komma oder Semikolon getrennt)
@@ -2652,7 +2703,7 @@ function fieldDone(p, a) {
   const ar = (p.w && p.h) ? p.w / p.h : 0.707;
   if (a.ftype === 'radio') return radioDone(p, a, ar);
   if (a.ftype === 'check') { const s = Math.max(a.w, a.h * (1 / ar), 0.022); a.w = s; a.h = s * ar; }
-  else if (a.w < 0.02 || a.h < 0.008) { a.w = a.ftype === 'date' ? 0.16 : 0.32; a.h = a.ftype === 'multi' ? 0.08 : 0.026; a.y = Math.max(0, a.y - a.h / 2); }
+  else if (a.w < 0.02 || a.h < 0.008) { a.w = ['date', 'plz', 'number', 'amount'].includes(a.ftype) ? 0.16 : 0.32; a.h = a.ftype === 'multi' ? 0.08 : 0.026; a.y = Math.max(0, a.y - a.h / 2); }
   a.x = Math.min(a.x, 1 - a.w); a.y = Math.min(a.y, 1 - a.h);
   if (!a.name) {
     const words = p.ocr?.words || p.nwords || [], cy = a.y + a.h / 2;
@@ -2662,8 +2713,9 @@ function fieldDone(p, a) {
     const pick = a.ftype === 'check' ? (right.length ? right.slice(0, 4) : left.slice(-4)) : (left.length ? left.slice(-4) : above.slice(0, 4));   // Ankreuzfeld: Beschriftung meist rechts
     const label = pick.map(w => w.t).join(' ').replace(/[:_.…]+$/, '').trim();
     const n = p.annots.filter(x => x.type === 'field').length;
-    a.name = label.slice(0, 40) || ({ text: 'Textfeld', multi: 'Text', date: 'Datum', check: 'Ankreuzfeld', select: 'Auswahl' }[a.ftype] + ' ' + n);
+    a.name = label.slice(0, 40) || ({ text: 'Textfeld', multi: 'Text', date: 'Datum', check: 'Ankreuzfeld', select: 'Auswahl', number: 'Zahl', amount: 'Betrag', email: 'E-Mail', iban: 'IBAN', plz: 'PLZ' }[a.ftype] + ' ' + n);
   }
+  if (a.calc) { const err = calcCheck(a.calc); if (err) { state.dirty = true; state.annSel = a.id; status(`Formularfeld „${a.name}“ angelegt. ${err} – bitte unter „Berechnung“ korrigieren.`); return; } }
   if (a.ftype === 'select' && !a.opts?.length && !fieldOpts(a)) a.opts = ['Ja', 'Nein'];
   state.dirty = true; state.annSel = a.id;
   status(`Formularfeld „${a.name}“ angelegt – Doppelklick zum Umbenennen. Beim Speichern wird es ein ausfüllbares Feld.`);
@@ -3523,6 +3575,7 @@ $('#x-flow-del').onclick = () => {
 function setRadio(name, v) { const r = document.querySelector(`#expForm [name="${name}"][value="${v}"]`); if (r) r.checked = true; }
 function openExport(pre = {}) {
   if (!state.pages.length) return;
+  { const sum = formSummary(); if (sum) toast(`Formular: ${sum} – Sie können trotzdem speichern.`, 8000); }
   const last = LS.get('export', {});
   setRadio('x-format', pre.format || (allScans() && S.pdfa ? 'pdfa' : 'pdf'));
   setRadio('x-size', pre.size || last.size || 'balanced');
@@ -4059,7 +4112,7 @@ scanHelperRunning().then(ok => { if (ok) setScanReady(true); });
   }
 })();
 async function pollInbox() {
-  if (state.polling || !state.inDir) return;
+  if (state.polling || !state.inDir || /[?&]automatik=1/.test(location.search)) return;   // Fenster „Ordner überwachen“ (js/hotfolder.js) holt selbst
   state.polling = true;
   try {
     const fresh = [];
@@ -4323,7 +4376,7 @@ async function detectForm(docIdx) {
     for (const f of lib.getForm().getFields()) {
       const name = f.getName(), ro = f.isReadOnly();
       if (/^pdfmy_[a-z0-9]+_\d+$/.test(name)) continue;   // Felder einer Unterschriftsanfrage (js/pro.js) – nicht als eigenes Formular zeigen
-      if (f instanceof L.PDFTextField) fields.push({ name, kind: 'text', value: f.getText() || '', multi: f.isMultiline(), max: f.getMaxLength(), ro });
+      if (f instanceof L.PDFTextField) { const sc = FormCalc.readScripts(fieldScripts(f)); fields.push({ name, kind: 'text', value: f.getText() || '', multi: f.isMultiline(), max: f.getMaxLength(), ro, req: f.isRequired(), fmt: sc.kind || '', calc: sc.calc || '' }); }
       else if (f instanceof L.PDFCheckBox) fields.push({ name, kind: 'check', value: f.isChecked(), ro });
       else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected()[0] || '', ro });
       else if (f instanceof L.PDFRadioGroup) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected() || '', ro });
@@ -4335,6 +4388,41 @@ async function detectForm(docIdx) {
     status(`Formular mit ${d.fields.length} Feldern erkannt – rechts ausfüllen, dann speichern.`);
     if (state.intent === 'form') $('#formSec').scrollIntoView({ behavior: 'smooth' });
   } else if (state.intent !== 'form') formHint(docIdx);   // Kachel „Formular“: Suche nach Schreiblinien startet in applyIntent, wenn die Seiten da sind
+}
+// Skripte eines Formularfelds (Berechnen, Formatieren, Tastatur, Prüfen) als Text – für FormCalc.readScripts
+function fieldScripts(f) {
+  const L = PDFLib, out = {};
+  try {
+    const aa = f.acroField.dict.lookup(L.PDFName.of('AA')); if (!(aa instanceof L.PDFDict)) return out;
+    for (const k of ['C', 'F', 'K', 'V']) {
+      const act = aa.lookup(L.PDFName.of(k)); if (!(act instanceof L.PDFDict)) continue;
+      const v = act.lookup(L.PDFName.of('JS'));
+      out[k] = v instanceof L.PDFRawStream ? new TextDecoder().decode(L.decodePDFRawStream(v).decode()) : v?.decodeText?.() || '';
+    }
+  } catch (e) { console.warn('Formularskript', e); }
+  return out;
+}
+/* Rechnen und prüfen beim Ausfüllen: Rechenfelder neu berechnen (Reihenfolge nach Abhängigkeit), jedes Feld prüfen.
+   → { errors: Map(Name → Meldung), missing: Anzahl leerer Pflichtfelder, calcs } */
+function formEvaluate(d) {
+  const names = d.fields.map(f => f.name), calcs = {};
+  for (const f of d.fields) if (f.calc) { const r = FormCalc.parse(f.calc, names); if (!r.error) calcs[f.name] = { ...r, f }; }
+  const val = n => d.values[n] ?? d.fields.find(x => x.name === n)?.value ?? '';
+  for (const n of FormCalc.order(calcs).order) { const c = calcs[n]; if (c) d.values[n] = FormCalc.fmt(FormCalc.evaluate(c.ast, val), c.f.fmt === 'amount' ? 'amount' : 'number'); }
+  const errors = new Map(); let missing = 0;
+  for (const f of d.fields) {
+    if (f.ro || calcs[f.name]) continue;
+    const v = val(f.name), empty = f.kind === 'check' ? !v : !String(v).trim();
+    const msg = f.kind === 'text' ? FormCalc.check(f.fmt || 'text', v, f.req) : (f.req && empty ? 'Pflichtfeld – bitte ausfüllen.' : '');
+    if (msg) { errors.set(f.name, msg); if (empty) missing++; }
+  }
+  return { errors, missing, calcs };
+}
+// Kurzfassung für Formular-Bereich und Speichern: „2 Pflichtfelder fehlen · 1 Angabe ungültig“ ('' = alles in Ordnung)
+function formSummary() {
+  let missing = 0, bad = 0;
+  for (const d of state.docs) if (d?.fields?.length) { const r = formEvaluate(d); missing += r.missing; bad += r.errors.size - r.missing; }
+  return [missing ? (missing === 1 ? '1 Pflichtfeld fehlt' : `${missing} Pflichtfelder fehlen`) : '', bad ? (bad === 1 ? '1 Angabe ist ungültig' : `${bad} Angaben sind ungültig`) : ''].filter(Boolean).join(' · ');
 }
 /* Nicht ausfüllbares Formular (nur gedruckte Linien): typische Feld-Beschriftungen auf den ersten Seiten → Angebot „Felder erkennen“ */
 const FORM_LABEL = /^(firma|firmenname|name|nachname|vorname|straße|strasse|straße,\s*hausnummer|hausnummer|postleitzahl|plz|ort|wohnort|e-?mail(\s*adresse)?|telefon|telefax|fax|mobil|geburtsdatum|geburtsort|kundennummer|vertragsnummer|iban|bic|kontoinhaber|steuernummer|anschrift)\b/i;
@@ -4368,16 +4456,36 @@ function renderForm() {
       } else {
         wrap.innerHTML = label + (f.multi ? `<textarea id="${id}" rows="3"></textarea>` : `<input id="${id}">`);
         const el = wrap.querySelector('input,textarea'); el.value = v; el.disabled = f.ro; if (f.max) el.maxLength = f.max;
+        if (f.calc) { el.readOnly = true; el.classList.add('calc'); el.title = `Wird berechnet: ${f.calc}`; }
+        if (f.fmt === 'amount' || f.fmt === 'number') el.inputMode = 'decimal'; else if (f.fmt === 'plz') el.inputMode = 'numeric'; else if (f.fmt === 'email') el.type = 'email';
       }
+      if (f.req) wrap.querySelector('label')?.append(' *');
+      wrap.dataset.name = f.name;
       const el = wrap.querySelector('input,select,textarea');
       el.addEventListener(f.kind === 'text' ? 'input' : 'change', () => {
         d.values[f.name] = f.kind === 'check' ? el.checked : el.value;
-        state.dirty = true;
+        state.dirty = true; formLive(d, box);
         clearTimeout(formTimers[d.name]); formTimers[d.name] = setTimeout(() => applyForm(d), 600);
       });
       box.append(wrap);
     }
+    formLive(d, box, true);
   }
+  if (!docs.length) $('#formCheckMsg').hidden = true;
+}
+// Rechenfelder aktualisieren, Meldungen an die Felder schreiben (still = beim ersten Anzeigen nur Rechnen, Fehler erst nach Eingabe)
+function formLive(d, box, still) {
+  const r = formEvaluate(d);
+  for (const wrap of box.querySelectorAll('.field')) {
+    const f = d.fields.find(x => x.name === wrap.dataset.name); if (!f) continue;
+    const el = wrap.querySelector('input,select,textarea'); if (!el) continue;
+    if (f.calc && r.calcs[f.name]) el.value = d.values[f.name];
+    const msg = still ? '' : r.errors.get(f.name) || '';
+    let m = wrap.querySelector('.ferr');
+    if (msg && (d.values[f.name] !== undefined || f.req && !still)) { if (!m) { m = document.createElement('small'); m.className = 'ferr'; m.id = el.id + '-e'; wrap.append(m); } m.textContent = msg; el.setAttribute('aria-invalid', 'true'); el.setAttribute('aria-describedby', m.id); }
+    else { m?.remove(); el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); }
+  }
+  const sum = formSummary(); $('#formCheckMsg').hidden = !sum || still; $('#formCheckMsg').textContent = sum ? `Formular: ${sum}.` : '';
 }
 async function applyForm(d) {
   try {

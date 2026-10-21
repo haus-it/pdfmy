@@ -136,6 +136,9 @@ select{border:1px solid var(--line);background:var(--panel);border-radius:7px;pa
 .ann.field{background:rgba(74,82,128,.10);border:1.5px dashed #4A5280;border-radius:2px;overflow:hidden}
 .ann.field .fl{position:absolute;left:3px;top:50%;transform:translateY(-50%);font:600 11px/1.1 system-ui,sans-serif;color:#2c3260;white-space:nowrap;pointer-events:none;max-width:calc(100% - 6px);overflow:hidden;text-overflow:ellipsis}
 .ann.field.check .fl{display:none}
+body.hotmode #hotPanel{position:fixed;inset:0;z-index:9000;overflow:auto;padding:24px;background:var(--bg);color:var(--text)}body.hotmode #hotPanel h2{margin-top:0}#hotState{font-weight:600}
+#formFields .ferr{display:block;color:#a11d1d;font-size:.85em;margin-top:2px}#formFields input[aria-invalid=true]{border-color:#a11d1d}#formFields input.calc{font-weight:600}.ferrsum{color:#8a5a00;font-weight:600;margin:.4em 0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #formFields .ferr{color:#ff8a8a}:root:not([data-theme="light"]) .ferrsum{color:#f0c060}}[data-theme="dark"] #formFields .ferr{color:#ff8a8a}[data-theme="dark"] .ferrsum{color:#f0c060}
 .sumout{white-space:pre-wrap;margin:12px 0;padding:10px 12px;border:1px solid var(--line);border-radius:6px;min-height:3em;max-height:min(45vh,360px);overflow:auto;font-size:14.5px;line-height:1.5}.sumout:empty{display:none}
 .ann.shape .mlabel{position:absolute;left:50%;top:50%;transform:translate(-50%,-110%);font:600 12px/1.2 system-ui,sans-serif;white-space:nowrap;background:rgba(255,255,255,.85);padding:0 3px;border-radius:3px;pointer-events:none}
 .ann.field.radio{border-radius:50%;overflow:visible}.ann.field.radio .fl{left:calc(100% + 4px);max-width:none;transform:translateY(-50%)}
@@ -1057,6 +1060,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi" id="btnDefaultPdf" title="PDF-Dateien per Doppelklick (Explorer bzw. Finder) in PDFMy öffnen"><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg><span>Als Standard für PDFs festlegen …</span></button>
           <label class="mi langmi" for="uiLang"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Sprache</span><select id="uiLang" translate="no" aria-label="Sprache der Oberfläche · Language"></select></label>
           <button class="mi" id="btnSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einstellungen</span></button>
+          <button class="mi" id="btnAi" title="KI-Assistent einrichten: KI des Browsers auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>KI-Assistent …</span></button>
           <button class="mi" id="btnReport" title="Fehlerbericht mit Protokoll per E-Mail an den Support senden"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span>Problem melden …</span></button>
           <button class="mi" id="btnUpdate" title="Nach einer neuen Version suchen"><svg class="ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg><span>Updates suchen</span></button>
           <button class="mi" id="btnHelp"><svg class="ic" aria-hidden="true"><use href="#i-circle-help"/></svg><span>Hilfe &amp; Tastenkürzel</span><kbd>?</kbd></button>
@@ -1114,10 +1118,12 @@ html.i18n-wait body{visibility:hidden}
       </div>
       <div class="grp" id="fieldOpts" hidden>
         <select id="fieldType" title="Art des Formularfelds" aria-label="Art des Formularfelds">
-          <option value="text">Textfeld</option><option value="multi">Mehrzeilig</option><option value="date">Datum</option><option value="check">Kontrollkästchen</option><option value="select">Auswahlliste</option><option value="radio">Optionsfeld</option>
+          <option value="text">Textfeld</option><option value="multi">Mehrzeilig</option><option value="date">Datum</option><option value="number">Zahl</option><option value="amount">Betrag (€)</option><option value="email">E-Mail</option><option value="iban">IBAN</option><option value="plz">Postleitzahl</option><option value="check">Kontrollkästchen</option><option value="select">Auswahlliste</option><option value="radio">Optionsfeld</option>
         </select>
         <label class="cb" title="Das Feld muss ausgefüllt werden – PDF-Programme weisen beim Absenden darauf hin"><input id="fieldReq" type="checkbox"> Pflichtfeld</label>
         <input id="fieldName" placeholder="Name (automatisch)" aria-label="Name des Formularfelds" title="Name des Felds, z. B. Vorname – leer lassen: PDFMy nimmt die Beschriftung daneben" style="width:170px">
+        <input id="fieldCalc" hidden placeholder="Berechnung, z. B. Menge * Preis" aria-label="Berechnung des Felds" aria-describedby="fieldScriptHint" title="Formel aus anderen Feldern: + − * /, Klammern und SUMME(…; …), MIN, MAX, MITTELWERT. Feldnamen mit Leerzeichen in eckigen Klammern, z. B. [Pos 1] + [Pos 2]. Leer lassen: Feld wird ausgefüllt, nicht berechnet." style="width:230px">
+        <small class="hint" id="fieldScriptHint" hidden>Rechnet bzw. prüft im PDF mit einem kleinen Formularskript (Acrobat, Foxit, Firefox). Manche Firmen-Mailfilter halten PDFs mit Skripten zurück; als PDF/A entfällt das Skript.</small>
       </div>
       <div class="grp" id="shapeOpts" hidden role="group" aria-label="Form">
         <select id="shapeKind" title="Art der Form" aria-label="Art der Form"><option value="rect">Rechteck</option><option value="ellipse">Ellipse</option><option value="line">Linie</option><option value="arrow">Pfeil</option><option value="mline">Messen: Strecke</option><option value="marea">Messen: Fläche</option><option value="mpoly">Messen: Vieleck (Fläche und Umfang)</option></select>
@@ -1195,6 +1201,7 @@ html.i18n-wait body{visibility:hidden}
         <button class="tile" data-intent="docx"><i><svg class="ic" aria-hidden="true"><use href="#i-file-type-2"/></svg></i><b>PDF in Word</b><span>Scan oder PDF als bearbeitbares Word-Dokument</span></button>
         <button class="tile" data-intent="compare"><i><svg class="ic" aria-hidden="true"><use href="#i-git-compare"/></svg></i><b>Dokumente vergleichen</b><span>Zwei Fassungen: Was wurde geändert?</span></button>
         <button class="tile" data-intent="batch"><i><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg></i><b>Stapelverarbeitung</b><span>Viele Dateien auf einmal: verkleinern, PDF/A, Texterkennung oder Briefe ablegen</span></button>
+        <button class="tile" id="tileHot"><i><svg class="ic" aria-hidden="true"><use href="#i-folder-input"/></svg></i><b>Ordner überwachen</b><span>Neue Dateien automatisch durchsuchbar, PDF/A oder abgelegt – im Hintergrund</span></button>
         <button class="tile" data-intent="bates"><i><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg></i><b>Bates &amp; Kopfzeile</b><span>Fortlaufend nummerieren für Akten und Gericht</span></button>
         <button class="tile" id="tileEinv"><i><svg class="ic" aria-hidden="true"><use href="#i-file-plus"/></svg></i><b>E-Rechnung schreiben</b><span>ZUGFeRD-PDF oder XRechnung nach EN 16931</span></button>
         <button class="tile" id="tileTax"><i><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg></i><b>Belege für Steuerberater</b><span>Monat als ZIP mit Belegliste und DATEV-Importdatei</span></button>
@@ -1241,6 +1248,7 @@ html.i18n-wait body{visibility:hidden}
     <section id="formSec" hidden>
       <h2>Formular</h2>
       <div id="formFields"></div>
+      <p id="formCheckMsg" class="ferrsum" role="status" hidden></p>
       <div class="hint">Wird beim Speichern fest in die Seiten übernommen.</div>
     </section>
 
@@ -1643,7 +1651,7 @@ html.i18n-wait body{visibility:hidden}
 </dialog>
 <dialog id="sumDlg" class="sharedlg" aria-labelledby="sumT">
   <h3 class="dlgtitle" id="sumT">Zusammenfassen und fragen</h3>
-  <p class="hint">Mit der eingebauten KI des Browsers – sie läuft auf diesem Gerät, das Dokument wird nicht hochgeladen. Beim ersten Mal lädt der Browser das KI-Modell (einmalig, mehrere GB).</p>
+  <p class="hint" id="sumHint">Mit der eingebauten KI des Browsers – sie läuft auf diesem Gerät, das Dokument wird nicht hochgeladen. Beim ersten Mal lädt der Browser das KI-Modell (einmalig, mehrere GB).</p>
   <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap;gap:8px">
     <label>Art <select id="sumType"><option value="key-points">Kernpunkte</option><option value="tldr">Kurzfassung</option><option value="teaser">Worum geht es?</option><option value="headline">Überschrift</option></select></label>
     <label>Länge <select id="sumLen"><option value="short">kurz</option><option value="medium" selected>mittel</option><option value="long">ausführlich</option></select></label>
@@ -1657,10 +1665,20 @@ html.i18n-wait body{visibility:hidden}
   <div id="sumOut" class="sumout" role="status" aria-live="polite" tabindex="0"></div>
   <div class="dlgrow"><button type="button" id="sumCopy" hidden>Kopieren</button><button type="button" id="sumClose">Schließen</button></div>
 </dialog>
+<dialog id="aiDlg" class="sharedlg" aria-labelledby="aiT"><form id="aiForm" method="dialog" novalidate>
+  <h3 class="dlgtitle" id="aiT">KI-Assistent</h3>
+  <p class="hint" style="margin:-6px 0 12px">Für Zusammenfassen, Fragen zum Dokument und Übersetzen – mit der KI, die Ihr Browser mitbringt. Sie läuft auf diesem Gerät, das Dokument wird nicht hochgeladen.</p>
+  <fieldset class="prset"><legend><b>KI-Assistent</b></legend>
+    <label class="prrow"><input type="radio" name="aiMode" value="browser"> <span><b>Ein – KI des Browsers</b> <small>– läuft auf diesem Gerät, nichts wird hochgeladen (Google Chrome ab Version 138 am Computer)</small></span></label>
+    <label class="prrow"><input type="radio" name="aiMode" value="off"> <span><b>Aus</b> <small>– Zusammenfassen und Übersetzen erscheinen nicht im Menü</small></span></label>
+  </fieldset>
+  <div id="aiBrowserSet"><p class="hint" id="aiState" role="status" aria-live="polite"></p><button type="button" id="aiSetup" hidden>KI des Browsers einrichten …</button></div>
+  <div class="dlgrow"><button type="button" id="aiClose">Abbrechen</button><button type="submit" class="primary" id="aiSave">Speichern</button></div>
+</form></dialog>
 <dialog id="trDlg" aria-labelledby="trT">
   <form id="trForm" method="dialog">
     <h3 class="dlgtitle" id="trT">Dokument übersetzen</h3>
-    <p class="hint">Die Übersetzung läuft mit dem eingebauten Übersetzer des Browsers auf diesem Gerät – der Text wird nicht hochgeladen. Beim ersten Mal lädt der Browser das Sprachpaket. Ergebnis: eine neue PDF im eigenen Reiter (Überschriften, Absätze, Listen, Tabellen; das ursprüngliche Seitenlayout wird nicht nachgebildet).</p>
+    <p class="hint" id="trHint">Die Übersetzung läuft mit dem eingebauten Übersetzer des Browsers auf diesem Gerät – der Text wird nicht hochgeladen. Beim ersten Mal lädt der Browser das Sprachpaket. Ergebnis: eine neue PDF im eigenen Reiter (Überschriften, Absätze, Listen, Tabellen; das ursprüngliche Seitenlayout wird nicht nachgebildet).</p>
     <div class="field"><label for="trFrom">Von</label><select id="trFrom"></select></div>
     <div class="field"><label for="trTo">Nach</label><select id="trTo"></select></div>
     <p class="hint" id="trInfo" role="status" aria-live="polite"></p>
@@ -1993,8 +2011,43 @@ html.i18n-wait body{visibility:hidden}
     <p class="hint" id="batchNow" role="status" aria-live="polite"></p>
   </div>
   <div id="batchResult" hidden><p id="batchSum" role="status"></p><ul class="batchres" id="batchList"></ul></div>
+  <p class="hint" id="batchHotRow">Immer wieder dieselbe Arbeit? <button type="button" class="linkbtn" id="batchHot">Ordner dauerhaft überwachen …</button></p>
   <div class="dlgrow"><button type="button" id="batchCancel">Abbrechen</button><button type="button" class="primary" id="batchGo">Starten</button></div>
 </dialog>
+<dialog id="hotDlg" class="sharedlg" aria-labelledby="hotT">
+  <h3 class="dlgtitle" id="hotT">Ordner überwachen</h3>
+  <p class="hint" style="margin:-6px 0 12px">Jede neue Datei im Eingangsordner wird automatisch verarbeitet – ganz ohne Klick. Das läuft in einem eigenen PDFMy-Fenster, solange es geöffnet ist; Ihre Arbeit im Hauptfenster bleibt ungestört. Nichts wird hochgeladen.</p>
+  <fieldset class="prset"><legend><b>Eingangsordner</b></legend>
+    <p class="prrow"><span>Ordner: <b id="hotInName" translate="no"></b></span> <button type="button" id="hotIn">Wählen …</button></p>
+    <small class="hint">Zum Beispiel der Ordner, in den Ihr Scanner oder Ihr Kopierer speichert.</small>
+  </fieldset>
+  <fieldset class="prset"><legend><b>Was soll mit jeder neuen Datei passieren?</b></legend>
+    <label class="prrow"><input type="radio" name="hotAct" value="ocr" checked> <span><b>Durchsuchbar machen</b> <small>– Texterkennung für Scans und Fotos</small></span></label>
+    <label class="prrow"><input type="radio" name="hotAct" value="pdfa"> <span><b>Archivieren (PDF/A)</b> <small>– Langzeitformat mit Texterkennung, barrierefrei</small></span></label>
+    <label class="prrow"><input type="radio" name="hotAct" value="small"> <span><b>Verkleinern</b> <small>– zum Mailen und Hochladen</small></span></label>
+    <div id="hotFlows"></div>
+    <label class="prrow"><input type="radio" name="hotAct" value="file"> <span><b>Briefe erkennen und ablegen</b> <small>– Briefdaten, Dateiname, Ablageordner, Posteingangsbuch</small></span></label>
+    <p class="hint" id="hotFileNote" hidden></p>
+  </fieldset>
+  <fieldset class="prset" id="hotOutRow"><legend><b>Zielordner</b></legend>
+    <p class="prrow"><span>Ordner: <b id="hotOutName" translate="no"></b></span> <button type="button" id="hotOut">Wählen …</button></p>
+  </fieldset>
+  <fieldset class="prset" id="hotNameSet"><legend><b>Dateiname</b></legend>
+    <label class="prrow"><input type="radio" name="hotName" value="auto" checked> <span>Aus dem Inhalt <small>– z. B. 2026-10-21_Stadtwerke_Rechnung.pdf</small></span></label>
+    <label class="prrow"><input type="radio" name="hotName" value="orig"> <span>Wie das Original</span></label>
+  </fieldset>
+  <label class="prrow"><input type="checkbox" id="hotMove" checked> <span>Original danach in den Unterordner „_erledigt“ verschieben</span></label>
+  <p class="err" id="hotErr" role="alert"></p>
+  <div class="dlgrow"><button type="button" id="hotCancel">Abbrechen</button><button type="button" class="primary" id="hotGo">Überwachung starten</button></div>
+</dialog>
+<section id="hotPanel" hidden aria-labelledby="hotPT">
+  <h2 id="hotPT">PDFMy – Ordner überwachen</h2>
+  <p id="hotInfo" translate="no"></p>
+  <p id="hotState" role="status" aria-live="polite"></p>
+  <div class="dlgrow" style="justify-content:flex-start"><button type="button" class="primary" id="hotGrant" hidden>Ordner freigeben</button><button type="button" id="hotPause">Anhalten</button></div>
+  <ul class="batchres" id="hotLog" aria-label="Verarbeitete Dateien"></ul>
+  <p class="hint">Dieses Fenster bitte offen lassen – solange es läuft, verarbeitet PDFMy neue Dateien automatisch. Einstellungen ändern: im Hauptfenster „Ordner überwachen“ wählen und neu starten.</p>
+</section>
 <dialog id="cmpDlg" class="wide">
   <h3 class="dlgtitle">Dokumente vergleichen</h3>
   <p class="cmpnames" id="cmpNames"></p>
@@ -2049,9 +2102,11 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/email.js"></script>
 <script src="js/journal.js"></script>
 <script src="js/sigreq.js"></script>
+<script src="js/formcalc.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/app.js"></script>
 <script src="js/pro.js"></script>
+<script src="js/hotfolder.js"></script>
 </body>
 </html>

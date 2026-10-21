@@ -1439,6 +1439,7 @@ const trLangs = () => [...new Map(I18N.LANGS.map(l => [l.code.split('-')[0], l])
 const trFill = (sel, v) => { sel.replaceChildren(...trLangs().map(l => { const o = new Option(l.name, l.code); o.setAttribute('translate', 'no'); return o; })); sel.value = [...sel.options].some(o => o.value === v) ? v : 'en'; };
 function openTranslate() {
   if (!state.pages.length) return;
+  if (aiMode() === 'off') return openAi();
   if (!('Translator' in self)) {
     alert('Übersetzen ohne Upload nutzt den eingebauten Übersetzer des Browsers. Er steht in Google Chrome ab Version 138 am Computer zur Verfügung – bitte PDFMy dort öffnen. Ihr Dokument wird dabei nicht hochgeladen.');
     return;
@@ -1501,7 +1502,71 @@ $('#btnTranslate').onclick = () => { closeMenu(); openTranslate(); };
 /* ---------- Zusammenfassen und Fragen ohne Upload: eingebaute KI des Browsers (Summarizer- und Prompt-API, Chrome ab 138) ----------
    Wie „AI Summarizer“ und „Chat mit PDF“ bei Acrobat, Smallpdf, iLovePDF und PDFgear – aber das Modell läuft auf dem Gerät,
    der Text verlässt den Computer nicht. Lange Dokumente: abschnittsweise zusammenfassen, dann die Teilergebnisse zusammenfassen. */
-const aiLang = () => { const l = I18N.lang.split('-')[0]; return ['de', 'en', 'es', 'ja', 'fr', 'it', 'pt', 'nl', 'pl'].includes(l) ? l : 'en'; };
+const aiLang = () => I18N.lang.split('-')[0];
+const AI_BROWSER_LANGS = ['de', 'en', 'es', 'ja', 'fr', 'it', 'pt', 'nl', 'pl'];   // Sprachen der Browser-KI
+const aiBLang = () => AI_BROWSER_LANGS.includes(aiLang()) ? aiLang() : 'en';
+/* ---------- KI-Assistent (KI des Browsers, auf dem Gerät, ohne Upload) – Einstellung unter „… Mehr → KI-Assistent …“: ein/aus, Zustand,
+   Modell vorab laden. Aus: Zusammenfassen und Übersetzen erscheinen nicht im Menü (z. B. wenn eine Firma keine KI möchte). */
+const aiMode = () => LS.get('aiMode', 'browser');
+function aiApply() { for (const id of ['#btnSummary', '#btnTranslate']) { const b = $(id); if (b) b.hidden = aiMode() === 'off'; } }
+window.aiApply = aiApply;
+const AI_STATE = {
+  available: 'Bereit – die KI des Browsers läuft auf diesem Gerät.',
+  downloadable: 'Noch nicht eingerichtet: „KI des Browsers einrichten“ lädt das KI-Modell einmalig über den Browser (einige GB, je nach Gerät).',
+  downloading: 'Das KI-Modell wird gerade geladen …',
+  unavailable: 'Auf diesem Gerät nicht verfügbar – zu wenig Arbeitsspeicher oder Grafikleistung.',
+};
+async function aiStatus() {
+  const el = $('#aiState'), btn = $('#aiSetup');
+  if (!('Summarizer' in self) && !('LanguageModel' in self)) {
+    el.textContent = 'Dieser Browser bringt keine KI mit. Sie steht in Google Chrome ab Version 138 am Computer zur Verfügung (mindestens 16 GB Arbeitsspeicher oder eine Grafikkarte mit 4 GB).' + ('Translator' in self ? ' Übersetzen ist verfügbar.' : '');
+    btn.hidden = true; return;
+  }
+  let av = 'unavailable';
+  try {
+    const lang = aiBLang();
+    const a = 'Summarizer' in self ? await Summarizer.availability({ type: 'key-points', format: 'plain-text', length: 'medium', expectedInputLanguages: [lang], outputLanguage: lang }) : 'unavailable';
+    const b = 'LanguageModel' in self ? await LanguageModel.availability({ expectedOutputs: [{ type: 'text', languages: [lang] }] }) : 'unavailable';
+    const rank = { available: 3, downloading: 2, downloadable: 1, unavailable: 0 };
+    av = rank[a] >= rank[b] ? a : b;
+  } catch (e) { console.warn('KI-Zustand', e); }
+  el.textContent = (AI_STATE[av] || AI_STATE.unavailable) + ('Translator' in self ? ' Übersetzen ist verfügbar.' : '');
+  btn.hidden = !(av === 'downloadable' || av === 'downloading');
+}
+function openAi() {
+  closeMenu?.();
+  const d = $('#aiDlg'), m = aiMode() === 'off' ? 'off' : 'browser';
+  d.querySelector(`[name=aiMode][value="${m}"]`).checked = true;
+  aiSync(); if (!d.open) d.showModal();
+}
+window.openAi = openAi;
+function aiSync() {
+  const m = $('#aiDlg').querySelector('[name=aiMode]:checked')?.value || 'browser';
+  $('#aiBrowserSet').hidden = m !== 'browser';
+  if (m === 'browser') aiStatus();
+}
+$('#aiDlg').addEventListener('change', e => { if (e.target.name === 'aiMode') aiSync(); });
+$('#btnAi').onclick = () => openAi();
+$('#aiClose').onclick = () => $('#aiDlg').close();
+$('#aiForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const m = $('#aiDlg').querySelector('[name=aiMode]:checked').value;
+  LS.set('aiMode', m); $('#aiDlg').close(); aiApply();
+  toast(m === 'off' ? 'KI-Assistent ausgeschaltet.' : 'KI-Assistent: KI des Browsers auf diesem Gerät.');
+});
+$('#aiSetup').onclick = async () => {
+  const el = $('#aiState'), btn = $('#aiSetup'), lang = aiBLang();
+  btn.disabled = true;
+  const mon = what => m => m.addEventListener('downloadprogress', ev => { el.textContent = `${what} wird geladen … ${Math.round(ev.loaded * 100)} % (einmalig, vom Browser)`; });
+  try {
+    if ('Summarizer' in self) (await Summarizer.create({ type: 'key-points', format: 'plain-text', length: 'medium', expectedInputLanguages: [lang], outputLanguage: lang, monitor: mon('KI-Modell') })).destroy?.();
+    if ('LanguageModel' in self) (await LanguageModel.create({ expectedOutputs: [{ type: 'text', languages: [lang] }], monitor: mon('KI-Modell für Fragen') })).destroy?.();
+    toast('Die KI des Browsers ist eingerichtet.');
+  } catch (e) { console.warn(e); el.textContent = 'Einrichten nicht möglich: ' + (e.message || e); btn.disabled = false; return; }
+  btn.disabled = false; aiStatus();
+};
+
+aiApply();
 let aiText = '', aiBusy = false;
 async function aiDocText() {
   const pages = docPages(); await waitForOcr(pages);
@@ -1518,6 +1583,7 @@ const aiOut = (txt, busy) => { $('#sumOut').textContent = txt; $('#sumCopy').hid
 const aiProgress = m => (ev => { aiOut(`KI-Modell wird geladen … ${Math.round(ev.loaded * 100)} % (einmalig, vom Browser)`, true); });
 function openSummary() {
   if (!state.pages.length) return;
+  if (aiMode() === 'off') return openAi();
   if (!('Summarizer' in self) && !('LanguageModel' in self)) {
     alert('Zusammenfassen ohne Upload nutzt die eingebaute KI des Browsers. Sie steht in Google Chrome ab Version 138 am Computer zur Verfügung (Windows, macOS, Linux; mindestens 16 GB Arbeitsspeicher oder eine Grafikkarte mit 4 GB). Ihr Dokument wird dabei nicht hochgeladen.');
     return;
@@ -1532,7 +1598,7 @@ $('#sumGo').onclick = async () => {
   let sm;
   try {
     if (!('Summarizer' in self)) throw new Error('Diese Chrome-Version kann noch nicht zusammenfassen.');
-    const opts = { type: $('#sumType').value, length: $('#sumLen').value, format: 'plain-text', outputLanguage: aiLang(), expectedInputLanguages: [docLang(state.pages).split('-')[0]], sharedContext: 'Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.' };
+    const opts = { type: $('#sumType').value, length: $('#sumLen').value, format: 'plain-text', outputLanguage: aiBLang(), expectedInputLanguages: [docLang(state.pages).split('-')[0]], sharedContext: 'Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.' };
     if (await Summarizer.availability(opts) === 'unavailable') throw new Error('Die eingebaute KI ist auf diesem Gerät nicht verfügbar (zu wenig Arbeitsspeicher oder Grafikleistung).');
     sm = await Summarizer.create({ ...opts, monitor(m) { m.addEventListener('downloadprogress', aiProgress()); } });   // Klick zählt als Bestätigung für das Herunterladen
     aiOut('Text wird gelesen …', true);
@@ -1557,7 +1623,7 @@ $('#sumForm').addEventListener('submit', async e => {
   aiBusy = true; $('#sumAsk').disabled = true; aiOut('Denke nach …', true);
   let lm;
   try {
-    const lang = aiLang();
+    const lang = aiBLang();
     if (await LanguageModel.availability({ expectedOutputs: [{ type: 'text', languages: [lang] }] }) === 'unavailable') throw new Error('Die eingebaute KI ist auf diesem Gerät nicht verfügbar.');
     aiOut('Text wird gelesen …', true);
     aiText ||= await aiDocText();

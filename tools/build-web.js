@@ -28,7 +28,7 @@ const write = (rel, text) => { fs.mkdirSync(path.dirname(path.join(OUT, rel)), {
 
 // Dateien der App
 // pdfmy.de im Mentor-Group-Design: „PDFMy – powered by Mentor Group“ (Schriften, Logo und Symbole wie die interne Version)
-for (const f of ['js/app.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/qr.js', 'js/formdetect.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
+for (const f of ['js/app.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/qr.js', 'js/formdetect.js', 'js/formcalc.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-maskable-512.png', 'icons/mentor-group.png', 'icons/file-pdf-256.png', 'icons/file-image-256.png', 'icons/app-192.png', 'icons/app-512.png', 'icons/app-maskable-512.png']) copy(f);
 // Wörterbücher der Oberfläche (nur fertige Sprachen, ohne Arbeitsdateien)
 for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) copy('i18n/' + f);
@@ -204,6 +204,8 @@ spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen.</p>
 <h2>6c. Hinweis auf Haus iT</h2>
 <p>Auf der Startseite steht ein als Anzeige gekennzeichneter Hinweis auf Haus iT. Es ist ein einfacher Link ohne eingebundene Inhalte, Zählpixel oder Cookies. Erst wenn Sie ihn anklicken,
 öffnet sich www.haus-it.de in einem neuen Tab; dabei wird keine Herkunftsadresse (Referrer) übermittelt. Für diese Website gilt die Datenschutzerklärung ihres Betreibers.</p>
+<h2>6d. KI-Assistent</h2>
+<p>Zusammenfassen, Fragen zum Dokument und Übersetzen nutzen die KI, die Ihr Browser mitbringt. Sie arbeitet auf Ihrem Gerät; der Text wird nicht übertragen. Das KI-Modell lädt Ihr Browser einmalig vom Browser-Hersteller, nicht von uns. Unter „… Mehr → KI-Assistent“ lässt sich die Funktion ausschalten.</p>
 <h2>7. Ihre Rechte</h2>
 <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen die
 Verarbeitung (Art. 15–21 DSGVO). Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), zum Beispiel bei der für uns zuständigen Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Kavalleriestraße 2–4, 40213 Düsseldorf.</p>
@@ -537,7 +539,7 @@ if (!BUILD_MENTOR || !fs.existsSync(htpasswd)) {
   const MD = 'mentor', M = rel => path.join(MD, rel), read = rel => fs.readFileSync(path.join(ROOT, rel), 'utf8');
   const toVendor = t => t.split("'vendor/").join("'../vendor/").split('"vendor/').join('"../vendor/');
   write(M('js/app.js'), toVendor(read('js/app.js')));
-  for (const f of ['js/letter.js', 'js/qr.js', 'js/formdetect.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js', 'js/camera.js', 'js/config.js']) copy(f, M(f));
+  for (const f of ['js/letter.js', 'js/qr.js', 'js/formdetect.js', 'js/formcalc.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js', 'js/camera.js', 'js/config.js']) copy(f, M(f));
   for (const f of ['icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-maskable-512.png', 'icons/mentor-group.png']) copy(f, M(f));
   fs.cpSync(path.join(ROOT, 'vendor', 'fonts'), path.join(OUT, MD, 'fonts'), { recursive: true });
   let mh = read('index.html').split('url(vendor/fonts/').join('url(fonts/').split('src="vendor/').join('src="../vendor/');

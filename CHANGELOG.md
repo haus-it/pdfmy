@@ -4,6 +4,17 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### KI-Assistent: Einstellung unter „… Mehr“
+- Neuer Dialog „… Mehr → KI-Assistent …“: KI des Browsers ein (Voreinstellung, auf dem Gerät, ohne Upload; Zustand und „KI des Browsers einrichten“ = Modell einmalig vorab laden) oder Aus (Zusammenfassen und Übersetzen verschwinden aus Menü und Suche).
+- Eine Anbindung von Claude mit eigenem API-Schlüssel wurde gebaut und getestet, aber vor dem Ausrollen zurückgenommen: Sie widerspricht den Grundsatzentscheidungen (kein Upload, keine Fremddienste) – siehe KONZEPT.md, Abschnitt 4.
+- Formulare: Skripte nur für Felder, die rechnen oder prüfen (Zahl, Betrag, E-Mail, IBAN, PLZ, Formel); Datum und Text ohne Skript; Hinweis im Designer.
+- KONZEPT.md: neue Leitplanken (Abschnitt 4) mit Prüfung der heutigen Funktionen und dem Vorschlag „KI nach eigener Wahl verbinden“ (lokale KI passt, Cloud-KI nicht).
+
+### Ordner überwachen (Hot Folder) und rechnende Formulare
+- **Ordner überwachen:** Kachel „Ordner überwachen“ (auch aus der Stapelverarbeitung): jede neue Datei im Eingangsordner automatisch durchsuchbar machen, als PDF/A archivieren, verkleinern, eigener Ablauf oder als Brief ins Posteingangsbuch ablegen; Name wie das Original oder aus dem Inhalt; Original nach „_erledigt“, nicht verarbeitbare nach zwei Versuchen nach „_fehler“; nur fertig geschriebene Dateien (Größe stabil). Läuft in einem eigenen Fenster (?automatik=1), damit das Hauptfenster ungestört bleibt (js/hotfolder.js). Edge/Chrome (File System Access).
+- **Formulare rechnen und prüfen** (js/formcalc.js): neue Feldarten Zahl, Betrag (€), E-Mail, IBAN, Postleitzahl; Rechenfelder mit Formeln (Feldnamen, + − * /, Klammern, SUMME/MIN/MAX/MITTELWERT). Im PDF als Acrobat-Formularskripte (Berechnen /C mit Rechenreihenfolge /CO, Format /F, Tastatur /K, Prüfen /V; Rechenfelder schreibgeschützt) – nicht in PDF/A (Skripte verboten, Hinweis). Beim Ausfüllen in PDFMy: Live-Berechnung, Meldungen am Feld, Zusammenfassung „x Pflichtfelder fehlen“, Hinweis beim Speichern; fremde Formulare mit AFSimple_Calculate und AFNumber_Format werden erkannt.
+- Tests: tests/formcalc.test.js (Zahlen, Formeln, Reihenfolge/Kreisbezug, Prüfungen, erzeugte Skripte ausgeführt); Browser: Formular anlegen → speichern → wieder öffnen → rechnen/prüfen; Hot Folder mit OPFS-Ordnern (durchsuchbar und „Briefe ablegen“); veraPDF PDF/A-2b + PDF/UA-1; axe hell/dunkel 0.
+
 ### Gescannte PDFs öffnen sich deutlich schneller
 - Die Aufbereitung von Scanseiten beim Öffnen (Blatt zuschneiden, gerade richten, Trennblatt- und Zahl-QR lesen, Modus „Automatisch“, Aufbereitung) läuft jetzt parallel in Web Workern (js/scanw.js, bis zu 6 Worker), während pdf.js die nächsten Seiten zeichnet. Eingefügt wird in Seitenreihenfolge; höchstens Worker + 2 Seiten gleichzeitig in Arbeit (Speicher).
 - Gemeinsamer Rechenkern Imaging.prepScan für Worker und Hauptprogramm: Ergebnisse identisch (Messreihe: Zuschnitt, Geraderichten, Trennblatt, Zahl-QR, Modus und Pixel-Prüfsumme je Seite ohne Abweichung). Ohne Worker-Unterstützung oder bei Worker-Fehlern wie bisher im Hauptprogramm; ein nicht ladbarer Worker schaltet den Pool ab, statt Seiten hängen zu lassen.

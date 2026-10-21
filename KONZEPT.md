@@ -68,7 +68,40 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | 4 | PDF/A-2b-Export (mit veraPDF geprüft: PASS). Textänderungen in bestehenden PDFs über „Abdecken + Text“ | ✅ |
 | Betrieb | Komplett offline (alle Bibliotheken und OCR-Daten lokal), als App installierbar (PWA, „Öffnen mit“), Desktop-Verknüpfungen, Rückgängig, Unit-Tests | ✅ |
 
-### Bewusst nicht umgesetzt
-- **KI-Zusammenfassung:** Ein lokales Sprachmodell wäre mehrere GB groß. Ein Cloud-Modell widerspräche dem Datenschutz-Ziel. Die Schlüsseldaten decken den praktischen Bedarf ab (Was? Wie viel? Bis wann? Wohin zahlen?).
-- **Freies Umschreiben von Originaltext** wie in Acrobat (Absatzumbruch, Schrift erkennen): Bei gescannten Briefen gibt es keinen editierbaren Text. Für gelegentliche Korrekturen reicht „Abdecken + Text“.
+### Bewusst nicht umgesetzt (Stand 14.10.2026, inzwischen teils überholt – siehe Abschnitt 4)
+- ~~**KI-Zusammenfassung**~~ → seit 20.10.2026 mit der KI, die der Browser selbst mitbringt (lokal, kein Upload, ausschaltbar). Cloud-Modelle bleiben ausgeschlossen (Entscheidung 21.10.2026, Abschnitt 4).
+- ~~**Freies Umschreiben von Originaltext**~~ → seit 17.10.2026 „Text ändern“ mit Absatzumbruch, seit 21.10.2026 mit der eingebetteten Originalschrift bzw. gleich breiter Ersatzschrift; Fälschungsschutz für Urkunden, Bescheide, Kontoauszüge.
 - **Direkter SharePoint-Upload per API:** Er bräuchte eine Azure-App-Registrierung samt Anmeldung. Der synchronisierte Ordner erreicht dasselbe ohne Konfiguration.
+
+## 4. Grundsatzentscheidungen (Leitplanken für jede neue Funktion)
+
+**Oberstes Ziel: Alles bleibt auf dem Rechner des Kunden.** Jede neue Funktion wird **vor dem Bau** gegen die folgenden Punkte geprüft. Verletzt sie einen davon, wird sie nicht gebaut oder nur so, dass der Punkt gewahrt bleibt.
+
+1. **Alles bleibt auf dem Rechner des Kunden:** Dokumente, erkannter Text, Eingaben und die Verarbeitung (auch KI) verlassen den Rechner nicht – kein Upload, auch nicht an Server im eigenen Netz. Ausnahmen gibt es nur, wenn der Kunde selbst etwas versendet oder speichert (E-Mail, Teilen, Ablage in einem Ordner seiner Wahl) – nie automatisch, nie im Hintergrund.
+2. **Kein Server, keine Fremddienste:** pdfmy.de liefert nur statische Dateien. Alle Bibliotheken, Schriften und Sprachdaten kommen von pdfmy.de. Die Sicherheitsrichtlinie (CSP) erlaubt Verbindungen nur zu pdfmy.de und zum eigenen Rechner (pdfmy Scan, 127.0.0.1).
+3. **Kostenlos, ohne Konto, ohne Limit, ohne Werbung/Tracking.**
+4. **So einfach wie möglich:** keine Konsole, keine Skripte beim Nutzer; neue Funktionen dürfen Bestehendes nicht verstecken.
+5. **Normgerecht und prüfbar:** PDF/A und PDF/UA (veraPDF), E-Rechnung (KoSIT), WCAG 2.1 AA (axe), ISO 27001/9001-Nachweis in docs/ISO-Konformitaet.md.
+6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
+7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
+
+### Prüfung 21.10.2026
+| Funktion | Ergebnis |
+|---|---|
+| Ordner überwachen (Hot Folder) | passt: lokal (Ordnerzugriff nur nach Freigabe), kein Konto, ohne Konsole; braucht Edge/Chrome wie der Scan-Ordner |
+| Formulare rechnen und prüfen | passt mit Auflage aus Punkt 6: Skripte nur für Felder, die rechnen oder prüfen, mit Hinweis im Designer; Datum/Text ohne Skript; PDF/A ohne Skript |
+| KI-Assistent: Dialog „… Mehr → KI-Assistent“ (KI des Browsers / Aus) | passt: lokal, ausschaltbar |
+| Claude mit eigenem API-Schlüssel | **verworfen**: verletzt Punkt 1 und 2 (Text an Anthropic, CSP-Öffnung) und Punkt 3 (Konto/Schlüssel). Gebaut, getestet, vor dem Ausrollen zurückgenommen. |
+
+### Vorschlag in Prüfung: KI nach eigener Wahl verbinden (ChatGPT, Claude, lokale KI)
+Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederzeit ein- und ausschaltbar.
+
+| Variante | Daten bleiben … | Passt zu den Leitplanken? |
+|---|---|---|
+| **KI des Browsers** (heute) | auf dem Gerät | ja |
+| **Lokale KI auf dem eigenen PC** (z. B. Ollama, LM Studio – Adresse localhost) | auf dem eigenen Rechner | ja – Verbindung nur zum eigenen Rechner wie pdfmy Scan; keine Fremddienste, kein Konto |
+| **KI-Server im eigenen Firmennetz** (selbst betrieben) | im Netz, aber nicht auf dem Rechner | nein – der Text verlässt den Rechner (oberstes Ziel, Punkt 1) |
+| **Cloud-KI mit eigenem Schlüssel** (ChatGPT/OpenAI, Claude/Anthropic, Gemini) | **beim Anbieter, meist USA** | nein – verletzt Punkt 1, 2 und 3; schwächt das prüfbare Versprechen „kein Upload“ für alle Nutzer (CSP muss die Anbieter dauerhaft zulassen), Schlüssel im Browser, Drittlandübermittlung |
+
+Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. Entscheidung durch die Geschäftsführung.
+
