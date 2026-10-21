@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Tūlītējs risinājums: saglabājiet pielikumu programmā Outlook („Saglabāt kā”) un pēc tam atveriet.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimetrs {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Izmērīts: {0} (mērogs 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mērīt: daudzstūris (laukums un perimetrs)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Daudzstūris atcelts – nepieciešamas vismaz trīs virsotnes.",
+ "Vieleck abgebrochen.": "Daudzstūris atcelts.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Daudzstūris, punkti: {0} – dubultklikšķis, klikšķis uz pirmā punkta vai Enter to noslēdz; Esc atceļ.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Daudzstūris: {0}. punkts novietots – noklikšķiniet uz nākamajām virsotnēm."
 }

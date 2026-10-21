@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Soluzzjoni immedjata: issejvja l-anness f’Outlook (“Issejvja Bħala”) u mbagħad iftħu.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimetru {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Imkejjel: {0} (skala 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Kejl: poligonu (erja u perimetru)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Poligonu kkanċellat – meħtieġa mill-inqas tliet kantunieri.",
+ "Vieleck abgebrochen.": "Poligonu kkanċellat.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Poligonu: {0} punti – double-click, klikk fuq l-ewwel punt jew Enter jagħlqu; Esc jikkanċella.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Poligonu: punt {0} imqiegħed – ikklikkja aktar kantunieri."
 }

@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Άμεση λύση: αποθηκεύστε το συνημμένο στο Outlook («Αποθήκευση ως») και στη συνέχεια ανοίξτε το.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · περίμετρος {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Μετρήθηκε: {0} (κλίμακα 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Μέτρηση: πολύγωνο (εμβαδόν και περίμετρος)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Το πολύγωνο ακυρώθηκε – απαιτούνται τουλάχιστον τρεις κορυφές.",
+ "Vieleck abgebrochen.": "Το πολύγωνο ακυρώθηκε.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Πολύγωνο: {0} σημεία – διπλό κλικ, κλικ στο πρώτο σημείο ή Enter κλείνει· Esc ακυρώνει.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Πολύγωνο: ορίστηκε το σημείο {0} – κάντε κλικ σε επόμενες κορυφές."
 }

@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Snabb lösning: spara bilagan i Outlook (”Spara som”) och öppna den sedan.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · omkrets {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Uppmätt: {0} (skala 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mät: polygon (area och omkrets)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polygonen avbröts – minst tre hörnpunkter krävs.",
+ "Vieleck abgebrochen.": "Polygonen avbröts.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polygon: {0} punkter – dubbelklick, klick på första punkten eller Enter stänger; Esc avbryter.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polygon: punkt {0} satt – klicka på fler hörnpunkter."
 }

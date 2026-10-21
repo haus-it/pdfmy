@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Ateb ar unwaith: cadwch yr atodiad yn Outlook (‘Cadw Fel’) ac yna ei agor.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimedr {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Wedi mesur: {0} (graddfa 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mesur: polygon (arwynebedd a pherimedr)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polygon wedi’i ganslo – mae angen o leiaf tri chornel.",
+ "Vieleck abgebrochen.": "Polygon wedi’i ganslo.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polygon, pwyntiau: {0} – clic dwbl, clic ar y pwynt cyntaf neu Enter yn ei gau; Esc yn canslo.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polygon: pwynt {0} wedi’i osod – cliciwch ar y corneli nesaf."
 }

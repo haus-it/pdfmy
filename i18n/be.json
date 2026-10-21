@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Хуткае рашэнне: захавайце ўкладанне ў Outlook («Захаваць як») і потым адкрыйце.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · перыметр {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Вымерана: {0} (маштаб 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Вымярэнне: многавугольнік (плошча і перыметр)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Многавугольнік скасаваны – патрэбныя мінімум тры вяршыні.",
+ "Vieleck abgebrochen.": "Многавугольнік скасаваны.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Многавугольнік, кропак: {0} – падвойны клік, клік па першай кропцы або Enter замыкае; Esc скасоўвае.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Многавугольнік: кропка {0} пастаўлена – клікайце па наступных вяршынях."
 }

@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Umiddelbar løsning: lagre vedlegget i Outlook («Lagre som») og åpne det deretter.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · omkrets {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Målt: {0} (målestokk 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mål: polygon (areal og omkrets)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polygon avbrutt – minst tre hjørnepunkter kreves.",
+ "Vieleck abgebrochen.": "Polygon avbrutt.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polygon: {0} punkter – dobbeltklikk, klikk på det første punktet eller Enter lukker; Esc avbryter.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polygon: punkt {0} satt – klikk på flere hjørnepunkter."
 }

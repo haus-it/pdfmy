@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Soluzione immediata: salvare l’allegato in Outlook («Salva con nome») e poi aprirlo.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimetro {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Misurato: {0} (scala 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Misura: poligono (area e perimetro)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Poligono annullato – servono almeno tre vertici.",
+ "Vieleck abgebrochen.": "Poligono annullato.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Poligono: {0} punti – doppio clic, clic sul primo punto o Invio chiude; Esc annulla.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Poligono: punto {0} impostato – clicchi su altri vertici."
 }

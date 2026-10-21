@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Hemen çözüm: eki Outlook’ta kaydedin (“Farklı Kaydet”) ve ardından açın.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · çevre {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Ölçüldü: {0} (ölçek 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Ölç: çokgen (alan ve çevre)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Çokgen iptal edildi – en az üç köşe noktası gerekli.",
+ "Vieleck abgebrochen.": "Çokgen iptal edildi.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Çokgen: {0} nokta – çift tıklama, ilk noktaya tıklama veya Enter kapatır; Esc iptal eder.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Çokgen: {0}. nokta yerleştirildi – diğer köşe noktalarını tıklayın."
 }

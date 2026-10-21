@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Greitas sprendimas: įrašykite priedą „Outlook“ („Įrašyti kaip“) ir tada atidarykite.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimetras {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Išmatuota: {0} (mastelis 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Matuoti: daugiakampis (plotas ir perimetras)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Daugiakampis atšauktas – reikia bent trijų viršūnių.",
+ "Vieleck abgebrochen.": "Daugiakampis atšauktas.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Daugiakampis, taškų: {0} – dukart spustelėjus, spustelėjus pirmąjį tašką arba paspaudus Enter uždaroma; Esc atšaukia.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Daugiakampis: {0} taškas padėtas – spustelėkite kitas viršūnes."
 }

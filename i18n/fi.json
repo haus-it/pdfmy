@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Pikaratkaisu: tallenna liite Outlookissa (”Tallenna nimellä”) ja avaa se sitten.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · piiri {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Mitattu: {0} (mittakaava 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mittaa: monikulmio (pinta-ala ja piiri)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Monikulmio peruttu – tarvitaan vähintään kolme kärkipistettä.",
+ "Vieleck abgebrochen.": "Monikulmio peruttu.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Monikulmio: {0} pistettä – kaksoisnapsautus, ensimmäisen pisteen napsautus tai Enter sulkee; Esc peruuttaa.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Monikulmio: piste {0} asetettu – napsauta seuraavia kärkipisteitä."
 }

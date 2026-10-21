@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Брзо решение: зачувајте го прилогот во Outlook („Зачувај како“) и потоа отворете го.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · периметар {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Измерено: {0} (размер 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Мерење: многуаголник (површина и периметар)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Многуаголникот е откажан – потребни се најмалку три темиња.",
+ "Vieleck abgebrochen.": "Многуаголникот е откажан.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Многуаголник: {0} точки – двоен клик, клик на првата точка или Enter го затвора; Esc откажува.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Многуаголник: точката {0} е поставена – кликнете на следните темиња."
 }

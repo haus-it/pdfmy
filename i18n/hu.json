@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Azonnali megoldás: mentse a mellékletet az Outlookban („Mentés másként”), majd nyissa meg.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · kerület {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Mért érték: {0} (méretarány 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mérés: sokszög (terület és kerület)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Sokszög megszakítva – legalább három csúcspont szükséges.",
+ "Vieleck abgebrochen.": "Sokszög megszakítva.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Sokszög: {0} pont – dupla kattintás, kattintás az első pontra vagy az Enter lezárja; az Esc megszakítja.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Sokszög: {0}. pont elhelyezve – kattintson a további csúcspontokra."
 }

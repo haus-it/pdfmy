@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Zgjidhje e menjëhershme: ruajeni shtojcën në Outlook („Ruaj si“) dhe pastaj hapeni.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimetri {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "U mat: {0} (shkallë 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Matje: shumëkëndësh (sipërfaqe dhe perimetër)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Shumëkëndëshi u anulua – nevojiten të paktën tri kulme.",
+ "Vieleck abgebrochen.": "Shumëkëndëshi u anulua.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Shumëkëndësh: {0} pika – klik i dyfishtë, klik në pikën e parë ose Enter e mbyll; Esc anulon.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Shumëkëndësh: pika {0} u vendos – klikoni kulme të tjera."
 }

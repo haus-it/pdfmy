@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Messwerkzeug: Vieleck mit Fläche und Umfang
+- Neu **„Messen: Vieleck (Fläche und Umfang)“**: Eckpunkte anklicken, Doppelklick / Klick auf den ersten Punkt / Eingabetaste schließt, Esc oder Werkzeugwechsel bricht ab. Fläche nach der Gaußschen Trapezformel, Umfang als Summe der Kanten, beides mit Maßstab bzw. Kalibrierung; verschieben und skalieren wie andere Formen; als Vektor mit Messwert-Text in PDF und Bild-Export.
+- Getestet: L-förmiger Raum bei 1:50 = 16,37 m², Umfang 17,92 m (nachgerechnet), Abbruch mit Esc, Messwert als Text in der PDF; veraPDF PDF/A-2b und PDF/UA-1 PASS.
+
 ### Word/LibreOffice in PDF: Kopf- und Fußzeilen, fett und kursiv im Satz
 - **Kopf- und Fußzeilen** aus Word (Standard-Variante, mit eigenen Bildern wie dem Firmenlogo) erscheinen auf jeder Seite; Felder **PAGE** und **NUMPAGES** (auch als einfache Felder) werden zu „Seite 1 von 3“. Ränder oben/unten sowie Abstand von Kopf- und Fußzeile aus der Datei.
 - **Fett und kursiv innerhalb eines Absatzes** (Word: w:b/w:i je Textstück; LibreOffice: Zeichenformate) – Satzmodul `js/textpdf.js` setzt gemischte Schnitte zeilenweise (DejaVu Sans normal/fett/kursiv/fett-kursiv, Kursivschnitte nur bei Bedarf eingebettet); Wörter gleichen Schnitts als ein Textstück (Kopieren mit Leerzeichen).

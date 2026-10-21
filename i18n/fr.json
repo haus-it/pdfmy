@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Solution immédiate : enregistrez la pièce jointe dans Outlook (« Enregistrer sous »), puis ouvrez-la.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · périmètre {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Mesuré : {0} (échelle 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mesurer : polygone (surface et périmètre)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polygone annulé – au moins trois sommets sont nécessaires.",
+ "Vieleck abgebrochen.": "Polygone annulé.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polygone : {0} points – double-clic, clic sur le premier point ou Entrée pour fermer ; Échap pour annuler.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polygone : point {0} placé – cliquez sur d’autres sommets."
 }

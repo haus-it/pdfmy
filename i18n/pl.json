@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Szybkie rozwiązanie: zapisz załącznik w Outlooku („Zapisz jako”), a następnie go otwórz.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · obwód {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Zmierzono: {0} (skala 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mierz: wielokąt (powierzchnia i obwód)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Anulowano wielokąt – potrzebne są co najmniej trzy wierzchołki.",
+ "Vieleck abgebrochen.": "Anulowano wielokąt.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Wielokąt, punktów: {0} – dwukrotne kliknięcie, kliknięcie pierwszego punktu lub Enter zamyka; Esc anuluje.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Wielokąt: ustawiono punkt {0} – kliknij kolejne wierzchołki."
 }

@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Soluție imediată: salvați atașamentul în Outlook („Salvare ca”) și apoi deschideți-l.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimetru {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Măsurat: {0} (scară 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Măsurare: poligon (suprafață și perimetru)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Poligon anulat – sunt necesare cel puțin trei vârfuri.",
+ "Vieleck abgebrochen.": "Poligon anulat.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Poligon, puncte: {0} – dublu clic, clic pe primul punct sau Enter îl închide; Esc anulează.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Poligon: punctul {0} plasat – faceți clic pe vârfurile următoare."
 }

@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Trenutno rješenje: sačuvajte prilog u Outlooku („Sačuvaj kao“) i zatim ga otvorite.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · obim {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Izmjereno: {0} (mjerilo 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mjerenje: poligon (površina i obim)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Poligon prekinut – potrebna su najmanje tri tjemena.",
+ "Vieleck abgebrochen.": "Poligon prekinut.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Poligon, tačaka: {0} – dvostruki klik, klik na prvu tačku ili Enter zatvara; Esc prekida.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Poligon: tačka {0} postavljena – kliknite na sljedeća tjemena."
 }

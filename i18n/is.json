@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Skyndilausn: vistið viðhengið í Outlook („Vista sem“) og opnið það síðan.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · ummál {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Mælt: {0} (mælikvarði 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mæla: marghyrningur (flatarmál og ummál)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Hætt við marghyrning – a.m.k. þrjá hornpunkta þarf.",
+ "Vieleck abgebrochen.": "Hætt við marghyrning.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Marghyrningur: {0} punktar – tvísmellur, smellur á fyrsta punktinn eða Enter lokar; Esc hættir við.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Marghyrningur: punktur {0} settur – smellið á fleiri hornpunkta."
 }

@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Kiirlahendus: salvestage manus Outlookis („Salvesta nimega“) ja avage seejärel.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · ümbermõõt {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Mõõdetud: {0} (mõõtkava 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mõõda: hulknurk (pindala ja ümbermõõt)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Hulknurk katkestatud – vaja on vähemalt kolme tippu.",
+ "Vieleck abgebrochen.": "Hulknurk katkestatud.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Hulknurk: {0} punkti – topeltklõps, klõps esimesel punktil või Enter sulgeb; Esc katkestab.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Hulknurk: punkt {0} lisatud – klõpsake järgmistel tippudel."
 }

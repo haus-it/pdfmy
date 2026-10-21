@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Directe oplossing: sla de bijlage in Outlook op („Opslaan als”) en open hem daarna.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · omtrek {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Gemeten: {0} (schaal 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Meten: veelhoek (oppervlakte en omtrek)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Veelhoek afgebroken – minstens drie hoekpunten nodig.",
+ "Vieleck abgebrochen.": "Veelhoek afgebroken.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Veelhoek: {0} punten – dubbelklik, klik op het eerste punt of Enter sluit; Esc breekt af.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Veelhoek: punt {0} geplaatst – klik verdere hoekpunten aan."
 }

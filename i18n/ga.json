@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Réiteach láithreach: sábháil an ceangaltán in Outlook (“Sábháil Mar”) agus oscail ansin é.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · imlíne {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Tomhaiste: {0} (scála 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Tomhais: polagán (achar agus imlíne)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polagán curtha ar ceal – teastaíonn trí rinn ar a laghad.",
+ "Vieleck abgebrochen.": "Polagán curtha ar ceal.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polagán, pointí: {0} – dúnann cliceáil dhúbailte, cliceáil ar an gcéad phointe nó Enter é; cealaíonn Esc é.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polagán: pointe {0} socraithe – cliceáil ar a thuilleadh rinn."
 }

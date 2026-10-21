@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Immediate solution: save the attachment in Outlook (‘Save As’) and then open it.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimeter {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Measured: {0} (scale 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Measure: polygon (area and perimeter)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polygon cancelled – at least three corner points are needed.",
+ "Vieleck abgebrochen.": "Polygon cancelled.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polygon: {0} points – double-click, click the first point or press Enter to close; Esc cancels.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polygon: point {0} set – click further corner points."
 }

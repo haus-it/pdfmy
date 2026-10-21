@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Berehalako irtenbidea: gorde eranskina Outlook-en («Gorde honela») eta ireki ondoren.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perimetroa {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Neurtuta: {0} (eskala 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Neurtu: poligonoa (azalera eta perimetroa)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Poligonoa bertan behera utzi da – gutxienez hiru erpin behar dira.",
+ "Vieleck abgebrochen.": "Poligonoa bertan behera utzi da.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Poligonoa: {0} puntu – klik bikoitzak, lehen puntuan klik egiteak edo Sartu teklak ixten du; Esc-ek bertan behera uzten du.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Poligonoa: {0}. puntua ezarrita – egin klik hurrengo erpinetan."
 }

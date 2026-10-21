@@ -920,7 +920,7 @@ function wrapLines(text, maxW, meas) {
 /* Formen (Rechteck, Ellipse, Linie, Pfeil): a.fx/a.fy = Linie beginnt rechts bzw. unten. Pfeilspitze am Ende. */
 // Maßstab-Auswahl: gilt für neue Messungen und die markierte Messung; „Aus bekannter Strecke“ kalibriert an der markierten Strecke
 function mscaleUi(a) {
-  const on = ['mline', 'marea'].includes($('#shapeKind').value) || isMeasure(a); $('#shapeScale').hidden = !on; if (!on) return;
+  const on = ['mline', 'marea', 'mpoly'].includes($('#shapeKind').value) || isMeasure(a); $('#shapeScale').hidden = !on; if (!on) return;
   const s = isMeasure(a) ? a.scale || 1 : state.mscale || 1, sel = $('#shapeScale');
   if (![...sel.options].some(o => o.value === String(s))) { sel.querySelector('[data-own]')?.remove(); const o = new Option(`1:${+s.toPrecision(4)}`, String(s)); o.dataset.own = '1'; sel.insertBefore(o, sel.lastElementChild); }
   sel.value = String(s);
@@ -935,9 +935,15 @@ const pageMm = p => p?.kind === 'pdf' && p.w ? [p.w * 25.4 / 120, p.h * 25.4 / 1
 function measureValue(a, p) {
   const [mw, mh] = pageMm(p), s = a.scale || 1, fmt = (v, d) => v.toLocaleString(I18N.info.bcp || 'de-DE', { minimumFractionDigits: d, maximumFractionDigits: d });
   if (a.kind === 'mline') { const mm = Math.hypot(a.w * mw, a.h * mh) * s; return mm >= 1000 || s > 1 ? `${fmt(mm / 1000, 2)} m` : `${fmt(mm / 10, 1)} cm`; }
-  const mm2 = a.w * mw * a.h * mh * s * s; return mm2 >= 1e6 || s > 1 ? `${fmt(mm2 / 1e6, 2)} m²` : `${fmt(mm2 / 100, 1)} cm²`;
+  const area = mm2 => mm2 >= 1e6 || s > 1 ? `${fmt(mm2 / 1e6, 2)} m²` : `${fmt(mm2 / 100, 1)} cm²`, len = mm => mm >= 1000 || s > 1 ? `${fmt(mm / 1000, 2)} m` : `${fmt(mm / 10, 1)} cm`;
+  if (a.kind === 'mpoly') {
+    const P = (a.pts || []).map(([u, v]) => [(a.x + u * a.w) * mw, (a.y + v * a.h) * mh]);
+    let A = 0, U = 0; P.forEach(([x1, y1], i) => { const [x2, y2] = P[(i + 1) % P.length]; A += x1 * y2 - x2 * y1; U += Math.hypot(x2 - x1, y2 - y1); });
+    return `${area(Math.abs(A) / 2 * s * s)} · Umfang ${len(U * s)}`;
+  }
+  return area(a.w * mw * a.h * mh * s * s);
 }
-const isMeasure = a => a?.type === 'shape' && (a.kind === 'mline' || a.kind === 'marea');
+const isMeasure = a => a?.type === 'shape' && (a.kind === 'mline' || a.kind === 'marea' || a.kind === 'mpoly');
 $('#shapeScale').addEventListener('change', e => {
   const p = cur(), a = p?.annots.find(x => x.id === state.annSel && isMeasure(x));
   let s = +e.target.value;
@@ -956,7 +962,8 @@ $('#shapeKind').addEventListener('change', () => mscaleUi(cur()?.annots.find(x =
 function shapeSvg(a, pw, ph) {
   const w = a.w * pw, h = a.h * ph, lw = Math.max(1, a.lw * pw), c = a.color, f = a.fill ? `fill="${c}" fill-opacity="0.2"` : 'fill="none"';
   let body;
-  if (a.kind === 'marea') body = `<rect x="${lw / 2}" y="${lw / 2}" width="${Math.max(0, w - lw)}" height="${Math.max(0, h - lw)}" fill="${c}" fill-opacity="0.12" stroke="${c}" stroke-width="${lw}" stroke-dasharray="${lw * 3} ${lw * 2}"/>`;
+  if (a.kind === 'mpoly') body = `<polygon points="${(a.pts || []).map(([u, v]) => `${u * w},${v * h}`).join(' ')}" fill="${c}" fill-opacity="0.12" stroke="${c}" stroke-width="${lw}" stroke-dasharray="${lw * 3} ${lw * 2}" stroke-linejoin="round"/>`;
+  else if (a.kind === 'marea') body = `<rect x="${lw / 2}" y="${lw / 2}" width="${Math.max(0, w - lw)}" height="${Math.max(0, h - lw)}" fill="${c}" fill-opacity="0.12" stroke="${c}" stroke-width="${lw}" stroke-dasharray="${lw * 3} ${lw * 2}"/>`;
   else if (a.kind === 'rect') body = `<rect x="${lw / 2}" y="${lw / 2}" width="${Math.max(0, w - lw)}" height="${Math.max(0, h - lw)}" ${f} stroke="${c}" stroke-width="${lw}"/>`;
   else if (a.kind === 'ellipse') body = `<ellipse cx="${w / 2}" cy="${h / 2}" rx="${Math.max(0, (w - lw) / 2)}" ry="${Math.max(0, (h - lw) / 2)}" ${f} stroke="${c}" stroke-width="${lw}"/>`;
   else {
@@ -1099,6 +1106,14 @@ $('#overlay').addEventListener('pointerdown', e => {
       }
       renderAnns();
     });
+  } else if (state.tool === 'shape' && $('#shapeKind').value === 'mpoly') {
+    // Vieleck messen: jeder Klick setzt einen Eckpunkt; Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt (mind. 3 Punkte)
+    e.preventDefault();
+    const pp = state.poly && state.poly.pid === p.id ? state.poly : (state.poly = { pid: p.id, pts: [] });
+    const f = pp.pts[0], r0 = ov.getBoundingClientRect();
+    if (f && pp.pts.length >= 3 && Math.hypot((s.x - f[0]) * r0.width, (s.y - f[1]) * r0.height) < 10) return polyDone(p);
+    pp.pts.push([s.x, s.y]); polyPreview(ov);
+    status(pp.pts.length < 3 ? `Vieleck: Punkt ${pp.pts.length} gesetzt – weitere Eckpunkte anklicken.` : `Vieleck: ${pp.pts.length} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.`);
   } else if (state.tool === 'shape') {
     // Form aufziehen: Rechteck/Ellipse im Rahmen, Linie/Pfeil vom Startpunkt zum Endpunkt (Umschalt: waagerecht/senkrecht)
     e.preventDefault(); pushUndo(p);
@@ -1192,7 +1207,23 @@ $('#fieldReq').addEventListener('change', e => {
   pushUndo(p); for (const x of p.annots) if (x === a || (a.ftype === 'radio' && x.type === 'field' && x.ftype === 'radio' && x.name === a.name)) x.req = e.target.checked;
   state.dirty = true; renderAnns();
 });
+// Vieleck: Vorschau während des Klickens und Abschluss
+function polyPreview(ov) {
+  ov.querySelector('.polyprev')?.remove(); const pp = state.poly; if (!pp?.pts.length) return;
+  const W = ov.clientWidth, H = ov.clientHeight, c = $('#shapeColor').value;
+  ov.insertAdjacentHTML('beforeend', `<svg class="polyprev" width="${W}" height="${H}" style="position:absolute;left:0;top:0;pointer-events:none" aria-hidden="true"><polyline points="${pp.pts.map(([x, y]) => `${x * W},${y * H}`).join(' ')}" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="6 4"/>${pp.pts.map(([x, y]) => `<circle cx="${x * W}" cy="${y * H}" r="4" fill="${c}"/>`).join('')}</svg>`);
+}
+function polyDone(p) {
+  const pp = state.poly; state.poly = null; document.querySelector('#overlay .polyprev')?.remove();
+  if (!pp || pp.pts.length < 3) { status('Vieleck abgebrochen – mindestens drei Eckpunkte nötig.'); return; }
+  const xs = pp.pts.map(q => q[0]), ys = pp.pts.map(q => q[1]), x = Math.min(...xs), y = Math.min(...ys), w = Math.max(...xs) - x || 0.001, h = Math.max(...ys) - y || 0.001;
+  pushUndo(p);
+  const a = { id: ++uid, type: 'shape', kind: 'mpoly', color: $('#shapeColor').value, lw: +$('#shapeLw').value, x, y, w, h, pts: pp.pts.map(([u, v]) => [(u - x) / w, (v - y) / h]), scale: state.mscale || 1 };
+  p.annots.push(a); state.annSel = a.id; state.dirty = true; renderAnns();
+  status(`Gemessen: ${measureValue(a, p)} (Maßstab 1:${+(a.scale || 1).toPrecision(4)}).`);
+}
 $('#overlay').addEventListener('dblclick', e => {
+  if (state.poly) { e.preventDefault(); const p = cur(); if (p && state.poly.pts.length > 3) state.poly.pts.pop(); return p && polyDone(p); }   // Doppelklick setzt zuvor einen doppelten Punkt
   const le = e.target.closest('.ann.link');
   if (le) { const p = cur(), a = p?.annots.find(x => x.id === +le.dataset.id); if (a) { pushUndo(p); if (!linkAsk(p, a)) state.undo.pop(); renderAnns(); } return; }
   const fe = e.target.closest('.ann.field');
@@ -1227,6 +1258,7 @@ async function dblEditText(e) {
 }
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); if (!$('#expDlg').open) openExport({ saveAs: e.shiftKey }); return; }
+  if (state.poly && (e.key === 'Enter' || e.key === 'Escape')) { e.preventDefault(); if (e.key === 'Enter') polyDone(cur()); else { state.poly = null; document.querySelector('#overlay .polyprev')?.remove(); status('Vieleck abgebrochen.'); } return; }
   if (e.target.matches('input,textarea,select,[contenteditable="true"]')) return;
   const p = cur();
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
@@ -1241,6 +1273,7 @@ document.addEventListener('keydown', e => {
 });
 
 function setTool(t) {
+  if (state.poly) { state.poly = null; document.querySelector('#overlay .polyprev')?.remove(); }
   state.tool = t;
   if (t === 'sign') window.findSignSpots?.();   // Unterschriftsstellen im Dokument suchen
   if (t === 'edit') status('Text ändern: in eine Zeile oder einen Absatz klicken, dann tippen – Schrift, Farbe, Hintergrund und Zeilenumbruch werden übernommen. Leeren entfernt die Zeile. Der alte Text wird beim Speichern entfernt.');
@@ -2658,6 +2691,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       else if (a.type === 'shape') await tagged('Artifact', () => {
         const col = hexRgb(a.color), lw = Math.max(0.5, a.lw * W), fill = a.fill ? { color: col, opacity: 0.2 } : {};
         if (a.kind === 'rect') page.drawRectangle({ x: x + lw / 2, y: y + lw / 2, width: Math.max(0, w - lw), height: Math.max(0, h - lw), borderColor: col, borderWidth: lw, ...fill });
+        else if (a.kind === 'mpoly') page.drawSvgPath((a.pts || []).map(([u, v], k) => `${k ? 'L' : 'M'}${(u * w).toFixed(2)} ${(v * h).toFixed(2)}`).join(' ') + ' Z', { x, y: y + h, borderColor: col, borderWidth: lw, borderDashArray: [lw * 3, lw * 2], color: col, opacity: 0.12, borderOpacity: 1 });
         else if (a.kind === 'marea') page.drawRectangle({ x: x + lw / 2, y: y + lw / 2, width: Math.max(0, w - lw), height: Math.max(0, h - lw), borderColor: col, borderWidth: lw, borderDashArray: [lw * 3, lw * 2], color: col, opacity: 0.12 });
         else if (a.kind === 'ellipse') page.drawEllipse({ x: x + w / 2, y: y + h / 2, xScale: Math.max(0.1, (w - lw) / 2), yScale: Math.max(0.1, (h - lw) / 2), borderColor: col, borderWidth: lw, ...fill });
         else {
@@ -2983,10 +3017,11 @@ async function drawAnnotsInner(x, p, W, H) {
     else if (a.type === 'sign' || a.type === 'img') { const im = new Image(); im.src = a.img; await im.decode(); x.drawImage(im, ax, ay, aw, ah); }
     else if (a.type === 'shape') {
       const lw = Math.max(1, a.lw * W); x.save(); x.strokeStyle = x.fillStyle = a.color; x.lineWidth = lw; x.lineCap = 'round'; x.beginPath();
-      if (a.kind === 'rect' || a.kind === 'marea') x.rect(ax + lw / 2, ay + lw / 2, Math.max(0, aw - lw), Math.max(0, ah - lw));
+      if (a.kind === 'mpoly') { (a.pts || []).forEach(([u, v], k) => k ? x.lineTo(ax + u * aw, ay + v * ah) : x.moveTo(ax + u * aw, ay + v * ah)); x.closePath(); }
+      else if (a.kind === 'rect' || a.kind === 'marea') x.rect(ax + lw / 2, ay + lw / 2, Math.max(0, aw - lw), Math.max(0, ah - lw));
       else if (a.kind === 'ellipse') x.ellipse(ax + aw / 2, ay + ah / 2, Math.max(0.1, (aw - lw) / 2), Math.max(0.1, (ah - lw) / 2), 0, 0, Math.PI * 2);
       else { const [[sx, sy], [ex, ey]] = shapeEnds(a); x.moveTo(ax + sx * aw, ay + sy * ah); x.lineTo(ax + ex * aw, ay + ey * ah); }
-      if ((a.fill && (a.kind === 'rect' || a.kind === 'ellipse')) || a.kind === 'marea') { x.globalAlpha = a.kind === 'marea' ? 0.12 : 0.2; x.fill(); x.globalAlpha = 1; }
+      if ((a.fill && (a.kind === 'rect' || a.kind === 'ellipse')) || a.kind === 'marea' || a.kind === 'mpoly') { x.globalAlpha = a.kind === 'marea' || a.kind === 'mpoly' ? 0.12 : 0.2; x.fill(); x.globalAlpha = 1; }
       x.stroke();
       if (a.kind === 'arrow') { const [[sx, sy], [ex, ey]] = shapeEnds(a), t = arrowHead(ax + sx * aw, ay + sy * ah, ax + ex * aw, ay + ey * ah, lw); x.beginPath(); x.moveTo(...t[0]); x.lineTo(...t[1]); x.lineTo(...t[2]); x.closePath(); x.fill(); }
       if (isMeasure(a)) { const sz = Math.max(10, Math.min(28, W * 0.016)); x.font = `600 ${sz}px "DejaVu Sans"`; x.textAlign = 'center'; x.fillText(measureValue(a, p), ax + aw / 2, a.kind === 'mline' ? ay + ah / 2 - sz * 0.4 : ay + ah / 2 + sz / 3); }

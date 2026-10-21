@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Solució immediata: deseu l’adjunt a l’Outlook («Anomena i desa») i després obriu-lo.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · perímetre {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Mesurat: {0} (escala 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Mesura: polígon (àrea i perímetre)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polígon cancel·lat – calen almenys tres vèrtexs.",
+ "Vieleck abgebrochen.": "Polígon cancel·lat.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polígon: {0} punts – doble clic, clic al primer punt o Retorn el tanca; Esc cancel·la.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polígon: punt {0} definit – feu clic als vèrtexs següents."
 }

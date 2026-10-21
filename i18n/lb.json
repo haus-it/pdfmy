@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Direkt-Léisung: den Unhang an Outlook späicheren („Späicheren ënner“) an dann opmaachen.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · Ëmfang {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Gemooss: {0} (Moossstaf 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Moossen: Polygon (Fläch an Ëmfang)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Polygon ofgebrach – mindestens dräi Eckpunkte néideg.",
+ "Vieleck abgebrochen.": "Polygon ofgebrach.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Polygon: {0} Punkten – Duebelklick, Klick op den éischte Punkt oder Enter schléisst; Esc bréch of.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Polygon: Punkt {0} gesat – weider Eckpunkten uklicken."
 }

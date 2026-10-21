@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Быстрое решение: сохраните вложение в Outlook («Сохранить как»), а затем откройте.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · периметр {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Измерено: {0} (масштаб 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Измерение: многоугольник (площадь и периметр)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Многоугольник отменён – нужны минимум три вершины.",
+ "Vieleck abgebrochen.": "Многоугольник отменён.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Многоугольник, точек: {0} – двойной щелчок, щелчок по первой точке или Enter замыкает; Esc отменяет.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Многоугольник: точка {0} установлена – щёлкайте по следующим вершинам."
 }

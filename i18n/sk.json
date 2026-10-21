@@ -2572,5 +2572,12 @@
  "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Okamžité riešenie: prílohu v Outlooku uložte („Uložiť ako“) a potom otvorte.",
  "{NUMPAGES}": "{NUMPAGES}",
  "{PAGE}": "{PAGE}",
- "w:{0}Reference": "w:{0}Reference"
+ "w:{0}Reference": "w:{0}Reference",
+ "{0} · Umfang {1}": "{0} · obvod {1}",
+ "Gemessen: {0} (Maßstab 1:{1}).": "Namerané: {0} (mierka 1:{1}).",
+ "Messen: Vieleck (Fläche und Umfang)": "Merať: mnohouholník (plocha a obvod)",
+ "Vieleck abgebrochen – mindestens drei Eckpunkte nötig.": "Mnohouholník zrušený – sú potrebné aspoň tri vrcholy.",
+ "Vieleck abgebrochen.": "Mnohouholník zrušený.",
+ "Vieleck: {0} Punkte – Doppelklick, Klick auf den ersten Punkt oder Eingabetaste schließt; Esc bricht ab.": "Mnohouholník, bodov: {0} – dvojklik, klik na prvý bod alebo Enter ho uzavrie; Esc zruší.",
+ "Vieleck: Punkt {0} gesetzt – weitere Eckpunkte anklicken.": "Mnohouholník: bod {0} umiestnený – kliknite na ďalšie vrcholy."
 }
