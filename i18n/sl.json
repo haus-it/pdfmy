@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programskih datotek se razlikuje od seznama kontrolnih vsot: {1}. Po posodobitvi znova naložite stran in ponovno preverite.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Različica programa preverjena: {0} od {0} naloženih programskih datotek se ujema z objavljenim seznamom kontrolnih vsot.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Primerjajte z dnevnikom izdaj na GitHubu",
- "Stand {0} · Fingerabdruck": "Različica {0} · prstni odtis"
+ "Stand {0} · Fingerabdruck": "Različica {0} · prstni odtis",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Natisnite v dejanski velikosti (100 %, ne »Prilagodi strani«) · ne prepogibajte · za večkratno uporabo",
+ "Patchcode-Trennblatt drucken …": "Natisni ločilni list s kodo patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Ločilni list s kodo patch ustvarjen – natisnite ga v dejanski velikosti, vstavite med pisma in skenirajte sveženj. PDFMy prepozna tudi obstoječe liste s kodo patch (tip 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – ločilni list (koda patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy prepozna ta list, loči pisma in ga izpusti – tako kot mnogi skenerji dokumentov.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Ločilni list s kodo patch Kodak T za tiskanje – PDFMy ga prepozna, tako kot mnogi skenerji dokumentov; obstoječi listi s kodo patch prav tako delujejo"
 }

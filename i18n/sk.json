@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programových súborov sa líši od zoznamu kontrolných súčtov: {1}. Po aktualizácii znova načítajte stránku a skontrolujte to znova.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Verzia programu overená: {0} z {0} načítaných programových súborov zodpovedá zverejnenému zoznamu kontrolných súčtov.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Porovnať s protokolom vydaní na GitHube",
- "Stand {0} · Fingerabdruck": "Verzia {0} · odtlačok"
+ "Stand {0} · Fingerabdruck": "Verzia {0} · odtlačok",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Tlačte v skutočnej veľkosti (100 %, nie „Prispôsobiť strane“) · neprekladajte · opakovane použiteľný",
+ "Patchcode-Trennblatt drucken …": "Vytlačiť oddeľovací list s patch kódom …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Oddeľovací list s patch kódom vytvorený – vytlačte ho v skutočnej veľkosti, vložte medzi listy a naskenujte stoh. PDFMy rozpozná aj existujúce listy s patch kódom (typ 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – oddeľovací list (patch kód T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy tento list rozpozná, rozdelí listy a tento vynechá – rovnako ako mnohé dokumentové skenery.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Oddeľovací list s patch kódom Kodak T na vytlačenie – PDFMy ho rozpozná, rovnako ako mnohé dokumentové skenery; existujúce listy s patch kódom fungujú tiež"
 }

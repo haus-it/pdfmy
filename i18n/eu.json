@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programa-fitxategi ez datoz bat kontrol-baturen zerrendarekin: {1}. Eguneratu ondoren, kargatu berriro orria eta egiaztatu berriro.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programaren bertsioa egiaztatuta: kargatutako {0} programa-fitxategietatik {0} bat datoz argitaratutako kontrol-baturen zerrendarekin.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Alderatu GitHub-eko bertsio-erregistroarekin",
- "Stand {0} · Fingerabdruck": "{0} bertsioa · hatz-marka"
+ "Stand {0} · Fingerabdruck": "{0} bertsioa · hatz-marka",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Inprimatu jatorrizko tamainan (% 100, ez «Doitu orrira») · ez tolestu · berrerabilgarria",
+ "Patchcode-Trennblatt drucken …": "Inprimatu patch kodedun bereizte-orria …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patch kodedun bereizte-orria sortu da – inprimatu jatorrizko tamainan, jarri gutunen artean eta eskaneatu pila. PDFMy-k lehendik dauden patch kodedun orriak ere ezagutzen ditu (1, 2, 3, 4, 6, T motak).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – Bereizte-orria (patch kodea T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy-k orri hau ezagutzen du, gutunak bereizten ditu eta orria kentzen du – dokumentu-eskaner askok ere bai.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Inprimatzeko bereizte-orria Kodak patch kodea T-rekin – PDFMy-k ezagutzen du, baita dokumentu-eskaner askok ere; lehendik dauden patch kodedun orriek ere funtzionatzen dute"
 }

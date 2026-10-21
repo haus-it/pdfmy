@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} fajl(s) tal-programm ma jaqblux mal-lista tal-checksums: {1}. Wara aġġornament, jekk jogħġbok erġa’ tella’ l-paġna u erġa’ ċċekkja.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Il-verżjoni tal-programm ġiet iċċekkjata: {0} minn {0} fajls tal-programm imtellgħin jaqblu mal-lista ppubblikata tal-checksums.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Qabbel mar-reġistru tar-rilaxxi fuq GitHub",
- "Stand {0} · Fingerabdruck": "Verżjoni {0} · marka tas-swaba’"
+ "Stand {0} · Fingerabdruck": "Verżjoni {0} · marka tas-swaba’",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Stampa fid-daqs reali (100%, mhux “Daħħal fil-paġna”) · tintwiex · tista’ terġa’ tintuża",
+ "Patchcode-Trennblatt drucken …": "Stampa folja ta’ separazzjoni b’kodiċi patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Folja ta’ separazzjoni b’kodiċi patch maħluqa – stampaha fid-daqs reali, poġġiha bejn l-ittri u skennja l-munzell. PDFMy jagħraf ukoll folji eżistenti b’kodiċi patch (tip 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – folja ta’ separazzjoni (kodiċi patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy jagħraf din il-folja, jissepara l-ittri u jħalliha barra – bħal ħafna skeners tad-dokumenti.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Folja ta’ separazzjoni bil-kodiċi patch T ta’ Kodak biex tistampaha – PDFMy jagħrafha, bħal ħafna skeners tad-dokumenti; il-folji eżistenti b’kodiċi patch jaħdmu wkoll"
 }

@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} archivo(s) del programa no coinciden con la lista de sumas de verificación: {1}. Tras una actualización, vuelva a cargar la página y compruébelo de nuevo.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versión del programa comprobada: {0} de {0} archivos del programa cargados coinciden con la lista publicada de sumas de verificación.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Comparar con el registro de versiones en GitHub",
- "Stand {0} · Fingerabdruck": "Versión {0} · huella digital"
+ "Stand {0} · Fingerabdruck": "Versión {0} · huella digital",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Imprimir a tamaño real (100 %, no «Ajustar a la página») · no doblar · reutilizable",
+ "Patchcode-Trennblatt drucken …": "Imprimir hoja separadora con código patch…",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Hoja separadora con código patch creada: imprímala a tamaño real, colóquela entre las cartas y escanee el lote. PDFMy también reconoce las hojas con código patch existentes (tipo 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – hoja separadora (código patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy reconoce esta hoja, separa las cartas y la omite; muchos escáneres de documentos también.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Hoja separadora con código patch T de Kodak para imprimir: PDFMy la reconoce, muchos escáneres de documentos también; las hojas con código patch existentes funcionan igualmente"
 }

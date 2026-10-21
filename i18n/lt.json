@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programos failas (-ai) nesutampa su kontrolinių sumų sąrašu: {1}. Po atnaujinimo iš naujo įkelkite puslapį ir patikrinkite dar kartą.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programos versija patikrinta: {0} iš {0} įkeltų programos failų atitinka paskelbtą kontrolinių sumų sąrašą.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Palyginti su leidimų žurnalu GitHub platformoje",
- "Stand {0} · Fingerabdruck": "Versija {0} · skaitmeninis atspaudas"
+ "Stand {0} · Fingerabdruck": "Versija {0} · skaitmeninis atspaudas",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Spausdinkite originalaus dydžio (100 %, ne „Pritaikyti prie puslapio“) · nelankstykite · daugkartinis",
+ "Patchcode-Trennblatt drucken …": "Spausdinti patch kodo skiriamąjį lapą …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patch kodo skiriamasis lapas sukurtas – atspausdinkite originalaus dydžio, įdėkite tarp laiškų ir nuskenuokite rietuvę. PDFMy atpažįsta ir esamus patch kodo lapus (1, 2, 3, 4, 6, T tipo).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – skiriamasis lapas (patch kodas T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy atpažįsta šį lapą, atskiria laiškus ir jį praleidžia – kaip ir daugelis dokumentų skenerių.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Spausdinamas skiriamasis lapas su Kodak patch kodu T – PDFMy jį atpažįsta, kaip ir daugelis dokumentų skenerių; esami patch kodo lapai irgi tinka"
 }

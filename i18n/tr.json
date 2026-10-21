@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} program dosyası sağlama toplamı listesinden farklı: {1}. Bir güncellemeden sonra lütfen sayfayı yeniden yükleyin ve tekrar kontrol edin.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Program sürümü kontrol edildi: yüklenen {0} program dosyasının {0} tanesi yayımlanan sağlama toplamı listesiyle eşleşiyor.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "GitHub’daki sürüm günlüğüyle karşılaştırın",
- "Stand {0} · Fingerabdruck": "Sürüm {0} · parmak izi"
+ "Stand {0} · Fingerabdruck": "Sürüm {0} · parmak izi",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Gerçek boyutta yazdırın (%100, “Sayfaya sığdır” değil) · katlamayın · tekrar kullanılabilir",
+ "Patchcode-Trennblatt drucken …": "Patch kodlu ayırma sayfası yazdır …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patch kodlu ayırma sayfası oluşturuldu – gerçek boyutta yazdırın, mektupların arasına koyun ve yığını tarayın. PDFMy mevcut patch kodlu sayfaları da (tip 1, 2, 3, 4, 6, T) tanır.",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – Ayırma sayfası (patch kodu T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy bu sayfayı tanır, mektupları ayırır ve sayfayı çıkarır – birçok doküman tarayıcısı da öyle.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Yazdırmak için Kodak patch kodu T içeren ayırma sayfası – PDFMy tanır, birçok doküman tarayıcısı da; mevcut patch kodlu sayfalar da çalışır"
 }

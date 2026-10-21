@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} skedar(ë) programi ndryshojnë nga lista e shumave të kontrollit: {1}. Pas një përditësimi, ringarkoni faqen dhe kontrolloni përsëri.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versioni i programit u kontrollua: {0} nga {0} skedarë programi të ngarkuar përputhen me listën e publikuar të shumave të kontrollit.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Krahasoni me regjistrin e versioneve në GitHub",
- "Stand {0} · Fingerabdruck": "Versioni {0} · gjurmë gishti"
+ "Stand {0} · Fingerabdruck": "Versioni {0} · gjurmë gishti",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Printojeni në madhësi origjinale (100 %, jo „Përshtat me faqen“) · mos e palosni · e ripërdorshme",
+ "Patchcode-Trennblatt drucken …": "Printo fletë ndarëse me kod patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Fleta ndarëse me kod patch u krijua – printojeni në madhësi origjinale, vendoseni midis letrave dhe skanoni tufën. PDFMy njeh gjithashtu fletët ekzistuese me kod patch (lloji 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – fletë ndarëse (kod patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy e njeh këtë fletë, i ndan letrat dhe e lë jashtë – ashtu si shumë skanerë dokumentesh.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Fletë ndarëse me kodin patch T të Kodak për printim – PDFMy e njeh, ashtu si shumë skanerë dokumentesh; edhe fletët ekzistuese me kod patch funksionojnë"
 }

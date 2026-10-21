@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} ficheiro(s) do programa não correspondem à lista de somas de verificação: {1}. Após uma atualização, volte a carregar a página e verifique novamente.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versão do programa verificada: {0} de {0} ficheiros do programa carregados correspondem à lista publicada de somas de verificação.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Comparar com o registo de versões no GitHub",
- "Stand {0} · Fingerabdruck": "Versão {0} · impressão digital"
+ "Stand {0} · Fingerabdruck": "Versão {0} · impressão digital",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Imprimir em tamanho real (100 %, não «Ajustar à página») · não dobrar · reutilizável",
+ "Patchcode-Trennblatt drucken …": "Imprimir folha separadora com código patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Folha separadora com código patch criada – imprima-a em tamanho real, coloque-a entre as cartas e digitalize o lote. O PDFMy também reconhece folhas com código patch existentes (tipo 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – folha separadora (código patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "O PDFMy reconhece esta folha, separa as cartas e omite-a – muitos digitalizadores de documentos também.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Folha separadora com código patch Kodak T para imprimir – o PDFMy reconhece-a, muitos digitalizadores de documentos também; as folhas com código patch existentes funcionam igualmente"
 }

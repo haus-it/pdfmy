@@ -1,12 +1,16 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* QR-Codes auf Seiten lesen (lokal, jsQR): GiroCode/QR-Rechnung auf Rechnungen und PDFMy-Trennblätter.
+   Patchcode-Trennblätter von Dokumentenscannern (js/patchcode.js) zählen ebenfalls als Trennblatt.
    scan(canvas) → Liste der gefundenen Inhalte (bis zu 4 je Seite). */
 (function (root) {
   'use strict';
   const SEPARATOR = 'PDFMY:TRENNBLATT';
   function scan(src, maxSide = 1600) {
-    if (typeof jsQR !== 'function' || !src || !src.width) return [];
+    if (!src || !src.width) return [];
+    let patch = null; try { patch = root.PatchCode?.fromCanvas(src); } catch { patch = null; }
+    if (patch) return [SEPARATOR];
+    if (typeof jsQR !== 'function') return [];
     const k = Math.min(1, maxSide / Math.max(src.width, src.height));
     const w = Math.max(1, Math.round(src.width * k)), h = Math.max(1, Math.round(src.height * k));
     const c = typeof document === 'undefined' ? new OffscreenCanvas(w, h) : Object.assign(document.createElement('canvas'), { width: w, height: h });   // im Worker (js/scanw.js) ohne document

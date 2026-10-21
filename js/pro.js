@@ -2333,6 +2333,25 @@ $('#btnSeparator').onclick = async () => {
 };
 
 
+/* ---------- Patchcode-Trennblatt (Kodak-Patchcode T): vier senkrechte Balken breit-schmal-schmal-schmal, schmal 0,08″, breit 0,2″,
+   Abstand 0,2″. PDFMy erkennt alle Patchcode-Typen (js/patchcode.js) – auch die Blätter, die im Büro schon für den Dokumentenscanner liegen. */
+$('#btnPatch').onclick = async () => {
+  closeMenu();
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
+  const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
+  const page = doc.addPage([595.28, 841.89]), N = 0.08 * 72, Wd = 0.2 * 72, G = 0.2 * 72;
+  const widths = [Wd, N, N, N], total = widths.reduce((a, b) => a + b, 0) + 3 * G;
+  let x = (595.28 - total) / 2;
+  for (const w of widths) { page.drawRectangle({ x, y: 120, width: w, height: 600, color: rgb(0, 0, 0) }); x += w + G; }
+  const center = (t, y, sz) => page.drawText(t, { x: (595.28 - font.widthOfTextAtSize(t, sz)) / 2, y, size: sz, font, color: rgb(0.15, 0.15, 0.15) });
+  center('PDFMy – Trennblatt (Patchcode T)', 770, 24);
+  center('Zwischen zwei Briefe legen und den ganzen Stapel auf einmal scannen.', 80, 11.5);
+  center('PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.', 62, 11.5);
+  center('In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar', 36, 8.5);
+  download(await doc.save(), 'PDFMy_Patchcode_Trennblatt.pdf', 'application/pdf');
+  status('Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.');
+};
+
 /* ---------- Digitale Signatur mit eigenem Zertifikat (.p12/.pfx) – lokal, ohne Server ---------- */
 let signCert = null;   // { name, bytes } – die Zertifikatsdatei ist selbst passwortgeschützt; das Passwort wird nie gespeichert
 window.signCertName = () => signCert?.name || '';

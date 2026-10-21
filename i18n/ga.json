@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ Tá {0} comhad ríomhchláir difriúil ón liosta suimeanna seiceála: {1}. Tar éis nuashonraithe, athlódáil an leathanach agus seiceáil arís.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Leagan an ríomhchláir seiceáilte: tagann {0} as {0} comhad ríomhchláir lódáilte leis an liosta suimeanna seiceála foilsithe.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Déan comparáid leis an loga eisiúna ar GitHub",
- "Stand {0} · Fingerabdruck": "Leagan {0} · méarlorg"
+ "Stand {0} · Fingerabdruck": "Leagan {0} · méarlorg",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Priontáil sa mhéid iarbhír (100%, ní “Oiriúnaigh don leathanach”) · ná fill · in-athúsáidte",
+ "Patchcode-Trennblatt drucken …": "Priontáil leathanach scartha le cód patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Leathanach scartha le cód patch cruthaithe – priontáil sa mhéid iarbhír é, cuir idir na litreacha é agus scan an chruach. Aithníonn PDFMy leathanaigh atá ann cheana le cód patch freisin (cineál 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – Leathanach scartha (cód patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "Aithníonn PDFMy an leathanach seo, scarann sé na litreacha agus fágann sé ar lár é – mar a dhéanann go leor scanóirí doiciméad.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Leathanach scartha le cód patch T Kodak le priontáil – aithníonn PDFMy é, mar a dhéanann go leor scanóirí doiciméad; oibríonn leathanaigh atá ann cheana le cód patch freisin"
 }

@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} program file(s) differ from the checksum list: {1}. After an update, please reload the page and check again.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Program version verified: {0} of {0} loaded program files match the published checksum list.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Compare with the release log on GitHub",
- "Stand {0} · Fingerabdruck": "Version {0} · fingerprint"
+ "Stand {0} · Fingerabdruck": "Version {0} · fingerprint",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Print at actual size (100%, not ‘Fit to page’) · do not fold · reusable",
+ "Patchcode-Trennblatt drucken …": "Print patch code separator sheet …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patch code separator sheet created – print it at actual size, place it between the letters and scan the stack. PDFMy also recognises existing patch code sheets (type 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – separator sheet (patch code T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy recognises this sheet, separates the letters and leaves it out – as do many document scanners.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Separator sheet with Kodak patch code T to print – PDFMy recognises it, as do many document scanners; existing patch code sheets work too"
 }

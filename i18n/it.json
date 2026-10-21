@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} file del programma non corrispondono all'elenco dei checksum: {1}. Dopo un aggiornamento ricarichi la pagina e verifichi di nuovo.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versione del programma verificata: {0} file del programma caricati su {0} corrispondono all'elenco dei checksum pubblicato.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Confrontare con il registro delle versioni su GitHub",
- "Stand {0} · Fingerabdruck": "Versione {0} · impronta"
+ "Stand {0} · Fingerabdruck": "Versione {0} · impronta",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Stampare in dimensioni reali (100%, non «Adatta alla pagina») · non piegare · riutilizzabile",
+ "Patchcode-Trennblatt drucken …": "Stampa foglio separatore con codice patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Foglio separatore con codice patch creato – lo stampi in dimensioni reali, lo inserisca tra le lettere e scansioni la pila. PDFMy riconosce anche i fogli con codice patch esistenti (tipo 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – foglio separatore (codice patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy riconosce questo foglio, separa le lettere e lo tralascia – come molti scanner documentali.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Foglio separatore con codice patch Kodak T da stampare – PDFMy lo riconosce, come molti scanner documentali; funzionano anche i fogli con codice patch esistenti"
 }

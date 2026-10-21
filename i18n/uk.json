@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} програмних файл(ів) не збігаються зі списком контрольних сум: {1}. Після оновлення перезавантажте сторінку та перевірте ще раз.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Версію програми перевірено: {0} з {0} завантажених програмних файлів збігаються з опублікованим списком контрольних сум.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Порівняти з журналом випусків на GitHub",
- "Stand {0} · Fingerabdruck": "Версія {0} · відбиток"
+ "Stand {0} · Fingerabdruck": "Версія {0} · відбиток",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Друкуйте в реальному розмірі (100 %, не «За розміром сторінки») · не згинайте · багаторазовий",
+ "Patchcode-Trennblatt drucken …": "Надрукувати аркуш-роздільник із патч-кодом…",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Аркуш-роздільник із патч-кодом створено – надрукуйте його в реальному розмірі, покладіть між листами й відскануйте пачку. PDFMy розпізнає й наявні аркуші з патч-кодом (тип 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – аркуш-роздільник (патч-код T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy розпізнає цей аркуш, розділяє листи й прибирає його – як і багато документних сканерів.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Аркуш-роздільник із патч-кодом Kodak T для друку – PDFMy його розпізнає, як і багато документних сканерів; наявні аркуші з патч-кодом теж підходять"
 }

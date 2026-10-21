@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Patchcode-Trennblätter (app-v167)
+- Neues Modul js/patchcode.js erkennt Kodak-Patchcodes (Typ 1, 2, 3, 4, 6, T) auf Scans: senkrecht oder quer, kopfüber, leicht schräg, ab etwa 40 dpi. Eingebunden in QR.scan – gilt damit im Scan-Worker, im Hauptprogramm und im überwachten Ordner; die Seite wird zum Trennblatt und beim Stapel trennen weggelassen.
+- Menü „Patchcode-Trennblatt drucken …“ erzeugt ein Patch-T-Blatt (Balken 0,08″/0,2″, Abstand 0,2″).
+- Tests: tests/patchcode.test.js (alle Typen, Drehung, Schräglage, Rauschen; Gegenproben Textseite, Tabelle, Balkendiagramm, Strichcode, kurze Balken); Ende-zu-Ende im Browser: gedrucktes Blatt als 200-dpi-Scan in einem Stapel aus fünf Seiten, aufrecht und kopfüber erkannt, Briefseiten nicht. axe hell/dunkel 0.
+
 ### Programmstand prüfen (app-v166)
 - Jeder Build erzeugt pruefsummen.txt (SHA-256 aller 392 ausgelieferten Dateien, prüfbar mit „sha256sum -c“) und pruefsummen.json; deploy.ps1 trägt den Fingerabdruck der Liste in docs/RELEASES.md ein (neue Spalte), das mit dem Quellcode auf GitHub liegt.
 - Der Dialog „Datenschutz selbst prüfen“ vergleicht die geladenen Programmdateien mit der Liste und zeigt Stand und Fingerabdruck mit Link zum Release-Protokoll. Kein Mitbewerber macht die Auslieferung so nachprüfbar. ISO-Maßnahme M10 erledigt.

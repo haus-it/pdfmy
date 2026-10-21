@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} ohjelmatiedosto(a) poikkeaa tarkistussummaluettelosta: {1}. Lataa sivu päivityksen jälkeen uudelleen ja tarkista uudelleen.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Ohjelmaversio tarkistettu: {0} ladatusta ohjelmatiedostosta {0} vastaa julkaistua tarkistussummaluetteloa.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Vertaa GitHubin julkaisulokiin",
- "Stand {0} · Fingerabdruck": "Versio {0} · sormenjälki"
+ "Stand {0} · Fingerabdruck": "Versio {0} · sormenjälki",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Tulosta alkuperäisessä koossa (100 %, ei ”Sovita sivulle”) · älä taita · uudelleenkäytettävä",
+ "Patchcode-Trennblatt drucken …": "Tulosta patch-koodierotinsivu …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patch-koodierotinsivu luotu – tulosta alkuperäisessä koossa, aseta kirjeiden väliin ja skannaa pino. PDFMy tunnistaa myös olemassa olevat patch-koodiarkit (tyyppi 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – erotinsivu (patch-koodi T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy tunnistaa tämän arkin, erottaa kirjeet ja jättää sen pois – samoin monet asiakirjaskannerit.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Tulostettava erotinsivu, jossa Kodak-patch-koodi T – PDFMy tunnistaa sen, samoin monet asiakirjaskannerit; olemassa olevat patch-koodiarkit toimivat myös"
 }

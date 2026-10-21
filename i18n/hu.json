@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programfájl eltér az ellenőrzőösszeg-listától: {1}. Frissítés után töltse be újra az oldalt, és ellenőrizze ismét.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programverzió ellenőrizve: a betöltött {0} programfájlból {0} egyezik a közzétett ellenőrzőösszeg-listával.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Összevetés a GitHubon lévő kiadási naplóval",
- "Stand {0} · Fingerabdruck": "{0} verzió · ujjlenyomat"
+ "Stand {0} · Fingerabdruck": "{0} verzió · ujjlenyomat",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Nyomtassa eredeti méretben (100%, ne „Oldalhoz igazítás”) · ne hajtsa össze · többször használható",
+ "Patchcode-Trennblatt drucken …": "Patchkódos elválasztólap nyomtatása …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patchkódos elválasztólap elkészült – nyomtassa ki eredeti méretben, tegye a levelek közé, és szkennelje be a köteget. A PDFMy a meglévő patchkódos lapokat (1, 2, 3, 4, 6, T típus) is felismeri.",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – elválasztólap (T patchkód)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "A PDFMy felismeri ezt a lapot, szétválasztja a leveleket, és kihagyja a lapot – sok dokumentumszkenner is.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Nyomtatható elválasztólap Kodak T patchkóddal – a PDFMy felismeri, sok dokumentumszkenner is; a meglévő patchkódos lapok szintén működnek"
 }

@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} fișier(e) de program diferă de lista sumelor de control: {1}. După o actualizare, reîncărcați pagina și verificați din nou.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versiunea programului verificată: {0} din {0} fișiere de program încărcate corespund listei publicate a sumelor de control.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Comparați cu jurnalul versiunilor de pe GitHub",
- "Stand {0} · Fingerabdruck": "Versiunea {0} · amprentă"
+ "Stand {0} · Fingerabdruck": "Versiunea {0} · amprentă",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Tipăriți la dimensiunea reală (100 %, nu „Potrivire în pagină”) · nu îndoiți · reutilizabilă",
+ "Patchcode-Trennblatt drucken …": "Tipărire foaie separatoare cu cod patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Foaie separatoare cu cod patch creată – tipăriți-o la dimensiunea reală, puneți-o între scrisori și scanați teancul. PDFMy recunoaște și foile cu cod patch existente (tip 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – foaie separatoare (cod patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy recunoaște această foaie, separă scrisorile și o omite – la fel ca multe scanere de documente.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Foaie separatoare cu cod patch Kodak T de tipărit – PDFMy o recunoaște, la fel ca multe scanere de documente; foile cu cod patch existente funcționează și ele"
 }

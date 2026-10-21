@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} Programmdatei(en) wäichen vun der Préifsummelëscht of: {1}. No engem Update w.e.g. d'Säit nei lueden an nach eng Kéier kontrolléieren.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programmstand kontrolléiert: {0} vun {0} geluedenen Programmdateien stëmmen mat der publizéierter Préifsummelëscht iwwereneen.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Mam Release-Protokoll op GitHub vergläichen",
- "Stand {0} · Fingerabdruck": "Versioun {0} · Fangerofdrock"
+ "Stand {0} · Fingerabdruck": "Versioun {0} · Fangerofdrock",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "An Originalgréisst drécken (100 %, net „un d’Säit upassen“) · net knécken · méimools benotzbar",
+ "Patchcode-Trennblatt drucken …": "Patchcode-Trennblat drécken …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patchcode-Trennblat erstallt – an Originalgréisst drécken, tëscht d’Bréiwer leeën an de Stapel scannen. Bestoend Patchcode-Blieder (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy och.",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – Trennblat (Patchcode T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy erkennt dëst Blat, trennt d’Bréiwer a léisst et ewech – vill Dokumentescanner och.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Trennblat mat Kodak-Patchcode T zum Drécken – PDFMy erkennt et, vill Dokumentescanner och; bestoend Patchcode-Blieder funktionéieren och"
 }

@@ -4,7 +4,7 @@
    Mehrere Worker arbeiten parallel, damit lange Scan-PDFs nicht nur einen Prozessorkern nutzen.
    Ein: { id, bmp (ImageBitmap), o (Optionen für prepScan) }
    Aus: { id, orig (ImageBitmap | null = unverändert), processed (ImageBitmap), cropped, angle, autoMode, qr (Texte) } oder { id, error } */
-importScripts('docdetect.js', 'imaging.js', 'qr.js', '../vendor/jsqr.js');
+importScripts('docdetect.js', 'imaging.js', 'patchcode.js', 'qr.js', '../vendor/jsqr.js');
 self.onmessage = e => {
   const { id, bmp, o } = e.data;
   try {

@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} fichier(s) du programme diffèrent de la liste des sommes de contrôle : {1}. Après une mise à jour, veuillez recharger la page et vérifier à nouveau.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Version du programme vérifiée : {0} sur {0} fichiers du programme chargés correspondent à la liste publiée des sommes de contrôle.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Comparer avec le journal des versions sur GitHub",
- "Stand {0} · Fingerabdruck": "Version {0} · empreinte"
+ "Stand {0} · Fingerabdruck": "Version {0} · empreinte",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Imprimer en taille réelle (100 %, pas « Ajuster à la page ») · ne pas plier · réutilisable",
+ "Patchcode-Trennblatt drucken …": "Imprimer une feuille de séparation à code patch…",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Feuille de séparation à code patch créée – imprimez-la en taille réelle, placez-la entre les courriers et numérisez la pile. PDFMy reconnaît aussi les feuilles à code patch existantes (type 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – feuille de séparation (code patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy reconnaît cette feuille, sépare les courriers et l’omet – de nombreux scanners de documents aussi.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Feuille de séparation avec code patch Kodak T à imprimer – PDFMy la reconnaît, de nombreux scanners de documents aussi ; les feuilles à code patch existantes fonctionnent également"
 }

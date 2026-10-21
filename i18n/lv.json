@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programmas fail(i) atšķiras no kontrolsummu saraksta: {1}. Pēc atjauninājuma, lūdzu, pārlādējiet lapu un pārbaudiet vēlreiz.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programmas versija pārbaudīta: {0} no {0} ielādētajiem programmas failiem atbilst publicētajam kontrolsummu sarakstam.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Salīdzināt ar laidienu žurnālu vietnē GitHub",
- "Stand {0} · Fingerabdruck": "Versija {0} · digitālais nospiedums"
+ "Stand {0} · Fingerabdruck": "Versija {0} · digitālais nospiedums",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Drukājiet oriģinālajā izmērā (100 %, nevis „Ietilpināt lapā”) · nelociet · izmantojama atkārtoti",
+ "Patchcode-Trennblatt drucken …": "Drukāt patch koda atdalītājlapu …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patch koda atdalītājlapa izveidota – izdrukājiet to oriģinālajā izmērā, ielieciet starp vēstulēm un skenējiet kaudzi. PDFMy atpazīst arī esošās patch koda lapas (1., 2., 3., 4., 6. tips, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – atdalītājlapa (patch kods T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy atpazīst šo lapu, sadala vēstules un to izlaiž – tāpat kā daudzi dokumentu skeneri.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Drukājama atdalītājlapa ar Kodak patch kodu T – PDFMy to atpazīst, tāpat kā daudzi dokumentu skeneri; arī esošās patch koda lapas darbojas"
 }

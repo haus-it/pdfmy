@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programmifaili erineb kontrollsummade loendist: {1}. Pärast uuendust laadige leht uuesti ja kontrollige uuesti.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programmi versioon kontrollitud: {0} laaditud programmifailist {0} vastavad avaldatud kontrollsummade loendile.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Võrrelge GitHubi väljalaskelogiga",
- "Stand {0} · Fingerabdruck": "Versioon {0} · sõrmejälg"
+ "Stand {0} · Fingerabdruck": "Versioon {0} · sõrmejälg",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Printige originaalsuuruses (100 %, mitte „Sobita lehele“) · ärge murdke · korduvkasutatav",
+ "Patchcode-Trennblatt drucken …": "Prindi patch-koodiga eraldusleht …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patch-koodiga eraldusleht loodud – printige originaalsuuruses, asetage kirjade vahele ja skannige virn. PDFMy tunneb ära ka olemasolevad patch-koodiga lehed (tüüp 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – eraldusleht (patch-kood T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy tunneb selle lehe ära, eraldab kirjad ja jätab lehe välja – nagu ka paljud dokumendiskannerid.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Prinditav eraldusleht Kodaki patch-koodiga T – PDFMy tunneb selle ära, nagu ka paljud dokumendiskannerid; olemasolevad patch-koodiga lehed töötavad samuti"
 }

@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ Mae {0} ffeil rhaglen yn wahanol i’r rhestr symiau gwirio: {1}. Ar ôl diweddariad, ail-lwythwch y dudalen a gwiriwch eto.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Fersiwn y rhaglen wedi’i gwirio: mae {0} o {0} ffeil rhaglen a lwythwyd yn cyfateb i’r rhestr symiau gwirio a gyhoeddwyd.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Cymharu â’r cofnod rhyddhau ar GitHub",
- "Stand {0} · Fingerabdruck": "Fersiwn {0} · ôl bys"
+ "Stand {0} · Fingerabdruck": "Fersiwn {0} · ôl bys",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Argraffwch ar y maint gwirioneddol (100%, nid ‘Ffitio i’r dudalen’) · peidiwch â phlygu · gellir ei hailddefnyddio",
+ "Patchcode-Trennblatt drucken …": "Argraffu dalen wahanu cod patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Dalen wahanu cod patch wedi’i chreu – argraffwch hi ar y maint gwirioneddol, rhowch hi rhwng y llythyrau a sganiwch y pentwr. Mae PDFMy hefyd yn adnabod dalennau cod patch sy’n bodoli eisoes (math 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – dalen wahanu (cod patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "Mae PDFMy yn adnabod y ddalen hon, yn gwahanu’r llythyrau ac yn ei hepgor – fel llawer o sganwyr dogfennau.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Dalen wahanu gyda chod patch T Kodak i’w hargraffu – mae PDFMy yn ei hadnabod, fel llawer o sganwyr dogfennau; mae dalennau cod patch presennol yn gweithio hefyd"
 }

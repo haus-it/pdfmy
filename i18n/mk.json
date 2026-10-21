@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} програмски датотеки отстапуваат од листата на контролни суми: {1}. По ажурирање, ве молиме повторно вчитајте ја страницата и проверете повторно.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Верзијата на програмата е проверена: {0} од {0} вчитани програмски датотеки се совпаѓаат со објавената листа на контролни суми.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Споредете со дневникот на изданија на GitHub",
- "Stand {0} · Fingerabdruck": "Верзија {0} · отпечаток"
+ "Stand {0} · Fingerabdruck": "Верзија {0} · отпечаток",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Печатете во вистинска големина (100 %, не „Прилагоди на страница“) · не превиткувајте · за повеќекратна употреба",
+ "Patchcode-Trennblatt drucken …": "Печати лист за делење со печ-код …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Создаден е лист за делење со печ-код – испечатете го во вистинска големина, ставете го меѓу писмата и скенирајте го купот. PDFMy ги препознава и постојните листови со печ-код (тип 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – лист за делење (печ-код T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy го препознава овој лист, ги дели писмата и го изоставува – како и многу скенери за документи.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Лист за делење со Kodak печ-код T за печатење – PDFMy го препознава, како и многу скенери за документи; постојните листови со печ-код исто така функционираат"
 }

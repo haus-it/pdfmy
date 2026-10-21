@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ Pliki programu niezgodne z listą sum kontrolnych ({0}): {1}. Po aktualizacji należy ponownie załadować stronę i sprawdzić jeszcze raz.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Wersja programu sprawdzona: {0} z {0} załadowanych plików programu jest zgodnych z opublikowaną listą sum kontrolnych.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Porównaj z dziennikiem wydań w serwisie GitHub",
- "Stand {0} · Fingerabdruck": "Wersja {0} · odcisk cyfrowy"
+ "Stand {0} · Fingerabdruck": "Wersja {0} · odcisk cyfrowy",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Drukuj w rozmiarze oryginalnym (100%, nie „Dopasuj do strony”) · nie zginaj · wielokrotnego użytku",
+ "Patchcode-Trennblatt drucken …": "Drukuj arkusz rozdzielający z kodem patch …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Utworzono arkusz rozdzielający z kodem patch – wydrukuj go w rozmiarze oryginalnym, włóż między pisma i zeskanuj stos. PDFMy rozpoznaje też istniejące arkusze z kodem patch (typ 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – arkusz rozdzielający (kod patch T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy rozpoznaje ten arkusz, rozdziela pisma i go pomija – wiele skanerów dokumentów również.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Arkusz rozdzielający z kodem patch Kodak T do wydruku – PDFMy go rozpoznaje, wiele skanerów dokumentów również; istniejące arkusze z kodem patch też działają"
 }

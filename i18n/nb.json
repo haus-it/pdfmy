@@ -2831,5 +2831,11 @@
  "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programfil(er) avviker fra sjekksumlisten: {1}. Etter en oppdatering må du laste inn siden på nytt og sjekke igjen.",
  "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programversjon kontrollert: {0} av {0} innlastede programfiler stemmer med den publiserte sjekksumlisten.",
  "Mit dem Release-Protokoll auf GitHub vergleichen": "Sammenlign med utgivelsesloggen på GitHub",
- "Stand {0} · Fingerabdruck": "Versjon {0} · fingeravtrykk"
+ "Stand {0} · Fingerabdruck": "Versjon {0} · fingeravtrykk",
+ "In Originalgröße drucken (100 %, nicht „an Seite anpassen“) · nicht knicken · mehrfach verwendbar": "Skriv ut i originalstørrelse (100 %, ikke «Tilpass til side») · ikke brett · kan gjenbrukes",
+ "Patchcode-Trennblatt drucken …": "Skriv ut patchkode-skilleark …",
+ "Patchcode-Trennblatt erstellt – in Originalgröße drucken, zwischen die Briefe legen und den Stapel scannen. Vorhandene Patchcode-Blätter (Typ 1, 2, 3, 4, 6, T) erkennt PDFMy ebenfalls.": "Patchkode-skilleark opprettet – skriv ut i originalstørrelse, legg mellom brevene og skann bunken. PDFMy gjenkjenner også eksisterende patchkode-ark (type 1, 2, 3, 4, 6, T).",
+ "PDFMy – Trennblatt (Patchcode T)": "PDFMy – skilleark (patchkode T)",
+ "PDFMy erkennt dieses Blatt, trennt die Briefe und lässt es weg – viele Dokumentenscanner auch.": "PDFMy gjenkjenner dette arket, skiller brevene og utelater det – det gjør mange dokumentskannere også.",
+ "Trennblatt mit Kodak-Patchcode T zum Ausdrucken – PDFMy erkennt es, viele Dokumentenscanner auch; vorhandene Patchcode-Blätter funktionieren ebenso": "Skilleark med Kodak-patchkode T for utskrift – PDFMy gjenkjenner det, mange dokumentskannere også; eksisterende patchkode-ark fungerer like godt"
 }
