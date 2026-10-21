@@ -11,6 +11,7 @@ launchctl bootout "gui/$(id -u)/de.pdfmy.scan" >/dev/null 2>&1 || launchctl unlo
 rm -f "$AGENT"
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -u "$APP" >/dev/null 2>&1
 rm -rf "$APP" "$DIR"
+rm -f "$HOME/Library/PDF Services/In PDFMy öffnen"
 echo "  ✓ Entfernt. PDF-Dateien öffnet jetzt wieder das bisherige Programm (z. B. Vorschau)."
 echo "  Dieses Fenster können Sie schließen."
 echo ""

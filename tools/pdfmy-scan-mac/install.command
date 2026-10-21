@@ -104,6 +104,21 @@ if [ -d "$APP" ]; then
   fi
 fi
 
+# 4. Drucken in PDFMy: Eintrag „In PDFMy öffnen“ im PDF-Menü des Druckdialogs (ohne Administratorrechte).
+#    macOS übergibt Titel, Optionen und den Pfad der gedruckten PDF; die Datei bleibt auf dem Mac.
+PS_DIR="$HOME/Library/PDF Services"; mkdir -p "$PS_DIR"
+cat > "$PS_DIR/In PDFMy öffnen" <<'PDFMYPRINT'
+#!/bin/bash
+f="$3"; [ -f "$f" ] || exit 1
+t="$HOME/Library/Caches/de.pdfmy.open/$(date +%s)$$"; /bin/mkdir -p "$t"
+name=$(printf %s "$1" | tr -d '/:' | cut -c1-80); [ -n "$name" ] || name="Druck"
+/bin/cp "$f" "$t/$name.pdf"
+send() { printf %s "$t/$name.pdf" | /usr/bin/curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:52880/open-local >/dev/null; }
+send || { launchctl kickstart -k "gui/$(id -u)/de.pdfmy.scan" >/dev/null 2>&1; sleep 2; send; } || /usr/bin/osascript -e 'display dialog "PDFMy konnte das Dokument nicht öffnen, weil pdfmy Scan nicht läuft. Bitte die Einrichtung (pdfmy-Scan-Mac.command) noch einmal öffnen." buttons {"OK"} default button 1 with icon caution' >/dev/null 2>&1
+PDFMYPRINT
+chmod 755 "$PS_DIR/In PDFMy öffnen"
+echo "  ✓ Drucken in PDFMy: im Druckdialog unten „PDF“ → „In PDFMy öffnen“"
+
 echo ""
 if [ -n "$ok" ]; then
   echo "  Fertig. In PDFMy heißt der Knopf oben jetzt „Scannen“."

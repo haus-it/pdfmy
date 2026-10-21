@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.9.0";
+        public const string Version = "1.10.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -44,6 +44,7 @@ namespace PdfmyScan
             ServicePointManager.ServerCertificateValidationCallback = (s, c, ch, e) => true;
             Directory.CreateDirectory(DataDir);
             if (args.Contains("--uninstall")) { Installer.Uninstall(); return; }
+            if (args.Length > 1 && args[0] == "--printer") { Environment.Exit(PdfPrinter.Elevated(args)); return; }   // erhöhte Kopie: Drucker „PDFMy“ einrichten/entfernen
             if (args.Contains("--register")) { FileAssoc.Register(Application.ExecutablePath); return; }     // Support: PDF-Zuordnung erneuern
             if (args.Contains("--unregister")) { FileAssoc.Unregister(); return; }
             if (args.Contains("--twain-test"))   // Support: TWAIN-Manager und -Quellen ins Protokoll schreiben (scannt nicht)
@@ -73,6 +74,7 @@ namespace PdfmyScan
                 var hub = new ScannerHub();
                 var server = new LocalServer(hub);
                 server.Start();
+                PdfPrinter.Watch();
                 if (openPath != null) FileOpen.Open(openPath);
                 _ = hub.RefreshAsync();
                 Application.Run(new TrayContext(hub, args.Contains("--installed")));
@@ -207,6 +209,7 @@ namespace PdfmyScan
             try { File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "pdfmy Scan.lnk")); } catch { }
             try { Registry.CurrentUser.DeleteSubKeyTree(UninstallKey, false); } catch { }
             FileAssoc.Unregister();
+            if (!PdfPrinter.TerminalServer && PdfPrinter.Installed()) PdfPrinter.Setup(false);   // eigenen Drucker „PDFMy“ wieder entfernen (eine Windows-Bestätigung)
             // Die laufende Datei kann sich nicht selbst löschen – das erledigt kurz danach ein unsichtbarer Befehl
             try { Process.Start(new ProcessStartInfo("cmd.exe", $"/c timeout /t 3 /nobreak >nul & rmdir /s /q \"{Program.AppDir}\"") { CreateNoWindow = true, UseShellExecute = false }); } catch { }
             try { MessageBox.Show("pdfmy Scan wurde entfernt.", "pdfmy Scan", MessageBoxButtons.OK, MessageBoxIcon.Information); } catch { }
@@ -265,6 +268,18 @@ namespace PdfmyScan
                 FileAssoc.OpenDefaultAppsSettings();
                 icon.ShowBalloonTip(10000, "PDFMy als Standard festlegen", "In den Windows-Einstellungen bei „.pdf“ auf das Programm klicken und „PDFMy (pdfmy Scan)“ wählen.", ToolTipIcon.Info);
             });
+            var printerItem = new ToolStripMenuItem("Drucker „PDFMy“ einrichten …");
+            printerItem.Click += (s, e) =>
+            {
+                bool on = !PdfPrinter.Installed();
+                ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    string err = PdfPrinter.Setup(on);
+                    try { menu.BeginInvoke((Action)(() => icon.ShowBalloonTip(9000, "Drucker „PDFMy“", err ?? (on ? "Eingerichtet: In jedem Programm „Drucken“ → Drucker „" + PdfPrinter.Name + "“ wählen – das Dokument öffnet sich in PDFMy." : "Der Drucker wurde entfernt."), err == null ? ToolTipIcon.Info : ToolTipIcon.Warning))); } catch { }
+                });
+            };
+            menu.Items.Add(printerItem);
+            menu.Opening += (s, e) => { printerItem.Visible = !PdfPrinter.TerminalServer; printerItem.Text = PdfPrinter.Installed() ? "Drucker „PDFMy“ entfernen …" : "Drucker „PDFMy“ einrichten …"; };
             devicesItem = new ToolStripMenuItem("Scanner werden gesucht …") { Enabled = false };
             menu.Items.Add(devicesItem);
             menu.Items.Add("Scanner neu suchen", null, async (s, e) => { await hub.RefreshAsync(); });
@@ -1664,8 +1679,14 @@ namespace PdfmyScan
                 catch (Exception e) { var m = (e is AggregateException a ? a.InnerException ?? e : e).Message; Program.Log("Zeitstempel: " + m); SendJson(s, 502, new { error = m }, cors); }
                 return;
             }
+            if (p == "/printer" && method == "POST")   // Drucker „PDFMy“ einrichten (?on=1) oder entfernen (?on=0) – Windows fragt einmal nach Bestätigung
+            {
+                bool on = path.Contains("on=1");
+                string err = PdfPrinter.Setup(on);
+                SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return;
+            }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault() }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return; }
             if (p == "/wake" && method == "POST")   // „Scanner aufwecken“: wecken, kurz warten, neu suchen
             {
                 hub.RefreshAsync().Wait(40000);   // die Suche weckt zuerst alle bekannten Geräte

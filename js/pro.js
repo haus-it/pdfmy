@@ -2133,6 +2133,41 @@ async function openFromHash() {
   } catch (e) { status('Die Datei konnte nicht geöffnet werden: ' + e.message); toast('Datei konnte nicht geöffnet werden – bitte noch einmal doppelt anklicken.', 6000); }
 }
 openFromHash(); addEventListener('hashchange', openFromHash);   // auch wenn PDFMy schon offen ist
+/* ---------- Drucker „PDFMy“: in jedem Programm „Drucken“ → das Dokument öffnet sich in PDFMy. Windows: pdfmy Scan ab 1.10.0 legt
+   je Benutzer einen Drucker mit dem eingebauten Treiber „Microsoft Print to PDF“ an (eine Windows-Bestätigung, nicht auf Terminalservern).
+   Mac: pdfmy Scan für Mac ab 1.3.0 trägt „In PDFMy öffnen“ ins PDF-Menü des Druckdialogs ein. Die Druckdatei bleibt auf dem Rechner. */
+$('#btnPrinter').onclick = async () => {
+  closeMenu();
+  const T = (k, ...v) => String(I18N.t(k)).replace(/\{(\d+)\}/g, (all, n) => v[n] != null ? v[n] : all);
+  const dl = f => (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f;
+  if (IS_MOBILE) { toast(T('Auf dem Handy: in der App „Teilen“ → „PDFMy“ wählen (PDFMy muss als App installiert sein).'), 8000); return; }
+  if (IS_LINUX) { alert(T('Unter Linux hat der Druckdialog „In Datei drucken“: als PDF speichern und die Datei in PDFMy öffnen. Ein eigener Drucker „PDFMy“ ist für Linux nicht vorgesehen.')); return; }
+  const running = await scanHelperRunning();
+  if (IS_MAC) {
+    if (running && state.scanMac && !verLess(state.scanVersion, '1.3.0') && state.scanPrinter === 'on') { alert(T('So drucken Sie in PDFMy:\n\nIm Druckdialog eines beliebigen Programms unten links auf „PDF“ klicken und „In PDFMy öffnen“ wählen. Das Dokument öffnet sich sofort in PDFMy – es bleibt auf Ihrem Mac.')); return; }
+    if (confirm(T('Dafür wird „pdfmy Scan für Mac“ ab Version 1.3.0 benötigt: Es trägt „In PDFMy öffnen“ ins PDF-Menü des Druckdialogs ein – ohne Administratorrechte.\n\nJetzt herunterladen (ZIP öffnen, „pdfmy-Scan-Mac.command“ doppelklicken)?'))) location.href = dl('pdfmy-Scan-Mac.zip');
+    return;
+  }
+  if (!running || verLess(state.scanVersion, '1.10.0')) {
+    if (confirm(T('Dafür wird das kleine Windows-Programm „pdfmy Scan“ ab Version 1.10.0 benötigt. Es legt einen Drucker „PDFMy“ nur für Sie an – mit dem in Windows eingebauten PDF-Treiber, die Dateien bleiben auf Ihrem Rechner.\n\nJetzt herunterladen?'))) location.href = dl(SCAN_FILE);
+    return;
+  }
+  const st = state.scanPrinter, name = state.scanPrinterName;
+  if (st === 'ts') { alert(T('Auf diesem Rechner melden sich mehrere Benutzer gleichzeitig an (Terminalserver). Ein Drucker „PDFMy“ gälte dort für alle – deshalb bietet PDFMy ihn hier nicht an. Alternative: im Druckdialog „Microsoft Print to PDF“ wählen und die Datei in PDFMy öffnen.')); return; }
+  if (st === 'nodriver') { alert(T('Der in Windows eingebaute Drucker „Microsoft Print to PDF“ ist ausgeschaltet.\n\nEinschalten: Windows-Suche „Windows-Features aktivieren oder deaktivieren“ → Haken bei „Microsoft Print to PDF“ → OK. Danach hier noch einmal klicken.')); return; }
+  const on = st !== 'on';
+  if (on ? !confirm(T('Drucker „{0}“ einrichten?\n\nDanach wählen Sie in jedem Programm (Word, Browser, Warenwirtschaft …) beim Drucken den Drucker „{0}“ – das Dokument öffnet sich sofort in PDFMy.\n\nWindows fragt einmal nach Ihrer Bestätigung. Nur Sie können diesen Drucker benutzen; die Dateien bleiben auf Ihrem Rechner.', name))
+         : !confirm(T('Der Drucker „{0}“ ist eingerichtet. Wieder entfernen?\n\nWindows fragt dafür einmal nach Ihrer Bestätigung.', name))) return;
+  status(on ? T('Drucker wird eingerichtet – bitte die Windows-Abfrage bestätigen …') : T('Drucker wird entfernt – bitte die Windows-Abfrage bestätigen …'));
+  try {
+    const r = await fetch(SCAN_API + '/printer?on=' + (on ? 1 : 0), { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json());
+    state.scanPrinter = r.printer || state.scanPrinter;
+    if (!r.ok) { const m = r.error || T('Das hat nicht geklappt.'); status(m); alert(m); return; }
+    status(on ? T('Drucker „{0}“ ist eingerichtet. Zum Ausprobieren: in einem beliebigen Programm drucken und „{0}“ wählen.', name) : T('Drucker „{0}“ wurde entfernt.', name));
+    toast(on ? T('Fertig: Beim Drucken „{0}“ wählen – das Dokument öffnet sich in PDFMy.', name) : T('Drucker „{0}“ wurde entfernt.', name), 8000);
+  } catch { status(T('pdfmy Scan antwortet nicht. Bitte prüfen, ob es läuft (Symbol unten rechts), und noch einmal versuchen.')); }
+};
+
 $('#btnDefaultPdf').onclick = async () => {
   closeMenu();
   if (IS_MOBILE) { toast('Auf dem Handy: eine PDF in der Dateien-App antippen und „Öffnen mit … PDFMy“ wählen (PDFMy muss als App installiert sein).', 8000); return; }

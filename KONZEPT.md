@@ -111,6 +111,27 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Entschieden und umgesetzt (22.10.2026): virtueller Drucker „Drucken in PDFMy“
+Ziel: In jedem Programm (Word, Browser, Warenwirtschaft) „Drucken“ → Drucker „PDFMy“ → das Dokument öffnet sich sofort in PDFMy.
+
+| Plattform | Weg | Aufwand |
+|---|---|---|
+| Windows | pdfmy Scan legt mit **einer** Windows-Bestätigung (UAC) einen Drucker „PDFMy“ an – mit dem in Windows eingebauten Treiber „Microsoft Print to PDF“ und einem Anschluss, der in einen Ordner des Nutzers schreibt. pdfmy Scan bemerkt die fertige Datei, gibt ihr einen eindeutigen Namen und öffnet sie in PDFMy (vorhandener Weg wie beim Doppelklick). Kein eigener Treiber → keine Treibersignatur, keine Kernel-Komponente. Entfernen per Knopf. | ca. 1–1,5 Tage inkl. Tests (hier testbar) |
+| Mac | Eintrag „In PDFMy öffnen“ im PDF-Menü des macOS-Druckdialogs (Ordner ~/Library/PDF Services, ohne Admin-Rechte), zeigt auf die vorhandene App „PDFMy“ | ca. 0,5 Tage, Test nur auf echtem Mac |
+| Linux | zurückgestellt: Druckdialoge haben „In Datei drucken“; eigene CUPS-Warteschlange bräuchte Root | – |
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Druckdatei entsteht lokal, Übergabe nur an 127.0.0.1 |
+| 2 Kein Server | passt: nur pdfmy Scan auf dem eigenen PC |
+| 3 Kostenlos, ohne Konto | passt |
+| 4 So einfach wie möglich | passt mit Auflage: ein Knopf „Drucker PDFMy einrichten“ in pdfmy Scan, eine Windows-Bestätigung, keine Konsole |
+| 5 Normgerecht | passt: Ergebnis ist echtes PDF mit Text; als PDF/A speicherbar |
+| 6 Wenig aktive Inhalte | passt: keine |
+| 7 Besser als Wettbewerb | gleichauf mit Acrobat (Drucker nur im Abo) und PDF24; besser als PDFgear (kein Drucker); dazu sofort bearbeiten, OCR-frei durchsuchbar |
+
+**Umsetzung:** Windows über pdfmy Scan 1.10.0 (Drucker je Benutzer, Ordner unter `C:\ProgramData\PDFMy\Druck\<SID>`, weil Windows Datei-Anschlüsse im Profil verbietet; auf Terminalservern nicht angeboten), Mac über pdfmy Scan 1.3.0 (PDF-Menü). **Risiken (im Prototyp geklärt):** (a) Mehrbenutzer-PCs und Terminalserver: der Drucker gilt für alle Benutzer – Druckdateien dürfen nicht in einem gemeinsamen Ordner landen (Lösung: Drucker je Benutzer „PDFMy (Name)“ mit eigenem Ordner, Zugriffsrechte nur für diesen Benutzer; auf Terminalservern zunächst nicht anbieten). (b) Zwei Druckaufträge kurz hintereinander: Datei sofort nach Abschluss wegbewegen. (c) Gruppenrichtlinien in Firmen können das Anlegen von Druckern verbieten → verständliche Meldung. (d) „Microsoft Print to PDF“ kann abgeschaltet sein → pdfmy Scan prüft und erklärt das Einschalten.
+
 ### Entschieden 21.10.2026: KI nach eigener Wahl verbinden (ChatGPT, Claude, lokale KI)
 Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederzeit ein- und ausschaltbar.
 

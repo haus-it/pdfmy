@@ -2,6 +2,14 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-22
+
+### Drucker „PDFMy“ (app-v168, pdfmy Scan 1.10.0, pdfmy Scan für Mac/Linux 1.3.0)
+- Windows: pdfmy Scan legt auf Wunsch je Benutzer einen Drucker „PDFMy (Name)“ an – Treiber „Microsoft Print To PDF“ (in Windows enthalten, kein eigener Treiber), Anschluss in `C:\ProgramData\PDFMy\Druck\<SID>` (Windows erlaubt Datei-Anschlüsse nicht im Benutzerprofil), Ordnerrechte nur Benutzer + System, Druckrecht nur für diesen Benutzer. Einrichten/Entfernen mit einer UAC-Bestätigung über eine erhöhte Kopie von pdfmy Scan (64-Bit-PowerShell, unsichtbar). Fertige Druckdatei wird umbenannt und in PDFMy geöffnet; Druckdateien nach 7 Tagen gelöscht. Terminalserver (RDSH, multi-session) werden erkannt – dort kein Drucker. Deinstallation entfernt den Drucker.
+- Mac: Skript „In PDFMy öffnen“ in ~/Library/PDF Services (Druckdialog → PDF), Dateiname aus dem Dokumenttitel; /status meldet printer.
+- Web-App: „… Mehr → Drucker „PDFMy“ einrichten …“ mit Zustand (eingerichtet, Terminalserver, Treiber aus, Version zu alt), Tray-Menü in pdfmy Scan.
+- Getestet (Windows Server 2025): Einrichten über /printer, zwei Druckaufträge direkt nacheinander (beide in ~4 s geöffnet), Öffnen in PDFMy mit echtem Text, Entfernen räumt Drucker, Anschluss und Ordner ab, Terminalserver-Sperre, Web-App Einrichten/Entfernen, axe 0. Mac-Druckskript: Syntax und Übergabe gegen nachgebildeten Dienst geprüft – nicht auf echtem Mac getestet.
+
 ## 2026-10-21
 
 ### Patchcode-Trennblätter (app-v167)
