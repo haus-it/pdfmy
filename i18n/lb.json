@@ -2569,5 +2569,8 @@
  "{0} pdfmy Scan hat die Datei nicht gefunden – Outlook hat die vorübergehende Kopie vermutlich schon entfernt. Bitte den Anhang in Outlook noch einmal öffnen. {1}": "{0} pdfmy Scan huet de Fichier net fonnt – Outlook huet déi temporär Kopie wahrscheinlech schonn ewechgeholl. W.e.g. den Unhang an Outlook nach eng Kéier opmaachen. {1}",
  "{0} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. {1}": "{0} pdfmy Scan leeft, mee macOS verweigert him den Zougrëff op d’Outlook-Unhäng. Dauerhaft Léisung: „PDFMy (pdfmy Scan)“ als Standardprogramm fir PDF-Dateien astellen (Menü → „Als Standard fir PDFs festleeën …“) – da gëtt Outlook de Fichier direkt weider. Alternativ an de Systemastellungen → Dateschutz & Sécherheet → Vollen Zougang op d’Festplack „perl“ erlaben. {1}",
  "{0} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). {1}": "{0} pdfmy Scan, dat esou Unhäng automatesch noreecht, leeft op dësem Apparat net – w.e.g. starten oder installéieren (Uleedung: pdfmy.de/scanner.html). {1}",
- "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Direkt-Léisung: den Unhang an Outlook späicheren („Späicheren ënner“) an dann opmaachen."
+ "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Direkt-Léisung: den Unhang an Outlook späicheren („Späicheren ënner“) an dann opmaachen.",
+ "{NUMPAGES}": "{NUMPAGES}",
+ "{PAGE}": "{PAGE}",
+ "w:{0}Reference": "w:{0}Reference"
 }

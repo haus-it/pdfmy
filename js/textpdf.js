@@ -70,11 +70,15 @@
   }
 
   // Satz: A4 hoch (Tabellen mit vielen Spalten: quer), Ränder 2 cm, Umbruch nach Wortbreite, Seitenzahl unten
-  /* blocks: fertige Bausteine (z. B. aus js/office.js) statt text; page: { size: [w, h] in pt, margin } (sonst A4, 2 cm) */
+  /* blocks: fertige Bausteine (z. B. aus js/office.js) statt text; page: { size: [w, h] in pt, margin, top, bottom, header: [Bausteine], footer: [Bausteine] }
+     (sonst A4, 2 cm). Absätze mit runs: [{ t, b, i }] wechseln innerhalb der Zeile zwischen normal, fett und kursiv. {PAGE}/{NUMPAGES} in Kopf-/Fußzeile. */
   async function build(L, { text, kind = 'txt', title = '', fonts, blocks: given = null, page: pg = null }) {
     const doc = await L.PDFDocument.create();
     if (fonts.fontkit) doc.registerFontkit(fonts.fontkit);
     const F = { r: await doc.embedFont(fonts.regular, { subset: true }), b: await doc.embedFont(fonts.bold, { subset: true }), m: await doc.embedFont(fonts.mono, { subset: true }) };
+    if (fonts.italic) F.i = await doc.embedFont(fonts.italic, { subset: true });
+    if (fonts.boldItalic) F.bi = await doc.embedFont(fonts.boldItalic, { subset: true });
+    F.i ||= F.r; F.bi ||= F.b;   // ohne Kursivschnitt: aufrecht
     const sets = {}; for (const k in F) sets[k] = new Set(F[k].getCharacterSet());
     const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => ch === '\n' || sets[k].has(ch.codePointAt(0)) ? ch : '?').join('');
     let blocks;
@@ -85,10 +89,12 @@
     const cols = Math.max(0, ...blocks.filter(b => b.type === 'table').map(b => b.rows[0]?.length || 0));
     const sz = pg?.size && pg.size[0] > 100 && pg.size[1] > 100 ? pg.size : null, land = !sz && cols > 6;
     const PW = sz ? sz[0] : land ? 841.89 : 595.28, PH = sz ? sz[1] : land ? 595.28 : 841.89, M = pg?.margin || 56.7, W = PW - 2 * M, gray = L.rgb(0.45, 0.45, 0.45);
+    const Mt = pg?.top || M, Mb = pg?.bottom || M;   // Rand oben/unten (Word: getrennt einstellbar)
+    let paginate = true;   // Kopf-/Fußzeilen: ohne Seitenumbruch
     let page, y;
-    const newPage = () => { page = doc.addPage([PW, PH]); y = PH - M; };
+    const newPage = () => { page = doc.addPage([PW, PH]); y = PH - Mt; };
     newPage();
-    const need = h => { if (y - h < M) newPage(); };
+    const need = h => { if (paginate && y - h < Mb) newPage(); };
     const wrap = (s, font, size, width) => {
       const out = [];
       for (const para of String(s).split('\n')) {
@@ -107,6 +113,27 @@
         out.push(line.trimEnd());
       }
       return out;
+    };
+    // Text mit wechselnden Schnitten: Wörter je Schnitt messen und zeilenweise setzen
+    const runs1 = (runs, { size = 10.5, x = M, width = W, color, lead = 1.38, align } = {}) => {
+      const kOf = r => r.b && r.i ? 'bi' : r.b ? 'b' : r.i ? 'i' : 'r', toks = [];
+      for (const rn of runs) for (const part of String(rn.t).split(/(\n|\s+)/)) if (part) toks.push({ t: part === '\n' ? '\n' : safe(part, 'r'), k: kOf(rn) });
+      const lines = [[]]; let wl = 0;
+      for (const t of toks) {
+        if (t.t === '\n') { lines.push([]); wl = 0; continue; }
+        const tw = F[t.k].widthOfTextAtSize(t.t, size), cur = lines[lines.length - 1];
+        if (/^\s+$/.test(t.t)) { if (cur.length) { cur.push({ ...t, w: tw }); wl += tw; } continue; }
+        if (wl + tw > width && cur.length) { while (cur.length && /^\s+$/.test(cur[cur.length - 1].t)) wl -= cur.pop().w; lines.push([]); wl = 0; }
+        lines[lines.length - 1].push({ ...t, w: tw }); wl += tw;
+      }
+      for (const ln of lines) {
+        while (ln.length && /^\s+$/.test(ln[ln.length - 1].t)) ln.pop();
+        need(size * lead); y -= size * lead;
+        const tw = ln.reduce((a, t) => a + t.w, 0); let lx = align === 'center' ? x + (width - tw) / 2 : align === 'right' ? x + width - tw : x;
+        // aufeinanderfolgende Wörter gleichen Schnitts als ein Stück (beim Kopieren bleiben die Leerzeichen erhalten)
+        const segs = []; for (const t of ln) { const g = segs[segs.length - 1]; if (g && g.k === t.k) { g.t += t.t; g.w += t.w; } else segs.push({ ...t }); }
+        for (const g of segs) { if (g.t.trim()) page.drawText(g.t, { x: lx, y: y + size * 0.25, size, font: F[g.k], color }); lx += g.w; }
+      }
     };
     const text1 = (s, { k = 'r', size = 10.5, x = M, width = W, color, lead = 1.38, align } = {}) => {
       const font = F[k];
@@ -141,32 +168,46 @@
       if (hd) { need(hd.h + size * 3); drawRow(rows[0], true, hd); }
       for (const r of rows.slice(head ? 1 : 0)) {
         const lay = layout(r, false);
-        if (y - lay.h < M) { newPage(); if (hd) drawRow(rows[0], true, hd); }   // Tabellenkopf auf jeder neuen Seite wiederholen
+        if (paginate && y - lay.h < Mb) { newPage(); if (hd) drawRow(rows[0], true, hd); }   // Tabellenkopf auf jeder neuen Seite wiederholen
         drawRow(r, false, lay);
       }
       y -= 8;
     };
     if (title && kind !== 'md' && !given) { text1(title, { k: 'b', size: 15 }); y -= 6; }
-    for (const b of blocks) {
+    async function render(list) {
+    for (const b of list) {
       if (b.type === 'h') { const size = [0, 20, 16, 13.5, 12, 11, 10.5][b.level]; y -= b.level <= 2 ? 10 : 6; need(size * 2.4); text1(b.text, { k: 'b', size, lead: 1.25 }); y -= 4; }
-      else if (b.type === 'p') { text1(b.text, { k: b.bold ? 'b' : 'r', align: b.align }); y -= 6; }
-      else if (b.type === 'gap') { y -= 10.5 * 1.1; if (y < M) newPage(); }
-      else if (b.type === 'pagebreak') { if (y < PH - M - 1) newPage(); }
+      else if (b.type === 'p') { if (b.runs?.length) runs1(b.runs, { align: b.align }); else text1(b.text, { k: b.bold ? 'b' : 'r', align: b.align }); y -= b.tight ? 2 : 6; }
+      else if (b.type === 'gap') { y -= 10.5 * 1.1; if (paginate && y < Mb) newPage(); }
+      else if (b.type === 'pagebreak') { if (paginate && y < PH - Mt - 1) newPage(); }
       else if (b.type === 'img') {
         // Bild (PNG/JPEG) in Originalgröße, höchstens Satzbreite bzw. -höhe
         let im; try { im = b.mime === 'image/png' ? await doc.embedPng(b.bytes) : await doc.embedJpg(b.bytes); } catch { text1('[Bild]', { color: gray }); continue; }
-        const k = Math.min(1, W / b.w, (PH - 2 * M) / b.h), w = b.w * k, h = b.h * k;
+        const k = Math.min(1, W / b.w, (PH - Mt - Mb) / b.h), w = b.w * k, h = b.h * k;
         need(h + 4); y -= h + 2;
         page.drawImage(im, { x: b.align === 'center' ? M + (W - w) / 2 : b.align === 'right' ? M + W - w : M, y, width: w, height: h }); y -= 4;
       }
-      else if (b.type === 'li') { const ind = 14 + b.depth * 16; need(16); page.drawText(safe(b.label, 'r'), { x: M + ind - (b.ordered ? 14 : 9), y: y - 10.5 * 1.38 + 10.5 * 0.25, size: 10.5, font: F.r }); text1(b.text, { x: M + ind, width: W - ind }); y -= 2; }   // Aufzählungszeichen zuerst (Lesereihenfolge)
+      else if (b.type === 'li') { const ind = 14 + b.depth * 16; need(16); page.drawText(safe(b.label, 'r'), { x: M + ind - (b.ordered ? 14 : 9), y: y - 10.5 * 1.38 + 10.5 * 0.25, size: 10.5, font: F.r }); if (b.runs?.length) runs1(b.runs, { x: M + ind, width: W - ind }); else text1(b.text, { x: M + ind, width: W - ind }); y -= 2; }   // Aufzählungszeichen zuerst (Lesereihenfolge)
       else if (b.type === 'quote') { const y0 = y, p0 = page; text1(b.text, { x: M + 14, width: W - 14, color: gray }); if (page === p0) page.drawLine({ start: { x: M + 4, y: y0 - 2 }, end: { x: M + 4, y: y + 2 }, thickness: 2, color: L.rgb(0.75, 0.75, 0.75) }); y -= 6; }
       else if (b.type === 'code' || b.type === 'pre') { text1(b.text, { k: 'm', size: b.type === 'pre' ? 9.5 : 9, lead: 1.3 }); y -= 6; }
       else if (b.type === 'hr') { need(14); y -= 7; page.drawLine({ start: { x: M, y }, end: { x: PW - M, y }, thickness: 0.6, color: L.rgb(0.7, 0.7, 0.7) }); y -= 7; }
       else if (b.type === 'table') table(b.rows, b.head);
     }
+    }
+    await render(blocks);
     const pages = doc.getPages();
-    if (pages.length > 1) pages.forEach((p, i) => { const s = `${i + 1} / ${pages.length}`; p.drawText(s, { x: PW / 2 - F.r.widthOfTextAtSize(s, 8) / 2, y: M / 2, size: 8, font: F.r, color: gray }); });
+    // Kopf- und Fußzeilen (z. B. aus Word): auf jede Seite, {PAGE}/{NUMPAGES} ersetzt; Kopf oben im Rand, Fuß unter dem Satzspiegel
+    const hf = (list, i) => JSON.parse(JSON.stringify(list, (k, v) => k === 'bytes' ? undefined : v), (k, v) => typeof v === 'string' ? v.replace(/\{PAGE\}/g, String(i + 1)).replace(/\{NUMPAGES\}/g, String(pages.length)) : v)
+      .map((b, j) => list[j].bytes ? { ...b, bytes: list[j].bytes } : b);
+    if (pg?.header?.length || pg?.footer?.length) {
+      paginate = false;
+      for (const [i, p] of pages.entries()) {
+        page = p;
+        if (pg.header?.length) { y = PH - (pg.headerY || Math.max(20, Mt * 0.45)); await render(hf(pg.header, i).map(b => b.type === 'p' ? { ...b, tight: true } : b)); }
+        if (pg.footer?.length) { y = Math.min(Mb - 4, (pg.footerY || Mb * 0.45) + 30); await render(hf(pg.footer, i).map(b => b.type === 'p' ? { ...b, tight: true } : b)); }
+      }
+      paginate = true;
+    } else if (pages.length > 1) pages.forEach((p, i) => { const s = `${i + 1} / ${pages.length}`; p.drawText(s, { x: PW / 2 - F.r.widthOfTextAtSize(s, 8) / 2, y: M / 2, size: 8, font: F.r, color: gray }); });
     doc.setTitle(title || 'Dokument'); doc.setProducer('PDFMy (pdfmy.de)'); doc.setCreator('PDFMy');
     return doc.save();
   }

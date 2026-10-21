@@ -2569,5 +2569,8 @@
  "{0} pdfmy Scan hat die Datei nicht gefunden – Outlook hat die vorübergehende Kopie vermutlich schon entfernt. Bitte den Anhang in Outlook noch einmal öffnen. {1}": "{0} pdfmy Scan nerado failo – „Outlook“ greičiausiai jau pašalino laikinąją kopiją. Atidarykite priedą „Outlook“ dar kartą. {1}",
  "{0} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. {1}": "{0} pdfmy Scan veikia, tačiau macOS neleidžia jai pasiekti „Outlook“ priedų. Ilgalaikis sprendimas: nustatykite „PDFMy (pdfmy Scan)“ kaip numatytąją PDF failų programą (meniu → „Nustatyti numatytąja PDF programa …“) – tada „Outlook“ failą perduos tiesiogiai. Arba leiskite „perl“ skiltyje Sistemos nuostatos → Privatumas ir sauga → Visa prieiga prie disko. {1}",
  "{0} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). {1}": "{0} pdfmy Scan, kuri tokius priedus perduoda automatiškai, šiame įrenginyje neveikia – paleiskite arba įdiekite ją (instrukcija: pdfmy.de/scanner.html). {1}",
- "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Greitas sprendimas: įrašykite priedą „Outlook“ („Įrašyti kaip“) ir tada atidarykite."
+ "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Greitas sprendimas: įrašykite priedą „Outlook“ („Įrašyti kaip“) ir tada atidarykite.",
+ "{NUMPAGES}": "{NUMPAGES}",
+ "{PAGE}": "{PAGE}",
+ "w:{0}Reference": "w:{0}Reference"
 }

@@ -2569,5 +2569,8 @@
  "{0} pdfmy Scan hat die Datei nicht gefunden – Outlook hat die vorübergehende Kopie vermutlich schon entfernt. Bitte den Anhang in Outlook noch einmal öffnen. {1}": "{0} A pdfmy Scan nem találta a fájlt – az Outlook valószínűleg már eltávolította az ideiglenes másolatot. Kérjük, nyissa meg újra a mellékletet az Outlookban. {1}",
  "{0} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. {1}": "{0} A pdfmy Scan fut, de a macOS megtagadja tőle a hozzáférést az Outlook-mellékletekhez. Tartós megoldás: állítsa be a „PDFMy (pdfmy Scan)” programot a PDF-fájlok alapértelmezett programjaként (menü → „Beállítás alapértelmezett PDF-programként …”) – ekkor az Outlook közvetlenül átadja a fájlt. Másik lehetőségként engedélyezze a „perl” programot a Rendszerbeállítások → Adatvédelem és biztonság → Teljes lemezhozzáférés pontban. {1}",
  "{0} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). {1}": "{0} Az ilyen mellékleteket automatikusan átadó pdfmy Scan nem fut ezen az eszközön – kérjük, indítsa el vagy telepítse (útmutató: pdfmy.de/scanner.html). {1}",
- "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Azonnali megoldás: mentse a mellékletet az Outlookban („Mentés másként”), majd nyissa meg."
+ "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Azonnali megoldás: mentse a mellékletet az Outlookban („Mentés másként”), majd nyissa meg.",
+ "{NUMPAGES}": "{NUMPAGES}",
+ "{PAGE}": "{PAGE}",
+ "w:{0}Reference": "w:{0}Reference"
 }

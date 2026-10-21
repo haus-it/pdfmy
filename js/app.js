@@ -273,7 +273,8 @@ async function importOffice(file) {
   const bytes = new Uint8Array(await file.arrayBuffer()), ext = file.name.toLowerCase().split('.').pop(), word = ext === 'docx' || ext === 'odt', loc = { locale: I18N.info.bcp || 'de-DE' };
   const r = ext === 'docx' ? await Office.docx(bytes) : ext === 'odt' ? await Office.odt(bytes) : ext === 'ods' ? await Office.ods(bytes, loc) : ext === 'epub' ? await Office.epub(bytes) : await Office.xlsx(bytes, loc);
   const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
-  const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono } });
+  const [italic, boldItalic] = await Promise.all([asset('font:vendor/dejavu/DejaVuSans-Oblique.ttf', 'vendor/dejavu/DejaVuSans-Oblique.ttf'), asset('font:vendor/dejavu/DejaVuSans-BoldOblique.ttf', 'vendor/dejavu/DejaVuSans-BoldOblique.ttf')]);
+  const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono, italic, boldItalic } });
   await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
   if (word) status(`${file.name} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.`);
 }

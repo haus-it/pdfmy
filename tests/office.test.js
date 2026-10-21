@@ -157,3 +157,32 @@ test('EPUB: Titel, Kapitel mit Seitenwechsel, Überschriften, Absätze mit Zeile
   const t = pdfText(pdf); for (const w of ['Vereinschronik', 'Gründung', 'Fußball', 'Halle', 'Mitglieder']) assert.ok(t.includes(w), w);
   await assert.rejects(Office.epub(await zipDeflate({ 'a.txt': 'x' })), /Keine EPUB-Datei/);
 });
+
+test('Word: Kopfzeile mit Logo, Fußzeile mit Seitenzahl auf jeder Seite, fett und kursiv im Satz', async () => {
+  const body = p(r('Sehr geehrte ') + r('Frau Müller', '<w:b/>') + r(', das ist ') + r('wichtig', '<w:i/>') + r('.'))
+    + p('<w:r><w:br w:type="page"/></w:r>') + p(r('Zweite Seite'))
+    + '<w:sectPr><w:headerReference w:type="default" r:id="rIdH"/><w:footerReference w:type="default" r:id="rIdF"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="2268" w:bottom="1701" w:left="1418" w:right="1134" w:header="709" w:footer="709"/></w:sectPr>';
+  const hdr = `<w:hdr ${W}>${p(r('Mentor GmbH · Paderborn'), '<w:jc w:val="right"/>')}${p('<w:r><w:drawing><wp:inline><wp:extent cx="635000" cy="317500"/><a:graphic><a:graphicData><a:blip r:embed="rIdLogo"/></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>')}</w:hdr>`;
+  const ftr = `<w:ftr ${W}>${p(r('Seite ') + '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> PAGE </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>9</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>' + r(' von ') + '<w:fldSimple w:instr=" NUMPAGES "><w:r><w:t>9</w:t></w:r></w:fldSimple>', '<w:jc w:val="center"/>')}</w:ftr>`;
+  const z = await zipDeflate({
+    'word/document.xml': `<w:document ${W}><w:body>${body}</w:body></w:document>`,
+    'word/_rels/document.xml.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdH" Type="header" Target="header1.xml"/><Relationship Id="rIdF" Type="footer" Target="footer1.xml"/></Relationships>',
+    'word/header1.xml': hdr, 'word/footer1.xml': ftr,
+    'word/_rels/header1.xml.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdLogo" Type="image" Target="media/logo.png"/></Relationships>',
+    'word/media/logo.png': PNG,
+  });
+  const { blocks, page } = await Office.docx(z);
+  assert.deepEqual(blocks[0].runs.map(x => x.t + (x.b ? '[b]' : '') + (x.i ? '[i]' : '')), ['Sehr geehrte ', 'Frau Müller[b]', ', das ist ', 'wichtig[i]', '.']);
+  assert.equal(page.header.length, 2); assert.equal(page.header[1].type, 'img');
+  assert.equal(page.footer[0].text, 'Seite {PAGE} von {NUMPAGES}');
+  assert.equal(Math.round(page.top), 113); assert.equal(Math.round(page.bottom), 85);
+  const pdf = await TP.build(L, { blocks, page, fonts: { ...fonts, italic: V('dejavu/DejaVuSans-Oblique.ttf'), boldItalic: V('dejavu/DejaVuSans-BoldOblique.ttf') } });
+  const t = pdfText(pdf);
+  assert.match(t, /^2\r?\n/);
+  assert.equal((t.match(/Mentor GmbH · Paderborn/g) || []).length, 2, 'Kopfzeile auf beiden Seiten');
+  assert.ok(t.includes('Seite 1 von 2') && t.includes('Seite 2 von 2'), 'Seitenzahlen: ' + t);
+  assert.ok(/Sehr geehrte\s*Frau Müller\s*,\s*das ist\s*wichtig\s*\./.test(t), 'Satz vollständig');   // pypdf trennt beim Schnittwechsel
+  const d = await L.PDFDocument.load(pdf);
+  const fontsUsed = new Set(); for (const [, o] of d.context.enumerateIndirectObjects()) { const bf = o?.get?.(L.PDFName.of('BaseFont')); if (bf) fontsUsed.add(String(bf).replace(/^\/[A-Z]{6}\+/, '/')); }
+  assert.ok([...fontsUsed].some(x => /Bold/.test(x)) && [...fontsUsed].some(x => /Oblique/.test(x)), 'fett und kursiv eingebettet: ' + [...fontsUsed]);
+});

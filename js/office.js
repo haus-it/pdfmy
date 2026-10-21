@@ -79,10 +79,9 @@
       for (const n of all(N, 'w:num')) nums.set(n.attrs['w:numId'], abs.get(kid(n, 'w:abstractNumId')?.attrs['w:val']));
     }
     // Bilder: Beziehungen rId → Datei
-    const rels = new Map();
-    const rx = await z.text('word/_rels/document.xml.rels');
-    if (rx) for (const r of all(parseXml(rx), 'Relationship')) rels.set(r.attrs.Id, r.attrs.Target);
-    const counters = new Map(), blocks = [];
+    const relsOf = async part => { const m = new Map(), x = await z.text(part.replace(/([^/]+)$/, '_rels/$1.rels')); if (x) for (const r of all(parseXml(x), 'Relationship')) m.set(r.attrs.Id, r.attrs.Target); return m; };
+    let rels = await relsOf('word/document.xml');
+    const counters = new Map(); let blocks = [];
     const image = async d => {
       const blip = all(d, 'a:blip')[0], ext = all(d, 'wp:extent')[0], id = blip?.attrs['r:embed'], target = id && rels.get(id);
       if (!target) return null;
@@ -96,22 +95,30 @@
     const para = async p => {
       const pPr = kid(p, 'w:pPr'), st = styles.get(kid(pPr, 'w:pStyle')?.attrs['w:val']) || { h: 0 };
       const jc = kid(pPr, 'w:jc')?.attrs['w:val'], align = jc === 'center' ? 'center' : jc === 'right' || jc === 'end' ? 'right' : null;
-      let text = '', runs = 0, boldRuns = 0; const extra = []; let pageBreak = false;
+      let text = '', runs = 0, boldRuns = 0, fieldSkip = false; const extra = [], parts = []; let pageBreak = false;
+      const field = instr => /\bNUMPAGES\b/.test(instr) ? '{NUMPAGES}' : /\bPAGE\b/.test(instr) ? '{PAGE}' : null;
       const walk = async el => {
         for (const k of els(el)) {
           if (k.name === 'w:r') {
             const rPr = kid(k, 'w:rPr'), hidden = on(kid(rPr, 'w:vanish')); if (hidden) continue;
             let t = '';
             for (const c of els(k)) {
+              // Felder: Seitenzahl/Seitenanzahl als Platzhalter, zwischengespeichertes Ergebnis überspringen
+              if (c.name === 'w:fldChar') { const ty = c.attrs['w:fldCharType']; if (ty === 'end') fieldSkip = false; continue; }
+              if (c.name === 'w:instrText') { const fd = field(txt(c)); if (fd) { t += fd; fieldSkip = true; } continue; }
+              if (fieldSkip) continue;
               if (c.name === 'w:t') t += txt(c);
               else if (c.name === 'w:tab') t += '\t';
               else if (c.name === 'w:br' || c.name === 'w:cr') { if (c.attrs['w:type'] === 'page') pageBreak = true; else t += '\n'; }
               else if (c.name === 'w:drawing' || c.name === 'w:pict') { const im = await image(c); if (im) extra.push(im); }
               else if (c.name === 'w:lastRenderedPageBreak') { /* nur Anzeige */ }
             }
-            if (t.trim()) { runs++; if (on(kid(rPr, 'w:b')) || st.bold) boldRuns++; }
+            const bo = on(kid(rPr, 'w:b')) || !!st.bold, it = on(kid(rPr, 'w:i'));
+            if (t.trim()) { runs++; if (bo) boldRuns++; }
+            if (t) { const last = parts[parts.length - 1]; if (last && last.b === bo && last.i === it) last.t += t; else parts.push({ t, b: bo, i: it }); }
             text += t;
-          } else if (['w:hyperlink', 'w:smartTag', 'w:ins', 'w:sdt', 'w:sdtContent', 'w:fldSimple', 'w:customXml'].includes(k.name)) await walk(k);
+          } else if (k.name === 'w:fldSimple' && field(k.attrs['w:instr'] || '')) { const fd = field(k.attrs['w:instr']); text += fd; parts.push({ t: fd, b: false, i: false }); }
+          else if (['w:hyperlink', 'w:smartTag', 'w:ins', 'w:sdt', 'w:sdtContent', 'w:fldSimple', 'w:customXml'].includes(k.name)) await walk(k);
           else if (k.name === 'w:del') continue;
         }
       };
@@ -126,7 +133,11 @@
           const n = (counters.get(key) || 0) + 1; counters.set(key, n);
           for (const [k2] of counters) if (k2.startsWith(numId + ':') && +k2.split(':')[1] > +ilvl) counters.delete(k2);   // Unterebenen neu zählen
           blocks.push({ type: 'li', ordered: ord, label: ord ? (fmt.includes('Letter') ? String.fromCharCode(96 + ((n - 1) % 26) + 1) + ')' : fmt.includes('Roman') ? ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x'][(n - 1) % 10] + '.' : n + '.') : '•', depth: Math.min(3, +ilvl), text });
-        } else blocks.push({ type: 'p', text, align, bold: runs > 0 && boldRuns === runs });
+        } else {
+          // gemischte Schnitte (fett/kursiv innerhalb des Absatzes): Textstücke mitgeben
+          const mixed = parts.some(x => x.i && x.t.trim()) || (boldRuns > 0 && boldRuns < runs);
+          blocks.push({ type: 'p', text, align, bold: runs > 0 && boldRuns === runs, ...(mixed ? { runs: parts.map(x => ({ ...x, t: x.t.replace(/[ \u00a0]+\n/g, '\n') })) } : {}) });
+        }
       } else if (!extra.length && !pageBreak) blocks.push({ type: 'gap' });   // leere Zeile im Dokument
       for (const x of extra) blocks.push({ ...x, align: align || 'left' });
       if (pageBreak) blocks.push({ type: 'pagebreak' });
@@ -154,7 +165,22 @@
     }
     // Seitenformat aus dem letzten Abschnitt (Twips → pt)
     const sect = kid(body, 'w:sectPr'), sz = kid(sect, 'w:pgSz'), mar = kid(sect, 'w:pgMar');
-    const page = { size: sz ? [+sz.attrs['w:w'] / 20, +sz.attrs['w:h'] / 20] : null, margin: mar ? Math.max(28, Math.min(85, +mar.attrs['w:left'] / 20 || 56.7)) : null };
+    const tw = v => +v / 20;
+    const page = { size: sz ? [tw(sz.attrs['w:w']), tw(sz.attrs['w:h'])] : null, margin: mar ? Math.max(28, Math.min(85, tw(mar.attrs['w:left']) || 56.7)) : null,
+      top: mar ? Math.max(20, Math.min(200, Math.abs(tw(mar.attrs['w:top'])) || 56.7)) : null, bottom: mar ? Math.max(20, Math.min(200, Math.abs(tw(mar.attrs['w:bottom'])) || 56.7)) : null,
+      headerY: mar?.attrs['w:header'] ? tw(mar.attrs['w:header']) : null, footerY: mar?.attrs['w:footer'] ? tw(mar.attrs['w:footer']) : null };
+    // Kopf- und Fußzeile (Standard-Variante) mit eigenen Bildern; auf jeder Seite wiederholt (js/textpdf.js)
+    const part = async (kind) => {
+      const ref = els(sect || { kids: [] }).find(k => k.name === `w:${kind}Reference` && (k.attrs['w:type'] || 'default') === 'default');
+      const target = ref && rels.get(ref.attrs['r:id']); if (!target) return null;
+      const path = 'word/' + target.replace(/^\.?\//, ''), xml = await z.text(path); if (!xml) return null;
+      const save = blocks, saveRels = rels; blocks = []; rels = await relsOf(path);
+      try { for (const k of els(parseXml(xml).kids.find(x => typeof x === 'object') || { kids: [] })) { if (k.name === 'w:p') await para(k); else if (k.name === 'w:tbl') await table(k); } return blocks.filter(b => b.type !== 'gap' && b.type !== 'pagebreak'); }
+      finally { blocks = save; rels = saveRels; }
+    };
+    const header = await part('header'), footer = await part('footer');
+    if (header?.length) page.header = header;
+    if (footer?.length) page.footer = footer;
     // aufeinanderfolgende Leerzeilen zusammenfassen, Leerzeilen am Ende weg
     const out = blocks.filter((b, i) => !(b.type === 'gap' && (i === 0 || blocks[i - 1].type === 'gap')));
     while (out.length && ['gap', 'pagebreak'].includes(out[out.length - 1].type)) out.pop();
@@ -233,28 +259,30 @@
     for (const src of [doc, st ? parseXml(st) : null].filter(Boolean)) {
       for (const s of all(src, 'style:style')) {
         const tp = kid(s, 'style:text-properties'), pp = kid(s, 'style:paragraph-properties');
-        styles.set(s.attrs['style:name'], { bold: tp?.attrs['fo:font-weight'] === 'bold', align: pp?.attrs['fo:text-align'], parent: s.attrs['style:parent-style-name'], h: /^(Heading|Title)/.test(s.attrs['style:name'] || '') ? (+(/\d/.exec(s.attrs['style:name']) || [1])[0] || 1) : 0 });
+        styles.set(s.attrs['style:name'], { bold: tp?.attrs['fo:font-weight'] === 'bold', italic: tp?.attrs['fo:font-style'] === 'italic', align: pp?.attrs['fo:text-align'], parent: s.attrs['style:parent-style-name'], h: /^(Heading|Title)/.test(s.attrs['style:name'] || '') ? (+(/\d/.exec(s.attrs['style:name']) || [1])[0] || 1) : 0 });
       }
       for (const l of all(src, 'text:list-style')) { const first = els(l)[0]; lists.set(l.attrs['style:name'], first?.name === 'text:list-level-style-number'); }
     }
-    const sty = name => { let s = styles.get(name), bold = false, align = null, h = 0, n = 0; while (s && n++ < 5) { bold ||= s.bold; align ||= s.align; h ||= s.h; s = styles.get(s.parent); } return { bold, align, h }; };
+    const sty = name => { let s = styles.get(name), bold = false, italic = false, align = null, h = 0, n = 0; while (s && n++ < 5) { bold ||= s.bold; italic ||= s.italic; align ||= s.align; h ||= s.h; s = styles.get(s.parent); } return { bold, italic, align, h }; };
     return { z, doc, sty, lists, st };
   }
   // Text eines Absatzes (Leerzeichen-, Tab- und Zeilenumbruch-Elemente), Fettdruck aller Teile
   function odfText(el, sty) {
-    let t = '', runs = 0, bold = 0;
-    const walk = (e, b) => {
+    let t = '', runs = 0, bold = 0; const parts = [];
+    const add = (s, b, i) => { t += s; const last = parts[parts.length - 1]; if (last && last.b === b && last.i === i) last.t += s; else parts.push({ t: s, b, i }); };
+    const walk = (e, b, i) => {
       for (const k of e.kids) {
-        if (typeof k === 'string') { t += k; if (k.trim()) { runs++; if (b) bold++; } continue; }
-        if (k.name === 'text:s') t += ' '.repeat(+k.attrs['text:c'] || 1);
-        else if (k.name === 'text:tab') t += '\t';
-        else if (k.name === 'text:line-break') t += '\n';
+        if (typeof k === 'string') { add(k, b, i); if (k.trim()) { runs++; if (b) bold++; } continue; }
+        if (k.name === 'text:s') add(' '.repeat(+k.attrs['text:c'] || 1), b, i);
+        else if (k.name === 'text:tab') add('\t', b, i);
+        else if (k.name === 'text:line-break') add('\n', b, i);
         else if (k.name === 'text:note' || k.name === 'office:annotation') continue;
-        else walk(k, b || (k.name === 'text:span' && sty(k.attrs['text:style-name']).bold));
+        else { const ss = k.name === 'text:span' ? sty(k.attrs['text:style-name']) : {}; walk(k, b || !!ss.bold, i || !!ss.italic); }
       }
     };
-    walk(el, sty(el.attrs['text:style-name']).bold);
-    return { text: t.replace(/\s+$/, ''), allBold: runs > 0 && bold === runs };
+    const ps = sty(el.attrs['text:style-name']); walk(el, ps.bold, ps.italic);
+    const mixed = parts.some(x => x.i && x.t.trim()) || (bold > 0 && bold < runs);
+    return { text: t.replace(/\s+$/, ''), allBold: runs > 0 && bold === runs, runs: mixed ? parts : null };
   }
   async function odt(bytes) {
     const { z, doc, sty, lists, st } = await odfParts(bytes, 'text'), blocks = [], body = all(doc, 'office:text')[0];
@@ -265,13 +293,13 @@
       return mime ? { type: 'img', bytes: data, mime, w: len(fr.attrs['svg:width']) || 200, h: len(fr.attrs['svg:height']) || 150 } : { type: 'p', text: '[Bild]' };
     };
     const para = async (p, extra = {}) => {
-      const { text, allBold } = odfText(p, sty), s = sty(p.attrs['text:style-name']);
+      const { text, allBold, runs } = odfText(p, sty), s = sty(p.attrs['text:style-name']);
       for (const fr of all(p, 'draw:frame')) { const im = await image(fr); if (im) blocks.push({ ...im, align: s.align === 'center' ? 'center' : s.align === 'end' || s.align === 'right' ? 'right' : 'left' }); }
       if (!text.trim()) { if (!all(p, 'draw:frame').length) blocks.push({ type: 'gap' }); return; }
       if (p.name === 'text:h') blocks.push({ type: 'h', level: Math.min(6, +p.attrs['text:outline-level'] || 1), text });
       else if (extra.li) blocks.push({ type: 'li', ...extra.li, text });
       else if (s.h) blocks.push({ type: 'h', level: Math.min(6, s.h), text });
-      else blocks.push({ type: 'p', text, bold: allBold, align: s.align === 'center' ? 'center' : s.align === 'end' || s.align === 'right' ? 'right' : null });
+      else blocks.push({ type: 'p', text, bold: allBold, align: s.align === 'center' ? 'center' : s.align === 'end' || s.align === 'right' ? 'right' : null, ...(runs ? { runs } : {}) });
     };
     const list = async (l, depth = 0, ordered = null) => {
       const ord = ordered ?? lists.get(l.attrs['text:style-name']) ?? false; let n = 0;

@@ -2569,5 +2569,8 @@
  "{0} pdfmy Scan hat die Datei nicht gefunden – Outlook hat die vorübergehende Kopie vermutlich schon entfernt. Bitte den Anhang in Outlook noch einmal öffnen. {1}": "{0} Níor aimsigh pdfmy Scan an comhad – is dócha gur bhain Outlook an chóip shealadach cheana féin. Oscail an ceangaltán in Outlook arís le do thoil. {1}",
  "{0} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. {1}": "{0} Tá pdfmy Scan ag rith, ach diúltaíonn macOS rochtain dó ar cheangaltáin Outlook. Réiteach buan: socraigh “PDFMy (pdfmy Scan)” mar an clár réamhshocraithe do chomhaid PDF (roghchlár → “Socraigh mar réamhshocrú do PDFanna …”) – ansin cuireann Outlook an comhad ar aghaidh go díreach. Mar mhalairt air sin, ceadaigh “perl” in System Settings → Privacy & Security → Full Disk Access. {1}",
  "{0} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). {1}": "{0} Níl pdfmy Scan, a chuireann ceangaltáin den sórt sin ar aghaidh go huathoibríoch, ag rith ar an ngléas seo – tosaigh nó suiteáil é le do thoil (treoracha: pdfmy.de/scanner.html). {1}",
- "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Réiteach láithreach: sábháil an ceangaltán in Outlook (“Sábháil Mar”) agus oscail ansin é."
+ "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Réiteach láithreach: sábháil an ceangaltán in Outlook (“Sábháil Mar”) agus oscail ansin é.",
+ "{NUMPAGES}": "{NUMPAGES}",
+ "{PAGE}": "{PAGE}",
+ "w:{0}Reference": "w:{0}Reference"
 }

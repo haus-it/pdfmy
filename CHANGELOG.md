@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Word/LibreOffice in PDF: Kopf- und Fußzeilen, fett und kursiv im Satz
+- **Kopf- und Fußzeilen** aus Word (Standard-Variante, mit eigenen Bildern wie dem Firmenlogo) erscheinen auf jeder Seite; Felder **PAGE** und **NUMPAGES** (auch als einfache Felder) werden zu „Seite 1 von 3“. Ränder oben/unten sowie Abstand von Kopf- und Fußzeile aus der Datei.
+- **Fett und kursiv innerhalb eines Absatzes** (Word: w:b/w:i je Textstück; LibreOffice: Zeichenformate) – Satzmodul `js/textpdf.js` setzt gemischte Schnitte zeilenweise (DejaVu Sans normal/fett/kursiv/fett-kursiv, Kursivschnitte nur bei Bedarf eingebettet); Wörter gleichen Schnitts als ein Textstück (Kopieren mit Leerzeichen).
+- Getestet: `tests/office.test.js` (neuer Fall: Kopfzeile mit Logo und Fußzeile mit Seitenzahl auf zwei Seiten, fett/kursiv, eingebettete Schnitte), Sichtprüfung einer Briefseite.
+
 ### Outlook-Anhänge: genaue Ursache statt allgemeiner Meldung; pdfmy Scan für Mac/Linux 1.2.0
 - Rückmeldung (Mac, „Rahmenvertrag…pdf konnte nicht gelesen werden“): Kann PDFMy einen Anhang nicht lesen, unterscheidet die Meldung jetzt **pdfmy Scan läuft nicht**, **pdfmy Scan zu alt**, **macOS verweigert den Zugriff** (mit Lösung: PDFMy als PDF-Standardprogramm einstellen oder Festplattenvollzugriff für „perl“) und **Datei nicht gefunden** (Outlook hat die Kopie schon entfernt) – jeweils mit Sofort-Lösung „Speichern unter“.
 - pdfmy Scan für Mac/Linux **1.2.0**: `/attachment` meldet bei „nicht gefunden“ zusätzlich, ob der macOS-Datenschutz Ordner gesperrt hat (`denied`).

@@ -2569,5 +2569,8 @@
  "{0} pdfmy Scan hat die Datei nicht gefunden – Outlook hat die vorübergehende Kopie vermutlich schon entfernt. Bitte den Anhang in Outlook noch einmal öffnen. {1}": "{0} pdfmy Scan nu a găsit fișierul – probabil Outlook a eliminat deja copia temporară. Vă rugăm să deschideți din nou atașamentul în Outlook. {1}",
  "{0} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. {1}": "{0} pdfmy Scan rulează, dar macOS îi refuză accesul la atașamentele din Outlook. Soluție permanentă: setați „PDFMy (pdfmy Scan)” ca program implicit pentru fișierele PDF (meniu → „Setare ca implicit pentru PDF-uri …”) – atunci Outlook transmite fișierul direct. Alternativ, permiteți „perl” în Setări sistem → Confidențialitate și securitate → Acces complet la disc. {1}",
  "{0} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). {1}": "{0} pdfmy Scan, care transmite automat astfel de atașamente, nu rulează pe acest dispozitiv – vă rugăm să îl porniți sau să îl instalați (instrucțiuni: pdfmy.de/scanner.html). {1}",
- "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Soluție imediată: salvați atașamentul în Outlook („Salvare ca”) și apoi deschideți-l."
+ "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Soluție imediată: salvați atașamentul în Outlook („Salvare ca”) și apoi deschideți-l.",
+ "{NUMPAGES}": "{NUMPAGES}",
+ "{PAGE}": "{PAGE}",
+ "w:{0}Reference": "w:{0}Reference"
 }

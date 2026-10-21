@@ -2569,5 +2569,8 @@
  "{0} pdfmy Scan hat die Datei nicht gefunden – Outlook hat die vorübergehende Kopie vermutlich schon entfernt. Bitte den Anhang in Outlook noch einmal öffnen. {1}": "{0} pdfmy Scan nuk e gjeti skedarin – Outlook ka të ngjarë ta ketë hequr tashmë kopjen e përkohshme. Ju lutemi hapeni sërish shtojcën në Outlook. {1}",
  "{0} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. {1}": "{0} pdfmy Scan po funksionon, por macOS i refuzon qasjen te shtojcat e Outlook. Zgjidhje e përhershme: caktoni „PDFMy (pdfmy Scan)“ si programin e parazgjedhur për skedarët PDF (menyja → „Cakto si parazgjedhje për PDF …“) – atëherë Outlook ia kalon skedarin drejtpërdrejt. Përndryshe, lejoni „perl“ te Cilësimet e sistemit → Privatësia & Siguria → Qasje e plotë në disk. {1}",
  "{0} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). {1}": "{0} pdfmy Scan, që i kalon automatikisht shtojca të tilla, nuk po funksionon në këtë pajisje – ju lutemi niseni ose instalojeni (udhëzime: pdfmy.de/scanner.html). {1}",
- "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Zgjidhje e menjëhershme: ruajeni shtojcën në Outlook („Ruaj si“) dhe pastaj hapeni."
+ "Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.": "Zgjidhje e menjëhershme: ruajeni shtojcën në Outlook („Ruaj si“) dhe pastaj hapeni.",
+ "{NUMPAGES}": "{NUMPAGES}",
+ "{PAGE}": "{PAGE}",
+ "w:{0}Reference": "w:{0}Reference"
 }
