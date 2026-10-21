@@ -6,7 +6,7 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ### pdfmy Scan für Mac 1.2.1: Outlook-Anhänge über die App „PDFMy“
 - Rückmeldung Mac (Herr Fischer): Die App „PDFMy“ (Standardprogramm für PDF) gab Outlook-Anhänge nur als Pfad an pdfmy Scan weiter – der Hintergrunddienst darf Outlooks geschützten Ordner aber nicht lesen (macOS-Datenschutz). Jetzt **kopiert die App den Anhang selbst** (sie darf das, weil Outlook ihr die Datei übergibt) nach ~/Library/Caches/de.pdfmy.open und reicht die Kopie weiter; Kopien älter als 12 Stunden werden entfernt.
-- Einmalig nötig: Einrichtung pdfmy Scan für Mac neu ausführen (legt die App neu an), dabei „Ja, PDFMy verwenden“ wählen.
+- Einmalig nötig: Einrichtung pdfmy Scan für Mac neu ausführen (legt die App neu an), dabei „Ja, PDFMy verwenden“ wählen – Schritt-für-Schritt-Anleitung jetzt in der Hilfe („Mac: PDF-Anhänge aus Outlook direkt in PDFMy öffnen“).
 - Getestet: Kopierbefehl mit Leerzeichen, Umlaut und Klammern im Dateinamen; install.command Syntaxprüfung. Auf einem echten Mac nicht getestet (kein Mac verfügbar).
 
 ### Messwerkzeug: Vieleck mit Fläche und Umfang
