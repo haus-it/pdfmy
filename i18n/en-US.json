@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Check for yourself",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Check for yourself that your documents don’t leave this device",
  "So prüfen Sie es selbst": "How to check for yourself",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Turn off Wi-Fi or unplug the network cable."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Turn off Wi-Fi or unplug the network cable.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(the same fingerprint is shown there, independent of pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} program file(s) differ from the checksum list: {1}. After an update, please reload the page and check again.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Program version verified: {0} of {0} loaded program files match the published checksum list.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Compare with the release log on GitHub",
+ "Stand {0} · Fingerabdruck": "Version {0} · fingerprint"
 }

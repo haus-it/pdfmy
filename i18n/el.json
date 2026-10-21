@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Ελέγξτε μόνοι σας",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Ελέγξτε μόνοι σας ότι τα έγγραφά σας δεν φεύγουν από αυτή τη συσκευή",
  "So prüfen Sie es selbst": "Πώς να το ελέγξετε μόνοι σας",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Απενεργοποιήστε το Wi-Fi ή αποσυνδέστε το καλώδιο δικτύου."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Απενεργοποιήστε το Wi-Fi ή αποσυνδέστε το καλώδιο δικτύου.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(εκεί αναγράφεται το ίδιο αποτύπωμα, ανεξάρτητα από το pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} αρχεία προγράμματος αποκλίνουν από τη λίστα αθροισμάτων ελέγχου: {1}. Μετά από ενημέρωση, φορτώστε ξανά τη σελίδα και ελέγξτε πάλι.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Η έκδοση του προγράμματος ελέγχθηκε: {0} από {0} φορτωμένα αρχεία προγράμματος συμφωνούν με τη δημοσιευμένη λίστα αθροισμάτων ελέγχου.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Σύγκριση με το αρχείο εκδόσεων στο GitHub",
+ "Stand {0} · Fingerabdruck": "Έκδοση {0} · αποτύπωμα"
 }

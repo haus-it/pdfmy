@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Kannið sjálf",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Kannið sjálf að skjölin yðar fari ekki af þessu tæki",
  "So prüfen Sie es selbst": "Svona kannið þér það sjálf",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Slökkvið á þráðlausa netinu eða takið netsnúruna úr sambandi."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Slökkvið á þráðlausa netinu eða takið netsnúruna úr sambandi.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(þar stendur sama fingrafarið, óháð pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} forritaskrá(r) víkja frá gátsummulistanum: {1}. Eftir uppfærslu vinsamlegast endurhlaðið síðunni og athugið aftur.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Útgáfa forritsins staðfest: {0} af {0} hlöðnum forritaskrám passa við birta gátsummulistann.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Bera saman við útgáfuskrána á GitHub",
+ "Stand {0} · Fingerabdruck": "Útgáfa {0} · fingrafar"
 }

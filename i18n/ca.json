@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Comproveu-ho vós mateix",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Comproveu vós mateix que els vostres documents no surten d'aquest dispositiu",
  "So prüfen Sie es selbst": "Com ho podeu comprovar vós mateix",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Desactiveu el wifi o desconnecteu el cable de xarxa."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Desactiveu el wifi o desconnecteu el cable de xarxa.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(allà hi figura la mateixa empremta digital, independentment de pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} fitxer(s) del programa no coincideixen amb la llista de sumes de verificació: {1}. Després d'una actualització, torneu a carregar la pàgina i comproveu-ho de nou.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versió del programa comprovada: {0} de {0} fitxers del programa carregats coincideixen amb la llista publicada de sumes de verificació.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Compareu-ho amb el registre de versions a GitHub",
+ "Stand {0} · Fingerabdruck": "Versió {0} · empremta digital"
 }

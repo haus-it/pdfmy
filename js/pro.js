@@ -1649,9 +1649,38 @@ function netShow() {
   }
   for (const x of netSent.filter(x => !x.local && !hosts.has(x.host))) { const li = document.createElement('li'); li.textContent = T('{0} · Daten gesendet', x.host); list.append(li); }
 }
-const netOpen = () => { closeMenu?.(); netShow(); $('#netDlg').showModal(); };
+const netOpen = () => { closeMenu?.(); netShow(); $('#netDlg').showModal(); netVerify(); };
 $('#btnNet').onclick = netOpen; if ($('#trustNet')) $('#trustNet').onclick = netOpen;
 $('#netRefresh').onclick = netShow;
+
+/* Programmstand prüfen: die laufenden Programmdateien mit der Prüfsummenliste des Releases vergleichen (pruefsummen.json,
+   nur auf pdfmy.de). Der Fingerabdruck der Liste steht im Release-Protokoll auf GitHub – unabhängig von pdfmy.de. */
+const RELEASES_URL = 'https://github.com/haus-it/pdfmy/blob/main/docs/RELEASES.md';
+async function netVerify() {
+  const box = $('#netVer'), T = (k, ...v) => String(I18N.t(k)).replace(/\{(\d+)\}/g, (all, n) => v[n] != null ? v[n] : all);
+  let list, txt;
+  try {
+    const [j, t] = await Promise.all([fetch('pruefsummen.json', { cache: 'no-store' }), fetch('pruefsummen.txt', { cache: 'no-store' })]);
+    if (!j.ok || !t.ok) return void (box.hidden = true);
+    list = await j.json(); txt = await t.text();
+  } catch { return void (box.hidden = true); }
+  const hex = async b => [...new Uint8Array(await crypto.subtle.digest('SHA-256', b))].map(x => x.toString(16).padStart(2, '0')).join('');
+  const finger = await hex(new TextEncoder().encode(txt));
+  const base = new URL('.', location.href).href, files = [...new Set([...document.scripts].map(s => s.src).filter(u => u.startsWith(base)).map(u => u.slice(base.length).split(/[?#]/)[0]))];
+  const bad = [];
+  for (const f of files) {
+    try { const r = await fetch(f); if (!list.dateien[f] || await hex(await r.arrayBuffer()) !== list.dateien[f]) bad.push(f); } catch { bad.push(f); }
+  }
+  const ok = finger === list.fingerabdruck && !bad.length;
+  box.innerHTML = '';
+  const p = (cls, text) => { const e = document.createElement('p'); e.style.margin = '0 0 4px'; if (cls) e.style.fontWeight = '600'; e.textContent = text; box.append(e); return e; };
+  p(true, ok ? T('✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.', files.length)
+    : T('⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.', bad.length || 1, bad.join(', ') || 'pruefsummen.txt'));
+  const f = p(false, T('Stand {0} · Fingerabdruck', list.stand) + ' '); const c = document.createElement('code'); c.translate = false; c.textContent = finger.slice(0, 16); f.append(c);
+  const l = p(false, ''), a = document.createElement('a'); a.href = RELEASES_URL; a.target = '_blank'; a.rel = 'noopener';
+  a.textContent = T('Mit dem Release-Protokoll auf GitHub vergleichen'); l.append(a, ' ' + T('(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).'));
+  box.hidden = false;
+}
 addEventListener('online', () => $('#netDlg').open && netShow());
 addEventListener('offline', () => $('#netDlg').open && netShow());
 $('#aiForm').addEventListener('submit', e => {

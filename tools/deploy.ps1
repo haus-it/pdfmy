@@ -54,8 +54,10 @@ try {
     $ver = Get-Content (Join-Path $dist 'download\version.json') -Raw | ConvertFrom-Json
     $files = [regex]::Match($log, '(\d+) ge.nderte Datei').Groups[1].Value
     $rel = Join-Path $root 'docs\RELEASES.md'
-    if (-not (Test-Path $rel)) { Set-Content $rel -Encoding utf8 -Value "# Release-Protokoll PDFMy`r`n`r`nAutomatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.`r`n`r`n| Datum | Web-Stand | pdfmy Scan | SHA-256 pdfmy Scan | Tests | geänderte Dateien | Bearbeiter |`r`n|---|---|---|---|---|---|---|" }
-    Add-Content $rel -Encoding utf8 -Value "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | $web | $($ver.pdfmyScan) | $($ver.sha256.Substring(0,16))… | $testSummary | $files | $env:USERNAME |"
+    if (-not (Test-Path $rel)) { Set-Content $rel -Encoding utf8 -Value "# Release-Protokoll PDFMy`r`n`r`nAutomatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.`r`n`r`n| Datum | Web-Stand | pdfmy Scan | SHA-256 pdfmy Scan | Tests | geänderte Dateien | Bearbeiter | Fingerabdruck pruefsummen.txt |`r`n|---|---|---|---|---|---|---|---|" }
+    # Fingerabdruck der Prüfsummenliste (SHA-256 von pruefsummen.txt) – die App zeigt ihn unter „Datenschutz selbst prüfen“
+    $finger = (Get-FileHash (Join-Path $dist 'pruefsummen.txt') -Algorithm SHA256).Hash.ToLower()
+    Add-Content $rel -Encoding utf8 -Value "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | $web | $($ver.pdfmyScan) | $($ver.sha256.Substring(0,16))… | $testSummary | $files | $env:USERNAME | $($finger.Substring(0,16)) |"
   }
 } finally {
   Remove-Item Env:PDFMY_SFTP_PASS -ErrorAction SilentlyContinue

@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Programmstand prüfen (app-v166)
+- Jeder Build erzeugt pruefsummen.txt (SHA-256 aller 392 ausgelieferten Dateien, prüfbar mit „sha256sum -c“) und pruefsummen.json; deploy.ps1 trägt den Fingerabdruck der Liste in docs/RELEASES.md ein (neue Spalte), das mit dem Quellcode auf GitHub liegt.
+- Der Dialog „Datenschutz selbst prüfen“ vergleicht die geladenen Programmdateien mit der Liste und zeigt Stand und Fingerabdruck mit Link zum Release-Protokoll. Kein Mitbewerber macht die Auslieferung so nachprüfbar. ISO-Maßnahme M10 erledigt.
+- Getestet: 36/36 Dateien übereinstimmend, absichtlich veränderte Datei erkannt, axe hell/dunkel 0.
+
 ### Datenschutz selbst prüfen (app-v165)
 - Neuer Dialog „… Mehr → Datenschutz selbst prüfen …“, auch per Klick auf „Dateien bleiben auf Ihrem Gerät“ auf der Startseite: zeigt live, welche Verbindungen das Fenster aufgebaut hat (je Adresse, Resource Timing), wie viele Daten ins Internet bzw. an Programme auf diesem PC gesendet wurden (Mitschnitt von fetch/XMLHttpRequest), den Online-/Offline-Zustand und eine Anleitung zum Selbsttest (WLAN aus, F12 → Netzwerk). Antwort auf die häufigste Forenfrage „Woher weiß ich, dass nichts hochgeladen wird?“.
 - Getestet: Zähler (0 Byte ins Internet; Testversand an 127.0.0.1 korrekt als „diesem PC“), Offline-Umschaltung per CDP, axe hell/dunkel 0.

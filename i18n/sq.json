@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Kontrolloni vetë",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Kontrolloni vetë që dokumentet Tuaja nuk e lënë këtë pajisje",
  "So prüfen Sie es selbst": "Si ta kontrolloni vetë",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Fikni Wi-Fi-n ose hiqni kabllon e rrjetit."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Fikni Wi-Fi-n ose hiqni kabllon e rrjetit.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(aty shfaqet e njëjta gjurmë gishti, pavarësisht nga pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} skedar(ë) programi ndryshojnë nga lista e shumave të kontrollit: {1}. Pas një përditësimi, ringarkoni faqen dhe kontrolloni përsëri.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versioni i programit u kontrollua: {0} nga {0} skedarë programi të ngarkuar përputhen me listën e publikuar të shumave të kontrollit.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Krahasoni me regjistrin e versioneve në GitHub",
+ "Stand {0} · Fingerabdruck": "Versioni {0} · gjurmë gishti"
 }

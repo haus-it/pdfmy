@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Tarkista itse",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Tarkista itse, etteivät asiakirjasi poistu tältä laitteelta",
  "So prüfen Sie es selbst": "Näin tarkistat sen itse",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Katkaise Wi-Fi tai irrota verkkokaapeli."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Katkaise Wi-Fi tai irrota verkkokaapeli.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(siellä on sama sormenjälki, pdfmy.de:stä riippumatta).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} ohjelmatiedosto(a) poikkeaa tarkistussummaluettelosta: {1}. Lataa sivu päivityksen jälkeen uudelleen ja tarkista uudelleen.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Ohjelmaversio tarkistettu: {0} ladatusta ohjelmatiedostosta {0} vastaa julkaistua tarkistussummaluetteloa.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Vertaa GitHubin julkaisulokiin",
+ "Stand {0} · Fingerabdruck": "Versio {0} · sormenjälki"
 }

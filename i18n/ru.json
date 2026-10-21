@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Проверить самостоятельно",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Самостоятельно убедиться, что ваши документы не покидают это устройство",
  "So prüfen Sie es selbst": "Как проверить самостоятельно",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Отключите Wi-Fi или выньте сетевой кабель."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Отключите Wi-Fi или выньте сетевой кабель.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(там указан тот же отпечаток, независимо от pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} программных файл(ов) не совпадают со списком контрольных сумм: {1}. После обновления перезагрузите страницу и проверьте снова.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Версия программы проверена: {0} из {0} загруженных программных файлов совпадают с опубликованным списком контрольных сумм.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Сравнить с журналом выпусков на GitHub",
+ "Stand {0} · Fingerabdruck": "Версия {0} · отпечаток"
 }

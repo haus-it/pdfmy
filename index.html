@@ -444,7 +444,7 @@ details.sec[open] > summary::after{content:" ▾"}
 .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;list-style:none;padding:0;margin:14px 0 26px;color:var(--muted);font-size:13px}
 .trust li::before{content:"✓ ";color:var(--accent);font-weight:700}
 .trust .linkbtn{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
-.netsent{font-weight:600;margin:4px 0 8px}.netlist{margin:0 0 12px;padding-left:18px;max-height:220px;overflow:auto}.netlist li{margin:3px 0}.nethow ol{margin:6px 0 0;padding-left:20px}.nethow li{margin:3px 0}
+.netsent{font-weight:600;margin:4px 0 8px}.netlist{margin:0 0 12px;padding-left:18px;max-height:220px;overflow:auto}.netlist li{margin:3px 0}.nethow ol{margin:6px 0 0;padding-left:20px}.netver{margin:0 0 12px;padding:8px 10px;border-radius:8px;background:var(--soft,rgba(127,127,127,.08));font-size:13px}.netver code{font-size:12px;word-break:break-all}.nethow li{margin:3px 0}
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;text-align:left}
 .tile{display:grid;grid-template-columns:40px 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:start;white-space:normal;padding:14px;border-radius:12px;background:var(--panel);box-shadow:var(--shadow);text-align:left}
 .tile:hover{border-color:var(--accent);transform:translateY(-1px)}
@@ -1693,6 +1693,7 @@ html.i18n-wait body{visibility:hidden}
   <p id="netOnline" role="status" aria-live="polite"></p>
   <p id="netSent" class="netsent"></p>
   <ul id="netList" class="netlist"></ul>
+  <div id="netVer" class="netver" role="status" aria-live="polite" hidden></div>
   <details class="nethow"><summary>So prüfen Sie es selbst</summary><ol>
     <li>WLAN ausschalten oder das Netzwerkkabel ziehen.</li>
     <li>Ein PDF öffnen, bearbeiten, Text erkennen lassen und speichern – alles funktioniert weiter.</li>

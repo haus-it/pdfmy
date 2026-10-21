@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Verificați singur",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Verificați singur că documentele dvs. nu părăsesc acest dispozitiv",
  "So prüfen Sie es selbst": "Cum verificați singur",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Opriți Wi-Fi-ul sau scoateți cablul de rețea."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Opriți Wi-Fi-ul sau scoateți cablul de rețea.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(acolo apare aceeași amprentă, independent de pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} fișier(e) de program diferă de lista sumelor de control: {1}. După o actualizare, reîncărcați pagina și verificați din nou.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versiunea programului verificată: {0} din {0} fișiere de program încărcate corespund listei publicate a sumelor de control.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Comparați cu jurnalul versiunilor de pe GitHub",
+ "Stand {0} · Fingerabdruck": "Versiunea {0} · amprentă"
 }

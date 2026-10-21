@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Ověřit sami",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Ověřte sami, že vaše dokumenty neopouštějí toto zařízení",
  "So prüfen Sie es selbst": "Jak to ověříte sami",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Vypněte Wi-Fi nebo odpojte síťový kabel."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Vypněte Wi-Fi nebo odpojte síťový kabel.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(tam je uveden stejný otisk, nezávisle na pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programových souborů se liší od seznamu kontrolních součtů: {1}. Po aktualizaci prosím znovu načtěte stránku a zkontrolujte to znovu.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Verze programu ověřena: {0} z {0} načtených programových souborů odpovídá zveřejněnému seznamu kontrolních součtů.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Porovnat s protokolem vydání na GitHubu",
+ "Stand {0} · Fingerabdruck": "Verze {0} · otisk"
 }

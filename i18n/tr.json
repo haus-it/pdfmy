@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Kendiniz kontrol edin",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Belgelerinizin bu cihazdan çıkmadığını kendiniz kontrol edin",
  "So prüfen Sie es selbst": "Kendiniz şöyle kontrol edersiniz",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Wi-Fi’ı kapatın veya ağ kablosunu çıkarın."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Wi-Fi’ı kapatın veya ağ kablosunu çıkarın.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(orada aynı parmak izi yer alır, pdfmy.de’den bağımsız olarak).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} program dosyası sağlama toplamı listesinden farklı: {1}. Bir güncellemeden sonra lütfen sayfayı yeniden yükleyin ve tekrar kontrol edin.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Program sürümü kontrol edildi: yüklenen {0} program dosyasının {0} tanesi yayımlanan sağlama toplamı listesiyle eşleşiyor.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "GitHub’daki sürüm günlüğüyle karşılaştırın",
+ "Stand {0} · Fingerabdruck": "Sürüm {0} · parmak izi"
 }

@@ -109,6 +109,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Virtueller Drucker „Als PDF drucken in PDFMy“ (Kritik an PDFgear) | Windows hat „Microsoft Print to PDF“; Ordner überwachen nimmt die Datei auf | passt grundsätzlich (lokal über pdfmy Scan), aber Druckertreiber + Signatur = großer Aufwand; zurückgestellt, Entscheidung GF |
 | Handschrift erkennen | Tesseract liest Druckschrift | passt nur lokal; heute gibt es kein freies, lokal im Browser lauffähiges Modell mit brauchbarer Qualität für Deutsch → beobachten |
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
+| Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
 ### Entschieden 21.10.2026: KI nach eigener Wahl verbinden (ChatGPT, Claude, lokale KI)
 Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederzeit ein- und ausschaltbar.

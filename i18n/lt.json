@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Patikrinkite patys",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Patikrinkite patys, kad Jūsų dokumentai nepalieka šio įrenginio",
  "So prüfen Sie es selbst": "Kaip patikrinti patiems",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Išjunkite Wi-Fi arba ištraukite tinklo kabelį."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Išjunkite Wi-Fi arba ištraukite tinklo kabelį.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(ten nurodytas tas pats skaitmeninis atspaudas, nepriklausomai nuo pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programos failas (-ai) nesutampa su kontrolinių sumų sąrašu: {1}. Po atnaujinimo iš naujo įkelkite puslapį ir patikrinkite dar kartą.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programos versija patikrinta: {0} iš {0} įkeltų programos failų atitinka paskelbtą kontrolinių sumų sąrašą.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Palyginti su leidimų žurnalu GitHub platformoje",
+ "Stand {0} · Fingerabdruck": "Versija {0} · skaitmeninis atspaudas"
 }

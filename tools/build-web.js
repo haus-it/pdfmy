@@ -562,6 +562,23 @@ Require valid-user
   fs.copyFileSync(htpasswd, path.join(OUT, MD, '.htpasswd'));
 }
 
+// Prüfsummenliste (ISO-Maßnahme M10): jede ausgelieferte Datei mit SHA-256, im Format von „sha256sum -c“.
+// Ihr Fingerabdruck steht im Release-Protokoll auf GitHub – so lässt sich prüfen, dass pdfmy.de genau diesen Stand ausliefert.
+{
+  const sha = b => require('crypto').createHash('sha256').update(b).digest('hex'), list = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const p = path.join(d, e.name), rel = path.relative(OUT, p).split(path.sep).join('/');
+      if (e.isDirectory()) walk(p); else if (!/^pruefsummen\.|(^|\/)\.ht/.test(rel)) list.push([rel, sha(fs.readFileSync(p))]);
+    }
+  })(OUT);
+  list.sort((a, b) => a[0] < b[0] ? -1 : 1);
+  const txt = list.map(([f, h]) => `${h}  ${f}`).join('\n') + '\n', stand = (fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8').match(/VERSION = '([^']+)'/) || [])[1];
+  write('pruefsummen.txt', txt);
+  write('pruefsummen.json', JSON.stringify({ stand, fingerabdruck: sha(txt), dateien: Object.fromEntries(list) }));
+  console.log(`Prüfsummen: ${list.length} Dateien, Fingerabdruck ${sha(txt).slice(0, 16)}`);
+}
+
 let n = 0, size = 0;
 (function walk(d) { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else { n++; size += fs.statSync(p).size; } } })(OUT);
 console.log(`Web-Build fertig: ${OUT} (${n} Dateien, ${(size / 1048576).toFixed(1)} MB)`);

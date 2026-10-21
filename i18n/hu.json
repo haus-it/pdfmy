@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Ellenőrizze saját maga",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Ellenőrizze saját maga, hogy dokumentumai nem hagyják el ezt az eszközt",
  "So prüfen Sie es selbst": "Így ellenőrizheti saját maga",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Kapcsolja ki a Wi-Fi-t, vagy húzza ki a hálózati kábelt."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Kapcsolja ki a Wi-Fi-t, vagy húzza ki a hálózati kábelt.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(ott ugyanez az ujjlenyomat szerepel, a pdfmy.de-től függetlenül).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programfájl eltér az ellenőrzőösszeg-listától: {1}. Frissítés után töltse be újra az oldalt, és ellenőrizze ismét.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programverzió ellenőrizve: a betöltött {0} programfájlból {0} egyezik a közzétett ellenőrzőösszeg-listával.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Összevetés a GitHubon lévő kiadási naplóval",
+ "Stand {0} · Fingerabdruck": "{0} verzió · ujjlenyomat"
 }

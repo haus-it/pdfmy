@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Gwirio eich hun",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Gwirio eich hun nad yw eich dogfennau’n gadael y ddyfais hon",
  "So prüfen Sie es selbst": "Sut i wirio eich hun",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Diffoddwch y Wi-Fi neu tynnwch y cebl rhwydwaith allan."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Diffoddwch y Wi-Fi neu tynnwch y cebl rhwydwaith allan.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(mae’r un ôl bys yno, yn annibynnol ar pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ Mae {0} ffeil rhaglen yn wahanol i’r rhestr symiau gwirio: {1}. Ar ôl diweddariad, ail-lwythwch y dudalen a gwiriwch eto.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Fersiwn y rhaglen wedi’i gwirio: mae {0} o {0} ffeil rhaglen a lwythwyd yn cyfateb i’r rhestr symiau gwirio a gyhoeddwyd.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Cymharu â’r cofnod rhyddhau ar GitHub",
+ "Stand {0} · Fingerabdruck": "Fersiwn {0} · ôl bys"
 }

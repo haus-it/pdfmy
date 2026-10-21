@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Zelf controleren",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Zelf controleren dat uw documenten dit apparaat niet verlaten",
  "So prüfen Sie es selbst": "Zo controleert u het zelf",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Zet de wifi uit of trek de netwerkkabel eruit."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Zet de wifi uit of trek de netwerkkabel eruit.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(daar staat dezelfde vingerafdruk, onafhankelijk van pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programmabestand(en) wijken af van de controlesomlijst: {1}. Laad na een update de pagina opnieuw en controleer opnieuw.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programmaversie gecontroleerd: {0} van {0} geladen programmabestanden komen overeen met de gepubliceerde controlesomlijst.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Vergelijken met het releaselogboek op GitHub",
+ "Stand {0} · Fingerabdruck": "Versie {0} · vingerafdruk"
 }

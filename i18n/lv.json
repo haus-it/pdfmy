@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Pārbaudiet paši",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Pārbaudiet paši, ka Jūsu dokumenti neatstāj šo ierīci",
  "So prüfen Sie es selbst": "Kā to pārbaudīt pašiem",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Izslēdziet Wi-Fi vai atvienojiet tīkla kabeli."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Izslēdziet Wi-Fi vai atvienojiet tīkla kabeli.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(tur norādīts tas pats digitālais nospiedums, neatkarīgi no pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programmas fail(i) atšķiras no kontrolsummu saraksta: {1}. Pēc atjauninājuma, lūdzu, pārlādējiet lapu un pārbaudiet vēlreiz.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programmas versija pārbaudīta: {0} no {0} ielādētajiem programmas failiem atbilst publicētajam kontrolsummu sarakstam.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Salīdzināt ar laidienu žurnālu vietnē GitHub",
+ "Stand {0} · Fingerabdruck": "Versija {0} · digitālais nospiedums"
 }

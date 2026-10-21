@@ -22,7 +22,7 @@ Oberstes Ziel (KONZEPT.md, Abschnitt 4): **Alles bleibt auf dem Rechner des Kund
 
 | Nr. | Bedrohung / Schwachstelle | Wert | W×A vorher | Maßnahmen (umgesetzt) | W×A Rest | Entscheidung |
 |---|---|---|---|---|---|---|
-| R1 | Manipulierter Code auf pdfmy.de (Webserver kompromittiert, Zugang gestohlen) → Dokumente könnten abfließen | A1, A2, A5 | 2×3 = 6 | CSP erlaubt Verbindungen nur zu pdfmy.de und zum eigenen Rechner; Veröffentlichung nur über `deploy.ps1` mit Test-Gate; Quellcode öffentlich vergleichbar (GitHub); Dialog „Datenschutz selbst prüfen“ macht Abflüsse sichtbar | 1×3 = 3 | behandeln: Subresource-Integrity/Hash-Liste der Releases in RELEASES.md veröffentlichen (offen, siehe M10) |
+| R1 | Manipulierter Code auf pdfmy.de (Webserver kompromittiert, Zugang gestohlen) → Dokumente könnten abfließen | A1, A2, A5 | 2×3 = 6 | CSP erlaubt Verbindungen nur zu pdfmy.de und zum eigenen Rechner; Veröffentlichung nur über `deploy.ps1` mit Test-Gate; Quellcode öffentlich vergleichbar (GitHub); Dialog „Datenschutz selbst prüfen“ macht Abflüsse sichtbar | 1×3 = 3 | behandelt: Prüfsummenliste je Release, Fingerabdruck in RELEASES.md auf GitHub, Abgleich in der App (M10, erledigt 21.10.2026) |
 | R2 | Kompromittierte Fremdbibliothek (pdf.js, pdf-lib, Tesseract …) | A1, A2 | 2×3 = 6 | Bibliotheken lokal eingebunden, keine CDNs; Versionen dokumentiert; vierteljährliche CVE-Prüfung (nächste bis 15.01.2027); CSP begrenzt Abfluss | 1×3 = 3 | akzeptiert mit laufender Prüfung |
 | R3 | Bösartige PDF des Nutzers (Skripte, Exploits gegen den PDF-Leser) | A1, A2 | 2×2 = 4 | PDF-JavaScript wird nicht ausgeführt (pdf.js ohne Scripting-Modul); CSP ohne `unsafe-eval` (nur `wasm-unsafe-eval`); Verarbeitung in der Browser-Sandbox | 1×2 = 2 | akzeptiert |
 | R4 | Lokale Schnittstelle pdfmy Scan (127.0.0.1:52880) von fremder Webseite angesprochen | A1, A2 | 2×3 = 6 | Herkunftsprüfung (nur pdfmy.de / localhost), Kopfzeile `X-Pdfmy`, nur Loopback, Private-Network-Access; Signierte Programmdatei (Authenticode) | 1×2 = 2 | akzeptiert |
@@ -43,7 +43,7 @@ Oberstes Ziel (KONZEPT.md, Abschnitt 4): **Alles bleibt auf dem Rechner des Kund
 |---|---|---|---|---|
 | M7 | Datensicherung der Ablage festlegen (Abschnitt 6) | R8 | GF / IT-Betreuung Haus iT | 31.12.2026 |
 | M9 | Browser-Erweiterung in Chrome Web Store und Edge-Add-ons veröffentlichen | R12 | GF | offen |
-| M10 | Prüfsummen (SHA-256) der ausgelieferten Dateien je Release in RELEASES.md veröffentlichen, damit Dritte die Auslieferung mit GitHub abgleichen können | R1 | Entwicklung | 31.12.2026 |
+| M10 | Prüfsummen (SHA-256) der ausgelieferten Dateien je Release veröffentlichen und in der App abgleichen | R1 | Entwicklung | erledigt 21.10.2026 |
 | M11 | SFTP-Zugang auf Schlüsselanmeldung umstellen (falls vom Hoster angeboten) | R10 | GF | 31.12.2026 |
 
 ## 6. Empfehlung Datensicherung der Ablage (M7, ISO 27001 A.8.13)

@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Kontrollera själv",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Kontrollera själv att dina dokument inte lämnar den här enheten",
  "So prüfen Sie es selbst": "Så kontrollerar du det själv",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Stäng av wifi eller dra ur nätverkskabeln."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Stäng av wifi eller dra ur nätverkskabeln.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(där står samma fingeravtryck, oberoende av pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programfil(er) avviker från kontrollsummelistan: {1}. Ladda om sidan efter en uppdatering och kontrollera igen.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programversion kontrollerad: {0} av {0} inlästa programfiler stämmer med den publicerade kontrollsummelistan.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Jämför med versionsloggen på GitHub",
+ "Stand {0} · Fingerabdruck": "Version {0} · fingeravtryck"
 }

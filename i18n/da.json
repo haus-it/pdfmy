@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Kontrollér selv",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Kontrollér selv, at Deres dokumenter ikke forlader denne enhed",
  "So prüfen Sie es selbst": "Sådan kontrollerer De det selv",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Slå wi-fi fra, eller træk netværkskablet ud."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Slå wi-fi fra, eller træk netværkskablet ud.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(der står det samme fingeraftryk, uafhængigt af pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programfil(er) afviger fra kontrolsumlisten: {1}. Efter en opdatering bedes De genindlæse siden og kontrollere igen.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programversion kontrolleret: {0} af {0} indlæste programfiler stemmer overens med den offentliggjorte kontrolsumliste.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Sammenlign med udgivelsesloggen på GitHub",
+ "Stand {0} · Fingerabdruck": "Version {0} · fingeraftryk"
 }

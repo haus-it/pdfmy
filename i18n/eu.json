@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Egiaztatu zuk zeuk",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Egiaztatu zuk zeuk zure dokumentuek ez dutela gailu hau uzten",
  "So prüfen Sie es selbst": "Horrela egiazta dezakezu zuk zeuk",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Itzali wifia edo atera sareko kablea."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Itzali wifia edo atera sareko kablea.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(han hatz-marka bera ageri da, pdfmy.de-tik independenteki).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programa-fitxategi ez datoz bat kontrol-baturen zerrendarekin: {1}. Eguneratu ondoren, kargatu berriro orria eta egiaztatu berriro.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programaren bertsioa egiaztatuta: kargatutako {0} programa-fitxategietatik {0} bat datoz argitaratutako kontrol-baturen zerrendarekin.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Alderatu GitHub-eko bertsio-erregistroarekin",
+ "Stand {0} · Fingerabdruck": "{0} bertsioa · hatz-marka"
 }

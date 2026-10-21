@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Kontrollige ise",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Kontrollige ise, et teie dokumendid ei lahku sellest seadmest",
  "So prüfen Sie es selbst": "Nii kontrollite seda ise",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Lülitage wifi välja või tõmmake võrgukaabel välja."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Lülitage wifi välja või tõmmake võrgukaabel välja.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(seal on sama sõrmejälg, pdfmy.de-st sõltumatult).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} programmifaili erineb kontrollsummade loendist: {1}. Pärast uuendust laadige leht uuesti ja kontrollige uuesti.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programmi versioon kontrollitud: {0} laaditud programmifailist {0} vastavad avaldatud kontrollsummade loendile.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Võrrelge GitHubi väljalaskelogiga",
+ "Stand {0} · Fingerabdruck": "Versioon {0} · sõrmejälg"
 }

@@ -2,8 +2,8 @@
 
 Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 
-| Datum | Web-Stand | pdfmy Scan | SHA-256 pdfmy Scan | Tests | geänderte Dateien | Bearbeiter |
-|---|---|---|---|---|---|---|
+| Datum | Web-Stand | pdfmy Scan | SHA-256 pdfmy Scan | Tests | geänderte Dateien | Bearbeiter | Fingerabdruck pruefsummen.txt |
+|---|---|---|---|---|---|---|---|
 | 2026-10-15 12:01 | pdfmy-202610151000 | 1.4.2 | 8f3e0519b720d5d7… | 39/39 Tests bestanden | 12 | Administrator |
 | 2026-10-15 12:50 | pdfmy-202610151050 | 1.4.2 | 8f3e0519b720d5d7… | 39/39 Tests bestanden | 6 | Administrator |
 | 2026-10-15 13:05 | pdfmy-202610151105 | 1.4.2 | 8f3e0519b720d5d7… | 39/39 Tests bestanden | 9 | Administrator |
@@ -168,3 +168,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-10-21 18:27 | pdfmy-202610211626 | 1.9.0 | f01c420119463ebb… | 188/188 Tests bestanden | 90 | Administrator |
 | 2026-10-21 18:55 | pdfmy-202610211655 | 1.9.0 | f01303d04fde5bdc… | 188/188 Tests bestanden | 104 | Administrator |
 | 2026-10-21 21:26 | pdfmy-202610211926 | 1.9.0 | ca7cf6ce05ecc320… | 188/188 Tests bestanden | 87 | Administrator |
+| 2026-10-21 22:20 | pdfmy-202610212019 | 1.9.0 | 50e247a0fa8d102c… | 188/188 Tests bestanden | 89 | Administrator | 6bbd4ac335efacff |

@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Verificar por si",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Verifique por si que os seus documentos não saem deste dispositivo",
  "So prüfen Sie es selbst": "Como verificar por si",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Desligue o Wi-Fi ou retire o cabo de rede."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Desligue o Wi-Fi ou retire o cabo de rede.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(aí consta a mesma impressão digital, independentemente de pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} ficheiro(s) do programa não correspondem à lista de somas de verificação: {1}. Após uma atualização, volte a carregar a página e verifique novamente.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Versão do programa verificada: {0} de {0} ficheiros do programa carregados correspondem à lista publicada de somas de verificação.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Comparar com o registo de versões no GitHub",
+ "Stand {0} · Fingerabdruck": "Versão {0} · impressão digital"
 }

@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Selwer nokucken",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Selwer nokucken, datt Är Dokumenter dësen Apparat net verloossen",
  "So prüfen Sie es selbst": "Sou kontrolléiert Dir et selwer",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "WLAN ausschalten oder de Netzwierkkabel erauszéien."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "WLAN ausschalten oder de Netzwierkkabel erauszéien.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(do steet dee selwechte Fangerofdrock, onofhängeg vu pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ {0} Programmdatei(en) wäichen vun der Préifsummelëscht of: {1}. No engem Update w.e.g. d'Säit nei lueden an nach eng Kéier kontrolléieren.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Programmstand kontrolléiert: {0} vun {0} geluedenen Programmdateien stëmmen mat der publizéierter Préifsummelëscht iwwereneen.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Mam Release-Protokoll op GitHub vergläichen",
+ "Stand {0} · Fingerabdruck": "Versioun {0} · Fangerofdrock"
 }

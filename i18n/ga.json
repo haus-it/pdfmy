@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Seiceáil tú féin",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Seiceáil tú féin nach bhfágann do dhoiciméid an gléas seo",
  "So prüfen Sie es selbst": "Conas é a sheiceáil tú féin",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Múch an Wi-Fi nó bain amach an cábla líonra."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Múch an Wi-Fi nó bain amach an cábla líonra.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(tá an méarlorg céanna ansin, neamhspleách ar pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ Tá {0} comhad ríomhchláir difriúil ón liosta suimeanna seiceála: {1}. Tar éis nuashonraithe, athlódáil an leathanach agus seiceáil arís.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Leagan an ríomhchláir seiceáilte: tagann {0} as {0} comhad ríomhchláir lódáilte leis an liosta suimeanna seiceála foilsithe.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Déan comparáid leis an loga eisiúna ar GitHub",
+ "Stand {0} · Fingerabdruck": "Leagan {0} · méarlorg"
 }

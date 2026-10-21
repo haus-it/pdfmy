@@ -2826,5 +2826,10 @@
  "Selbst nachprüfen": "Sprawdź samodzielnie",
  "Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen": "Sprawdź samodzielnie, że Twoje dokumenty nie opuszczają tego urządzenia",
  "So prüfen Sie es selbst": "Jak to sprawdzić samodzielnie",
- "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Wyłącz Wi-Fi lub odłącz kabel sieciowy."
+ "WLAN ausschalten oder das Netzwerkkabel ziehen.": "Wyłącz Wi-Fi lub odłącz kabel sieciowy.",
+ "(dort steht derselbe Fingerabdruck, unabhängig von pdfmy.de).": "(znajduje się tam ten sam odcisk cyfrowy, niezależnie od pdfmy.de).",
+ "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.": "⚠ Pliki programu niezgodne z listą sum kontrolnych ({0}): {1}. Po aktualizacji należy ponownie załadować stronę i sprawdzić jeszcze raz.",
+ "✓ Programmstand geprüft: {0} von {0} geladenen Programmdateien stimmen mit der veröffentlichten Prüfsummenliste überein.": "✓ Wersja programu sprawdzona: {0} z {0} załadowanych plików programu jest zgodnych z opublikowaną listą sum kontrolnych.",
+ "Mit dem Release-Protokoll auf GitHub vergleichen": "Porównaj z dziennikiem wydań w serwisie GitHub",
+ "Stand {0} · Fingerabdruck": "Wersja {0} · odcisk cyfrowy"
 }
