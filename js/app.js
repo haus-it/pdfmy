@@ -4400,7 +4400,7 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     setInterval(check, 10 * 60 * 1000);                                                                 // alle 10 Minuten
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });   // beim Zurückkehren zum Tab
     addEventListener('online', check);                                                                   // wenn die Verbindung wieder da ist
-    setTimeout(check, 30 * 1000);                                                                        // und kurz nach dem Start
+    setTimeout(check, 3 * 1000);                                                                         // und gleich nach dem Start (z. B. beim Öffnen eines Outlook-Anhangs)
   }).catch(e => console.warn('Service Worker:', e));
   $('#updBtn').onclick = () => {
     if (state.dirty && state.pages.length && !confirm('Es gibt ungespeicherte Änderungen. Trotzdem neu laden?')) return;
