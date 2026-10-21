@@ -50,7 +50,8 @@ async function pdfAttachments(js) {
   }
   return Object.values(att);
 }
-async function openPdf(data, extra = {}) { await pdfjsReady(); return pdfjsLib.getDocument({ data, ...window.PDFJS_OPTS, ...extra }).promise; }
+// fontExtraProperties: Schriftnamen (z. B. „ABCDEF+Calibri-Bold“) für fett/kursiv und die Originalschrift beim Textändern
+async function openPdf(data, extra = {}) { await pdfjsReady(); return pdfjsLib.getDocument({ data, fontExtraProperties: true, ...window.PDFJS_OPTS, ...extra }).promise; }
 
 const $ = s => document.querySelector(s);
 // Beschriftung eines Knopfs ändern, Symbol behalten
@@ -886,7 +887,7 @@ function renderAnns() {
     if (a.type === 'stamp') { el.textContent = a.text; el.style.color = a.color; el.style.fontSize = a.h * ov.clientHeight * 0.3 + 'px'; el.style.borderWidth = Math.max(2, a.h * ov.clientHeight * 0.06) + 'px'; }
     if (a.type === 'text' || a.type === 'note') {
       el.textContent = a.text; el.style.fontSize = a.fs * W + 'px';
-      if (a.type === 'text') { el.style.color = a.color; el.style.fontFamily = FONT_CSS[fontFam(a)]; if (a.lh) el.style.lineHeight = a.lh; if (a.bold) el.style.fontWeight = '700'; if (a.italic && fontFam(a) !== 'mono') el.style.fontStyle = 'italic'; }
+      if (a.type === 'text') { ofontCheck(a); el.style.color = a.color; el.style.fontFamily = origCss(a) + FONT_CSS[fontFam(a)]; if (a.lh) el.style.lineHeight = a.lh; if (a.bold && !origCss(a)) el.style.fontWeight = '700'; if (a.italic && fontFam(a) !== 'mono' && !origCss(a)) el.style.fontStyle = 'italic'; }
       else el.dataset.head = noteHead(a);
       if (state.editing === a.id) { el.contentEditable = 'true'; editEl = el; el.addEventListener('focusout', () => finishEdit(p, a, el)); }
     } else if (a.id === state.annSel) { const h = document.createElement('div'); h.className = 'handle'; el.append(h); }
@@ -1863,11 +1864,14 @@ const pageText = p => p?.native || p?.ocr?.text || '';
 /* Fälschungsschutz (Betrügern die Arbeit nicht erleichtern): 'urkunde' (Urkunde, Zeugnis, Ausweis, Steuer-/Rentenbescheid, Urteil …: Inhalt nicht änderbar) |
    'konto' / 'nachweis' (Kontoauszug, Einkommen, Bescheid, Auskunft, Rechnung: Änderungen sichtbar markiert + Vermerk) | ''
    Bei PDFs zählt das ganze Dokument (Folgeseiten eines Kontoauszugs nennen das Wort oft nicht mehr). */
+// Ergebnis je Seite merken (neu nur, wenn sich ihr Text ändert) – sonst prüft jede Seite alle anderen erneut: bei 1000 Seiten eine Million Prüfungen
+const protMemo = new WeakMap();
+function protOf(q) { const t = pageText(q), c = protMemo.get(q); if (c && c.t === t) return c.k; const k = Letter.protectedKind(t); protMemo.set(q, { t, k }); return k; }
 function pageProt(p) {
   if (!p || typeof Letter === 'undefined' || !Letter.protectedKind) return '';
-  const own = Letter.protectedKind(pageText(p));
+  const own = protOf(p);
   if (own === 'urkunde' || p.kind !== 'pdf') return own;
-  const doc = state.pages.filter(q => q.kind === 'pdf' && q.docIdx === p.docIdx && q !== p).map(q => Letter.protectedKind(pageText(q)));
+  const doc = state.pages.filter(q => q.kind === 'pdf' && q.docIdx === p.docIdx && q !== p).map(protOf);
   return doc.includes('urkunde') && !own ? 'urkunde' : own || (doc.includes('konto') ? 'konto' : doc.includes('nachweis') ? 'nachweis' : '');
 }
 const PROT_MSG = {
@@ -2053,22 +2057,97 @@ function scaleToDpi(c, dpi) {
   return k;
 }
 
-/* Schriften für Text: DejaVu Sans / Serif / Mono, je mit fett und kursiv – im Browser, im Bild und eingebettet im PDF identisch */
+/* Schriften für Text: DejaVu Sans / Serif / Mono, je mit fett und kursiv – im Browser, im Bild und eingebettet im PDF identisch.
+   Beim Ändern vorhandenen Textes zusätzlich Schriften mit gleicher Laufweite wie die Originale (Arial/Helvetica, Times, Courier,
+   Calibri, Cambria): Liberation, Carlito, Caladea (SIL OFL) – der geänderte Text läuft so breit wie vorher. */
 const TEXT_FONTS = {
+  arial: ['fonts/metric/LiberationSans-Regular.ttf', 'fonts/metric/LiberationSans-Bold.ttf', 'fonts/metric/LiberationSans-Italic.ttf', 'fonts/metric/LiberationSans-BoldItalic.ttf'],
+  times: ['fonts/metric/LiberationSerif-Regular.ttf', 'fonts/metric/LiberationSerif-Bold.ttf', 'fonts/metric/LiberationSerif-Italic.ttf', 'fonts/metric/LiberationSerif-BoldItalic.ttf'],
+  courier: ['fonts/metric/LiberationMono-Regular.ttf', 'fonts/metric/LiberationMono-Bold.ttf', 'fonts/metric/LiberationMono-Italic.ttf', 'fonts/metric/LiberationMono-BoldItalic.ttf'],
+  calibri: ['fonts/metric/PDFMySansC-Regular.ttf', 'fonts/metric/PDFMySansC-Bold.ttf', 'fonts/metric/PDFMySansC-Italic.ttf', 'fonts/metric/PDFMySansC-BoldItalic.ttf'],
+  cambria: ['fonts/metric/Caladea-Regular.ttf', 'fonts/metric/Caladea-Bold.ttf', 'fonts/metric/Caladea-Italic.ttf', 'fonts/metric/Caladea-BoldItalic.ttf'],
   sans: ['DejaVuSans.ttf', 'dejavu/DejaVuSans-Bold.ttf', 'dejavu/DejaVuSans-Oblique.ttf', 'dejavu/DejaVuSans-BoldOblique.ttf'],
   serif: ['dejavu/DejaVuSerif.ttf', 'dejavu/DejaVuSerif-Bold.ttf', 'dejavu/DejaVuSerif-Italic.ttf', 'dejavu/DejaVuSerif-BoldItalic.ttf'],
   mono: ['dejavu/DejaVuSansMono.ttf', 'dejavu/DejaVuSansMono.ttf', 'dejavu/DejaVuSansMono.ttf', 'dejavu/DejaVuSansMono.ttf'],
 };
-const FONT_CSS = { sans: '"DejaVu Sans"', serif: '"DejaVu Serif"', mono: '"DejaVu Sans Mono"' };
+const FONT_CSS = { sans: '"DejaVu Sans"', serif: '"DejaVu Serif"', mono: '"DejaVu Sans Mono"',
+  arial: '"PDFMy Arial","DejaVu Sans"', times: '"PDFMy Times","DejaVu Serif"', courier: '"PDFMy Courier","DejaVu Sans Mono"', calibri: '"PDFMy Calibri","DejaVu Sans"', cambria: '"PDFMy Cambria","DejaVu Serif"' };
+// Ersatz, wenn eine Laufweiten-Schrift ein Zeichen nicht hat (z. B. Arabisch, CJK): DejaVu derselben Art
+const FONT_BASE = { arial: 'sans', calibri: 'sans', times: 'serif', cambria: 'serif', courier: 'mono' };
+const FONT_EXACT = new Set(['arial', 'calibri', 'times', 'courier']);   // Laufweite wie das Original (Caladea dagegen schmaler als Cambria)
+const ofontHas = (a, t) => { const fk = ORIG_FK.get(a.ofont); return !!fk && [...String(t || '')].every(ch => /\s/.test(ch) || fk.hasGlyphForCodePoint(ch.codePointAt(0))); };
+/* Originalschrift fehlt ein (neu getipptes) Zeichen oder ist nach dem Neuladen nicht mehr da: ganze Zeile auf die Ersatzschrift,
+   Laufweite über osx angleichen (beim Ändern gemessen) – keine Mischung zweier Schriften in einer Zeile */
+function ofontCheck(a) {
+  if (!a?.ofont || ofontHas(a, a.text)) return;
+  const k = (a.sx || 1) * (a.osx || 1); delete a.ofont; delete a.osx;
+  if (Math.abs(k - 1) < 0.01) delete a.sx; else a.sx = +k.toFixed(3);
+}
 const fontFam = a => TEXT_FONTS[a.font] ? a.font : 'sans';
-const fontPath = a => 'vendor/' + TEXT_FONTS[fontFam(a)][(a.bold ? 1 : 0) + (a.italic && fontFam(a) !== 'mono' ? 2 : 0)];
-const cssFont = (a, px) => `${a.italic && fontFam(a) !== 'mono' ? 'italic ' : ''}${a.bold ? 'bold ' : ''}${px}px ${FONT_CSS[fontFam(a)]}`;
+const fontPath = (a, fam = fontFam(a)) => 'vendor/' + TEXT_FONTS[fam][(a.bold ? 1 : 0) + (a.italic && fam !== 'mono' ? 2 : 0)];
+/* Originalschrift aus dem PDF (eingebettet, enthält alle Zeichen des Textes): Bytes je Schlüssel, im Browser als eigene Schriftfamilie.
+   Sie trägt fett/kursiv schon in sich – deshalb kein künstliches Fett/Kursiv darüber. */
+const ORIG_FONTS = new Map(), ORIG_FK = new Map();   // Bytes bzw. fontkit-Schrift je Schlüssel
+const origCss = a => a.ofont && ORIG_FONTS.has(a.ofont) ? `"${a.ofont}",` : '';
+const cssFont = (a, px) => origCss(a) ? `${px}px ${origCss(a)}${FONT_CSS[fontFam(a)]}` : `${a.italic && fontFam(a) !== 'mono' ? 'italic ' : ''}${a.bold ? 'bold ' : ''}${px}px ${FONT_CSS[fontFam(a)]}`;
+// Eingebettete Schrift zu einem pdf.js-Schriftnamen (z. B. „ABCDEF+Arial-BoldMT“) aus den Seitenressourcen holen – nur TrueType/OpenType
+const fontKey = s => String(s || '').replace(/^\/?[A-Z]{6}\+/, '').replace(/[^a-z0-9]/gi, '').toLowerCase();
+async function origFontFor(p, name, text) {
+  if (p.kind !== 'pdf' || !name || !text) return null;
+  const d = state.docs[p.docIdx]; if (!d) return null;
+  const cache = d.ofonts ||= new Map(), want = fontKey(name);
+  let hit = cache.get(want);
+  if (hit === undefined) {
+    hit = null;
+    try {
+      const L = PDFLib, lib = await libFor(d), page = lib.getPage(p.pageIdx);
+      const fd = page.node.Resources()?.lookup(L.PDFName.of('Font'));
+      for (const [, ref] of fd instanceof L.PDFDict ? fd.entries() : []) {
+        const f = lib.context.lookup(ref); if (!(f instanceof L.PDFDict)) continue;
+        if (fontKey(f.lookup(L.PDFName.of('BaseFont'))?.decodeText?.() || f.lookup(L.PDFName.of('BaseFont'))?.asString?.()) !== want) continue;
+        const desc = f.lookup(L.PDFName.of('DescendantFonts'))?.lookup?.(0) || f, fdesc = desc.lookup(L.PDFName.of('FontDescriptor'));
+        if (!(fdesc instanceof L.PDFDict)) continue;
+        let st = fdesc.lookup(L.PDFName.of('FontFile2'));
+        if (!st) { const f3 = fdesc.lookup(L.PDFName.of('FontFile3')); if (f3?.dict?.lookup(L.PDFName.of('Subtype'))?.asString?.() === '/OpenType') st = f3; }
+        if (!st) continue;
+        const bytes = st instanceof L.PDFRawStream ? L.decodePDFRawStream(st).decode() : st.getContents();
+        const fk = await loadFontkit(), font = fk.create(bytes);
+        if (!font || !font.numGlyphs) continue;
+        hit = { key: 'PDFMyO' + p.docIdx + '_' + want.slice(0, 40), bytes, font };
+        break;
+      }
+    } catch (e) { console.warn('Originalschrift:', e); hit = null; }
+    cache.set(want, hit);
+  }
+  if (!hit) return null;
+  // Nur wenn jedes Zeichen des Textes in der (meist verkleinerten) Originalschrift vorkommt
+  if (![...text].every(ch => /\s/.test(ch) || hit.font.hasGlyphForCodePoint(ch.codePointAt(0)))) return null;
+  if (!ORIG_FONTS.has(hit.key)) {
+    try { const ff = new FontFace(hit.key, hit.bytes); await ff.load(); document.fonts.add(ff); } catch { return null; }
+    ORIG_FONTS.set(hit.key, hit.bytes); ORIG_FK.set(hit.key, hit.font);
+  }
+  return hit.key;
+}
+// Schrift deckt den Text ab? (für Laufweiten-Schriften: sonst DejaVu derselben Art)
+const LIB_RE = /^[\u0000-\u024F\u0259\u02B0-\u02FF\u0300-\u036F\u0370-\u03FF\u0400-\u04FF\u1E00-\u1EFF\u2000-\u206F\u20A0-\u20BF\u2100-\u2199\u2200-\u22FF\u25A0-\u25FF\uFB01\uFB02]*$/u;
+function fontCovers(fam, text) {
+  if (!FONT_BASE[fam]) return true;
+  if (fam === 'cambria' && /[\u0370-\u04FF]/.test(text)) return false;   // Caladea: nur lateinische Schrift
+  return LIB_RE.test(text);
+}
 // Schrift aus dem PDF deuten: Familie (pdf.js), fett/kursiv aus Schriftobjekt oder Name (z. B. „ABCDEF+Times-BoldItalic“)
 function fontInfo(pg, styles, name) {
   let o = null; try { o = pg.commonObjs.get(name); } catch {}
   const n = String(o?.name || o?.loadedName || '') + ' ' + String(styles[name]?.fontFamily || '');
+  const bn = String(o?.name || '').replace(/^[A-Z]{6}\+/, ''), pick = f => ({ font: f, name: o?.name || '', bold: !!(o?.bold || o?.black) || /bold|black|heavy|semibold|demi/i.test(n), italic: !!o?.italic || /italic|oblique/i.test(n) });
+  // Bekannte Bürofamilien: Schrift mit gleicher Laufweite (Arial = Helvetica, Times, Courier, Calibri, Cambria)
+  if (/calibri|carlito/i.test(bn)) return pick('calibri');
+  if (/cambria|caladea/i.test(bn)) return pick('cambria');
+  if (/courier|cousine|liberationmono/i.test(bn)) return pick('courier');
+  if (/times|tinos|liberationserif|nimbusrom/i.test(bn)) return pick('times');
+  if (/arial|helvetica|arimo|liberationsans|nimbussans/i.test(bn) && !/narrow|black|rounded/i.test(bn)) return pick('arial');
   const fam = /mono|courier|consol|menlo/i.test(n) ? 'mono' : /serif/i.test(styles[name]?.fontFamily || '') && !/sans-serif/i.test(styles[name]?.fontFamily || '') || /times|roman|georgia|garamond|cambria|book|minion|palatino/i.test(n) ? 'serif' : 'sans';
-  return { font: fam, bold: !!(o?.bold || o?.black) || /bold|black|heavy|semibold|demi/i.test(n), italic: !!o?.italic || /italic|oblique/i.test(n) };
+  return { font: fam, name: o?.name || '', bold: !!(o?.bold || o?.black) || /bold|black|heavy|semibold|demi/i.test(n), italic: !!o?.italic || /italic|oblique/i.test(n) };
 }
 // Farben der Zeile aus dem Seitenbild: Hintergrund (häufigste helle Farbe) und Schriftfarbe (dunkelste Pixel)
 async function lineColors(p, r) {
@@ -2177,7 +2256,21 @@ async function buildEdit(p, para, prot) {
   if (!fi.length && col?.px >= 24 && col.stroke > 0.145) f.bold = true;
   if (!fi.length && await serifOfLines(p, para.lines).catch(() => -1) >= 0.5) f.font = 'serif';   // Scan: Serifenfüße an der Grundlinie erkannt
   let sz = h * H / W * 0.95;   // Schriftgröße relativ zur Seitenbreite (wie beim Text-Werkzeug)
+  if (!fontCovers(f.font, text)) f.font = FONT_BASE[f.font];
   const a = { id: ++uid, type: 'text', x: x0, y: 0, w: 0, h: 0, text, fs: sz, color: col?.color || '#111111', font: f.font, bold: f.bold, italic: f.italic, orig: text, cover: cover.id };
+  const of = await origFontFor(p, f.name, text).catch(() => null);   // eingebettete Originalschrift, wenn sie alle Zeichen enthält
+  if (of) {
+    // Gegenprobe: Breite im Browser und im PDF (fontkit) müssen übereinstimmen – bei verkleinerten Schriften mit abweichenden Breitenangaben nicht
+    try { await document.fonts.load(cssFont({ ...a, ofont: of }, 40)); const m = document.createElement('canvas').getContext('2d'); m.font = cssFont({ ...a, ofont: of }, 100);
+      const fk = ORIG_FK.get(of), cw = m.measureText(text).width / 100, kw = fk.layout(text).advanceWidth / fk.unitsPerEm;
+      if (kw > 0 && Math.abs(cw - kw) / kw < 0.015) {
+        a.ofont = of;
+        // Laufweite der Ersatzschrift im Verhältnis zur Originalschrift (falls später ein Zeichen fehlt)
+        await document.fonts.load(cssFont({ ...a, ofont: '' }, 40)); m.font = cssFont({ ...a, ofont: '' }, 100);
+        const fw = m.measureText(text).width / 100; if (fw > 0) a.osx = +(cw / fw).toFixed(3);
+      } else console.info('Originalschrift: Breiten weichen ab', f.name, cw, kw);
+    } catch {}
+  }
   // Breite angleichen: Ersatztext so groß, dass er so breit läuft wie das Original (in Grenzen, damit die Höhe passt)
   try {
     await document.fonts.load(cssFont(a, 40));
@@ -2186,7 +2279,9 @@ async function buildEdit(p, para, prot) {
     const ref = (multi ? para.lines.slice(0, -1) : para.lines).map(l => ({ t: l.map(w => w.t).join(' '), w: Math.max(...l.map(w => w.x + w.w)) - Math.min(...l.map(w => w.x)) })).sort((m1, m2) => m2.w - m1.w)[0];
     const tw = m.measureText(ref.t).width / 100;   // Breite bei Schriftgröße 1 (in Seitenbreiten je fs)
     // Höhe wie im Original behalten, Breite über die Laufweite angleichen (DejaVu läuft z. B. breiter als Times); erst darüber hinaus die Größe
-    if (tw > 0) { const k = ref.w / (tw * sz); a.sx = +clamp(k, 0.75, 1.2).toFixed(3); sz = clamp(sz * k / a.sx, sz * 0.8, sz * 1.2); if (Math.abs(a.sx - 1) < 0.01) delete a.sx; }
+    // Originalschrift oder Schrift mit gleicher Laufweite: Größe genau aus der Breite (kein Strecken); sonst Laufweite angleichen
+    if (tw > 0 && (a.ofont || FONT_EXACT.has(a.font))) { const k = ref.w / (tw * sz); if (k > 0.85 && k < 1.18) sz *= k; else { a.sx = +clamp(k, 0.75, 1.2).toFixed(3); sz = clamp(sz * k / a.sx, sz * 0.8, sz * 1.2); if (Math.abs(a.sx - 1) < 0.01) delete a.sx; } }
+    else if (tw > 0) { const k = ref.w / (tw * sz); a.sx = +clamp(k, 0.75, 1.2).toFixed(3); sz = clamp(sz * k / a.sx, sz * 0.8, sz * 1.2); if (Math.abs(a.sx - 1) < 0.01) delete a.sx; }
   } catch {}
   a.fs = sz; a.y = y0 + 0.8 * h - 0.95 * sz * W / H;
   if (multi) {
@@ -2562,6 +2657,40 @@ function textLines(words) {
   return lines.map(l => l.words);
 }
 
+/* Scanseiten beim Speichern parallel zerlegen (js/compactw.js): bis zu 4 Worker, je Seite ein Auftrag; ohne Worker-Unterstützung
+   oder bei Fehlern wie bisher im Hauptprogramm. Liefert dasselbe wie Imaging.compactLayers (bg als Canvas). */
+const compactPool = (() => {
+  let ws = null, seq = 0; const wait = new Map(), busy = new Map();
+  const ok = () => typeof Worker !== 'undefined' && typeof OffscreenCanvas !== 'undefined' && typeof createImageBitmap === 'function';
+  function start() {
+    if (ws || !ok()) return ws;
+    const n = Math.max(1, Math.min(4, (navigator.hardwareConcurrency || 2) - 1));
+    try {
+      ws = Array.from({ length: n }, () => { const w = new Worker('js/compactw.js'); busy.set(w, 0);
+        w.onmessage = e => { const j = wait.get(e.data.id); if (!j) return; wait.delete(e.data.id); busy.set(w, busy.get(w) - 1); j(e.data); };
+        w.onerror = () => { for (const [id, j] of wait) j({ id, error: 'worker' }); wait.clear(); };
+        return w; });
+    } catch { ws = null; }
+    return ws;
+  }
+  async function run(c, ms, bs) {
+    if (start()) {
+      try {
+        const bmp = await createImageBitmap(c), id = ++seq, w = ws.reduce((a, b) => busy.get(a) <= busy.get(b) ? a : b);
+        busy.set(w, busy.get(w) + 1);
+        const r = await new Promise(res => { wait.set(id, res); w.postMessage({ id, bmp, ms, bs }, [bmp]); });
+        if (!r.error) {
+          let bg = null;
+          if (r.bg) { bg = Imaging.canvas(r.bg.width, r.bg.height); bg.getContext('2d').drawImage(r.bg, 0, 0); r.bg.close?.(); }
+          return { w: r.w, h: r.h, bits: r.bits, color: r.color, inkShare: r.inkShare, bg };
+        }
+        console.warn('Kompakt-Worker:', r.error);
+      } catch (e) { console.warn('Kompakt-Worker:', e); }
+    }
+    return Imaging.compactLayers(c, ms, bs);
+  }
+  return { run };
+})();
 async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
   header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false } = {}) {
   GRAY = gray;
@@ -2584,16 +2713,53 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   // weitere Schriftschnitte (Serif, fett, kursiv …) nur bei Bedarf einbetten
   const fontsUsed = {};
   const fontFor = async a => {
-    const path = fontPath(a); if (path === 'vendor/DejaVuSans.ttf') return { f: font, safe };
+    const txt = String(a.text || ''); ofontCheck(a);
+    if (a.ofont && ORIG_FONTS.has(a.ofont)) {
+      if (!fontsUsed[a.ofont]) { try { const f = await out.embedFont(ORIG_FONTS.get(a.ofont), { subset: false })   /* schon verkleinert – unverändert einbetten (erneutes Verkleinern kann fremde Schriften beschädigen) */, cs = new Set(f.getCharacterSet()); fontsUsed[a.ofont] = { f, cs, safe: t => [...t].filter(ch => cs.has(ch.codePointAt(0))).join('') }; } catch { fontsUsed[a.ofont] = { bad: true }; } }
+      const o = fontsUsed[a.ofont]; if (!o.bad && [...txt].every(ch => /\s/.test(ch) || o.cs.has(ch.codePointAt(0)))) return o;
+    }
+    const fam = fontCovers(fontFam(a), txt) ? fontFam(a) : FONT_BASE[fontFam(a)];
+    const path = fontPath(a, fam); if (path === 'vendor/DejaVuSans.ttf') return { f: font, safe };
     if (!fontsUsed[path]) { const f = await out.embedFont(await asset('font:' + path, path), { subset: true }), cs = new Set(f.getCharacterSet()); fontsUsed[path] = { f, safe: t => [...t].filter(ch => cs.has(ch.codePointAt(0))).join('') }; }
     return fontsUsed[path];
   };
 
+  const rasterOf = p => p.kind === 'image' || p.annots.some(a => a.type === 'rd' || a.type === 'wo') || pdfa || preset.rasterAll || gray ||
+    (p.rotation !== 0 && (p.annots.length > 0 || !!p.ocr || hasStamps));
+  /* Unveränderte PDF-Seiten je Quelldokument in einem Durchgang kopieren: gemeinsame Schriften und Bilder werden dabei nur einmal
+     übernommen – bei Hunderten Seiten viel schneller und die Datei bleibt klein (Seite für Seite kopiert jede Seite ihre Schriften neu) */
+  const preCopied = new Map();
+  {
+    const byDoc = new Map();
+    for (const p of pages) {
+      if (p.kind !== 'pdf' || rasterOf(p)) continue;
+      const g = byDoc.get(p.docIdx) || byDoc.set(p.docIdx, { idx: [], ps: [], seen: new Set() }).get(p.docIdx);
+      if (g.seen.has(p.pageIdx)) continue;   // doppelte Seite: einzeln kopieren (sonst zweimal dasselbe Seitenobjekt)
+      g.seen.add(p.pageIdx); g.idx.push(p.pageIdx); g.ps.push(p);
+    }
+    for (const [docIdx, g] of byDoc) {
+      if (g.idx.length < 2) continue;
+      const copied = await out.copyPages(await libFor(state.docs[docIdx]), g.idx);
+      g.ps.forEach((p, k) => preCopied.set(p, copied[k]));
+    }
+  }
+
+  const compactOf = p => p.kind === 'image' && S.compact && size !== 'original' && effMode(p) !== 'original' && !p.lowRes;
+  const layerArgs = c => { const small = size === 'small', pxPerIn = c.width / A4W_IN; return [Math.min(2.5, (small ? 240 : 300) / pxPerIn), Math.min(1, (small ? 72 : 100) / pxPerIn)]; };
+  const ahead = new Map(), AHEAD = 6;
+  const prefetch = from => {
+    for (let k = from; k < Math.min(pages.length, from + AHEAD); k++) {
+      const q = pages[k];
+      if (ahead.has(q) || !compactOf(q) || gray || q.annots.some(a => a.type === 'rd' || a.type === 'wo') || !q.processed) continue;
+      ahead.set(q, compactPool.run(q.processed, ...layerArgs(q.processed)));
+    }
+  };
+
   for (const [i, p] of pages.entries()) {
     onPage ? onPage(i) : status(`Erzeuge Seite ${i + 1} von ${pages.length} …`, i / pages.length);
+    prefetch(i);
     const cover = p.annots.filter(a => a.type === 'rd' || a.type === 'wo');
-    const raster = p.kind === 'image' || cover.length > 0 || pdfa || preset.rasterAll || gray ||
-      (p.rotation !== 0 && (p.annots.length > 0 || !!p.ocr || hasStamps));
+    const raster = rasterOf(p);
     let page, W, H, ox = 0, oy = 0, words = null;
     if (raster) {
       // Als Bild übernommene PDF-Seiten brauchen eine Textebene: vorhandenen Text übernehmen, sonst OCR
@@ -2605,7 +2771,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       if (!words && !p.ocr && cover.some(a => a.type === 'wo')) { try { await ocrPage(p); } catch (e) { console.warn(e); } }
       // Scans kompakt (MRC): Schrift als scharfe 1-Bit-Ebene, Hintergrund nur bei Bedarf – sonst klassisch als JPEG
       // Kompakt (1-Bit-Schrift) nur bei ausreichender Auflösung – sehr kleine Fotos würden klumpig
-      const compact = p.kind === 'image' && S.compact && size !== 'original' && effMode(p) !== 'original' && !p.lowRes;
+      const compact = compactOf(p);
       let c = p.kind === 'image' ? (compact ? p.processed : scaleToDpi(p.processed, preset.dpi)) : await renderPdf(p, preset.dpi);
       if (gray) { const k = Imaging.canvas(c.width, c.height); k.getContext('2d').drawImage(c, 0, 0); c = grayCanvas(k); }
       if (cover.length) {
@@ -2625,7 +2791,8 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       if (compact) {
         const small = size === 'small', pxPerIn = c.width / A4W_IN;
         // Maske mindestens in Druckauflösung: kleine Handyfotos werden weich hochgerechnet, dann erst in Schwarz/Weiß – glatte statt klumpiger Buchstaben
-        const L = Imaging.compactLayers(c, Math.min(2.5, (small ? 240 : 300) / pxPerIn), Math.min(1, (small ? 72 : 100) / pxPerIn));
+        const pre = ahead.get(p); ahead.delete(p);
+        const L = pre && c === p.processed ? await pre : Imaging.compactLayers(c, Math.min(2.5, (small ? 240 : 300) / pxPerIn), Math.min(1, (small ? 72 : 100) / pxPerIn));
         if (L.bg) page.drawImage(await embedCanvas(out, L.bg, small ? 0.4 : 0.5), { x: 0, y: 0, width: W, height: H });
         if (L.inkShare > 0) {
           const ctx = out.context;
@@ -2640,7 +2807,8 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       words = (p.ocr?.words || words || []).filter(w => !cover.some(a => overlaps(a, w)));
     } else {
       const d = state.docs[p.docIdx];
-      [page] = await out.copyPages(await libFor(d), [p.pageIdx]);
+      page = preCopied.get(p); preCopied.delete(p);
+      if (!page) [page] = await out.copyPages(await libFor(d), [p.pageIdx]);
       out.addPage(page);
       if (clean) deepClean(out, page); else if (bea) beaClean(out, page);
       T?.page(page);
@@ -3047,7 +3215,7 @@ async function drawAnnotsInner(x, p, W, H) {
       x.restore();
     }
     else if (a.type === 'text') {
-      const sz = a.fs * W; x.fillStyle = a.color; try { await document.fonts.load(cssFont(a, 20)); } catch {} x.font = cssFont(a, sz); x.textBaseline = 'alphabetic';
+      ofontCheck(a); const sz = a.fs * W; x.fillStyle = a.color; try { await document.fonts.load(cssFont(a, 20)); } catch {} x.font = cssFont(a, sz); x.textBaseline = 'alphabetic';
       const sx = a.sx || 1, lines = a.w > 0 ? wrapLines(a.text, aw, t => x.measureText(t).width * sx) : a.text.split('\n');
       x.save(); x.translate(ax, 0); x.scale(sx, 1);
       lines.forEach((l, li) => x.fillText(l, 0, ay + sz * (0.95 + (a.lh || 1.2) * li)));

@@ -5,7 +5,8 @@
   'use strict';
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
-  function canvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+  // im Worker (js/compactw.js) gibt es kein document – dort OffscreenCanvas
+  function canvas(w, h) { if (typeof document === 'undefined') return new OffscreenCanvas(Math.max(1, w), Math.max(1, h)); const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
 
   function scaled(src, maxSide) {
     const s = Math.min(1, maxSide / Math.max(src.width, src.height));

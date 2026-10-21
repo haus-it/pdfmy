@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Text ändern mit Originalschrift; große Dokumente schneller
+- Text ändern: Ist die Schrift in der PDF eingebettet (TrueType/OpenType) und enthält sie alle Zeichen, schreibt PDFMy mit der Originalschrift weiter (Gegenprobe der Breiten Browser ↔ PDF; die schon verkleinerte Schrift wird unverändert eingebettet). Sonst Schriften mit gleicher Laufweite: Liberation Sans/Serif/Mono (Arial/Helvetica, Times, Courier), PDFMy Sans C (aus Carlito, Calibri), Caladea (Cambria, Breite angeglichen); bei Zeichen außerhalb (z. B. Arabisch, CJK) DejaVu. Fehlt der Originalschrift später ein getipptes Zeichen, wechselt die ganze Zeile mit angeglichener Breite – keine Mischschrift.
+- Schriftnamen aus dem PDF werden jetzt gelesen (pdf.js fontExtraProperties) – damit greift auch die Erkennung fett/kursiv beim Ändern wieder.
+- Große Dokumente: Fälschungsschutz-Prüfung je Seite gemerkt statt für jede Seite alle Seiten neu (1000 Seiten speichern: 22,6 s → 1,1 s); unveränderte Seiten je Quelldokument in einem Durchgang kopiert (gemeinsame Schriften nur einmal); gescannte Seiten beim Speichern parallel in bis zu 4 Web Workern verdichtet (15 Scanseiten: 16,8 s → 3,5 s).
+- Neue Schriftdateien (SIL OFL 1.1) mit Lizenztexten in vendor/licenses; Carlito für fehlerfreies Einbetten aufbereitet und gemäß OFL umbenannt („PDFMy Sans C“).
+- Getestet: Chrome-PDF mit Calibri, Arial, Times New Roman, Courier New, Verdana, Cambria (Breiten vorher/nachher gleich bzw. ±1 %), alle 20 Schriftdateien eingebettet und gerendert, veraPDF PDF/A-2b + PDF/UA-1 bestanden, Messreihen 1000 Text- und 60 Scanseiten.
+
 ### Schnittstelle mysupermail.app (Protokoll „mysupermail-pdfmy“ Version 1)
 - mysupermail.app öffnet pdfmy.de/?quelle=mysupermail und reicht eine Datei von Fenster zu Fenster herein (postMessage, kein Upload); „Fertig – zurück an mysupermail.app“ gibt die bearbeitete PDF zurück. Angenommen werden nur Nachrichten des öffnenden Fensters von festgelegten Herkünften; nur für diesen Aufruf sendet der Server kein COOP same-origin.
 - Getestet: Übergabe hin und zurück im Browser (Testseite als öffnendes Fenster).

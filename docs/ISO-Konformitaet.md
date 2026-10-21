@@ -168,3 +168,5 @@ Nachtrag 17.10.2026: „Text ändern“ mit originalgetreuen Schriften (DejaVu S
 | M7 | Datensicherung der Ablage (SharePoint/OneDrive-Versionierung) im ISMS festlegen | ISO 27001 A.8.13 | organisatorisch |
 | M8 | Formale Risikobeurteilung für PDFMy im ISMS | ISO 27001 Kap. 6.1 | organisatorisch |
 | M9 | Browser-Erweiterung im Chrome Web Store und bei Edge-Add-ons veröffentlichen (geprüfte Herkunft, automatische Updates; ersetzt „Entpackte Erweiterung laden“). Für verwaltete PCs optional Verteilung per Gruppenrichtlinie `ExtensionInstallForcelist` | ISO 27001 A.5.21, A.8.19, A.8.32 | hoch |
+
+Nachtrag 21.10.2026 (Originalschrift, große Dokumente): Eingebettete Schriften werden nur aus der vom Nutzer geöffneten PDF übernommen und lokal verarbeitet; neue Schriftdateien stehen unter SIL OFL 1.1 (Lizenztexte in vendor/licenses, veränderte Carlito-Fassung umbenannt gemäß OFL). PDF/A-2b und PDF/UA-1 mit eingebetteter Originalschrift per veraPDF geprüft (ISO 19005-2, ISO 14289-1). Leistungsnachweis (ISO 25010 Leistungseffizienz): Messreihen 1000 Textseiten / 60 Scanseiten im CHANGELOG.

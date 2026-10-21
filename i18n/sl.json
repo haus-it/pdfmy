@@ -2633,5 +2633,11 @@
  "Übergabe nicht möglich:": "Predaja ni mogoča:",
  "Verlauf": "Potek",
  "Wartet auf": "Čaka na",
- "Wartet auf <b translate=\"no\">{0}</b>{1} · {2}{3}{4}": "Čaka na <b translate=\"no\">{0}</b>{1} · {2}{3}{4}"
+ "Wartet auf <b translate=\"no\">{0}</b>{1} · {2}{3}{4}": "Čaka na <b translate=\"no\">{0}</b>{1} · {2}{3}{4}",
+ "\"PDFMy Arial\",\"DejaVu Sans\"": "\"PDFMy Arial\",\"DejaVu Sans\"",
+ "\"PDFMy Calibri\",\"DejaVu Sans\"": "\"PDFMy Calibri\",\"DejaVu Sans\"",
+ "\"PDFMy Cambria\",\"DejaVu Serif\"": "\"PDFMy Cambria\",\"DejaVu Serif\"",
+ "\"PDFMy Courier\",\"DejaVu Sans Mono\"": "\"PDFMy Courier\",\"DejaVu Sans Mono\"",
+ "\"PDFMy Times\",\"DejaVu Serif\"": "\"PDFMy Times\",\"DejaVu Serif\"",
+ "Originalschrift: Breiten weichen ab": "Originalschrift: Breiten weichen ab"
 }
