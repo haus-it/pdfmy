@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Unterschriftsanfrage per E-Mail (js/sigreq.js)
 const test = require('node:test'), assert = require('node:assert/strict');
-const R = require('../js/sigreq.js');
+const R = require('../js/sigreq.js'), SigReq = R, Journal = require('../js/journal.js');
 
 const mk = () => R.create({ title: 'Mietvertrag Halle 2', requester: { name: 'Anna Absender', email: 'Anna@Firma.de' },
   signers: [{ name: 'Max Müller', email: 'max@example.com' }, { name: 'Erika Meier', email: 'erika@example.com' }, { name: '', email: '' }], message: 'Bitte bis Freitag.' });
@@ -151,4 +151,29 @@ test('Serienversand: Empfängerliste aus Zeilen, Outlook-Format und CSV mit Kopf
   const c = R.recipients('Name,Email\n"Fritz Meier",fritz@example.de');
   assert.deepEqual(c.list, [{ name: 'Fritz Meier', email: 'fritz@example.de' }]);
   assert.equal(R.recipients(Array.from({ length: 300 }, (_, i) => `p${i}@example.de`).join('\n')).list.length, 200);
+});
+
+test('Zustellstand: gesendet, empfangen, gelesen; wer wartet, Frist und nächster Schritt', () => {
+  let r = SigReq.create({ title: 'Vertrag', requester: { name: 'A', email: 'a@x.de' }, signers: [{ name: 'B', email: 'b@x.de' }, { name: 'C', email: 'c@x.de' }], due: '2026-10-22' });
+  assert.equal(SigReq.stage(r.signers[0]).key, 'offen');
+  r = SigReq.markSent(r, 0, '2026-10-15T08:00:00Z');
+  assert.equal(SigReq.stage(r.signers[0]).key, 'gesendet');
+  r = SigReq.markRead(r, 0, '2026-10-16T08:00:00Z');   // gelesen schließt empfangen ein
+  assert.equal(r.signers[0].openedAt, '2026-10-16T08:00:00Z');
+  assert.deepEqual(SigReq.steps(r.signers[0]).map(x => x.key), ['gesendet', 'empfangen', 'gelesen']);
+  assert.equal(SigReq.markOpened(r, 0, '2026-10-17T08:00:00Z').signers[0].openedAt, '2026-10-16T08:00:00Z');   // erstes Öffnen zählt
+  const w = SigReq.waiting(r, new Date(2026, 9, 18));
+  assert.equal(w.name, 'B'); assert.equal(w.days, 3); assert.equal(w.dueDays, 4); assert.equal(w.after, 'C');
+  assert.equal(SigReq.advice(w).urgent, true);   // gelesen, aber seit Tagen nicht unterschrieben
+  assert.match(SigReq.advice(SigReq.waiting(r, new Date(2026, 9, 23))).text, /Frist ist überschritten/);
+  assert.equal(SigReq.advice(SigReq.waiting(SigReq.markSent(SigReq.create({ title: 'x', requester: { email: 'a@x.de' }, signers: [{ name: 'B', email: 'b@x.de' }] }), 0, '2026-10-18T08:00:00Z'), new Date(2026, 9, 19))), null);
+  assert.match(SigReq.summaryText(r), /B gelesen 16\.10\.2026/);
+  assert.equal(SigReq.mail(r).notify, 'a@x.de');   // Lesebestätigung an den Absender
+  r = SigReq.markSigned(r, 0, { at: '2026-10-18T09:00:00Z' });
+  assert.equal(SigReq.markRead(r, 0).signers[0].readAt, '2026-10-16T08:00:00Z');   // nach dem Unterschreiben nichts mehr
+  assert.equal(SigReq.waiting(r, new Date(2026, 9, 18)).since, '2026-10-18T09:00:00Z');   // C wartet ab der Unterschrift von B
+  assert.ok(SigReq.auditLines(r).some(l => /Gesendet am .* · Empfangen am .* · Gelesen am/.test(l[1])));
+  assert.equal(SigReq.urgent('2026-10-14T08:00:00Z', '', new Date(2026, 9, 18)), true);
+  assert.equal(SigReq.urgent('2026-10-17T08:00:00Z', '2026-10-30', new Date(2026, 9, 18)), false);
+  assert.match(Journal.emlDraft({ to: 'b@x.de', subject: 's', body: 'b', notify: 'a@x.de' }), /Disposition-Notification-To: a@x\.de/);
 });

@@ -280,10 +280,10 @@ function renderJournal(focusId) {
     return `<tr data-id="${esc(e.id)}" class="${closed ? 'done' : ''}${e.id === focusId ? ' focus' : ''} st-${(e.status || '').replace(' ', '-')}">
       <td>${e.extra ? '' : `<select data-st title="Status">${Journal.STATUS.map(s => `<option${s === e.status ? ' selected' : ''}>${s}</option>`).join('')}</select>`}</td>
       <td>${e.extra ? '' : `<input data-as list="teamList" value="${esc(e.assignee)}" placeholder="–" title="Zuständig" size="6">`}</td><td>${e.extra ? '' : `<input data-akte list="caseList" value="${esc(e.akte)}" placeholder="–" title="Akte" aria-label="Akte">`}</td><td>${e.extra ? '<span class="hint">Ablage</span>' : esc(fmtDate(e.savedAt))}${e.inNo ? `<br><small class="hint">Nr. ${esc(e.inNo)}</small>` : ''}</td>
-      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
+      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${+e.remN ? `<small class="jcf">Erinnert: ${esc(e.remN)}× · zuletzt ${esc(fmtDate(e.remAt))}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
       <td class="jdl ${d ? d.state : ''}">${e.deadline ? fmtDate(e.deadline) + (d ? `<small>${inDays(d.days)}</small>` : '') : ''}${e.wv ? `<small class="wvtag">WV ${fmtDate(e.wv)} <button type="button" class="linkbtn" data-wvclear="${esc(e.id)}" title="Wiedervorlage erledigt" aria-label="Wiedervorlage entfernen">✕</button></small>` : ''}</td>
       <td>${esc(e.amount)}</td><td>${esc(e.reference || e.invoiceNo)}</td>
-      <td class="jact">${+e.ver > 1 ? `<small class="ver" title="${esc(`${e.ver} Fassungen – frühere liegen unverändert im Ordner „_Versionen“`)}">v${esc(e.ver)}</small> ` : ''}${e.file && state.outDir ? `<button type="button" class="linkbtn" data-open title="${esc(e.file)}">Öffnen</button>` : `<span class="hint" title="${esc(e.file)}">${esc((e.file || '').split('\\').pop().slice(0, 28))}</span>`}${e.file && state.outDir ? ` <button type="button" class="linkbtn" data-share title="Per WhatsApp, Telegram, Webex oder E-Mail senden">Teilen</button>` : ''}${e.extra ? '' : ` <button type="button" class="linkbtn" data-fwd title="An Kollegen weitergeben: zuständig setzen und E-Mail mit allen Briefdaten öffnen">Weiterleiten</button>`}${e.sigreq && e.sigTo && e.status === 'in Arbeit' ? ` <button type="button" class="linkbtn" data-sigrem title="${esc(`Erinnerungs-E-Mail an ${e.sigName || e.sigTo} vorbereiten`)}">Erinnern</button>` : ''}</td></tr>`;
+      <td class="jact">${+e.ver > 1 ? `<small class="ver" title="${esc(`${e.ver} Fassungen – frühere liegen unverändert im Ordner „_Versionen“`)}">v${esc(e.ver)}</small> ` : ''}${e.file && state.outDir ? `<button type="button" class="linkbtn" data-open title="${esc(e.file)}">Öffnen</button>` : `<span class="hint" title="${esc(e.file)}">${esc((e.file || '').split('\\').pop().slice(0, 28))}</span>`}${e.file && state.outDir ? ` <button type="button" class="linkbtn" data-share title="Per WhatsApp, Telegram, Webex oder E-Mail senden">Teilen</button>` : ''}${e.extra ? '' : ` <button type="button" class="linkbtn" data-fwd title="An Kollegen weitergeben: zuständig setzen und E-Mail mit allen Briefdaten öffnen">Weiterleiten</button>`}${e.sigreq && e.sigTo && e.status === 'in Arbeit' ? ` <button type="button" class="linkbtn" data-sigrem${SigReq.urgent(e.sigSince || e.savedAt, e.deadline) ? ' data-urgent' : ''} title="${esc(`Erinnerungs-E-Mail an ${e.sigName || e.sigTo} vorbereiten`)}">Erinnern</button>` : ''}</td></tr>`;
   }).join('') || `<tr><td colspan="11" class="hint" style="padding:18px">${jList.length ? 'Keine Treffer.' : 'Noch leer. Jeder abgelegte Brief wird hier automatisch eingetragen – mit Absender, Betreff, Betrag und Frist.'}</td></tr>`;
   $('#jBody tr.focus')?.scrollIntoView({ block: 'center' });
   // Vorschau behalten, solange die Zeile noch in der Liste steht
@@ -420,9 +420,10 @@ $('#cfForm').onsubmit = async ev => {
 cfRender(); cfLoad();
 /* ---------- Unterschriftsanfrage per E-Mail (js/sigreq.js): Unterzeichner festlegen, Felder setzen, nacheinander unterschreiben lassen ---------- */
 let req = null, reqDoc = -1, reqArm = -1, reqDraft = false, reqHash = '', reqSigned = false, reqStart = 0, reqType = 'sign', reqAudit = false, reqExt = false;
+let reqTrack = -1, reqSeen = new Set(), reqFromMe = false;   // reqFromMe: dieser Rechner ist der Absender (für Handlungstipps)   // Person, deren Lesen gerade festgehalten wird, und angesehene Seiten
 const RQ_ICON = { sign: '✍', initials: '✍', date: '📅', name: '👤', text: '✎', check: '☑' };
 const reqMine = () => req && !reqDraft ? SigReq.next(req) : -1;
-window.reqReset = () => { req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
+window.reqReset = () => { reqFromMe = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
 function reqRow(s = {}, i = 0) {
   return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button></div>`;
 }
@@ -497,7 +498,7 @@ $('#reqForm').onsubmit = ev => {
   const tpl = reqTpls()[+$('#reqTpl').value];
   if (tpl && !r.fields.length) { const pages = docPages(); r.fields = tpl.fields.filter(f => f.page < pages.length && f.s < r.signers.length).map(f => ({ ...f, v: '', pg: pages[f.page] })); }
   if (serial) r.serial = serial;   // Felder werden für die erste Person gesetzt und für alle übernommen
-  req = r; reqDraft = true; reqDoc = -1; LS.set('reqMail', r.requester.email);
+  req = r; reqDraft = true; reqDoc = -1; reqFromMe = true; LS.set('reqMail', r.requester.email);
   $('#reqDlg').close();
   reqSuggest().then(n => {
     reqArm = req.signers.findIndex((s, i) => !req.fields.some(f => f.s === i));
@@ -662,7 +663,11 @@ async function reqReadForm(r, bytes) {
   return ext;
 }
 window.reqLoad = (json, docIdx, bytes) => {
-  const r = SigReq.parse(json); if (!r) return;
+  let r = SigReq.parse(json); if (!r) return;
+  // „Empfangen“: die Person, die dran ist, hat die PDF in PDFMy geöffnet – nicht, wenn der Absender seine Kopie ansieht
+  const me = String(LS.get('reqMail', '') || '').toLowerCase(), nx = SigReq.next(r), mineReq = me ? me === r.requester.email : !!S.author && S.author === r.requester.name;
+  reqTrack = -1; reqSeen = new Set(); reqFromMe = mineReq;
+  if (nx >= 0 && (!mineReq || r.signers[nx].email === r.requester.email)) { r = SigReq.markOpened(r, nx); reqTrack = nx; }
   req = r; reqDoc = docIdx; reqDraft = false; reqArm = -1; reqSigned = false; reqHash = ''; reqStart = state.pages.length;   // Seiten dieses Dokuments folgen ab hier (auch als Scan aufbereitete)
   reqBytes = new Uint8Array(bytes); reqCursor = -1;   // empfangene Fassung: Unterschriften werden daran angehängt (js/pdfinc.js)
   sha256(bytes).then(h => { reqHash = h; });
@@ -678,6 +683,13 @@ window.reqAfterImport = docIdx => {
   renderReqBar(); renderAnns();
   const i = reqMine();
   if (i >= 0) { const f = req.fields.find(x => x.s === i && x.pg); if (f) reqGoto(f); }
+  window.reqSeenPage(cur());
+};
+// „Gelesen“: jede Seite der empfangenen Fassung wurde angezeigt
+window.reqSeenPage = p => {
+  if (reqTrack < 0 || !req || reqDraft || !reqBase || !p || !reqBase.pages.includes(p)) return;
+  reqSeen.add(p.id);
+  if (reqBase.pages.every(x => reqSeen.has(x.id)) && SigReq.next(req) === reqTrack) { req = SigReq.markRead(req, reqTrack); reqTrack = -1; renderReqBar(); }
 };
 // Prüfprotokoll-Seite (A4) nach der letzten Unterschrift: Personen, Zeitpunkte, Prüfsummen, Ablauf
 async function reqAuditPage(out) {
@@ -757,7 +769,7 @@ window.openEml = openEml;
 const emlDone = (opened, to) => opened ? `E-Mail an ${to} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `E-Mail an ${to} vorbereitet – die .eml-Datei öffnen und senden.`;
 async function reqMail(r, bytes, pdfName) {
   const m = SigReq.mail(r, { from: S.author, tr: s => I18N.t(s) });   // E-Mail in der Sprache der Oberfläche
-  const eml = Journal.emlDraft({ to: m.to, cc: m.cc, subject: m.subject, body: m.body, attachments: [{ name: pdfName, mime: 'application/pdf', bytes }] });
+  const eml = Journal.emlDraft({ to: m.to, cc: m.cc, notify: m.notify, subject: m.subject, body: m.body, attachments: [{ name: pdfName, mime: 'application/pdf', bytes }] });
   m.opened = await openEml(new TextEncoder().encode(eml), pdfName.replace(/\.pdf$/i, '') + '.eml');
   return m;
 }
@@ -767,7 +779,7 @@ async function reqJournal(r, add) {
   const nx = SigReq.next(r), cur = r.signers[nx];
   // Frist erscheint unter „Fristen“ (erledigt → erledigt sich mit); wer gerade dran ist, für „Erinnern“
   const patch = { sigs: SigReq.summaryText(r), status: SigReq.complete(r) ? 'erledigt' : SigReq.declined(r) >= 0 ? 'offen' : 'in Arbeit', upd: updStamp(),
-    deadline: nx >= 0 && r.due ? r.due : '', sigTo: cur?.email || '', sigName: cur?.name || '', sigN: SigReq.doneCount(r) };
+    deadline: nx >= 0 && r.due ? r.due : '', sigSince: SigReq.waiting(r)?.since || '', sigTo: cur?.email || '', sigName: cur?.name || '', sigN: SigReq.doneCount(r) };
   let list;
   if (has) list = all.map(x => x.sigreq === r.id ? { ...x, ...patch } : x);
   else if (add) {
@@ -784,7 +796,8 @@ async function reqRemind(e) {
   if (!+e.sigN && e.file && state.outDir) try { bytes = new Uint8Array(await (await archiveFile(e.file)).arrayBuffer()); } catch {}
   const m = SigReq.reminder({ title: e.subject, to: e.sigTo, name: e.sigName, due: e.deadline, from: S.author, attached: !!bytes, tr: s => I18N.t(s) });
   const name = (e.file || 'Dokument.pdf').split('\\').pop();
-  const opened = await openEml(new TextEncoder().encode(Journal.emlDraft({ ...m, attachments: bytes ? [{ name, mime: 'application/pdf', bytes }] : [] })), `Erinnerung – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`);
+  const opened = await openEml(new TextEncoder().encode(Journal.emlDraft({ ...m, notify: LS.get('reqMail', '') || '', attachments: bytes ? [{ name, mime: 'application/pdf', bytes }] : [] })), `Erinnerung – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`);
+  try { await updateEntry(e.id, { remN: (+e.remN || 0) + 1, remAt: stamp() }); renderJournal(); } catch {}
   status(opened ? `Erinnerung an ${e.sigName || e.sigTo} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `Erinnerung an ${e.sigName || e.sigTo} vorbereitet – die .eml-Datei öffnen und senden.`);
 }
 // Serienversand: je Empfänger eine eigene Anfrage (eigene Kennung, gleiche Felder), E-Mail-Entwurf und Eintrag im Posteingangsbuch.
@@ -800,7 +813,7 @@ async function reqSendSerial() {
       status(`Serienversand: ${i + 1} von ${list.length} – ${rc.name} …`, i / list.length);
       const r = SigReq.create({ title: base.title, requester: base.requester, signers: [rc], message: base.message, due: base.due, cc: (base.cc || []).join(', ') });
       r.fields = base.fields.filter(f => f.s === 0).map(f => ({ ...f, v: '', s: 0 }));
-      req = r;
+      req = SigReq.markSent(r, 0);
       const bytes = await reqPdf(), name = reqFile(r, ` – ${safe(rc.name)} – zur Unterschrift.pdf`);
       const m = SigReq.mail(r, { from: S.author, tr: s => I18N.t(s) });
       const eml = new TextEncoder().encode(Journal.emlDraft({ to: m.to, cc: m.cc, subject: m.subject, body: m.body, attachments: [{ name, mime: 'application/pdf', bytes }] }));
@@ -809,7 +822,7 @@ async function reqSendSerial() {
       const emlName = name.replace(/\.pdf$/i, '') + '.eml';
       if (direct && await openEml(eml, emlName)) opened++; else files.push({ name: emlName, data: eml });
       rows.push([rc.name, rc.email, emlName]);
-      await reqJournal(r, { rel, sha });
+      await reqJournal(req, { rel, sha });
     }
   } catch (e) { console.error(e); req = base; return status('Serienversand abgebrochen: ' + e.message); }
   req = base;
@@ -827,6 +840,7 @@ async function reqSend() {
   if (miss.length) return status(`Für ${miss.map(s => s.name).join(', ')} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.`);
   try {
     status('Bereite die Unterschriftsanfrage vor …');
+    req = SigReq.markSent(req, 0);
     const bytes = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
     let rel = '', sha = '';
     if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(bytes); }
@@ -843,6 +857,7 @@ async function reqForward(ext = false) {
     req = SigReq.markSigned(req, i, { hash: reqHash, ext: ext === true });
     reqExt = false;
     const done = SigReq.complete(req);
+    if (!done) req = SigReq.markSent(req, SigReq.next(req));
     let bytes = await reqIncremental(done);
     if (!bytes) { reqAudit = done; try { bytes = await reqPdf(); } finally { reqAudit = false; } }
     const name = reqFile(req, done ? ' – unterschrieben.pdf' : ' – zur Unterschrift.pdf');
@@ -873,7 +888,18 @@ async function reqInfoShow() {
     ? `<p class="reqok">✓ Echtheit geprüft: Alle ${signed.length} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>`
     : `<p class="reqwarn">${good} von ${signed.length} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.</p>`;
   const cell = i => !ok || !req.signers[i].hash ? '–' : ok[i] ? '✓ unverändert enthalten' : '– nicht nachweisbar';
-  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${head}<table class="reqtab"><thead><tr><th>Person</th><th>Status</th><th>Zeitpunkt</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td>${s.status === SigReq.DONE ? '✓ unterschrieben' : s.status === SigReq.DECLINED ? `✕ abgelehnt${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}` : 'offen'}</td><td>${esc(SigReq.fmt(s.signedAt))}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table>`;
+  const w = SigReq.waiting(req);
+  const seit = n => n === 0 ? 'Seit heute' : n === 1 ? 'seit 1 Tag' : `seit ${n} Tagen`, late = n => n === 1 ? 'überfällig seit 1 Tag' : `überfällig seit ${n} Tagen`;
+  // Teile einzeln übersetzen und erst dann zusammensetzen – zusammengesetztes HTML erkennen die Übersetzungsmuster nicht
+  const T = (k, ...v) => String(I18N.t(k)).replace(/\{(\d+)\}/g, (all, n) => v[n] != null ? v[n] : all), L = k => esc(I18N.t(k));
+  const due = !w?.due ? '' : ' ' + T('· Frist {0}: {1}', esc(SigReq.day(w.due)), w.dueDays < 0 ? `<b class="reqlate">${L(late(-w.dueDays))}</b>` : w.dueDays === 0 ? `<b class="reqlate">${L('heute fällig')}</b>` : L(w.dueDays === 1 ? 'noch 1 Tag' : `noch ${w.dueDays} Tage`));
+  const wl = w ? `<p class="reqwait" translate="no">${T('Wartet auf <b translate="no">{0}</b>{1} · {2}{3}{4}', esc(w.name), w.stage.key === 'offen' ? '' : ` – ${L(w.stage.label)} ${esc(SigReq.fmt(w.stage.at))}`, L(seit(w.days)), due, w.after ? ' ' + T('· danach: <span translate="no">{0}</span>', esc(w.after)) : '')}</p>` : '';
+  const last = req.log.filter(l => l.what === 'abgeschlossen').pop(), dur = last ? Math.round((new Date(last.at) - new Date(req.created)) / 86400000) : -1;
+  const fin = dur >= 0 ? `<p class="reqok" translate="no">${T('✓ Abgeschlossen {0} – {1}.', esc(SigReq.fmt(last.at)), L(dur < 1 ? 'am selben Tag' : dur === 1 ? 'nach 1 Tag' : `nach ${dur} Tagen`))}</p>` : '';
+  const adv = reqFromMe ? SigReq.advice(w) : null;
+  const wa = adv ? `<p class="${adv.urgent ? 'reqwarn' : 'hint'}" translate="no">➜ ${L(adv.text)}</p>` : '';
+  const steps = s => SigReq.steps(s).map(x => `${x.label} <small>${esc(SigReq.fmt(x.at))}</small>`).join('<br>') || 'Offen – noch nicht gesendet';
+  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin}${wl}${wa}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
   $('#reqInfoDlg').showModal();
 }
 $('#reqInfoClose').onclick = () => $('#reqInfoDlg').close();
@@ -889,16 +915,20 @@ function renderReqBar() {
     text = `„${req.title}“ wurde von ${req.signers[di].name} abgelehnt${req.signers[di].reason ? `: ${req.signers[di].reason}` : ''}`;
     btns = b('info', 'Übersicht');
   } else if (i >= 0) {
-    text = `${req.requester.name || req.requester.email} bittet um Unterschrift: ${req.signers[i].name} ist dran (${d} von ${n} unterschrieben)`;
+    const parts = [`${req.requester.name || req.requester.email} bittet um Unterschrift: ${req.signers[i].name} ist dran (${d} von ${n} unterschrieben)`];
     const need = req.fields.filter(f => f.s === i && f.t === 'text' && f.pg);
-    if (need.length && !reqSigned) text += ` – ${need.filter(f => String(f.v || '').trim()).length} von ${need.length} Angaben ausgefüllt`;
-    if (reqExt && !reqSigned) text += ` – ${req.signers[i].name} hat offenbar in einem anderen PDF-Programm unterschrieben`;
+    if (need.length && !reqSigned) parts.push(`– ${need.filter(f => String(f.v || '').trim()).length} von ${need.length} Angaben ausgefüllt`);
+    const wt = SigReq.waiting(req);
+    if (wt?.due) parts.push(wt.dueDays < 0 ? `– Frist ${SigReq.day(wt.due)} ist überschritten` : wt.dueDays === 0 ? '– Frist: heute' : `– Frist: ${SigReq.day(wt.due)}`);
+    if (reqExt && !reqSigned) parts.push(`– ${req.signers[i].name} hat offenbar in einem anderen PDF-Programm unterschrieben`);
+    text = parts.map(p => I18N.t(p)).join(' ');   // jeden Teil für sich übersetzen
     btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + b('decline', 'Ablehnen …') + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
   } else {
     text = `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
     btns = b('info', 'Übersicht') + b('dsign', 'Zusätzlich digital signieren …');
   }
   $('#reqText').textContent = text;
+  $('#reqText').toggleAttribute('translate', i >= 0 && !reqDraft && SigReq.declined(req) < 0); if ($('#reqText').hasAttribute('translate')) $('#reqText').setAttribute('translate', 'no');
   $('#reqBtns').innerHTML = btns;
 }
 $('#reqBtns').addEventListener('click', ev => {
@@ -3794,3 +3824,82 @@ $('#attList').addEventListener('click', e => {
   if (s) { const f = state.files[+s.dataset.attSave]; download(f.data, f.name, mimeOf(f.name)); }
   if (d) { state.files.splice(+d.dataset.attDel, 1); state.filesDirty = true; state.dirty = true; attRender(); $('#attAdd').focus(); status('Anhang entfernt – wird beim nächsten Speichern nicht mehr eingebettet.'); }
 });
+
+/* ---------- Schnittstelle mysupermail.app (Protokoll „mysupermail-pdfmy“ Version 1) ----------
+   mysupermail.app öffnet https://pdfmy.de/?quelle=mysupermail und reicht eine Datei von Fenster zu Fenster herein:
+   1. PDFMy meldet sich: { type: 'pdfmy:bereit', version: 1 }
+   2. mysupermail schickt: { type: 'mysupermail:datei', version: 1, name, contentType, bytes (ArrayBuffer) }
+   3. „Zurück an mysupermail.app“ schickt: { type: 'pdfmy:ergebnis', version: 1, name, contentType, bytes }
+      Abbrechen: { type: 'pdfmy:abbruch', version: 1 } · abgelehnte Datei: { type: 'pdfmy:fehler', version: 1, grund }
+   Kein Server, kein Upload. Nur Nachrichten des öffnenden Fensters von diesen Herkünften werden angenommen;
+   damit das Fenster überhaupt verbunden bleibt, sendet der Server für ?quelle=mysupermail kein COOP same-origin. */
+(() => {
+  const MSM_ORIGINS = ['https://app.mysupermail.app', 'https://tauri.localhost', 'http://localhost:5173'];
+  if (new URLSearchParams(location.search).get('quelle') !== 'mysupermail' || !window.opener) return;
+  let from = null;      // Herkunft, von der die Datei kam – nur dorthin geht das Ergebnis
+  let got = false;
+  let origName = 'Dokument.pdf';   // Name der hereingereichten Datei – das Ergebnis heißt wieder so (als .pdf)
+  const send = (msg) => { try { window.opener?.postMessage({ version: 1, ...msg }, from); } catch {} };
+
+  const bar = document.createElement('div');
+  bar.className = 'msm-bar';
+  bar.setAttribute('role', 'region');
+  bar.setAttribute('aria-label', 'mysupermail.app');
+  bar.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:none;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:#1f2333;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.25);font:14px system-ui,sans-serif;max-width:calc(100vw - 32px);flex-wrap:wrap';
+  bar.innerHTML = '<span class="msm-text"></span>' +
+    '<button type="button" class="msm-back" style="border:0;border-radius:8px;padding:7px 14px;background:#f08c00;color:#fff;font-weight:600;cursor:pointer">Fertig – zurück an mysupermail.app</button>' +
+    '<button type="button" class="msm-cancel" style="border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 12px;background:transparent;color:#fff;cursor:pointer">Abbrechen</button>';
+  document.body.appendChild(bar);
+  const back = bar.querySelector('.msm-back');
+
+  bar.querySelector('.msm-cancel').onclick = () => { send({ type: 'pdfmy:abbruch' }); bar.style.display = 'none'; window.close(); };
+  back.onclick = async () => {
+    if (!state.pages.length) return toast('Es ist kein Dokument geöffnet.');
+    back.disabled = true; back.textContent = 'PDF wird erstellt …';
+    try {
+      if (typeof ocrRunning !== 'undefined' && ocrRunning) await runOcrAll();
+      const bytes = await buildPdf(docPages(), state.meta, { noOcr: true, onPage: () => {} });
+      const buf = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+      window.opener.postMessage({ type: 'pdfmy:ergebnis', version: 1, name: origName.replace(/\.[^.]+$/, '') + '.pdf', contentType: 'application/pdf', bytes: buf }, from, [buf]);
+      state.dirty = false;
+      bar.querySelector('.msm-text').textContent = 'An mysupermail.app übergeben ✓';
+      back.hidden = true; bar.querySelector('.msm-cancel').hidden = true;
+      setTimeout(() => window.close(), 1200);
+    } catch (e) {
+      console.error(e);
+      back.disabled = false; back.textContent = 'Fertig – zurück an mysupermail.app';
+      toast('Übergabe nicht möglich: ' + e.message);
+    }
+  };
+
+  addEventListener('message', async (e) => {
+    if (e.source !== window.opener || !MSM_ORIGINS.includes(e.origin)) return;
+    const d = e.data;
+    if (!d || d.version !== 1 || d.type !== 'mysupermail:datei' || got) return;
+    from = e.origin;
+    if (!(d.bytes instanceof ArrayBuffer) || !d.bytes.byteLength) return send({ type: 'pdfmy:fehler', grund: 'leer' });
+    got = true;
+    const name = String(d.name || 'Dokument.pdf').replace(/[\/:*?"<>|\u0000-\u001f]/g, '_').slice(0, 180);
+    origName = name;
+    const type = typeof d.contentType === 'string' && d.contentType ? d.contentType : mimeOf(name);
+    try {
+      if (state.pages.length) resetDoc();
+      await importFiles([new File([d.bytes], name, { type })]);
+      state.dirty = false;
+      bar.querySelector('.msm-text').textContent = `„${name}“ aus mysupermail.app`;
+      bar.style.display = 'flex';
+    } catch (err) {
+      console.error(err);
+      send({ type: 'pdfmy:fehler', grund: String(err?.message || err) });
+    }
+  });
+  // Bereit melden – an jede erlaubte Herkunft (der Browser stellt nur bei passender Herkunft zu).
+  // Mehrfach, falls mysupermail.app den Empfänger erst kurz nach dem Öffnen einrichtet.
+  let tries = 0;
+  const hello = () => {
+    if (got || tries++ > 10 || !window.opener) return;
+    for (const o of MSM_ORIGINS) { try { window.opener.postMessage({ type: 'pdfmy:bereit', version: 1 }, o); } catch {} }
+    setTimeout(hello, 500);
+  };
+  hello();
+})();

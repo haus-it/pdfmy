@@ -688,6 +688,7 @@ function renderStage() {
   const cropping = !!(p && state.crop && state.crop.id === p.id);
   $('#toolbar').classList.toggle('cropping', cropping);
   if (!p) { renderFlow(0); return; }
+  window.reqSeenPage?.(p);   // Unterschriftsanfrage: „gelesen“, sobald jede Seite angezeigt wurde
   updateToolbar();
   if (p.kind === 'image') $('#mode').value = p.mode;
   $('#mode').disabled = p.kind !== 'image';

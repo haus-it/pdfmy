@@ -157,10 +157,11 @@ ${names.map(n => `    <document>\n      <extension xsi:type="File" name="${x(n)}
   const utf8 = s => new TextEncoder().encode(s);
   const wrap = s => s.replace(/.{1,76}/g, '$&\r\n');
   const word = s => /^[\x20-\x7e]*$/.test(s) ? s : `=?UTF-8?B?${b64(utf8(s))}?=`;
-  function emlDraft({ to = '', cc = '', subject = '', body = '', attachments = [], date = new Date() }) {
+  // notify: Lesebestätigung an diese Adresse anfordern (das Mail-Programm des Empfängers fragt, ob sie gesendet werden soll)
+  function emlDraft({ to = '', cc = '', subject = '', body = '', attachments = [], date = new Date(), notify = '' }) {
     const bnd = '----=_PDFMy_' + date.getTime().toString(36);
     const parts = [
-      `To: ${to}`, ...(cc ? [`Cc: ${cc}`] : []), `Subject: ${word(subject)}`, 'X-Unsent: 1', `Date: ${date.toUTCString()}`, 'MIME-Version: 1.0',
+      `To: ${to}`, ...(cc ? [`Cc: ${cc}`] : []), ...(notify ? [`Disposition-Notification-To: ${notify}`, `Return-Receipt-To: ${notify}`] : []), `Subject: ${word(subject)}`, 'X-Unsent: 1', `Date: ${date.toUTCString()}`, 'MIME-Version: 1.0',
       `Content-Type: multipart/mixed; boundary="${bnd}"`, '', 'This is a multi-part message in MIME format.', '',
       `--${bnd}`, 'Content-Type: text/plain; charset="utf-8"', 'Content-Transfer-Encoding: base64', '', wrap(b64(utf8(body))).trimEnd(),
       ...attachments.flatMap(a => ['', `--${bnd}`, `Content-Type: ${a.mime || 'application/octet-stream'}; name="${word(a.name)}"`, 'Content-Transfer-Encoding: base64',

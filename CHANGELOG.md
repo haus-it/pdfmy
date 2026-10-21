@@ -4,6 +4,17 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Schnittstelle mysupermail.app (Protokoll „mysupermail-pdfmy“ Version 1)
+- mysupermail.app öffnet pdfmy.de/?quelle=mysupermail und reicht eine Datei von Fenster zu Fenster herein (postMessage, kein Upload); „Fertig – zurück an mysupermail.app“ gibt die bearbeitete PDF zurück. Angenommen werden nur Nachrichten des öffnenden Fensters von festgelegten Herkünften; nur für diesen Aufruf sendet der Server kein COOP same-origin.
+- Getestet: Übergabe hin und zurück im Browser (Testseite als öffnendes Fenster).
+
+### Unterschriftsanfragen: Gesendet, Empfangen, Gelesen – und was jetzt zu tun ist
+- Verlauf je Person mit Uhrzeit wie bei einem Messenger: ✓ Gesendet (E-Mail vorbereitet), ✓✓ Empfangen (in PDFMy geöffnet), ✓✓ Gelesen (jede Seite angesehen), ✍ Unterschrieben. Ohne Server: die Zeitpunkte stehen in der PDF und reisen mit; die Kopie des Absenders zählt nicht als „empfangen“.
+- Übersicht: auf wen die Anfrage wartet, seit wann, Frist (noch X Tage / überfällig), wer danach kommt, Laufzeit nach Abschluss.
+- Handlungstipp für den Absender (z. B. „gelesen, aber nicht unterschrieben – kurz anrufen“, „seit 3 Tagen keine Reaktion – erinnern“); im Posteingangsbuch ist „Erinnern“ dann hervorgehoben, Erinnerungen werden gezählt.
+- Anfrage- und Erinnerungs-E-Mails fordern eine Lesebestätigung an (Disposition-Notification-To). Prüfprotokoll-Seite enthält Gesendet/Empfangen/Gelesen.
+- Tests: sigreq.test.js (Zustellstand, Wartezeit, Frist, Handlungstipp, Lesebestätigung); Browser-Ablauf Unterzeichnerin/Absender.
+
 ### pdfmy Scan für Mac 1.2.1: Outlook-Anhänge über die App „PDFMy“
 - Rückmeldung Mac (Herr Fischer): Die App „PDFMy“ (Standardprogramm für PDF) gab Outlook-Anhänge nur als Pfad an pdfmy Scan weiter – der Hintergrunddienst darf Outlooks geschützten Ordner aber nicht lesen (macOS-Datenschutz). Jetzt **kopiert die App den Anhang selbst** (sie darf das, weil Outlook ihr die Datei übergibt) nach ~/Library/Caches/de.pdfmy.open und reicht die Kopie weiter; Kopien älter als 12 Stunden werden entfernt.
 - Einmalig nötig: Einrichtung pdfmy Scan für Mac neu ausführen (legt die App neu an), dabei „Ja, PDFMy verwenden“ wählen – Schritt-für-Schritt-Anleitung jetzt in der Hilfe („Mac: PDF-Anhänge aus Outlook direkt in PDFMy öffnen“).

@@ -93,6 +93,8 @@ Nachtrag 21.10.2026 (PDF/A-Kurzprüfung): Prüfung eingehender PDFs auf die häu
 
 Nachtrag 21.10.2026 (Serienversand): Jede Person erhält eine eigene Anfrage mit eigener Kennung und eigenem Prüfprotokoll (keine Einsicht in Daten anderer Empfänger, DSGVO Art. 5 Abs. 1 lit. f); Empfängerlisten werden nur lokal verarbeitet; E-Mails werden nur als Entwurf vorbereitet, Versand durch den Nutzer.
 
+Nachtrag 21.10.2026 (Zustellstand von Unterschriftsanfragen): „Empfangen“/„Gelesen“ werden nur lokal beim Öffnen in PDFMy festgehalten und reisen in der PDF mit (kein Tracking-Pixel, kein Server, keine Daten an Dritte – DSGVO Art. 5 Abs. 1 lit. c, Datenminimierung); die Lesebestätigung der E-Mail sendet nur der Empfänger selbst auf Nachfrage seines Mail-Programms. Die Zeitpunkte stehen im Prüfprotokoll (ISO 27001 A.8.15 Protokollierung). Nachweis: tests/sigreq.test.js.
+
 Nachtrag 21.10.2026 (Word/Excel in PDF): Umwandlung lokal im Browser ohne Fremdbibliothek (ISO 27001 A.5.21: keine zusätzliche Lieferkette; XML-Verarbeitung ohne externe Entitäten/DTD – XXE ausgeschlossen, A.8.28). Ergebnis-PDF mit eingebetteten Schriften (ISO 32000-1), Text mit pypdf (strict) geprüft.
 
 Nachtrag 20.10.2026 (Zusammenfassen/Fragen): KI ausschließlich über die im Browser eingebaute, lokal laufende Summarizer-/Prompt-API (Gemini Nano auf dem Gerät; keine Übertragung von Dokumentinhalten an PDFMy oder Dritte, DSGVO Art. 25). Ergebnisse als „maschinell erstellt“ gekennzeichnet, Antworten nur aus dem Dokument (ISO 9001, 8.5.1; EU-KI-Verordnung Art. 50: Kennzeichnung KI-erzeugter Inhalte).

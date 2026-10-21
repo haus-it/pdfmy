@@ -14,6 +14,7 @@
   const clean = s => String(s == null ? '' : s).replace(/[\r\n\t]+/g, ' ').trim().slice(0, 200);
   const isMail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || '').trim());
 
+  const utcDay = t => Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
   const isDay = d => /^\d{4}-\d{2}-\d{2}$/.test(String(d || '')) && !isNaN(new Date(d + 'T00:00:00Z'));
   const day = d => isDay(d) ? d.split('-').reverse().join('.') : '';
   // „Zur Kenntnis“: Adressen, die nicht unterschreiben, aber das Ergebnis in Kopie bekommen (Komma, Semikolon oder Leerzeichen getrennt)
@@ -70,12 +71,60 @@
     const signers = r.signers.map((s, j) => j === i ? { ...s, status: DECLINED, signedAt: at, reason: why } : s);
     return { ...r, signers, log: [...r.log, { at, what: DECLINED, by: r.signers[i].name || r.signers[i].email, reason: why }] };
   }
+  /* Zustellstand je Person – wie bei einem Messenger, aber ohne Server und deshalb ehrlich benannt:
+     gesendet  = PDFMy hat die E-Mail mit der PDF an diese Person vorbereitet (sentAt),
+     empfangen = die Person hat die PDF in PDFMy geöffnet (openedAt),
+     gelesen   = sie hat dabei jede Seite angesehen (readAt).
+     Die Zeitpunkte stehen in der PDF und reisen mit; der Absender sieht sie, sobald eine neuere Fassung zurückkommt. */
+  const setS = (r, i, patch, what) => {
+    const s = r.signers[i]; if (!s) return r;
+    return { ...r, signers: r.signers.map((x, j) => j === i ? { ...x, ...patch } : x), log: [...r.log, { at: Object.values(patch)[0], what, by: s.name || s.email }] };
+  };
+  const markSent = (r, i, at = now()) => r.signers[i] ? setS(r, i, { sentAt: at }, 'gesendet') : r;
+  const markOpened = (r, i, at = now()) => r.signers[i] && !r.signers[i].openedAt && r.signers[i].status !== DONE ? setS(r, i, { openedAt: at }, 'empfangen') : r;
+  function markRead(r, i, at = now()) {
+    const s = r.signers[i]; if (!s || s.readAt || s.status === DONE) return r;
+    return setS(markOpened(r, i, at), i, { readAt: at }, 'gelesen');
+  }
+  // Letzter erreichter Schritt einer Person: { key, label, at } – key: offen | gesendet | empfangen | gelesen | unterschrieben | abgelehnt
+  const STAGE = { offen: 'Offen', gesendet: '✓ Gesendet', empfangen: '✓✓ Empfangen', gelesen: '✓✓ Gelesen', [DONE]: '✍ Unterschrieben', [DECLINED]: '✕ Abgelehnt' };
+  function stage(s) {
+    const key = s.status === DONE || s.status === DECLINED ? s.status : s.readAt ? 'gelesen' : s.openedAt ? 'empfangen' : s.sentAt ? 'gesendet' : 'offen';
+    return { key, label: STAGE[key], at: { [DONE]: s.signedAt, [DECLINED]: s.signedAt, gelesen: s.readAt, empfangen: s.openedAt, gesendet: s.sentAt }[key] || '' };
+  }
+  // Alle Schritte einer Person mit Zeitpunkt (für Übersicht und Prüfprotokoll)
+  const steps = s => [['gesendet', s.sentAt], ['empfangen', s.openedAt], ['gelesen', s.readAt], [s.status === DECLINED ? DECLINED : DONE, s.status === DONE || s.status === DECLINED ? s.signedAt : '']]
+    .filter(([, at]) => at).map(([key, at]) => ({ key, label: STAGE[key], at }));
+  // Wer ist dran, seit wann wartet die Anfrage auf ihn, und wie steht die Frist? (Tage, ganzzahlig; due < 0: überfällig)
+  function waiting(r, today = new Date()) {
+    const i = next(r); if (i < 0) return null;
+    const s = r.signers[i], since = s.sentAt || (i > 0 ? r.signers[i - 1].signedAt : '') || r.created;
+    const t0 = utcDay(today), d0 = iso => { const d = new Date(iso); return isNaN(d) ? 0 : Math.max(0, Math.round((t0 - utcDay(d)) / 86400000)); };
+    return { i, name: s.name || s.email, email: s.email, stage: stage(s), since, days: d0(since), after: r.signers[i + 1] ? r.signers[i + 1].name || r.signers[i + 1].email : '',
+      ...(isDay(r.due) ? { due: r.due, dueDays: Math.round((new Date(r.due + 'T00:00:00Z') - t0) / 86400000) } : {}) };
+  }
+  /* Nächster sinnvoller Schritt für den Absender (aus waiting()): { text, urgent } oder null, wenn nichts zu tun ist.
+     Der Mehrwert gegenüber bloßen Häkchen: PDFMy sagt, wo es hängt und was hilft. */
+  function advice(w) {
+    if (!w) return null;
+    if (w.dueDays < 0) return { urgent: true, text: `Die Frist ist überschritten – ${w.name} erinnern oder eine neue Frist vereinbaren.` };
+    if (w.dueDays <= 1) return { urgent: true, text: `Die Frist läuft ab – jetzt an ${w.name} erinnern.` };
+    if (w.stage.key === 'gelesen' && w.days >= 2) return { urgent: true, text: `${w.name} hat das Dokument gelesen, aber noch nicht unterschrieben – vielleicht gibt es Fragen. Kurz anrufen oder nachfragen.` };
+    if (w.stage.key === 'empfangen' && w.days >= 2) return { urgent: false, text: `${w.name} hat das Dokument geöffnet, aber noch nicht ganz angesehen.` };
+    if (w.stage.key === 'gesendet' && w.days >= 3) return { urgent: true, text: `Seit ${w.days} Tagen keine Reaktion von ${w.name} – erinnern; vielleicht liegt die E-Mail im Spam-Ordner.` };
+    return null;
+  }
+  // Drängt es? (für das Posteingangsbuch, das nur Kurzangaben speichert: seit = ISO-Zeitpunkt, due = JJJJ-MM-TT)
+  function urgent(since, due, today = new Date()) {
+    const t0 = utcDay(today), d = new Date(since || '');
+    return (!isNaN(d) && t0 - utcDay(d) >= 3 * 86400000) || (isDay(due) && new Date(due + 'T00:00:00Z') - t0 <= 86400000);
+  }
   // Felder einer Person, die vor dem Unterschreiben noch ausgefüllt werden müssen (Textfelder ohne Eintrag)
   const missing = (r, i) => r.fields.filter(f => f.s === i && f.t === 'text' && !String(f.v || '').trim());
   const fmt = iso => { if (!iso) return ''; const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); };
   // Kurzfassung fürs Posteingangsbuch (Excel-Spalte „Unterschriften“)
   function summaryText(r) {
-    return `${doneCount(r)}/${r.signers.length}: ` + r.signers.map(s => s.status === DONE ? `${s.name} ✓ ${fmt(s.signedAt)}` : s.status === DECLINED ? `${s.name} abgelehnt ${fmt(s.signedAt)}${s.reason ? ` („${s.reason}“)` : ''}` : `${s.name} offen`).join('; ');
+    return `${doneCount(r)}/${r.signers.length}: ` + r.signers.map(s => s.status === DONE ? `${s.name} ✓ ${fmt(s.signedAt)}` : s.status === DECLINED ? `${s.name} abgelehnt ${fmt(s.signedAt)}${s.reason ? ` („${s.reason}“)` : ''}` : (st => st.key === 'offen' ? `${s.name} offen` : `${s.name} ${st.key} ${fmt(st.at)}`)(stage(s))).join('; ');
   }
   /* Texte der E-Mails in der Sprache der Oberfläche: tr übersetzt einen deutschen Satz mit Platzhaltern {0}, {1} … (in PDFMy: I18N.t);
      die Werte (Namen, Titel, Daten) werden erst danach eingesetzt und nie übersetzt. Ohne tr bleibt alles Deutsch. */
@@ -99,7 +148,7 @@
     }
     const s = r.signers[i], after = r.signers[i + 1];
     const cc = i > 0 && r.requester.email && r.requester.email !== s.email ? r.requester.email : '';
-    return { to: s.email, cc, subject: say(tr, 'Bitte unterschreiben: {0}', r.title),
+    return { to: s.email, cc, notify: r.requester.email && r.requester.email !== s.email ? r.requester.email : '', subject: say(tr, 'Bitte unterschreiben: {0}', r.title),
       body: para(hello(tr, s.name),
         n > 1 ? say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben (Person {2} von {3}).', req, r.title, i + 1, n) : say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben.', req, r.title),
         r.due ? say(tr, 'Bitte bis {0}.', day(r.due)) : '',
@@ -126,8 +175,7 @@
   const formName = (r, k) => `pdfmy_${r.id}_${k}`;
   const formField = (r, name) => { const m = /^pdfmy_([a-z0-9]+)_(\d+)$/.exec(String(name || '')); return m && m[1] === r.id && +m[2] < r.fields.length ? +m[2] : -1; };
   // Vorlagen: Personen, Felder, Nachricht und Frist (in Tagen) für wiederkehrende Dokumente
-  const utcDay = t => Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
-  function template(r, name, pageIndex = f => f.page, today = new Date()) {
+    function template(r, name, pageIndex = f => f.page, today = new Date()) {
     const days = isDay(r.due) ? Math.max(0, Math.round((new Date(r.due + 'T00:00:00Z') - utcDay(today)) / 86400000)) : 0;
     return { name: clean(name).slice(0, 80) || r.title, title: r.title, message: r.message, days, ...(r.cc ? { cc: r.cc.slice() } : {}), signers: r.signers.map(s => ({ name: s.name, email: s.email })),
       fields: r.fields.map(f => ({ s: f.s, t: f.t || 'sign', label: f.label || '', page: pageIndex(f), x: f.x, y: f.y, w: f.w, h: f.h })).filter(f => f.page >= 0) };
@@ -135,7 +183,7 @@
   const dueIn = (days, today = new Date()) => days > 0 ? new Date(utcDay(today) + days * 86400000).toISOString().slice(0, 10) : '';
   // Zeilen der Prüfprotokoll-Seite (wird nach der letzten Unterschrift an die PDF angehängt)
   // tr wie bei mail(): jede Zeile über eine Vorlage mit Platzhaltern; Namen, Titel, Prüfsummen, Daten werden nie übersetzt
-  const LOGW = { angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
+  const LOGW = { gesendet: 'gesendet', empfangen: 'empfangen (in PDFMy geöffnet)', gelesen: 'gelesen (alle Seiten angesehen)', angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
   function auditLines(r, docHash = '', tr = s => s) {
     const L = [['h', say(tr, 'Prüfprotokoll – Unterschriftsanfrage')], ['p', say(tr, 'Dokument: {0}', r.title)], ['p', say(tr, 'Anfrage-ID: {0}', r.id)],
       ['p', say(tr, 'Erstellt: {0} von {1}{2}', fmt(r.created), r.requester.name || '', r.requester.email ? ` <${r.requester.email}>` : '')],
@@ -147,6 +195,8 @@
       const st = s.status === DONE ? (s.ext ? say(tr, 'Unterschrieben in einem anderen PDF-Programm') : say(tr, 'Unterschrieben')) : s.status === DECLINED ? say(tr, 'Abgelehnt') : say(tr, 'Offen');
       L.push(['p', st + (s.signedAt ? ' ' + say(tr, 'am {0}', fmt(s.signedAt)) : '') + (s.reason ? ' – ' + say(tr, 'Begründung: {0}', s.reason) : '')]);
       const vals = r.fields.filter(f => f.s === i && f.v && (f.t === 'text' || f.t === 'check')).map(f => `${f.label || say(tr, TYPES[f.t])}: ${f.t === 'check' ? (f.v ? say(tr, 'angekreuzt') : say(tr, 'nicht angekreuzt')) : f.v}`);
+      const tl = steps(s).filter(x => x.key !== DONE && x.key !== DECLINED);
+      if (tl.length) L.push(['p', tl.map(x => say(tr, { gesendet: 'Gesendet am {0}', empfangen: 'Empfangen am {0}', gelesen: 'Gelesen am {0}' }[x.key], fmt(x.at))).join(' · ')]);
       if (vals.length) L.push(['p', say(tr, 'Angaben: {0}', vals.join('; '))]);
       if (s.hash) L.push(['m', say(tr, 'SHA-256 der erhaltenen Fassung: {0}', s.hash)]);
       L.push(['g', '']);
@@ -204,6 +254,6 @@
     }
     return { list, bad };
   }
-  const api = { recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
+  const api = { advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.SigReq = api;
 })(typeof self !== 'undefined' ? self : globalThis);

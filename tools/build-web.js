@@ -261,7 +261,13 @@ AddDefaultCharset utf-8
   Header always set X-Frame-Options "DENY"
   Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=()"
   Header always set Strict-Transport-Security "max-age=31536000"
-  Header always set Cross-Origin-Opener-Policy "same-origin"
+  # mysupermail.app reicht Dateien per Fenster-Nachricht herein (?quelle=mysupermail) – dafür muss das öffnende Fenster verbunden bleiben
+  <If "%{QUERY_STRING} =~ /(^|&)quelle=mysupermail(&|$)/">
+    Header always set Cross-Origin-Opener-Policy "unsafe-none"
+  </If>
+  <Else>
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+  </Else>
   Header always set Content-Security-Policy "${CSP}; frame-ancestors 'none'"
   <FilesMatch "\\.(html|webmanifest|js)$">
     Header set Cache-Control "no-cache"
