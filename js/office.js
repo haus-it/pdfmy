@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
-/* Word (.docx) und Excel (.xlsx) lesen – ohne Server und ohne Bibliothek: ZIP über DecompressionStream, XML mit kleinem eigenem Parser.
+/* Word (.docx), Excel (.xlsx) und OpenDocument (.odt, .ods) lesen – ohne Server und ohne Bibliothek: ZIP über DecompressionStream, XML mit kleinem eigenem Parser.
    Ergebnis: Bausteine für js/textpdf.js (Überschriften, Absätze mit Ausrichtung/fett, Listen, Tabellen, Bilder, Seitenumbrüche).
    Office.docx(bytes) → { blocks, page: { size: [w, h], margin } }   Office.xlsx(bytes) → { blocks }
    Nicht nachgebildet: Kopf-/Fußzeilen, Textfelder, Spalten, Schriftarten und -größen im Einzelnen, Formeln (es zählt der gespeicherte Wert). */
@@ -220,6 +220,123 @@
     return { blocks };
   }
 
-  const api = { readZip, parseXml, docx, xlsx };
+
+  // ---------- OpenDocument (LibreOffice/OpenOffice): .odt Text, .ods Tabelle ----------
+  const len = v => { const m = /^([\d.]+)\s*(cm|mm|in|pt|pc|px)?$/.exec(String(v || '').trim()); if (!m) return 0; return +m[1] * ({ cm: 28.3465, mm: 2.83465, in: 72, pt: 1, pc: 12, px: 0.75 }[m[2] || 'pt']); };
+  async function odfParts(bytes, want) {
+    const z = readZip(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes));
+    const mt = (await z.text('mimetype') || '').trim(), xml = await z.text('content.xml');
+    if (!xml || !mt.startsWith('application/vnd.oasis.opendocument.' + want)) throw new Error(want === 'text' ? 'Keine OpenDocument-Textdatei (.odt).' : 'Keine OpenDocument-Tabelle (.ods).');
+    const doc = parseXml(xml), st = await z.text('styles.xml');
+    // Absatz-/Zeichenformate: fett, Ausrichtung, Überschrift; Listenformate: nummeriert?
+    const styles = new Map(), lists = new Map();
+    for (const src of [doc, st ? parseXml(st) : null].filter(Boolean)) {
+      for (const s of all(src, 'style:style')) {
+        const tp = kid(s, 'style:text-properties'), pp = kid(s, 'style:paragraph-properties');
+        styles.set(s.attrs['style:name'], { bold: tp?.attrs['fo:font-weight'] === 'bold', align: pp?.attrs['fo:text-align'], parent: s.attrs['style:parent-style-name'], h: /^(Heading|Title)/.test(s.attrs['style:name'] || '') ? (+(/\d/.exec(s.attrs['style:name']) || [1])[0] || 1) : 0 });
+      }
+      for (const l of all(src, 'text:list-style')) { const first = els(l)[0]; lists.set(l.attrs['style:name'], first?.name === 'text:list-level-style-number'); }
+    }
+    const sty = name => { let s = styles.get(name), bold = false, align = null, h = 0, n = 0; while (s && n++ < 5) { bold ||= s.bold; align ||= s.align; h ||= s.h; s = styles.get(s.parent); } return { bold, align, h }; };
+    return { z, doc, sty, lists, st };
+  }
+  // Text eines Absatzes (Leerzeichen-, Tab- und Zeilenumbruch-Elemente), Fettdruck aller Teile
+  function odfText(el, sty) {
+    let t = '', runs = 0, bold = 0;
+    const walk = (e, b) => {
+      for (const k of e.kids) {
+        if (typeof k === 'string') { t += k; if (k.trim()) { runs++; if (b) bold++; } continue; }
+        if (k.name === 'text:s') t += ' '.repeat(+k.attrs['text:c'] || 1);
+        else if (k.name === 'text:tab') t += '\t';
+        else if (k.name === 'text:line-break') t += '\n';
+        else if (k.name === 'text:note' || k.name === 'office:annotation') continue;
+        else walk(k, b || (k.name === 'text:span' && sty(k.attrs['text:style-name']).bold));
+      }
+    };
+    walk(el, sty(el.attrs['text:style-name']).bold);
+    return { text: t.replace(/\s+$/, ''), allBold: runs > 0 && bold === runs };
+  }
+  async function odt(bytes) {
+    const { z, doc, sty, lists, st } = await odfParts(bytes, 'text'), blocks = [], body = all(doc, 'office:text')[0];
+    const image = async fr => {
+      const im = kid(fr, 'draw:image'), href = im?.attrs['xlink:href']; if (!href || /^https?:/.test(href)) return null;
+      const data = await z.get(href.replace(/^\.\//, '')); if (!data) return null;
+      const mime = data[0] === 0x89 && data[1] === 0x50 ? 'image/png' : data[0] === 0xff && data[1] === 0xd8 ? 'image/jpeg' : null;
+      return mime ? { type: 'img', bytes: data, mime, w: len(fr.attrs['svg:width']) || 200, h: len(fr.attrs['svg:height']) || 150 } : { type: 'p', text: '[Bild]' };
+    };
+    const para = async (p, extra = {}) => {
+      const { text, allBold } = odfText(p, sty), s = sty(p.attrs['text:style-name']);
+      for (const fr of all(p, 'draw:frame')) { const im = await image(fr); if (im) blocks.push({ ...im, align: s.align === 'center' ? 'center' : s.align === 'end' || s.align === 'right' ? 'right' : 'left' }); }
+      if (!text.trim()) { if (!all(p, 'draw:frame').length) blocks.push({ type: 'gap' }); return; }
+      if (p.name === 'text:h') blocks.push({ type: 'h', level: Math.min(6, +p.attrs['text:outline-level'] || 1), text });
+      else if (extra.li) blocks.push({ type: 'li', ...extra.li, text });
+      else if (s.h) blocks.push({ type: 'h', level: Math.min(6, s.h), text });
+      else blocks.push({ type: 'p', text, bold: allBold, align: s.align === 'center' ? 'center' : s.align === 'end' || s.align === 'right' ? 'right' : null });
+    };
+    const list = async (l, depth = 0, ordered = null) => {
+      const ord = ordered ?? lists.get(l.attrs['text:style-name']) ?? false; let n = 0;
+      for (const it of els(l).filter(k => k.name === 'text:list-item')) {
+        n++;
+        for (const c of els(it)) {
+          if (c.name === 'text:p' || c.name === 'text:h') await para(c, { li: { ordered: ord, label: ord ? n + '.' : '•', depth: Math.min(3, depth) } });
+          else if (c.name === 'text:list') await list(c, depth + 1, ord);
+        }
+      }
+    };
+    const table = t => {
+      const rows = [];
+      for (const tr of all(t, 'table:table-row')) {
+        const row = [];
+        for (const tc of els(tr).filter(k => k.name === 'table:table-cell' || k.name === 'table:covered-table-cell')) {
+          const v = all(tc, 'text:p').map(p => odfText(p, sty).text).join('\n').trim(), rep = Math.min(50, +tc.attrs['table:number-columns-repeated'] || 1);
+          for (let i = 0; i < rep; i++) row.push(v);
+        }
+        rows.push(row);
+      }
+      let n = Math.max(0, ...rows.map(r => r.length)); while (n > 0 && rows.every(r => !r[n - 1])) n--;
+      if (n) blocks.push({ type: 'table', rows: rows.filter(r => r.some(Boolean)).map(r => Array.from({ length: n }, (_, i) => r[i] ?? '')), head: !!all(t, 'table:table-header-rows').length });
+    };
+    const walk = async el => {
+      for (const k of els(el)) {
+        if (k.name === 'text:p' || k.name === 'text:h') await para(k);
+        else if (k.name === 'text:list') await list(k);
+        else if (k.name === 'table:table') table(k);
+        else if (k.name === 'text:section' || k.name === 'text:soft-page-break') await walk(k);
+      }
+    };
+    await walk(body);
+    // Seitenformat aus styles.xml
+    let page = { size: null, margin: null };
+    if (st) { const pl = all(parseXml(st), 'style:page-layout-properties')[0]; if (pl) page = { size: [len(pl.attrs['fo:page-width']), len(pl.attrs['fo:page-height'])].every(v => v > 100) ? [len(pl.attrs['fo:page-width']), len(pl.attrs['fo:page-height'])] : null, margin: len(pl.attrs['fo:margin-left']) ? Math.max(28, Math.min(85, len(pl.attrs['fo:margin-left']))) : null }; }
+    const out = blocks.filter((b, i) => !(b.type === 'gap' && (i === 0 || blocks[i - 1].type === 'gap')));
+    while (out.length && out[out.length - 1].type === 'gap') out.pop();
+    return { blocks: out, page };
+  }
+  async function ods(bytes, { locale = 'de-DE' } = {}) {
+    const { doc } = await odfParts(bytes, 'spreadsheet'), blocks = [];
+    const nf = (v, t) => { const n = +v; if (Number.isNaN(n)) return v; return t === 'percentage' ? new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 2 }).format(n) : t === 'currency' ? new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n) + ' €' : new Intl.NumberFormat(locale, { maximumFractionDigits: 10 }).format(n); };
+    for (const t of all(doc, 'table:table')) {
+      const rows = [];
+      for (const tr of all(t, 'table:table-row')) {
+        const row = [];
+        for (const tc of els(tr).filter(k => k.name === 'table:table-cell' || k.name === 'table:covered-table-cell')) {
+          const vt = tc.attrs['office:value-type'], txt0 = all(tc, 'text:p').map(txt).join('\n');
+          const v = vt === 'date' && tc.attrs['office:date-value'] ? new Intl.DateTimeFormat(locale).format(new Date(tc.attrs['office:date-value'])) : ['float', 'percentage', 'currency'].includes(vt) && tc.attrs['office:value'] != null ? nf(tc.attrs['office:value'], vt) : txt0;
+          const rep = Math.min(100, +tc.attrs['table:number-columns-repeated'] || 1);   // leere Restspalten werden oft tausendfach wiederholt
+          for (let i = 0; i < rep; i++) row.push(v);
+        }
+        const rrep = Math.min(row.some(Boolean) ? 100 : 1, +tr.attrs['table:number-rows-repeated'] || 1);
+        for (let i = 0; i < rrep; i++) rows.push(row);
+      }
+      let n = Math.max(0, ...rows.map(r => r.length)); while (n > 0 && rows.every(r => !r[n - 1])) n--;
+      const tbl = rows.map(r => Array.from({ length: n }, (_, i) => r[i] ?? '')).filter(r => r.some(Boolean));
+      if (tbl.length) blocks.push({ type: 'h', level: 2, text: t.attrs['table:name'] || '' }, { type: 'table', rows: tbl, head: true });
+    }
+    if (blocks.length === 2) blocks.shift();
+    if (!blocks.length) throw new Error('Die Tabelle enthält keine Werte.');
+    return { blocks };
+  }
+
+  const api = { readZip, parseXml, docx, xlsx, odt, ods };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Office = api;
 })(typeof self !== 'undefined' ? self : this);

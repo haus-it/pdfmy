@@ -95,3 +95,44 @@ test('Keine Office-Datei: verständlicher Fehler', async () => {
   await assert.rejects(Office.docx(new Uint8Array([1, 2, 3])), /Keine gültige Office-Datei/);
   await assert.rejects(Office.docx(await zipDeflate({ 'a.txt': 'x' })), /Keine Word-Datei/);
 });
+
+const ODF = 'xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"';
+test('OpenDocument-Text: Überschrift, Ausrichtung, fett, Listen, Tabelle, Bild, Leerzeichen-Elemente', async () => {
+  const content = `<office:document-content ${ODF}><office:automatic-styles>
+    <style:style style:name="P1" style:family="paragraph"><style:paragraph-properties fo:text-align="center"/></style:style>
+    <style:style style:name="T1" style:family="text"><style:text-properties fo:font-weight="bold"/></style:style>
+    <text:list-style style:name="L1"><text:list-level-style-number text:level="1"/></text:list-style></office:automatic-styles>
+    <office:body><office:text>
+      <text:h text:outline-level="1">Vereinssatzung</text:h>
+      <text:p text:style-name="P1">Fassung 2026</text:p>
+      <text:p>Der Verein<text:s text:c="2"/>heißt<text:tab/>„Mentor e.&#x202F;V.“</text:p>
+      <text:p><text:span text:style-name="T1">Alles fett</text:span></text:p>
+      <text:list><text:list-item><text:p>Punkt A</text:p></text:list-item><text:list-item><text:p>Punkt B</text:p></text:list-item></text:list>
+      <text:list text:style-name="L1"><text:list-item><text:p>Erstens</text:p></text:list-item></text:list>
+      <table:table><table:table-header-rows><table:table-row><table:table-cell><text:p>Amt</text:p></table:table-cell><table:table-cell><text:p>Name</text:p></table:table-cell></table:table-row></table:table-header-rows>
+        <table:table-row><table:table-cell><text:p>Vorsitz</text:p></table:table-cell><table:table-cell><text:p>Anna</text:p></table:table-cell><table:table-cell table:number-columns-repeated="1000"/></table:table-row></table:table>
+      <text:p><draw:frame svg:width="2cm" svg:height="1cm"><draw:image xlink:href="Pictures/logo.png"/></draw:frame></text:p>
+    </office:text></office:body></office:document-content>`;
+  const styles = `<office:document-styles ${ODF}><office:automatic-styles><style:page-layout style:name="pm1"><style:page-layout-properties fo:page-width="21cm" fo:page-height="29.7cm" fo:margin-left="2.5cm"/></style:page-layout></office:automatic-styles></office:document-styles>`;
+  const z = await zipDeflate({ mimetype: 'application/vnd.oasis.opendocument.text', 'content.xml': content, 'styles.xml': styles, 'Pictures/logo.png': PNG });
+  const { blocks, page } = await Office.odt(z);
+  assert.deepEqual(blocks.map(b => b.type + (b.level || '') + (b.ordered ? 'o' : '') + (b.bold ? 'B' : '') + (b.align && b.type === 'p' ? '@' + b.align : '')), ['h1', 'p@center', 'p', 'pB', 'li', 'li', 'lio', 'table', 'img']);
+  assert.equal(blocks[2].text, 'Der Verein  heißt\t„Mentor e. V.“');
+  assert.deepEqual(blocks[7].rows, [['Amt', 'Name'], ['Vorsitz', 'Anna']]); assert.equal(blocks[7].head, true);
+  assert.equal(Math.round(blocks[8].w), 57); assert.equal(Math.round(page.size[0]), 595); assert.equal(Math.round(page.margin), 71);
+  const pdf = await TP.build(L, { blocks, page, fonts });
+  const t = pdfText(pdf); for (const w of ['Vereinssatzung', 'Fassung 2026', 'Punkt B', 'Erstens', 'Vorsitz']) assert.ok(t.includes(w), w);
+});
+
+test('OpenDocument-Tabelle: Werte, Währung, Prozent, Datum, wiederholte Zeilen/Spalten', async () => {
+  const content = `<office:document-content ${ODF}><office:body><office:spreadsheet><table:table table:name="Kasse">
+    <table:table-row><table:table-cell office:value-type="string"><text:p>Posten</text:p></table:table-cell><table:table-cell office:value-type="string"><text:p>Betrag</text:p></table:table-cell><table:table-cell office:value-type="string"><text:p>Anteil</text:p></table:table-cell><table:table-cell office:value-type="string"><text:p>Datum</text:p></table:table-cell><table:table-cell table:number-columns-repeated="16380"/></table:table-row>
+    <table:table-row><table:table-cell office:value-type="string"><text:p>Beitrag</text:p></table:table-cell><table:table-cell office:value-type="currency" office:value="1250.5"><text:p>1.250,50 €</text:p></table:table-cell><table:table-cell office:value-type="percentage" office:value="0.19"><text:p>19 %</text:p></table:table-cell><table:table-cell office:value-type="date" office:date-value="2026-10-21"><text:p>21.10.26</text:p></table:table-cell></table:table-row>
+    <table:table-row table:number-rows-repeated="1048570"><table:table-cell table:number-columns-repeated="16384"/></table:table-row>
+  </table:table></office:spreadsheet></office:body></office:document-content>`;
+  const z = await zipDeflate({ mimetype: 'application/vnd.oasis.opendocument.spreadsheet', 'content.xml': content });
+  const { blocks } = await Office.ods(z);
+  assert.equal(blocks.length, 1);
+  assert.deepEqual(blocks[0].rows, [['Posten', 'Betrag', 'Anteil', 'Datum'], ['Beitrag', '1.250,50 €', '19 %', '21.10.2026']]);
+  await assert.rejects(Office.ods(await zipDeflate({ mimetype: 'application/vnd.oasis.opendocument.text', 'content.xml': content })), /Keine OpenDocument-Tabelle/);
+});

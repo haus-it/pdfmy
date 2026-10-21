@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### LibreOffice/OpenOffice in PDF
+- **.odt und .ods** (OpenDocument, ISO/IEC 26300) öffnen jetzt direkt als PDF (wie bei PDF24 und Smallpdf): `Office.odt` mit Überschriften (Gliederungsebene), Absätzen mit Ausrichtung und Fettdruck, Aufzählungen/Nummerierungen, Tabellen (Kopfzeilen, wiederholte Spalten begrenzt), Bildern und Seitenformat; `Office.ods` mit allen Blättern, Zahlen-, Währungs-, Prozent- und Datumswerten; tausendfach wiederholte leere Zeilen/Spalten werden begrenzt.
+- Getestet: `tests/office.test.js` (2 neue Fälle), im Browser .odt und .ods umgewandelt.
+
 ### Serienversand von Unterschriftsanfragen
 - „Zur Unterschrift senden“ → **„Serienversand“** (wie Bulk Send bei DocuSign und DocuSeal): Empfängerliste als Zeilen („Name; E-Mail“), aus Outlook („Name <E-Mail>“) oder als CSV aus Excel/Outlook (Trennzeichen ; , Tab, Kopfzeile mit Name/Vorname/Nachname/E-Mail erkannt, UTF-8 oder Windows-1252), doppelte Adressen entfallen, ungültige Zeilen werden genannt; höchstens 200. Felder einmal setzen – jede Person bekommt eine eigene Anfrage (eigene Kennung, eigenes Prüfprotokoll), E-Mail-Entwurf und Eintrag im Posteingangsbuch (mit „Erinnern“). Bis 10 Empfänger direkt in Outlook (pdfmy Scan), sonst ZIP mit allen .eml-Entwürfen und Empfänger.csv. Neue Funktion `SigReq.recipients`.
 - Getestet: `tests/sigreq.test.js` (neuer Fall: Zeilen, Outlook-Format, CSV mit Kopfzeile, Höchstzahl); im Browser 3 Empfänger → ZIP mit 3 Entwürfen an die richtigen Adressen, 3 Einträge im Posteingangsbuch; PDF aus Annas Entwurf geöffnet: „Anna Muster ist dran“; axe ohne Befund.
