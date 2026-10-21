@@ -40,7 +40,7 @@ if (!webConfig.includes("edition: 'web'")) throw new Error('config.js: Edition n
 write('js/config.js', webConfig.replace('/* Edition und Branding.', `/* Web-Edition ${site.domain}.`));
 
 // Content-Security-Policy: nur eigene Dateien; WebAssembly (OCR) und Blob-Worker erlaubt
-const CSP = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; connect-src 'self' blob: data: http://127.0.0.1:52880; " +
+const CSP = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; connect-src 'self' blob: data: http://127.0.0.1:* http://localhost:*; " +
   "img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; frame-src 'self' blob:; base-uri 'self'; form-action 'none'; manifest-src 'self'";
 
 let html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
@@ -205,7 +205,7 @@ spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen.</p>
 <p>Auf der Startseite steht ein als Anzeige gekennzeichneter Hinweis auf Haus iT. Es ist ein einfacher Link ohne eingebundene Inhalte, Zählpixel oder Cookies. Erst wenn Sie ihn anklicken,
 öffnet sich www.haus-it.de in einem neuen Tab; dabei wird keine Herkunftsadresse (Referrer) übermittelt. Für diese Website gilt die Datenschutzerklärung ihres Betreibers.</p>
 <h2>6d. KI-Assistent</h2>
-<p>Zusammenfassen, Fragen zum Dokument und Übersetzen nutzen die KI, die Ihr Browser mitbringt. Sie arbeitet auf Ihrem Gerät; der Text wird nicht übertragen. Das KI-Modell lädt Ihr Browser einmalig vom Browser-Hersteller, nicht von uns. Unter „… Mehr → KI-Assistent“ lässt sich die Funktion ausschalten.</p>
+<p>Zusammenfassen, Fragen zum Dokument und Übersetzen nutzen die KI, die Ihr Browser mitbringt. Sie arbeitet auf Ihrem Gerät; der Text wird nicht übertragen. Das KI-Modell lädt Ihr Browser einmalig vom Browser-Hersteller, nicht von uns. Unter „… Mehr → KI-Assistent“ lässt sich die Funktion ausschalten. Auf eigenen Wunsch kann dort stattdessen ein KI-Programm auf Ihrem eigenen Rechner gewählt werden (z. B. Ollama oder LM Studio); PDFMy verbindet sich dann nur mit diesem Programm auf demselben Rechner (localhost) – der Text verlässt Ihren Rechner nicht, Adressen im Netz oder im Internet werden abgelehnt.</p>
 <h2>7. Ihre Rechte</h2>
 <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen die
 Verarbeitung (Art. 15–21 DSGVO). Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), zum Beispiel bei der für uns zuständigen Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Kavalleriestraße 2–4, 40213 Düsseldorf.</p>

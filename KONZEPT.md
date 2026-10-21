@@ -78,7 +78,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 **Oberstes Ziel: Alles bleibt auf dem Rechner des Kunden.** Jede neue Funktion wird **vor dem Bau** gegen die folgenden Punkte geprüft. Verletzt sie einen davon, wird sie nicht gebaut oder nur so, dass der Punkt gewahrt bleibt.
 
 1. **Alles bleibt auf dem Rechner des Kunden:** Dokumente, erkannter Text, Eingaben und die Verarbeitung (auch KI) verlassen den Rechner nicht – kein Upload, auch nicht an Server im eigenen Netz. Ausnahmen gibt es nur, wenn der Kunde selbst etwas versendet oder speichert (E-Mail, Teilen, Ablage in einem Ordner seiner Wahl) – nie automatisch, nie im Hintergrund.
-2. **Kein Server, keine Fremddienste:** pdfmy.de liefert nur statische Dateien. Alle Bibliotheken, Schriften und Sprachdaten kommen von pdfmy.de. Die Sicherheitsrichtlinie (CSP) erlaubt Verbindungen nur zu pdfmy.de und zum eigenen Rechner (pdfmy Scan, 127.0.0.1).
+2. **Kein Server, keine Fremddienste:** pdfmy.de liefert nur statische Dateien. Alle Bibliotheken, Schriften und Sprachdaten kommen von pdfmy.de. Die Sicherheitsrichtlinie (CSP) erlaubt Verbindungen nur zu pdfmy.de und zum eigenen Rechner (pdfmy Scan, lokale KI – localhost/127.0.0.1).
 3. **Kostenlos, ohne Konto, ohne Limit, ohne Werbung/Tracking.**
 4. **So einfach wie möglich:** keine Konsole, keine Skripte beim Nutzer; neue Funktionen dürfen Bestehendes nicht verstecken.
 5. **Normgerecht und prüfbar:** PDF/A und PDF/UA (veraPDF), E-Rechnung (KoSIT), WCAG 2.1 AA (axe), ISO 27001/9001-Nachweis in docs/ISO-Konformitaet.md.
@@ -91,6 +91,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Ordner überwachen (Hot Folder) | passt: lokal (Ordnerzugriff nur nach Freigabe), kein Konto, ohne Konsole; braucht Edge/Chrome wie der Scan-Ordner |
 | Formulare rechnen und prüfen | passt mit Auflage aus Punkt 6: Skripte nur für Felder, die rechnen oder prüfen, mit Hinweis im Designer; Datum/Text ohne Skript; PDF/A ohne Skript |
 | KI-Assistent: Dialog „… Mehr → KI-Assistent“ (KI des Browsers / Aus) | passt: lokal, ausschaltbar |
+| Lokale KI auf diesem PC (Ollama, LM Studio, localhost) | passt: der Text bleibt auf dem Rechner; nur localhost/127.0.0.1 erlaubt (Prüfung im Dialog + CSP); aus als Voreinstellung; Freigabe ohne Konsole (LM Studio: Häkchen, Ollama: Windows-Umgebungsvariable per Dialog) – umgesetzt 21.10.2026 |
 | Claude mit eigenem API-Schlüssel | **verworfen**: verletzt Punkt 1 und 2 (Text an Anthropic, CSP-Öffnung) und Punkt 3 (Konto/Schlüssel). Gebaut, getestet, vor dem Ausrollen zurückgenommen. |
 
 ### Vorschlag in Prüfung: KI nach eigener Wahl verbinden (ChatGPT, Claude, lokale KI)

@@ -1670,8 +1670,17 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint" style="margin:-6px 0 12px">Für Zusammenfassen, Fragen zum Dokument und Übersetzen – mit der KI, die Ihr Browser mitbringt. Sie läuft auf diesem Gerät, das Dokument wird nicht hochgeladen.</p>
   <fieldset class="prset"><legend><b>KI-Assistent</b></legend>
     <label class="prrow"><input type="radio" name="aiMode" value="browser"> <span><b>Ein – KI des Browsers</b> <small>– läuft auf diesem Gerät, nichts wird hochgeladen (Google Chrome ab Version 138 am Computer)</small></span></label>
+    <label class="prrow"><input type="radio" name="aiMode" value="local"> <span><b>Lokale KI auf diesem PC</b> <small>– ein KI-Programm wie Ollama oder LM Studio auf demselben Rechner; nichts verlässt den PC</small></span></label>
     <label class="prrow"><input type="radio" name="aiMode" value="off"> <span><b>Aus</b> <small>– Zusammenfassen und Übersetzen erscheinen nicht im Menü</small></span></label>
   </fieldset>
+  <div id="aiLocalSet" hidden>
+    <div class="field"><label for="aiLocalApp">Programm</label><select id="aiLocalApp"><option value="ollama">Ollama</option><option value="lmstudio">LM Studio</option><option value="custom">Anderes Programm auf diesem PC</option></select></div>
+    <div class="field"><label for="aiLocalUrl">Adresse auf diesem PC</label><input id="aiLocalUrl" spellcheck="false" autocomplete="off" aria-describedby="aiLocalHow"></div>
+    <div class="field"><label for="aiLocalModel">Modell</label><select id="aiLocalModel"></select></div>
+    <p class="hint" id="aiLocalState" role="status" aria-live="polite"></p>
+    <p class="hint" id="aiLocalHow"></p>
+    <div class="dlgrow" style="justify-content:flex-start"><button type="button" id="aiLocalTest">Verbindung prüfen</button></div>
+  </div>
   <div id="aiBrowserSet"><p class="hint" id="aiState" role="status" aria-live="polite"></p><button type="button" id="aiSetup" hidden>KI des Browsers einrichten …</button></div>
   <div class="dlgrow"><button type="button" id="aiClose">Abbrechen</button><button type="submit" class="primary" id="aiSave">Speichern</button></div>
 </form></dialog>

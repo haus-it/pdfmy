@@ -1440,7 +1440,8 @@ const trFill = (sel, v) => { sel.replaceChildren(...trLangs().map(l => { const o
 function openTranslate() {
   if (!state.pages.length) return;
   if (aiMode() === 'off') return openAi();
-  if (!('Translator' in self)) {
+  $('#trHint').textContent = aiMode() === 'local' ? `Die Übersetzung macht die lokale KI auf diesem PC (${localCfg().model}) – der Text verlässt den Rechner nicht. Ergebnis: eine neue PDF im eigenen Reiter.` : 'Die Übersetzung läuft mit dem eingebauten Übersetzer des Browsers auf diesem Gerät – der Text wird nicht hochgeladen. Beim ersten Mal lädt der Browser das Sprachpaket. Ergebnis: eine neue PDF im eigenen Reiter.';
+  if (aiMode() !== 'local' && !('Translator' in self)) {
     alert('Übersetzen ohne Upload nutzt den eingebauten Übersetzer des Browsers. Er steht in Google Chrome ab Version 138 am Computer zur Verfügung – bitte PDFMy dort öffnen. Ihr Dokument wird dabei nicht hochgeladen.');
     return;
   }
@@ -1458,7 +1459,8 @@ $('#trForm').addEventListener('submit', async e => {
   if (to === from) { $('#trInfo').textContent = 'Das Dokument ist bereits in dieser Sprache.'; return; }
   $('#trGo').disabled = true;
   let tr;
-  try {
+  if (aiMode() === 'local') tr = { translate: async s => (await localChat({ system: `Du übersetzt Text aus einem Dokument von „${from}“ nach „${to}“. Gib nur die Übersetzung aus, ohne Erklärung. Zahlen, Beträge, Daten, IBAN, Aktenzeichen, Namen und Adressen bleiben unverändert. Ist der Text mit „ | “ in Spalten geteilt, behalte genau diese Trennzeichen und die Spaltenzahl.`, prompt: s })) || s };
+  else try {
     const av = await Translator.availability({ sourceLanguage: from, targetLanguage: to });
     if (av === 'unavailable') { $('#trInfo').textContent = 'Diese Sprachkombination kann der eingebaute Übersetzer nicht.'; $('#trGo').disabled = false; return; }
     // Sprachpaket einmalig laden (vom Browser-Hersteller, nicht von PDFMy) – Klick zählt als Bestätigung
@@ -1505,8 +1507,10 @@ $('#btnTranslate').onclick = () => { closeMenu(); openTranslate(); };
 const aiLang = () => I18N.lang.split('-')[0];
 const AI_BROWSER_LANGS = ['de', 'en', 'es', 'ja', 'fr', 'it', 'pt', 'nl', 'pl'];   // Sprachen der Browser-KI
 const aiBLang = () => AI_BROWSER_LANGS.includes(aiLang()) ? aiLang() : 'en';
-/* ---------- KI-Assistent (KI des Browsers, auf dem Gerät, ohne Upload) – Einstellung unter „… Mehr → KI-Assistent …“: ein/aus, Zustand,
-   Modell vorab laden. Aus: Zusammenfassen und Übersetzen erscheinen nicht im Menü (z. B. wenn eine Firma keine KI möchte). */
+/* ---------- KI-Assistent – Einstellung unter „… Mehr → KI-Assistent …“. Oberstes Ziel: alles bleibt auf dem Rechner des Kunden (KONZEPT.md, Abschnitt 4).
+   KI des Browsers (Voreinstellung) oder – auf eigenen Wunsch – eine lokale KI auf demselben PC (Ollama, LM Studio; OpenAI-kompatible
+   Schnittstelle unter localhost). Andere Adressen werden abgelehnt, die CSP erlaubt nur den eigenen Rechner. Aus: Zusammenfassen und
+   Übersetzen erscheinen nicht im Menü. */
 const aiMode = () => LS.get('aiMode', 'browser');
 function aiApply() { for (const id of ['#btnSummary', '#btnTranslate']) { const b = $(id); if (b) b.hidden = aiMode() === 'off'; } }
 window.aiApply = aiApply;
@@ -1533,17 +1537,74 @@ async function aiStatus() {
   el.textContent = (AI_STATE[av] || AI_STATE.unavailable) + ('Translator' in self ? ' Übersetzen ist verfügbar.' : '');
   btn.hidden = !(av === 'downloadable' || av === 'downloading');
 }
+/* ---------- Lokale KI auf diesem PC ---------- */
+const LOCAL_APPS = { ollama: 'http://localhost:11434', lmstudio: 'http://localhost:1234' };
+const localCfg = () => ({ app: 'ollama', url: LOCAL_APPS.ollama, model: '', ...(LS.get('aiLocal', null) || {}) });
+// nur der eigene Rechner – nie ein Server im Netz oder im Internet
+function localUrl(u) {
+  try { const x = new URL(String(u || '').trim()); if (!/^https?:$/.test(x.protocol) || !['localhost', '127.0.0.1', '[::1]'].includes(x.hostname)) return null; return x.origin; } catch { return null; }
+}
+const localHow = app => app === 'lmstudio'
+  ? 'In LM Studio unter „Developer“ den lokalen Server starten und in dessen Einstellungen „Enable CORS“ einschalten. Ein Modell laden – fertig.'
+  : app === 'ollama'
+    ? `Ollama einmalig für PDFMy freigeben (ohne Konsole): In Windows „Umgebungsvariablen für dieses Konto bearbeiten“ öffnen, eine neue Variable OLLAMA_ORIGINS mit dem Wert ${location.origin} anlegen und Ollama neu starten. Ein Modell, z. B. „llama3.2“ oder „qwen3“, in der Ollama-App laden.`
+    : 'Das Programm muss eine OpenAI-kompatible Schnittstelle auf diesem PC anbieten und Anfragen von PDFMy zulassen (CORS).';
+async function localModels(url) {
+  const r = await fetch(url + '/v1/models', { headers: { Accept: 'application/json' } });
+  if (!r.ok) throw new Error(`Die lokale KI antwortet mit Fehler ${r.status}.`);
+  return ((await r.json()).data || []).map(m => m.id).filter(Boolean);
+}
+const localNetErr = e => e instanceof TypeError ? 'Keine Verbindung zur lokalen KI – läuft das Programm, und ist PDFMy dort freigegeben (siehe Hinweis darunter)?' : (e.message || String(e));
+// Eine Anfrage an die lokale KI (OpenAI-kompatibel, gestreamt): Antwort fortlaufend über onText
+async function localChat({ system, prompt, onText }) {
+  const c = localCfg(), url = localUrl(c.url);
+  if (!url) throw new Error('Die lokale KI ist nicht eingerichtet – bitte unter „… Mehr → KI-Assistent“ wählen.');
+  if (!c.model) throw new Error('Kein Modell gewählt – bitte unter „… Mehr → KI-Assistent“ „Verbindung prüfen“ und ein Modell wählen.');
+  let r;
+  try { r = await fetch(url + '/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: c.model, stream: true, temperature: 0.2, messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }] }) }); }
+  catch (e) { throw new Error(localNetErr(e)); }
+  if (!r.ok) throw new Error(`Die lokale KI meldet einen Fehler (${r.status})${r.status === 404 ? ' – ist das Modell geladen?' : ''}.`);
+  const rd = r.body.getReader(), dec = new TextDecoder(); let buf = '', text = '';
+  for (;;) {
+    const { done, value } = await rd.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let i; while ((i = buf.indexOf('\n')) >= 0) {
+      const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
+      if (!line.startsWith('data:')) continue;
+      const d = line.slice(5).trim(); if (d === '[DONE]') continue;
+      try { const j = JSON.parse(d), t = j.choices?.[0]?.delta?.content ?? j.choices?.[0]?.message?.content ?? ''; if (t) { text += t; onText?.(text); } } catch {}
+    }
+  }
+  return text.replace(/<think>[\s\S]*?<\/think>\s*/g, '').trim();   // Denkmodelle (z. B. qwen3): Gedankengang nicht anzeigen
+}
+const localNote = () => `\n\n— Maschinell erstellt mit ${localCfg().model} auf diesem PC: bitte mit dem Dokument abgleichen.`;
+const localSys = () => `Du bist der KI-Assistent von PDFMy. Arbeite ausschließlich mit dem Dokument, das du bekommst. Antworte in der Sprache „${aiLang()}“, sachlich und ohne Einleitung. Steht etwas nicht im Dokument, sage das. Erfinde nichts. Beträge, Daten, Fristen und Namen genau wie im Dokument.`;
+async function localFill(sel, url, keep) {
+  $('#aiLocalState').textContent = 'Verbinde …';
+  try {
+    const ms = await localModels(url);
+    sel.replaceChildren(...ms.map(m => { const o = new Option(m, m); o.setAttribute('translate', 'no'); return o; }));
+    if (keep && ms.includes(keep)) sel.value = keep;
+    $('#aiLocalState').textContent = ms.length ? `✓ Verbunden – ${ms.length === 1 ? '1 Modell' : ms.length + ' Modelle'} verfügbar.` : 'Verbunden, aber es ist noch kein Modell geladen – bitte im KI-Programm ein Modell laden.';
+    return ms.length > 0;
+  } catch (e) { console.warn(e); $('#aiLocalState').textContent = localNetErr(e); return false; }
+}
+$('#aiLocalApp').addEventListener('change', e => { if (LOCAL_APPS[e.target.value]) $('#aiLocalUrl').value = LOCAL_APPS[e.target.value]; $('#aiLocalHow').textContent = localHow(e.target.value); $('#aiLocalModel').replaceChildren(); $('#aiLocalState').textContent = ''; });
+$('#aiLocalTest').onclick = () => { const u = localUrl($('#aiLocalUrl').value); if (!u) { $('#aiLocalState').textContent = 'Nur Adressen auf diesem PC sind erlaubt (localhost oder 127.0.0.1) – Ihre Dokumente sollen den Rechner nicht verlassen.'; return; } localFill($('#aiLocalModel'), u, localCfg().model); };
 function openAi() {
   closeMenu?.();
-  const d = $('#aiDlg'), m = aiMode() === 'off' ? 'off' : 'browser';
+  const d = $('#aiDlg'), m = ['off', 'local'].includes(aiMode()) ? aiMode() : 'browser';
+  const c = localCfg(); $('#aiLocalApp').value = c.app; $('#aiLocalUrl').value = c.url; $('#aiLocalHow').textContent = localHow(c.app);
+  $('#aiLocalModel').replaceChildren(...(c.model ? [new Option(c.model, c.model)] : [])); $('#aiLocalState').textContent = '';
   d.querySelector(`[name=aiMode][value="${m}"]`).checked = true;
   aiSync(); if (!d.open) d.showModal();
 }
 window.openAi = openAi;
 function aiSync() {
   const m = $('#aiDlg').querySelector('[name=aiMode]:checked')?.value || 'browser';
-  $('#aiBrowserSet').hidden = m !== 'browser';
+  $('#aiBrowserSet').hidden = m !== 'browser'; $('#aiLocalSet').hidden = m !== 'local';
   if (m === 'browser') aiStatus();
+  if (m === 'local' && !$('#aiLocalModel').options.length) { const u = localUrl($('#aiLocalUrl').value); if (u) localFill($('#aiLocalModel'), u, localCfg().model); }
 }
 $('#aiDlg').addEventListener('change', e => { if (e.target.name === 'aiMode') aiSync(); });
 $('#btnAi').onclick = () => openAi();
@@ -1551,8 +1612,14 @@ $('#aiClose').onclick = () => $('#aiDlg').close();
 $('#aiForm').addEventListener('submit', e => {
   e.preventDefault();
   const m = $('#aiDlg').querySelector('[name=aiMode]:checked').value;
+  if (m === 'local') {
+    const u = localUrl($('#aiLocalUrl').value), model = $('#aiLocalModel').value;
+    if (!u) { $('#aiLocalState').textContent = 'Nur Adressen auf diesem PC sind erlaubt (localhost oder 127.0.0.1) – Ihre Dokumente sollen den Rechner nicht verlassen.'; $('#aiLocalUrl').focus(); return; }
+    if (!model) { $('#aiLocalState').textContent = 'Bitte zuerst „Verbindung prüfen“ und ein Modell wählen.'; return; }
+    LS.set('aiLocal', { app: $('#aiLocalApp').value, url: u, model });
+  }
   LS.set('aiMode', m); $('#aiDlg').close(); aiApply();
-  toast(m === 'off' ? 'KI-Assistent ausgeschaltet.' : 'KI-Assistent: KI des Browsers auf diesem Gerät.');
+  toast(m === 'off' ? 'KI-Assistent ausgeschaltet.' : m === 'local' ? `KI-Assistent: lokale KI auf diesem PC (${localCfg().model}).` : 'KI-Assistent: KI des Browsers auf diesem Gerät.');
 });
 $('#aiSetup').onclick = async () => {
   const el = $('#aiState'), btn = $('#aiSetup'), lang = aiBLang();
@@ -1584,6 +1651,8 @@ const aiProgress = m => (ev => { aiOut(`KI-Modell wird geladen … ${Math.round(
 function openSummary() {
   if (!state.pages.length) return;
   if (aiMode() === 'off') return openAi();
+  $('#sumHint').textContent = aiMode() === 'local' ? `Mit der lokalen KI auf diesem PC (${localCfg().model}) – das Dokument verlässt den Rechner nicht.` : 'Mit der eingebauten KI des Browsers – sie läuft auf diesem Gerät, das Dokument wird nicht hochgeladen. Beim ersten Mal lädt der Browser das KI-Modell (einmalig, mehrere GB).';
+  if (aiMode() === 'local') { aiText = ''; aiOut('', false); $('#sumAsk').disabled = $('#sumQ').disabled = false; $('#sumDlg').showModal(); return; }
   if (!('Summarizer' in self) && !('LanguageModel' in self)) {
     alert('Zusammenfassen ohne Upload nutzt die eingebaute KI des Browsers. Sie steht in Google Chrome ab Version 138 am Computer zur Verfügung (Windows, macOS, Linux; mindestens 16 GB Arbeitsspeicher oder eine Grafikkarte mit 4 GB). Ihr Dokument wird dabei nicht hochgeladen.');
     return;
@@ -1596,6 +1665,23 @@ $('#sumCopy').onclick = async () => { try { await navigator.clipboard.writeText(
 $('#sumGo').onclick = async () => {
   if (aiBusy) return; aiBusy = true; $('#sumGo').disabled = true; aiOut('Wird zusammengefasst …', true);
   let sm;
+  if (aiMode() === 'local') {   // lokale KI: lange Dokumente abschnittsweise, dann die Teilergebnisse zusammenfassen
+    try {
+      aiText ||= await aiDocText(); if (!aiText.trim()) throw new Error('Das Dokument enthält keinen lesbaren Text.');
+      const how = { 'key-points': 'die wichtigsten Kernpunkte als Liste mit „• “', tldr: 'eine Kurzfassung in wenigen Sätzen', teaser: 'in zwei, drei Sätzen, worum es geht und was zu tun ist', headline: 'eine einzige treffende Überschrift' }[$('#sumType').value];
+      const len = { short: 'Sehr knapp.', medium: 'Mittlere Länge.', long: 'Ausführlich, aber ohne Wiederholungen.' }[$('#sumLen').value] || '';
+      const parts = aiChunks(aiText, 6000); let res;
+      if (parts.length === 1) res = await localChat({ system: localSys(), prompt: `Dokument:\n"""\n${parts[0]}\n"""\n\nFasse das Dokument zusammen: ${how}. ${len}`, onText: t => aiOut(t, true) });
+      else {
+        const sums = [];
+        for (const [i, p] of parts.entries()) { aiOut(`Fasse Abschnitt ${i + 1} von ${parts.length} zusammen …`, true); sums.push(await localChat({ system: localSys(), prompt: `Abschnitt eines Dokuments:\n"""\n${p}\n"""\n\nFasse diesen Abschnitt knapp zusammen.` })); }
+        res = await localChat({ system: localSys(), prompt: `Zusammenfassungen der Abschnitte eines Dokuments:\n"""\n${sums.join('\n\n')}\n"""\n\nFasse das ganze Dokument zusammen: ${how}. ${len}`, onText: t => aiOut(t, true) });
+      }
+      aiOut(res + localNote(), false);
+    } catch (e) { console.error(e); aiOut('Zusammenfassen nicht möglich: ' + e.message, false); }
+    finally { aiBusy = false; $('#sumGo').disabled = false; }
+    return;
+  }
   try {
     if (!('Summarizer' in self)) throw new Error('Diese Chrome-Version kann noch nicht zusammenfassen.');
     const opts = { type: $('#sumType').value, length: $('#sumLen').value, format: 'plain-text', outputLanguage: aiBLang(), expectedInputLanguages: [docLang(state.pages).split('-')[0]], sharedContext: 'Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.' };
@@ -1622,6 +1708,16 @@ $('#sumForm').addEventListener('submit', async e => {
   const q = $('#sumQ').value.trim(); if (!q || aiBusy) return;
   aiBusy = true; $('#sumAsk').disabled = true; aiOut('Denke nach …', true);
   let lm;
+  if (aiMode() === 'local') {
+    try {
+      aiText ||= await aiDocText(); if (!aiText.trim()) throw new Error('Das Dokument enthält keinen lesbaren Text.');
+      const room = 24000, doc = aiText.length > room ? aiText.slice(0, room) + '\n[… gekürzt]' : aiText;
+      const a = await localChat({ system: localSys(), prompt: `Dokument:\n"""\n${doc}\n"""\n\nFrage: ${q}`, onText: t => aiOut(t, true) });
+      aiOut(a + (aiText.length > room ? '\n\n(Das Dokument war zu lang – nur der Anfang wurde berücksichtigt.)' : '') + localNote(), false);
+    } catch (err) { console.error(err); aiOut('Antwort nicht möglich: ' + err.message, false); }
+    finally { aiBusy = false; $('#sumAsk').disabled = false; }
+    return;
+  }
   try {
     const lang = aiBLang();
     if (await LanguageModel.availability({ expectedOutputs: [{ type: 'text', languages: [lang] }] }) === 'unavailable') throw new Error('Die eingebaute KI ist auf diesem Gerät nicht verfügbar.');

@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### KI-Assistent: lokale KI auf diesem PC (Ollama, LM Studio)
+- Dritte Wahl im Dialog „… Mehr → KI-Assistent“: lokale KI auf demselben Rechner (OpenAI-kompatible Schnittstelle, gestreamt). Programm wählen (Ollama, LM Studio, anderes), „Verbindung prüfen“ listet die Modelle, Modell wählen. Zusammenfassen (lange Dokumente abschnittsweise), Fragen und Übersetzen laufen dann lokal; Gedankengang von Denkmodellen wird ausgeblendet.
+- Nur localhost/127.0.0.1 – andere Adressen lehnt der Dialog ab, die CSP erlaubt zusätzlich nur den eigenen Rechner. Voreinstellung bleibt die KI des Browsers. Freigabe-Anleitung ohne Konsole im Dialog und in der Hilfe; Datenschutzerklärung Nr. 6d ergänzt; KONZEPT.md: Prüfung „passt“.
+- Getestet mit nachgebildetem Ollama-Server (Modelle, Zusammenfassen, Fragen, Übersetzen, Netzadresse abgelehnt, Programm nicht erreichbar), axe hell/dunkel 0. Nicht getestet: echtes Ollama/LM Studio.
+
 ### KI-Assistent: Einstellung unter „… Mehr“
 - Neuer Dialog „… Mehr → KI-Assistent …“: KI des Browsers ein (Voreinstellung, auf dem Gerät, ohne Upload; Zustand und „KI des Browsers einrichten“ = Modell einmalig vorab laden) oder Aus (Zusammenfassen und Übersetzen verschwinden aus Menü und Suche).
 - Eine Anbindung von Claude mit eigenem API-Schlüssel wurde gebaut und getestet, aber vor dem Ausrollen zurückgenommen: Sie widerspricht den Grundsatzentscheidungen (kein Upload, keine Fremddienste) – siehe KONZEPT.md, Abschnitt 4.
