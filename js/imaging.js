@@ -312,5 +312,22 @@
     return { w: mw, h: mh, bits, color, bg, inkShare: inks / n };
   }
 
-  root.Imaging = { canvas, scaled, enhance, hasBackground, average, isColorful, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank };
+  /* Scan aufbereiten wie beim Import (js/app.js, parallel im Worker js/scanw.js): zuschneiden, wenn das Blatt vor einem Untergrund liegt
+     (Kamera: immer), gerade richten, Modus „Automatisch“ auflösen, aufbereiten. → { orig, processed, cropped, angle, autoMode } */
+  function prepScan(c, { crop, straighten, fromCamera, mode }) {
+    let cropped = false, angle = 0;
+    if (crop) {
+      // Andere Bilder als Kamerafotos nur, wenn das Blatt sichtbar vor einem Untergrund liegt (Tisch o. Ä.) –
+      // echte Scans und Seiten mit Rahmen/Tabellen bleiben unverändert
+      let det = detectDocument(c);
+      if (det.found && (fromCamera || (det.score > 0.6 && det.area < 0.93 && hasBackground(c, det.corners)))) {
+        det = detectDocument(c, 1400, det.corners); c = warp(c, det.corners); cropped = true;
+      }
+    }
+    if (straighten) { const r = deskew(c); c = r.canvas; angle = r.angle; }
+    const autoMode = mode === 'auto' ? (isColorful(c) ? 'colordoc' : 'document') : null;
+    return { orig: c, processed: enhance(c, autoMode || mode), cropped, angle, autoMode };
+  }
+
+  root.Imaging = { canvas, scaled, enhance, hasBackground, average, isColorful, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
 })(self);

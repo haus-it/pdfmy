@@ -8,7 +8,8 @@
   function scan(src, maxSide = 1600) {
     if (typeof jsQR !== 'function' || !src || !src.width) return [];
     const k = Math.min(1, maxSide / Math.max(src.width, src.height));
-    const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(src.width * k)); c.height = Math.max(1, Math.round(src.height * k));
+    const w = Math.max(1, Math.round(src.width * k)), h = Math.max(1, Math.round(src.height * k));
+    const c = typeof document === 'undefined' ? new OffscreenCanvas(w, h) : Object.assign(document.createElement('canvas'), { width: w, height: h });   // im Worker (js/scanw.js) ohne document
     const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(src, 0, 0, c.width, c.height);
     const out = [];
     for (let i = 0; i < 4; i++) {

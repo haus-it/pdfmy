@@ -296,7 +296,7 @@ async function importImage(file, fromCamera) {
     if (!bmp) {
       status(isHeic(file) ? `${file.name}: iPhone-Foto (HEIC) wird umgewandelt …` : `${file.name}: TIFF-Datei wird umgewandelt …`);
       const cs = isHeic(file) ? await heicCanvases(file) : await tiffCanvases(file);
-      cs.forEach((c, i) => addScan(c, cs.length > 1 ? `${file.name} (${i + 1}/${cs.length})` : file.name, fromCamera));
+      state.pages.push(...await Promise.all(cs.map((c, i) => scanAsync(c, cs.length > 1 ? `${file.name} (${i + 1}/${cs.length})` : file.name, fromCamera))));
       return;
     }
     bmp.close?.();
@@ -305,24 +305,47 @@ async function importImage(file, fromCamera) {
   const k = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
   const c = Imaging.canvas(Math.round(bmp.width * k), Math.round(bmp.height * k));
   c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
-  addScan(c, file.name, fromCamera);
+  state.pages.push(await scanAsync(c, file.name, fromCamera));
 }
-/* Scan-Aufbereitung für Fotos, Bilddateien und gescannte PDF-Seiten: zuschneiden, gerade richten, aufbereiten */
+/* Scan-Aufbereitung für Fotos, Bilddateien und gescannte PDF-Seiten: zuschneiden, gerade richten, aufbereiten (Imaging.prepScan) */
+const scanOpts = fromCamera => ({ crop: S.autoCrop, straighten: S.autoDeskew, fromCamera, mode: S.mode });
+function scanPage(r, label, lowRes, mode) {
+  const note = [r.cropped && 'zugeschnitten', r.angle && `${I18N.fmtNum(r.angle)}° gerade gerichtet`].filter(Boolean).join(', ');
+  const p = { id: ++uid, kind: 'image', orig: r.orig, mode, rotation: 0, annots: [], ocr: null, native: null, label: label + (note ? ` (${note})` : ''), lowRes };
+  if (r.autoMode) p.autoMode = r.autoMode;
+  p.processed = r.processed; p.w = p.processed.width; p.h = p.processed.height; p.thumb = null; p.thumbL = null;   // wie reprocess()
+  return p;
+}
 function addScan(c, label, fromCamera = false) {
-  let note = ''; const lowRes = !!c.lowRes || c.width < 1000;   // vor dem Zuschneiden merken
-  if (S.autoCrop) {
-    // Kamera: immer zuschneiden. Andere Bilder (Galerie, „Öffnen“, Ziehen): nur wenn das Blatt sichtbar vor einem
-    // Untergrund liegt (Tisch o. Ä.) – echte Scans und Seiten mit Rahmen/Tabellen bleiben unverändert
-    let det = Imaging.detectDocument(c);
-    if (det.found && (fromCamera || (det.score > 0.6 && det.area < 0.93 && Imaging.hasBackground(c, det.corners)))) {
-      det = Imaging.detectDocument(c, 1400, det.corners); c = Imaging.warp(c, det.corners); note = 'zugeschnitten';
-    }
-  }
-  if (S.autoDeskew) { const r = Imaging.deskew(c); c = r.canvas; if (r.angle) note = (note ? note + ', ' : '') + `${I18N.fmtNum(r.angle)}° gerade gerichtet`; }
-  const p = { id: ++uid, kind: 'image', orig: c, mode: S.mode, rotation: 0, annots: [], ocr: null, native: null, label: label + (note ? ` (${note})` : ''), lowRes };
-  readQr(p, c);
-  reprocess(p);
+  const lowRes = !!c.lowRes || c.width < 1000;   // vor dem Zuschneiden merken
+  const p = scanPage(Imaging.prepScan(c, scanOpts(fromCamera)), label, lowRes, S.mode);
+  readQr(p, p.orig);
   state.pages.push(p);
+}
+/* Wie addScan, aber in einem Worker (js/scanw.js) und ohne die Seite einzufügen – der Aufrufer fügt die Seiten in ihrer Reihenfolge ein.
+   Ohne Worker-Unterstützung oder bei Fehlern im Hauptprogramm; das Ergebnis ist dasselbe. */
+const scanPool = workerPool('js/scanw.js', 6);
+async function scanAsync(c, label, fromCamera = false) {
+  const lowRes = !!c.lowRes || c.width < 1000, o = scanOpts(fromCamera), mode = S.mode;
+  if (scanPool.ok() && typeof QR !== 'undefined') {
+    try {
+      const r = await scanPool.post({ bmp: await createImageBitmap(c), o }, m => [m.bmp]);
+      if (!r.error) {
+        const p = scanPage({ ...r, orig: r.orig ? bmpCanvas(r.orig) : c, processed: bmpCanvas(r.processed) }, label, lowRes, mode);
+        qrTexts(p, r.qr);
+        return p;
+      }
+      console.warn('Scan-Worker:', r.error);
+    } catch (e) { console.warn('Scan-Worker:', e); }
+  }
+  const p = scanPage(Imaging.prepScan(c, o), label, lowRes, mode);
+  readQr(p, p.orig);
+  return p;
+}
+// ImageBitmap aus einem Worker → Canvas wie im Hauptprogramm
+function bmpCanvas(b) {
+  const c = Imaging.canvas(b.width, b.height); c.getContext('2d', { willReadFrequently: true }).drawImage(b, 0, 0); b.close?.();
+  return c;
 }
 // Gescannte PDF-Seite = kein Text, aber Bildinhalt (typisch für Multifunktionsgeräte)
 const IMG_OPS = () => new Set([pdfjsLib.OPS.paintImageXObject, pdfjsLib.OPS.paintInlineImageXObject, pdfjsLib.OPS.paintJpegXObject].filter(x => x != null));
@@ -457,6 +480,8 @@ async function importPdf(file) {
     if (own.length) setTimeout(() => status(own.length === 1 ? 'Die PDF enthält einen Dateianhang – Menü → Dateianhänge.' : `Die PDF enthält ${own.length} Dateianhänge – Menü → Dateianhänge.`), 1200);
     window.attRefresh?.();
   } catch (e) { console.warn('Dateianhänge:', e); }
+  // Scanseiten werden parallel in Workern aufbereitet, während die nächsten Seiten gezeichnet werden; eingefügt wird in Seitenreihenfolge
+  const pend = [], flush = async (keep = 0) => { while (pend.length > keep) state.pages.push(await pend.shift()); };
   for (let i = 1; i <= js.numPages; i++) {
     const pg = await js.getPage(i);
     const tc = await pg.getTextContent();
@@ -470,7 +495,8 @@ async function importPdf(file) {
       status(`Bereite Scan auf: ${file.name}, Seite ${i} von ${js.numPages} …`, (i - 1) / js.numPages);
       const vp = pg.getViewport({ scale: 1 });
       const dpi = Math.min(300, MAX_SIDE * 72 / Math.max(vp.width, vp.height));
-      addScan(await renderPdf(p, dpi), `${file.name} S. ${i}`);
+      pend.push(scanAsync(await renderPdf(p, dpi), `${file.name} S. ${i}`));
+      await flush(scanPool.size() + 2);   // höchstens so viele Seiten gleichzeitig in Arbeit (Speicher)
       continue;
     }
     // Große Dokumente: nur die ersten Seiten sofort zeichnen, die übrigen erst, wenn sie sichtbar werden (Maße aus dem Seitenformat)
@@ -478,8 +504,10 @@ async function importPdf(file) {
     else { const vp = pg.getViewport({ scale: 120 / 72, rotation: p.rotation }); p.w = Math.round(vp.width); p.h = Math.round(vp.height); if (p.native || p.hasText) p.blank = false; }
     if (i % 25 === 0) status(`Öffne ${file.name}: Seite ${i} von ${js.numPages} …`, i / js.numPages);
     if (i <= 2) try { readQr(p, await renderPdf(p, 200)); } catch (e) { console.warn('QR', e); }   // Zahl-QR steht auf den ersten Seiten
+    await flush();
     state.pages.push(p);
   }
+  await flush();
   await formCheck; renderForm();
   window.reqAfterImport?.(docIdx);
 }
@@ -2338,7 +2366,10 @@ function readQr(p, img) {
   if (typeof QR === 'undefined') return;
   // jsQR noch nicht geladen (Datei direkt beim Start geöffnet): nachladen, dann diese Seite prüfen und die Briefdaten aktualisieren
   if (typeof jsQR !== 'function') { loadJsQR().then(() => { if (typeof jsQR !== 'function') return; const had = !!(p.payQr || p.separator); readQr(p, img); if (!had && (p.payQr || p.separator)) { analyze(); refresh(); } }).catch(() => {}); return; }
-  for (const t of QR.scan(img)) {
+  qrTexts(p, QR.scan(img));
+}
+function qrTexts(p, list) {
+  for (const t of list) {
     if (t === QR.SEPARATOR) { p.blank = true; p.separator = true; p.label += ' (Trennblatt)'; }
     else { const pay = Letter.parsePaymentQr(t); if (pay && !p.payQr) p.payQr = pay; }
   }
@@ -2657,29 +2688,39 @@ function textLines(words) {
   return lines.map(l => l.words);
 }
 
-/* Scanseiten beim Speichern parallel zerlegen (js/compactw.js): bis zu 4 Worker, je Seite ein Auftrag; ohne Worker-Unterstützung
-   oder bei Fehlern wie bisher im Hauptprogramm. Liefert dasselbe wie Imaging.compactLayers (bg als Canvas). */
-const compactPool = (() => {
-  let ws = null, seq = 0; const wait = new Map(), busy = new Map();
-  const ok = () => typeof Worker !== 'undefined' && typeof OffscreenCanvas !== 'undefined' && typeof createImageBitmap === 'function';
+/* Worker-Pool (bis zu 4 Worker, erst bei Bedarf gestartet): Auftrag an den am wenigsten belegten Worker, Antwort mit derselben id.
+   ok() = falsch ohne Worker-/OffscreenCanvas-Unterstützung – dann rechnet der Aufrufer im Hauptprogramm. */
+function workerPool(url, max = 4) {
+  let ws = null, seq = 0, dead = false; const wait = new Map(), busy = new Map();
+  const can = () => typeof Worker !== 'undefined' && typeof OffscreenCanvas !== 'undefined' && typeof createImageBitmap === 'function';
   function start() {
-    if (ws || !ok()) return ws;
-    const n = Math.max(1, Math.min(4, (navigator.hardwareConcurrency || 2) - 1));
+    if (ws || !can()) return ws;
+    const n = Math.max(1, Math.min(max, (navigator.hardwareConcurrency || 2) - 1));
     try {
-      ws = Array.from({ length: n }, () => { const w = new Worker('js/compactw.js'); busy.set(w, 0);
+      ws = Array.from({ length: n }, () => { const w = new Worker(url); busy.set(w, 0);
         w.onmessage = e => { const j = wait.get(e.data.id); if (!j) return; wait.delete(e.data.id); busy.set(w, busy.get(w) - 1); j(e.data); };
-        w.onerror = () => { for (const [id, j] of wait) j({ id, error: 'worker' }); wait.clear(); };
+        w.onerror = () => { dead = true; for (const [id, j] of wait) j({ id, error: 'worker' }); wait.clear(); };   // z. B. Skript nicht ladbar: ab jetzt ohne Worker
         return w; });
     } catch { ws = null; }
     return ws;
   }
   async function run(c, ms, bs) {
-    if (start()) {
+    if (pool.ok()) {
       try {
-        const bmp = await createImageBitmap(c), id = ++seq, w = ws.reduce((a, b) => busy.get(a) <= busy.get(b) ? a : b);
-        busy.set(w, busy.get(w) + 1);
-        const r = await new Promise(res => { wait.set(id, res); w.postMessage({ id, bmp, ms, bs }, [bmp]); });
+        const r = await pool.post({ bmp: await createImageBitmap(c), ms, bs }, m => [m.bmp]);
         if (!r.error) {
+  // msg ohne id; transfer(msg) → zu übertragende Objekte (ImageBitmap). Nur nach ok() aufrufen.
+  function post(msg, transfer) {
+    const id = ++seq, w = ws.reduce((a, b) => busy.get(a) <= busy.get(b) ? a : b);
+    busy.set(w, busy.get(w) + 1);
+    return new Promise(res => { wait.set(id, res); w.postMessage({ ...msg, id }, transfer(msg)); });
+  }
+  return { ok: () => !dead && !!start(), post, size: () => (start() || []).length };
+}
+/* Scanseiten beim Speichern parallel zerlegen (js/compactw.js): je Seite ein Auftrag; ohne Worker-Unterstützung
+   oder bei Fehlern wie bisher im Hauptprogramm. Liefert dasselbe wie Imaging.compactLayers (bg als Canvas). */
+const compactPool = (() => {
+  const pool = workerPool('js/compactw.js');
           let bg = null;
           if (r.bg) { bg = Imaging.canvas(r.bg.width, r.bg.height); bg.getContext('2d').drawImage(r.bg, 0, 0); r.bg.close?.(); }
           return { w: r.w, h: r.h, bits: r.bits, color: r.color, inkShare: r.inkShare, bg };
