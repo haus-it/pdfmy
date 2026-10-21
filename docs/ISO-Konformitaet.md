@@ -89,6 +89,8 @@ Prüfwerkzeuge: **veraPDF 1.30.3** (PDF/A, PDF/UA) und **qpdf 11 über pikepdf 9
 
 Wiederholung der Prüfung: bei jeder Änderung an der PDF-Erzeugung (`buildPdf`, `makePdfA`, `buildInvoicePdf`) bzw. am E-Rechnungs-Generator (`js/einvoice-out.js`) und mindestens vierteljährlich.
 
+Nachtrag 21.10.2026 (PDF/A-Kurzprüfung): Prüfung eingehender PDFs auf die häufigsten Verstöße gegen ISO 19005-2 (Kennung, OutputIntent, Schrifteinbettung, Verschlüsselung, Skripte, Aktionen, Anmerkungen, LZW). Ausdrücklich als Kurzprüfung gekennzeichnet – verbindlicher Nachweis weiterhin mit veraPDF (Abschnitt 4). Kontrolle: von PDFMy erzeugte PDF/A ohne Befund.
+
 Nachtrag 21.10.2026 (Serienversand): Jede Person erhält eine eigene Anfrage mit eigener Kennung und eigenem Prüfprotokoll (keine Einsicht in Daten anderer Empfänger, DSGVO Art. 5 Abs. 1 lit. f); Empfängerlisten werden nur lokal verarbeitet; E-Mails werden nur als Entwurf vorbereitet, Versand durch den Nutzer.
 
 Nachtrag 21.10.2026 (Word/Excel in PDF): Umwandlung lokal im Browser ohne Fremdbibliothek (ISO 27001 A.5.21: keine zusätzliche Lieferkette; XML-Verarbeitung ohne externe Entitäten/DTD – XXE ausgeschlossen, A.8.28). Ergebnis-PDF mit eingebetteten Schriften (ISO 32000-1), Text mit pypdf (strict) geprüft.

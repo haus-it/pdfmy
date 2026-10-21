@@ -1018,6 +1018,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnBea" title="Prüft nach den Vorgaben der Justiz (ERVB 2025): kein JavaScript, keine Anhänge, druckbar, zulässiger Dateiname – und speichert auf Wunsch passend"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Für beA prüfen …</span></button>
           <button class="mi doc" id="btnAnl" title="Jede geöffnete Datei wird eine Anlage: Stempel „Anlage K 1“, Anlagenverzeichnis, einzelne Dateien für das beA"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Anlagen nummerieren …</span></button>
           <button class="mi doc" id="btnA11y" title="Prüfbericht: Tags, Sprache, Titel, Alternativtexte, Schriften, Lesbarkeit für Screenreader"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Barrierefreiheit prüfen …</span></button>
+          <button class="mi doc" id="btnPdfaCheck" title="Kurzprüfung nach PDF/A (Langzeitarchiv): Kennung, Farbprofil, Schriften, Skripte, Verschlüsselung – mit Reparatur"><svg class="ic" aria-hidden="true"><use href="#i-archive"/></svg><span>PDF/A prüfen …</span></button>
           <button class="mi doc" id="btnAutoForm" title="Schreiblinien, Kästen und Ankreuzfelder finden und daraus ein ausfüllbares Formular machen"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>Formularfelder erkennen …</span></button>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgOffice"><div class="mgh" id="mgOffice">Büro</div>
@@ -1352,6 +1353,14 @@ html.i18n-wait body{visibility:hidden}
   <ul id="a11yList" class="a11ylist"></ul>
   <p class="hint" id="a11yHint"></p>
   <div class="dlgrow"><button type="button" id="a11yClose">Schließen</button><button type="button" id="a11yFix" class="primary">Barrierefrei speichern (PDF/UA)</button></div>
+</dialog>
+<dialog id="pdfaDlg" class="sharedlg a11ydlg" aria-labelledby="pdfaT">
+  <h3 class="dlgtitle" id="pdfaT">PDF/A-Prüfung</h3>
+  <p class="hint" id="pdfaWhat" style="margin:-8px 0 10px"></p>
+  <ul id="pdfaList" class="a11ylist"></ul>
+  <p class="hint" id="pdfaHint"></p>
+  <p class="hint">Kurzprüfung der häufigsten Ablehnungsgründe von Archiven, Gerichten und Behörden (angelehnt an ISO 19005-2). Sie ersetzt keine vollständige Validierung.</p>
+  <div class="dlgrow"><button type="button" id="pdfaClose">Schließen</button><button type="button" id="pdfaFix" class="primary">Als PDF/A speichern</button></div>
 </dialog>
 <dialog id="replyDlg" class="wide replydlg" aria-labelledby="replyT"><form id="replyForm">
   <h3 class="dlgtitle" id="replyT">Antwortbrief (DIN 5008)</h3>
@@ -1998,6 +2007,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/textpdf.js"></script>
 <script src="js/glyphless.js"></script>
 <script src="js/office.js"></script>
+<script src="js/pdfacheck.js"></script>
 <script src="js/letter.js"></script>
 <script src="js/qr.js"></script>
 <script src="js/formdetect.js"></script>

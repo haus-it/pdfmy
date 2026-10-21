@@ -1546,7 +1546,7 @@ $('#btnSummary').onclick = () => { closeMenu(); openSummary(); };
 
 /* ---------- Befehlssuche (Strg+K): jede Funktion per Tastatur finden – Kacheln, Werkzeuge, Menü, Kopfzeile ---------- */
 const CMD_SYNONYMS = { scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
-  protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', btnSummary: 'ki zusammenfassung zusammenfassen frage chat kernpunkte ai', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
+  protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', btnPdfaCheck: 'archiv validieren konform langzeit iso 19005 veraPDF', btnSummary: 'ki zusammenfassung zusammenfassen frage chat kernpunkte ai', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
   bates: 'nummerieren akte', btnCam: 'foto handy smartphone kamera abfotografieren', tileCam: 'foto handy smartphone kamera abfotografieren', btnTax: 'datev buchhaltung steuer belege monat export', tileTax: 'datev buchhaltung steuer belege monat export', pdfa: 'archiv revisionssicher', btnJournal: 'fristen post liste', btnSettings: 'optionen kürzel', btnFile: 'ablage archivieren' };
 function commands() {
   const out = [], seen = new Set();
@@ -2501,6 +2501,25 @@ $('#btnA11y').onclick = async () => {
   $('#a11yDlg').showModal();
 };
 $('#a11yClose').onclick = () => $('#a11yDlg').close();
+// PDF/A-Kurzprüfung (js/pdfacheck.js): Bericht wie bei der Barrierefreiheit; „Als PDF/A speichern“ repariert (Schriften, Farbprofil, Skripte …)
+$('#btnPdfaCheck').onclick = async () => {
+  closeMenu();
+  const pdfPage = state.pages.find(p => p.kind === 'pdf'), d = pdfPage && state.docs[pdfPage.docIdx];
+  $('#pdfaList').innerHTML = ''; $('#pdfaHint').textContent = '';
+  if (!d) {
+    $('#pdfaWhat').textContent = 'Gescannte Seiten / Fotos';
+    $('#pdfaHint').textContent = 'Aus Scans und Fotos erstellt PDFMy beim Speichern als PDF/A automatisch ein gültiges PDF/A-2b (geprüft mit veraPDF).';
+  } else {
+    $('#pdfaWhat').textContent = `Prüfung von „${d.name}“ (Original)`;
+    const r = await PdfACheck.check(d.filled || d.bytes);
+    $('#pdfaList').innerHTML = r.items.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(x.title)}</b><span class="sr-only">: ${x.ok === true ? 'erfüllt' : x.ok === false ? 'nicht erfüllt' : 'Hinweis'}</span><small>${esc(x.detail)}</small></span></li>`).join('');
+    const bad = r.items.filter(x => x.ok === false).length;
+    $('#pdfaHint').textContent = bad ? `${bad} Punkt(e) nicht erfüllt${r.claim ? ` – obwohl die Datei sich als ${r.claim} ausgibt` : ''}. „Als PDF/A speichern“ erzeugt ein gültiges PDF/A-2b (zugleich barrierefrei nach PDF/UA-1).` : `Keine Auffälligkeiten${r.claim ? ` – die Datei ist als ${r.claim} gekennzeichnet` : ''}.`;
+  }
+  $('#pdfaDlg').showModal();
+};
+$('#pdfaClose').onclick = () => $('#pdfaDlg').close();
+$('#pdfaFix').onclick = () => { $('#pdfaDlg').close(); openExport(); setRadio('x-format', 'pdfa'); updateExportUi(); status('Format PDF/A gewählt – Schriften werden eingebettet, Farbprofil, Kennung und Struktur ergänzt, Skripte entfernt.'); };
 $('#a11yFix').onclick = () => { $('#a11yDlg').close(); openExport(); setRadio('x-format', 'pdfa'); updateExportUi(); status('Format PDF/A gewählt – das Ergebnis ist zugleich barrierefrei nach PDF/UA-1.'); };
 
 

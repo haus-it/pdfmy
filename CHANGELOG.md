@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### PDF/A prüfen
+- Menü → **„PDF/A prüfen …“** (wie bei PDF24 und Xodo): Kurzprüfung angelehnt an ISO 19005-2 – PDF/A-Kennung (XMP pdfaid), Dateikopf mit Binärkennung, Verschlüsselung, OutputIntent mit ICC-Profil, eingebettete Schriften, JavaScript (OpenAction, Names, AA, JS-Aktionen), verbotene Aktionen und Medien, druckbare/sichtbare Anmerkungen mit Erscheinungsbild, LZW, Transparenzgruppen, Anhänge (PDF/A-2 vs. -3), Titel in Info und XMP. Bericht wie bei der Barrierefreiheit, „Als PDF/A speichern“ repariert. Neues Modul `js/pdfacheck.js`.
+- Getestet: `tests/pdfacheck.test.js` (3 Fälle), im Browser: gewöhnliche PDF → 3 Mängel (Kennung, Farbprofil, Schrift), von PDFMy erzeugtes PDF/A → keine Auffälligkeiten; axe ohne Befund.
+
 ### LibreOffice/OpenOffice in PDF
 - **.odt und .ods** (OpenDocument, ISO/IEC 26300) öffnen jetzt direkt als PDF (wie bei PDF24 und Smallpdf): `Office.odt` mit Überschriften (Gliederungsebene), Absätzen mit Ausrichtung und Fettdruck, Aufzählungen/Nummerierungen, Tabellen (Kopfzeilen, wiederholte Spalten begrenzt), Bildern und Seitenformat; `Office.ods` mit allen Blättern, Zahlen-, Währungs-, Prozent- und Datumswerten; tausendfach wiederholte leere Zeilen/Spalten werden begrenzt.
 - Getestet: `tests/office.test.js` (2 neue Fälle), im Browser .odt und .ods umgewandelt.
