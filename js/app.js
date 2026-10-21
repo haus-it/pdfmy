@@ -2704,11 +2704,6 @@ function workerPool(url, max = 4) {
     } catch { ws = null; }
     return ws;
   }
-  async function run(c, ms, bs) {
-    if (pool.ok()) {
-      try {
-        const r = await pool.post({ bmp: await createImageBitmap(c), ms, bs }, m => [m.bmp]);
-        if (!r.error) {
   // msg ohne id; transfer(msg) → zu übertragende Objekte (ImageBitmap). Nur nach ok() aufrufen.
   function post(msg, transfer) {
     const id = ++seq, w = ws.reduce((a, b) => busy.get(a) <= busy.get(b) ? a : b);
@@ -2721,6 +2716,11 @@ function workerPool(url, max = 4) {
    oder bei Fehlern wie bisher im Hauptprogramm. Liefert dasselbe wie Imaging.compactLayers (bg als Canvas). */
 const compactPool = (() => {
   const pool = workerPool('js/compactw.js');
+  async function run(c, ms, bs) {
+    if (pool.ok()) {
+      try {
+        const r = await pool.post({ bmp: await createImageBitmap(c), ms, bs }, m => [m.bmp]);
+        if (!r.error) {
           let bg = null;
           if (r.bg) { bg = Imaging.canvas(r.bg.width, r.bg.height); bg.getContext('2d').drawImage(r.bg, 0, 0); r.bg.close?.(); }
           return { w: r.w, h: r.h, bits: r.bits, color: r.color, inkShare: r.inkShare, bg };
