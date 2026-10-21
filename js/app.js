@@ -3060,7 +3060,7 @@ function readyToSave(name, pick) {
 }
 // saveAs: immer nach Ort und Namen fragen (auch wenn ein Ablageordner eingestellt ist)
 async function deliver(data, name, mime, meta, saveAs = false) {
-  const kind = { [DOCX]: ['Word-Dokument', '.docx'], 'application/xml': ['XRechnung (XML)', '.xml'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['Excel-Tabelle', '.xlsx'], 'text/csv': ['CSV-Tabelle (Excel)', '.csv'], 'application/pdf': ['PDF-Dokument', '.pdf'], 'application/zip': ['ZIP-Archiv', '.zip'], 'image/jpeg': ['JPG-Bild', '.jpg'], 'image/png': ['PNG-Bild', '.png'], 'text/plain': ['Textdatei', '.txt'], 'text/markdown': ['Markdown', '.md'], 'text/html': ['Webseite (HTML)', '.html'] }[mime];
+  const kind = { [DOCX]: ['Word-Dokument', '.docx'], 'application/xml': ['XRechnung (XML)', '.xml'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['Excel-Tabelle', '.xlsx'], 'text/csv': ['CSV-Tabelle (Excel)', '.csv'], 'application/pdf': ['PDF-Dokument', '.pdf'], 'application/zip': ['ZIP-Archiv', '.zip'], 'image/jpeg': ['JPG-Bild', '.jpg'], 'image/png': ['PNG-Bild', '.png'], 'text/plain': ['Textdatei', '.txt'], 'text/markdown': ['Markdown', '.md'], 'text/html': ['Webseite (HTML)', '.html'], 'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['PowerPoint-Präsentation', '.pptx'] }[mime];
   if (state.outDir && !saveAs) {
     const path = mime === 'application/pdf' && meta ? await saveToOutDir(data, name, meta) : await writeUnique(state.outDir, name, data);
     return `${state.outDir.name}\\${path}`;
@@ -3125,6 +3125,22 @@ async function doExport(o) {
     await waitForOcr(pages);
     data = new TextEncoder().encode(pages.map((p, i) => `--- Seite ${i + 1} ---\n${pageText(p).trim()}\n`).join('\n').replace(/\n/g, '\r\n'));
     name = base + '.txt'; mime = 'text/plain';
+  } else if (o.format === 'pptx') {
+    // PowerPoint: je Seite eine Folie mit Seitenbild (inkl. Stempel/Markierungen) und unsichtbarem Text zum Suchen/Kopieren (js/pptx.js)
+    await waitForOcr(pages); await document.fonts.load('16px "DejaVu Sans"');
+    const preset = SIZES[o.size] || SIZES.balanced, slides = [];
+    for (const [i, p] of pages.entries()) {
+      status(`Erzeuge Folie ${i + 1} von ${pages.length} …`, i / pages.length);
+      const src = p.kind === 'image' ? scaleToDpi(p.processed, preset.dpi) : await renderPdf(p, preset.dpi);
+      const k = Imaging.canvas(src.width, src.height), x = k.getContext('2d');
+      x.drawImage(src, 0, 0); await drawAnnotsCanvas(x, p, k.width, k.height);
+      stampCanvas(x, k.width, k.height, i, pages.length, st, p.kind === 'image' ? k.width / 595.28 : preset.dpi / 72);
+      const words = p.ocr?.words || (p.kind === 'pdf' && p.native !== false ? await nativeWords(p) : null) || [];
+      const lines = textLines(words).map(l => { const x0 = Math.min(...l.map(w => w.x)), y0 = Math.min(...l.map(w => w.y)), x1 = Math.max(...l.map(w => w.x + w.w)), y1 = Math.max(...l.map(w => w.y + w.h)); return { t: l.map(w => w.t).join(' '), x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; });
+      const wPt = p.kind === 'image' ? 595.28 : k.width * 72 / preset.dpi, hPt = p.kind === 'image' ? 595.28 * k.height / k.width : k.height * 72 / preset.dpi;
+      slides.push({ jpeg: await canvasToJpeg(k, preset.q), w: wPt, h: hPt, lines, lang: docLang([p]) });
+    }
+    data = Pptx.build(slides, { title: meta.subject || base, author: S.author || '' }); name = base + '.pptx'; mime = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
   } else if (o.format === 'img') {
     await document.fonts.load('16px "DejaVu Sans"');
     const preset = SIZES[o.size] || SIZES.balanced, files = [];
@@ -3178,7 +3194,7 @@ async function doExport(o) {
   const where = await deliver(data, name, mime, mime === 'application/pdf' && !o.password ? meta : null, o.saveAs);
   if (!where) { status('Speichern abgebrochen.'); return; }
   state.dirty = false;
-  if (o.batesOn && !['txt', 'docx', 'md', 'html'].includes(o.format)) LS.set('batesNext', o.batesStart + pages.length);   // nächstes Dokument zählt weiter
+  if (o.batesOn && !['txt', 'docx', 'md', 'html', 'pptx'].includes(o.format)) LS.set('batesNext', o.batesStart + pages.length);   // nächstes Dokument zählt weiter
   if (mime === 'application/pdf' && !o.password) journalAdd(meta, where, pages.length);
   $('#btnNew').classList.add('next'); setTimeout(() => $('#btnNew').classList.remove('next'), 8000);
   const secs = I18N.fmtNum((performance.now() - t0) / 1000, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -3301,7 +3317,7 @@ function updateExportUi() {
   else if (o.sign && o.password) err = 'Signieren und Passwortschutz gleichzeitig geht nicht – bitte eines von beiden wählen.';
   else if (o.sign && !window.signCertName?.()) err = 'Zum Signieren zuerst „Zertifikat wählen …“ (.p12/.pfx).';
   $('#x-err').textContent = err; $('#x-go').disabled = $('#x-saveas').disabled = !!err;
-  $('#x-ext').textContent = { pdf: '.pdf', pdfa: '.pdf', img: o.pages?.length > 1 ? '_Bilder.zip' : '.jpg', txt: '.txt', docx: '.docx', xlsx: '.xlsx', md: '.md', html: '.html' }[o.format];
+  $('#x-ext').textContent = { pdf: '.pdf', pdfa: '.pdf', img: o.pages?.length > 1 ? '_Bilder.zip' : '.jpg', txt: '.txt', docx: '.docx', xlsx: '.xlsx', md: '.md', html: '.html', pptx: '.pptx' }[o.format];
   clearTimeout(estTimer); $('#x-est').textContent = '';
   if (err || !isPdf || o.pages.length > 40) return;
   const seq = ++estSeq;

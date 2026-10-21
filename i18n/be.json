@@ -2553,5 +2553,15 @@
  "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\"",
  "Das E-Book enthält keinen lesbaren Text (oder ist kopiergeschützt).": "Электронная кніга не змяшчае чытэльнага тэксту (або абаронена ад капіравання).",
  "EPUB ohne Inhaltsverzeichnis (OPF).": "EPUB без зместу (OPF).",
- "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Гэта не файл EPUB (няма META-INF/container.xml)."
+ "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Гэта не файл EPUB (няма META-INF/container.xml).",
+ "Präsentation für PowerPoint, Keynote oder Impress – je Seite eine Folie, Text durchsuchbar": "Прэзентацыя для PowerPoint, Keynote або Impress – кожная старонка як слайд, тэкст даступны для пошуку",
+ "Erzeuge Folie {0} von {1} …": "Стварэнне слайда {0} з {1} …",
+ "Keine Seiten.": "Няма старонак.",
+ "PowerPoint": "PowerPoint",
+ "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\"><Application>PDFMy (pdfmy.de)</Application><Slides>{0}</Slides></Properties>": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\"><Application>PDFMy (pdfmy.de)</Application><Slides>{0}</Slides></Properties>",
+ "bg1=\"lt1\" tx1=\"dk1\" bg2=\"lt2\" tx2=\"dk2\" accent1=\"accent1\" accent2=\"accent2\" accent3=\"accent3\" accent4=\"accent4\" accent5=\"accent5\" accent6=\"accent6\" hlink=\"hlink\" folHlink=\"folHlink\"": "bg1=\"lt1\" tx1=\"dk1\" bg2=\"lt2\" tx2=\"dk2\" accent1=\"accent1\" accent2=\"accent2\" accent3=\"accent3\" accent4=\"accent4\" accent5=\"accent5\" accent6=\"accent6\" hlink=\"hlink\" folHlink=\"folHlink\"",
+ "ppt/media/image{0}.jpeg": "ppt/media/image{0}.jpeg",
+ "ppt/slides/slide{0}.xml": "ppt/slides/slide{0}.xml",
+ "slides/slide{0}.xml": "slides/slide{0}.xml",
+ "xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"": "xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\""
 }

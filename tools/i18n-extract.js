@@ -15,7 +15,7 @@
 'use strict';
 const fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, '..'), DIR = path.join(ROOT, 'i18n');
-const FILES = ['app.js', 'bea.js', 'pro.js', 'camera.js', 'journal.js', 'a11ycheck.js', 'pdfsign.js', 'pdfverify.js', 'einvoice.js', 'einvoice-out.js', 'email.js', 'bank.js', 'docdetect.js', 'formdetect.js', 'imaging.js', 'tools.js', 'qr.js', 'letter.js', 'sigreq.js', 'pdfinc.js', 'layout.js', 'pdfcrypt.js', 'pdfacheck.js', 'office.js', 'textpdf.js'];
+const FILES = ['app.js', 'bea.js', 'pro.js', 'camera.js', 'journal.js', 'a11ycheck.js', 'pdfsign.js', 'pdfverify.js', 'einvoice.js', 'einvoice-out.js', 'email.js', 'bank.js', 'docdetect.js', 'formdetect.js', 'imaging.js', 'tools.js', 'qr.js', 'letter.js', 'sigreq.js', 'pdfinc.js', 'layout.js', 'pdfcrypt.js', 'pdfacheck.js', 'office.js', 'textpdf.js', 'pptx.js'];
 
 // Kleiner JS-Scanner: liefert alle Zeichenketten; Vorlagen als Text mit {n} für jeden ${…}-Ausdruck (Ausdrücke werden selbst gescannt)
 function scan(src) {

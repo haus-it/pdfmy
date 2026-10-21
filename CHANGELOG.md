@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### PDF als PowerPoint speichern
+- Speichern-Dialog → **„PowerPoint“** (.pptx, wie „PDF to PowerPoint“ bei iLovePDF, Smallpdf, PDF24): je Seite eine Folie in Seitengröße mit dem Seitenbild (inkl. Stempel, Markierungen, Unterschriften, Kopf-/Fußzeile); erkannter Text als unsichtbare Textfelder an der Originalstelle (durchsuchbar, kopierbar). Seiten anderer Größe werden mittig eingepasst. Neues Modul `js/pptx.js` ohne Bibliothek (Office Open XML).
+- Getestet: `tests/pptx.test.js` (mit python-pptx gelesen: Foliengröße, Bild, Text, Einpassen), im Browser 2-seitige PDF → 2 Folien mit Text; axe ohne Befund. In Microsoft PowerPoint selbst nicht geprüft (auf dem Entwicklungsrechner nicht installiert).
+
 ### E-Books (EPUB) in PDF
 - **.epub** öffnet jetzt direkt als PDF (wie bei PDF24 und Smallpdf): `Office.epub` liest container.xml → OPF → Lesereihenfolge (spine), XHTML-Kapitel mit Überschriften, Absätzen (Zeilenumbrüche), verschachtelten Listen, Tabellen, Bildern (Größe aus PNG/JPEG) und Trennlinien; Titel aus den Metadaten, jedes Kapitel auf neuer Seite, A5-Buchformat. Kopiergeschützte E-Books: verständliche Meldung.
 - Getestet: `tests/office.test.js` (neuer Fall), im Browser umgewandelt.

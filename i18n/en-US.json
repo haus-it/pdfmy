@@ -2553,5 +2553,15 @@
  "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\"",
  "Das E-Book enthält keinen lesbaren Text (oder ist kopiergeschützt).": "The e-book contains no readable text (or is copy-protected).",
  "EPUB ohne Inhaltsverzeichnis (OPF).": "EPUB without a table of contents (OPF).",
- "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Not an EPUB file (META-INF/container.xml missing)."
+ "Keine EPUB-Datei (META-INF/container.xml fehlt).": "Not an EPUB file (META-INF/container.xml missing).",
+ "Präsentation für PowerPoint, Keynote oder Impress – je Seite eine Folie, Text durchsuchbar": "Presentation for PowerPoint, Keynote, or Impress – one slide per page, searchable text",
+ "Erzeuge Folie {0} von {1} …": "Generating slide {0} of {1} …",
+ "Keine Seiten.": "No pages.",
+ "PowerPoint": "PowerPoint",
+ "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\"><Application>PDFMy (pdfmy.de)</Application><Slides>{0}</Slides></Properties>": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\"><Application>PDFMy (pdfmy.de)</Application><Slides>{0}</Slides></Properties>",
+ "bg1=\"lt1\" tx1=\"dk1\" bg2=\"lt2\" tx2=\"dk2\" accent1=\"accent1\" accent2=\"accent2\" accent3=\"accent3\" accent4=\"accent4\" accent5=\"accent5\" accent6=\"accent6\" hlink=\"hlink\" folHlink=\"folHlink\"": "bg1=\"lt1\" tx1=\"dk1\" bg2=\"lt2\" tx2=\"dk2\" accent1=\"accent1\" accent2=\"accent2\" accent3=\"accent3\" accent4=\"accent4\" accent5=\"accent5\" accent6=\"accent6\" hlink=\"hlink\" folHlink=\"folHlink\"",
+ "ppt/media/image{0}.jpeg": "ppt/media/image{0}.jpeg",
+ "ppt/slides/slide{0}.xml": "ppt/slides/slide{0}.xml",
+ "slides/slide{0}.xml": "slides/slide{0}.xml",
+ "xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"": "xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\""
 }
