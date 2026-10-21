@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### pdfmy Scan für Mac 1.2.1: Outlook-Anhänge über die App „PDFMy“
+- Rückmeldung Mac (Herr Fischer): Die App „PDFMy“ (Standardprogramm für PDF) gab Outlook-Anhänge nur als Pfad an pdfmy Scan weiter – der Hintergrunddienst darf Outlooks geschützten Ordner aber nicht lesen (macOS-Datenschutz). Jetzt **kopiert die App den Anhang selbst** (sie darf das, weil Outlook ihr die Datei übergibt) nach ~/Library/Caches/de.pdfmy.open und reicht die Kopie weiter; Kopien älter als 12 Stunden werden entfernt.
+- Einmalig nötig: Einrichtung pdfmy Scan für Mac neu ausführen (legt die App neu an), dabei „Ja, PDFMy verwenden“ wählen.
+- Getestet: Kopierbefehl mit Leerzeichen, Umlaut und Klammern im Dateinamen; install.command Syntaxprüfung. Auf einem echten Mac nicht getestet (kein Mac verfügbar).
+
 ### Messwerkzeug: Vieleck mit Fläche und Umfang
 - Neu **„Messen: Vieleck (Fläche und Umfang)“**: Eckpunkte anklicken, Doppelklick / Klick auf den ersten Punkt / Eingabetaste schließt, Esc oder Werkzeugwechsel bricht ab. Fläche nach der Gaußschen Trapezformel, Umfang als Summe der Kanten, beides mit Maßstab bzw. Kalibrierung; verschieben und skalieren wie andere Formen; als Vektor mit Messwert-Text in PDF und Bild-Export.
 - Getestet: L-förmiger Raum bei 1:50 = 16,37 m², Umfang 17,92 m (nachgerechnet), Abbruch mit Esc, Messwert als Text in der PDF; veraPDF PDF/A-2b und PDF/UA-1 PASS.

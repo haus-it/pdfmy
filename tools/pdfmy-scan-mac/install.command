@@ -48,6 +48,9 @@ rm -rf "$APP"
   -e '  repeat with f in theFiles' \
   -e '    set p to POSIX path of f' \
   -e '    try' \
+  -e '      set p to do shell script "t=$HOME/Library/Caches/de.pdfmy.open; /usr/bin/find \"$t\" -mindepth 1 -mmin +720 -delete 2>/dev/null; t=$t/$(date +%s)$$; /bin/mkdir -p \"$t\" && /bin/cp -p " & quoted form of p & " \"$t/\" && printf %s \"$t/$(/usr/bin/basename " & quoted form of p & ")\""' \
+  -e '    end try' \
+  -e '    try' \
   -e '      do shell script "printf %s " & quoted form of p & " | /usr/bin/curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:52880/open-local"' \
   -e '    on error' \
   -e '      do shell script "launchctl kickstart -k gui/$(id -u)/de.pdfmy.scan >/dev/null 2>&1; sleep 2"' \
