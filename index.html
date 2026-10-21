@@ -117,6 +117,7 @@ select{border:1px solid var(--line);background:var(--panel);border-radius:7px;pa
 .ann.field .fl{position:absolute;left:3px;top:50%;transform:translateY(-50%);font:600 11px/1.1 system-ui,sans-serif;color:#2c3260;white-space:nowrap;pointer-events:none;max-width:calc(100% - 6px);overflow:hidden;text-overflow:ellipsis}
 .ann.field.check .fl{display:none}
 .sumout{white-space:pre-wrap;margin:12px 0;padding:10px 12px;border:1px solid var(--line);border-radius:6px;min-height:3em;max-height:min(45vh,360px);overflow:auto;font-size:14.5px;line-height:1.5}.sumout:empty{display:none}
+.ann.shape .mlabel{position:absolute;left:50%;top:50%;transform:translate(-50%,-110%);font:600 12px/1.2 system-ui,sans-serif;white-space:nowrap;background:rgba(255,255,255,.85);padding:0 3px;border-radius:3px;pointer-events:none}
 .ann.field.radio{border-radius:50%;overflow:visible}.ann.field.radio .fl{left:calc(100% + 4px);max-width:none;transform:translateY(-50%)}
 .ann.text{white-space:pre;line-height:1.2;font-family:"DejaVu Sans",Verdana,sans-serif;min-width:6px;padding:0;outline:none}
 .ann.text[contenteditable="true"]{outline:1px dashed var(--sel);background:rgba(255,255,255,.6);cursor:text;user-select:text}
@@ -1099,7 +1100,8 @@ html.i18n-wait body{visibility:hidden}
         <input id="fieldName" placeholder="Name (automatisch)" aria-label="Name des Formularfelds" title="Name des Felds, z. B. Vorname – leer lassen: PDFMy nimmt die Beschriftung daneben" style="width:170px">
       </div>
       <div class="grp" id="shapeOpts" hidden role="group" aria-label="Form">
-        <select id="shapeKind" title="Art der Form" aria-label="Art der Form"><option value="rect">Rechteck</option><option value="ellipse">Ellipse</option><option value="line">Linie</option><option value="arrow">Pfeil</option></select>
+        <select id="shapeKind" title="Art der Form" aria-label="Art der Form"><option value="rect">Rechteck</option><option value="ellipse">Ellipse</option><option value="line">Linie</option><option value="arrow">Pfeil</option><option value="mline">Messen: Strecke</option><option value="marea">Messen: Fläche</option></select>
+        <select id="shapeScale" hidden title="Maßstab der Zeichnung – „Aus bekannter Strecke“ rechnet ihn aus einer gemessenen Strecke mit bekannter Länge aus" aria-label="Maßstab"><option value="1">1:1 (Papier)</option><option value="10">1:10</option><option value="20">1:20</option><option value="50">1:50</option><option value="100">1:100</option><option value="200">1:200</option><option value="500">1:500</option><option value="1000">1:1000</option><option value="cal">Aus bekannter Strecke …</option></select>
         <select id="shapeColor" title="Farbe der Form" aria-label="Farbe der Form"><option value="#c8102e">rot</option><option value="#1d4ed8">blau</option><option value="#15803d">grün</option><option value="#000000">schwarz</option><option value="#f59e0b">orange</option></select>
         <select id="shapeLw" title="Strichstärke" aria-label="Strichstärke"><option value="0.002">dünn</option><option value="0.0035" selected>mittel</option><option value="0.006">dick</option></select>
         <label class="cb"><input id="shapeFill" type="checkbox"> gefüllt</label>

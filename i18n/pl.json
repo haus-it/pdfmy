@@ -2537,5 +2537,18 @@
  "Roman": "Roman",
  "word/": "word/",
  "xl/": "xl/",
- "PDFMy (pdfmy.de)": "PDFMy (pdfmy.de)"
+ "PDFMy (pdfmy.de)": "PDFMy (pdfmy.de)",
+ "1:1 (Papier)": "1:1 (papier)",
+ "Aus bekannter Strecke …": "Ze znanej odległości …",
+ "Gemessen: {0} (Maßstab 1:{1}) – Maßstab oben ändern; „Aus bekannter Strecke“ rechnet ihn aus einer Strecke mit bekannter Länge aus.": "Zmierzono: {0} (skala 1:{1}) – zmień skalę powyżej; „Ze znanej odległości” oblicza ją na podstawie odcinka o znanej długości.",
+ "Maßstab": "Skala",
+ "Maßstab 1:{0}{1}.": "Skala 1:{0}{1}.",
+ "Maßstab der Zeichnung – „Aus bekannter Strecke“ rechnet ihn aus einer gemessenen Strecke mit bekannter Länge aus": "Skala rysunku – „Ze znanej odległości” oblicza ją na podstawie zmierzonego odcinka o znanej długości",
+ "Messen: Fläche": "Mierz: powierzchnia",
+ "Messen: Strecke": "Mierz: odległość",
+ "Messung: {0} (Maßstab 1:{1})": "Pomiar: {0} (skala 1:{1})",
+ "Wie lang ist die markierte Strecke in Wirklichkeit (in Metern, z. B. 4,25)?": "Jaka jest rzeczywista długość zaznaczonego odcinka (w metrach, np. 4,25)?",
+ "Zuerst eine Strecke mit bekannter Länge messen und markieren, dann „Aus bekannter Strecke“ wählen.": "Najpierw zmierz i zaznacz odcinek o znanej długości, a następnie wybierz „Ze znanej odległości”.",
+ "{0} cm²": "{0} cm²",
+ "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\""
 }

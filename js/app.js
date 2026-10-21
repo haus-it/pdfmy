@@ -874,7 +874,7 @@ function renderAnns() {
     el.setAttribute('translate', 'no');   // Inhalt des Dokuments (Stempel, Notiz, Text) – nicht in die Oberflächensprache übersetzen
     placeEl(el, a);
     if (a.type === 'sign' || a.type === 'img') el.style.backgroundImage = `url(${a.img})`;
-    if (a.type === 'shape') el.innerHTML = shapeSvg(a, W, ov.clientHeight);
+    if (a.type === 'shape') { el.innerHTML = shapeSvg(a, W, ov.clientHeight); if (isMeasure(a)) { const l = document.createElement('span'); l.className = 'mlabel'; l.textContent = measureValue(a, p); l.style.color = a.color; el.append(l); el.title = `Messung: ${measureValue(a, p)} (Maßstab 1:${+(a.scale || 1).toPrecision(4)})`; } }
     if (a.type === 'wo' && a.fill) { el.style.background = a.fill; el.style.boxShadow = 'none'; }
     if (a.type === 'wo' && a.mark) el.classList.add('mark');
     if (a.type === 'link') { const l = document.createElement('span'); l.className = 'fl'; l.textContent = linkLabel(a); el.append(l); el.title = `Link: ${linkLabel(a)} – Doppelklick zum Ändern`; }
@@ -917,22 +917,54 @@ function wrapLines(text, maxW, meas) {
   return out;
 }
 /* Formen (Rechteck, Ellipse, Linie, Pfeil): a.fx/a.fy = Linie beginnt rechts bzw. unten. Pfeilspitze am Ende. */
+// Maßstab-Auswahl: gilt für neue Messungen und die markierte Messung; „Aus bekannter Strecke“ kalibriert an der markierten Strecke
+function mscaleUi(a) {
+  const on = ['mline', 'marea'].includes($('#shapeKind').value) || isMeasure(a); $('#shapeScale').hidden = !on; if (!on) return;
+  const s = isMeasure(a) ? a.scale || 1 : state.mscale || 1, sel = $('#shapeScale');
+  if (![...sel.options].some(o => o.value === String(s))) { sel.querySelector('[data-own]')?.remove(); const o = new Option(`1:${+s.toPrecision(4)}`, String(s)); o.dataset.own = '1'; sel.insertBefore(o, sel.lastElementChild); }
+  sel.value = String(s);
+}
 function shapeEnds(a) { return [[a.fx ? 1 : 0, a.fy ? 1 : 0], [a.fx ? 0 : 1, a.fy ? 0 : 1]]; }
 function arrowHead(x0, y0, x1, y1, lw) {
   const L = Math.max(lw * 5, 10), ang = Math.atan2(y1 - y0, x1 - x0), sp = 0.42;
   return [[x1, y1], [x1 - L * Math.cos(ang - sp), y1 - L * Math.sin(ang - sp)], [x1 - L * Math.cos(ang + sp), y1 - L * Math.sin(ang + sp)]];
 }
+// Messen (wie Acrobat Pro/Xodo): Papiermaß aus der Seitengröße (PDF in Punkt, Scans/Fotos als A4) × Maßstab
+const pageMm = p => p?.kind === 'pdf' && p.w ? [p.w * 25.4 / 120, p.h * 25.4 / 120] : [210, 210 * ((p?.h || 297) / (p?.w || 210))];
+function measureValue(a, p) {
+  const [mw, mh] = pageMm(p), s = a.scale || 1, fmt = (v, d) => v.toLocaleString(I18N.info.bcp || 'de-DE', { minimumFractionDigits: d, maximumFractionDigits: d });
+  if (a.kind === 'mline') { const mm = Math.hypot(a.w * mw, a.h * mh) * s; return mm >= 1000 || s > 1 ? `${fmt(mm / 1000, 2)} m` : `${fmt(mm / 10, 1)} cm`; }
+  const mm2 = a.w * mw * a.h * mh * s * s; return mm2 >= 1e6 || s > 1 ? `${fmt(mm2 / 1e6, 2)} m²` : `${fmt(mm2 / 100, 1)} cm²`;
+}
+const isMeasure = a => a?.type === 'shape' && (a.kind === 'mline' || a.kind === 'marea');
+$('#shapeScale').addEventListener('change', e => {
+  const p = cur(), a = p?.annots.find(x => x.id === state.annSel && isMeasure(x));
+  let s = +e.target.value;
+  if (e.target.value === 'cal') {
+    if (a?.kind !== 'mline') { alert('Zuerst eine Strecke mit bekannter Länge messen und markieren, dann „Aus bekannter Strecke“ wählen.'); mscaleUi(a); return; }
+    const v = prompt('Wie lang ist die markierte Strecke in Wirklichkeit (in Metern, z. B. 4,25)?', ''); const m = parseFloat(String(v || '').replace(',', '.'));
+    if (!(m > 0)) { mscaleUi(a); return; }
+    const [mw, mh] = pageMm(p); s = m * 1000 / Math.hypot(a.w * mw, a.h * mh);
+  }
+  state.mscale = s;
+  if (a) { pushUndo(p); for (const x of p.annots) if (isMeasure(x) && (x === a || x.scale === a.scale)) x.scale = s; state.dirty = true; renderAnns(); }   // gleiche Zeichnung: alle Messungen mit demselben Maßstab mitziehen
+  mscaleUi(a);
+  status(`Maßstab 1:${+s.toPrecision(4)}${a ? ` – ${measureValue(a, p)}` : ''}.`);
+});
+$('#shapeKind').addEventListener('change', () => mscaleUi(cur()?.annots.find(x => x.id === state.annSel)));
 function shapeSvg(a, pw, ph) {
   const w = a.w * pw, h = a.h * ph, lw = Math.max(1, a.lw * pw), c = a.color, f = a.fill ? `fill="${c}" fill-opacity="0.2"` : 'fill="none"';
   let body;
-  if (a.kind === 'rect') body = `<rect x="${lw / 2}" y="${lw / 2}" width="${Math.max(0, w - lw)}" height="${Math.max(0, h - lw)}" ${f} stroke="${c}" stroke-width="${lw}"/>`;
+  if (a.kind === 'marea') body = `<rect x="${lw / 2}" y="${lw / 2}" width="${Math.max(0, w - lw)}" height="${Math.max(0, h - lw)}" fill="${c}" fill-opacity="0.12" stroke="${c}" stroke-width="${lw}" stroke-dasharray="${lw * 3} ${lw * 2}"/>`;
+  else if (a.kind === 'rect') body = `<rect x="${lw / 2}" y="${lw / 2}" width="${Math.max(0, w - lw)}" height="${Math.max(0, h - lw)}" ${f} stroke="${c}" stroke-width="${lw}"/>`;
   else if (a.kind === 'ellipse') body = `<ellipse cx="${w / 2}" cy="${h / 2}" rx="${Math.max(0, (w - lw) / 2)}" ry="${Math.max(0, (h - lw) / 2)}" ${f} stroke="${c}" stroke-width="${lw}"/>`;
   else {
     const [[sx, sy], [ex, ey]] = shapeEnds(a), x0 = sx * w, y0 = sy * h, x1 = ex * w, y1 = ey * h;
     body = `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="${c}" stroke-width="${lw}" stroke-linecap="round"/>`;
     if (a.kind === 'arrow') body += `<polygon points="${arrowHead(x0, y0, x1, y1, lw).map(q => q.join(',')).join(' ')}" fill="${c}"/>`;
+    if (a.kind === 'mline') for (const [tx, ty] of [[x0, y0], [x1, y1]]) { const ang = Math.atan2(y1 - y0, x1 - x0) + Math.PI / 2, L = lw * 4; body += `<line x1="${tx - L * Math.cos(ang)}" y1="${ty - L * Math.sin(ang)}" x2="${tx + L * Math.cos(ang)}" y2="${ty + L * Math.sin(ang)}" stroke="${c}" stroke-width="${lw}"/>`; }   // Endstriche wie bei einer Bemaßung
   }
-  return `<svg width="${Math.max(1, w)}" height="${Math.max(1, h)}" aria-hidden="true">${body}</svg>`;
+  return `<svg width="${Math.max(1, w)}" height="${Math.max(1, h)}" overflow="visible" aria-hidden="true">${body}</svg>`;
 }
 function inkSvg(a, W) {
   const pts = a.pts.map(([x, y]) => `${(x * 1000).toFixed(1)},${(y * 1000).toFixed(1)}`).join(' ');
@@ -1019,7 +1051,7 @@ $('#overlay').addEventListener('pointerdown', e => {
         a.h = a.type === 'sign' || a.type === 'img' ? a.w * a.ar * p.w / p.h : Math.max(a.type === 'shape' ? 0 : 0.005, o.h + q.y - s.y);
       } else { a.x = o.x + q.x - s.x; a.y = o.y + q.y - s.y; }
       placeEl(el, a); state.dirty = true;
-      if (a.type === 'shape') { el.querySelector('svg')?.remove(); el.insertAdjacentHTML('afterbegin', shapeSvg(a, ov.clientWidth, ov.clientHeight)); }
+      if (a.type === 'shape') { el.querySelector('svg')?.remove(); el.insertAdjacentHTML('afterbegin', shapeSvg(a, ov.clientWidth, ov.clientHeight)); const ml = el.querySelector('.mlabel'); if (ml) ml.textContent = measureValue(a, p); }
     });
   } else if (state.tool === 'hl') {
     e.preventDefault();
@@ -1070,17 +1102,19 @@ $('#overlay').addEventListener('pointerdown', e => {
     // Form aufziehen: Rechteck/Ellipse im Rahmen, Linie/Pfeil vom Startpunkt zum Endpunkt (Umschalt: waagerecht/senkrecht)
     e.preventDefault(); pushUndo(p);
     const a = { id: ++uid, type: 'shape', kind: $('#shapeKind').value, color: $('#shapeColor').value, lw: +$('#shapeLw').value, fill: $('#shapeFill').checked, x: s.x, y: s.y, w: 0, h: 0, fx: false, fy: false };
+    if (isMeasure(a)) a.scale = state.mscale || 1;
     p.annots.push(a); renderAnns();
     const el = ov.querySelector(`[data-id="${a.id}"]`);
     drag(e, ev => {
       let q = pt(ev);
-      if (ev.shiftKey && (a.kind === 'line' || a.kind === 'arrow')) q = Math.abs(q.x - s.x) * r.width > Math.abs(q.y - s.y) * r.height ? { x: q.x, y: s.y } : { x: s.x, y: q.y };
+      if (ev.shiftKey && (a.kind === 'line' || a.kind === 'arrow' || a.kind === 'mline')) q = Math.abs(q.x - s.x) * r.width > Math.abs(q.y - s.y) * r.height ? { x: q.x, y: s.y } : { x: s.x, y: q.y };
       a.x = Math.min(s.x, q.x); a.y = Math.min(s.y, q.y); a.w = Math.abs(q.x - s.x); a.h = Math.abs(q.y - s.y); a.fx = q.x < s.x; a.fy = q.y < s.y;
       placeEl(el, a); el.innerHTML = shapeSvg(a, ov.clientWidth, ov.clientHeight);
+      if (isMeasure(a)) { const l = document.createElement('span'); l.className = 'mlabel'; l.textContent = measureValue(a, p); l.style.color = a.color; el.append(l); }
     }, () => {
       if (a.w < 0.008 && a.h < 0.008) { p.annots.splice(p.annots.indexOf(a), 1); state.undo.pop(); status('Form aufziehen: Maustaste gedrückt halten und ziehen.'); return renderAnns(); }
       state.dirty = true; state.annSel = a.id; renderAnns();
-      status('Form gesetzt – Art, Farbe und Strichstärke oben ändern, zum Verschieben ziehen, Entf löscht.');
+      status(isMeasure(a) ? `Gemessen: ${measureValue(a, p)} (Maßstab 1:${+(a.scale || 1).toPrecision(4)}) – Maßstab oben ändern; „Aus bekannter Strecke“ rechnet ihn aus einer Strecke mit bekannter Länge aus.` : 'Form gesetzt – Art, Farbe und Strichstärke oben ändern, zum Verschieben ziehen, Entf löscht.');
     });
   } else if (state.tool === 'edit') {
     e.preventDefault();
@@ -1219,6 +1253,7 @@ function updateToolbar() {
   $('#stampOpts').hidden = state.tool !== 'stamp';
   $('#shapeOpts').hidden = !(state.tool === 'shape' || a?.type === 'shape');
   if (a?.type === 'shape') { $('#shapeKind').value = a.kind; $('#shapeColor').value = a.color; $('#shapeLw').value = String(a.lw); $('#shapeFill').checked = !!a.fill; }
+  mscaleUi(a);
   $('#fieldOpts').hidden = state.tool !== 'field';
   $('#signOpts').hidden = state.tool !== 'sign';
   $('#hlOpts').hidden = !(state.tool === 'hl' || a?.type === 'hl');
@@ -1254,7 +1289,7 @@ document.querySelectorAll('.hlsw button').forEach(b => {
 $('#hlStyle').onchange = e => hlSet('hlStyle', e.target.value);
 // Formen: Änderungen gelten für neue Formen und für die gewählte
 ['shapeKind', 'shapeColor', 'shapeLw', 'shapeFill'].forEach(id => $('#' + id).onchange = () => {
-  const p = cur(), a = p?.annots.find(x => x.id === state.annSel && x.type === 'shape'); if (!a) return;
+  const p = cur(), a = p?.annots.find(x => x.id === state.annSel && x.type === 'shape'); mscaleUi(a); if (!a) return;
   pushUndo(p); Object.assign(a, { kind: $('#shapeKind').value, color: $('#shapeColor').value, lw: +$('#shapeLw').value, fill: $('#shapeFill').checked }); state.dirty = true; renderAnns();
 });
 // Bild oder Logo einfügen (PNG mit Transparenz bleibt PNG, Fotos als JPEG) – mittig auf die aktuelle Seite, dann verschieben/skalieren
@@ -2622,6 +2657,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       else if (a.type === 'shape') await tagged('Artifact', () => {
         const col = hexRgb(a.color), lw = Math.max(0.5, a.lw * W), fill = a.fill ? { color: col, opacity: 0.2 } : {};
         if (a.kind === 'rect') page.drawRectangle({ x: x + lw / 2, y: y + lw / 2, width: Math.max(0, w - lw), height: Math.max(0, h - lw), borderColor: col, borderWidth: lw, ...fill });
+        else if (a.kind === 'marea') page.drawRectangle({ x: x + lw / 2, y: y + lw / 2, width: Math.max(0, w - lw), height: Math.max(0, h - lw), borderColor: col, borderWidth: lw, borderDashArray: [lw * 3, lw * 2], color: col, opacity: 0.12 });
         else if (a.kind === 'ellipse') page.drawEllipse({ x: x + w / 2, y: y + h / 2, xScale: Math.max(0.1, (w - lw) / 2), yScale: Math.max(0.1, (h - lw) / 2), borderColor: col, borderWidth: lw, ...fill });
         else {
           const [[sx, sy], [ex, ey]] = shapeEnds(a), P = (u, v) => ({ x: x + u * w, y: y + h - v * h }), s0 = P(sx, sy), e0 = P(ex, ey);
@@ -2629,6 +2665,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
           if (a.kind === 'arrow') { const t = arrowHead(s0.x, s0.y, e0.x, e0.y, lw); page.drawSvgPath(`M${t[0][0]} ${-t[0][1]} L${t[1][0]} ${-t[1][1]} L${t[2][0]} ${-t[2][1]} Z`, { x: 0, y: 0, color: col, borderWidth: 0 }); }
         }
       });
+      if (isMeasure(a)) { const t = safe(measureValue(a, p)), sz = Math.max(6, Math.min(14, W * 0.016)); T?.open('P'); page.drawText(t, { x: x + w / 2 - font.widthOfTextAtSize(t, sz) / 2, y: a.kind === 'mline' ? y + h / 2 + sz * 0.4 : y + h / 2 - sz / 3, size: sz, font, color: hexRgb(a.color) }); T?.close(); }   // Messwert als echter Text
       else if (a.type === 'ink') {
         const d = a.pts.map(([px, py], k) => `${k ? 'L' : 'M'}${((a.x + px * a.w) * W).toFixed(2)} ${((a.y + py * a.h) * H).toFixed(2)}`).join(' ');
         await tagged('Artifact', () => page.drawSvgPath(d, { x: ox, y: oy + H, borderColor: hexRgb(a.color), borderWidth: a.lw * W, borderLineCap: PDFLib.LineCapStyle?.Round }));
@@ -2945,12 +2982,13 @@ async function drawAnnotsInner(x, p, W, H) {
     else if (a.type === 'sign' || a.type === 'img') { const im = new Image(); im.src = a.img; await im.decode(); x.drawImage(im, ax, ay, aw, ah); }
     else if (a.type === 'shape') {
       const lw = Math.max(1, a.lw * W); x.save(); x.strokeStyle = x.fillStyle = a.color; x.lineWidth = lw; x.lineCap = 'round'; x.beginPath();
-      if (a.kind === 'rect') x.rect(ax + lw / 2, ay + lw / 2, Math.max(0, aw - lw), Math.max(0, ah - lw));
+      if (a.kind === 'rect' || a.kind === 'marea') x.rect(ax + lw / 2, ay + lw / 2, Math.max(0, aw - lw), Math.max(0, ah - lw));
       else if (a.kind === 'ellipse') x.ellipse(ax + aw / 2, ay + ah / 2, Math.max(0.1, (aw - lw) / 2), Math.max(0.1, (ah - lw) / 2), 0, 0, Math.PI * 2);
       else { const [[sx, sy], [ex, ey]] = shapeEnds(a); x.moveTo(ax + sx * aw, ay + sy * ah); x.lineTo(ax + ex * aw, ay + ey * ah); }
-      if (a.fill && (a.kind === 'rect' || a.kind === 'ellipse')) { x.globalAlpha = 0.2; x.fill(); x.globalAlpha = 1; }
+      if ((a.fill && (a.kind === 'rect' || a.kind === 'ellipse')) || a.kind === 'marea') { x.globalAlpha = a.kind === 'marea' ? 0.12 : 0.2; x.fill(); x.globalAlpha = 1; }
       x.stroke();
       if (a.kind === 'arrow') { const [[sx, sy], [ex, ey]] = shapeEnds(a), t = arrowHead(ax + sx * aw, ay + sy * ah, ax + ex * aw, ay + ey * ah, lw); x.beginPath(); x.moveTo(...t[0]); x.lineTo(...t[1]); x.lineTo(...t[2]); x.closePath(); x.fill(); }
+      if (isMeasure(a)) { const sz = Math.max(10, Math.min(28, W * 0.016)); x.font = `600 ${sz}px "DejaVu Sans"`; x.textAlign = 'center'; x.fillText(measureValue(a, p), ax + aw / 2, a.kind === 'mline' ? ay + ah / 2 - sz * 0.4 : ay + ah / 2 + sz / 3); }
       x.restore();
     }
     else if (a.type === 'ink') {

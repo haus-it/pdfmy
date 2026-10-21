@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-21
 
+### Messwerkzeug
+- Werkzeug „Formen“ → **„Messen: Strecke“** und **„Messen: Fläche“** (wie das Messwerkzeug in Acrobat Pro und Xodo): Wert direkt an der Messung, Maßstab 1:1 bis 1:1000 oder „Aus bekannter Strecke“ (Kalibrieren an einer markierten Strecke; Messungen gleichen Maßstabs ziehen mit). Papiermaß aus der Seitengröße der PDF, bei Scans/Fotos A4. Bemaßungslinie mit Endstrichen, Fläche gestrichelt und leicht gefüllt; beim Speichern als Vektor (Artefakt) mit Messwert als echtem Text, auch im Bild-Export.
+- Getestet im Browser: 105 mm bei 1:100 = 10,50 m; kalibriert auf 5 m → 1:47,6; Fläche 105 × 74,25 mm bei 1:50 = 19,49 m²; Messwerte als Text in der PDF; veraPDF PDF/A-2b und PDF/UA-1 PASS; axe ohne Befund.
+
 ### PDF/A prüfen
 - Menü → **„PDF/A prüfen …“** (wie bei PDF24 und Xodo): Kurzprüfung angelehnt an ISO 19005-2 – PDF/A-Kennung (XMP pdfaid), Dateikopf mit Binärkennung, Verschlüsselung, OutputIntent mit ICC-Profil, eingebettete Schriften, JavaScript (OpenAction, Names, AA, JS-Aktionen), verbotene Aktionen und Medien, druckbare/sichtbare Anmerkungen mit Erscheinungsbild, LZW, Transparenzgruppen, Anhänge (PDF/A-2 vs. -3), Titel in Info und XMP. Bericht wie bei der Barrierefreiheit, „Als PDF/A speichern“ repariert. Neues Modul `js/pdfacheck.js`.
 - Getestet: `tests/pdfacheck.test.js` (3 Fälle), im Browser: gewöhnliche PDF → 3 Mängel (Kennung, Farbprofil, Schrift), von PDFMy erzeugtes PDF/A → keine Auffälligkeiten; axe ohne Befund.

@@ -2537,5 +2537,18 @@
  "Roman": "Roman",
  "word/": "word/",
  "xl/": "xl/",
- "PDFMy (pdfmy.de)": "PDFMy (pdfmy.de)"
+ "PDFMy (pdfmy.de)": "PDFMy (pdfmy.de)",
+ "1:1 (Papier)": "1:1 (papir)",
+ "Aus bekannter Strecke …": "Iz poznate udaljenosti …",
+ "Gemessen: {0} (Maßstab 1:{1}) – Maßstab oben ändern; „Aus bekannter Strecke“ rechnet ihn aus einer Strecke mit bekannter Länge aus.": "Izmjereno: {0} (mjerilo 1:{1}) – promijenite mjerilo iznad; „Iz poznate udaljenosti“ ga izračunava iz udaljenosti poznate duljine.",
+ "Maßstab": "Mjerilo",
+ "Maßstab 1:{0}{1}.": "Mjerilo 1:{0}{1}.",
+ "Maßstab der Zeichnung – „Aus bekannter Strecke“ rechnet ihn aus einer gemessenen Strecke mit bekannter Länge aus": "Mjerilo crteža – „Iz poznate udaljenosti“ ga izračunava iz izmjerene udaljenosti poznate duljine",
+ "Messen: Fläche": "Mjerenje: površina",
+ "Messen: Strecke": "Mjerenje: udaljenost",
+ "Messung: {0} (Maßstab 1:{1})": "Mjerenje: {0} (mjerilo 1:{1})",
+ "Wie lang ist die markierte Strecke in Wirklichkeit (in Metern, z. B. 4,25)?": "Kolika je stvarna duljina označene udaljenosti (u metrima, npr. 4,25)?",
+ "Zuerst eine Strecke mit bekannter Länge messen und markieren, dann „Aus bekannter Strecke“ wählen.": "Najprije izmjerite i označite udaljenost poznate duljine, zatim odaberite „Iz poznate udaljenosti“.",
+ "{0} cm²": "{0} cm²",
+ "600 {0}px \"DejaVu Sans\"": "600 {0}px \"DejaVu Sans\""
 }
