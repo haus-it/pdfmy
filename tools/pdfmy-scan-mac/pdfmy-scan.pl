@@ -11,7 +11,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
@@ -676,6 +676,46 @@ sub take_file {
   return ($data, $name);
 }
 # Ist PDFMy das Standardprogramm für PDFs? (macOS LaunchServices, über JavaScript for Automation; 60 Sekunden zwischengespeichert)
+# „In Office-Programm öffnen“: installierte Programme und was man damit machen kann (der Nutzer wählt in PDFMy).
+# Mac: Programme-Ordner, Linux: Befehle im Pfad. Die PDF liegt danach in $DIR/office (lokal, nicht in iCloud/OneDrive).
+sub office_apps {
+  my @l; my $t = sub { $ENV{ 'PDFMY_TEST_OFFICE_' . uc $_[0] } };   # nur für Tests
+  if ($IS_MAC) {
+    my $app = sub { for my $d ('/Applications', "$ENV{HOME}/Applications") { return "$d/$_[0].app" if -d "$d/$_[0].app"; } return undef; };
+    if (my $a = $t->('onlyoffice') || $app->('ONLYOFFICE')) { push @l, { id => 'onlyoffice', app => 'ONLYOFFICE', what => 'pdf', cmd => ['/usr/bin/open', '-a', $a] }; }
+    for ([ 'libreoffice', 'LibreOffice', 'LibreOffice' ], [ 'collabora', 'Collabora Office', 'Collabora Office' ]) {
+      my ($id, $name, $label) = @$_; my $a = $t->($id) || $app->($name) or next;
+      my $so = -x "$a/Contents/MacOS/soffice" ? "$a/Contents/MacOS/soffice" : $a;
+      push @l, { id => "$id-writer", app => "$label Writer", what => 'text', cmd => [$so, '--norestore', '--infilter=writer_pdf_import'] },
+               { id => "$id-draw", app => "$label Draw", what => 'draw', cmd => ['/usr/bin/open', '-a', $a] };
+    }
+    if (my $a = $t->('word') || $app->('Microsoft Word')) { push @l, { id => 'word', app => 'Microsoft Word', what => 'word', cmd => ['/usr/bin/open', '-a', $a] }; }
+  } else {
+    my $oo = $t->('onlyoffice') || which('onlyoffice-desktopeditors') || which('desktopeditors') || (-x '/opt/onlyoffice/desktopeditors/DesktopEditors' ? '/opt/onlyoffice/desktopeditors/DesktopEditors' : undef);
+    push @l, { id => 'onlyoffice', app => 'ONLYOFFICE', what => 'pdf', cmd => [$oo] } if $oo;
+    if (my $lo = $t->('libreoffice') || which('libreoffice') || which('soffice')) {
+      push @l, { id => 'libreoffice-writer', app => 'LibreOffice Writer', what => 'text', cmd => [$lo, '--norestore', '--infilter=writer_pdf_import'] },
+               { id => 'libreoffice-draw', app => 'LibreOffice Draw', what => 'draw', cmd => [$lo, '--norestore'] };
+    }
+  }
+  return @l;
+}
+sub office_open {
+  my ($id, $name, $pdf) = @_;
+  my ($c) = grep { $_->{id} eq ($id // '') } office_apps();
+  return (undef, 'Dieses Programm ist auf diesem Rechner nicht (mehr) installiert.') unless $c;
+  return (undef, 'Keine gültige PDF-Datei.') unless defined $pdf && substr($pdf, 0, 4) eq '%PDF';
+  my $dir = "$DIR/office"; make_path($dir);
+  my $base = $name // ''; $base =~ s/\.pdf$//i; $base =~ s{[/\\:*?"<>|\x00-\x1f]+}{ }g; $base =~ s/\s+/ /g; $base = trim($base);
+  $base = 'Dokument' unless length $base; $base = substr($base, 0, 80);
+  my $f = "$dir/$base.pdf"; for (my $n = 2; -e $f; $n++) { $f = "$dir/$base ($n).pdf"; }
+  open my $h, '>:raw', $f or return (undef, "Datei lässt sich nicht anlegen: $!"); print $h $pdf; close $h;
+  my $k = fork();
+  return (undef, "$c->{app} ließ sich nicht starten.") unless defined $k;
+  if ($k == 0) { POSIX::setsid(); open STDIN, '<', '/dev/null'; open STDOUT, '>', '/dev/null'; open STDERR, '>', '/dev/null'; exec(@{ $c->{cmd} }, $f) or POSIX::_exit(1); }
+  logl("Office: $base.pdf → $c->{app}");
+  return ($f, undef);
+}
 # Mac: Eintrag „In PDFMy öffnen“ im PDF-Menü des Druckdialogs (Skript in ~/Library/PDF Services, legt die Einrichtung an)
 sub print_service {
   return 'none' unless $IS_MAC;
@@ -742,7 +782,7 @@ sub handle {
   my ($line, @hl) = split /\r\n/, $hdrs; my ($method, $path) = split / /, $line // '';
   return unless $method;
   my %h; for (@hl) { $h{ lc $1 } = $2 if /^([^:]+):\s*(.*)$/; }
-  my $len = $h{'content-length'} || 0; return if $len > 1_000_000;
+  my $len = $h{'content-length'} || 0; return if $len > ($path =~ m{^/office} ? 300_000_000 : 1_000_000);   # PDFs für „In Office-Programm öffnen“ dürfen groß sein
   my $body = $rest; while (length $body < $len) { my $n = sysread($c, my $b, $len - length $body); last unless $n; $body .= $b; }
   alarm 0;
   my $origin = $h{origin};
@@ -802,6 +842,11 @@ sub handle {
     if ($code != 0 || !length $d) { logl("Zeitstempel: Dienst $host antwortet nicht"); return send_json($c, 502, { error => "Zeitstempeldienst $host antwortet nicht" }, \%cors); }
     logl("Zeitstempel von $host (" . length($d) . ' Bytes)');
     return send_json($c, 200, { data => encode_base64($d, '') }, \%cors);
+  }
+  if ($p eq '/office' && $method eq 'GET') { return send_json($c, 200, { apps => [ map { +{ id => $_->{id}, app => $_->{app}, what => $_->{what} } } office_apps() ] }, \%cors); }   # installierte Office-Programme
+  if ($p eq '/office' && $method eq 'POST') {   # PDF mit dem gewählten Office-Programm öffnen (Datei bleibt auf dem Rechner)
+    my $o = $in->(); my ($f, $err) = office_open($o->{id}, $o->{name}, eval { decode_base64($o->{data} // '') });
+    return send_json($c, $err ? 409 : 200, { ok => $err ? JSON::PP::false : JSON::PP::true, error => $err, path => $f }, \%cors);
   }
   if ($p eq '/defaultapps' && $method eq 'POST') { my $ok = set_pdf_default(); return send_json($c, 200, { ok => JSON::PP::true, registered => $ok ? JSON::PP::true : JSON::PP::false, isDefault => $ok ? JSON::PP::true : JSON::PP::false }, \%cors); }
   if ($p eq '/wake' && $method eq 'POST') {   # „Scanner aufwecken“: wecken, kurz warten, neu suchen

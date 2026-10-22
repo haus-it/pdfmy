@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### In Office-Programm öffnen (app-v171, pdfmy Scan 1.11.0, Mac/Linux 1.4.0)
+- Neuer Menüpunkt „… Mehr → In Office-Programm öffnen …“: Jeder Nutzer wählt selbst, mit welchem installierten Programm er was macht – ONLYOFFICE (PDF direkt bearbeiten), LibreOffice bzw. Collabora Office (Writer: als Textdokument; Draw: als Zeichnung), Microsoft Word (Word wandelt um). Nur Vorhandenes wird angeboten, die letzte Wahl wird je Browser gemerkt; nichts installiert → Hinweis auf kostenlose ONLYOFFICE/LibreOffice.
+- pdfmy Scan: GET/POST /office – Erkennung (Windows: Programmordner, Registry LibreOffice/UNO und App Paths Winword.exe; Mac: Programme-Ordner; Linux: Befehle), Ablage lokal (%LOCALAPPDATA%\PDFMy\Office bzw. Datenordner – bewusst nicht „Dokumente“, der oft in OneDrive liegt), Start mit dokumentierten Parametern (LibreOffice --infilter=writer_pdf_import für Writer).
+- Hilfe: Weg aus allen Office-Programmen zurück über den Drucker „PDFMy“.
+- Recherche Office-Anbindungen (ONLYOFFICE, LibreOffice/Collabora, Microsoft, SoftMaker, WPS, Apple, Google, openDesk) in KONZEPT.md bewertet; Partner-Anschreiben an ONLYOFFICE, The Document Foundation und Collabora als Entwurf (nicht gesendet).
+- Getestet mit nachgebildeten Programmen (Windows und Perl/Linux-Modus): Erkennung, Dateiname mit Umlauten, Aufrufparameter, Ablehnung ungültiger Daten und nicht installierter Programme; Browser: Dialog, gemerkte Wahl, axe hell/dunkel 0. Nicht getestet mit echtem ONLYOFFICE, LibreOffice oder Word.
+
 ### Website in 40 Sprachen für Suchmaschinen (app-v170)
 - Befund: Die Webseiten wurden immer deutsch ausgeliefert und erst im Browser übersetzt (auch ?lang=fr), kanonische Adresse immer deutsch, keine hreflang-Angaben, Sitemap nur deutsch – die 39 Übersetzungen waren für Suchmaschinen praktisch unsichtbar.
 - tools/prerender.js übersetzt beim Ausrollen alle 30 Webseiten in 39 Sprachen vorab (headless Chrome, dasselbe Verfahren wie im Browser, andere Seitenskripte gesperrt) → pdfmy.de/<sprache>/<seite>.html mit lang-Attribut, übersetztem Titel und Beschreibung, eigener kanonischer Adresse, hreflang auf alle 40 Fassungen (x-default Deutsch), FAQ-Daten in der Zielsprache; Sitemap mit allen Fassungen; pdfmy.de/<sprache>/ führt zur App in dieser Sprache. Zwischenspeicher: nur geänderte Seiten werden neu übersetzt (erstes Mal ca. 6 Minuten für 1.170 Seiten).

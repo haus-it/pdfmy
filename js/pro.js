@@ -2174,6 +2174,57 @@ $('#btnPrinter').onclick = async () => {
   } catch { status(T('pdfmy Scan antwortet nicht. Bitte prüfen, ob es läuft (Symbol unten rechts), und noch einmal versuchen.')); }
 };
 
+/* ---------- In Office-Programm öffnen: Jeder Nutzer wählt selbst, mit welchem installierten Programm er was macht (ONLYOFFICE,
+   LibreOffice, Collabora Office, Microsoft Word). pdfmy Scan erkennt die Programme, legt die PDF lokal ab und startet das gewählte
+   Programm – die Datei verlässt den Rechner nicht. Die letzte Wahl merkt sich der Browser (je Nutzer). Zurück: Drucker „PDFMy“. */
+const OFFICE_WHAT = {
+  pdf: 'PDF direkt bearbeiten – Text, Seiten, Formulare',
+  text: 'als Textdokument bearbeiten – der Text wird übernommen, das Layout kann sich ändern',
+  draw: 'als Zeichnung bearbeiten – das Layout bleibt weitgehend, Text steht in Blöcken',
+  word: 'als Word-Dokument bearbeiten – Word wandelt die PDF dabei um',
+};
+$('#btnOffice').onclick = async () => {
+  closeMenu();
+  if (!state.pages.length) { status('Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.'); return; }
+  if (IS_MOBILE) { toast('Auf dem Handy: das Dokument speichern und in der Office-App öffnen.', 7000); return; }
+  const dl = f => (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f;
+  const running = await scanHelperRunning(), need = state.scanMac ? '1.4.0' : '1.11.0';
+  if (!running || verLess(state.scanVersion, need)) {
+    const mac = IS_MAC || state.scanMac;
+    if (confirm(mac ? 'Dafür wird „pdfmy Scan“ für Mac bzw. Linux ab Version 1.4.0 benötigt. Es erkennt Ihre Office-Programme und öffnet das Dokument darin – die Datei bleibt auf Ihrem Rechner.\n\nJetzt herunterladen?'
+      : 'Dafür wird das kleine Windows-Programm „pdfmy Scan“ ab Version 1.11.0 benötigt. Es erkennt Ihre Office-Programme und öffnet das Dokument darin – die Datei bleibt auf Ihrem Rechner.\n\nJetzt herunterladen?')) location.href = dl(mac ? SCAN_FILE_UNIX() : SCAN_FILE);
+    return;
+  }
+  const r = await fetch(SCAN_API + '/office', { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' }).then(x => x.json()).catch(() => ({ apps: [] }));
+  const apps = r.apps || [], list = $('#officeList'), last = LS.get('officeChoice', '');
+  list.textContent = '';
+  for (const [i, a] of apps.entries()) {
+    const l = document.createElement('label'); l.className = 'prrow';
+    const inp = document.createElement('input'); inp.type = 'radio'; inp.name = 'officeApp'; inp.value = a.id; inp.checked = a.id === last || (!apps.some(x => x.id === last) && i === 0);
+    const sp = document.createElement('span'), b = document.createElement('b'), sm = document.createElement('small');
+    b.textContent = a.app; b.translate = false; sm.textContent = ' – ' + I18N.t(OFFICE_WHAT[a.what] || '');
+    sp.append(b, sm); l.append(inp, ' ', sp); list.append(l);
+  }
+  $('#officeNone').hidden = apps.length > 0; $('#officeSet').hidden = !apps.length; $('#officeGo').hidden = !apps.length;
+  $('#officeDlg').showModal();
+};
+$('#officeClose').onclick = () => $('#officeDlg').close();
+$('#officeForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const sel = $('#officeDlg').querySelector('[name=officeApp]:checked'); if (!sel) return;
+  const app = sel.closest('label').querySelector('b').textContent;
+  LS.set('officeChoice', sel.value); $('#officeDlg').close();
+  status(`Dokument wird für ${app} vorbereitet …`);
+  try {
+    const bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
+    let s = ''; for (let i = 0; i < bytes.length; i += 32768) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 32768));
+    const res = await fetch(SCAN_API + '/office', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + '.pdf', data: btoa(s) }) }).then(x => x.json());
+    if (!res.ok) { status(res.error || 'Das hat nicht geklappt.'); alert(res.error || 'Das hat nicht geklappt.'); return; }
+    status(`Geöffnet in ${app}. Ergebnis dort mit „Speichern unter“ sichern – zurück zu PDFMy: im Programm drucken und den Drucker „PDFMy“ wählen.`);
+    toast(`Geöffnet in ${app}.`, 6000);
+  } catch { status('pdfmy Scan antwortet nicht. Bitte prüfen, ob es läuft (Symbol unten rechts), und noch einmal versuchen.'); }
+});
+
 $('#btnDefaultPdf').onclick = async () => {
   closeMenu();
   if (IS_MOBILE) { toast('Auf dem Handy: eine PDF in der Dateien-App antippen und „Öffnen mit … PDFMy“ wählen (PDFMy muss als App installiert sein).', 8000); return; }

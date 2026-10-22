@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.10.1";
+        public const string Version = "1.11.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1571,7 +1571,7 @@ namespace PdfmyScan
                     var h = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     foreach (var l in lines.Skip(1)) { int i = l.IndexOf(':'); if (i > 0) h[l.Substring(0, i).Trim()] = l.Substring(i + 1).Trim(); }
                     byte[] body = new byte[0];
-                    if (h.TryGetValue("Content-Length", out var cl) && int.TryParse(cl, out int n) && n > 0 && n < (path.StartsWith("/sign") || path.StartsWith("/maildraft") ? 300_000_000 : 1_000_000))
+                    if (h.TryGetValue("Content-Length", out var cl) && int.TryParse(cl, out int n) && n > 0 && n < (path.StartsWith("/sign") || path.StartsWith("/maildraft") || path.StartsWith("/office") ? 300_000_000 : 1_000_000))
                     { body = new byte[n]; int r = 0; while (r < n) { int k = s.Read(body, r, n - r); if (k <= 0) break; r += k; } }
 
                     h.TryGetValue("Origin", out var origin);
@@ -1678,6 +1678,14 @@ namespace PdfmyScan
                 }
                 catch (Exception e) { var m = (e is AggregateException a ? a.InnerException ?? e : e).Message; Program.Log("Zeitstempel: " + m); SendJson(s, 502, new { error = m }, cors); }
                 return;
+            }
+            if (p == "/office" && method == "GET") { SendJson(s, 200, new { apps = OfficeApps.Detect().Select(c => new { c.id, c.app, c.what }).ToList() }, cors); return; }   // installierte Office-Programme
+            if (p == "/office" && method == "POST")   // PDF mit dem gewählten Office-Programm öffnen (Datei bleibt auf dem Rechner)
+            {
+                var o = json.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(body ?? new byte[0]));
+                byte[] pdf = null; try { pdf = Convert.FromBase64String(Convert.ToString(o["data"])); } catch { }
+                string err = OfficeApps.Open(Convert.ToString(o["id"]), o.ContainsKey("name") ? Convert.ToString(o["name"]) : null, pdf, out string saved);
+                SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, path = saved }, cors); return;
             }
             if (p == "/printer" && method == "POST")   // Drucker „PDFMy“ einrichten (?on=1) oder entfernen (?on=0) – Windows fragt einmal nach Bestätigung
             {

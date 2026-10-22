@@ -173,3 +173,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-10-22 01:47 | pdfmy-202610212346 | 1.10.0 | c17b2bb8fbc5453a… | 192/192 Tests bestanden | 94 | Administrator | d3feaad204744fd4 |
 | 2026-10-22 03:06 | pdfmy-202610220106 | 1.10.1 | 346958a76323d014… | 192/192 Tests bestanden | 111 | Administrator | 8d34f84d5aa667b5 |
 | 2026-10-22 11:41 | pdfmy-202610220939 | 1.10.1 | 47af0bb7206be8e7… | 192/192 Tests bestanden | 1286 | Administrator | 1ee5bed50f8e8519 |
+| 2026-10-22 12:21 | pdfmy-202610221015 | 1.11.0 | fc3ed540a82f7c52… | 192/192 Tests bestanden | 170 | Administrator | bea5180ccd2f8d58 |

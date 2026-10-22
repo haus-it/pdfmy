@@ -1061,6 +1061,7 @@ html.i18n-wait body{visibility:hidden}
         <div class="mgrp" role="group" aria-labelledby="mgApp"><div class="mgh" id="mgApp" translate="no">PDFMy</div>
           <button class="mi" id="btnSetup" title="Name, Ablageordner, Scanner und PDF-Standard einrichten"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einrichtung …</span></button>
           <button class="mi" id="btnPrinter" title="Drucker „PDFMy“: in jedem Programm drucken – das Dokument öffnet sich in PDFMy (über pdfmy Scan, die Datei bleibt auf diesem Rechner)"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg><span>Drucker „PDFMy“ einrichten …</span></button>
+          <button class="mi" id="btnOffice" title="Das Dokument mit einem Office-Programm auf diesem Rechner weiterbearbeiten – ONLYOFFICE, LibreOffice, Word … nach Ihrer Wahl"><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg><span>In Office-Programm öffnen …</span></button>
           <button class="mi" id="btnDefaultPdf" title="PDF-Dateien per Doppelklick (Explorer bzw. Finder) in PDFMy öffnen"><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg><span>Als Standard für PDFs festlegen …</span></button>
           <label class="mi langmi" for="uiLang"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Sprache</span><select id="uiLang" translate="no" aria-label="Sprache der Oberfläche · Language"></select></label>
           <button class="mi" id="btnSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einstellungen</span></button>
@@ -1688,6 +1689,17 @@ html.i18n-wait body{visibility:hidden}
   </div>
   <div id="aiBrowserSet"><p class="hint" id="aiState" role="status" aria-live="polite"></p><button type="button" id="aiSetup" hidden>KI des Browsers einrichten …</button></div>
   <div class="dlgrow"><button type="button" id="aiClose">Abbrechen</button><button type="submit" class="primary" id="aiSave">Speichern</button></div>
+</form></dialog>
+<dialog id="officeDlg" class="sharedlg" aria-labelledby="officeT"><form id="officeForm" method="dialog" novalidate>
+  <h3 class="dlgtitle" id="officeT">In Office-Programm öffnen</h3>
+  <p class="hint" style="margin:-6px 0 12px">Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.</p>
+  <fieldset class="prset" id="officeSet"><legend><b>Programm</b></legend><div id="officeList"></div></fieldset>
+  <div id="officeNone" hidden>
+    <p>Auf diesem Rechner wurde kein passendes Office-Programm gefunden.</p>
+    <p class="hint">Kostenlos und ohne Konto: <a href="https://www.onlyoffice.com/download-desktop.aspx" target="_blank" rel="noopener">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt) oder <a href="https://de.libreoffice.org/download/download/" target="_blank" rel="noopener">LibreOffice</a>. Danach hier noch einmal klicken.</p>
+  </div>
+  <p class="hint">Ergebnis im Programm mit <i>„Speichern unter“</i> an Ihrem gewohnten Ort sichern. Zurück zu PDFMy: im Programm drucken und den Drucker <i>„PDFMy“</i> wählen.</p>
+  <div class="dlgrow"><button type="button" id="officeClose">Abbrechen</button><button type="submit" class="primary" id="officeGo">Öffnen</button></div>
 </form></dialog>
 <dialog id="netDlg" class="sharedlg" aria-labelledby="netT"><form method="dialog">
   <h3 class="dlgtitle" id="netT">Datenschutz selbst prüfen</h3>
