@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Feinschliff (app-v178)
+- Handy-Ansicht der neuen Dialoge geprüft (Scannen, Speichern, Office-Programm, Datenschutz, KI-Assistent, 375 px): „Bildformat“ ragte über den Rand – behoben; axe 0.
+- Vorab-Übersetzung: in den Prüfwert einer Seite fließen nur noch die Wörterbuch-Einträge, die auf ihr vorkommen (Quelltext, aufgelöste Zeichen und reiner Text verglichen; Abgleich mit I18N.collect: 1.740 von 1.740 Einträgen gefunden) – eine geänderte Übersetzung übersetzt nur noch die betroffenen Seiten neu statt aller 1.170.
+- 11 verwaiste Übersetzungseinträge (alte Fassungen) aus allen 39 Sprachen entfernt.
+
 ### Unterschriftsanfrage per Messenger mit Lesebestätigung (app-v177)
 - Absender: „Per Messenger senden …“ neben „Per E-Mail senden …“ – PDF über das Teilen-Menü (WhatsApp, Signal, Teams …), sonst Download + Begleittext in der Zwischenablage; Vermerk „Gesendet“; Anfrage bekommt einen Schlüssel (rt), der in der PDF und im Posteingangsbuch steht.
 - Empfänger: nach dem Durchsehen aller Seiten „Lesebestätigung senden“ – ein Tipp schickt „✓✓ Gelesen“ mit Link pdfmy.de/#gelesen=Kennung/Person/Zeit/Name/Prüfwert (SHA-256 mit dem Schlüssel; der #-Teil geht nie an den Server).

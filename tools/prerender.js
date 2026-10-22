@@ -10,7 +10,7 @@
 const fs = require('fs'), path = require('path'), http = require('http'), crypto = require('crypto'), os = require('os'), { spawn } = require('child_process');
 const ROOT = path.join(__dirname, '..'), site = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'site.json'), 'utf8'));
 const OUT = path.join(ROOT, 'dist', site.domain), CACHE = path.join(ROOT, '.deploy', 'prerender'), BASE = 'https://' + site.domain + '/';
-const REV = '1';   // bei Änderungen an diesem Skript erhöhen → alles neu übersetzen
+const REV = '2';   // bei Änderungen an diesem Skript erhöhen → alles neu übersetzen
 const sha = s => crypto.createHash('sha256').update(s).digest('hex');
 const LANGS = fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f)).map(f => f.slice(0, -5)).filter(c => c !== 'de').sort();
 const PAGES = fs.readdirSync(OUT).filter(f => f.endsWith('.html') && fs.readFileSync(path.join(OUT, f), 'utf8').includes('data-dict="site"')).sort();
@@ -108,11 +108,19 @@ async function render(cr, port, page, code) {
   // deutsches HTML ohne die Ergänzungen eines früheren Laufs (hreflang, Kennung) – sonst wäre der Zwischenspeicher nie gültig
   const clean = h => h.replace(/<link rel="alternate" hreflang="[^"]*" href="[^"]*">/g, '').replace(/\sdata-static-page="[^"]*"/, '');
   const src = Object.fromEntries(PAGES.map(p => [p, clean(fs.readFileSync(path.join(OUT, p), 'utf8'))]));
+  // Nur die Wörterbuch-Einträge zählen, die auf der Seite vorkommen – eine geänderte Übersetzung übersetzt nur die betroffenen Seiten neu
+  const flat = h => h.replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\s+/g, ' ');
+  // drei Fassungen je Seite: Quelltext, mit aufgelösten Zeichen, reiner Text ohne Tags (Browser schreiben innerHTML anders als die Datei)
+  const bare = h => flat(h.replace(/<[^>]+>/g, ' ')).replace(/ +/g, ' ');
+  const text = Object.fromEntries(PAGES.map(p => [p, { raw: src[p].replace(/\s+/g, ' '), flat: flat(src[p]), bare: bare(src[p]) }]));
+  const has = (t, x) => t.raw.includes(x) || t.flat.includes(x) || t.bare.includes(bare(x).trim());
+  const onPage = (t, k) => k.includes('{') ? k.split(/\{\d+\}/).filter(x => x.trim().length > 3).every(x => has(t, x)) : has(t, k);
   const jobs = [];
   for (const code of LANGS) {
-    const dict = fs.readFileSync(path.join(ROOT, 'i18n', 'site', code + '.json'), 'utf8');
+    const dict = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', 'site', code + '.json'), 'utf8')), keys = Object.keys(dict).sort();
     for (const page of PAGES) {
-      const key = code + '/' + page, h = sha(REV + '\0' + src[page] + '\0' + dict + '\0' + i18nJs + '\0' + LANGS.join(','));
+      const used = keys.filter(k => onPage(text[page], k)).map(k => [k, dict[k]]);
+      const key = code + '/' + page, h = sha(REV + '\0' + src[page] + '\0' + JSON.stringify(used) + '\0' + i18nJs + '\0' + LANGS.join(','));
       const cf = path.join(CACHE, code, page);
       if (man[key] === h && fs.existsSync(cf)) { fs.mkdirSync(path.join(OUT, code), { recursive: true }); fs.copyFileSync(cf, path.join(OUT, code, page)); continue; }
       jobs.push({ code, page, key, h, cf });
