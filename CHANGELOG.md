@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Geräteliste: ältere Brother-Geräte (2010–2020)
+- Neue Zeilen in „Welche Scanner funktionieren?“ für die verbreiteten Vorgängergenerationen: Laser s/w DCP/MFC-L2500–L2740 und DCP/MFC-7000/MFC-8000, Farblaser DCP/MFC-9000 (u. a. MFC-9142CDN), MFC-L8600/L9550, DCP/MFC-L3500/L3700 und L8000/L9500, Büro DCP/MFC-L5500–L6900, Tinte MFC-J4000/J400–J800 sowie ab 2017/18 (J572–J895, J5330–J6935), ältere ADS-Netzwerk- und USB-Scanner, PDS-5000/6000.
+- Recherche (Brother-Handbücher, sane-airscan-Testliste): AirPrint-Scan/eSCL erst ab der Generation 2017/18; ältere Netzwerkgeräte scannen über WSD – beides kann pdfmy Scan ohne Treiber. Unbelegte Angaben vorsichtig formuliert („je nach Modell“).
+
 ### In Office-Programm öffnen (app-v171, pdfmy Scan 1.11.0, Mac/Linux 1.4.0)
 - Neuer Menüpunkt „… Mehr → In Office-Programm öffnen …“: Jeder Nutzer wählt selbst, mit welchem installierten Programm er was macht – ONLYOFFICE (PDF direkt bearbeiten), LibreOffice bzw. Collabora Office (Writer: als Textdokument; Draw: als Zeichnung), Microsoft Word (Word wandelt um). Nur Vorhandenes wird angeboten, die letzte Wahl wird je Browser gemerkt; nichts installiert → Hinweis auf kostenlose ONLYOFFICE/LibreOffice.
 - pdfmy Scan: GET/POST /office – Erkennung (Windows: Programmordner, Registry LibreOffice/UNO und App Paths Winword.exe; Mac: Programme-Ordner; Linux: Befehle), Ablage lokal (%LOCALAPPDATA%\PDFMy\Office bzw. Datenordner – bewusst nicht „Dokumente“, der oft in OneDrive liegt), Start mit dokumentierten Parametern (LibreOffice --infilter=writer_pdf_import für Writer).
