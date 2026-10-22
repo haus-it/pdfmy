@@ -2220,7 +2220,8 @@ $('#officeForm').addEventListener('submit', async e => {
     let s = ''; for (let i = 0; i < bytes.length; i += 32768) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 32768));
     const res = await fetch(SCAN_API + '/office', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + '.pdf', data: btoa(s) }) }).then(x => x.json());
     if (!res.ok) { status(res.error || 'Das hat nicht geklappt.'); alert(res.error || 'Das hat nicht geklappt.'); return; }
-    status(`Geöffnet in ${app}. Ergebnis dort mit „Speichern unter“ sichern – zurück zu PDFMy: im Programm drucken und den Drucker „PDFMy“ wählen.`);
+    status(sel.value === 'word' ? `Geöffnet in ${app}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.`
+      : `Geöffnet in ${app}. Ergebnis dort mit „Speichern unter“ sichern – zurück zu PDFMy: im Programm drucken und den Drucker „PDFMy“ wählen.`);
     toast(`Geöffnet in ${app}.`, 6000);
   } catch { status('pdfmy Scan antwortet nicht. Bitte prüfen, ob es läuft (Symbol unten rechts), und noch einmal versuchen.'); }
 });
