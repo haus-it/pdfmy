@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Recunoaștere automată",
  "Farbdokument": "Document color",
  "Graustufen-Dokument": "Document în tonuri de gri",
- "Schwarzweiß-Dokument": "Document alb-negru"
+ "Schwarzweiß-Dokument": "Document alb-negru",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Fotografii scanate: {0} – salvare ca imagine: „Salvare” → format „Imagini” (JPG, PNG, TIFF sau WebP); decupare cu instrumentul „Decupare”.",
+ "Bilder": "Imagini",
+ "Bildformat": "Format imagine",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Fiecare pagină ca imagine – alegeți formatul mai jos: JPG, PNG, TIFF sau WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – mic, pentru fotografii și trimitere",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – fără pierderi, pentru text și grafică",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – fără pierderi, pentru arhivă și tipărire (fișiere mari)",
+ "WebP – besonders klein": "WebP – deosebit de mic"
 }

@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Розпізнавати автоматично",
  "Farbdokument": "Кольоровий документ",
  "Graustufen-Dokument": "Документ у відтінках сірого",
- "Schwarzweiß-Dokument": "Чорно-білий документ"
+ "Schwarzweiß-Dokument": "Чорно-білий документ",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Відскановано фото: {0} – зберегти як зображення: «Зберегти» → формат «Зображення» (JPG, PNG, TIFF або WebP); обрізати інструментом «Обрізати».",
+ "Bilder": "Зображення",
+ "Bildformat": "Формат зображення",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Кожна сторінка як зображення – виберіть формат нижче: JPG, PNG, TIFF або WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – малий, для фото й надсилання",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – без втрат, для тексту та графіки",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – без втрат, для архіву та друку (великі файли)",
+ "WebP – besonders klein": "WebP – особливо малий"
 }

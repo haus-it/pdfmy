@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Detecta automàticament",
  "Farbdokument": "Document en color",
  "Graustufen-Dokument": "Document en escala de grisos",
- "Schwarzweiß-Dokument": "Document en blanc i negre"
+ "Schwarzweiß-Dokument": "Document en blanc i negre",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Fotos escanejades: {0} – per desar com a imatge: «Desa» → format «Imatges» (JPG, PNG, TIFF o WebP); per retallar, l'eina «Retalla».",
+ "Bilder": "Imatges",
+ "Bildformat": "Format d'imatge",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Cada pàgina com a imatge – trieu el format a sota: JPG, PNG, TIFF o WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – petit, per a fotos i per enviar",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – sense pèrdua, per a text i gràfics",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – sense pèrdua, per a arxiu i impressió (fitxers grans)",
+ "WebP – besonders klein": "WebP – especialment petit"
 }

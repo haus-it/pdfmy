@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Känn igen automatiskt",
  "Farbdokument": "Färgdokument",
  "Graustufen-Dokument": "Gråskaledokument",
- "Schwarzweiß-Dokument": "Svartvitt dokument"
+ "Schwarzweiß-Dokument": "Svartvitt dokument",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Skannade foton: {0} – spara som bild: ”Spara” → format ”Bilder” (JPG, PNG, TIFF eller WebP); beskär med verktyget ”Beskär”.",
+ "Bilder": "Bilder",
+ "Bildformat": "Bildformat",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Varje sida som bild – välj format nedan: JPG, PNG, TIFF eller WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – liten, för foton och för att skicka",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – förlustfri, för text och grafik",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – förlustfri, för arkiv och tryck (stora filer)",
+ "WebP – besonders klein": "WebP – särskilt liten"
 }

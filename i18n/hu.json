@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Automatikus felismerés",
  "Farbdokument": "Színes dokumentum",
  "Graustufen-Dokument": "Szürkeárnyalatos dokumentum",
- "Schwarzweiß-Dokument": "Fekete-fehér dokumentum"
+ "Schwarzweiß-Dokument": "Fekete-fehér dokumentum",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Beolvasott fényképek: {0} – mentés képként: „Mentés” → „Képek” (JPG, PNG, TIFF vagy WebP) formátum; körbevágás a „Körbevágás” eszközzel.",
+ "Bilder": "Képek",
+ "Bildformat": "Képformátum",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Minden oldal képként – a formátumot alább válassza: JPG, PNG, TIFF vagy WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – kicsi, fényképekhez és küldéshez",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – veszteségmentes, szöveghez és grafikához",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – veszteségmentes, archiváláshoz és nyomtatáshoz (nagy fájlok)",
+ "WebP – besonders klein": "WebP – különösen kicsi"
 }

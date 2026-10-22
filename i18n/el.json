@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Αυτόματη αναγνώριση",
  "Farbdokument": "Έγχρωμο έγγραφο",
  "Graustufen-Dokument": "Έγγραφο σε αποχρώσεις του γκρι",
- "Schwarzweiß-Dokument": "Ασπρόμαυρο έγγραφο"
+ "Schwarzweiß-Dokument": "Ασπρόμαυρο έγγραφο",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Σαρώθηκαν φωτογραφίες: {0} – αποθήκευση ως εικόνα: «Αποθήκευση» → μορφή «Εικόνες» (JPG, PNG, TIFF ή WebP)· περικοπή με το εργαλείο «Περικοπή».",
+ "Bilder": "Εικόνες",
+ "Bildformat": "Μορφή εικόνας",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Κάθε σελίδα ως εικόνα – επιλέξτε τη μορφή παρακάτω: JPG, PNG, TIFF ή WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – μικρό, για φωτογραφίες και αποστολή",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – χωρίς απώλειες, για κείμενο και γραφικά",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – χωρίς απώλειες, για αρχειοθέτηση και εκτύπωση (μεγάλα αρχεία)",
+ "WebP – besonders klein": "WebP – ιδιαίτερα μικρό"
 }

@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Riconosci automaticamente",
  "Farbdokument": "Documento a colori",
  "Graustufen-Dokument": "Documento in scala di grigi",
- "Schwarzweiß-Dokument": "Documento in bianco e nero"
+ "Schwarzweiß-Dokument": "Documento in bianco e nero",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Foto scansionate: {0} – per salvare come immagine: «Salva» → formato «Immagini» (JPG, PNG, TIFF o WebP); ritagliare con lo strumento «Ritaglia».",
+ "Bilder": "Immagini",
+ "Bildformat": "Formato immagine",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Ogni pagina come immagine – scegliere il formato qui sotto: JPG, PNG, TIFF o WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – leggero, per foto e invio",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – senza perdita, per testo e grafica",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – senza perdita, per archivio e stampa (file grandi)",
+ "WebP – besonders klein": "WebP – particolarmente leggero"
 }

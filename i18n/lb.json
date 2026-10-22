@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Automatesch erkennen",
  "Farbdokument": "Faarfdokument",
  "Graustufen-Dokument": "Grostufen-Dokument",
- "Schwarzweiß-Dokument": "Schwaarz-wäiss-Dokument"
+ "Schwarzweiß-Dokument": "Schwaarz-wäiss-Dokument",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Gescannte Fotoen: {0} – als Bild späicheren: „Späicheren“ → Format „Biller“ (JPG, PNG, TIFF oder WebP); Zouschneide mam Werkzeug „Zouschneiden“.",
+ "Bilder": "Biller",
+ "Bildformat": "Bildformat",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "All Säit als Bild – Format drënner wielen: JPG, PNG, TIFF oder WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – kleng, fir Fotoen an zum Verschécken",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – ouni Verloscht, fir Text a Grafiken",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – ouni Verloscht, fir Archiv an Drock (grouss Fichieren)",
+ "WebP – besonders klein": "WebP – besonnesch kleng"
 }

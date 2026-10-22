@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Rozpoznat automaticky",
  "Farbdokument": "Barevný dokument",
  "Graustufen-Dokument": "Dokument v odstínech šedi",
- "Schwarzweiß-Dokument": "Černobílý dokument"
+ "Schwarzweiß-Dokument": "Černobílý dokument",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Naskenované fotografie: {0} – uložit jako obrázek: „Uložit“ → formát „Obrázky“ (JPG, PNG, TIFF nebo WebP); oříznutí nástrojem „Oříznout“.",
+ "Bilder": "Obrázky",
+ "Bildformat": "Formát obrázku",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Každá stránka jako obrázek – formát zvolte níže: JPG, PNG, TIFF nebo WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – malý, pro fotografie a odesílání",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – bezztrátový, pro text a grafiku",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – bezztrátový, pro archiv a tisk (velké soubory)",
+ "WebP – besonders klein": "WebP – obzvlášť malý"
 }

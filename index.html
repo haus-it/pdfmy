@@ -1483,7 +1483,7 @@ html.i18n-wait body{visibility:hidden}
     <div class="xrow"><span class="xl" aria-hidden="true">Format</span><div class="chips" role="group" aria-label="Format">
       <label><input type="radio" name="x-format" value="pdf"><span>PDF</span></label>
       <label title="Langzeitarchiv nach ISO 19005-2 (PDF/A-2b), zugleich barrierefrei nach ISO 14289-1 (PDF/UA-1)"><input type="radio" name="x-format" value="pdfa"><span>PDF/A</span></label>
-      <label><input type="radio" name="x-format" value="img"><span>Bilder (JPG)</span></label>
+      <label title="Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP"><input type="radio" name="x-format" value="img"><span>Bilder</span></label>
       <label title="Bearbeitbarer Text für Microsoft Word (aus der Texterkennung)"><input type="radio" name="x-format" value="docx"><span>Word</span></label>
       <label title="Präsentation für PowerPoint, Keynote oder Impress – je Seite eine Folie, Text durchsuchbar"><input type="radio" name="x-format" value="pptx"><span>PowerPoint</span></label>
       <label title="Tabellen (z. B. Rechnungspositionen, Kontoauszüge) als Excel-Datei – je Seite ein Blatt, Beträge als Zahlen"><input type="radio" name="x-format" value="xlsx"><span>Excel</span></label>
@@ -1497,6 +1497,7 @@ html.i18n-wait body{visibility:hidden}
       <label><input type="radio" name="x-pages" value="range"><span>Bereich</span></label>
       <input id="x-range" placeholder="z. B. 1-3, 5" size="10">
     </div></div>
+    <div class="xrow" id="x-imgfmt-row" hidden><label class="xl" for="x-imgfmt">Bildformat</label><select id="x-imgfmt"><option value="jpg">JPG – klein, für Fotos und zum Versenden</option><option value="png">PNG – verlustfrei, für Text und Grafiken</option><option value="tiff">TIFF – verlustfrei, für Archiv und Druck (große Dateien)</option><option value="webp">WebP – besonders klein</option></select></div>
     <div class="xrow" id="x-size-row"><span class="xl" aria-hidden="true">Größe</span><div class="chips" role="group" aria-label="Größe">
       <label title="Höchste Qualität"><input type="radio" name="x-size" value="original"><span>Hohe Qualität</span></label>
       <label><input type="radio" name="x-size" value="balanced"><span>Ausgewogen</span></label>

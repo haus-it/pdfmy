@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Automatisch herkennen",
  "Farbdokument": "Kleurendocument",
  "Graustufen-Dokument": "Grijstintendocument",
- "Schwarzweiß-Dokument": "Zwart-witdocument"
+ "Schwarzweiß-Dokument": "Zwart-witdocument",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Foto's gescand: {0} – opslaan als afbeelding: „Opslaan” → formaat „Afbeeldingen” (JPG, PNG, TIFF of WebP); bijsnijden met het hulpmiddel „Bijsnijden”.",
+ "Bilder": "Afbeeldingen",
+ "Bildformat": "Afbeeldingsformaat",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Elke pagina als afbeelding – kies het formaat hieronder: JPG, PNG, TIFF of WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – klein, voor foto's en verzenden",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – verliesvrij, voor tekst en afbeeldingen",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – verliesvrij, voor archief en druk (grote bestanden)",
+ "WebP – besonders klein": "WebP – bijzonder klein"
 }

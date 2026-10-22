@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Detectar automaticamente",
  "Farbdokument": "Documento en cor",
  "Graustufen-Dokument": "Documento en escala de grises",
- "Schwarzweiß-Dokument": "Documento en branco e negro"
+ "Schwarzweiß-Dokument": "Documento en branco e negro",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Fotos dixitalizadas: {0} – para gardar como imaxe: «Gardar» → formato «Imaxes» (JPG, PNG, TIFF ou WebP); recortar coa ferramenta «Recortar».",
+ "Bilder": "Imaxes",
+ "Bildformat": "Formato de imaxe",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Cada páxina como imaxe – escolla o formato abaixo: JPG, PNG, TIFF ou WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – pequeno, para fotos e para enviar",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – sen perda, para texto e gráficos",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – sen perda, para arquivo e impresión (ficheiros grandes)",
+ "WebP – besonders klein": "WebP – especialmente pequeno"
 }

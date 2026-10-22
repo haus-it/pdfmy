@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Antzeman automatikoki",
  "Farbdokument": "Koloretako dokumentua",
  "Graustufen-Dokument": "Gris-eskalako dokumentua",
- "Schwarzweiß-Dokument": "Zuri-beltzeko dokumentua"
+ "Schwarzweiß-Dokument": "Zuri-beltzeko dokumentua",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Eskaneatutako argazkiak: {0} – irudi gisa gordetzeko: «Gorde» → «Irudiak» (JPG, PNG, TIFF edo WebP) formatua; mozteko, «Moztu» tresna.",
+ "Bilder": "Irudiak",
+ "Bildformat": "Irudi-formatua",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Orri bakoitza irudi gisa – aukeratu formatua behean: JPG, PNG, TIFF edo WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – txikia, argazkietarako eta bidaltzeko",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – galerarik gabea, testurako eta grafikoetarako",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – galerarik gabea, artxiborako eta inprimatzeko (fitxategi handiak)",
+ "WebP – besonders klein": "WebP – bereziki txikia"
 }

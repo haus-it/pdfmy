@@ -2083,6 +2083,22 @@ function renderResults() {
 }
 
 /* ---------- PDF erzeugen ---------- */
+// Bild speichern als JPG, PNG, WebP (Browser) oder TIFF (UTIF.js, verlustfrei) – alles lokal
+const canvasBlob = (c, type, q) => new Promise(res => c.toBlob(b => b.arrayBuffer().then(a => res(new Uint8Array(a))), type, q));
+async function encodeImage(c, fmt, q) {
+  if (fmt === 'png') return { data: await canvasBlob(c, 'image/png'), ext: 'png', mime: 'image/png' };
+  if (fmt === 'webp' && WEBP_OK) return { data: await canvasBlob(c, 'image/webp', Math.max(q, 0.8)), ext: 'webp', mime: 'image/webp' };
+  if (fmt === 'tiff') {
+    const U = await loadTiff(), px = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+    return { data: new Uint8Array(U.encodeImage(px.buffer, c.width, c.height)), ext: 'tif', mime: 'image/tiff' };
+  }
+  return { data: await canvasBlob(c, 'image/jpeg', q), ext: 'jpg', mime: 'image/jpeg' };
+}
+// WebP erzeugen kann nicht jeder Browser (ältere Safari liefern stattdessen PNG) – dann wird WebP nicht angeboten
+const WEBP_OK = (() => { try { const c = document.createElement('canvas'); c.width = c.height = 2; return c.toDataURL('image/webp').startsWith('data:image/webp'); } catch { return false; } })();
+if (!WEBP_OK) $('#x-imgfmt').querySelector('[value=webp]')?.remove();
+$('#x-imgfmt').value = LS.get('imgFmt', 'jpg'); if (!$('#x-imgfmt').value) $('#x-imgfmt').value = 'jpg';
+$('#x-imgfmt').addEventListener('change', () => { LS.set('imgFmt', $('#x-imgfmt').value); updateExportUi(); });
 const canvasToJpeg = (c, q) => new Promise(res => c.toBlob(b => b.arrayBuffer().then(a => res(new Uint8Array(a))), 'image/jpeg', q));
 // Bild ins PDF: JPEG, wenn der Browser es erzeugen kann – sonst (manche WebKit-Varianten) verlustfrei als PNG
 const isJpeg = b => b && b[0] === 0xFF && b[1] === 0xD8;
@@ -3461,14 +3477,16 @@ async function doExport(o) {
     const preset = SIZES[o.size] || SIZES.balanced, files = [];
     for (const [i, p] of pages.entries()) {
       status(`Erzeuge Bild ${i + 1} von ${pages.length} …`, i / pages.length);
-      const src = p.kind === 'image' ? scaleToDpi(p.processed, preset.dpi) : await renderPdf(p, preset.dpi);
+      // Fotos und „Hohe Qualität“: volle Scan-Auflösung (sonst würde ein 600-dpi-Foto verkleinert)
+      const src = p.kind === 'image' ? (p.photo || o.size === 'original' ? p.processed : scaleToDpi(p.processed, preset.dpi)) : await renderPdf(p, preset.dpi);
       const k = Imaging.canvas(src.width, src.height), x = k.getContext('2d');
       x.drawImage(src, 0, 0);
       await drawAnnotsCanvas(x, p, k.width, k.height);
       stampCanvas(x, k.width, k.height, i, pages.length, st, p.kind === 'image' ? k.width / 595.28 : preset.dpi / 72);
-      files.push({ name: `${base}_Seite_${String(i + 1).padStart(3, '0')}.jpg`, data: await canvasToJpeg(k, preset.q) });
+      const img = await encodeImage(k, o.imgFmt, preset.q);
+      files.push({ name: `${base}_Seite_${String(i + 1).padStart(3, '0')}.${img.ext}`, data: img.data, mime: img.mime });
     }
-    if (files.length === 1) { data = files[0].data; name = files[0].name; mime = 'image/jpeg'; }
+    if (files.length === 1) { data = files[0].data; name = files[0].name; mime = files[0].mime; }
     else { data = Tools.zip(files); name = base + '_Bilder.zip'; mime = 'application/zip'; }
   } else {
     if (o.format === 'pdfa' && pages.some(p => p.kind === 'pdf' && !p.native)) await waitForOcr(pages);
@@ -3537,7 +3555,7 @@ function exportPages() {
 }
 function readExport() {
   return {
-    format: xv('x-format'), size: xv('x-size'), pages: exportPages(), name: $('#x-name').value.trim(),
+    format: xv('x-format'), size: xv('x-size'), imgFmt: $('#x-imgfmt').value || 'jpg', pages: exportPages(), name: $('#x-name').value.trim(),
     pageNumbers: $('#x-pnum').value, watermark: $('#x-wm').value.trim(), dropBlank: $('#x-blank').checked,
     header: $('#x-head').value.trim(), footer: $('#x-foot').value.trim(), batesOn: $('#x-bates').checked,
     batesPrefix: $('#x-bpre').value.trim(), batesStart: Math.max(1, parseInt($('#x-bstart').value, 10) || 1),
@@ -3618,6 +3636,7 @@ let estTimer = null, estSeq = 0;
 function updateExportUi() {
   const o = readExport(), isPdf = o.format === 'pdf' || o.format === 'pdfa', textOnly = ['txt', 'docx', 'xlsx', 'md', 'html'].includes(o.format);
   $('#x-size-row').hidden = textOnly;
+  $('#x-imgfmt-row').hidden = o.format !== 'img';
   $('#x-sec-pdf').hidden = !isPdf;
   $('#x-lh-row').hidden = o.format !== 'pdf';
   $('#x-sheet-wrap').hidden = o.format !== 'pdf';   // Bögen (2/4 pro Blatt, Broschüre) nur für normale PDF – zum Drucken gedacht   // Briefbogen nur für normale PDF (bei PDF/A wird die Seite als Bild neu aufgebaut)
@@ -3633,7 +3652,7 @@ function updateExportUi() {
   else if (o.sign && o.password) err = 'Signieren und Passwortschutz gleichzeitig geht nicht – bitte eines von beiden wählen.';
   else if (o.sign && !window.signCertName?.()) err = 'Zum Signieren zuerst „Zertifikat wählen …“ (.p12/.pfx).';
   $('#x-err').textContent = err; $('#x-go').disabled = $('#x-saveas').disabled = !!err;
-  $('#x-ext').textContent = { pdf: '.pdf', pdfa: '.pdf', img: o.pages?.length > 1 ? '_Bilder.zip' : '.jpg', txt: '.txt', docx: '.docx', xlsx: '.xlsx', md: '.md', html: '.html', pptx: '.pptx' }[o.format];
+  $('#x-ext').textContent = { pdf: '.pdf', pdfa: '.pdf', img: o.pages?.length > 1 ? '_Bilder.zip' : '.' + (o.imgFmt === 'tiff' ? 'tif' : o.imgFmt), txt: '.txt', docx: '.docx', xlsx: '.xlsx', md: '.md', html: '.html', pptx: '.pptx' }[o.format];
   clearTimeout(estTimer); $('#x-est').textContent = '';
   if (err || !isPdf || o.pages.length > 40) return;
   const seq = ++estSeq;
@@ -4054,7 +4073,7 @@ async function scanRun(req, word) {
     }
     state.scanDone = true; window.renderTodo?.();
     if (st.state === 'error') { const err = new Error(st.error); err.detail = st.detail; throw err; }
-    status(got ? (req.photo ? `${got} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.` : `${got} Seite(n) gescannt.`) + (st.note ? ' ' + st.note : '') : (req.photo ? 'Kein Foto gescannt – liegt das Foto auf dem Glas?' : 'Keine Seiten gescannt – liegt Papier im Einzug?'));
+    status(got ? (req.photo ? `${got} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.` : `${got} Seite(n) gescannt.`) + (st.note ? ' ' + st.note : '') : (req.photo ? 'Kein Foto gescannt – liegt das Foto auf dem Glas?' : 'Keine Seiten gescannt – liegt Papier im Einzug?'));
     if (st.note) toast(st.note, 9000);
     else if (req.duplex && got % 2 === 1) toast(`Beidseitig angefordert, aber ${got} Seite(n) erhalten. Falls Rückseiten fehlen: im Scan-Fenster auf „Protokoll“ klicken und es uns schicken.`, 12000);
   }

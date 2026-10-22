@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Agħraf awtomatikament",
  "Farbdokument": "Dokument bil-kulur",
  "Graustufen-Dokument": "Dokument bl-iskala tal-griż",
- "Schwarzweiß-Dokument": "Dokument iswed u abjad"
+ "Schwarzweiß-Dokument": "Dokument iswed u abjad",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Ritratti skennjati: {0} – biex tissejvja bħala stampa: “Issejvja” → format “Stampi” (JPG, PNG, TIFF jew WebP); biex taqta’, l-għodda “Aqta’”.",
+ "Bilder": "Stampi",
+ "Bildformat": "Format tal-istampa",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Kull paġna bħala stampa – agħżel il-format hawn taħt: JPG, PNG, TIFF jew WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – żgħir, għal ritratti u biex tibgħat",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – mingħajr telf, għal test u grafika",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – mingħajr telf, għall-arkivju u l-istampar (fajls kbar)",
+ "WebP – besonders klein": "WebP – partikolarment żgħir"
 }

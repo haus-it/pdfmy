@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Njih automatikisht",
  "Farbdokument": "Dokument me ngjyra",
  "Graustufen-Dokument": "Dokument në shkallë gri",
- "Schwarzweiß-Dokument": "Dokument bardhë e zi"
+ "Schwarzweiß-Dokument": "Dokument bardhë e zi",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Fotografi të skanuara: {0} – ruajtja si imazh: „Ruaj“ → formati „Imazhe“ (JPG, PNG, TIFF ose WebP); prerja me mjetin „Prit“.",
+ "Bilder": "Imazhe",
+ "Bildformat": "Formati i imazhit",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Çdo faqe si imazh – zgjidhni formatin më poshtë: JPG, PNG, TIFF ose WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – i vogël, për fotografi dhe dërgim",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – pa humbje, për tekst dhe grafika",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – pa humbje, për arkiv dhe printim (skedarë të mëdhenj)",
+ "WebP – besonders klein": "WebP – veçanërisht i vogël"
 }

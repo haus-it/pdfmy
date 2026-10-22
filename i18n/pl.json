@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Rozpoznaj automatycznie",
  "Farbdokument": "Dokument kolorowy",
  "Graustufen-Dokument": "Dokument w skali szarości",
- "Schwarzweiß-Dokument": "Dokument czarno-biały"
+ "Schwarzweiß-Dokument": "Dokument czarno-biały",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Zeskanowane zdjęcia: {0} – zapis jako obraz: „Zapisz” → format „Obrazy” (JPG, PNG, TIFF lub WebP); przycinanie narzędziem „Przytnij”.",
+ "Bilder": "Obrazy",
+ "Bildformat": "Format obrazu",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Każda strona jako obraz – format wybierz poniżej: JPG, PNG, TIFF lub WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – mały, do zdjęć i wysyłania",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – bezstratny, do tekstu i grafiki",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – bezstratny, do archiwum i druku (duże pliki)",
+ "WebP – besonders klein": "WebP – szczególnie mały"
 }

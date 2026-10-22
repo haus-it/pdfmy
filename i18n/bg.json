@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Автоматично разпознаване",
  "Farbdokument": "Цветен документ",
  "Graustufen-Dokument": "Документ в нюанси на сивото",
- "Schwarzweiß-Dokument": "Черно-бял документ"
+ "Schwarzweiß-Dokument": "Черно-бял документ",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Сканирани снимки: {0} – запазване като изображение: „Запиши“ → формат „Изображения“ (JPG, PNG, TIFF или WebP); изрязване с инструмента „Изрязване“.",
+ "Bilder": "Изображения",
+ "Bildformat": "Формат на изображението",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Всяка страница като изображение – изберете формата по-долу: JPG, PNG, TIFF или WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – малък, за снимки и изпращане",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – без загуби, за текст и графики",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – без загуби, за архив и печат (големи файлове)",
+ "WebP – besonders klein": "WebP – особено малък"
 }

@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Braith go huathoibríoch",
  "Farbdokument": "Doiciméad daite",
  "Graustufen-Dokument": "Doiciméad liathscála",
- "Schwarzweiß-Dokument": "Doiciméad dubh agus bán"
+ "Schwarzweiß-Dokument": "Doiciméad dubh agus bán",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Grianghraif scanta: {0} – le sábháil mar íomhá: “Sábháil” → formáid “Íomhánna” (JPG, PNG, TIFF nó WebP); bearr leis an uirlis “Bearr”.",
+ "Bilder": "Íomhánna",
+ "Bildformat": "Formáid íomhá",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Gach leathanach mar íomhá – roghnaigh an fhormáid thíos: JPG, PNG, TIFF nó WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – beag, do ghrianghraif agus le seoladh",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – gan chailliúint, do théacs agus grafaicí",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – gan chailliúint, don chartlann agus don phriontáil (comhaid mhóra)",
+ "WebP – besonders klein": "WebP – an-bheag"
 }

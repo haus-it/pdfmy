@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Atpazīt automātiski",
  "Farbdokument": "Krāsains dokuments",
  "Graustufen-Dokument": "Pelēktoņu dokuments",
- "Schwarzweiß-Dokument": "Melnbalts dokuments"
+ "Schwarzweiß-Dokument": "Melnbalts dokuments",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Ieskenētas fotogrāfijas: {0} – saglabāt kā attēlu: „Saglabāt” → formāts „Attēli” (JPG, PNG, TIFF vai WebP); apgriešana ar rīku „Apgriezt”.",
+ "Bilder": "Attēli",
+ "Bildformat": "Attēla formāts",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Katra lapa kā attēls – formātu izvēlieties zemāk: JPG, PNG, TIFF vai WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – mazs, fotogrāfijām un nosūtīšanai",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – bez zudumiem, tekstam un grafikai",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – bez zudumiem, arhīvam un drukai (lieli faili)",
+ "WebP – besonders klein": "WebP – īpaši mazs"
 }

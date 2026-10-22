@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Adnabod yn awtomatig",
  "Farbdokument": "Dogfen liw",
  "Graustufen-Dokument": "Dogfen raddlwyd",
- "Schwarzweiß-Dokument": "Dogfen ddu a gwyn"
+ "Schwarzweiß-Dokument": "Dogfen ddu a gwyn",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Lluniau wedi’u sganio: {0} – i gadw fel delwedd: ‘Cadw’ → fformat ‘Delweddau’ (JPG, PNG, TIFF neu WebP); tocio gyda’r offeryn ‘Tocio’.",
+ "Bilder": "Delweddau",
+ "Bildformat": "Fformat delwedd",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Pob tudalen fel delwedd – dewiswch y fformat isod: JPG, PNG, TIFF neu WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – bach, ar gyfer lluniau ac anfon",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – di-golled, ar gyfer testun a graffeg",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – di-golled, ar gyfer archif ac argraffu (ffeiliau mawr)",
+ "WebP – besonders klein": "WebP – arbennig o fach"
 }

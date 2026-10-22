@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Bilder in verschiedenen Formaten speichern (app-v176)
+- Speichern → Format „Bilder“ mit Auswahl „Bildformat“: JPG, PNG (verlustfrei), TIFF (verlustfrei, UTIF.js), WebP (nur wo der Browser es erzeugen kann). Wahl wird gemerkt.
+- Fotos und „Hohe Qualität“ in voller Scan-Auflösung (vorher auf 200 dpi verkleinert).
+- Getestet: alle vier Formate mit gültiger Dateikennung, Endung, MIME-Typ und voller Auflösung (2400 × 1600), axe 0.
+
 ### Scan „Automatisch“: Schwarzweiß-, Graustufen-, Farbdokument oder Foto (app-v175)
 - Art und Farbe „Automatisch“ (Voreinstellung): Scan in Farbe, je Blatt erkannt – Schwarzweiß-Dokument (Imaging.isBilevel: deutlich weniger Grautöne als Schwarz, keine hellgrauen Flächen), Graustufen-Dokument, Farbdokument (isColorful), Foto (findPhoto, jetzt nur wenn außerhalb des Fotos keine Schrift steht – Dokument mit Bild bleibt Dokument). Erkannte Art in der Seitenbeschriftung.
 - Tests: Browser mit fünf nachgebildeten Scans (reiner Text, graue Schattierung, Schwarzweiß-Bild, rotes Logo, Farbfoto) alle richtig; Unit-Test „Dokument mit Bild ist kein Foto“. Nicht mit echtem Scanner getestet.

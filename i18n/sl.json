@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Samodejno prepoznaj",
  "Farbdokument": "Barvni dokument",
  "Graustufen-Dokument": "Dokument v sivinah",
- "Schwarzweiß-Dokument": "Črno-beli dokument"
+ "Schwarzweiß-Dokument": "Črno-beli dokument",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Skenirane fotografije: {0} – shranjevanje kot slika: „Shrani“ → oblika „Slike“ (JPG, PNG, TIFF ali WebP); obrezovanje z orodjem „Obreži“.",
+ "Bilder": "Slike",
+ "Bildformat": "Oblika slike",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Vsaka stran kot slika – obliko izberite spodaj: JPG, PNG, TIFF ali WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – majhna, za fotografije in pošiljanje",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – brez izgub, za besedilo in grafiko",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – brez izgub, za arhiv in tisk (velike datoteke)",
+ "WebP – besonders klein": "WebP – posebno majhna"
 }

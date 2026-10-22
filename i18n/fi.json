@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Tunnista automaattisesti",
  "Farbdokument": "Värillinen asiakirja",
  "Graustufen-Dokument": "Harmaasävyasiakirja",
- "Schwarzweiß-Dokument": "Mustavalkoinen asiakirja"
+ "Schwarzweiß-Dokument": "Mustavalkoinen asiakirja",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Skannattuja valokuvia: {0} – tallennus kuvana: ”Tallenna” → muoto ”Kuvat” (JPG, PNG, TIFF tai WebP); rajaus työkalulla ”Rajaa”.",
+ "Bilder": "Kuvat",
+ "Bildformat": "Kuvamuoto",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Jokainen sivu kuvana – valitse muoto alta: JPG, PNG, TIFF tai WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – pieni, valokuville ja lähettämiseen",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – häviötön, tekstille ja grafiikalle",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – häviötön, arkistointiin ja tulostukseen (suuret tiedostot)",
+ "WebP – besonders klein": "WebP – erityisen pieni"
 }

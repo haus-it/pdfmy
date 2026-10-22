@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Tuvasta automaatselt",
  "Farbdokument": "Värviline dokument",
  "Graustufen-Dokument": "Halltoonides dokument",
- "Schwarzweiß-Dokument": "Mustvalge dokument"
+ "Schwarzweiß-Dokument": "Mustvalge dokument",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Skannitud fotosid: {0} – pildina salvestamiseks: „Salvesta“ → vorming „Pildid“ (JPG, PNG, TIFF või WebP); kärpimine tööriistaga „Kärbi“.",
+ "Bilder": "Pildid",
+ "Bildformat": "Pildivorming",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Iga leht pildina – valige vorming allpool: JPG, PNG, TIFF või WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – väike, fotode ja saatmise jaoks",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – kadudeta, teksti ja graafika jaoks",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – kadudeta, arhiivi ja printimise jaoks (suured failid)",
+ "WebP – besonders klein": "WebP – eriti väike"
 }

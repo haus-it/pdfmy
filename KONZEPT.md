@@ -114,6 +114,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Vorschlag in Prüfung (22.10.2026): Lesebestätigung für Unterschriftsanfragen per WhatsApp, Signal, Teams
+**Wunsch:** Der Absender soll sehen, ob der Empfänger eine per Messenger verschickte Anfrage gelesen hat.
+**Grenze:** Die Lesehaken von WhatsApp, Signal und Teams sind nur in deren App sichtbar; eine Abfrage durch PDFMy ginge nur mit Firmenkonto und Server (Business-API, Graph) – verletzt Punkt 1–3. Außerdem zeigen die Haken nur, dass die Nachricht angezeigt wurde, nicht, dass das Dokument gelesen ist.
+**Vorschlag ohne Server:** (1) „Per Messenger senden“ in der Unterschriftsanfrage: PDF über das Teilen-Menü des Systems an WhatsApp/Signal/Teams, Vermerk „Gesendet“. (2) Hat der Empfänger alle Seiten in PDFMy durchgesehen, bietet PDFMy ihm an: „Dem Absender bestätigen, dass Sie es gelesen haben“ – ein Tipp öffnet seinen Messenger mit einer fertigen Nachricht samt Link pdfmy.de/#gelesen=… (Kennung der Anfrage, Zeit, Prüfwert; nichts vom Dokument). (3) Der Absender tippt in seinem Messenger auf den Link: PDFMy öffnet sich und setzt im Posteingangsbuch „Gelesen“ mit Uhrzeit. Der #-Teil eines Links wird nie an pdfmy.de übertragen.
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: nur auf Wunsch des Empfängers, kein Dokumentinhalt im Link |
+| 2 Kein Server | passt: Link mit #-Teil, Auswertung lokal |
+| 3 Kostenlos, ohne Konto | passt |
+| 4 Einfach | passt mit Auflage: je ein Tipp beim Empfänger und beim Absender; kein Zwang |
+**Ehrlich zu sagen:** Ohne Mitwirkung des Empfängers ist eine Lesebestätigung über Messenger nicht möglich – sonst bräuchte es einen Server, der heimlich mitzählt (das wäre ein Tracking-Pixel, das wir bewusst nicht bauen).
+
 ### Umgesetzt (22.10.2026): Fotos scannen und zuschneiden
 Wunsch: Fotos scannen (Farbe/Schwarzweiß), Scan zuschneiden, automatisch erkennen. **Passt:** alles lokal im Browser bzw. über pdfmy Scan, kein Upload (Punkt 1, 2); eine Auswahl „Art“ mit „Automatisch“ als Voreinstellung – der Nutzer muss nichts tun (Punkt 4); Fotos bleiben unverändert (keine Dokument-Aufbereitung).
 

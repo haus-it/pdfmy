@@ -2859,5 +2859,13 @@
  "Automatisch erkennen": "Detect automatically",
  "Farbdokument": "Colour document",
  "Graustufen-Dokument": "Greyscale document",
- "Schwarzweiß-Dokument": "Black-and-white document"
+ "Schwarzweiß-Dokument": "Black-and-white document",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Photos scanned: {0} – to save as an image: ‘Save’ → format ‘Images’ (JPG, PNG, TIFF or WebP); crop with the ‘Crop’ tool.",
+ "Bilder": "Images",
+ "Bildformat": "Image format",
+ "Jede Seite als Bild – Format darunter wählen: JPG, PNG, TIFF oder WebP": "Each page as an image – choose the format below: JPG, PNG, TIFF or WebP",
+ "JPG – klein, für Fotos und zum Versenden": "JPG – small, for photos and sending",
+ "PNG – verlustfrei, für Text und Grafiken": "PNG – lossless, for text and graphics",
+ "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – lossless, for archiving and printing (large files)",
+ "WebP – besonders klein": "WebP – especially small"
 }
