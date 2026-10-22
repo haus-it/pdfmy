@@ -254,6 +254,27 @@
     }
     return { list, bad };
   }
-  const api = { advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
+  /* Lesebestätigung ohne Server (Versand per Messenger): Der Empfänger schickt dem Absender einen Link
+     pdfmy.de/#gelesen=<Kennung>/<Person>/<Zeit>/<Name>/<Prüfwert>. Der #-Teil geht nie an den Server. Prüfwert = SHA-256 aus dem
+     Schlüssel der Anfrage (rt, steht in der PDF und im Posteingangsbuch des Absenders) und den Angaben – Fremde können keinen fälschen. */
+  const hexOf = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+  function newToken() { const a = new Uint8Array(12); crypto.getRandomValues(a); return hexOf(a); }
+  async function readMac(rt, id, i, t, name) {
+    return hexOf(await crypto.subtle.digest('SHA-256', new TextEncoder().encode([rt, id, i, t, name].join('|')))).slice(0, 16);
+  }
+  async function readLink(r, i, at = now(), base = 'https://pdfmy.de/') {
+    const name = r.signers[i]?.name || '', t = Date.parse(at).toString(36);
+    return base + '#gelesen=' + [r.id, i, t, encodeURIComponent(name), await readMac(r.rt || '', r.id, i, t, name)].join('/');
+  }
+  function parseRead(hash) {
+    const m = /#gelesen=([^&#]+)/.exec(hash || ''); if (!m) return null;
+    const p = m[1].split('/'); if (p.length !== 5 || !/^\d+$/.test(p[1]) || !/^[0-9a-z]+$/.test(p[2]) || !/^[0-9a-f]{16}$/.test(p[4])) return null;
+    let name = ''; try { name = decodeURIComponent(p[3]); } catch { return null; }
+    const ms = parseInt(p[2], 36); if (!isFinite(ms)) return null;
+    return { id: p[0], i: +p[1], t: p[2], at: new Date(ms).toISOString(), name, mac: p[4] };
+  }
+  async function verifyRead(rt, p) { return !!(rt && p) && await readMac(rt, p.id, p.i, p.t, p.name) === p.mac; }
+
+  const api = { newToken, readLink, parseRead, verifyRead, advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.SigReq = api;
 })(typeof self !== 'undefined' ? self : globalThis);

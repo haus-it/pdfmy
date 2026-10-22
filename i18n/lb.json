@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – kleng, fir Fotoen an zum Verschécken",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – ouni Verloscht, fir Text a Grafiken",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – ouni Verloscht, fir Archiv an Drock (grouss Fichieren)",
- "WebP – besonders klein": "WebP – besonnesch kleng"
+ "WebP – besonders klein": "WebP – besonnesch kleng",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} huet „{1}“ gelies ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "W.e.g. ënnerschreiwen: „{0}“. De PDF am PDFMy opmaachen (pdfmy.de, Fichier an d'Fënster zéien) – d'Felder si markéiert.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Dës Liesbestätegung gehéiert zu enger Ufro, déi an dësem Browser net am Postentréesbuch steet.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Dës Liesbestätegung ass ongëlteg oder onvollstänneg – w.e.g. de Link komplett untippen.",
+ "Gelesen": "Gelies",
+ "Gelesen: „{0}“ – {1}.": "Gelies: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Geschéckt – soubal d'Liesbestätegung kënnt, drop tippen: PDFMy vermierkt „Gelies“ am Postentréesbuch.",
+ "Lesebestätigung gesendet.": "Liesbestätegung geschéckt.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Liesbestätegung an d'Tëschenoflag kopéiert – am Messenger un den Ofsender apechen a schécken.",
+ "Lesebestätigung senden": "Liesbestätegung schécken",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF gespäichert – am WhatsApp, Signal oder Teams uhänken a schécken (de Begleettext ass an der Tëschenoflag).",
+ "Per E-Mail senden …": "Per E-Mail schécken …",
+ "Per Messenger senden …": "Per Messenger schécken …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Deelen ofgebrach. D'Ufro steet am Postentréesbuch; de PDF läit hei prett zum Uhänken.",
+ "Zum Vermerken in PDFMy antippen:": "Fir am PDFMy ze vermierken, untippen:"
 }

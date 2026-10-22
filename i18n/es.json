@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – pequeño, para fotos y para enviar",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – sin pérdida, para texto y gráficos",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – sin pérdida, para archivo e impresión (archivos grandes)",
- "WebP – besonders klein": "WebP – especialmente pequeño"
+ "WebP – besonders klein": "WebP – especialmente pequeño",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} ha leído «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Por favor, firme: «{0}». Abra el PDF en PDFMy (pdfmy.de, arrastre el archivo a la ventana) – los campos están marcados.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Esta confirmación de lectura pertenece a una solicitud que no está en el registro de entrada de este navegador.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Esta confirmación de lectura no es válida o está incompleta – toque el enlace completo.",
+ "Gelesen": "Leído",
+ "Gelesen: „{0}“ – {1}.": "Leído: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Enviado – en cuanto llegue la confirmación de lectura, tóquela: PDFMy anota «Leído» en el registro de entrada.",
+ "Lesebestätigung gesendet.": "Confirmación de lectura enviada.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Confirmación de lectura copiada al portapapeles – péguela en el mensajero dirigida al remitente y envíela.",
+ "Lesebestätigung senden": "Enviar confirmación de lectura",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF guardado – adjúntelo en WhatsApp, Signal o Teams y envíelo (el texto de acompañamiento está en el portapapeles).",
+ "Per E-Mail senden …": "Enviar por correo electrónico…",
+ "Per Messenger senden …": "Enviar por mensajería…",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Se canceló el uso compartido. La solicitud está en el registro de entrada; el PDF está aquí listo para adjuntar.",
+ "Zum Vermerken in PDFMy antippen:": "Toque para anotarlo en PDFMy:"
 }

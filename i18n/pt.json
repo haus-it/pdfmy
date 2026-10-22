@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – pequeno, para fotos e envio",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – sem perdas, para texto e gráficos",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – sem perdas, para arquivo e impressão (ficheiros grandes)",
- "WebP – besonders klein": "WebP – especialmente pequeno"
+ "WebP – besonders klein": "WebP – especialmente pequeno",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} leu «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Por favor, assine: «{0}». Abra o PDF no PDFMy (pdfmy.de, arraste o ficheiro para a janela) – os campos estão marcados.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Esta confirmação de leitura pertence a um pedido que não está no registo de correspondência deste browser.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Esta confirmação de leitura é inválida ou está incompleta – toque na ligação completa.",
+ "Gelesen": "Lido",
+ "Gelesen: „{0}“ – {1}.": "Lido: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Enviado – assim que chegar a confirmação de leitura, toque nela: o PDFMy regista «Lido» no registo de correspondência.",
+ "Lesebestätigung gesendet.": "Confirmação de leitura enviada.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Confirmação de leitura copiada para a área de transferência – cole-a no mensageiro para o remetente e envie.",
+ "Lesebestätigung senden": "Enviar confirmação de leitura",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF guardado – anexe-o no WhatsApp, Signal ou Teams e envie (o texto de acompanhamento está na área de transferência).",
+ "Per E-Mail senden …": "Enviar por e-mail …",
+ "Per Messenger senden …": "Enviar por mensageiro …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Partilha cancelada. O pedido está no registo de correspondência; o PDF está aqui pronto a anexar.",
+ "Zum Vermerken in PDFMy antippen:": "Toque para registar no PDFMy:"
 }

@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – żgħir, għal ritratti u biex tibgħat",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – mingħajr telf, għal test u grafika",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – mingħajr telf, għall-arkivju u l-istampar (fajls kbar)",
- "WebP – besonders klein": "WebP – partikolarment żgħir"
+ "WebP – besonders klein": "WebP – partikolarment żgħir",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} qara “{1}” ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Jekk jogħġbok iffirma: “{0}”. Iftaħ il-PDF f’PDFMy (pdfmy.de, kaxkar il-fajl fit-tieqa) – il-oqsma huma mmarkati.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Din il-konferma tal-qari tappartjeni għal talba li mhix fir-reġistru tal-posta f’dan il-browser.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Din il-konferma tal-qari mhix valida jew mhix kompluta – jekk jogħġbok agħfas il-link kollu.",
+ "Gelesen": "Moqri",
+ "Gelesen: „{0}“ – {1}.": "Moqri: “{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Mibgħut – hekk kif tasal il-konferma tal-qari, agħfas fuqha: PDFMy jniżżel “Moqri” fir-reġistru tal-posta.",
+ "Lesebestätigung gesendet.": "Konferma tal-qari mibgħuta.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Konferma tal-qari kkupjata fil-clipboard – waħħalha fil-messenger lill-mittent u ibgħatha.",
+ "Lesebestätigung senden": "Ibgħat konferma tal-qari",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF issejvjat – ehmżu f’WhatsApp, Signal jew Teams u ibgħatu (it-test ta’ akkumpanjament qiegħed fil-clipboard).",
+ "Per E-Mail senden …": "Ibgħat bl-email …",
+ "Per Messenger senden …": "Ibgħat bil-messenger …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Il-qsim ġie kkanċellat. It-talba qiegħda fir-reġistru tal-posta; il-PDF qiegħed hawn lest biex jiġi mehmuż.",
+ "Zum Vermerken in PDFMy antippen:": "Agħfas biex tniżżlu f’PDFMy:"
 }

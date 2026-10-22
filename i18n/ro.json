@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – mic, pentru fotografii și trimitere",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – fără pierderi, pentru text și grafică",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – fără pierderi, pentru arhivă și tipărire (fișiere mari)",
- "WebP – besonders klein": "WebP – deosebit de mic"
+ "WebP – besonders klein": "WebP – deosebit de mic",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} a citit „{1}” ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Vă rugăm să semnați: „{0}”. Deschideți PDF-ul în PDFMy (pdfmy.de, trageți fișierul în fereastră) – câmpurile sunt marcate.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Această confirmare de citire aparține unei solicitări care nu se află în registrul de intrări din acest browser.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Această confirmare de citire este nevalidă sau incompletă – atingeți linkul complet.",
+ "Gelesen": "Citit",
+ "Gelesen: „{0}“ – {1}.": "Citit: „{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Trimis – imediat ce sosește confirmarea de citire, atingeți-o: PDFMy notează „Citit” în registrul de intrări.",
+ "Lesebestätigung gesendet.": "Confirmare de citire trimisă.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Confirmarea de citire a fost copiată în clipboard – lipiți-o în aplicația de mesagerie către expeditor și trimiteți-o.",
+ "Lesebestätigung senden": "Trimitere confirmare de citire",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF salvat – atașați-l în WhatsApp, Signal sau Teams și trimiteți-l (textul însoțitor este în clipboard).",
+ "Per E-Mail senden …": "Trimitere prin e-mail …",
+ "Per Messenger senden …": "Trimitere prin mesagerie …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Partajare anulată. Solicitarea se află în registrul de intrări; PDF-ul este aici gata de atașat.",
+ "Zum Vermerken in PDFMy antippen:": "Atingeți pentru a nota în PDFMy:"
 }

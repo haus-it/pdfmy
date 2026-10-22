@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – majhna, za fotografije in pošiljanje",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – brez izgub, za besedilo in grafiko",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – brez izgub, za arhiv in tisk (velike datoteke)",
- "WebP – besonders klein": "WebP – posebno majhna"
+ "WebP – besonders klein": "WebP – posebno majhna",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} je prebral(a) „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Prosimo, podpišite: „{0}“. Odprite PDF v PDFMy (pdfmy.de, povlecite datoteko v okno) – polja so označena.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "To potrdilo o branju pripada zahtevi, ki je v tem brskalniku ni v knjigi vhodne pošte.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "To potrdilo o branju ni veljavno ali je nepopolno – tapnite celotno povezavo.",
+ "Gelesen": "Prebrano",
+ "Gelesen: „{0}“ – {1}.": "Prebrano: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Poslano – takoj ko prispe potrdilo o branju, ga tapnite: PDFMy zabeleži „Prebrano“ v knjigi vhodne pošte.",
+ "Lesebestätigung gesendet.": "Potrdilo o branju poslano.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Potrdilo o branju kopirano v odložišče – prilepite ga v sporočilniku pošiljatelju in pošljite.",
+ "Lesebestätigung senden": "Pošlji potrdilo o branju",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF shranjen – priložite ga v WhatsAppu, Signalu ali Teamsu in pošljite (spremno besedilo je v odložišču).",
+ "Per E-Mail senden …": "Pošlji po e-pošti …",
+ "Per Messenger senden …": "Pošlji prek sporočilnika …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Deljenje preklicano. Zahteva je v knjigi vhodne pošte; PDF je tukaj pripravljen za prilaganje.",
+ "Zum Vermerken in PDFMy antippen:": "Tapnite za zapis v PDFMy:"
 }

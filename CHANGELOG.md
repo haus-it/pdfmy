@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Unterschriftsanfrage per Messenger mit Lesebestätigung (app-v177)
+- Absender: „Per Messenger senden …“ neben „Per E-Mail senden …“ – PDF über das Teilen-Menü (WhatsApp, Signal, Teams …), sonst Download + Begleittext in der Zwischenablage; Vermerk „Gesendet“; Anfrage bekommt einen Schlüssel (rt), der in der PDF und im Posteingangsbuch steht.
+- Empfänger: nach dem Durchsehen aller Seiten „Lesebestätigung senden“ – ein Tipp schickt „✓✓ Gelesen“ mit Link pdfmy.de/#gelesen=Kennung/Person/Zeit/Name/Prüfwert (SHA-256 mit dem Schlüssel; der #-Teil geht nie an den Server).
+- Absender: Antippen des Links prüft den Prüfwert und vermerkt „✓✓ Gelesen: Name (Zeit)“ im Posteingangsbuch; gefälschte oder unvollständige Links werden abgelehnt.
+- Tests: tests/sigreq.test.js (Link, Lesen, Prüfen, veränderter Name, falscher Schlüssel); Browser Ende-zu-Ende (Absender teilt PDF mit Schlüssel, Empfänger liest und bestätigt, Absender vermerkt, gefälschter Link abgelehnt), axe 0. Nicht mit echtem WhatsApp/Signal/Teams getestet.
+
 ### Bilder in verschiedenen Formaten speichern (app-v176)
 - Speichern → Format „Bilder“ mit Auswahl „Bildformat“: JPG, PNG (verlustfrei), TIFF (verlustfrei, UTIF.js), WebP (nur wo der Browser es erzeugen kann). Wahl wird gemerkt.
 - Fotos und „Hohe Qualität“ in voller Scan-Auflösung (vorher auf 200 dpi verkleinert).

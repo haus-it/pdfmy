@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – pieni, valokuville ja lähettämiseen",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – häviötön, tekstille ja grafiikalle",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – häviötön, arkistointiin ja tulostukseen (suuret tiedostot)",
- "WebP – besonders klein": "WebP – erityisen pieni"
+ "WebP – besonders klein": "WebP – erityisen pieni",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} on lukenut asiakirjan ”{1}” ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Allekirjoita: ”{0}”. Avaa PDF PDFMy:ssä (pdfmy.de, vedä tiedosto ikkunaan) – kentät on merkitty.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Tämä lukukuittaus kuuluu pyyntöön, jota ei ole tämän selaimen saapuneen postin kirjassa.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Tämä lukukuittaus on virheellinen tai puutteellinen – napauta koko linkkiä.",
+ "Gelesen": "Luettu",
+ "Gelesen: „{0}“ – {1}.": "Luettu: ”{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Lähetetty – kun lukukuittaus saapuu, napauta sitä: PDFMy merkitsee saapuneen postin kirjaan ”Luettu”.",
+ "Lesebestätigung gesendet.": "Lukukuittaus lähetetty.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Lukukuittaus kopioitu leikepöydälle – liitä se viestisovelluksessa lähettäjälle ja lähetä.",
+ "Lesebestätigung senden": "Lähetä lukukuittaus",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF tallennettu – liitä se WhatsAppissa, Signalissa tai Teamsissa ja lähetä (saateteksti on leikepöydällä).",
+ "Per E-Mail senden …": "Lähetä sähköpostilla …",
+ "Per Messenger senden …": "Lähetä viestisovelluksella …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Jakaminen keskeytetty. Pyyntö on saapuneen postin kirjassa; PDF on täällä valmiina liitettäväksi.",
+ "Zum Vermerken in PDFMy antippen:": "Napauta merkitäksesi PDFMy:hin:"
 }

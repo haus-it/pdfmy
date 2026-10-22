@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – мала датотека, за фотографије и слање",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – без губитака, за текст и графику",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – без губитака, за архиву и штампу (велике датотеке)",
- "WebP – besonders klein": "WebP – посебно мала датотека"
+ "WebP – besonders klein": "WebP – посебно мала датотека",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} је прочитао/ла „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Молимо потпишите: „{0}“. Отворите PDF у PDFMy-у (pdfmy.de, превуците датотеку у прозор) – поља су означена.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Ова потврда о читању припада захтеву који у овом прегледачу није у књизи улазне поште.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Ова потврда о читању је неважећа или непотпуна – молимо додирните целу везу.",
+ "Gelesen": "Прочитано",
+ "Gelesen: „{0}“ – {1}.": "Прочитано: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Послато – чим стигне потврда о читању, додирните је: PDFMy бележи „Прочитано“ у књизи улазне поште.",
+ "Lesebestätigung gesendet.": "Потврда о читању послата.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Потврда о читању копирана у привремену меморију – налепите је у месинџеру пошиљаоцу и пошаљите.",
+ "Lesebestätigung senden": "Пошаљи потврду о читању",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF сачуван – приложите га у WhatsApp-у, Signal-у или Teams-у и пошаљите (пратећи текст је у привременој меморији).",
+ "Per E-Mail senden …": "Пошаљи е-поштом …",
+ "Per Messenger senden …": "Пошаљи преко месинџера …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Дељење прекинуто. Захтев је у књизи улазне поште; PDF је овде спреман за прилагање.",
+ "Zum Vermerken in PDFMy antippen:": "Додирните за бележење у PDFMy-у:"
 }

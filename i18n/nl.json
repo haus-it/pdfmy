@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – klein, voor foto's en verzenden",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – verliesvrij, voor tekst en afbeeldingen",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – verliesvrij, voor archief en druk (grote bestanden)",
- "WebP – besonders klein": "WebP – bijzonder klein"
+ "WebP – besonders klein": "WebP – bijzonder klein",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} heeft „{1}” gelezen ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Graag ondertekenen: „{0}”. Open de PDF in PDFMy (pdfmy.de, sleep het bestand naar het venster) – de velden zijn gemarkeerd.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Deze leesbevestiging hoort bij een verzoek dat in deze browser niet in het postregister staat.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Deze leesbevestiging is ongeldig of onvolledig – tik op de volledige link.",
+ "Gelesen": "Gelezen",
+ "Gelesen: „{0}“ – {1}.": "Gelezen: „{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Verzonden – zodra de leesbevestiging binnenkomt, tikt u erop: PDFMy noteert „Gelezen” in het postregister.",
+ "Lesebestätigung gesendet.": "Leesbevestiging verzonden.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Leesbevestiging naar het klembord gekopieerd – plak hem in de messenger bij de afzender en verzend hem.",
+ "Lesebestätigung senden": "Leesbevestiging verzenden",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF opgeslagen – voeg hem in WhatsApp, Signal of Teams als bijlage toe en verzend hem (de begeleidende tekst staat op het klembord).",
+ "Per E-Mail senden …": "Verzenden per e-mail …",
+ "Per Messenger senden …": "Verzenden via messenger …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Delen geannuleerd. Het verzoek staat in het postregister; de PDF ligt hier klaar om bij te voegen.",
+ "Zum Vermerken in PDFMy antippen:": "Tik om in PDFMy te noteren:"
 }

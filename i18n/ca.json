@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – petit, per a fotos i per enviar",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – sense pèrdua, per a text i gràfics",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – sense pèrdua, per a arxiu i impressió (fitxers grans)",
- "WebP – besonders klein": "WebP – especialment petit"
+ "WebP – besonders klein": "WebP – especialment petit",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} ha llegit «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Signeu, si us plau: «{0}». Obriu el PDF a PDFMy (pdfmy.de, arrossegueu el fitxer a la finestra) – els camps estan marcats.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Aquesta confirmació de lectura correspon a una sol·licitud que no és al registre d'entrada d'aquest navegador.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Aquesta confirmació de lectura no és vàlida o és incompleta – toqueu l'enllaç sencer.",
+ "Gelesen": "Llegit",
+ "Gelesen: „{0}“ – {1}.": "Llegit: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Enviat – quan arribi la confirmació de lectura, toqueu-la: PDFMy anota «Llegit» al registre d'entrada.",
+ "Lesebestätigung gesendet.": "Confirmació de lectura enviada.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Confirmació de lectura copiada al porta-retalls – enganxeu-la al missatger adreçada al remitent i envieu-la.",
+ "Lesebestätigung senden": "Envia la confirmació de lectura",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF desat – adjunteu-lo a WhatsApp, Signal o Teams i envieu-lo (el text d'acompanyament és al porta-retalls).",
+ "Per E-Mail senden …": "Envia per correu electrònic…",
+ "Per Messenger senden …": "Envia per missatger…",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Compartició cancel·lada. La sol·licitud és al registre d'entrada; el PDF és aquí a punt per adjuntar.",
+ "Zum Vermerken in PDFMy antippen:": "Toqueu per anotar-ho a PDFMy:"
 }

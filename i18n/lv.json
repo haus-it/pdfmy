@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – mazs, fotogrāfijām un nosūtīšanai",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – bez zudumiem, tekstam un grafikai",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – bez zudumiem, arhīvam un drukai (lieli faili)",
- "WebP – besonders klein": "WebP – īpaši mazs"
+ "WebP – besonders klein": "WebP – īpaši mazs",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} izlasīja „{1}” ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Lūdzu, parakstiet: „{0}”. Atveriet PDF programmā PDFMy (pdfmy.de, ievelciet failu logā) – lauki ir atzīmēti.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Šis izlasīšanas apstiprinājums pieder pieprasījumam, kura šajā pārlūkā nav ienākošā pasta žurnālā.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Šis izlasīšanas apstiprinājums ir nederīgs vai nepilnīgs – lūdzu, pieskarieties visai saitei.",
+ "Gelesen": "Izlasīts",
+ "Gelesen: „{0}“ – {1}.": "Izlasīts: „{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Nosūtīts – tiklīdz pienāk izlasīšanas apstiprinājums, pieskarieties tam: PDFMy atzīmē „Izlasīts” ienākošā pasta žurnālā.",
+ "Lesebestätigung gesendet.": "Izlasīšanas apstiprinājums nosūtīts.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Izlasīšanas apstiprinājums nokopēts starpliktuvē – ielīmējiet to ziņapmaiņas lietotnē sūtītājam un nosūtiet.",
+ "Lesebestätigung senden": "Sūtīt izlasīšanas apstiprinājumu",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF saglabāts – pievienojiet to WhatsApp, Signal vai Teams un nosūtiet (pavadteksts ir starpliktuvē).",
+ "Per E-Mail senden …": "Sūtīt pa e-pastu …",
+ "Per Messenger senden …": "Sūtīt ar ziņapmaiņas lietotni …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Kopīgošana pārtraukta. Pieprasījums ir ienākošā pasta žurnālā; PDF šeit ir gatavs pievienošanai.",
+ "Zum Vermerken in PDFMy antippen:": "Pieskarieties, lai atzīmētu PDFMy:"
 }

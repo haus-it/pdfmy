@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – liten, för foton och för att skicka",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – förlustfri, för text och grafik",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – förlustfri, för arkiv och tryck (stora filer)",
- "WebP – besonders klein": "WebP – särskilt liten"
+ "WebP – besonders klein": "WebP – särskilt liten",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} har läst ”{1}” ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Skriv under: ”{0}”. Öppna PDF:en i PDFMy (pdfmy.de, dra filen till fönstret) – fälten är markerade.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Den här läskvittensen hör till en begäran som inte finns i postjournalen i den här webbläsaren.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Den här läskvittensen är ogiltig eller ofullständig – tryck på hela länken.",
+ "Gelesen": "Läst",
+ "Gelesen: „{0}“ – {1}.": "Läst: ”{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Skickat – så snart läskvittensen kommer, tryck på den: PDFMy noterar ”Läst” i postjournalen.",
+ "Lesebestätigung gesendet.": "Läskvitto skickat.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Läskvittot har kopierats till urklipp – klistra in det i meddelandeappen till avsändaren och skicka.",
+ "Lesebestätigung senden": "Skicka läskvitto",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF sparad – bifoga den i WhatsApp, Signal eller Teams och skicka (följetexten finns i urklipp).",
+ "Per E-Mail senden …": "Skicka via e-post …",
+ "Per Messenger senden …": "Skicka via meddelandeapp …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Delning avbruten. Begäran finns i postjournalen; PDF:en ligger här redo att bifogas.",
+ "Zum Vermerken in PDFMy antippen:": "Tryck för att notera i PDFMy:"
 }

@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – маленький, для фото и отправки",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – без потерь, для текста и графики",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – без потерь, для архива и печати (большие файлы)",
- "WebP – besonders klein": "WebP – особенно маленький"
+ "WebP – besonders klein": "WebP – особенно маленький",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} прочитал(а) «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Пожалуйста, подпишите: «{0}». Откройте PDF в PDFMy (pdfmy.de, перетащите файл в окно) – поля отмечены.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Это подтверждение прочтения относится к запросу, которого нет в журнале входящей почты в этом браузере.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Это подтверждение прочтения недействительно или неполно – пожалуйста, нажмите на ссылку целиком.",
+ "Gelesen": "Прочитано",
+ "Gelesen: „{0}“ – {1}.": "Прочитано: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Отправлено – как только придёт подтверждение прочтения, нажмите на него: PDFMy отметит «Прочитано» в журнале входящей почты.",
+ "Lesebestätigung gesendet.": "Подтверждение прочтения отправлено.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Подтверждение прочтения скопировано в буфер обмена – вставьте его в мессенджере для отправителя и отправьте.",
+ "Lesebestätigung senden": "Отправить подтверждение прочтения",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF сохранён – прикрепите его в WhatsApp, Signal или Teams и отправьте (сопроводительный текст в буфере обмена).",
+ "Per E-Mail senden …": "Отправить по эл. почте …",
+ "Per Messenger senden …": "Отправить через мессенджер …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Отправка отменена. Запрос есть в журнале входящей почты; PDF готов здесь для прикрепления.",
+ "Zum Vermerken in PDFMy antippen:": "Нажмите, чтобы отметить в PDFMy:"
 }

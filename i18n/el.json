@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – μικρό, για φωτογραφίες και αποστολή",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – χωρίς απώλειες, για κείμενο και γραφικά",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – χωρίς απώλειες, για αρχειοθέτηση και εκτύπωση (μεγάλα αρχεία)",
- "WebP – besonders klein": "WebP – ιδιαίτερα μικρό"
+ "WebP – besonders klein": "WebP – ιδιαίτερα μικρό",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ Ο/Η {0} διάβασε το «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Παρακαλώ υπογράψτε: «{0}». Ανοίξτε το PDF στο PDFMy (pdfmy.de, σύρετε το αρχείο στο παράθυρο) – τα πεδία είναι επισημασμένα.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Αυτή η επιβεβαίωση ανάγνωσης ανήκει σε αίτημα που δεν υπάρχει στο βιβλίο εισερχομένων αυτού του προγράμματος περιήγησης.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Αυτή η επιβεβαίωση ανάγνωσης είναι άκυρη ή ελλιπής – πατήστε ολόκληρο τον σύνδεσμο.",
+ "Gelesen": "Διαβάστηκε",
+ "Gelesen: „{0}“ – {1}.": "Διαβάστηκε: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Στάλθηκε – μόλις έρθει η επιβεβαίωση ανάγνωσης, πατήστε την: το PDFMy σημειώνει «Διαβάστηκε» στο βιβλίο εισερχομένων.",
+ "Lesebestätigung gesendet.": "Η επιβεβαίωση ανάγνωσης στάλθηκε.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Η επιβεβαίωση ανάγνωσης αντιγράφηκε στο πρόχειρο – επικολλήστε την στο messenger προς τον αποστολέα και στείλτε την.",
+ "Lesebestätigung senden": "Αποστολή επιβεβαίωσης ανάγνωσης",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "Το PDF αποθηκεύτηκε – επισυνάψτε το στο WhatsApp, στο Signal ή στο Teams και στείλτε το (το συνοδευτικό κείμενο βρίσκεται στο πρόχειρο).",
+ "Per E-Mail senden …": "Αποστολή μέσω email …",
+ "Per Messenger senden …": "Αποστολή μέσω messenger …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Η κοινοποίηση ακυρώθηκε. Το αίτημα βρίσκεται στο βιβλίο εισερχομένων· το PDF είναι εδώ έτοιμο για επισύναψη.",
+ "Zum Vermerken in PDFMy antippen:": "Πατήστε για καταγραφή στο PDFMy:"
 }

@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – küçük, fotoğraflar ve gönderme için",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – kayıpsız, metin ve grafikler için",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – kayıpsız, arşiv ve baskı için (büyük dosyalar)",
- "WebP – besonders klein": "WebP – özellikle küçük"
+ "WebP – besonders klein": "WebP – özellikle küçük",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0}, “{1}” belgesini okudu ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Lütfen imzalayın: “{0}”. PDF’yi PDFMy’de açın (pdfmy.de, dosyayı pencereye sürükleyin) – alanlar işaretlidir.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Bu okundu bilgisi, bu tarayıcıda gelen evrak defterinde bulunmayan bir talebe aittir.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Bu okundu bilgisi geçersiz veya eksik – lütfen bağlantının tamamına dokunun.",
+ "Gelesen": "Okundu",
+ "Gelesen: „{0}“ – {1}.": "Okundu: “{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Gönderildi – okundu bilgisi gelir gelmez üzerine dokunun: PDFMy gelen evrak defterine “Okundu” notunu düşer.",
+ "Lesebestätigung gesendet.": "Okundu bilgisi gönderildi.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Okundu bilgisi panoya kopyalandı – mesajlaşma uygulamasında gönderene yapıştırıp gönderin.",
+ "Lesebestätigung senden": "Okundu bilgisi gönder",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF kaydedildi – WhatsApp, Signal veya Teams’te ekleyip gönderin (eşlik eden metin panoda).",
+ "Per E-Mail senden …": "E-postayla gönder …",
+ "Per Messenger senden …": "Mesajlaşma uygulamasıyla gönder …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Paylaşım iptal edildi. Talep gelen evrak defterinde; PDF burada eklenmeye hazır.",
+ "Zum Vermerken in PDFMy antippen:": "PDFMy’de not etmek için dokunun:"
 }

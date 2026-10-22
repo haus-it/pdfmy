@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – malý, na fotografie a odosielanie",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – bezstratový, na text a grafiku",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – bezstratový, na archív a tlač (veľké súbory)",
- "WebP – besonders klein": "WebP – obzvlášť malý"
+ "WebP – besonders klein": "WebP – obzvlášť malý",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} si prečítal(a) „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Prosím podpíšte: „{0}“. Otvorte PDF v PDFMy (pdfmy.de, potiahnite súbor do okna) – polia sú označené.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Toto potvrdenie o prečítaní patrí k žiadosti, ktorá v tomto prehliadači nie je v knihe došlej pošty.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Toto potvrdenie o prečítaní je neplatné alebo neúplné – ťuknite, prosím, na celý odkaz.",
+ "Gelesen": "Prečítané",
+ "Gelesen: „{0}“ – {1}.": "Prečítané: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Odoslané – hneď ako príde potvrdenie o prečítaní, ťuknite naň: PDFMy zaznamená „Prečítané“ v knihe došlej pošty.",
+ "Lesebestätigung gesendet.": "Potvrdenie o prečítaní odoslané.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Potvrdenie o prečítaní skopírované do schránky – vložte ho v messengeri odosielateľovi a odošlite.",
+ "Lesebestätigung senden": "Odoslať potvrdenie o prečítaní",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF uložené – priložte ho vo WhatsAppe, Signale alebo Teams a odošlite (sprievodný text je v schránke).",
+ "Per E-Mail senden …": "Odoslať e-mailom …",
+ "Per Messenger senden …": "Odoslať cez messenger …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Zdieľanie zrušené. Žiadosť je v knihe došlej pošty; PDF je tu pripravené na priloženie.",
+ "Zum Vermerken in PDFMy antippen:": "Ťuknutím zaznamenáte v PDFMy:"
 }

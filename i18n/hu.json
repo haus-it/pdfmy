@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – kicsi, fényképekhez és küldéshez",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – veszteségmentes, szöveghez és grafikához",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – veszteségmentes, archiváláshoz és nyomtatáshoz (nagy fájlok)",
- "WebP – besonders klein": "WebP – különösen kicsi"
+ "WebP – besonders klein": "WebP – különösen kicsi",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} elolvasta: „{1}” ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Kérjük, írja alá: „{0}”. Nyissa meg a PDF-et a PDFMy-ban (pdfmy.de, húzza a fájlt az ablakba) – a mezők meg vannak jelölve.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Ez az olvasási visszaigazolás olyan kérelemhez tartozik, amely ebben a böngészőben nem szerepel a beérkező posta naplójában.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Ez az olvasási visszaigazolás érvénytelen vagy hiányos – koppintson a teljes hivatkozásra.",
+ "Gelesen": "Elolvasva",
+ "Gelesen: „{0}“ – {1}.": "Elolvasva: „{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Elküldve – amint megérkezik az olvasási visszaigazolás, koppintson rá: a PDFMy „Elolvasva” bejegyzést tesz a beérkező posta naplójába.",
+ "Lesebestätigung gesendet.": "Olvasási visszaigazolás elküldve.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Olvasási visszaigazolás vágólapra másolva – illessze be az üzenetküldőben a feladónak, és küldje el.",
+ "Lesebestätigung senden": "Olvasási visszaigazolás küldése",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF mentve – csatolja a WhatsAppban, a Signalban vagy a Teamsben, és küldje el (a kísérőszöveg a vágólapon van).",
+ "Per E-Mail senden …": "Küldés e-mailben …",
+ "Per Messenger senden …": "Küldés üzenetküldővel …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Megosztás megszakítva. A kérelem szerepel a beérkező posta naplójában; a PDF itt csatolásra készen áll.",
+ "Zum Vermerken in PDFMy antippen:": "Koppintson a PDFMy-ban való rögzítéshez:"
 }

@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – lítið, fyrir ljósmyndir og sendingu",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – taplaust, fyrir texta og grafík",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – taplaust, fyrir skjalasafn og prentun (stórar skrár)",
- "WebP – besonders klein": "WebP – sérlega lítið"
+ "WebP – besonders klein": "WebP – sérlega lítið",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} hefur lesið „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Vinsamlegast undirritið: „{0}“. Opnið PDF-skjalið í PDFMy (pdfmy.de, dragið skrána inn í gluggann) – reitirnir eru merktir.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Þessi lesstaðfesting tilheyrir beiðni sem er ekki í póstskránni í þessum vafra.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Þessi lesstaðfesting er ógild eða ófullgerð – vinsamlegast ýtið á allan tengilinn.",
+ "Gelesen": "Lesið",
+ "Gelesen: „{0}“ – {1}.": "Lesið: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Sent – um leið og lesstaðfestingin berst, ýtið á hana: PDFMy skráir „Lesið“ í póstskrána.",
+ "Lesebestätigung gesendet.": "Lesstaðfesting send.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Lesstaðfesting afrituð á klippiborð – límið hana í spjallforritinu til sendandans og sendið.",
+ "Lesebestätigung senden": "Senda lesstaðfestingu",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF vistað – hengið það við í WhatsApp, Signal eða Teams og sendið (fylgitextinn er á klippiborðinu).",
+ "Per E-Mail senden …": "Senda með tölvupósti …",
+ "Per Messenger senden …": "Senda með spjallforriti …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Hætt við deilingu. Beiðnin er í póstskránni; PDF-skjalið er hér tilbúið til að hengja við.",
+ "Zum Vermerken in PDFMy antippen:": "Ýtið til að skrá í PDFMy:"
 }

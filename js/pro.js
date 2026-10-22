@@ -280,7 +280,7 @@ function renderJournal(focusId) {
     return `<tr data-id="${esc(e.id)}" class="${closed ? 'done' : ''}${e.id === focusId ? ' focus' : ''} st-${(e.status || '').replace(' ', '-')}">
       <td>${e.extra ? '' : `<select data-st title="Status">${Journal.STATUS.map(s => `<option${s === e.status ? ' selected' : ''}>${s}</option>`).join('')}</select>`}</td>
       <td>${e.extra ? '' : `<input data-as list="teamList" value="${esc(e.assignee)}" placeholder="–" title="Zuständig" size="6">`}</td><td>${e.extra ? '' : `<input data-akte list="caseList" value="${esc(e.akte)}" placeholder="–" title="Akte" aria-label="Akte">`}</td><td>${e.extra ? '<span class="hint">Ablage</span>' : esc(fmtDate(e.savedAt))}${e.inNo ? `<br><small class="hint">Nr. ${esc(e.inNo)}</small>` : ''}</td>
-      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${+e.remN ? `<small class="jcf">Erinnert: ${esc(e.remN)}× · zuletzt ${esc(fmtDate(e.remAt))}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
+      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${e.sigReads?.length ? `<small class="jcf" translate="no">✓✓ ${esc(I18N.t('Gelesen'))}: ${e.sigReads.map(x => esc(x.n) + ' (' + esc(SigReq.fmt(x.at)) + ')').join(', ')}</small>` : ''}${+e.remN ? `<small class="jcf">Erinnert: ${esc(e.remN)}× · zuletzt ${esc(fmtDate(e.remAt))}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
       <td class="jdl ${d ? d.state : ''}">${e.deadline ? fmtDate(e.deadline) + (d ? `<small>${inDays(d.days)}</small>` : '') : ''}${e.wv ? `<small class="wvtag">WV ${fmtDate(e.wv)} <button type="button" class="linkbtn" data-wvclear="${esc(e.id)}" title="Wiedervorlage erledigt" aria-label="Wiedervorlage entfernen">✕</button></small>` : ''}</td>
       <td>${esc(e.amount)}</td><td>${esc(e.reference || e.invoiceNo)}</td>
       <td class="jact">${+e.ver > 1 ? `<small class="ver" title="${esc(`${e.ver} Fassungen – frühere liegen unverändert im Ordner „_Versionen“`)}">v${esc(e.ver)}</small> ` : ''}${e.file && state.outDir ? `<button type="button" class="linkbtn" data-open title="${esc(e.file)}">Öffnen</button>` : `<span class="hint" title="${esc(e.file)}">${esc((e.file || '').split('\\').pop().slice(0, 28))}</span>`}${e.file && state.outDir ? ` <button type="button" class="linkbtn" data-share title="Per WhatsApp, Telegram, Webex oder E-Mail senden">Teilen</button>` : ''}${e.extra ? '' : ` <button type="button" class="linkbtn" data-fwd title="An Kollegen weitergeben: zuständig setzen und E-Mail mit allen Briefdaten öffnen">Weiterleiten</button>`}${e.sigreq && e.sigTo && e.status === 'in Arbeit' ? ` <button type="button" class="linkbtn" data-sigrem${SigReq.urgent(e.sigSince || e.savedAt, e.deadline) ? ' data-urgent' : ''} title="${esc(`Erinnerungs-E-Mail an ${e.sigName || e.sigTo} vorbereiten`)}">Erinnern</button>` : ''}</td></tr>`;
@@ -423,7 +423,7 @@ let req = null, reqDoc = -1, reqArm = -1, reqDraft = false, reqHash = '', reqSig
 let reqTrack = -1, reqSeen = new Set(), reqFromMe = false;   // reqFromMe: dieser Rechner ist der Absender (für Handlungstipps)   // Person, deren Lesen gerade festgehalten wird, und angesehene Seiten
 const RQ_ICON = { sign: '✍', initials: '✍', date: '📅', name: '👤', text: '✎', check: '☑' };
 const reqMine = () => req && !reqDraft ? SigReq.next(req) : -1;
-window.reqReset = () => { reqFromMe = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
+window.reqReset = () => { reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
 function reqRow(s = {}, i = 0) {
   return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button></div>`;
 }
@@ -779,7 +779,7 @@ async function reqJournal(r, add) {
   const nx = SigReq.next(r), cur = r.signers[nx];
   // Frist erscheint unter „Fristen“ (erledigt → erledigt sich mit); wer gerade dran ist, für „Erinnern“
   const patch = { sigs: SigReq.summaryText(r), status: SigReq.complete(r) ? 'erledigt' : SigReq.declined(r) >= 0 ? 'offen' : 'in Arbeit', upd: updStamp(),
-    deadline: nx >= 0 && r.due ? r.due : '', sigSince: SigReq.waiting(r)?.since || '', sigTo: cur?.email || '', sigName: cur?.name || '', sigN: SigReq.doneCount(r) };
+    deadline: nx >= 0 && r.due ? r.due : '', ...(r.rt ? { sigRt: r.rt } : {}), sigSince: SigReq.waiting(r)?.since || '', sigTo: cur?.email || '', sigName: cur?.name || '', sigN: SigReq.doneCount(r) };
   let list;
   if (has) list = all.map(x => x.sigreq === r.id ? { ...x, ...patch } : x);
   else if (add) {
@@ -850,6 +850,61 @@ async function reqSend() {
     status(`${emlDone(m.opened, m.to)}${rel ? ` Kopie in der Ablage: ${rel}.` : ''} Den Stand sehen Sie im Posteingangsbuch.`);
   } catch (e) { console.error(e); status('Senden nicht möglich: ' + e.message); }
 }
+/* ---------- Unterschriftsanfrage per Messenger (WhatsApp, Signal, Teams …) mit Lesebestätigung – ohne Server ----------
+   Absender: PDF über das Teilen-Menü des Systems senden; die Anfrage bekommt einen Schlüssel (rt), der auch im Posteingangsbuch steht.
+   Empfänger: hat er alle Seiten gesehen, schickt er mit einem Tipp „✓✓ Gelesen“ samt Link zurück.
+   Absender: der Link (#gelesen=…, geht nie an den Server) wird mit dem Schlüssel geprüft und setzt im Posteingangsbuch „Gelesen“. */
+let reqConfirmed = false;   // Lesebestätigung in dieser Sitzung schon gesendet
+async function reqSendMessenger() {
+  const miss = req.signers.filter((s, i) => !req.fields.some(f => f.s === i && f.pg));
+  if (miss.length) return status(`Für ${miss.map(s => s.name).join(', ')} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.`);
+  try {
+    status('Bereite die Unterschriftsanfrage vor …');
+    req.rt ||= SigReq.newToken(); req.via = 'messenger';
+    req = SigReq.markSent(req, 0);
+    const bytes = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
+    let rel = '', sha = '';
+    if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(bytes); }
+    await reqJournal(req, { rel, sha });
+    reqDraft = false; reqArm = -1; renderReqBar(); renderAnns();
+    const file = new File([bytes], name, { type: 'application/pdf' });
+    const text = I18N.t(`Bitte unterschreiben: „${req.title}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.`);
+    if (navigator.canShare?.({ files: [file] })) {
+      try { await navigator.share({ files: [file], text, title: req.title }); status(I18N.t('Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.')); return; }
+      catch (e) { if (e.name === 'AbortError') { status('Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.'); download(bytes, name, 'application/pdf'); return; } }
+    }
+    download(bytes, name, 'application/pdf');
+    try { await navigator.clipboard.writeText(text); } catch {}
+    status('PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).');
+  } catch (e) { console.error(e); status('Senden nicht möglich: ' + e.message); }
+}
+async function reqReadConfirm() {
+  const i = reqMine(); if (i < 0 || !req?.rt) return;
+  const base = APP.edition === 'web' ? location.origin + location.pathname : 'https://pdfmy.de/';
+  const link = await SigReq.readLink(req, i, req.signers[i].readAt || new Date().toISOString(), base);
+  const text = `✓✓ ${I18N.t(`Gelesen: „${req.title}“ – ${req.signers[i].name}.`)} ${I18N.t('Zum Vermerken in PDFMy antippen:')} ${link}`;
+  const done = msg => { reqConfirmed = true; renderReqBar(); status(msg); };
+  if (navigator.share) {
+    try { await navigator.share({ text }); return done('Lesebestätigung gesendet.'); }
+    catch (e) { if (e.name === 'AbortError') return; }
+  }
+  try { await navigator.clipboard.writeText(text); } catch {}
+  done('Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.');
+}
+// Absender: Lesebestätigung aus dem Messenger angetippt → prüfen und im Posteingangsbuch vermerken
+async function readFromHash() {
+  const p = SigReq.parseRead(location.hash); if (!p) return;
+  history.replaceState(null, '', location.pathname + location.search);
+  const all = await journalAll(), e = all.find(x => x.sigreq === p.id);
+  if (!e || !e.sigRt) { status('Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.'); return; }
+  if (!await SigReq.verifyRead(e.sigRt, p)) { status('Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.'); return; }
+  const reads = (e.sigReads || []).filter(x => x.n !== p.name).concat({ n: p.name, at: p.at });
+  await updateEntry(e.id, { sigReads: reads }); renderJournal();
+  const msg = I18N.t(`✓✓ ${p.name} hat „${e.subject}“ gelesen (${SigReq.fmt(p.at)}).`);
+  status(msg); toast(msg, 8000);
+}
+readFromHash(); addEventListener('hashchange', readFromHash);
+
 async function reqForward(ext = false) {
   const i = reqMine(); if (i < 0) return;
   if (!reqSigned) return status('Bitte zuerst im markierten Feld unterschreiben.');
@@ -910,7 +965,7 @@ function renderReqBar() {
   const di = SigReq.declined(req);
   if (reqDraft) {
     text = req.serial ? `Serienversand „${req.title}“ an ${req.serial.length} Empfänger: Felder setzen` : `Unterschriftsanfrage „${req.title}“: Felder setzen`;
-    btns = `<label class="hint">Feldart <select id="reqType">${Object.entries(SigReq.TYPES).map(([k, v]) => `<option value="${k}"${k === reqType ? ' selected' : ''}>${v}</option>`).join('')}</select></label>` + req.signers.map((s, k) => { const c = req.fields.filter(f => f.s === k).length; return `<button type="button" class="linkbtn" data-rarm="${k}"${k === reqArm ? ' aria-pressed="true"' : ''}>${k === reqArm ? '➜ ' : ''}${req.serial ? 'Feld für Empfänger' : `Feld für ${esc(s.name)}`}${c ? ` (${c})` : ''}</button>`; }).join('') + b('send', req.serial ? `An ${req.serial.length} Empfänger senden …` : 'Senden …') + b('edit', 'Ändern …') + b('tpl', 'Als Vorlage speichern …') + b('cancel', 'Abbrechen');
+    btns = `<label class="hint">Feldart <select id="reqType">${Object.entries(SigReq.TYPES).map(([k, v]) => `<option value="${k}"${k === reqType ? ' selected' : ''}>${v}</option>`).join('')}</select></label>` + req.signers.map((s, k) => { const c = req.fields.filter(f => f.s === k).length; return `<button type="button" class="linkbtn" data-rarm="${k}"${k === reqArm ? ' aria-pressed="true"' : ''}>${k === reqArm ? '➜ ' : ''}${req.serial ? 'Feld für Empfänger' : `Feld für ${esc(s.name)}`}${c ? ` (${c})` : ''}</button>`; }).join('') + b('send', req.serial ? `An ${req.serial.length} Empfänger senden …` : 'Per E-Mail senden …') + (req.serial ? '' : b('msend', 'Per Messenger senden …')) + b('edit', 'Ändern …') + b('tpl', 'Als Vorlage speichern …') + b('cancel', 'Abbrechen');
   } else if (di >= 0) {
     text = `„${req.title}“ wurde von ${req.signers[di].name} abgelehnt${req.signers[di].reason ? `: ${req.signers[di].reason}` : ''}`;
     btns = b('info', 'Übersicht');
@@ -922,7 +977,7 @@ function renderReqBar() {
     if (wt?.due) parts.push(wt.dueDays < 0 ? `– Frist ${SigReq.day(wt.due)} ist überschritten` : wt.dueDays === 0 ? '– Frist: heute' : `– Frist: ${SigReq.day(wt.due)}`);
     if (reqExt && !reqSigned) parts.push(`– ${req.signers[i].name} hat offenbar in einem anderen PDF-Programm unterschrieben`);
     text = parts.map(p => I18N.t(p)).join(' ');   // jeden Teil für sich übersetzen
-    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + b('decline', 'Ablehnen …') + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
+    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
   } else {
     text = `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
     btns = b('info', 'Übersicht') + b('dsign', 'Zusätzlich digital signieren …');
@@ -935,6 +990,8 @@ $('#reqBtns').addEventListener('click', ev => {
   const a = ev.target.closest('[data-rarm]'); if (a) { reqArm = +a.dataset.rarm; renderReqBar(); toast(`Jetzt auf die Stelle klicken, an der ${req.signers[reqArm].name} unterschreiben soll.`, 6000); return; }
   const k = ev.target.closest('[data-rq]')?.dataset.rq;
   if (k === 'send') reqSend();
+  else if (k === 'msend') reqSendMessenger();
+  else if (k === 'rconf') reqReadConfirm();
   else if (k === 'edit') $('#btnSigReq').click();
   else if (k === 'cancel') { window.reqReset(); renderAnns(); status('Unterschriftsanfrage verworfen.'); }
   else if (k === 'sign') reqSignNow();

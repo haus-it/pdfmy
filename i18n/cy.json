@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – bach, ar gyfer lluniau ac anfon",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – di-golled, ar gyfer testun a graffeg",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – di-golled, ar gyfer archif ac argraffu (ffeiliau mawr)",
- "WebP – besonders klein": "WebP – arbennig o fach"
+ "WebP – besonders klein": "WebP – arbennig o fach",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ Mae {0} wedi darllen ‘{1}’ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Llofnodwch os gwelwch yn dda: ‘{0}’. Agorwch y PDF yn PDFMy (pdfmy.de, llusgwch y ffeil i’r ffenestr) – mae’r meysydd wedi’u marcio.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Mae’r cadarnhad darllen hwn yn perthyn i gais nad yw yn y gofrestr post yn y porwr hwn.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Mae’r cadarnhad darllen hwn yn annilys neu’n anghyflawn – tapiwch y ddolen gyfan.",
+ "Gelesen": "Darllenwyd",
+ "Gelesen: „{0}“ – {1}.": "Darllenwyd: ‘{0}’ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Wedi anfon – cyn gynted ag y daw’r cadarnhad darllen, tapiwch arno: mae PDFMy yn nodi ‘Darllenwyd’ yn y gofrestr post.",
+ "Lesebestätigung gesendet.": "Cadarnhad darllen wedi’i anfon.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Cadarnhad darllen wedi’i gopïo i’r clipfwrdd – gludwch ef yn y negesydd at yr anfonwr a’i anfon.",
+ "Lesebestätigung senden": "Anfon cadarnhad darllen",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF wedi’i gadw – atodwch ef yn WhatsApp, Signal neu Teams a’i anfon (mae’r testun cysylltiedig ar y clipfwrdd).",
+ "Per E-Mail senden …": "Anfon drwy e-bost …",
+ "Per Messenger senden …": "Anfon drwy negesydd …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Rhannu wedi’i ganslo. Mae’r cais yn y gofrestr post; mae’r PDF yma’n barod i’w atodi.",
+ "Zum Vermerken in PDFMy antippen:": "Tapiwch i’w nodi yn PDFMy:"
 }

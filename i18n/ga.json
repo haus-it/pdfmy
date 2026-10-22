@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – beag, do ghrianghraif agus le seoladh",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – gan chailliúint, do théacs agus grafaicí",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – gan chailliúint, don chartlann agus don phriontáil (comhaid mhóra)",
- "WebP – besonders klein": "WebP – an-bheag"
+ "WebP – besonders klein": "WebP – an-bheag",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ Tá “{1}” léite ag {0} ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Sínigh, le do thoil: “{0}”. Oscail an PDF in PDFMy (pdfmy.de, tarraing an comhad isteach san fhuinneog) – tá na réimsí marcáilte.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Baineann an admháil léite seo le hiarratas nach bhfuil i leabhar an phoist isteach sa bhrabhsálaí seo.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Tá an admháil léite seo neamhbhailí nó neamhiomlán – tapáil an nasc iomlán, le do thoil.",
+ "Gelesen": "Léite",
+ "Gelesen: „{0}“ – {1}.": "Léite: “{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Seolta – a luaithe a thagann an admháil léite, tapáil í: nótálann PDFMy “Léite” i leabhar an phoist isteach.",
+ "Lesebestätigung gesendet.": "Admháil léite seolta.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Admháil léite cóipeáilte chuig an ngearrthaisce – greamaigh sa teachtaire chuig an seoltóir í agus seol í.",
+ "Lesebestätigung senden": "Seol admháil léite",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF sábháilte – ceangail é in WhatsApp, Signal nó Teams agus seol é (tá an téacs tionlacain sa ghearrthaisce).",
+ "Per E-Mail senden …": "Seol trí ríomhphost …",
+ "Per Messenger senden …": "Seol trí theachtaire …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Cealaíodh an chomhroinnt. Tá an t-iarratas i leabhar an phoist isteach; tá an PDF anseo réidh le ceangal.",
+ "Zum Vermerken in PDFMy antippen:": "Tapáil chun é a nótáil in PDFMy:"
 }

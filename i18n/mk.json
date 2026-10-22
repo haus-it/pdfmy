@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – мал, за фотографии и испраќање",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – без загуби, за текст и графика",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – без загуби, за архива и печатење (големи датотеки)",
- "WebP – besonders klein": "WebP – особено мал"
+ "WebP – besonders klein": "WebP – особено мал",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} го прочита „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Ве молиме потпишете: „{0}“. Отворете го PDF-от во PDFMy (pdfmy.de, повлечете ја датотеката во прозорецот) – полињата се означени.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Оваа потврда за читање припаѓа на барање што во овој прелистувач не е во книгата на влезна пошта.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Оваа потврда за читање е неважечка или нецелосна – допрете ја целата врска.",
+ "Gelesen": "Прочитано",
+ "Gelesen: „{0}“ – {1}.": "Прочитано: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Испратено – штом пристигне потврдата за читање, допрете ја: PDFMy запишува „Прочитано“ во книгата на влезна пошта.",
+ "Lesebestätigung gesendet.": "Потврдата за читање е испратена.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Потврдата за читање е копирана во меѓумеморијата – залепете ја во месинџерот до испраќачот и испратете ја.",
+ "Lesebestätigung senden": "Испрати потврда за читање",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF-от е зачуван – прикачете го во WhatsApp, Signal или Teams и испратете го (придружниот текст е во меѓумеморијата).",
+ "Per E-Mail senden …": "Испрати по е-пошта …",
+ "Per Messenger senden …": "Испрати преку месинџер …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Споделувањето е прекинато. Барањето е во книгата на влезна пошта; PDF-от е тука подготвен за прикачување.",
+ "Zum Vermerken in PDFMy antippen:": "Допрете за запис во PDFMy:"
 }

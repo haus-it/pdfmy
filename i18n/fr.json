@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – léger, pour les photos et l’envoi",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – sans perte, pour le texte et les graphiques",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – sans perte, pour l’archivage et l’impression (fichiers volumineux)",
- "WebP – besonders klein": "WebP – particulièrement léger"
+ "WebP – besonders klein": "WebP – particulièrement léger",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} a lu « {1} » ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Veuillez signer : « {0} ». Ouvrez le PDF dans PDFMy (pdfmy.de, faites glisser le fichier dans la fenêtre) – les champs sont marqués.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Cet accusé de lecture correspond à une demande qui ne figure pas dans le registre du courrier de ce navigateur.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Cet accusé de lecture est invalide ou incomplet – veuillez toucher le lien complet.",
+ "Gelesen": "Lu",
+ "Gelesen: „{0}“ – {1}.": "Lu : « {0} » – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Envoyé – dès que l’accusé de lecture arrive, touchez-le : PDFMy note « Lu » dans le registre du courrier.",
+ "Lesebestätigung gesendet.": "Accusé de lecture envoyé.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Accusé de lecture copié dans le presse-papiers – collez-le dans la messagerie à l’attention de l’expéditeur et envoyez-le.",
+ "Lesebestätigung senden": "Envoyer l’accusé de lecture",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF enregistré – joignez-le dans WhatsApp, Signal ou Teams et envoyez-le (le texte d’accompagnement est dans le presse-papiers).",
+ "Per E-Mail senden …": "Envoyer par e-mail …",
+ "Per Messenger senden …": "Envoyer par messagerie …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Partage annulé. La demande figure dans le registre du courrier ; le PDF est prêt ici à être joint.",
+ "Zum Vermerken in PDFMy antippen:": "Touchez pour l’enregistrer dans PDFMy :"
 }

@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – малий, для фото й надсилання",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – без втрат, для тексту та графіки",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – без втрат, для архіву та друку (великі файли)",
- "WebP – besonders klein": "WebP – особливо малий"
+ "WebP – besonders klein": "WebP – особливо малий",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} прочитав(-ла) «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Будь ласка, підпишіть: «{0}». Відкрийте PDF у PDFMy (pdfmy.de, перетягніть файл у вікно) – поля позначено.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Це підтвердження прочитання належить до запиту, якого немає в журналі вхідної пошти в цьому браузері.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Це підтвердження прочитання недійсне або неповне – будь ласка, торкніться посилання повністю.",
+ "Gelesen": "Прочитано",
+ "Gelesen: „{0}“ – {1}.": "Прочитано: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Надіслано – щойно надійде підтвердження прочитання, торкніться його: PDFMy позначить «Прочитано» в журналі вхідної пошти.",
+ "Lesebestätigung gesendet.": "Підтвердження прочитання надіслано.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Підтвердження прочитання скопійовано в буфер обміну – вставте його в месенджері для відправника й надішліть.",
+ "Lesebestätigung senden": "Надіслати підтвердження прочитання",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF збережено – додайте його у WhatsApp, Signal або Teams і надішліть (супровідний текст у буфері обміну).",
+ "Per E-Mail senden …": "Надіслати електронною поштою …",
+ "Per Messenger senden …": "Надіслати через месенджер …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Надсилання скасовано. Запит є в журналі вхідної пошти; PDF тут готовий до додавання.",
+ "Zum Vermerken in PDFMy antippen:": "Торкніться, щоб позначити в PDFMy:"
 }

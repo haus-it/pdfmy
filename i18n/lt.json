@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – mažas, nuotraukoms ir siuntimui",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – be nuostolių, tekstui ir grafikai",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – be nuostolių, archyvui ir spausdinimui (dideli failai)",
- "WebP – besonders klein": "WebP – ypač mažas"
+ "WebP – besonders klein": "WebP – ypač mažas",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} perskaitė „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Prašome pasirašyti: „{0}“. Atidarykite PDF programoje PDFMy (pdfmy.de, nutempkite failą į langą) – laukai pažymėti.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Šis skaitymo patvirtinimas priklauso užklausai, kurios šios naršyklės gaunamųjų registre nėra.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Šis skaitymo patvirtinimas negalioja arba nepilnas – bakstelėkite visą nuorodą.",
+ "Gelesen": "Perskaityta",
+ "Gelesen: „{0}“ – {1}.": "Perskaityta: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Išsiųsta – kai tik gausite skaitymo patvirtinimą, bakstelėkite jį: PDFMy pažymės „Perskaityta“ gaunamųjų registre.",
+ "Lesebestätigung gesendet.": "Skaitymo patvirtinimas išsiųstas.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Skaitymo patvirtinimas nukopijuotas į iškarpinę – įklijuokite jį pokalbių programėlėje siuntėjui ir išsiųskite.",
+ "Lesebestätigung senden": "Siųsti skaitymo patvirtinimą",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF įrašytas – pridėkite jį WhatsApp, Signal arba Teams ir išsiųskite (lydimasis tekstas yra iškarpinėje).",
+ "Per E-Mail senden …": "Siųsti el. paštu …",
+ "Per Messenger senden …": "Siųsti pokalbių programėle …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Bendrinimas nutrauktas. Užklausa yra gaunamųjų registre; PDF čia paruoštas pridėti.",
+ "Zum Vermerken in PDFMy antippen:": "Bakstelėkite, kad pažymėtumėte PDFMy:"
 }

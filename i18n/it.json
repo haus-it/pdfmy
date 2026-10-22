@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – leggero, per foto e invio",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – senza perdita, per testo e grafica",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – senza perdita, per archivio e stampa (file grandi)",
- "WebP – besonders klein": "WebP – particolarmente leggero"
+ "WebP – besonders klein": "WebP – particolarmente leggero",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} ha letto «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Per favore firmi: «{0}». Apra il PDF in PDFMy (pdfmy.de, trascini il file nella finestra) – i campi sono evidenziati.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Questa conferma di lettura appartiene a una richiesta che in questo browser non è nel registro posta in arrivo.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Questa conferma di lettura non è valida o è incompleta – tocchi il link completo.",
+ "Gelesen": "Letto",
+ "Gelesen: „{0}“ – {1}.": "Letto: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Inviato – appena arriva la conferma di lettura, la tocchi: PDFMy annota «Letto» nel registro posta in arrivo.",
+ "Lesebestätigung gesendet.": "Conferma di lettura inviata.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Conferma di lettura copiata negli appunti – la incolli nel messenger per il mittente e la invii.",
+ "Lesebestätigung senden": "Invia conferma di lettura",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF salvato – lo alleghi in WhatsApp, Signal o Teams e lo invii (il testo di accompagnamento è negli appunti).",
+ "Per E-Mail senden …": "Invia per e-mail …",
+ "Per Messenger senden …": "Invia via messenger …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Condivisione annullata. La richiesta è nel registro posta in arrivo; il PDF è qui pronto da allegare.",
+ "Zum Vermerken in PDFMy antippen:": "Tocchi per annotarlo in PDFMy:"
 }

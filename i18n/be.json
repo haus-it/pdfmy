@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – малы памер, для фота і адпраўкі",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – без страт, для тэксту і графікі",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – без страт, для архіва і друку (вялікія файлы)",
- "WebP – besonders klein": "WebP – асабліва малы памер"
+ "WebP – besonders klein": "WebP – асабліва малы памер",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} прачытаў(-ла) «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Калі ласка, падпішыце: «{0}». Адкрыйце PDF у PDFMy (pdfmy.de, перацягніце файл у акно) – палі пазначаны.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Гэта пацвярджэнне прачытання адносіцца да запыту, якога няма ў журнале ўваходнай пошты ў гэтым браўзеры.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Гэта пацвярджэнне прачытання несапраўднае або няпоўнае – націсніце на спасылку цалкам.",
+ "Gelesen": "Прачытана",
+ "Gelesen: „{0}“ – {1}.": "Прачытана: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Адпраўлена – як толькі прыйдзе пацвярджэнне прачытання, націсніце на яго: PDFMy адзначыць «Прачытана» ў журнале ўваходнай пошты.",
+ "Lesebestätigung gesendet.": "Пацвярджэнне прачытання адпраўлена.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Пацвярджэнне прачытання скапіравана ў буфер абмену – устаўце яго ў месенджары для адпраўніка і адпраўце.",
+ "Lesebestätigung senden": "Адправіць пацвярджэнне прачытання",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF захаваны – далучыце яго ў WhatsApp, Signal або Teams і адпраўце (суправаджальны тэкст у буферы абмену).",
+ "Per E-Mail senden …": "Адправіць па электроннай пошце …",
+ "Per Messenger senden …": "Адправіць праз месенджар …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Абагульванне скасавана. Запыт ёсць у журнале ўваходнай пошты; PDF гатовы тут для далучэння.",
+ "Zum Vermerken in PDFMy antippen:": "Націсніце, каб адзначыць у PDFMy:"
 }

@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – lite, for bilder og sending",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – tapsfritt, for tekst og grafikk",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – tapsfritt, for arkiv og trykk (store filer)",
- "WebP – besonders klein": "WebP – spesielt lite"
+ "WebP – besonders klein": "WebP – spesielt lite",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} har lest «{1}» ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Vennligst signer: «{0}». Åpne PDF-en i PDFMy (pdfmy.de, dra filen inn i vinduet) – feltene er merket.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Denne lesebekreftelsen hører til en forespørsel som ikke står i postjournalen i denne nettleseren.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Denne lesebekreftelsen er ugyldig eller ufullstendig – trykk på hele lenken.",
+ "Gelesen": "Lest",
+ "Gelesen: „{0}“ – {1}.": "Lest: «{0}» – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Sendt – så snart lesebekreftelsen kommer, trykker du på den: PDFMy noterer «Lest» i postjournalen.",
+ "Lesebestätigung gesendet.": "Lesebekreftelse sendt.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Lesebekreftelse kopiert til utklippstavlen – lim den inn i meldingsappen til avsenderen og send.",
+ "Lesebestätigung senden": "Send lesebekreftelse",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF lagret – legg den ved i WhatsApp, Signal eller Teams og send (følgeteksten ligger på utklippstavlen).",
+ "Per E-Mail senden …": "Send via e-post …",
+ "Per Messenger senden …": "Send via meldingsapp …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Deling avbrutt. Forespørselen står i postjournalen; PDF-en ligger klar her for å legges ved.",
+ "Zum Vermerken in PDFMy antippen:": "Trykk for å notere i PDFMy:"
 }

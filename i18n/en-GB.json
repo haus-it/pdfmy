@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – small, for photos and sending",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – lossless, for text and graphics",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – lossless, for archiving and printing (large files)",
- "WebP – besonders klein": "WebP – especially small"
+ "WebP – besonders klein": "WebP – especially small",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} has read ‘{1}’ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Please sign: ‘{0}’. Open the PDF in PDFMy (pdfmy.de, drag the file into the window) – the fields are marked.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "This read receipt belongs to a request that is not in the post log in this browser.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "This read receipt is invalid or incomplete – please tap the complete link.",
+ "Gelesen": "Read",
+ "Gelesen: „{0}“ – {1}.": "Read: ‘{0}’ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Sent – as soon as the read receipt arrives, tap it: PDFMy notes ‘Read’ in the post log.",
+ "Lesebestätigung gesendet.": "Read receipt sent.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Read receipt copied to the clipboard – paste it into the messenger to the sender and send it.",
+ "Lesebestätigung senden": "Send read receipt",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF saved – attach it in WhatsApp, Signal or Teams and send it (the accompanying text is on the clipboard).",
+ "Per E-Mail senden …": "Send by email …",
+ "Per Messenger senden …": "Send via messenger …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Sharing cancelled. The request is in the post log; the PDF is ready here to attach.",
+ "Zum Vermerken in PDFMy antippen:": "Tap to record in PDFMy:"
 }

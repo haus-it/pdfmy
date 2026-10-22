@@ -177,3 +177,16 @@ test('Zustellstand: gesendet, empfangen, gelesen; wer wartet, Frist und nächste
   assert.equal(SigReq.urgent('2026-10-17T08:00:00Z', '2026-10-30', new Date(2026, 9, 18)), false);
   assert.match(Journal.emlDraft({ to: 'b@x.de', subject: 's', body: 'b', notify: 'a@x.de' }), /Disposition-Notification-To: a@x\.de/);
 });
+
+test('Lesebestätigung per Messenger: Link erzeugen, lesen, prüfen', async () => {
+  const r = SigReq.create({ title: 'Vertrag', requester: { name: 'Anna', email: 'a@x.de' }, signers: [{ name: 'Dr. Müller', email: 'm@x.de' }] });
+  r.rt = SigReq.newToken();
+  const link = await SigReq.readLink(r, 0, '2026-10-22T14:00:00.000Z');
+  assert.match(link, /^https:\/\/pdfmy\.de\/#gelesen=/);
+  const p = SigReq.parseRead(link.slice(link.indexOf('#')));
+  assert.equal(p.id, r.id); assert.equal(p.i, 0); assert.equal(p.name, 'Dr. Müller'); assert.equal(p.at, '2026-10-22T14:00:00.000Z');
+  assert.equal(await SigReq.verifyRead(r.rt, p), true);
+  assert.equal(await SigReq.verifyRead('anderer-schluessel', p), false);
+  assert.equal(await SigReq.verifyRead(r.rt, { ...p, name: 'Jemand anders' }), false);   // Name verändert
+  assert.equal(SigReq.parseRead('#gelesen=kaputt'), null);
+});

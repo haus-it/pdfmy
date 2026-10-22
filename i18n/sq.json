@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – i vogël, për fotografi dhe dërgim",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – pa humbje, për tekst dhe grafika",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – pa humbje, për arkiv dhe printim (skedarë të mëdhenj)",
- "WebP – besonders klein": "WebP – veçanërisht i vogël"
+ "WebP – besonders klein": "WebP – veçanërisht i vogël",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} e lexoi „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Ju lutemi nënshkruani: „{0}“. Hapeni PDF-në në PDFMy (pdfmy.de, tërhiqeni skedarin në dritare) – fushat janë të shënuara.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "Ky konfirmim leximi i përket një kërkese që nuk ndodhet në regjistrin e postës hyrëse në këtë shfletues.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "Ky konfirmim leximi është i pavlefshëm ose i paplotë – ju lutemi prekni lidhjen e plotë.",
+ "Gelesen": "Lexuar",
+ "Gelesen: „{0}“ – {1}.": "Lexuar: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "U dërgua – sapo të vijë konfirmimi i leximit, prekeni: PDFMy shënon „Lexuar“ në regjistrin e postës hyrëse.",
+ "Lesebestätigung gesendet.": "Konfirmimi i leximit u dërgua.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Konfirmimi i leximit u kopjua në kujtesën e fragmenteve – ngjiteni në aplikacionin e mesazheve për dërguesin dhe dërgojeni.",
+ "Lesebestätigung senden": "Dërgo konfirmimin e leximit",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF-ja u ruajt – bashkëngjiteni në WhatsApp, Signal ose Teams dhe dërgojeni (teksti shoqërues është në kujtesën e fragmenteve).",
+ "Per E-Mail senden …": "Dërgo me email …",
+ "Per Messenger senden …": "Dërgo me aplikacion mesazhesh …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Ndarja u anulua. Kërkesa ndodhet në regjistrin e postës hyrëse; PDF-ja është këtu gati për t’u bashkëngjitur.",
+ "Zum Vermerken in PDFMy antippen:": "Prekni për ta shënuar në PDFMy:"
 }

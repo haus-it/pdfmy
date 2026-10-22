@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – mały, do zdjęć i wysyłania",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – bezstratny, do tekstu i grafiki",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – bezstratny, do archiwum i druku (duże pliki)",
- "WebP – besonders klein": "WebP – szczególnie mały"
+ "WebP – besonders klein": "WebP – szczególnie mały",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} przeczytał(a) „{1}” ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Proszę podpisać: „{0}”. Otwórz PDF w PDFMy (pdfmy.de, przeciągnij plik do okna) – pola są zaznaczone.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "To potwierdzenie przeczytania należy do prośby, której nie ma w dzienniku korespondencji w tej przeglądarce.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "To potwierdzenie przeczytania jest nieprawidłowe lub niekompletne – dotknij całego linku.",
+ "Gelesen": "Przeczytano",
+ "Gelesen: „{0}“ – {1}.": "Przeczytano: „{0}” – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Wysłano – gdy tylko przyjdzie potwierdzenie przeczytania, dotknij go: PDFMy odnotuje „Przeczytano” w dzienniku korespondencji.",
+ "Lesebestätigung gesendet.": "Potwierdzenie przeczytania wysłane.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Potwierdzenie przeczytania skopiowano do schowka – wklej je w komunikatorze do nadawcy i wyślij.",
+ "Lesebestätigung senden": "Wyślij potwierdzenie przeczytania",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF zapisany – załącz go w WhatsApp, Signal lub Teams i wyślij (tekst towarzyszący jest w schowku).",
+ "Per E-Mail senden …": "Wyślij e-mailem …",
+ "Per Messenger senden …": "Wyślij przez komunikator …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Udostępnianie przerwane. Prośba jest w dzienniku korespondencji; PDF jest tutaj gotowy do załączenia.",
+ "Zum Vermerken in PDFMy antippen:": "Dotknij, aby odnotować w PDFMy:"
 }

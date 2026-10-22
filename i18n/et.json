@@ -2867,5 +2867,20 @@
  "JPG – klein, für Fotos und zum Versenden": "JPG – väike, fotode ja saatmise jaoks",
  "PNG – verlustfrei, für Text und Grafiken": "PNG – kadudeta, teksti ja graafika jaoks",
  "TIFF – verlustfrei, für Archiv und Druck (große Dateien)": "TIFF – kadudeta, arhiivi ja printimise jaoks (suured failid)",
- "WebP – besonders klein": "WebP – eriti väike"
+ "WebP – besonders klein": "WebP – eriti väike",
+ "✓✓ {0} hat „{1}“ gelesen ({2}).": "✓✓ {0} on lugenud dokumenti „{1}“ ({2}).",
+ "Bitte unterschreiben: „{0}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.": "Palun allkirjastage: „{0}“. Avage PDF PDFMy-s (pdfmy.de, lohistage fail aknasse) – väljad on märgitud.",
+ "Diese Lesebestätigung gehört zu einer Anfrage, die in diesem Browser nicht im Posteingangsbuch steht.": "See lugemiskinnitus kuulub taotlusele, mida selle brauseri sissetuleva posti registris ei ole.",
+ "Diese Lesebestätigung ist ungültig oder unvollständig – bitte den Link vollständig antippen.": "See lugemiskinnitus on kehtetu või puudulik – puudutage palun kogu linki.",
+ "Gelesen": "Loetud",
+ "Gelesen: „{0}“ – {1}.": "Loetud: „{0}“ – {1}.",
+ "Gesendet – sobald die Lesebestätigung kommt, darauf tippen: PDFMy vermerkt „Gelesen“ im Posteingangsbuch.": "Saadetud – kui lugemiskinnitus saabub, puudutage seda: PDFMy märgib sissetuleva posti registrisse „Loetud“.",
+ "Lesebestätigung gesendet.": "Lugemiskinnitus saadetud.",
+ "Lesebestätigung in die Zwischenablage kopiert – im Messenger an den Absender einfügen und senden.": "Lugemiskinnitus kopeeriti lõikelauale – kleepige see sõnumirakenduses saatjale ja saatke.",
+ "Lesebestätigung senden": "Saada lugemiskinnitus",
+ "PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).": "PDF salvestatud – lisage see WhatsAppis, Signalis või Teamsis manusena ja saatke (saatetekst on lõikelaual).",
+ "Per E-Mail senden …": "Saada e-postiga …",
+ "Per Messenger senden …": "Saada sõnumirakendusega …",
+ "Teilen abgebrochen. Die Anfrage steht im Posteingangsbuch; die PDF liegt hier zum Anhängen bereit.": "Jagamine katkestati. Taotlus on sissetuleva posti registris; PDF on siin manustamiseks valmis.",
+ "Zum Vermerken in PDFMy antippen:": "Puudutage, et PDFMy-s märkida:"
 }
