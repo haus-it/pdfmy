@@ -168,7 +168,14 @@ test('Schwärzen-Vorschläge: IBAN, E-Mail, Telefon, Steuer-ID, Geburtsdatum', (
   const L = require('../js/letter.js');
   const t = 'Herr Max Muster, geb. am 03.04.1980, Tel.: 05251 202081-1, max@muster.de, IBAN DE02 1203 0000 0000 2020 51, Steuer-ID 12 345 678 901, Rechnung 2026-48213 vom 07.10.2026';
   const r = L.findSensitive(t).map(x => [x.kind, t.slice(x.start, x.end)]);
-  assert.deepEqual(r, [['Geburtsdatum', '03.04.1980'], ['Telefon', '05251 202081-1'], ['E-Mail', 'max@muster.de'], ['IBAN', 'DE02 1203 0000 0000 2020 51'], ['Steuer-ID', '12 345 678 901']]);
+  assert.deepEqual(r, [['Name', 'Max Muster'], ['Geburtsdatum', '03.04.1980'], ['Telefon', '05251 202081-1'], ['E-Mail', 'max@muster.de'], ['IBAN', 'DE02 1203 0000 0000 2020 51'], ['Steuer-ID', '12 345 678 901']]);
+});
+
+test('Schwärzen-Vorschläge: Namen nach Anrede und Anschrift', () => {
+  const L = require('../js/letter.js');
+  const t = 'Frau Dr. Erika Mustermann\nHeidestraße 17\n51147 Köln\nSehr geehrte Damen und Herren, Herr Vorsitzender, 12345 Euro Umsatz';
+  assert.deepEqual(L.findSensitive(t).map(x => [x.kind, t.slice(x.start, x.end)]),
+    [['Name', 'Dr. Erika Mustermann'], ['Anschrift', 'Heidestraße 17'], ['Anschrift', '51147 Köln']]);
 });
 
 test('Schwärzen-Vorschläge: IBAN mit OCR-Leerzeichen nach dem Ländercode', () => {

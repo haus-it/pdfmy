@@ -4425,6 +4425,7 @@ async function detectForm(docIdx) {
       else if (f instanceof L.PDFCheckBox) fields.push({ name, kind: 'check', value: f.isChecked(), ro });
       else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected()[0] || '', ro });
       else if (f instanceof L.PDFRadioGroup) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected() || '', ro });
+      if (fields.at(-1)?.name === name) try { fields.at(-1).tip = f.acroField.dict.lookup(L.PDFName.of('TU'))?.decodeText?.() || ''; } catch {}   // Kurzinfo (für „Meine Angaben“)
     }
     d.fields = fields; d.values = {};
   } catch (e) { console.warn('Formular:', e); d.fields = []; }

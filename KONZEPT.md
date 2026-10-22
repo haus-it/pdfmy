@@ -114,6 +114,26 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Prüfung 22.10.2026 (3): Was Nutzer bei Mitbewerbern vermissen oder kritisieren
+Grundlage: Recherche 22.10.2026 (Herstellerseiten Adobe/Foxit/iLovePDF/Stirling-PDF, Fachpresse borncity/WinFuture/PC-WELT/IT Brief, Adobe-Community, r/sysadmin, Trustpilot). Ein Vergleichstest von Stiftung Warentest oder c't aus 2025/2026 war nicht zu finden.
+
+**Kritik an Mitbewerbern – wo PDFMy schon besser ist:** Abo-Preise und Lizenzentzug (Adobe: Preiserhöhung 2026, alte Kauflizenzen entzogen, automatische Verlängerung von Probeabos), Limits für kostenlose Nutzer (iLovePDF 100 MB/Tageslimit, Smallpdf), Upload-Zwang (Online-Dienste von PDF24, iLovePDF, Smallpdf), Werbung (PDF24 online), KI mit Cloud-Upload (Acrobat-KI ab Werk an, PDFgear Copilot online). **Achtung:** Foxit bietet seit 2026.2 lokale KI, auch im kostenlosen Reader – „KI ohne Upload“ ist kein Alleinstellungsmerkmal mehr; Vorsprung halten wir über „gar nichts verlässt den Rechner, selbst prüfbar“.
+
+| Wunsch / Kritik | Stand PDFMy vorher | Ergebnis |
+|---|---|---|
+| Formulare aus gespeicherten eigenen Daten ausfüllen (Acrobat nur in der Handy-App) | fehlte | **passt, umgesetzt:** „Meine Angaben“ – nur im Browser gespeichert, nie übertragen, nur leere Felder, „Alle löschen“ (Punkt 1–4). Auflage: Hinweis für gemeinsam genutzte Geräte im Dialog |
+| Lesemodus mit Textumbruch auf dem Handy (Acrobat Liquid Mode: Cloud, max. 200 Seiten) | fehlte | **passt, umgesetzt:** lokal aus Textebene/OCR, ohne Seitenbegrenzung (Punkt 1, 2, 4) |
+| Automatisches Schwärzen (Foxit Smart Redact kostenpflichtig) | IBAN, E-Mail, Telefon, Steuer-ID, Geburtsdatum, SV-Nr. | **passt, erweitert:** Namen nach Anrede, Straße/Hausnummer, PLZ/Ort; bleibt Vorschlag mit Prüfung durch den Nutzer |
+| Dateinamen automatisch aus dem Inhalt | vorhanden (Datum_Typ_Absender_Betreff) | kein Handlungsbedarf; eigene Namensvorlage → beobachten |
+| Belege nach DATEV | DATEV-XML (Belegbilder) + Belegliste CSV vorhanden | Buchungsstapel EXTF zurückgestellt: nur mit geprüfter DATEV-Spezifikation (Formatfehler → falsche Buchungen) |
+| Formularfelder automatisch erkennen (Stirling-PDF 3.0) | vorhanden (Schreiblinien, Kästen, Ankreuzfelder) | kein Handlungsbedarf |
+| Aufteilen nach Inhalt (iLovePDF) | vorhanden (Anrede, Datum, Absender, Seite 1 von n) | kein Handlungsbedarf |
+| Bearbeiten per Anweisung in natürlicher Sprache (Acrobat, Cloud) | Befehlssuche Strg+K mit Synonymen, KI-Assistent lokal | passt nur lokal (Browser-KI/lokale KI) → später prüfen |
+| Arbeitsraum mit Fragen über viele Dokumente (Acrobat PDF Spaces, Foxit) | Fragen an ein Dokument (lokale KI) | passt nur lokal, Speichergrenzen im Browser → beobachten |
+| Handschrift erkennen | Druckschrift | weiterhin kein brauchbares lokales Modell für Deutsch → beobachten |
+| Qualifizierte elektronische Signatur (QES) | fortgeschrittene Signatur, PAdES, Prüfung | braucht Vertrauensdiensteanbieter (Konto, oft kostenpflichtig) → verletzt Punkt 2/3; höchstens später Übergabe nur des Hashwerts auf ausdrücklichen Wunsch – Entscheidung GF |
+| Layoutverlust bei PDF → Word (alle kostenlosen Tools) | vorhanden, Qualität nicht gemessen | **offen:** Vergleichstest mit Acrobat/PDF24 ins Test-Gate aufnehmen |
+
 ### Umgesetzt (22.10.2026): Lesebestätigung für Unterschriftsanfragen per WhatsApp, Signal, Teams
 **Wunsch:** Der Absender soll sehen, ob der Empfänger eine per Messenger verschickte Anfrage gelesen hat.
 **Grenze:** Die Lesehaken von WhatsApp, Signal und Teams sind nur in deren App sichtbar; eine Abfrage durch PDFMy ginge nur mit Firmenkonto und Server (Business-API, Graph) – verletzt Punkt 1–3. Außerdem zeigen die Haken nur, dass die Nachricht angezeigt wurde, nicht, dass das Dokument gelesen ist.

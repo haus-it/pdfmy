@@ -4310,3 +4310,88 @@ $('#attList').addEventListener('click', e => {
   };
   hello();
 })();
+
+/* ---------- „Meine Angaben“: Formulare mit eigenen Daten ausfüllen (js/formprofile.js) ----------
+   Die Angaben liegen nur in diesem Browser (localStorage) – kein Konto, keine Übertragung. */
+const FP_AUTO = { anrede: 'honorific-prefix', vorname: 'given-name', nachname: 'family-name', geburtsdatum: 'bday', strasse: 'address-line1', plz: 'postal-code', ort: 'address-level2', land: 'country-name', telefon: 'tel', email: 'email', firma: 'organization' };
+const fpDocs = () => state.docs.filter(d => d?.fields?.length && state.pages.some(p => p.kind === 'pdf' && state.docs[p.docIdx] === d));
+function fpOpen(note) {
+  closeMenu?.();
+  const prof = LS.get('profile', {}) || {};
+  $('#fpGrid').innerHTML = FormProfile.KEYS.map(([k, label]) =>
+    `<label for="fp-${k}">${esc(I18N.t(label))}<input id="fp-${k}" data-k="${k}" autocomplete="${FP_AUTO[k] || 'off'}" value="${esc(prof[k] || '')}"${k === 'iban' ? ' spellcheck="false"' : ''}></label>`).join('');
+  $('#fpLearn').hidden = !fpDocs().length;
+  $('#fpDlg').returnValue = '';
+  $('#fpDlg').showModal();
+  if (note) status(note);
+}
+$('#fpDlg').addEventListener('close', () => {
+  if ($('#fpDlg').returnValue !== 'save') return;
+  const prof = {};
+  for (const el of $('#fpGrid').querySelectorAll('input')) { const v = el.value.trim(); if (v) prof[el.dataset.k] = v; }
+  Object.keys(prof).length ? LS.set('profile', prof) : LS.del('profile');
+  status(Object.keys(prof).length ? 'Meine Angaben gespeichert – nur in diesem Browser.' : 'Meine Angaben gelöscht.');
+  if (fpPending) { fpPending = false; if (Object.keys(prof).length) fpFill(); }
+});
+$('#fpClear').onclick = () => { for (const el of $('#fpGrid').querySelectorAll('input')) el.value = ''; };
+$('#fpLearn').onclick = () => {
+  let n = 0;
+  for (const d of fpDocs()) for (const [k, v] of Object.entries(FormProfile.learn(d.fields, d.values))) { const el = $('#fp-' + k); if (el && el.value !== v) { el.value = v; n++; } }
+  status(n ? `${n} Angabe(n) aus dem Formular übernommen – bitte prüfen und speichern.` : 'Im Formular sind keine passenden Angaben ausgefüllt.');
+};
+let fpPending = false;
+function fpFill() {
+  const prof = LS.get('profile', null);
+  if (!prof || !Object.keys(prof).length) { fpPending = true; return fpOpen('Einmal Ihre Angaben eintragen – danach füllt PDFMy Formulare mit einem Klick aus.'); }
+  let n = 0;
+  for (const d of fpDocs()) {
+    const cur = d.fields.map(f => ({ ...f, value: d.values[f.name] ?? f.value }));
+    const r = FormProfile.fill(cur, prof);
+    if (!r.n) continue;
+    Object.assign(d.values, r.values); n += r.n; state.dirty = true;
+    applyForm(d);
+  }
+  renderForm();
+  status(n ? `${n} Feld(er) mit Ihren Angaben ausgefüllt – bitte prüfen.` : 'Keine passenden leeren Felder gefunden. Felder wie Name, Anschrift oder IBAN erkennt PDFMy an ihrer Beschriftung.');
+}
+$('#fpFill').onclick = fpFill;
+$('#fpEdit').onclick = () => fpOpen();
+$('#btnProfile').onclick = () => fpOpen();
+
+/* ---------- Lesemodus: Text neu umbrechen (js/reflow.js) – bequem lesen auf dem Handy ---------- */
+const readFont = () => Math.min(32, Math.max(12, LS.get('readFont', 18)));
+async function readOpen() {
+  closeMenu?.();
+  if (!state.pages.length) return;
+  const body = $('#readBody'), toc = $('#readToc'); body.textContent = ''; toc.textContent = '';
+  body.style.setProperty('--rf', readFont());
+  const multi = state.pages.length > 1; let heads = 0, empty = 0, start = null;
+  toc.append(new Option(I18N.t('Springen zu …'), ''));
+  for (const [i, p] of state.pages.entries()) {
+    const words = await pageWords(p).catch(() => null);
+    const blocks = words?.length ? Reflow.blocks(textLines(words)) : Reflow.fromText(pageText(p));
+    const sec = document.createElement('section'); sec.id = 'rd-pg' + i;
+    if (p.lang && I18N.byOcr?.(p.lang)?.bcp) sec.lang = I18N.byOcr(p.lang).bcp;
+    if (multi) { const h = document.createElement('div'); h.className = 'rpg'; h.textContent = I18N.t(`Seite ${i + 1}`); sec.append(h); toc.append(new Option(I18N.t(`Seite ${i + 1}`), sec.id)); }
+    if (!blocks.length) { empty++; const n = document.createElement('p'); n.className = 'rnone'; n.textContent = I18N.t('Auf dieser Seite ist noch kein Text erkannt („… Mehr → Texterkennung (OCR) für alle Seiten“).'); sec.append(n); }
+    let list = null;
+    for (const b of blocks) {
+      if (b.type === 'li') { if (!list) sec.append(list = document.createElement('ul')); const li = document.createElement('li'); li.textContent = b.text.replace(/^[•·▪◦‣–\-*]\s*/, ''); list.append(li); continue; }
+      list = null;
+      const el = document.createElement(b.type === 'h' ? 'h2' : 'p'); el.textContent = b.text;
+      if (b.type === 'h') { el.id = 'rd-h' + (++heads); toc.append(new Option('  ' + b.text.slice(0, 60), el.id)); }
+      sec.append(el);
+    }
+    body.append(sec);
+    if (p === cur()) start = sec;
+  }
+  toc.hidden = toc.options.length < 3;
+  $('#readDlg').showModal();
+  if (start && multi) start.scrollIntoView(); else body.scrollTop = 0;
+  body.focus();
+  if (empty === state.pages.length) status('Noch kein Text erkannt – zuerst die Texterkennung laufen lassen, dann zeigt der Lesemodus den Text.');
+}
+$('#readToc').onchange = e => { const t = document.getElementById(e.target.value); if (t) t.scrollIntoView({ behavior: 'smooth' }); e.target.value = ''; };
+const readZoom = d => { const v = Math.min(32, Math.max(12, readFont() + d)); LS.set('readFont', v); $('#readBody').style.setProperty('--rf', v); };
+$('#readSm').onclick = () => readZoom(-2); $('#readLg').onclick = () => readZoom(2);
+$('#btnReader').onclick = readOpen; $('#readMode').onclick = readOpen;

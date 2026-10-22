@@ -526,6 +526,12 @@
     run(/(?:Steuer-?ID|Steueridentifikationsnummer|Identifikationsnummer|IdNr\.?)\D{0,20}(\d{2} ?\d{3} ?\d{3} ?\d{3})\b/gi, 'Steuer-ID');
     run(/geb(?:oren|\.)?(?: am)?\s*:?\s*(\d{1,2}\.\d{1,2}\.\d{2,4})/gi, 'Geburtsdatum');
     run(/\b(\d{2} ?\d{6} ?[A-Z] ?\d{3})\b/g, 'Sozialvers.-Nr.');
+    // Namen nach einer Anrede („Frau Erika Mustermann“, „Herrn Dr. Max Muster“), nicht „Damen und Herren“
+    run(/\b(?:Herrn?|Frau)[ \t]+((?:(?:Dr|Prof)\.[ \t]*)*[A-ZÄÖÜ][a-zäöüß]+(?:-[A-ZÄÖÜ][a-zäöüß]+)?(?:[ \t]+(?:von[ \t]+|van[ \t]+|de[ \t]+)?[A-ZÄÖÜ][a-zäöüß]+(?:-[A-ZÄÖÜ][a-zäöüß]+)?)?)/g, 'Name',
+      g => !/^(und|oder|Kollegin|Kollege|Vorsitzende[rn]?|Präsident(in)?|Bürgermeister(in)?|Direktor(in)?|Richter(in)?|Rechtsanwalt|Rechtsanwältin|Doktor)\b/.test(g));
+    // Anschrift: Straße mit Hausnummer und PLZ mit Ort
+    run(/\b([A-ZÄÖÜ][a-zäöüß-]*(?:straße|strasse|str\.|weg|allee|platz|gasse|ring|damm|ufer|steig|pfad|chaussee)[ \t]+\d{1,4}(?: ?[a-zA-Z](?![A-Za-zäöüß]))?(?:[-–]\d{1,4})?)(?![\d,.]*\s?(?:€|EUR|%))/g, 'Anschrift');
+    run(/\b(\d{5}[ \t]+[A-ZÄÖÜ][a-zäöüß]+(?:[- ](?:an der|am|im|in|bei|ob der)? ?[A-ZÄÖÜ][a-zäöüß]+)?)/g, 'Anschrift', g => !/\d\s+(Euro|EUR|Stück|Seiten?|Tage?|Kunden|Mitglieder|Einwohner)\b/.test(g));
     // Überlappungen zusammenfassen
     out.sort((a, b) => a.start - b.start);
     return out.filter((r, i) => !out.slice(0, i).some(o => o.start <= r.start && o.end >= r.end));

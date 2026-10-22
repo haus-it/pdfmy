@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Was bei Mitbewerbern fehlt oder stört – drei Verbesserungen (app-v179)
+- Grundlage: Recherche 22.10.2026 (Herstellerangaben, Fachpresse, Foren, Bewertungsportale) – Ergebnis und Leitplanken-Prüfung in KONZEPT.md Abschnitt 4.
+- **Meine Angaben:** Formulare mit einem Klick ausfüllen („Mit meinen Angaben ausfüllen“ im Formular-Bereich, „… Mehr → Meine Angaben …“). Zuordnung über Feldname und Kurzinfo, deutsch und englisch (js/formprofile.js): Vor-/Nachname, „Name, Vorname“, Straße/Hausnummer getrennt oder zusammen, PLZ/Ort, „Ort, Datum“ (heute), Geburtsdatum/-ort, Telefon, E-Mail, IBAN, BIC, Bank, Kontoinhaber, Steuer-ID, Steuernummer, Firma, Anrede (Auswahlfeld). Nur leere, beschreibbare Felder; Felder fremder Personen (Kind, Ehegatte, Geburtsname …) bleiben leer. „Aus diesem Formular übernehmen“ schlägt Angaben aus einem ausgefüllten Formular vor. Die Angaben liegen nur im Browser (localStorage), „Alle löschen“ entfernt sie. Bei Acrobat gibt es das nur in der Handy-App.
+- **Lesemodus:** Text neu umbrechen – bequem lesen auf dem Handy (js/reflow.js): Absätze, Überschriften, Aufzählungen, Silbentrennung am Zeilenende aufgehoben, Schrift A−/A+ (gemerkt), „Springen zu“ Seiten und Überschriften. Aus der Textebene oder der Texterkennung, ohne Seitenbegrenzung.
+- **Schwärzen-Vorschläge erweitert:** zusätzlich Namen nach einer Anrede („Frau Dr. Erika Mustermann“, nicht „Damen und Herren“ oder Amtsbezeichnungen), Straße mit Hausnummer und PLZ mit Ort.
+- Tests: tests/formprofile.test.js (Zuordnung, Ausfüllen, Übernehmen, Lesemodus), tests/letter.test.js (Namen, Anschrift); Browser: Formular ausfüllen, Lesemodus Brief mit Überschrift/Absätzen/Aufzählung; axe 0 (hell/dunkel, 1280/390 px).
+
 ### Feinschliff (app-v178)
 - Handy-Ansicht der neuen Dialoge geprüft (Scannen, Speichern, Office-Programm, Datenschutz, KI-Assistent, 375 px): „Bildformat“ ragte über den Rand – behoben; axe 0.
 - Vorab-Übersetzung: in den Prüfwert einer Seite fließen nur noch die Wörterbuch-Einträge, die auf ihr vorkommen (Quelltext, aufgelöste Zeichen und reiner Text verglichen; Abgleich mit I18N.collect: 1.740 von 1.740 Einträgen gefunden) – eine geänderte Übersetzung übersetzt nur noch die betroffenen Seiten neu statt aller 1.170.
