@@ -78,5 +78,93 @@
     "intro": "Machen Sie aus Fotos, Belegen und Screenshots eine ordentliche PDF. Handyfotos von Dokumenten schneidet PDFMy automatisch zu und entzerrt sie.",
     "steps": ["Auf „Bilder in PDF“ klicken und die Bilder wählen.", "Reihenfolge prüfen – Fotos von Blättern werden automatisch zugeschnitten.", "Speichern."],
     "faq": [["Welche Formate gehen?", "JPG, PNG, TIFF, WebP, HEIC und weitere übliche Bildformate."], ["Geht das auf dem Handy?", "Ja – PDFMy läuft auch auf iPhone und Android, auf Wunsch als App."]]
+  },
+  {
+    "slug": "pdf-bearbeiten", "target": "open", "label": "PDF bearbeiten",
+    "title": "PDF bearbeiten – Text ändern, ergänzen, markieren ohne Upload",
+    "description": "PDF kostenlos bearbeiten: vorhandenen Text ändern, Text und Bilder einfügen, markieren, Notizen und Formularfelder – direkt im Browser, ohne Upload und ohne Anmeldung.",
+    "intro": "Tippfehler im Vertrag, neue Adresse im Formular, eine Notiz für die Kollegin: PDFMy bearbeitet PDFs direkt im Browser – und schreibt geänderten Text nach Möglichkeit in der Originalschrift weiter.",
+    "steps": ["PDF mit „Öffnen“ laden oder ins Fenster ziehen.", "Werkzeug wählen: „Text ändern“, „Text“, „Markieren“, „Notiz“, „Unterschrift“ oder „Formularfeld“.", "Speichern – auf Wunsch auch als PDF/A."],
+    "faq": [["Kann ich vorhandenen Text ändern?", "Ja. Mit „Text ändern“ auf eine Zeile klicken und tippen. Ist die Schrift in der PDF eingebettet, schreibt PDFMy mit genau dieser Schrift weiter, sonst mit einer Schrift gleicher Breite."], ["Geht das auch bei Scans?", "Ja. PDFMy erkennt den Text gescannter Seiten (OCR) und macht ihn durchsuchbar; Änderungen setzen Sie mit „Abdecken und Text“."]]
+  },
+  {
+    "slug": "word-in-pdf", "target": "open", "label": "Word in PDF",
+    "title": "Word in PDF umwandeln – auch Excel und LibreOffice, ohne Upload",
+    "description": "Word, Excel, LibreOffice/OpenOffice, EPUB, Text, Markdown und CSV kostenlos in PDF umwandeln – mit Tabellen, Bildern, Kopf- und Fußzeilen. Ohne Upload, direkt im Browser.",
+    "intro": "Ein Angebot aus Word, eine Liste aus Excel, ein Text aus LibreOffice: PDFMy wandelt Office-Dateien direkt im Browser in PDF um – die Datei verlässt Ihren Rechner nicht.",
+    "steps": ["Auf „Öffnen“ klicken und die Word-, Excel- oder LibreOffice-Datei wählen (oder ins Fenster ziehen).", "PDFMy zeigt die Seiten als PDF – bei Bedarf Seiten ergänzen, unterschreiben oder zusammenfügen.", "Als PDF oder PDF/A speichern."],
+    "faq": [["Welche Formate gehen?", "Word (.docx), Excel (.xlsx), LibreOffice/OpenOffice (.odt, .ods), E-Books (.epub), Text, Markdown und CSV."], ["Sieht das PDF aus wie in Word?", "Absätze, Tabellen, Bilder sowie Kopf- und Fußzeilen werden übernommen. Bei sehr aufwendigen Layouts kann es kleine Abweichungen geben – prüfen Sie die Vorschau vor dem Speichern."]]
+  },
+  {
+    "slug": "pdf-aufteilen", "target": "split", "label": "PDF aufteilen",
+    "title": "PDF aufteilen – nach Seiten, Lesezeichen oder Dateigröße",
+    "description": "PDF kostenlos aufteilen: alle N Seiten, an Lesezeichen oder nach Dateigröße für E-Mail und Portale – auch gescannte Stapel an Trennblättern. Ohne Upload.",
+    "intro": "Zu groß fürs Portal, mehrere Briefe in einem Scan oder ein Kapitel herauslösen: PDFMy teilt PDFs so, wie Sie es brauchen – direkt im Browser.",
+    "steps": ["Auf „PDF aufteilen“ klicken und die Datei wählen.", "Art wählen: alle N Seiten, an Lesezeichen oder nach höchstens erlaubter Dateigröße.", "Speichern – die Teile kommen gesammelt als ZIP oder direkt in einen Ordner."],
+    "faq": [["Kann ich einen Scan-Stapel in einzelne Briefe trennen?", "Ja. Legen Sie Trennblätter (QR- oder Patchcode) zwischen die Briefe oder lassen Sie PDFMy am Inhalt erkennen, wo ein neuer Brief beginnt."], ["Bleiben Text und Qualität erhalten?", "Ja. Beim Aufteilen wird nichts neu gerastert; durchsuchbarer Text bleibt durchsuchbar."]]
+  },
+  {
+    "slug": "pdf-seiten-bearbeiten", "target": "organize", "label": "PDF-Seiten drehen und löschen",
+    "title": "PDF-Seiten drehen, löschen und sortieren – kostenlos ohne Upload",
+    "description": "Seiten einer PDF drehen, löschen, sortieren, einfügen oder halbieren – per Ziehen in der Vorschau. Kostenlos, ohne Anmeldung, ohne Upload.",
+    "intro": "Eine Seite steht kopf, eine ist doppelt, die Reihenfolge stimmt nicht: In PDFMy ordnen Sie Seiten per Ziehen – und sehen sofort das Ergebnis.",
+    "steps": ["Auf „Seiten organisieren“ klicken und die PDF wählen.", "Seiten ziehen, drehen, löschen oder Seiten aus einer anderen Datei einfügen.", "Speichern."],
+    "faq": [["Kann ich Doppelseiten-Scans teilen?", "Ja. „Seiten halbieren“ teilt aufgeschlagene Bücher und A3-Bögen in zwei Seiten – senkrecht oder waagerecht."], ["Verliere ich dabei Text oder Formularfelder?", "Nein. Drehen, Sortieren und Löschen ändern nur die Seitenreihenfolge und -lage."]]
+  },
+  {
+    "slug": "pdf-in-jpg", "target": "pdf2img", "label": "PDF in JPG",
+    "title": "PDF in JPG umwandeln – jede Seite als Bild, ohne Upload",
+    "description": "PDF kostenlos in JPG-Bilder umwandeln: jede Seite als Bild, gesammelt als ZIP. Ohne Upload und ohne Anmeldung.",
+    "intro": "Für Präsentationen, Webseiten oder Messenger: PDFMy macht aus jeder PDF-Seite ein Bild – direkt im Browser.",
+    "steps": ["Auf „PDF in Bilder“ klicken und die PDF wählen.", "Im Speichern-Dialog ist das Format „Bilder“ schon gewählt.", "Speichern – alle Bilder kommen gesammelt als ZIP."],
+    "faq": [["Kann ich die Bilder aus einer PDF in Originalgröße herausholen?", "Ja. „Bilder aus PDF“ holt Fotos und Logos so heraus, wie sie in der Datei stecken."], ["Und umgekehrt?", "„Bilder in PDF“ macht aus JPG- und PNG-Dateien ein PDF – auch Fotos vom Handy."]]
+  },
+  {
+    "slug": "pdf-vergleichen", "target": "compare", "label": "PDF vergleichen",
+    "title": "PDF vergleichen – Unterschiede zweier Fassungen finden",
+    "description": "Zwei PDF-Fassungen kostenlos vergleichen: eingefügte und entfernte Wörter oder Überlagerung der Seiten in Rot und Grün. Ohne Upload – auch für Verträge.",
+    "intro": "Was hat die Gegenseite im Vertrag geändert? PDFMy vergleicht zwei Fassungen Wort für Wort oder legt die Seiten übereinander – vertrauliche Dokumente bleiben auf Ihrem Rechner.",
+    "steps": ["Auf „Dokumente vergleichen“ klicken und die beiden Fassungen wählen.", "Ansicht wählen: „Text“ (eingefügte und entfernte Wörter) oder „Bild (Überlagerung)“.", "Unterschiede durchgehen – gestrichelte Rahmen zeigen jede geänderte Stelle."],
+    "faq": [["Und bei Scans oder Plänen?", "Für Scans, Pläne und Zeichnungen eignet sich die Überlagerung: Rot ist nur in der ersten, Grün nur in der zweiten Fassung."], ["Werden meine Verträge hochgeladen?", "Nein. Der Vergleich läuft vollständig in Ihrem Browser."]]
+  },
+  {
+    "slug": "pdf-a-erstellen", "target": "pdfa", "label": "PDF/A erstellen",
+    "title": "PDF/A erstellen – revisionssicher archivieren, geprüft",
+    "description": "PDF und Scans kostenlos in PDF/A-2b umwandeln – mit Texterkennung, eingebetteten Schriften und Farbprofil, geprüft mit veraPDF; zugleich barrierefrei nach PDF/UA. Ohne Upload.",
+    "intro": "Für Finanzamt, Behörden und das eigene Archiv: PDFMy speichert Dokumente im Langzeitformat PDF/A – mit dem unabhängigen Prüfwerkzeug veraPDF getestet.",
+    "steps": ["Auf „PDF/A archivieren“ klicken und die Datei wählen.", "PDFMy erkennt bei Scans den Text und bettet Schriften und Farbprofil ein.", "Als PDF/A speichern – vorhandene Dateien prüft „PDF/A prüfen“."],
+    "faq": [["Welche PDF/A-Stufe?", "PDF/A-2b. Aus Scans und Fotos entsteht zugleich ein barrierefreies PDF nach PDF/UA-1 mit Tags, Sprache und Titel."], ["Kann ich viele Dateien auf einmal umwandeln?", "Ja – mit der Stapelverarbeitung oder automatisch über „Ordner überwachen“."]]
+  },
+  {
+    "slug": "pdf-formular-ausfuellen", "target": "form", "label": "PDF-Formular ausfüllen",
+    "title": "PDF-Formular ausfüllen und erstellen – mit Rechenfeldern",
+    "description": "PDF-Formulare kostenlos ausfüllen und speichern – oder eigene Formulare erstellen, die rechnen (Summe, MwSt.) und prüfen (E-Mail, IBAN, PLZ). Ohne Upload.",
+    "intro": "Antrag, Bestellung, Anmeldung: PDFMy füllt PDF-Formulare direkt im Browser aus – und baut auf Wunsch eigene Formulare, die selbst rechnen und Eingaben prüfen.",
+    "steps": ["Auf „Formular ausfüllen“ klicken und die PDF wählen.", "Felder ausfüllen – Pflichtfelder und falsche Eingaben zeigt PDFMy an.", "Speichern; fehlen Felder ohne Formular, setzt sie das Werkzeug „Formularfeld“."],
+    "faq": [["Kann ich Formulare ohne Felder ausfüllen?", "Ja. Mit „Text“ schreiben Sie an jede Stelle; PDFMy erkennt bei vielen Formularen die Linien und Kästchen und schlägt Felder vor."], ["Rechnen die Felder auch in Acrobat?", "Ja. Rechen- und Prüffelder funktionieren in gängigen PDF-Programmen; in PDF/A bleiben Formulare ohne Skripte."]]
+  },
+  {
+    "slug": "pdf-seitenzahlen-wasserzeichen", "target": "stamp", "label": "Seitenzahlen und Wasserzeichen",
+    "title": "PDF Seitenzahlen und Wasserzeichen einfügen – kostenlos",
+    "description": "Seitenzahlen, Kopf- und Fußzeilen, Wasserzeichen wie „KOPIE“ oder „ENTWURF“ und Bates-Nummern kostenlos in PDFs einfügen. Ohne Upload, ohne Anmeldung.",
+    "intro": "Nummerieren für die Akte, „ENTWURF“ quer über jede Seite oder fortlaufende Bates-Nummern fürs Gericht: PDFMy stempelt PDFs direkt im Browser.",
+    "steps": ["Auf „Seitenzahlen & Wasserzeichen“ klicken und die PDF wählen.", "Seitenzahl-Format, Text des Wasserzeichens und Position wählen.", "Speichern."],
+    "faq": [["Kann ich fortlaufend über mehrere Dateien nummerieren?", "Ja – mit „Bates & Kopfzeile“ für Akten und Gerichtsunterlagen."], ["Lassen sich eigene Stempel setzen?", "Ja. Neben „KOPIE“ und „ENTWURF“ gibt es Stempel wie „Bezahlt“ oder „Eingegangen“."]]
+  },
+  {
+    "slug": "pdf-entsperren", "target": "unlock", "label": "PDF entsperren",
+    "title": "PDF entsperren – Passwortschutz entfernen (mit Passwort)",
+    "description": "Passwortgeschützte PDF kostenlos entsperren, wenn Sie das Passwort kennen – danach ohne Passwort öffnen, drucken und weitergeben. Ohne Upload.",
+    "intro": "Das Passwort bei jedem Öffnen eintippen nervt? Wenn Sie es kennen, speichert PDFMy eine Kopie ohne Schutz – die Datei bleibt dabei auf Ihrem Rechner.",
+    "steps": ["Auf „PDF entsperren“ klicken und die Datei wählen.", "Das Passwort eingeben.", "Ohne Passwortschutz speichern."],
+    "faq": [["Kann PDFMy ein unbekanntes Passwort knacken?", "Nein. Zum Entsperren ist das richtige Passwort nötig."], ["Und umgekehrt schützen?", "„Mit Passwort schützen“ verschlüsselt mit AES-256 und regelt Drucken und Kopieren."]]
+  },
+  {
+    "slug": "pdf-drucker", "target": "printer", "label": "PDF-Drucker",
+    "title": "PDF-Drucker kostenlos – aus jedem Programm in PDFMy drucken",
+    "description": "Kostenloser PDF-Drucker für Windows und Mac: in Word, Browser oder Warenwirtschaft „Drucken“ wählen – das Dokument öffnet sich sofort in PDFMy. Ohne eigenen Treiber, ohne Upload.",
+    "intro": "Aus jedem Programm ein PDF – und gleich bearbeiten, unterschreiben oder archivieren: Mit dem Drucker „PDFMy“ landet jedes gedruckte Dokument direkt in PDFMy.",
+    "steps": ["pdfmy Scan installieren (kostenlos, für Windows und Mac).", "In PDFMy unter „Mehr“ auf „Drucker „PDFMy“ einrichten“ klicken – unter Windows einmal bestätigen.", "In einem beliebigen Programm drucken und „PDFMy“ wählen (Mac: im Druckdialog „PDF“ → „In PDFMy öffnen“)."],
+    "faq": [["Braucht der Drucker einen eigenen Treiber?", "Nein. Unter Windows nutzt er den eingebauten Treiber „Microsoft Print to PDF“, am Mac das PDF-Menü des Druckdialogs."], ["Können andere Benutzer meine Ausdrucke sehen?", "Nein. Unter Windows bekommt jeder Benutzer einen eigenen Drucker und einen Ordner, auf den nur er Zugriff hat. Auf Terminalservern wird der Drucker nicht angeboten."]]
   }
 ]

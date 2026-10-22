@@ -27,7 +27,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 - **Cloud-Tools** scheiden für Geschäftspost aus, weil Briefe personenbezogene Daten enthalten und hochgeladen würden.
 - **Lücke im Markt:** Keines der Tools versteht, *was* ein Brief ist. Datum, Absender, Betreff und Dokumenttyp tippt man überall von Hand ab, um die Datei sinnvoll zu benennen. Genau das automatisieren wir.
 
-## 1b. Öffentliche Web-Version pdfmy.de – Wettbewerb online (Stand 21.10.2026)
+## 1b. Öffentliche Web-Version pdfmy.de – Wettbewerb online (Stand 22.10.2026)
 
 | | Smallpdf | iLovePDF | PDF24 Tools (online) | Adobe Acrobat online | Sejda | **pdfmy.de** |
 |---|---|---|---|---|---|---|
@@ -49,7 +49,10 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare mit Rechenfeldern und Prüfungen | nein | nein | nein | Acrobat Pro | nein | **ja** (Summen, MwSt., E-Mail/IBAN/PLZ; nie in PDF/A) |
 | KI (Zusammenfassen, Fragen, Übersetzen) | Cloud | Cloud | nein | Cloud, Abo | nein | **ohne Upload:** KI des Browsers oder lokale KI auf demselben PC; aus abschaltbar |
 | Ordner überwachen (Hot Folder) | nein | nein | Desktop-App | Desktop (Pro) | nein | **ja, im Browser** (Edge/Chrome) |
-| Prüfbar, dass nichts hochgeladen wird | nein | nein | nein | nein | nein | **ja:** Dialog „Datenschutz selbst prüfen“, CSP, offline nutzbar |
+| Prüfbar, dass nichts hochgeladen wird | nein | nein | nein | nein | nein | **ja:** Dialog „Datenschutz selbst prüfen“, CSP, offline nutzbar; ausgelieferter Programmstand per Prüfsummenliste gegen GitHub prüfbar |
+| PDF-Drucker (aus jedem Programm) | nein | nein | Desktop-App | Acrobat Pro (Abo) | nein | **ja:** Drucker „PDFMy“ (Windows, je Benutzer, ohne eigenen Treiber; Mac über PDF-Menü), öffnet direkt in PDFMy |
+| Trennblätter für Scan-Stapel | nein | nein | nein | nein | nein | **ja:** QR- und Kodak-Patchcode-Trennblätter, Erkennung am Inhalt |
+| Werkzeug-Einstiegsseiten (Suchmaschinen) | sehr viele | sehr viele | viele | viele | viele | 21 (Stand 22.10.2026), in 40 Sprachen |
 
 **Wie pdfmy die Wettbewerber übertrifft:**
 1. **Datenschutz als Produkt:** Kein Upload. Das kann man prüfen, die App funktioniert sogar offline.

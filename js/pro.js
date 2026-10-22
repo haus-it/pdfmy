@@ -2154,7 +2154,13 @@ $('#btnPrinter').onclick = async () => {
   }
   const st = state.scanPrinter, name = state.scanPrinterName;
   if (st === 'ts') { alert(T('Auf diesem Rechner melden sich mehrere Benutzer gleichzeitig an (Terminalserver). Ein Drucker „PDFMy“ gälte dort für alle – deshalb bietet PDFMy ihn hier nicht an. Alternative: im Druckdialog „Microsoft Print to PDF“ wählen und die Datei in PDFMy öffnen.')); return; }
-  if (st === 'nodriver') { alert(T('Der in Windows eingebaute Drucker „Microsoft Print to PDF“ ist ausgeschaltet.\n\nEinschalten: Windows-Suche „Windows-Features aktivieren oder deaktivieren“ → Haken bei „Microsoft Print to PDF“ → OK. Danach hier noch einmal klicken.')); return; }
+  if (st === 'nodriver') {   // pdfmy Scan ab 1.10.1 öffnet das Windows-Fenster zum Einschalten selbst (unabhängig von der Sprache)
+    if (verLess(state.scanVersion, '1.10.1')) { alert(T('Der in Windows eingebaute Drucker „Microsoft Print to PDF“ ist ausgeschaltet.\n\nEinschalten: Windows-Suche „Windows-Features aktivieren oder deaktivieren“ → Haken bei „Microsoft Print to PDF“ → OK. Danach hier noch einmal klicken.')); return; }
+    if (!confirm(T('Der in Windows eingebaute PDF-Treiber „Microsoft Print to PDF“ ist ausgeschaltet.\n\nSoll pdfmy Scan das Windows-Fenster zum Einschalten öffnen? Dort den Haken bei „Microsoft Print to PDF“ setzen und OK klicken – danach den Drucker hier noch einmal einrichten.'))) return;
+    const r = await fetch(SCAN_API + '/printer?on=1', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json()).catch(() => ({}));
+    status(r.error || T('Das hat nicht geklappt.'));
+    return;
+  }
   const on = st !== 'on';
   if (on ? !confirm(T('Drucker „{0}“ einrichten?\n\nDanach wählen Sie in jedem Programm (Word, Browser, Warenwirtschaft …) beim Drucken den Drucker „{0}“ – das Dokument öffnet sich sofort in PDFMy.\n\nWindows fragt einmal nach Ihrer Bestätigung. Nur Sie können diesen Drucker benutzen; die Dateien bleiben auf Ihrem Rechner.', name))
          : !confirm(T('Der Drucker „{0}“ ist eingerichtet. Wieder entfernen?\n\nWindows fragt dafür einmal nach Ihrer Bestätigung.', name))) return;
@@ -3759,12 +3765,14 @@ $('#mbNewTab').onclick = () => { closeMenu(); $('#btnNewWin').click(); };
 function showTool() {
   const m = location.hash.match(/^#werkzeug=([a-z0-9]+)$/); if (!m) return;
   history.replaceState(null, '', location.pathname + location.search);
-  const t = m[1] === 'einv' ? $('#tileEinv') : document.querySelector(`.tile[data-intent="${m[1]}"]`);
+  // open: Knopf „Öffnen“ (Office, beliebige PDF bearbeiten), printer: Menü „Mehr“ aufklappen → „Drucker „PDFMy“ einrichten …“
+  const special = { open: () => $('#fileIn')?.closest('label'), printer: () => { const d = $('#btnPrinter')?.closest('details'); if (d) d.open = true; return $('#btnPrinter'); } };
+  const t = m[1] === 'einv' ? $('#tileEinv') : special[m[1]] ? special[m[1]]() : document.querySelector(`.tile[data-intent="${m[1]}"]`);
   if (!t || state.pages.length) return;
   t.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   t.classList.add('tile-hi'); setTimeout(() => t.classList.remove('tile-hi'), 6000);
   t.focus({ preventScroll: true });
-  status(`Hier geht's los: auf „${t.querySelector('b').textContent}“ klicken.`);
+  status(`Hier geht's los: auf „${(t.querySelector('b') || t.querySelector('span'))?.textContent || ''}“ klicken.`);
 }
 showTool(); addEventListener('hashchange', showTool);
 

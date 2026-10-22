@@ -60,7 +60,7 @@ namespace PdfmyScan
         public static string Setup(bool on)
         {
             if (on && TerminalServer) return "Auf Terminalservern bietet pdfmy Scan den Drucker nicht an: Er gälte für alle angemeldeten Benutzer.";
-            if (on && !DriverAvailable()) return "Der Windows-Drucker „Microsoft Print to PDF“ ist ausgeschaltet. Einschalten: Windows-Suche „Windows-Features aktivieren oder deaktivieren“ → Haken bei „Microsoft Print to PDF“.";
+            if (on && !DriverAvailable()) { OpenFeatures(); return "Der in Windows eingebaute PDF-Treiber „Microsoft Print to PDF“ ist ausgeschaltet. pdfmy Scan hat das Windows-Fenster zum Einschalten geöffnet: Haken bei „Microsoft Print to PDF“ setzen, OK klicken und den Drucker danach noch einmal einrichten."; }
             string errFile = Path.Combine(Root, "fehler-" + Sid + ".txt");
             try
             {
@@ -77,6 +77,17 @@ namespace PdfmyScan
             Program.Log("Drucker „" + Name + "“ " + (on ? "eingerichtet" : "entfernt"));
             if (on) Watch();
             return null;
+        }
+
+        // Fenster „Windows-Features“ öffnen (dort lässt sich „Microsoft Print to PDF“ einschalten) – in jeder Sprache dasselbe Programm
+        static void OpenFeatures()
+        {
+            try
+            {
+                string win = Environment.GetFolderPath(Environment.SpecialFolder.Windows), exe = Path.Combine(win, @"Sysnative\OptionalFeatures.exe");
+                Process.Start(new ProcessStartInfo(File.Exists(exe) ? exe : Path.Combine(win, @"System32\OptionalFeatures.exe")) { UseShellExecute = true });
+            }
+            catch (Exception e) { Program.Log("Windows-Features öffnen: " + e.Message); }
         }
 
         // Erhöhte Kopie: "--printer install|remove <SID> <Benutzername>" → Rückgabe 0 = gut

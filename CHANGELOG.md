@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Einstiegsseiten, Aufräumen, pdfmy Scan 1.10.1 (app-v169)
+- 11 neue Werkzeug-Einstiegsseiten für Suchmaschinen (PDF bearbeiten, Word in PDF, PDF aufteilen, Seiten drehen/löschen, PDF in JPG, PDF vergleichen, PDF/A erstellen, Formular ausfüllen, Seitenzahlen/Wasserzeichen, PDF entsperren, PDF-Drucker) – jetzt 21; Sprung „#werkzeug=open“ (Knopf „Öffnen“) und „#werkzeug=printer“ (Menü „Mehr“ → Drucker).
+- pdfmy Scan 1.10.1: Ist „Microsoft Print to PDF“ ausgeschaltet, öffnet pdfmy Scan das Windows-Fenster zum Einschalten (OptionalFeatures.exe, sprachunabhängig) – die Web-App fragt vorher.
+- Übersetzungen: 40 verwaiste Einträge (alte Textfassungen, nicht mehr im Quelltext) aus allen 39 Sprachen entfernt (1.560 Einträge).
+- KONZEPT.md: Wettbewerbstabelle um Drucker, Trennblätter, Einstiegsseiten ergänzt; Nachfass-Entwürfe an die Presse um Drucker, Patchcode und Programmstand ergänzt (nicht gesendet).
+
 ### Drucker „PDFMy“ (app-v168, pdfmy Scan 1.10.0, pdfmy Scan für Mac/Linux 1.3.0)
 - Windows: pdfmy Scan legt auf Wunsch je Benutzer einen Drucker „PDFMy (Name)“ an – Treiber „Microsoft Print To PDF“ (in Windows enthalten, kein eigener Treiber), Anschluss in `C:\ProgramData\PDFMy\Druck\<SID>` (Windows erlaubt Datei-Anschlüsse nicht im Benutzerprofil), Ordnerrechte nur Benutzer + System, Druckrecht nur für diesen Benutzer. Einrichten/Entfernen mit einer UAC-Bestätigung über eine erhöhte Kopie von pdfmy Scan (64-Bit-PowerShell, unsichtbar). Fertige Druckdatei wird umbenannt und in PDFMy geöffnet; Druckdateien nach 7 Tagen gelöscht. Terminalserver (RDSH, multi-session) werden erkannt – dort kein Drucker. Deinstallation entfernt den Drucker.
 - Mac: Skript „In PDFMy öffnen“ in ~/Library/PDF Services (Druckdialog → PDF), Dateiname aus dem Dokumenttitel; /status meldet printer.

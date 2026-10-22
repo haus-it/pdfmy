@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.10.0";
+        public const string Version = "1.10.1";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 

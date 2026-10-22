@@ -957,6 +957,7 @@
 "Der Drucker „{0}“ ist eingerichtet. Wieder entfernen? Windows fragt dafür einmal nach Ihrer Bestätigung.",
 "Der Eintrag wurde aus der Liste entfernt.",
 "Der in Windows eingebaute Drucker „Microsoft Print to PDF“ ist ausgeschaltet. Einschalten: Windows-Suche „Windows-Features aktivieren oder deaktivieren“ → Haken bei „Microsoft Print to PDF“ → OK. Danach hier noch einmal klicken.",
+"Der in Windows eingebaute PDF-Treiber „Microsoft Print to PDF“ ist ausgeschaltet. Soll pdfmy Scan das Windows-Fenster zum Einschalten öffnen? Dort den Haken bei „Microsoft Print to PDF“ setzen und OK klicken – danach den Drucker hier noch einmal einrichten.",
 "Der Kamerazugriff wurde nicht erlaubt. Bitte in den Browser-Einstellungen die Kamera für diese Seite freigeben – oder ein Foto aus der Galerie wählen.",
 "Der Scan-Ordner „{0}“ wurde nicht gefunden – bitte über „Scanner verbinden“ neu wählen.",
 "Der Zeitstempel gehört nicht zu dieser Anfrage.",
