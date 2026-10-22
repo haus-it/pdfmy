@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Leggið ljósmyndina með myndhliðina niður á glerið og smellið á „Skanna“. PDFMy sker ljósmyndina út og lætur litina óbreytta.",
  "Foto zugeschnitten.": "Ljósmynd skorin til.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Engin ljósmynd skönnuð – liggur ljósmyndin á glerinu?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Skera til skönnun eða ljósmynd: dragið hornin fjögur – blöð sem voru mynduð á ská eru einnig rétt af"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Skera til skönnun eða ljósmynd: dragið hornin fjögur – blöð sem voru mynduð á ská eru einnig rétt af",
+ "Automatisch erkennen": "Greina sjálfvirkt",
+ "Farbdokument": "Litaskjal",
+ "Graustufen-Dokument": "Grátónaskjal",
+ "Schwarzweiß-Dokument": "Svarthvítt skjal"
 }

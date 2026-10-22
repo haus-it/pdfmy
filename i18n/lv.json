@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Novietojiet fotogrāfiju ar attēlu uz leju uz stikla un noklikšķiniet uz „Skenēt”. PDFMy izgriež fotogrāfiju un atstāj krāsas nemainītas.",
  "Foto zugeschnitten.": "Fotogrāfija apgriezta.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Neviena fotogrāfija netika ieskenēta – vai fotogrāfija atrodas uz stikla?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Apgriezt skenējumu vai fotogrāfiju: velciet četrus stūrus – arī slīpi nofotografētas lapas tiek iztaisnotas"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Apgriezt skenējumu vai fotogrāfiju: velciet četrus stūrus – arī slīpi nofotografētas lapas tiek iztaisnotas",
+ "Automatisch erkennen": "Atpazīt automātiski",
+ "Farbdokument": "Krāsains dokuments",
+ "Graustufen-Dokument": "Pelēktoņu dokuments",
+ "Schwarzweiß-Dokument": "Melnbalts dokuments"
 }

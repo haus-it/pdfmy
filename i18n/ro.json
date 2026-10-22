@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Așezați fotografia cu fața în jos pe geam și faceți clic pe „Scanare”. PDFMy decupează fotografia și lasă culorile neschimbate.",
  "Foto zugeschnitten.": "Fotografie decupată.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nicio fotografie scanată – se află fotografia pe geam?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Decupați o scanare sau o fotografie: trageți de cele patru colțuri – și foile fotografiate oblic sunt îndreptate"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Decupați o scanare sau o fotografie: trageți de cele patru colțuri – și foile fotografiate oblic sunt îndreptate",
+ "Automatisch erkennen": "Recunoaștere automată",
+ "Farbdokument": "Document color",
+ "Graustufen-Dokument": "Document în tonuri de gri",
+ "Schwarzweiß-Dokument": "Document alb-negru"
 }

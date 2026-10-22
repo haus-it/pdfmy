@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Asetage foto pildipoolega allapoole klaasile ja klõpsake „Skanni“. PDFMy lõikab foto välja ja jätab värvid muutmata.",
  "Foto zugeschnitten.": "Foto kärbitud.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Ühtegi fotot ei skannitud – kas foto on klaasil?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Kärbi skannitud lehte või fotot: lohistage nelja nurka – ka viltu pildistatud lehed sirgestatakse"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Kärbi skannitud lehte või fotot: lohistage nelja nurka – ka viltu pildistatud lehed sirgestatakse",
+ "Automatisch erkennen": "Tuvasta automaatselt",
+ "Farbdokument": "Värviline dokument",
+ "Graustufen-Dokument": "Halltoonides dokument",
+ "Schwarzweiß-Dokument": "Mustvalge dokument"
 }

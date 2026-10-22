@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Τοποθετήστε τη φωτογραφία με την όψη προς τα κάτω στο γυαλί και κάντε κλικ στο «Σάρωση». Το PDFMy αποκόπτει τη φωτογραφία και αφήνει τα χρώματα αμετάβλητα.",
  "Foto zugeschnitten.": "Η φωτογραφία περικόπηκε.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Δεν σαρώθηκε φωτογραφία – βρίσκεται η φωτογραφία στο γυαλί;",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Περικοπή σάρωσης ή φωτογραφίας: σύρετε τις τέσσερις γωνίες – και τα φύλλα που φωτογραφήθηκαν λοξά ισιώνονται"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Περικοπή σάρωσης ή φωτογραφίας: σύρετε τις τέσσερις γωνίες – και τα φύλλα που φωτογραφήθηκαν λοξά ισιώνονται",
+ "Automatisch erkennen": "Αυτόματη αναγνώριση",
+ "Farbdokument": "Έγχρωμο έγγραφο",
+ "Graustufen-Dokument": "Έγγραφο σε αποχρώσεις του γκρι",
+ "Schwarzweiß-Dokument": "Ασπρόμαυρο έγγραφο"
 }

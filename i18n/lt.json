@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Padėkite nuotrauką atvaizdu žemyn ant stiklo ir spustelėkite „Skenuoti“. PDFMy iškerpa nuotrauką ir palieka spalvas nepakeistas.",
  "Foto zugeschnitten.": "Nuotrauka apkirpta.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nenuskenuota jokia nuotrauka – ar nuotrauka yra ant stiklo?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Apkirpti nuskaitytą lapą ar nuotrauką: vilkite keturis kampus – ir kampu nufotografuoti lapai ištiesinami"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Apkirpti nuskaitytą lapą ar nuotrauką: vilkite keturis kampus – ir kampu nufotografuoti lapai ištiesinami",
+ "Automatisch erkennen": "Atpažinti automatiškai",
+ "Farbdokument": "Spalvotas dokumentas",
+ "Graustufen-Dokument": "Pilkų atspalvių dokumentas",
+ "Schwarzweiß-Dokument": "Nespalvotas dokumentas"
 }

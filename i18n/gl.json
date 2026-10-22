@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Coloque a foto boca abaixo sobre o cristal e faga clic en «Dixitalizar». PDFMy recorta a foto e deixa as cores sen cambios.",
  "Foto zugeschnitten.": "Foto recortada.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Non se dixitalizou ningunha foto – está a foto sobre o cristal?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Recortar unha dixitalización ou unha foto: arrastre as catro esquinas – as follas fotografadas en ángulo tamén se endereitan"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Recortar unha dixitalización ou unha foto: arrastre as catro esquinas – as follas fotografadas en ángulo tamén se endereitan",
+ "Automatisch erkennen": "Detectar automaticamente",
+ "Farbdokument": "Documento en cor",
+ "Graustufen-Dokument": "Documento en escala de grises",
+ "Schwarzweiß-Dokument": "Documento en branco e negro"
 }

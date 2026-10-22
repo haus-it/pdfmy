@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Jarri argazkia irudia behera begira kristalaren gainean eta egin klik «Eskaneatu» aukeran. PDFMy-k argazkia mozten du eta koloreak aldatu gabe uzten ditu.",
  "Foto zugeschnitten.": "Argazkia moztu da.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Ez da argazkirik eskaneatu – kristalaren gainean dago argazkia?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Moztu eskaneatua edo argazkia: arrastatu lau izkinak – zeiharka ateratako orriak ere zuzentzen dira"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Moztu eskaneatua edo argazkia: arrastatu lau izkinak – zeiharka ateratako orriak ere zuzentzen dira",
+ "Automatisch erkennen": "Antzeman automatikoki",
+ "Farbdokument": "Koloretako dokumentua",
+ "Graustufen-Dokument": "Gris-eskalako dokumentua",
+ "Schwarzweiß-Dokument": "Zuri-beltzeko dokumentua"
 }

@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Покладіть фото зображенням донизу на скло та натисніть «Сканування». PDFMy виріже фото й залишить кольори без змін.",
  "Foto zugeschnitten.": "Фото обрізано.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Фото не відскановано – чи лежить фото на склі?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Обрізати скан або фото: перетягніть чотири кути – аркуші, зняті під кутом, також вирівнюються"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Обрізати скан або фото: перетягніть чотири кути – аркуші, зняті під кутом, також вирівнюються",
+ "Automatisch erkennen": "Розпізнавати автоматично",
+ "Farbdokument": "Кольоровий документ",
+ "Graustufen-Dokument": "Документ у відтінках сірого",
+ "Schwarzweiß-Dokument": "Чорно-білий документ"
 }

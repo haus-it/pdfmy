@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Положите фото изображением вниз на стекло и нажмите «Сканировать». PDFMy вырежет фото и оставит цвета без изменений.",
  "Foto zugeschnitten.": "Фото обрезано.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Фото не отсканировано – лежит ли фото на стекле?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Обрезать скан или фото: перетащите четыре угла – листы, снятые под углом, тоже выравниваются"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Обрезать скан или фото: перетащите четыре угла – листы, снятые под углом, тоже выравниваются",
+ "Automatisch erkennen": "Распознавать автоматически",
+ "Farbdokument": "Цветной документ",
+ "Graustufen-Dokument": "Документ в оттенках серого",
+ "Schwarzweiß-Dokument": "Чёрно-белый документ"
 }

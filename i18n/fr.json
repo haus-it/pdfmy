@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Posez la photo face vers le bas sur la vitre et cliquez sur « Numériser ». PDFMy découpe la photo et laisse les couleurs inchangées.",
  "Foto zugeschnitten.": "Photo recadrée.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Aucune photo numérisée – la photo est-elle sur la vitre ?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Recadrer une numérisation ou une photo : faites glisser les quatre coins – les feuilles photographiées de biais sont aussi redressées"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Recadrer une numérisation ou une photo : faites glisser les quatre coins – les feuilles photographiées de biais sont aussi redressées",
+ "Automatisch erkennen": "Détecter automatiquement",
+ "Farbdokument": "Document couleur",
+ "Graustufen-Dokument": "Document en niveaux de gris",
+ "Schwarzweiß-Dokument": "Document noir et blanc"
 }

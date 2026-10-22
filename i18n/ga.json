@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Leag an grianghraf agus a aghaidh síos ar an ngloine agus cliceáil “Scan”. Gearrann PDFMy an grianghraf amach agus fágann sé na dathanna gan athrú.",
  "Foto zugeschnitten.": "Grianghraf bearrtha.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Níor scanadh aon ghrianghraf – an bhfuil an grianghraf ar an ngloine?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Bearr scanadh nó grianghraf: tarraing na ceithre choirnéal – dírítear leathanaigh a grianghrafadh ar fiar freisin"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Bearr scanadh nó grianghraf: tarraing na ceithre choirnéal – dírítear leathanaigh a grianghrafadh ar fiar freisin",
+ "Automatisch erkennen": "Braith go huathoibríoch",
+ "Farbdokument": "Doiciméad daite",
+ "Graustufen-Dokument": "Doiciméad liathscála",
+ "Schwarzweiß-Dokument": "Doiciméad dubh agus bán"
 }

@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Ставите фотографију лицем надоле на стакло и кликните „Скенирај“. PDFMy исеца фотографију и оставља боје непромењеним.",
  "Foto zugeschnitten.": "Фотографија опсечена.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Ниједна фотографија није скенирана – да ли фотографија лежи на стаклу?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Опсеците скен или фотографију: превуците четири угла – и укосо снимљени листови се исправљају"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Опсеците скен или фотографију: превуците четири угла – и укосо снимљени листови се исправљају",
+ "Automatisch erkennen": "Аутоматски препознај",
+ "Farbdokument": "Документ у боји",
+ "Graustufen-Dokument": "Документ у нијансама сиве",
+ "Schwarzweiß-Dokument": "Црно-бели документ"
 }

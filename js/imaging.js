@@ -43,6 +43,17 @@
     }
     return colored / n > 0.003;
   }
+  /* Reiner Text (Schwarzweiß-Dokument)? Fast nur Papierweiß und dunkle Schrift – Grautöne nur an den Buchstabenkanten.
+     Graue Flächen, Schattierungen oder Schwarzweiß-Bilder bringen viele Mitteltöne → Graustufen-Dokument. */
+  function isBilevel(src) {
+    const s = scaled(src, 700), g = grayData(s), n = g.length, hist = new Uint32Array(256); for (const v of g) hist[v]++;
+    let acc = 0, paper = 255; for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= n * 0.6) { paper = v; break; } }
+    // Schrift: deutlich weniger Grautöne als Schwarz (nur Kanten); hellgraue Flächen (Schattierung, Tabellenköpfe) würden als Schwarzweiß verloren gehen
+    const darkT = Math.min(110, paper - 80), midHi = paper - 40, lightLo = paper - 38, lightHi = paper - 14;
+    let dark = 0, mid = 0, light = 0;
+    for (let v = 0; v < 256; v++) { if (v < darkT) dark += hist[v]; else if (v < midHi) mid += hist[v]; if (v >= lightLo && v < lightHi) light += hist[v]; }
+    return paper > 150 && dark > n * 0.002 && mid < dark * 0.8 && light / n < 0.04;
+  }
 
   /* Papierhintergrund schätzen und herausrechnen (Schatten, Lichtverlauf bei Handyfotos):
      grob verkleinern, Schrift per Maximum-Filter entfernen, weich vergrößern; Pixel / Hintergrund → Papier wird gleichmäßig hell */
@@ -315,7 +326,7 @@
 
   /* Scan aufbereiten wie beim Import (js/app.js, parallel im Worker js/scanw.js): zuschneiden, wenn das Blatt vor einem Untergrund liegt
      (Kamera: immer), gerade richten, Modus „Automatisch“ auflösen, aufbereiten. → { orig, processed, cropped, angle, autoMode } */
-  function prepScan(c, { crop, straighten, fromCamera, mode, photo, detectPhoto }) {
+  function prepScan(c, { crop, straighten, fromCamera, mode, photo, detectPhoto }) {   // detectPhoto: Scan „Automatisch“ – Foto und Dokumentart selbst erkennen
     let cropped = false, angle = 0;
     // Foto (gewählt oder bei „Automatisch“ erkannt): ausschneiden, Seitenverhältnis und Farben unverändert, kein Geraderichten nach Text
     if (photo || detectPhoto) {
@@ -334,9 +345,10 @@
       }
     }
     if (straighten) { const r = deskew(c); c = r.canvas; angle = r.angle; }
-    const autoMode = mode === 'auto' ? (isColorful(c) ? 'colordoc' : 'document') : null;
+    // Automatisch: Farbdokument, sonst Graustufen-Dokument; beim Scan „Automatisch“ reiner Text als Schwarzweiß-Dokument
+    const autoMode = mode === 'auto' ? (isColorful(c) ? 'colordoc' : detectPhoto && isBilevel(c) ? 'bw' : 'document') : null;
     return { orig: c, processed: enhance(c, autoMode || mode), cropped, angle, autoMode };
   }
 
-  root.Imaging = { canvas, scaled, enhance, hasBackground, average, isColorful, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
+  root.Imaging = { canvas, scaled, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
 })(self);

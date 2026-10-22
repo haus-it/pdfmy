@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Scan „Automatisch“: Schwarzweiß-, Graustufen-, Farbdokument oder Foto (app-v175)
+- Art und Farbe „Automatisch“ (Voreinstellung): Scan in Farbe, je Blatt erkannt – Schwarzweiß-Dokument (Imaging.isBilevel: deutlich weniger Grautöne als Schwarz, keine hellgrauen Flächen), Graustufen-Dokument, Farbdokument (isColorful), Foto (findPhoto, jetzt nur wenn außerhalb des Fotos keine Schrift steht – Dokument mit Bild bleibt Dokument). Erkannte Art in der Seitenbeschriftung.
+- Tests: Browser mit fünf nachgebildeten Scans (reiner Text, graue Schattierung, Schwarzweiß-Bild, rotes Logo, Farbfoto) alle richtig; Unit-Test „Dokument mit Bild ist kein Foto“. Nicht mit echtem Scanner getestet.
+
 ### Fotos scannen und zuschneiden (app-v174)
 - Scan-Fenster: neue Auswahl „Art“ – Automatisch (Voreinstellung), Dokument, Foto. Foto: vom Glas, 600 dpi, Farbe oder Schwarzweiß (Graustufen), Beidseitig ausgeblendet. Automatisch: PDFMy erkennt Fotos selbst (DocDetect.findPhoto: Untergrund am Bildrand, größte abgehobene Fläche, viele Mitteltöne/wenig Papierweiß).
 - Fotos werden ausgeschnitten, auch in der Ecke des Glases; Farben unverändert (Modus „original“), kein Geraderichten nach Textzeilen, keine Texterkennung, Kennzeichen „Foto“ in der Seitenleiste.

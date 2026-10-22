@@ -263,8 +263,10 @@
       let best = null;
       for (let q of qs || []) { q = order(q); const A = area(q) / n; if (A < 0.01 || A > 0.97 || !anglesOk(q, 60, 120)) continue; if (!best || A > best.A) best = { q, A }; }
       if (best && c.n / (area(best.q) || 1) > 0.8) {   // die Fläche füllt das Viereck fast ganz – ein rechteckiges Foto, kein Text
+        // Foto auf dem Glas: außerhalb liegt nur der Deckel. Steht dort Schrift, ist es ein Dokument mit Bild
+        let outN = 0, ink = 0; for (let i = 0, j = 0; i < n; i++, j += 4) { if (c.m[i]) continue; outN++; if (lum(j) < 120) ink++; }
         const norm = q => q.map(([x, y]) => [Math.max(0, Math.min(1, x / (W - 1))), Math.max(0, Math.min(1, y / (H - 1)))]);
-        return { corners: norm(inset(best.q, W, H)), found: true, area: best.A, photoLike: like(tone(c.m)) };
+        return { corners: norm(inset(best.q, W, H)), found: true, area: best.A, photoLike: like(tone(c.m)) && ink / (outN || 1) < 0.004 };
       }
     }
     return { corners: full, found: false, area: 1, photoLike: like(tone(null)) };   // randloses Foto oder Dokument

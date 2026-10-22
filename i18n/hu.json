@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Tegye a fényképet képpel lefelé az üvegre, és kattintson a „Szkennelés” gombra. A PDFMy kivágja a fényképet, és változatlanul hagyja a színeket.",
  "Foto zugeschnitten.": "Fénykép körbevágva.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nem lett fénykép beolvasva – az üvegen van a fénykép?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Beolvasott oldal vagy fénykép körbevágása: húzza a négy sarkot – a ferdén fényképezett lapokat is kiegyenesíti"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Beolvasott oldal vagy fénykép körbevágása: húzza a négy sarkot – a ferdén fényképezett lapokat is kiegyenesíti",
+ "Automatisch erkennen": "Automatikus felismerés",
+ "Farbdokument": "Színes dokumentum",
+ "Graustufen-Dokument": "Szürkeárnyalatos dokumentum",
+ "Schwarzweiß-Dokument": "Fekete-fehér dokumentum"
 }

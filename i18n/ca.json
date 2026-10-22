@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Col·loqueu la foto cap per avall sobre el vidre i feu clic a «Escaneja». PDFMy retalla la foto i deixa els colors sense canvis.",
  "Foto zugeschnitten.": "Foto retallada.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "No s'ha escanejat cap foto – és la foto sobre el vidre?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Retalla un escaneig o una foto: arrossegueu les quatre cantonades – els fulls fotografiats de biaix també es redrecen"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Retalla un escaneig o una foto: arrossegueu les quatre cantonades – els fulls fotografiats de biaix també es redrecen",
+ "Automatisch erkennen": "Detecta automàticament",
+ "Farbdokument": "Document en color",
+ "Graustufen-Dokument": "Document en escala de grisos",
+ "Schwarzweiß-Dokument": "Document en blanc i negre"
 }

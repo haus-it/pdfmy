@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Læg fotoet med billedsiden nedad på glasset, og klik på »Scan«. PDFMy skærer fotoet ud og lader farverne være uændrede.",
  "Foto zugeschnitten.": "Foto beskåret.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Intet foto scannet – ligger fotoet på glasset?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Beskær scanning eller foto: træk i de fire hjørner – også skævt fotograferede ark rettes ud"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Beskær scanning eller foto: træk i de fire hjørner – også skævt fotograferede ark rettes ud",
+ "Automatisch erkennen": "Genkend automatisk",
+ "Farbdokument": "Farvedokument",
+ "Graustufen-Dokument": "Gråtonedokument",
+ "Schwarzweiß-Dokument": "Sort-hvid-dokument"
 }

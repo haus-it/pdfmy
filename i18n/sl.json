@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Fotografijo položite s sliko navzdol na steklo in kliknite „Skeniraj“. PDFMy izreže fotografijo in pusti barve nespremenjene.",
  "Foto zugeschnitten.": "Fotografija obrezana.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Skenirana ni bila nobena fotografija – ali fotografija leži na steklu?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Obrežite sken ali fotografijo: povlecite štiri vogale – tudi poševno fotografirani listi se poravnajo"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Obrežite sken ali fotografijo: povlecite štiri vogale – tudi poševno fotografirani listi se poravnajo",
+ "Automatisch erkennen": "Samodejno prepoznaj",
+ "Farbdokument": "Barvni dokument",
+ "Graustufen-Dokument": "Dokument v sivinah",
+ "Schwarzweiß-Dokument": "Črno-beli dokument"
 }

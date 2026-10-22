@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Appoggi la foto sul vetro con l'immagine rivolta verso il basso e faccia clic su «Scansiona». PDFMy ritaglia la foto e lascia invariati i colori.",
  "Foto zugeschnitten.": "Foto ritagliata.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nessuna foto scansionata – la foto è sul vetro?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Ritagliare una scansione o una foto: trascinare i quattro angoli – anche i fogli fotografati di sbieco vengono raddrizzati"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Ritagliare una scansione o una foto: trascinare i quattro angoli – anche i fogli fotografati di sbieco vengono raddrizzati",
+ "Automatisch erkennen": "Riconosci automaticamente",
+ "Farbdokument": "Documento a colori",
+ "Graustufen-Dokument": "Documento in scala di grigi",
+ "Schwarzweiß-Dokument": "Documento in bianco e nero"
 }

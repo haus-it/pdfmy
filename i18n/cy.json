@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Rhowch y llun wyneb i lawr ar y gwydr a chlicio ‘Sganio’. Mae PDFMy yn torri’r llun allan ac yn gadael y lliwiau heb eu newid.",
  "Foto zugeschnitten.": "Llun wedi’i docio.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Dim llun wedi’i sganio – ydy’r llun ar y gwydr?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Tocio sgan neu lun: llusgwch y pedair cornel – mae tudalennau a dynnwyd ar ongl hefyd yn cael eu sythu"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Tocio sgan neu lun: llusgwch y pedair cornel – mae tudalennau a dynnwyd ar ongl hefyd yn cael eu sythu",
+ "Automatisch erkennen": "Adnabod yn awtomatig",
+ "Farbdokument": "Dogfen liw",
+ "Graustufen-Dokument": "Dogfen raddlwyd",
+ "Schwarzweiß-Dokument": "Dogfen ddu a gwyn"
 }

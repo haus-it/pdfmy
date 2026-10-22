@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Połóż zdjęcie obrazem do dołu na szybie i kliknij „Skanuj”. PDFMy wytnie zdjęcie i pozostawi kolory bez zmian.",
  "Foto zugeschnitten.": "Zdjęcie przycięte.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nie zeskanowano zdjęcia – czy zdjęcie leży na szybie?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Przytnij skan lub zdjęcie: przeciągnij cztery narożniki – także krzywo sfotografowane kartki zostaną wyprostowane"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Przytnij skan lub zdjęcie: przeciągnij cztery narożniki – także krzywo sfotografowane kartki zostaną wyprostowane",
+ "Automatisch erkennen": "Rozpoznaj automatycznie",
+ "Farbdokument": "Dokument kolorowy",
+ "Graustufen-Dokument": "Dokument w skali szarości",
+ "Schwarzweiß-Dokument": "Dokument czarno-biały"
 }

@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Leg de foto met de beeldzijde naar beneden op de glasplaat en klik op „Scannen”. PDFMy snijdt de foto uit en laat de kleuren onveranderd.",
  "Foto zugeschnitten.": "Foto bijgesneden.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Geen foto gescand – ligt de foto op de glasplaat?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Scan of foto bijsnijden: sleep de vier hoeken – ook scheef gefotografeerde vellen worden rechtgetrokken"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Scan of foto bijsnijden: sleep de vier hoeken – ook scheef gefotografeerde vellen worden rechtgetrokken",
+ "Automatisch erkennen": "Automatisch herkennen",
+ "Farbdokument": "Kleurendocument",
+ "Graustufen-Dokument": "Grijstintendocument",
+ "Schwarzweiß-Dokument": "Zwart-witdocument"
 }

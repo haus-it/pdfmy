@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Fotoğrafı görüntü yüzü aşağı bakacak şekilde cama yerleştirin ve “Tara”ya tıklayın. PDFMy fotoğrafı kırpar ve renkleri değiştirmez.",
  "Foto zugeschnitten.": "Fotoğraf kırpıldı.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Hiç fotoğraf taranmadı – fotoğraf camın üzerinde mi?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Taramayı veya fotoğrafı kırp: dört köşeyi sürükleyin – eğik çekilmiş sayfalar da düzeltilir"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Taramayı veya fotoğrafı kırp: dört köşeyi sürükleyin – eğik çekilmiş sayfalar da düzeltilir",
+ "Automatisch erkennen": "Otomatik algıla",
+ "Farbdokument": "Renkli belge",
+ "Graustufen-Dokument": "Gri tonlamalı belge",
+ "Schwarzweiß-Dokument": "Siyah beyaz belge"
 }

@@ -99,3 +99,7 @@ test('randloses Foto über die ganze Fläche ist ein Foto (ohne Zuschnitt)', () 
   const { d, W, H } = glass({ photo: [0, 0, 413, 585] }), r = D.findPhoto(d, W, H);
   assert.equal(r.found, false); assert.ok(r.photoLike);
 });
+test('Dokument mit Bild und Text ist kein Foto', () => {
+  const { d, W, H } = glass({ photo: [40, 40, 200, 140], letter: true }), r = D.findPhoto(d, W, H);
+  assert.equal(r.photoLike, false);
+});

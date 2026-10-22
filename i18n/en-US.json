@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Place the photo face down on the glass and click “Scan”. PDFMy crops the photo and leaves the colors unchanged.",
  "Foto zugeschnitten.": "Photo cropped.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "No photo scanned – is the photo on the glass?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Crop a scan or photo: drag the four corners – sheets photographed at an angle are also straightened"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Crop a scan or photo: drag the four corners – sheets photographed at an angle are also straightened",
+ "Automatisch erkennen": "Detect automatically",
+ "Farbdokument": "Color document",
+ "Graustufen-Dokument": "Grayscale document",
+ "Schwarzweiß-Dokument": "Black-and-white document"
 }

@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Poġġi r-ritratt b’wiċċu ’l isfel fuq il-ħġieġ u kklikkja “Skennja”. PDFMy jaqta’ r-ritratt u jħalli l-kuluri mhux mibdula.",
  "Foto zugeschnitten.": "Ritratt maqtugħ.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "L-ebda ritratt ma ġie skennjat – ir-ritratt qiegħed fuq il-ħġieġ?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Aqta’ skan jew ritratt: kaxkar l-erba’ kantunieri – anke folji ritrattati mżerżqa jiġu ddrittati"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Aqta’ skan jew ritratt: kaxkar l-erba’ kantunieri – anke folji ritrattati mżerżqa jiġu ddrittati",
+ "Automatisch erkennen": "Agħraf awtomatikament",
+ "Farbdokument": "Dokument bil-kulur",
+ "Graustufen-Dokument": "Dokument bl-iskala tal-griż",
+ "Schwarzweiß-Dokument": "Dokument iswed u abjad"
 }

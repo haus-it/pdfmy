@@ -311,7 +311,9 @@ async function importImage(file, fromCamera) {
 // Foto-Scan (state.scanPhoto = 'color' | 'gray'): Foto ausschneiden, nicht geraderichten (das Geraderichten richtet sich nach Textzeilen),
 // Farben bzw. Grautöne unverändert lassen; Fotos werden nicht per Texterkennung gelesen
 const scanOpts = fromCamera => state.scanPhoto && state.scanPhoto !== 'auto' ? { crop: true, straighten: false, fromCamera: false, mode: state.scanPhoto === 'gray' ? 'gray' : 'original', photo: true }
-  : { crop: S.autoCrop, straighten: S.autoDeskew, fromCamera, mode: S.mode, detectPhoto: state.scanPhoto === 'auto' };   // „Automatisch“: Fotos selbst erkennen
+  : { crop: S.autoCrop, straighten: S.autoDeskew, fromCamera, mode: state.scanPhoto === 'auto' ? 'auto' : S.mode, detectPhoto: state.scanPhoto === 'auto' };
+// Erkannte Art beim Scan „Automatisch“ – steht in der Seitenbeschriftung
+const SCAN_KIND_LABEL = r => I18N.t(r.photo ? 'Foto' : r.autoMode === 'colordoc' ? 'Farbdokument' : r.autoMode === 'bw' ? 'Schwarzweiß-Dokument' : 'Graustufen-Dokument');   // „Automatisch“: Fotos selbst erkennen
 function scanPage(r, label, lowRes, mode) {
   const note = [r.cropped && 'zugeschnitten', r.angle && `${I18N.fmtNum(r.angle)}° gerade gerichtet`].filter(Boolean).join(', ');
   const p = { id: ++uid, kind: 'image', orig: r.orig, mode, rotation: 0, annots: [], ocr: null, native: null, label: label + (note ? ` (${note})` : ''), lowRes };
@@ -336,6 +338,7 @@ async function scanAsync(c, label, fromCamera = false) {
       if (!r.error) {
         const p = scanPage({ ...r, orig: r.orig ? bmpCanvas(r.orig) : c, processed: bmpCanvas(r.processed) }, label, lowRes, mode);
         if (o.photo || r.photo) { p.photo = true; p.mode = 'original'; }
+        if (o.detectPhoto) p.label += ' – ' + SCAN_KIND_LABEL(r);
         qrTexts(p, r.qr);
         return p;
       }
@@ -344,6 +347,7 @@ async function scanAsync(c, label, fromCamera = false) {
   }
   const r = Imaging.prepScan(c, o), p = scanPage(r, label, lowRes, mode);
   if (o.photo || r.photo) { p.photo = true; p.mode = 'original'; }
+  if (o.detectPhoto) p.label += ' – ' + SCAN_KIND_LABEL(r);
   readQr(p, p.orig);
   return p;
 }
@@ -3923,11 +3927,11 @@ function updateScanOpts() {
   $('#scanGo').disabled = !sel;
 }
 // Art „Dokument“ oder „Foto“: Fotos in Farbe oder Schwarzweiß (Graustufen), immer vom Glas
-const SCAN_COLORS = { doc: [['gray', 'Graustufen (empfohlen)'], ['color', 'Farbe'], ['bw', 'Schwarzweiß']], photo: [['color', 'Farbe'], ['gray', 'Schwarzweiß']] };
+const SCAN_COLORS = { auto: [['auto', 'Automatisch erkennen'], ['gray', 'Graustufen'], ['color', 'Farbe'], ['bw', 'Schwarzweiß']], doc: [['gray', 'Graustufen (empfohlen)'], ['color', 'Farbe'], ['bw', 'Schwarzweiß']], photo: [['color', 'Farbe'], ['gray', 'Schwarzweiß']] };
 function applyScanKind() {
-  const photo = $('#scanKind').value === 'photo', c = $('#scanColor'), src = $('#scanSource');
-  c.textContent = ''; for (const [v, t] of SCAN_COLORS[photo ? 'photo' : 'doc']) c.append(new Option(t, v));
-  c.value = LS.get(photo ? 'scanPhotoColor' : 'scanColor', photo ? 'color' : 'gray'); if (!c.value) c.selectedIndex = 0;
+  const kind = $('#scanKind').value, photo = kind === 'photo', c = $('#scanColor'), src = $('#scanSource');
+  c.textContent = ''; for (const [v, t] of SCAN_COLORS[kind] || SCAN_COLORS.doc) c.append(new Option(t, v));
+  c.value = LS.get({ auto: 'scanAutoColor', photo: 'scanPhotoColor' }[kind] || 'scanColor', { auto: 'auto', photo: 'color' }[kind] || 'gray'); if (!c.value) c.selectedIndex = 0;
   src.disabled = photo; src.value = photo ? 'platen' : LS.get('scanSource', 'auto');
   $('#scanPhotoHint').hidden = !photo; $('#scanHint').hidden = photo;
   updateScanOpts();
@@ -4006,14 +4010,14 @@ document.querySelectorAll('#scanDlg [data-connect]').forEach(b => b.onclick = as
 $('#scanGo').onclick = async () => {
   const sel = document.querySelector('#scanList input:checked'); if (!sel) return;
   const kind = $('#scanKind').value, photo = kind === 'photo';
-  LS.set('scanner', sel.value); LS.set('scanKind', kind); LS.set(photo ? 'scanPhotoColor' : 'scanColor', $('#scanColor').value);
+  LS.set('scanner', sel.value); LS.set('scanKind', kind); LS.set({ auto: 'scanAutoColor', photo: 'scanPhotoColor' }[kind] || 'scanColor', $('#scanColor').value);
   if (!photo) LS.set('scanSource', $('#scanSource').value);
   if (!$('#scanDuplexRow').hidden) LS.set('scanDuplex', $('#scanDuplex').checked);
   const flip = !$('#scanFlipRow').hidden && $('#scanFlip').checked;
   if (!$('#scanFlipRow').hidden) LS.set('scanFlip', flip);
   // Fotos: vom Glas, 600 dpi, Farbe oder Graustufen
   const req = photo ? { id: sel.value, duplex: false, color: $('#scanColor').value === 'gray' ? 'gray' : 'color', dpi: 600, source: 'platen', photo: true }
-    : { id: sel.value, duplex: $('#scanDuplex').checked && !$('#scanDuplexRow').hidden, color: $('#scanColor').value, dpi: 300, source: flip ? 'feeder' : $('#scanSource').value };
+    : { id: sel.value, duplex: $('#scanDuplex').checked && !$('#scanDuplexRow').hidden, color: $('#scanColor').value === 'auto' ? 'color' : $('#scanColor').value, dpi: 300, source: flip ? 'feeder' : $('#scanSource').value };
   $('#scanDlg').close();
   state.scanPhoto = photo ? req.color : kind === 'auto' ? 'auto' : null;
   try {

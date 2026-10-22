@@ -2855,5 +2855,9 @@
  "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Aseta valokuva kuvapuoli alaspäin lasille ja napsauta ”Skannaa”. PDFMy rajaa valokuvan ja jättää värit muuttumattomiksi.",
  "Foto zugeschnitten.": "Valokuva rajattu.",
  "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Valokuvaa ei skannattu – onko valokuva lasilla?",
- "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Rajaa skannaus tai valokuva: vedä neljää kulmaa – myös vinosti kuvatut arkit oikaistaan"
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Rajaa skannaus tai valokuva: vedä neljää kulmaa – myös vinosti kuvatut arkit oikaistaan",
+ "Automatisch erkennen": "Tunnista automaattisesti",
+ "Farbdokument": "Värillinen asiakirja",
+ "Graustufen-Dokument": "Harmaasävyasiakirja",
+ "Schwarzweiß-Dokument": "Mustavalkoinen asiakirja"
 }
