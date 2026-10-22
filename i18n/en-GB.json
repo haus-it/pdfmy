@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Edit PDF directly – text, pages, forms",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Choose which program on this computer you would like to use to continue editing the document. The file stays on your computer.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Open a document first – then it can be edited in an Office program.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Opened in {0}. Word asks once whether it should convert the PDF – confirm with ‘OK’. Back to PDFMy: print from Word and choose the ‘PDFMy’ printer."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Opened in {0}. Word asks once whether it should convert the PDF – confirm with ‘OK’. Back to PDFMy: print from Word and choose the ‘PDFMy’ printer.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Photos scanned: {0} – to save as an image: ‘Save’ → format ‘Images (JPG)’; crop with the ‘Crop’ tool.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automatic: PDFMy detects photos itself and crops them. Photo: from the glass, 600 dpi, colours unchanged, without text recognition",
+ "Foto": "Photo",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Place the photo face down on the glass and click ‘Scan’. PDFMy crops the photo and leaves the colours unchanged.",
+ "Foto zugeschnitten.": "Photo cropped.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "No photo scanned – is the photo on the glass?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Crop a scan or photo: drag the four corners – sheets photographed at an angle are also straightened"
 }

@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "PDF direkt änneren – Text, Säiten, Formulairen",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Wielt, mat wéi engem Programm op dësem Computer Dir d'Dokument weiderbeaarbechte wëllt. De Fichier bleift op Ärem Computer.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Fir d'éischt en Dokument opmaachen – da léisst et sech an engem Office-Programm beaarbechten.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Opgemaach an {0}. Word freet eng Kéier, ob et de PDF ëmwandele soll – mat „OK“ bestätegen. Zréck op PDFMy: am Word drécken an den Drécker „PDFMy“ wielen."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Opgemaach an {0}. Word freet eng Kéier, ob et de PDF ëmwandele soll – mat „OK“ bestätegen. Zréck op PDFMy: am Word drécken an den Drécker „PDFMy“ wielen.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Gescannte Fotoen: {0} – als Bild späicheren: „Späicheren“ → Format „Biller (JPG)“; Zouschneide mam Werkzeug „Zouschneiden“.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automatesch: PDFMy erkennt Fotoe selwer a schneit se aus. Foto: vum Glas, 600 dpi, Faarwen onverännert, ouni Texterkennung",
+ "Foto": "Foto",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Foto mat der Bildsäit no ënnen op d'Glas leeën an op „Scannen“ klicken. PDFMy schneit d'Foto aus a léisst d'Faarwen onverännert.",
+ "Foto zugeschnitten.": "Foto zougeschnidden.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Keng Foto gescannt – läit d'Foto op dem Glas?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Scan oder Foto zouschneiden: déi véier Ecken zéien – och schréi opgeholl Blieder ginn entzerrt"
 }

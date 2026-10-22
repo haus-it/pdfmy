@@ -67,3 +67,35 @@ test('Nachführen mit bekannten Ecken (volle Auflösung)', () => {
   const r = D.findDocument(d, W, H, rough);
   assert.ok(err(r.corners, persp) < 0.006, 'Abweichung ' + err(r.corners, persp));
 });
+
+// Fotos auf dem Scannerglas (findPhoto): heller Deckel, Foto mit vielen Mitteltönen – auch in einer Ecke
+function glass({ W = 413, H = 585, photo, letter = false }) {
+  const d = new Uint8ClampedArray(W * H * 4); let s = 3; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const o = (y * W + x) * 4; let r = 246, g = 246, b = 243;
+    if (photo && x >= photo[0] && x < photo[0] + photo[2] && y >= photo[1] && y < photo[1] + photo[3]) {   // Verlauf mit Struktur wie ein Foto
+      const u = (x - photo[0]) / photo[2], v = (y - photo[1]) / photo[3];
+      r = 60 + 140 * u + 30 * Math.sin(y / 7); g = 90 + 80 * v + 25 * Math.cos(x / 9); b = 150 - 90 * u + 20 * Math.sin((x + y) / 11);
+    }
+    if (letter && y > 80 && y < H - 60 && y % 14 < 3 && x > 40 && x < W - 40 && rnd() > 0.3) r = g = b = 30;   // Schriftzeilen
+    if (letter && x > 300 && x < 370 && y > 30 && y < 60) { r = 190; g = 40; b = 40; }                         // kleines Logo
+    d[o] = r + (rnd() - 0.5) * 6; d[o + 1] = g + (rnd() - 0.5) * 6; d[o + 2] = b + (rnd() - 0.5) * 6; d[o + 3] = 255;
+  }
+  return { d, W, H };
+}
+
+test('Foto in der Glasecke wird gefunden und als Foto erkannt', () => {
+  const { d, W, H } = glass({ photo: [20, 20, 250, 167] }), r = D.findPhoto(d, W, H);
+  assert.ok(r.found); assert.ok(r.photoLike);
+  const xs = r.corners.map(p => p[0] * W), ys = r.corners.map(p => p[1] * H);
+  const w = Math.max(...xs) - Math.min(...xs), h = Math.max(...ys) - Math.min(...ys);
+  assert.ok(Math.abs(w / h - 1.5) < 0.08, 'Seitenverhältnis ' + (w / h).toFixed(2));
+});
+test('Brief mit Schrift und Logo ist kein Foto', () => {
+  const { d, W, H } = glass({ letter: true }), r = D.findPhoto(d, W, H);
+  assert.equal(r.photoLike, false);
+});
+test('randloses Foto über die ganze Fläche ist ein Foto (ohne Zuschnitt)', () => {
+  const { d, W, H } = glass({ photo: [0, 0, 413, 585] }), r = D.findPhoto(d, W, H);
+  assert.equal(r.found, false); assert.ok(r.photoLike);
+});

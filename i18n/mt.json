@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Editja l-PDF direttament – test, paġni, formoli",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Agħżel b’liema programm fuq dan il-kompjuter trid tkompli teditja d-dokument. Il-fajl jibqa’ fuq il-kompjuter tiegħek.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "L-ewwel iftaħ dokument – imbagħad ikun jista’ jiġi editjat fi programm tal-Office.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Infetaħ f’{0}. Word jistaqsi darba jekk għandux jikkonverti l-PDF – ikkonferma b’“OK”. Lura għal PDFMy: stampa minn Word u agħżel il-printer “PDFMy”."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Infetaħ f’{0}. Word jistaqsi darba jekk għandux jikkonverti l-PDF – ikkonferma b’“OK”. Lura għal PDFMy: stampa minn Word u agħżel il-printer “PDFMy”.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Ritratti skennjati: {0} – biex tissejvja bħala stampa: “Issejvja” → format “Stampi (JPG)”; biex taqta’, l-għodda “Aqta’”.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Awtomatiku: PDFMy jagħraf ir-ritratti waħdu u jaqtagħhom. Ritratt: mill-ħġieġ, 600 dpi, kuluri mhux mibdula, mingħajr għarfien tat-test",
+ "Foto": "Ritratt",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Poġġi r-ritratt b’wiċċu ’l isfel fuq il-ħġieġ u kklikkja “Skennja”. PDFMy jaqta’ r-ritratt u jħalli l-kuluri mhux mibdula.",
+ "Foto zugeschnitten.": "Ritratt maqtugħ.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "L-ebda ritratt ma ġie skennjat – ir-ritratt qiegħed fuq il-ħġieġ?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Aqta’ skan jew ritratt: kaxkar l-erba’ kantunieri – anke folji ritrattati mżerżqa jiġu ddrittati"
 }

@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "PDF közvetlen szerkesztése – szöveg, oldalak, űrlapok",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Válassza ki, hogy a számítógép melyik programjával szeretné tovább szerkeszteni a dokumentumot. A fájl az Ön számítógépén marad.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Először nyisson meg egy dokumentumot – utána szerkeszthető egy Office-programban.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Megnyitva: {0}. A Word egyszer megkérdezi, hogy átalakítsa-e a PDF-et – erősítse meg az „OK” gombbal. Vissza a PDFMy-ba: nyomtasson a Wordből, és válassza a „PDFMy” nyomtatót."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Megnyitva: {0}. A Word egyszer megkérdezi, hogy átalakítsa-e a PDF-et – erősítse meg az „OK” gombbal. Vissza a PDFMy-ba: nyomtasson a Wordből, és válassza a „PDFMy” nyomtatót.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Beolvasott fényképek: {0} – mentés képként: „Mentés” → „Képek (JPG)” formátum; körbevágás a „Körbevágás” eszközzel.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automatikus: a PDFMy maga felismeri a fényképeket, és kivágja őket. Fénykép: az üvegről, 600 dpi, változatlan színek, szövegfelismerés nélkül",
+ "Foto": "Fénykép",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Tegye a fényképet képpel lefelé az üvegre, és kattintson a „Szkennelés” gombra. A PDFMy kivágja a fényképet, és változatlanul hagyja a színeket.",
+ "Foto zugeschnitten.": "Fénykép körbevágva.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nem lett fénykép beolvasva – az üvegen van a fénykép?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Beolvasott oldal vagy fénykép körbevágása: húzza a négy sarkot – a ferdén fényképezett lapokat is kiegyenesíti"
 }

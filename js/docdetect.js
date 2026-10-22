@@ -237,12 +237,44 @@
     if (!best || best.score < 0.4) return { corners: full, found: false, score: best ? best.score : 0 };
     return { corners: norm(inset(best.q, W, H)), found: true, score: best.score, fill: Math.max(best.fill, Math.min(1, best.score + 0.25)), area: best.area };
   }
+  /* Foto auf dem Scannerglas: Untergrund = Farbe am Bildrand (Deckel, meist weiß); das Foto ist die größte zusammenhängende Fläche,
+     die sich davon abhebt – egal wo sie liegt (Fotos liegen oft in einer Ecke). photoLike: viele Mitteltöne, wenig Papierweiß
+     (Briefe sind überwiegend weiß mit dunkler Schrift). → { corners, found, area, photoLike } */
+  function findPhoto(rgba, W, H) {
+    const n = W * H, full = [[0, 0], [1, 0], [1, 1], [0, 1]], band = Math.max(2, Math.round(Math.min(W, H) * 0.01));
+    const rs = [], gs = [], bs = [];
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      if (x >= band && x < W - band && y >= band && y < H - band) continue;
+      const j = (y * W + x) * 4; rs.push(rgba[j]); gs.push(rgba[j + 1]); bs.push(rgba[j + 2]);
+    }
+    const med = a => a.sort((p, q) => p - q)[a.length >> 1], br = med(rs), bgc = med(gs), bb = med(bs);
+    const lum = j => rgba[j] * 0.299 + rgba[j + 1] * 0.587 + rgba[j + 2] * 0.114;
+    const tone = inside => {   // Anteil Mitteltöne und Papierweiß
+      let k = 0, mid = 0, white = 0;
+      for (let i = 0, j = 0; i < n; i++, j += 4) { if (inside && !inside[i]) continue; k++; const l = lum(j); if (l >= 225) white++; else if (l > 40) mid++; }
+      return k ? { mid: mid / k, white: white / k } : { mid: 0, white: 1 };
+    };
+    const like = t => t.mid > 0.5 && t.white < 0.35;
+    const m = new Uint8Array(n);
+    for (let i = 0, j = 0; i < n; i++, j += 4) m[i] = Math.abs(rgba[j] - br) + Math.abs(rgba[j + 1] - bgc) + Math.abs(rgba[j + 2] - bb) > 36 ? 1 : 0;
+    const c = largest(W, H, m), frac = c.n / n;
+    if (frac > 0.01 && frac < 0.97) {
+      const qs = maskQuad(W, H, c.m);
+      let best = null;
+      for (let q of qs || []) { q = order(q); const A = area(q) / n; if (A < 0.01 || A > 0.97 || !anglesOk(q, 60, 120)) continue; if (!best || A > best.A) best = { q, A }; }
+      if (best && c.n / (area(best.q) || 1) > 0.8) {   // die Fläche füllt das Viereck fast ganz – ein rechteckiges Foto, kein Text
+        const norm = q => q.map(([x, y]) => [Math.max(0, Math.min(1, x / (W - 1))), Math.max(0, Math.min(1, y / (H - 1)))]);
+        return { corners: norm(inset(best.q, W, H)), found: true, area: best.A, photoLike: like(tone(c.m)) };
+      }
+    }
+    return { corners: full, found: false, area: 1, photoLike: like(tone(null)) };   // randloses Foto oder Dokument
+  }
   // Ecken minimal nach innen ziehen, damit kein Untergrund-Streifen am Rand bleibt
   function inset(q, W, H) {
     const cx = q.reduce((s, p) => s + p[0], 0) / 4, cy = q.reduce((s, p) => s + p[1], 0) / 4, d = 0.0025 * Math.hypot(W, H) + 0.6;
     return q.map(([x, y]) => { const l = Math.hypot(cx - x, cy - y) || 1; return [x + (cx - x) / l * d, y + (cy - y) / l * d]; });
   }
 
-  const api = { findDocument, order, area, anglesOk };
+  const api = { findDocument, findPhoto, order, area, anglesOk };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.DocDetect = api;
 })(typeof self !== 'undefined' ? self : this);

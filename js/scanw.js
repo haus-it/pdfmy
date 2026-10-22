@@ -11,7 +11,7 @@ self.onmessage = e => {
     const r = Imaging.prepScan(bmp, o), qr = QR.scan(r.orig);
     const orig = r.orig === bmp ? null : r.orig.transferToImageBitmap(), processed = r.processed.transferToImageBitmap();
     bmp.close?.();
-    self.postMessage({ id, orig, processed, cropped: r.cropped, angle: r.angle, autoMode: r.autoMode, qr }, [processed, ...(orig ? [orig] : [])]);
+    self.postMessage({ id, orig, processed, cropped: r.cropped, angle: r.angle, autoMode: r.autoMode, photo: !!r.photo, qr }, [processed, ...(orig ? [orig] : [])]);
   } catch (err) {
     self.postMessage({ id, error: String(err && err.message || err) });
   }

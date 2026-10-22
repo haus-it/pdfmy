@@ -308,7 +308,10 @@ async function importImage(file, fromCamera) {
   state.pages.push(await scanAsync(c, file.name, fromCamera));
 }
 /* Scan-Aufbereitung für Fotos, Bilddateien und gescannte PDF-Seiten: zuschneiden, gerade richten, aufbereiten (Imaging.prepScan) */
-const scanOpts = fromCamera => ({ crop: S.autoCrop, straighten: S.autoDeskew, fromCamera, mode: S.mode });
+// Foto-Scan (state.scanPhoto = 'color' | 'gray'): Foto ausschneiden, nicht geraderichten (das Geraderichten richtet sich nach Textzeilen),
+// Farben bzw. Grautöne unverändert lassen; Fotos werden nicht per Texterkennung gelesen
+const scanOpts = fromCamera => state.scanPhoto && state.scanPhoto !== 'auto' ? { crop: true, straighten: false, fromCamera: false, mode: state.scanPhoto === 'gray' ? 'gray' : 'original', photo: true }
+  : { crop: S.autoCrop, straighten: S.autoDeskew, fromCamera, mode: S.mode, detectPhoto: state.scanPhoto === 'auto' };   // „Automatisch“: Fotos selbst erkennen
 function scanPage(r, label, lowRes, mode) {
   const note = [r.cropped && 'zugeschnitten', r.angle && `${I18N.fmtNum(r.angle)}° gerade gerichtet`].filter(Boolean).join(', ');
   const p = { id: ++uid, kind: 'image', orig: r.orig, mode, rotation: 0, annots: [], ocr: null, native: null, label: label + (note ? ` (${note})` : ''), lowRes };
@@ -326,19 +329,21 @@ function addScan(c, label, fromCamera = false) {
    Ohne Worker-Unterstützung oder bei Fehlern im Hauptprogramm; das Ergebnis ist dasselbe. */
 const scanPool = workerPool('js/scanw.js', 6);
 async function scanAsync(c, label, fromCamera = false) {
-  const lowRes = !!c.lowRes || c.width < 1000, o = scanOpts(fromCamera), mode = S.mode;
+  const lowRes = !!c.lowRes || c.width < 1000, o = scanOpts(fromCamera), mode = o.mode;
   if (scanPool.ok() && typeof QR !== 'undefined') {
     try {
       const r = await scanPool.post({ bmp: await createImageBitmap(c), o }, m => [m.bmp]);
       if (!r.error) {
         const p = scanPage({ ...r, orig: r.orig ? bmpCanvas(r.orig) : c, processed: bmpCanvas(r.processed) }, label, lowRes, mode);
+        if (o.photo || r.photo) { p.photo = true; p.mode = 'original'; }
         qrTexts(p, r.qr);
         return p;
       }
       console.warn('Scan-Worker:', r.error);
     } catch (e) { console.warn('Scan-Worker:', e); }
   }
-  const p = scanPage(Imaging.prepScan(c, o), label, lowRes, mode);
+  const r = Imaging.prepScan(c, o), p = scanPage(r, label, lowRes, mode);
+  if (o.photo || r.photo) { p.photo = true; p.mode = 'original'; }
   readQr(p, p.orig);
   return p;
 }
@@ -597,7 +602,7 @@ function makeThumb(c) {
   t.getContext('2d').drawImage(c, 0, 0, t.width, t.height);
   return t.toDataURL('image/jpeg', 0.7);
 }
-const thumbBadge = p => p.blank ? 'leer' : p.native ? 'Text' : p.ocr ? 'OCR ✓' : p.busy ? 'OCR …' : p.failed ? 'OCR ✗' : (S.autoOcr && p.kind === 'image' && !p.ocr && !p.failed) ? 'OCR wartet' : '';
+const thumbBadge = p => p.photo ? 'Foto' : p.blank ? 'leer' : p.native ? 'Text' : p.ocr ? 'OCR ✓' : p.busy ? 'OCR …' : p.failed ? 'OCR ✗' : (S.autoOcr && p.kind === 'image' && !p.ocr && !p.failed) ? 'OCR wartet' : '';
 function renderThumbs() {
   const box = $('#thumbs');
   const key = state.pages.map(p => `${p.id}:${thumbBadge(p)}:${hitCount(p)}:${state.picked.has(p.id) ? 1 : 0}:${p.splitAfter ? 1 : 0}`).join('|') + '#' + state.query;
@@ -1487,11 +1492,12 @@ $('#cropFull').onclick = () => { state.crop.corners = [[0, 0], [1, 0], [1, 1], [
 $('#cropApply').onclick = () => {
   const p = cur(); if (!p || !state.crop) return;
   status('Entzerre Seite …');
-  let c = Imaging.warp(p.orig, state.crop.corners);
-  if (S.autoDeskew) c = Imaging.deskew(c).canvas;
+  // Fotos: Seitenverhältnis behalten und nicht nach Textzeilen geraderichten
+  let c = Imaging.warp(p.orig, state.crop.corners, !p.photo);
+  if (S.autoDeskew && !p.photo) c = Imaging.deskew(c).canvas;
   p.orig = c; p.autoMode = null; p.annots = []; p.ocr = null; p.failed = false; p.orientChecked = false;
   reprocess(p); state.crop = null; state.dirty = true; refresh();
-  status('Seite zugeschnitten.');
+  status(p.photo ? 'Foto zugeschnitten.' : 'Seite zugeschnitten.');
   if (S.autoOcr) runOcrAll();
 };
 
@@ -1876,7 +1882,7 @@ function runOcrAll() {
     ocrRunning = true;
     if (!state.meta.sender && !state.einv) $('#anaHint').textContent = '· werden gerade aus dem Brief gelesen …';
     try {
-      const next = () => state.pages.find(x => !x.ocr && !x.native && !x.failed && !x.blank && !x.busy && (x.kind === 'image' || x.forceOcr || !NO_OCR_INTENTS.has(state.intent)));
+      const next = () => state.pages.find(x => !x.ocr && !x.native && !x.failed && !x.blank && !x.busy && !x.photo && (x.kind === 'image' || x.forceOcr || !NO_OCR_INTENTS.has(state.intent)));
       const one = async p => {
         const todo = state.pages.filter(x => !x.ocr && !x.native && !x.failed && !x.blank).length, done = state.pages.filter(x => x.ocr).length;
         state.ocrLabel = `Seite ${state.pages.indexOf(p) + 1} (${done + 1} von ${done + todo})`;
@@ -3913,10 +3919,22 @@ function updateScanOpts() {
   // Einzug ohne Duplex (z. B. Epson L5290, viele Brother-DCP, Dell-Einstiegsgeräte): beidseitig durch Wenden des Stapels
   $('#scanFlipRow').hidden = !(sel && sel.dataset.feeder === 'true' && sel.dataset.duplex !== 'true');
   $('#scanFlip').checked = LS.get('scanFlip', false);
+  if ($('#scanKind').value === 'photo') { $('#scanDuplexRow').hidden = true; $('#scanFlipRow').hidden = true; }   // Fotos: einzeln vom Glas
   $('#scanGo').disabled = !sel;
 }
+// Art „Dokument“ oder „Foto“: Fotos in Farbe oder Schwarzweiß (Graustufen), immer vom Glas
+const SCAN_COLORS = { doc: [['gray', 'Graustufen (empfohlen)'], ['color', 'Farbe'], ['bw', 'Schwarzweiß']], photo: [['color', 'Farbe'], ['gray', 'Schwarzweiß']] };
+function applyScanKind() {
+  const photo = $('#scanKind').value === 'photo', c = $('#scanColor'), src = $('#scanSource');
+  c.textContent = ''; for (const [v, t] of SCAN_COLORS[photo ? 'photo' : 'doc']) c.append(new Option(t, v));
+  c.value = LS.get(photo ? 'scanPhotoColor' : 'scanColor', photo ? 'color' : 'gray'); if (!c.value) c.selectedIndex = 0;
+  src.disabled = photo; src.value = photo ? 'platen' : LS.get('scanSource', 'auto');
+  $('#scanPhotoHint').hidden = !photo; $('#scanHint').hidden = photo;
+  updateScanOpts();
+}
+$('#scanKind').addEventListener('change', applyScanKind);
 $('#scanList').addEventListener('change', updateScanOpts);
-$('#scanColor').value = LS.get('scanColor', 'gray');
+$('#scanKind').value = LS.get('scanKind', 'auto'); applyScanKind();
 
 // "Scanner verbinden": mit pdfmy Scan → Scanner wählen und scannen; ohne → Programm anbieten (oder gemerkten Scan-Ordner)
 async function openScanDialog() {
@@ -3987,20 +4005,24 @@ document.querySelectorAll('#scanDlg [data-connect]').forEach(b => b.onclick = as
 // Scannen: Auftrag starten, Seiten abholen, sobald sie fertig sind – sie erscheinen sofort im Dokument
 $('#scanGo').onclick = async () => {
   const sel = document.querySelector('#scanList input:checked'); if (!sel) return;
-  LS.set('scanner', sel.value); LS.set('scanColor', $('#scanColor').value);
-  LS.set('scanSource', $('#scanSource').value);
+  const kind = $('#scanKind').value, photo = kind === 'photo';
+  LS.set('scanner', sel.value); LS.set('scanKind', kind); LS.set(photo ? 'scanPhotoColor' : 'scanColor', $('#scanColor').value);
+  if (!photo) LS.set('scanSource', $('#scanSource').value);
   if (!$('#scanDuplexRow').hidden) LS.set('scanDuplex', $('#scanDuplex').checked);
   const flip = !$('#scanFlipRow').hidden && $('#scanFlip').checked;
   if (!$('#scanFlipRow').hidden) LS.set('scanFlip', flip);
-  const req = { id: sel.value, duplex: $('#scanDuplex').checked && !$('#scanDuplexRow').hidden, color: $('#scanColor').value, dpi: 300, source: flip ? 'feeder' : $('#scanSource').value };
+  // Fotos: vom Glas, 600 dpi, Farbe oder Graustufen
+  const req = photo ? { id: sel.value, duplex: false, color: $('#scanColor').value === 'gray' ? 'gray' : 'color', dpi: 600, source: 'platen', photo: true }
+    : { id: sel.value, duplex: $('#scanDuplex').checked && !$('#scanDuplexRow').hidden, color: $('#scanColor').value, dpi: 300, source: flip ? 'feeder' : $('#scanSource').value };
   $('#scanDlg').close();
+  state.scanPhoto = photo ? req.color : kind === 'auto' ? 'auto' : null;
   try {
     const fronts = await scanRun(req, flip ? 'Vorderseite' : 'Seite');
     if (!flip || !fronts.length) return;
     if (!await askFlip(fronts.length)) { status(`${fronts.length} Vorderseite(n) gescannt – ohne Rückseiten.`); return; }
     const backs = await scanRun(req, 'Rückseite');
     flipMerge(fronts, backs);
-  } catch (e) { showScanError(e); }
+  } catch (e) { showScanError(e); } finally { state.scanPhoto = null; }
 };
 // Ein Scanauftrag: Seiten abholen, sobald sie fertig sind (sie erscheinen sofort im Dokument); liefert die neuen Seiten
 async function scanRun(req, word) {
@@ -4028,7 +4050,7 @@ async function scanRun(req, word) {
     }
     state.scanDone = true; window.renderTodo?.();
     if (st.state === 'error') { const err = new Error(st.error); err.detail = st.detail; throw err; }
-    status(got ? `${got} Seite(n) gescannt.` + (st.note ? ' ' + st.note : '') : 'Keine Seiten gescannt – liegt Papier im Einzug?');
+    status(got ? (req.photo ? `${got} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.` : `${got} Seite(n) gescannt.`) + (st.note ? ' ' + st.note : '') : (req.photo ? 'Kein Foto gescannt – liegt das Foto auf dem Glas?' : 'Keine Seiten gescannt – liegt Papier im Einzug?'));
     if (st.note) toast(st.note, 9000);
     else if (req.duplex && got % 2 === 1) toast(`Beidseitig angefordert, aber ${got} Seite(n) erhalten. Falls Rückseiten fehlen: im Scan-Fenster auf „Protokoll“ klicken und es uns schicken.`, 12000);
   }

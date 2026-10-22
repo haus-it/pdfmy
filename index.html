@@ -1163,7 +1163,7 @@ html.i18n-wait body{visibility:hidden}
           <option value="gray">Graustufen</option>
           <option value="original">Original</option>
         </select>
-        <button id="btnCrop" title="Blatt zuschneiden und Perspektive entzerren (für Handyfotos)"><svg class="ic" aria-hidden="true"><use href="#i-crop"/></svg><span>Zuschneiden</span></button>
+        <button id="btnCrop" title="Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt"><svg class="ic" aria-hidden="true"><use href="#i-crop"/></svg><span>Zuschneiden</span></button>
       </div>
       <div id="cropBar">
         <span class="hint">Die blauen Ecken auf die Blattecken ziehen.</span>
@@ -1568,11 +1568,13 @@ html.i18n-wait body{visibility:hidden}
     <div id="scanUpdate" class="scanupdate" hidden><b>pdfmy Scan <span class="scanVerNew"></span></b> ist verfügbar – installiert ist <span id="scanVerOld"></span>. <a id="scanUpdateLink" download>Version <span class="scanVerNew"></span> herunterladen</a>, Datei öffnen, fertig.</div>
     <div id="scanList" class="scanlist" role="radiogroup" aria-label="Scanner"></div>
     <div class="scanopts">
+      <label title="Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung">Art <select id="scanKind"><option value="auto">Automatisch</option><option value="doc">Dokument</option><option value="photo">Foto</option></select></label>
       <label>Farbe <select id="scanColor"><option value="gray">Graustufen (empfohlen)</option><option value="color">Farbe</option><option value="bw">Schwarzweiß</option></select></label>
       <label>Vorlage <select id="scanSource"><option value="auto">Automatisch</option><option value="feeder">Einzug</option><option value="platen">Glas</option></select></label>
       <label class="cb" id="scanDuplexRow" title="Vorder- und Rückseite in einem Durchgang. Leere Rückseiten entfernt PDFMy automatisch."><input id="scanDuplex" type="checkbox"> Beidseitig</label>
       <label class="cb" id="scanFlipRow" hidden title="Für Einzüge ohne Duplex: erst die Vorderseiten, dann den Stapel wenden und die Rückseiten scannen – PDFMy sortiert die Seiten richtig ein."><input id="scanFlip" type="checkbox"> Beidseitig durch Wenden</label>
     </div>
+    <p class="hint" id="scanPhotoHint" hidden>Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.</p>
     <p class="hint" id="scanHint">Papier in den Einzug legen (oder aufs Glas) und auf „Scannen“ klicken. <a class="devList" target="_blank">Funktioniert mein Gerät?</a></p>
     <div class="dlgrow" style="justify-content:space-between">
       <span><span class="hint" id="scanVerInfo"></span> · <button type="button" class="linkbtn" id="scanLog" title="Was pdfmy Scan und der Scanner-Treiber zuletzt gemeldet haben – zum Kopieren für den Support">Protokoll</button> · <button type="button" class="linkbtn" id="scanRefresh">Neu suchen</button> · <button type="button" class="linkbtn" id="scanWake" title="Für Geräte im Energiesparmodus: pdfmy Scan spricht die bekannten Scanner direkt an (und sendet Wake-on-LAN), dann wird neu gesucht">Scanner aufwecken</button> · <button type="button" class="linkbtn" id="scanAddIp">Gerät per IP-Adresse hinzufügen</button></span>

@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Muokkaa PDF:ää suoraan – teksti, sivut, lomakkeet",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Valitse, millä tämän tietokoneen ohjelmalla haluat jatkaa asiakirjan muokkaamista. Tiedosto pysyy tietokoneellasi.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Avaa ensin asiakirja – sitten sitä voi muokata Office-ohjelmassa.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Avattu ohjelmassa {0}. Word kysyy kerran, muunnetaanko PDF – vahvista valitsemalla ”OK”. Takaisin PDFMy:hin: tulosta Wordista ja valitse tulostin ”PDFMy”."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Avattu ohjelmassa {0}. Word kysyy kerran, muunnetaanko PDF – vahvista valitsemalla ”OK”. Takaisin PDFMy:hin: tulosta Wordista ja valitse tulostin ”PDFMy”.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Skannattuja valokuvia: {0} – tallennus kuvana: ”Tallenna” → muoto ”Kuvat (JPG)”; rajaus työkalulla ”Rajaa”.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automaattinen: PDFMy tunnistaa valokuvat itse ja rajaa ne. Valokuva: lasilta, 600 dpi, värit muuttumattomina, ilman tekstintunnistusta",
+ "Foto": "Valokuva",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Aseta valokuva kuvapuoli alaspäin lasille ja napsauta ”Skannaa”. PDFMy rajaa valokuvan ja jättää värit muuttumattomiksi.",
+ "Foto zugeschnitten.": "Valokuva rajattu.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Valokuvaa ei skannattu – onko valokuva lasilla?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Rajaa skannaus tai valokuva: vedä neljää kulmaa – myös vinosti kuvatut arkit oikaistaan"
 }

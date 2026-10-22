@@ -227,15 +227,16 @@
     return [...h, 1];
   }
 
-  /* Viereck (normierte Ecken tl,tr,br,bl) zu Rechteck entzerren */
-  function warp(src, corners) {
+  /* Viereck (normierte Ecken tl,tr,br,bl) zu Rechteck entzerren; din: Seitenverhältnis nahe DIN A auf genau DIN A bringen (Briefe) –
+     für Fotos aus, sonst würde z. B. 10 × 15 cm verzerrt */
+  function warp(src, corners, din = true) {
     const P = corners.map(([x, y]) => [x * src.width, y * src.height]);
     const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
     let w = Math.round(Math.max(dist(P[0], P[1]), dist(P[3], P[2])));
     let h = Math.round(Math.max(dist(P[0], P[3]), dist(P[1], P[2])));
     // Perspektive verfälscht das Seitenverhältnis: nahe an DIN A (1 : 1,414) → genau DIN A (Briefe sehen wie gescannt aus)
     const ratio = Math.max(w, h) / Math.min(w, h);
-    if (Math.abs(ratio - Math.SQRT2) / Math.SQRT2 < 0.12) { if (h >= w) h = Math.round(w * Math.SQRT2); else w = Math.round(h * Math.SQRT2); }
+    if (din && Math.abs(ratio - Math.SQRT2) / Math.SQRT2 < 0.12) { if (h >= w) h = Math.round(w * Math.SQRT2); else w = Math.round(h * Math.SQRT2); }
     const k = Math.min(1, 3300 / Math.max(w, h)); w = Math.round(w * k); h = Math.round(h * k);
     const H = homography([[0, 0], [w - 1, 0], [w - 1, h - 1], [0, h - 1]], P);
     const sd = src.getContext ? src.getContext('2d', { willReadFrequently: true }) : null;
@@ -314,14 +315,22 @@
 
   /* Scan aufbereiten wie beim Import (js/app.js, parallel im Worker js/scanw.js): zuschneiden, wenn das Blatt vor einem Untergrund liegt
      (Kamera: immer), gerade richten, Modus „Automatisch“ auflösen, aufbereiten. → { orig, processed, cropped, angle, autoMode } */
-  function prepScan(c, { crop, straighten, fromCamera, mode }) {
+  function prepScan(c, { crop, straighten, fromCamera, mode, photo, detectPhoto }) {
     let cropped = false, angle = 0;
+    // Foto (gewählt oder bei „Automatisch“ erkannt): ausschneiden, Seitenverhältnis und Farben unverändert, kein Geraderichten nach Text
+    if (photo || detectPhoto) {
+      const s = scaled(c, 900), f = DocDetect.findPhoto(s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data, s.width, s.height);
+      if (photo || f.photoLike) {
+        if (f.found) { c = warp(c, f.corners, false); cropped = true; }
+        return { orig: c, processed: enhance(c, 'original'), cropped, angle: 0, autoMode: null, photo: true };
+      }
+    }
     if (crop) {
       // Andere Bilder als Kamerafotos nur, wenn das Blatt sichtbar vor einem Untergrund liegt (Tisch o. Ä.) –
       // echte Scans und Seiten mit Rahmen/Tabellen bleiben unverändert
       let det = detectDocument(c);
       if (det.found && (fromCamera || (det.score > 0.6 && det.area < 0.93 && hasBackground(c, det.corners)))) {
-        det = detectDocument(c, 1400, det.corners); c = warp(c, det.corners); cropped = true;
+        det = detectDocument(c, 1400, det.corners); c = warp(c, det.corners, !photo); cropped = true;
       }
     }
     if (straighten) { const r = deskew(c); c = r.canvas; angle = r.angle; }

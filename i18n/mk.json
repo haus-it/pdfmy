@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Директно уредување на PDF – текст, страници, обрасци",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Изберете со која програма на овој компјутер сакате да продолжите со уредување на документот. Датотеката останува на Вашиот компјутер.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Прво отворете документ – потоа може да се уредува во Office-програма.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Отворено во {0}. Word еднаш прашува дали да го претвори PDF-от – потврдете со „OK“. Назад во PDFMy: печатете од Word и изберете го печатачот „PDFMy“."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Отворено во {0}. Word еднаш прашува дали да го претвори PDF-от – потврдете со „OK“. Назад во PDFMy: печатете од Word и изберете го печатачот „PDFMy“.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Скенирани фотографии: {0} – зачувување како слика: „Зачувај“ → формат „Слики (JPG)“; сечење со алатката „Исечи“.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Автоматски: PDFMy сам ги препознава фотографиите и ги исекува. Фотографија: од стаклото, 600 dpi, боите непроменети, без препознавање текст",
+ "Foto": "Фотографија",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Ставете ја фотографијата со сликата надолу на стаклото и кликнете „Скенирај“. PDFMy ја исекува фотографијата и ги остава боите непроменети.",
+ "Foto zugeschnitten.": "Фотографијата е исечена.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Не е скенирана фотографија – дали фотографијата е на стаклото?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Исечете скен или фотографија: повлечете ги четирите агли – и косо сликаните листови се исправаат"
 }

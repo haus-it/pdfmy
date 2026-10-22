@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Editar o PDF directamente – texto, páxinas, formularios",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Escolla con que programa deste ordenador desexa seguir editando o documento. O ficheiro queda no seu ordenador.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Abra primeiro un documento – despois poderá editalo nun programa de Office.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Aberto en {0}. Word pregunta unha vez se debe converter o PDF – confirme con «OK». Para volver a PDFMy: imprima desde Word e escolla a impresora «PDFMy»."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Aberto en {0}. Word pregunta unha vez se debe converter o PDF – confirme con «OK». Para volver a PDFMy: imprima desde Word e escolla a impresora «PDFMy».",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Fotos dixitalizadas: {0} – para gardar como imaxe: «Gardar» → formato «Imaxes (JPG)»; recortar coa ferramenta «Recortar».",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automático: PDFMy detecta as fotos e recórtaas. Foto: desde o cristal, 600 dpi, cores sen cambios, sen recoñecemento de texto",
+ "Foto": "Foto",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Coloque a foto boca abaixo sobre o cristal e faga clic en «Dixitalizar». PDFMy recorta a foto e deixa as cores sen cambios.",
+ "Foto zugeschnitten.": "Foto recortada.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Non se dixitalizou ningunha foto – está a foto sobre o cristal?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Recortar unha dixitalización ou unha foto: arrastre as catro esquinas – as follas fotografadas en ángulo tamén se endereitan"
 }

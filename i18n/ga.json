@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Cuir an PDF in eagar go díreach – téacs, leathanaigh, foirmeacha",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Roghnaigh cén clár ar an ríomhaire seo ar mhaith leat leanúint ar aghaidh leis an doiciméad a chur in eagar leis. Fanann an comhad ar do ríomhaire.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Oscail doiciméad ar dtús – ansin is féidir é a chur in eagar i gclár Office.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Osclaíodh in {0}. Fiafraíonn Word uair amháin ar cheart dó an PDF a athrú – deimhnigh le “OK”. Ar ais chuig PDFMy: priontáil ó Word agus roghnaigh an printéir “PDFMy”."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Osclaíodh in {0}. Fiafraíonn Word uair amháin ar cheart dó an PDF a athrú – deimhnigh le “OK”. Ar ais chuig PDFMy: priontáil ó Word agus roghnaigh an printéir “PDFMy”.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Grianghraif scanta: {0} – le sábháil mar íomhá: “Sábháil” → formáid “Íomhánna (JPG)”; bearr leis an uirlis “Bearr”.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Uathoibríoch: aithníonn PDFMy grianghraif é féin agus gearrann sé amach iad. Grianghraf: ón ngloine, 600 dpi, dathanna gan athrú, gan aithint téacs",
+ "Foto": "Grianghraf",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Leag an grianghraf agus a aghaidh síos ar an ngloine agus cliceáil “Scan”. Gearrann PDFMy an grianghraf amach agus fágann sé na dathanna gan athrú.",
+ "Foto zugeschnitten.": "Grianghraf bearrtha.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Níor scanadh aon ghrianghraf – an bhfuil an grianghraf ar an ngloine?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Bearr scanadh nó grianghraf: tarraing na ceithre choirnéal – dírítear leathanaigh a grianghrafadh ar fiar freisin"
 }

@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Fotos scannen und zuschneiden (app-v174)
+- Scan-Fenster: neue Auswahl „Art“ – Automatisch (Voreinstellung), Dokument, Foto. Foto: vom Glas, 600 dpi, Farbe oder Schwarzweiß (Graustufen), Beidseitig ausgeblendet. Automatisch: PDFMy erkennt Fotos selbst (DocDetect.findPhoto: Untergrund am Bildrand, größte abgehobene Fläche, viele Mitteltöne/wenig Papierweiß).
+- Fotos werden ausgeschnitten, auch in der Ecke des Glases; Farben unverändert (Modus „original“), kein Geraderichten nach Textzeilen, keine Texterkennung, Kennzeichen „Foto“ in der Seitenleiste.
+- Zuschneiden: bei Fotos kein Einrasten auf DIN A (10 × 15 bleibt 10 × 15) und kein Geraderichten; Knopf-Beschriftung allgemeiner.
+- Tests: tests/docdetect.test.js (Foto in der Ecke mit Seitenverhältnis 1,5; Brief mit Logo kein Foto; randloses Foto), Browser: Dialog, Aufbereitung in vier Fällen, manuelles Zuschneiden, axe hell/dunkel 0. Nicht mit echtem Foto auf echtem Scanner getestet.
+
 ### Geräteliste: ältere Brother-Geräte (2010–2020)
 - Neue Zeilen in „Welche Scanner funktionieren?“ für die verbreiteten Vorgängergenerationen: Laser s/w DCP/MFC-L2500–L2740 und DCP/MFC-7000/MFC-8000, Farblaser DCP/MFC-9000 (u. a. MFC-9142CDN), MFC-L8600/L9550, DCP/MFC-L3500/L3700 und L8000/L9500, Büro DCP/MFC-L5500–L6900, Tinte MFC-J4000/J400–J800 sowie ab 2017/18 (J572–J895, J5330–J6935), ältere ADS-Netzwerk- und USB-Scanner, PDS-5000/6000.
 - Recherche (Brother-Handbücher, sane-airscan-Testliste): AirPrint-Scan/eSCL erst ab der Generation 2017/18; ältere Netzwerkgeräte scannen über WSD – beides kann pdfmy Scan ohne Treiber. Unbelegte Angaben vorsichtig formuliert („je nach Modell“).

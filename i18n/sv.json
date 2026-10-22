@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Redigera PDF direkt – text, sidor, formulär",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Välj vilket program på den här datorn du vill redigera dokumentet vidare med. Filen stannar på din dator.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Öppna först ett dokument – sedan kan det redigeras i ett Office-program.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Öppnat i {0}. Word frågar en gång om PDF:en ska konverteras – bekräfta med ”OK”. Tillbaka till PDFMy: skriv ut från Word och välj skrivaren ”PDFMy”."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Öppnat i {0}. Word frågar en gång om PDF:en ska konverteras – bekräfta med ”OK”. Tillbaka till PDFMy: skriv ut från Word och välj skrivaren ”PDFMy”.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Skannade foton: {0} – spara som bild: ”Spara” → format ”Bilder (JPG)”; beskär med verktyget ”Beskär”.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automatiskt: PDFMy känner själv igen foton och skär ut dem. Foto: från glaset, 600 dpi, färgerna oförändrade, utan textigenkänning",
+ "Foto": "Foto",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Lägg fotot med bildsidan nedåt på glaset och klicka på ”Skanna”. PDFMy skär ut fotot och låter färgerna vara oförändrade.",
+ "Foto zugeschnitten.": "Fotot beskuret.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Inget foto skannat – ligger fotot på glaset?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Beskär skanning eller foto: dra i de fyra hörnen – även snett fotograferade ark rätas upp"
 }

@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Editare directă a PDF-ului – text, pagini, formulare",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Alegeți cu ce program de pe acest computer doriți să continuați editarea documentului. Fișierul rămâne pe computerul dumneavoastră.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Deschideți mai întâi un document – apoi poate fi editat într-un program Office.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Deschis în {0}. Word întreabă o dată dacă să convertească PDF-ul – confirmați cu „OK”. Înapoi la PDFMy: tipăriți din Word și alegeți imprimanta „PDFMy”."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Deschis în {0}. Word întreabă o dată dacă să convertească PDF-ul – confirmați cu „OK”. Înapoi la PDFMy: tipăriți din Word și alegeți imprimanta „PDFMy”.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Fotografii scanate: {0} – salvare ca imagine: „Salvare” → format „Imagini (JPG)”; decupare cu instrumentul „Decupare”.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automat: PDFMy recunoaște singur fotografiile și le decupează. Fotografie: de pe geam, 600 dpi, culori neschimbate, fără recunoaștere text",
+ "Foto": "Fotografie",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Așezați fotografia cu fața în jos pe geam și faceți clic pe „Scanare”. PDFMy decupează fotografia și lasă culorile neschimbate.",
+ "Foto zugeschnitten.": "Fotografie decupată.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nicio fotografie scanată – se află fotografia pe geam?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Decupați o scanare sau o fotografie: trageți de cele patru colțuri – și foile fotografiate oblic sunt îndreptate"
 }

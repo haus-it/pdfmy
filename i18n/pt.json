@@ -56,7 +56,7 @@
  "· beidseitig möglich": "· frente e verso possível",
  "· digital signiert ({0})": "· assinado digitalmente ({0})",
  "· E-Rechnung: {0} – Daten verbindlich aus dem XML": "· Fatura eletrónica: {0} – dados vinculativos a partir do XML",
- "· Einzug": "· Débito direto",
+ "· Einzug": "· Alimentador",
  "· erkannt, Typ wie zuletzt bei diesem Absender": "· detetado, tipo igual ao último deste remetente",
  "· Fehler: {0}": "· Erro: {0}",
  "· keine Briefdaten erkannt (z. B. kein Brief)": "· nenhum dado de carta detetado (p. ex. não é uma carta)",
@@ -813,7 +813,7 @@
  "Einzelpreis (netto)": "Preço unitário (líquido)",
  "Einzelseite": "Página individual",
  "Einzelseiten speichern": "Guardar páginas individuais",
- "Einzug": "Débito direto",
+ "Einzug": "Alimentador",
  "Elegant": "Elegante",
  "Element in die Seite gesetzt – mit den Pfeiltasten verschieben, Entf löscht.": "Elemento colocado na página – mova com as teclas de seta, Del elimina.",
  "Element wählen, verschieben": "Selecionar e mover elemento",
@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Editar o PDF diretamente – texto, páginas, formulários",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Escolha com que programa deste computador pretende continuar a editar o documento. O ficheiro fica no seu computador.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Abra primeiro um documento – depois pode ser editado num programa Office.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Aberto no {0}. O Word pergunta uma vez se deve converter o PDF – confirme com «OK». Voltar ao PDFMy: imprima a partir do Word e escolha a impressora «PDFMy»."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Aberto no {0}. O Word pergunta uma vez se deve converter o PDF – confirme com «OK». Voltar ao PDFMy: imprima a partir do Word e escolha a impressora «PDFMy».",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Fotos digitalizadas: {0} – para guardar como imagem: «Guardar» → formato «Imagens (JPG)»; recortar com a ferramenta «Recortar».",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automático: o PDFMy deteta as fotos e recorta-as. Foto: a partir do vidro, 600 dpi, cores inalteradas, sem reconhecimento de texto",
+ "Foto": "Foto",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Coloque a foto virada para baixo sobre o vidro e clique em «Digitalizar». O PDFMy recorta a foto e mantém as cores inalteradas.",
+ "Foto zugeschnitten.": "Foto recortada.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nenhuma foto digitalizada – a foto está sobre o vidro?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Recortar uma digitalização ou foto: arraste os quatro cantos – as folhas fotografadas em ângulo também são endireitadas"
 }

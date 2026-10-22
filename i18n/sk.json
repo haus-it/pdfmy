@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Upraviť PDF priamo – text, strany, formuláre",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Vyberte, v ktorom programe v tomto počítači chcete pokračovať v úpravách dokumentu. Súbor zostane vo vašom počítači.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Najprv otvorte dokument – potom ho možno upraviť v programe Office.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Otvorené v {0}. Word sa raz opýta, či má PDF previesť – potvrďte tlačidlom „OK“. Späť do PDFMy: vo Worde tlačte a vyberte tlačiareň „PDFMy“."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Otvorené v {0}. Word sa raz opýta, či má PDF previesť – potvrďte tlačidlom „OK“. Späť do PDFMy: vo Worde tlačte a vyberte tlačiareň „PDFMy“.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Naskenované fotografie: {0} – uložiť ako obrázok: „Uložiť“ → formát „Obrázky (JPG)“; orezanie nástrojom „Orezať“.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automaticky: PDFMy sám rozpozná fotografie a vyreže ich. Fotografia: zo skla, 600 dpi, farby bez zmeny, bez rozpoznávania textu",
+ "Foto": "Fotografia",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Položte fotografiu obrázkom nadol na sklo a kliknite na „Skenovať“. PDFMy fotografiu vyreže a farby ponechá bez zmeny.",
+ "Foto zugeschnitten.": "Fotografia orezaná.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Nenaskenovala sa žiadna fotografia – leží fotografia na skle?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Orezať sken alebo fotografiu: potiahnite štyri rohy – aj šikmo odfotené listy sa vyrovnajú"
 }

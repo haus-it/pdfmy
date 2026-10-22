@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Modifier le PDF directement – texte, pages, formulaires",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Choisissez avec quel programme de cet ordinateur vous souhaitez continuer à modifier le document. Le fichier reste sur votre ordinateur.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Ouvrez d’abord un document – il pourra ensuite être modifié dans un programme Office.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Ouvert dans {0}. Word demande une fois s’il doit convertir le PDF – confirmez avec « OK ». Retour à PDFMy : imprimez depuis Word et choisissez l’imprimante « PDFMy »."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Ouvert dans {0}. Word demande une fois s’il doit convertir le PDF – confirmez avec « OK ». Retour à PDFMy : imprimez depuis Word et choisissez l’imprimante « PDFMy ».",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Photos numérisées : {0} – pour enregistrer comme image : « Enregistrer » → format « Images (JPG) » ; recadrer avec l’outil « Recadrer ».",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Automatique : PDFMy détecte lui-même les photos et les découpe. Photo : depuis la vitre, 600 dpi, couleurs inchangées, sans reconnaissance de texte",
+ "Foto": "Photo",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Posez la photo face vers le bas sur la vitre et cliquez sur « Numériser ». PDFMy découpe la photo et laisse les couleurs inchangées.",
+ "Foto zugeschnitten.": "Photo recadrée.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Aucune photo numérisée – la photo est-elle sur la vitre ?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Recadrer une numérisation ou une photo : faites glisser les quatre coins – les feuilles photographiées de biais sont aussi redressées"
 }

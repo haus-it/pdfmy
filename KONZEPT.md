@@ -114,6 +114,9 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Umgesetzt (22.10.2026): Fotos scannen und zuschneiden
+Wunsch: Fotos scannen (Farbe/Schwarzweiß), Scan zuschneiden, automatisch erkennen. **Passt:** alles lokal im Browser bzw. über pdfmy Scan, kein Upload (Punkt 1, 2); eine Auswahl „Art“ mit „Automatisch“ als Voreinstellung – der Nutzer muss nichts tun (Punkt 4); Fotos bleiben unverändert (keine Dokument-Aufbereitung).
+
 ### Umgesetzt (22.10.2026): Office-Programme anbinden (ONLYOFFICE, LibreOffice, Collabora, Word)
 | Weg | Ergebnis |
 |---|---|

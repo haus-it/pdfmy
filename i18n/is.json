@@ -2848,5 +2848,12 @@
  "PDF direkt bearbeiten – Text, Seiten, Formulare": "Breyta PDF beint – texti, síður, eyðublöð",
  "Wählen Sie, mit welchem Programm auf diesem Rechner Sie das Dokument weiterbearbeiten möchten. Die Datei bleibt auf Ihrem Rechner.": "Veljið með hvaða forriti á þessari tölvu þér viljið halda áfram að vinna í skjalinu. Skráin verður áfram á tölvunni yðar.",
  "Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.": "Opnið fyrst skjal – þá er hægt að breyta því í Office-forriti.",
- "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Opnað í {0}. Word spyr einu sinni hvort það eigi að umbreyta PDF-skjalinu – staðfestið með „OK“. Aftur í PDFMy: prentið úr Word og veljið prentarann „PDFMy“."
+ "Geöffnet in {0}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.": "Opnað í {0}. Word spyr einu sinni hvort það eigi að umbreyta PDF-skjalinu – staðfestið með „OK“. Aftur í PDFMy: prentið úr Word og veljið prentarann „PDFMy“.",
+ "{0} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder (JPG)“; Zuschneiden mit dem Werkzeug „Zuschneiden“.": "Skannaðar myndir: {0} – vista sem mynd: „Vista“ → snið „Myndir (JPG)“; skera til með tólinu „Skera til“.",
+ "Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung": "Sjálfvirkt: PDFMy greinir ljósmyndir sjálft og sker þær út. Ljósmynd: af glerinu, 600 dpi, litir óbreyttir, án textagreiningar",
+ "Foto": "Ljósmynd",
+ "Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.": "Leggið ljósmyndina með myndhliðina niður á glerið og smellið á „Skanna“. PDFMy sker ljósmyndina út og lætur litina óbreytta.",
+ "Foto zugeschnitten.": "Ljósmynd skorin til.",
+ "Kein Foto gescannt – liegt das Foto auf dem Glas?": "Engin ljósmynd skönnuð – liggur ljósmyndin á glerinu?",
+ "Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt": "Skera til skönnun eða ljósmynd: dragið hornin fjögur – blöð sem voru mynduð á ská eru einnig rétt af"
 }
