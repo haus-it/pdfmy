@@ -32,6 +32,7 @@ if (-not $Test -and -not $NoBuild) {
   # Signieren (Mentor GmbH, Microsoft Artifact Signing) – der Build überschreibt die Signatur jedes Mal
   & (Join-Path $PSScriptRoot 'sign.ps1') | Out-Null
   Write-Host 'pdfmy Scan signiert (Mentor GmbH)' -ForegroundColor Green
+  $env:PDFMY_PRERENDER = '1'   # Webseiten je Sprache vorab übersetzen (tools/prerender.js)
   & node (Join-Path $PSScriptRoot 'build-web.js')
   if ($LASTEXITCODE) { throw 'Build fehlgeschlagen.' }
 }

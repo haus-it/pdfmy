@@ -114,6 +114,29 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Konzept (22.10.2026): ONLYOFFICE anbinden
+| Weg | Ergebnis |
+|---|---|
+| ONLYOFFICE → PDFMy: im Druckdialog den Drucker „PDFMy“ wählen | **passt, geht heute** – in der Hilfe beschrieben |
+| PDFMy → ONLYOFFICE Desktop: „… Mehr → In ONLYOFFICE bearbeiten“ | **passt, wird gebaut:** PDFMy erzeugt die aktuelle PDF (mit Texterkennung und Änderungen), pdfmy Scan legt sie in Dokumente\PDFMy\ONLYOFFICE ab und startet ONLYOFFICE Desktop mit --edit (dokumentierter Startparameter); ONLYOFFICE ab 9 bearbeitet PDFs selbst und speichert auch als Word. Die Datei verlässt den Rechner nicht. Windows, Mac, Linux; ist ONLYOFFICE nicht installiert, erklärt PDFMy das |
+| Plugin „In PDFMy öffnen“ in ONLYOFFICE Docs | zurückgestellt: GetFileToDownload funktioniert laut Hersteller in Desktop nicht; Lizenzfrage (AGPL) vorher klären |
+| ONLYOFFICE Docs als Umwandlungs-Server | **verworfen:** Server im Netz verletzt Punkt 1 (wie KI-Server); lokal nur mit Docker – zu kompliziert (Punkt 4) |
+| ONLYOFFICE DocSpace (Cloud) | **verworfen:** wäre ein Upload (Punkt 1) |
+
+### Umgesetzt (22.10.2026): Website in 40 Sprachen für Suchmaschinen sichtbar
+**Befund:** Die Webseiten (Hilfe, Werkzeug-Seiten, Presse …) werden immer auf Deutsch ausgeliefert und erst im Browser per JavaScript übersetzt. Auch pdfmy.de/…?lang=fr liefert deutsches HTML; kanonische Adresse immer deutsch, keine hreflang-Angaben, Sitemap nur 28 deutsche Adressen. Suchmaschinen finden die 39 Übersetzungen deshalb praktisch nicht; Crawler, die JavaScript ausführen (Google mit englischer Browsersprache), sehen unter der deutschen Adresse womöglich englischen Text.
+
+**Lösung:** Beim Ausrollen werden die Webseiten je Sprache **vorab übersetzt** und als statische Seiten unter /<sprache>/ abgelegt (z. B. pdfmy.de/fr/pdf-verkleinern.html) – mit demselben Übersetzungsverfahren wie im Browser (headless Chrome auf dem Build-Rechner, nur geänderte Seiten neu). Jede Seite bekommt lang-Attribut, übersetzten Titel und Beschreibung, eigene kanonische Adresse und hreflang-Verweise auf alle 40 Fassungen (x-default = Deutsch); die Sitemap führt alle Fassungen. Die Sprachwahl auf diesen Seiten springt zur gleichen Seite in der anderen Sprache. Die deutschen Seiten bleiben, wie sie sind; für Menschen übersetzt die deutsche Seite weiter automatisch nach Browsersprache, für Suchmaschinen-Crawler nicht (sie folgen den hreflang-Verweisen). Die App selbst (Startseite) bleibt unverändert.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: betrifft nur öffentliche Webseiten, keine Nutzerdaten |
+| 2 Kein Server | passt: statische Dateien, Übersetzung beim Build |
+| 3 Kostenlos, ohne Tracking | passt |
+| 4 So einfach wie möglich | passt: für Nutzer keine Änderung; teilbare Adressen je Sprache |
+| 5 Normgerecht | passt: korrektes lang-Attribut (WCAG 3.1.1), axe-geprüft |
+| 7 Besser als Wettbewerb | Wettbewerber haben Sprachfassungen je Adresse – das holen wir nach |
+
 ### Entschieden und umgesetzt (22.10.2026): virtueller Drucker „Drucken in PDFMy“
 Ziel: In jedem Programm (Word, Browser, Warenwirtschaft) „Drucken“ → Drucker „PDFMy“ → das Dokument öffnet sich sofort in PDFMy.
 

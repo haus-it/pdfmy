@@ -37,15 +37,15 @@
     "description": "PDF kostenlos in ein bearbeitbares Word-Dokument (.docx) umwandeln – auch gescannte Briefe dank Texterkennung. Ohne Upload, ohne Anmeldung.",
     "intro": "Machen Sie aus PDFs und Scans bearbeitbare Word-Dokumente. Gescannte Seiten liest PDFMy mit Texterkennung – direkt auf Ihrem Gerät.",
     "steps": ["Auf „PDF in Word“ klicken und die Datei wählen.", "PDFMy erkennt den Text, auch bei Scans.", "Als Word-Dokument speichern und in Word weiterbearbeiten."],
-    "faq": [["Funktioniert das auch mit Scans?", "Ja. Die Texterkennung liest gedruckten Text in acht Sprachen."], ["Brauche ich Word?", "Zum Umwandeln nicht. Die .docx-Datei öffnen Sie danach in Word, LibreOffice oder Pages."]]
+    "faq": [["Funktioniert das auch mit Scans?", "Ja. Die Texterkennung liest gedruckten Text in über 40 Sprachen."], ["Brauche ich Word?", "Zum Umwandeln nicht. Die .docx-Datei öffnen Sie danach in Word, LibreOffice oder Pages."]]
   },
   {
     "slug": "pdf-texterkennung-ocr", "target": "scan", "label": "Scannen & Text erkennen",
     "title": "Texterkennung (OCR) – Scans durchsuchbar machen",
-    "description": "Kostenlose OCR: Scans und Fotos in durchsuchbare PDFs umwandeln – in 8 Sprachen, direkt im Browser, ohne Upload. Briefdaten werden automatisch erkannt.",
-    "intro": "Aus Fotos und Scans werden durchsuchbare PDFs. PDFMy erkennt den Text in acht Sprachen und liest gleich Absender, Betrag und Frist aus Briefen.",
+    "description": "Kostenlose OCR: Scans und Fotos in durchsuchbare PDFs umwandeln – in über 40 Sprachen, direkt im Browser, ohne Upload. Briefdaten werden automatisch erkannt.",
+    "intro": "Aus Fotos und Scans werden durchsuchbare PDFs. PDFMy erkennt den Text in über 40 Sprachen und liest gleich Absender, Betrag und Frist aus Briefen.",
     "steps": ["Auf „Scannen & Text erkennen“ klicken – oder mit dem Handy bzw. Scanner scannen.", "PDFMy richtet die Seiten gerade und erkennt den Text automatisch.", "Als durchsuchbare PDF speichern oder direkt ablegen."],
-    "faq": [["Welche Sprachen erkennt PDFMy?", "Deutsch, Englisch, Französisch, Italienisch, Spanisch, Niederländisch, Polnisch und Türkisch – die Sprache wird automatisch erkannt."], ["Läuft die Texterkennung in der Cloud?", "Nein. Die Texterkennung läuft auf Ihrem Gerät; kein Dokument geht an einen Online-Dienst."]]
+    "faq": [["Welche Sprachen erkennt PDFMy?", "Über 40 Sprachen – darunter Deutsch, Englisch, Französisch, Spanisch, Polnisch, Türkisch, Russisch und Ukrainisch, Arabisch, Hebräisch, Chinesisch, Japanisch und Koreanisch. Die Sprache wird automatisch erkannt."], ["Läuft die Texterkennung in der Cloud?", "Nein. Die Texterkennung läuft auf Ihrem Gerät; kein Dokument geht an einen Online-Dienst."]]
   },
   {
     "slug": "e-rechnung-erstellen", "target": "#tileEinv", "label": "E-Rechnung schreiben",

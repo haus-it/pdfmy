@@ -79,7 +79,12 @@
   const fromQs = qs && pick([qs]);
   if (fromQs) { try { localStorage.setItem('mpdf.uiLang', fromQs); } catch (e) { /* egal */ } }
   const nav = typeof navigator !== 'undefined' ? (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language]) : [];
-  const lang = fromQs || (stored && byCode(stored) ? stored : null) || pick(nav) || (nav.length ? 'en-GB' : 'de');
+  // Vorab übersetzte Webseiten (pdfmy.de/<sprache>/…, tools/prerender.js) tragen ihre Sprache fest; Suchmaschinen-Crawler bekommen die
+  // deutschen Seiten unübersetzt – die Sprachfassungen finden sie über die hreflang-Verweise
+  const htmlEl = typeof document !== 'undefined' ? document.documentElement : null;
+  const staticLang = htmlEl && htmlEl.getAttribute('data-static-lang'), staticPage = htmlEl && htmlEl.getAttribute('data-static-page');
+  const isBot = typeof navigator !== 'undefined' && /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|whatsapp|telegram|lighthouse/i.test(navigator.userAgent || '');
+  const lang = (staticLang && byCode(staticLang) ? staticLang : null) || (isBot && staticPage ? 'de' : null) || fromQs || (stored && byCode(stored) ? stored : null) || pick(nav) || (nav.length ? 'en-GB' : 'de');
   const info = byCode(lang) || LANGS[0];
 
   let dict = null, pats = [], ready = Promise.resolve();
@@ -232,6 +237,7 @@
   function collect(rootNode = document.documentElement) {
     const keys = new Set(), add = s => { const k = norm(s); if (k && /[A-Za-zÄÖÜäöüß]{2}/.test(k.replace(/<[^>]+>/g, ''))) keys.add(k); };
     add(document.title);
+    for (const m of document.querySelectorAll(META)) add(m.getAttribute('content') || '');   // Beschreibung für Suchmaschinen und Teilen
     const units = [];
     for (const el of rootNode.querySelectorAll('*')) {
       if (SKIP_TAGS.has(el.tagName) || skipped(el)) continue;
@@ -275,6 +281,8 @@
   }
   function setLang(code) {
     try { if (code) localStorage.setItem('mpdf.uiLang', code); else localStorage.removeItem('mpdf.uiLang'); } catch (e) { /* egal */ }
+    // Webseite mit Sprachfassungen: zur gleichen Seite in der gewählten Sprache (Deutsch liegt im Hauptordner)
+    if (staticPage && code) { location.href = (code === 'de' ? '/' : '/' + code + '/') + staticPage + location.hash; return; }
     try { const u = new URL(location.href); u.searchParams.delete('lang'); location.replace(u.href); } catch (e) { location.reload(); }
   }
 

@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-22
 
+### Website in 40 Sprachen für Suchmaschinen (app-v170)
+- Befund: Die Webseiten wurden immer deutsch ausgeliefert und erst im Browser übersetzt (auch ?lang=fr), kanonische Adresse immer deutsch, keine hreflang-Angaben, Sitemap nur deutsch – die 39 Übersetzungen waren für Suchmaschinen praktisch unsichtbar.
+- tools/prerender.js übersetzt beim Ausrollen alle 30 Webseiten in 39 Sprachen vorab (headless Chrome, dasselbe Verfahren wie im Browser, andere Seitenskripte gesperrt) → pdfmy.de/<sprache>/<seite>.html mit lang-Attribut, übersetztem Titel und Beschreibung, eigener kanonischer Adresse, hreflang auf alle 40 Fassungen (x-default Deutsch), FAQ-Daten in der Zielsprache; Sitemap mit allen Fassungen; pdfmy.de/<sprache>/ führt zur App in dieser Sprache. Zwischenspeicher: nur geänderte Seiten werden neu übersetzt (erstes Mal ca. 6 Minuten für 1.170 Seiten).
+- js/i18n.js: Sprachseiten behalten ihre Sprache, die Sprachwahl springt zur gleichen Seite in der anderen Sprache; Suchmaschinen-Crawler bekommen die deutschen Seiten unübersetzt; Beschreibungen (meta description, og) werden jetzt mitgesammelt und übersetzt.
+- Veraltete Angaben korrigiert: Werkzeug-Seiten „Texterkennung“ und „PDF in Word“ nannten noch acht Sprachen (jetzt über 40).
+
 ### Einstiegsseiten, Aufräumen, pdfmy Scan 1.10.1 (app-v169)
 - 11 neue Werkzeug-Einstiegsseiten für Suchmaschinen (PDF bearbeiten, Word in PDF, PDF aufteilen, Seiten drehen/löschen, PDF in JPG, PDF vergleichen, PDF/A erstellen, Formular ausfüllen, Seitenzahlen/Wasserzeichen, PDF entsperren, PDF-Drucker) – jetzt 21; Sprung „#werkzeug=open“ (Knopf „Öffnen“) und „#werkzeug=printer“ (Menü „Mehr“ → Drucker).
 - pdfmy Scan 1.10.1: Ist „Microsoft Print to PDF“ ausgeschaltet, öffnet pdfmy Scan das Windows-Fenster zum Einschalten (OptionalFeatures.exe, sprachunabhängig) – die Web-App fragt vorher.
