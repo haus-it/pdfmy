@@ -4,6 +4,23 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const D = require('../js/docdetect.js');
 
+test('Abbildungen finden: Foto und farbiges Logo, Schrift nicht', () => {
+  const W = 600, H = 800, d = new Uint8ClampedArray(W * H * 4).fill(255);
+  const px = (x, y, r, g, b) => { const o = (y * W + x) * 4; d[o] = r; d[o + 1] = g; d[o + 2] = b; };
+  let s = 3; const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+  for (let y = 300; y < 500; y++) for (let x = 100; x < 400; x++) { const v = 60 + rnd() * 150; px(x, y, v, v * 0.9, v * 0.7); }   // Foto 300×200
+  for (let y = 40; y < 90; y++) for (let x = 450; x < 560; x++) px(x, y, 200, 30, 40);                                            // rotes Logo
+  const words = [];
+  for (let row = 0; row < 6; row++) for (let k = 0; k < 8; k++) {                                                                  // schwarze Schrift
+    const x0 = 60 + k * 60, y0 = 560 + row * 30; for (let y = y0; y < y0 + 12; y++) for (let x = x0; x < x0 + 40; x++) if ((x + y) % 3) px(x, y, 0, 0, 0);
+    words.push({ x: x0 / W, y: y0 / H, w: 40 / W, h: 12 / H });
+  }
+  const f = D.findFigures(d, W, H, words);
+  assert.equal(f.length, 2, JSON.stringify(f));
+  assert.ok(Math.abs(f[0].x - 100 / W) < 0.02 && Math.abs(f[0].w - 300 / W) < 0.03 && Math.abs(f[0].h - 200 / H) < 0.03, 'Foto: ' + JSON.stringify(f[0]));
+  assert.ok(Math.abs(f[1].x - 450 / W) < 0.02 && Math.abs(f[1].y - 40 / H) < 0.02, 'Logo: ' + JSON.stringify(f[1]));
+});
+
 test('Tabellenlinien entfernen: dünne Rahmen weg, Schrift und dicke Balken bleiben', () => {
   const W = 400, H = 300, d = new Uint8ClampedArray(W * H * 4).fill(255);
   const px = (x, y, v = 0) => { const o = (y * W + x) * 4; d[o] = d[o + 1] = d[o + 2] = v; };

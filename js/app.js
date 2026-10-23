@@ -2848,7 +2848,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   const T = pdfa ? makeTagger(out) : null;   // barrierefrei (PDF/UA-1) zusammen mit PDF/A
   const fieldQ = [], linkQ = [], hlQ = [];   // Formularfelder und Links: nach den Seiten als echte PDF-Objekte anlegen
   const heads = [];   // erkannte Überschriften (barrierefrei): werden Lesezeichen, wenn das Dokument keine eigenen hat
-  lastTagStats = { h: 0, table: 0, list: 0 };
+  lastTagStats = { h: 0, table: 0, list: 0, fig: 0 };
   /* Barrierefrei: Kopf- und Fußzeilen und Seitenzahlen sind Artefakte (Screenreader lesen sie sonst auf jeder Seite vor).
      Kopf-/Fußzeile = gleiche erste bzw. letzte Zeile (Ziffern egal) auf mindestens der Hälfte der Seiten, ab 2 Seiten. */
   const runKey = t => t.replace(/\d+/g, '#').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -2916,7 +2916,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     prefetch(i);
     const cover = p.annots.filter(a => a.type === 'rd' || a.type === 'wo');
     const raster = rasterOf(p);
-    let page, W, H, ox = 0, oy = 0, words = null;
+    let page, W, H, ox = 0, oy = 0, words = null, figSrc = null;
     if (raster) {
       // Als Bild übernommene PDF-Seiten brauchen eine Textebene: vorhandenen Text übernehmen, sonst OCR
       if (p.kind === 'pdf' && !p.ocr) {
@@ -2937,6 +2937,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
         protMarkCanvas(x, p, c.width, c.height, c.width / 595);   // Kontoauszug/Urkunde: Änderungen rot markiert + Vermerk
         c = k;
       }
+      figSrc = c;   // für beschriebene Abbildungen (barrierefrei)
       if (p.kind === 'image') {
         W = 595.28; H = W * c.height / c.width;
         if (Math.abs(H / 841.89 - 1) < 0.04) H = 841.89; // A4 glätten
@@ -2972,6 +2973,18 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       const mb = page.getMediaBox(); W = mb.width; H = mb.height; ox = mb.x; oy = mb.y;
       if (!p.native) words = p.ocr?.words;
     }
+    /* Barrierefrei: vom Nutzer beschriebene Abbildungen (Dialog „Bilder beschreiben“) als Figure mit Alternativtext – der Bildausschnitt
+       liegt deckungsgleich über dem Seitenbild und steht in der Lesereihenfolge dort, wo er auf der Seite steht. */
+    const figs = T && figSrc ? (p.figs || []).filter(f => !f.deco && f.alt?.trim()).sort((a, b) => a.y - b.y) : [];
+    const emitFigs = async upto => {
+      while (figs.length && figs[0].y <= upto) {
+        const f = figs.shift(), sw = Math.max(1, Math.round(f.w * figSrc.width)), sh = Math.max(1, Math.round(f.h * figSrc.height));
+        const k = Imaging.canvas(sw, sh); k.getContext('2d').drawImage(figSrc, Math.round(f.x * figSrc.width), Math.round(f.y * figSrc.height), sw, sh, 0, 0, sw, sh);
+        const img = await embedCanvas(out, k, preset.q);
+        T.open('Figure', { Alt: PDFHexString.fromText(f.alt.trim()), A: out.context.obj({ O: 'Layout', BBox: [f.x * W, H - (f.y + f.h) * H, (f.x + f.w) * W, H - f.y * H] }) });
+        page.drawImage(img, { x: f.x * W, y: H - (f.y + f.h) * H, width: f.w * W, height: f.h * H }); T.close(); lastTagStats.fig++;
+      }
+    };
     // Unsichtbare Textebene (Render-Modus 3) → durchsuchbar und kopierbar
     if (words?.length) {
       page.pushOperators(pushGraphicsState(), setTextRenderingMode(TextRenderingMode.Invisible));
@@ -3006,6 +3019,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
            Tabellen Table/TR/TH/TD (Kopfzeile mit Scope); die Reihenfolge ist die Lesereihenfolge. Überschriften werden Lesezeichen. */
         let list = null;
         for (const b of Reflow.blocks(textLines(words), { words: true })) {
+          if (figs.length) await emitFigs(Math.min(...(b.ws || b.cws.flat(2)).map(w => w.y)));
           if (b.type === 'table') {
             list = null;
             const tb = T.group('Table'); lastTagStats.table++;
@@ -3035,6 +3049,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       } else drawWords(words);
       page.pushOperators(popGraphicsState());
     }
+    if (figs.length) await emitFigs(2);   // Abbildungen unter dem letzten Text bzw. auf Seiten ohne Text
     for (const a of p.annots) {
       const x = ox + a.x * W, y = oy + H - (a.y + a.h) * H, w = a.w * W, h = a.h * H;
       if (a.type === 'field') fieldQ.push({ page, x, y, w, h, a });
@@ -3196,12 +3211,13 @@ function outlineFor(pages) {
   return items;
 }
 // „PDF barrierefrei machen“ (Kachel, Menü, Prüfdialog): Speichern als PDF/A + PDF/UA mit Gliederung; danach prüft a11yAfterSave die Datei
-function a11yMake() {
+async function a11yMake() {
   if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich barrierefrei machen.'); return; }
+  try { await a11yFigures(); } catch (e) { console.warn('Bilder suchen', e); }   // Bilder finden und beschreiben lassen (js/pro.js)
   openExport({ format: 'pdfa' });
   status('PDF barrierefrei machen: auf „Speichern“ klicken. PDFMy erkennt Überschriften, Absätze, Listen und Tabellen, speichert als PDF/UA (zugleich PDF/A) und prüft danach die Datei.');
 }
-let lastTagStats = { h: 0, table: 0, list: 0 };   // Gliederung der zuletzt barrierefrei erzeugten PDF (für den Prüfbericht)
+let lastTagStats = { h: 0, table: 0, list: 0, fig: 0 };   // Gliederung der zuletzt barrierefrei erzeugten PDF (für den Prüfbericht)
 // Lesezeichen aus erkannten Überschriften: Ebene 2 unter die vorangehende Ebene 1
 function headOutline(heads) {
   const root = []; let top = null;
@@ -3621,7 +3637,7 @@ async function doExport(o) {
 async function a11yAfterSave(bytes, nPages) {
   try {
     const r = await A11yCheck.check(bytes, { pages: nPages, pagesWithText: nPages }), checked = r.filter(x => x.ok !== null), ok = checked.filter(x => x.ok).length;
-    const s = lastTagStats, parts = [s.h && `${s.h} Überschrift(en)`, s.table && `${s.table} Tabelle(n)`, s.list && `${s.list} Liste(n)`].filter(Boolean).join(', ');
+    const s = lastTagStats, parts = [s.h && `${s.h} Überschrift(en)`, s.table && `${s.table} Tabelle(n)`, s.list && `${s.list} Liste(n)`, s.fig && `${s.fig} beschriebene(s) Bild(er)`].filter(Boolean).join(', ');
     const msg = I18N.t(`Barrierefreiheit geprüft: ${ok} von ${checked.length} Punkten erfüllt (PDF/UA-1)`) + (parts ? ' · ' + I18N.t(`erkannt: ${parts}`) : '');
     toast(msg, 9000); status($('#msg').textContent + ' · ' + msg);
   } catch (e) { console.warn('Barrierefreiheit prüfen', e); }

@@ -4457,3 +4457,45 @@ $('#cloudForm').addEventListener('submit', async e => {
   } catch { status('pdfmy Scan antwortet nicht. Bitte prüfen, ob es läuft (Symbol unten rechts), und noch einmal versuchen.'); }
   finally { $('#cloudGo').disabled = false; }
 });
+
+/* ---------- Barrierefrei: Bilder finden und beschreiben (Alternativtexte) ----------
+   DocDetect.findFigures sucht auf jeder Seite Fotos, Logos und Grafiken (ohne die erkannten Wörter). Der Nutzer beschreibt sie kurz
+   oder markiert sie als Schmuck; beim Speichern als PDF/UA werden beschriebene Bilder zu „Figure“ mit Alternativtext (buildPdf). */
+async function a11yFigures() {
+  const pages = state.pages.slice(0, 60);
+  const img = pages.filter(p => p.kind === 'image' && !p.ocr && !p.blank && !p.photo);
+  if (img.length) { status('Texterkennung für die Bildsuche …'); await waitForOcr(img); }
+  const found = [];
+  for (const [i, p] of pages.entries()) {
+    if (p.blank) continue;
+    status(`Suche Bilder auf Seite ${i + 1} von ${pages.length} …`, i / pages.length);
+    const src = p.kind === 'image' ? p.processed : await renderPdf(p, 110).catch(() => null); if (!src) continue;
+    const s = Imaging.scaled(src, 1000), words = p.ocr?.words || await pageWords(p).catch(() => null) || [];
+    const figs = p.photo ? [{ x: 0, y: 0, w: 1, h: 1 }] : DocDetect.findFigures(s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data, s.width, s.height, words);
+    for (const f of figs) {
+      const old = (p.figs || []).find(o => Math.abs(o.x - f.x) < 0.02 && Math.abs(o.y - f.y) < 0.02);
+      found.push({ p, page: i + 1, f: { ...f, alt: old?.alt ?? (f.y < 0.15 && f.w * f.h < 0.05 && state.meta?.sender ? I18N.t(`Logo ${state.meta.sender}`) : ''), deco: old?.deco ?? false }, src });
+    }
+  }
+  status(found.length ? `${found.length} Bild(er) gefunden – bitte kurz beschreiben.` : 'Keine Bilder gefunden.');
+  if (!found.length) return;
+  const list = $('#figList'); list.textContent = '';
+  for (const [k, x] of found.entries()) {
+    const li = document.createElement('li'), c = document.createElement('canvas'), sc = Math.min(1, 240 / Math.max(x.f.w * x.src.width, x.f.h * x.src.height));
+    c.width = Math.max(1, Math.round(x.f.w * x.src.width * sc)); c.height = Math.max(1, Math.round(x.f.h * x.src.height * sc));
+    c.getContext('2d').drawImage(x.src, x.f.x * x.src.width, x.f.y * x.src.height, x.f.w * x.src.width, x.f.h * x.src.height, 0, 0, c.width, c.height);
+    c.setAttribute('aria-hidden', 'true');
+    const box = document.createElement('div');
+    box.innerHTML = `<label for="fig-${k}">${esc(I18N.t(`Bild ${k + 1} (Seite ${x.page}) – Beschreibung`))}<input type="text" id="fig-${k}" maxlength="250"></label>
+      <label class="deco"><input type="checkbox" id="figd-${k}"> ${esc(I18N.t('Nur Schmuck – nicht vorlesen'))}</label>`;
+    box.querySelector('input[type=text]').value = x.f.alt; box.querySelector('input[type=checkbox]').checked = x.f.deco;
+    li.append(c, box); list.append(li);
+  }
+  const dlg = $('#figDlg'); dlg.returnValue = ''; dlg.showModal();
+  await new Promise(r => dlg.addEventListener('close', r, { once: true }));
+  if (dlg.returnValue !== 'ok') { status('Bilder nicht beschrieben – sie bleiben Teil des Seitenbilds und werden nicht vorgelesen.'); return; }
+  for (const p of new Set(found.map(x => x.p))) p.figs = [];
+  let n = 0;
+  found.forEach((x, k) => { const alt = $('#fig-' + k).value.trim(), deco = $('#figd-' + k).checked; x.p.figs.push({ ...x.f, alt, deco }); if (alt && !deco) n++; });
+  status(`${n} Bild(er) beschrieben – sie werden beim Speichern mit Alternativtext gekennzeichnet.`);
+}

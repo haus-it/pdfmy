@@ -853,6 +853,13 @@ label[role=button]:focus-visible,.thumb:focus-visible,#viewer:focus-visible,.car
 @media (max-width:700px){ .verbar .vs{display:none} }
 .sharedlg{width:min(460px,94vw)}
 #cloudDone,#cloudList small{overflow-wrap:anywhere}
+.figlist{list-style:none;margin:0;padding:0;max-height:56vh;overflow:auto;display:grid;gap:12px}
+.figlist li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:start}
+.figlist canvas{max-width:120px;max-height:120px;border:1px solid var(--line,#ccc);background:#fff}
+.figlist label{display:flex;flex-direction:column;gap:3px;font-size:13px;min-width:0}
+.figlist input[type=text]{width:100%;min-width:0}
+.figlist .deco{flex-direction:row;align-items:center;gap:6px;margin-top:6px}
+@media (max-width:520px){.figlist li{grid-template-columns:80px minmax(0,1fr)}.figlist canvas{max-width:80px;max-height:80px}}
 .fpgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 10px;max-height:52vh;overflow:auto;padding:2px}
 .fpgrid label{display:flex;flex-direction:column;font-size:12.5px;gap:2px;min-width:0}
 .fpgrid input{width:100%;min-width:0}
@@ -1729,6 +1736,12 @@ html.i18n-wait body{visibility:hidden}
   </div>
   <p class="hint">Ergebnis im Programm mit <i>„Speichern unter“</i> an Ihrem gewohnten Ort sichern. Zurück zu PDFMy: im Programm drucken und den Drucker <i>„PDFMy“</i> wählen.</p>
   <div class="dlgrow"><button type="button" id="officeClose">Abbrechen</button><button type="submit" class="primary" id="officeGo">Öffnen</button></div>
+</form></dialog>
+<dialog id="figDlg" class="sharedlg figdlg" aria-labelledby="figT"><form method="dialog">
+  <h3 class="dlgtitle" id="figT">Bilder beschreiben</h3>
+  <p class="hint" style="margin:-6px 0 12px">Damit Screenreader die Bilder vorlesen können, beschreiben Sie kurz, was zu sehen ist (z. B. „Logo Stadtwerke Musterstadt“, „Lageplan des Grundstücks“). Reiner Schmuck wird nicht vorgelesen.</p>
+  <ol id="figList" class="figlist"></ol>
+  <div class="dlgrow"><button type="submit" value="skip">Überspringen</button><button type="submit" value="ok" class="primary">Übernehmen</button></div>
 </form></dialog>
 <dialog id="cloudDlg" class="sharedlg" aria-labelledby="cloudT"><form id="cloudForm" method="dialog" novalidate>
   <h3 class="dlgtitle" id="cloudT">In Cloud-Ordner speichern</h3>

@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-23
 
+### Barrierefrei: Bilder beschreiben, erweiterter Prüfbericht (app-v186)
+- „PDF barrierefrei machen“ sucht vor dem Speichern auf jeder Seite Fotos, Logos und Grafiken (DocDetect.findFigures: farbige oder graue Flächen ohne erkannte Wörter, Papierhelligkeit berücksichtigt) und zeigt sie im neuen Dialog „Bilder beschreiben“ – Beschreibung eintragen (Logo oben: Absender vorgeschlagen) oder „Nur Schmuck – nicht vorlesen“.
+- Beschriebene Bilder werden `Figure` mit Alternativtext und BBox, deckungsgleich über dem Seitenbild, in der Lesereihenfolge an ihrer Stelle (vor dem nächsten Textabschnitt darunter). Schmuck und nicht beschriebene Bilder bleiben Teil des Seitenbilds (Artefakt).
+- Prüfbericht (js/a11ycheck.js): neu „Überschriften gekennzeichnet“ und „Tabellen haben Kopfzellen“ (BITV 2.0 / EN 301 549, Matterhorn 14 und 15); Meldung nach dem Speichern nennt beschriebene Bilder.
+- Geprüft: Testseite mit Logo, Foto und Text → Struktur „Figure (Logo), H1, P, Figure (Foto), P“, veraPDF PDF/UA-1 und PDF/A-2b bestanden; Unit-Test findFigures (Foto und Logo gefunden, Schrift nicht); axe 0 (hell/dunkel, 1280/390 px).
+
 ### Barrierefrei: mit Screenreader NVDA geprüft (app-v185)
 - Test mit NVDA 2026.2 (NV Access, per winget installiert) und dem PDF-Betrachter von Microsoft Edge: Die Satzung wird als „Überschrift Ebene 1 – Satzung des Vereins, Überschrift Ebene 2 – § 1 Abschnitt 1 …“ vorgelesen, die Kopfzeile nicht. Barrierefreiheitsbaum von Edge (UI Automation, das, was NVDA bekommt): Überschrift, Liste mit Listenpunkten, Tabelle mit Kopf- und Datenzellen wie angelegt.
 - Verbesserung aus dem Test: Aufzählungszeichen bzw. Nummer als eigenes `Lbl`, der Text als `LBody` (vorher stand „•“ im Listentext). veraPDF PDF/UA-1 und PDF/A-2b weiter bestanden.

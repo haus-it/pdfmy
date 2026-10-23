@@ -324,6 +324,51 @@
     return removed;
   }
 
-  const api = { findDocument, findPhoto, order, area, anglesOk, removeLines };
+  /* Abbildungen auf einer Seite finden (Fotos, Logos, Grafiken) – für Alternativtexte in barrierefreien PDFs.
+     Bildartige Pixel = farbig oder mittleres Grau; Flächen der erkannten Wörter (words: [{x,y,w,h}] 0…1) zählen nicht.
+     → [{ x, y, w, h }] (0…1), größte zuerst, höchstens max */
+  function findFigures(rgba, W, H, words = [], { minArea = 0.004, max = 8 } = {}) {
+    const n = W * H, m = new Uint8Array(n), hist = new Uint32Array(256);
+    for (let o = 0; o < n * 4; o += 16) hist[Math.round(rgba[o] * 0.299 + rgba[o + 1] * 0.587 + rgba[o + 2] * 0.114)]++;
+    let paper = 255; for (let acc = 0, k = 255; k >= 0; k--) { acc += hist[k]; if (acc > n / 4 * 0.4) { paper = k; break; } }   // Papierhelligkeit (graues Recyclingpapier, Scan)
+    const hi = Math.min(215, paper - 35);
+    for (let i = 0, o = 0; i < n; i++, o += 4) {
+      const r = rgba[o], g = rgba[o + 1], b = rgba[o + 2], mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (r * 0.299 + g * 0.587 + b * 0.114);
+      m[i] = (mx - mn > 40 && mx > 60) || (l > 40 && l < hi) ? 1 : 0;   // Farbe oder Grauton (Schrift ist nach der Kantenglättung fast nur Schwarz/Weiß)
+    }
+    // Wörter ausblenden (mit etwas Rand)
+    for (const w of words) {
+      const x0 = Math.max(0, Math.floor((w.x - 0.004) * W)), x1 = Math.min(W, Math.ceil((w.x + w.w + 0.004) * W));
+      const y0 = Math.max(0, Math.floor((w.y - 0.004) * H)), y1 = Math.min(H, Math.ceil((w.y + w.h + 0.004) * H));
+      for (let y = y0; y < y1; y++) m.fill(0, y * W + x0, y * W + x1);
+    }
+    // grob rastern (Zellen 1 % der Breite), damit Fotos mit hellen Stellen eine Fläche bleiben
+    const cs = Math.max(2, Math.round(W / 100)), gw = Math.ceil(W / cs), gh = Math.ceil(H / cs), cell = new Uint8Array(gw * gh);
+    for (let gy = 0; gy < gh; gy++) for (let gx = 0; gx < gw; gx++) {
+      let c = 0, t = 0;
+      for (let y = gy * cs; y < Math.min(H, (gy + 1) * cs); y++) for (let x = gx * cs; x < Math.min(W, (gx + 1) * cs); x++) { t++; c += m[y * W + x]; }
+      cell[gy * gw + gx] = c > t * 0.15 ? 1 : 0;
+    }
+    // zusammenhängende Flächen (8er-Nachbarschaft, eine Zelle Lücke erlaubt)
+    const seen = new Uint8Array(gw * gh), out = [];
+    for (let s = 0; s < cell.length; s++) {
+      if (!cell[s] || seen[s]) continue;
+      const st = [s]; seen[s] = 1; let x0 = gw, y0 = gh, x1 = -1, y1 = -1, cnt = 0;
+      while (st.length) {
+        const c = st.pop(), cx = c % gw, cy = (c - cx) / gw; cnt++;
+        x0 = Math.min(x0, cx); x1 = Math.max(x1, cx); y0 = Math.min(y0, cy); y1 = Math.max(y1, cy);
+        for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+          const nx = cx + dx, ny = cy + dy, k = ny * gw + nx;
+          if (nx >= 0 && ny >= 0 && nx < gw && ny < gh && cell[k] && !seen[k]) { seen[k] = 1; st.push(k); }
+        }
+      }
+      const f = { x: x0 * cs / W, y: y0 * cs / H, w: Math.min(W, (x1 + 1) * cs) / W - x0 * cs / W, h: Math.min(H, (y1 + 1) * cs) / H - y0 * cs / H };
+      // genug Fläche, nicht nur ein Strich (Linien, Rahmen), ausreichend gefüllt
+      if (f.w * f.h >= minArea && f.w > 0.03 && f.h > 0.02 && cnt / ((x1 - x0 + 1) * (y1 - y0 + 1)) > 0.3) out.push(f);
+    }
+    return out.sort((a, b) => b.w * b.h - a.w * a.h).slice(0, max);
+  }
+
+  const api = { findDocument, findPhoto, order, area, anglesOk, removeLines, findFigures };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.DocDetect = api;
 })(typeof self !== 'undefined' ? self : this);

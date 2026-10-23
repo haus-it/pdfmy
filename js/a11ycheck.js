@@ -25,15 +25,23 @@
     }
     // Abbildungen mit Alternativtext
     if (tree) {
-      let figs = 0, noAlt = 0; const seen = new Set();
-      (function walk(n, depth) {
+      let figs = 0, noAlt = 0, heads = 0, paras = 0; const seen = new Set(), tables = [];   // tables: je Tabelle „hat Kopfzellen“
+      (function walk(n, depth, tbl) {
         if (!n || depth > 60) return;
-        if (n instanceof PL.PDFArray) { for (let i = 0; i < n.size(); i++) walk(n.lookup(i), depth + 1); return; }
+        if (n instanceof PL.PDFArray) { for (let i = 0; i < n.size(); i++) walk(n.lookup(i), depth + 1, tbl); return; }
         if (!(n instanceof PL.PDFDict) || seen.has(n)) return; seen.add(n);
-        if (String(get(n, 'S')) === '/Figure') { figs++; if (!str(get(n, 'Alt')) && !str(get(n, 'ActualText'))) noAlt++; }
-        walk(get(n, 'K'), depth + 1);
-      })(get(tree, 'K'), 0);
+        const s = String(get(n, 'S'));
+        if (s === '/Figure') { figs++; if (!str(get(n, 'Alt')) && !str(get(n, 'ActualText'))) noAlt++; }
+        else if (/^\/H[1-6]?$/.test(s)) heads++;
+        else if (s === '/P') paras++;
+        else if (s === '/Table') { tables.push(false); tbl = tables.length - 1; }
+        else if (s === '/TH' && tbl != null) tables[tbl] = true;
+        walk(get(n, 'K'), depth + 1, tbl);
+      })(get(tree, 'K'), 0, null);
       add('alt', noAlt === 0, 'Abbildungen haben Alternativtext', figs ? (noAlt ? `${noAlt} von ${figs} Abbildung(en) ohne Alternativtext.` : `${figs} Abbildung(en) beschrieben.`) : 'Keine Abbildungen gekennzeichnet.');
+      // Überschriften (Navigation mit dem Screenreader) und Tabellen mit Kopfzellen (BITV 2.0 / EN 301 549, Matterhorn 14, 15)
+      if (heads || paras > 3) add('headings', heads ? true : null, 'Überschriften gekennzeichnet', heads ? `${heads} Überschrift(en) – Screenreader können von Abschnitt zu Abschnitt springen.` : 'Keine Überschriften gekennzeichnet – bei längeren Texten können Screenreader-Nutzer nicht springen (Hinweis).');
+      if (tables.length) { const bad = tables.filter(x => !x).length; add('tableheads', bad === 0, 'Tabellen haben Kopfzellen', bad ? `${bad} von ${tables.length} Tabelle(n) ohne Kopfzellen (TH).` : `${tables.length} Tabelle(n) mit Kopfzellen.`); }
     }
     // Schriften eingebettet, Tab-Reihenfolge bei Seiten mit Feldern/Anmerkungen
     let fonts = 0, notEmb = new Set(), tabsBad = 0;
