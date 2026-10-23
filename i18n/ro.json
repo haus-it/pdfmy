@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: convertit. Antetele și subsolurile, casetele text și fonturile speciale nu sunt preluate de PDFMy – pentru o copie exactă, folosiți în Word „Salvare ca PDF”.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy nu poate încă să convertească acest format – vă rugăm să salvați fișierul în Word sau Excel ca .docx/.xlsx sau să alegeți acolo „Salvare ca PDF”.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, Word, Excel, text, Markdown, CSV sau factură electronică ca XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – pentru semnare.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Stradă",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Reașezare text – citire comodă pe telefon",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Reașezare text – citire comodă pe telefon, cu font reglabil și cuprins",
- "Vorname": "Prenume"
+ "Vorname": "Prenume",
+ "Wohnort": "Localitate",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} convertit. Casetele text, coloanele și fonturile speciale sunt preluate simplificat de PDFMy – pentru o copie exactă, tipăriți prin imprimanta „PDFMy” sau folosiți în Word „Salvare ca PDF”.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Căutare versiune nouă",
+ "Tabelle": "Tabel"
 }

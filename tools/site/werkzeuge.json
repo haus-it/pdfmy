@@ -37,7 +37,7 @@
     "description": "PDF kostenlos in ein bearbeitbares Word-Dokument (.docx) umwandeln – auch gescannte Briefe dank Texterkennung. Ohne Upload, ohne Anmeldung.",
     "intro": "Machen Sie aus PDFs und Scans bearbeitbare Word-Dokumente. Gescannte Seiten liest PDFMy mit Texterkennung – direkt auf Ihrem Gerät.",
     "steps": ["Auf „PDF in Word“ klicken und die Datei wählen.", "PDFMy erkennt den Text, auch bei Scans.", "Als Word-Dokument speichern und in Word weiterbearbeiten."],
-    "faq": [["Funktioniert das auch mit Scans?", "Ja. Die Texterkennung liest gedruckten Text in über 40 Sprachen."], ["Brauche ich Word?", "Zum Umwandeln nicht. Die .docx-Datei öffnen Sie danach in Word, LibreOffice oder Pages."]]
+    "faq": [["Funktioniert das auch mit Scans?", "Ja. Die Texterkennung liest gedruckten Text in über 40 Sprachen."], ["Brauche ich Word?", "Zum Umwandeln nicht. Die .docx-Datei öffnen Sie danach in Word, LibreOffice oder Pages."], ["Bleiben Tabellen und Überschriften erhalten?", "Ja. PDFMy setzt Absätze wieder zusammen, macht aus Überschriften echte Word-Überschriften und aus Tabellen Word-Tabellen mit den Spaltenbreiten des Originals. Aufwendige Layouts werden vereinfacht."]]
   },
   {
     "slug": "pdf-texterkennung-ocr", "target": "scan", "label": "Scannen & Text erkennen",

@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0} converted. PDFMy does not carry over headers and footers, text boxes or special fonts – for an exact copy, use ‘Save as PDF’ in Word.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy cannot convert this format yet – please save it in Word or Excel as .docx/.xlsx or choose ‘Save as PDF’ there.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, Word, Excel, text, Markdown, CSV or an e-invoice as XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – for signature.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Street",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Reflow text – comfortable reading on your phone",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Reflow text – comfortable reading on your phone, with adjustable text size and table of contents",
- "Vorname": "First name"
+ "Vorname": "First name",
+ "Wohnort": "Town / city",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} converted. PDFMy simplifies text boxes, columns and special fonts – for an exact copy, print via the ‘PDFMy’ printer or use ‘Save as PDF’ in Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Check for a new version",
+ "Tabelle": "Table"
 }

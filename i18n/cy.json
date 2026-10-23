@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: wedi’i drosi. Nid yw PDFMy yn cadw penynnau a throedynnau, blychau testun na ffontiau arbennig – am gopi union, defnyddiwch ‘Cadw fel PDF’ yn Word.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: ni all PDFMy drosi’r fformat hwn eto – cadwch y ffeil yn Word neu Excel fel .docx/.xlsx neu dewiswch ‘Cadw fel PDF’ yno.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, delwedd, Word, Excel, testun, Markdown, CSV neu e-anfoneb fel XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – i’w llofnodi.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Stryd",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Ail-lifo’r testun – darllen cyfforddus ar y ffôn",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Ail-lifo’r testun – darllen cyfforddus ar y ffôn, gyda maint testun addasadwy a thabl cynnwys",
- "Vorname": "Enw cyntaf"
+ "Vorname": "Enw cyntaf",
+ "Wohnort": "Tref / dinas",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "Wedi trosi {0}. Mae PDFMy yn symleiddio blychau testun, colofnau a ffontiau arbennig – am gopi union, argraffwch drwy’r argraffydd ‘PDFMy’ neu defnyddiwch ‘Cadw fel PDF’ yn Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Chwilio am fersiwn newydd",
+ "Tabelle": "Tabl"
 }

@@ -3,7 +3,7 @@
 /* Word (.docx), Excel (.xlsx) und OpenDocument (.odt, .ods) lesen – ohne Server und ohne Bibliothek: ZIP über DecompressionStream, XML mit kleinem eigenem Parser.
    Ergebnis: Bausteine für js/textpdf.js (Überschriften, Absätze mit Ausrichtung/fett, Listen, Tabellen, Bilder, Seitenumbrüche).
    Office.docx(bytes) → { blocks, page: { size: [w, h], margin } }   Office.xlsx(bytes) → { blocks }
-   Nicht nachgebildet: Kopf-/Fußzeilen, Textfelder, Spalten, Schriftarten und -größen im Einzelnen, Formeln (es zählt der gespeicherte Wert). */
+   Nicht nachgebildet: Textfelder, Spalten, Schriftarten und -größen im Einzelnen, Formeln (es zählt der gespeicherte Wert). */
 (function (root) {
   'use strict';
 

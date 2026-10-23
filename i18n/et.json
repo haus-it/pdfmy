@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: teisendatud. Päiseid ja jaluseid, tekstivälju ega eriliste fontidega teksti PDFMy üle ei võta – täpse koopia saamiseks kasutage Wordis „Salvesta PDF-ina“.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: seda vormingut PDFMy veel teisendada ei oska – salvestage fail palun Wordis või Excelis kui .docx/.xlsx või valige seal „Salvesta PDF-ina“.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, Word, Excel, tekst, Markdown, CSV või e-arve XML-ina)",
  "– {0} – zur Unterschrift.pdf": "– {0} – allkirjastamiseks.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Tänav",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Murra tekst uuesti – mugav lugemine telefonis",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Murra tekst uuesti – mugav lugemine telefonis, reguleeritava kirja ja sisukorraga",
- "Vorname": "Eesnimi"
+ "Vorname": "Eesnimi",
+ "Wohnort": "Linn / asula",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} teisendatud. Tekstivälju, veerge ja erifonte annab PDFMy edasi lihtsustatult – täpse koopia jaoks printige printeriga „PDFMy“ või kasutage Wordis käsku „Salvesta PDF-ina“.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Otsi uut versiooni",
+ "Tabelle": "Tabel"
 }

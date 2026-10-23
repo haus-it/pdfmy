@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: převedeno. Záhlaví a zápatí, textová pole a zvláštní písma PDFMy nepřenáší – pro přesnou kopii použijte ve Wordu „Uložit jako PDF“.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: tento formát zatím PDFMy neumí převést – uložte jej prosím ve Wordu nebo Excelu jako .docx/.xlsx nebo tam zvolte „Uložit jako PDF“.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formát není podporován: {0} (použijte prosím PDF, obrázek, Word, Excel, text, Markdown, CSV nebo e-fakturu jako XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – k podpisu.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Ulice",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Přeformátovat text – pohodlné čtení na mobilu",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Přeformátovat text – pohodlné čtení na mobilu, s nastavitelným písmem a obsahem",
- "Vorname": "Jméno"
+ "Vorname": "Jméno",
+ "Wohnort": "Obec / město",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} převedeno. Textová pole, sloupce a zvláštní písma PDFMy přebírá zjednodušeně – pro přesnou kopii tiskněte přes tiskárnu „PDFMy“ nebo ve Wordu zvolte „Uložit jako PDF“.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Vyhledat novou verzi",
+ "Tabelle": "Tabulka"
 }

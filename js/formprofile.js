@@ -8,7 +8,7 @@
   // Angaben im Profil (Reihenfolge = Reihenfolge im Dialog)
   const KEYS = [
     ['anrede', 'Anrede'], ['vorname', 'Vorname'], ['nachname', 'Nachname'], ['geburtsdatum', 'Geburtsdatum'], ['geburtsort', 'Geburtsort'],
-    ['strasse', 'Straße'], ['hausnr', 'Hausnummer'], ['plz', 'PLZ'], ['ort', 'Ort'], ['land', 'Land'],
+    ['strasse', 'Straße'], ['hausnr', 'Hausnummer'], ['plz', 'PLZ'], ['ort', 'Wohnort'], ['land', 'Land'],
     ['telefon', 'Telefon'], ['email', 'E-Mail'], ['firma', 'Firma / Verein'],
     ['iban', 'IBAN'], ['bic', 'BIC'], ['bank', 'Bank'], ['steuerid', 'Steuer-ID'], ['steuernr', 'Steuernummer'],
   ];

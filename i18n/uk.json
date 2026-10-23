@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: перетворено. Колонтитули, текстові поля й особливі шрифти PDFMy не переносить – для точної копії скористайтеся у Word «Зберегти як PDF».",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: цей формат PDFMy поки що не може перетворити – збережіть файл у Word або Excel як .docx/.xlsx або виберіть там «Зберегти як PDF».",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, зображення, Word, Excel, текст, Markdown, CSV або електронний рахунок у форматі XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – на підпис.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Вулиця",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Переформатувати текст – зручно читати на телефоні",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Переформатувати текст – зручно читати на телефоні, з налаштовуваним шрифтом і змістом",
- "Vorname": "Ім’я"
+ "Vorname": "Ім’я",
+ "Wohnort": "Населений пункт",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} перетворено. Текстові поля, колонки й особливі шрифти PDFMy переносить спрощено – для точної копії надрукуйте через принтер «PDFMy» або скористайтеся в Word командою «Зберегти як PDF».",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Шукати нову версію",
+ "Tabelle": "Таблиця"
 }

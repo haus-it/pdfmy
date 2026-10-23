@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: convertit. PDFMy no conserva les capçaleres i els peus de pàgina, els quadres de text ni les tipografies especials; per obtenir una còpia exacta, utilitzeu «Desa com a PDF» al Word.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy encara no pot convertir aquest format; deseu-lo al Word o a l’Excel com a .docx/.xlsx o trieu-hi «Desa com a PDF».",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, Word, Excel, text, Markdown, CSV o factura electrònica en XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – per signar.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Carrer",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Redistribueix el text – lectura còmoda al mòbil",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Redistribueix el text – lectura còmoda al mòbil, amb lletra ajustable i índex",
- "Vorname": "Nom"
+ "Vorname": "Nom",
+ "Wohnort": "Localitat",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} convertit. PDFMy simplifica els quadres de text, les columnes i les tipografies especials – per a una còpia exacta, imprimiu amb la impressora «PDFMy» o feu servir «Desa com a PDF» al Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Cerca una versió nova",
+ "Tabelle": "Taula"
 }

@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: bihurtuta. PDFMy-k ez ditu goiburuak eta orri-oinak, testu-koadroak eta letra-tipo bereziak eramaten; kopia zehatza lortzeko, erabili «Gorde PDF gisa» Word-en.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy-k ezin du oraindik formatu hau bihurtu; gorde fitxategia Word-en edo Excel-en .docx/.xlsx gisa, edo aukeratu han «Gorde PDF gisa».",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, Word, Excel, testua, Markdown, CSV edo e-faktura XML gisa)",
  "– {0} – zur Unterschrift.pdf": "– {0} – sinatzeko.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Kalea",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Birmoldatu testua – erosoago irakurri mugikorrean",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Birmoldatu testua – erosoago irakurri mugikorrean, letra doigarriarekin eta aurkibidearekin",
- "Vorname": "Izena"
+ "Vorname": "Izena",
+ "Wohnort": "Herria",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} bihurtu da. Testu-koadroak, zutabeak eta letra-tipo bereziak modu sinplifikatuan hartzen ditu PDFMy-k – kopia zehatza lortzeko, inprimatu «PDFMy» inprimagailuaren bidez edo erabili Word-en «Gorde PDF gisa».",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Bilatu bertsio berri bat",
+ "Tabelle": "Taula"
 }

@@ -4368,8 +4368,7 @@ async function readOpen() {
   const multi = state.pages.length > 1; let heads = 0, empty = 0, start = null;
   toc.append(new Option(I18N.t('Springen zu …'), ''));
   for (const [i, p] of state.pages.entries()) {
-    const words = await pageWords(p).catch(() => null);
-    const blocks = words?.length ? Reflow.blocks(textLines(words)) : Reflow.fromText(pageText(p));
+    const blocks = await pageBlocks(p);
     const sec = document.createElement('section'); sec.id = 'rd-pg' + i;
     if (p.lang && I18N.byOcr?.(p.lang)?.bcp) sec.lang = I18N.byOcr(p.lang).bcp;
     if (multi) { const h = document.createElement('div'); h.className = 'rpg'; h.textContent = I18N.t(`Seite ${i + 1}`); sec.append(h); toc.append(new Option(I18N.t(`Seite ${i + 1}`), sec.id)); }
@@ -4378,7 +4377,13 @@ async function readOpen() {
     for (const b of blocks) {
       if (b.type === 'li') { if (!list) sec.append(list = document.createElement('ul')); const li = document.createElement('li'); li.textContent = b.text.replace(/^[•·▪◦‣–\-*]\s*/, ''); list.append(li); continue; }
       list = null;
-      const el = document.createElement(b.type === 'h' ? 'h2' : 'p'); el.textContent = b.text;
+      if (b.type === 'table') {   // Tabelle: auf dem Handy waagrecht scrollbar statt zerquetscht
+        const wrap = document.createElement('div'); wrap.className = 'rtbl'; wrap.tabIndex = 0; wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', I18N.t('Tabelle'));
+        const t = document.createElement('table');
+        b.rows.forEach((r, ri) => { const tr = t.insertRow(); r.forEach(c => { const td = document.createElement(ri ? 'td' : 'th'); td.textContent = c; tr.append(td); }); });
+        wrap.append(t); sec.append(wrap); continue;
+      }
+      const el = document.createElement(b.type === 'h' ? (b.level === 1 ? 'h2' : 'h3') : 'p'); el.textContent = b.text;
       if (b.type === 'h') { el.id = 'rd-h' + (++heads); toc.append(new Option('  ' + b.text.slice(0, 60), el.id)); }
       sec.append(el);
     }

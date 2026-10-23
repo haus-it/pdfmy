@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: convertido. PDFMy no conserva encabezados y pies de página, cuadros de texto ni fuentes especiales; para una copia exacta, use «Guardar como PDF» en Word.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy aún no puede convertir este formato; guárdelo en Word o Excel como .docx/.xlsx o elija allí «Guardar como PDF».",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato no compatible: {0} (use PDF, imagen, Word, Excel, texto, Markdown, CSV o factura electrónica en XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – para firmar.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Calle",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Reajustar el texto – lectura cómoda en el móvil",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Reajustar el texto – lectura cómoda en el móvil, con letra ajustable e índice",
- "Vorname": "Nombre"
+ "Vorname": "Nombre",
+ "Wohnort": "Localidad",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} convertido. PDFMy simplifica los cuadros de texto, las columnas y las fuentes especiales – para una copia exacta, imprima con la impresora «PDFMy» o use «Guardar como PDF» en Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Buscar una nueva versión",
+ "Tabelle": "Tabla"
 }

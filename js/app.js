@@ -277,7 +277,7 @@ async function importOffice(file) {
   const [italic, boldItalic] = await Promise.all([asset('font:vendor/dejavu/DejaVuSans-Oblique.ttf', 'vendor/dejavu/DejaVuSans-Oblique.ttf'), asset('font:vendor/dejavu/DejaVuSans-BoldOblique.ttf', 'vendor/dejavu/DejaVuSans-BoldOblique.ttf')]);
   const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono, italic, boldItalic } });
   await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
-  if (word) status(`${file.name} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.`);
+  if (word) status(`${file.name} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.`);
 }
 // Text, Markdown und CSV → PDF (js/textpdf.js), dann wie eine PDF weiterverarbeiten. Kodierung: UTF-8, sonst Windows-1252 (ältere Excel-CSV)
 async function importText(file) {
@@ -2365,6 +2365,11 @@ async function buildEdit(p, para, prot) {
 }
 // Wort liegt unter einer Abdeckung (schon ersetzt/abgedeckt) – zählt bei der Suche nicht mehr
 const coveredWord = (p, w) => p.annots.some(a => a.type === 'wo' && overlaps(a, w));
+// Text einer Seite gegliedert (Absätze, Überschriften, Aufzählungen, Tabellen – js/reflow.js) für Lesemodus und „PDF → Word“
+async function pageBlocks(p) {
+  const words = await pageWords(p).catch(() => null);
+  return words?.length ? Reflow.blocks(textLines(words)) : Reflow.fromText(pageText(p));
+}
 async function pageWords(p) {
   if (p.ocr?.words) return p.ocr.words;
   if (p.kind === 'pdf' && p.native) return p.nwords || (p.nwords = await nativeWords(p) || []);
@@ -3434,7 +3439,7 @@ async function doExport(o) {
   const st = stampOpts(o, base);
   if (o.format === 'docx') {
     await waitForOcr(pages);
-    data = Tools.docx(pages.map(p => pageText(p).trim()), { title: meta.subject || base, author: meta.sender });
+    data = Tools.docx(await Promise.all(pages.map(pageBlocks)), { title: meta.subject || base, author: meta.sender, lang: docLang(pages) });
     name = base + '.docx'; mime = DOCX;
   } else if (o.format === 'xlsx') {
     await waitForOcr(pages);

@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: pārveidots. Galvenes un kājenes, tekstlodziņus un īpašus fontus PDFMy nepārņem – precīzai kopijai izmantojiet programmā Word „Saglabāt kā PDF”.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: šo formātu PDFMy vēl nevar pārveidot – lūdzu, saglabājiet failu programmā Word vai Excel kā .docx/.xlsx vai izvēlieties tur „Saglabāt kā PDF”.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, Word, Excel, teksts, Markdown, CSV vai e-rēķins kā XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – parakstīšanai.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Iela",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Pārkārtot tekstu – ērta lasīšana tālrunī",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Pārkārtot tekstu – ērta lasīšana tālrunī, ar regulējamu burtu izmēru un satura rādītāju",
- "Vorname": "Vārds"
+ "Vorname": "Vārds",
+ "Wohnort": "Apdzīvota vieta",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} pārveidots. Teksta lodziņus, kolonnas un īpašus fontus PDFMy pārņem vienkāršoti – precīzai kopijai drukājiet ar printeri „PDFMy” vai programmā Word izmantojiet „Saglabāt kā PDF”.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Meklēt jaunu versiju",
+ "Tabelle": "Tabula"
 }

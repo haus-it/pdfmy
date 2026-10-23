@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: μετατράπηκε. Το PDFMy δεν μεταφέρει κεφαλίδες και υποσέλιδα, πλαίσια κειμένου και ειδικές γραμματοσειρές – για ακριβές αντίγραφο χρησιμοποιήστε στο Word «Αποθήκευση ως PDF».",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: Το PDFMy δεν μπορεί ακόμη να μετατρέψει αυτή τη μορφή – αποθηκεύστε το στο Word ή στο Excel ως .docx/.xlsx ή επιλέξτε εκεί «Αποθήκευση ως PDF».",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, Word, Excel, κείμενο, Markdown, CSV ή ηλεκτρονικό τιμολόγιο ως XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – για υπογραφή.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Οδός",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Αναδιάταξη κειμένου – άνετη ανάγνωση στο κινητό",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Αναδιάταξη κειμένου – άνετη ανάγνωση στο κινητό, με ρυθμιζόμενο μέγεθος γραμμάτων και πίνακα περιεχομένων",
- "Vorname": "Όνομα"
+ "Vorname": "Όνομα",
+ "Wohnort": "Πόλη",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "Το {0} μετατράπηκε. Τα πλαίσια κειμένου, τις στήλες και τις ειδικές γραμματοσειρές το PDFMy τα μεταφέρει απλοποιημένα – για ακριβές αντίγραφο εκτυπώστε μέσω του εκτυπωτή «PDFMy» ή επιλέξτε στο Word «Αποθήκευση ως PDF».",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Αναζήτηση νέας έκδοσης",
+ "Tabelle": "Πίνακας"
 }

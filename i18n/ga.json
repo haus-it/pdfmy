@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: tiontaithe. Ní thugann PDFMy ceanntásca agus buntásca, boscaí téacs ná clónna speisialta leis – le haghaidh cóip chruinn, bain úsáid as “Sábháil mar PDF” in Word.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: ní féidir le PDFMy an fhormáid seo a thiontú fós – sábháil in Word nó Excel mar .docx/.xlsx é le do thoil nó roghnaigh “Sábháil mar PDF” ansin.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, Word, Excel, téacs, Markdown, CSV nó r-shonrasc mar XML le do thoil)",
  "– {0} – zur Unterschrift.pdf": "– {0} – le síniú.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Sráid",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Athshreabhadh an téacs – léamh compordach ar an bhfón",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Athshreabhadh an téacs – léamh compordach ar an bhfón, le méid téacs inchoigeartaithe agus clár ábhair",
- "Vorname": "Céadainm"
+ "Vorname": "Céadainm",
+ "Wohnort": "Baile",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "Tiontaíodh {0}. Simplíonn PDFMy boscaí téacs, colúin agus clófhoirne speisialta – le haghaidh cóip chruinn, priontáil tríd an bprintéir “PDFMy” nó úsáid “Sábháil mar PDF” in Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Cuardaigh leagan nua",
+ "Tabelle": "Tábla"
 }

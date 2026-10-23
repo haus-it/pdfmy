@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: átalakítva. Az élőfejet és élőlábat, a szövegdobozokat és a különleges betűtípusokat a PDFMy nem veszi át – a pontos másolathoz használja a Wordben a „Mentés PDF-ként” parancsot.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: ezt a formátumot a PDFMy még nem tudja átalakítani – kérjük, mentse a Wordben vagy az Excelben .docx/.xlsx formátumban, vagy válassza ott a „Mentés PDF-ként” parancsot.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, Word, Excel, szöveg, Markdown, CSV vagy XML e-számla)",
  "– {0} – zur Unterschrift.pdf": "– {0} – aláírásra.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Utca",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Szöveg újratördelése – kényelmes olvasás telefonon",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Szöveg újratördelése – kényelmes olvasás telefonon, állítható betűmérettel és tartalomjegyzékkel",
- "Vorname": "Keresztnév"
+ "Vorname": "Keresztnév",
+ "Wohnort": "Település",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} átalakítva. A szövegdobozokat, hasábokat és különleges betűtípusokat a PDFMy egyszerűsítve veszi át – pontos másolathoz nyomtasson a „PDFMy” nyomtatóval, vagy használja a Wordben a „Mentés PDF-ként” lehetőséget.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Új verzió keresése",
+ "Tabelle": "Táblázat"
 }

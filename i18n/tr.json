@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0} dönüştürüldü. PDFMy üst ve alt bilgileri, metin kutularını ve özel yazı tiplerini aktarmaz – birebir kopya için Word’de “PDF olarak kaydet” seçeneğini kullanın.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy bu biçimi henüz dönüştüremiyor – lütfen dosyayı Word veya Excel’de .docx/.xlsx olarak kaydedin ya da orada “PDF olarak kaydet” seçeneğini seçin.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, görüntü, Word, Excel, metin, Markdown, CSV veya XML olarak e-fatura)",
  "– {0} – zur Unterschrift.pdf": "– {0} – imza için.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Sokak",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Metni yeniden akıt – telefonda rahat okuma",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Metni yeniden akıt – telefonda rahat okuma, ayarlanabilir yazı boyutu ve içindekilerle",
- "Vorname": "Ad"
+ "Vorname": "Ad",
+ "Wohnort": "Şehir",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} dönüştürüldü. PDFMy metin kutularını, sütunları ve özel yazı tiplerini basitleştirerek aktarır – birebir kopya için “PDFMy” yazıcısıyla yazdırın veya Word’de “PDF olarak kaydet”i kullanın.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Yeni sürüm ara",
+ "Tabelle": "Tablo"
 }

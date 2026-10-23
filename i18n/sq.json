@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: u konvertua. PDFMy nuk merr kokat dhe fundet e faqes, kutitë e tekstit dhe shkronjat e veçanta – për një kopje të saktë, përdorni në Word „Ruaj si PDF“.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy nuk mund ta konvertojë ende këtë format – ju lutemi ruajeni në Word ose Excel si .docx/.xlsx ose zgjidhni atje „Ruaj si PDF“.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, Word, Excel, tekst, Markdown, CSV ose e-faturë si XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – për nënshkrim.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Rruga",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Rirendit tekstin – lexim i rehatshëm në celular",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Rirendit tekstin – lexim i rehatshëm në celular, me shkronja të rregullueshme dhe tryezë të lëndës",
- "Vorname": "Emri"
+ "Vorname": "Emri",
+ "Wohnort": "Qyteti",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} u konvertua. Kutitë e tekstit, kolonat dhe shkronjat e veçanta PDFMy i merr në mënyrë të thjeshtuar – për një kopje të saktë, printoni përmes printerit „PDFMy“ ose përdorni në Word „Ruaj si PDF“.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Kërko një version të ri",
+ "Tabelle": "Tabela"
 }

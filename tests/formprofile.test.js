@@ -64,9 +64,20 @@ test('Lesemodus: Absätze, Überschrift, Silbentrennung', () => {
     [W('Mit', 0.1, 0.23), W('freundlichen', 0.2, 0.23), W('Grüßen', 0.4, 0.23, 0.4)],
   ];
   assert.deepEqual(R.blocks(lines), [
-    { type: 'h', text: 'Kündigung' },
+    { type: 'h', level: 1, text: 'Kündigung' },
     { type: 'p', text: 'Sehr geehrte Damen hiermit kündige ich die Wohnung zum 31.12.' },
     { type: 'p', text: 'Mit freundlichen Grüßen' },
+  ]);
+  // Tabelle mit rechtsbündigen Beträgen (unterschiedliche linke Kanten) und Fließtext darunter
+  const T = [
+    [W('Pos', 0.1, 0.30, 0.04), W('Bezeichnung', 0.2, 0.30, 0.15), W('Betrag', 0.75, 0.30, 0.08)],
+    [W('1', 0.1, 0.32, 0.01), W('Grundgebühr', 0.2, 0.32, 0.14), W('12,50', 0.77, 0.32, 0.06)],
+    [W('2', 0.1, 0.34, 0.01), W('Arbeitspreis', 0.2, 0.34, 0.11), W('Strom', 0.32, 0.34, 0.06), W('1.234,00', 0.74, 0.34, 0.09)],
+    [W('Bitte', 0.1, 0.38), W('zahlen', 0.2, 0.38), W('Sie', 0.3, 0.38), W('bis', 0.4, 0.38), W('Monatsende.', 0.5, 0.38, 0.12)],
+  ];
+  assert.deepEqual(R.blocks(T), [
+    { type: 'table', rows: [['Pos', 'Bezeichnung', 'Betrag'], ['1', 'Grundgebühr', '12,50'], ['2', 'Arbeitspreis Strom', '1.234,00']], widths: [0.137, 0.74, 0.123] },
+    { type: 'p', text: 'Bitte zahlen Sie bis Monatsende.' },
   ]);
   assert.deepEqual(R.fromText('Erste Zei-\nle geht weiter\n\n• Punkt'), [{ type: 'p', text: 'Erste Zeile geht weiter' }, { type: 'li', text: '• Punkt' }]);
 });

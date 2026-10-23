@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: преобразуван. Горните и долните колонтитули, текстовите полета и специалните шрифтове PDFMy не пренася – за точно копие използвайте в Word „Запиши като PDF“.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: този формат PDFMy все още не може да преобразува – моля, запишете в Word или Excel като .docx/.xlsx или изберете там „Запиши като PDF“.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, Word, Excel, текст, Markdown, CSV или е-фактура като XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – за подпис.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Улица",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Пренареждане на текста – удобно четене на телефона",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Пренареждане на текста – удобно четене на телефона, с регулируем шрифт и съдържание",
- "Vorname": "Име"
+ "Vorname": "Име",
+ "Wohnort": "Населено място",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} е преобразуван. Текстовите полета, колоните и специалните шрифтове PDFMy пренася опростено – за точно копие отпечатайте чрез принтера „PDFMy“ или в Word изберете „Запиши като PDF“.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Търсене на нова версия",
+ "Tabelle": "Таблица"
 }

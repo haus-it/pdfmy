@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: konvertert. Topp- og bunntekster, tekstbokser og spesielle skrifter overfører ikke PDFMy – bruk «Lagre som PDF» i Word for en nøyaktig gjengivelse.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: Dette formatet kan PDFMy ennå ikke konvertere – lagre filen i Word eller Excel som .docx/.xlsx, eller velg «Lagre som PDF» der.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatet støttes ikke: {0} (bruk PDF, bilde, Word, Excel, tekst, Markdown, CSV eller e-faktura som XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – til signering.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Gate",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Bryt teksten på nytt – les komfortabelt på mobilen",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Bryt teksten på nytt – les komfortabelt på mobilen, med justerbar skrift og innholdsfortegnelse",
- "Vorname": "Fornavn"
+ "Vorname": "Fornavn",
+ "Wohnort": "Poststed",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} konvertert. Tekstbokser, spalter og spesielle skrifter overfører PDFMy forenklet – for en nøyaktig gjengivelse skriver du ut via skriveren «PDFMy» eller bruker «Lagre som PDF» i Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Se etter en ny versjon",
+ "Tabelle": "Tabell"
 }

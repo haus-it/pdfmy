@@ -49,6 +49,20 @@ test('Word-Export: gültiges docx-Paket mit Text, Seitenumbruch und Sonderzeiche
   assert.ok(s.includes('<dc:title>Brief &quot;A&quot;</dc:title>'));
 });
 
+test('Word-Export gegliedert: Überschriften, Aufzählung, Tabelle mit Kopfzeile und Beträgen rechtsbündig', () => {
+  const T = require('../js/tools.js');
+  const z = T.docx([[{ type: 'h', level: 1, text: 'Rechnung' }, { type: 'p', text: 'Sehr geehrte Damen und Herren,' }, { type: 'li', text: '• Punkt' },
+    { type: 'table', rows: [['Pos', 'Betrag'], ['1', '12,50 €']] }]], { lang: 'en-GB' });
+  const s = Buffer.from(z).toString('utf8');
+  for (const n of ['word/styles.xml', 'word/_rels/document.xml.rels', 'wordprocessingml.styles+xml']) assert.ok(s.includes(n), n);
+  assert.ok(s.includes('<w:pStyle w:val="berschrift1"/></w:pPr><w:r><w:t xml:space="preserve">Rechnung'));
+  assert.ok(s.includes('<w:outlineLvl w:val="0"/>'));
+  assert.ok(s.includes('<w:pStyle w:val="Listenabsatz"/></w:pPr><w:r><w:t xml:space="preserve">• Punkt<'));
+  assert.ok(s.includes('<w:tblHeader/>') && s.includes('<w:b/></w:rPr><w:t xml:space="preserve">Pos<'));
+  assert.ok(s.includes('<w:jc w:val="right"/></w:pPr><w:r><w:t xml:space="preserve">12,50 €<'));
+  assert.ok(s.includes('<dc:language>en-GB</dc:language>') && s.includes('<w:lang w:val="en-GB"/>'));
+});
+
 test('Vergleich: geänderte, eingefügte und gelöschte Wörter', () => {
   const T = require('../js/tools.js');
   const d = T.diffWords('Die Miete beträgt 850 EUR monatlich ab Januar.', 'Die Miete beträgt 910 EUR monatlich ab sofort zum Januar.');

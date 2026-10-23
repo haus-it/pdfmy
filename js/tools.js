@@ -74,26 +74,58 @@
   const xml = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
 
-  /* Word-Dokument (.docx, Office Open XML) aus dem Text der Seiten: ein Absatz je Zeile, Seitenumbruch je Seite */
-  function docx(pages, { title = '', author = '' } = {}, date = new Date()) {
+  /* Word-Dokument (.docx, Office Open XML), Seitenumbruch je Seite. Eine Seite ist entweder Text (ein Absatz je Zeile)
+     oder gegliedert (js/reflow.js): [{ type: 'h', level } | 'p' | 'li' | { type: 'table', rows }] → Word-Überschriften
+     (Formatvorlagen „Überschrift 1/2“, im Navigationsbereich und für Screenreader), Absätze, Aufzählung, Tabellen mit Rahmen. */
+  function docx(pages, { title = '', author = '', lang = 'de-DE' } = {}, date = new Date()) {
     const enc = new TextEncoder(), iso = date.toISOString().replace(/\.\d{3}Z$/, 'Z');
-    const para = t => `<w:p><w:r><w:t xml:space="preserve">${xml(t)}</w:t></w:r></w:p>`;
-    const body = pages.map((t, i) => (i ? '<w:p><w:r><w:br w:type="page"/></w:r></w:p>' : '') +
-      String(t || '').replace(/\r/g, '').split('\n').map(para).join('')).join('');
+    const run = (t, b) => `<w:r>${b ? '<w:rPr><w:b/></w:rPr>' : ''}${String(t).split('\n').map(s => `<w:t xml:space="preserve">${xml(s)}</w:t>`).join('<w:br/>')}</w:r>`;   // \n = Zeilenumbruch im Absatz
+    const para = (t, style) => `<w:p>${style ? `<w:pPr><w:pStyle w:val="${style}"/></w:pPr>` : ''}${run(t)}</w:p>`;
+    const table = (rows, widths) => {
+      const n = Math.max(...rows.map(r => r.length)), ws = Array.from({ length: n }, (_, k) => Math.max(400, Math.round(9354 * (widths?.length === n ? widths[k] : 1 / n))));   // Breite wie im Original
+      const isNum = v => /\d/.test(v) && /^[-+]?[\d.,]+\s?(€|EUR|%)?$/.test(v.trim());
+      const numCol = ws.map((_, k) => { const body = rows.slice(1).map(r => String(r[k] ?? '').trim()).filter(Boolean); return body.length > 0 && body.filter(isNum).length / body.length >= 0.6; });
+      return '<w:tbl><w:tblPr><w:tblStyle w:val="Tabellengitter"/><w:tblW w:w="0" w:type="auto"/><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr>' +
+        `<w:tblGrid>${ws.map(w => `<w:gridCol w:w="${w}"/>`).join('')}</w:tblGrid>` +
+        rows.map((r, i) => `<w:tr>${i === 0 ? '<w:trPr><w:tblHeader/></w:trPr>' : ''}` + Array.from({ length: n }, (_, k) => {
+          const v = String(r[k] ?? ''), num = i === 0 ? numCol[k] : isNum(v);   // Zahlen und Beträge rechtsbündig, Kopfzelle wie ihre Spalte
+          return `<w:tc><w:tcPr><w:tcW w:w="${ws[k]}" w:type="dxa"/></w:tcPr><w:p><w:pPr><w:spacing w:after="0"/>${num ? '<w:jc w:val="right"/>' : ''}</w:pPr>${run(v, i === 0)}</w:p></w:tc>`;
+        }).join('') + '</w:tr>').join('') + '</w:tbl><w:p/>';
+    };
+    const page = t => Array.isArray(t)
+      ? t.map(b => b.type === 'table' ? table(b.rows, b.widths) : b.type === 'h' ? para(b.text, b.level === 1 ? 'berschrift1' : 'berschrift2')
+        : b.type === 'li' ? para('• ' + b.text.replace(/^[•·▪◦‣–\-*]\s*/, ''), 'Listenabsatz') : para(b.text)).join('')
+      : String(t || '').replace(/\r/g, '').split('\n').map(l => para(l)).join('');
+    const body = pages.map((t, i) => (i ? '<w:p><w:r><w:br w:type="page"/></w:r></w:p>' : '') + page(t)).join('');
+    const sty = (id, name, extra) => `<w:style w:type="paragraph" w:styleId="${id}"><w:name w:val="${name}"/><w:basedOn w:val="Standard"/><w:next w:val="Standard"/><w:qFormat/>${extra}</w:style>`;
+    const border = k => `<w:${k} w:val="single" w:sz="4" w:space="0" w:color="auto"/>`;
+    const styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+      `<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:sz w:val="22"/><w:szCs w:val="22"/><w:lang w:val="${xml(lang)}"/></w:rPr></w:rPrDefault>` +
+      '<w:pPrDefault><w:pPr><w:spacing w:after="160" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>' +
+      '<w:style w:type="paragraph" w:default="1" w:styleId="Standard"><w:name w:val="Normal"/><w:qFormat/></w:style>' +
+      sty('berschrift1', 'heading 1', '<w:pPr><w:keepNext/><w:spacing w:before="360" w:after="120"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:sz w:val="32"/><w:szCs w:val="32"/></w:rPr>') +
+      sty('berschrift2', 'heading 2', '<w:pPr><w:keepNext/><w:spacing w:before="240" w:after="80"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr>') +
+      sty('Listenabsatz', 'List Paragraph', '<w:pPr><w:spacing w:after="60"/><w:ind w:left="357" w:hanging="357"/></w:pPr>') +
+      `<w:style w:type="table" w:styleId="Tabellengitter"><w:name w:val="Table Grid"/><w:tblPr><w:tblBorders>${['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(border).join('')}</w:tblBorders>` +
+      '<w:tblCellMar><w:left w:w="108" w:type="dxa"/><w:right w:w="108" w:type="dxa"/></w:tblCellMar></w:tblPr></w:style></w:styles>';
     const files = {
       '[Content_Types].xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
         '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>' +
         '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+        '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>' +
         '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>',
       '_rels/.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
         '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
         '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>',
       'docProps/core.xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" ' +
         'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-        `<dc:title>${xml(title)}</dc:title><dc:creator>${xml(author)}</dc:creator><dc:language>de-DE</dc:language>` +
+        `<dc:title>${xml(title)}</dc:title><dc:creator>${xml(author)}</dc:creator><dc:language>${xml(lang)}</dc:language>` +
         `<dcterms:created xsi:type="dcterms:W3CDTF">${iso}</dcterms:created></cp:coreProperties>`,
       'word/document.xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
         `<w:body>${body}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1418" w:header="709" w:footer="709" w:gutter="0"/></w:sectPr></w:body></w:document>`,
+      'word/styles.xml': styles,
+      'word/_rels/document.xml.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',
     };
     return zip(Object.entries(files).map(([name, s]) => ({ name, data: enc.encode(s) })), date);
   }

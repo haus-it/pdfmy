@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: umbreytt. PDFMy flytur ekki haus og fót, textareiti né sérstakar leturgerðir – fyrir nákvæmt afrit notið „Vista sem PDF“ í Word.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy getur ekki enn umbreytt þessu sniði – vinsamlegast vistið skrána í Word eða Excel sem .docx/.xlsx eða veljið þar „Vista sem PDF“.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, Word, Excel, texti, Markdown, CSV eða rafrænn reikningur sem XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – til undirritunar.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Gata",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Endurraða texta – þægilegur lestur í símanum",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Endurraða texta – þægilegur lestur í símanum, með stillanlegu letri og efnisyfirliti",
- "Vorname": "Fornafn"
+ "Vorname": "Fornafn",
+ "Wohnort": "Staður",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} umbreytt. Textareiti, dálka og sérstakar leturgerðir tekur PDFMy einfaldaðar yfir – fyrir nákvæmt afrit prentið þér með prentaranum „PDFMy“ eða notið „Vista sem PDF“ í Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Leita að nýrri útgáfu",
+ "Tabelle": "Tafla"
 }

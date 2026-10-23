@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: muunnettu. PDFMy ei siirrä ylä- ja alatunnisteita, tekstiruutuja eikä erikoisfontteja – saat tarkan kopion valitsemalla Wordissa ”Tallenna PDF-tiedostona”.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy ei vielä osaa muuntaa tätä muotoa – tallenna tiedosto Wordissa tai Excelissä .docx-/.xlsx-muodossa tai valitse siellä ”Tallenna PDF-tiedostona”.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, Word-, Excel-, teksti-, Markdown- tai CSV-tiedostoa tai XML-muotoista e-laskua)",
  "– {0} – zur Unterschrift.pdf": "– {0} – allekirjoitettavaksi.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Katu",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Rivitä teksti uudelleen – mukava lukea puhelimella",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Rivitä teksti uudelleen – mukava lukea puhelimella, säädettävällä tekstikoolla ja sisällysluettelolla",
- "Vorname": "Etunimi"
+ "Vorname": "Etunimi",
+ "Wohnort": "Postitoimipaikka",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} muunnettu. Tekstiruudut, palstat ja erikoisfontit PDFMy siirtää yksinkertaistettuina – tarkkaa kopiota varten tulosta ”PDFMy”-tulostimella tai käytä Wordissa toimintoa ”Tallenna PDF-muodossa”.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Etsi uusi versio",
+ "Tabelle": "Taulukko"
 }

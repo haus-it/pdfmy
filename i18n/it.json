@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0} convertito. PDFMy non riporta intestazioni e piè di pagina, caselle di testo e caratteri speciali – per una copia esatta utilizzi «Salva come PDF» in Word.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy non può ancora convertire questo formato – salvi il file in Word o Excel come .docx/.xlsx oppure scelga lì «Salva come PDF».",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, immagine, Word, Excel, testo, Markdown, CSV o fattura elettronica come XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – da firmare.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Via",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Riadatta il testo – lettura comoda sullo smartphone",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Riadatta il testo – lettura comoda sullo smartphone, con carattere regolabile e indice",
- "Vorname": "Nome"
+ "Vorname": "Nome",
+ "Wohnort": "Città",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} convertito. PDFMy riprende in modo semplificato caselle di testo, colonne e caratteri speciali – per una copia esatta, stampi tramite la stampante «PDFMy» oppure usi «Salva come PDF» in Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Cerca una nuova versione",
+ "Tabelle": "Tabella"
 }

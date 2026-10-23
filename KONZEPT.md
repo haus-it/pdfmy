@@ -132,7 +132,7 @@ Grundlage: Recherche 22.10.2026 (Herstellerseiten Adobe/Foxit/iLovePDF/Stirling-
 | Arbeitsraum mit Fragen über viele Dokumente (Acrobat PDF Spaces, Foxit) | Fragen an ein Dokument (lokale KI) | passt nur lokal, Speichergrenzen im Browser → beobachten |
 | Handschrift erkennen | Druckschrift | weiterhin kein brauchbares lokales Modell für Deutsch → beobachten |
 | Qualifizierte elektronische Signatur (QES) | fortgeschrittene Signatur, PAdES, Prüfung | braucht Vertrauensdiensteanbieter (Konto, oft kostenpflichtig) → verletzt Punkt 2/3; höchstens später Übergabe nur des Hashwerts auf ausdrücklichen Wunsch – Entscheidung GF |
-| Layoutverlust bei PDF → Word (alle kostenlosen Tools) | vorhanden, Qualität nicht gemessen | **offen:** Vergleichstest mit Acrobat/PDF24 ins Test-Gate aufnehmen |
+| Layoutverlust bei PDF → Word (alle kostenlosen Tools) | gemessen 23.10.2026: jede Zeile ein Absatz, keine Überschriften/Tabellen | **passt, umgesetzt 23.10.2026:** Absätze, Word-Überschriften, Aufzählungen, Tabellen mit Originalbreiten – lokal (Punkt 1, 2), geprüft in Word und LibreOffice. Vergleich mit Acrobat/PDF24 offen (nicht installiert) |
 
 ### Umgesetzt (22.10.2026): Lesebestätigung für Unterschriftsanfragen per WhatsApp, Signal, Teams
 **Wunsch:** Der Absender soll sehen, ob der Empfänger eine per Messenger verschickte Anfrage gelesen hat.

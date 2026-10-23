@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0} ëmgewandelt. Kapp- a Fousszeilen, Textfelder a besonnesch Schrëften iwwerhëlt PDFMy net – fir eng exakt Kopie an Word „Als PDF späicheren“.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: Dëse Format kann PDFMy nach net ëmwandelen – späichert w.e.g. an Word oder Excel als .docx/.xlsx oder wielt do „Als PDF späicheren“.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – fir z'ënnerschreiwen.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Strooss",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Text nei ëmbriechen – bequem um Handy liesen",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Text nei ëmbriechen – bequem um Handy liesen, mat astellbarer Schrëft an Inhaltsverzeechnes",
- "Vorname": "Virnumm"
+ "Vorname": "Virnumm",
+ "Wohnort": "Uertschaft",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} ëmgewandelt. Textfelder, Spalten a speziell Schrëften iwwerhëlt PDFMy vereinfacht – fir eng exakt Kopie iwwer den Drécker „PDFMy“ drécken oder am Word „Als PDF späicheren“.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "No enger neier Versioun sichen",
+ "Tabelle": "Tabell"
 }

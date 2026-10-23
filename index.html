@@ -861,8 +861,12 @@ label[role=button]:focus-visible,.thumb:focus-visible,#viewer:focus-visible,.car
 .readbar h3{margin:0;flex:1 1 auto}
 .readbar select{max-width:min(320px,60vw)}
 .readbody{flex:1;overflow:auto;padding:16px max(16px,calc((100% - 42em)/2));font-size:calc(var(--rf,18) * 1px);line-height:1.6;font-family:Georgia,'Times New Roman',serif}
-.readbody h2{font-size:1.25em;line-height:1.3;margin:1.2em 0 .4em;text-transform:none;letter-spacing:0}
-.readbody p,.readbody li{margin:0 0 .8em;overflow-wrap:anywhere}
+.readbody h2,.readbody h3{font-size:1.25em;line-height:1.3;margin:1.2em 0 .4em;text-transform:none;letter-spacing:0}
+.readbody h3{font-size:1.1em}
+.readbody .rtbl{overflow-x:auto;margin:0 0 1em}
+.readbody table{border-collapse:collapse;font-size:.9em}
+.readbody th,.readbody td{border:1px solid var(--line,#ccc);padding:4px 8px;text-align:left;vertical-align:top}
+.readbody p,.readbody li{margin:0 0 .8em;overflow-wrap:anywhere;white-space:pre-line}
 .readbody .rpg{font:600 12px system-ui,sans-serif;color:var(--muted,#666);border-top:1px solid var(--line,#ddd);margin:1.6em 0 .8em;padding-top:6px}
 .readbody .rnone{font-style:italic;color:var(--muted,#666)}
 @media (max-width:520px){.fpgrid{grid-template-columns:minmax(0,1fr)}}

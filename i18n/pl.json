@@ -1292,7 +1292,7 @@
  "Nächster Treffer (Enter, F3)": "Następny wynik (Enter, F3)",
  "nachträglich geändert (PDFMy)": "zmieniono później (PDFMy)",
  "Nachweis/Beleg (z. B. Gehaltsabrechnung, Bescheid, Rechnung): Änderungen werden sichtbar rot markiert, und die Seite erhält den Vermerk „nachträglich geändert“ (Schutz vor Fälschung).": "Dowód/dokument (np. pasek wynagrodzenia, decyzja, faktura): zmiany są wyraźnie oznaczane na czerwono, a strona otrzymuje adnotację „zmieniono później” (ochrona przed fałszerstwem).",
- "Name": "Nazwa",
+ "Name": "Imię i nazwisko",
  "Name (automatisch)": "Nazwa (automatycznie)",
  "Name / Firma": "Imię i nazwisko / firma",
  "Name des Felds, z. B. Vorname – leer lassen: PDFMy nimmt die Beschriftung daneben": "Nazwa pola, np. Imię – pozostaw puste: PDFMy użyje sąsiedniej etykiety",
@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: przekonwertowano. Nagłówków i stopek, pól tekstowych ani specjalnych czcionek PDFMy nie przenosi – aby uzyskać dokładną kopię, użyj w programie Word „Zapisz jako PDF”.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: tego formatu PDFMy nie potrafi jeszcze przekonwertować – zapisz plik w programie Word lub Excel jako .docx/.xlsx albo wybierz tam „Zapisz jako PDF”.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, Word, Excel, tekstu, Markdown, CSV lub e-faktury w formacie XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – do podpisu.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Ulica",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Przełam tekst na nowo – wygodne czytanie na telefonie",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Przełam tekst na nowo – wygodne czytanie na telefonie, z regulowaną czcionką i spisem treści",
- "Vorname": "Imię"
+ "Vorname": "Imię",
+ "Wohnort": "Miejscowość",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} przekonwertowano. Pola tekstowe, kolumny i nietypowe czcionki PDFMy przenosi w uproszczeniu – aby uzyskać dokładną kopię, wydrukuj przez drukarkę „PDFMy” lub użyj w Wordzie opcji „Zapisz jako PDF”.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Szukaj nowej wersji",
+ "Tabelle": "Tabela"
 }

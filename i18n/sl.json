@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: pretvorjeno. Glav in nog, polj z besedilom ter posebnih pisav PDFMy ne prenese – za natančno kopijo uporabite v Wordu „Shrani kot PDF“.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: tega formata PDFMy še ne zna pretvoriti – datoteko shranite v Wordu ali Excelu kot .docx/.xlsx ali tam izberite „Shrani kot PDF“.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Format ni podprt: {0} (uporabite PDF, sliko, Word, Excel, besedilo, Markdown, CSV ali e-račun kot XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – za podpis.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Ulica",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Prelomi besedilo na novo – udobno branje na telefonu",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Prelomi besedilo na novo – udobno branje na telefonu, z nastavljivo pisavo in kazalom",
- "Vorname": "Ime"
+ "Vorname": "Ime",
+ "Wohnort": "Kraj",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} pretvorjeno. Polja z besedilom, stolpce in posebne pisave PDFMy prevzame poenostavljeno – za natančno kopijo natisnite prek tiskalnika „PDFMy“ ali v Wordu uporabite „Shrani kot PDF“.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Poišči novo različico",
+ "Tabelle": "Tabela"
 }

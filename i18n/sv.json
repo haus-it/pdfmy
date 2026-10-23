@@ -2412,7 +2412,6 @@
  "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.": "Du beantwortest Fragen ausschließlich anhand des folgenden Dokuments. Antworte kurz und sachlich in der Sprache „{0}“. Steht die Antwort nicht im Dokument, sage das. Erfinde nichts.",
  "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.": "Ein Brief oder Dokument (z. B. Rechnung, Bescheid, Vertrag) für ein Büro.",
  "Summarizer": "Summarizer",
- "{0} umgewandelt. Kopf- und Fußzeilen, Textfelder und besondere Schriften übernimmt PDFMy nicht – für ein exaktes Abbild in Word „Als PDF speichern“.": "{0}: konverterad. Sidhuvuden och sidfötter, textrutor och särskilda teckensnitt överför PDFMy inte – använd ”Spara som PDF” i Word för en exakt kopia.",
  "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.": "{0}: Det här formatet kan PDFMy ännu inte konvertera – spara filen i Word eller Excel som .docx/.xlsx eller välj ”Spara som PDF” där.",
  "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, bild, Word, Excel, text, Markdown, CSV eller e-faktura som XML)",
  "– {0} – zur Unterschrift.pdf": "– {0} – för underskrift.pdf",
@@ -2889,5 +2888,11 @@
  "Straße": "Gata",
  "Text neu umbrechen – bequem lesen auf dem Handy": "Bryt om texten – läs bekvämt på mobilen",
  "Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis": "Bryt om texten – läs bekvämt på mobilen, med justerbar textstorlek och innehållsförteckning",
- "Vorname": "Förnamn"
+ "Vorname": "Förnamn",
+ "Wohnort": "Ort",
+ "{0} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.": "{0} konverterat. Textrutor, spalter och särskilda typsnitt överför PDFMy förenklat – för en exakt kopia skriver du ut via skrivaren ”PDFMy” eller använder ”Spara som PDF” i Word.",
+ "List Paragraph": "List Paragraph",
+ "Listenabsatz": "Listenabsatz",
+ "Nach einer neuen Version suchen": "Sök efter en ny version",
+ "Tabelle": "Tabell"
 }

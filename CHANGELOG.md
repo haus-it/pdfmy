@@ -2,6 +2,16 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-23
+
+### PDF in Word mit Gliederung (app-v180)
+- Anlass: häufigste Kritik an kostenlosen Umwandlern ist Layoutverlust bei PDF → Word (KONZEPT.md, Prüfung 22.10.2026 (3)). Messung vorher: PDFMy schrieb jede Zeile als eigenen Absatz – keine Überschriften, keine Tabellen, Trennstriche blieben stehen.
+- Jetzt (js/reflow.js, Tools.docx): ganze Absätze, Silbentrennung am Zeilenende aufgehoben, Word-Formatvorlagen „Überschrift 1/2“ (Navigationsbereich, Screenreader), Aufzählungen, Zeilenumbrüche in Anschrift und Briefkopf, Anrede als eigener Absatz, Tabellen als Word-Tabellen (Spalten aus den Zellbereichen aller Zeilen – auch rechtsbündige Beträge –, Spaltenbreiten wie im Original, Kopfzeile fett und auf jeder Seite wiederholt, Zahlen rechtsbündig), Dokumentsprache aus der Texterkennung.
+- Lesemodus nutzt dieselbe Gliederung: Tabellen als Tabelle (auf dem Handy waagrecht scrollbar), Überschriften in zwei Ebenen, Zeilenumbrüche in Anschriften.
+- Word → PDF geprüft (in Word erzeugtes Angebot mit Kopfzeile, Überschrift, Aufzählung, Tabelle, Fettdruck): wird übernommen; veralteter Hinweis „Kopf- und Fußzeilen übernimmt PDFMy nicht“ korrigiert, Hinweis auf den Drucker „PDFMy“ für ein exaktes Abbild.
+- „Meine Angaben“: Beschriftung „Wohnort“ statt „Ort“ (en-US „City“); Polnisch „Name“ bei Unterschriftsanfragen „Imię i nazwisko“ statt „Nazwa“.
+- Getestet: Rechnung (Briefkopf, Überschrift, Absatz mit Trennung, Tabelle 4×5) → .docx in Microsoft Word 16 (Formatvorlagen „Überschrift 1/2“ erkannt, Tabelle 4×5) und LibreOffice 26.8 geöffnet und als PDF ausgegeben; Unit-Tests Tabelle/Spaltenbreiten und gegliederter Word-Export; 203 Tests, axe 0. Bei Scans hängt die Tabellenerkennung von der Zeilenerkennung der Texterkennung ab (nicht mit echten Scans gemessen); Vergleich mit Acrobat/PDF24 nicht durchgeführt (nicht installiert).
+
 ## 2026-10-22
 
 ### Was bei Mitbewerbern fehlt oder stört – drei Verbesserungen (app-v179)
