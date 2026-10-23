@@ -277,6 +277,43 @@
     return q.map(([x, y]) => { const l = Math.hypot(cx - x, cy - y) || 1; return [x + (cx - x) / l * d, y + (cy - y) / l * d]; });
   }
 
-  const api = { findDocument, findPhoto, order, area, anglesOk };
+  /* Tabellenlinien vor der Texterkennung entfernen (nur in einer Arbeitskopie): Tesseract hält Rahmenlinien für Zeichen („|“, „[“, „_“)
+     und lässt Zellen daneben aus. Lange, dünne waagrechte und senkrechte Striche werden weiß; dicke Balken (z. B. weiße Schrift auf
+     schwarzem Grund) und Schrift bleiben. rgba wird verändert. → Anzahl entfernter Pixel */
+  function removeLines(rgba, W, H, { minH = Math.max(40, Math.round(W * 0.06)), minV = Math.max(30, Math.round(H * 0.025)), thick = Math.max(3, Math.round(Math.min(W, H) * 0.004)) } = {}) {
+    const n = W * H, dark = new Uint8Array(n);
+    for (let i = 0, o = 0; i < n; i++, o += 4) dark[i] = rgba[o] * 0.299 + rgba[o + 1] * 0.587 + rgba[o + 2] * 0.114 < 185 ? 1 : 0;   // auch hellgraue, geglättete Linien
+    const mark = new Uint8Array(n);   // 1 = Teil einer langen waagrechten, 2 = senkrechten Linie
+    for (let y = 0; y < H; y++) for (let x = 0; x < W;) {
+      if (!dark[y * W + x]) { x++; continue; }
+      let e = x; while (e < W && dark[y * W + e]) e++;
+      if (e - x >= minH) for (let k = x; k < e; k++) mark[y * W + k] |= 1;
+      x = e;
+    }
+    for (let x = 0; x < W; x++) for (let y = 0; y < H;) {
+      if (!dark[y * W + x]) { y++; continue; }
+      let e = y; while (e < H && dark[e * W + x]) e++;
+      if (e - y >= minV) for (let k = y; k < e; k++) mark[k * W + x] |= 2;
+      y = e;
+    }
+    // nur dünne Linien: Dicke quer zur Linie höchstens „thick“ Pixel
+    let removed = 0;
+    const clear = i => { const o = i * 4; rgba[o] = rgba[o + 1] = rgba[o + 2] = 255; removed++; };
+    for (let x = 0; x < W; x++) for (let y = 0; y < H;) {   // waagrechte Linien: senkrechte Ausdehnung der Markierung
+      if (!(mark[y * W + x] & 1)) { y++; continue; }
+      let e = y; while (e < H && mark[e * W + x] & 1) e++;
+      if (e - y <= thick) for (let k = y; k < e; k++) clear(k * W + x);
+      y = e;
+    }
+    for (let y = 0; y < H; y++) for (let x = 0; x < W;) {   // senkrechte Linien: waagrechte Ausdehnung
+      if (!(mark[y * W + x] & 2)) { x++; continue; }
+      let e = x; while (e < W && mark[y * W + e] & 2) e++;
+      if (e - x <= thick) for (let k = x; k < e; k++) if (rgba[(y * W + k) * 4] !== 255 || rgba[(y * W + k) * 4 + 1] !== 255) clear(y * W + k);
+      x = e;
+    }
+    return removed;
+  }
+
+  const api = { findDocument, findPhoto, order, area, anglesOk, removeLines };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.DocDetect = api;
 })(typeof self !== 'undefined' ? self : this);

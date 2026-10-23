@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-23
 
+### Texterkennung bei Tabellen mit Rahmenlinien (app-v182)
+- Messung: gescannte Rechnung mit Tabellenrahmen (200 dpi) – Tesseract las die Linien als „[“, „|“, „_“ und ließ Zellen aus (Positionsnummern, „0,32“, „2,10“, die ganze dritte Zeile fehlten); in Word zerfiel die Kopfzeile.
+- Jetzt: vor der Texterkennung werden in einer Arbeitskopie lange, dünne waagrechte und senkrechte Linien entfernt (DocDetect.removeLines; dicke Balken, z. B. weiße Schrift auf Schwarz, und Schrift bleiben; die angezeigte und gespeicherte Seite bleibt unverändert). Ergebnis: alle Zellen erkannt.
+- Gliederung (js/reflow.js): Linienreste („|“, „[“, „_]“) werden entfernt; Nachbarspalten, die nie in derselben Zeile gefüllt sind, werden zusammengeführt, wenn eine davon nur die Kopfzelle enthält oder beide sehr dicht liegen (linksbündige Kopfzelle über rechtsbündigen Zahlen) – Soll/Haben eines Kontoauszugs bleiben getrennt.
+- Wirkt auf alles mit Texterkennung: durchsuchbare PDF, PDF in Word/Excel, Lesemodus, Briefdaten.
+- Tests: Linien entfernen (Rahmen weg, Schrift und Balken bleiben), Spalten zusammenführen inkl. Soll/Haben; Browser: gescannte Rechnung → Tabelle 4×5 vollständig; 204 Tests. Nicht mit echten Scannern gemessen.
+
 ### Weitere Office-Programme und Cloud-Ordner – wie ONLYOFFICE (app-v181, pdfmy Scan 1.12.0 Windows / 1.5.0 Mac und Linux)
 - Leitplanken-Prüfung: KONZEPT.md „Entschieden 23.10.2026: weitere kostenlose Office-Programme und Cloud-Ordner“ – direkte Anmeldung an Nextcloud/WebDAV und Online-Office verworfen (Upload, Zugangsdaten, CSP).
 - **In Office-Programm öffnen:** zusätzlich SoftMaker FreeOffice/SoftMaker Office (TextMaker), Apache OpenOffice Writer und Inkscape (Windows: Programme-Ordner; Mac: Programme; Linux: textmaker24free/textmaker24/openoffice4/inkscape). Textprogramme (LibreOffice/Collabora Writer, TextMaker, OpenOffice) bekommen das gegliederte Word-Dokument aus PDFMy (Absätze, Überschriften, Tabellen) statt des PDF-Imports mit Textrahmen. Link auf FreeOffice im Dialog.

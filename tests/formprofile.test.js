@@ -79,5 +79,12 @@ test('Lesemodus: Absätze, Überschrift, Silbentrennung', () => {
     { type: 'table', rows: [['Pos', 'Bezeichnung', 'Betrag'], ['1', 'Grundgebühr', '12,50'], ['2', 'Arbeitspreis Strom', '1.234,00']], widths: [0.137, 0.74, 0.123] },
     { type: 'p', text: 'Bitte zahlen Sie bis Monatsende.' },
   ]);
+  // Scan: linksbündige Kopfzellen über rechtsbündigen Zahlen → eine Spalte; Linienreste „|“, „[“ weg; Soll/Haben bleiben getrennt
+  const S = [
+    [W('[Pos', 0.10, 0.50, 0.04), W('Text', 0.20, 0.50, 0.05), W('|', 0.45, 0.50, 0.005), W('Soll', 0.60, 0.50, 0.05), W('Haben]', 0.80, 0.50, 0.07)],
+    [W('1', 0.16, 0.52, 0.01), W('Miete', 0.20, 0.52, 0.06), W('850,00', 0.62, 0.52, 0.07)],
+    [W('2', 0.16, 0.54, 0.01), W('Gehalt', 0.20, 0.54, 0.07), W('2.400,00', 0.82, 0.54, 0.08)],
+  ];
+  assert.deepEqual(R.blocks(S)[0].rows, [['Pos', 'Text', 'Soll', 'Haben'], ['1', 'Miete', '850,00', ''], ['2', 'Gehalt', '', '2.400,00']]);
   assert.deepEqual(R.fromText('Erste Zei-\nle geht weiter\n\n• Punkt'), [{ type: 'p', text: 'Erste Zeile geht weiter' }, { type: 'li', text: '• Punkt' }]);
 });

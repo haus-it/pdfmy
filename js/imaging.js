@@ -350,5 +350,16 @@
     return { orig: c, processed: enhance(c, autoMode || mode), cropped, angle, autoMode };
   }
 
-  root.Imaging = { canvas, scaled, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
+  // Arbeitskopie ohne Tabellenlinien für die Texterkennung (DocDetect.removeLines); ohne Linien das Original
+  function unline(src) {
+    if (!src?.width || typeof DocDetect === 'undefined' || !DocDetect.removeLines) return src;
+    const c = canvas(src.width, src.height), ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(src, 0, 0);
+    const img = ctx.getImageData(0, 0, c.width, c.height);
+    if (!DocDetect.removeLines(img.data, c.width, c.height)) return src;
+    ctx.putImageData(img, 0, 0);
+    return c;
+  }
+
+  root.Imaging = { canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
 })(self);

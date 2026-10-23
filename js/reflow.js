@@ -30,14 +30,29 @@
     }
     spans.sort((a, b) => a.x0 - b.x0);
     if (spans.length < 2) return null;
-    const out = rows.map(r => { const cells = spans.map(() => ''); for (const c of r.cells) { const i = spans.findIndex(s => c.x0 < s.x1 && c.x1 > s.x0); cells[i] = cells[i] ? cells[i] + ' ' + c.t : c.t; } return cells; });
+    let out = rows.map(r => { const cells = spans.map(() => ''); for (const c of r.cells) { const i = spans.findIndex(s => c.x0 < s.x1 && c.x1 > s.x0); cells[i] = cells[i] ? cells[i] + ' ' + c.t : c.t; } return cells; });
+    /* Nachbarspalten zusammenführen, die nie in derselben Zeile gefüllt sind – z. B. linksbündige Kopfzelle „Betrag“ über rechtsbündigen
+       Zahlen. Nur wenn eine davon allein die Kopfzelle ist oder beide sehr dicht liegen (Soll/Haben eines Kontoauszugs bleiben getrennt). */
+    for (let k = 0; k + 1 < spans.length;) {
+      const clash = out.some(r => r[k] && r[k + 1]), headOnly = i => out.every((r, ri) => !r[i] === (ri > 0));
+      if (!clash && (headOnly(k) || headOnly(k + 1) || spans[k + 1].x0 - spans[k].x1 < 0.03)) {
+        spans.splice(k, 2, { x0: spans[k].x0, x1: spans[k + 1].x1 });
+        out = out.map(r => [...r.slice(0, k), r[k] || r[k + 1], ...r.slice(k + 2)]);
+        if (k > 0) k--;
+      } else k++;
+    }
+    if (spans.length < 2) return null;
     // Spaltenbreiten wie im Original (Anteile, Summe 1): vom Beginn einer Spalte bis zum Beginn der nächsten
     const ext = spans.map((s, i) => (i + 1 < spans.length ? spans[i + 1].x0 : s.x1) - s.x0), sum = ext.reduce((a, b) => a + b, 0) || 1;
     return { rows: out, widths: ext.map(e => Math.round(e / sum * 1000) / 1000) };
   }
 
+  // Reste von Tabellenlinien aus der Texterkennung („|“, „[“, „_]“) entfernen
+  const LINE_JUNK = /^[|[\]_¦!]+$/;
+  const unjunk = ws => ws.filter(w => !LINE_JUNK.test(w.t)).map(w => /^[|[_]+\S|\S[|\]_]+$/.test(w.t) ? { ...w, t: w.t.replace(/^[|[_]+|[|\]_]+$/g, '') } : w).filter(w => w.t);
+
   function blocks(lines) {
-    const L = lines.filter(ws => ws && ws.length).map(ws => {
+    const L = lines.map(ws => ws && unjunk(ws)).filter(ws => ws && ws.length).map(ws => {
       const text = ws.map(w => w.t).join(' ').replace(/\s+/g, ' ').trim(), h = median(ws.map(w => w.h));
       return { ws, text, h, x0: Math.min(...ws.map(w => w.x)), x1: Math.max(...ws.map(w => w.x + w.w)),
         top: Math.min(...ws.map(w => w.y)), bot: Math.max(...ws.map(w => w.y + w.h)) };

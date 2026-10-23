@@ -4,6 +4,22 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const D = require('../js/docdetect.js');
 
+test('Tabellenlinien entfernen: dünne Rahmen weg, Schrift und dicke Balken bleiben', () => {
+  const W = 400, H = 300, d = new Uint8ClampedArray(W * H * 4).fill(255);
+  const px = (x, y, v = 0) => { const o = (y * W + x) * 4; d[o] = d[o + 1] = d[o + 2] = v; };
+  const isDark = (x, y) => d[(y * W + x) * 4] < 150;
+  for (let x = 20; x < 380; x++) for (const y of [50, 51, 150, 250]) px(x, y);        // waagrechte Rahmenlinien (1–2 px)
+  for (let y = 50; y <= 250; y++) for (const x of [20, 200, 379]) px(x, y);          // senkrechte Rahmenlinien
+  for (let y = 80; y < 100; y++) for (let x = 40; x < 44; x++) px(x, y);             // „Buchstabe“: kurzer dicker Strich
+  for (let x = 60; x < 70; x++) px(x, 120);                                          // kurzer waagrechter Strich (z. B. Querstrich „t“)
+  for (let y = 270; y < 290; y++) for (let x = 20; x < 380; x++) px(x, y);           // dicker schwarzer Balken
+  const n = D.removeLines(d, W, H);
+  assert.ok(n > 1500, 'Linien entfernt: ' + n);
+  assert.ok(!isDark(100, 50) && !isDark(100, 150) && !isDark(20, 120) && !isDark(200, 200), 'Rahmen weg');
+  assert.ok(isDark(41, 90) && isDark(65, 120), 'Schrift bleibt');
+  assert.ok(isDark(100, 280) && isDark(20, 280), 'Balken bleibt');
+});
+
 // Synthetisches Handyfoto: Blatt (Viereck) mit Schriftzeilen auf einem Untergrund, mit Licht, Schatten und Rauschen
 function scene({ W = 480, H = 640, quad, bg = 'dark', light = 0, shadow = 0, seed = 7, text = true, hand = false }) {
   let s = seed; const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);

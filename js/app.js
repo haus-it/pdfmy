@@ -1752,7 +1752,7 @@ async function recognize(img) {
   let timer;
   try {
     const w = await sl.w;
-    const job = w.recognize(img, {}, { text: true, blocks: true });
+    const job = w.recognize(Imaging.unline(img), {}, { text: true, blocks: true });   // ohne Tabellenlinien – sonst liest Tesseract „|“/„[“ und lässt Zellen aus
     const timeout = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('Zeitüberschreitung der Texterkennung')), ocrTimeout()); });
     var { data } = await Promise.race([job, timeout]);
   } catch (e) { resetWorker(e.message, sl); throw e; }
@@ -1861,7 +1861,7 @@ function recognizeLangs(img, langs) {
     const w = await langWorker; let timer;
     try {
       const timeout = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('Zeitüberschreitung der Texterkennung')), ocrTimeout() * 1.5); });
-      const { data } = await Promise.race([w.recognize(img, {}, { text: true, blocks: true }), timeout]);
+      const { data } = await Promise.race([w.recognize(Imaging.unline(img), {}, { text: true, blocks: true }), timeout]);
       return ocrResult(data, img);
     } catch (e) { (await langWorker.catch(() => null))?.terminate().catch(() => {}); langWorker = null; langCombo = ''; throw e; }
     finally { clearTimeout(timer); }
