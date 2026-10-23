@@ -3019,7 +3019,10 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
             });
           } else if (b.type === 'li') {
             if (!list) { list = T.group('L'); lastTagStats.list++; }
-            const li = T.group('LI', list); T.open('LBody', {}, li); drawWords(b.ws); T.close();
+            // Aufzählungszeichen bzw. Nummer als eigenes Lbl, der Text als LBody (Screenreader sagen „Listenpunkt“ statt „Punkt“)
+            const li = T.group('LI', list), lbl = /^([•·▪◦‣–\-*]|\d{1,2}[.)]|[a-z][.)])$/.test(b.ws[0]?.t || '') && b.ws.length > 1;
+            if (lbl) { T.open('Lbl', {}, li); drawWords(b.ws.slice(0, 1)); T.close(); }
+            T.open('LBody', {}, li); drawWords(lbl ? b.ws.slice(1) : b.ws); T.close();
           } else if (isRunning(b)) {   // Kopf-/Fußzeile, Seitenzahl: Artefakt, aber weiter durchsuchbar
             T.artifact(); drawWords(b.ws); T.close();
           } else {

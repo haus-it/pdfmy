@@ -131,7 +131,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | 4 Einfach | passt: ein Befehl, keine Einstellungen; vorhandenes „Als PDF/A speichern“ bleibt |
 | 5 Normgerecht und prüfbar | passt mit Auflage: jede Änderung mit veraPDF (PDF/UA-1 und PDF/A-2b) gegen Testdokumente (Brief, Rechnung mit Tabelle, Aufzählung, mehrseitig mit Überschriften) |
 | 6 Wenig aktive Inhalte | passt: keine Skripte |
-**Entscheidung:** umsetzen (Auftrag GF 23.10.2026). **Umgesetzt 23.10.2026 (app-v184):** Gliederung H1/H2, P, L/LI/LBody, Table/TR/TH(Scope)/TD; Kopf-/Fußzeilen und Seitenzahlen als Artefakt; Lesezeichen aus Überschriften; Prüfbericht nach dem Speichern. veraPDF PDF/UA-1 und PDF/A-2b bestanden für Rechnung mit Tabelle, Angebot mit Aufzählung und Tabelle, gescannte Rechnung, dreiseitige Satzung mit Kopf-/Fußzeile.
+**Entscheidung:** umsetzen (Auftrag GF 23.10.2026). **Umgesetzt 23.10.2026 (app-v184):** Gliederung H1/H2, P, L/LI/LBody, Table/TR/TH(Scope)/TD; Kopf-/Fußzeilen und Seitenzahlen als Artefakt; Lesezeichen aus Überschriften; Prüfbericht nach dem Speichern. veraPDF PDF/UA-1 und PDF/A-2b bestanden für Rechnung mit Tabelle, Angebot mit Aufzählung und Tabelle, gescannte Rechnung, dreiseitige Satzung mit Kopf-/Fußzeile. **Screenreader-Test 23.10.2026 (app-v185):** NVDA 2026.2 in Edge liest Überschriften mit Ebene, Listen und Tabellen; Listenzeichen jetzt als `Lbl`.
 
 ### Entschieden 23.10.2026: weitere kostenlose Office-Programme und Cloud-Ordner (Nextcloud & Co.) – wie ONLYOFFICE
 Wunsch: Verbindung zu kostenlosen Office-Anbietern, zu Nextcloud und weiteren – so wie bei ONLYOFFICE (über pdfmy Scan, auf dem Rechner).

@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-23
 
+### Barrierefrei: mit Screenreader NVDA geprüft (app-v185)
+- Test mit NVDA 2026.2 (NV Access, per winget installiert) und dem PDF-Betrachter von Microsoft Edge: Die Satzung wird als „Überschrift Ebene 1 – Satzung des Vereins, Überschrift Ebene 2 – § 1 Abschnitt 1 …“ vorgelesen, die Kopfzeile nicht. Barrierefreiheitsbaum von Edge (UI Automation, das, was NVDA bekommt): Überschrift, Liste mit Listenpunkten, Tabelle mit Kopf- und Datenzellen wie angelegt.
+- Verbesserung aus dem Test: Aufzählungszeichen bzw. Nummer als eigenes `Lbl`, der Text als `LBody` (vorher stand „•“ im Listentext). veraPDF PDF/UA-1 und PDF/A-2b weiter bestanden.
+- Bekannte Grenze: Bei einseitigen Dokumenten wird eine Kopfzeile nicht als solche erkannt (kein Vergleich mit weiteren Seiten möglich) und wird vorgelesen.
+
 ### PDF barrierefrei machen – PDF/UA mit echter Gliederung (app-v184)
 - Anlass: Barrierefreiheitsstärkungsgesetz (BFSG); Leitplanken-Prüfung in KONZEPT.md. Vorher: PDF/A-Export formal PDF/UA-1, aber jede Zeile ein eigener Absatz `P`.
 - Neuer Befehl „PDF barrierefrei machen“ (Startseiten-Kachel, … Mehr, Prüfdialog, Werkzeugseite pdf-barrierefrei-machen.html): speichert als PDF/UA-1 + PDF/A-2b.
