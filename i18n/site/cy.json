@@ -1131,5 +1131,6 @@
  "PDF vor dem Versand prüfen": "Gwirio PDF cyn anfon",
  "PDF vor dem Versand prüfen – jetzt in PDFMy öffnen →": "Gwirio PDF cyn anfon – agorwch yn PDFMy nawr →",
  "PDF vor dem Versand prüfen: Gericht (beA, ERVB 2025), elektronische Patientenakte (ePA), barrierefrei (BITV 2.0, PDF/UA) und Archiv (GoBD, PDF/A) – mit Bericht und automatischer Korrektur. Direkt im Browser, ohne Upload.": "Gwirio PDF cyn anfon: llys (beA, ERVB 2025), cofnod cleifion electronig (ePA), hygyrchedd (BITV 2.0, PDF/UA) ac archif (GoBD, PDF/A) – gydag adroddiad a chywiro awtomatig. Yn uniongyrchol yn y porwr, heb uwchlwytho.",
- "Warum vor dem Versand an das Gericht prüfen?": "Pam gwirio cyn anfon at y llys?"
+ "Warum vor dem Versand an das Gericht prüfen?": "Pam gwirio cyn anfon at y llys?",
+ "<b>Dateiname:</b> Eine geöffnete Datei behält ihren Namen („Angebot Müller.pdf“ bleibt „Angebot Müller.pdf“). Nur Scans und nichtssagende Namen von Scannern, Kameras und Programmen wie „Scan0001“, „IMG_1234“ oder „Dokument (2)“ ersetzt PDFMy durch einen sprechenden Namen aus den Briefdaten (Datum, Art, Absender, Betreff). Den Namen können Sie rechts unter <i>„Dateiname“</i> jederzeit ändern.": "<b>Enw ffeil:</b> mae ffeil a agorwyd yn cadw ei henw (mae ‘Dyfynbris Jones.pdf’ yn aros yn ‘Dyfynbris Jones.pdf’). Dim ond ar gyfer sganiau ac enwau diystyr o sganwyr, camerâu a rhaglenni fel ‘Scan0001’, ‘IMG_1234’ neu ‘Dogfen (2)’ y mae PDFMy yn defnyddio enw ystyrlon o ddata’r llythyr (dyddiad, math, anfonwr, pwnc). Gallwch newid yr enw unrhyw bryd ar y dde o dan <i>‘Enw ffeil’</i>."
 }

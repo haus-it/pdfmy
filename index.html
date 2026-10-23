@@ -446,6 +446,9 @@ details.sec[open] > summary::after{content:" ▾"}
 .trust .linkbtn{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
 .netsent{font-weight:600;margin:4px 0 8px}.netlist{margin:0 0 12px;padding-left:18px;max-height:220px;overflow:auto}.netlist li{margin:3px 0}.nethow ol{margin:6px 0 0;padding-left:20px}.netver{margin:0 0 12px;padding:8px 10px;border-radius:8px;background:var(--soft,rgba(127,127,127,.08));font-size:13px}.netver code{font-size:12px;word-break:break-all}.nethow li{margin:3px 0}
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;text-align:left}
+.tgroups{display:grid;gap:22px}
+@media (max-width:700px){.linkbtn{min-height:24px;display:inline-flex;align-items:center}details.sec>summary{padding-block:6px}}
+.tgh{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted,#5b6170);margin:0 0 8px;text-align:left}
 .tile{display:grid;grid-template-columns:40px 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:start;white-space:normal;padding:14px;border-radius:12px;background:var(--panel);box-shadow:var(--shadow);text-align:left}
 .tile:hover{border-color:var(--accent);transform:translateY(-1px)}
 .tile i{grid-row:1/3;font-style:normal;font-size:20px;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
@@ -944,8 +947,9 @@ body:not(.has-doc) #btnShareTop{display:none}
 .cmdfoot{margin:0;padding:10px 16px;border-top:1px solid var(--line)}
 @media (max-width:1100px){ .cmdbtn{min-width:0} .cmdbtn kbd{display:none} }
 .kd button .ic{width:15px;height:15px}
-#toolbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+#toolbar{flex-wrap:wrap;row-gap:6px}
 #toolbar > *{flex:none}
+@media (max-width:760px){#toolbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}}
 #mode{max-width:170px}
 @media (max-width:1700px){
   .seg button span{display:none} .seg button{padding:0 8px} .seg button[aria-pressed="true"] span{display:inline} .seg button[aria-pressed="true"]{padding:0 10px}
@@ -1008,7 +1012,7 @@ html.i18n-wait body{visibility:hidden}
 .bealist{list-style:none;padding:0;margin:8px 0;display:grid;gap:4px}.bealist li{display:flex;gap:8px;align-items:flex-start;line-height:1.4}.bealist .bi{flex:0 0 1.4em;font-weight:700;text-align:center}
 .bealist .fehler .bi{color:var(--bad)}.bealist .ok .bi{color:#15803d}.bealist .hinweis .bi{color:var(--muted)}.bealist h4{margin:8px 0 2px;font-size:14px}
 .anlrow{display:flex;gap:12px}.anlrow .field{flex:1}.anltable{display:grid;gap:6px;margin:8px 0 12px;max-height:40vh;overflow:auto}.anltable .ar{display:grid;grid-template-columns:7.5em 1fr auto;gap:8px;align-items:center}.anltable .ar small{color:var(--muted)}
-.mgh{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:8px 10px 4px}.mgrp{display:flex;flex-direction:column}.mgrp+.mgrp{border-top:1px solid var(--line);margin-top:4px;padding-top:2px}body:not(.has-doc) .mgrp.docgrp{display:none}@media (min-width:900px){#moreMenu .menu-list{display:block;columns:2 270px;column-gap:6px;width:600px;max-width:calc(100vw - 24px)}#moreMenu .mgrp{break-inside:avoid}#moreMenu .mgrp+.mgrp{border-top:0;margin-top:0;padding-top:0}#moreMenu .mgrp .mi{width:100%}}
+.mgh{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:8px 10px 4px}.mgrp{display:flex;flex-direction:column}.mgrp+.mgrp{border-top:1px solid var(--line);margin-top:4px;padding-top:2px}body:not(.has-doc) .mgrp.docgrp{display:none}@media (min-width:900px){#moreMenu .menu-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));align-items:start;column-gap:6px;width:min(1140px,calc(100vw - 24px))}#moreMenu .mgrp{break-inside:avoid}#moreMenu .mgrp+.mgrp{border-top:0;margin-top:0;padding-top:0}#moreMenu .mgrp .mi{width:100%}}
 .jview{margin:-4px 0 10px}.jcases{display:grid;gap:8px;max-height:60vh;overflow:auto;padding:2px}
 .jcase{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--panel)}
 .jcase b{font-size:15px}.jcase .meta{color:var(--muted);font-size:13px}.jcase .acts{grid-row:span 2;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
@@ -1221,34 +1225,55 @@ html.i18n-wait body{visibility:hidden}
       <div id="deadlines" class="deadlines" hidden></div>
       <section id="rescue" class="deadlines recent rescue" hidden aria-labelledby="rescueT"></section>
       <section id="recent" class="deadlines recent" hidden aria-labelledby="recentT"></section>
+      <div class="tgroups">
+      <section class="tgroup" aria-labelledby="tgScan"><h2 class="tgh" id="tgScan">Scannen und Text</h2>
       <div class="tiles">
         <button class="tile" data-intent="scan"><i><svg class="ic" aria-hidden="true"><use href="#i-scan-text"/></svg></i><b>Scannen &amp; Text erkennen</b><span>Fotos und Scans → durchsuchbares PDF, Briefdaten automatisch</span></button>
         <button class="tile" id="tileCam"><i><svg class="ic" aria-hidden="true"><use href="#i-smartphone"/></svg></i><b>Mit dem Handy scannen</b><span>Kamera erkennt das Blatt und löst selbst aus – mehrere Seiten am Stück</span></button>
+        <button class="tile" data-intent="text"><i><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg></i><b>Text extrahieren</b><span>Text aus PDF oder Scan als .txt</span></button>
+      </div></section>
+      <section class="tgroup" aria-labelledby="tgPages"><h2 class="tgh" id="tgPages">Seiten und Dateien</h2>
+      <div class="tiles">
         <button class="tile" data-intent="merge"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>PDFs zusammenfügen</b><span>Mehrere Dateien zu einer, Reihenfolge per Ziehen</span></button>
         <button class="tile" data-intent="split"><i><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg></i><b>PDF aufteilen</b><span>Alle N Seiten, an Lesezeichen oder nach Dateigröße</span></button>
         <button class="tile" data-intent="organize"><i><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg></i><b>Seiten organisieren</b><span>Sortieren, drehen, löschen, einfügen, teilen</span></button>
         <button class="tile" data-intent="compress"><i><svg class="ic" aria-hidden="true"><use href="#i-minimize-2"/></svg></i><b>PDF verkleinern</b><span>Dateigröße reduzieren, mit Vorschau der Größe</span></button>
+        <button class="tile" data-intent="repair"><i><svg class="ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg></i><b>PDF reparieren</b><span>Beschädigte oder abgeschnittene PDFs retten</span></button>
+      </div></section>
+      <section class="tgroup" aria-labelledby="tgConv"><h2 class="tgh" id="tgConv">Umwandeln</h2>
+      <div class="tiles">
+        <button class="tile" data-intent="docx"><i><svg class="ic" aria-hidden="true"><use href="#i-file-type-2"/></svg></i><b>PDF in Word</b><span>Scan oder PDF als bearbeitbares Word-Dokument</span></button>
         <button class="tile" data-intent="img2pdf"><i><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg></i><b>Bilder in PDF</b><span>JPG und PNG zu einem PDF, auch vom Handy</span></button>
         <button class="tile" data-intent="pdf2img"><i><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg></i><b>PDF in Bilder</b><span>Jede Seite als JPG, gesammelt als ZIP</span></button>
         <button class="tile" data-intent="imgout"><i><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg></i><b>Bilder aus PDF</b><span>Fotos und Logos in Originalgröße herausholen</span></button>
-        <button class="tile" data-intent="repair"><i><svg class="ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg></i><b>PDF reparieren</b><span>Beschädigte oder abgeschnittene PDFs retten</span></button>
-        <button class="tile" data-intent="redact"><i><svg class="ic" aria-hidden="true"><use href="#i-eye-off"/></svg></i><b>Schwärzen</b><span>Inhalte sicher entfernen, nicht nur übermalen</span></button>
+      </div></section>
+      <section class="tgroup" aria-labelledby="tgEdit"><h2 class="tgh" id="tgEdit">Bearbeiten und unterschreiben</h2>
+      <div class="tiles">
         <button class="tile" data-intent="sign"><i><svg class="ic" aria-hidden="true"><use href="#i-signature"/></svg></i><b>Unterschreiben</b><span>Unterschrift zeichnen und platzieren</span></button>
         <button class="tile" data-intent="form"><i><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg></i><b>Formular ausfüllen</b><span>PDF-Formularfelder ausfüllen und speichern</span></button>
-        <button class="tile" data-intent="protect"><i><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></i><b>Mit Passwort schützen</b><span>AES-Verschlüsselung, Rechte für Drucken und Kopieren</span></button>
-        <button class="tile" data-intent="unlock"><i><svg class="ic" aria-hidden="true"><use href="#i-lock-open"/></svg></i><b>PDF entsperren</b><span>Passwort entfernen (Passwort erforderlich)</span></button>
+        <button class="tile" data-intent="redact"><i><svg class="ic" aria-hidden="true"><use href="#i-eye-off"/></svg></i><b>Schwärzen</b><span>Inhalte sicher entfernen, nicht nur übermalen</span></button>
         <button class="tile" data-intent="stamp"><i><svg class="ic" aria-hidden="true"><use href="#i-hash"/></svg></i><b>Seitenzahlen &amp; Wasserzeichen</b><span>Nummerieren, „KOPIE“ oder „ENTWURF“ stempeln</span></button>
-        <button class="tile" data-intent="preflight"><i><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg></i><b>PDF vor dem Versand prüfen</b><span>beA/Gericht, ePA, barrierefrei, GoBD-Archiv</span></button>
+        <button class="tile" data-intent="bates"><i><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg></i><b>Akten nummerieren</b><span>Fortlaufende Seitennummern (Bates) und Kopfzeile für Akten und Gericht</span></button>
+        <button class="tile" data-intent="compare"><i><svg class="ic" aria-hidden="true"><use href="#i-git-compare"/></svg></i><b>Dokumente vergleichen</b><span>Zwei Fassungen: Was wurde geändert?</span></button>
+      </div></section>
+      <section class="tgroup" aria-labelledby="tgSafe"><h2 class="tgh" id="tgSafe">Schützen</h2>
+      <div class="tiles">
+        <button class="tile" data-intent="protect"><i><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></i><b>Mit Passwort schützen</b><span>Nur mit Passwort zu öffnen; Drucken und Kopieren erlauben oder sperren</span></button>
+        <button class="tile" data-intent="unlock"><i><svg class="ic" aria-hidden="true"><use href="#i-lock-open"/></svg></i><b>PDF entsperren</b><span>Passwort entfernen (Passwort erforderlich)</span></button>
+      </div></section>
+      <section class="tgroup" aria-labelledby="tgCheck"><h2 class="tgh" id="tgCheck">Prüfen, barrierefrei, archivieren</h2>
+      <div class="tiles">
+        <button class="tile" data-intent="preflight"><i><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg></i><b>PDF vor dem Versand prüfen</b><span>Für Gericht (beA), Patientenakte (ePA), Barrierefreiheit und Archiv</span></button>
         <button class="tile" data-intent="a11y"><i><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg></i><b>PDF barrierefrei machen</b><span>Für Screenreader, nach PDF/UA – mit Prüfung</span></button>
         <button class="tile" data-intent="pdfa"><i><svg class="ic" aria-hidden="true"><use href="#i-archive"/></svg></i><b>PDF/A archivieren</b><span>Revisionssicheres Langzeitformat, geprüft</span></button>
-        <button class="tile" data-intent="docx"><i><svg class="ic" aria-hidden="true"><use href="#i-file-type-2"/></svg></i><b>PDF in Word</b><span>Scan oder PDF als bearbeitbares Word-Dokument</span></button>
-        <button class="tile" data-intent="compare"><i><svg class="ic" aria-hidden="true"><use href="#i-git-compare"/></svg></i><b>Dokumente vergleichen</b><span>Zwei Fassungen: Was wurde geändert?</span></button>
+      </div></section>
+      <section class="tgroup" aria-labelledby="tgOffice"><h2 class="tgh" id="tgOffice">Büro und Buchhaltung</h2>
+      <div class="tiles">
         <button class="tile" data-intent="batch"><i><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg></i><b>Stapelverarbeitung</b><span>Viele Dateien auf einmal: verkleinern, PDF/A, Texterkennung oder Briefe ablegen</span></button>
         <button class="tile" id="tileHot"><i><svg class="ic" aria-hidden="true"><use href="#i-folder-input"/></svg></i><b>Ordner überwachen</b><span>Neue Dateien automatisch durchsuchbar, PDF/A oder abgelegt – im Hintergrund</span></button>
-        <button class="tile" data-intent="bates"><i><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg></i><b>Bates &amp; Kopfzeile</b><span>Fortlaufend nummerieren für Akten und Gericht</span></button>
-        <button class="tile" id="tileEinv"><i><svg class="ic" aria-hidden="true"><use href="#i-file-plus"/></svg></i><b>E-Rechnung schreiben</b><span>ZUGFeRD-PDF oder XRechnung nach EN 16931</span></button>
+        <button class="tile" id="tileEinv"><i><svg class="ic" aria-hidden="true"><use href="#i-file-plus"/></svg></i><b>E-Rechnung schreiben</b><span>Für Behörden und Firmen – als ZUGFeRD oder XRechnung</span></button>
         <button class="tile" id="tileTax"><i><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg></i><b>Belege für Steuerberater</b><span>Monat als ZIP mit Belegliste und DATEV-Importdatei</span></button>
-        <button class="tile" data-intent="text"><i><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg></i><b>Text extrahieren</b><span>Text aus PDF oder Scan als .txt</span></button>
+      </div></section>
       </div>
       <!-- Neu in PDFMy: die neuesten Funktionen sichtbar machen (bei neuen Versionen hier und im CHANGELOG pflegen) -->
       <section class="fb news" aria-labelledby="newsTitle">
@@ -1256,10 +1281,10 @@ html.i18n-wait body{visibility:hidden}
         <div class="fb-body">
           <h2 class="fb-title" id="newsTitle">Neu in PDFMy</h2>
           <ul class="news-list">
-            <li><b>Übersetzen ohne Upload</b> – direkt auf Ihrem Gerät, in viele Sprachen</li>
-            <li><b>iPhone-Fotos, TIFF, Text, Markdown und CSV</b> öffnen – in jedem Browser</li>
-            <li><b>Speichern als Markdown, HTML oder in Graustufen</b>, Seiten halbieren, eigene Abläufe</li>
-            <li><b>Formulare mit Auswahllisten und Pflichtfeldern</b>, Signatur mit Zeitstempel</li>
+            <li><b>PDF vor dem Versand prüfen</b> – für Gericht (beA), Patientenakte (ePA), Barrierefreiheit und Archiv, mit Bericht</li>
+            <li><b>PDF barrierefrei machen</b> – Überschriften, Listen, Tabellen und Bildbeschreibungen für Screenreader</li>
+            <li><b>Formulare mit einem Klick ausfüllen</b> mit „Meine Angaben“ – und ein Lesemodus fürs Handy</li>
+            <li><b>PDF in Word mit Tabellen und Überschriften</b>; in Nextcloud, Dropbox & Co. speichern</li>
           </ul>
         </div>
         <a class="btn fb-go" href="https://github.com/haus-it/pdfmy/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Alle Neuerungen<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
@@ -1511,7 +1536,8 @@ html.i18n-wait body{visibility:hidden}
 
 <dialog id="expDlg">
   <form method="dialog" id="expForm">
-    <h3 class="dlgtitle">Speichern</h3>
+    <h3 class="dlgtitle" id="x-title">Speichern</h3>
+    <p class="hint" id="x-task" hidden></p>
     <div class="xrow" id="x-flow-row"><span class="xl"><label for="x-flow">Gespeicherter Ablauf</label></span><div class="chips">
       <select id="x-flow" title="Gespeicherte Einstellungen übernehmen (Format, Größe, Seitenzahlen, Briefbogen …)"><option value="">– keiner –</option></select>
       <button type="button" id="x-flow-save" class="linkbtn" title="Die aktuellen Einstellungen unter einem Namen merken – auch für die Stapelverarbeitung. Passwort und Signatur werden nicht gespeichert.">Als Ablauf speichern …</button>
@@ -1755,7 +1781,7 @@ html.i18n-wait body{visibility:hidden}
   <h3 class="dlgtitle" id="figT">Bilder beschreiben</h3>
   <p class="hint" style="margin:-6px 0 12px">Damit Screenreader die Bilder vorlesen können, beschreiben Sie kurz, was zu sehen ist (z. B. „Logo Stadtwerke Musterstadt“, „Lageplan des Grundstücks“). Reiner Schmuck wird nicht vorgelesen.</p>
   <ol id="figList" class="figlist"></ol>
-  <div class="dlgrow"><button type="submit" value="skip">Überspringen</button><button type="submit" value="ok" class="primary">Übernehmen</button></div>
+  <div class="dlgrow"><button type="submit" value="skip">Ohne Beschreibung weiter</button><button type="submit" value="ok" class="primary">Weiter</button></div>
 </form></dialog>
 <dialog id="cloudDlg" class="sharedlg" aria-labelledby="cloudT"><form id="cloudForm" method="dialog" novalidate>
   <h3 class="dlgtitle" id="cloudT">In Cloud-Ordner speichern</h3>

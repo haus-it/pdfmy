@@ -1997,7 +1997,17 @@ function analyze() {
 }
 function filename() {
   if (state.touched.fname) { const v = $('#fname').value.trim() || 'Scan'; return /\.pdf$/i.test(v) ? v : v + '.pdf'; }
+  const own = ownName(); if (own) return own;
   return Letter.buildFilename(state.meta);
+}
+/* Originalname einer geöffneten Datei behalten („Angebot.pdf“ bleibt „Angebot.pdf“) – nur nichtssagende Namen von Scannern,
+   Kameras und Programmen („Scan0001“, „IMG_1234“, „Dokument (2)“, „20261023_101500“) ersetzt PDFMy durch einen Namen aus den Briefdaten. */
+const GENERIC_NAME = /^([\d\s_\-.()]*|(scan|scans|scanned|img|image|bild|foto|photo|dok|doc|dokument|document|unbenannt|untitled|neu|new|file|datei|ocr|druck|print|kopie|copy|pdf|attachment|anhang|merged|zusammengefügt)[\s_\-.()]*[\d\s_\-.()]*|(dsc|img|pxl|scn|brn|epson|canon|hp|xerox|ricoh|kyocera)[\s_\-]?[\w\-]*\d[\w\-]*|scan_\d{4}-\d{2}-\d{2}.*)$/i;
+function ownName() {
+  const p = state.pages.find(q => q.kind === 'pdf') || state.pages[0], d = p && state.docs[p.docIdx];
+  const raw = p?.kind === 'pdf' ? d?.name : p?.srcName;
+  const stem = String(raw || '').replace(/\.[a-z0-9]{2,5}$/i, '').trim();
+  return stem && !GENERIC_NAME.test(stem) ? stem + '.pdf' : '';
 }
 function targetPath(meta) {
   return [S.byYear && (meta.date || '').slice(0, 4), S.byType && Letter.folderName(meta.type || 'Sonstiges')].filter(Boolean).join('\\');
@@ -3214,7 +3224,7 @@ function outlineFor(pages) {
 async function a11yMake() {
   if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich barrierefrei machen.'); return; }
   try { await a11yFigures(); } catch (e) { console.warn('Bilder suchen', e); }   // Bilder finden und beschreiben lassen (js/pro.js)
-  openExport({ format: 'pdfa' });
+  openExport({ format: 'pdfa', task: { title: 'Barrierefrei speichern', hint: 'Gespeichert wird als PDF/UA (zugleich PDF/A) mit Überschriften, Listen, Tabellen und Bildbeschreibungen für Screenreader. Die Datei wird dadurch meist größer, weil Schriften und Seitenbilder eingebettet werden. Nach dem Speichern prüft PDFMy die Datei.' } });
   status('PDF barrierefrei machen: auf „Speichern“ klicken. PDFMy erkennt Überschriften, Absätze, Listen und Tabellen, speichert als PDF/UA (zugleich PDF/A) und prüft danach die Datei.');
 }
 let lastTagStats = { h: 0, table: 0, list: 0, fig: 0 };   // Gliederung der zuletzt barrierefrei erzeugten PDF (für den Prüfbericht)
@@ -3639,7 +3649,13 @@ async function a11yAfterSave(bytes, nPages) {
     const r = await A11yCheck.check(bytes, { pages: nPages, pagesWithText: nPages }), checked = r.filter(x => x.ok !== null), ok = checked.filter(x => x.ok).length;
     const s = lastTagStats, parts = [s.h && `${s.h} Überschrift(en)`, s.table && `${s.table} Tabelle(n)`, s.list && `${s.list} Liste(n)`, s.fig && `${s.fig} beschriebene(s) Bild(er)`].filter(Boolean).join(', ');
     const msg = I18N.t(`Barrierefreiheit geprüft: ${ok} von ${checked.length} Punkten erfüllt (PDF/UA-1)`) + (parts ? ' · ' + I18N.t(`erkannt: ${parts}`) : '');
-    toast(msg, 9000); status($('#msg').textContent + ' · ' + msg);
+    status($('#msg').textContent + ' · ' + msg);
+    // Ergebnis als Fenster (nicht nur in der Statuszeile): Prüfbericht der gespeicherten Datei
+    const esc1 = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    $('#a11yWhat').textContent = I18N.t('Prüfung der gespeicherten Datei');
+    $('#a11yList').innerHTML = r.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc1(I18N.t(x.title))}</b><small>${esc1(I18N.t(x.detail))}</small></span></li>`).join('');
+    $('#a11yHint').textContent = msg; $('#a11yFix').hidden = true;
+    $('#a11yDlg').showModal(); $('#a11yDlg').addEventListener('close', () => { $('#a11yFix').hidden = false; }, { once: true });
   } catch (e) { console.warn('Barrierefreiheit prüfen', e); }
 }
 
@@ -3733,6 +3749,8 @@ function openExport(pre = {}) {
   $('#x-go').textContent = state.outDir ? 'In Ablage speichern' : 'Speichern';
   flowList();
   updateExportUi();
+  // Aufgabe im Titel nennen (z. B. „Barrierefrei speichern“), damit klar ist, wozu dieser Dialog gerade dient
+  $('#x-title').textContent = I18N.t(pre.task?.title || 'Speichern'); $('#x-task').hidden = !pre.task?.hint; $('#x-task').textContent = pre.task?.hint ? I18N.t(pre.task.hint) : '';
   $('#expDlg').showModal();
   if (pre.focus === 'password') $('#x-pw').focus(); else if (pre.focus === 'stamp') $('#x-pnum').focus();
   else (pre.saveAs ? $('#x-saveas') : $('#x-go')).focus();
@@ -4311,7 +4329,7 @@ function resetDoc() {
 $('.brand').title = 'Zur Startseite';
 $('.brand').addEventListener('click', () => { if (state.pages.length) $('#btnNew').click(); else window.scrollTo(0, 0); });
 $('#btnNew').onclick = () => {
-  if (state.dirty && state.pages.length && !confirm('Aktuellen Brief verwerfen? Er wurde noch nicht gespeichert.')) return;
+  if (state.dirty && state.pages.length && !confirm('Aktuelles Dokument verwerfen? Es wurde noch nicht gespeichert.')) return;
   resetDoc(); status('Bereit.');
 };
 addEventListener('beforeunload', e => { if (state.dirty && state.pages.length) { e.preventDefault(); e.returnValue = ''; } });
@@ -4719,6 +4737,13 @@ async function shareDoc() {
   } catch (e) { console.error(e); status('Teilen nicht möglich: ' + e.message); }
 }
 const closeMenu = () => { $('#moreMenu').open = false; };
+// Menü „Mehr“ beim Öffnen ganz ins Fenster schieben (am Knopf rechtsbündig – im Editor steht der Knopf mittig, das breite Menü ragte links hinaus)
+$('#moreMenu').addEventListener('toggle', () => {
+  const ml = $('#moreMenu .menu-list'); if (!ml) return;
+  ml.style.right = '';
+  if (!$('#moreMenu').open || matchMedia('(max-width:700px)').matches) return;
+  const r = ml.getBoundingClientRect(); if (r.left < 8) ml.style.right = (r.left - 8) + 'px';
+});
 $('#moreMenu').addEventListener('click', e => { if (e.target.closest('.mi') && !e.target.closest('label')) closeMenu(); });
 $('#camIn').addEventListener('change', closeMenu);
 document.addEventListener('click', e => { if (!e.target.closest('#moreMenu')) closeMenu(); });

@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-23
 
+### Bedienung nach Usability-Gutachten verbessert (app-v188)
+- Gutachten (Experten-Evaluation): kognitiver Walkthrough (8 Aufgaben, 2 Personas), heuristische Evaluation nach Nielsen (Schweregrade 0–4), ISO 9241-110:2020, Kennzahlen (Hick-Hyman, WCAG 2.5.8). Ergebnis und Grenzen in docs/ISO-Konformitaet.md.
+- Schweregrad 3 behoben: Originaldateiname bleibt erhalten (nur Scans und nichtssagende Namen wie „Scan0001“, „IMG_1234“ werden aus den Briefdaten benannt) – damit prüft auch die beA-Prüfung den richtigen Namen. Werkzeugleiste am Desktop vollständig sichtbar (bricht um statt seitlich zu scrollen; Rückgängig/Wiederholen waren bei 1280 px verdeckt). Menü „Mehr“ im Editor vollständig sichtbar (Gruppen nebeneinander, ins Fenster geschoben; Hilfe und Einstellungen waren abgeschnitten).
+- Schweregrad 2 behoben: Vorabprüfung „Automatisch beheben“ behebt im selben Fenster (Datei erzeugen, speichern, sofort erneut prüfen) statt einen zweiten Prüfdialog zu öffnen; Prüfung wartet auf die Texterkennung. Speichern-Dialog nennt die Aufgabe („Barrierefrei speichern“ mit Erklärung, warum die Datei größer wird); Prüfergebnis nach dem Barrierefrei-Speichern als Fenster statt nur in der Statuszeile. Klartext auf Kacheln („Akten nummerieren“ statt „Bates & Kopfzeile“, Passwortschutz, Vorabprüfung, E-Rechnung ohne Normkürzel).
+- Startseite: 27 Kacheln in 7 benannten Gruppen (nichts versteckt); „Neu in PDFMy“ aktualisiert. Bilder-Dialog: „Weiter“ / „Ohne Beschreibung weiter“. Rückfrage beim Schließen: „Aktuelles Dokument verwerfen?“ statt „Brief“. Klickziele am Handy mindestens 24 px.
+- Nachgemessen: keine verdeckten Werkzeuge bei 1280 px, Menü ohne seitlichen Überlauf, Dateiname „Angebot_word.pdf“ erhalten, Vorabprüfung behebt und prüft im selben Fenster; axe 0 (hell/dunkel, 1280/390 px); 209 Tests.
+- Offen (mittlerer Aufwand, nächste Schritte): Prüfwege zusammenlegen (Für beA prüfen / Barrierefreiheit prüfen / PDF/A prüfen in der Vorabprüfung), Briefdaten-Feld nur bei erkannten Briefen, Aufgabenleiste statt Statuszeile, Test mit 5 Nutzerinnen und Nutzern (SUS).
+
 ### Vorabprüfung vor dem Versand: beA, ePA, BITV, GoBD (app-v187)
 - Anlass: Recherche Berufsgruppen (Anwälte, Steuerberater, Ärzte, Behörden); Leitplanken-Prüfung in KONZEPT.md.
 - Neu: „… Mehr → Vorabprüfung …“, Startseiten-Kachel „PDF vor dem Versand prüfen“, Werkzeugseite pdf-vor-dem-versand-pruefen.html. Profile (js/preflight.js): beA/Gericht (ERVB 2025, Bausteine aus js/bea.js), ePA (PDF/A-1/-2, höchstens 25 MB, keine aktiven Inhalte, keine Anhänge, Titel), Barrierefrei (PDF/UA-1/BITV, Bausteine aus js/a11ycheck.js; PDF/UA-Kennung Pflicht), Archiv GoBD (PDF/A-Kurzprüfung aus js/pdfacheck.js, unverschlüsselt, Text erkannt, Titel, Hinweise zu Signatur und E-Rechnung).

@@ -234,7 +234,7 @@ $('#jCases').addEventListener('click', async ev => {
 async function openCase(name) {
   const docs = jList.filter(e => String(e.akte || '').trim().toLowerCase() === name.toLowerCase() && e.file).sort((a, b) => String(a.date || a.savedAt).localeCompare(String(b.date || b.savedAt)));
   if (!docs.length) return status('In dieser Akte sind keine Dateien abgelegt.');
-  if (state.dirty && state.pages.length && !confirm('Aktuellen Brief verwerfen? Er wurde noch nicht gespeichert.')) return;
+  if (state.dirty && state.pages.length && !confirm('Aktuelles Dokument verwerfen? Es wurde noch nicht gespeichert.')) return;
   const files = [], missing = [];
   for (const e of docs) {
     try { let dir = state.outDir; const parts = e.file.split('\\'), fn = parts.pop(); for (const p of parts) dir = await dir.getDirectoryHandle(p); files.push(await (await dir.getFileHandle(fn)).getFile()); }
@@ -1037,7 +1037,7 @@ $('#jBody').addEventListener('click', async ev => {
       let dir = state.outDir; const parts = e.file.split('\\'), name = parts.pop();
       for (const p of parts) dir = await dir.getDirectoryHandle(p);
       const file = await (await dir.getFileHandle(name)).getFile();
-      if (state.dirty && state.pages.length && !confirm('Aktuellen Brief verwerfen? Er wurde noch nicht gespeichert.')) return;
+      if (state.dirty && state.pages.length && !confirm('Aktuelles Dokument verwerfen? Es wurde noch nicht gespeichert.')) return;
       $('#jDlg').close(); resetDoc(); await importFiles([file]);
       state.fromArchive = { id: e.id && !String(e.id).startsWith('f:') ? e.id : null, file: e.file };   // Speichern → neue Version an derselben Stelle
       if (e.akte) { state.akte = e.akte; $('#akte').value = e.akte; state.akteTouched = true; }
@@ -1405,7 +1405,7 @@ async function batchFiles(files) {
   const choice = await batchAsk(files); if (!choice) return;
   if (choice.act !== 'file') return batchConvert(files, choice);
   $('#batchDlg').close();
-  if (state.pages.length && state.dirty && !confirm('Aktuellen Brief verwerfen? Er wurde noch nicht gespeichert.')) return;
+  if (state.pages.length && state.dirty && !confirm('Aktuelles Dokument verwerfen? Es wurde noch nicht gespeichert.')) return;
   if (!state.outDir) { await chooseOutDir(); if (!state.outDir) return status('Für die Stapelverarbeitung wird ein Ablageordner benötigt.'); }
   const done = [], failed = [], skipped = [];
   for (const [i, f] of files.entries()) {
@@ -4507,19 +4507,25 @@ async function preflightBytes() {
   const o = untouchedOriginal(state.pages) || einvOriginal(state.pages);
   return o ? o.slice() : await buildPdf(state.pages, state.meta, { noOcr: true, onPage: () => {} });
 }
+const pfInfo = name => ({ name, pages: state.pages.length, textPages: state.pages.filter(p => p.native || p.ocr?.text?.trim()).length, title: state.meta?.subject || '', einvoice: !!state.einv });
+function preflightShow(res, name, after = false) {
+  const profile = res.profile; pfLast = { res, name };
+  $('#pfList').innerHTML = res.items.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(I18N.t(x.title))}</b><span class="sr-only">: ${x.ok === true ? I18N.t('erfüllt') : x.ok === false ? I18N.t('nicht erfüllt') : I18N.t('Hinweis')}</span>${x.detail ? `<small>${esc(I18N.t(x.detail))}</small>` : ''}</span></li>`).join('');
+  const bad = res.items.filter(x => x.ok === false).length, hint = res.items.filter(x => x.ok === null).length, h = hint ? ' ' + I18N.t(`${hint} Hinweis(e).`) : '';
+  $('#pfSum').textContent = (after ? I18N.t(`Gespeichert als „${name}“ und erneut geprüft: `) : '') + (bad ? I18N.t(`${bad} Fehler – vor dem Versand beheben.`) : I18N.t('Keine Fehler gefunden.')) + h;
+  $('#pfFix').hidden = after || (!bad && !(profile === 'bitv' && hint));
+  $('#pfBasis').textContent = I18N.t('Grundlage: ' + Preflight.PROFILES[profile].basis + '. Kurzprüfung der häufigsten Ablehnungsgründe – ersetzt keine vollständige Validierung.');
+}
 async function preflightRun() {
   const profile = $('#pfProfile').value; LS.set('pfProfile', profile);
-  $('#pfList').innerHTML = ''; $('#pfSum').textContent = I18N.t('Prüfe …'); $('#pfBasis').textContent = '';
+  $('#pfList').innerHTML = ''; $('#pfBasis').textContent = ''; $('#pfFix').hidden = true;
   try {
-    const bytes = await preflightBytes(), pages = state.pages.length, textPages = state.pages.filter(p => p.native || p.ocr?.text?.trim()).length;
-    const name = baseName() + '.pdf', title = state.meta?.subject || '';
-    const res = await Preflight.run(profile, bytes, { name, pages, textPages, title, einvoice: !!state.einv });
-    pfLast = { res, name };
-    $('#pfList').innerHTML = res.items.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(I18N.t(x.title))}</b><span class="sr-only">: ${x.ok === true ? I18N.t('erfüllt') : x.ok === false ? I18N.t('nicht erfüllt') : I18N.t('Hinweis')}</span>${x.detail ? `<small>${esc(I18N.t(x.detail))}</small>` : ''}</span></li>`).join('');
-    const bad = res.items.filter(x => x.ok === false).length, hint = res.items.filter(x => x.ok === null).length;
-    $('#pfSum').textContent = bad ? I18N.t(`${bad} Fehler – vor dem Versand beheben.`) + (hint ? ' ' + I18N.t(`${hint} Hinweis(e).`) : '') : I18N.t('Keine Fehler gefunden.') + (hint ? ' ' + I18N.t(`${hint} Hinweis(e).`) : '');
-    $('#pfFix').hidden = !bad && !(profile === 'bitv' && hint);
-    $('#pfBasis').textContent = I18N.t('Grundlage: ' + Preflight.PROFILES[profile].basis + '. Kurzprüfung der häufigsten Ablehnungsgründe – ersetzt keine vollständige Validierung.');
+    // erst die Texterkennung abwarten – sonst meldet die Prüfung „ohne Text“, obwohl der Text gleich da ist
+    const todo = state.pages.filter(p => p.kind === 'image' && !p.ocr && !p.blank && !p.photo);
+    if (todo.length) { $('#pfSum').textContent = I18N.t('Texterkennung läuft …'); await waitForOcr(todo); }
+    $('#pfSum').textContent = I18N.t('Prüfe …');
+    const name = baseName() + '.pdf';
+    preflightShow(await Preflight.run(profile, await preflightBytes(), pfInfo(name)), name);
   } catch (e) { console.error(e); $('#pfSum').textContent = I18N.t('Prüfung nicht möglich: ') + e.message; }
 }
 async function preflightOpen() {
@@ -4531,13 +4537,22 @@ async function preflightOpen() {
 $('#btnPreflight').onclick = preflightOpen;
 $('#pfProfile').onchange = preflightRun;
 $('#pfClose').onclick = () => $('#pfDlg').close();
-// Automatisch beheben: je Profil der passende Speicherweg
-$('#pfFix').onclick = () => {
-  const p = $('#pfProfile').value; $('#pfDlg').close();
-  if (p === 'bea') openBea();
-  else if (p === 'bitv') a11yMake();
-  else { openExport({ format: 'pdfa' }); if (p === 'epa') { setRadio('x-size', 'small'); updateExportUi(); }
-    status(p === 'epa' ? 'Für die ePA: Format PDF/A und Größe „Klein“ gewählt – auf „Speichern“ klicken.' : 'Für das Archiv: Format PDF/A gewählt – auf „Speichern“ klicken.'); }
+/* Automatisch beheben – im selben Dialog: passende Datei erzeugen (beA-tauglich, PDF/A „Klein“, barrierefrei, PDF/A),
+   Speicherort wählen, die gespeicherte Datei sofort erneut prüfen und das Ergebnis hier zeigen */
+$('#pfFix').onclick = async () => {
+  const p = $('#pfProfile').value, btn = $('#pfFix'); btn.disabled = true;
+  try {
+    if (p === 'bitv') await a11yFigures().catch(e => console.warn(e));   // Bilder beschreiben (optional)
+    $('#pfSum').textContent = I18N.t('Erzeuge die korrigierte Datei …'); $('#pfList').innerHTML = '';
+    const stem = baseName(), name = p === 'bea' ? BeaCheck.checkName(stem + '.pdf').suggestion : stem + '.pdf';
+    let bytes = await buildPdf(state.pages, state.meta, { pdfa: true, bea: p === 'bea', size: p === 'epa' ? 'small' : 'balanced', onPage: () => {} });
+    if (p === 'epa' && bytes.length > Preflight.EPA_MAX) bytes = await buildPdf(state.pages, state.meta, { pdfa: true, size: 'small', gray: true, onPage: () => {} });   // notfalls Graustufen
+    const where = await deliver(bytes, name, 'application/pdf', state.meta, true);
+    if (!where) { $('#pfSum').textContent = I18N.t('Speichern abgebrochen.'); btn.disabled = false; return preflightRun(); }
+    preflightShow(await Preflight.run(p, bytes, pfInfo(name)), name, true);
+    status(I18N.t(`Gespeichert: ${where}`));
+  } catch (e) { console.error(e); $('#pfSum').textContent = I18N.t('Beheben nicht möglich: ') + e.message; }
+  btn.disabled = false;
 };
 // Bericht als PDF (Nachweis für Akte bzw. Verfahrensdokumentation)
 $('#pfReport').onclick = async () => {
