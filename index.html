@@ -1065,6 +1065,7 @@ html.i18n-wait body{visibility:hidden}
         <div class="mgrp docgrp" role="group" aria-labelledby="mgCheck"><div class="mgh" id="mgCheck">Prüfen & Formulare</div>
           <button class="mi doc" id="btnBea" title="Prüft nach den Vorgaben der Justiz (ERVB 2025): kein JavaScript, keine Anhänge, druckbar, zulässiger Dateiname – und speichert auf Wunsch passend"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Für beA prüfen …</span></button>
           <button class="mi doc" id="btnAnl" title="Jede geöffnete Datei wird eine Anlage: Stempel „Anlage K 1“, Anlagenverzeichnis, einzelne Dateien für das beA"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Anlagen nummerieren …</span></button>
+          <button class="mi doc" id="btnA11yMake" title="Überschriften, Absätze, Listen und Tabellen für Screenreader kennzeichnen, Inhaltsverzeichnis anlegen – als PDF/UA, mit Prüfung"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>PDF barrierefrei machen …</span></button>
           <button class="mi doc" id="btnA11y" title="Prüfbericht: Tags, Sprache, Titel, Alternativtexte, Schriften, Lesbarkeit für Screenreader"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Barrierefreiheit prüfen …</span></button>
           <button class="mi doc" id="btnPdfaCheck" title="Kurzprüfung nach PDF/A (Langzeitarchiv): Kennung, Farbprofil, Schriften, Skripte, Verschlüsselung – mit Reparatur"><svg class="ic" aria-hidden="true"><use href="#i-archive"/></svg><span>PDF/A prüfen …</span></button>
           <button class="mi doc" id="btnAutoForm" title="Schreiblinien, Kästen und Ankreuzfelder finden und daraus ein ausfüllbares Formular machen"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>Formularfelder erkennen …</span></button>
@@ -1226,6 +1227,7 @@ html.i18n-wait body{visibility:hidden}
         <button class="tile" data-intent="protect"><i><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></i><b>Mit Passwort schützen</b><span>AES-Verschlüsselung, Rechte für Drucken und Kopieren</span></button>
         <button class="tile" data-intent="unlock"><i><svg class="ic" aria-hidden="true"><use href="#i-lock-open"/></svg></i><b>PDF entsperren</b><span>Passwort entfernen (Passwort erforderlich)</span></button>
         <button class="tile" data-intent="stamp"><i><svg class="ic" aria-hidden="true"><use href="#i-hash"/></svg></i><b>Seitenzahlen &amp; Wasserzeichen</b><span>Nummerieren, „KOPIE“ oder „ENTWURF“ stempeln</span></button>
+        <button class="tile" data-intent="a11y"><i><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg></i><b>PDF barrierefrei machen</b><span>Für Screenreader, nach PDF/UA – mit Prüfung</span></button>
         <button class="tile" data-intent="pdfa"><i><svg class="ic" aria-hidden="true"><use href="#i-archive"/></svg></i><b>PDF/A archivieren</b><span>Revisionssicheres Langzeitformat, geprüft</span></button>
         <button class="tile" data-intent="docx"><i><svg class="ic" aria-hidden="true"><use href="#i-file-type-2"/></svg></i><b>PDF in Word</b><span>Scan oder PDF als bearbeitbares Word-Dokument</span></button>
         <button class="tile" data-intent="compare"><i><svg class="ic" aria-hidden="true"><use href="#i-git-compare"/></svg></i><b>Dokumente vergleichen</b><span>Zwei Fassungen: Was wurde geändert?</span></button>
@@ -1412,7 +1414,7 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint" id="a11yWhat" style="margin:-8px 0 10px"></p>
   <ul id="a11yList" class="a11ylist"></ul>
   <p class="hint" id="a11yHint"></p>
-  <div class="dlgrow"><button type="button" id="a11yClose">Schließen</button><button type="button" id="a11yFix" class="primary">Barrierefrei speichern (PDF/UA)</button></div>
+  <div class="dlgrow"><button type="button" id="a11yClose">Schließen</button><button type="button" id="a11yFix" class="primary">PDF barrierefrei machen</button></div>
 </dialog>
 <dialog id="pdfaDlg" class="sharedlg a11ydlg" aria-labelledby="pdfaT">
   <h3 class="dlgtitle" id="pdfaT">PDF/A-Prüfung</h3>

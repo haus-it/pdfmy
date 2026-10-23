@@ -114,6 +114,25 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Entschieden 23.10.2026: „PDF barrierefrei machen“ (Anlass: Barrierefreiheitsstärkungsgesetz, BFSG, seit 28.06.2025)
+**Stand vorher:** „Als PDF/A speichern“ erzeugt bereits ein formal gültiges PDF/UA-1 (veraPDF), aber inhaltlich dünn: jede Textzeile ist ein eigener Absatz `P` – keine Überschriften, Listen, Tabellen, kein Inhaltsverzeichnis. Screenreader lesen Zeile für Zeile; Tabellen sind nicht als Tabelle navigierbar. Bei Acrobat Pro kostet das „Automatisch taggen“, kostenlose Tools können es kaum.
+**Vorschlag:** ein Befehl „PDF barrierefrei machen“ (Menü, Werkzeug-Kachel, Befehlssuche, im Dialog „Barrierefreiheit prüfen“):
+1. Texterkennung, wo nötig; Gliederung aus js/reflow.js (dieselbe wie Lesemodus und PDF → Word).
+2. Strukturbaum mit echten Tags: `H1`/`H2`, `P`, `L`/`LI`/`LBody`, `Table`/`TR`/`TH`/`TD` (Kopfzeile mit `Scope`), Reihenfolge = Lesereihenfolge.
+3. Lesezeichen (Inhaltsverzeichnis im PDF) aus den Überschriften; Titel und Dokumentsprache gesetzt, Titel wird angezeigt.
+4. Ergebnis als PDF/A-2b + PDF/UA-1; danach automatisch die eigene Prüfung auf der gespeicherten Datei mit Ergebnis („x von y Punkten erfüllt“).
+**Grenzen (ehrlich in der Hilfe):** Bilder und Grafiken in Scans bleiben Teil des Seitenbilds (Artefakt) – Alternativtexte gibt es für eingefügte Bilder, Unterschriften und Stempel; komplexe Layouts werden vereinfacht; automatisch getaggte Dokumente sollten bei Veröffentlichung stichprobenartig mit Screenreader geprüft werden (wie bei jedem Werkzeug).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Gliederung, Texterkennung, Strukturbaum lokal |
+| 2 Kein Server | passt |
+| 3 Kostenlos, ohne Konto | passt |
+| 4 Einfach | passt: ein Befehl, keine Einstellungen; vorhandenes „Als PDF/A speichern“ bleibt |
+| 5 Normgerecht und prüfbar | passt mit Auflage: jede Änderung mit veraPDF (PDF/UA-1 und PDF/A-2b) gegen Testdokumente (Brief, Rechnung mit Tabelle, Aufzählung, mehrseitig mit Überschriften) |
+| 6 Wenig aktive Inhalte | passt: keine Skripte |
+**Entscheidung:** umsetzen (Auftrag GF 23.10.2026). **Umgesetzt 23.10.2026 (app-v184):** Gliederung H1/H2, P, L/LI/LBody, Table/TR/TH(Scope)/TD; Kopf-/Fußzeilen und Seitenzahlen als Artefakt; Lesezeichen aus Überschriften; Prüfbericht nach dem Speichern. veraPDF PDF/UA-1 und PDF/A-2b bestanden für Rechnung mit Tabelle, Angebot mit Aufzählung und Tabelle, gescannte Rechnung, dreiseitige Satzung mit Kopf-/Fußzeile.
+
 ### Entschieden 23.10.2026: weitere kostenlose Office-Programme und Cloud-Ordner (Nextcloud & Co.) – wie ONLYOFFICE
 Wunsch: Verbindung zu kostenlosen Office-Anbietern, zu Nextcloud und weiteren – so wie bei ONLYOFFICE (über pdfmy Scan, auf dem Rechner).
 

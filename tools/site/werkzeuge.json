@@ -128,6 +128,14 @@
     "faq": [["Und bei Scans oder Plänen?", "Für Scans, Pläne und Zeichnungen eignet sich die Überlagerung: Rot ist nur in der ersten, Grün nur in der zweiten Fassung."], ["Werden meine Verträge hochgeladen?", "Nein. Der Vergleich läuft vollständig in Ihrem Browser."]]
   },
   {
+    "slug": "pdf-barrierefrei-machen", "target": "a11y", "label": "PDF barrierefrei machen",
+    "title": "PDF barrierefrei machen – PDF/UA kostenlos, ohne Upload",
+    "description": "PDF und Scans kostenlos barrierefrei machen (PDF/UA): Überschriften, Absätze, Listen und Tabellen für Screenreader, Inhaltsverzeichnis, Sprache und Titel – mit Prüfbericht. Direkt im Browser, ohne Upload.",
+    "intro": "Seit dem Barrierefreiheitsstärkungsgesetz (BFSG) müssen viele Dokumente für Screenreader lesbar sein. PDFMy erkennt Überschriften, Absätze, Aufzählungen und Tabellen und speichert ein PDF/UA – auch aus Scans, alles auf Ihrem Gerät.",
+    "steps": ["Auf „PDF barrierefrei machen“ klicken und die PDF oder den Scan wählen.", "PDFMy erkennt den Text und gliedert ihn: Überschriften, Absätze, Listen, Tabellen.", "Speichern – PDFMy prüft die fertige Datei und zeigt das Ergebnis."],
+    "faq": [["Was bedeutet PDF/UA?", "PDF/UA (ISO 14289) ist die Norm für barrierefreie PDFs: Der Inhalt ist mit Tags gekennzeichnet, damit Screenreader Überschriften, Listen und Tabellen richtig vorlesen und man darin springen kann."], ["Reicht das automatisch erzeugte Ergebnis?", "Für die meisten Briefe, Bescheide und Rechnungen ja. Bei Veröffentlichungen empfehlen wir eine Stichprobe mit einem Screenreader – Bilder in Scans bekommen keine automatische Beschreibung."]]
+  },
+  {
     "slug": "pdf-a-erstellen", "target": "pdfa", "label": "PDF/A erstellen",
     "title": "PDF/A erstellen – revisionssicher archivieren, geprüft",
     "description": "PDF und Scans kostenlos in PDF/A-2b umwandeln – mit Texterkennung, eingebetteten Schriften und Farbprofil, geprüft mit veraPDF; zugleich barrierefrei nach PDF/UA. Ohne Upload.",

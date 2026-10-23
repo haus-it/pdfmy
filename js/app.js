@@ -2526,12 +2526,18 @@ function makeTagger(out) {
   const ctx = out.context, rootRef = ctx.nextRef(), docRef = ctx.nextRef(), kids = [], nums = [], objs = [];
   let pageNo = -1, mcid = 0, elems = null, pg = null;
   const op = (name, args = []) => pg.pushOperators(PDFOperator.of(name, args));
+  const groups = [];   // Gruppen ohne eigenen Inhalt (Table, TR, L, LI): Kinder werden am Ende eingetragen
   return {
     page(page) { pageNo++; mcid = 0; elems = []; pg = page; page.node.set(PDFName.of('StructParents'), PDFNumber.of(pageNo)); nums.push([pageNo, elems]); },
-    open(tag, extra = {}) {
-      const id = mcid++, ref = ctx.register(ctx.obj({ Type: 'StructElem', S: tag, P: docRef, Pg: pg.ref, K: id, ...extra }));
-      kids.push(ref); elems.push(ref);
+    // parent: Gruppe aus group() – sonst direkt unter „Document“
+    open(tag, extra = {}, parent = null) {
+      const id = mcid++, ref = ctx.register(ctx.obj({ Type: 'StructElem', S: tag, P: parent ? parent.ref : docRef, Pg: pg.ref, K: id, ...extra }));
+      (parent ? parent.kids : kids).push(ref); elems.push(ref);
       op(PDFOperatorNames.BeginMarkedContentSequence, [PDFName.of(tag), ctx.obj({ MCID: id })]);
+    },
+    group(tag, parent = null, extra = {}) {
+      const g = { ref: ctx.nextRef(), tag, parent, kids: [], extra, pg: pg.ref };
+      (parent ? parent.kids : kids).push(g.ref); groups.push(g); return g;
     },
     artifact() { op(PDFOperatorNames.BeginMarkedContent, [PDFName.of('Artifact')]); },
     // Formularfeld (Widget) in die Struktur: StructElem „Form“ mit Objektverweis, Widget bekommt StructParent (PDF/UA-1 7.18)
@@ -2542,6 +2548,7 @@ function makeTagger(out) {
     },
     close() { op(PDFOperatorNames.EndMarkedContent); },
     finish() {
+      for (const g of groups) ctx.assign(g.ref, ctx.obj({ Type: 'StructElem', S: g.tag, P: g.parent ? g.parent.ref : docRef, Pg: g.pg, K: g.kids, ...g.extra }));
       ctx.assign(docRef, ctx.obj({ Type: 'StructElem', S: 'Document', P: rootRef, K: kids }));
       const flat = []; for (const [n, list] of nums) flat.push(n, ctx.obj(list));
       for (const [n, se] of objs) flat.push(n, se);
@@ -2840,6 +2847,24 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   stamps.watermark = safe(stamps.watermark); stamps.safe = safe;
   const T = pdfa ? makeTagger(out) : null;   // barrierefrei (PDF/UA-1) zusammen mit PDF/A
   const fieldQ = [], linkQ = [], hlQ = [];   // Formularfelder und Links: nach den Seiten als echte PDF-Objekte anlegen
+  const heads = [];   // erkannte Überschriften (barrierefrei): werden Lesezeichen, wenn das Dokument keine eigenen hat
+  lastTagStats = { h: 0, table: 0, list: 0 };
+  /* Barrierefrei: Kopf- und Fußzeilen und Seitenzahlen sind Artefakte (Screenreader lesen sie sonst auf jeder Seite vor).
+     Kopf-/Fußzeile = gleiche erste bzw. letzte Zeile (Ziffern egal) auf mindestens der Hälfte der Seiten, ab 2 Seiten. */
+  const runKey = t => t.replace(/\d+/g, '#').replace(/\s+/g, ' ').trim().toLowerCase();
+  const running = new Set();
+  if (T && pages.length > 1) {
+    const cnt = new Map();
+    for (const p of pages) {
+      const ws = p.ocr?.words || (p.kind === 'pdf' && p.native ? await pageWords(p).catch(() => null) : null); if (!ws?.length) continue;
+      const ls = textLines(ws), keys = new Set([ls[0], ls[ls.length - 1]].map(l => runKey(l.map(w => w.t).join(' '))));
+      for (const k of keys) if (k) cnt.set(k, (cnt.get(k) || 0) + 1);
+    }
+    for (const [k, n] of cnt) if (n >= 2 && n >= pages.length / 2) running.add(k);
+  }
+  const PAGE_NO = /^(?:seite|page|blatt|s\.)?\s*[-–]?\s*\d{1,4}\s*[-–]?\s*(?:(?:von|of|\/)\s*\d{1,4})?$/i;
+  const isRunning = b => b.ws?.length && (running.has(runKey(b.text)) ||
+    (PAGE_NO.test(b.text.trim()) && b.ws.every(w => w.y < 0.1 || w.y > 0.9)));   // Seitenzahl im oberen/unteren Rand
   const tagged = async (kind, fn, extra) => { if (T) kind === 'Artifact' ? T.artifact() : T.open(kind, extra); await fn(); if (T) T.close(); };
   // weitere Schriftschnitte (Serif, fett, kursiv …) nur bei Bedarf einbetten
   const fontsUsed = {};
@@ -2951,9 +2976,9 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     if (words?.length) {
       page.pushOperators(pushGraphicsState(), setTextRenderingMode(TextRenderingMode.Invisible));
       let glfName = null;
-      for (const line of textLines(words)) {
+      const lineItems = line =>
         // Wörter mit Zeichen außerhalb der eingebetteten Schrift (Chinesisch, Japanisch, Koreanisch …) über die Platzhalterschrift (js/glyphless.js)
-        const items = line.map(w => { const t = safe(w.t); return t === w.t ? { w, t } : { w, t: w.t, g: true }; }).filter(o => o.t && (o.g ? Glyphless.hex(o.t) : font.widthOfTextAtSize(o.t, 1)))
+        line.map(w => { const t = safe(w.t); return t === w.t ? { w, t } : { w, t: w.t, g: true }; }).filter(o => o.t && (o.g ? Glyphless.hex(o.t) : font.widthOfTextAtSize(o.t, 1)))
           // aufeinanderfolgende chinesische/japanische Zeichen (je ein „Wort“ von Tesseract) zu einem Textstück – sonst Leerzeichen beim Kopieren
           .reduce((acc, o) => {
             const prev = acc[acc.length - 1];
@@ -2963,9 +2988,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
             } else acc.push({ ...o });
             return acc;
           }, []);
-        if (!items.length) continue;
-        T?.open('P');
-        items.forEach(({ w, t, g }, k) => {
+      const drawItems = items => items.forEach(({ w, t, g }, k) => {
           const last = k === items.length - 1, cjkPair = !last && CJK_RE.test(t.slice(-1)) && CJK_RE.test(items[k + 1].t[0]);   // CJK: keine Leerzeichen zwischen Wörtern
           if (g) {
             const hx = Glyphless.hex(last || cjkPair ? t : t + ' '), n = hx.length / 4, size = w.h * H; if (!n || !(size > 0.5)) return;
@@ -2977,8 +3000,36 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
           const unit = font.widthOfTextAtSize(t, 1), sz = Math.min((w.w * W) / unit, w.h * H * 1.6); if (!(sz > 0.5)) return;
           page.drawText(last || cjkPair ? t : t + ' ', { x: ox + w.x * W, y: oy + H - (w.y + w.h) * H + w.h * H * 0.18, size: sz, font });
         });
-        T?.close();
-      }
+      const drawWords = ws => { for (const line of textLines(ws)) { const items = lineItems(line); if (items.length) drawItems(items); } };
+      if (T) {
+        /* Barrierefrei (PDF/UA-1): Text nach seiner Gliederung (js/reflow.js) taggen – Überschriften H1/H2, Absätze P, Listen L/LI/LBody,
+           Tabellen Table/TR/TH/TD (Kopfzeile mit Scope); die Reihenfolge ist die Lesereihenfolge. Überschriften werden Lesezeichen. */
+        let list = null;
+        for (const b of Reflow.blocks(textLines(words), { words: true })) {
+          if (b.type === 'table') {
+            list = null;
+            const tb = T.group('Table'); lastTagStats.table++;
+            b.cws.forEach((r, ri) => {
+              const tr = T.group('TR', tb);
+              for (const ws of r) {
+                const tag = ri === 0 ? 'TH' : 'TD', extra = ri === 0 ? { A: out.context.obj({ O: 'Table', Scope: 'Column' }) } : {};
+                if (!ws.length) { T.group(tag, tr, extra); continue; }   // leere Zelle: Element ohne Inhalt
+                T.open(tag, extra, tr); drawWords(ws); T.close();
+              }
+            });
+          } else if (b.type === 'li') {
+            if (!list) { list = T.group('L'); lastTagStats.list++; }
+            const li = T.group('LI', list); T.open('LBody', {}, li); drawWords(b.ws); T.close();
+          } else if (isRunning(b)) {   // Kopf-/Fußzeile, Seitenzahl: Artefakt, aber weiter durchsuchbar
+            T.artifact(); drawWords(b.ws); T.close();
+          } else {
+            list = null;
+            const level = b.type === 'h' ? (heads.some(h => h.level === 1) ? b.level : 1) : 0;   // keine Ebene überspringen: die erste Überschrift ist H1
+            T.open(level ? 'H' + level : 'P'); drawWords(b.ws); T.close();
+            if (level) { heads.push({ title: b.text.replace(/\s+/g, ' ').slice(0, 120), level, pageIndex: i }); lastTagStats.h++; }
+          }
+        }
+      } else drawWords(words);
       page.pushOperators(popGraphicsState());
     }
     for (const a of p.annots) {
@@ -3052,7 +3103,11 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   for (const f of clean ? [] : (files ?? state.files ?? []).filter(f => !pdfa || isPdfA(f.data))) {
     await out.attach(f.data, f.name, { mimeType: mimeOf(f.name), description: f.desc || undefined, modificationDate: f.date || undefined });
   }
-  if (bookmarks) { const marks = outlineFor(pages); if (marks.length > 1 || marks[0]?.children.length || (state.marks && marks.length)) addOutline(out, marks); }
+  if (bookmarks) {
+    let marks = outlineFor(pages);
+    if (T && !state.marks && !marks.length && heads.length > 1) marks = headOutline(heads);   // barrierefrei: Inhaltsverzeichnis aus den Überschriften
+    if (marks.length > 1 || marks[0]?.children.length || (state.marks && marks.length)) addOutline(out, marks);
+  }
   // Metadaten (Info und XMP identisch, sekundengenau)
   const now = new Date(Math.floor(Date.now() / 1000) * 1000);
   const { title, author, subject, keywords } = await docProps(pages, meta);
@@ -3136,6 +3191,22 @@ function outlineFor(pages) {
   });
   if (items.length === 1) return items[0].children;   // eine Datei: deren eigene Gliederung (oder keine)
   return items;
+}
+// „PDF barrierefrei machen“ (Kachel, Menü, Prüfdialog): Speichern als PDF/A + PDF/UA mit Gliederung; danach prüft a11yAfterSave die Datei
+function a11yMake() {
+  if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich barrierefrei machen.'); return; }
+  openExport({ format: 'pdfa' });
+  status('PDF barrierefrei machen: auf „Speichern“ klicken. PDFMy erkennt Überschriften, Absätze, Listen und Tabellen, speichert als PDF/UA (zugleich PDF/A) und prüft danach die Datei.');
+}
+let lastTagStats = { h: 0, table: 0, list: 0 };   // Gliederung der zuletzt barrierefrei erzeugten PDF (für den Prüfbericht)
+// Lesezeichen aus erkannten Überschriften: Ebene 2 unter die vorangehende Ebene 1
+function headOutline(heads) {
+  const root = []; let top = null;
+  for (const h of heads) {
+    const node = { title: h.title, pageIndex: h.pageIndex, children: [] };
+    if (h.level === 1 || !top) { root.push(node); if (h.level === 1) top = node; } else top.children.push(node);
+  }
+  return root;
 }
 function addOutline(out, items) {
   const ctx = out.context, pages = out.getPages(), root = ctx.nextRef();
@@ -3540,6 +3611,17 @@ async function doExport(o) {
   status(`Gespeichert: ${where} (${Tools.formatBytes(data.length)}${before}, ${secs} s)` +
     (o.password ? ' · passwortgeschützt' : '') + (o.sign ? ` · digital signiert (${state.signer?.name || ''})` : '') + (state.outDir && S.saveIcs && meta.deadline && mime === 'application/pdf' ? ' + Fristtermin' : '') +
     (keptOrig ? ' · Die Datei war bereits optimal komprimiert – das Original wurde unverändert gespeichert.' : ''));
+  if (o.format === 'pdfa' && !o.password) a11yAfterSave(data, pages.length);
+}
+/* Nach „PDF/A“ bzw. „PDF barrierefrei machen“: die gespeicherte Datei selbst prüfen (js/a11ycheck.js) und das Ergebnis zeigen –
+   mit der erkannten Gliederung (Überschriften, Tabellen, Listen). */
+async function a11yAfterSave(bytes, nPages) {
+  try {
+    const r = await A11yCheck.check(bytes, { pages: nPages, pagesWithText: nPages }), checked = r.filter(x => x.ok !== null), ok = checked.filter(x => x.ok).length;
+    const s = lastTagStats, parts = [s.h && `${s.h} Überschrift(en)`, s.table && `${s.table} Tabelle(n)`, s.list && `${s.list} Liste(n)`].filter(Boolean).join(', ');
+    const msg = I18N.t(`Barrierefreiheit geprüft: ${ok} von ${checked.length} Punkten erfüllt (PDF/UA-1)`) + (parts ? ' · ' + I18N.t(`erkannt: ${parts}`) : '');
+    toast(msg, 9000); status($('#msg').textContent + ' · ' + msg);
+  } catch (e) { console.warn('Barrierefreiheit prüfen', e); }
 }
 
 /* ---------- Export-Dialog ---------- */
@@ -4303,7 +4385,7 @@ const INTENTS = {
   scan: 'image/*,application/pdf,.pdf,.xml,.eml,.msg', merge: 'application/pdf,.pdf', organize: 'application/pdf,.pdf,image/*',
   compress: 'application/pdf,.pdf', img2pdf: 'image/*', pdf2img: 'application/pdf,.pdf', redact: 'application/pdf,.pdf,image/*',
   sign: 'application/pdf,.pdf,image/*', form: 'application/pdf,.pdf', protect: 'application/pdf,.pdf', unlock: 'application/pdf,.pdf',
-  stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
+  stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', a11y: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
   docx: 'application/pdf,.pdf,image/*', bates: 'application/pdf,.pdf,image/*',
   compare: 'application/pdf,.pdf,image/*', split: 'application/pdf,.pdf', batch: 'application/pdf,.pdf,image/*', imgout: 'application/pdf,.pdf', repair: 'application/pdf,.pdf',
 };
@@ -4342,6 +4424,7 @@ function applyIntent() {
       openExport({ format: 'pdf' }); break;
     case 'stamp': openExport({ format: 'pdf', focus: 'stamp' }); break;
     case 'pdfa': openExport({ format: 'pdfa' }); break;
+    case 'a11y': a11yMake(); break;
     case 'text': openExport({ format: 'txt' }); break;
     case 'docx': openExport({ format: 'docx' }); break;
     case 'bates': setView('grid'); openExport({ format: 'pdf', bates: true }); break;

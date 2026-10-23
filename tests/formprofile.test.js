@@ -86,5 +86,10 @@ test('Lesemodus: Absätze, Überschrift, Silbentrennung', () => {
     [W('2', 0.16, 0.54, 0.01), W('Gehalt', 0.20, 0.54, 0.07), W('2.400,00', 0.82, 0.54, 0.08)],
   ];
   assert.deepEqual(R.blocks(S)[0].rows, [['Pos', 'Text', 'Soll', 'Haben'], ['1', 'Miete', '850,00', ''], ['2', 'Gehalt', '', '2.400,00']]);
+  // words: true (barrierefreie PDF): jeder Block kennt seine Wörter, Tabellen die Wörter je Zelle
+  const wb = R.blocks(T, { words: true });
+  assert.deepEqual(wb[0].cws.map(r => r.map(c => c.map(w => w.t).join(' '))), [['Pos', 'Bezeichnung', 'Betrag'], ['1', 'Grundgebühr', '12,50'], ['2', 'Arbeitspreis Strom', '1.234,00']]);
+  assert.deepEqual(wb[1].ws.map(w => w.t), ['Bitte', 'zahlen', 'Sie', 'bis', 'Monatsende.']);
+  assert.equal(R.blocks(T)[1].ws, undefined);
   assert.deepEqual(R.fromText('Erste Zei-\nle geht weiter\n\n• Punkt'), [{ type: 'p', text: 'Erste Zeile geht weiter' }, { type: 'li', text: '• Punkt' }]);
 });

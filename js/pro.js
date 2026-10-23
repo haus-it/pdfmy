@@ -2960,7 +2960,8 @@ $('#btnPdfaCheck').onclick = async () => {
 };
 $('#pdfaClose').onclick = () => $('#pdfaDlg').close();
 $('#pdfaFix').onclick = () => { $('#pdfaDlg').close(); openExport(); setRadio('x-format', 'pdfa'); updateExportUi(); status('Format PDF/A gewählt – Schriften werden eingebettet, Farbprofil, Kennung und Struktur ergänzt, Skripte entfernt.'); };
-$('#a11yFix').onclick = () => { $('#a11yDlg').close(); openExport(); setRadio('x-format', 'pdfa'); updateExportUi(); status('Format PDF/A gewählt – das Ergebnis ist zugleich barrierefrei nach PDF/UA-1.'); };
+$('#a11yFix').onclick = () => { $('#a11yDlg').close(); a11yMake(); };
+$('#btnA11yMake').onclick = () => { closeMenu(); a11yMake(); };
 
 
 /* ---------- Eingangsstempel mit fortlaufender Eingangsnummer (beim Ablegen) ---------- */

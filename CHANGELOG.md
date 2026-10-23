@@ -4,6 +4,15 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-23
 
+### PDF barrierefrei machen – PDF/UA mit echter Gliederung (app-v184)
+- Anlass: Barrierefreiheitsstärkungsgesetz (BFSG); Leitplanken-Prüfung in KONZEPT.md. Vorher: PDF/A-Export formal PDF/UA-1, aber jede Zeile ein eigener Absatz `P`.
+- Neuer Befehl „PDF barrierefrei machen“ (Startseiten-Kachel, … Mehr, Prüfdialog, Werkzeugseite pdf-barrierefrei-machen.html): speichert als PDF/UA-1 + PDF/A-2b.
+- Strukturbaum aus der Gliederung (js/reflow.js, Option words): `H1`/`H2` (erste Überschrift immer H1, keine Ebene übersprungen), `P`, `L`/`LI`/`LBody`, `Table`/`TR`/`TH` (Scope Column)/`TD`, leere Zellen als leeres Element; Lesereihenfolge = Gliederung. Tagger mit verschachtelten Gruppen (makeTagger.group).
+- Kopf-/Fußzeilen (gleiche erste/letzte Zeile auf mindestens der Hälfte der Seiten) und Seitenzahlen im Rand werden Artefakt – weiter durchsuchbar.
+- Lesezeichen aus den erkannten Überschriften (wenn das Dokument keine eigenen hat).
+- Nach dem Speichern prüft PDFMy die fertige Datei (A11yCheck) und meldet „x von y Punkten erfüllt · erkannt: … Überschrift(en), … Tabelle(n), … Liste(n)“.
+- Geprüft mit veraPDF (PDF/UA-1 und PDF/A-2b, alle bestanden): Rechnung mit Tabelle (Word-PDF), Angebot mit Aufzählung und Tabelle, gescannte Rechnung (Texterkennung), dreiseitige Satzung mit Kopfzeile und „Seite X von Y“. Strukturbaum kontrolliert. axe 0 (hell/dunkel, 1280/390 px); 205 Tests. Nicht mit einem echten Screenreader (NVDA/JAWS) getestet.
+
 ### Word → PDF: Tabellen wie in Word (app-v183)
 - Spaltenbreiten aus dem Word-Tabellenraster (w:tblGrid) statt nach Inhalt, Ausrichtung je Zelle wie in Word (links/zentriert/rechts) statt automatisch rechtsbündiger Zahlen, Kopfzeile auch erkannt, wenn sie nur fett formatiert ist (ohne „Überschrift wiederholen“) – fett, grau hinterlegt und auf Folgeseiten wiederholt.
 - Texterkennung: auch die hellgrauen Kantenpixel neben entfernten Tabellenlinien werden in der Arbeitskopie entfernt. Ein Lesefehler „CGrundgebuehr“ in der Testrechnung bleibt – er kommt von Tesseract selbst (Linien sind nachweislich weg).
