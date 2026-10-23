@@ -114,6 +114,17 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Entschieden 23.10.2026: weitere kostenlose Office-Programme und Cloud-Ordner (Nextcloud & Co.) – wie ONLYOFFICE
+Wunsch: Verbindung zu kostenlosen Office-Anbietern, zu Nextcloud und weiteren – so wie bei ONLYOFFICE (über pdfmy Scan, auf dem Rechner).
+
+| Variante | Daten bleiben … | Ergebnis |
+|---|---|---|
+| Weitere Office-Programme auf dem Rechner: SoftMaker FreeOffice (TextMaker), Apache OpenOffice, Inkscape; Textprogramme bekommen das gegliederte Word-Dokument aus PDFMy | auf dem Rechner | **passt, umgesetzt:** wie ONLYOFFICE – pdfmy Scan erkennt, legt lokal ab, startet (Punkt 1, 2, 4) |
+| WPS Office | auf dem Rechner, Programm drängt zur Anmeldung in der Kingsoft-Cloud | nicht angeboten (Datenschutz-Bedenken; Nutzer kann die Datei selbst öffnen) |
+| **Cloud-Ordner über das Sync-Programm des Nutzers** (Nextcloud, ownCloud, Seafile, Dropbox, OneDrive, Google Drive, iCloud): pdfmy Scan findet die Sync-Ordner, „In Cloud-Ordner speichern“ legt die PDF dort ab | auf dem Rechner; das Sync-Programm des Nutzers überträgt sie an **seinen** Speicher | **passt mit Auflage:** Ausnahme aus Punkt 1 („Kunde speichert in einem Ordner seiner Wahl“) – nur auf Klick, nie automatisch, im Dialog klar gesagt, dass das Sync-Programm die Datei hochlädt; PDFMy selbst baut keine Verbindung auf, CSP unverändert (Punkt 2), kein Konto in PDFMy (Punkt 3) |
+| Direkte Anmeldung an Nextcloud/WebDAV/Google/Dropbox aus dem Browser | beim Anbieter | **verworfen:** CSP müsste beliebige Server zulassen, Zugangsdaten im Browser, Upload durch PDFMy (Punkt 1–3) |
+| Online-Office (Google Docs, Microsoft 365 im Browser, ONLYOFFICE Docs/Collabora Online auf einem Server) | beim Anbieter bzw. Server | verworfen (Punkt 1, 2) – die Desktop-Programme derselben Anbieter sind angebunden |
+
 ### Prüfung 22.10.2026 (3): Was Nutzer bei Mitbewerbern vermissen oder kritisieren
 Grundlage: Recherche 22.10.2026 (Herstellerseiten Adobe/Foxit/iLovePDF/Stirling-PDF, Fachpresse borncity/WinFuture/PC-WELT/IT Brief, Adobe-Community, r/sysadmin, Trustpilot). Ein Vergleichstest von Stiftung Warentest oder c't aus 2025/2026 war nicht zu finden.
 

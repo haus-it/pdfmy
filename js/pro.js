@@ -2234,11 +2234,14 @@ $('#btnPrinter').onclick = async () => {
 /* ---------- In Office-Programm öffnen: Jeder Nutzer wählt selbst, mit welchem installierten Programm er was macht (ONLYOFFICE,
    LibreOffice, Collabora Office, Microsoft Word). pdfmy Scan erkennt die Programme, legt die PDF lokal ab und startet das gewählte
    Programm – die Datei verlässt den Rechner nicht. Die letzte Wahl merkt sich der Browser (je Nutzer). Zurück: Drucker „PDFMy“. */
+const b64Bytes = bytes => { let s = ''; for (let i = 0; i < bytes.length; i += 32768) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 32768)); return btoa(s); };
 const OFFICE_WHAT = {
   pdf: 'PDF direkt bearbeiten – Text, Seiten, Formulare',
   text: 'als Textdokument bearbeiten – der Text wird übernommen, das Layout kann sich ändern',
   draw: 'als Zeichnung bearbeiten – das Layout bleibt weitgehend, Text steht in Blöcken',
   word: 'als Word-Dokument bearbeiten – Word wandelt die PDF dabei um',
+  docx: 'als Word-Dokument bearbeiten – PDFMy übernimmt Absätze, Überschriften und Tabellen',
+  graphic: 'als Grafik bearbeiten – Linien, Formen und Text als Vektoren',
 };
 $('#btnOffice').onclick = async () => {
   closeMenu();
@@ -2257,7 +2260,7 @@ $('#btnOffice').onclick = async () => {
   list.textContent = '';
   for (const [i, a] of apps.entries()) {
     const l = document.createElement('label'); l.className = 'prrow';
-    const inp = document.createElement('input'); inp.type = 'radio'; inp.name = 'officeApp'; inp.value = a.id; inp.checked = a.id === last || (!apps.some(x => x.id === last) && i === 0);
+    const inp = document.createElement('input'); inp.type = 'radio'; inp.name = 'officeApp'; inp.value = a.id; inp.dataset.fmt = a.fmt || 'pdf'; inp.checked = a.id === last || (!apps.some(x => x.id === last) && i === 0);
     const sp = document.createElement('span'), b = document.createElement('b'), sm = document.createElement('small');
     b.textContent = a.app; b.translate = false; sm.textContent = ' – ' + I18N.t(OFFICE_WHAT[a.what] || '');
     sp.append(b, sm); l.append(inp, ' ', sp); list.append(l);
@@ -2273,9 +2276,11 @@ $('#officeForm').addEventListener('submit', async e => {
   LS.set('officeChoice', sel.value); $('#officeDlg').close();
   status(`Dokument wird für ${app} vorbereitet …`);
   try {
-    const bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
-    let s = ''; for (let i = 0; i < bytes.length; i += 32768) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 32768));
-    const res = await fetch(SCAN_API + '/office', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + '.pdf', data: btoa(s) }) }).then(x => x.json());
+    const docx = sel.dataset.fmt === 'docx';   // Textprogramme bekommen das gegliederte Word-Dokument (Absätze, Überschriften, Tabellen)
+    let bytes;
+    if (docx) { await waitForOcr(state.pages); bytes = Tools.docx(await Promise.all(state.pages.map(pageBlocks)), { title: state.meta.subject || baseName(), author: state.meta.sender, lang: docLang(state.pages) }); }
+    else bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
+    const res = await fetch(SCAN_API + '/office', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + (docx ? '.docx' : '.pdf'), data: b64Bytes(bytes) }) }).then(x => x.json());
     if (!res.ok) { status(res.error || 'Das hat nicht geklappt.'); alert(res.error || 'Das hat nicht geklappt.'); return; }
     status(sel.value === 'word' ? `Geöffnet in ${app}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.`
       : `Geöffnet in ${app}. Ergebnis dort mit „Speichern unter“ sichern – zurück zu PDFMy: im Programm drucken und den Drucker „PDFMy“ wählen.`);
@@ -4400,3 +4405,54 @@ $('#readToc').onchange = e => { const t = document.getElementById(e.target.value
 const readZoom = d => { const v = Math.min(32, Math.max(12, readFont() + d)); LS.set('readFont', v); $('#readBody').style.setProperty('--rf', v); };
 $('#readSm').onclick = () => readZoom(-2); $('#readLg').onclick = () => readZoom(2);
 $('#btnReader').onclick = readOpen; $('#readMode').onclick = readOpen;
+
+/* ---------- In Cloud-Ordner speichern (Nextcloud, ownCloud, Seafile, Dropbox, OneDrive, Google Drive, iCloud) – wie „In Office-Programm öffnen“ ----------
+   pdfmy Scan findet die Sync-Ordner der Programme, die der Nutzer selbst installiert hat, und legt die PDF im Unterordner „PDFMy“ ab.
+   PDFMy baut keine Verbindung zur Cloud auf – das Hochladen übernimmt das Sync-Programm des Nutzers (KONZEPT.md, Entscheidung 23.10.2026). */
+let cloudSaved = '';
+$('#btnCloud').onclick = async () => {
+  closeMenu();
+  if (!state.pages.length) { status('Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.'); return; }
+  if (IS_MOBILE) { toast('Auf dem Handy: „Teilen …“ wählen und die App Ihres Cloud-Speichers (z. B. Nextcloud) antippen.', 7000); return; }
+  const dl = f => (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f;
+  const running = await scanHelperRunning(), need = state.scanMac ? '1.5.0' : '1.12.0';
+  if (!running || verLess(state.scanVersion, need)) {
+    const mac = IS_MAC || state.scanMac;
+    if (confirm(mac ? 'Dafür wird „pdfmy Scan“ für Mac bzw. Linux ab Version 1.5.0 benötigt. Es findet die Ordner von Nextcloud, Dropbox & Co. auf Ihrem Rechner und legt die PDF dort ab – PDFMy selbst lädt nichts hoch.\n\nJetzt herunterladen?'
+      : 'Dafür wird das kleine Windows-Programm „pdfmy Scan“ ab Version 1.12.0 benötigt. Es findet die Ordner von Nextcloud, Dropbox & Co. auf Ihrem Rechner und legt die PDF dort ab – PDFMy selbst lädt nichts hoch.\n\nJetzt herunterladen?')) location.href = dl(mac ? SCAN_FILE_UNIX() : SCAN_FILE);
+    return;
+  }
+  const r = await fetch(SCAN_API + '/cloud', { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' }).then(x => x.json()).catch(() => ({ folders: [] }));
+  const fl = r.folders || [], list = $('#cloudList'), last = LS.get('cloudChoice', '');
+  list.textContent = '';
+  for (const [i, f] of fl.entries()) {
+    const l = document.createElement('label'); l.className = 'prrow';
+    const inp = document.createElement('input'); inp.type = 'radio'; inp.name = 'cloudF'; inp.value = f.id; inp.checked = f.id === last || (!fl.some(x => x.id === last) && i === 0);
+    const sp = document.createElement('span'), b = document.createElement('b'), sm = document.createElement('small');
+    b.textContent = f.name; b.translate = false; sm.textContent = ' – ' + f.path; sm.translate = false;
+    sp.append(b, sm); l.append(inp, ' ', sp); list.append(l);
+  }
+  cloudSaved = '';
+  $('#cloudNone').hidden = fl.length > 0; $('#cloudSet').hidden = !fl.length; $('#cloudGo').hidden = !fl.length;
+  $('#cloudDone').hidden = true; $('#cloudShow').hidden = true; $('#cloudClose').textContent = I18N.t('Abbrechen');
+  $('#cloudDlg').showModal();
+};
+$('#cloudClose').onclick = () => $('#cloudDlg').close();
+$('#cloudShow').onclick = () => fetch(SCAN_API + '/cloud/show', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ path: cloudSaved }) }).catch(() => {});
+$('#cloudForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const sel = $('#cloudDlg').querySelector('[name=cloudF]:checked'); if (!sel) return;
+  const name = sel.closest('label').querySelector('b').textContent;
+  LS.set('cloudChoice', sel.value); $('#cloudGo').disabled = true;
+  status(`Wird in ${name} gespeichert …`);
+  try {
+    const bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
+    const res = await fetch(SCAN_API + '/cloud', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + '.pdf', data: b64Bytes(bytes) }) }).then(x => x.json());
+    if (!res.ok) { status(res.error || 'Das hat nicht geklappt.'); alert(res.error || 'Das hat nicht geklappt.'); return; }
+    cloudSaved = res.path || ''; state.dirty = false;
+    const msg = I18N.t(`Gespeichert in ${name}: ${res.path} – Ihr Sync-Programm lädt die Datei hoch.`);
+    $('#cloudDone').textContent = msg; $('#cloudDone').hidden = false; $('#cloudShow').hidden = false; $('#cloudGo').hidden = true;
+    $('#cloudClose').textContent = I18N.t('Schließen'); status(msg);
+  } catch { status('pdfmy Scan antwortet nicht. Bitte prüfen, ob es läuft (Symbol unten rechts), und noch einmal versuchen.'); }
+  finally { $('#cloudGo').disabled = false; }
+});

@@ -11,7 +11,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.5.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
@@ -686,17 +686,27 @@ sub office_apps {
     for ([ 'libreoffice', 'LibreOffice', 'LibreOffice' ], [ 'collabora', 'Collabora Office', 'Collabora Office' ]) {
       my ($id, $name, $label) = @$_; my $a = $t->($id) || $app->($name) or next;
       my $so = -x "$a/Contents/MacOS/soffice" ? "$a/Contents/MacOS/soffice" : $a;
-      push @l, { id => "$id-writer", app => "$label Writer", what => 'text', cmd => [$so, '--norestore', '--infilter=writer_pdf_import'] },
+      push @l, { id => "$id-writer", app => "$label Writer", what => 'docx', fmt => 'docx', cmd => ['/usr/bin/open', '-a', $a] },
                { id => "$id-draw", app => "$label Draw", what => 'draw', cmd => ['/usr/bin/open', '-a', $a] };
     }
+    # SoftMaker FreeOffice / SoftMaker Office (TextMaker), Apache OpenOffice: Word-Dokument aus PDFMy; Inkscape: Grafik
+    my $glob = sub { for my $d ('/Applications', "$ENV{HOME}/Applications") { my ($a) = reverse sort glob("'$d/'*$_[0]*.app"); return $a if $a && -d $a; } return undef; };
+    if (my $a = $t->('textmaker') || $glob->('TextMaker')) { push @l, { id => 'textmaker', app => ($a =~ /FreeOffice/i ? 'FreeOffice TextMaker' : 'SoftMaker TextMaker'), what => 'docx', fmt => 'docx', cmd => ['/usr/bin/open', '-a', $a] }; }
+    if (my $a = $t->('openoffice') || $app->('OpenOffice')) { push @l, { id => 'openoffice-writer', app => 'Apache OpenOffice Writer', what => 'docx', fmt => 'docx', cmd => ['/usr/bin/open', '-a', $a] }; }
+    if (my $a = $t->('inkscape') || $app->('Inkscape')) { push @l, { id => 'inkscape', app => 'Inkscape', what => 'graphic', cmd => ['/usr/bin/open', '-a', $a] }; }
     if (my $a = $t->('word') || $app->('Microsoft Word')) { push @l, { id => 'word', app => 'Microsoft Word', what => 'word', cmd => ['/usr/bin/open', '-a', $a] }; }
   } else {
     my $oo = $t->('onlyoffice') || which('onlyoffice-desktopeditors') || which('desktopeditors') || (-x '/opt/onlyoffice/desktopeditors/DesktopEditors' ? '/opt/onlyoffice/desktopeditors/DesktopEditors' : undef);
     push @l, { id => 'onlyoffice', app => 'ONLYOFFICE', what => 'pdf', cmd => [$oo] } if $oo;
     if (my $lo = $t->('libreoffice') || which('libreoffice') || which('soffice')) {
-      push @l, { id => 'libreoffice-writer', app => 'LibreOffice Writer', what => 'text', cmd => [$lo, '--norestore', '--infilter=writer_pdf_import'] },
+      push @l, { id => 'libreoffice-writer', app => 'LibreOffice Writer', what => 'docx', fmt => 'docx', cmd => [$lo, '--norestore'] },
                { id => 'libreoffice-draw', app => 'LibreOffice Draw', what => 'draw', cmd => [$lo, '--norestore'] };
     }
+    if (my $tm = $t->('textmaker') || which('textmaker24free') || which('textmaker24') || which('textmaker21free') || which('textmaker21')) {
+      push @l, { id => 'textmaker', app => ($tm =~ /free/ ? 'FreeOffice TextMaker' : 'SoftMaker TextMaker'), what => 'docx', fmt => 'docx', cmd => [$tm] };
+    }
+    if (my $ao = $t->('openoffice') || which('openoffice4')) { push @l, { id => 'openoffice-writer', app => 'Apache OpenOffice Writer', what => 'docx', fmt => 'docx', cmd => [$ao, '-writer'] }; }
+    if (my $ik = $t->('inkscape') || which('inkscape')) { push @l, { id => 'inkscape', app => 'Inkscape', what => 'graphic', cmd => [$ik] }; }
   }
   return @l;
 }
@@ -704,17 +714,73 @@ sub office_open {
   my ($id, $name, $pdf) = @_;
   my ($c) = grep { $_->{id} eq ($id // '') } office_apps();
   return (undef, 'Dieses Programm ist auf diesem Rechner nicht (mehr) installiert.') unless $c;
-  return (undef, 'Keine gültige PDF-Datei.') unless defined $pdf && substr($pdf, 0, 4) eq '%PDF';
+  my $docx = ($c->{fmt} // 'pdf') eq 'docx'; my $ext = $docx ? '.docx' : '.pdf';
+  return (undef, $docx ? 'Kein gültiges Word-Dokument.' : 'Keine gültige PDF-Datei.') unless defined $pdf && substr($pdf, 0, $docx ? 2 : 4) eq ($docx ? 'PK' : '%PDF');
   my $dir = "$DIR/office"; make_path($dir);
-  my $base = $name // ''; $base =~ s/\.pdf$//i; $base =~ s{[/\\:*?"<>|\x00-\x1f]+}{ }g; $base =~ s/\s+/ /g; $base = trim($base);
+  my $base = $name // ''; $base =~ s/\.(pdf|docx)$//i; $base =~ s{[/\\:*?"<>|\x00-\x1f]+}{ }g; $base =~ s/\s+/ /g; $base = trim($base);
   $base = 'Dokument' unless length $base; $base = substr($base, 0, 80);
-  my $f = "$dir/$base.pdf"; for (my $n = 2; -e $f; $n++) { $f = "$dir/$base ($n).pdf"; }
+  my $f = "$dir/$base$ext"; for (my $n = 2; -e $f; $n++) { $f = "$dir/$base ($n)$ext"; }
   open my $h, '>:raw', $f or return (undef, "Datei lässt sich nicht anlegen: $!"); print $h $pdf; close $h;
   my $k = fork();
   return (undef, "$c->{app} ließ sich nicht starten.") unless defined $k;
   if ($k == 0) { POSIX::setsid(); open STDIN, '<', '/dev/null'; open STDOUT, '>', '/dev/null'; open STDERR, '>', '/dev/null'; exec(@{ $c->{cmd} }, $f) or POSIX::_exit(1); }
-  logl("Office: $base.pdf → $c->{app}");
+  logl("Office: $base$ext → $c->{app}");
   return ($f, undef);
+}
+# „In Cloud-Ordner speichern“: Sync-Ordner der Programme, die der Nutzer selbst installiert hat (Nextcloud, ownCloud, Seafile, Dropbox,
+# OneDrive, Google Drive, iCloud). pdfmy Scan legt die PDF im Unterordner „PDFMy“ ab – hochladen tut das Sync-Programm des Nutzers.
+sub cloud_folders {
+  my (@l, %seen); my $H = $ENV{HOME} // '';
+  my $add = sub {
+    my ($id, $name, $p) = @_; return unless defined $p && length $p; $p =~ s{/+$}{}; return unless -d $p && !$seen{$p}++;
+    my $n = grep { $_->{id} eq $id || index($_->{id}, "$id-") == 0 } @l;
+    push @l, { id => $n ? "$id-" . ($n + 1) : $id, name => $name, path => $p };
+  };
+  if (my $t = $ENV{PDFMY_TEST_CLOUD}) { for (split /;/, $t) { my ($n, $p) = split /\|/, $_, 2; $add->('test', $n, $p); } return @l; }   # nur für Tests
+  my $cfg = sub {   # Nextcloud/ownCloud-Programm: „0\Folders\1\localPath=/Users/…/Nextcloud/“
+    my ($f) = @_; open my $h, '<:encoding(UTF-8)', $f or return ();
+    my @p; while (<$h>) { push @p, $1 if /^\d+\\Folders(?:WithPlaceholders)?\\\d+\\localPath=(.+?)\s*$/; } close $h; return @p;
+  };
+  my $conf = $IS_MAC ? "$H/Library/Preferences" : ($ENV{XDG_CONFIG_HOME} || "$H/.config");
+  $add->('nextcloud', 'Nextcloud', $_) for $cfg->("$conf/Nextcloud/nextcloud.cfg");
+  $add->('owncloud', 'ownCloud', $_) for $cfg->("$conf/ownCloud/owncloud.cfg");
+  $add->('seafile', 'Seafile', "$H/Seafile");
+  if (open my $h, '<', "$H/.dropbox/info.json") {   # Dropbox: { "personal": { "path": … }, "business": { … } }
+    local $/; my $o = eval { $J->decode(<$h>) } || {}; close $h;
+    for my $k (sort keys %$o) { $add->('dropbox', $k eq 'business' ? 'Dropbox (Firma)' : 'Dropbox', $o->{$k}{path}) if ref $o->{$k} eq 'HASH'; }
+  }
+  if ($IS_MAC) {   # macOS: Datei-Anbieter unter ~/Library/CloudStorage (OneDrive, Google Drive, Dropbox, Nextcloud …) und iCloud Drive
+    for my $d (sort glob("'$H/Library/CloudStorage/'*")) {
+      my $b = (split m{/}, $d)[-1]; my ($k) = $b =~ /^([A-Za-z]+)/; next unless $k;
+      my %nm = (OneDrive => 'OneDrive', GoogleDrive => 'Google Drive', Dropbox => 'Dropbox', Nextcloud => 'Nextcloud', ownCloud => 'ownCloud', Box => 'Box', pCloud => 'pCloud');
+      my $p = $d; if ($k eq 'GoogleDrive') { ($p) = grep { -d } ("$d/My Drive", "$d/Meine Ablage"); $p //= $d; }
+      $add->(lc $k, ($nm{$k} // $k) . ($b =~ /^OneDrive-(?!Personal)(.+)$/ ? " ($1)" : ''), $p);
+    }
+    $add->('icloud', 'iCloud Drive', "$H/Library/Mobile Documents/com~apple~CloudDocs");
+  } else {
+    $add->('onedrive', 'OneDrive', "$H/OneDrive");
+  }
+  return @l;
+}
+sub cloud_save {
+  my ($id, $name, $pdf) = @_;
+  my ($c) = grep { $_->{id} eq ($id // '') } cloud_folders();
+  return (undef, 'Diesen Cloud-Ordner gibt es auf diesem Rechner nicht (mehr).') unless $c;
+  return (undef, 'Keine gültige PDF-Datei.') unless defined $pdf && substr($pdf, 0, 4) eq '%PDF';
+  my $dir = "$c->{path}/PDFMy"; eval { make_path($dir) }; return (undef, "Ordner lässt sich nicht anlegen: $!") unless -d $dir;
+  my $base = $name // ''; $base =~ s/\.pdf$//i; $base =~ s{[/\\:*?"<>|\x00-\x1f]+}{ }g; $base =~ s/\s+/ /g; $base = trim($base); $base =~ s/\.+$//;
+  $base = 'Dokument' unless length $base; $base = substr($base, 0, 120);
+  my $f = "$dir/$base.pdf"; for (my $n = 2; -e $f; $n++) { $f = "$dir/$base ($n).pdf"; }
+  open my $h, '>:raw', $f or return (undef, "Speichern nicht möglich: $!"); print $h $pdf; close $h;
+  logl("Cloud-Ordner: $base.pdf → $c->{name}");
+  return ($f, undef);
+}
+sub cloud_show {   # abgelegte Datei im Finder bzw. Dateimanager zeigen – nur eigene Ablagen
+  my ($f) = @_; return unless defined $f && -f $f;
+  return unless grep { index($f, "$_->{path}/PDFMy/") == 0 } cloud_folders();
+  my @cmd = $IS_MAC ? ('/usr/bin/open', '-R', $f) : ((which('xdg-open') // return), ($f =~ m{^(.*)/[^/]+$})[0]);
+  my $k = fork(); return unless defined $k;
+  if ($k == 0) { POSIX::setsid(); open STDIN, '<', '/dev/null'; open STDOUT, '>', '/dev/null'; open STDERR, '>', '/dev/null'; exec(@cmd) or POSIX::_exit(1); }
 }
 # Mac: Eintrag „In PDFMy öffnen“ im PDF-Menü des Druckdialogs (Skript in ~/Library/PDF Services, legt die Einrichtung an)
 sub print_service {
@@ -782,7 +848,7 @@ sub handle {
   my ($line, @hl) = split /\r\n/, $hdrs; my ($method, $path) = split / /, $line // '';
   return unless $method;
   my %h; for (@hl) { $h{ lc $1 } = $2 if /^([^:]+):\s*(.*)$/; }
-  my $len = $h{'content-length'} || 0; return if $len > ($path =~ m{^/office} ? 300_000_000 : 1_000_000);   # PDFs für „In Office-Programm öffnen“ dürfen groß sein
+  my $len = $h{'content-length'} || 0; return if $len > ($path =~ m{^/(office|cloud)$} ? 300_000_000 : 1_000_000);   # PDFs für „In Office-Programm öffnen“ dürfen groß sein
   my $body = $rest; while (length $body < $len) { my $n = sysread($c, my $b, $len - length $body); last unless $n; $body .= $b; }
   alarm 0;
   my $origin = $h{origin};
@@ -843,11 +909,17 @@ sub handle {
     logl("Zeitstempel von $host (" . length($d) . ' Bytes)');
     return send_json($c, 200, { data => encode_base64($d, '') }, \%cors);
   }
-  if ($p eq '/office' && $method eq 'GET') { return send_json($c, 200, { apps => [ map { +{ id => $_->{id}, app => $_->{app}, what => $_->{what} } } office_apps() ] }, \%cors); }   # installierte Office-Programme
+  if ($p eq '/office' && $method eq 'GET') { return send_json($c, 200, { apps => [ map { +{ id => $_->{id}, app => $_->{app}, what => $_->{what}, fmt => $_->{fmt} // 'pdf' } } office_apps() ] }, \%cors); }   # installierte Office-Programme
   if ($p eq '/office' && $method eq 'POST') {   # PDF mit dem gewählten Office-Programm öffnen (Datei bleibt auf dem Rechner)
     my $o = $in->(); my ($f, $err) = office_open($o->{id}, $o->{name}, eval { decode_base64($o->{data} // '') });
     return send_json($c, $err ? 409 : 200, { ok => $err ? JSON::PP::false : JSON::PP::true, error => $err, path => $f }, \%cors);
   }
+  if ($p eq '/cloud' && $method eq 'GET') { return send_json($c, 200, { folders => [ cloud_folders() ] }, \%cors); }   # Sync-Ordner (Nextcloud, Dropbox, OneDrive …)
+  if ($p eq '/cloud' && $method eq 'POST') {   # PDF im Unterordner „PDFMy“ des Cloud-Ordners ablegen – hochladen tut das Sync-Programm
+    my $o = $in->(); my ($f, $err) = cloud_save($o->{id}, $o->{name}, eval { decode_base64($o->{data} // '') });
+    return send_json($c, $err ? 409 : 200, { ok => $err ? JSON::PP::false : JSON::PP::true, error => $err, path => $f }, \%cors);
+  }
+  if ($p eq '/cloud/show' && $method eq 'POST') { my $o = $in->(); cloud_show($o->{path}); return send_json($c, 200, { ok => JSON::PP::true }, \%cors); }
   if ($p eq '/defaultapps' && $method eq 'POST') { my $ok = set_pdf_default(); return send_json($c, 200, { ok => JSON::PP::true, registered => $ok ? JSON::PP::true : JSON::PP::false, isDefault => $ok ? JSON::PP::true : JSON::PP::false }, \%cors); }
   if ($p eq '/wake' && $method eq 'POST') {   # „Scanner aufwecken“: wecken, kurz warten, neu suchen
     my $n = safe(sub { wake_known() }) || 0; sleep 3 if $n;

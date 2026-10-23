@@ -14,7 +14,7 @@ namespace PdfmyScan
        die Datei verlässt den Rechner nicht. Zurück zu PDFMy über den Drucker „PDFMy“. */
     static class OfficeApps
     {
-        public class Choice { public string id, app, what, exe, args; }   // args: {0} = Pfad der PDF
+        public class Choice { public string id, app, what, exe, args, fmt = "pdf"; }   // args: {0} = Pfad der Datei; fmt: pdf oder docx (gegliedertes Word-Dokument aus PDFMy)
 
         static RegistryKey Hklm(RegistryView v) => RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, v);
         static string Pf(string sub) => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), sub);
@@ -43,6 +43,14 @@ namespace PdfmyScan
             return null;
         }
 
+        // Programm in einem Ordner unter „Programme“ suchen, dessen Name mit prefix beginnt (z. B. „SoftMaker FreeOffice 2024“) – neueste zuerst
+        static string InDirs(string prefix, params string[] exes)
+        {
+            foreach (var root in new[] { Environment.GetEnvironmentVariable("ProgramW6432"), Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) }.Where(r => !string.IsNullOrEmpty(r)).Distinct())
+                try { foreach (var d in Directory.GetDirectories(root, prefix + "*").OrderByDescending(x => x)) foreach (var e in exes) { var f = Path.Combine(d, e); if (File.Exists(f)) return f; } } catch { }
+            return null;
+        }
+
         // Installierte Programme und was man damit machen kann – in der Reihenfolge, in der PDFMy sie anbietet
         public static List<Choice> Detect()
         {
@@ -53,15 +61,24 @@ namespace PdfmyScan
             string lo = Test("libreoffice") ?? LibreOffice();
             if (lo != null)
             {
-                list.Add(new Choice { id = "libreoffice-writer", app = "LibreOffice Writer", what = "text", exe = lo, args = "--norestore --infilter=\"writer_pdf_import\" \"{0}\"" });
+                list.Add(new Choice { id = "libreoffice-writer", app = "LibreOffice Writer", what = "docx", exe = lo, args = "--norestore \"{0}\"", fmt = "docx" });
                 list.Add(new Choice { id = "libreoffice-draw", app = "LibreOffice Draw", what = "draw", exe = lo, args = "--norestore \"{0}\"" });
             }
             string co = Test("collabora") ?? Collabora();
             if (co != null)
             {
-                list.Add(new Choice { id = "collabora-writer", app = "Collabora Office Writer", what = "text", exe = co, args = "--norestore --infilter=\"writer_pdf_import\" \"{0}\"" });
+                list.Add(new Choice { id = "collabora-writer", app = "Collabora Office Writer", what = "docx", exe = co, args = "--norestore \"{0}\"", fmt = "docx" });
                 list.Add(new Choice { id = "collabora-draw", app = "Collabora Office Draw", what = "draw", exe = co, args = "--norestore \"{0}\"" });
             }
+            // SoftMaker FreeOffice / SoftMaker Office: TextMaker öffnet das Word-Dokument
+            string tm = Test("textmaker") ?? InDirs("SoftMaker", "TextMaker.exe") ?? InDirs("FreeOffice", "TextMaker.exe");
+            if (tm != null) list.Add(new Choice { id = "textmaker", app = tm.IndexOf("FreeOffice", StringComparison.OrdinalIgnoreCase) >= 0 ? "FreeOffice TextMaker" : "SoftMaker TextMaker", what = "docx", exe = tm, args = "\"{0}\"", fmt = "docx" });
+            // Apache OpenOffice: Writer öffnet das Word-Dokument (PDFs öffnet OpenOffice ohne Erweiterung nicht)
+            string ao = Test("openoffice") ?? InDirs("OpenOffice", @"program\soffice.exe");
+            if (ao != null) list.Add(new Choice { id = "openoffice-writer", app = "Apache OpenOffice Writer", what = "docx", exe = ao, args = "-writer \"{0}\"", fmt = "docx" });
+            // Inkscape: Grafiken, Pläne, Flyer – die Seite als Vektorgrafik
+            string ik = Test("inkscape") ?? First(Pf64(@"Inkscape\bin\inkscape.exe"), Pf(@"Inkscape\bin\inkscape.exe"), Pf86(@"Inkscape\bin\inkscape.exe"));
+            if (ik != null) list.Add(new Choice { id = "inkscape", app = "Inkscape", what = "graphic", exe = ik, args = "\"{0}\"" });
             string wd = Test("word") ?? AppPath("Winword.exe");
             if (wd != null) list.Add(new Choice { id = "word", app = "Microsoft Word", what = "word", exe = wd, args = "\"{0}\"" });
             return list;
@@ -73,15 +90,17 @@ namespace PdfmyScan
             path = null;
             var c = Detect().FirstOrDefault(x => x.id == id);
             if (c == null) return "Dieses Programm ist auf diesem Rechner nicht (mehr) installiert.";
-            if (pdf == null || pdf.Length < 8 || pdf[0] != '%' || pdf[1] != 'P') return "Keine gültige PDF-Datei.";
+            bool docx = c.fmt == "docx";
+            if (pdf == null || pdf.Length < 8 || (docx ? pdf[0] != 'P' || pdf[1] != 'K' : pdf[0] != '%' || pdf[1] != 'P')) return docx ? "Kein gültiges Word-Dokument." : "Keine gültige PDF-Datei.";
+            string ext = docx ? ".docx" : ".pdf";
             // lokaler Ordner, nicht „Dokumente“: der liegt oft in OneDrive und würde die Datei ungefragt in die Cloud laden
             string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PDFMy", "Office");
             Directory.CreateDirectory(dir);
-            string bas = System.Text.RegularExpressions.Regex.Replace(name ?? "", @"\.pdf$", "", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            string bas = System.Text.RegularExpressions.Regex.Replace(name ?? "", @"\.(pdf|docx)$", "", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             bas = System.Text.RegularExpressions.Regex.Replace(string.Join(" ", bas.Split(Path.GetInvalidFileNameChars())), @"\s+", " ").Trim();
             if (bas.Length == 0) bas = "Dokument"; if (bas.Length > 80) bas = bas.Substring(0, 80);
-            path = Path.Combine(dir, bas + ".pdf");
-            for (int n = 2; File.Exists(path); n++) path = Path.Combine(dir, $"{bas} ({n}).pdf");
+            path = Path.Combine(dir, bas + ext);
+            for (int n = 2; File.Exists(path); n++) path = Path.Combine(dir, $"{bas} ({n}){ext}");
             File.WriteAllBytes(path, pdf);
             try
             {

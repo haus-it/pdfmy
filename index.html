@@ -852,6 +852,7 @@ label[role=button]:focus-visible,.thumb:focus-visible,#viewer:focus-visible,.car
 .verbar b{color:var(--warn);font-weight:600}
 @media (max-width:700px){ .verbar .vs{display:none} }
 .sharedlg{width:min(460px,94vw)}
+#cloudDone,#cloudList small{overflow-wrap:anywhere}
 .fpgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 10px;max-height:52vh;overflow:auto;padding:2px}
 .fpgrid label{display:flex;flex-direction:column;font-size:12.5px;gap:2px;min-width:0}
 .fpgrid input{width:100%;min-width:0}
@@ -1048,6 +1049,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnOcrAll"><svg class="ic" aria-hidden="true"><use href="#i-scan-text"/></svg><span>Texterkennung (OCR) für alle Seiten</span></button>
           <button class="mi doc" id="btnPrint"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg><span>Drucken</span><kbd>Strg+P</kbd></button>
           <button class="mi doc" id="btnReader" title="Text neu umbrechen – bequem lesen auf dem Handy, mit einstellbarer Schrift und Inhaltsverzeichnis"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg><span>Lesemodus</span></button>
+          <button class="mi doc" id="btnCloud" title="In den Ordner von Nextcloud, ownCloud, Seafile, Dropbox, OneDrive, Google Drive oder iCloud auf diesem Rechner speichern – Ihr Sync-Programm lädt sie hoch"><svg class="ic" aria-hidden="true"><use href="#i-folder-input"/></svg><span>In Cloud-Ordner speichern …</span></button>
           <button class="mi doc" id="btnShare"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg><span>Teilen …</span></button>
           <button class="mi doc" id="btnSplit" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Stapel in einzelne Briefe trennen</span></button>
           <button class="mi doc" id="btnSplitAdv" disabled><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>PDF aufteilen …</span></button>
@@ -1721,10 +1723,21 @@ html.i18n-wait body{visibility:hidden}
   <fieldset class="prset" id="officeSet"><legend><b>Programm</b></legend><div id="officeList"></div></fieldset>
   <div id="officeNone" hidden>
     <p>Auf diesem Rechner wurde kein passendes Office-Programm gefunden.</p>
-    <p class="hint">Kostenlos und ohne Konto: <a href="https://www.onlyoffice.com/download-desktop.aspx" target="_blank" rel="noopener">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt) oder <a href="https://de.libreoffice.org/download/download/" target="_blank" rel="noopener">LibreOffice</a>. Danach hier noch einmal klicken.</p>
+    <p class="hint">Kostenlos und ohne Konto: <a href="https://www.onlyoffice.com/download-desktop.aspx" target="_blank" rel="noopener">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href="https://de.libreoffice.org/download/download/" target="_blank" rel="noopener">LibreOffice</a> oder <a href="https://www.freeoffice.com/de/" target="_blank" rel="noopener">FreeOffice</a>. Danach hier noch einmal klicken.</p>
   </div>
   <p class="hint">Ergebnis im Programm mit <i>„Speichern unter“</i> an Ihrem gewohnten Ort sichern. Zurück zu PDFMy: im Programm drucken und den Drucker <i>„PDFMy“</i> wählen.</p>
   <div class="dlgrow"><button type="button" id="officeClose">Abbrechen</button><button type="submit" class="primary" id="officeGo">Öffnen</button></div>
+</form></dialog>
+<dialog id="cloudDlg" class="sharedlg" aria-labelledby="cloudT"><form id="cloudForm" method="dialog" novalidate>
+  <h3 class="dlgtitle" id="cloudT">In Cloud-Ordner speichern</h3>
+  <p class="hint" style="margin:-6px 0 12px">PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.</p>
+  <fieldset class="prset" id="cloudSet"><legend><b>Cloud-Ordner</b></legend><div id="cloudList"></div></fieldset>
+  <div id="cloudNone" hidden>
+    <p>Auf diesem Rechner wurde kein Cloud-Ordner gefunden.</p>
+    <p class="hint">Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href="https://nextcloud.com/de/install/#install-clients" target="_blank" rel="noopener">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.</p>
+  </div>
+  <p id="cloudDone" role="status" aria-live="polite" hidden></p>
+  <div class="dlgrow"><button type="button" id="cloudShow" hidden>Im Ordner zeigen</button><button type="button" id="cloudClose">Abbrechen</button><button type="submit" class="primary" id="cloudGo">Speichern</button></div>
 </form></dialog>
 <dialog id="fpDlg" class="sharedlg" aria-labelledby="fpT"><form method="dialog">
   <h3 class="dlgtitle" id="fpT">Meine Angaben</h3>
