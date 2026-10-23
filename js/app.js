@@ -4404,7 +4404,7 @@ const INTENTS = {
   scan: 'image/*,application/pdf,.pdf,.xml,.eml,.msg', merge: 'application/pdf,.pdf', organize: 'application/pdf,.pdf,image/*',
   compress: 'application/pdf,.pdf', img2pdf: 'image/*', pdf2img: 'application/pdf,.pdf', redact: 'application/pdf,.pdf,image/*',
   sign: 'application/pdf,.pdf,image/*', form: 'application/pdf,.pdf', protect: 'application/pdf,.pdf', unlock: 'application/pdf,.pdf',
-  stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', a11y: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
+  stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', a11y: 'application/pdf,.pdf,image/*', preflight: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
   docx: 'application/pdf,.pdf,image/*', bates: 'application/pdf,.pdf,image/*',
   compare: 'application/pdf,.pdf,image/*', split: 'application/pdf,.pdf', batch: 'application/pdf,.pdf,image/*', imgout: 'application/pdf,.pdf', repair: 'application/pdf,.pdf',
 };
@@ -4444,6 +4444,7 @@ function applyIntent() {
     case 'stamp': openExport({ format: 'pdf', focus: 'stamp' }); break;
     case 'pdfa': openExport({ format: 'pdfa' }); break;
     case 'a11y': a11yMake(); break;
+    case 'preflight': preflightOpen(); break;
     case 'text': openExport({ format: 'txt' }); break;
     case 'docx': openExport({ format: 'docx' }); break;
     case 'bates': setView('grid'); openExport({ format: 'pdf', bates: true }); break;

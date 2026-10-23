@@ -128,6 +128,14 @@
     "faq": [["Und bei Scans oder Plänen?", "Für Scans, Pläne und Zeichnungen eignet sich die Überlagerung: Rot ist nur in der ersten, Grün nur in der zweiten Fassung."], ["Werden meine Verträge hochgeladen?", "Nein. Der Vergleich läuft vollständig in Ihrem Browser."]]
   },
   {
+    "slug": "pdf-vor-dem-versand-pruefen", "target": "preflight", "label": "PDF vor dem Versand prüfen",
+    "title": "PDF prüfen für beA, ePA, BITV und GoBD – kostenlos, ohne Upload",
+    "description": "PDF vor dem Versand prüfen: Gericht (beA, ERVB 2025), elektronische Patientenakte (ePA), barrierefrei (BITV 2.0, PDF/UA) und Archiv (GoBD, PDF/A) – mit Bericht und automatischer Korrektur. Direkt im Browser, ohne Upload.",
+    "intro": "Gerichte, Praxisverwaltungen und Archive lehnen Dateien ab, wenn Schriften fehlen, Skripte enthalten sind oder das Format nicht stimmt. PDFMy prüft vorher – auf Ihrem Gerät, ohne dass die Datei hochgeladen wird – und behebt die Fehler auf Wunsch selbst.",
+    "steps": ["Auf „PDF vor dem Versand prüfen“ klicken und die Datei wählen.", "Empfänger wählen: beA/Gericht, ePA, barrierefrei oder GoBD-Archiv – PDFMy zeigt, was erfüllt ist und was fehlt.", "„Automatisch beheben“ oder den Bericht als PDF für die Akte speichern."],
+    "faq": [["Ersetzt das eine vollständige Prüfung?", "Es ist eine Kurzprüfung der häufigsten Ablehnungsgründe nach den genannten Vorgaben. Für eine vollständige Validierung gibt es Spezialwerkzeuge wie veraPDF."], ["Warum vor dem Versand an das Gericht prüfen?", "Gerichte können Dateien zurückweisen, die nicht den technischen Vorgaben entsprechen – das kostet Zeit und gefährdet Fristen. Eine Prüfung vor der Einreichung vermeidet das; der Bericht mit Fingerabdruck dokumentiert sie."]]
+  },
+  {
     "slug": "pdf-barrierefrei-machen", "target": "a11y", "label": "PDF barrierefrei machen",
     "title": "PDF barrierefrei machen – PDF/UA kostenlos, ohne Upload",
     "description": "PDF und Scans kostenlos barrierefrei machen (PDF/UA): Überschriften, Absätze, Listen und Tabellen für Screenreader, Inhaltsverzeichnis, Sprache und Titel – mit Prüfbericht. Direkt im Browser, ohne Upload.",

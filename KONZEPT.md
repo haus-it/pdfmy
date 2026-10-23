@@ -114,6 +114,21 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Entschieden 23.10.2026: Vorabprüfung („Preflight“) mit Profilen beA/ERV, ePA, BITV/PDF/UA, GoBD-Archiv
+**Anlass (Recherche Berufsgruppen 23.10.2026):** Anwälte müssen eine umgewandelte PDF vor dem Versand prüfen (BGH II ZB 5/24, 12/2024); Gerichte lehnen Dateien nach ERVB 2025 ab (Schriften, JavaScript, Anhänge, Dateiname, 200 MB). Arztpraxen: ePA nimmt nur PDF/A bis 25 MB. Behörden: BITV 2.0/EN 301 549, Prüfung durch BFIT-Bund. Steuerberater: GoBD-Archiv, Verfahrensdokumentation. Mitbewerber bieten Preflight nur in Acrobat Pro (Abo) oder Spezialsoftware.
+**Vorschlag:** „… Mehr → Vorabprüfung …“ und Werkzeug-Kachel: Profil wählen → Ampelbericht (✓ erfüllt, ✗ Fehler, i Hinweis) für die Datei, die gespeichert würde → „Automatisch beheben“ (je Profil: beA-tauglich speichern, PDF/A klein, barrierefrei machen, PDF/A) → „Bericht als PDF speichern“ (Nachweis für Akte/Verfahrensdokumentation, mit SHA-256-Fingerabdruck und Zeitpunkt). Bausteine vorhanden: BeaCheck (ERVB 2025), PdfACheck (PDF/A-2b-Kurzprüfung), A11yCheck (PDF/UA, Matterhorn-Auswahl).
+**Grenzen:** Kurzprüfung, keine vollständige Validierung (dafür veraPDF); ERVV-Änderung vom 22.06.2026 noch nicht ausgewertet; ePA-Metadaten (Dokumenttyp) setzt das Praxisverwaltungssystem.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Prüfung und Bericht lokal |
+| 2 Kein Server | passt |
+| 3 Kostenlos, ohne Konto | passt |
+| 4 Einfach | passt: ein Dialog, Profil vorbelegt nach Edition/letzter Wahl, „Automatisch beheben“ |
+| 5 Normgerecht und prüfbar | passt mit Auflage: Bericht nennt Grundlage und Grenzen; Ergebnisse gegen veraPDF an Testdateien abgleichen |
+| 6 Wenig aktive Inhalte | passt: Bericht ohne Skripte |
+**Entscheidung:** umsetzen (Auftrag GF 23.10.2026). **Umgesetzt 23.10.2026 (app-v187):** js/preflight.js mit vier Profilen, Dialog mit Ampel, „Automatisch beheben“, Bericht als PDF mit SHA-256. Abgleich mit veraPDF am Word-Original: Titel/DisplayDocTitle (7.1-9) übereinstimmend; fehlende PDF/UA-Kennung (5-1) im Profil „Barrierefrei“ jetzt Fehler statt Hinweis. BGH-Beschluss nur intern zitiert (nicht im Original geprüft).
+
 ### Entschieden 23.10.2026: „PDF barrierefrei machen“ (Anlass: Barrierefreiheitsstärkungsgesetz, BFSG, seit 28.06.2025)
 **Stand vorher:** „Als PDF/A speichern“ erzeugt bereits ein formal gültiges PDF/UA-1 (veraPDF), aber inhaltlich dünn: jede Textzeile ist ein eigener Absatz `P` – keine Überschriften, Listen, Tabellen, kein Inhaltsverzeichnis. Screenreader lesen Zeile für Zeile; Tabellen sind nicht als Tabelle navigierbar. Bei Acrobat Pro kostet das „Automatisch taggen“, kostenlose Tools können es kaum.
 **Vorschlag:** ein Befehl „PDF barrierefrei machen“ (Menü, Werkzeug-Kachel, Befehlssuche, im Dialog „Barrierefreiheit prüfen“):

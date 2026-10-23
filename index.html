@@ -853,6 +853,9 @@ label[role=button]:focus-visible,.thumb:focus-visible,#viewer:focus-visible,.car
 @media (max-width:700px){ .verbar .vs{display:none} }
 .sharedlg{width:min(460px,94vw)}
 #cloudDone,#cloudList small{overflow-wrap:anywhere}
+.pfsel{display:flex;flex-direction:column;gap:4px;font-size:13px;margin-bottom:8px}
+.pfsel select{max-width:100%}
+.pfsum{font-weight:600;margin:8px 0}
 .figlist{list-style:none;margin:0;padding:0;max-height:56vh;overflow:auto;display:grid;gap:12px}
 .figlist li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:start}
 .figlist canvas{max-width:120px;max-height:120px;border:1px solid var(--line,#ccc);background:#fff}
@@ -1072,6 +1075,7 @@ html.i18n-wait body{visibility:hidden}
         <div class="mgrp docgrp" role="group" aria-labelledby="mgCheck"><div class="mgh" id="mgCheck">Prüfen & Formulare</div>
           <button class="mi doc" id="btnBea" title="Prüft nach den Vorgaben der Justiz (ERVB 2025): kein JavaScript, keine Anhänge, druckbar, zulässiger Dateiname – und speichert auf Wunsch passend"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Für beA prüfen …</span></button>
           <button class="mi doc" id="btnAnl" title="Jede geöffnete Datei wird eine Anlage: Stempel „Anlage K 1“, Anlagenverzeichnis, einzelne Dateien für das beA"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Anlagen nummerieren …</span></button>
+          <button class="mi doc" id="btnPreflight" title="Vor dem Versand prüfen: Gericht (beA), elektronische Patientenakte, barrierefrei (BITV), Archiv (GoBD) – mit Bericht"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Vorabprüfung …</span></button>
           <button class="mi doc" id="btnA11yMake" title="Überschriften, Absätze, Listen und Tabellen für Screenreader kennzeichnen, Inhaltsverzeichnis anlegen – als PDF/UA, mit Prüfung"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>PDF barrierefrei machen …</span></button>
           <button class="mi doc" id="btnA11y" title="Prüfbericht: Tags, Sprache, Titel, Alternativtexte, Schriften, Lesbarkeit für Screenreader"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Barrierefreiheit prüfen …</span></button>
           <button class="mi doc" id="btnPdfaCheck" title="Kurzprüfung nach PDF/A (Langzeitarchiv): Kennung, Farbprofil, Schriften, Skripte, Verschlüsselung – mit Reparatur"><svg class="ic" aria-hidden="true"><use href="#i-archive"/></svg><span>PDF/A prüfen …</span></button>
@@ -1234,6 +1238,7 @@ html.i18n-wait body{visibility:hidden}
         <button class="tile" data-intent="protect"><i><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></i><b>Mit Passwort schützen</b><span>AES-Verschlüsselung, Rechte für Drucken und Kopieren</span></button>
         <button class="tile" data-intent="unlock"><i><svg class="ic" aria-hidden="true"><use href="#i-lock-open"/></svg></i><b>PDF entsperren</b><span>Passwort entfernen (Passwort erforderlich)</span></button>
         <button class="tile" data-intent="stamp"><i><svg class="ic" aria-hidden="true"><use href="#i-hash"/></svg></i><b>Seitenzahlen &amp; Wasserzeichen</b><span>Nummerieren, „KOPIE“ oder „ENTWURF“ stempeln</span></button>
+        <button class="tile" data-intent="preflight"><i><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg></i><b>PDF vor dem Versand prüfen</b><span>beA/Gericht, ePA, barrierefrei, GoBD-Archiv</span></button>
         <button class="tile" data-intent="a11y"><i><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg></i><b>PDF barrierefrei machen</b><span>Für Screenreader, nach PDF/UA – mit Prüfung</span></button>
         <button class="tile" data-intent="pdfa"><i><svg class="ic" aria-hidden="true"><use href="#i-archive"/></svg></i><b>PDF/A archivieren</b><span>Revisionssicheres Langzeitformat, geprüft</span></button>
         <button class="tile" data-intent="docx"><i><svg class="ic" aria-hidden="true"><use href="#i-file-type-2"/></svg></i><b>PDF in Word</b><span>Scan oder PDF als bearbeitbares Word-Dokument</span></button>
@@ -1737,6 +1742,15 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint">Ergebnis im Programm mit <i>„Speichern unter“</i> an Ihrem gewohnten Ort sichern. Zurück zu PDFMy: im Programm drucken und den Drucker <i>„PDFMy“</i> wählen.</p>
   <div class="dlgrow"><button type="button" id="officeClose">Abbrechen</button><button type="submit" class="primary" id="officeGo">Öffnen</button></div>
 </form></dialog>
+<dialog id="pfDlg" class="sharedlg a11ydlg" aria-labelledby="pfT"><form method="dialog" id="pfForm">
+  <h3 class="dlgtitle" id="pfT">Vorabprüfung</h3>
+  <p class="hint" style="margin:-6px 0 10px">Prüft die Datei, wie sie gespeichert würde, gegen die Vorgaben des Empfängers – auf diesem Gerät, ohne Upload.</p>
+  <label class="pfsel" for="pfProfile">Empfänger bzw. Zweck <select id="pfProfile"><option value="bea">beA / Gericht (ERVB 2025)</option><option value="epa">ePA (elektronische Patientenakte)</option><option value="bitv">Barrierefrei (BITV 2.0 / PDF/UA)</option><option value="gobd">Archiv (GoBD, PDF/A)</option></select></label>
+  <p id="pfSum" class="pfsum" role="status" aria-live="polite"></p>
+  <ul id="pfList" class="a11ylist"></ul>
+  <p class="hint" id="pfBasis"></p>
+  <div class="dlgrow"><button type="button" id="pfReport">Bericht als PDF speichern</button><button type="button" id="pfClose">Schließen</button><button type="button" id="pfFix" class="primary">Automatisch beheben</button></div>
+</form></dialog>
 <dialog id="figDlg" class="sharedlg figdlg" aria-labelledby="figT"><form method="dialog">
   <h3 class="dlgtitle" id="figT">Bilder beschreiben</h3>
   <p class="hint" style="margin:-6px 0 12px">Damit Screenreader die Bilder vorlesen können, beschreiben Sie kurz, was zu sehen ist (z. B. „Logo Stadtwerke Musterstadt“, „Lageplan des Grundstücks“). Reiner Schmuck wird nicht vorgelesen.</p>
@@ -2213,6 +2227,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/formcalc.js"></script>
 <script src="js/formprofile.js"></script>
 <script src="js/reflow.js"></script>
+<script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/app.js"></script>

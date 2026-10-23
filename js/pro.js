@@ -4499,3 +4499,54 @@ async function a11yFigures() {
   found.forEach((x, k) => { const alt = $('#fig-' + k).value.trim(), deco = $('#figd-' + k).checked; x.p.figs.push({ ...x.f, alt, deco }); if (alt && !deco) n++; });
   status(`${n} Bild(er) beschrieben – sie werden beim Speichern mit Alternativtext gekennzeichnet.`);
 }
+
+/* ---------- Vorabprüfung (js/preflight.js): beA/Gericht, ePA, barrierefrei (BITV), Archiv (GoBD) ----------
+   Geprüft wird die Datei, wie sie gespeichert würde: das unveränderte Original oder – nach Änderungen – die neu erzeugte PDF. */
+let pfLast = null;
+async function preflightBytes() {
+  const o = untouchedOriginal(state.pages) || einvOriginal(state.pages);
+  return o ? o.slice() : await buildPdf(state.pages, state.meta, { noOcr: true, onPage: () => {} });
+}
+async function preflightRun() {
+  const profile = $('#pfProfile').value; LS.set('pfProfile', profile);
+  $('#pfList').innerHTML = ''; $('#pfSum').textContent = I18N.t('Prüfe …'); $('#pfBasis').textContent = '';
+  try {
+    const bytes = await preflightBytes(), pages = state.pages.length, textPages = state.pages.filter(p => p.native || p.ocr?.text?.trim()).length;
+    const name = baseName() + '.pdf', title = state.meta?.subject || '';
+    const res = await Preflight.run(profile, bytes, { name, pages, textPages, title, einvoice: !!state.einv });
+    pfLast = { res, name };
+    $('#pfList').innerHTML = res.items.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(I18N.t(x.title))}</b><span class="sr-only">: ${x.ok === true ? I18N.t('erfüllt') : x.ok === false ? I18N.t('nicht erfüllt') : I18N.t('Hinweis')}</span>${x.detail ? `<small>${esc(I18N.t(x.detail))}</small>` : ''}</span></li>`).join('');
+    const bad = res.items.filter(x => x.ok === false).length, hint = res.items.filter(x => x.ok === null).length;
+    $('#pfSum').textContent = bad ? I18N.t(`${bad} Fehler – vor dem Versand beheben.`) + (hint ? ' ' + I18N.t(`${hint} Hinweis(e).`) : '') : I18N.t('Keine Fehler gefunden.') + (hint ? ' ' + I18N.t(`${hint} Hinweis(e).`) : '');
+    $('#pfFix').hidden = !bad && !(profile === 'bitv' && hint);
+    $('#pfBasis').textContent = I18N.t('Grundlage: ' + Preflight.PROFILES[profile].basis + '. Kurzprüfung der häufigsten Ablehnungsgründe – ersetzt keine vollständige Validierung.');
+  } catch (e) { console.error(e); $('#pfSum').textContent = I18N.t('Prüfung nicht möglich: ') + e.message; }
+}
+async function preflightOpen() {
+  closeMenu?.();
+  if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich prüfen.'); return; }
+  const last = LS.get('pfProfile', 'bea'); $('#pfProfile').value = Preflight.PROFILES[last] ? last : 'bea';
+  $('#pfDlg').showModal(); await preflightRun();
+}
+$('#btnPreflight').onclick = preflightOpen;
+$('#pfProfile').onchange = preflightRun;
+$('#pfClose').onclick = () => $('#pfDlg').close();
+// Automatisch beheben: je Profil der passende Speicherweg
+$('#pfFix').onclick = () => {
+  const p = $('#pfProfile').value; $('#pfDlg').close();
+  if (p === 'bea') openBea();
+  else if (p === 'bitv') a11yMake();
+  else { openExport({ format: 'pdfa' }); if (p === 'epa') { setRadio('x-size', 'small'); updateExportUi(); }
+    status(p === 'epa' ? 'Für die ePA: Format PDF/A und Größe „Klein“ gewählt – auf „Speichern“ klicken.' : 'Für das Archiv: Format PDF/A gewählt – auf „Speichern“ klicken.'); }
+};
+// Bericht als PDF (Nachweis für Akte bzw. Verfahrensdokumentation)
+$('#pfReport').onclick = async () => {
+  if (!pfLast) return;
+  try {
+    const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
+    const blocks = Preflight.reportBlocks(pfLast.res, { file: pfLast.name, app: APP.name }).map(b => b.type === 'table' ? { ...b, rows: b.rows.map(r => r.map(c => I18N.t(c))) } : { ...b, text: I18N.t(b.text) });
+    const pdf = await TextPdf.build(PDFLib, { blocks, title: I18N.t('Vorabprüfung') + ' – ' + pfLast.name, fonts: { fontkit: fk, regular, bold, mono } });
+    const where = await deliver(pdf, pfLast.name.replace(/\.pdf$/i, '') + '_Pruefbericht.pdf', 'application/pdf');
+    if (where) status(I18N.t(`Prüfbericht gespeichert: ${where}`));
+  } catch (e) { console.error(e); status('Bericht nicht möglich: ' + e.message); }
+};

@@ -189,3 +189,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-10-23 19:56 | pdfmy-202610231750 | 1.12.0 | 0b2bf72efc1e8c89… | 205/205 Tests bestanden | 1089 | Administrator | ec20b5e46dbf25db |
 | 2026-10-23 20:41 | pdfmy-202610231839 | 1.12.0 | 08c613f1a5d698fd… | 205/205 Tests bestanden | 47 | Administrator | b11de82615532120 |
 | 2026-10-23 21:29 | pdfmy-202610231928 | 1.12.0 | c996af5c1f1923e7… | 206/206 Tests bestanden | 169 | Administrator | ec3cae35fd71641d |
+| 2026-10-23 22:12 | pdfmy-202610232006 | 1.12.0 | be41eb7eba50ad75… | 209/209 Tests bestanden | 1129 | Administrator | 37ee7943d20d5231 |

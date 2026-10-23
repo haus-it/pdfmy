@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-23
 
+### Vorabprüfung vor dem Versand: beA, ePA, BITV, GoBD (app-v187)
+- Anlass: Recherche Berufsgruppen (Anwälte, Steuerberater, Ärzte, Behörden); Leitplanken-Prüfung in KONZEPT.md.
+- Neu: „… Mehr → Vorabprüfung …“, Startseiten-Kachel „PDF vor dem Versand prüfen“, Werkzeugseite pdf-vor-dem-versand-pruefen.html. Profile (js/preflight.js): beA/Gericht (ERVB 2025, Bausteine aus js/bea.js), ePA (PDF/A-1/-2, höchstens 25 MB, keine aktiven Inhalte, keine Anhänge, Titel), Barrierefrei (PDF/UA-1/BITV, Bausteine aus js/a11ycheck.js; PDF/UA-Kennung Pflicht), Archiv GoBD (PDF/A-Kurzprüfung aus js/pdfacheck.js, unverschlüsselt, Text erkannt, Titel, Hinweise zu Signatur und E-Rechnung).
+- Geprüft wird die Datei, wie sie gespeichert würde (unverändertes Original oder neu erzeugte PDF); Titel aus der Datei selbst.
+- „Automatisch beheben“: beA-tauglich speichern, PDF/A „Klein“ (ePA), barrierefrei machen, PDF/A (GoBD). „Bericht als PDF speichern“: Ergebnis, Datum, Grundlage, SHA-256-Fingerabdruck.
+- Tests: tests/preflight.test.js (beA mit gutem/schlechtem Namen und JavaScript, ePA/GoBD ohne PDF/A, BITV ohne Tags, Bericht); Browser: Word-Angebot (Fehler wie erwartet) und barrierefreie PDF/A-Fassung (alle Profile ohne Fehler außer Dateiname bei beA), Bericht gerendert; Abgleich mit veraPDF; axe 0 (hell/dunkel, 1280/390 px); 209 Tests.
+
 ### Barrierefrei: Bilder beschreiben, erweiterter Prüfbericht (app-v186)
 - „PDF barrierefrei machen“ sucht vor dem Speichern auf jeder Seite Fotos, Logos und Grafiken (DocDetect.findFigures: farbige oder graue Flächen ohne erkannte Wörter, Papierhelligkeit berücksichtigt) und zeigt sie im neuen Dialog „Bilder beschreiben“ – Beschreibung eintragen (Logo oben: Absender vorgeschlagen) oder „Nur Schmuck – nicht vorlesen“.
 - Beschriebene Bilder werden `Figure` mit Alternativtext und BBox, deckungsgleich über dem Seitenbild, in der Lesereihenfolge an ihrer Stelle (vor dem nächsten Textabschnitt darunter). Schmuck und nicht beschriebene Bilder bleiben Teil des Seitenbilds (Artefakt).
