@@ -143,20 +143,28 @@
       if (pageBreak) blocks.push({ type: 'pagebreak' });
     };
     const table = async t => {
-      const rows = [];
-      let head = false;
+      const rows = [], aligns = [];
+      let head = false, firstBold = true;
       for (const tr of els(t).filter(k => k.name === 'w:tr')) {
         if (!rows.length && kid(kid(tr, 'w:trPr'), 'w:tblHeader')) head = true;
-        const row = [];
+        const row = [], al = [];
         for (const tc of els(tr).filter(k => k.name === 'w:tc')) {
           const span = +(kid(kid(tc, 'w:tcPr'), 'w:gridSpan')?.attrs['w:val'] || 1);
-          const cell = all(tc, 'w:p').map(p => all(p, 'w:t').map(txt).join('')).join('\n').trim();
-          row.push(cell); for (let i = 1; i < span; i++) row.push('');
+          const ps = all(tc, 'w:p'), cell = ps.map(p => all(p, 'w:t').map(txt).join('')).join('\n').trim();
+          const jc = kid(kid(ps[0], 'w:pPr'), 'w:jc')?.attrs['w:val'];   // Ausrichtung wie in Word
+          // Kopfzeile auch erkennen, wenn sie nur fett formatiert ist (ohne „Überschrift wiederholen“)
+          if (!rows.length) for (const r of all(tc, 'w:r')) if (all(r, 'w:t').map(txt).join('').trim() && !on(kid(kid(r, 'w:rPr'), 'w:b'))) firstBold = false;
+          row.push(cell); al.push(jc === 'center' ? 'center' : jc === 'right' || jc === 'end' ? 'right' : 'left');
+          for (let i = 1; i < span; i++) { row.push(''); al.push('left'); }
         }
-        rows.push(row);
+        rows.push(row); aligns.push(al);
       }
       const n = Math.max(0, ...rows.map(r => r.length));
-      if (n) blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: n }, (_, i) => r[i] ?? '')), head });
+      // Spaltenbreiten aus dem Tabellenraster (Twips) als Anteile
+      const grid = all(kid(t, 'w:tblGrid') || { kids: [] }, 'w:gridCol').map(g => +g.attrs['w:w'] || 0), gs = grid.reduce((a, b) => a + b, 0);
+      const widths = grid.length === n && gs > 0 ? grid.map(w => w / gs) : null;
+      if (n) blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: n }, (_, i) => r[i] ?? '')), head: head || (rows.length > 1 && firstBold && rows[0].some(Boolean)),
+        widths, aligns: aligns.map(a => Array.from({ length: n }, (_, i) => a[i] || 'left')) });
     };
     for (const k of els(body)) {
       if (k.name === 'w:p') await para(k);

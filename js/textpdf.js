@@ -143,22 +143,23 @@
         page.drawText(ln, { x: lx, y: y + size * 0.25, size, font, color });
       }
     };
-    const table = (rows, head) => {
+    const table = (rows, head, widths, aligns) => {
       if (!rows.length) return;
       const n = rows[0].length, size = n > 10 ? 7.5 : n > 6 ? 8.5 : 9.5, pad = 3;
-      // Spaltenbreite nach Inhalt (gekappt), mindestens 6 %
-      const want = Array.from({ length: n }, (_, c) => Math.min(220, Math.max(24, ...rows.slice(0, 200).map(r => F[head && r === rows[0] ? 'b' : 'r'].widthOfTextAtSize(safe(r[c], 'r'), size) + 2 * pad))));
+      // Spaltenbreite wie im Original (z. B. Word-Tabellenraster), sonst nach Inhalt (gekappt), mindestens 6 %
+      const want = widths?.length === n ? widths.map(f => f * W) : Array.from({ length: n }, (_, c) => Math.min(220, Math.max(24, ...rows.slice(0, 200).map(r => F[head && r === rows[0] ? 'b' : 'r'].widthOfTextAtSize(safe(r[c], 'r'), size) + 2 * pad))));
       const sum = want.reduce((a, b) => a + b, 0), cw = want.map(w => Math.max(W * 0.06, w * W / sum));
       const scale = W / cw.reduce((a, b) => a + b, 0); for (let c = 0; c < n; c++) cw[c] *= scale;
       const layout = (r, bold) => { const k = bold ? 'b' : 'r', lines = r.map((v, c) => wrap(safe(v, k), F[k], size, cw[c] - 2 * pad)); return { k, lines, h: Math.max(...lines.map(l => l.length)) * size * 1.3 + 2 * pad }; };
-      const drawRow = (r, bold, lay = layout(r, bold)) => {
+      const drawRow = (r, bold, lay = layout(r, bold), ri = rows.indexOf(r)) => {
         const { k, lines, h } = lay; let x = M;
         for (let c = 0; c < n; c++) {
           page.drawRectangle({ x, y: y - h, width: cw[c], height: h, borderColor: L.rgb(0.7, 0.7, 0.7), borderWidth: 0.5, color: bold ? L.rgb(0.93, 0.93, 0.93) : undefined });
-          const num = !bold && /^-?[\d.,\s]+(?:€|EUR|%)?$/.test(r[c]) && /\d/.test(r[c]);   // Zahlen rechtsbündig
+          // Ausrichtung wie im Original (Word), sonst Zahlen rechtsbündig
+          const al = aligns?.[ri]?.[c] || (!bold && /^-?[\d.,\s]+(?:€|EUR|%)?$/.test(r[c]) && /\d/.test(r[c]) ? 'right' : 'left');
           lines[c].forEach((ln, j) => {
             const tw = F[k].widthOfTextAtSize(ln, size);
-            page.drawText(ln, { x: num ? x + cw[c] - pad - tw : x + pad, y: y - pad - (j + 1) * size * 1.3 + size * 0.3, size, font: F[k] });
+            page.drawText(ln, { x: al === 'right' ? x + cw[c] - pad - tw : al === 'center' ? x + (cw[c] - tw) / 2 : x + pad, y: y - pad - (j + 1) * size * 1.3 + size * 0.3, size, font: F[k] });
           });
           x += cw[c];
         }
@@ -191,7 +192,7 @@
       else if (b.type === 'quote') { const y0 = y, p0 = page; text1(b.text, { x: M + 14, width: W - 14, color: gray }); if (page === p0) page.drawLine({ start: { x: M + 4, y: y0 - 2 }, end: { x: M + 4, y: y + 2 }, thickness: 2, color: L.rgb(0.75, 0.75, 0.75) }); y -= 6; }
       else if (b.type === 'code' || b.type === 'pre') { text1(b.text, { k: 'm', size: b.type === 'pre' ? 9.5 : 9, lead: 1.3 }); y -= 6; }
       else if (b.type === 'hr') { need(14); y -= 7; page.drawLine({ start: { x: M, y }, end: { x: PW - M, y }, thickness: 0.6, color: L.rgb(0.7, 0.7, 0.7) }); y -= 7; }
-      else if (b.type === 'table') table(b.rows, b.head);
+      else if (b.type === 'table') table(b.rows, b.head, b.widths, b.aligns);
     }
     }
     await render(blocks);

@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-23
 
+### Word → PDF: Tabellen wie in Word (app-v183)
+- Spaltenbreiten aus dem Word-Tabellenraster (w:tblGrid) statt nach Inhalt, Ausrichtung je Zelle wie in Word (links/zentriert/rechts) statt automatisch rechtsbündiger Zahlen, Kopfzeile auch erkannt, wenn sie nur fett formatiert ist (ohne „Überschrift wiederholen“) – fett, grau hinterlegt und auf Folgeseiten wiederholt.
+- Texterkennung: auch die hellgrauen Kantenpixel neben entfernten Tabellenlinien werden in der Arbeitskopie entfernt. Ein Lesefehler „CGrundgebuehr“ in der Testrechnung bleibt – er kommt von Tesseract selbst (Linien sind nachweislich weg).
+- Test: tests/office.test.js (Raster 1:3:2, fette Kopfzeile, rechtsbündige Zelle); Browser: in Word erzeugtes Angebot – Tabelle jetzt wie im Word-Original; 205 Tests.
+
 ### Texterkennung bei Tabellen mit Rahmenlinien (app-v182)
 - Messung: gescannte Rechnung mit Tabellenrahmen (200 dpi) – Tesseract las die Linien als „[“, „|“, „_“ und ließ Zellen aus (Positionsnummern, „0,32“, „2,10“, die ganze dritte Zeile fehlten); in Word zerfiel die Kopfzeile.
 - Jetzt: vor der Texterkennung werden in einer Arbeitskopie lange, dünne waagrechte und senkrechte Linien entfernt (DocDetect.removeLines; dicke Balken, z. B. weiße Schrift auf Schwarz, und Schrift bleiben; die angezeigte und gespeicherte Seite bleibt unverändert). Ergebnis: alle Zellen erkannt.

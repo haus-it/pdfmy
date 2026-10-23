@@ -186,3 +186,18 @@ test('Word: Kopfzeile mit Logo, Fußzeile mit Seitenzahl auf jeder Seite, fett u
   const fontsUsed = new Set(); for (const [, o] of d.context.enumerateIndirectObjects()) { const bf = o?.get?.(L.PDFName.of('BaseFont')); if (bf) fontsUsed.add(String(bf).replace(/^\/[A-Z]{6}\+/, '/')); }
   assert.ok([...fontsUsed].some(x => /Bold/.test(x)) && [...fontsUsed].some(x => /Oblique/.test(x)), 'fett und kursiv eingebettet: ' + [...fontsUsed]);
 });
+
+test('Word: Tabelle mit Spaltenbreiten aus dem Raster, fetter Kopfzeile und Ausrichtung wie im Original', async () => {
+  const tc = (t, ppr = '', rpr = '') => `<w:tc>${p(r(t, rpr), ppr)}</w:tc>`;
+  const tbl = '<w:tbl><w:tblGrid><w:gridCol w:w="1000"/><w:gridCol w:w="3000"/><w:gridCol w:w="2000"/></w:tblGrid>'
+    + `<w:tr>${tc('Pos', '', '<w:b/>')}${tc('Leistung', '', '<w:b/>')}${tc('Preis', '', '<w:b/>')}</w:tr>`
+    + `<w:tr>${tc('1')}${tc('Einrichtung')}${tc('450,00 €', '<w:jc w:val="right"/>')}</w:tr></w:tbl>`;
+  const z = await zipDeflate({ 'word/document.xml': `<w:document ${W}><w:body>${tbl}</w:body></w:document>` });
+  const { blocks } = await Office.docx(z);
+  const t = blocks.find(b => b.type === 'table');
+  assert.equal(t.head, true, 'fette erste Zeile = Kopfzeile');
+  assert.deepEqual(t.widths.map(w => Math.round(w * 6)), [1, 3, 2]);
+  assert.deepEqual(t.aligns[1], ['left', 'left', 'right']);
+  const pdf = await TP.build(L, { blocks, fonts });
+  assert.ok(pdfText(pdf).includes('450,00 €'));
+});

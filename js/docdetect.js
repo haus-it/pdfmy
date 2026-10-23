@@ -298,7 +298,8 @@
     }
     // nur dünne Linien: Dicke quer zur Linie höchstens „thick“ Pixel
     let removed = 0;
-    const clear = i => { const o = i * 4; rgba[o] = rgba[o + 1] = rgba[o + 2] = 255; removed++; };
+    const gone = new Uint8Array(n);
+    const clear = i => { const o = i * 4; rgba[o] = rgba[o + 1] = rgba[o + 2] = 255; gone[i] = 1; removed++; };
     for (let x = 0; x < W; x++) for (let y = 0; y < H;) {   // waagrechte Linien: senkrechte Ausdehnung der Markierung
       if (!(mark[y * W + x] & 1)) { y++; continue; }
       let e = y; while (e < H && mark[e * W + x] & 1) e++;
@@ -310,6 +311,15 @@
       let e = x; while (e < W && mark[y * W + e] & 2) e++;
       if (e - x <= thick) for (let k = x; k < e; k++) if (rgba[(y * W + k) * 4] !== 255 || rgba[(y * W + k) * 4 + 1] !== 255) clear(y * W + k);
       x = e;
+    }
+    // hellgraue Kantenpixel der Kantenglättung neben entfernten Linien (sonst liest Tesseract dort „C“ oder „l“); dunkle Schrift bleibt
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      if (!gone[y * W + x]) continue;
+      for (const [dx, dy] of [[1, 0], [2, 0], [-1, 0], [-2, 0], [0, 1], [0, 2], [0, -1], [0, -2]]) {
+        const X = x + dx, Y = y + dy; if (X < 0 || Y < 0 || X >= W || Y >= H) continue;
+        const j = Y * W + X, o = j * 4; if (gone[j]) continue;
+        if (rgba[o] * 0.299 + rgba[o + 1] * 0.587 + rgba[o + 2] * 0.114 >= 150) { rgba[o] = rgba[o + 1] = rgba[o + 2] = 255; }
+      }
     }
     return removed;
   }
