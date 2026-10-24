@@ -5,7 +5,7 @@
    Updates laden nur geänderte Dateien (Update-Strategie, KONZEPT.md): Der Offline-Speicher bleibt über Versionen bestehen; beim
    Installieren wird jede gespeicherte Datei mit ihrer Prüfsumme in pruefsummen.json verglichen und nur bei Abweichung neu geladen.
    Bei 100.000 Nutzern spart das je Veröffentlichung Terabytes (vorher: alle ~18 MB je Gerät bei jeder neuen VERSION). */
-const VERSION = 'app-v192';
+const VERSION = 'app-v194';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',
@@ -110,9 +110,27 @@ self.addEventListener('activate', e => {
         await store.put(req, await stage.match(req));
       }
     }
+    await store.put('__version__', new Response(VERSION));   // Stand der aktiven Fassung für die Versionsanzeige der App
     // alte Speicher je VERSION und Zwischenspeicher entfernen
-    for (const k of await caches.keys()) if (k !== STORE) await caches.delete(k);
+    for (const k of await caches.keys()) if (k !== STORE && k !== SHARE) await caches.delete(k);   // geteilte Dateien (Android) bleiben, bis die App sie übernommen hat
     await self.clients.claim();
+  })());
+});
+/* Android „Teilen“ / „Öffnen mit → PDFMy“ (share_target im Manifest): Die installierte App bekommt die Datei per POST an ./teilen.
+   Der Service Worker legt sie nur kurz im Gerätespeicher ab (SHARE) und öffnet die App; die App übernimmt sie und löscht den Speicher.
+   Die Datei geht nie an den Server – die Anfrage beantwortet der Service Worker selbst. */
+const SHARE = 'pdfmy-teilen';
+self.addEventListener('fetch', e => {
+  const u = new URL(e.request.url);
+  if (e.request.method !== 'POST' || u.origin !== location.origin || !u.pathname.endsWith('/teilen')) return;
+  e.respondWith((async () => {
+    try {
+      const fd = await e.request.formData(), files = fd.getAll('dateien').filter(f => f && typeof f !== 'string' && f.size);
+      const c = await caches.open(SHARE);
+      for (const k of await c.keys()) await c.delete(k);
+      for (const [i, f] of files.entries()) await c.put(new Request(`__teilen__/${i}`), new Response(f, { headers: { 'content-type': f.type || 'application/octet-stream', 'x-name': encodeURIComponent(f.name || 'Datei') } }));
+      return Response.redirect(new URL(`./?geteilt=${files.length}`, BASE).href, 303);
+    } catch { return Response.redirect(new URL('./?geteilt=0', BASE).href, 303); }
   })());
 });
 self.addEventListener('fetch', e => {

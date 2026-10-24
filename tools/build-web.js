@@ -230,6 +230,9 @@ ErrorDocument 404 /index.html
   RewriteRule ^ https://${site.domain}%{REQUEST_URI} [R=301,L]
   RewriteCond %{HTTP_HOST} ^www\\. [NC]
   RewriteRule ^ https://${site.domain}%{REQUEST_URI} [R=301,L]
+  # Teilen am Handy nimmt der Service Worker im Browser an; fehlt er (Websitedaten gelöscht),
+  # sofort zurück zur App – der Server verarbeitet und speichert nichts
+  RewriteRule ^teilen$ /?geteilt=0 [R=303,L]
 </IfModule>
 
 # Richtige Dateitypen; .gz NICHT als Content-Encoding ausliefern (die OCR entpackt selbst)
@@ -425,6 +428,8 @@ oder direkt: <code>curl -fsSL https://${site.domain}/download/${linuxSh} | sh</c
 <li>Nur bei sehr alten Geräten ohne eSCL/WSD: Herstellertreiber – HP <code>hplip</code>, Brother <code>brscan4</code>/<code>brscan5</code>, Epson <code>epsonscan2</code>, Samsung/Xerox „Unified Linux Driver“.</li>
 </ul>
 <p>pdfmy Scan sucht über Bonjour/avahi, per WSD-Rundruf und fragt zusätzlich jede Adresse im eigenen Netz direkt (Port 80/443) – so findet es Geräte auch, wenn die Firewall Rundruf-Antworten verwirft (z. B. firewalld unter Fedora) oder das Paket <code>avahi-utils</code> fehlt. Das Protokoll im Scan-Fenster zeigt, welcher Weg was gefunden hat. Notfalls: <i>„Gerät per IP-Adresse hinzufügen“</i> – das geht immer. Entfernen: <a href="download/pdfmy-scan-linux-entfernen.sh" download>pdfmy-scan-linux-entfernen.sh</a> herunterladen und mit <code>sh</code> starten.</p>
+<h2 id="chromebook">Auf dem Chromebook (Chrome OS)</h2>
+<p>Auf dem <b>Chromebook</b> braucht PDFMy kein Zusatzprogramm – pdfmy Scan läuft unter Chrome OS nicht, wird aber auch nicht gebraucht: Chrome OS steuert viele Netzwerk- und USB-Scanner selbst an (AirScan/eSCL, ohne Treiber). Scanner einrichten unter <i>Einstellungen → Erweitert → Drucken und Scannen</i>, dann mit der App <b>„Scannen“</b> als PDF oder JPG in einen Ordner scannen, z. B. <i>Meine Dateien › Scans</i>. In PDFMy im Scan-Fenster <i>„Diesen Ordner als Scan-Ordner verbinden“</i> – jeder neue Scan erscheint automatisch, mit Texterkennung. PDFMy über <i>„App herunterladen“</i> installieren: Dann öffnet die App „Dateien“ PDFs mit <i>Öffnen mit → PDFMy</i>; Drucken geht über <i>„Als PDF speichern“</i>, Google Drive ist in der App „Dateien“ eingebunden (als Ablageordner wählbar).</p>
 <h2 id="geraet-fehlt">Ihr Drucker oder Scanner ist noch nicht dabei?</h2>
 <div style="border-left:4px solid #4A5280;background:var(--bg);padding:10px 14px;margin:14px 0">
 <p style="margin:0 0 8px"><b>Kein Problem – kurz Bescheid geben, wir machen den Rest.</b> Wir prüfen Ihr Modell, passen pdfmy Scan bei Bedarf an und melden uns mit einer Lösung. Kostenlos.</p>

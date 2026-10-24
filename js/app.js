@@ -105,7 +105,8 @@ function status(msg, pct) {
 const IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const IS_MOBILE = IS_IOS || /Android|Mobile/i.test(navigator.userAgent);
 const IS_MAC = !IS_IOS && /Macintosh|Mac OS X/.test(navigator.userAgent);
-const IS_LINUX = !IS_MAC && !IS_IOS && /Linux|X11/.test(navigator.userAgent) && !/Android|CrOS/.test(navigator.userAgent);   // Linux-PC: pdfmy Scan für Linux   // Mac: kein pdfmy Scan (Windows), Scannen über „Digitale Bilder“ + Scan-Ordner
+const IS_LINUX = !IS_MAC && !IS_IOS && /Linux|X11/.test(navigator.userAgent) && !/Android|CrOS/.test(navigator.userAgent);
+const IS_CHROMEOS = /CrOS/.test(navigator.userAgent);   // Chromebook: kein pdfmy Scan (läuft dort nicht) – eingebaute Wege von Chrome OS   // Linux-PC: pdfmy Scan für Linux   // Mac: kein pdfmy Scan (Windows), Scannen über „Digitale Bilder“ + Scan-Ordner
 const MAX_SIDE = IS_MOBILE ? 2600 : 3300;
 document.documentElement.classList.toggle('mobile', IS_MOBILE);
 // Bild laden, EXIF-Drehung beachten – mit Rückfall für ältere Safari-Versionen
@@ -4106,7 +4107,7 @@ async function openScanDialog() {
   document.querySelectorAll('.scanVerNew').forEach(e => e.textContent = IS_MAC || IS_LINUX ? SCAN_MAC_LATEST : SCAN_LATEST);
   $('#guideLink').href = APP.edition === 'web' ? 'scanner.html' : 'https://pdfmy.de/scanner.html';
   document.querySelectorAll('#scanDlg [data-connect]').forEach(b => b.disabled = !window.showDirectoryPicker);
-  $('#scanSetupMac').hidden = !IS_MAC; $('#scanSetupLinux').hidden = !IS_LINUX; $('#scanSetupWin').hidden = IS_MAC || IS_LINUX; $('#scanMacSafari').hidden = !!window.showDirectoryPicker;
+  $('#scanSetupMac').hidden = !IS_MAC; $('#scanSetupLinux').hidden = !IS_LINUX; $('#scanSetupCros').hidden = !IS_CHROMEOS; $('#scanSetupWin').hidden = IS_MAC || IS_LINUX || IS_CHROMEOS; $('#scanMacSafari').hidden = !!window.showDirectoryPicker;
   showScan('wait'); $('#scanWait').textContent = 'Verbinde …';
   if (!$('#scanDlg').open) $('#scanDlg').showModal();
   if (await scanHelperRunning()) {
@@ -4391,6 +4392,18 @@ const unreadable = (name, e) => {
   return `${head} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). ${save}`;
 };
 window.unreadable = unreadable;
+// Android: über „Teilen“ / „Öffnen mit → PDFMy“ übergebene Dateien (share_target; der Service Worker hat sie kurz im Gerätespeicher abgelegt)
+addEventListener('load', async () => {   // erst wenn alle Programmteile geladen sind
+  const q = new URLSearchParams(location.search); if (!q.has('geteilt')) return;
+  history.replaceState(null, '', location.pathname + location.hash);
+  try {
+    const c = await caches.open('pdfmy-teilen'), files = [];
+    for (const req of await c.keys()) { const res = await c.match(req); const name = decodeURIComponent(res.headers.get('x-name') || 'Datei'); files.push(new File([await res.blob()], name, { type: res.headers.get('content-type') || '' })); }
+    await caches.delete('pdfmy-teilen');
+    if (!files.length) { status('Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen.'); return; }
+    await importFiles(files);
+  } catch (e) { console.warn('Geteilte Datei', e); status('Die geteilte Datei ließ sich nicht übernehmen: ' + e.message); }
+});
 if ('launchQueue' in window) launchQueue.setConsumer(async params => {
   if (!params.files?.length) return;
   let files;
@@ -4867,7 +4880,9 @@ $('#signNew').onclick = () => openSign(null, 'sign');
 // Versionsstand = Name des Offline-Speichers (Build-Zeitstempel, z. B. pdfmy-202610150012 → „Stand 15.10.2026, 02:12 Uhr“)
 async function versionLabel(report) {   // report: für Fehlerberichte immer deutsch, sonst im Format der Oberfläche
   try {
-    const k = (await caches.keys()).find(x => /^(pdfmy|mentor|app)-/.test(x)) || '';
+    // Stand der aktiven Fassung: der Service Worker legt ihn im dauerhaften Speicher ab (Name „pdfmy-dateien“ trägt keine Version mehr)
+    const mark = await caches.match('__version__').catch(() => null);
+    const k = mark ? (await mark.text()).trim() : (await caches.keys()).find(x => /^(pdfmy|mentor|app)-\d/.test(x)) || '';
     const m = k.match(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/);
     if (!m) return k ? `Version ${k.replace(/^app-/, '')}` : '';
     const d = new Date(Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5]));

@@ -57,5 +57,36 @@
       "focus-existing",
       "auto"
     ]
+  },
+  "share_target": {
+    "action": "./teilen",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "dateien",
+          "accept": [
+            "application/pdf",
+            ".pdf",
+            "image/jpeg",
+            ".jpg",
+            ".jpeg",
+            "image/png",
+            ".png",
+            "image/heic",
+            ".heic",
+            "image/tiff",
+            ".tif",
+            ".tiff",
+            "image/webp",
+            ".webp"
+          ]
+        }
+      ]
+    }
   }
 }

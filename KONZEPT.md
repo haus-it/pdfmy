@@ -114,6 +114,19 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Umgesetzt 24.10.2026: PDFMy am Handy beim Öffnen von PDFs anbieten (Android-Teilen-Ziel)
+**Anlass (GF 24.10.2026):** Android und iPhone bieten PDFMy beim Öffnen einer PDF nicht an. Ursache: file_handlers gelten nur für Desktop-Chrome. Android: Web Share Target der installierten App; iOS: für Web-Apps nicht vorgesehen (nur native App aus dem App Store – Entscheidung GF, Kosten Apple Developer Program, Prüfverfahren, Pflege einer zweiten Codebasis).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Service Worker nimmt die Datei im Browser entgegen, eigener Zwischenspeicher, nach Übernahme gelöscht; fehlt der Service Worker, leitet der Server ohne Verarbeitung zurück |
+| 2 Kein Server | passt |
+| 3 Kostenlos, ohne Konto | passt |
+| 4 Einfach | passt: „Teilen → PDFMy“, wie bei nativen Apps |
+| 5 Normgerecht und prüfbar | passt: W3C-Web-Share-Target, Browser-Test |
+| 6 Wenig aktive Inhalte | passt |
+**Umgesetzt (app-v194).** Offen: Test auf echtem Android-Gerät; Entscheidung GF zu einer iOS-App.
+
 ### Entschieden 24.10.2026: sichere Update-Strategie – Stufe 1
 **Ausgangslage:** `tools\deploy.ps1` testet (npm test), baut und lädt direkt nach pdfmy.de – ohne Probelauf im Browser und ohne Rückweg; ein Fehler erreicht sofort alle Nutzer (Service Worker lädt zuerst übers Netz). pdfmy-Scan.exe wird bei jedem Ausrollen neu signiert, auch unverändert (Signaturkontingent, Fehlerquelle). pdfmy Scan prüft vor einem Update nur den SHA-256-Wert aus `download/version.json` – vom selben Server wie die Datei; wer den Server übernimmt, kann beides tauschen.
 **Stufe 1 (umgesetzt 24.10.2026):**

@@ -1671,6 +1671,15 @@ html.i18n-wait body{visibility:hidden}
     </ol>
     <p class="hint">Für USB-Scanner zusätzlich: <code class="sel">sudo apt install sane-utils sane-airscan ipp-usb</code> (Fedora: <code>dnf install sane-backends sane-airscan ipp-usb</code>). <a class="linuxGuide" target="_blank">Anleitung für alle Distributionen</a></p>
    </div>
+   <div id="scanSetupCros" hidden>
+    <p>Auf dem <b>Chromebook</b> braucht PDFMy kein Zusatzprogramm: Chrome OS steuert viele Netzwerk- und USB-Scanner selbst an (AirScan/eSCL, ohne Treiber).</p>
+    <ol class="steps">
+      <li>Scanner einrichten, falls noch nicht geschehen: <i>Einstellungen → Erweitert → Drucken und Scannen → Scanner</i>.</li>
+      <li>Im Startprogramm die App <b>„Scannen“</b> öffnen, als <i>PDF</i> oder <i>JPG</i> scannen und einen Speicherort wählen, z. B. <i>Meine Dateien › Scans</i>.</li>
+      <li><button type="button" class="btn primary" data-connect>Diesen Ordner als Scan-Ordner verbinden</button> – jeder neue Scan erscheint dann automatisch in PDFMy (Texterkennung inklusive).</li>
+    </ol>
+    <p class="hint">Oder: Scans einfach ins PDFMy-Fenster ziehen bzw. mit dem Handy abfotografieren (<i>„Mit dem Handy scannen“</i>). Drucker „PDFMy“, Office-Programme und Cloud-Ordner über pdfmy Scan gibt es auf Chromebooks nicht – dafür die eingebauten Wege von Chrome OS (Hilfe: „Chromebook“).</p>
+   </div>
    <div id="scanSetupWin">
     <p>Damit pdfmy Ihren Scanner direkt ansteuern kann, braucht es einmalig das kleine Programm <b>pdfmy Scan</b> (Version <span class="scanVerNew"></span>, ca. 100 KB, kostenlos). Es findet Netzwerkscanner automatisch – <b>ohne Treiber</b> – und auch USB-Scanner.</p>
     <ol class="steps">
