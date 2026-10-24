@@ -14,6 +14,7 @@
     epa: { label: 'ePA (elektronische Patientenakte)', basis: 'gematik „ePA für alle“, KBV-Praxisnachrichten: PDF/A, höchstens 25 MB je Dokument' },
     bitv: { label: 'Barrierefrei (BITV 2.0 / PDF/UA)', basis: 'PDF/UA-1 (ISO 14289-1), BITV 2.0, EN 301 549 Kap. 10, BFSG' },
     gobd: { label: 'Archiv (GoBD, PDF/A)', basis: 'GoBD Rz. 58 ff., 118 ff. (Unveränderbarkeit, maschinelle Auswertbarkeit), PDF/A (ISO 19005-2)' },
+    pdfa: { label: 'PDF/A – alle Prüfpunkte', basis: 'ISO 19005-2 (PDF/A-2b) – Kurzprüfung der häufigsten Ablehnungsgründe von Archiven, Gerichten und Behörden' },
   };
   const EPA_MAX = 25 * 1024 * 1024;
   const mb = n => n > 1048576 ? (n / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
@@ -48,6 +49,10 @@
       add(info.title ? true : null, 'Titel/Beschreibung gesetzt', info.title || 'Titel erleichtert das Wiederfinden im Archiv (Hinweis).');
       if (f.signed) add(null, 'Digital signiert', 'Signierte Originale unverändert aufbewahren – jede Änderung macht die Signatur ungültig.');
       if (info.einvoice) add(null, 'E-Rechnung', 'Bei ZUGFeRD/XRechnung ist die XML-Datei das Original – unverändert mit aufbewahren (GoBD, § 14 UStG).');
+    }
+    if (profile === 'pdfa') {   // vollständige PDF/A-Kurzprüfung (früher „PDF/A prüfen“): jeder Punkt einzeln
+      const pa = await R.PdfACheck.check(u8);
+      for (const x of pa.items) add(x.ok, x.title, x.detail);
     }
     if (profile === 'bitv') {
       const r = await R.A11yCheck.check(u8, { pages: info.pages, pagesWithText: info.textPages });

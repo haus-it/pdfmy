@@ -40,6 +40,13 @@ test('ePA und GoBD verlangen PDF/A; BITV verlangt Tags', async () => {
   assert.ok(titles(bitv).some(t => /^✗ Getaggtes PDF/.test(t)));
 });
 
+test('PDF/A-Profil zeigt alle Prüfpunkte der PDF/A-Kurzprüfung einzeln', async () => {
+  const pdf = await plainPdf(), r = await P.run('pdfa', pdf);
+  const n = (await globalThis.PdfACheck.check(pdf)).items.length;
+  assert.equal(r.items.length, n);
+  assert.ok(titles(r).some(t => /^✗ Als PDF\/A gekennzeichnet/.test(t)) && titles(r).some(t => /Schriften eingebettet/.test(t)));
+});
+
 test('Bericht: Überschrift, Tabelle mit allen Prüfpunkten, Fingerabdruck und Grundlage', async () => {
   const r = await P.run('bea', await plainPdf(), { name: 'Klage.pdf' });
   const b = P.reportBlocks(r, { file: 'Klage.pdf', date: new Date(2026, 9, 23, 12, 0) });

@@ -1869,7 +1869,7 @@ $('#btnSummary').onclick = () => { closeMenu(); openSummary(); };
 
 /* ---------- Befehlssuche (Strg+K): jede Funktion per Tastatur finden – Kacheln, Werkzeuge, Menü, Kopfzeile ---------- */
 const CMD_SYNONYMS = { scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
-  protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', btnPdfaCheck: 'archiv validieren konform langzeit iso 19005 veraPDF', btnSummary: 'ki zusammenfassung zusammenfassen frage chat kernpunkte ai', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
+  protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', btnPreflight: 'prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight', btnSummary: 'ki zusammenfassung zusammenfassen frage chat kernpunkte ai', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
   bates: 'nummerieren akte', btnCam: 'foto handy smartphone kamera abfotografieren', tileCam: 'foto handy smartphone kamera abfotografieren', btnTax: 'datev buchhaltung steuer belege monat export', tileTax: 'datev buchhaltung steuer belege monat export', pdfa: 'archiv revisionssicher', btnJournal: 'fristen post liste', btnSettings: 'optionen kürzel', btnFile: 'ablage archivieren' };
 function commands() {
   const out = [], seen = new Set();
@@ -2793,49 +2793,6 @@ $('#einvChkFile').onchange = async e => {
   } catch (err) { einvChkRender({ ok: false, format: '', items: [{ level: 'fehler', rule: '', text: 'Datei lässt sich nicht lesen: ' + err.message }] }, f.name); }
 };
 
-/* ---------- Für beA prüfen (ERVB 2025) ---------- */
-const BEA_ICON = { ok: '✓', fehler: '✗', hinweis: 'i' };
-const BEA_LABEL = { ok: 'erfüllt', fehler: 'nicht erfüllt', hinweis: 'Hinweis' };
-function beaRender(groups) {
-  $('#beaList').innerHTML = groups.map(g => (g.title ? `<li><h4>${esc(g.title)}</h4></li>` : '') + g.items.map(i =>
-    `<li class="${i.level}"><span class="bi" aria-hidden="true">${BEA_ICON[i.level]}</span><span><span class="sr">${BEA_LABEL[i.level]}: </span>${esc(i.text)}</span></li>`).join('')).join('');
-}
-async function openBea() {
-  if (!state.pages.length) return;
-  const name = BeaCheck.checkName(filename()).suggestion;
-  $('#beaName').value = name; $('#beaList').innerHTML = '<li>Prüfe …</li>'; $('#beaGo').disabled = false;
-  $('#beaDlg').showModal();
-  const groups = [], docs = [...new Set(state.pages.filter(p => p.kind === 'pdf').map(p => p.docIdx))];
-  const textPages = state.pages.filter(p => (p.native || p.ocr?.text || '').trim()).length;
-  for (const di of docs) {
-    const d = state.docs[di]; if (!d) continue;
-    const r = await BeaCheck.checkPdf(d.filled || d.bytes, { name: d.name });
-    groups.push({ title: `Geöffnete Datei: ${d.name}`, items: r.items.filter(i => i.level !== 'ok' || i.key === 'druck') });
-  }
-  if (state.pages.some(p => p.kind === 'image')) groups.push({ title: 'Scans und Fotos', items: [{ level: 'ok', text: 'Werden als PDF/A erzeugt' }] });
-  groups.push({ title: 'Beim Speichern', items: [
-    ...(textPages < state.pages.length ? [{ level: 'hinweis', text: `${state.pages.length - textPages} von ${state.pages.length} Seite(n) ohne Text – Texterkennung empfohlen (keine Pflicht)` }] : [{ level: 'ok', text: 'Durchsuchbar (Text auf allen Seiten)' }]),
-    ...BeaCheck.checkName($('#beaName').value).issues.map(t => ({ level: 'fehler', text: 'Dateiname: ' + t })) ] });
-  beaRender(groups);
-}
-$('#btnBea').onclick = openBea;
-$('#beaCancel').onclick = () => $('#beaDlg').close();
-$('#beaName').oninput = () => { const r = BeaCheck.checkName($('#beaName').value); $('#beaName').setAttribute('aria-invalid', String(!r.ok)); $('#beaName').title = r.ok ? '' : r.issues.join(' · '); };
-$('#beaForm').onsubmit = async e => {
-  e.preventDefault();
-  let name = $('#beaName').value.trim(); if (!/\.pdf$/i.test(name)) name += '.pdf';
-  const n = BeaCheck.checkName(name); if (!n.ok) { name = n.suggestion; $('#beaName').value = name; }
-  $('#beaGo').disabled = true; $('#beaList').innerHTML = '<li>Erzeuge PDF/A …</li>';
-  try {
-    const bytes = await buildPdf(state.pages, state.meta, { pdfa: true, bea: true });
-    const r = await BeaCheck.checkPdf(bytes, { name, pages: state.pages.length, textPages: state.pages.filter(p => (p.native || p.ocr?.text || '').trim()).length });
-    beaRender([{ title: r.ok ? 'Gespeicherte Datei erfüllt die Vorgaben' : 'Gespeicherte Datei – bitte prüfen', items: r.items }]);
-    const where = await deliver(bytes, name, 'application/pdf', state.meta, true);
-    status(where ? `beA-tauglich gespeichert: ${name}${r.ok ? '' : ' – mit Hinweisen, siehe Prüfung'}` : 'Speichern abgebrochen.');
-  } catch (err) { console.error(err); status('Fehler beim Speichern: ' + err.message); }
-  $('#beaGo').disabled = false;
-};
-
 /* ---------- Anlagen nummerieren (Anlage K 1, B 1 …), Verzeichnis, einzelne Dateien ---------- */
 // Jede Datei (bzw. jeder Scan-Stapel) in der Reihenfolge der Seitenübersicht ist eine Anlage
 function anlGroups() {
@@ -2922,44 +2879,8 @@ $('#anlForm').onsubmit = async e => {
 };
 
 
-/* ---------- Barrierefreiheit prüfen (Prüfbericht) und barrierefrei speichern ---------- */
-$('#btnA11y').onclick = async () => {
-  closeMenu();
-  const pdfPage = state.pages.find(p => p.kind === 'pdf'), d = pdfPage && state.docs[pdfPage.docIdx];
-  $('#a11yList').innerHTML = ''; $('#a11yHint').textContent = '';
-  if (!d) {
-    $('#a11yWhat').textContent = 'Gescannte Seiten / Fotos';
-    $('#a11yHint').textContent = 'Aus Scans und Fotos erstellt PDFMy beim Speichern als PDF/A automatisch ein barrierefreies PDF: Texterkennung, Lesereihenfolge, Sprache, Titel und Tags (PDF/UA-1).';
-  } else {
-    $('#a11yWhat').textContent = `Prüfung von „${d.name}“ (Original)`;
-    const pages = state.pages.filter(p => p.kind === 'pdf' && state.docs[p.docIdx] === d);
-    const r = await A11yCheck.check(d.filled || d.bytes, { pages: pages.length, pagesWithText: pages.filter(p => p.native).length });
-    $('#a11yList').innerHTML = r.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(x.title)}</b><span class="sr-only">: ${x.ok === true ? 'erfüllt' : x.ok === false ? 'nicht erfüllt' : 'Hinweis'}</span><small>${esc(x.detail)}</small></span></li>`).join('');
-    const bad = r.filter(x => x.ok === false).length;
-    $('#a11yHint').textContent = bad ? `${bad} Punkt(e) nicht erfüllt. „Barrierefrei speichern“ erzeugt ein PDF/A, das zugleich PDF/UA-1 ist – mit Texterkennung, Tags, Sprache und Titel.` : 'Dieses PDF erfüllt alle geprüften Punkte.';
-  }
-  $('#a11yDlg').showModal();
-};
+/* ---------- Prüfbericht der Barrierefreiheit (nach „Barrierefrei speichern“); die Prüfung selbst steckt in der Vorabprüfung ---------- */
 $('#a11yClose').onclick = () => $('#a11yDlg').close();
-// PDF/A-Kurzprüfung (js/pdfacheck.js): Bericht wie bei der Barrierefreiheit; „Als PDF/A speichern“ repariert (Schriften, Farbprofil, Skripte …)
-$('#btnPdfaCheck').onclick = async () => {
-  closeMenu();
-  const pdfPage = state.pages.find(p => p.kind === 'pdf'), d = pdfPage && state.docs[pdfPage.docIdx];
-  $('#pdfaList').innerHTML = ''; $('#pdfaHint').textContent = '';
-  if (!d) {
-    $('#pdfaWhat').textContent = 'Gescannte Seiten / Fotos';
-    $('#pdfaHint').textContent = 'Aus Scans und Fotos erstellt PDFMy beim Speichern als PDF/A automatisch ein gültiges PDF/A-2b (geprüft mit veraPDF).';
-  } else {
-    $('#pdfaWhat').textContent = `Prüfung von „${d.name}“ (Original)`;
-    const r = await PdfACheck.check(d.filled || d.bytes);
-    $('#pdfaList').innerHTML = r.items.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(x.title)}</b><span class="sr-only">: ${x.ok === true ? 'erfüllt' : x.ok === false ? 'nicht erfüllt' : 'Hinweis'}</span><small>${esc(x.detail)}</small></span></li>`).join('');
-    const bad = r.items.filter(x => x.ok === false).length;
-    $('#pdfaHint').textContent = bad ? `${bad} Punkt(e) nicht erfüllt${r.claim ? ` – obwohl die Datei sich als ${r.claim} ausgibt` : ''}. „Als PDF/A speichern“ erzeugt ein gültiges PDF/A-2b (zugleich barrierefrei nach PDF/UA-1).` : `Keine Auffälligkeiten${r.claim ? ` – die Datei ist als ${r.claim} gekennzeichnet` : ''}.`;
-  }
-  $('#pdfaDlg').showModal();
-};
-$('#pdfaClose').onclick = () => $('#pdfaDlg').close();
-$('#pdfaFix').onclick = () => { $('#pdfaDlg').close(); openExport(); setRadio('x-format', 'pdfa'); updateExportUi(); status('Format PDF/A gewählt – Schriften werden eingebettet, Farbprofil, Kennung und Struktur ergänzt, Skripte entfernt.'); };
 $('#a11yFix').onclick = () => { $('#a11yDlg').close(); a11yMake(); };
 $('#btnA11yMake').onclick = () => { closeMenu(); a11yMake(); };
 
@@ -4513,7 +4434,9 @@ function preflightShow(res, name, after = false) {
   $('#pfList').innerHTML = res.items.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(I18N.t(x.title))}</b><span class="sr-only">: ${x.ok === true ? I18N.t('erfüllt') : x.ok === false ? I18N.t('nicht erfüllt') : I18N.t('Hinweis')}</span>${x.detail ? `<small>${esc(I18N.t(x.detail))}</small>` : ''}</span></li>`).join('');
   const bad = res.items.filter(x => x.ok === false).length, hint = res.items.filter(x => x.ok === null).length, h = hint ? ' ' + I18N.t(`${hint} Hinweis(e).`) : '';
   $('#pfSum').textContent = (after ? I18N.t(`Gespeichert als „${name}“ und erneut geprüft: `) : '') + (bad ? I18N.t(`${bad} Fehler – vor dem Versand beheben.`) : I18N.t('Keine Fehler gefunden.')) + h;
-  $('#pfFix').hidden = after || (!bad && !(profile === 'bitv' && hint));
+  // beA: „beA-tauglich speichern“ immer anbieten (wie früher im Dialog „Für beA prüfen“), sonst nur bei Fehlern
+  $('#pfFix').hidden = after || (!bad && !(profile === 'bitv' && hint) && profile !== 'bea');
+  $('#pfFix').textContent = I18N.t(!bad && profile === 'bea' ? 'beA-tauglich speichern' : 'Automatisch beheben');
   $('#pfBasis').textContent = I18N.t('Grundlage: ' + Preflight.PROFILES[profile].basis + '. Kurzprüfung der häufigsten Ablehnungsgründe – ersetzt keine vollständige Validierung.');
 }
 async function preflightRun() {
@@ -4524,17 +4447,36 @@ async function preflightRun() {
     const todo = state.pages.filter(p => p.kind === 'image' && !p.ocr && !p.blank && !p.photo);
     if (todo.length) { $('#pfSum').textContent = I18N.t('Texterkennung läuft …'); await waitForOcr(todo); }
     $('#pfSum').textContent = I18N.t('Prüfe …');
-    const name = baseName() + '.pdf';
-    preflightShow(await Preflight.run(profile, await preflightBytes(), pfInfo(name)), name);
+    $('#pfNameRow').hidden = profile !== 'bea';
+    const name = pfName(profile), res = await Preflight.run(profile, await preflightBytes(), pfInfo(name));
+    // beA: jede geöffnete Datei auch einzeln (wie früher „Für beA prüfen“) – wichtig, wenn mehrere Dateien unverändert eingereicht werden
+    const docs = [...new Set(state.pages.filter(q => q.kind === 'pdf').map(q => q.docIdx))].map(i => state.docs[i]).filter(Boolean);
+    if (profile === 'bea' && docs.length > 1) for (const d of docs) {
+      const r = await BeaCheck.checkPdf(d.filled || d.bytes, { name: d.name }), bad = r.items.filter(i => i.level !== 'ok');
+      if (!bad.length) res.items.push({ ok: true, title: I18N.t(`Einzeldatei „${d.name}“: keine Beanstandung`), detail: '' });
+      for (const i of bad) res.items.push({ ok: null, title: I18N.t(`Einzeldatei „${d.name}“: `) + I18N.t(i.text), detail: I18N.t('Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.') });
+    }
+    // Scans und Fotos: werden erst beim Speichern zu PDF/A bzw. PDF/UA (wie früher in „Barrierefreiheit prüfen“ / „PDF/A prüfen“ erklärt)
+    if (profile !== 'bea' && state.pages.some(q => q.kind === 'image')) res.items.push({ ok: null, title: I18N.t('Scans und Fotos'), detail: I18N.t('Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.') });
+    preflightShow(res, name);
   } catch (e) { console.error(e); $('#pfSum').textContent = I18N.t('Prüfung nicht möglich: ') + e.message; }
 }
-async function preflightOpen() {
+// Dateiname: beA mit eigenem Feld (Vorschlag nach ERVB, änderbar), sonst der Name, unter dem gespeichert würde
+const pfName = profile => profile === 'bea' ? (() => { const v = $('#pfName').value.trim() || BeaCheck.checkName(filename()).suggestion; return /\.pdf$/i.test(v) ? v : v + '.pdf'; })() : baseName() + '.pdf';
+// profile: optional fest vorgeben (z. B. 'bea'); sonst die letzte Wahl
+async function preflightOpen(profile) {
   closeMenu?.();
   if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich prüfen.'); return; }
-  const last = LS.get('pfProfile', 'bea'); $('#pfProfile').value = Preflight.PROFILES[last] ? last : 'bea';
+  const want = typeof profile === 'string' ? profile : LS.get('pfProfile', 'bea'); $('#pfProfile').value = Preflight.PROFILES[want] ? want : 'bea';
+  $('#pfName').value = BeaCheck.checkName(filename()).suggestion; $('#pfName').removeAttribute('aria-invalid');
   $('#pfDlg').showModal(); await preflightRun();
 }
-$('#btnPreflight').onclick = preflightOpen;
+let pfNameTimer = null;
+$('#pfName').oninput = () => {
+  const r = BeaCheck.checkName(pfName('bea')); $('#pfName').setAttribute('aria-invalid', String(!r.ok));
+  clearTimeout(pfNameTimer); pfNameTimer = setTimeout(preflightRun, 600);
+};
+$('#btnPreflight').onclick = () => preflightOpen();
 $('#pfProfile').onchange = preflightRun;
 $('#pfClose').onclick = () => $('#pfDlg').close();
 /* Automatisch beheben – im selben Dialog: passende Datei erzeugen (beA-tauglich, PDF/A „Klein“, barrierefrei, PDF/A),
@@ -4544,7 +4486,8 @@ $('#pfFix').onclick = async () => {
   try {
     if (p === 'bitv') await a11yFigures().catch(e => console.warn(e));   // Bilder beschreiben (optional)
     $('#pfSum').textContent = I18N.t('Erzeuge die korrigierte Datei …'); $('#pfList').innerHTML = '';
-    const stem = baseName(), name = p === 'bea' ? BeaCheck.checkName(stem + '.pdf').suggestion : stem + '.pdf';
+    const name = p === 'bea' ? (n => n.ok ? pfName('bea') : n.suggestion)(BeaCheck.checkName(pfName('bea'))) : baseName() + '.pdf';
+    if (p === 'bea') $('#pfName').value = name;
     let bytes = await buildPdf(state.pages, state.meta, { pdfa: true, bea: p === 'bea', size: p === 'epa' ? 'small' : 'balanced', onPage: () => {} });
     if (p === 'epa' && bytes.length > Preflight.EPA_MAX) bytes = await buildPdf(state.pages, state.meta, { pdfa: true, size: 'small', gray: true, onPage: () => {} });   // notfalls Graustufen
     const where = await deliver(bytes, name, 'application/pdf', state.meta, true);

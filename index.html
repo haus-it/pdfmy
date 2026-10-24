@@ -1077,12 +1077,9 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnCompare"><svg class="ic" aria-hidden="true"><use href="#i-git-compare"/></svg><span>Mit anderer Fassung vergleichen …</span></button>
         </div>
         <div class="mgrp docgrp" role="group" aria-labelledby="mgCheck"><div class="mgh" id="mgCheck">Prüfen & Formulare</div>
-          <button class="mi doc" id="btnBea" title="Prüft nach den Vorgaben der Justiz (ERVB 2025): kein JavaScript, keine Anhänge, druckbar, zulässiger Dateiname – und speichert auf Wunsch passend"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Für beA prüfen …</span></button>
           <button class="mi doc" id="btnAnl" title="Jede geöffnete Datei wird eine Anlage: Stempel „Anlage K 1“, Anlagenverzeichnis, einzelne Dateien für das beA"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Anlagen nummerieren …</span></button>
           <button class="mi doc" id="btnPreflight" title="Vor dem Versand prüfen: Gericht (beA), elektronische Patientenakte, barrierefrei (BITV), Archiv (GoBD) – mit Bericht"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Vorabprüfung …</span></button>
           <button class="mi doc" id="btnA11yMake" title="Überschriften, Absätze, Listen und Tabellen für Screenreader kennzeichnen, Inhaltsverzeichnis anlegen – als PDF/UA, mit Prüfung"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>PDF barrierefrei machen …</span></button>
-          <button class="mi doc" id="btnA11y" title="Prüfbericht: Tags, Sprache, Titel, Alternativtexte, Schriften, Lesbarkeit für Screenreader"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Barrierefreiheit prüfen …</span></button>
-          <button class="mi doc" id="btnPdfaCheck" title="Kurzprüfung nach PDF/A (Langzeitarchiv): Kennung, Farbprofil, Schriften, Skripte, Verschlüsselung – mit Reparatur"><svg class="ic" aria-hidden="true"><use href="#i-archive"/></svg><span>PDF/A prüfen …</span></button>
           <button class="mi doc" id="btnAutoForm" title="Schreiblinien, Kästen und Ankreuzfelder finden und daraus ein ausfüllbares Formular machen"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>Formularfelder erkennen …</span></button>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgOffice"><div class="mgh" id="mgOffice">Büro</div>
@@ -1453,14 +1450,6 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint" id="a11yHint"></p>
   <div class="dlgrow"><button type="button" id="a11yClose">Schließen</button><button type="button" id="a11yFix" class="primary">PDF barrierefrei machen</button></div>
 </dialog>
-<dialog id="pdfaDlg" class="sharedlg a11ydlg" aria-labelledby="pdfaT">
-  <h3 class="dlgtitle" id="pdfaT">PDF/A-Prüfung</h3>
-  <p class="hint" id="pdfaWhat" style="margin:-8px 0 10px"></p>
-  <ul id="pdfaList" class="a11ylist"></ul>
-  <p class="hint" id="pdfaHint"></p>
-  <p class="hint">Kurzprüfung der häufigsten Ablehnungsgründe von Archiven, Gerichten und Behörden (angelehnt an ISO 19005-2). Sie ersetzt keine vollständige Validierung.</p>
-  <div class="dlgrow"><button type="button" id="pdfaClose">Schließen</button><button type="button" id="pdfaFix" class="primary">Als PDF/A speichern</button></div>
-</dialog>
 <dialog id="replyDlg" class="wide replydlg" aria-labelledby="replyT"><form id="replyForm">
   <h3 class="dlgtitle" id="replyT">Antwortbrief (DIN 5008)</h3>
   <div class="replygrid">
@@ -1771,7 +1760,8 @@ html.i18n-wait body{visibility:hidden}
 <dialog id="pfDlg" class="sharedlg a11ydlg" aria-labelledby="pfT"><form method="dialog" id="pfForm">
   <h3 class="dlgtitle" id="pfT">Vorabprüfung</h3>
   <p class="hint" style="margin:-6px 0 10px">Prüft die Datei, wie sie gespeichert würde, gegen die Vorgaben des Empfängers – auf diesem Gerät, ohne Upload.</p>
-  <label class="pfsel" for="pfProfile">Empfänger bzw. Zweck <select id="pfProfile"><option value="bea">beA / Gericht (ERVB 2025)</option><option value="epa">ePA (elektronische Patientenakte)</option><option value="bitv">Barrierefrei (BITV 2.0 / PDF/UA)</option><option value="gobd">Archiv (GoBD, PDF/A)</option></select></label>
+  <label class="pfsel" for="pfProfile">Empfänger bzw. Zweck <select id="pfProfile"><option value="bea">beA / Gericht (ERVB 2025)</option><option value="epa">ePA (elektronische Patientenakte)</option><option value="bitv">Barrierefrei (BITV 2.0 / PDF/UA)</option><option value="gobd">Archiv (GoBD, PDF/A)</option><option value="pdfa">PDF/A – alle Prüfpunkte</option></select></label>
+  <div class="field" id="pfNameRow" hidden><label for="pfName">Dateiname für das Gericht</label><input id="pfName" autocomplete="off" spellcheck="false" aria-describedby="pfNameHint"><small class="hint" id="pfNameHint">Erlaubt: Buchstaben (auch ä, ö, ü, ß), Ziffern, _ und -, höchstens 90 Zeichen.</small></div>
   <p id="pfSum" class="pfsum" role="status" aria-live="polite"></p>
   <ul id="pfList" class="a11ylist"></ul>
   <p class="hint" id="pfBasis"></p>
@@ -1984,14 +1974,6 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" id="einvChkOpen">Andere E-Rechnung prüfen …</button><button type="button" class="primary" id="einvChkClose">Schließen</button></div>
   <input type="file" id="einvChkFile" accept=".xml,.pdf,application/xml,text/xml,application/pdf" hidden>
 </dialog>
-<dialog id="beaDlg" class="sharedlg propdlg" aria-labelledby="beaT"><form id="beaForm">
-  <h3 class="dlgtitle" id="beaT">Für beA prüfen</h3>
-  <p class="hint" style="margin-top:0">Technische Vorgaben der Justiz für die Einreichung (ERVB 2025 zu § 5 ERVV). Die Prüfung läuft auf Ihrem Gerät.</p>
-  <div class="field"><label for="beaName">Dateiname</label><input id="beaName" autocomplete="off" spellcheck="false"></div>
-  <ul class="bealist" id="beaList" aria-live="polite"></ul>
-  <p class="hint" id="beaFix">„beA-tauglich speichern“ erzeugt eine PDF/A ohne JavaScript und ohne Anhänge, mit zulässigem Dateinamen – und prüft die gespeicherte Datei noch einmal.</p>
-  <div class="dlgrow"><button type="button" id="beaCancel">Schließen</button><button type="submit" class="primary" id="beaGo">beA-tauglich speichern</button></div>
-</form></dialog>
 <dialog id="anlDlg" class="sharedlg propdlg" aria-labelledby="anlT"><form id="anlForm">
   <h3 class="dlgtitle" id="anlT">Anlagen nummerieren</h3>
   <p class="hint" style="margin-top:0">Jede geöffnete Datei wird eine Anlage – in der Reihenfolge der Seitenübersicht.</p>

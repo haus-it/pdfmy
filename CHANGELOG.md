@@ -2,6 +2,14 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-24
+
+### Prüfwege zusammengelegt: alles in der Vorabprüfung (app-v189)
+- Aus dem Usability-Gutachten (Heuristik „Ästhetik und minimalistisches Design“): „Für beA prüfen“, „Barrierefreiheit prüfen“ und „PDF/A prüfen“ gehen in der Vorabprüfung auf; die drei Menüeinträge und die Dialoge „Für beA prüfen“ und „PDF/A-Prüfung“ entfallen.
+- Nichts geht verloren: beA-Profil mit eigenem Feld „Dateiname für das Gericht“ (Vorschlag nach ERVB, Prüfung beim Tippen), jede geöffnete Datei zusätzlich einzeln geprüft (bei mehreren Dateien), „beA-tauglich speichern“ immer verfügbar (auch ohne Fehler) und prüft die gespeicherte Datei erneut; neues Profil „PDF/A – alle Prüfpunkte“ mit jedem Punkt der PDF/A-Kurzprüfung einzeln (Kennung, Dateikopf, Verschlüsselung, Farbprofil, Schriften, Skripte, Aktionen/Medien, Kommentare, LZW, Transparenz, Anhänge, Titel); Hinweis bei Scans und Fotos (werden beim Beheben PDF/A und PDF/UA); Prüfbericht nach „Barrierefrei speichern“ bleibt als Fenster.
+- Befehlssuche (Strg+K): „beA“, „Gericht“, „PDF/A prüfen“, „barrierefrei“, „BITV“, „ePA“, „GoBD“ finden die Vorabprüfung. Hilfe und Werkzeugseite PDF/A angepasst.
+- Getestet: zwei geöffnete Dateien (beA: Gesamt + Einzeldateien), ungültiger Dateiname wird beim Tippen markiert, PDF/A-Profil mit 9 Einzelpunkten, Befehlssuche; axe 0 (hell/dunkel, 1280/390 px); 210 Tests.
+
 ## 2026-10-23
 
 ### Bedienung nach Usability-Gutachten verbessert (app-v188)
