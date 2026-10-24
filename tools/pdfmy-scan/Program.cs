@@ -32,17 +32,39 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.12.0";
+        public const string Version = "1.13.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
         [STAThread]
+        // Gerät im eigenen Netz? (private bzw. lokale IP-Adresse, Name ohne Punkt oder mit „.local“) – nur dort sind selbstsignierte Zertifikate erlaubt
+        static bool LocalHost(string host)
+        {
+            host = (host ?? "").Trim('[', ']').ToLowerInvariant();
+            if (!host.Contains(".") || host.EndsWith(".local") || host.EndsWith(".lan") || host.EndsWith(".home") || host.EndsWith(".fritz.box")) return true;
+            if (!IPAddress.TryParse(host, out var ip)) return false;
+            if (IPAddress.IsLoopback(ip)) return true;
+            var b = ip.GetAddressBytes();
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+                return b[0] == 10 || (b[0] == 172 && b[1] >= 16 && b[1] <= 31) || (b[0] == 192 && b[1] == 168) || (b[0] == 169 && b[1] == 254);
+            return ip.IsIPv6LinkLocal || ip.IsIPv6SiteLocal || (b[0] & 0xFE) == 0xFC;
+        }
+
         static void Main(string[] args)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            // Geräte nutzen oft selbstsignierte Zertifikate – nur für Verbindungen zu Scannern im eigenen Netz relevant
-            ServicePointManager.ServerCertificateValidationCallback = (s, c, ch, e) => true;
+            // Geräte nutzen oft selbstsignierte Zertifikate – das gilt nur für Scanner im eigenen Netz. Verbindungen ins Internet
+            // (Updates von pdfmy.de) werden normal geprüft, sonst könnte ein Angreifer im Netz Update-Angaben unterschieben.
+            ServicePointManager.ServerCertificateValidationCallback = (s, c, ch, e) =>
+                e == System.Net.Security.SslPolicyErrors.None || (s is HttpWebRequest wr && LocalHost(wr.RequestUri.Host));
             Directory.CreateDirectory(DataDir);
+            int vi = Array.IndexOf(args, "--verify-update");   // Prüfung einer Update-Datei (Support und Test): Exit-Code 0 = vertrauenswürdig
+            if (vi >= 0 && vi + 1 < args.Length)
+            {
+                string why = UpdateTrust.Check(args[vi + 1], vi + 2 < args.Length ? args[vi + 2] : null);
+                File.WriteAllText(Path.Combine(DataDir, "verify-update.txt"), why ?? "OK");
+                Environment.Exit(why == null ? 0 : 1); return;
+            }
             if (args.Contains("--uninstall")) { Installer.Uninstall(); return; }
             if (args.Length > 1 && args[0] == "--printer") { Environment.Exit(PdfPrinter.Elevated(args)); return; }   // erhöhte Kopie: Drucker „PDFMy“ einrichten/entfernen
             if (args.Contains("--register")) { FileAssoc.Register(Application.ExecutablePath); return; }     // Support: PDF-Zuordnung erneuern
@@ -303,8 +325,10 @@ namespace PdfmyScan
             assocTimer = new System.Windows.Forms.Timer { Interval = 20 * 1000 };
             assocTimer.Tick += (s, e) => { assocTimer.Interval = 30 * 60 * 1000; CheckAssoc(); };
             assocTimer.Start();
-            updateTimer = new System.Windows.Forms.Timer { Interval = 30 * 1000 };
-            updateTimer.Tick += async (s, e) => { updateTimer.Interval = 6 * 60 * 60 * 1000; await CheckUpdate(false); };
+            // Prüfzeitpunkte mit Zufallsversatz: bei 100.000 Installationen fragen nicht alle gleichzeitig nach (z. B. alle um 8 Uhr beim Hochfahren)
+            var jitter = new Random();
+            updateTimer = new System.Windows.Forms.Timer { Interval = (60 + jitter.Next(0, 15 * 60)) * 1000 };   // erste Prüfung 1–16 Minuten nach dem Start
+            updateTimer.Tick += async (s, e) => { updateTimer.Interval = (6 * 60 + jitter.Next(-45, 46)) * 60 * 1000; await CheckUpdate(false); };   // dann alle 6 h ± 45 min
             updateTimer.Start();
         }
 
@@ -323,6 +347,10 @@ namespace PdfmyScan
         {
             string latest = await Updater.LatestAsync();
             if (latest == null) { if (manual) icon.ShowBalloonTip(5000, "pdfmy Scan", "Update-Prüfung nicht möglich (keine Verbindung zu pdfmy.de).", ToolTipIcon.Warning); return; }
+            // Gestaffelte Verteilung: version.json „rollout“ (0–100 %) – automatisch sieht das Update nur der freigegebene Teil der Installationen
+            // (stabile Zufallszahl je Installation); „Nach Updates suchen“ von Hand bekommt es immer
+            if (!manual && new System.Version(latest) > new System.Version(Program.Version) && Updater.Bucket >= Updater.Rollout)
+            { Program.Log($"Update {latest} noch nicht für diese Installation freigegeben ({Updater.Rollout} % – hier {Updater.Bucket})"); return; }
             if (new System.Version(latest) > new System.Version(Program.Version))
             {
                 updateItem.Text = $"Update auf {latest} installieren"; updateItem.Tag = latest; updateItem.Visible = true;
@@ -349,6 +377,19 @@ namespace PdfmyScan
     {
         const string Base = "https://pdfmy.de/download/";
         static string ExpectedSha = "";
+        public static int Rollout = 100;   // Anteil der Installationen in %, die das Update automatisch angeboten bekommen (version.json „rollout“)
+        // Stabile Zufallszahl 0–99 je Installation (einmal erzeugt, in %AppData%\pdfmy Scan\update-bucket.txt) – entscheidet über die Freigabestufe
+        public static int Bucket
+        {
+            get
+            {
+                string f = Path.Combine(Program.DataDir, "update-bucket.txt");
+                try { if (int.TryParse(File.ReadAllText(f).Trim(), out int b) && b >= 0 && b < 100) return b; } catch { }
+                int n = new Random().Next(0, 100);
+                try { File.WriteAllText(f, n.ToString()); } catch { }
+                return n;
+            }
+        }
         public static async Task<string> LatestAsync()
         {
             try
@@ -359,6 +400,7 @@ namespace PdfmyScan
                     var d = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(await h.GetStringAsync(Base + "version.json?t=" + DateTime.UtcNow.Ticks));
                     string v = Convert.ToString(d["pdfmyScan"]);
                     ExpectedSha = d.ContainsKey("sha256") ? Convert.ToString(d["sha256"]).ToLowerInvariant() : "";
+                    Rollout = d.ContainsKey("rollout") && int.TryParse(Convert.ToString(d["rollout"]), out int ro) ? Math.Max(0, Math.Min(100, ro)) : 100;
                     return System.Text.RegularExpressions.Regex.IsMatch(v ?? "", @"^\d+\.\d+\.\d+$") ? v : null;
                 }
             }
@@ -380,6 +422,10 @@ namespace PdfmyScan
                     Program.Log($"Update {version}: Prüfsumme {(ExpectedSha.Length == 64 ? "bestätigt" : "nicht veröffentlicht")} ({sha.Substring(0, 12)}…)");
                     File.WriteAllBytes(file, data);
                 }
+                // Signatur prüfen (Mentor GmbH, gültig, neuere Version) – sonst nicht starten und die Datei löschen
+                string why = UpdateTrust.Check(file, version);
+                if (why != null) { try { File.Delete(file); } catch { } throw new Exception("Signaturprüfung: " + why + " – Update abgebrochen"); }
+                Program.Log($"Update {version}: Signatur „Mentor GmbH“ gültig");
                 Program.Log($"Update {version} geladen – starte Installation");
                 Process.Start(new ProcessStartInfo(file) { UseShellExecute = true });   // die neue Version beendet diese und installiert sich
             }

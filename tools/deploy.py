@@ -50,6 +50,7 @@ def main():
     ap.add_argument('--known-hosts', required=True)
     ap.add_argument('--test', action='store_true')
     ap.add_argument('--dry-run', action='store_true')
+    ap.add_argument('--subdir', default='', help='Unterverzeichnis im Webspace (z. B. für die Testadresse)')
     a = ap.parse_args()
     user, pw = os.environ.get('PDFMY_SFTP_USER'), os.environ.get('PDFMY_SFTP_PASS')
     if not user or not pw:
@@ -69,6 +70,9 @@ def main():
     print(f'Verbunden mit {a.host} als {user} (Server-Schlüssel {key.get_name()} {key.get_fingerprint().hex()[:16]}…)')
     sftp = client.open_sftp()
     root = sftp.normalize('.')
+    if a.subdir:   # Testadresse: eigenes Verzeichnis mit eigenem Manifest – die Live-Seite bleibt unberührt
+        root = posixpath.join(root, a.subdir.strip('/'))
+        ensure_dir(sftp, root, set())
     entries = sftp.listdir_attr(root)
     print(f'Zielverzeichnis {root}: {len(entries)} Einträge')
     if a.test:

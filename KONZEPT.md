@@ -114,6 +114,40 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Entschieden 24.10.2026: sichere Update-Strategie – Stufe 1
+**Ausgangslage:** `tools\deploy.ps1` testet (npm test), baut und lädt direkt nach pdfmy.de – ohne Probelauf im Browser und ohne Rückweg; ein Fehler erreicht sofort alle Nutzer (Service Worker lädt zuerst übers Netz). pdfmy-Scan.exe wird bei jedem Ausrollen neu signiert, auch unverändert (Signaturkontingent, Fehlerquelle). pdfmy Scan prüft vor einem Update nur den SHA-256-Wert aus `download/version.json` – vom selben Server wie die Datei; wer den Server übernimmt, kann beides tauschen.
+**Stufe 1 (umgesetzt 24.10.2026):**
+1. **Probelauf** (`tools/smoke.js`): Nach dem Build und vor dem Hochladen wird die fertige Website lokal ausgeliefert und in Headless-Chrome geprüft – Startseite ohne Skriptfehler, PDF öffnen, als PDF und als PDF/A erzeugen, Vorabprüfung, Handyansicht ohne seitlichen Überlauf, Service Worker registriert. Rot → kein Upload. `-TestUrl` prüft eine schon hochgeladene Testadresse; `-Target test` lädt in ein Testverzeichnis (sobald die Testadresse eingerichtet ist, `testDir` in `tools/site.json`).
+2. **Rückweg** (`deploy.ps1 -Rollback [Stand]`): Jede Veröffentlichung wird als ZIP in `.deploy/releases` aufbewahrt (letzte 5); der Rückweg lädt eine frühere Fassung wieder hoch und protokolliert das in `docs/RELEASES.md`.
+3. **Nur bei Änderung signieren:** Der Hash der unsignierten exe wird mit dem letzten Stand verglichen; unverändert wird die schon signierte Datei wiederverwendet.
+4. **pdfmy Scan prüft vor jedem Update die Signatur** (ab 1.13.0): gültige Authenticode-Signatur, Herausgeber „Mentor GmbH“, keine ältere Version – sonst wird nicht installiert. Grenze: pdfmy Scan für Mac/Linux (Perl-Skript, nicht signiert) prüft weiter nur den SHA-256-Wert.
+5. **Auslegung auf 100.000 Nutzer** (Vorgabe GF 24.10.2026):
+   - **Service Worker lädt nur geänderte Dateien.** Vorher bekam jede Veröffentlichung einen neuen Versionsnamen, und der Offline-Speicher wurde komplett verworfen: jedes Gerät lud gemessen **21,6 MB** neu (1,9 MB App-Dateien, 15,9 MB Bibliotheken, Rest Seiten/Bilder), dazu erneut jede schon genutzte OCR-Sprache (1–2 MB je Sprache). Jetzt bleibt der Speicher bestehen; beim Update wird jede Datei mit ihrer SHA-256-Prüfsumme aus `pruefsummen.json` (40 KB) verglichen. Gemessen (Test mit einer geänderten Datei): **0,41 MB** statt 21,6 MB. Der erste Wechsel auf das neue Verfahren übernimmt unveränderte Dateien aus den alten Speichern.
+   - **pdfmy Scan:** Prüfzeitpunkte mit Zufallsversatz (erste Prüfung 1–16 min nach dem Start, dann alle 6 h ± 45 min statt bei allen 30 s nach dem Hochfahren); Freigabe in Stufen über `rollout` in `download/version.json` (`deploy.ps1 -ScanRollout 10` → automatisch nur 10 % der Installationen, anhand einer stabilen Zufallszahl je Installation; „Nach Updates suchen“ von Hand bekommt das Update immer). Versionen vor 1.13.0 kennen das Feld noch nicht.
+   - **Datenvolumen je Veröffentlichung bei 100.000 aktiven Geräten (Abschätzung):**
+
+     | | vorher | nachher |
+     |---|---|---|
+     | Web-App je Gerät | ≈ 21,6 MB (+ genutzte OCR-Sprachen) | ≈ 0,05 MB (sw.js 6 KB + Prüfsummen 40 KB) + geänderte Dateien, typisch 0,1–2 MB |
+     | Web-App gesamt | ≈ 2,2 TB | ≈ 15–200 GB |
+     | pdfmy Scan (0,46 MB) | alle gleichzeitig, bis 46 GB in wenigen Minuten | gleiche Menge, aber über Stunden bzw. Tage verteilt |
+
+     Mit dem geplanten Release-Takt (wöchentlich statt mehrmals täglich) sinkt das Monatsvolumen auf grob **0,1–1 TB**. Der laufende Betrieb kommt hinzu: je Besuch prüft der Browser die App-Dateien nur auf Änderung (Antwort „304“, wenige KB) und fragt je offenem Fenster alle 10 min `sw.js` ab (6 KB).
+   - **IONOS-Grenzen (zu klären, nicht geprüft):** Der Webspace-Tarif nennt Datenverkehr meist „inklusive“, begrenzt aber gleichzeitige Verbindungen bzw. Prozesse und kann bei Lastspitzen drosseln. Vor dem Wachstum auf 100.000 Nutzer die Vertragsbedingungen (Fair Use, gleichzeitige Verbindungen, Bandbreite) bei IONOS schriftlich bestätigen lassen.
+   - **CDN später (Entscheidung GF):** sinnvoll ab hoher gleichzeitiger Last. Passt zu den Leitplanken nur mit Auflagen: **unter der eigenen Domain** (pdfmy.de bleibt Ursprung, CSP unverändert, keine Fremdadresse im Browser), **nur statische Dateien**, **EU-Standort und EU-Anbieter**, **kein Tracking, keine Cookies, Protokolle minimal/kurz**, Auftragsverarbeitungsvertrag, Hinweis in der Datenschutzerklärung (IP-Adressen gehen dann auch an den CDN-Anbieter – Punkt 1 betrifft Dokumente, nicht Abrufe der Programmdateien; trotzdem transparent machen). Prüfsummen und „Datenschutz selbst prüfen“ bleiben wirksam, weil die Dateien unverändert ausgeliefert werden.
+
+**Geplant (Stufe 2/3, Entscheidung GF):** fester Release-Takt (z. B. dienstags, Sicherheitskorrekturen sofort), Updates von pdfmy Scan in Ringen (erst Mentor/Haus iT, nach 48 h alle), Freigabe neuer pdfmy-Scan-Versionen durch die GF, Übersetzungen mit günstigerem Modell und festem Glossar einmal je Release, SFTP nur mit Schlüssel (Maßnahme M11), Zwei-Faktor-Anmeldung beim Signierkonto.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Probelauf lokal; Nutzerdaten sind nicht betroffen |
+| 2 Kein Server | passt: weiterhin nur statische Dateien; Testadresse ist ebenfalls statisch |
+| 3 Kostenlos, ohne Konto | passt; senkt Betriebskosten (weniger Signaturen) |
+| 4 Einfach | passt: für Nutzer unsichtbar; Update-Ablehnung mit klarer Meldung |
+| 5 Normgerecht und prüfbar | passt: Änderungs- und Freigabemanagement (ISO 27001 A.8.32), Integrität der Software (A.8.24, A.8.19), Protokoll in RELEASES.md |
+| 6 Wenig aktive Inhalte | nicht betroffen |
+**Entscheidung:** Stufe 1 umsetzen (Auftrag GF 24.10.2026).
+
 ### Entschieden 23.10.2026: Vorabprüfung („Preflight“) mit Profilen beA/ERV, ePA, BITV/PDF/UA, GoBD-Archiv
 **Anlass (Recherche Berufsgruppen 23.10.2026):** Anwälte müssen eine umgewandelte PDF vor dem Versand prüfen (BGH II ZB 5/24, 12/2024); Gerichte lehnen Dateien nach ERVB 2025 ab (Schriften, JavaScript, Anhänge, Dateiname, 200 MB). Arztpraxen: ePA nimmt nur PDF/A bis 25 MB. Behörden: BITV 2.0/EN 301 549, Prüfung durch BFIT-Bund. Steuerberater: GoBD-Archiv, Verfahrensdokumentation. Mitbewerber bieten Preflight nur in Acrobat Pro (Abo) oder Spezialsoftware.
 **Vorschlag:** „… Mehr → Vorabprüfung …“ und Werkzeug-Kachel: Profil wählen → Ampelbericht (✓ erfüllt, ✗ Fehler, i Hinweis) für die Datei, die gespeichert würde → „Automatisch beheben“ (je Profil: beA-tauglich speichern, PDF/A klein, barrierefrei machen, PDF/A) → „Bericht als PDF speichern“ (Nachweis für Akte/Verfahrensdokumentation, mit SHA-256-Fingerabdruck und Zeitpunkt). Bausteine vorhanden: BeaCheck (ERVB 2025), PdfACheck (PDF/A-2b-Kurzprüfung), A11yCheck (PDF/UA, Matterhorn-Auswahl).

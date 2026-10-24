@@ -55,7 +55,7 @@ rep('<title>PDFMy</title>', `<title>${esc(W.title)}</title>
 rep('content="Briefe scannen, als durchsuchbares PDF ablegen und bearbeiten – lokal, ohne Upload."',
   `content="${esc(W.description)}"`);
 rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a href="hilfe.html">${N.hilfe}</a> · <a href="werkzeuge.html">${N.werkzeuge}</a> · <span class="ext"><a href="erweiterung.html">${N.erweiterung}</a> · </span><a href="presse.html">${N.presse}</a> · <a href="impressum.html">${N.impressum}</a> · <a href="datenschutz.html">${N.datenschutz}</a> · <a href="barrierefreiheit.html">${N.barrierefreiheit}</a> · <a href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
-rep('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} @media (max-width:760px){footer .legal .ext{display:none}}\n</style>');
+rep('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} @media (max-width:760px){footer .legal .ext{display:none} footer{flex-wrap:wrap} footer .legal{white-space:normal;min-width:0}}\n</style>');
 // Suchmaschinen: kanonische Adresse und strukturierte Daten (schema.org) der Anwendung
 rep('</head>', `<link rel="canonical" href="https://${site.domain}/">
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebApplication', name: 'PDFMy', url: `https://${site.domain}/`,
@@ -289,7 +289,10 @@ if (!scanVer || scanVer !== webVer) { console.error(`Versionskonflikt pdfmy Scan
 const scanFile = `pdfmy-Scan-${scanVer}.exe`;
 const scanKb = fs.existsSync(scanExe) ? Math.round(fs.statSync(scanExe).size / 1024) : 0;   // Downloadgröße auf der Scanner-Seite
 const scanSha = fs.existsSync(scanExe) ? require('node:crypto').createHash('sha256').update(fs.readFileSync(scanExe)).digest('hex') : '';
-write('download/version.json', JSON.stringify({ pdfmyScan: scanVer, file: scanFile, sha256: scanSha }) + '\n');   // Update-Prüfung + Integritätsprüfung in pdfmy Scan
+// Freigabe in Stufen (Update-Strategie): rollout = Anteil der Installationen in %, die das Update automatisch angeboten bekommen
+// (deploy.ps1 -ScanRollout 10 → erst 10 %, später 100 %); ohne Angabe 100. Ältere pdfmy-Scan-Versionen (< 1.13.0) kennen das Feld nicht.
+const scanRollout = Math.max(0, Math.min(100, +(process.env.PDFMY_SCAN_ROLLOUT ?? site.scanRollout ?? 100) || 0));
+write('download/version.json', JSON.stringify({ pdfmyScan: scanVer, file: scanFile, sha256: scanSha, rollout: scanRollout }) + '\n');   // Update-Prüfung + Integritätsprüfung in pdfmy Scan
 if (fs.existsSync(scanExe)) {
   copy(path.relative(ROOT, scanExe), 'download/' + scanFile);
   copy(path.relative(ROOT, scanExe), 'download/pdfmy-Scan.exe');   // alter Link funktioniert weiter
