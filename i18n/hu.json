@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Aláírás: kattintson oda, ahová az aláírásnak kerülnie kell.",
  "Weitere Bilder hinzufügen": "További képek hozzáadása",
  "Weitere Dateien hinzufügen": "További fájlok hozzáadása",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Egyesítés: a sorrendet húzással módosíthatja – további fájlok adhatók hozzá."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Egyesítés: a sorrendet húzással módosíthatja – további fájlok adhatók hozzá.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Még nem minden programrész van mentve ezen az eszközön – nyissa meg internettel, a PDFMy automatikusan letölti őket.",
+ "Offline-Speicher unvollständig": "Offline tárhely hiányos",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "A PDFMy internet nélkül is működik – minden fájl mentve van ezen az eszközön.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "A PDFMy internet nélkül is működik. Néhány kiegészítő fájlt (pl. betűtípusokat Word-fájlokhoz) a PDFMy letölt, amint van Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Tipp az offline használathoz: a Safariban koppintson a „Megosztás”, majd a „Főképernyőhöz adás” elemre. Így a PDFMy internet nélkül is tartósan elérhető marad – különben a Safari kb. 7 nap használaton kívüli idő után törli az offline tárhelyet.",
+ "Offline bereit": "Offline kész"
 }

@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Потпиши: кликните место на којем треба да буде потпис.",
  "Weitere Bilder hinzufügen": "Додај још слика",
  "Weitere Dateien hinzufügen": "Додај још датотека",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Споји: промените редослед превлачењем – могуће је додати још датотека."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Споји: промените редослед превлачењем – могуће је додати још датотека.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "На овом уређају још нису сачувани сви делови програма – отворите са интернетом, PDFMy ће их аутоматски преузети.",
+ "Offline-Speicher unvollständig": "Офлајн складиште непотпуно",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy ради без интернета – све датотеке су сачуване на овом уређају.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy ради без интернета. Неке додатне датотеке (нпр. фонтове за Word датотеке) PDFMy преузима чим је Wi-Fi доступан.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Савет за офлајн рад: у Safari-ју додирните „Дели“ и „Додај на почетни екран“. Тада PDFMy остаје трајно доступан и без интернета – иначе Safari брише офлајн складиште после отприлике 7 дана некоришћења.",
+ "Offline bereit": "Спремно офлајн"
 }

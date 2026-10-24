@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Allkirjasta: klõpsake kohal, kuhu allkiri peab tulema.",
  "Weitere Bilder hinzufügen": "Lisa veel pilte",
  "Weitere Dateien hinzufügen": "Lisa veel faile",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Liida: muutke järjekorda lohistades – faile saab juurde lisada."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Liida: muutke järjekorda lohistades – faile saab juurde lisada.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Kõik programmiosad pole veel sellesse seadmesse salvestatud – avage internetiühendusega, PDFMy laadib need automaatselt.",
+ "Offline-Speicher unvollständig": "Võrguühenduseta salvestus puudulik",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy töötab ilma internetita – kõik failid on sellesse seadmesse salvestatud.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy töötab ilma internetita. Mõned lisafailid (nt Wordi failide fondid) laadib PDFMy kohe, kui Wi-Fi on olemas.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Nõuanne võrguühenduseta kasutamiseks: puudutage Safaris „Jaga“ ja „Lisa avaekraanile“. Siis jääb PDFMy ka ilma internetita püsivalt kättesaadavaks – muidu kustutab Safari võrguühenduseta salvestuse umbes 7 päeva pärast, kui seda ei kasutata.",
+ "Offline bereit": "Võrguühenduseta valmis"
 }

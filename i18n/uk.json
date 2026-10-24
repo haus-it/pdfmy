@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Підписати: клацніть там, де має стояти підпис.",
  "Weitere Bilder hinzufügen": "Додати ще зображення",
  "Weitere Dateien hinzufügen": "Додати ще файли",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Об’єднати: змініть порядок перетягуванням – можна додати ще файли."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Об’єднати: змініть порядок перетягуванням – можна додати ще файли.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Ще не всі частини програми збережено на цьому пристрої – відкрийте з інтернетом, PDFMy завантажить їх автоматично.",
+ "Offline-Speicher unvollständig": "Офлайн-сховище неповне",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy працює без інтернету – усі файли збережено на цьому пристрої.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy працює без інтернету. Деякі додаткові файли (напр. шрифти для файлів Word) PDFMy завантажить, щойно з’явиться Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Порада для роботи офлайн: у Safari торкніться «Поділитися» і «На початковий екран». Тоді PDFMy залишиться доступним без інтернету постійно – інакше Safari видаляє офлайн-сховище приблизно через 7 днів без використання.",
+ "Offline bereit": "Готово до роботи офлайн"
 }

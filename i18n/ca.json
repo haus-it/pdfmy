@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Signa: feu clic al lloc on ha d'anar la signatura.",
  "Weitere Bilder hinzufügen": "Afegeix més imatges",
  "Weitere Dateien hinzufügen": "Afegeix més fitxers",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combina: canvieu l'ordre arrossegant – podeu afegir més fitxers."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combina: canvieu l'ordre arrossegant – podeu afegir més fitxers.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Encara no totes les parts del programa estan desades en aquest dispositiu – obriu-lo amb internet i PDFMy les baixarà automàticament.",
+ "Offline-Speicher unvollständig": "Emmagatzematge fora de línia incomplet",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy funciona sense internet – tots els fitxers estan desats en aquest dispositiu.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy funciona sense internet. Alguns fitxers addicionals (p. ex. tipus de lletra per a fitxers de Word) els baixa PDFMy tan bon punt hi hagi wifi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Consell per a l'ús fora de línia: a Safari, toqueu «Comparteix» i «Afegeix a la pantalla d'inici». Així PDFMy continua disponible sense internet de manera permanent – altrament, Safari esborra l'emmagatzematge fora de línia després d'uns 7 dies sense ús.",
+ "Offline bereit": "A punt fora de línia"
 }

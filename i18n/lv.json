@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Parakstīt: noklikšķiniet vietā, kur jābūt parakstam.",
  "Weitere Bilder hinzufügen": "Pievienot vēl attēlus",
  "Weitere Dateien hinzufügen": "Pievienot vēl failus",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Apvienot: mainiet secību, velkot – var pievienot vēl failus."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Apvienot: mainiet secību, velkot – var pievienot vēl failus.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Vēl ne visas programmas daļas ir saglabātas šajā ierīcē – atveriet ar internetu, PDFMy tās lejupielādēs automātiski.",
+ "Offline-Speicher unvollständig": "Bezsaistes krātuve nepilnīga",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy darbojas bez interneta – visi faili ir saglabāti šajā ierīcē.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy darbojas bez interneta. Dažus papildu failus (piem., fontus Word failiem) PDFMy lejupielādē, tiklīdz ir Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Padoms bezsaistes lietošanai: Safari pieskarieties „Kopīgot” un „Pievienot sākuma ekrānam”. Tad PDFMy paliek pieejams bez interneta pastāvīgi – citādi Safari izdzēš bezsaistes krātuvi pēc aptuveni 7 dienām bez lietošanas.",
+ "Offline bereit": "Gatavs bezsaistei"
 }

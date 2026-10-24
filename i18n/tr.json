@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "İmzala: imzanın bulunacağı yere tıklayın.",
  "Weitere Bilder hinzufügen": "Başka görseller ekle",
  "Weitere Dateien hinzufügen": "Başka dosyalar ekle",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Birleştir: sırayı sürükleyerek değiştirin – başka dosyalar eklenebilir."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Birleştir: sırayı sürükleyerek değiştirin – başka dosyalar eklenebilir.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Programın tüm bölümleri henüz bu cihaza kaydedilmedi – internetle açın, PDFMy bunları otomatik olarak indirir.",
+ "Offline-Speicher unvollständig": "Çevrimdışı depolama eksik",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy internetsiz çalışır – tüm dosyalar bu cihaza kaydedildi.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy internetsiz çalışır. Bazı ek dosyaları (ör. Word dosyaları için yazı tipleri) PDFMy, Wi-Fi olur olmaz indirir.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Çevrimdışı kullanım için ipucu: Safari’de “Paylaş” ve “Ana Ekrana Ekle”ye dokunun. Böylece PDFMy internetsiz de kalıcı olarak kullanılabilir kalır – aksi hâlde Safari çevrimdışı depolamayı yaklaşık 7 gün kullanılmadığında siler.",
+ "Offline bereit": "Çevrimdışı hazır"
 }

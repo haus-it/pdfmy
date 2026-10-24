@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Iffirma: ikklikkja fejn għandha tkun il-firma.",
  "Weitere Bilder hinzufügen": "Żid aktar stampi",
  "Weitere Dateien hinzufügen": "Żid aktar fajls",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Għaqqad: ibdel l-ordni billi tkaxkar – tista’ żżid aktar fajls."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Għaqqad: ibdel l-ordni billi tkaxkar – tista’ żżid aktar fajls.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Għadhom mhux il-partijiet kollha tal-programm issejvjati fuq dan it-tagħmir – iftaħ bl-internet u PDFMy iniżżilhom awtomatikament.",
+ "Offline-Speicher unvollständig": "Ħażna offline mhux kompluta",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy jaħdem mingħajr internet – il-fajls kollha huma ssejvjati fuq dan it-tagħmir.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy jaħdem mingħajr internet. Xi fajls addizzjonali (eż. tipi ta’ ittri għal fajls Word) PDFMy iniżżilhom malli jkun hemm Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Parir għall-użu offline: f’Safari, agħfas “Share” u “Add to Home Screen”. Imbagħad PDFMy jibqa’ disponibbli mingħajr internet b’mod permanenti – inkella Safari jħassar il-ħażna offline wara madwar 7 ijiem mingħajr użu.",
+ "Offline bereit": "Lest offline"
 }

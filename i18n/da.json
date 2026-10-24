@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Underskriv: klik dér, hvor underskriften skal stå.",
  "Weitere Bilder hinzufügen": "Tilføj flere billeder",
  "Weitere Dateien hinzufügen": "Tilføj flere filer",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Flet: ændr rækkefølgen ved at trække – du kan tilføje flere filer."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Flet: ændr rækkefølgen ved at trække – du kan tilføje flere filer.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Endnu ikke alle programdele er gemt på denne enhed – åbn med internet, så henter PDFMy dem automatisk.",
+ "Offline-Speicher unvollständig": "Offlinelager ufuldstændigt",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy virker uden internet – alle filer er gemt på denne enhed.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy virker uden internet. Nogle ekstra filer (f.eks. skrifttyper til Word-filer) henter PDFMy, så snart der er wi-fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Tip til offlinebrug: Tryk i Safari på »Del« og »Føj til hjemmeskærm«. Så forbliver PDFMy tilgængelig uden internet permanent – ellers sletter Safari offlinelageret efter ca. 7 dage uden brug.",
+ "Offline bereit": "Klar offline"
 }

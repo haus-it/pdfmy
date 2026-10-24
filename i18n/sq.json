@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Nënshkruaj: klikoni aty ku duhet të jetë nënshkrimi.",
  "Weitere Bilder hinzufügen": "Shto imazhe të tjera",
  "Weitere Dateien hinzufügen": "Shto skedarë të tjerë",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Bashko: ndryshoni renditjen duke tërhequr – mund të shtoni skedarë të tjerë."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Bashko: ndryshoni renditjen duke tërhequr – mund të shtoni skedarë të tjerë.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Ende jo të gjitha pjesët e programit janë ruajtur në këtë pajisje – hapeni me internet, PDFMy i shkarkon automatikisht.",
+ "Offline-Speicher unvollständig": "Ruajtja jashtë linje e paplotë",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy funksionon pa internet – të gjithë skedarët janë ruajtur në këtë pajisje.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy funksionon pa internet. Disa skedarë shtesë (p.sh. shkronja për skedarë Word) PDFMy i shkarkon sapo të ketë Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Këshillë për përdorimin jashtë linje: në Safari prekni „Ndaj“ dhe „Shto në ekranin bazë“. Atëherë PDFMy mbetet i disponueshëm përgjithmonë edhe pa internet – përndryshe Safari e fshin ruajtjen jashtë linje pas rreth 7 ditësh pa përdorim.",
+ "Offline bereit": "Gati jashtë linje"
 }

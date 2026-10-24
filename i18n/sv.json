@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Skriv under: klicka där underskriften ska stå.",
  "Weitere Bilder hinzufügen": "Lägg till fler bilder",
  "Weitere Dateien hinzufügen": "Lägg till fler filer",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sammanfoga: ändra ordningen genom att dra – du kan lägga till fler filer."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sammanfoga: ändra ordningen genom att dra – du kan lägga till fler filer.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Ännu är inte alla programdelar sparade på den här enheten – öppna med internet, så laddar PDFMy ner dem automatiskt.",
+ "Offline-Speicher unvollständig": "Offlinelagring ofullständig",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy fungerar utan internet – alla filer är sparade på den här enheten.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy fungerar utan internet. Vissa extra filer (t.ex. teckensnitt för Word-filer) laddar PDFMy ner så snart det finns wifi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Tips för offlineanvändning: Tryck på ”Dela” och ”Lägg till på hemskärmen” i Safari. Då förblir PDFMy tillgängligt utan internet permanent – annars raderar Safari offlinelagringen efter cirka 7 dagar utan användning.",
+ "Offline bereit": "Redo offline"
 }

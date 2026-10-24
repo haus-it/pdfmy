@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Υπογραφή: κάντε κλικ στο σημείο όπου πρέπει να μπει η υπογραφή.",
  "Weitere Bilder hinzufügen": "Προσθήκη κι άλλων εικόνων",
  "Weitere Dateien hinzufügen": "Προσθήκη κι άλλων αρχείων",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Συγχώνευση: αλλάξτε τη σειρά με σύρσιμο – μπορείτε να προσθέσετε κι άλλα αρχεία."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Συγχώνευση: αλλάξτε τη σειρά με σύρσιμο – μπορείτε να προσθέσετε κι άλλα αρχεία.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Δεν έχουν αποθηκευτεί ακόμη όλα τα μέρη του προγράμματος σε αυτή τη συσκευή – ανοίξτε με internet και το PDFMy θα τα κατεβάσει αυτόματα.",
+ "Offline-Speicher unvollständig": "Ελλιπής αποθήκευση εκτός σύνδεσης",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "Το PDFMy λειτουργεί χωρίς internet – όλα τα αρχεία είναι αποθηκευμένα σε αυτή τη συσκευή.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "Το PDFMy λειτουργεί χωρίς internet. Ορισμένα πρόσθετα αρχεία (π.χ. γραμματοσειρές για αρχεία Word) το PDFMy τα κατεβάζει μόλις υπάρξει Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Συμβουλή για χρήση εκτός σύνδεσης: στο Safari πατήστε «Κοινοποίηση» και «Προσθήκη στην οθόνη Αφετηρίας». Τότε το PDFMy παραμένει μόνιμα διαθέσιμο και χωρίς internet – διαφορετικά το Safari διαγράφει την αποθήκευση εκτός σύνδεσης μετά από περίπου 7 ημέρες χωρίς χρήση.",
+ "Offline bereit": "Έτοιμο εκτός σύνδεσης"
 }

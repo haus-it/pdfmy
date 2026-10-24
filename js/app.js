@@ -4916,6 +4916,7 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });   // beim Zurückkehren zum Tab
     addEventListener('online', check);                                                                   // wenn die Verbindung wieder da ist
     setTimeout(check, 3 * 1000);                                                                         // und gleich nach dem Start (z. B. beim Öffnen eines Outlook-Anhangs)
+    offlineReady();
   }).catch(e => console.warn('Service Worker:', e));
   $('#updBtn').onclick = () => {
     if (state.dirty && state.pages.length && !confirm('Es gibt ungespeicherte Änderungen. Trotzdem neu laden?')) return;
@@ -4928,6 +4929,35 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
       versionLabel().then(v => { status(`${APP.name} wurde aktualisiert${v ? ` (${v})` : ''}.`); toast(`${APP.name} wurde auf die neue Version aktualisiert${v ? ` (${v})` : ''}.`); });
     }
   } catch {}
+}
+/* Offline-Betrieb sichern und anzeigen: kurz nach dem Start fragt die Seite den Service Worker, was offline fehlt, und lässt es
+   nachladen (Pflichtdateien, iPhone-Fotos, Schriften, OCR-Sprache der Oberfläche; große Schriften nur im WLAN). Unten erscheint
+   „offline bereit“. Der Browser wird gebeten, den Speicher dauerhaft zu behalten (sonst kann er ihn bei Platzmangel löschen). */
+function offlineReady() {
+  const el = $('#offState'); if (!el || !navigator.serviceWorker) return;
+  const c = navigator.connection, heavy = !!c && !c.saveData && c.type !== 'cellular' && !/^(slow-)?2g$/.test(c.effectiveType || '');
+  const ask = () => navigator.serviceWorker.ready.then(reg => {
+    const langs = typeof ocrPrimary === 'function' ? String(ocrPrimary() || '').split('+').filter(l => l && l !== 'deu') : [];
+    reg.active?.postMessage({ type: 'pdfmy:offline', langs, heavy, load: navigator.onLine });
+  });
+  navigator.serviceWorker.addEventListener('message', e => {
+    if (e.data?.type !== 'pdfmy:offline') return;
+    el.hidden = false;
+    el.textContent = e.data.ready ? I18N.t('Offline bereit') : I18N.t('Offline-Speicher unvollständig');   // getrennte Aufrufe: das Sammelwerkzeug der Übersetzungen erkennt nur Texte direkt in I18N.t(…)
+    el.title = I18N.t(e.data.ready ? (e.data.extraMissing ? 'PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.' : 'PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.')
+      : 'Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.');
+    el.classList.toggle('bad', !e.data.ready);
+    if (e.data.ready) iosOfflineHint();
+  });
+  setTimeout(ask, 4000); addEventListener('online', () => setTimeout(ask, 2000));
+  navigator.storage?.persist?.().catch(() => {});
+}
+// iPhone/iPad (Safari): ohne Installation löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung – einmal darauf hinweisen
+function iosOfflineHint() {
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (!ios || navigator.standalone || matchMedia('(display-mode: standalone)').matches || LS.get('iosOfflineHint', false)) return;
+  LS.set('iosOfflineHint', true);
+  toast(I18N.t('Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.'), 12000);
 }
 $('#btnUpdate').onclick = () => checkUpdates(true);
 I18N.ready().then(versionLabel).then(v => { if (v) { $('#verInfo').textContent = `${APP.name} · ${I18N.t(v)}`; $('#btnUpdate').title = `Nach einer neuen Version suchen – installiert: ${v}`; } });

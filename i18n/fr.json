@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Signer : cliquez à l’endroit où la signature doit figurer.",
  "Weitere Bilder hinzufügen": "Ajouter d’autres images",
  "Weitere Dateien hinzufügen": "Ajouter d’autres fichiers",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Fusionner : modifiez l’ordre par glisser-déposer – vous pouvez ajouter d’autres fichiers."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Fusionner : modifiez l’ordre par glisser-déposer – vous pouvez ajouter d’autres fichiers.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Toutes les parties du programme ne sont pas encore enregistrées sur cet appareil – ouvrez avec Internet, PDFMy les télécharge automatiquement.",
+ "Offline-Speicher unvollständig": "Stockage hors ligne incomplet",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy fonctionne sans Internet – tous les fichiers sont enregistrés sur cet appareil.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy fonctionne sans Internet. PDFMy télécharge certains fichiers supplémentaires (p. ex. polices pour fichiers Word) dès que le Wi-Fi est disponible.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Astuce pour le mode hors ligne : dans Safari, touchez « Partager » puis « Sur l’écran d’accueil ». PDFMy reste alors disponible durablement sans Internet – sinon Safari efface le stockage hors ligne après environ 7 jours sans utilisation.",
+ "Offline bereit": "Prêt hors ligne"
 }

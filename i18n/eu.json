@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Sinatu: egin klik sinadurak egon behar duen lekuan.",
  "Weitere Bilder hinzufügen": "Gehitu irudi gehiago",
  "Weitere Dateien hinzufügen": "Gehitu fitxategi gehiago",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Batu: aldatu ordena arrastatuz – fitxategi gehiago gehi daitezke."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Batu: aldatu ordena arrastatuz – fitxategi gehiago gehi daitezke.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Programaren zati guztiak ez daude oraindik gailu honetan gordeta – ireki Interneteko konexioarekin, eta PDFMy-k automatikoki deskargatuko ditu.",
+ "Offline-Speicher unvollständig": "Lineaz kanpoko biltegia osatu gabe",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy-k Internetik gabe funtzionatzen du – fitxategi guztiak gailu honetan gordeta daude.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy-k Internetik gabe funtzionatzen du. Fitxategi gehigarri batzuk (adib. Word fitxategietarako letra-tipoak) wifia dagoen bezain laster deskargatzen ditu PDFMy-k.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Lineaz kanpo erabiltzeko aholkua: Safarin, sakatu «Partekatu» eta «Gehitu hasierako pantailan». Horrela PDFMy Internetik gabe ere betiko erabilgarri geratzen da – bestela, Safarik lineaz kanpoko biltegia ezabatzen du 7 egun inguru erabili gabe igarotakoan.",
+ "Offline bereit": "Lineaz kanpo prest"
 }

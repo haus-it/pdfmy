@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Ondertekenen: klik op de plek waar de handtekening moet komen.",
  "Weitere Bilder hinzufügen": "Meer afbeeldingen toevoegen",
  "Weitere Dateien hinzufügen": "Meer bestanden toevoegen",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Samenvoegen: wijzig de volgorde door te slepen – u kunt meer bestanden toevoegen."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Samenvoegen: wijzig de volgorde door te slepen – u kunt meer bestanden toevoegen.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Nog niet alle programmaonderdelen zijn op dit apparaat opgeslagen – open met internet, PDFMy laadt ze automatisch.",
+ "Offline-Speicher unvollständig": "Offline opslag onvolledig",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy werkt zonder internet – alle bestanden zijn op dit apparaat opgeslagen.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy werkt zonder internet. Sommige extra bestanden (bijv. lettertypen voor Word-bestanden) laadt PDFMy zodra er wifi is.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Tip voor offline gebruik: tik in Safari op „Deel” en „Zet op beginscherm”. Dan blijft PDFMy ook zonder internet blijvend beschikbaar – anders wist Safari de offline opslag na ongeveer 7 dagen zonder gebruik.",
+ "Offline bereit": "Offline klaar"
 }

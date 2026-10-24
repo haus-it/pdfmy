@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Pasirašyti: spustelėkite vietą, kur turi būti parašas.",
  "Weitere Bilder hinzufügen": "Pridėti daugiau vaizdų",
  "Weitere Dateien hinzufügen": "Pridėti daugiau failų",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sujungti: keiskite tvarką vilkdami – galima pridėti daugiau failų."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sujungti: keiskite tvarką vilkdami – galima pridėti daugiau failų.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Dar ne visos programos dalys įrašytos šiame įrenginyje – atidarykite prisijungę prie interneto, PDFMy jas atsisiųs automatiškai.",
+ "Offline-Speicher unvollständig": "Neprisijungus naudojama saugykla nepilna",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy veikia be interneto – visi failai įrašyti šiame įrenginyje.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy veikia be interneto. Kai kuriuos papildomus failus (pvz., šriftus „Word“ failams) PDFMy atsisiunčia, kai tik yra „Wi-Fi“.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Patarimas naudoti neprisijungus: „Safari“ bakstelėkite „Bendrinti“ ir „Į pradžios ekraną“. Tada PDFMy liks pasiekiama be interneto visam laikui – kitaip „Safari“ ištrina neprisijungus naudojamą saugyklą maždaug po 7 dienų nenaudojimo.",
+ "Offline bereit": "Paruošta neprisijungus"
 }

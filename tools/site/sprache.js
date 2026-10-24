@@ -2,3 +2,9 @@
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // Sprachwahl der mehrsprachigen Webseiten (Hilfe, Scanner): gleiche Sprachliste und gleiche gemerkte Wahl wie in der App (js/i18n.js)
 if (window.I18N) I18N.picker(document.getElementById('siteLang'));
+// Offline-Betrieb auch für Besucher, die über eine Werkzeug- oder Hilfeseite kommen (z. B. aus der Suchmaschine): den Service Worker
+// der App anmelden – er speichert PDFMy auf dem Gerät; ohne Internet öffnet sich dann die App. sw.js liegt neben dieser Datei.
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || /^(localhost|127.0.0.1)$/.test(location.hostname)) && document.currentScript) {
+  const sw = new URL('sw.js', document.currentScript.src);
+  addEventListener('load', () => navigator.serviceWorker.register(sw.href, { scope: new URL('./', sw).href }).catch(e => console.warn('Service Worker:', e)));
+}

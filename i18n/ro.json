@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Semnare: faceți clic în locul unde trebuie să fie semnătura.",
  "Weitere Bilder hinzufügen": "Adăugați mai multe imagini",
  "Weitere Dateien hinzufügen": "Adăugați mai multe fișiere",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combinare: schimbați ordinea prin tragere – puteți adăuga mai multe fișiere."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combinare: schimbați ordinea prin tragere – puteți adăuga mai multe fișiere.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Încă nu toate componentele programului sunt salvate pe acest dispozitiv – deschideți cu internet, PDFMy le descarcă automat.",
+ "Offline-Speicher unvollständig": "Stocare offline incompletă",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy funcționează fără internet – toate fișierele sunt salvate pe acest dispozitiv.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy funcționează fără internet. Unele fișiere suplimentare (de ex. fonturi pentru fișiere Word) PDFMy le descarcă imediat ce există Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Sfat pentru utilizarea offline: în Safari, atingeți „Partajare” și „Adaugă pe ecranul principal”. Astfel PDFMy rămâne disponibil permanent și fără internet – altfel Safari șterge stocarea offline după aproximativ 7 zile de neutilizare.",
+ "Offline bereit": "Pregătit offline"
 }

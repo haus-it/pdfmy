@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Undirrita: smellið þar sem undirskriftin á að vera.",
  "Weitere Bilder hinzufügen": "Bæta við fleiri myndum",
  "Weitere Dateien hinzufügen": "Bæta við fleiri skrám",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sameina: breytið röðinni með því að draga – hægt er að bæta við fleiri skrám."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sameina: breytið röðinni með því að draga – hægt er að bæta við fleiri skrám.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Ekki eru enn allir hlutar forritsins vistaðir á þessu tæki – opnið með interneti, PDFMy sækir þá sjálfkrafa.",
+ "Offline-Speicher unvollständig": "Ótengd geymsla ófullgerð",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy virkar án internets – allar skrár eru vistaðar á þessu tæki.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy virkar án internets. Sumar viðbótarskrár (t.d. leturgerðir fyrir Word-skrár) sækir PDFMy um leið og Wi-Fi er tiltækt.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Ábending fyrir ótengda notkun: Ýtið á „Deila“ og „Á heimaskjá“ í Safari. Þá er PDFMy varanlega tiltækt án internets – annars eyðir Safari ótengdu geymslunni eftir um 7 daga án notkunar.",
+ "Offline bereit": "Tilbúið ótengt"
 }

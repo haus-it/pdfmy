@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Podpísať: kliknite na miesto, kde má byť podpis.",
  "Weitere Bilder hinzufügen": "Pridať ďalšie obrázky",
  "Weitere Dateien hinzufügen": "Pridať ďalšie súbory",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Zlúčiť: poradie zmeňte presunutím – ďalšie súbory možno pridať."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Zlúčiť: poradie zmeňte presunutím – ďalšie súbory možno pridať.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Na tomto zariadení ešte nie sú uložené všetky časti programu – otvorte s internetom, PDFMy ich automaticky stiahne.",
+ "Offline-Speicher unvollständig": "Offline úložisko neúplné",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy funguje bez internetu – všetky súbory sú uložené na tomto zariadení.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy funguje bez internetu. Niektoré doplnkové súbory (napr. písma pre súbory Word) stiahne PDFMy, len čo bude k dispozícii Wi-Fi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Tip pre offline režim: V Safari ťuknite na „Zdieľať“ a „Pridať na plochu“. Potom zostane PDFMy trvalo dostupné aj bez internetu – inak Safari offline úložisko vymaže približne po 7 dňoch nepoužívania.",
+ "Offline bereit": "Pripravené offline"
 }

@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Allekirjoita: napsauta kohtaa, johon allekirjoitus tulee.",
  "Weitere Bilder hinzufügen": "Lisää kuvia",
  "Weitere Dateien hinzufügen": "Lisää tiedostoja",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Yhdistä: muuta järjestystä vetämällä – voit lisätä tiedostoja."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Yhdistä: muuta järjestystä vetämällä – voit lisätä tiedostoja.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Kaikkia ohjelman osia ei ole vielä tallennettu tähän laitteeseen – avaa internetyhteydellä, niin PDFMy lataa ne automaattisesti.",
+ "Offline-Speicher unvollständig": "Offline-tallennus kesken",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy toimii ilman internetiä – kaikki tiedostot on tallennettu tähän laitteeseen.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy toimii ilman internetiä. Joitakin lisätiedostoja (esim. Word-tiedostojen fontteja) PDFMy lataa heti, kun Wi-Fi on käytettävissä.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Vinkki offline-käyttöön: Napauta Safarissa ”Jaa” ja ”Lisää Koti-valikkoon”. Silloin PDFMy pysyy käytettävissä ilman internetiä pysyvästi – muuten Safari poistaa offline-tallennuksen noin 7 päivän käyttämättömyyden jälkeen.",
+ "Offline bereit": "Valmis offline-käyttöön"
 }

@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Sínigh: cliceáil san áit ar cheart don síniú a bheith.",
  "Weitere Bilder hinzufügen": "Cuir tuilleadh íomhánna leis",
  "Weitere Dateien hinzufügen": "Cuir tuilleadh comhad leis",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Cumaisc: athraigh an t-ord trí tharraingt – is féidir tuilleadh comhad a chur leis."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Cumaisc: athraigh an t-ord trí tharraingt – is féidir tuilleadh comhad a chur leis.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Níl gach cuid den ríomhchlár sábháilte ar an ngléas seo fós – oscail le hidirlíon agus íoslódálfaidh PDFMy iad go huathoibríoch.",
+ "Offline-Speicher unvollständig": "Stóráil as líne neamhiomlán",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "Oibríonn PDFMy gan idirlíon – tá gach comhad sábháilte ar an ngléas seo.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "Oibríonn PDFMy gan idirlíon. Íoslódálann PDFMy roinnt comhad breise (m.sh. clófhoirne do chomhaid Word) a luaithe a bhíonn Wi-Fi ar fáil.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Leid d'úsáid as líne: i Safari, tapáil “Share” agus “Add to Home Screen”. Ansin fanann PDFMy ar fáil gan idirlíon go buan – murach sin scriosann Safari an stóráil as líne tar éis thart ar 7 lá gan úsáid.",
+ "Offline bereit": "Réidh as líne"
 }

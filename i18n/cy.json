@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Llofnodi: cliciwch lle dylai’r llofnod fod.",
  "Weitere Bilder hinzufügen": "Ychwanegu rhagor o ddelweddau",
  "Weitere Dateien hinzufügen": "Ychwanegu rhagor o ffeiliau",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Cyfuno: newidiwch y drefn drwy lusgo – gallwch ychwanegu rhagor o ffeiliau."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Cyfuno: newidiwch y drefn drwy lusgo – gallwch ychwanegu rhagor o ffeiliau.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Nid yw pob rhan o’r rhaglen wedi’i chadw ar y ddyfais hon eto – agorwch gyda’r rhyngrwyd, a bydd PDFMy yn eu llwytho i lawr yn awtomatig.",
+ "Offline-Speicher unvollständig": "Storfa all-lein yn anghyflawn",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "Mae PDFMy yn gweithio heb y rhyngrwyd – mae pob ffeil wedi’i chadw ar y ddyfais hon.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "Mae PDFMy yn gweithio heb y rhyngrwyd. Mae PDFMy yn llwytho rhai ffeiliau ychwanegol (e.e. ffontiau ar gyfer ffeiliau Word) cyn gynted ag y bydd Wi-Fi ar gael.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Awgrym ar gyfer defnydd all-lein: yn Safari, tapiwch ‘Share’ ac ‘Add to Home Screen’. Yna mae PDFMy yn aros ar gael heb y rhyngrwyd yn barhaol – fel arall mae Safari yn dileu’r storfa all-lein ar ôl tua 7 diwrnod heb ddefnydd.",
+ "Offline bereit": "Yn barod all-lein"
 }

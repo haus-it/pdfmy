@@ -3001,5 +3001,11 @@
  "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Asinar: prema no lugar onde debe ir a sinatura.",
  "Weitere Bilder hinzufügen": "Engadir máis imaxes",
  "Weitere Dateien hinzufügen": "Engadir máis ficheiros",
- "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combinar: cambie a orde arrastrando – pode engadir máis ficheiros."
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combinar: cambie a orde arrastrando – pode engadir máis ficheiros.",
+ "Noch nicht alle Programmteile sind auf diesem Gerät gespeichert – mit Internet öffnen, PDFMy lädt sie automatisch nach.": "Aínda non todas as partes do programa están gardadas neste dispositivo – ábrao con internet e PDFMy descárgaas automaticamente.",
+ "Offline-Speicher unvollständig": "Almacenamento sen conexión incompleto",
+ "PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.": "PDFMy funciona sen internet – todos os ficheiros están gardados neste dispositivo.",
+ "PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.": "PDFMy funciona sen internet. Algúns ficheiros adicionais (p. ex. fontes para ficheiros de Word) descárgaos PDFMy en canto haxa wifi.",
+ "Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.": "Consello para o uso sen conexión: en Safari, toque «Compartir» e «Engadir á pantalla de inicio». Así PDFMy segue dispoñible sen internet de xeito permanente – se non, Safari borra o almacenamento sen conexión despois de arredor de 7 días sen uso.",
+ "Offline bereit": "Listo sen conexión"
 }

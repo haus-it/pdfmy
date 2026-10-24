@@ -851,6 +851,7 @@ label[role=button]:focus-visible,.thumb:focus-visible,#viewer:focus-visible,.car
 .brand{cursor:pointer}
 #scanErrDlg.logmode ul,#scanErrDlg.logmode #scanErrRetry{display:none}
 .brand:hover .pdfmark{opacity:.85}
+.offstate{flex:none;font-size:12px;color:var(--ok);padding:2px 6px;white-space:nowrap}.offstate::before{content:"✓ "}.offstate.bad{color:var(--bad,#b42318)}.offstate.bad::before{content:"! "}
 .verbar{flex:none;border:0!important;background:none!important;height:auto!important;padding:2px 6px!important;font-size:12px;color:var(--muted);font-weight:500;white-space:nowrap}
 .verbar:hover{color:var(--accent)}
 .verbar b{color:var(--warn);font-weight:600}
@@ -1408,7 +1409,7 @@ html.i18n-wait body{visibility:hidden}
 <div id="toast" class="toast" role="status" hidden></div>
 <div id="present" class="present" hidden role="dialog" aria-modal="true" aria-label="Präsentation" tabindex="-1"><canvas id="presCv" aria-hidden="true"></canvas><div id="presBlack" class="presblack" hidden></div><div id="presBar" class="presbar"><button type="button" id="presPrev" aria-label="Vorherige Seite">‹</button><span id="presNum" aria-live="polite"></span><button type="button" id="presNext" aria-label="Nächste Seite">›</button><button type="button" id="presExit" aria-label="Präsentation beenden">Beenden (Esc)</button></div></div>
 <nav id="mobBar" aria-label="Dokument speichern und teilen"><button type="button" id="mbShare"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg>Teilen</button><button type="button" id="mbFile" hidden><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg>Ablegen</button><button type="button" id="mbSave" class="primary"><svg class="ic" aria-hidden="true"><use href="#i-save"/></svg>Speichern</button></nav>
-<footer><span id="pageNav" hidden><button type="button" id="pageInd" class="pageind" title="Zu einer Seite springen (Strg+G)">Seite 1 von 1</button><label class="sr-only" for="pageGo">Seitenzahl</label><input id="pageGo" type="number" min="1" inputmode="numeric" hidden></span><span id="msg" role="status">Bereit.</span><button type="button" id="verBar" class="verbar" title="Installierte Versionen – klicken, um nach Updates zu suchen"></button><button type="button" id="updBtn" class="upd" hidden title="Eine neue Version ist geladen – ein Klick aktiviert sie">Neue Version verfügbar – jetzt neu laden</button><div class="bar" id="bar"><i></i></div></footer>
+<footer><span id="pageNav" hidden><button type="button" id="pageInd" class="pageind" title="Zu einer Seite springen (Strg+G)">Seite 1 von 1</button><label class="sr-only" for="pageGo">Seitenzahl</label><input id="pageGo" type="number" min="1" inputmode="numeric" hidden></span><span id="msg" role="status">Bereit.</span><span id="offState" class="offstate" hidden></span><button type="button" id="verBar" class="verbar" title="Installierte Versionen – klicken, um nach Updates zu suchen"></button><button type="button" id="updBtn" class="upd" hidden title="Eine neue Version ist geladen – ein Klick aktiviert sie">Neue Version verfügbar – jetzt neu laden</button><div class="bar" id="bar"><i></i></div></footer>
 
 <dialog id="einvDlg" class="wide einvdlg" aria-labelledby="einvT"><form id="einvForm" novalidate>
   <h3 class="dlgtitle" id="einvT">E-Rechnung schreiben</h3>

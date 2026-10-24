@@ -5,7 +5,7 @@
    Updates laden nur geänderte Dateien (Update-Strategie, KONZEPT.md): Der Offline-Speicher bleibt über Versionen bestehen; beim
    Installieren wird jede gespeicherte Datei mit ihrer Prüfsumme in pruefsummen.json verglichen und nur bei Abweichung neu geladen.
    Bei 100.000 Nutzern spart das je Veröffentlichung Terabytes (vorher: alle ~18 MB je Gerät bei jeder neuen VERSION). */
-const VERSION = 'app-v191';
+const VERSION = 'app-v192';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',
@@ -27,6 +27,42 @@ async function published() {
   try { const r = await fetch('pruefsummen.json', { cache: 'reload' }); if (r.ok) return (await r.json()).dateien || null; } catch {}
   return null;
 }
+// Abruf am HTTP-Cache vorbei, mit Wiederholung (Mobilfunk) → Antwort oder null
+async function fetchRetry(f, tries = 3) {
+  for (let i = 0; i < tries; i++) {
+    try { const res = await fetch(new Request(f, { cache: 'reload' })); if (res.ok) return res; if (res.status === 404) return null; } catch {}
+    await new Promise(r => setTimeout(r, 800 * (i + 1)));
+  }
+  return null;
+}
+/* Weitere Dateien für den Offline-Betrieb, die nicht beim Installieren, sondern danach im Hintergrund geladen werden (Seite fragt an):
+   klein und wichtig (iPhone-Fotos HEIC, Schriften der Unterschrift und Oberfläche, Verschlüsselung) immer; die großen Schriften für
+   Word-Import und „Text ändern“ (~10 MB) nur im WLAN bzw. ohne Datensparmodus. Dazu die OCR-Sprache der Oberfläche. */
+const EXTRA = ['vendor/libheif/libheif.js', 'vendor/libheif/libheif.wasm', 'vendor/forge.min.js',
+  'vendor/fonts/archivo-latin-standard-normal.woff2', 'vendor/fonts/archivo-latin-standard-italic.woff2', 'vendor/fonts/source-sans-3-latin-wght-normal.woff2',
+  ...['allura', 'caveat', 'dancing-script', 'great-vibes', 'homemade-apple'].map(n => `vendor/fonts/sign/${n}.woff2`)];
+const HEAVY = [...['Sans-Oblique', 'Sans-BoldOblique', 'SansMono', 'Serif-Bold', 'Serif-Italic', 'Serif-BoldItalic'].map(n => `vendor/dejavu/DejaVu${n}.ttf`),
+  ...['Caladea', 'LiberationMono', 'LiberationSans', 'LiberationSerif', 'PDFMySansC'].flatMap(f => ['Regular', 'Bold', 'Italic', 'BoldItalic'].map(s => `vendor/fonts/metric/${f}-${s}.ttf`))];
+// Offline-Stand prüfen und fehlende Dateien nachladen: { want: [...], load: true|false } → { missing: [...], total }
+async function ensure(list, load) {
+  const store = await caches.open(STORE), missing = [];
+  for (const f of list) {
+    if (await store.match(new Request(f), { ignoreSearch: true })) continue;
+    const res = load ? await fetchRetry(f, 2) : null;
+    if (res) await store.put(new Request(f), res); else missing.push(f);
+  }
+  return { missing, total: list.length };
+}
+self.addEventListener('message', e => {
+  const d = e.data || {};
+  if (d.type !== 'pdfmy:offline') return;
+  const langs = (d.langs || []).filter(l => /^[a-z_]{3,8}$/.test(l)).map(l => `vendor/tesseract/lang/${l}.traineddata.gz`);
+  const base = [...CORE, ...VENDOR], more = [...EXTRA, ...langs, ...(d.heavy ? HEAVY : [])];
+  e.waitUntil((async () => {
+    const core = await ensure(base, true), extra = await ensure(more, d.load !== false);
+    e.source?.postMessage({ type: 'pdfmy:offline', ready: !core.missing.length, coreMissing: core.missing.length, extraMissing: extra.missing.length, heavy: !!d.heavy });
+  })());
+});
 // Gespeicherte Antwort zu einer Datei – im dauerhaften Speicher oder in einem alten Speicher je VERSION (Übergang)
 async function stored(req) {
   for (const name of [STORE, ...(await caches.keys()).filter(k => k !== STORE && !k.startsWith('pdfmy-neu-'))]) {
@@ -42,11 +78,14 @@ self.addEventListener('install', e => {
     const sums = await published(), stage = await caches.open(STAGE), store = await caches.open(STORE);
     let kept = 0, loaded = 0;
     // Pflichtdateien: unverändert behalten, geändert oder fehlend neu laden (in den Zwischenspeicher). 'reload' umgeht den HTTP-Cache.
+    // App-Dateien (CORE) sind Pflicht – fehlt eine, bleibt die bisherige Fassung aktiv. Bibliotheken (VENDOR) mit Wiederholung;
+    // scheitert eine trotzdem (schwaches Mobilfunknetz), installiert die Fassung dennoch – die Datei lädt die Seite später nach (ensure).
+    let missed = 0;
     await Promise.all([...CORE, ...VENDOR].map(async f => {
       const req = new Request(f), want = sums?.[rel(req.url)], have = want && await stored(req);
       if (have && await shaOf(have) === want) { if (!await store.match(req, { ignoreSearch: true })) await stage.put(req, have); kept++; return; }   // aus altem Speicher je VERSION übernehmen
-      const res = await fetch(new Request(f, { cache: 'reload' }));
-      if (!res.ok) throw new Error(`${f}: ${res.status}`);
+      const res = await fetchRetry(f);
+      if (!res) { if (CORE.includes(f)) throw new Error(`${f}: nicht ladbar`); missed++; return; }
       await stage.put(req, res); loaded++;
     }));
     // Zur Laufzeit gespeicherte Dateien (z. B. weitere OCR-Sprachen): veraltete merken – beim Aktivieren entfernt, bei Bedarf neu geladen
@@ -56,7 +95,7 @@ self.addEventListener('install', e => {
       if (want && !CORE.includes(r) && !VENDOR.includes(r)) { const hit = await store.match(req); if (!hit || await shaOf(hit) !== want) stale.push(req.url); }
     }
     await stage.put('__veraltet__', new Response(JSON.stringify(stale)));
-    console.info(`PDFMy ${VERSION}: ${loaded} Datei(en) geladen, ${kept} unverändert übernommen`);
+    console.info(`PDFMy ${VERSION}: ${loaded} Datei(en) geladen, ${kept} unverändert übernommen${missed ? `, ${missed} später` : ''}`);
     await self.skipWaiting();
   })());
 });
