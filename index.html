@@ -716,7 +716,8 @@ footer{min-height:30px;padding:4px 20px;font-size:12.5px}
 @media (max-width:1100px){ #btnInstall .lbl-s{display:inline} #btnInstall{gap:6px;padding:0 12px;width:auto} }
 .todo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 12px 0;padding:8px 10px 8px 14px;border-radius:10px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));background:color-mix(in srgb,var(--accent) 7%,var(--panel));font-size:14.5px;font-weight:600}
 .todo > .ic{width:18px;height:18px;color:var(--accent);flex:none}
-.todo #todoText{flex:1 1 260px;min-width:0}
+.todo #todoText,.todo #taskText{flex:1 1 260px;min-width:0}
+.taskbar #taskText{font-weight:600}
 .todo.soon{border-color:#d9a400;background:color-mix(in srgb,#f5c400 14%,var(--panel))}
 .todo.late{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--panel))}
 .todo.late > .ic{color:var(--bad)}
@@ -1211,6 +1212,7 @@ html.i18n-wait body{visibility:hidden}
     <div id="sigBar" class="sigbar" hidden role="status" aria-live="polite"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span id="sigText"></span><button type="button" class="linkbtn" id="sigCosign" hidden title="Eigene digitale Signatur anhängen – vorhandene Signaturen bleiben gültig">Mitunterzeichnen</button><button type="button" class="linkbtn" id="sigMore">Signaturdetails</button></div>
     <div id="reqBar" class="sigbar req" hidden role="status" aria-live="polite"><svg class="ic" aria-hidden="true"><use href="#i-signature"/></svg><span id="reqText"></span><span id="reqBtns" class="reqbtns"></span></div>
     <div id="formHint" class="sigbar ok" hidden role="status" aria-live="polite"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span id="formHintText"></span><button type="button" class="linkbtn" id="formHintGo">Felder erkennen</button><button type="button" class="linkbtn" id="formHintNo" aria-label="Hinweis schließen">✕</button></div>
+    <div id="taskBar" class="todo taskbar" hidden role="status" aria-live="polite"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span id="taskText"></span><span class="todo-acts"><button type="button" id="taskHelp" hidden></button><button type="button" id="taskDone" class="primary">Fertig &amp; speichern</button><button type="button" id="taskClose" aria-label="Hinweis schließen" title="Hinweis schließen"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span></div>
     <div id="todo" class="todo" hidden role="status" aria-live="polite"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span id="todoText"></span><span class="todo-acts"><button type="button" data-act="stop" class="stopbtn" hidden>Stopp</button><button type="button" data-act="pay"><svg class="ic" aria-hidden="true"><use href="#i-scan-line"/></svg>Überweisen</button><button type="button" data-act="cal"><svg class="ic" aria-hidden="true"><use href="#i-calendar-plus"/></svg>Frist eintragen</button><button type="button" data-act="reply"><svg class="ic" aria-hidden="true"><use href="#i-pen-line"/></svg>Antworten</button><button type="button" data-act="fwd"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Weiterleiten</button><button type="button" data-act="file" class="primary"><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg>Ablegen</button></span></div>
     <div id="findBar" class="findbar" role="search" hidden><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="findQ" type="search" placeholder="Im Dokument suchen" aria-label="Im Dokument suchen" autocomplete="off" enterkeyhint="search"><span id="findN" class="findn" role="status" aria-live="polite"></span><button type="button" id="findPrev" title="Vorheriger Treffer (Umschalt+Enter)" aria-label="Vorheriger Treffer">▲</button><button type="button" id="findNext" title="Nächster Treffer (Enter, F3)" aria-label="Nächster Treffer">▼</button><button type="button" id="findMark" class="txt" title="Alle Treffer im ganzen Dokument mit dem Textmarker markieren – Farbe und Art wie beim Werkzeug „Markieren“">Alle markieren</button><button type="button" id="findReplT" class="txt" aria-expanded="false" aria-controls="findRepl" title="Ersetzen ein-/ausblenden">Ersetzen …</button><span id="findRepl" class="findrepl" hidden><input id="replQ" type="text" placeholder="Ersetzen durch" aria-label="Ersetzen durch" autocomplete="off"><button type="button" id="replOne" class="txt" title="Aktuellen Treffer ersetzen (Enter)">Ersetzen</button><button type="button" id="replAll" class="txt" title="Alle Treffer ersetzen (Strg+Enter)">Alle ersetzen</button></span><button type="button" id="findClose" title="Suche schließen (Esc)" aria-label="Suche schließen">✕</button></div>
     <div id="viewer" tabindex="0" role="region" aria-label="Seitenansicht – Enter setzt das gewählte Werkzeug, N wählt das nächste Element, Pfeiltasten verschieben es, Entf löscht"><div id="flow"><div id="flowBefore" class="flowpart"></div><div id="stage" hidden><canvas id="cv" role="img" aria-label="Seite"></canvas><div id="overlay"></div></div><div id="flowAfter" class="flowpart"></div></div><div id="empty" class="home">
@@ -1320,6 +1322,8 @@ html.i18n-wait body{visibility:hidden}
 
     <section>
       <h2>Briefdaten <span class="hint" id="anaHint" style="text-transform:none;letter-spacing:0"></span> <button type="button" id="einvChkBtn" class="linkbtn" hidden></button></h2>
+      <p class="cfrow" id="metaShowRow" hidden><button type="button" id="metaShow" class="linkbtn" title="Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage">Briefdaten eingeben (Absender, Frist, Akte …)</button></p>
+      <div id="metaFields">
       <div class="row2">
         <div class="field"><label for="m-date">Briefdatum</label><input id="m-date" type="date"></div>
         <div class="field"><label for="m-type">Dokumenttyp</label><input id="m-type" list="types"></div>
@@ -1335,6 +1339,7 @@ html.i18n-wait body{visibility:hidden}
       <div class="field"><label for="m-deadline">Frist / zahlbar bis</label>
         <div class="withbtn"><input id="m-deadline" type="date"><button id="btnIcs" disabled title="Kalendereintrag mit Erinnerung 3 Tage vorher (Outlook)">Termin</button></div></div>
         <div class="field"><label for="m-wv">Wiedervorlage</label><div class="withbtn"><input id="m-wv" type="date" title="An diesem Tag erscheint der Brief wieder auf der Startseite"><select id="m-wvq" aria-label="Wiedervorlage schnell wählen"><option value="">schnell …</option><option value="1">morgen</option><option value="7">in 1 Woche</option><option value="14">in 2 Wochen</option><option value="30">in 1 Monat</option></select></div></div>
+      </div>
       <div class="field"><label for="fname">Dateiname</label><input id="fname" spellcheck="false"></div>
       <div class="hint" id="outHint"></div>
     </section>

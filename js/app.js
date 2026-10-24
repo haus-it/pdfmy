@@ -2012,8 +2012,17 @@ function ownName() {
 function targetPath(meta) {
   return [S.byYear && (meta.date || '').slice(0, 4), S.byType && Letter.folderName(meta.type || 'Sonstiges')].filter(Boolean).join('\\');
 }
+/* Briefdaten nur bei Post zeigen (Usability-Gutachten): Scans, oder erkannte Frist, Betrag, IBAN, Absender mit Datum/Typ, oder schon
+   eingetragene Akte/Schlagwörter – sonst eingeklappt mit „Briefdaten eingeben …“. Der Dateiname bleibt immer sichtbar. */
+function letterLike() {
+  const m = state.meta || {};
+  return state.metaShown || S.autopilot || state.pages.some(p => p.kind === 'image') || !!(m.deadline || m.amount || m.iban || m.wv || (m.sender && (m.date || m.type)))
+    || !!($('#akte')?.value || $('#tags')?.value);
+}
 function renderSide() {
   window.renderTodo?.();
+  { const show = letterLike(); $('#metaFields').hidden = !show; $('#metaShowRow').hidden = show;
+    if (state.letterLikeWas !== show) { state.letterLikeWas = show; $('#secKey').open = show; } }   // Schlüsseldaten (Betrag, IBAN …) nur bei Post aufgeklappt – nur beim Wechsel, Nutzerwahl bleibt
   for (const k of META_KEYS) { const el = $('#m-' + k); if (el && document.activeElement !== el) el.value = state.meta[k] || ''; }
   if (document.activeElement !== $('#fname')) $('#fname').value = filename();
   $('#ptext').value = pageText(cur());
@@ -4317,10 +4326,11 @@ addEventListener('drop', e => {
   });
 });
 function resetDoc() {
+  if ($('#taskBar')) $('#taskBar').hidden = true;   // Aufgabenleiste gehört zum vorigen Dokument
   $('#assignee').value = ''; $('#akte').value = ''; state.akteTouched = false; $('#tags').value = '';
   $('#formHint').hidden = true;
   Object.assign(state, { files: [], filesDirty: false, marks: null, einv: null, assignee: '', akte: '', fromArchive: null, tags: '', cf: {}, cfTouched: false, pages: [], docs: [], sel: -1, annSel: null, editing: null, crop: null, undo: [], touched: {}, dirty: false, meta: emptyMeta(),
-    picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0, fromScanner: false, scanDone: false, autoArmed: null, wv: '' });
+    picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0, fromScanner: false, scanDone: false, autoArmed: null, wv: '', metaShown: false, letterLikeWas: undefined });
   if ($('#m-wv')) $('#m-wv').value = '';
   window.cfRender?.(); window.reqReset?.();
   setLbl('#btnGrid', 'Seitenübersicht'); renderForm();
@@ -4439,6 +4449,7 @@ $('#intentIn').onchange = e => {
 $('#dropIn').onchange = e => { state.intent = null; importFiles([...e.target.files]); e.target.value = ''; };
 
 function applyIntent() {
+  window.showTask?.(state.intent);   // Aufgabenleiste: nächster Schritt, Hilfsknopf, „Fertig & speichern“ (js/pro.js)
   switch (state.intent) {
     case 'merge': setView('grid'); status(`${state.docs.length} Datei(en), ${state.pages.length} Seiten. Reihenfolge per Ziehen ändern, dann „Speichern“.`); break;
     case 'organize': setView('grid'); status('Seiten anklicken (Strg/Umschalt für mehrere), ziehen, drehen, löschen – dann „Speichern“.'); break;

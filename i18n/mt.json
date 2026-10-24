@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Installa l-programm tas-sinkronizzazzjoni tal-fornitur tiegħek, eż. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – jew agħżel kwalunkwe folder taħt <i>“… Aktar → Agħżel folder tal-arkivju …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "B’xejn u mingħajr kont: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (jeditja l-PDFs direttament), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> jew <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Imbagħad ikklikkja hawn darb’oħra.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy ipoġġi l-PDF fil-folder “PDFMy” tal-folder tal-cloud tiegħek fuq dan il-kompjuter. It-tlugħ imbagħad isir mill-programm tas-sinkronizzazzjoni tiegħek stess (eż. Nextcloud) – fil-ħażna tiegħek. PDFMy innifsu ma jibgħat xejn.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 qed jaħdem – jinstabu l-iskaners fuq in-netwerk u mal-PC.",
  "Wird in {0} gespeichert …": "Qed jiġi ssejvjat f’{0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "L-ewwel iftaħ dokument – imbagħad ikun jista’ jiġi ssejvjat fil-folder tal-cloud.",
  "{0} Liste(n)": "{0} lista/listi",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Importanti biss jekk dan il-fajl jiġi ppreżentat mingħajr bidla – “Irranġa awtomatikament” jissejvja kollox flimkien adattat għall-beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – il-punti kollha",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "iċċekkja pdf/a arkivju ivvalida konformi fit-tul iso 19005 verapdf bea qorti ġustizzja erv ervb ippreżenta aċċessibbiltà aċċessibbli bitv pdf/ua screen reader epa rekord tal-pazjent gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Jinħolqu b’“Irranġa awtomatikament” bħala PDF/A – fl-istess ħin aċċessibbli skont PDF/UA, b’għarfien tat-test, lingwa u titlu."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Jinħolqu b’“Irranġa awtomatikament” bħala PDF/A – fl-istess ħin aċċessibbli skont PDF/UA, b’għarfien tat-test, lingwa u titlu.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Stampi f’PDF: iċċekkja l-ordni – tista’ żżid aktar stampi.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Daħħal id-dettalji tal-ittra (mittent, skadenza, fajl …)",
+ "Fertig & speichern": "Lest & issejvja",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formola: imla l-oqsma fiż-żona “Formola”.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Għal ittri u posta: data, mittent, suġġett, fajl, skadenza u segwitu",
+ "Nach einer neuen Version suchen": "Fittex verżjoni ġdida",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Sewwi: iċċekkja l-paġni – meta tissejvja, il-fajl jerġa’ jinkiteb b’mod nadif.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Għatti: iġbed żoni. Il-kontenut taħthom jitneħħa tassew meta tissejvja.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organizza l-paġni: ikklikkja (Ctrl/Shift għal diversi), iġbed, dawwar jew ħassar.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Iffirma: ikklikkja fejn għandha tkun il-firma.",
+ "Weitere Bilder hinzufügen": "Żid aktar stampi",
+ "Weitere Dateien hinzufügen": "Żid aktar fajls",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Għaqqad: ibdel l-ordni billi tkaxkar – tista’ żżid aktar fajls."
 }

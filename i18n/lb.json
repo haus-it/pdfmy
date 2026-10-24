@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Installéiert d'Sync-Programm vun Ärem Ubidder, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wielt ënner <i>„… Méi → Oflagedossier wielen …“</i> e beléiwegen Dossier.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratis an ouni Kont: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (beaarbecht PDFen direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Duerno hei nach eng Kéier klicken.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy leet de PDF am Dossier „PDFMy“ vun Ärem Cloud-Dossier op dësem Computer of. D'Eroplueden iwwerhëlt duerno Äert eegent Sync-Programm (z. B. Nextcloud) – op Äre Späicher. PDFMy selwer iwwerdréit näischt.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 leeft – Scanneren am Netzwierk an um PC gi fonnt.",
  "Wird in {0} gespeichert …": "Gëtt an {0} gespäichert …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Fir d'éischt en Dokument opmaachen – da léisst et sech am Cloud-Dossier späicheren.",
  "{0} Liste(n)": "{0} Lëscht(en)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Nëmme wichteg, wann dës Datei onverännert agereecht gëtt – „Automatesch behiewen“ späichert alles zesummen beA-tauglech.",
  "PDF/A – alle Prüfpunkte": "PDF/A – all Préifpunkten",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "préiwen pdf/a archiv validéieren konform laangzäit iso 19005 verapdf bea geriicht justiz erv ervb areechen barrièrefräiheet barrièrefräi bitv pdf/ua screenreader epa patientenakt gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Gi mat „Automatesch behiewen“ als PDF/A erstallt – gläichzäiteg barrièrefräi no PDF/UA, mat Texterkennung, Sprooch an Titel."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Gi mat „Automatesch behiewen“ als PDF/A erstallt – gläichzäiteg barrièrefräi no PDF/UA, mat Texterkennung, Sprooch an Titel.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Biller a PDF: Reiefolleg kontrolléieren – Dir kënnt weider Biller derbäisetzen.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Bréifdaten aginn (Ofsender, Delai, Dossier …)",
+ "Fertig & speichern": "Fäerdeg & späicheren",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulaire: d'Felder am Beräich „Formulaire“ ausfëllen.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Fir Bréiwer a Post: Datum, Ofsender, Betreff, Dossier, Delai a Widderviirlag",
+ "Nach einer neuen Version suchen": "No enger neier Versioun sichen",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Reparéieren: Säite kontrolléieren – beim Späicheren gëtt d'Datei propper nei geschriwwen.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Schwäerzen: Beräicher opzéien. Den Inhalt drënner gëtt beim Späicheren wierklech ewechgeholl.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Säiten organiséieren: klicken (Ctrl/Shift fir méi), zéien, dréinen oder läschen.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Ënnerschreiwen: op d'Plaz klicken, wou d'Ënnerschrëft stoe soll.",
+ "Weitere Bilder hinzufügen": "Weider Biller derbäisetzen",
+ "Weitere Dateien hinzufügen": "Weider Dateien derbäisetzen",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Zesummesetzen: Reiefolleg duerch Zéien änneren – Dir kënnt weider Dateien derbäisetzen."
 }

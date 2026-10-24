@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Instal·leu el programa de sincronització del vostre proveïdor, p. ex. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – o trieu qualsevol carpeta a <i>«… Més → Tria la carpeta d'arxiu…»</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratuïts i sense compte: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (edita PDF directament), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> o <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Després feu clic aquí de nou.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy desa el PDF a la carpeta «PDFMy» de la vostra carpeta del núvol d'aquest ordinador. Després, el puja el vostre propi programa de sincronització (p. ex. Nextcloud) – al vostre emmagatzematge. PDFMy mateix no transmet res.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 s'està executant – es troben els escàners de la xarxa i de l'ordinador.",
  "Wird in {0} gespeichert …": "S'està desant a {0}…",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Primer obriu un document – després es pot desar a la carpeta del núvol.",
  "{0} Liste(n)": "{0} llista(es)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Només importa si aquest fitxer es presenta sense canvis – «Corregeix automàticament» ho desa tot junt apte per a beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – tots els punts",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "comprovar pdf/a arxiu validar conforme llarg termini iso 19005 verapdf bea tribunal justícia erv ervb presentar accessibilitat accessible bitv pdf/ua lector de pantalla epa història clínica gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Es generen com a PDF/A amb «Corregeix automàticament» – alhora accessibles segons PDF/UA, amb reconeixement de text, idioma i títol."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Es generen com a PDF/A amb «Corregeix automàticament» – alhora accessibles segons PDF/UA, amb reconeixement de text, idioma i títol.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Imatges a PDF: comproveu l'ordre – podeu afegir més imatges.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Introduir dades de la carta (remitent, termini, expedient …)",
+ "Fertig & speichern": "Acaba i desa",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulari: empleneu els camps de l'àrea «Formulari».",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Per a cartes i correu: data, remitent, assumpte, expedient, termini i seguiment",
+ "Nach einer neuen Version suchen": "Cerca una versió nova",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Repara: comproveu les pàgines – en desar, el fitxer es reescriu netament.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Ennegreix: traceu zones. El contingut de sota s'elimina de veritat en desar.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organitza les pàgines: feu clic (Ctrl/Maj per a diverses), arrossegueu, gireu o suprimiu.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Signa: feu clic al lloc on ha d'anar la signatura.",
+ "Weitere Bilder hinzufügen": "Afegeix més imatges",
+ "Weitere Dateien hinzufügen": "Afegeix més fitxers",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combina: canvieu l'ordre arrossegant – podeu afegir més fitxers."
 }

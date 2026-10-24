@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Sağlayıcınızın eşitleme programını yükleyin, ör. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – veya <i>“… Daha fazla → Arşiv klasörü seç …”</i> altında herhangi bir klasör seçin.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Ücretsiz ve hesap gerektirmeden: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (PDF’leri doğrudan düzenler), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> veya <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Ardından buraya bir kez daha tıklayın.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy, PDF’yi bu bilgisayardaki bulut klasörünüzün “PDFMy” klasörüne koyar. Yüklemeyi daha sonra kendi eşitleme programınız (ör. Nextcloud) yapar – kendi depolama alanınıza. PDFMy’nin kendisi hiçbir şey aktarmaz.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 çalışıyor – ağdaki ve bilgisayara bağlı tarayıcılar bulunur.",
  "Wird in {0} gespeichert …": "{0} içine kaydediliyor …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Önce bir belge açın – ardından bulut klasörüne kaydedilebilir.",
  "{0} Liste(n)": "{0} liste",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Yalnızca bu dosya değiştirilmeden sunulursa önemlidir – “Otomatik düzelt” her şeyi birlikte beA’ya uygun kaydeder.",
  "PDF/A – alle Prüfpunkte": "PDF/A – tüm denetim noktaları",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "denetle pdf/a arşiv doğrula uyumlu uzun süreli iso 19005 verapdf bea mahkeme adalet erv ervb sunmak erişilebilirlik erişilebilir bitv pdf/ua ekran okuyucu epa hasta dosyası gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "“Otomatik düzelt” ile PDF/A olarak oluşturulur – aynı zamanda PDF/UA’ya göre erişilebilir, metin tanıma, dil ve başlıkla."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "“Otomatik düzelt” ile PDF/A olarak oluşturulur – aynı zamanda PDF/UA’ya göre erişilebilir, metin tanıma, dil ve başlıkla.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Görsellerden PDF: sırayı kontrol edin – başka görseller eklenebilir.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Mektup bilgilerini girin (gönderen, süre, dosya …)",
+ "Fertig & speichern": "Bitti & kaydet",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Form: “Form” alanındaki alanları doldurun.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Mektuplar ve posta için: tarih, gönderen, konu, dosya, süre ve hatırlatma",
+ "Nach einer neuen Version suchen": "Yeni sürüm ara",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Onar: sayfaları kontrol edin – kaydederken dosya temiz biçimde yeniden yazılır.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Karart: alanlar çizin. Altlarındaki içerik kaydederken gerçekten kaldırılır.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Sayfaları düzenle: tıklayın (birden fazlası için Ctrl/Shift), sürükleyin, döndürün veya silin.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "İmzala: imzanın bulunacağı yere tıklayın.",
+ "Weitere Bilder hinzufügen": "Başka görseller ekle",
+ "Weitere Dateien hinzufügen": "Başka dosyalar ekle",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Birleştir: sırayı sürükleyerek değiştirin – başka dosyalar eklenebilir."
 }

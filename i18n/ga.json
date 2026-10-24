@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Suiteáil clár sioncrónaithe do sholáthraí, m.sh. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – nó roghnaigh fillteán ar bith faoi <i>“… Tuilleadh → Roghnaigh fillteán comhdaithe …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Saor in aisce agus gan chuntas: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (cuireann sé PDFanna in eagar go díreach), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> nó <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Ansin cliceáil anseo arís.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "Cuireann PDFMy an PDF san fhillteán “PDFMy” i d'fhillteán néil ar an ríomhaire seo. Ansin déanann do chlár sioncrónaithe féin (m.sh. Nextcloud) an uaslódáil – chuig do stóras. Ní tharchuireann PDFMy féin aon rud.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "Tá pdfmy Scan 1.12.0 ag rith – aimsítear scanóirí ar an líonra agus ar an ríomhaire.",
  "Wird in {0} gespeichert …": "Á shábháil in {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Oscail doiciméad ar dtús – ansin is féidir é a shábháil san fhillteán néil.",
  "{0} Liste(n)": "{0} liosta",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Tábhachtach amháin má chuirtear an comhad seo isteach gan athrú – sábhálann “Ceartaigh go huathoibríoch” gach rud le chéile oiriúnach do beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – gach pointe seiceála",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "seiceáil pdf/a cartlann bailíochtaigh comhlíontach fadtéarmach iso 19005 verapdf bea cúirt ceartas erv ervb comhdaigh inrochtaineacht inrochtana bitv pdf/ua léitheoir scáileáin epa taifead othair gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Cruthaítear iad mar PDF/A le “Ceartaigh go huathoibríoch” – inrochtana de réir PDF/UA ag an am céanna, le haithint téacs, teanga agus teideal."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Cruthaítear iad mar PDF/A le “Ceartaigh go huathoibríoch” – inrochtana de réir PDF/UA ag an am céanna, le haithint téacs, teanga agus teideal.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Íomhánna go PDF: seiceáil an t-ord – is féidir tuilleadh íomhánna a chur leis.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Iontráil sonraí na litreach (seoltóir, spriocdháta, comhad …)",
+ "Fertig & speichern": "Críochnaithe & sábháil",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Foirm: líon isteach na réimsí sa limistéar “Foirm”.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Do litreacha agus post: dáta, seoltóir, ábhar, comhad, spriocdháta agus athbhreithniú",
+ "Nach einer neuen Version suchen": "Lorg leagan nua",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Deisigh: seiceáil na leathanaigh – athscríobhtar an comhad go glan nuair a shábháiltear é.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Dubhaigh: tarraing limistéir. Baintear an t-ábhar fúthu i ndáiríre nuair a shábháiltear.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Eagraigh leathanaigh: cliceáil (Ctrl/Shift le haghaidh roinnt), tarraing, rothlaigh nó scrios.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Sínigh: cliceáil san áit ar cheart don síniú a bheith.",
+ "Weitere Bilder hinzufügen": "Cuir tuilleadh íomhánna leis",
+ "Weitere Dateien hinzufügen": "Cuir tuilleadh comhad leis",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Cumaisc: athraigh an t-ord trí tharraingt – is féidir tuilleadh comhad a chur leis."
 }

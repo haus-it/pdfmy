@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Installera din leverantörs synkroniseringsprogram, t.ex. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – eller välj valfri mapp under <i>”… Mer → Välj arkivmapp …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratis och utan konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (redigerar PDF:er direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> eller <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Klicka sedan här igen.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy lägger PDF:en i mappen ”PDFMy” i din molnmapp på den här datorn. Uppladdningen sköts sedan av ditt eget synkroniseringsprogram (t.ex. Nextcloud) – till din lagring. PDFMy själv överför ingenting.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 körs – skannrar i nätverket och vid datorn hittas.",
  "Wird in {0} gespeichert …": "Sparas i {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Öppna först ett dokument – sedan kan det sparas i molnmappen.",
  "{0} Liste(n)": "{0} lista/listor",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Bara viktigt om filen lämnas in oförändrad – ”Åtgärda automatiskt” sparar allt tillsammans beA-kompatibelt.",
  "PDF/A – alle Prüfpunkte": "PDF/A – alla kontrollpunkter",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "kontrollera pdf/a arkiv validera överensstämmande långtid iso 19005 verapdf bea domstol rättsväsende erv ervb lämna in tillgänglighet tillgänglig bitv pdf/ua skärmläsare epa patientjournal gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Skapas med ”Åtgärda automatiskt” som PDF/A – samtidigt tillgängliga enligt PDF/UA, med textigenkänning, språk och titel."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Skapas med ”Åtgärda automatiskt” som PDF/A – samtidigt tillgängliga enligt PDF/UA, med textigenkänning, språk och titel.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Bilder till PDF: kontrollera ordningen – du kan lägga till fler bilder.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Ange brevuppgifter (avsändare, frist, ärende …)",
+ "Fertig & speichern": "Klar & spara",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulär: fyll i fälten i området ”Formulär”.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "För brev och post: datum, avsändare, ämne, ärende, frist och bevakning",
+ "Nach einer neuen Version suchen": "Sök efter en ny version",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Reparera: kontrollera sidorna – när du sparar skrivs filen om på ett rent sätt.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Maskera: dra upp områden. Innehållet under tas verkligen bort när du sparar.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Ordna sidor: klicka (Ctrl/Skift för flera), dra, rotera eller ta bort.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Skriv under: klicka där underskriften ska stå.",
+ "Weitere Bilder hinzufügen": "Lägg till fler bilder",
+ "Weitere Dateien hinzufügen": "Lägg till fler filer",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sammanfoga: ändra ordningen genom att dra – du kan lägga till fler filer."
 }

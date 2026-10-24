@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Gosodwch raglen gydweddu eich darparwr, e.e. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – neu dewiswch unrhyw ffolder o dan <i>‘… Mwy → Dewis ffolder ffeilio …’</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Am ddim a heb gyfrif: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (yn golygu PDFs yn uniongyrchol), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> neu <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Yna cliciwch yma eto.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "Mae PDFMy yn rhoi’r PDF yn y ffolder ‘PDFMy’ yn eich ffolder cwmwl ar y cyfrifiadur hwn. Wedyn mae eich rhaglen gydweddu eich hun (e.e. Nextcloud) yn ei uwchlwytho – i’ch storfa chi. Nid yw PDFMy ei hun yn trosglwyddo dim.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "Mae pdfmy Scan 1.12.0 yn rhedeg – mae sganwyr ar y rhwydwaith ac ar y PC yn cael eu canfod.",
  "Wird in {0} gespeichert …": "Wrthi’n cadw yn {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Agorwch ddogfen yn gyntaf – yna gellir ei chadw i’r ffolder cwmwl.",
  "{0} Liste(n)": "{0} rhestr",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Pwysig dim ond os caiff y ffeil hon ei chyflwyno heb ei newid – mae ‘Trwsio’n awtomatig’ yn cadw popeth gyda’i gilydd yn addas ar gyfer beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – pob pwynt gwirio",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "gwirio pdf/a archif dilysu cydymffurfio hirdymor iso 19005 verapdf bea llys cyfiawnder erv ervb cyflwyno hygyrchedd hygyrch bitv pdf/ua darllenydd sgrin epa cofnod cleifion gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Maent yn cael eu creu fel PDF/A gyda ‘Trwsio’n awtomatig’ – yn hygyrch yn ôl PDF/UA ar yr un pryd, gydag adnabod testun, iaith a theitl."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Maent yn cael eu creu fel PDF/A gyda ‘Trwsio’n awtomatig’ – yn hygyrch yn ôl PDF/UA ar yr un pryd, gydag adnabod testun, iaith a theitl.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Delweddau i PDF: gwiriwch y drefn – gallwch ychwanegu rhagor o ddelweddau.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Rhoi manylion y llythyr (anfonwr, terfyn amser, ffeil …)",
+ "Fertig & speichern": "Wedi gorffen & cadw",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Ffurflen: llenwch y meysydd yn yr ardal ‘Ffurflen’.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Ar gyfer llythyrau a phost: dyddiad, anfonwr, pwnc, ffeil, terfyn amser a dilyn i fyny",
+ "Nach einer neuen Version suchen": "Chwilio am fersiwn newydd",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Trwsio: gwiriwch y tudalennau – wrth gadw, caiff y ffeil ei hailysgrifennu’n lân.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Duo: llusgwch ardaloedd. Caiff y cynnwys oddi tanynt ei ddileu go iawn wrth gadw.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Trefnu tudalennau: cliciwch (Ctrl/Shift ar gyfer sawl un), llusgwch, cylchdrowch neu dilëwch.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Llofnodi: cliciwch lle dylai’r llofnod fod.",
+ "Weitere Bilder hinzufügen": "Ychwanegu rhagor o ddelweddau",
+ "Weitere Dateien hinzufügen": "Ychwanegu rhagor o ffeiliau",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Cyfuno: newidiwch y drefn drwy lusgo – gallwch ychwanegu rhagor o ffeiliau."
 }

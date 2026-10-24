@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Setjið upp samstillingarforrit þjónustuveitunnar, t.d. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – eða veljið hvaða möppu sem er undir <i>„… Meira → Velja skjalamöppu …“</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Ókeypis og án aðgangs: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (breytir PDF-skjölum beint), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> eða <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Smellið síðan hér aftur.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy vistar PDF-skjalið í möppunni „PDFMy“ í skýjamöppunni yðar á þessari tölvu. Upphleðslan er síðan í höndum yðar eigin samstillingarforrits (t.d. Nextcloud) – í yðar geymslu. PDFMy sjálft sendir ekkert.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 er í gangi – skannar á netinu og við tölvuna finnast.",
  "Wird in {0} gespeichert …": "Vistar í {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Opnið fyrst skjal – þá er hægt að vista það í skýjamöppunni.",
  "{0} Liste(n)": "{0} listi/listar",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Aðeins mikilvægt ef þessi skrá er send óbreytt – „Lagfæra sjálfvirkt“ vistar allt saman hæft fyrir beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – öll athugunaratriði",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "athuga pdf/a skjalasafn staðfesta samræmi langtíma iso 19005 verapdf bea dómstóll réttarkerfi erv ervb innsending aðgengi aðgengilegt bitv pdf/ua skjálesari epa sjúkraskrá gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Eru búnar til sem PDF/A með „Lagfæra sjálfvirkt“ – um leið aðgengilegar samkvæmt PDF/UA, með textagreiningu, tungumáli og titli."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Eru búnar til sem PDF/A með „Lagfæra sjálfvirkt“ – um leið aðgengilegar samkvæmt PDF/UA, með textagreiningu, tungumáli og titli.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Myndir í PDF: athugið röðina – hægt er að bæta við fleiri myndum.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Slá inn bréfaupplýsingar (sendandi, frestur, mál …)",
+ "Fertig & speichern": "Lokið & vista",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Eyðublað: fyllið út reitina á svæðinu „Eyðublað“.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Fyrir bréf og póst: dagsetning, sendandi, efni, mál, frestur og eftirfylgni",
+ "Nach einer neuen Version suchen": "Leita að nýrri útgáfu",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Lagfæra: athugið síðurnar – við vistun er skráin endurskrifuð hreint.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Sverta: dragið upp svæði. Efnið undir er í raun fjarlægt við vistun.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Skipuleggja síður: smellið (Ctrl/Shift fyrir fleiri), dragið, snúið eða eyðið.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Undirrita: smellið þar sem undirskriftin á að vera.",
+ "Weitere Bilder hinzufügen": "Bæta við fleiri myndum",
+ "Weitere Dateien hinzufügen": "Bæta við fleiri skrám",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sameina: breytið röðinni með því að draga – hægt er að bæta við fleiri skrám."
 }

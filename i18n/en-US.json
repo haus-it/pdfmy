@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Install your provider’s sync program, e.g. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – or choose any folder under <i>“… More → Choose filing folder …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Free and without an account: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (edits PDFs directly), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> or <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Then click here again.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy puts the PDF in the “PDFMy” folder of your cloud folder on this computer. Uploading is then done by your own sync program (e.g. Nextcloud) – to your storage. PDFMy itself transmits nothing.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 is running – scanners on the network and on the PC are found.",
  "Wird in {0} gespeichert …": "Saving to {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Open a document first – then it can be saved to the cloud folder.",
  "{0} Liste(n)": "{0} list(s)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Only relevant if this file is submitted unchanged – “Fix automatically” saves everything together beA-compliant.",
  "PDF/A – alle Prüfpunkte": "PDF/A – all check items",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "check pdf/a archive validate compliant long-term iso 19005 verapdf bea court justice erv ervb file submit accessibility accessible bitv pdf/ua screen reader epa patient record gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Are created as PDF/A with “Fix automatically” – also accessible to PDF/UA, with text recognition, language and title."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Are created as PDF/A with “Fix automatically” – also accessible to PDF/UA, with text recognition, language and title.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Images to PDF: check the order – you can add more images.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Enter letter details (sender, deadline, file …)",
+ "Fertig & speichern": "Done & save",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Form: fill in the fields in the “Form” area.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "For letters and mail: date, sender, subject, file, deadline and follow-up",
+ "Nach einer neuen Version suchen": "Check for a new version",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Repair: check the pages – the file is rewritten cleanly when saving.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Redact: drag areas. The content underneath is really removed when saving.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organize pages: click (Ctrl/Shift for several), drag, rotate or delete.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Sign: click where the signature should go.",
+ "Weitere Bilder hinzufügen": "Add more images",
+ "Weitere Dateien hinzufügen": "Add more files",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Merge: change the order by dragging – you can add more files."
 }

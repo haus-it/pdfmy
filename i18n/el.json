@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Εγκαταστήστε το πρόγραμμα συγχρονισμού του παρόχου σας, π.χ. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – ή επιλέξτε οποιονδήποτε φάκελο στο <i>«… Περισσότερα → Επιλογή φακέλου αρχειοθέτησης …»</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Δωρεάν και χωρίς λογαριασμό: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (επεξεργάζεται απευθείας PDF), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> ή <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Στη συνέχεια κάντε ξανά κλικ εδώ.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "Το PDFMy τοποθετεί το PDF στον φάκελο «PDFMy» του φακέλου cloud σας σε αυτόν τον υπολογιστή. Το ανέβασμα γίνεται στη συνέχεια από το δικό σας πρόγραμμα συγχρονισμού (π.χ. Nextcloud) – στον δικό σας χώρο. Το ίδιο το PDFMy δεν μεταδίδει τίποτα.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "Το pdfmy Scan 1.12.0 εκτελείται – οι σαρωτές στο δίκτυο και στον υπολογιστή εντοπίζονται.",
  "Wird in {0} gespeichert …": "Αποθήκευση στο {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Ανοίξτε πρώτα ένα έγγραφο – στη συνέχεια μπορεί να αποθηκευτεί στον φάκελο cloud.",
  "{0} Liste(n)": "{0} λίστα(ες)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Σημαντικό μόνο αν αυτό το αρχείο κατατεθεί αμετάβλητο – το «Αυτόματη διόρθωση» αποθηκεύει τα πάντα μαζί συμβατά με beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – όλα τα σημεία ελέγχου",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "έλεγχος pdf/a αρχείο επικύρωση συμμόρφωση μακροπρόθεσμη iso 19005 verapdf bea δικαστήριο δικαιοσύνη erv ervb κατάθεση προσβασιμότητα προσβάσιμο bitv pdf/ua αναγνώστης οθόνης epa φάκελος ασθενούς gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Δημιουργούνται με το «Αυτόματη διόρθωση» ως PDF/A – ταυτόχρονα προσβάσιμα κατά PDF/UA, με αναγνώριση κειμένου, γλώσσα και τίτλο."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Δημιουργούνται με το «Αυτόματη διόρθωση» ως PDF/A – ταυτόχρονα προσβάσιμα κατά PDF/UA, με αναγνώριση κειμένου, γλώσσα και τίτλο.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Εικόνες σε PDF: ελέγξτε τη σειρά – μπορείτε να προσθέσετε κι άλλες εικόνες.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Εισαγωγή στοιχείων επιστολής (αποστολέας, προθεσμία, φάκελος …)",
+ "Fertig & speichern": "Τέλος & αποθήκευση",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Φόρμα: συμπληρώστε τα πεδία στην περιοχή «Φόρμα».",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Για επιστολές και αλληλογραφία: ημερομηνία, αποστολέας, θέμα, φάκελος, προθεσμία και υπενθύμιση",
+ "Nach einer neuen Version suchen": "Έλεγχος για νέα έκδοση",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Επιδιόρθωση: ελέγξτε τις σελίδες – κατά την αποθήκευση το αρχείο ξαναγράφεται καθαρά.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Μαύρισμα: σχεδιάστε περιοχές. Το περιεχόμενο από κάτω αφαιρείται πραγματικά κατά την αποθήκευση.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Οργάνωση σελίδων: κάντε κλικ (Ctrl/Shift για πολλές), σύρετε, περιστρέψτε ή διαγράψτε.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Υπογραφή: κάντε κλικ στο σημείο όπου πρέπει να μπει η υπογραφή.",
+ "Weitere Bilder hinzufügen": "Προσθήκη κι άλλων εικόνων",
+ "Weitere Dateien hinzufügen": "Προσθήκη κι άλλων αρχείων",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Συγχώνευση: αλλάξτε τη σειρά με σύρσιμο – μπορείτε να προσθέσετε κι άλλα αρχεία."
 }

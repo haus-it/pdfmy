@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Instalați programul de sincronizare al furnizorului dumneavoastră, de ex. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – sau alegeți orice dosar la <i>„… Mai multe → Alegere dosar de arhivare …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratuit și fără cont: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (editează direct PDF-uri), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> sau <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Apoi faceți din nou clic aici.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy pune PDF-ul în dosarul „PDFMy” al dosarului dumneavoastră cloud de pe acest computer. Încărcarea o face apoi propriul program de sincronizare (de ex. Nextcloud) – în spațiul dumneavoastră de stocare. PDFMy însuși nu transmite nimic.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 rulează – scanerele din rețea și de la PC sunt găsite.",
  "Wird in {0} gespeichert …": "Se salvează în {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Deschideți mai întâi un document – apoi poate fi salvat în dosarul cloud.",
  "{0} Liste(n)": "{0} listă(e)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Important doar dacă acest fișier este depus nemodificat – „Corectare automată” salvează totul împreună compatibil beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – toate punctele de verificare",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "verificare pdf/a arhivă validare conform termen lung iso 19005 verapdf bea instanță justiție erv ervb depunere accesibilitate accesibil bitv pdf/ua cititor de ecran epa dosarul pacientului gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Sunt create cu „Corectare automată” ca PDF/A – totodată accesibile conform PDF/UA, cu recunoaștere text, limbă și titlu."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Sunt create cu „Corectare automată” ca PDF/A – totodată accesibile conform PDF/UA, cu recunoaștere text, limbă și titlu.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Imagini în PDF: verificați ordinea – puteți adăuga mai multe imagini.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Introduceți datele scrisorii (expeditor, termen, dosar …)",
+ "Fertig & speichern": "Gata & salvare",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formular: completați câmpurile din zona „Formular”.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Pentru scrisori și corespondență: dată, expeditor, subiect, dosar, termen și reamintire",
+ "Nach einer neuen Version suchen": "Căutare versiune nouă",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Reparare: verificați paginile – la salvare, fișierul este rescris curat.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Înnegrire: trasați zone. Conținutul de dedesubt este eliminat cu adevărat la salvare.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organizare pagini: faceți clic (Ctrl/Shift pentru mai multe), trageți, rotiți sau ștergeți.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Semnare: faceți clic în locul unde trebuie să fie semnătura.",
+ "Weitere Bilder hinzufügen": "Adăugați mai multe imagini",
+ "Weitere Dateien hinzufügen": "Adăugați mai multe fișiere",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combinare: schimbați ordinea prin tragere – puteți adăuga mai multe fișiere."
 }

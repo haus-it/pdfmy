@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Telepítse a szolgáltatója szinkronizáló programját, pl. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – vagy válasszon tetszőleges mappát itt: <i>„… Továbbiak → Iktatási mappa kiválasztása …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Ingyenesen és fiók nélkül: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (közvetlenül szerkeszti a PDF-eket), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> vagy <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Ezután kattintson ide még egyszer.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "A PDFMy a PDF-et a számítógépen lévő felhőmappája „PDFMy” mappájába menti. A feltöltést ezután a saját szinkronizáló programja végzi (pl. Nextcloud) – az Ön tárhelyére. A PDFMy maga semmit sem továbbít.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "A pdfmy Scan 1.12.0 fut – a hálózati és a számítógéphez csatlakoztatott szkennereket megtalálja.",
  "Wird in {0} gespeichert …": "Mentés ide: {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Először nyisson meg egy dokumentumot – utána menthető a felhőmappába.",
  "{0} Liste(n)": "{0} lista",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Csak akkor fontos, ha ezt a fájlt változatlanul nyújtják be – az „Automatikus javítás” mindent együtt, beA-kompatibilisen ment.",
  "PDF/A – alle Prüfpunkte": "PDF/A – minden ellenőrzési pont",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "ellenőrzés pdf/a archívum validálás megfelelő hosszú távú iso 19005 verapdf bea bíróság igazságügy erv ervb benyújtás akadálymentesség akadálymentes bitv pdf/ua képernyőolvasó epa betegdokumentáció gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Az „Automatikus javítás” segítségével PDF/A-ként jönnek létre – egyben akadálymentesen a PDF/UA szerint, szövegfelismeréssel, nyelvvel és címmel."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Az „Automatikus javítás” segítségével PDF/A-ként jönnek létre – egyben akadálymentesen a PDF/UA szerint, szövegfelismeréssel, nyelvvel és címmel.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Képek PDF-be: ellenőrizze a sorrendet – további képek adhatók hozzá.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Levéladatok megadása (feladó, határidő, ügyirat …)",
+ "Fertig & speichern": "Kész & mentés",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Űrlap: töltse ki a(z) „Űrlap” terület mezőit.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Levelekhez és postához: dátum, feladó, tárgy, ügyirat, határidő és emlékeztető",
+ "Nach einer neuen Version suchen": "Új verzió keresése",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Javítás: ellenőrizze az oldalakat – mentéskor a fájl tisztán újraíródik.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Kitakarás: jelöljön ki területeket. Az alattuk lévő tartalom mentéskor valóban törlődik.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Oldalak rendezése: kattintson (több oldalhoz Ctrl/Shift), húzza, forgassa vagy törölje.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Aláírás: kattintson oda, ahová az aláírásnak kerülnie kell.",
+ "Weitere Bilder hinzufügen": "További képek hozzáadása",
+ "Weitere Dateien hinzufügen": "További fájlok hozzáadása",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Egyesítés: a sorrendet húzással módosíthatja – további fájlok adhatók hozzá."
 }

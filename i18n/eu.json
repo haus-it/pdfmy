@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Instalatu zure hornitzailearen sinkronizazio-programa, adib. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – edo aukeratu edozein karpeta <i>«… Gehiago → Aukeratu artxibo-karpeta …»</i> aukeran.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Doan eta konturik gabe: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (PDFak zuzenean editatzen ditu), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> edo <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Ondoren, egin klik hemen berriro.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy-k PDFa ordenagailu honetako zure hodeiko karpetaren «PDFMy» karpetan gordetzen du. Ondoren, zure sinkronizazio-programak berak (adib. Nextcloud) igotzen du – zure biltegira. PDFMy-k berak ez du ezer transmititzen.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 abian dago – sareko eta ordenagailuko eskanerrak aurkitzen dira.",
  "Wird in {0} gespeichert …": "{0}-n gordetzen…",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Lehenik, ireki dokumentu bat – gero hodeiko karpetan gorde daiteke.",
  "{0} Liste(n)": "{0} zerrenda",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Fitxategi hau aldatu gabe aurkezten bada bakarrik da garrantzitsua – «Zuzendu automatikoki» aukerak dena batera gordetzen du beA-rako egoki.",
  "PDF/A – alle Prüfpunkte": "PDF/A – egiaztapen-puntu guztiak",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "egiaztatu pdf/a artxiboa baliozkotu bateragarria epe luzerako iso 19005 verapdf bea auzitegia justizia erv ervb aurkeztu irisgarritasuna irisgarria bitv pdf/ua pantaila-irakurgailua epa paziente-espedientea gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "«Zuzendu automatikoki» aukerarekin PDF/A gisa sortzen dira – aldi berean irisgarri PDF/UA arauaren arabera, testu-ezagutza, hizkuntza eta izenburuarekin."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "«Zuzendu automatikoki» aukerarekin PDF/A gisa sortzen dira – aldi berean irisgarri PDF/UA arauaren arabera, testu-ezagutza, hizkuntza eta izenburuarekin.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Irudiak PDFra: egiaztatu ordena – irudi gehiago gehi daitezke.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Sartu gutunaren datuak (igorlea, epea, espedientea …)",
+ "Fertig & speichern": "Amaitu & gorde",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Inprimakia: bete «Inprimakia» eremuko eremuak.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Gutunetarako eta postarako: data, igorlea, gaia, espedientea, epea eta oroigarria",
+ "Nach einer neuen Version suchen": "Bilatu bertsio berria",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Konpondu: egiaztatu orrialdeak – gordetzean fitxategia garbi berridazten da.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Estali beltzez: marraztu eremuak. Azpiko edukia benetan kentzen da gordetzean.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Antolatu orrialdeak: egin klik (Ctrl/Shift hainbatentzat), arrastatu, biratu edo ezabatu.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Sinatu: egin klik sinadurak egon behar duen lekuan.",
+ "Weitere Bilder hinzufügen": "Gehitu irudi gehiago",
+ "Weitere Dateien hinzufügen": "Gehitu fitxategi gehiago",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Batu: aldatu ordena arrastatuz – fitxategi gehiago gehi daitezke."
 }

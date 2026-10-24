@@ -4508,3 +4508,27 @@ $('#pfReport').onclick = async () => {
     if (where) status(I18N.t(`Prüfbericht gespeichert: ${where}`));
   } catch (e) { console.error(e); status('Bericht nicht möglich: ' + e.message); }
 };
+
+// „Briefdaten eingeben …“: eingeklappte Briefdaten für dieses Dokument aufklappen
+$('#metaShow').onclick = () => { state.metaShown = true; renderSide(); $('#m-date').focus(); };
+
+/* ---------- Aufgabenleiste (Usability-Gutachten: Anleitungen nicht nur in der Statuszeile) ----------
+   Nach einer Kachel-Aufgabe steht über der Seite, was jetzt zu tun ist – mit passendem Hilfsknopf und „Fertig & speichern“. */
+const TASKS = {
+  merge: { text: 'Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.', help: ['Weitere Dateien hinzufügen', () => $('#fileIn').click()] },
+  organize: { text: 'Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.' },
+  img2pdf: { text: 'Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.', help: ['Weitere Bilder hinzufügen', () => $('#fileIn').click()] },
+  redact: { text: 'Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.', help: ['Persönliche Daten finden', () => $('#rdAuto').click()] },
+  sign: { text: 'Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.' },
+  form: { text: 'Formular: die Felder im Bereich „Formular“ ausfüllen.', help: ['Mit meinen Angaben ausfüllen', () => fpFill()] },
+  repair: { text: 'Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.' },
+};
+window.showTask = intent => {
+  const t = TASKS[intent], bar = $('#taskBar');
+  if (!t || !state.pages.length) { bar.hidden = true; return; }
+  $('#taskText').textContent = I18N.t(t.text);
+  const h = $('#taskHelp'); h.hidden = !t.help; if (t.help) { h.textContent = I18N.t(t.help[0]); h.onclick = t.help[1]; }
+  bar.hidden = false;
+};
+$('#taskDone').onclick = () => { $('#taskBar').hidden = true; openExport(); };
+$('#taskClose').onclick = () => { $('#taskBar').hidden = true; };

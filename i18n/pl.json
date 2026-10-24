@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Zainstaluj program do synchronizacji swojego dostawcy, np. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – albo wybierz dowolny folder w <i>„… Więcej → Wybierz folder archiwum …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Bezpłatnie i bez konta: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (edytuje pliki PDF bezpośrednio), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> lub <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Następnie kliknij tutaj jeszcze raz.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy zapisuje PDF w folderze „PDFMy” Twojego folderu chmury na tym komputerze. Przesyłanie wykonuje potem Twój własny program do synchronizacji (np. Nextcloud) – do Twojej przestrzeni. Samo PDFMy niczego nie przesyła.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 działa – skanery w sieci i przy komputerze są wykrywane.",
  "Wird in {0} gespeichert …": "Zapisywanie w {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Najpierw otwórz dokument – potem można go zapisać w folderze chmury.",
  "{0} Liste(n)": "{0} list(a)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Ważne tylko wtedy, gdy ten plik zostanie złożony bez zmian – „Popraw automatycznie” zapisuje wszystko razem zgodnie z beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – wszystkie punkty",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "sprawdzić pdf/a archiwum walidować zgodny długoterminowy iso 19005 verapdf bea sąd wymiar sprawiedliwości erv ervb złożyć dostępność dostępny bitv pdf/ua czytnik ekranu epa dokumentacja pacjenta gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Są tworzone za pomocą „Popraw automatycznie” jako PDF/A – jednocześnie dostępne wg PDF/UA, z rozpoznawaniem tekstu, językiem i tytułem."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Są tworzone za pomocą „Popraw automatycznie” jako PDF/A – jednocześnie dostępne wg PDF/UA, z rozpoznawaniem tekstu, językiem i tytułem.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Obrazy do PDF: sprawdź kolejność – można dodać kolejne obrazy.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Wprowadź dane pisma (nadawca, termin, sprawa …)",
+ "Fertig & speichern": "Gotowe & zapisz",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formularz: wypełnij pola w obszarze „Formularz”.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Dla pism i poczty: data, nadawca, temat, sprawa, termin i przypomnienie",
+ "Nach einer neuen Version suchen": "Sprawdź dostępność nowej wersji",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Napraw: sprawdź strony – przy zapisie plik zostanie czysto zapisany od nowa.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Zaczernij: zaznacz obszary. Treść pod nimi zostanie przy zapisie naprawdę usunięta.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organizuj strony: kliknij (Ctrl/Shift dla kilku), przeciągnij, obróć lub usuń.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Podpisz: kliknij miejsce, w którym ma się znaleźć podpis.",
+ "Weitere Bilder hinzufügen": "Dodaj kolejne obrazy",
+ "Weitere Dateien hinzufügen": "Dodaj kolejne pliki",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Połącz: zmień kolejność przeciągając – można dodać kolejne pliki."
 }

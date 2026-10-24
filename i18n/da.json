@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Installer Deres udbyders synkroniseringsprogram, f.eks. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – eller vælg en vilkårlig mappe under <i>»… Mere → Vælg arkivmappe …«</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratis og uden konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (redigerer PDF'er direkte), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> eller <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Klik derefter her igen.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy lægger PDF'en i mappen »PDFMy« i Deres cloudmappe på denne computer. Upload foretages derefter af Deres eget synkroniseringsprogram (f.eks. Nextcloud) – til Deres lager. PDFMy selv overfører intet.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 kører – scannere på netværket og ved pc'en findes.",
  "Wird in {0} gespeichert …": "Gemmes i {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Åbn først et dokument – så kan det gemmes i cloudmappen.",
  "{0} Liste(n)": "{0} liste(r)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Kun vigtigt, hvis denne fil indsendes uændret – »Ret automatisk« gemmer det hele samlet beA-egnet.",
  "PDF/A – alle Prüfpunkte": "PDF/A – alle kontrolpunkter",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "kontrollér pdf/a arkiv validér konform langtid iso 19005 verapdf bea domstol retsvæsen erv ervb indsend tilgængelighed tilgængelig bitv pdf/ua skærmlæser epa patientjournal gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Oprettes med »Ret automatisk« som PDF/A – samtidig tilgængelige efter PDF/UA, med tekstgenkendelse, sprog og titel."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Oprettes med »Ret automatisk« som PDF/A – samtidig tilgængelige efter PDF/UA, med tekstgenkendelse, sprog og titel.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Billeder til PDF: kontrollér rækkefølgen – du kan tilføje flere billeder.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Indtast brevdata (afsender, frist, sag …)",
+ "Fertig & speichern": "Færdig & gem",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formular: udfyld felterne i området »Formular«.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Til breve og post: dato, afsender, emne, sag, frist og opfølgning",
+ "Nach einer neuen Version suchen": "Søg efter en ny version",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Reparér: kontrollér siderne – ved lagring skrives filen rent på ny.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Slør: træk områder. Indholdet nedenunder fjernes reelt ved lagring.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organisér sider: klik (Ctrl/Skift for flere), træk, rotér eller slet.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Underskriv: klik dér, hvor underskriften skal stå.",
+ "Weitere Bilder hinzufügen": "Tilføj flere billeder",
+ "Weitere Dateien hinzufügen": "Tilføj flere filer",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Flet: ændr rækkefølgen ved at trække – du kan tilføje flere filer."
 }

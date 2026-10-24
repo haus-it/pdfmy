@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-24
 
+### Briefdaten nur bei Post, Aufgabenleiste (app-v190)
+- Aus dem Usability-Gutachten (Schweregrad 2, Heuristiken „Ästhetik und minimalistisches Design“ und „Sichtbarkeit des Systemstatus“).
+- Briefdaten (Datum, Typ, Absender, Betreff, Akte, Schlagwörter, eigene Felder, Zuständig, Frist, Wiedervorlage) erscheinen nur, wenn das Dokument wie Post aussieht: Scans, erkannte Frist/Betrag/IBAN/Wiedervorlage, Absender mit Datum oder Typ, eingetragene Akte/Schlagwörter, Autopilot. Sonst „Briefdaten eingeben (Absender, Frist, Akte …)“ zum Aufklappen; Dateiname immer sichtbar; Schlüsseldaten (Betrag, IBAN …) entsprechend auf- bzw. zugeklappt (Nutzerwahl bleibt).
+- Aufgabenleiste über der Seite für die Kachel-Aufgaben Zusammenfügen, Seiten organisieren, Bilder in PDF, Schwärzen, Unterschreiben, Formular, Reparieren: nächster Schritt, passender Hilfsknopf (Weitere Dateien hinzufügen, Persönliche Daten finden, Mit meinen Angaben ausfüllen) und „Fertig & speichern“; schließbar, verschwindet beim nächsten Dokument.
+- Getestet: Satzung (Briefdaten und Schlüsseldaten zu, Link öffnet und setzt den Fokus) und gescannter Brief (alles offen); Aufgabenleiste für drei Aufgaben auf 1280 und 390 px vollständig sichtbar, „Fertig & speichern“ öffnet den Speichern-Dialog; axe 0 (hell/dunkel, 1280/390 px); 210 Tests.
+
 ### Prüfwege zusammengelegt: alles in der Vorabprüfung (app-v189)
 - Aus dem Usability-Gutachten (Heuristik „Ästhetik und minimalistisches Design“): „Für beA prüfen“, „Barrierefreiheit prüfen“ und „PDF/A prüfen“ gehen in der Vorabprüfung auf; die drei Menüeinträge und die Dialoge „Für beA prüfen“ und „PDF/A-Prüfung“ entfallen.
 - Nichts geht verloren: beA-Profil mit eigenem Feld „Dateiname für das Gericht“ (Vorschlag nach ERVB, Prüfung beim Tippen), jede geöffnete Datei zusätzlich einzeln geprüft (bei mehreren Dateien), „beA-tauglich speichern“ immer verfügbar (auch ohne Fehler) und prüft die gespeicherte Datei erneut; neues Profil „PDF/A – alle Prüfpunkte“ mit jedem Punkt der PDF/A-Kurzprüfung einzeln (Kennung, Dateikopf, Verschlüsselung, Farbprofil, Schriften, Skripte, Aktionen/Medien, Kommentare, LZW, Transparenz, Anhänge, Titel); Hinweis bei Scans und Fotos (werden beim Beheben PDF/A und PDF/UA); Prüfbericht nach „Barrierefrei speichern“ bleibt als Fenster.

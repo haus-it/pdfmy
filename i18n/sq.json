@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Instaloni programin e sinkronizimit të ofruesit tuaj, p.sh. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – ose zgjidhni çfarëdo dosjeje te <i>„… Më shumë → Zgjidh dosjen e arkivit …“</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Falas dhe pa llogari: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (redakton PDF-të drejtpërdrejt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> ose <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Pastaj klikoni sërish këtu.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy e vendos PDF-në në dosjen „PDFMy“ të dosjes suaj cloud në këtë kompjuter. Ngarkimin e bën më pas programi juaj i sinkronizimit (p.sh. Nextcloud) – në hapësirën tuaj. Vetë PDFMy nuk transmeton asgjë.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 po punon – skanerët në rrjet dhe në PC gjenden.",
  "Wird in {0} gespeichert …": "Po ruhet në {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Fillimisht hapni një dokument – pastaj ai mund të ruhet në dosjen cloud.",
  "{0} Liste(n)": "{0} listë/lista",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "E rëndësishme vetëm nëse ky skedar paraqitet i pandryshuar – „Korrigjo automatikisht“ i ruan të gjitha bashkë të përshtatshme për beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – të gjitha pikat e kontrollit",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "kontrollo pdf/a arkiv vërteto në përputhje afatgjatë iso 19005 verapdf bea gjykatë drejtësi erv ervb paraqit aksesueshmëri i aksesueshëm bitv pdf/ua lexues ekrani epa kartelë pacienti gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Krijohen me „Korrigjo automatikisht“ si PDF/A – njëkohësisht të aksesueshëm sipas PDF/UA, me njohje teksti, gjuhë dhe titull."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Krijohen me „Korrigjo automatikisht“ si PDF/A – njëkohësisht të aksesueshëm sipas PDF/UA, me njohje teksti, gjuhë dhe titull.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Imazhe në PDF: kontrolloni renditjen – mund të shtoni imazhe të tjera.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Fut të dhënat e letrës (dërguesi, afati, dosja …)",
+ "Fertig & speichern": "Gati & ruaj",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulari: plotësoni fushat në zonën „Formulari“.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Për letra dhe postë: data, dërguesi, subjekti, dosja, afati dhe rikujtesa",
+ "Nach einer neuen Version suchen": "Kërko version të ri",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Riparo: kontrolloni faqet – gjatë ruajtjes skedari rishkruhet pastër.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Nxi: vizatoni zona. Përmbajtja poshtë tyre hiqet vërtet gjatë ruajtjes.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organizo faqet: klikoni (Ctrl/Shift për disa), tërhiqni, rrotulloni ose fshini.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Nënshkruaj: klikoni aty ku duhet të jetë nënshkrimi.",
+ "Weitere Bilder hinzufügen": "Shto imazhe të tjera",
+ "Weitere Dateien hinzufügen": "Shto skedarë të tjerë",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Bashko: ndryshoni renditjen duke tërhequr – mund të shtoni skedarë të tjerë."
 }

@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Paigaldage oma teenusepakkuja sünkroonimisprogramm, nt <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – või valige mis tahes kaust menüüs <i>„… Rohkem → Vali arhiivikaust …“</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Tasuta ja ilma kontota: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (muudab PDF-e otse), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> või <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Seejärel klõpsake siin uuesti.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy salvestab PDF-i selle arvuti pilvekausta alamkausta „PDFMy“. Üleslaadimise teeb seejärel teie enda sünkroonimisprogramm (nt Nextcloud) – teie salvestusruumi. PDFMy ise ei edasta midagi.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 töötab – võrgus ja arvuti küljes olevad skannerid leitakse.",
  "Wird in {0} gespeichert …": "Salvestatakse kausta {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Avage esmalt dokument – siis saab selle pilvekausta salvestada.",
  "{0} Liste(n)": "{0} loend(it)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Oluline ainult siis, kui see fail esitatakse muutmata kujul – „Paranda automaatselt“ salvestab kõik koos beA-kõlblikuna.",
  "PDF/A – alle Prüfpunkte": "PDF/A – kõik kontrollpunktid",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "kontrolli pdf/a arhiiv valideeri vastav pikaajaline iso 19005 verapdf bea kohus õigusemõistmine erv ervb esitamine ligipääsetavus ligipääsetav bitv pdf/ua ekraanilugeja epa patsienditoimik gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Luuakse funktsiooniga „Paranda automaatselt“ PDF/A-na – samal ajal ligipääsetavana PDF/UA järgi, tekstituvastuse, keele ja pealkirjaga."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Luuakse funktsiooniga „Paranda automaatselt“ PDF/A-na – samal ajal ligipääsetavana PDF/UA järgi, tekstituvastuse, keele ja pealkirjaga.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Pildid PDF-iks: kontrollige järjekorda – pilte saab juurde lisada.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Sisesta kirja andmed (saatja, tähtaeg, toimik …)",
+ "Fertig & speichern": "Valmis & salvesta",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Vorm: täitke ala „Vorm“ väljad.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Kirjadele ja postile: kuupäev, saatja, teema, toimik, tähtaeg ja meeldetuletus",
+ "Nach einer neuen Version suchen": "Otsi uut versiooni",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Paranda: kontrollige lehekülgi – salvestamisel kirjutatakse fail puhtalt uuesti.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Musta: tõmmake alad. Nende all olev sisu eemaldatakse salvestamisel päriselt.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Korralda lehekülgi: klõpsake (mitme jaoks Ctrl/Shift), lohistage, pöörake või kustutage.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Allkirjasta: klõpsake kohal, kuhu allkiri peab tulema.",
+ "Weitere Bilder hinzufügen": "Lisa veel pilte",
+ "Weitere Dateien hinzufügen": "Lisa veel faile",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Liida: muutke järjekorda lohistades – faile saab juurde lisada."
 }

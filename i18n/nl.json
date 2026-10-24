@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Installeer het synchronisatieprogramma van uw aanbieder, bijv. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – of kies onder <i>„… Meer → Archiefmap kiezen …”</i> een willekeurige map.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratis en zonder account: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bewerkt PDF's direct), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> of <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Klik daarna hier nog een keer.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy zet de PDF in de map „PDFMy” van uw cloudmap op deze computer. Het uploaden doet daarna uw eigen synchronisatieprogramma (bijv. Nextcloud) – naar uw opslag. PDFMy zelf verzendt niets.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 is actief – scanners in het netwerk en aan de pc worden gevonden.",
  "Wird in {0} gespeichert …": "Wordt opgeslagen in {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Open eerst een document – dan kan het in de cloudmap worden opgeslagen.",
  "{0} Liste(n)": "{0} lijst(en)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Alleen belangrijk als dit bestand ongewijzigd wordt ingediend – „Automatisch oplossen” slaat alles samen geschikt voor beA op.",
  "PDF/A – alle Prüfpunkte": "PDF/A – alle controlepunten",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "controleren pdf/a archief valideren conform lange termijn iso 19005 verapdf bea rechtbank justitie erv ervb indienen toegankelijkheid toegankelijk bitv pdf/ua schermlezer epa patiëntendossier gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Worden met „Automatisch oplossen” als PDF/A gemaakt – tegelijk toegankelijk volgens PDF/UA, met tekstherkenning, taal en titel."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Worden met „Automatisch oplossen” als PDF/A gemaakt – tegelijk toegankelijk volgens PDF/UA, met tekstherkenning, taal en titel.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Afbeeldingen naar PDF: controleer de volgorde – u kunt meer afbeeldingen toevoegen.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Briefgegevens invoeren (afzender, termijn, dossier …)",
+ "Fertig & speichern": "Klaar & opslaan",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulier: vul de velden in het gebied „Formulier” in.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Voor brieven en post: datum, afzender, onderwerp, dossier, termijn en herinnering",
+ "Nach einer neuen Version suchen": "Naar een nieuwe versie zoeken",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Repareren: controleer de pagina's – bij het opslaan wordt het bestand netjes opnieuw geschreven.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Zwart maken: trek gebieden. De inhoud eronder wordt bij het opslaan echt verwijderd.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Pagina's ordenen: klik (Ctrl/Shift voor meerdere), sleep, draai of verwijder.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Ondertekenen: klik op de plek waar de handtekening moet komen.",
+ "Weitere Bilder hinzufügen": "Meer afbeeldingen toevoegen",
+ "Weitere Dateien hinzufügen": "Meer bestanden toevoegen",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Samenvoegen: wijzig de volgorde door te slepen – u kunt meer bestanden toevoegen."
 }

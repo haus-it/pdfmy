@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Asenna palveluntarjoajasi synkronointiohjelma, esim. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – tai valitse mikä tahansa kansio kohdasta <i>”… Lisää → Valitse arkistokansio …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Ilmaiseksi ja ilman tiliä: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (muokkaa PDF-tiedostoja suoraan), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> tai <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Napsauta sen jälkeen tästä uudelleen.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy tallentaa PDF:n tämän tietokoneen pilvikansiosi kansioon ”PDFMy”. Lataamisen hoitaa sen jälkeen oma synkronointiohjelmasi (esim. Nextcloud) – omaan tallennustilaasi. PDFMy itse ei siirrä mitään.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 on käynnissä – verkon ja tietokoneen skannerit löytyvät.",
  "Wird in {0} gespeichert …": "Tallennetaan kohteeseen {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Avaa ensin asiakirja – sitten sen voi tallentaa pilvikansioon.",
  "{0} Liste(n)": "{0} luettelo(a)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Merkitystä vain, jos tämä tiedosto jätetään muuttamattomana – ”Korjaa automaattisesti” tallentaa kaiken yhdessä beA-kelpoisena.",
  "PDF/A – alle Prüfpunkte": "PDF/A – kaikki tarkistuskohdat",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "tarkista pdf/a arkisto validoi yhdenmukainen pitkäaikais iso 19005 verapdf bea tuomioistuin oikeus erv ervb jättäminen saavutettavuus saavutettava bitv pdf/ua ruudunlukuohjelma epa potilaskertomus gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Luodaan ”Korjaa automaattisesti”-toiminnolla PDF/A-muotoon – samalla saavutettaviksi PDF/UA:n mukaan, tekstintunnistuksella, kielellä ja otsikolla."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Luodaan ”Korjaa automaattisesti”-toiminnolla PDF/A-muotoon – samalla saavutettaviksi PDF/UA:n mukaan, tekstintunnistuksella, kielellä ja otsikolla.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Kuvat PDF:ksi: tarkista järjestys – voit lisätä kuvia.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Syötä kirjeen tiedot (lähettäjä, määräaika, asia …)",
+ "Fertig & speichern": "Valmis & tallenna",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Lomake: täytä alueen ”Lomake” kentät.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Kirjeille ja postille: päivämäärä, lähettäjä, aihe, asia, määräaika ja seuranta",
+ "Nach einer neuen Version suchen": "Etsi uusi versio",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Korjaa: tarkista sivut – tallennettaessa tiedosto kirjoitetaan siististi uudelleen.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Mustaa: rajaa alueet. Niiden alla oleva sisältö poistetaan tallennettaessa todella.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Järjestä sivut: napsauta (Ctrl/Vaihto useille), vedä, kierrä tai poista.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Allekirjoita: napsauta kohtaa, johon allekirjoitus tulee.",
+ "Weitere Bilder hinzufügen": "Lisää kuvia",
+ "Weitere Dateien hinzufügen": "Lisää tiedostoja",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Yhdistä: muuta järjestystä vetämällä – voit lisätä tiedostoja."
 }

@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Nainstalujte synchronizační program svého poskytovatele, např. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – nebo v <i>„… Více → Zvolit složku archivu …“</i> zvolte libovolnou složku.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Zdarma a bez účtu: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (upravuje PDF přímo), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> nebo <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Poté sem klikněte ještě jednou.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy uloží PDF do složky „PDFMy“ ve vaší cloudové složce v tomto počítači. Nahrání pak provede váš vlastní synchronizační program (např. Nextcloud) – do vašeho úložiště. Samotné PDFMy nic nepřenáší.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 běží – skenery v síti a u počítače jsou nalezeny.",
  "Wird in {0} gespeichert …": "Ukládá se do {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Nejprve otevřete dokument – pak jej lze uložit do cloudové složky.",
  "{0} Liste(n)": "{0} seznam(ů)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Důležité jen tehdy, když se tento soubor podává beze změny – „Opravit automaticky“ uloží vše dohromady vhodně pro beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – všechny body kontroly",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "kontrola pdf/a archiv validace shoda dlouhodobý iso 19005 verapdf bea soud justice erv ervb podání přístupnost přístupný bitv pdf/ua čtečka obrazovky epa zdravotní dokumentace gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Vytvoří se pomocí „Opravit automaticky“ jako PDF/A – zároveň přístupné podle PDF/UA, s rozpoznáním textu, jazykem a názvem."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Vytvoří se pomocí „Opravit automaticky“ jako PDF/A – zároveň přístupné podle PDF/UA, s rozpoznáním textu, jazykem a názvem.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Obrázky do PDF: zkontrolujte pořadí – další obrázky lze přidat.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Zadat údaje dopisu (odesílatel, lhůta, spis …)",
+ "Fertig & speichern": "Hotovo & uložit",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulář: vyplňte pole v oblasti „Formulář“.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Pro dopisy a poštu: datum, odesílatel, předmět, spis, lhůta a připomenutí",
+ "Nach einer neuen Version suchen": "Vyhledat novou verzi",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Opravit: zkontrolujte strany – při uložení se soubor čistě přepíše.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Začernit: vyznačte oblasti. Obsah pod nimi se při uložení skutečně odstraní.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Uspořádat strany: klikněte (Ctrl/Shift pro více), přetáhněte, otočte nebo odstraňte.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Podepsat: klikněte na místo, kde má být podpis.",
+ "Weitere Bilder hinzufügen": "Přidat další obrázky",
+ "Weitere Dateien hinzufügen": "Přidat další soubory",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sloučit: pořadí změňte přetažením – další soubory lze přidat."
 }

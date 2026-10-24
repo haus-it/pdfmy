@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Инсталирајте програм за синхронизацију свог добављача, нпр. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – или под <i>„… Више → Изабери фасциклу архиве …“</i> изаберите било коју фасциклу.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Бесплатно и без налога: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (директно уређује PDF датотеке), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> или <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Затим овде кликните још једном.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy смешта PDF у фасциклу „PDFMy“ Ваше фасцикле у облаку на овом рачунару. Отпремање затим обавља Ваш сопствени програм за синхронизацију (нпр. Nextcloud) – у Ваше складиште. Сам PDFMy ништа не преноси.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 ради – скенери у мрежи и на рачунару се проналазе.",
  "Wird in {0} gespeichert …": "Чува се у {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Прво отворите документ – затим се може сачувати у фасциклу у облаку.",
  "{0} Liste(n)": "Листа: {0}",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Важно само ако се ова датотека подноси непромењена – „Исправи аутоматски“ чува све заједно погодно за beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – све тачке провере",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "провера pdf/a архива валидација усклађен дугорочан iso 19005 verapdf bea суд правосуђе erv ervb подношење приступачност приступачан bitv pdf/ua читач екрана epa здравствени картон gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Праве се помоћу „Исправи аутоматски“ као PDF/A – истовремено приступачни према PDF/UA, са препознавањем текста, језиком и насловом."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Праве се помоћу „Исправи аутоматски“ као PDF/A – истовремено приступачни према PDF/UA, са препознавањем текста, језиком и насловом.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Слике у PDF: проверите редослед – могуће је додати још слика.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Унеси податке писма (пошиљалац, рок, спис …)",
+ "Fertig & speichern": "Готово & сачувај",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Образац: попуните поља у области „Образац“.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "За писма и пошту: датум, пошиљалац, предмет, спис, рок и подсетник",
+ "Nach einer neuen Version suchen": "Провери нову верзију",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Поправи: проверите странице – при чувању датотека се чисто поново записује.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Зацрни: означите области. Садржај испод њих при чувању се заиста уклања.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Организуј странице: кликните (Ctrl/Shift за више), превуците, окрените или избришите.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Потпиши: кликните место на којем треба да буде потпис.",
+ "Weitere Bilder hinzufügen": "Додај још слика",
+ "Weitere Dateien hinzufügen": "Додај још датотека",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Споји: промените редослед превлачењем – могуће је додати још датотека."
 }

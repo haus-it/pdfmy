@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Installi il programma di sincronizzazione del Suo fornitore, ad es. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oppure scelga una cartella qualsiasi in <i>«… Altro → Scegli cartella di archiviazione …»</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratis e senza account: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (modifica direttamente i PDF), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oppure <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Poi faccia di nuovo clic qui.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy salva il PDF nella cartella «PDFMy» della Sua cartella cloud su questo computer. Il caricamento lo esegue poi il Suo programma di sincronizzazione (ad es. Nextcloud) – sul Suo spazio. PDFMy stesso non trasmette nulla.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 è in esecuzione – vengono trovati gli scanner in rete e collegati al PC.",
  "Wird in {0} gespeichert …": "Salvataggio in {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Apra prima un documento – poi potrà salvarlo nella cartella cloud.",
  "{0} Liste(n)": "{0} elenco/i",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Importante solo se questo file viene depositato senza modifiche – «Correggi automaticamente» salva tutto insieme conforme al beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – tutti i punti di verifica",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "verificare pdf/a archivio validare conforme lungo termine iso 19005 verapdf bea tribunale giustizia erv ervb deposito accessibilità accessibile bitv pdf/ua screen reader epa fascicolo sanitario gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Vengono generati come PDF/A con «Correggi automaticamente» – insieme accessibili secondo PDF/UA, con riconoscimento del testo, lingua e titolo."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Vengono generati come PDF/A con «Correggi automaticamente» – insieme accessibili secondo PDF/UA, con riconoscimento del testo, lingua e titolo.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Immagini in PDF: controlla l'ordine – puoi aggiungere altre immagini.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Inserisci i dati della lettera (mittente, scadenza, pratica …)",
+ "Fertig & speichern": "Fine e salva",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Modulo: compila i campi nell'area «Modulo».",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Per lettere e posta: data, mittente, oggetto, pratica, scadenza e promemoria",
+ "Nach einer neuen Version suchen": "Cerca una nuova versione",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Ripara: controlla le pagine – al salvataggio il file viene riscritto in modo pulito.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Oscura: traccia le aree. Il contenuto sottostante viene davvero rimosso al salvataggio.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organizza pagine: fai clic (Ctrl/Maiusc per più pagine), trascina, ruota o elimina.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Firma: fai clic nel punto in cui deve stare la firma.",
+ "Weitere Bilder hinzufügen": "Aggiungi altre immagini",
+ "Weitere Dateien hinzufügen": "Aggiungi altri file",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Unisci: cambia l'ordine trascinando – puoi aggiungere altri file."
 }

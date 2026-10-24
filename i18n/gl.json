@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Instale o programa de sincronización do seu provedor, p. ex. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – ou escolla calquera cartafol en <i>«… Máis → Escoller cartafol de arquivo…»</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "De balde e sen conta: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (edita PDF directamente), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> ou <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Despois, faga clic aquí de novo.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy garda o PDF no cartafol «PDFMy» do seu cartafol da nube neste ordenador. Despois súbeo o seu propio programa de sincronización (p. ex. Nextcloud) – ao seu almacenamento. PDFMy por si mesmo non transmite nada.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 está en execución – atópanse escáneres na rede e no PC.",
  "Wird in {0} gespeichert …": "Gardando en {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Abra primeiro un documento – despois poderá gardalo no cartafol da nube.",
  "{0} Liste(n)": "{0} lista(s)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Só importa se este ficheiro se presenta sen cambios – «Corrixir automaticamente» gárdao todo xunto apto para beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – todos os puntos",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "comprobar pdf/a arquivo validar conforme longo prazo iso 19005 verapdf bea tribunal xustiza erv ervb presentar accesibilidade accesible bitv pdf/ua lector de pantalla epa historia clínica gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Xéranse como PDF/A con «Corrixir automaticamente» – á vez accesibles segundo PDF/UA, con recoñecemento de texto, idioma e título."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Xéranse como PDF/A con «Corrixir automaticamente» – á vez accesibles segundo PDF/UA, con recoñecemento de texto, idioma e título.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Imaxes a PDF: comprobe a orde – pode engadir máis imaxes.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Introducir datos da carta (remitente, prazo, expediente …)",
+ "Fertig & speichern": "Rematar e gardar",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulario: cubra os campos da área «Formulario».",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Para cartas e correo: data, remitente, asunto, expediente, prazo e seguimento",
+ "Nach einer neuen Version suchen": "Buscar unha nova versión",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Reparar: comprobe as páxinas – ao gardar, o ficheiro reescríbese limpamente.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Ocultar: trace zonas. O contido de debaixo elimínase de verdade ao gardar.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organizar páxinas: prema (Ctrl/Maiús para varias), arrastre, xire ou elimine.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Asinar: prema no lugar onde debe ir a sinatura.",
+ "Weitere Bilder hinzufügen": "Engadir máis imaxes",
+ "Weitere Dateien hinzufügen": "Engadir máis ficheiros",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Combinar: cambie a orde arrastrando – pode engadir máis ficheiros."
 }

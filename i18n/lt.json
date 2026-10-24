@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Įdiekite savo paslaugų teikėjo sinchronizavimo programą, pvz., <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – arba pasirinkite bet kurį aplanką per <i>„… Daugiau → Pasirinkti archyvo aplanką …“</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Nemokamai ir be paskyros: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (tiesiogiai redaguoja PDF), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> arba <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Tada dar kartą spustelėkite čia.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy įrašo PDF į šio kompiuterio debesies aplanko poaplankį „PDFMy“. Įkėlimą po to atlieka Jūsų pačių sinchronizavimo programa (pvz., Nextcloud) – į Jūsų saugyklą. Pati PDFMy nieko neperduoda.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 veikia – randami tinklo ir prie kompiuterio prijungti skeneriai.",
  "Wird in {0} gespeichert …": "Įrašoma į {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Pirmiausia atidarykite dokumentą – tada jį bus galima įrašyti į debesies aplanką.",
  "{0} Liste(n)": "Sąrašų: {0}",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Svarbu tik tada, jei šis failas pateikiamas nepakeistas – „Ištaisyti automatiškai“ įrašo viską kartu tinkamai beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – visi patikros punktai",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "tikrinti pdf/a archyvas patvirtinti atitinkantis ilgalaikis iso 19005 verapdf bea teismas teisingumas erv ervb pateikti prieinamumas prieinamas bitv pdf/ua ekrano skaitytuvas epa paciento kortelė gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Sukuriami su „Ištaisyti automatiškai“ kaip PDF/A – kartu prieinami pagal PDF/UA, su teksto atpažinimu, kalba ir pavadinimu."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Sukuriami su „Ištaisyti automatiškai“ kaip PDF/A – kartu prieinami pagal PDF/UA, su teksto atpažinimu, kalba ir pavadinimu.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Vaizdai į PDF: patikrinkite tvarką – galima pridėti daugiau vaizdų.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Įvesti laiško duomenis (siuntėjas, terminas, byla …)",
+ "Fertig & speichern": "Baigta & įrašyti",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Forma: užpildykite srities „Forma“ laukus.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Laiškams ir paštui: data, siuntėjas, tema, byla, terminas ir priminimas",
+ "Nach einer neuen Version suchen": "Ieškoti naujos versijos",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Taisyti: patikrinkite puslapius – įrašant failas švariai perrašomas.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Užtamsinti: pažymėkite sritis. Po jomis esantis turinys įrašant iš tikrųjų pašalinamas.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Tvarkyti puslapius: spustelėkite (keliems – Ctrl/Shift), vilkite, pasukite arba ištrinkite.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Pasirašyti: spustelėkite vietą, kur turi būti parašas.",
+ "Weitere Bilder hinzufügen": "Pridėti daugiau vaizdų",
+ "Weitere Dateien hinzufügen": "Pridėti daugiau failų",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Sujungti: keiskite tvarką vilkdami – galima pridėti daugiau failų."
 }

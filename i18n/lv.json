@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Instalējiet sava pakalpojumu sniedzēja sinhronizācijas programmu, piem., <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – vai izvēlieties jebkuru mapi sadaļā <i>„… Vairāk → Izvēlēties arhīva mapi …”</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Bez maksas un bez konta: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (tieši rediģē PDF), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> vai <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Pēc tam noklikšķiniet šeit vēlreiz.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy saglabā PDF šī datora mākoņa mapes apakšmapē „PDFMy”. Augšupielādi pēc tam veic Jūsu pašu sinhronizācijas programma (piem., Nextcloud) – uz Jūsu krātuvi. Pati PDFMy neko nepārsūta.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 darbojas – tīkla un datoram pievienotie skeneri tiek atrasti.",
  "Wird in {0} gespeichert …": "Saglabā mapē {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Vispirms atveriet dokumentu – pēc tam to var saglabāt mākoņa mapē.",
  "{0} Liste(n)": "{0} saraksts(-i)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Svarīgi tikai tad, ja šo failu iesniedz nemainītu – „Labot automātiski” saglabā visu kopā atbilstoši beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – visi pārbaudes punkti",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "pārbaudīt pdf/a arhīvs validēt atbilstošs ilgtermiņa iso 19005 verapdf bea tiesa tieslietas erv ervb iesniegt piekļūstamība piekļūstams bitv pdf/ua ekrāna lasītājs epa pacienta karte gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Tiek izveidoti ar „Labot automātiski” kā PDF/A – vienlaikus piekļūstami saskaņā ar PDF/UA, ar teksta atpazīšanu, valodu un nosaukumu."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Tiek izveidoti ar „Labot automātiski” kā PDF/A – vienlaikus piekļūstami saskaņā ar PDF/UA, ar teksta atpazīšanu, valodu un nosaukumu.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Attēli uz PDF: pārbaudiet secību – var pievienot vēl attēlus.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Ievadīt vēstules datus (sūtītājs, termiņš, lieta …)",
+ "Fertig & speichern": "Gatavs & saglabāt",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Veidlapa: aizpildiet laukus apgabalā „Veidlapa”.",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Vēstulēm un pastam: datums, sūtītājs, temats, lieta, termiņš un atgādinājums",
+ "Nach einer neuen Version suchen": "Meklēt jaunu versiju",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Labot: pārbaudiet lapas – saglabājot fails tiek tīri pārrakstīts.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Melnot: iezīmējiet apgabalus. Saturs zem tiem saglabājot tiek patiešām izņemts.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Kārtot lapas: noklikšķiniet (Ctrl/Shift vairākām), velciet, pagrieziet vai dzēsiet.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Parakstīt: noklikšķiniet vietā, kur jābūt parakstam.",
+ "Weitere Bilder hinzufügen": "Pievienot vēl attēlus",
+ "Weitere Dateien hinzufügen": "Pievienot vēl failus",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Apvienot: mainiet secību, velkot – var pievienot vēl failus."
 }

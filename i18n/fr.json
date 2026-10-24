@@ -2863,8 +2863,6 @@
  "Installieren Sie das Sync-Programm Ihres Anbieters, z. B. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – oder wählen Sie unter <i>„… Mehr → Ablageordner wählen …“</i> einen beliebigen Ordner.": "Installez le programme de synchronisation de votre fournisseur, p. ex. <a href=\"https://nextcloud.com/de/install/#install-clients\" target=\"_blank\" rel=\"noopener\">Nextcloud Desktop</a> – ou choisissez n’importe quel dossier sous <i>« … Plus → Choisir le dossier de classement… »</i>.",
  "Kostenlos und ohne Konto: <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (bearbeitet PDFs direkt), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> oder <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Danach hier noch einmal klicken.": "Gratuits et sans compte : <a href=\"https://www.onlyoffice.com/download-desktop.aspx\" target=\"_blank\" rel=\"noopener\">ONLYOFFICE Desktop</a> (modifie directement les PDF), <a href=\"https://de.libreoffice.org/download/download/\" target=\"_blank\" rel=\"noopener\">LibreOffice</a> ou <a href=\"https://www.freeoffice.com/de/\" target=\"_blank\" rel=\"noopener\">FreeOffice</a>. Cliquez ensuite à nouveau ici.",
  "PDFMy legt die PDF im Ordner „PDFMy“ Ihres Cloud-Ordners auf diesem Rechner ab. Hochladen tut danach Ihr eigenes Sync-Programm (z. B. Nextcloud) – an Ihren Speicher. PDFMy selbst überträgt nichts.": "PDFMy dépose le PDF dans le dossier « PDFMy » de votre dossier cloud sur cet ordinateur. L’envoi est ensuite effectué par votre propre programme de synchronisation (p. ex. Nextcloud) – vers votre stockage. PDFMy lui-même ne transmet rien.",
- "pdfmy Scan 1.12.0": "pdfmy Scan 1.12.0",
- "pdfmy Scan 1.12.0 läuft – Scanner im Netzwerk und am PC werden gefunden.": "pdfmy Scan 1.12.0 est en cours d’exécution – les scanners du réseau et du PC sont détectés.",
  "Wird in {0} gespeichert …": "Enregistrement dans {0} …",
  "Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.": "Ouvrez d’abord un document – il pourra ensuite être enregistré dans le dossier cloud.",
  "{0} Liste(n)": "{0} liste(s)",
@@ -2990,5 +2988,18 @@
  "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.": "Important uniquement si ce fichier est déposé tel quel – « Corriger automatiquement » enregistre le tout conforme beA.",
  "PDF/A – alle Prüfpunkte": "PDF/A – tous les points de contrôle",
  "prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight": "vérifier pdf/a archive valider conforme long terme iso 19005 verapdf bea tribunal justice erv ervb dépôt accessibilité accessible bitv pdf/ua lecteur d’écran epa dossier patient gobd preflight",
- "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Sont générés en PDF/A avec « Corriger automatiquement » – et en même temps accessibles selon PDF/UA, avec reconnaissance de texte, langue et titre."
+ "Werden mit „Automatisch beheben“ als PDF/A erzeugt – zugleich barrierefrei nach PDF/UA, mit Texterkennung, Sprache und Titel.": "Sont générés en PDF/A avec « Corriger automatiquement » – et en même temps accessibles selon PDF/UA, avec reconnaissance de texte, langue et titre.",
+ "Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.": "Images en PDF : vérifiez l’ordre – vous pouvez ajouter d’autres images.",
+ "Briefdaten eingeben (Absender, Frist, Akte …)": "Saisir les données du courrier (expéditeur, délai, dossier …)",
+ "Fertig & speichern": "Terminer & enregistrer",
+ "Formular: die Felder im Bereich „Formular“ ausfüllen.": "Formulaire : remplissez les champs de la zone « Formulaire ».",
+ "Für Briefe und Post: Datum, Absender, Betreff, Akte, Frist und Wiedervorlage": "Pour lettres et courrier : date, expéditeur, objet, dossier, délai et rappel",
+ "Nach einer neuen Version suchen": "Rechercher une nouvelle version",
+ "Reparieren: Seiten prüfen – beim Speichern wird die Datei sauber neu geschrieben.": "Réparer : vérifiez les pages – le fichier est réécrit proprement à l’enregistrement.",
+ "Schwärzen: Bereiche aufziehen. Der Inhalt darunter wird beim Speichern wirklich entfernt.": "Caviarder : tracez des zones. Le contenu en dessous est réellement supprimé à l’enregistrement.",
+ "Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.": "Organiser les pages : cliquez (Ctrl/Maj pour plusieurs), faites glisser, faites pivoter ou supprimez.",
+ "Unterschreiben: auf die Stelle klicken, an der die Unterschrift stehen soll.": "Signer : cliquez à l’endroit où la signature doit figurer.",
+ "Weitere Bilder hinzufügen": "Ajouter d’autres images",
+ "Weitere Dateien hinzufügen": "Ajouter d’autres fichiers",
+ "Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.": "Fusionner : modifiez l’ordre par glisser-déposer – vous pouvez ajouter d’autres fichiers."
 }
