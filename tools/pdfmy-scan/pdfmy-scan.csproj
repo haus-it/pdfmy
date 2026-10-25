@@ -19,6 +19,9 @@
     <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <DebugType>none</DebugType>
+    <!-- Keine Git-Commit-Kennung in die Versionsangabe („1.13.0+abc…“): sonst ändert jeder Commit die exe, und deploy.ps1
+         müsste sie neu signieren und hochladen, obwohl sich am Programm nichts geändert hat (Build bleibt deterministisch) -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http" />

@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-25
 
+### pdfmy Scan nur noch bei echter Änderung signieren
+- Ursache: Das .NET-SDK schrieb die Git-Commit-Kennung in die Versionsangabe der exe („1.13.0+da0aa9c…“). Dadurch war die Datei nach jedem Commit anders, und deploy.ps1 signierte und lud pdfmy Scan bei jedem Ausrollen neu hoch, obwohl sich am Programm nichts geändert hatte (unnötige Signaturen, ~1 MB Upload, neue Prüfsumme in version.json).
+- Behoben: `IncludeSourceRevisionInInformationalVersion=false` im Projekt. Geprüft: Build vor und nach einem Commit byte-gleich; Versionsangabe „1.13.0“ (die Versionsprüfung beim Selbst-Update vergleicht per StartsWith und bleibt gültig).
+
+
 ### Datensparsamer Download-Zähler für pdfmy Scan (app-v195)
 - Anlass: IONOS WebAnalytics zeigt Besucher, aber keine Downloads (nur die 20 meistbesuchten Adressen; Rohprotokolle legt IONOS für pdfmy.de nicht im Webspace ab). Leitplanken-Prüfung in KONZEPT.md („Entschieden 25.10.2026“).
 - Beim Klick auf einen Download (App, Update-Hinweis, Einrichtung, Scanner- und Erweiterungsseite) ruft PDFMy zusätzlich eine leere, statische Zählseite ab: `download/zaehlung/windows.html`, `mac.html`, `linux.html`, `erweiterung.html`. Sie erscheint in WebAnalytics unter „Meist besuchte Seiten“. Kein Cookie, keine Kennung, kein Fremddienst, CSP unverändert.
