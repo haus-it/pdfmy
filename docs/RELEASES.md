@@ -201,3 +201,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-10-25 11:10 | pdfmy-202610250954 | 1.14.0 | ebc8ca6da26a4e1a… | 210/210 Tests bestanden, Probelauf bestanden | 1370 | Administrator | 4dcdfbbecc8ed758 |
 | 2026-10-25 12:12 | pdfmy-202610251103 | 1.14.0 | ebc8ca6da26a4e1a… | 210/210 Tests bestanden, Probelauf bestanden | 84 | Administrator | bae6f31d9f2edf05 |
 | 2026-10-25 17:59 | pdfmy-202610251656 | 1.14.1 | 799221d35a55c1d8… | 210/210 Tests bestanden, Probelauf bestanden | 172 | Administrator | 0d76de845b12632f |
+| 2026-10-25 22:18 | pdfmy-202610252115 | 1.15.0 | c335f795d755fda1… | 210/210 Tests bestanden, Probelauf bestanden | 170 | Administrator | 907e22e268799b14 |
