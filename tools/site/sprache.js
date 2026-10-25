@@ -8,3 +8,9 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || /^(localh
   const sw = new URL('sw.js', document.currentScript.src);
   addEventListener('load', () => navigator.serviceWorker.register(sw.href, { scope: new URL('./', sw).href }).catch(e => console.warn('Service Worker:', e)));
 }
+// Download-Zähler (KONZEPT.md, 25.10.2026), gleiche Regel wie in js/app.js: beim Klick auf einen Download eine leere Zählseite abrufen
+document.addEventListener('click', e => {
+  const a = e.target.closest?.('a[href*="download/"]'); if (!a) return;
+  const u = new URL(a.href), kind = [[/pdfmy-Scan(-[\d.]+)?\.exe$/, 'windows'], [/(pdfmy-Scan-Mac\.zip|pdfmy-scan-mac\.sh)$/, 'mac'], [/pdfmy-scan-linux\.sh$/, 'linux'], [/pdfmy-erweiterung-[\d.]+\.zip$/, 'erweiterung']].find(([re]) => re.test(u.pathname));
+  if (kind && u.origin === location.origin) fetch(new URL(`zaehlung/${kind[1]}.html`, u).href, { cache: 'no-store', credentials: 'omit', keepalive: true }).catch(() => {});
+}, true);

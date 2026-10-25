@@ -4031,6 +4031,15 @@ const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // sca
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
 const SCAN_FILE = `pdfmy-Scan-${SCAN_LATEST}.exe`;
+// Download-Zähler (KONZEPT.md, 25.10.2026): beim Herunterladen eine leere, statische Zählseite je Plattform abrufen (download/zaehlung/…) –
+// IONOS WebAnalytics zählt sie wie jeden Seitenabruf; ohne Cookie, ohne Kennung, ohne weitere Daten. Gleiche Regel in tools/site/sprache.js.
+const DL_KIND = [[/pdfmy-Scan(-[\d.]+)?\.exe$/, 'windows'], [/(pdfmy-Scan-Mac\.zip|pdfmy-scan-mac\.sh)$/, 'mac'], [/pdfmy-scan-linux\.sh$/, 'linux'], [/pdfmy-erweiterung-[\d.]+\.zip$/, 'erweiterung']];
+function countDownload(href) {
+  const u = new URL(href, location.href), kind = u.pathname.includes('/download/') && (DL_KIND.find(([re]) => re.test(u.pathname)) || [])[1];
+  if (kind) fetch(new URL(`zaehlung/${kind}.html`, u).href, { cache: 'no-store', credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(() => {});
+  return href;
+}
+document.addEventListener('click', e => { const a = e.target.closest?.('a[href*="download/"]'); if (a) countDownload(a.href); }, true);
 const verLess = (a, b) => { const x = String(a).split('.').map(Number), y = b.split('.').map(Number); for (let i = 0; i < 3; i++) if ((x[i] || 0) !== y[i]) return (x[i] || 0) < y[i]; return false; };
 async function scanHelperRunning() {
   try {

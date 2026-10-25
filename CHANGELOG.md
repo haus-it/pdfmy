@@ -2,6 +2,16 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-25
+
+### Datensparsamer Download-Zähler für pdfmy Scan (app-v195)
+- Anlass: IONOS WebAnalytics zeigt Besucher, aber keine Downloads (nur die 20 meistbesuchten Adressen; Rohprotokolle legt IONOS für pdfmy.de nicht im Webspace ab). Leitplanken-Prüfung in KONZEPT.md („Entschieden 25.10.2026“).
+- Beim Klick auf einen Download (App, Update-Hinweis, Einrichtung, Scanner- und Erweiterungsseite) ruft PDFMy zusätzlich eine leere, statische Zählseite ab: `download/zaehlung/windows.html`, `mac.html`, `linux.html`, `erweiterung.html`. Sie erscheint in WebAnalytics unter „Meist besuchte Seiten“. Kein Cookie, keine Kennung, kein Fremddienst, CSP unverändert.
+- Nicht gezählt: automatische Updates von pdfmy Scan, Direktaufrufe per Terminal, Desktop-Ausgabe ohne Internet – die Zahlen sind eine Untergrenze und zählen Download-Klicks, nicht Installationen.
+- Service Worker legt Downloads (.exe/.zip/.sh) nicht mehr im Offline-Speicher ab (sparte bisher unnötig Speicher auf dem Gerät).
+- Datenschutzerklärung Nr. 3: IONOS WebAnalytics und die Zählseiten genannt (bisher fehlte der Hinweis auf die Zugriffsstatistik). Hilfe (Datenschutz und Sicherheit) ergänzt.
+- Getestet (Headless-Chrome, lokaler Server): Windows-Knopf, Mac-Download per Skript, Linux-Link der Scanner-Seite – je genau ein Abruf der passenden Zählseite.
+
 ## 2026-10-24
 
 ### Handy: PDFMy beim Öffnen von PDFs anbieten (app-v194)

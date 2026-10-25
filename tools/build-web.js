@@ -166,6 +166,9 @@ Daten an den Server, die in Protokolldateien gespeichert werden können: IP-Adre
 Referrer-URL sowie Browser und Betriebssystem. Die Verarbeitung dient der sicheren und stabilen Bereitstellung der Website
 (Art. 6 Abs. 1 lit. f DSGVO). Die Protokolldaten werden nach kurzer Zeit gelöscht oder anonymisiert und nicht mit anderen Daten zusammengeführt.
 Mit IONOS besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.</p>
+<p>Aus diesen Protokolldaten erstellt IONOS für uns zusammengefasste Zugriffsstatistiken (IONOS WebAnalytics) – etwa Zahl der Besucher, aufgerufene Seiten und Downloads. Dafür wird nichts in die Seite eingebunden, es gibt keine Cookies und keine Kennung, die Sie wiedererkennt
+(Art. 6 Abs. 1 lit. f DSGVO; berechtigtes Interesse: Bedarf und Verbreitung des Angebots einschätzen). Damit Downloads von pdfmy Scan und der Browser-Erweiterung darin erscheinen, ruft PDFMy beim Herunterladen zusätzlich eine leere Seite
+dieser Website ab (<code>/download/zaehlung/windows.html</code>, <code>mac.html</code>, <code>linux.html</code> bzw. <code>erweiterung.html</code>); dabei entstehen nur die oben genannten Protokolldaten.</p>
 <p>Alle Programmteile, Schriften und die Sprachdaten der Texterkennung werden ausschließlich von ${esc(site.domain)} geladen, nicht von fremden Servern.</p>
 <h2>4. Verarbeitung Ihrer Dokumente</h2>
 <p>Öffnen, Texterkennung (OCR), Bearbeiten, Zusammenfügen, Komprimieren, Verschlüsseln und Speichern finden vollständig lokal in Ihrem Browser statt.
@@ -301,6 +304,10 @@ if (fs.existsSync(scanExe)) {
   copy(path.relative(ROOT, scanExe), 'download/pdfmy-Scan.exe');   // alter Link funktioniert weiter
 }
 else console.warn('Hinweis: pdfmy-Scan.exe nicht gebaut (dotnet build -c Release in tools/pdfmy-scan)');
+// Download-Zähler (KONZEPT.md, 25.10.2026): leere Zählseiten ohne Skript; der Service Worker ruft sie beim Download ab,
+// IONOS WebAnalytics zählt sie unter „Meist besuchte Seiten“ (/download/zaehlung/windows.html usw.)
+for (const k of ['windows', 'mac', 'linux', 'erweiterung'])
+  write(`download/zaehlung/${k}.html`, `<!doctype html><html lang="de"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Download ${k}</title><p>Download-Zählung ${k} – ohne Cookie, ohne Kennung.</p></html>\n`);
 // pdfmy Scan für Mac (tools/pdfmy-scan-mac): .command zum Doppelklicken (ZIP erhält das Ausführen-Recht) und als Skript für das Terminal
 const MAC = path.join(ROOT, 'tools', 'pdfmy-scan-mac');
 const lf = f => fs.readFileSync(path.join(MAC, f), 'utf8').replace(/\r\n/g, '\n');

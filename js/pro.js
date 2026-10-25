@@ -2196,7 +2196,7 @@ openFromHash(); addEventListener('hashchange', openFromHash);   // auch wenn PDF
 $('#btnPrinter').onclick = async () => {
   closeMenu();
   const T = (k, ...v) => String(I18N.t(k)).replace(/\{(\d+)\}/g, (all, n) => v[n] != null ? v[n] : all);
-  const dl = f => (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f;
+  const dl = f => countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f);   // nur beim Herunterladen aufgerufen → zählen
   if (IS_MOBILE) { toast(T('Auf dem Handy: in der App „Teilen“ → „PDFMy“ wählen (PDFMy muss als App installiert sein).'), 8000); return; }
   if (IS_CHROMEOS) { alert(T('Auf dem Chromebook: im Druckdialog als Ziel „Als PDF speichern“ wählen und die Datei in PDFMy öffnen. Ist PDFMy als App installiert, geht es noch schneller: in der App „Dateien“ Rechtsklick auf die PDF → „Öffnen mit“ → „PDFMy“. Einen eigenen Drucker „PDFMy“ gibt es auf Chromebooks nicht.')); return; }
   if (IS_LINUX) { alert(T('Unter Linux hat der Druckdialog „In Datei drucken“: als PDF speichern und die Datei in PDFMy öffnen. Ein eigener Drucker „PDFMy“ ist für Linux nicht vorgesehen.')); return; }
@@ -2249,7 +2249,7 @@ $('#btnOffice').onclick = async () => {
   if (!state.pages.length) { status('Zuerst ein Dokument öffnen – dann lässt es sich in einem Office-Programm bearbeiten.'); return; }
   if (IS_MOBILE) { toast('Auf dem Handy: das Dokument speichern und in der Office-App öffnen.', 7000); return; }
   if (IS_CHROMEOS) { alert(I18N.t('Auf dem Chromebook: das Dokument speichern – als PDF oder über „PDF in Word“ als Word-Dokument – und in der App „Dateien“ mit einer Office-App öffnen, z. B. ONLYOFFICE aus dem Play Store oder LibreOffice in der Linux-Umgebung. Zurück zu PDFMy: im Office-Programm „Als PDF speichern“ und die Datei in PDFMy öffnen.')); return; }
-  const dl = f => (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f;
+  const dl = f => countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f);   // nur beim Herunterladen aufgerufen → zählen
   const running = await scanHelperRunning(), need = state.scanMac ? '1.4.0' : '1.11.0';
   if (!running || verLess(state.scanVersion, need)) {
     const mac = IS_MAC || state.scanMac;
@@ -2317,7 +2317,7 @@ $('#btnDefaultPdf').onclick = async () => {
       return;
     }
     if (runsAsApp()) { alert(finder); return; }
-    if (confirm('Dafür gibt es das kleine Programm „pdfmy Scan für Mac“: Es meldet PDFMy bei macOS als PDF-Programm an – auch für Safari – und verbindet gleich Ihren Scanner. Die Dateien bleiben auf Ihrem Mac.\n\nJetzt herunterladen?')) location.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-Scan-Mac.zip';
+    if (confirm('Dafür gibt es das kleine Programm „pdfmy Scan für Mac“: Es meldet PDFMy bei macOS als PDF-Programm an – auch für Safari – und verbindet gleich Ihren Scanner. Die Dateien bleiben auf Ihrem Mac.\n\nJetzt herunterladen?')) location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-Scan-Mac.zip');
     return;
   }
   if (await scanHelperRunning() && !verLess(state.scanVersion, '1.5.0')) {
@@ -2326,7 +2326,7 @@ $('#btnDefaultPdf').onclick = async () => {
     alert('Die Windows-Einstellungen öffnen sich.\n\nDort bei „.pdf“ auf das bisherige Programm klicken, „PDFMy (pdfmy Scan)“ wählen und mit „Standard festlegen“ bestätigen.\n\nDanach öffnet ein Doppelklick auf eine PDF-Datei sie direkt in PDFMy.');
     return;
   }
-  if (confirm('Dafür wird das kleine Windows-Programm „pdfmy Scan“ (ab Version 1.5.0) benötigt. Es meldet PDFMy bei Windows als PDF-Programm an – die Dateien bleiben dabei auf Ihrem Rechner.\n\nJetzt herunterladen?')) location.href = 'https://pdfmy.de/download/pdfmy-Scan.exe';
+  if (confirm('Dafür wird das kleine Windows-Programm „pdfmy Scan“ (ab Version 1.5.0) benötigt. Es meldet PDFMy bei Windows als PDF-Programm an – die Dateien bleiben dabei auf Ihrem Rechner.\n\nJetzt herunterladen?')) location.href = countDownload('https://pdfmy.de/download/pdfmy-Scan.exe');
 };
 
 
@@ -2406,9 +2406,9 @@ $('#btnSetup').onclick = openSetup;
 $('#setAuthor').oninput = e => { S.author = e.target.value.trim(); saveSettings(); $('#author').value = S.author; $('#stName').classList.toggle('ok', !!S.author); };
 $('#setOut').onclick = async () => { await chooseOutDir(); renderSetup(); };
 const scanDl = kind => {
-  if (kind === 'linux') { location.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-scan-linux.sh'; $('#setScanInfo').textContent = 'Download gestartet – im Terminal starten: sh ~/Downloads/pdfmy-scan-linux.sh (ohne sudo). Dieses Fenster erkennt es automatisch.'; return; }
-  if (kind === 'mac' || kind === true) { location.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-Scan-Mac.zip'; $('#setScanInfo').textContent = 'Download gestartet – die ZIP-Datei öffnen und „pdfmy-Scan-Mac.command“ doppelklicken. Dieses Fenster erkennt es automatisch.'; return; }
-  location.href = 'https://pdfmy.de/download/pdfmy-Scan.exe'; $('#setScanInfo').textContent = 'Download gestartet – die Datei „pdfmy-Scan.exe“ unten im Browser öffnen. Dieses Fenster erkennt es automatisch.';
+  if (kind === 'linux') { location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-scan-linux.sh'); $('#setScanInfo').textContent = 'Download gestartet – im Terminal starten: sh ~/Downloads/pdfmy-scan-linux.sh (ohne sudo). Dieses Fenster erkennt es automatisch.'; return; }
+  if (kind === 'mac' || kind === true) { location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-Scan-Mac.zip'); $('#setScanInfo').textContent = 'Download gestartet – die ZIP-Datei öffnen und „pdfmy-Scan-Mac.command“ doppelklicken. Dieses Fenster erkennt es automatisch.'; return; }
+  location.href = countDownload('https://pdfmy.de/download/pdfmy-Scan.exe'); $('#setScanInfo').textContent = 'Download gestartet – die Datei „pdfmy-Scan.exe“ unten im Browser öffnen. Dieses Fenster erkennt es automatisch.';
 };
 $('#setScan').onclick = async () => {
   if (IS_CHROMEOS) { try { await useInbox(await showDirectoryPicker({ id: 'mpdf-in', mode: 'read' }), false); renderSetup(); } catch (e) { if (e.name !== 'AbortError') status(e.message); } return; }
@@ -4351,7 +4351,7 @@ $('#btnCloud').onclick = async () => {
   if (!state.pages.length) { status('Zuerst ein Dokument öffnen – dann lässt es sich im Cloud-Ordner speichern.'); return; }
   if (IS_MOBILE) { toast('Auf dem Handy: „Teilen …“ wählen und die App Ihres Cloud-Speichers (z. B. Nextcloud) antippen.', 7000); return; }
   if (IS_CHROMEOS) { alert(I18N.t('Auf dem Chromebook ist Google Drive in der App „Dateien“ eingebunden (OneDrive und andere über „Dateien → Dienst hinzufügen“). Unter „… Mehr → Ablageordner wählen …“ einen Ordner dort wählen – dann legt „Ablegen“ jede PDF direkt hinein, und Chrome OS lädt sie hoch. Oder beim Speichern den Ordner direkt auswählen.')); return; }
-  const dl = f => (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f;
+  const dl = f => countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f);   // nur beim Herunterladen aufgerufen → zählen
   const running = await scanHelperRunning(), need = state.scanMac ? '1.5.0' : '1.12.0';
   if (!running || verLess(state.scanVersion, need)) {
     const mac = IS_MAC || state.scanMac;

@@ -114,6 +114,21 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Entschieden 25.10.2026: datensparsamer Download-Zähler für pdfmy Scan
+**Anlass (GF 25.10.2026):** IONOS WebAnalytics zeigt Besucher (900 seit 14.10.2026), aber keine Downloads: Es listet nur die 20 meistbesuchten Adressen, die .exe/.zip/.sh tauchen dort nicht auf. Rohprotokolle legt IONOS für pdfmy.de nicht im Webspace ab (geprüft in allen drei Hosting-Verträgen), eine Protokollauswertung entfällt.
+**Geprüfte Wege:** (a) Zählskript auf dem Server (PHP, Datenbank) – verworfen, Leitplanke 2 (nur statische Dateien). (b) Fremddienst (Matomo-Cloud, Google Analytics) – verworfen, Leitplanken 2 und 3. (c) Eindeutige Kennung je Installation – verworfen, nicht datensparsam und für die Frage „wie oft heruntergeladen“ unnötig. (d) **Gewählt:** Beim Download ruft der Service Worker zusätzlich eine leere, statische Zählseite je Plattform ab (`download/zaehlung/windows.html`, `mac.html`, `linux.html`, `erweiterung.html`). IONOS WebAnalytics wertet sie wie jeden Seitenabruf aus – ohne Cookie, ohne Kennung, ohne zusätzliche Daten (nur die ohnehin entstehenden, von IONOS gekürzten Protokolldaten). Die Seiten sind kurz und eindeutig benannt und erscheinen in „Meist besuchte Seiten“ bzw. per Export.
+**Grenzen:** Gezählt wird ein Klick auf „Herunterladen“, keine Installation. Nicht gezählt werden: automatische Updates von pdfmy Scan (laufen am Browser vorbei, gewollt), der allererste Besuch, bevor der Service Worker aktiv ist, Direktaufrufe per Terminal (curl) und die Desktop-Ausgabe. Zahlen sind daher eine Untergrenze.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: keine Dokumente, keine Eingaben, nur ein leerer Seitenabruf beim ohnehin stattfindenden Download |
+| 2 Kein Server, keine Fremddienste | passt: statische Dateien auf pdfmy.de, keine neue Verbindung (CSP unverändert) |
+| 3 Ohne Tracking | passt mit Auflage: keine Kennung, kein Cookie, keine Zusammenführung; Erwähnung in Datenschutzerklärung Nr. 3 und Hilfe |
+| 4 Einfach | passt: für Nutzer unsichtbar, Download unverändert |
+| 5 Prüfbar | passt: Zählseiten im Quelltext und in den Prüfsummen, Browser-Test |
+| 6 Wenig aktive Inhalte | passt: Zählseiten ohne Skript |
+**Entscheidung:** umsetzen (Auftrag GF 25.10.2026).
+
 ### Umgesetzt 24.10.2026: PDFMy am Handy beim Öffnen von PDFs anbieten (Android-Teilen-Ziel)
 **Anlass (GF 24.10.2026):** Android und iPhone bieten PDFMy beim Öffnen einer PDF nicht an. Ursache: file_handlers gelten nur für Desktop-Chrome. Android: Web Share Target der installierten App; iOS: für Web-Apps nicht vorgesehen (nur native App aus dem App Store – Entscheidung GF, Kosten Apple Developer Program, Prüfverfahren, Pflege einer zweiten Codebasis).
 
