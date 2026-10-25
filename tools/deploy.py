@@ -44,6 +44,8 @@ def ensure_dir(sftp, path, made):
 
 
 def main():
+    # Ausgabe geht über eine Pipe an deploy.ps1 (Windows-Codepage): nicht darstellbare Zeichen ersetzen statt abzubrechen
+    sys.stdout.reconfigure(errors='replace')
     ap = argparse.ArgumentParser()
     ap.add_argument('--host', required=True)
     ap.add_argument('--local', required=True)
@@ -93,9 +95,9 @@ def main():
     print(f'{len(changed)} geänderte Datei(en), {size / 1048576:.1f} MB; {len(stale)} veraltete Datei(en)')
     if a.dry_run:
         for r in changed:
-            print('  ↑', r)
+            print('  +', r)
         for r in stale:
-            print('  ✗', r)
+            print('  x', r)
         client.close()
         return
 

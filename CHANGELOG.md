@@ -7,6 +7,8 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 ### pdfmy Scan nur noch bei echter Änderung signieren
 - Ursache: Das .NET-SDK schrieb die Git-Commit-Kennung in die Versionsangabe der exe („1.13.0+da0aa9c…“). Dadurch war die Datei nach jedem Commit anders, und deploy.ps1 signierte und lud pdfmy Scan bei jedem Ausrollen neu hoch, obwohl sich am Programm nichts geändert hatte (unnötige Signaturen, ~1 MB Upload, neue Prüfsumme in version.json).
 - Behoben: `IncludeSourceRevisionInInformationalVersion=false` im Projekt. Geprüft: Build vor und nach einem Commit byte-gleich; Versionsangabe „1.13.0“ (die Versionsprüfung beim Selbst-Update vergleicht per StartsWith und bleibt gültig).
+- Nachweis: `deploy.ps1 -DryRun` nach einem neuen Commit meldet „pdfmy Scan unverändert – signierte Fassung wiederverwendet“ und würde nur sw.js und die Prüfsummen hochladen.
+- Nebenbei behoben: `deploy.ps1 -DryRun` brach ab, weil deploy.py die Zeichen „↑“/„✗“ in die Windows-Codepage schreiben wollte (jetzt „+“/„x“, nicht darstellbare Zeichen werden ersetzt).
 
 
 ### Datensparsamer Download-Zähler für pdfmy Scan (app-v195)
