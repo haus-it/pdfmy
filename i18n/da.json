@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Opdatering fundet – indlæses …{0}",
  "Vergleich nicht möglich: {0}": "Sammenligning ikke mulig: {0}",
  "Visueller Vergleich nicht möglich: {0}": "Visuel sammenligning ikke mulig: {0}",
- "Weitersenden nicht möglich: {0}": "Kan ikke sende videre: {0}"
+ "Weitersenden nicht möglich: {0}": "Kan ikke sende videre: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Arkiveret: {0}. Bemærk: postindgangsjournal ikke opdateret ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Gemt: {0}. Bemærk: postindgangsjournal ikke opdateret ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Advarsel: Der er stadig et dokument åbent, som ikke er gemt. Det går tabt ved sletning. Fortsæt alligevel?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Den arkiverede fil »{0}« kunne ikke gemmes som ny version ({1}) – er den stadig åben i et andet program?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installeret: PDFMy (ukendt), pdfmy Scan ikke startet. Klik: søg efter opdateringer.",
+ "PDF konnte nicht erzeugt werden: {0}": "PDF kunne ikke oprettes: {0}",
+ "PDFMy ·": "PDFMy ·"
 }

@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Знайдено оновлення – завантаження…{0}",
  "Vergleich nicht möglich: {0}": "Порівняння неможливе: {0}",
  "Visueller Vergleich nicht möglich: {0}": "Візуальне порівняння неможливе: {0}",
- "Weitersenden nicht möglich: {0}": "Переслати неможливо: {0}"
+ "Weitersenden nicht möglich: {0}": "Переслати неможливо: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Заархівовано: {0}. Примітка: журнал вхідної пошти не оновлено ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Збережено: {0}. Примітка: журнал вхідної пошти не оновлено ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Увага: ще відкрито незбережений документ. Під час видалення його буде втрачено. Усе одно продовжити?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Не вдалося зберегти архівний файл «{0}» як нову версію ({1}) – можливо, він ще відкритий в іншій програмі?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Установлено: PDFMy (невідомо), pdfmy Scan не запущено. Клацніть: перевірити оновлення.",
+ "PDF konnte nicht erzeugt werden: {0}": "Не вдалося створити PDF: {0}",
+ "PDFMy ·": "PDFMy ·"
 }

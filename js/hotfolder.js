@@ -159,6 +159,8 @@
       } else setRow(li, `Fehler: ${e.message || e} – neuer Versuch`, 'bad');
     } finally { resetDoc(); state.dirty = false; }
   }
+  // Kein automatisches Update-Neuladen im Überwachungsfenster (busyNow in js/app.js) – es blieb sonst an „Seite verlassen?“ hängen
+  window.hotfolderActive = true;
   // Fenster schließen: Hinweis, dass die Überwachung dann endet
   addEventListener('beforeunload', e => { if (timer && !paused) { e.preventDefault(); e.returnValue = ''; } });
   (async () => {

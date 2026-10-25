@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Atualização encontrada – a carregar …{0}",
  "Vergleich nicht möglich: {0}": "Comparação impossível: {0}",
  "Visueller Vergleich nicht möglich: {0}": "Comparação visual não é possível: {0}",
- "Weitersenden nicht möglich: {0}": "Não é possível reencaminhar: {0}"
+ "Weitersenden nicht möglich: {0}": "Não é possível reencaminhar: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Arquivado: {0}. Nota: registo de correspondência recebida não atualizado ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Guardado: {0}. Nota: registo de correspondência recebida não atualizado ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Atenção: ainda há um documento aberto que não foi guardado. Será perdido ao eliminar. Continuar mesmo assim?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Não foi possível guardar o ficheiro arquivado «{0}» como nova versão ({1}) – ainda está aberto noutro programa?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instalado: PDFMy (desconhecido), pdfmy Scan não iniciado. Clicar: procurar atualizações.",
+ "PDF konnte nicht erzeugt werden: {0}": "Não foi possível criar o PDF: {0}",
+ "PDFMy ·": "PDFMy ·"
 }

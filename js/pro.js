@@ -169,7 +169,7 @@ function remindDeadlines(due) {
     LS.set('remindDay', today);
     const first = due[0], what = [first.type, first.sender].filter(Boolean).join(' · ') || first.file;
     try {
-      const n = new Notification(I18N.t(`PDFMy: ${urgent > 1 ? `${urgent} Fristen` : `${urgent} Frist`} heute fällig oder überfällig`), { body: what + (urgent > 1 ? ` und ${urgent - 1} weitere` : ''), icon: 'icons/mentor-192.png', tag: 'pdfmy-fristen' });
+      const n = new Notification(I18N.t(`PDFMy: ${urgent > 1 ? `${urgent} Fristen` : `${urgent} Frist`} heute fällig oder überfällig`), { body: what + (urgent > 1 ? ' ' + I18N.t(`und ${urgent - 1} weitere`) : ''),   /* Benachrichtigung ist kein DOM – selbst übersetzen */ icon: 'icons/mentor-192.png', tag: 'pdfmy-fristen' });
       n.onclick = () => { focus(); openJournal('', first.id, 'open'); n.close(); };
     } catch {}
   }
@@ -1194,9 +1194,10 @@ async function fileAndNext() {
     await stampInNo(pages, meta);
     const bytes = einvOriginal(pages) || await buildPdf(pages, meta, { pdfa: S.pdfa && allScans() });
     const where = `${state.outDir.name}\\${await saveToOutDir(bytes, name, meta)}`;
-    await journalAdd(meta, where, pages.length);
+    // Die Datei liegt schon – scheitert nur der Bucheintrag, nicht „fehlgeschlagen“ melden (erneutes Ablegen ergäbe eine Dublette)
+    const jErr = await journalAdd(meta, where, pages.length).then(() => '', e => e?.message || String(e));
     state.dirty = false; resetDoc();
-    status(`✓ Abgelegt: ${where} (${Tools.formatBytes(bytes.length)}). Bereit für den nächsten Brief.`);
+    status(jErr ? `✓ Abgelegt: ${where}. Hinweis: Posteingangsbuch nicht aktualisiert (${jErr}).` : `✓ Abgelegt: ${where} (${Tools.formatBytes(bytes.length)}). Bereit für den nächsten Brief.`);
     if (state.scanHelper) openScanDialog();          // mit Scanner: gleich weiterscannen
   } catch (e) { console.error(e); status(`Ablegen fehlgeschlagen: ${e.message}`); }
   finally { btn.disabled = false; }
@@ -1213,11 +1214,11 @@ async function fileAndNextSimple() {
     const bytes = einvOriginal(pages) || await buildPdf(pages, meta, { pdfa: S.pdfa && allScans() });
     const where = await deliver(bytes, name, 'application/pdf', null, false);
     if (!where) return status('Abgebrochen – der Brief ist noch offen.');
-    await journalAdd(meta, name, pages.length);
+    const jErr = await journalAdd(meta, name, pages.length).then(() => '', e => e?.message || String(e));
     // Am Handy kann der Download-Weg still scheitern (z. B. installierte iPhone-App) – deshalb 20 s „Wieder öffnen“ anbieten
     const snap = snapshot(), nm = tabName(tabCur);
     state.dirty = false; resetDoc(); offerReopen(snap, nm);
-    status(`✓ Gespeichert: ${where} (${Tools.formatBytes(bytes.length)}). Bereit für den nächsten Brief.`);
+    status(jErr ? `✓ Gespeichert: ${where}. Hinweis: Posteingangsbuch nicht aktualisiert (${jErr}).` : `✓ Gespeichert: ${where} (${Tools.formatBytes(bytes.length)}). Bereit für den nächsten Brief.`);
   } catch (e) { console.error(e); status(`Speichern fehlgeschlagen: ${e.message}`); }
   finally { btn.disabled = false; }
 }
@@ -2163,6 +2164,9 @@ $('#updBannerLater').onclick = () => { $('#updBanner').hidden = true; try { sess
 
 /* ---------- Datenschutz: alle lokal im Browser gespeicherten Daten löschen (ISO 27001 A.8.10, DSGVO Art. 17) ---------- */
 $('#wipeLocal').onclick = async () => {
+  // Löschen lädt neu und verwirft die Absturzschutz-Kopien – ein offenes, ungespeichertes Dokument vorher ausdrücklich nennen
+  const open = (state.dirty && state.pages.length) || window.otherTabsDirty?.();
+  if (open && !confirm(I18N.t('Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren.\n\nTrotzdem fortfahren?'))) return;
   if (!confirm('Alle in diesem Browser gespeicherten PDFMy-Daten löschen?\n\nEinstellungen, Posteingangsbuch (lokale Kopie), Volltext-Index, gelernte Absender-Regeln, Team-Adressen, eigene Anschrift, Briefbogen, Firmendaten der E-Rechnung, gemerkte Unterschrift, Signatur-Zertifikat, Liste „Zuletzt geöffnet“ und Ordner-Freigaben.\n\nDie Dateien in Ihrer Ablage (auch Posteingangsbuch.csv) bleiben erhalten.')) return;
   try { Object.keys(localStorage).filter(k => k.startsWith('mpdf.')).forEach(k => localStorage.removeItem(k)); } catch {}
   try { sessionStorage.clear(); } catch {}
@@ -4453,8 +4457,11 @@ $('#cloudForm').addEventListener('submit', async e => {
   const name = sel.closest('label').querySelector('b').textContent;
   LS.set('cloudChoice', sel.value); $('#cloudGo').disabled = true;
   status(`Wird in ${name} gespeichert …`);
+  let bytes;
+  // PDF-Fehler nicht als „pdfmy Scan antwortet nicht“ melden – das schickte Nutzer auf die falsche Spur
+  try { bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} }); }
+  catch (err) { console.error(err); status(`PDF konnte nicht erzeugt werden: ${err.message}`); $('#cloudGo').disabled = false; return; }
   try {
-    const bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
     const res = await fetch(SCAN_API + '/cloud', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + '.pdf', data: b64Bytes(bytes) }) }).then(x => x.json());
     if (!res.ok) { status(res.error || 'Das hat nicht geklappt.'); alert(res.error || 'Das hat nicht geklappt.'); return; }
     cloudSaved = res.path || ''; state.dirty = false;

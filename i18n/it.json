@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Aggiornamento trovato – caricamento …{0}",
  "Vergleich nicht möglich: {0}": "Confronto non possibile: {0}",
  "Visueller Vergleich nicht möglich: {0}": "Confronto visivo non possibile: {0}",
- "Weitersenden nicht möglich: {0}": "Inoltro non possibile: {0}"
+ "Weitersenden nicht möglich: {0}": "Inoltro non possibile: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Archiviato: {0}. Nota: registro della posta in arrivo non aggiornato ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Salvato: {0}. Nota: registro della posta in arrivo non aggiornato ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Attenzione: è ancora aperto un documento non salvato. Andrà perso con l'eliminazione. Continuare comunque?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Il file archiviato «{0}» non è stato salvato come nuova versione ({1}) – è ancora aperto in un altro programma?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installato: PDFMy (sconosciuto), pdfmy Scan non avviato. Clic: cerca aggiornamenti.",
+ "PDF konnte nicht erzeugt werden: {0}": "Impossibile creare il PDF: {0}",
+ "PDFMy ·": "PDFMy ·"
 }

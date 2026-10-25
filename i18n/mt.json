@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Instab aġġornament – qed jitgħabba …{0}",
  "Vergleich nicht möglich: {0}": "It-tqabbil mhux possibbli: {0}",
  "Visueller Vergleich nicht möglich: {0}": "Tqabbil viżwali mhux possibbli: {0}",
- "Weitersenden nicht möglich: {0}": "Ma jistax jintbagħat 'il quddiem: {0}"
+ "Weitersenden nicht möglich: {0}": "Ma jistax jintbagħat 'il quddiem: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Arkivjat: {0}. Nota: ir-reġistru tal-posta li tidħol ma ġiex aġġornat ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Issejvjat: {0}. Nota: ir-reġistru tal-posta li tidħol ma ġiex aġġornat ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Attenzjoni: għad hemm dokument miftuħ li ma ġiex issejvjat. Jintilef meta tħassar. Tkompli xorta waħda?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Il-fajl arkivjat “{0}” ma setax jiġi ssejvjat bħala verżjoni ġdida ({1}) – għadu miftuħ fi programm ieħor?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installat: PDFMy (mhux magħruf), pdfmy Scan mhux mibdi. Ikklikkja: fittex aġġornamenti.",
+ "PDF konnte nicht erzeugt werden: {0}": "Il-PDF ma setax jinħoloq: {0}",
+ "PDFMy ·": "PDFMy ·"
 }

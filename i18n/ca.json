@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Actualització trobada – s'està carregant…{0}",
  "Vergleich nicht möglich: {0}": "No es pot comparar: {0}",
  "Visueller Vergleich nicht möglich: {0}": "No és possible la comparació visual: {0}",
- "Weitersenden nicht möglich: {0}": "No es pot reenviar: {0}"
+ "Weitersenden nicht möglich: {0}": "No es pot reenviar: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Arxivat: {0}. Nota: registre de correu d'entrada no actualitzat ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Desat: {0}. Nota: registre de correu d'entrada no actualitzat ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Atenció: encara hi ha un document obert sense desar. Es perdrà en suprimir. Voleu continuar igualment?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "No s'ha pogut desar el fitxer arxivat «{0}» com a versió nova ({1}) – encara és obert en un altre programa?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instal·lat: PDFMy (desconegut), pdfmy Scan no iniciat. Feu clic: cerca actualitzacions.",
+ "PDF konnte nicht erzeugt werden: {0}": "No s'ha pogut crear el PDF: {0}",
+ "PDFMy ·": "PDFMy ·"
 }

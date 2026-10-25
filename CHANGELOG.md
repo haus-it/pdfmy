@@ -4,6 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-25
 
+### Restbefunde der Lückensuche (app-v201)
+- Ablegen: Scheitert nur der Eintrag ins Posteingangsbuch, meldet PDFMy „✓ Abgelegt … Hinweis: Posteingangsbuch nicht aktualisiert“ statt „Ablegen fehlgeschlagen“ – vorher führte ein erneutes Ablegen zu einer Dublette.
+- Neue Version einer abgelegten Datei: Ist die Datei gesperrt (z. B. auf dem Netzlaufwerk noch geöffnet), meldet PDFMy das, statt still eine zweite Datei anzulegen. Nur wenn das Original fehlt, wird wie bisher neu abgelegt.
+- In Cloud-Ordner speichern: Fehler beim Erzeugen der PDF werden als solche gemeldet, nicht mehr als „pdfmy Scan antwortet nicht“.
+- „Alle lokal gespeicherten Daten löschen“ warnt zuerst, wenn ein Dokument offen und nicht gespeichert ist (auch in einem anderen Reiter).
+- Überwachter Ordner (Hotfolder-Fenster): kein automatisches Update-Neuladen mehr – das Fenster blieb sonst an „Seite verlassen?“ hängen und die Überwachung stand.
+- Erinnerung an fällige Fristen (Systembenachrichtigung): Zusatz „und n weitere“ wird übersetzt.
+- Getestet (Headless-Chrome): Löschen mit offenem Dokument → Warnung, Dokument bleibt; Hotfolder blockiert Update-Neuladen; frühere Prüfskripte (Reiter, Wieder öffnen, Update während Scan, Bug-Melder) ohne Rückschritt.
+
+
 ### Sicherheit: pdfmy Scan auf Terminalservern und Rechnern mit mehreren Benutzern (app-v200, pdfmy Scan 1.15.0, Mac/Linux 1.7.0)
 Bei der Lückensuche bewusst offengelassen, jetzt behoben (Konzept und Leitplanken-Prüfung: KONZEPT.md Abschnitt 4, Risiko R16).
 - Hoch: Auf Rechnern mit mehreren gleichzeitig angemeldeten Benutzern (Windows-Terminalserver/RDS, Mac/Linux mit mehreren Konten) konnte ein Prozess eines anderen Benutzers die lokale Schnittstelle ohne Origin-Kopf ansprechen – u. a. `/attachment`, `/log`, `/open-local`, `/quit`, `/sign`, `/maildraft`. Jetzt prüft pdfmy Scan bei jeder Verbindung, wem das andere Ende gehört, und lässt nur Prozesse des eigenen Benutzers zu (Windows: Verbindungstabelle → Prozess → Benutzer-SID, zusätzlich dieselbe Sitzung; Linux: `/proc/net/tcp`; Mac: `lsof`). Alle anderen erhalten 403, noch bevor der Inhalt gelesen wird; ist der Besitzer nicht ermittelbar, wird ebenfalls abgelehnt. Abgewiesene Anfragen stehen im Protokoll.

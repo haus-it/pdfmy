@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Mise à jour trouvée – chargement…{0}",
  "Vergleich nicht möglich: {0}": "Comparaison impossible : {0}",
  "Visueller Vergleich nicht möglich: {0}": "Comparaison visuelle impossible : {0}",
- "Weitersenden nicht möglich: {0}": "Transmission impossible : {0}"
+ "Weitersenden nicht möglich: {0}": "Transmission impossible : {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Classé : {0}. Remarque : registre du courrier entrant non mis à jour ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Enregistré : {0}. Remarque : registre du courrier entrant non mis à jour ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Attention : un document non enregistré est encore ouvert. Il sera perdu lors de la suppression. Continuer quand même ?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Le fichier classé « {0} » n’a pas pu être enregistré comme nouvelle version ({1}) – est-il encore ouvert dans un autre programme ?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installé : PDFMy (inconnu), pdfmy Scan non démarré. Cliquer : rechercher des mises à jour.",
+ "PDF konnte nicht erzeugt werden: {0}": "Impossible de créer le PDF : {0}",
+ "PDFMy ·": "PDFMy ·"
 }

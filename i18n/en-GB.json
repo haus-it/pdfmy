@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Update found – loading …{0}",
  "Vergleich nicht möglich: {0}": "Comparison not possible: {0}",
  "Visueller Vergleich nicht möglich: {0}": "Visual comparison not possible: {0}",
- "Weitersenden nicht möglich: {0}": "Cannot forward: {0}"
+ "Weitersenden nicht möglich: {0}": "Cannot forward: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Filed: {0}. Note: incoming mail log not updated ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Saved: {0}. Note: incoming mail log not updated ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Warning: there is still a document open that has not been saved. It will be lost when deleting. Continue anyway?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "The filed file ‘{0}’ could not be saved as a new version ({1}) – is it still open in another program?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installed: PDFMy (unknown), pdfmy Scan not started. Click: check for updates.",
+ "PDF konnte nicht erzeugt werden: {0}": "PDF could not be created: {0}",
+ "PDFMy ·": "PDFMy ·"
 }

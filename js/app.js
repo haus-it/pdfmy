@@ -3380,7 +3380,12 @@ async function saveVersion(bytes, rel) {
     (state.hashes ||= {})[rel] = await sha256(bytes);
     state.fromArchive.saved = { prev: ['_Versionen', ...parts, vname].join('\\') };
     return rel;
-  } catch (e) { console.warn('Version:', e); return null; }   // Original nicht mehr da → normal neu ablegen
+  } catch (e) {
+    console.warn('Version:', e);
+    if (e?.name === 'NotFoundError') return null;   // Original nicht mehr da → normal neu ablegen
+    // Gesperrt (z. B. auf dem Netzlaufwerk geöffnet) o. Ä.: melden statt still eine zweite Datei anzulegen
+    throw new Error(`Die abgelegte Datei „${rel.split('\\').pop()}“ konnte nicht als neue Version gespeichert werden (${e?.message || e}) – ist sie noch in einem anderen Programm geöffnet?`);
+  }
 }
 async function saveToOutDir(bytes, name, meta) {
   if (state.fromArchive?.file && state.docs.length === 1 && /\.pdf$/i.test(name)) { const rel = await saveVersion(bytes, state.fromArchive.file); if (rel) return rel; }
@@ -4970,7 +4975,7 @@ function toast(msg, ms = 6000) {
 const upd = { reg: null, ready: false, manual: false };
 // Auch ein laufender Scan zählt: bis die erste Seite ankommt, ist das Dokument leer und das Scan-Fenster schon zu – früher lud
 // PDFMy dann für ein Update neu und der Scan ging verloren (Fehlerbericht 25.10.2026)
-const busyNow = () => (state.dirty && state.pages.length > 0) || !!document.querySelector('dialog[open]') || ocrRunning || state.scanning > 0 || state.importing > 0 || !!state.working || !!window.otherTabsDirty?.();
+const busyNow = () => (state.dirty && state.pages.length > 0) || !!document.querySelector('dialog[open]') || ocrRunning || state.scanning > 0 || state.importing > 0 || !!state.working || !!window.otherTabsDirty?.() || !!window.hotfolderActive;
 function newVersionActive() {
   upd.ready = true;
   // Nichts in Arbeit? Dann gleich auf die neue Version wechseln – sonst nur anbieten (ungespeicherte Arbeit bleibt erhalten)

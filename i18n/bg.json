@@ -3052,5 +3052,12 @@
  "Update gefunden – wird geladen …{0}": "Намерена е актуализация – зарежда се …{0}",
  "Vergleich nicht möglich: {0}": "Сравнението не е възможно: {0}",
  "Visueller Vergleich nicht möglich: {0}": "Визуалното сравнение не е възможно: {0}",
- "Weitersenden nicht möglich: {0}": "Препращането не е възможно: {0}"
+ "Weitersenden nicht möglich: {0}": "Препращането не е възможно: {0}",
+ "✓ Abgelegt: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Архивирано: {0}. Забележка: дневникът за входяща поща не е актуализиран ({1}).",
+ "✓ Gespeichert: {0}. Hinweis: Posteingangsbuch nicht aktualisiert ({1}).": "✓ Записано: {0}. Забележка: дневникът за входяща поща не е актуализиран ({1}).",
+ "Achtung: Es ist noch ein Dokument offen, das nicht gespeichert ist. Es geht beim Löschen verloren. Trotzdem fortfahren?": "Внимание: все още има отворен документ, който не е записан. Той ще бъде загубен при изтриването. Да се продължи ли въпреки това?",
+ "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Архивираният файл „{0}“ не можа да бъде записан като нова версия ({1}) – дали все още е отворен в друга програма?",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Инсталирано: PDFMy (неизвестно), pdfmy Scan не е стартиран. Щракнете: проверка за актуализации.",
+ "PDF konnte nicht erzeugt werden: {0}": "PDF не можа да бъде създаден: {0}",
+ "PDFMy ·": "PDFMy ·"
 }
