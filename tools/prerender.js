@@ -28,7 +28,7 @@ function finish(html, page, code) {
   const rel = v => {
     if (/^([a-z][a-z0-9+.-]*:|\/\/|\/|#)/i.test(v)) return v;                                       // absolut, Wurzel oder Anker
     const m = /^(\.\/)?(\?[^#]*)?(#.*)?$/.exec(v);
-    if (m) return '../?lang=' + code + (m[3] || '');                                                  // ./ = die App, in derselben Sprache
+    if (m) return '../?lang=' + code + (m[2] ? '&' + m[2].slice(1) : '') + (m[3] || '');                // z. B. ./?melden bleibt erhalten                                                  // ./ = die App, in derselben Sprache
     const file = v.split(/[?#]/)[0].replace(/^\.\//, '');
     return local.has(file) ? v.replace(/^\.\//, '') : '../' + v.replace(/^\.\//, '');                  // Webseite mit Sprachfassung: im Ordner bleiben
   };

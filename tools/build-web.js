@@ -97,6 +97,7 @@ const page = (title, body, head = '', multi = true) =>   // multi: Sprachauswahl
 :root[data-theme="dark"]{--bg:#15171C;--panel:#1D2027;--text:#E8E9ED;--muted:#A6AAB6;--accent:#9AA3D9;--line:#343842}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Source Sans 3","Segoe UI",system-ui,sans-serif}
 header{background:var(--panel);border-bottom:1px solid var(--line);padding:12px 20px}
+.bugline{font-size:14px;color:var(--muted);margin:14px 4px}.bugline a{color:var(--accent)}
 .brand{display:inline-flex;flex-direction:column;gap:3px;line-height:1;color:inherit;text-decoration:none}
 .brand b{font-family:"Archivo",sans-serif;font-style:italic;font-weight:900;font-stretch:125%;font-size:22px;letter-spacing:.3px;color:var(--accent)}
 .brand span{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)}
@@ -112,7 +113,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 html.i18n-wait body{visibility:hidden}
 html[lang="de"] .lang-note,html:not([lang]) .lang-note{display:none}.lang-note{border-left:4px solid #4A5280;padding:6px 12px;background:var(--bg)}
 </style></head><body><header><a class="brand" href="./" translate="no"><b>PDFMy</b><span>powered by <img src="icons/mentor-group.png" alt="Mentor Group"></span></a>${multi ? '<span class="lang"><select id="siteLang" aria-label="Sprache"></select></span><script src="sprache.js"></script>' : ''}</header>
-<main><a class="back" href="./">← zurück zu PDFMy</a><div class="card"><h1>${title}</h1>${body}</div></main></body></html>
+<main><a class="back" href="./">← zurück zu PDFMy</a><div class="card"><h1>${title}</h1>${body}</div><p class="bugline">Fehler gefunden oder eine Idee? <a href="./?melden">Fehler melden</a> – per E-Mail aus Ihrem Mailprogramm, ohne Dokumente.</p></main></body></html>
 `;
 const who = [op.company, op.name].filter(Boolean).map(esc).join('<br>');
 const addr = `${who}<br>${esc(op.street)}<br>${esc(op.zipCity)}<br>${esc(op.country)}`;
@@ -201,8 +202,8 @@ von ${esc(site.domain)} ab; dabei entstehen nur die unter Nr. 3 genannten Server
 Richten Sie den Drucker „PDFMy“ ein, legt Windows gedruckte Dokumente in einem Ordner ab, auf den nur Ihr Benutzerkonto Zugriff hat (C:\\ProgramData\\PDFMy\\Druck); pdfmy Scan öffnet sie von dort in PDFMy und löscht sie nach 7 Tagen. Nichts davon wird übertragen. Wählen Sie „In Cloud-Ordner speichern“, legt pdfmy Scan die PDF in den Ordner Ihres Sync-Programms (z. B. Nextcloud, Dropbox, OneDrive) auf Ihrem Rechner; ob und wohin sie von dort übertragen wird, bestimmt allein Ihr Sync-Programm und Ihr Vertrag mit dessen Anbieter – PDFMy und pdfmy Scan selbst übertragen nichts.</p>
 <p>pdfmy Scan für Mac arbeitet genauso: Es läuft auf Ihrem Mac, ist nur von dort aus erreichbar (127.0.0.1) und spricht mit Scannern in Ihrem lokalen Netzwerk. Öffnen Sie eine PDF per Doppelklick in PDFMy – oder wählen Sie im Druckdialog „PDF → In PDFMy öffnen“ –, wird die Datei mit einem Einmal-Kennwort direkt an PDFMy in Ihrem Browser übergeben; sie verlässt den Mac nicht. Bei der Einrichtung wird einmal das PDFMy-Symbol von ${esc(site.domain)} geladen; eine automatische Update-Prüfung gibt es nicht. pdfmy Scan für Linux arbeitet genauso (nur 127.0.0.1, Einrichtung nur für Ihren Benutzer, ohne Administratorrechte); als Standard für PDFs trägt es sich auf Ihren Wunsch in die Einstellungsdatei Ihrer Arbeitsoberfläche (mimeapps.list) ein.</p>
 <h2>6b. Fehlerberichte und Kontakt per E-Mail</h2>
-<p>„Problem melden“ und „Herausforderung melden“ bereiten eine E-Mail in Ihrem eigenen Mailprogramm vor; gesendet wird erst, wenn Sie selbst auf „Senden“ klicken. Vorher sehen Sie genau,
-was die E-Mail enthält (Versionen, Browser, Protokoll – keine Dokumente). Dateinamen, Absender und E-Mail-Adressen werden standardmäßig unkenntlich gemacht.
+<p>„Fehler melden“, „Problem melden“ und „Herausforderung melden“ bereiten eine E-Mail in Ihrem eigenen Mailprogramm vor; gesendet wird erst, wenn Sie selbst auf „Senden“ klicken. Vorher sehen Sie genau,
+was die E-Mail enthält (Versionen, Browser, Protokoll, aufgetretene Programmfehler und – wenn pdfmy Scan läuft – interne Netzwerkadresse und Rechnername; keine Dokumente). Dateinamen, Absender und E-Mail-Adressen werden standardmäßig unkenntlich gemacht.
 Wir verwenden Ihre Nachricht nur, um das Problem zu lösen und Ihnen zu antworten (Art. 6 Abs. 1 lit. b und f DSGVO), und löschen sie, wenn sie dafür nicht mehr benötigt wird,
 spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen.</p>
 <h2>6c. Hinweis auf Haus iT</h2>

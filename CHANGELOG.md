@@ -4,6 +4,18 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-25
 
+### Bug-Melder ausgebaut (app-v196, pdfmy Scan 1.14.0, Mac/Linux 1.6.0)
+- Leitplanken-Prüfung in KONZEPT.md („Entschieden 25.10.2026: Bug-Melder ausbauen“). Versand unverändert per E-Mail aus dem eigenen Mailprogramm; nichts wird automatisch gesendet.
+- Knopf „Fehler melden“ dauerhaft unten rechts in der Fußleiste (bisher nur „Mehr → Problem melden“).
+- Nach einem unerwarteten Programmfehler bietet PDFMy einmal je Sitzung oben das Melden an; der Fehler ist im Bericht vorbelegt. Harmlose Meldungen (Browser-Erweiterungen, abgebrochene Vorgänge, ResizeObserver) lösen den Hinweis nicht aus.
+- Formular: „Fehler“ oder „Verbesserungsvorschlag“, dazu „Was haben Sie gemacht?“, „Was ist passiert?“ (bei Vorschlägen „Was wünschen Sie sich?“), „Was hätten Sie erwartet?“ – alles freiwillig.
+- Bericht: Programmfehler seit dem Start mit gekürzter Aufrufkette; interne Netzwerkadresse und Rechnername, wenn pdfmy Scan ab 1.14.0 (Mac/Linux 1.6.0) läuft (neu in dessen Protokoll-Abfrage `/log`). Benutzernamen in Pfaden mit Schrägstrich (Mac, Linux) werden jetzt ebenfalls unkenntlich gemacht.
+- Öffentliche IP-Adresse: kennt der Browser nicht; sie ließe sich nur über einen Server oder Fremddienst ermitteln (Leitplanke 2) – nicht eingebaut.
+- Hilfe-, Scanner- und Werkzeugseiten: Zeile „Fehler gefunden oder eine Idee? Fehler melden“ öffnet PDFMy mit dem Melde-Fenster (`?melden`, auch in den Sprachfassungen).
+- Hilfe und Datenschutzerklärung (Nr. „Fehlerberichte“) ergänzt.
+- Getestet (Headless-Chrome): Knopf sichtbar, Hinweis nach ausgelöstem Fehler, Fenster mit vorbelegtem Fehler und Aufrufkette, Umschalten auf Vorschlag, `?melden`, axe ohne Verstöße (Hinweis und Fenster); pdfmy Scan 1.14.0 portabel gestartet: `/log` liefert Netzwerkadresse und Rechnername.
+
+
 ### pdfmy Scan nur noch bei echter Änderung signieren
 - Ursache: Das .NET-SDK schrieb die Git-Commit-Kennung in die Versionsangabe der exe („1.13.0+da0aa9c…“). Dadurch war die Datei nach jedem Commit anders, und deploy.ps1 signierte und lud pdfmy Scan bei jedem Ausrollen neu hoch, obwohl sich am Programm nichts geändert hatte (unnötige Signaturen, ~1 MB Upload, neue Prüfsumme in version.json).
 - Behoben: `IncludeSourceRevisionInInformationalVersion=false` im Projekt. Geprüft: Build vor und nach einem Commit byte-gleich; Versionsangabe „1.13.0“ (die Versionsprüfung beim Selbst-Update vergleicht per StartsWith und bleibt gültig).

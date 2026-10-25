@@ -11,7 +11,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.5.0';
+our $VERSION = '1.6.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
@@ -960,7 +960,8 @@ sub handle {
     return send_json($c, 404, { error => 'Seite nicht vorhanden.' }, \%cors) unless defined $data;
     return send_resp($c, 200, $s->{mime} || 'image/jpeg', $data, \%cors);
   }
-  if ($p eq '/log') { my @z = split /\n/, decode('UTF-8', slurp("$DIR/log.txt") // ''); return send_json($c, 200, { version => $VERSION, lines => [@z[($#z > 39 ? $#z - 39 : 0) .. $#z]] }, \%cors); }
+  # net: interne IP-Adressen dieses Rechners – für den Fehlerbericht (Scanner im selben Netz?)
+  if ($p eq '/log') { my @z = split /\n/, decode('UTF-8', slurp("$DIR/log.txt") // ''); return send_json($c, 200, { version => $VERSION, lines => [@z[($#z > 39 ? $#z - 39 : 0) .. $#z]], net => join(', ', local_ipv4()), host => eval { require Sys::Hostname; Sys::Hostname::hostname() } // '' }, \%cors); }
   if ($p eq '/certs') { return send_json($c, 200, { certs => [] }, \%cors); }
   return send_json($c, 404, { error => 'Nicht gefunden' }, \%cors);
 }

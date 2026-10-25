@@ -2044,8 +2044,14 @@ const SUPPORT = APP.supportMail || 'wumertens@mentor-group.de';
 let repBase = '';
 async function buildReport(context) {
   const v = await versionLabel(true), running = await scanHelperRunning();
-  let scanLog = '';
-  if (running) { try { const l = await (await scanApi('/log', {}, 3000)).json(); scanLog = l.lines.slice(-60).join('\n'); } catch (e) { scanLog = 'Protokoll nicht abrufbar: ' + e.message; } }
+  let scanLog = '', net = '';
+  if (running) {
+    try {
+      const l = await (await scanApi('/log', {}, 3000)).json(); scanLog = l.lines.slice(-60).join('\n');
+      // Interne IP-Adresse und Rechnername liefert pdfmy Scan ab 1.14.0 (Mac/Linux 1.6.0); die öffentliche Adresse kennt der Browser nicht
+      if (l.net) net = `Netzwerk (intern): ${l.net}${l.host ? ' – Rechner: ' + l.host : ''}`;
+    } catch (e) { scanLog = 'Protokoll nicht abrufbar: ' + e.message; }
+  }
   return [
     `Fehlerbericht ${APP.name} – ${new Date().toLocaleString('de-DE')}`,
     context ? `Anlass: ${context}` : '',
@@ -2054,7 +2060,11 @@ async function buildReport(context) {
     `pdfmy Scan: ${running ? state.scanVersion + (scanOutdated() ? ` (veraltet, aktuell ${scanLatest()})` : ' (aktuell)') : IS_MOBILE ? 'Handy – nicht verwendet' : 'nicht gestartet'}`,
     `Browser: ${navigator.userAgent}`,
     `Bildschirm: ${screen.width}×${screen.height}, Kürzel: ${S.author || '–'}`,
+    net || `Netzwerk (intern): ${running ? 'erst ab pdfmy Scan 1.14.0 (Mac/Linux 1.6.0)' : 'unbekannt – pdfmy Scan läuft nicht'}`,
     `Dokument: ${state.pages.length} Seite(n)${state.meta.type ? ', ' + state.meta.type : ''}`,
+    '',
+    `Programmfehler seit dem Start: ${appErrors.count || 0}`,
+    ...appErrors.slice(-3).flatMap(x => [`${x.time} ${x.msg}`, ...x.stack.split('\n').map(l => l.trim()).filter(l => l && !/^\w*Error\b/.test(l) && !x.msg.includes(l)).map(l => '    ' + l)]),
     '',
     '--- Letzte Meldungen von ' + APP.name + ' ---',
     ...appLog.slice(-30),
@@ -2066,10 +2076,12 @@ async function buildReport(context) {
 let repKind = 'Fehlerbericht';
 async function openReport(context) {
   closeMenu();
-  repKind = /^Herausforderung/.test(context || '') ? 'Rückmeldung' : 'Fehlerbericht';
+  const idea = /^Herausforderung/.test(context || '');
+  document.querySelector(`input[name="repType"][value="${idea ? 'idea' : 'bug'}"]`).checked = true; repTypeChanged();
   document.querySelectorAll('dialog[open]').forEach(d => { if (d.id !== 'reportDlg') d.close(); });
   repBase = await buildReport(context);
-  $('#repTo').textContent = SUPPORT; $('#repMask').checked = true; $('#repText').textContent = repShown(); $('#repWhat').value = '';
+  $('#repTo').textContent = SUPPORT; $('#repMask').checked = true; $('#repText').textContent = repShown();
+  $('#repDid').value = $('#repExpect').value = ''; $('#repWhat').value = /^Programmfehler: /.test(context || '') ? 'Fehlermeldung: ' + context.slice(16) : '';
   $('#repOutlook').hidden = IS_MOBILE;
   $('#reportDlg').showModal(); $('#repWhat').focus();
 }
@@ -2077,14 +2089,26 @@ async function openReport(context) {
 const maskReport = t => {
   const names = [state.meta.sender].filter(s => s && s.length > 2);
   for (const n of names) t = t.split(n).join('[Absender]');
-  return t.replace(/\b([A-Za-z]:\\(?:Users|Benutzer)\\)[^\\\s]+/gi, '$1[Benutzer]')
+  return t.replace(/\b([A-Za-z]:\\(?:Users|Benutzer)\\)[^\\\s]+/gi, '$1[Benutzer]').replace(/(\/(?:Users|Benutzer|home)\/)[^/\s]+/gi, '$1[Benutzer]')
     .replace(/[\w.+-]+@[\w-]+\.[\w.-]+/g, m => m === SUPPORT ? m : '[E-Mail]')
     .replace(/[^\s\\/„“"'()]+\.(pdf|jpe?g|png|tiff?|heic|eml|msg|xml|csv|xlsx|docx)\b/gi, (m, ext) => '[Datei].' + ext.toLowerCase())
     .replace(/„[^“\n]{2,80}“/g, '„…“');
 };
 const repShown = () => $('#repMask').checked ? maskReport(repBase) : repBase;
 $('#repMask').onchange = () => { $('#repText').textContent = repShown(); };
-const reportText = () => ($('#repWhat').value.trim() ? 'Beschreibung: ' + $('#repWhat').value.trim() + '\n\n' : '') + repShown();
+// Art und die drei Fragen (alle freiwillig) stehen vor den technischen Angaben
+function repTypeChanged() {
+  const idea = document.querySelector('input[name="repType"]:checked')?.value === 'idea';
+  repKind = idea ? 'Verbesserungsvorschlag' : 'Fehlerbericht';
+  $('#repWhatL').textContent = idea ? I18N.t('Was wünschen Sie sich? (optional)') : I18N.t('Was ist passiert? (optional)');
+  $('#repExpectF').hidden = idea;
+}
+document.querySelectorAll('input[name="repType"]').forEach(r => r.onchange = repTypeChanged);
+const reportText = () => {
+  const idea = repKind === 'Verbesserungsvorschlag', f = (label, id) => $(id).value.trim() ? `${label}: ${$(id).value.trim()}\n` : '';
+  return `Art: ${idea ? 'Verbesserungsvorschlag' : 'Fehler'}\n` + f('Was habe ich gemacht', '#repDid') + f(idea ? 'Was wünsche ich mir' : 'Was ist passiert', '#repWhat')
+    + (idea ? '' : f('Was hätte ich erwartet', '#repExpect')) + '\n' + repShown();
+};
 const reportSubject = () => `${APP.name} ${repKind} – ${state.scanVersion ? 'pdfmy Scan ' + state.scanVersion + ' – ' : ''}${new Date().toLocaleDateString('de-DE')}`;
 $('#repOutlook').onclick = async () => {
   const txt = reportText(), enc = new TextEncoder();
@@ -2111,6 +2135,9 @@ $('#repMailto').onclick = async () => {
 };
 $('#repCancel').onclick = () => $('#reportDlg').close();
 $('#btnReport').onclick = () => openReport('');
+$('#bugBtn').onclick = () => openReport('');
+$('#errBannerGo').onclick = () => { $('#errBanner').hidden = true; openReport('Programmfehler: ' + ($('#errBanner').dataset.msg || '')); };
+$('#errBannerLater').onclick = () => { $('#errBanner').hidden = true; };
 $('#fbReport').onclick = () => openReport('Herausforderung / Verbesserungsvorschlag');
 $('#scanErrMail').onclick = () => openReport($('#scanErrDlg').classList.contains('logmode') ? 'Protokoll von pdfmy Scan' : 'Scannen: ' + $('#scanErrMsg').textContent);
 

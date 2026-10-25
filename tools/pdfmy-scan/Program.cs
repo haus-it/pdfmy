@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.13.0";
+        public const string Version = "1.14.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1770,7 +1770,8 @@ namespace PdfmyScan
             {
                 string f = Path.Combine(Program.DataDir, "log.txt");
                 var lines = File.Exists(f) ? File.ReadAllLines(f) : new string[0];
-                SendJson(s, 200, new { version = Program.Version, lines = lines.Skip(Math.Max(0, lines.Length - 40)).ToArray() }, cors); return;
+                // net: Netzwerkkarten mit interner IP-Adresse (z. B. „Ethernet 192.168.1.23/24“) – für den Fehlerbericht (Scanner im selben Netz?)
+                SendJson(s, 200, new { version = Program.Version, lines = lines.Skip(Math.Max(0, lines.Length - 40)).ToArray(), net = Net.Describe(), host = Environment.MachineName }, cors); return;
             }
             if (p == "/quit" && method == "POST" && !cors.ContainsKey("Access-Control-Allow-Origin"))
             {

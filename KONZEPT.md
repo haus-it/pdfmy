@@ -114,6 +114,21 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | Formulare/PowerPoint in Acrobat, Foxit, PowerPoint | Skripte simuliert ausgeführt (Summe, MwSt., Format 1.234,56 €, E-Mail/IBAN/PLZ-Prüfung), PPTX-Struktur geprüft (Inhaltstypen, Verweise, Kennungen) | ohne Fehler; Test auf echten Geräten steht noch aus |
 | Nachprüfbar, dass das ausgelieferte Programm dem veröffentlichten Stand entspricht (kein Mitbewerber bietet das; ISO-Maßnahme M10) | bisher nur Quellcode auf GitHub | **passt, umgesetzt:** Prüfsummenliste je Release (pruefsummen.txt, sha256sum-Format), Fingerabdruck im Release-Protokoll auf GitHub, Abgleich der laufenden Programmdateien im Dialog „Datenschutz selbst prüfen“. Statische Datei, kein Server, kein Upload (Punkt 1, 2, 4, 5) |
 
+### Entschieden 25.10.2026: Bug-Melder ausbauen
+**Anlass (GF 25.10.2026):** „Bug-Melder einbauen“. Vorhanden war „Mehr → Problem melden“ (E-Mail mit Versionen und Protokoll, Unkenntlichmachen, Vorschau). Lücken: schwer zu finden (nur im Menü „Mehr“); Programmfehler werden nur still protokolliert, PDFMy bietet nie von sich aus das Melden an; nur ein Freitextfeld (keine Art, keine Schritte zum Nachstellen, kein erwartetes Ergebnis); bei Programmfehlern keine Aufrufkette; von Hilfe-, Scanner- und Werkzeugseiten aus kein Weg zum Melden.
+**Umfang:** (1) Knopf „Fehler melden“ dauerhaft in der Fußleiste. (2) Nach einem unerwarteten Programmfehler einmal je Sitzung ein Hinweis unten „Da ist etwas schiefgelaufen – Fehler melden / Schließen“; der Fehler ist im Bericht vorbelegt; harmlose Meldungen (Browser-Erweiterungen fremder Herkunft, abgebrochene Downloads, ResizeObserver) lösen ihn nicht aus. (3) Formular: Art (Fehler / Verbesserungsvorschlag), „Was haben Sie gemacht?“, „Was ist passiert?“, „Was hätten Sie erwartet?“ – alles freiwillig. (4) Technik im Bericht: Fehler mit gekürzter Aufrufkette (Pfade unkenntlich), Anzahl der Fehler seit dem Start. (5) Hilfe- und Webseiten: Link „Fehler melden“ öffnet PDFMy mit dem Melde-Fenster (`?melden`).
+**Versand unverändert:** E-Mail aus dem eigenen Mailprogramm des Nutzers (Outlook-Entwurf oder mailto); gesendet wird nur, wenn er selbst auf „Senden“ klickt. Kein Meldeserver, kein Fehlerdienst (Sentry o. Ä.), kein automatisches Senden, keine Bildschirmfotos (könnten Dokumentinhalte zeigen).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: nichts wird automatisch gesendet; Bericht ohne Dokumente, Unkenntlichmachen voreingestellt, Vorschau vor dem Senden |
+| 2 Kein Server, keine Fremddienste | passt: E-Mail über das Mailprogramm des Nutzers |
+| 3 Ohne Tracking | passt: keine automatische Fehlerübermittlung |
+| 4 Einfach | passt: ein sichtbarer Knopf, vorbelegter Fehler, Felder freiwillig |
+| 5 Prüfbar | passt: axe für Fußleiste, Hinweis und Fenster; Browser-Test mit ausgelöstem Fehler |
+| 6 Wenig aktive Inhalte | passt (betrifft keine PDF) |
+**Entscheidung:** umsetzen (Auftrag GF 25.10.2026).
+
 ### Entschieden 25.10.2026: datensparsamer Download-Zähler für pdfmy Scan
 **Anlass (GF 25.10.2026):** IONOS WebAnalytics zeigt Besucher (900 seit 14.10.2026), aber keine Downloads: Es listet nur die 20 meistbesuchten Adressen, die .exe/.zip/.sh tauchen dort nicht auf. Rohprotokolle legt IONOS für pdfmy.de nicht im Webspace ab (geprüft in allen drei Hosting-Verträgen), eine Protokollauswertung entfällt.
 **Geprüfte Wege:** (a) Zählskript auf dem Server (PHP, Datenbank) – verworfen, Leitplanke 2 (nur statische Dateien). (b) Fremddienst (Matomo-Cloud, Google Analytics) – verworfen, Leitplanken 2 und 3. (c) Eindeutige Kennung je Installation – verworfen, nicht datensparsam und für die Frage „wie oft heruntergeladen“ unnötig. (d) **Gewählt:** Beim Download ruft der Service Worker zusätzlich eine leere, statische Zählseite je Plattform ab (`download/zaehlung/windows.html`, `mac.html`, `linux.html`, `erweiterung.html`). IONOS WebAnalytics wertet sie wie jeden Seitenabruf aus – ohne Cookie, ohne Kennung, ohne zusätzliche Daten (nur die ohnehin entstehenden, von IONOS gekürzten Protokolldaten). Die Seiten sind kurz und eindeutig benannt und erscheinen in „Meist besuchte Seiten“ bzw. per Export.

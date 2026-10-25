@@ -90,8 +90,24 @@ const cur = () => state.pages[state.sel];
 /* ---------- Status ---------- */
 const appLog = [];   // letzte Meldungen und Programmfehler – für „Problem melden“
 const logLine = t => { appLog.push(new Date().toLocaleTimeString('de-DE') + ' ' + t); if (appLog.length > 60) appLog.shift(); };
-addEventListener('error', e => logLine('FEHLER ' + (e.message || e.error) + (e.filename ? ` (${e.filename.split('/').pop()}:${e.lineno})` : '')));
-addEventListener('unhandledrejection', e => logLine('FEHLER ' + (e.reason?.message || e.reason)));
+// Programmfehler mit gekürzter Aufrufkette für den Bug-Melder; nach dem ersten echten Fehler einmal je Sitzung das Melden anbieten
+const appErrors = [];
+const BENIGN_ERR = /ResizeObserver loop|AbortError|The user aborted|aborted a request|NotAllowedError|^Script error\.?$/i;
+function appError(msg, err, file) {
+  msg = String(msg || 'Unbekannter Fehler');
+  logLine('FEHLER ' + msg + (file ? ` (${file})` : ''));
+  if (BENIGN_ERR.test(msg) || (err && BENIGN_ERR.test(err.name || ''))) return;
+  appErrors.push({ time: new Date().toLocaleTimeString('de-DE'), msg, stack: String(err?.stack || '').split('\n').slice(0, 6).join('\n') });
+  if (appErrors.length > 10) appErrors.shift();
+  appErrors.count = (appErrors.count || 0) + 1;
+  const b = document.getElementById('errBanner');
+  if (b && !appErrors.offered) { appErrors.offered = true; b.dataset.msg = msg; b.hidden = false; }
+}
+addEventListener('error', e => {
+  if (e.filename && !e.filename.startsWith(location.origin) && !/^(blob|file):/.test(e.filename)) return;   // Browser-Erweiterungen u. ä.: nicht unser Fehler
+  appError(e.message || e.error, e.error, e.filename ? `${e.filename.split('/').pop()}:${e.lineno}` : '');
+});
+addEventListener('unhandledrejection', e => appError(e.reason?.message || e.reason, e.reason));
 function status(msg, pct) {
   if (pct == null && msg !== $('#msg').textContent) logLine(msg);
   $('#msg').textContent = msg;
@@ -4025,8 +4041,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.13.0';
-const SCAN_MAC_LATEST = '1.5.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.14.0';
+const SCAN_MAC_LATEST = '1.6.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
@@ -4401,6 +4417,13 @@ const unreadable = (name, e) => {
   return `${head} pdfmy Scan, das solche Anhänge automatisch nachreicht, läuft auf diesem Gerät nicht – bitte starten oder installieren (Anleitung: pdfmy.de/scanner.html). ${save}`;
 };
 window.unreadable = unreadable;
+// „Fehler melden“ von Hilfe- und Webseiten: ./?melden öffnet das Melde-Fenster (mit Versionen und Protokoll)
+addEventListener('load', () => {
+  const q = new URLSearchParams(location.search); if (!q.has('melden')) return;
+  q.delete('melden'); history.replaceState(null, '', location.pathname + (q.size ? '?' + q : '') + location.hash);
+  let n = 0; const go = () => window.openReport ? setTimeout(() => window.openReport(''), 400) : ++n < 50 && setTimeout(go, 200);   // warten, bis pro.js geladen ist
+  go();
+});
 // Android: über „Teilen“ / „Öffnen mit → PDFMy“ übergebene Dateien (share_target; der Service Worker hat sie kurz im Gerätespeicher abgelegt)
 addEventListener('load', async () => {   // erst wenn alle Programmteile geladen sind
   const q = new URLSearchParams(location.search); if (!q.has('geteilt')) return;

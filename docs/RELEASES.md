@@ -198,3 +198,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-10-24 19:58 | pdfmy-202610241756 | 1.13.0 | 3f751eae25295c86… | 210/210 Tests bestanden, Probelauf bestanden | 169 | Administrator | 7767ccca76c5621f |
 | 2026-10-25 09:31 | pdfmy-202610250829 | 1.13.0 | 44cab9f321e1128f… | 210/210 Tests bestanden, Probelauf bestanden | 172 | Administrator | aec9a34f3bbc0949 |
 | 2026-10-25 09:41 | pdfmy-202610250839 | 1.13.0 | 6127a2c887167d36… | 210/210 Tests bestanden, Probelauf bestanden | 46 | Administrator | 5e1283ba1cea773f |
+| 2026-10-25 11:10 | pdfmy-202610250954 | 1.14.0 | ebc8ca6da26a4e1a… | 210/210 Tests bestanden, Probelauf bestanden | 1370 | Administrator | 4dcdfbbecc8ed758 |
