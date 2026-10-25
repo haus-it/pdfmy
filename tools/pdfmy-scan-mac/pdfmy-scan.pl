@@ -11,13 +11,14 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.6.0';
+our $VERSION = '1.6.1';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;
 my $WSD_PORT = $ENV{PDFMY_WSD_PORT} || 3702;
 my $DIR = $ENV{PDFMY_DIR} || ($IS_MAC ? "$ENV{HOME}/Library/Application Support/pdfmy-scan" : ($ENV{XDG_DATA_HOME} || "$ENV{HOME}/.local/share") . '/pdfmy-scan');
-my @ALLOWED = ('https://pdfmy.de', 'https://www.pdfmy.de', 'http://localhost:8765', 'http://localhost:8766', 'http://127.0.0.1:8765', 'http://127.0.0.1:8766');
+# Entwicklungsadressen nur mit PDFMY_DEV=1 – sonst gälte jeder fremde lokale Server auf Port 8765/8766 als PDFMy
+my @ALLOWED = ('https://pdfmy.de', 'https://www.pdfmy.de', $ENV{PDFMY_DEV} ? ('http://localhost:8765', 'http://localhost:8766', 'http://127.0.0.1:8765', 'http://127.0.0.1:8766') : ());
 my $J = JSON::PP->new->utf8->canonical;
 make_path("$DIR/jobs");
 $SIG{CHLD} = 'IGNORE'; $SIG{PIPE} = 'IGNORE';
@@ -848,11 +849,14 @@ sub handle {
   my ($line, @hl) = split /\r\n/, $hdrs; my ($method, $path) = split / /, $line // '';
   return unless $method;
   my %h; for (@hl) { $h{ lc $1 } = $2 if /^([^:]+):\s*(.*)$/; }
+  # Host-Kopf nur die eigene Adresse (Schutz gegen DNS-Rebinding), Herkunft nur PDFMy – geprüft, bevor der Inhalt gelesen wird
+  my $origin = $h{origin};
+  my $hostok = defined $h{host} && grep { lc $h{host} eq $_ } ("127.0.0.1:$PORT", "localhost:$PORT");
+  my $ok = $hostok && (!defined $origin || grep { lc $_ eq lc $origin } @ALLOWED);
+  if (!$ok) { alarm 0; return send_resp($c, 403, 'text/plain', 'forbidden'); }
   my $len = $h{'content-length'} || 0; return if $len > ($path =~ m{^/(office|cloud)$} ? 300_000_000 : 1_000_000);   # PDFs für „In Office-Programm öffnen“ dürfen groß sein
   my $body = $rest; while (length $body < $len) { my $n = sysread($c, my $b, $len - length $body); last unless $n; $body .= $b; }
   alarm 0;
-  my $origin = $h{origin};
-  my $ok = !defined $origin || grep { lc $_ eq lc $origin } @ALLOWED;
   my %cors; if (defined $origin && $ok) { %cors = ('Access-Control-Allow-Origin' => $origin, 'Vary' => 'Origin'); }
   %CORS_NOW = %cors;
   if ($method eq 'OPTIONS') {

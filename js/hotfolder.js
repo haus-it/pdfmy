@@ -38,7 +38,7 @@
     $('#hotFileNote').hidden = act !== 'file';
     $('#hotFileNote').textContent = state.outDir ? `Abgelegt wird wie gewohnt im Ablageordner „${state.outDir.name}“, mit Eintrag im Posteingangsbuch.` : 'Für „Briefe ablegen“ bitte zuerst unter „Mehr → Einrichtung“ einen Ablageordner wählen.';
   }
-  const pick = async (id) => { try { return await showDirectoryPicker({ id, mode: 'readwrite' }); } catch (e) { if (e.name !== 'AbortError') status('Ordner nicht verfügbar: ' + e.message); return null; } };
+  const pick = async (id) => { try { return await showDirectoryPicker({ id, mode: 'readwrite' }); } catch (e) { if (e.name !== 'AbortError') status(`Ordner nicht verfügbar: ${e.message}`); return null; } };
   $('#hotDlg').addEventListener('change', sync);
   $('#hotIn').onclick = async () => { const h = await pick('mpdf-hot-in'); if (h) { cfg.inDir = h; sync(); } };
   $('#hotOut').onclick = async () => { const h = await pick('mpdf-hot-out'); if (h) { cfg.outDir = h; sync(); } };

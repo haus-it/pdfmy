@@ -1,7 +1,11 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
@@ -37,8 +41,8 @@ namespace PdfmyScan
                 Marshal.StructureToPtr(fi, pfi, false);
                 var d = new WINTRUST_DATA
                 {
-                    cbStruct = (uint)Marshal.SizeOf(typeof(WINTRUST_DATA)), dwUIChoice = 2 /* WTD_UI_NONE */, fdwRevocationChecks = 0 /* WTD_REVOKE_NONE: Kette mit Zeitstempel; Sperrprüfung macht Windows bei Bedarf selbst */,
-                    dwUnionChoice = 1 /* WTD_CHOICE_FILE */, pFile = pfi, dwStateAction = 1 /* WTD_STATEACTION_VERIFY */, dwProvFlags = 0x80 /* WTD_CACHE_ONLY_URL_RETRIEVAL */,
+                    cbStruct = (uint)Marshal.SizeOf(typeof(WINTRUST_DATA)), dwUIChoice = 2 /* WTD_UI_NONE */, fdwRevocationChecks = 1 /* WTD_REVOKE_WHOLECHAIN: gesperrte (z. B. gestohlene) Zertifikate ablehnen */,
+                    dwUnionChoice = 1 /* WTD_CHOICE_FILE */, pFile = pfi, dwStateAction = 1 /* WTD_STATEACTION_VERIFY */, dwProvFlags = 0x80 /* WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT */,
                 };
                 int r = WinVerifyTrust(IntPtr.Zero, GenericVerifyV2, ref d);
                 d.dwStateAction = 2;   // WTD_STATEACTION_CLOSE
@@ -59,8 +63,17 @@ namespace PdfmyScan
             try { cert = new X509Certificate2(X509Certificate.CreateFromSignedFile(path)); }
             catch (Exception e) { return "Signatur nicht lesbar: " + e.Message; }
             string cn = cert.GetNameInfo(X509NameType.SimpleName, false) ?? "", subj = cert.Subject ?? "";
-            if (cn != Publisher || subj.IndexOf("O=" + Publisher, StringComparison.Ordinal) < 0 || subj.IndexOf("C=DE", StringComparison.Ordinal) < 0)
-                return $"falscher Herausgeber: {cn} (erwartet {Publisher})";
+            // Bestandteile genau vergleichen (nicht als Teilstring – „O=Mentor GmbH Holding“ passte sonst), dazu Sitz Paderborn
+            var parts = new HashSet<string>(Regex.Split(subj, @",\s*(?=[A-Z]+=)").Select(x => x.Trim().Trim('"')), StringComparer.Ordinal);
+            if (cn != Publisher || !parts.Contains("O=" + Publisher) || !parts.Contains("L=Paderborn") || !parts.Contains("C=DE"))
+                return $"falscher Herausgeber: {subj} (erwartet {Publisher}, Paderborn)";
+            // Version der signierten Datei selbst prüfen – die Angabe in version.json allein ließe ein Zurückstufen auf eine alte, signierte Fassung zu
+            if (version != null)
+            {
+                var fv = FileVersionInfo.GetVersionInfo(path).FileVersion;
+                if (!Version.TryParse(fv, out var got) || got < new Version(version) || !(got > new Version(Program.Version)))
+                    return $"Dateiversion {fv} passt nicht zur angebotenen Version {version} – nicht installiert";
+            }
             return null;
         }
     }

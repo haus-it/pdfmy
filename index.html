@@ -1949,7 +1949,7 @@ html.i18n-wait body{visibility:hidden}
   <div id="camReview" class="camreview" hidden>
     <div class="camrevtop"><button type="button" id="camRevBack" class="camic" title="Zurück zur Kamera"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button><b id="camRevTitle"></b><span></span></div>
     <img id="camRevImg" alt="Aufgenommene Seite">
-    <div class="camrevbar"><button type="button" id="camRevRot" class="camrevbtn"><svg class="ic" aria-hidden="true"><use href="#i-rotate-cw"/></svg>Drehen</button><button type="button" id="camRevDel" class="camrevbtn danger"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>Löschen</button><button type="button" id="camRevOk" class="camrevbtn ok" onclick="document.querySelector('#camRevBack').click()"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Passt</button></div>
+    <div class="camrevbar"><button type="button" id="camRevRot" class="camrevbtn"><svg class="ic" aria-hidden="true"><use href="#i-rotate-cw"/></svg>Drehen</button><button type="button" id="camRevDel" class="camrevbtn danger"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>Löschen</button><button type="button" id="camRevOk" class="camrevbtn ok"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Passt</button></div>
   </div>
 </dialog>
 
@@ -1965,6 +1965,7 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" id="repCancel">Abbrechen</button><button type="button" id="repMailto" title="Öffnet das Standard-Mailprogramm; das vollständige Protokoll liegt zusätzlich in der Zwischenablage">E-Mail-Programm</button><button type="button" class="primary" id="repOutlook"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>E-Mail mit Anhang (Outlook)</button></div>
 </dialog>
 <div id="errBanner" class="updbanner errbanner" role="alert" hidden><span>Da ist etwas schiefgelaufen. Möchten Sie uns den Fehler melden? Ihre Dokumente sind nicht betroffen und werden nicht gesendet.</span><button type="button" id="errBannerGo" class="primary">Fehler melden</button><button type="button" id="errBannerLater" class="linkbtn">Schließen</button></div>
+<div id="closedBanner" class="updbanner" role="status" hidden><span id="closedText"></span><button type="button" id="closedUndo" class="primary">Wieder öffnen</button><button type="button" id="closedX" class="linkbtn" aria-label="Hinweis schließen">Schließen</button></div>
 <div id="updBanner" class="updbanner" hidden><span id="updBannerText"></span><a id="updBannerGo" class="btn primary" download>Jetzt aktualisieren</a><button type="button" id="updBannerLater" class="linkbtn">Später</button></div>
 
 <dialog id="openDlg" class="sharedlg" aria-labelledby="openT">

@@ -824,7 +824,7 @@ async function reqSendSerial() {
       rows.push([rc.name, rc.email, emlName]);
       await reqJournal(req, { rel, sha });
     }
-  } catch (e) { console.error(e); req = base; return status('Serienversand abgebrochen: ' + e.message); }
+  } catch (e) { console.error(e); req = base; return status(`Serienversand abgebrochen: ${e.message}`); }
   req = base;
   let zipName = '';
   if (files.length) {
@@ -848,7 +848,7 @@ async function reqSend() {
     await reqJournal(req, { rel, sha });
     reqDraft = false; reqArm = -1; renderReqBar(); renderAnns();
     status(`${emlDone(m.opened, m.to)}${rel ? ` Kopie in der Ablage: ${rel}.` : ''} Den Stand sehen Sie im Posteingangsbuch.`);
-  } catch (e) { console.error(e); status('Senden nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Senden nicht möglich: ${e.message}`); }
 }
 /* ---------- Unterschriftsanfrage per Messenger (WhatsApp, Signal, Teams …) mit Lesebestätigung – ohne Server ----------
    Absender: PDF über das Teilen-Menü des Systems senden; die Anfrage bekommt einen Schlüssel (rt), der auch im Posteingangsbuch steht.
@@ -876,7 +876,7 @@ async function reqSendMessenger() {
     download(bytes, name, 'application/pdf');
     try { await navigator.clipboard.writeText(text); } catch {}
     status('PDF gespeichert – in WhatsApp, Signal oder Teams anhängen und senden (der Begleittext ist in der Zwischenablage).');
-  } catch (e) { console.error(e); status('Senden nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Senden nicht möglich: ${e.message}`); }
 }
 async function reqReadConfirm() {
   const i = reqMine(); if (i < 0 || !req?.rt) return;
@@ -919,7 +919,7 @@ async function reqForward(ext = false) {
     const m = await reqMail(req, bytes, name);
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
     status(done ? `Alle haben unterschrieben. ${emlDone(m.opened, m.to)}` : `Danke! ${emlDone(m.opened, m.to)}`);
-  } catch (e) { console.error(e); status('Weitersenden nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Weitersenden nicht möglich: ${e.message}`); }
 }
 $('#reqDecCancel').onclick = () => $('#reqDecDlg').close();
 $('#reqDecForm').onsubmit = async ev => {
@@ -931,7 +931,7 @@ $('#reqDecForm').onsubmit = async ev => {
     const bytes = await reqIncremental(false) || await reqPdf(), m = await reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
     status(`Abgelehnt. ${emlDone(m.opened, m.to)}`);
-  } catch (e) { console.error(e); status('Ablehnen nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Ablehnen nicht möglich: ${e.message}`); }
 };
 const reqSignedIds = new Set();
 async function reqInfoShow() {
@@ -1198,7 +1198,7 @@ async function fileAndNext() {
     state.dirty = false; resetDoc();
     status(`✓ Abgelegt: ${where} (${Tools.formatBytes(bytes.length)}). Bereit für den nächsten Brief.`);
     if (state.scanHelper) openScanDialog();          // mit Scanner: gleich weiterscannen
-  } catch (e) { console.error(e); status('Ablegen fehlgeschlagen: ' + e.message); }
+  } catch (e) { console.error(e); status(`Ablegen fehlgeschlagen: ${e.message}`); }
   finally { btn.disabled = false; }
 }
 async function fileAndNextSimple() {
@@ -1214,9 +1214,11 @@ async function fileAndNextSimple() {
     const where = await deliver(bytes, name, 'application/pdf', null, false);
     if (!where) return status('Abgebrochen – der Brief ist noch offen.');
     await journalAdd(meta, name, pages.length);
-    state.dirty = false; resetDoc();
+    // Am Handy kann der Download-Weg still scheitern (z. B. installierte iPhone-App) – deshalb 20 s „Wieder öffnen“ anbieten
+    const snap = snapshot(), nm = tabName(tabCur);
+    state.dirty = false; resetDoc(); offerReopen(snap, nm);
     status(`✓ Gespeichert: ${where} (${Tools.formatBytes(bytes.length)}). Bereit für den nächsten Brief.`);
-  } catch (e) { console.error(e); status('Speichern fehlgeschlagen: ' + e.message); }
+  } catch (e) { console.error(e); status(`Speichern fehlgeschlagen: ${e.message}`); }
   finally { btn.disabled = false; }
 }
 $('#btnFile').onclick = fileAndNext;
@@ -1245,7 +1247,7 @@ function openShareDlg() {
 }
 $('#shSystem').onclick = async () => {
   try { await navigator.share({ files: [shareFile.file], title: shareFile.name.replace(/\.pdf$/i, '') }); $('#shareDlg').close(); status(`Geteilt: ${shareFile.name}`); }
-  catch (e) { if (e.name !== 'AbortError') status('Teilen nicht möglich: ' + e.message); }
+  catch (e) { if (e.name !== 'AbortError') status(`Teilen nicht möglich: ${e.message}`); }
 };
 $('#shMail').onclick = async () => {
   const f = shareFile, m = f.meta || {};
@@ -1337,7 +1339,7 @@ async function cmpVisual() {
 }
 function cmpTextMode() { $('#cmpText').hidden = false; $('#cmpVis').hidden = true; $('#cmpModeText').setAttribute('aria-pressed', 'true'); $('#cmpModeVis').setAttribute('aria-pressed', 'false'); }
 $('#cmpModeText').onclick = cmpTextMode;
-$('#cmpModeVis').onclick = () => cmpVisual().catch(e => { console.error(e); status('Visueller Vergleich nicht möglich: ' + e.message); });
+$('#cmpModeVis').onclick = () => cmpVisual().catch(e => { console.error(e); status(`Visueller Vergleich nicht möglich: ${e.message}`); });
 $('#cmpPrev').onclick = () => cmpShowPage(cmpPage - 1);
 $('#cmpNextPg').onclick = () => cmpShowPage(cmpPage + 1);
 async function compareFiles(files) {
@@ -1355,7 +1357,7 @@ async function compareFiles(files) {
       a = await textOfFile(files[0], nameA); b = await textOfFile(files[1], nameB);
     } else return status('Zum Vergleichen bitte genau zwei Dateien wählen (alte und neue Fassung).');
     showCompare(Tools.diffWords(a, b), nameA, nameB);
-  } catch (e) { console.error(e); status('Vergleich nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Vergleich nicht möglich: ${e.message}`); }
 }
 function showCompare(d, nameA, nameB) {
   const ins = d.filter(x => x.op === '+').length, del = d.filter(x => x.op === '-').length;
@@ -1553,7 +1555,7 @@ $('#trForm').addEventListener('submit', async e => {
     await importFiles([new File([bytes], `${name}_${to.toUpperCase()}.pdf`, { type: 'application/pdf' })]);
     state.dirty = true;
     status(`Übersetzung fertig (${from.toUpperCase()} → ${to.toUpperCase()}) – im neuen Reiter. Maschinell übersetzt: bitte vor dem Versand prüfen.`);
-  } catch (err) { console.error(err); status('Übersetzen nicht möglich: ' + err.message); }
+  } catch (err) { console.error(err); status(`Übersetzen nicht möglich: ${err.message}`); }
   finally { tr?.destroy?.(); }
 });
 $('#btnTranslate').onclick = () => { closeMenu(); openTranslate(); };
@@ -1988,7 +1990,7 @@ $('#taxGo').onclick = async () => {
       a.href = `mailto:${mail}?subject=${encodeURIComponent(`Belege ${monthName(month)}`)}&body=${encodeURIComponent(`Guten Tag,\n\nanbei die Belege für ${monthName(month)} (${r.count} Belege, Belegliste als CSV${withDatev ? ', DATEV-Importdatei document.xml' : ''}).\nBitte die Datei „Belege_${r.tag}_Steuerberater.zip“ anhängen.\n\nViele Grüße${S.author ? '\n' + S.author : ''}`)}`;
       a.click();
     }
-  } catch (e) { console.error(e); status('Export fehlgeschlagen: ' + e.message); }
+  } catch (e) { console.error(e); status(`Export fehlgeschlagen: ${e.message}`); }
   finally { $('#taxGo').disabled = false; }
 };
 $('#btnTax').onclick = openTax;
@@ -2016,6 +2018,7 @@ $('#btnCam').onclick = openCamera;
 $('#tileCam').onclick = openCamera;
 $('#homeCam').onclick = openCamera;
 $('#scanPhone').onclick = openCamera;
+$('#scanPhoneMac').onclick = openCamera;   // am Mac dieselbe Kamera wie unter Windows (vorher Dateiauswahl)
 
 
 /* ---------- Installierte Versionen immer sichtbar (Statuszeile unten): PDFMy-Stand und pdfmy Scan ---------- */
@@ -2215,7 +2218,7 @@ async function openFromHash() {
     if (state.pages.length) { if (state.dirty && !confirm(`„${name}“ öffnen? Das aktuelle Dokument wurde noch nicht gespeichert und wird geschlossen.`)) return; resetDoc(); }
     await importFiles([new File([await r.blob()], name, { type: 'application/pdf' })]);
     state.dirty = false;   // Original liegt unverändert auf dem Rechner
-  } catch (e) { status('Die Datei konnte nicht geöffnet werden: ' + e.message); toast('Datei konnte nicht geöffnet werden – bitte noch einmal doppelt anklicken.', 6000); }
+  } catch (e) { status(`Die Datei konnte nicht geöffnet werden: ${e.message}`); toast('Datei konnte nicht geöffnet werden – bitte noch einmal doppelt anklicken.', 6000); }
 }
 openFromHash(); addEventListener('hashchange', openFromHash);   // auch wenn PDFMy schon offen ist
 /* ---------- Drucker „PDFMy“: in jedem Programm „Drucken“ → das Dokument öffnet sich in PDFMy. Windows: pdfmy Scan ab 1.10.0 legt
@@ -2782,7 +2785,7 @@ window.autoForm = async (fromIntent) => {
     for (const f of FormDetect.detectFields(g, c.width, c.height, words)) found.push({ ...f, page: i });
     c.width = 0;
   }
-  if (!found.length) { status('Keine Schreiblinien, Kästen oder Ankreuzfelder gefunden.' + (fromIntent ? ' Mit dem Text-Werkzeug können Sie direkt auf die Seite schreiben.' : '')); if (fromIntent) setTool('text'); return; }
+  if (!found.length) { status(fromIntent ? 'Keine Schreiblinien, Kästen oder Ankreuzfelder gefunden. Mit dem Text-Werkzeug können Sie direkt auf die Seite schreiben.' : 'Keine Schreiblinien, Kästen oder Ankreuzfelder gefunden.'); if (fromIntent) setTool('text'); return; }
   const nT = found.filter(f => f.type === 'text').length, nC = found.length - nT;
   if (!confirm(`${nT} Eingabefeld(er) und ${nC} Ankreuzfeld(er) gefunden.\n\nDaraus ein ausfüllbares Formular machen? Es öffnet sich als neues Dokument – rechts ausfüllen, dann speichern.`)) return status('Abgebrochen.');
   const bytes = await buildPdf(pages, state.meta, { pdfa: false });
@@ -2801,6 +2804,9 @@ window.autoForm = async (fromIntent) => {
 $('#btnAutoForm').onclick = () => window.autoForm(false);
 
 /* ---------- E-Rechnung prüfen (EN 16931, XRechnung) ---------- */
+// Beim Zusammenlegen der Prüfwege (5b0e3ee) mit entfernt, aber hier noch gebraucht – ohne sie öffnete sich der Prüfdialog nicht
+const BEA_ICON = { ok: '✓', fehler: '✗', hinweis: 'i' };
+const BEA_LABEL = { ok: I18N.t('erfüllt'), fehler: I18N.t('nicht erfüllt'), hinweis: I18N.t('Hinweis') };
 function einvChkRender(r, name) {
   $('#einvChkInfo').textContent = r.format ? `${name ? name + ' · ' : ''}${r.format}` : (name || '');
   const items = r.items.filter(i => i.level !== 'ok' || r.ok);
@@ -3691,7 +3697,11 @@ window.openWithChoice = async files => {
   const c = await askOpen(files);
   if (c === 'add') return importFiles(files);
   if (c === 'window') { newTab(); return fresh(); }
-  if (c === 'replace') { resetDoc(); await importFiles(files); state.dirty = false; }
+  if (c === 'replace') {
+    if (state.pages.length) offerReopen(snapshot(), tabName(tabCur));   // „Ersetzen“ ist rückgängig zu machen wie „Schließen“
+    resetDoc(); await importFiles(files);
+    if (files.every(f => /\.pdf$/i.test(f.name))) { state.dirty = false; refresh(); }   // ein umgewandeltes Bild/Office-Dokument ist noch nicht gespeichert
+  }
 };
 // Datei an ein neues PDFMy-Fenster übergeben: nur zwischen Fenstern derselben Herkunft, nichts verlässt das Gerät
 const pendingOpen = new Map();
@@ -3713,7 +3723,9 @@ $('#btnNewWin').onclick = () => newTab();
 
 /* ---------- Reiter: mehrere Dokumente im selben Fenster (wie in Acrobat) ----------
    Jeder Reiter hält seinen eigenen Dokument-Zustand; beim Wechsel wird er ausgetauscht. */
-const DOC_KEYS = ['marks', 'einv', 'assignee', 'pages', 'docs', 'sel', 'annSel', 'editing', 'crop', 'undo', 'touched', 'dirty', 'meta', 'picked', 'anchor', 'view', 'intent', 'inputBytes', 'fromScanner', 'scanDone', 'autoArmed', 'wv'];
+// Alles, was resetDoc() zum Dokument zählt – fehlte ein Feld (z. B. Anhänge, Akte, Schlagwörter, Ablage-Herkunft), ging es beim
+// Reiterwechsel verloren oder rutschte in den anderen Reiter
+const DOC_KEYS = ['files', 'filesDirty', 'marks', 'einv', 'assignee', 'akte', 'akteTouched', 'tags', 'cf', 'cfTouched', 'fromArchive', 'pages', 'docs', 'sel', 'annSel', 'editing', 'crop', 'undo', 'touched', 'dirty', 'meta', 'picked', 'anchor', 'view', 'intent', 'inputBytes', 'fromScanner', 'scanDone', 'autoArmed', 'wv', 'metaShown', 'letterLikeWas'];
 const newRid = () => Math.random().toString(36).slice(2);
 const tabs = [{ snap: null, rid: newRid() }]; let tabCur = 0;
 const snapshot = () => Object.fromEntries(DOC_KEYS.map(k => [k, state[k]]));
@@ -3721,18 +3733,44 @@ function restoreTab(i) {
   tabCur = i; const s = tabs[i].snap;
   if (s) Object.assign(state, s); else { resetDoc(); return renderTabs(); }
   $('#assignee').value = state.assignee || ''; if ($('#m-wv')) $('#m-wv').value = state.wv || '';
+  $('#akte').value = state.akte || ''; $('#tags').value = state.tags || '';
   setLbl('#btnGrid', state.view === 'grid' ? 'Einzelseite' : 'Seitenübersicht');
+  window.cfRender?.(); window.attRefresh?.();
   renderForm(); refresh(); renderTabs();
 }
-function switchTab(i) { if (i === tabCur || !tabs[i]) return; rescueFlush(); tabs[tabCur].snap = snapshot(); restoreTab(i); status(`Reiter: ${tabName(i)}`); }
+// Lange Vorgänge (Ablegen, PDF erzeugen, Scan, Import) arbeiten am Ende auf dem sichtbaren Reiter – solange nicht wechseln
+const docBusy = () => !!state.working || state.scanning > 0 || state.importing > 0 || !!$('#btnFile')?.disabled;
+const busyToast = () => toast(I18N.t('Bitte warten, bis der laufende Vorgang fertig ist.'));
+// Für busyNow() (js/app.js): ein ungespeicherter Reiter im Hintergrund verhindert das automatische Update-Neuladen
+window.otherTabsDirty = () => tabs.some((t, i) => i !== tabCur && t.snap && t.snap.dirty && t.snap.pages?.length);
+function switchTab(i) { if (i === tabCur || !tabs[i]) return; if (docBusy()) return busyToast(); rescueFlush(); tabs[tabCur].snap = snapshot(); restoreTab(i); status(`Reiter: ${tabName(i)}`); }
 function newTab() {
+  if (docBusy()) return busyToast();
   rescueFlush(); tabs[tabCur].snap = snapshot();
   tabs.push({ snap: null, rid: newRid() }); tabCur = tabs.length - 1;
   resetDoc(); renderTabs(); status('Neuer Reiter – Datei öffnen, scannen oder hierher ziehen.');
 }
+// Schließen verwirft nichts endgültig: 20 s lang „Wieder öffnen“ (Fehlerbericht vom Handy 25.10.2026 – nach einem Kamerascan
+// waren 5 Seiten mit einem Tipp auf „ד und „OK“ weg)
+let lastClosed = null;
+function offerReopen(snap, name) {
+  lastClosed = { snap, name };
+  $('#closedText').textContent = `„${name}“ geschlossen (${snap.pages.length} Seite(n)).`;
+  const b = $('#closedBanner'); b.hidden = false;
+  clearTimeout(b._h); b._h = setTimeout(() => { b.hidden = true; lastClosed = null; }, 20000);
+}
+$('#closedUndo').onclick = () => {
+  const c = lastClosed; $('#closedBanner').hidden = true; lastClosed = null; if (!c) return;
+  if (state.pages.length) { rescueFlush(); tabs[tabCur].snap = snapshot(); tabs.push({ snap: c.snap, rid: newRid() }); restoreTab(tabs.length - 1); }
+  else { tabs[tabCur].snap = c.snap; restoreTab(tabCur); }
+  logLine(`Dokument wiederhergestellt: ${c.snap.pages.length} Seite(n)`);
+  status(`„${c.name}“ wiederhergestellt – jetzt „Speichern“, „Ablegen“ oder „Teilen“.`);
+};
+$('#closedX').onclick = () => { $('#closedBanner').hidden = true; lastClosed = null; };
 function closeTab(i) {
-  const s = i === tabCur ? snapshot() : tabs[i].snap;
-  if (s && s.dirty && s.pages.length && !confirm(`„${tabName(i)}“ schließen? Es wurde noch nicht gespeichert.`)) return;
+  const s = i === tabCur ? snapshot() : tabs[i].snap, unsaved = s && s.dirty && s.pages.length;
+  if (unsaved && !confirm(`„${tabName(i)}“ schließen? Die ${s.pages.length} Seite(n) wurden noch nicht gespeichert.\n\nZum Behalten auf „Abbrechen“ tippen und dann „Speichern“, „Ablegen“ oder „Teilen“ wählen.`)) return;
+  if (s && s.pages.length) { offerReopen(s, tabName(i)); logLine(`Dokument geschlossen: ${s.pages.length} Seite(n)${unsaved ? ', nicht gespeichert' : ''}`); }
   if (tabs.length === 1) { resetDoc(); tabs[0].snap = null; renderTabs(); status('Bereit.'); return; }
   if (i !== tabCur) tabs[tabCur].snap = snapshot();
   rescueDrop(tabs[i].rid); tabs.splice(i, 1);
@@ -3756,11 +3794,11 @@ function renderTabs() {
 $('#doctabs').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.dataset.tab != null) switchTab(+b.dataset.tab);
-  else if (b.dataset.close != null) closeTab(+b.dataset.close);
+  else if (b.dataset.close != null) { if (+b.dataset.close === tabCur && docBusy()) busyToast(); else closeTab(+b.dataset.close); }
   else if (b.classList.contains('dt-add')) newTab();
 });
 // „Schließen“ in der Kopfzeile schließt den aktuellen Reiter
-$('#btnNew').onclick = () => closeTab(tabCur);
+$('#btnNew').onclick = () => docBusy() ? busyToast() : closeTab(tabCur);
 window.renderTabs = renderTabs;
 
 /* ---------- Absturzschutz (wie Word): ungespeicherte Arbeit laufend lokal sichern und beim nächsten Start anbieten ----------
@@ -3784,7 +3822,11 @@ async function rescueSave(job) {
       l.unshift({ rid: job.rid, sid: SID, name: job.name, at: Date.now(), pages: job.pages.length, bytes, meta });
       await idb.set('rescue', l.slice(0, RESCUE_MAX));
     }
-  } catch (e) { console.warn('Absturzschutz', e); }
+  } catch (e) {
+    console.warn('Absturzschutz', e);
+    // Bisher nur in der Konsole – der Nutzer verließ sich auf eine Sicherung, die es nicht gab (z. B. Speicher voll)
+    if (!rescueSave.warned) { rescueSave.warned = true; logLine('Absturzschutz: ' + (e?.name || '') + ' ' + (e?.message || e)); toast(I18N.t('Absturzschutz konnte nicht sichern (Gerätespeicher voll?) – bitte zwischendurch speichern.'), 10000); }
+  }
   rescueBusy = false;
 }
 // Bei jeder Bildschirm-Auffrischung: hat sich am Dokument etwas geändert? Dann nach kurzer Ruhe sichern.
@@ -4020,7 +4062,7 @@ window.extractImages = async () => {
   status('Suche Bilder in der PDF …', 0);
   let imgs;
   try { imgs = await collectImages(pages, n => status(`Suche Bilder: Seite ${n + 1} von ${pages.length} …`, n / pages.length)); }
-  catch (e) { console.error(e); return status('Bilder konnten nicht gelesen werden: ' + e.message); }
+  catch (e) { console.error(e); return status(`Bilder konnten nicht gelesen werden: ${e.message}`); }
   if (!imgs.length) { status('Keine Bilder gefunden.'); return toast('In dieser PDF sind keine Fotos oder Grafiken eingebettet (nur Text und Linien).', 6000); }
   const base = baseName(), files = imgs.map(m => ({ name: `${base}_S${String(m.page).padStart(3, '0')}_Bild${m.nr}.${m.ext}`, data: m.data }));
   const single = files.length === 1;
@@ -4244,7 +4286,7 @@ $('#attList').addEventListener('click', e => {
     } catch (e) {
       console.error(e);
       back.disabled = false; back.textContent = 'Fertig – zurück an mysupermail.app';
-      toast('Übergabe nicht möglich: ' + e.message);
+      toast(`Übergabe nicht möglich: ${e.message}`);
     }
   };
 
@@ -4549,7 +4591,7 @@ $('#pfReport').onclick = async () => {
     const pdf = await TextPdf.build(PDFLib, { blocks, title: I18N.t('Vorabprüfung') + ' – ' + pfLast.name, fonts: { fontkit: fk, regular, bold, mono } });
     const where = await deliver(pdf, pfLast.name.replace(/\.pdf$/i, '') + '_Pruefbericht.pdf', 'application/pdf');
     if (where) status(I18N.t(`Prüfbericht gespeichert: ${where}`));
-  } catch (e) { console.error(e); status('Bericht nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Bericht nicht möglich: ${e.message}`); }
 };
 
 // „Briefdaten eingeben …“: eingeklappte Briefdaten für dieses Dokument aufklappen

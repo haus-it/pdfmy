@@ -4,6 +4,44 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-25
 
+### Lückensuche: Sicherheit, Datenverlust, Programmfehler (app-v199, pdfmy Scan 1.14.1, Mac/Linux 1.6.1)
+Systematische Prüfung in drei Richtungen (Sicherheit; Datenverlust und stille Fehler; latente Programmfehler – mit Gültigkeitsbereichs-Analyse aller Skripte). Jeder Befund wurde im Code nachvollzogen, die Behebung getestet.
+
+**Sicherheit (pdfmy Scan)**
+- Hoch: `/attachment?name=*.pdf` lieferte dank Platzhalter die neueste PDF aus Outlook-Cache, Temp oder Downloads. Jetzt keine Platzhalter, nur exakter Dateiname.
+- Hoch: DNS-Rebinding – der Host-Kopf wurde nicht geprüft; eine fremde Seite hätte nach Umleitung ihres Namens auf 127.0.0.1 lesend zugreifen können (Protokoll, Rechnername, Anhänge). Jetzt nur `127.0.0.1:52880`/`localhost:52880` (Windows und Mac/Linux).
+- Update-Prüfung: Herausgeber genau verglichen (O=Mentor GmbH, L=Paderborn, C=DE statt Teilstring), Sperrprüfung der ganzen Zertifikatskette, Dateiversion der signierten Datei muss zur angebotenen passen (Schutz gegen Zurückstufen auf eine alte, signierte Fassung).
+- Anfrageinhalt (bis 300 MB) wird erst nach der Herkunftsprüfung gelesen (Speicher-Angriff durch fremde Seiten). `/status?app=` ändert die Öffnen-Adresse nur noch mit PDFMy-Kopf. Entwicklungsadressen (localhost:8765/8766) nur noch im Test-Build bzw. mit `PDFMY_DEV=1`.
+- Teilen-Ziel (`/teilen`): Anfragen, die erkennbar von einer fremden Website kommen, werden abgewiesen.
+- Getestet: echte signierte Datei angenommen, als „9.9.9“ angeboten abgelehnt; Rebinding-Host, fremde Herkunft, Entwicklungsherkunft und Platzhalter → 403/404, PDFMy weiter 200 (Windows und Perl).
+
+**Datenverlust**
+- Reiterwechsel nahm Anhänge, Akte, Schlagwörter, eigene Felder und die Ablage-Herkunft nicht mit – sie gingen verloren oder rutschten in den anderen Reiter (Datenleck). Jetzt vollständig.
+- Während Ablegen, Scan, Import oder PDF-Erzeugung kein Reiterwechsel/Schließen mehr („Bitte warten …“) – vorher wirkte das Ende des Vorgangs auf den falschen Reiter.
+- Export als Text, Word, Bild … gilt nicht mehr als „gespeichert“ (nur PDF).
+- Ablegen am Handy: 20 s „Wieder öffnen“, falls der Download still scheiterte; „Ersetzen“ im Öffnen-Fenster ebenso rückgängig zu machen, umgewandelte Bilder/Office-Dateien gelten danach nicht als gespeichert.
+- Kein automatisches Update-Neuladen während eines Imports oder solange ein anderer Reiter ungespeichert ist; geteilte Dateien werden erst nach erfolgreichem Import aus dem Zwischenspeicher gelöscht.
+- Kameraaufnahmen kommen beim Wechsel in den Hintergrund (Anruf, App-Wechsel) ins Dokument, statt mit der Seite verloren zu gehen.
+- Absturzschutz meldet sichtbar, wenn er nicht sichern kann (z. B. Speicher voll). Fehler beim Öffnen mehrerer Dateien werden am Ende zusammengefasst.
+- Service Worker: offline nur aus dem eigenen Speicher; ein fehlendes Skript wird nicht mehr als Startseite ausgeliefert.
+
+**Programmfehler**
+- Der Prüfdialog der E-Rechnung öffnete sich nicht (zwei beim Zusammenlegen der Prüfwege gelöschte Konstanten) – live seit app-v189.
+- „Passt“ in der Kamera-Vorschau tat auf pdfmy.de nichts (Inline-Handler, von der Sicherheitsrichtlinie blockiert).
+- „Foto mit dem Handy aufnehmen“ am Mac öffnete die Dateiauswahl statt der Kamera.
+- 34 Fehlermeldungen blieben in allen Sprachen deutsch (zusammengesetzte Texte) – jetzt übersetzbar.
+
+**Bewusst offen (Entscheidung bzw. eigener Umbau nötig)**: Zugriff anderer Benutzer desselben Rechners auf pdfmy Scan (Terminalserver; braucht Geheimnis je Sitzung), Selbst-Update für Mac/Linux, COOP-Ausnahme für die mysupermail-Anbindung, Empfangsbestätigung bei der Rückgabe an mysupermail.
+
+
+### Geschlossenes Dokument wiederherstellen (app-v198)
+- Anlass: Fehlerbericht vom Handy (Android) vom 25.10.2026, 11:53: „Bitte die Handyscann Funktion anschauen“. Protokoll: „5 Seite(n) mit der Kamera aufgenommen“, 5 s später „Bereit.“, Dokument mit 0 Seiten, keine Programmfehler.
+- Befund: Die Seiten verschwinden nicht von selbst (nachgestellt: 5 Kameraseiten bleiben ohne Eingabe erhalten). „Bereit.“ entsteht nur durch Schließen des Dokuments – auf dem Handy über das große „ד oben neben dem Logo (oder einen Tipp aufs Logo) und „OK“ auf die Rückfrage. Die Rückfrage „… schließen? Es wurde noch nicht gespeichert.“ war leicht als „fertig/zurück“ misszuverstehen, und es gab keinen Rückweg.
+- Behoben: Nach dem Schließen eines Dokuments erscheint 20 s lang „Wieder öffnen“ – alle Seiten, Angaben und Bearbeitungen kommen zurück (in einem neuen Reiter, falls inzwischen ein anderes Dokument offen ist). Die Rückfrage nennt die Zahl der Seiten und sagt, wie man sie behält („Abbrechen“, dann „Speichern“, „Ablegen“ oder „Teilen“). Schließen und Wiederherstellen werden protokolliert, damit ein Bericht künftig eindeutig ist.
+- Hilfe (Mit dem Handy scannen) ergänzt.
+- Getestet (Headless-Chrome, Handyansicht 360×800): Kamerascan mit 5 Seiten → „ד + OK → 0 Seiten, Hinweis „Wieder öffnen“ → 5 Seiten, weiterhin ungespeichert; axe ohne Verstöße. Nicht getestet: echtes Android-Gerät.
+
+
 ### Behoben: Scan ging verloren, wenn währenddessen ein Update kam (app-v197)
 - Anlass: Fehlerbericht von Bodo Kopplin (Haus iT) vom 25.10.2026, 10:24: „wenn ich scannen will und kann nicht als PDF speichern“. Protokoll: Scanner (EPSON L5290, WSD) gefunden, kein Scan-Ergebnis, kein Fehler, Dokument mit 0 Seiten; um 10:23:46 „PDFMy wurde aktualisiert“ (Ausrollen von 09:39).
 - Ursache: PDFMy aktiviert eine neue Fassung sofort durch Neuladen, wenn kein Dokument offen und kein Fenster geöffnet ist. Beim Scannen schließt sich das Scan-Fenster vor dem Scan, und bis die erste Seite ankommt, ist das Dokument leer – PDFMy hielt sich für untätig und lud mitten im Scan neu. Der Scan ging verloren, es gab nichts zu speichern.

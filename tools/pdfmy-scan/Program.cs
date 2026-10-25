@@ -32,7 +32,7 @@ namespace PdfmyScan
     static class Program
     {
         public const int Port = 52880;
-        public const string Version = "1.14.0";
+        public const string Version = "1.14.1";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1274,6 +1274,8 @@ namespace PdfmyScan
         public static string FindRecent(string name)
         {
             name = Path.GetFileName(name ?? "");
+            // Keine Platzhalter: „*.pdf“ hätte sonst die neueste PDF aus Outlook/Temp/Downloads geliefert (Sicherheitsprüfung 25.10.2026)
+            if (name.IndexOfAny(new[] { '*', '?' }) >= 0) return null;
             if (name.Length == 0 || !System.Text.RegularExpressions.Regex.IsMatch(name, @"\.(pdf|jpe?g|png|tiff?|webp|bmp)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase)) return null;
             string la = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             // [Ordner, Suchtiefe] – nur dort, wo Outlook Anhänge zum Öffnen ablegt; höchstens 8 Sekunden suchen
@@ -1288,7 +1290,7 @@ namespace PdfmyScan
             void Walk(string dir, int left)
             {
                 if (DateTime.UtcNow > stop) return;
-                try { foreach (var f in Directory.GetFiles(dir, name)) { var fi = new FileInfo(f); if (fi.LastWriteTimeUtc >= cutoff && fi.Length > 0 && (best == null || fi.LastWriteTimeUtc > best.LastWriteTimeUtc)) best = fi; } } catch { }
+                try { foreach (var f in Directory.GetFiles(dir, name)) { if (!string.Equals(Path.GetFileName(f), name, StringComparison.OrdinalIgnoreCase)) continue; var fi = new FileInfo(f); if (fi.LastWriteTimeUtc >= cutoff && fi.Length > 0 && (best == null || fi.LastWriteTimeUtc > best.LastWriteTimeUtc)) best = fi; } } catch { }
                 if (left > 0) try { foreach (var d in Directory.GetDirectories(dir)) Walk(d, left - 1); } catch { }
             }
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -1575,7 +1577,13 @@ namespace PdfmyScan
     class LocalServer
     {
         public static bool IsAllowed(string origin) => Allowed.Contains(origin, StringComparer.OrdinalIgnoreCase);
+#if DEBUG
         static readonly string[] Allowed = { "https://pdfmy.de", "https://www.pdfmy.de", "http://localhost:8765", "http://localhost:8766", "http://127.0.0.1:8765", "http://127.0.0.1:8766" };
+#else
+        static readonly string[] Allowed = { "https://pdfmy.de", "https://www.pdfmy.de" };   // Entwicklungsadressen nur im Test-Build
+#endif
+        // Host-Kopf: nur die eigene Adresse – sonst könnte eine fremde Seite per DNS-Rebinding (evil.example → 127.0.0.1) mitlesen
+        static readonly string[] Hosts = { "127.0.0.1:" + Program.Port, "localhost:" + Program.Port };
         readonly ScannerHub hub; TcpListener listener; volatile bool stop;
         readonly ConcurrentDictionary<string, ScanJob> jobs = new ConcurrentDictionary<string, ScanJob>();
         readonly JavaScriptSerializer json = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
@@ -1616,12 +1624,9 @@ namespace PdfmyScan
                     var req = lines[0].Split(' '); string method = req[0], path = req.Length > 1 ? req[1] : "/";
                     var h = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     foreach (var l in lines.Skip(1)) { int i = l.IndexOf(':'); if (i > 0) h[l.Substring(0, i).Trim()] = l.Substring(i + 1).Trim(); }
-                    byte[] body = new byte[0];
-                    if (h.TryGetValue("Content-Length", out var cl) && int.TryParse(cl, out int n) && n > 0 && n < (path.StartsWith("/sign") || path.StartsWith("/maildraft") || path.StartsWith("/office") || path == "/cloud" ? 300_000_000 : 1_000_000))
-                    { body = new byte[n]; int r = 0; while (r < n) { int k = s.Read(body, r, n - r); if (k <= 0) break; r += k; } }
-
                     h.TryGetValue("Origin", out var origin);
-                    bool okOrigin = origin == null || Allowed.Contains(origin, StringComparer.OrdinalIgnoreCase);
+                    h.TryGetValue("Host", out var host);
+                    bool okOrigin = (origin == null || Allowed.Contains(origin, StringComparer.OrdinalIgnoreCase)) && host != null && Hosts.Contains(host, StringComparer.OrdinalIgnoreCase);
                     var cors = new Dictionary<string, string>();
                     if (origin != null && okOrigin) { cors["Access-Control-Allow-Origin"] = origin; cors["Vary"] = "Origin"; }
                     if (method == "OPTIONS")
@@ -1635,16 +1640,20 @@ namespace PdfmyScan
                     }
                     // Schutz: nur pdfmy (Origin) und nur mit eigenem Header – fremde Seiten/Bilder-Links können nichts auslösen oder lesen
                     if (!okOrigin || (path.Split('?')[0] != "/status" && !h.ContainsKey("X-Pdfmy"))) { Send(s, 403, "text/plain", Encoding.UTF8.GetBytes("forbidden"), cors); return; }
-                    Route(s, method, path, body, cors);
+                    // Inhalt erst nach der Prüfung lesen – vorher konnte eine fremde Seite bis zu 300 MB in den Speicher schieben
+                    byte[] body = new byte[0];
+                    if (h.TryGetValue("Content-Length", out var cl) && int.TryParse(cl, out int n) && n > 0 && n < (path.StartsWith("/sign") || path.StartsWith("/maildraft") || path.StartsWith("/office") || path == "/cloud" ? 300_000_000 : 1_000_000))
+                    { body = new byte[n]; int r = 0; while (r < n) { int k = s.Read(body, r, n - r); if (k <= 0) break; r += k; } }
+                    Route(s, method, path, body, cors, h.ContainsKey("X-Pdfmy"));
                 }
                 catch (Exception e) { Program.Log("HTTP: " + e.Message); try { SendJson(s, 500, new { error = e.Message }, null); } catch { } }
             }
         }
 
-        void Route(Stream s, string method, string path, byte[] body, Dictionary<string, string> cors)
+        void Route(Stream s, string method, string path, byte[] body, Dictionary<string, string> cors, bool fromApp)
         {
             string p = path.Split('?')[0];
-            if (p == "/status") FileOpen.Remember(path);
+            if (p == "/status" && fromApp) FileOpen.Remember(path);   // Öffnen-Adresse nur von PDFMy selbst (nicht per <img> von fremden Seiten)
             if (p.StartsWith("/file/") && method == "GET")
             {
                 var data = FileOpen.Take(p.Substring(6), out string fname, out string err);

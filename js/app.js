@@ -145,7 +145,11 @@ const freeCanvas = c => { if (c && c.width) { c.width = 0; c.height = 0; } };
 // Aufgaben, bei denen PDF-Seiten ohne Textebene nicht automatisch erkannt werden müssen (schneller)
 const NO_OCR_INTENTS = new Set(['merge', 'organize', 'compress', 'pdf2img', 'protect', 'unlock', 'stamp', 'form', 'sign', 'bates']);
 async function importFiles(files, { fromCamera = false } = {}) {
-  const before = state.pages.length;
+  state.importing = (state.importing || 0) + 1;   // läuft – kein Update-Neuladen (das Dokument ist bis zur ersten Seite leer)
+  try { await importFilesRun(files, fromCamera); } finally { state.importing--; }
+}
+async function importFilesRun(files, fromCamera) {
+  const before = state.pages.length, failed = [];
   for (const f of files) {
     const n = f.name.toLowerCase();
     try {
@@ -154,22 +158,25 @@ async function importFiles(files, { fromCamera = false } = {}) {
       else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
       else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
       else if (/\.(docx|xlsx|odt|ods|epub)$/.test(n)) await importOffice(f);
-      else if (/\.(doc|xls|ppt|pptx|odp)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.`); continue; }
+      else if (/\.(doc|xls|ppt|pptx|odp)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)`); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)`); failed.push(f.name); continue; }
       state.inputBytes += f.size;
     } catch (e) {
       console.error(e);
       status(e.name === 'AbortError' ? `${f.name}: Öffnen abgebrochen.` : unreadable(f.name, e));
+      if (e.name !== 'AbortError') failed.push(f.name);
     }
   }
+  // Bei mehreren Dateien überschrieb die nächste Meldung den Fehler – am Ende zusammenfassen
+  if (failed.length && files.length > 1) toast(`Nicht geöffnet: ${failed.join(', ')}`, 10000);
   if (state.pages.length === before) return;
   state.dirty = true;
   if (state.sel < 0) state.sel = 0;
   const added = state.pages.length - before;
   refresh();
-  status(`${added} Seite(n) importiert.`);
+  status(`${added} Seite(n) importiert.` + (failed.length ? ` Nicht geöffnet: ${failed.length} Datei(en).` : ''));
   applyIntent();
   if (S.autoOcr) runOcrAll(); else analyze();
 }
@@ -1920,7 +1927,7 @@ function runOcrAll() {
           console.error(e);
           // Einmal mit frischem Rechenkern wiederholen, erst dann als fehlgeschlagen markieren
           if (!p.ocrRetried) { p.ocrRetried = true; status('Texterkennung wird neu gestartet …'); return; }
-          p.failed = true; status('Texterkennung fehlgeschlagen: ' + e.message + ' – mit „Text erkennen (OCR)“ erneut versuchen.');
+          p.failed = true; status(`Texterkennung fehlgeschlagen: ${e.message} – mit „Text erkennen (OCR)“ erneut versuchen.`);
         }
         refresh(); analyze();
       };
@@ -3523,7 +3530,7 @@ function readyToSave(name, pick) {
     const done = v => { d.close(); d.remove(); resolve(v); };
     d.querySelector('.ghost').onclick = () => done(null);
     d.addEventListener('cancel', e => { e.preventDefault(); done(null); });
-    d.querySelector('.primary').onclick = async () => { try { done(await pick()); } catch (e) { if (e.name === 'AbortError') done(null); else { done(null); status('Speichern nicht möglich: ' + e.message); } } };
+    d.querySelector('.primary').onclick = async () => { try { done(await pick()); } catch (e) { if (e.name === 'AbortError') done(null); else { done(null); status(`Speichern nicht möglich: ${e.message}`); } } };
     document.body.append(d); d.showModal(); d.querySelector('.primary').focus();
   });
 }
@@ -3656,7 +3663,7 @@ async function doExport(o) {
       if (perm !== 'granted') perm = await od.handle.requestPermission({ mode: 'readwrite' });
       if (perm !== 'granted') { status('Nicht gespeichert – ohne Ihre Erlaubnis kann PDFMy die Originaldatei nicht überschreiben.'); return; }
       const w = await od.handle.createWritable(); await w.write(data); await w.close();
-    } catch (err) { console.error(err); status('Die Originaldatei konnte nicht überschrieben werden: ' + err.message + ' – bitte „Speichern unter …“ verwenden.'); return; }
+    } catch (err) { console.error(err); status(`Die Originaldatei konnte nicht überschrieben werden: ${err.message} – bitte „Speichern unter …“ verwenden.`); return; }
     state.dirty = false; refresh();
     status(`Gespeichert in die Originaldatei: ${od.name} (${Tools.formatBytes(data.length)})` + (o.sign ? ` · digital signiert (${state.signer?.name || ''})` : ''));
     return;
@@ -3664,7 +3671,8 @@ async function doExport(o) {
   if (state.outDir && !o.saveAs && mime === 'application/pdf' && !await confirmNotDuplicate(meta)) { status('Nicht gespeichert (Dublette).'); return; }
   const where = await deliver(data, name, mime, mime === 'application/pdf' && !o.password ? meta : null, o.saveAs);
   if (!where) { status('Speichern abgebrochen.'); return; }
-  state.dirty = false;
+  // Nur eine PDF gilt als gesichert – ein Export als Text, Word, Bild … enthält Anmerkungen, Unterschriften, Formular nicht
+  if (mime === 'application/pdf') state.dirty = false;
   if (o.batesOn && !['txt', 'docx', 'md', 'html', 'pptx'].includes(o.format)) LS.set('batesNext', o.batesStart + pages.length);   // nächstes Dokument zählt weiter
   if (mime === 'application/pdf' && !o.password) journalAdd(meta, where, pages.length);
   $('#btnNew').classList.add('next'); setTimeout(() => $('#btnNew').classList.remove('next'), 8000);
@@ -3838,7 +3846,7 @@ $('#expForm').addEventListener('submit', async e => {
   o.saveAs = how === 'saveas';
   LS.set('export', { size: o.size, pageNumbers: o.pageNumbers, header: o.header, footer: o.footer, batesPrefix: o.batesPrefix });
   if (o.name && o.name + '.pdf' !== filename()) { state.touched.fname = true; $('#fname').value = o.name + '.pdf'; }
-  try { await doExport(o); } catch (e) { console.error(e); status('Fehler beim Speichern: ' + e.message); }
+  try { await doExport(o); } catch (e) { console.error(e); status(`Fehler beim Speichern: ${e.message}`); }
 });
 
 /* Jede Seite (bzw. jede ausgewählte Seite) als eigene PDF – als ZIP oder in den Ablageordner */
@@ -3908,7 +3916,7 @@ $('#halveForm').addEventListener('submit', async e => {
     await importFiles([new File([bytes], /\.pdf$/i.test(name) ? name : name + '.pdf', { type: 'application/pdf' })]);
     state.dirty = true; renderForm?.();
     status(`${n} Seite(n) halbiert – das Dokument hat jetzt ${total} Seiten.`);
-  } catch (err) { console.error(err); status('Halbieren nicht möglich: ' + err.message); }
+  } catch (err) { console.error(err); status(`Halbieren nicht möglich: ${err.message}`); }
 });
 $('#splitForm').addEventListener('submit', async ev => {
   ev.preventDefault(); $('#splitDlg').close();
@@ -3933,7 +3941,7 @@ $('#splitForm').addEventListener('submit', async ev => {
     else where = await deliver(Tools.zip(files), base + '_aufgeteilt.zip', 'application/zip');
     const big = mode === 'size' ? files.filter(f => f.data.length > spLimit()).length : 0;
     status(where ? `${files.length} PDF-Dateien gespeichert: ${where}` + (big ? ` – ${big} davon größer als gewünscht (eine einzelne Seite ist zu groß; vorher „Verkleinern“ hilft).` : '') : 'Speichern abgebrochen.');
-  } catch (e) { console.error(e); status('Aufteilen nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Aufteilen nicht möglich: ${e.message}`); }
 });
 
 /* Stapel trennen: Leerseiten oder ✂-Markierungen teilen den Scan in einzelne Briefe */
@@ -3977,7 +3985,7 @@ $('#btnSplit').onclick = async () => {
     }
     state.dirty = false;
     status(`${saved.length} Briefe abgelegt in „${state.outDir.name}“: ${saved.join(' · ')}`);
-  } catch (e) { console.error(e); status('Fehler beim Trennen: ' + e.message); }
+  } catch (e) { console.error(e); status(`Fehler beim Trennen: ${e.message}`); }
 };
 
 /* ---------- Ordner ---------- */
@@ -4048,8 +4056,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.14.0';
-const SCAN_MAC_LATEST = '1.6.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.14.1';
+const SCAN_MAC_LATEST = '1.6.1';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
@@ -4071,7 +4079,7 @@ async function scanHelperRunning() {
     const changed = state.scanVersion !== d.version;
     state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll
-    if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store' }).catch(() => {});
+    if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store', headers: { 'X-Pdfmy': '1' } }).catch(() => {});   // ab pdfmy Scan 1.14.1 nur mit eigenem Kopf
     if (changed && typeof renderVerBar === 'function') setTimeout(renderVerBar, 0);   // Statuszeile sofort nachziehen (z. B. nach einem Update)
     return true;
   } catch { return false; }
@@ -4169,7 +4177,7 @@ $('#scanWake').onclick = async () => {
     const r = await scanApi('/wake', { method: 'POST' }, 60000), d = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(d.error || `Antwort ${r.status} – bitte pdfmy Scan aktualisieren`);
     status(d.woken ? `${d.woken} Gerät(e) angesprochen – ${d.devices} Scanner gefunden.` : 'Noch kein Gerät bekannt – bitte „Neu suchen“ oder das Gerät per IP-Adresse hinzufügen.');
-  } catch (e) { status('Aufwecken nicht möglich: ' + e.message); }
+  } catch (e) { status(`Aufwecken nicht möglich: ${e.message}`); }
   loadScanners(false);
 };
 $('#scanAddIp').onclick = async () => {
@@ -4178,7 +4186,7 @@ $('#scanAddIp').onclick = async () => {
   try {
     const r = await scanApi('/scanners/add', { method: 'POST', body: JSON.stringify({ ip }) }), d = await r.json();
     if (!r.ok) { alert(d.error); } else LS.set('scanner', d.id);
-  } catch (e) { alert('Fehler: ' + e.message); }
+  } catch (e) { alert(`Fehler: ${e.message}`); }
   loadScanners(false);
 };
 $('#scanCancel').onclick = $('#scanClose').onclick = () => $('#scanDlg').close();
@@ -4279,7 +4287,7 @@ function flipMerge(fronts, backs, reversed = true) {
 }
 // Verständliches Fehlerfenster statt nur einer Statuszeile – mit Tipps, Details und "Erneut versuchen"
 async function showScanError(e) {
-  status('Scannen fehlgeschlagen: ' + e.message);
+  status(`Scannen fehlgeschlagen: ${e.message}`);
   const others = [...document.querySelectorAll('#scanList label')].filter(l => !l.querySelector('input').checked).map(l => l.querySelector('b').textContent);
   const otherHint = others.length ? ` Tipp: Es gibt noch ${others.length === 1 ? 'einen weiteren Eintrag' : 'weitere Einträge'} in der Scannerliste (${others.join(', ')}) – oft ist es dasselbe Gerät über einen anderen Weg. Bitte damit versuchen.` : '';
   $('#scanErrMsg').textContent = (/falscher parameter/i.test(e.message)
@@ -4438,13 +4446,15 @@ addEventListener('load', () => {
 addEventListener('load', async () => {   // erst wenn alle Programmteile geladen sind
   const q = new URLSearchParams(location.search); if (!q.has('geteilt')) return;
   history.replaceState(null, '', location.pathname + location.hash);
+  state.importing = (state.importing || 0) + 1;   // kein Update-Neuladen, bis die Datei übernommen ist
   try {
     const c = await caches.open('pdfmy-teilen'), files = [];
     for (const req of await c.keys()) { const res = await c.match(req); const name = decodeURIComponent(res.headers.get('x-name') || 'Datei'); files.push(new File([await res.blob()], name, { type: res.headers.get('content-type') || '' })); }
-    await caches.delete('pdfmy-teilen');
     if (!files.length) { status('Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen.'); return; }
     await importFiles(files);
-  } catch (e) { console.warn('Geteilte Datei', e); status('Die geteilte Datei ließ sich nicht übernehmen: ' + e.message); }
+    await caches.delete('pdfmy-teilen');   // erst nach dem Import löschen – scheitert er, liegt die Datei beim nächsten Start noch da
+  } catch (e) { console.warn('Geteilte Datei', e); status(`Die geteilte Datei ließ sich nicht übernehmen: ${e.message}`); }
+  finally { state.importing--; }
 });
 if ('launchQueue' in window) launchQueue.setConsumer(async params => {
   if (!params.files?.length) return;
@@ -4744,7 +4754,7 @@ async function applyForm(d) {
     d.js = await openPdf(d.filled.slice());
     for (const p of state.pages) if (p.kind === 'pdf' && state.docs[p.docIdx] === d) { await renderPdfPreview(p); p.thumbL = null; }
     renderThumbs(); renderStage(); if (state.view === 'grid') renderGrid();
-  } catch (e) { console.error(e); status('Formular konnte nicht übernommen werden: ' + e.message); }
+  } catch (e) { console.error(e); status(`Formular konnte nicht übernommen werden: ${e.message}`); }
 }
 
 document.addEventListener('keydown', e => {
@@ -4791,7 +4801,7 @@ async function printPages(pages, sheet = '1') {
       }, 300);
     };
     f.src = url;
-  } catch (e) { console.error(e); status('Drucken nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Drucken nicht möglich: ${e.message}`); }
 }
 async function shareDoc() {
   if (!state.pages.length) return;
@@ -4800,7 +4810,7 @@ async function shareDoc() {
     if (ocrRunning) await runOcrAll();   // Text mitgeben, damit das PDF beim Empfänger durchsuchbar ist
     const bytes = await buildPdf(docPages(), state.meta, { noOcr: true, onPage: () => {} });
     sharePdf(bytes, filename(), { ...state.meta });   // js/pro.js
-  } catch (e) { console.error(e); status('Teilen nicht möglich: ' + e.message); }
+  } catch (e) { console.error(e); status(`Teilen nicht möglich: ${e.message}`); }
 }
 const closeMenu = () => { $('#moreMenu').open = false; };
 // Menü „Mehr“ beim Öffnen ganz ins Fenster schieben (am Knopf rechtsbündig – im Editor steht der Knopf mittig, das breite Menü ragte links hinaus)
@@ -4939,13 +4949,13 @@ function toast(msg, ms = 6000) {
 const upd = { reg: null, ready: false, manual: false };
 // Auch ein laufender Scan zählt: bis die erste Seite ankommt, ist das Dokument leer und das Scan-Fenster schon zu – früher lud
 // PDFMy dann für ein Update neu und der Scan ging verloren (Fehlerbericht 25.10.2026)
-const busyNow = () => (state.dirty && state.pages.length > 0) || !!document.querySelector('dialog[open]') || ocrRunning || state.scanning > 0 || !!state.working;
+const busyNow = () => (state.dirty && state.pages.length > 0) || !!document.querySelector('dialog[open]') || ocrRunning || state.scanning > 0 || state.importing > 0 || !!state.working || !!window.otherTabsDirty?.();
 function newVersionActive() {
   upd.ready = true;
   // Nichts in Arbeit? Dann gleich auf die neue Version wechseln – sonst nur anbieten (ungespeicherte Arbeit bleibt erhalten)
   if (!state.pages.length && !busyNow()) { try { sessionStorage.setItem('mpdf.updated', '1'); } catch {} location.reload(); return; }
   $('#updBtn').hidden = false;
-  status('Eine neue Version von ' + APP.name + ' ist bereit – unten rechts „jetzt neu laden“ (nach dem Speichern).');
+  status(`Eine neue Version von ${APP.name} ist bereit – unten rechts „jetzt neu laden“ (nach dem Speichern).`);
   if (upd.manual) toast('Update geladen – unten rechts „Neue Version: jetzt neu laden“.');
 }
 async function checkUpdates(manual) {
@@ -4956,7 +4966,7 @@ async function checkUpdates(manual) {
   try { await upd.reg.update(); } catch { if (manual) toast('Keine Verbindung zum Server – bitte später erneut versuchen.'); return; }
   if (!manual) return;
   const scanOld = scanOutdated() ? ` · pdfmy Scan ${scanLatest()} ist verfügbar (installiert: ${state.scanVersion}) – unter „Scannen“ aktualisieren` : '';
-  if (upd.reg.installing || upd.reg.waiting) { status('Update gefunden – wird geladen …' + scanOld); toast('Update gefunden – wird geladen …'); }
+  if (upd.reg.installing || upd.reg.waiting) { status(`Update gefunden – wird geladen …${scanOld}`); toast('Update gefunden – wird geladen …'); }
   else {
     const v = await versionLabel(), msg = `Sie haben die neueste Version${v ? ` (${v})` : ''}.`;
     status(msg + scanOld); toast(msg + (scanOld ? ' pdfmy Scan kann aktualisiert werden.' : ''));

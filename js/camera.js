@@ -241,9 +241,13 @@
     // Foto-App: volle Auflösung der Handykamera (iPhone liefert im Browser nur ein Videobild); bisherige Aufnahmen werden übernommen
     $('#camPhotoApp').onclick = () => { const had = shots.length; close(true); setTimeout(() => document.querySelector('#camIn')?.click(), had ? 400 : 0); };
     $('#camRevBack').onclick = closeReview;
+    $('#camRevOk').onclick = closeReview;   // vorher Inline-onclick – auf pdfmy.de von der CSP blockiert, „Passt“ tat nichts
     $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); renderStrip(); closeReview(); };
     $('#camRevRot').onclick = () => { const sh = shots[reviewIdx]; if (!sh) return; const r = Imaging.rotate90(sh.canvas, 90); sh.canvas.width = 0; sh.canvas = r; renderStrip(); review(reviewIdx); };
     $('#camDone').onclick = () => close(true);
+    // Anruf oder App-Wechsel: Das Handy kann die Seite im Hintergrund beenden – bisherige Aufnahmen ins Dokument übernehmen
+    // (dort greift der Absturzschutz); weiterscannen mit „Kamera“ hängt neue Seiten hinten an
+    document.addEventListener('visibilitychange', () => { if (document.hidden && stream && shots.length) close(true); });
     $('#camClose').onclick = () => { if (shots.length && !confirm(`${shots.length} aufgenommene Seite(n) verwerfen?`)) return; close(false); };
     $('#camDlg').addEventListener('cancel', e => { e.preventDefault(); $('#camClose').click(); });
     $('#camAuto').onchange = e => { auto = e.target.checked; try { localStorage.setItem('mpdf.camAuto', auto ? '1' : '0'); } catch {} shutter = new AutoShutter(); };
