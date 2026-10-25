@@ -2089,7 +2089,8 @@ async function openReport(context) {
 const maskReport = t => {
   const names = [state.meta.sender].filter(s => s && s.length > 2);
   for (const n of names) t = t.split(n).join('[Absender]');
-  return t.replace(/\b([A-Za-z]:\\(?:Users|Benutzer)\\)[^\\\s]+/gi, '$1[Benutzer]').replace(/(\/(?:Users|Benutzer|home)\/)[^/\s]+/gi, '$1[Benutzer]')
+  // Benutzernamen dürfen Leerzeichen enthalten („Haus iT“): bis zum nächsten Pfadtrenner unkenntlich machen
+  return t.replace(/\b([A-Za-z]:\\(?:Users|Benutzer)\\)[^\\\r\n]+/gi, '$1[Benutzer]').replace(/(\/(?:Users|Benutzer|home)\/)[^/\r\n]+/gi, '$1[Benutzer]')
     .replace(/[\w.+-]+@[\w-]+\.[\w.-]+/g, m => m === SUPPORT ? m : '[E-Mail]')
     .replace(/[^\s\\/„“"'()]+\.(pdf|jpe?g|png|tiff?|heic|eml|msg|xml|csv|xlsx|docx)\b/gi, (m, ext) => '[Datei].' + ext.toLowerCase())
     .replace(/„[^“\n]{2,80}“/g, '„…“');

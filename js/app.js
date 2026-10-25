@@ -88,8 +88,14 @@ window.pdfmyHandles = new WeakMap();   // Datei → Verweis auf die Originaldate
 const cur = () => state.pages[state.sel];
 
 /* ---------- Status ---------- */
-const appLog = [];   // letzte Meldungen und Programmfehler – für „Problem melden“
-const logLine = t => { appLog.push(new Date().toLocaleTimeString('de-DE') + ' ' + t); if (appLog.length > 60) appLog.shift(); };
+// Letzte Meldungen und Programmfehler – für „Problem melden“. Sie überstehen ein Neuladen im selben Tab (z. B. nach einem Update),
+// damit ein Bericht auch zeigt, was davor geschah; sessionStorage bleibt auf dem Gerät und endet mit dem Tab.
+const appLog = (() => { try { return JSON.parse(sessionStorage.getItem('mpdf.log') || '[]').slice(-60); } catch { return []; } })();
+if (appLog.length) appLog.push('— neu geladen —');
+const logLine = t => {
+  appLog.push(new Date().toLocaleTimeString('de-DE') + ' ' + t); if (appLog.length > 60) appLog.shift();
+  try { sessionStorage.setItem('mpdf.log', JSON.stringify(appLog)); } catch {}
+};
 // Programmfehler mit gekürzter Aufrufkette für den Bug-Melder; nach dem ersten echten Fehler einmal je Sitzung das Melden anbieten
 const appErrors = [];
 const BENIGN_ERR = /ResizeObserver loop|AbortError|The user aborted|aborted a request|NotAllowedError|^Script error\.?$/i;
@@ -114,6 +120,7 @@ function status(msg, pct) {
   const bar = $('#bar');
   if (pct == null) bar.style.visibility = 'hidden';
   else { bar.style.visibility = 'visible'; bar.firstElementChild.style.width = Math.round(pct * 100) + '%'; }
+  state.working = pct != null && pct < 1;   // Fortschrittsanzeige sichtbar = ein Vorgang läuft (kein automatisches Neuladen für Updates)
 }
 
 /* ---------- Import ---------- */
@@ -4208,9 +4215,11 @@ $('#scanGo').onclick = async () => {
 };
 // Ein Scanauftrag: Seiten abholen, sobald sie fertig sind (sie erscheinen sofort im Dokument); liefert die neuen Seiten
 async function scanRun(req, word) {
+  logLine(`Scan gestartet: ${$('#scanList input:checked')?.closest('label')?.textContent.trim().slice(0, 60) || req.id} · ${req.source} · ${req.duplex ? 'beidseitig' : 'einseitig'} · ${req.color} · ${req.dpi} dpi`);
   status('Scanne … bitte warten', 0.05);
   const added = [];
-  {
+  state.scanning = (state.scanning || 0) + 1;
+  try {
     const r = await scanApi('/scan', { method: 'POST', body: JSON.stringify(req) }), d = await r.json();
     if (!r.ok) throw new Error(d.error || 'Scan nicht möglich');
     let got = 0, st;
@@ -4235,7 +4244,8 @@ async function scanRun(req, word) {
     status(got ? (req.photo ? `${got} Foto(s) gescannt – als Bild speichern: „Speichern“ → Format „Bilder“ (JPG, PNG, TIFF oder WebP); Zuschneiden mit dem Werkzeug „Zuschneiden“.` : `${got} Seite(n) gescannt.`) + (st.note ? ' ' + st.note : '') : (req.photo ? 'Kein Foto gescannt – liegt das Foto auf dem Glas?' : 'Keine Seiten gescannt – liegt Papier im Einzug?'));
     if (st.note) toast(st.note, 9000);
     else if (req.duplex && got % 2 === 1) toast(`Beidseitig angefordert, aber ${got} Seite(n) erhalten. Falls Rückseiten fehlen: im Scan-Fenster auf „Protokoll“ klicken und es uns schicken.`, 12000);
-  }
+  } catch (e) { logLine('Scan fehlgeschlagen: ' + (e?.message || e)); throw e; }
+  finally { state.scanning--; }
   return added;
 }
 // Beidseitig durch Wenden: nach den Vorderseiten um das Wenden des Stapels bitten
@@ -4927,7 +4937,9 @@ function toast(msg, ms = 6000) {
   clearTimeout(t._h); t._h = setTimeout(() => { t.classList.remove('show'); setTimeout(() => { t.hidden = true; }, 250); }, ms);
 }
 const upd = { reg: null, ready: false, manual: false };
-const busyNow = () => (state.dirty && state.pages.length > 0) || !!document.querySelector('dialog[open]') || ocrRunning;
+// Auch ein laufender Scan zählt: bis die erste Seite ankommt, ist das Dokument leer und das Scan-Fenster schon zu – früher lud
+// PDFMy dann für ein Update neu und der Scan ging verloren (Fehlerbericht 25.10.2026)
+const busyNow = () => (state.dirty && state.pages.length > 0) || !!document.querySelector('dialog[open]') || ocrRunning || state.scanning > 0 || !!state.working;
 function newVersionActive() {
   upd.ready = true;
   // Nichts in Arbeit? Dann gleich auf die neue Version wechseln – sonst nur anbieten (ungespeicherte Arbeit bleibt erhalten)

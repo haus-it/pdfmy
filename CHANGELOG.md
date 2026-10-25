@@ -4,6 +4,15 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-25
 
+### Behoben: Scan ging verloren, wenn währenddessen ein Update kam (app-v197)
+- Anlass: Fehlerbericht von Bodo Kopplin (Haus iT) vom 25.10.2026, 10:24: „wenn ich scannen will und kann nicht als PDF speichern“. Protokoll: Scanner (EPSON L5290, WSD) gefunden, kein Scan-Ergebnis, kein Fehler, Dokument mit 0 Seiten; um 10:23:46 „PDFMy wurde aktualisiert“ (Ausrollen von 09:39).
+- Ursache: PDFMy aktiviert eine neue Fassung sofort durch Neuladen, wenn kein Dokument offen und kein Fenster geöffnet ist. Beim Scannen schließt sich das Scan-Fenster vor dem Scan, und bis die erste Seite ankommt, ist das Dokument leer – PDFMy hielt sich für untätig und lud mitten im Scan neu. Der Scan ging verloren, es gab nichts zu speichern.
+- Behoben: Während eines Scans und während jedes Vorgangs mit Fortschrittsanzeige wird nicht neu geladen; das Update wird unten rechts angeboten („Neue Version verfügbar – jetzt neu laden“).
+- Diagnose verbessert: Das Protokoll für „Fehler melden“ übersteht ein Neuladen im selben Tab (vorher war alles vor dem Update verloren, daher zeigte der Bericht nur „wurde aktualisiert“). Scan-Start (Gerät, Quelle, ein-/beidseitig, Farbe, Auflösung) und Scan-Fehler werden protokolliert.
+- Unkenntlichmachen: Benutzernamen mit Leerzeichen (z. B. „Haus iT“) wurden nur bis zum Leerzeichen ersetzt – jetzt bis zum nächsten Pfadtrenner.
+- Getestet (Headless-Chrome): Update während eines laufenden Scans → kein Neuladen, Knopf „jetzt neu laden“; ohne Vorgang → Neuladen, Protokoll erhalten; Unkenntlichmachen an „C:\Users\Haus iT\…“ und „/Users/Max Muster/…“. Nicht getestet: echter Scan mit dem EPSON L5290.
+
+
 ### Bug-Melder ausgebaut (app-v196, pdfmy Scan 1.14.0, Mac/Linux 1.6.0)
 - Leitplanken-Prüfung in KONZEPT.md („Entschieden 25.10.2026: Bug-Melder ausbauen“). Versand unverändert per E-Mail aus dem eigenen Mailprogramm; nichts wird automatisch gesendet.
 - Knopf „Fehler melden“ dauerhaft unten rechts in der Fußleiste (bisher nur „Mehr → Problem melden“).
