@@ -1,7 +1,8 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 // pdfmy Scan – macht Scanner für pdfmy.de im Browser verfügbar.
-// Läuft im Infobereich, lauscht nur auf 127.0.0.1:52880 und akzeptiert nur Anfragen von pdfmy.
+// Läuft im Infobereich, lauscht nur auf 127.0.0.1:52880 (ist der Port von einem anderen Benutzer belegt: 52881–52889)
+// und akzeptiert nur Anfragen von pdfmy – und nur von Prozessen des eigenen Benutzers in der eigenen Sitzung (Peer.cs).
 // Netzwerkgeräte: eSCL ("AirScan"/"Mopria", ohne Treiber). USB/Treiber-Geräte: Windows WIA.
 using System;
 using System.Collections.Concurrent;
@@ -31,8 +32,12 @@ namespace PdfmyScan
 {
     static class Program
     {
-        public const int Port = 52880;
-        public const string Version = "1.14.1";
+        // Mehrere Benutzer auf einem Rechner (Terminalserver): jeder Benutzer bekommt den ersten freien Port ab 52880.
+        // Die Web-App sucht 52880–52889 ab – die Helfer anderer Benutzer antworten 403 (KONZEPT.md, 25.10.2026).
+        public const int PortFirst = 52880, PortLast = 52889;
+        public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
+        public static string PortFile => Path.Combine(DataDir, "port.txt");
+        public const string Version = "1.15.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -75,6 +80,7 @@ namespace PdfmyScan
                 Twain.TryScan("(--keine--)", new ScanRequest(), b => { }, tr, CancellationToken.None);
                 Log(string.Join(" | ", tr)); return;
             }   // aus „Installierte Apps“ – vor der Einzelinstanz-Prüfung
+            if (args.Contains("--peer-test")) { Log("Peer-Test: " + Peer.SelfTest()); return; }   // Support: Besitzerprüfung gegen alle laufenden Prozesse (Terminalserver)
 
             // Doppelklick auf eine PDF im Explorer: "pdfmy-Scan.exe --open <Datei>"
             int oi = Array.IndexOf(args, "--open");
@@ -115,17 +121,29 @@ namespace PdfmyScan
         {
             try
             {
+                int port = RunningPort(); if (port == 0) return false;
                 using (var h = new HttpClient { Timeout = TimeSpan.FromSeconds(3) })
                 {
-                    var st = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(h.GetStringAsync($"http://127.0.0.1:{Port}/status").Result);
+                    var st = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(h.GetStringAsync($"http://127.0.0.1:{port}/status").Result);
                     if (new System.Version(Convert.ToString(st["version"])) >= new System.Version(Version)) return false;
-                    var req = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{Port}/quit");
+                    var req = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{port}/quit");
                     req.Headers.Add("X-Pdfmy", "1");
                     h.SendAsync(req).Wait(3000);
                     return true;
                 }
             }
             catch { return false; }
+        }
+
+        // Port des eigenen, bereits laufenden pdfmy Scan (gleicher Benutzer, gleiche Sitzung) – 0, wenn keiner läuft.
+        // Geprüft wird der Besitzer des lauschenden Ports, nicht die Antwort: so wird nie der Helfer eines anderen Benutzers angesprochen.
+        public static int RunningPort()
+        {
+            var ports = new List<int>();
+            try { if (int.TryParse(File.ReadAllText(PortFile).Trim(), out int p) && p >= PortFirst && p <= PortLast) ports.Add(p); } catch { }
+            for (int p = PortFirst; p <= PortLast; p++) if (!ports.Contains(p)) ports.Add(p);
+            foreach (int p in ports) if (Peer.ListenerIsOwn(p)) return p;
+            return 0;
         }
 
         public static void OpenPdfmy() { try { Process.Start(FileOpen.AppUrl); } catch { } }
@@ -226,7 +244,7 @@ namespace PdfmyScan
         }
         public static void Uninstall()
         {
-            try { using (var h = new HttpClient { Timeout = TimeSpan.FromSeconds(3) }) { var q = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{Program.Port}/quit"); q.Headers.Add("X-Pdfmy", "1"); h.SendAsync(q).Wait(3000); } } catch { }
+            try { int port = Program.RunningPort(); if (port > 0) using (var h = new HttpClient { Timeout = TimeSpan.FromSeconds(3) }) { var q = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{port}/quit"); q.Headers.Add("X-Pdfmy", "1"); h.SendAsync(q).Wait(3000); } } catch { }
             SetAutostart(false);
             try { File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "pdfmy Scan.lnk")); } catch { }
             try { Registry.CurrentUser.DeleteSubKeyTree(UninstallKey, false); } catch { }
@@ -1217,9 +1235,10 @@ namespace PdfmyScan
         {
             try
             {
+                int port = Program.RunningPort(); if (port == 0) return false;   // läuft nur beim anderen Benutzer → selbst starten
                 using (var h = new HttpClient { Timeout = TimeSpan.FromSeconds(4) })
                 {
-                    var req = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{Program.Port}/open-local")
+                    var req = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{port}/open-local")
                     { Content = new StringContent(new JavaScriptSerializer().Serialize(new { path = Path.GetFullPath(file) }), Encoding.UTF8, "application/json") };
                     req.Headers.Add("X-Pdfmy", "1");
                     return h.SendAsync(req).Result.IsSuccessStatusCode;
@@ -1583,7 +1602,7 @@ namespace PdfmyScan
         static readonly string[] Allowed = { "https://pdfmy.de", "https://www.pdfmy.de" };   // Entwicklungsadressen nur im Test-Build
 #endif
         // Host-Kopf: nur die eigene Adresse – sonst könnte eine fremde Seite per DNS-Rebinding (evil.example → 127.0.0.1) mitlesen
-        static readonly string[] Hosts = { "127.0.0.1:" + Program.Port, "localhost:" + Program.Port };
+        static string[] Hosts => new[] { "127.0.0.1:" + Program.Port, "localhost:" + Program.Port };
         readonly ScannerHub hub; TcpListener listener; volatile bool stop;
         readonly ConcurrentDictionary<string, ScanJob> jobs = new ConcurrentDictionary<string, ScanJob>();
         readonly JavaScriptSerializer json = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
@@ -1593,9 +1612,20 @@ namespace PdfmyScan
 
         public void Start()
         {
-            listener = new TcpListener(IPAddress.Loopback, Program.Port);
-            try { listener.Start(); }
-            catch (Exception e) { Program.Log("Port belegt: " + e.Message); MessageBox.Show("pdfmy Scan konnte nicht starten (Port " + Program.Port + " belegt).", "pdfmy Scan"); return; }
+            // Ersten freien Port ab 52880 nehmen – auf Terminalservern hat jeder angemeldete Benutzer seinen eigenen pdfmy Scan
+            for (int p = Program.PortFirst; ; p++)
+            {
+                // ExclusiveAddressUse: kein anderer Prozess darf sich mit SO_REUSEADDR auf denselben Port setzen und Verbindungen abgreifen
+                var l = new TcpListener(IPAddress.Loopback, p) { ExclusiveAddressUse = true };
+                try { l.Start(); listener = l; Program.Port = p; break; }
+                catch (Exception e)
+                {
+                    if (p < Program.PortLast) continue;
+                    Program.Log("Ports belegt: " + e.Message); MessageBox.Show($"pdfmy Scan konnte nicht starten (Ports {Program.PortFirst}–{Program.PortLast} belegt).", "pdfmy Scan"); return;
+                }
+            }
+            try { File.WriteAllText(Program.PortFile, Program.Port.ToString()); } catch { }
+            if (Program.Port != Program.PortFirst) Program.Log($"Port {Program.Port} (Port {Program.PortFirst} ist belegt – anderer Benutzer oder anderes Programm)");
             new Thread(Loop) { IsBackground = true }.Start();
         }
         public void Stop() { stop = true; try { listener.Stop(); } catch { } }
@@ -1624,6 +1654,8 @@ namespace PdfmyScan
                     var req = lines[0].Split(' '); string method = req[0], path = req.Length > 1 ? req[1] : "/";
                     var h = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     foreach (var l in lines.Skip(1)) { int i = l.IndexOf(':'); if (i > 0) h[l.Substring(0, i).Trim()] = l.Substring(i + 1).Trim(); }
+                    // Nur Prozesse des eigenen Benutzers in der eigenen Sitzung – auf Terminalservern erreichen alle Benutzer 127.0.0.1
+                    if (!Peer.IsOwn(c, out string why)) { Program.Log($"Abgelehnt: {method} {path.Split('?')[0]} ({why})"); Reject(c, s); return; }
                     h.TryGetValue("Origin", out var origin);
                     h.TryGetValue("Host", out var host);
                     bool okOrigin = (origin == null || Allowed.Contains(origin, StringComparer.OrdinalIgnoreCase)) && host != null && Hosts.Contains(host, StringComparer.OrdinalIgnoreCase);
@@ -1763,7 +1795,7 @@ namespace PdfmyScan
                 SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return;
             }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return; }
             if (p == "/wake" && method == "POST")   // „Scanner aufwecken“: wecken, kurz warten, neu suchen
             {
                 hub.RefreshAsync().Wait(40000);   // die Suche weckt zuerst alle bekannten Geräte
@@ -1836,6 +1868,20 @@ namespace PdfmyScan
                 }
             }
             SendJson(s, 404, new { error = "Nicht gefunden" }, cors);
+        }
+
+        // 403 an einen fremden Prozess: Antwort senden, Rest der Anfrage (höchstens 1 MB, 2 s) verwerfen und sauber schließen –
+        // sonst bricht Windows die Verbindung hart ab und der Absender sieht statt 403 nur einen Verbindungsfehler
+        static void Reject(TcpClient c, Stream s)
+        {
+            Send(s, 403, "text/plain", Encoding.UTF8.GetBytes("forbidden"), null);
+            try
+            {
+                c.Client.Shutdown(SocketShutdown.Send); s.ReadTimeout = 2000;
+                var buf = new byte[16384]; int total = 0, n;
+                while (total < 1_000_000 && (n = s.Read(buf, 0, buf.Length)) > 0) total += n;
+            }
+            catch { }
         }
 
         void SendJson(Stream s, int code, object o, Dictionary<string, string> extra) => Send(s, code, "application/json; charset=utf-8", Encoding.UTF8.GetBytes(json.Serialize(o)), extra);

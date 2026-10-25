@@ -36,9 +36,10 @@ cat > "$AGENT" <<PLIST
 PLIST
 launchctl bootout "gui/$(id -u)/de.pdfmy.scan" >/dev/null 2>&1 || launchctl unload "$AGENT" >/dev/null 2>&1
 sleep 1
+rm -f "$DIR/port"   # der Dienst schreibt beim Start seinen Port hinein (52880, bei mehreren angemeldeten Benutzern ggf. 52881–52889)
 launchctl bootstrap "gui/$(id -u)" "$AGENT" >/dev/null 2>&1 || launchctl load -w "$AGENT" >/dev/null 2>&1
 ok=""
-for i in 1 2 3 4 5 6; do sleep 1; if /usr/bin/curl -s -m 2 http://127.0.0.1:52880/status | grep -q pdfmy-scan; then ok=1; break; fi; done
+for i in 1 2 3 4 5 6; do sleep 1; if /usr/bin/curl -s -m 2 "http://127.0.0.1:$(cat "$DIR/port" 2>/dev/null || echo 52880)/status" | grep -q pdfmy-scan; then ok=1; break; fi; done
 if [ -n "$ok" ]; then echo "  ✓ Scan-Dienst läuft"; else echo "  ✗ Der Scan-Dienst startet nicht. Details: $DIR/fehler.txt"; fi
 
 # 2. App „PDFMy“: öffnet PDFs per Doppelklick in PDFMy (die Datei bleibt auf dem Mac)
@@ -51,11 +52,11 @@ rm -rf "$APP"
   -e '      set p to do shell script "t=$HOME/Library/Caches/de.pdfmy.open; /usr/bin/find \"$t\" -mindepth 1 -mmin +720 -delete 2>/dev/null; t=$t/$(date +%s)$$; /bin/mkdir -p \"$t\" && /bin/cp -p " & quoted form of p & " \"$t/\" && printf %s \"$t/$(/usr/bin/basename " & quoted form of p & ")\""' \
   -e '    end try' \
   -e '    try' \
-  -e '      do shell script "printf %s " & quoted form of p & " | /usr/bin/curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:52880/open-local"' \
+  -e '      do shell script "printf %s " & quoted form of p & " | /usr/bin/curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:$(/bin/cat \"$HOME/Library/Application Support/pdfmy-scan/port\" 2>/dev/null || echo 52880)/open-local"' \
   -e '    on error' \
   -e '      do shell script "launchctl kickstart -k gui/$(id -u)/de.pdfmy.scan >/dev/null 2>&1; sleep 2"' \
   -e '      try' \
-  -e '        do shell script "printf %s " & quoted form of p & " | /usr/bin/curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:52880/open-local"' \
+  -e '        do shell script "printf %s " & quoted form of p & " | /usr/bin/curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:$(/bin/cat \"$HOME/Library/Application Support/pdfmy-scan/port\" 2>/dev/null || echo 52880)/open-local"' \
   -e '      on error' \
   -e '        display dialog "PDFMy konnte die Datei nicht öffnen, weil pdfmy Scan nicht läuft. Bitte die Einrichtung (pdfmy-Scan-Mac.command) noch einmal öffnen." buttons {"OK"} default button 1 with icon caution' \
   -e '      end try' \
@@ -113,7 +114,7 @@ f="$3"; [ -f "$f" ] || exit 1
 t="$HOME/Library/Caches/de.pdfmy.open/$(date +%s)$$"; /bin/mkdir -p "$t"
 name=$(printf %s "$1" | tr -d '/:' | cut -c1-80); [ -n "$name" ] || name="Druck"
 /bin/cp "$f" "$t/$name.pdf"
-send() { printf %s "$t/$name.pdf" | /usr/bin/curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:52880/open-local >/dev/null; }
+send() { P=$(/bin/cat "$HOME/Library/Application Support/pdfmy-scan/port" 2>/dev/null || echo 52880); printf %s "$t/$name.pdf" | /usr/bin/curl -sf -m 5 -X POST --data-binary @- "http://127.0.0.1:$P/open-local" >/dev/null; }
 send || { launchctl kickstart -k "gui/$(id -u)/de.pdfmy.scan" >/dev/null 2>&1; sleep 2; send; } || /usr/bin/osascript -e 'display dialog "PDFMy konnte das Dokument nicht öffnen, weil pdfmy Scan nicht läuft. Bitte die Einrichtung (pdfmy-Scan-Mac.command) noch einmal öffnen." buttons {"OK"} default button 1 with icon caution' >/dev/null 2>&1
 PDFMYPRINT
 chmod 755 "$PS_DIR/In PDFMy öffnen"

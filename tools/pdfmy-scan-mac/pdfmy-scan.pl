@@ -2,7 +2,8 @@
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 # SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 # pdfmy Scan für Mac und Linux – macht Scanner für PDFMy (pdfmy.de) im Browser verfügbar.
-# Spricht dieselbe Schnittstelle wie pdfmy Scan für Windows (http://127.0.0.1:52880), nur vom eigenen Rechner erreichbar.
+# Spricht dieselbe Schnittstelle wie pdfmy Scan für Windows (http://127.0.0.1:52880), nur vom eigenen Rechner und nur für den eigenen Benutzer
+# erreichbar. Ist 52880 von einem anderen Benutzer belegt (mehrere Konten gleichzeitig angemeldet), nimmt es den nächsten freien Port bis 52889.
 # Protokolle: eSCL/AirScan (fast alle Geräte ab ca. 2015) und WSD-Scan (z. B. Dell Color MFP E525w, viele ältere Geräte) – ohne Treiber.
 # Linux zusätzlich: SANE (scanimage) für USB- und ältere Geräte, sofern installiert.
 # Nutzt nur Bordmittel: Perl, curl, dns-sd (Mac) bzw. avahi-browse (Linux). Scans gehen direkt an PDFMy im Browser – nichts ins Internet.
@@ -11,10 +12,10 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.6.1';
+our $VERSION = '1.7.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
-my $PORT = $ENV{PDFMY_PORT} || 52880;
+my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
 my $WSD_PORT = $ENV{PDFMY_WSD_PORT} || 3702;
 my $DIR = $ENV{PDFMY_DIR} || ($IS_MAC ? "$ENV{HOME}/Library/Application Support/pdfmy-scan" : ($ENV{XDG_DATA_HOME} || "$ENV{HOME}/.local/share") . '/pdfmy-scan');
 # Entwicklungsadressen nur mit PDFMY_DEV=1 – sonst gälte jeder fremde lokale Server auf Port 8765/8766 als PDFMy
@@ -839,6 +840,29 @@ sub send_resp {
 }
 sub send_json { my ($c, $code, $o, $extra) = @_; send_resp($c, $code, 'application/json; charset=utf-8', $J->encode($o), $extra); }
 
+# Wem gehört das andere Ende der Verbindung? Auf Rechnern mit mehreren Konten erreichen alle Benutzer 127.0.0.1 –
+# zugelassen werden nur Prozesse des eigenen Benutzers (KONZEPT.md, 25.10.2026). Nicht ermittelbar → abgelehnt.
+sub peer_own {
+  my $cport = shift; return 0 unless $cport;
+  if ($IS_MAC) {
+    # lsof sieht als normaler Benutzer nur eigene Prozesse; -a -u schränkt zusätzlich darauf ein
+    my $lsof = -x '/usr/sbin/lsof' ? '/usr/sbin/lsof' : which('lsof'); return 0 unless $lsof;
+    my $o = run_for(5, $lsof, '-nP', '-a', '-u', $<, "-iTCP\@127.0.0.1:$cport", '-sTCP:ESTABLISHED', '-Fn');
+    return $o =~ /^n127\.0\.0\.1:$cport->127\.0\.0\.1:$PORT$/m ? 1 : 0;
+  }
+  # Linux: /proc/net/tcp nennt zu jeder Verbindung den Besitzer (Spalte uid); gesucht ist das Ende cport → PORT im Zustand ESTABLISHED
+  for my $f ($ENV{PDFMY_TEST_PROC_TCP} // ('/proc/net/tcp', '/proc/net/tcp6')) {
+    open my $h, '<', $f or next;
+    while (<$h>) {
+      my @c = split;
+      next unless @c > 7 && $c[3] eq '01' && $c[1] =~ /:([0-9A-Fa-f]{4})$/ && hex($1) == $cport && $c[2] =~ /:([0-9A-Fa-f]{4})$/ && hex($1) == $PORT;
+      close $h; return $c[7] == $< ? 1 : 0;
+    }
+    close $h;
+  }
+  return 0;
+}
+
 our %CORS_NOW;
 sub handle {
   my $c = shift; binmode $c;
@@ -849,6 +873,14 @@ sub handle {
   my ($line, @hl) = split /\r\n/, $hdrs; my ($method, $path) = split / /, $line // '';
   return unless $method;
   my %h; for (@hl) { $h{ lc $1 } = $2 if /^([^:]+):\s*(.*)$/; }
+  # Nur Prozesse des eigenen Benutzers – vor jeder anderen Prüfung, auch für /open-local und OPTIONS
+  if (!peer_own($c->peerport)) {
+    my ($p0) = split /\?/, $path // ''; logl("Abgelehnt: $method $p0 (anderer Benutzer oder nicht ermittelbar)");
+    send_resp($c, 403, 'text/plain', 'forbidden');
+    # Rest der Anfrage verwerfen (höchstens 1 MB) und sauber schließen – sonst sieht der Absender statt 403 einen Verbindungsabbruch
+    shutdown($c, 1); alarm 2; my $got = 0; eval { while ($got < 1_000_000) { my $n = sysread($c, my $b, 16384); last unless $n; $got += $n; } }; alarm 0;
+    return;
+  }
   # Host-Kopf nur die eigene Adresse (Schutz gegen DNS-Rebinding), Herkunft nur PDFMy – geprüft, bevor der Inhalt gelesen wird
   my $origin = $h{origin};
   my $hostok = defined $h{host} && grep { lc $h{host} eq $_ } ("127.0.0.1:$PORT", "localhost:$PORT");
@@ -881,7 +913,7 @@ sub handle {
     # /status muss sofort antworten: Standard-PDF-Programm nur aus dem Zwischenspeicher, Auffrischen im Hintergrund
     my $cf = "$DIR/pdfdefault.txt"; my $def = -f $cf && trim(slurp($cf)) eq '1';
     if (!-f $cf || -M $cf >= 0.0007) { my $k = fork(); if (defined $k && $k == 0) { pdf_default(); POSIX::_exit(0); } }
-    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, platform => lc $OS, tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false }, \%cors);
+    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false }, \%cors);
   }
   if ($p =~ m{^/file/(\w+)$} && $method eq 'GET') {
     my ($data, $name) = take_file($1);
@@ -970,9 +1002,15 @@ sub handle {
   return send_json($c, 404, { error => 'Nicht gefunden' }, \%cors);
 }
 
-my $srv = IO::Socket::INET->new(LocalAddr => '127.0.0.1', LocalPort => $PORT, Proto => 'tcp', Listen => 20, ReuseAddr => 1)
-  or do { logl("Start nicht möglich (Port $PORT belegt?): $!"); die "pdfmy Scan: Port $PORT belegt\n"; };
-logl("pdfmy Scan für $OS $VERSION gestartet (Port $PORT)");
+# Ersten freien Port ab 52880 nehmen: sind mehrere Benutzer angemeldet, hat jeder seinen eigenen pdfmy Scan.
+# Die Web-App sucht 52880–52889 ab; die Helfer der anderen Benutzer antworten ihr mit 403.
+my $srv;
+for my $p ($ENV{PDFMY_PORT} ? ($PORT) : (52880 .. 52889)) {
+  $srv = IO::Socket::INET->new(LocalAddr => '127.0.0.1', LocalPort => $p, Proto => 'tcp', Listen => 20, ReuseAddr => 1) and do { $PORT = $p; last };
+}
+$srv or do { logl("Start nicht möglich (Ports 52880–52889 belegt?): $!"); die "pdfmy Scan: Ports belegt\n"; };
+spit("$DIR/port", "$PORT\n");   # Doppelklick-App, Druck-Dienst und Einrichtung lesen hier den eigenen Port
+logl("pdfmy Scan für $OS $VERSION gestartet (Port $PORT" . ($PORT != 52880 ? ' – 52880 ist belegt, anderer Benutzer oder anderes Programm' : '') . ')');
 while (1) {
   my $c = $srv->accept or next;
   my $pid = fork();

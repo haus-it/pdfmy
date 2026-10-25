@@ -71,7 +71,7 @@ AUTO
   nohup "$PERL" "$DIR/pdfmy-scan.pl" >"$DIR/fehler.txt" 2>&1 &
   STARTER="( nohup $PERL \"$DIR/pdfmy-scan.pl\" >/dev/null 2>&1 & )"
 fi
-for i in 1 2 3 4 5 6 7 8; do sleep 1; if curl -s -m 2 http://127.0.0.1:52880/status | grep -q pdfmy-scan; then ok=1; break; fi; done
+for i in 1 2 3 4 5 6 7 8; do sleep 1; if curl -s -m 2 "http://127.0.0.1:$(cat "$DIR/port" 2>/dev/null || echo 52880)/status" | grep -q pdfmy-scan; then ok=1; break; fi; done
 if [ -n "$ok" ]; then echo "  ✓ Scan-Dienst läuft (startet künftig mit der Anmeldung)"; else echo "  ✗ Der Scan-Dienst startet nicht. Details: journalctl --user -u pdfmy-scan  bzw.  $DIR/log.txt"; fi
 
 # 2. „PDFMy“ im Anwendungsmenü: öffnet PDFs per Doppelklick in PDFMy (die Datei bleibt auf dem Rechner)
@@ -79,7 +79,7 @@ cat > "$DIR/pdfmy-open" <<OPEN
 #!/bin/sh
 # Öffnet die übergebenen PDFs in PDFMy im Browser. Die Datei bleibt auf dem Rechner: pdfmy Scan gibt sie einmalig über 127.0.0.1 heraus.
 [ \$# -eq 0 ] && exec xdg-open https://pdfmy.de/
-send() { printf '%s' "\$1" | curl -sf -m 5 -X POST --data-binary @- http://127.0.0.1:52880/open-local; }
+send() { printf '%s' "\$1" | curl -sf -m 5 -X POST --data-binary @- "http://127.0.0.1:\$(cat "$DIR/port" 2>/dev/null || echo 52880)/open-local"; }   # eigener Port (bei mehreren angemeldeten Benutzern ggf. 52881–52889)
 # Als App installiertes PDFMy (Chrome/Edge legen dafür eine .desktop-Datei mit --app-id an): Datei direkt im App-Fenster öffnen
 pwa() {
   for d in "\${XDG_DATA_HOME:-\$HOME/.local/share}"/applications/*.desktop; do
@@ -127,7 +127,7 @@ if { : </dev/tty; } 2>/dev/null; then printf "  Sollen PDF-Dateien künftig per 
 case "$ans" in
   ""|j|J|ja|Ja|y|Y)
     if command -v xdg-mime >/dev/null 2>&1; then xdg-mime default pdfmy.desktop application/pdf >/dev/null 2>&1; fi
-    curl -s -m 5 -X POST -H 'Origin: https://pdfmy.de' -H 'X-Pdfmy: 1' http://127.0.0.1:52880/defaultapps >/dev/null 2>&1
+    curl -s -m 5 -X POST -H 'Origin: https://pdfmy.de' -H 'X-Pdfmy: 1' "http://127.0.0.1:$(cat "$DIR/port" 2>/dev/null || echo 52880)/defaultapps" >/dev/null 2>&1
     echo "  ✓ PDFMy ist jetzt Ihr Standard für PDF-Dateien (änderbar im Dateimanager: Rechtsklick → Öffnen mit)";;
 esac
 

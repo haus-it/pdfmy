@@ -4,6 +4,15 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-25
 
+### Sicherheit: pdfmy Scan auf Terminalservern und Rechnern mit mehreren Benutzern (app-v200, pdfmy Scan 1.15.0, Mac/Linux 1.7.0)
+Bei der Lückensuche bewusst offengelassen, jetzt behoben (Konzept und Leitplanken-Prüfung: KONZEPT.md Abschnitt 4, Risiko R16).
+- Hoch: Auf Rechnern mit mehreren gleichzeitig angemeldeten Benutzern (Windows-Terminalserver/RDS, Mac/Linux mit mehreren Konten) konnte ein Prozess eines anderen Benutzers die lokale Schnittstelle ohne Origin-Kopf ansprechen – u. a. `/attachment`, `/log`, `/open-local`, `/quit`, `/sign`, `/maildraft`. Jetzt prüft pdfmy Scan bei jeder Verbindung, wem das andere Ende gehört, und lässt nur Prozesse des eigenen Benutzers zu (Windows: Verbindungstabelle → Prozess → Benutzer-SID, zusätzlich dieselbe Sitzung; Linux: `/proc/net/tcp`; Mac: `lsof`). Alle anderen erhalten 403, noch bevor der Inhalt gelesen wird; ist der Besitzer nicht ermittelbar, wird ebenfalls abgelehnt. Abgewiesene Anfragen stehen im Protokoll.
+- Port je Benutzer: Ist 52880 belegt, nimmt pdfmy Scan den nächsten freien Port bis 52889 und merkt ihn in seinem Datenordner (`port.txt` bzw. `port`). Vorher belegte der zuerst angemeldete Benutzer den Port, und Scans, Doppelklicks und Signaturen des zweiten landeten bei ihm. Windows bindet den Port exklusiv (kein Mitbenutzen per SO_REUSEADDR).
+- Web-App: fragt zuerst den zuletzt gefundenen Port, sonst 52880–52889 gleichzeitig; `/status` meldet `ownUser: true`. Ältere Helfer (ohne Prüfung) werden noch genutzt, PDFMy sucht dann einmal je Seitenaufruf nach einem eigenen neueren. Öffnen per Doppelklick sucht vor dem Abholen den eigenen Helfer.
+- Doppelklick, Update, Deinstallation (Windows) sprechen nur den eigenen laufenden Helfer an (geprüft wird der Besitzer des lauschenden Ports); Mac-App „PDFMy“, Druck-Dienst „In PDFMy öffnen“, Linux-Starter und Einrichtung lesen den Port aus der Port-Datei.
+- Support: `pdfmy-Scan.exe --peer-test` schreibt ins Protokoll, wie viele laufende Prozesse zugelassen bzw. abgelehnt würden.
+- Getestet (Windows): Prozess eines anderen Benutzers (SYSTEM, Sitzung 0) → 403 auf allen Endpunkten, auch mit PDFMy-Origin; eigener Benutzer (curl, Browser) → 200; zweiter Helfer des anderen Benutzers auf 52881, beidseitig 403; Web-App wechselt selbst zum eigenen Helfer; Doppelklick startet den eigenen Helfer, statt die Datei dem fremden zu geben. Perl (Linux-Pfad, nachgebildete `/proc/net/tcp`): eigene UID 200, fremde und unbekannte 403, Ausweichport. **Offen:** Test auf einem echten Mac und Linux mit zwei Konten; Restrisiko eines vorsätzlich vorgeschobenen Fremd-Helfers auf 52880 (Abhilfe wäre eine Kopplung mit Einmal-Code – nur bei Bedarf).
+
 ### Lückensuche: Sicherheit, Datenverlust, Programmfehler (app-v199, pdfmy Scan 1.14.1, Mac/Linux 1.6.1)
 Systematische Prüfung in drei Richtungen (Sicherheit; Datenverlust und stille Fehler; latente Programmfehler – mit Gültigkeitsbereichs-Analyse aller Skripte). Jeder Befund wurde im Code nachvollzogen, die Behebung getestet.
 

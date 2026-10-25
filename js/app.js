@@ -4047,7 +4047,10 @@ async function useInbox(dir, catchUp) {
   if (missed) pollInbox();
 }
 /* ---------- Scannen: über das Programm "pdfmy Scan" (lokal, 127.0.0.1:52880) ---------- */
-const SCAN_API = 'http://127.0.0.1:52880';
+// Mehrere Benutzer auf einem Rechner (Terminalserver, Mac/Linux mit mehreren Konten): jeder hat seinen eigenen pdfmy Scan auf dem
+// ersten freien Port 52880–52889, die Helfer der anderen Benutzer antworten 403 (KONZEPT.md, 25.10.2026). Gefundener Port wird gemerkt.
+const SCAN_PORTS = Array.from({ length: 10 }, (_, i) => 52880 + i);
+let SCAN_API = 'http://127.0.0.1:' + (SCAN_PORTS.includes(LS.get('scanPort')) ? LS.get('scanPort') : 52880);
 const scanApi = async (path, opts = {}, ms = 30000) => {
   const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), ms);
   try {
@@ -4056,8 +4059,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.14.1';
-const SCAN_MAC_LATEST = '1.6.1';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.15.0';
+const SCAN_MAC_LATEST = '1.7.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
@@ -4072,10 +4075,28 @@ function countDownload(href) {
 }
 document.addEventListener('click', e => { const a = e.target.closest?.('a[href*="download/"]'); if (a) countDownload(a.href); }, true);
 const verLess = (a, b) => { const x = String(a).split('.').map(Number), y = b.split('.').map(Number); for (let i = 0; i < 3; i++) if ((x[i] || 0) !== y[i]) return (x[i] || 0) < y[i]; return false; };
+// Antwortet auf diesem Port der eigene pdfmy Scan? Helfer anderer Benutzer antworten 403, freie Ports gar nicht.
+const scanProbe = port => fetch(`http://127.0.0.1:${port}/status`, { signal: AbortSignal.timeout(1500), cache: 'no-store' })
+  .then(r => r.ok ? r.json() : null).then(d => d && d.app === 'pdfmy-scan' ? d : null).catch(() => null);
+let scanSearched = false, scanFinding = null;
+// Eigenen pdfmy Scan finden: zuerst der gemerkte Port, sonst alle 52880–52889 gleichzeitig. Ab 1.15.0 (Windows) bzw. 1.7.0 (Mac/Linux)
+// meldet /status „ownUser: true“ – der Helfer hat selbst geprüft, dass die Anfrage vom eigenen Benutzer kommt. Ältere Helfer prüfen das
+// nicht; antwortet einer, wird einmal je Seitenaufruf nach einem eigenen neueren gesucht (Übergang, bis alle Helfer aktualisiert sind).
+function scanFind() {
+  return scanFinding || (scanFinding = (async () => {
+    const cur = +SCAN_API.split(':').pop(), d = await scanProbe(cur);
+    if (d && (d.ownUser || scanSearched)) return d;
+    scanSearched = true;
+    const all = await Promise.all(SCAN_PORTS.filter(p => p !== cur).map(async p => [p, await scanProbe(p)]));
+    const hit = all.find(([, x]) => x && x.ownUser) || (!d && all.find(([, x]) => x));
+    if (!hit) return d;
+    SCAN_API = 'http://127.0.0.1:' + hit[0]; LS.set('scanPort', hit[0]);
+    return hit[1];
+  })().finally(() => { scanFinding = null; }));
+}
 async function scanHelperRunning() {
   try {
-    const r = await fetch(SCAN_API + '/status', { signal: AbortSignal.timeout(1500), cache: 'no-store' });
-    const d = r.ok && await r.json(); if (!d || d.app !== 'pdfmy-scan') return false;
+    const d = await scanFind(); if (!d) return false;
     const changed = state.scanVersion !== d.version;
     state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll

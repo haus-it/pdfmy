@@ -2212,6 +2212,7 @@ async function openFromHash() {
   const m = location.hash.match(/^#open=([a-f0-9]{16,64})$/); if (!m) return;
   history.replaceState(null, '', location.pathname + location.search);   // Einmal-Kennwort aus der Adresszeile entfernen
   try {
+    await scanHelperRunning();   // eigenen pdfmy Scan finden (auf Terminalservern ggf. nicht Port 52880)
     const r = await fetch(`${SCAN_API}/file/${m[1]}`, { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' });
     if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Fehler ' + r.status);
     const name = decodeURIComponent(r.headers.get('X-Pdfmy-Name') || 'Dokument.pdf');
