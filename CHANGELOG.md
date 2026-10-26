@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-26
 
+### Formularseiten, die der PDF-Renderer nicht zeichnen konnte (app-v203)
+- Anlass: zweiter Bericht zur selben Formular-PDF (51 Felder, 12 Seiten) nach app-v202 – die Datei öffnete jetzt vollständig (vorher 1 Seite), der Bericht nannte die Stelle genau: „Vorschau S. 4/5/6: Cannot read properties of null (reading '0')“.
+- Ursache: Beim Zeichnen der Seiten mit Formularfeldern scheitert der PDF-Renderer an einzelnen Feldern dieser Datei. Betroffen waren Vorschau, Seitenansicht und alles, was Seiten rastert (Druck, Texterkennung).
+- Behoben: Scheitert das Zeichnen, zeichnet PDFMy die Seite erneut – zuerst mit den gespeicherten Feldansichten, notfalls ohne Feldebene. Der Seiteninhalt erscheint immer; die Felder bleiben rechts ausfüllbar und werden beim Speichern eingetragen. Der Rückfall wird im Fehlerbericht mit Seitenzahl vermerkt.
+- Getestet (Headless-Chrome): Formular-PDF mit künstlich scheiterndem Zeichnen – alle Seiten mit Vorschau, Rückfall im Bericht vermerkt. Nicht getestet: die Original-PDF (liegt nur beim Melder).
+
+
 ### Fehlerbericht 26.10.2026: Formular-PDF nur teilweise geöffnet, Dateinamen im Bericht lesbar (app-v202)
 - Anlass: Bericht von Wolfgang-Udo Mertens (pdfmy Scan 1.15.0): Beim Öffnen einer PDF mit 51 Formularfeldern meldete PDFMy nach „Formular … erkannt“ den Fehler „Cannot read properties of null (reading '0')“ und „1 Seite(n) importiert. Nicht geöffnet: 1 Datei(en)“.
 - Befund: Die Formularanzeige läuft zweimal (beim Erkennen und am Ende des Öffnens). Ein Fehler darin brach das ganze Öffnen ab bzw. ließ die Datei als „nicht geöffnet“ erscheinen; ebenso hätte ein Fehler beim Übernehmen vorhandener Markierungen oder beim Zeichnen der Vorschau einer Seite das Öffnen nach dieser Seite beendet. Die genaue Ursache im betroffenen Formular ließ sich ohne die Datei nicht nachstellen (Nachbau mit 51 Feldern – Text, Ankreuz, Auswahl, Liste, Optionsfelder – öffnet fehlerfrei).

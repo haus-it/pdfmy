@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Rādīt veidlapu",
  "Markierungen S. {0}": "Iezīmes lpp. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Priekšskatījums lpp. {0}"
+ "Vorschau S. {0}": "Priekšskatījums lpp. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Zīmēt {0}. lapu (rezerves variants bez veidlapas laukiem)"
 }

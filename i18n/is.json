@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Sýna eyðublað",
  "Markierungen S. {0}": "Yfirstrikanir bls. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Forskoðun bls. {0}"
+ "Vorschau S. {0}": "Forskoðun bls. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Teikna síðu {0} (varaleið án eyðublaðsreita)"
 }

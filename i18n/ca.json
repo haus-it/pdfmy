@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Mostra el formulari",
  "Markierungen S. {0}": "Marques pàg. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Previsualització pàg. {0}"
+ "Vorschau S. {0}": "Previsualització pàg. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Dibuixa la pàgina {0} (alternativa sense camps de formulari)"
 }

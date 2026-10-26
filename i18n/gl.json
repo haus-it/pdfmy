@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Mostrar formulario",
  "Markierungen S. {0}": "Marcas páx. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Vista previa páx. {0}"
+ "Vorschau S. {0}": "Vista previa páx. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Debuxar a páxina {0} (alternativa sen campos de formulario)"
 }

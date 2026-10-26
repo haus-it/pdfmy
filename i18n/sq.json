@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Shfaq formularin",
  "Markierungen S. {0}": "Theksime f. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Parapamje f. {0}"
+ "Vorschau S. {0}": "Parapamje f. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Vizato faqen {0} (zgjidhje rezervë pa fusha formulari)"
 }

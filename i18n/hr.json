@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Prikaži obrazac",
  "Markierungen S. {0}": "Označavanja str. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Pregled str. {0}"
+ "Vorschau S. {0}": "Pregled str. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Iscrtaj stranicu {0} (zamjensko rješenje bez polja obrasca)"
 }

@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Afișare formular",
  "Markierungen S. {0}": "Evidențieri p. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Previzualizare p. {0}"
+ "Vorschau S. {0}": "Previzualizare p. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Desenare pagina {0} (variantă de rezervă fără câmpuri de formular)"
 }

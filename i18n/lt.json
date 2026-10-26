@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Rodyti formą",
  "Markierungen S. {0}": "Žymėjimai psl. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Peržiūra psl. {0}"
+ "Vorschau S. {0}": "Peržiūra psl. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Piešti {0} puslapį (atsarginis būdas be formos laukų)"
 }

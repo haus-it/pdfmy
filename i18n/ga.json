@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Taispeáin foirm",
  "Markierungen S. {0}": "Aibhsithe lch {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Réamhamharc lch {0}"
+ "Vorschau S. {0}": "Réamhamharc lch {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Leathanach {0} a tharraingt (cúltaca gan réimsí foirme)"
 }

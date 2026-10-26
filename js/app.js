@@ -580,9 +580,15 @@ async function renderPdf(p, dpi) {
   const vp = pg.getViewport({ scale: dpi / 72, rotation: p.rotation });
   const c = Imaging.canvas(Math.round(vp.width), Math.round(vp.height));
   const ctx = c.getContext('2d');
-  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
-  // intent 'print' rendert ohne requestAnimationFrame – läuft so auch in Hintergrund-Tabs weiter
-  await pg.render({ canvasContext: ctx, viewport: vp, intent: 'print' }).promise;
+  // intent 'print' rendert ohne requestAnimationFrame – läuft so auch in Hintergrund-Tabs weiter.
+  // Manche Formularfelder bringen den Renderer zum Absturz („Cannot read properties of null“, Fehlerbericht 26.10.2026, S. 4–6
+  // eines Formulars): dann mit den gespeicherten Feldansichten, notfalls ganz ohne Feldebene zeichnen – der Seiteninhalt kommt immer
+  const AM = pdfjsLib.AnnotationMode, modes = [undefined, AM?.ENABLE, AM?.DISABLE];
+  for (const [k, mode] of modes.entries()) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+    try { await pg.render({ canvasContext: ctx, viewport: vp, intent: 'print', ...(mode != null ? { annotationMode: mode } : {}) }).promise; return c; }
+    catch (e) { if (k === modes.length - 1) throw e; if (k === 0) noteError(e, `Seite ${p.pageIdx + 1} zeichnen (Rückfall ohne Formularfelder)`); }
+  }
   return c;
 }
 const PREVIEW_EAGER = 6;   // so viele Seiten werden beim Öffnen sofort gezeichnet

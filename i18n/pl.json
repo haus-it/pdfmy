@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Pokaż formularz",
  "Markierungen S. {0}": "Wyróżnienia str. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Podgląd str. {0}"
+ "Vorschau S. {0}": "Podgląd str. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Rysowanie strony {0} (rozwiązanie zastępcze bez pól formularza)"
 }

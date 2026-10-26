@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Показать форму",
  "Markierungen S. {0}": "Выделения стр. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Предпросмотр стр. {0}"
+ "Vorschau S. {0}": "Предпросмотр стр. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Отрисовка страницы {0} (запасной вариант без полей формы)"
 }

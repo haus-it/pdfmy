@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Erakutsi inprimakia",
  "Markierungen S. {0}": "Nabarmentzeak or. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Aurrebista or. {0}"
+ "Vorschau S. {0}": "Aurrebista or. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "{0}. orrialdea marraztu (ordezko bidea inprimaki-eremurik gabe)"
 }

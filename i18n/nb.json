@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Vis skjema",
  "Markierungen S. {0}": "Markeringer s. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Forhåndsvisning s. {0}"
+ "Vorschau S. {0}": "Forhåndsvisning s. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Tegn side {0} (reserve uten skjemafelt)"
 }

@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Mostrar formulário",
  "Markierungen S. {0}": "Destaques pág. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Pré-visualização pág. {0}"
+ "Vorschau S. {0}": "Pré-visualização pág. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Desenhar a página {0} (alternativa sem campos de formulário)"
 }

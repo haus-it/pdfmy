@@ -3063,5 +3063,6 @@
  "Formular anzeigen": "Zobrazit formulář",
  "Markierungen S. {0}": "Zvýraznění str. {0}",
  "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
- "Vorschau S. {0}": "Náhled str. {0}"
+ "Vorschau S. {0}": "Náhled str. {0}",
+ "Seite {0} zeichnen (Rückfall ohne Formularfelder)": "Vykreslit stranu {0} (náhradní způsob bez polí formuláře)"
 }
