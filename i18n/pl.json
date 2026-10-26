@@ -3059,5 +3059,9 @@
  "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Zarchiwizowanego pliku „{0}” nie udało się zapisać jako nowej wersji ({1}) – czy jest nadal otwarty w innym programie?",
  "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Zainstalowano: PDFMy (nieznana), pdfmy Scan nieuruchomiony. Kliknij: sprawdź aktualizacje.",
  "PDF konnte nicht erzeugt werden: {0}": "Nie udało się utworzyć PDF: {0}",
- "PDFMy ·": "PDFMy ·"
+ "PDFMy ·": "PDFMy ·",
+ "Formular anzeigen": "Pokaż formularz",
+ "Markierungen S. {0}": "Wyróżnienia str. {0}",
+ "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
+ "Vorschau S. {0}": "Podgląd str. {0}"
 }

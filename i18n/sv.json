@@ -3059,5 +3059,9 @@
  "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Den arkiverade filen ”{0}” kunde inte sparas som ny version ({1}) – är den fortfarande öppen i ett annat program?",
  "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installerat: PDFMy (okänt), pdfmy Scan inte startat. Klicka: sök efter uppdateringar.",
  "PDF konnte nicht erzeugt werden: {0}": "PDF kunde inte skapas: {0}",
- "PDFMy ·": "PDFMy ·"
+ "PDFMy ·": "PDFMy ·",
+ "Formular anzeigen": "Visa formulär",
+ "Markierungen S. {0}": "Markeringar s. {0}",
+ "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
+ "Vorschau S. {0}": "Förhandsvisning s. {0}"
 }

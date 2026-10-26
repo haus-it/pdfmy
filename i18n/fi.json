@@ -3059,5 +3059,9 @@
  "Die abgelegte Datei „{0}“ konnte nicht als neue Version gespeichert werden ({1}) – ist sie noch in einem anderen Programm geöffnet?": "Arkistoitua tiedostoa ”{0}” ei voitu tallentaa uutena versiona ({1}) – onko se vielä auki toisessa ohjelmassa?",
  "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Asennettu: PDFMy (tuntematon), pdfmy Scan ei käynnissä. Napsauta: etsi päivityksiä.",
  "PDF konnte nicht erzeugt werden: {0}": "PDF:ää ei voitu luoda: {0}",
- "PDFMy ·": "PDFMy ·"
+ "PDFMy ·": "PDFMy ·",
+ "Formular anzeigen": "Näytä lomake",
+ "Markierungen S. {0}": "Korostukset s. {0}",
+ "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip": "pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip",
+ "Vorschau S. {0}": "Esikatselu s. {0}"
 }

@@ -99,6 +99,14 @@ const logLine = t => {
 // Programmfehler mit gekürzter Aufrufkette für den Bug-Melder; nach dem ersten echten Fehler einmal je Sitzung das Melden anbieten
 const appErrors = [];
 const BENIGN_ERR = /ResizeObserver loop|AbortError|The user aborted|aborted a request|NotAllowedError|^Script error\.?$/i;
+// Abgefangene Fehler (z. B. beim Öffnen einer Datei) mit Aufrufkette für den Bericht festhalten – ohne Hinweis, der Nutzer sah schon eine Meldung
+function noteError(err, where) {
+  console.error(where || '', err);
+  if (!err || BENIGN_ERR.test(err.name || '') || BENIGN_ERR.test(String(err.message || ''))) return;
+  appErrors.push({ time: new Date().toLocaleTimeString('de-DE'), msg: (where ? where + ': ' : '') + (err.message || err), stack: String(err.stack || '').split('\n').slice(0, 6).join('\n') });
+  if (appErrors.length > 10) appErrors.shift();
+  appErrors.count = (appErrors.count || 0) + 1;
+}
 function appError(msg, err, file) {
   msg = String(msg || 'Unbekannter Fehler');
   logLine('FEHLER ' + msg + (file ? ` (${file})` : ''));
@@ -151,7 +159,7 @@ async function importFiles(files, { fromCamera = false } = {}) {
 async function importFilesRun(files, fromCamera) {
   const before = state.pages.length, failed = [];
   for (const f of files) {
-    const n = f.name.toLowerCase();
+    const n = f.name.toLowerCase(); (window.seenFileNames ||= new Set()).add(f.name);   // für das Unkenntlichmachen im Fehlerbericht
     try {
       status(`Importiere ${f.name} …`);
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
@@ -164,7 +172,7 @@ async function importFilesRun(files, fromCamera) {
       else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)`); failed.push(f.name); continue; }
       state.inputBytes += f.size;
     } catch (e) {
-      console.error(e);
+      noteError(e, 'Öffnen');
       status(e.name === 'AbortError' ? `${f.name}: Öffnen abgebrochen.` : unreadable(f.name, e));
       if (e.name !== 'AbortError') failed.push(f.name);
     }
@@ -528,8 +536,11 @@ async function importPdf(file) {
     const text = tc.items.map(it => it.str + (it.hasEOL ? '\n' : ' ')).join('').trim();
     const p = { id: ++uid, kind: 'pdf', docIdx, pageIdx: i - 1, rotation: pg.rotate || 0, annots: [], ocr: null,
       native: text.length > 20 ? text : null, hasText: /\S/.test(text), label: `${file.name} S. ${i}` };
-    const mk = state.docs[docIdx].markup?.get(i - 1);
-    if (mk) { const vp = pg.getViewport({ scale: 1, rotation: p.rotation }); for (const m of mk) { const an = markupAnnot(m, vp); if (an) p.annots.push(an); } }
+    // Zusatzfunktionen pro Seite dürfen das Öffnen nicht abbrechen (Fehlerbericht 26.10.2026: nach Seite 1 abgebrochen)
+    try {
+      const mk = state.docs[docIdx].markup?.get(i - 1);
+      if (mk) { const vp = pg.getViewport({ scale: 1, rotation: p.rotation }); for (const m of mk) { const an = markupAnnot(m, vp); if (an) p.annots.push(an); } }
+    } catch (e) { noteError(e, `Markierungen S. ${i}`); }
     if (!p.native && S.scanPdf && await isScannedPage(pg)) {
       // Scan-PDF: Seite als Bild übernehmen und wie einen Scan aufbereiten (gerade richten, Ausrichtung, Kompakt-Speicherung)
       status(`Bereite Scan auf: ${file.name}, Seite ${i} von ${js.numPages} …`, (i - 1) / js.numPages);
@@ -540,16 +551,18 @@ async function importPdf(file) {
       continue;
     }
     // Große Dokumente: nur die ersten Seiten sofort zeichnen, die übrigen erst, wenn sie sichtbar werden (Maße aus dem Seitenformat)
-    if (i <= PREVIEW_EAGER) await renderPdfPreview(p);
-    else { const vp = pg.getViewport({ scale: 120 / 72, rotation: p.rotation }); p.w = Math.round(vp.width); p.h = Math.round(vp.height); if (p.native || p.hasText) p.blank = false; }
+    const lazy = () => { const vp = pg.getViewport({ scale: 120 / 72, rotation: p.rotation }); p.w = Math.round(vp.width); p.h = Math.round(vp.height); if (p.native || p.hasText) p.blank = false; };
+    if (i <= PREVIEW_EAGER) { try { await renderPdfPreview(p); } catch (e) { noteError(e, `Vorschau S. ${i}`); lazy(); } }   // Vorschau später nachzeichnen statt abbrechen
+    else lazy();
     if (i % 25 === 0) status(`Öffne ${file.name}: Seite ${i} von ${js.numPages} …`, i / js.numPages);
     if (i <= 2) try { readQr(p, await renderPdf(p, 200)); } catch (e) { console.warn('QR', e); }   // Zahl-QR steht auf den ersten Seiten
     await flush();
     state.pages.push(p);
   }
   await flush();
-  await formCheck; renderForm();
-  window.reqAfterImport?.(docIdx);
+  await formCheck;
+  try { renderForm(); } catch (e) { noteError(e, 'Formular anzeigen'); }   // die Seiten sind schon da – nicht als „nicht geöffnet“ melden
+  try { window.reqAfterImport?.(docIdx); } catch (e) { noteError(e, 'Unterschriftsanfrage'); }
 }
 
 // "Automatisch": farbige Seiten behalten Farbe, alle anderen werden als Dokument (Graustufen, Papier weiß) aufbereitet
@@ -4657,7 +4670,7 @@ async function detectForm(docIdx) {
     }
     d.fields = fields; d.values = {};
   } catch (e) { console.warn('Formular:', e); d.fields = []; }
-  renderForm();
+  try { renderForm(); } catch (e) { noteError(e, 'Formular anzeigen'); }   // Anzeigefehler darf das Öffnen nicht abbrechen
   if (d.fields.length) {
     status(`Formular mit ${d.fields.length} Feldern erkannt – rechts ausfüllen, dann speichern.`);
     if (state.intent === 'form') $('#formSec').scrollIntoView({ behavior: 'smooth' });

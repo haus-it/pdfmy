@@ -2,6 +2,15 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-26
+
+### Fehlerbericht 26.10.2026: Formular-PDF nur teilweise geöffnet, Dateinamen im Bericht lesbar (app-v202)
+- Anlass: Bericht von Wolfgang-Udo Mertens (pdfmy Scan 1.15.0): Beim Öffnen einer PDF mit 51 Formularfeldern meldete PDFMy nach „Formular … erkannt“ den Fehler „Cannot read properties of null (reading '0')“ und „1 Seite(n) importiert. Nicht geöffnet: 1 Datei(en)“.
+- Befund: Die Formularanzeige läuft zweimal (beim Erkennen und am Ende des Öffnens). Ein Fehler darin brach das ganze Öffnen ab bzw. ließ die Datei als „nicht geöffnet“ erscheinen; ebenso hätte ein Fehler beim Übernehmen vorhandener Markierungen oder beim Zeichnen der Vorschau einer Seite das Öffnen nach dieser Seite beendet. Die genaue Ursache im betroffenen Formular ließ sich ohne die Datei nicht nachstellen (Nachbau mit 51 Feldern – Text, Ankreuz, Auswahl, Liste, Optionsfelder – öffnet fehlerfrei).
+- Behoben: Formularanzeige, Markierungen und Vorschau je Seite sind abgesichert – die Seiten werden immer übernommen, eine fehlende Vorschau wird später gezeichnet. Abgefangene Fehler beim Öffnen kommen jetzt mit Ort und Aufrufkette in den Fehlerbericht („Programmfehler seit dem Start“), damit ein erneuter Bericht die Stelle zeigt.
+- Datenschutz: Dateinamen mit Leerzeichen wurden im Bericht nur ab dem letzten Leerzeichen unkenntlich gemacht („… Finanzamt Paderborn – Mertens W. und N. – Bescheid füt [Datei].pdf“). Jetzt werden geöffnete Dateinamen vollständig ersetzt, ebenso alles nach einem Pfadtrenner oder „: “ bis zur Endung.
+- Getestet (Headless-Chrome): Formular mit 51 Feldern über 2 Seiten öffnet mit allen Feldern; mit künstlichem Fehler in der Formularanzeige werden beide Seiten übernommen, ohne „Nicht geöffnet“, Fehler mit Aufrufkette im Bericht; Unkenntlichmachen an den Originalzeilen des Berichts.
+
 ## 2026-10-25
 
 ### Restbefunde der Lückensuche (app-v201)
