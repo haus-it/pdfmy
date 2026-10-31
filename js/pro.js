@@ -2121,9 +2121,21 @@ const reportText = () => {
     + (idea ? '' : f('Was hätte ich erwartet', '#repExpect')) + '\n' + repShown();
 };
 const reportSubject = () => `${APP.name} ${repKind} – ${state.scanVersion ? 'pdfmy Scan ' + state.scanVersion + ' – ' : ''}${new Date().toLocaleDateString('de-DE')}`;
+// Ohne Beschreibung sagt ein Bericht kaum etwas – einmal nachfragen; „Abbrechen“ führt ins Feld
+function reportReady() {
+  if (['#repDid', '#repWhat', '#repExpect'].some(id => $(id).value.trim())) return true;
+  if (confirm('Ohne Beschreibung lässt sich das Problem schwer finden.\n\nTrotzdem senden? „Abbrechen“ führt zurück zum Eintragen.')) return true;
+  $('#repWhat').focus(); return false;
+}
+// E-Mail-Text: Angaben und die letzten Meldungen – das vollständige Protokoll liegt im Anhang (so bleibt der Text auch kopiert aussagekräftig)
+function reportMailBody(txt) {
+  const [head, rest = ''] = txt.split('\n--- Letzte Meldungen'), msgs = rest.split('\n--- Protokoll')[0].split('\n').slice(1).filter(Boolean).slice(-10);
+  return head + (msgs.length ? '\n--- Letzte Meldungen ---\n' + msgs.join('\n') + '\n' : '');
+}
 $('#repOutlook').onclick = async () => {
+  if (!reportReady()) return;
   const txt = reportText(), enc = new TextEncoder();
-  const eml = Journal.emlDraft({ to: SUPPORT, subject: reportSubject(), body: txt.split('\n--- Letzte Meldungen')[0] + '\n\nDas vollständige Protokoll ist angehängt.\n\nViele Grüße' + (S.author ? '\n' + S.author : ''),
+  const eml = Journal.emlDraft({ to: SUPPORT, subject: reportSubject(), body: reportMailBody(txt) + '\n\nDas vollständige Protokoll ist angehängt.\n\nViele Grüße' + (S.author ? '\n' + S.author : ''),
     attachments: [{ name: `Protokoll_${new Date().toISOString().slice(0, 16).replace(/\D/g, '')}.txt`, mime: 'text/plain', bytes: enc.encode(txt) }] });
   $('#reportDlg').close();
   if (await openEml(enc.encode(eml), 'Fehlerbericht_PDFMy.eml')) return status(`Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an ${SUPPORT}).`);
@@ -2131,6 +2143,7 @@ $('#repOutlook').onclick = async () => {
   toast('E-Mail vorbereitet: Datei „Fehlerbericht_PDFMy.eml“ öffnen und senden.', 8000);
 };
 $('#repMailto').onclick = async () => {
+  if (!reportReady()) return;
   const txt = reportText();
   try { await navigator.clipboard.writeText(txt); } catch {}
   // mailto-Links sind in der Länge begrenzt: Kopf (Versionen) + die NEUESTEN Protokollzeilen behalten, vollständig in der Zwischenablage
@@ -3768,7 +3781,9 @@ function offerReopen(snap, name) {
   lastClosed = { snap, name };
   $('#closedText').textContent = `„${name}“ geschlossen (${snap.pages.length} Seite(n)).`;
   const b = $('#closedBanner'); b.hidden = false;
-  clearTimeout(b._h); b._h = setTimeout(() => { b.hidden = true; lastClosed = null; }, 20000);
+  const arm = () => { clearTimeout(b._h); b._h = setTimeout(() => { b.hidden = true; lastClosed = null; }, 20000); };
+  arm(); b.onmouseenter = () => clearTimeout(b._h); b.onmouseleave = arm;
+  $('#closedUndo').focus({ preventScroll: true });   // sonst viele Tabulatorschritte – die Frist wäre abgelaufen
 }
 $('#closedUndo').onclick = () => {
   const c = lastClosed; $('#closedBanner').hidden = true; lastClosed = null; if (!c) return;
@@ -3780,7 +3795,7 @@ $('#closedUndo').onclick = () => {
 $('#closedX').onclick = () => { $('#closedBanner').hidden = true; lastClosed = null; };
 function closeTab(i) {
   const s = i === tabCur ? snapshot() : tabs[i].snap, unsaved = s && s.dirty && s.pages.length;
-  if (unsaved && !confirm(`„${tabName(i)}“ schließen? Die ${s.pages.length} Seite(n) wurden noch nicht gespeichert.\n\nZum Behalten auf „Abbrechen“ tippen und dann „Speichern“, „Ablegen“ oder „Teilen“ wählen.`)) return;
+  if (unsaved && !confirm(`„${tabName(i)}“ schließen? Die ${s.pages.length} Seite(n) wurden noch nicht gespeichert.\n\nZum Behalten „Abbrechen“ wählen und dann „Speichern“, „Ablegen“ oder „Teilen“ wählen.`)) return;
   if (s && s.pages.length) { offerReopen(s, tabName(i)); logLine(`Dokument geschlossen: ${s.pages.length} Seite(n)${unsaved ? ', nicht gespeichert' : ''}`); }
   if (tabs.length === 1) { resetDoc(); tabs[0].snap = null; renderTabs(); status('Bereit.'); return; }
   if (i !== tabCur) tabs[tabCur].snap = snapshot();

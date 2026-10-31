@@ -129,6 +129,25 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | 6 Wenig aktive Inhalte | passt (betrifft keine PDF) |
 **Entscheidung:** umsetzen (Lückensuche 25.10.2026), pdfmy Scan 1.15.0 (Windows) und 1.7.0 (Mac/Linux).
 
+### Entschieden 31.10.2026: PDFMy-App für Android (Tablet und Handy) mit Scannersuche im Netzwerk
+**Anlass (GF 31.10.2026):** „Wir müssen eine Lösung für Tablets finden. So einfach wie möglich installierbar, die App soll auch auf dem Tablet den Scanner im Netzwerk finden.“ Im Browser ist das nicht lösbar: Eine Webseite darf das Netz nicht durchsuchen (mDNS, WSD-Rundruf) und Scanner wegen CORS und gemischter Inhalte nicht ansprechen; pdfmy Scan läuft nicht auf Tablets.
+**Vorschlag:** Android-App aus dem Play Store. Für den Nutzer: installieren, öffnen, „Scannen“, Scanner antippen.
+**Aufbau:** Die App enthält dieselbe PDFMy-Oberfläche wie die Website als eingebaute Dateien (Capacitor, WebView), also offline und ohne zweite Codebasis für die Oberfläche. Ein kleines natives Modul übernimmt, was pdfmy Scan am PC tut: Suche (Bonjour/NsdManager für eSCL, WSD-Rundruf) und Scan (eSCL, WSD). Die Web-App spricht es über dieselbe Schnittstelle an wie pdfmy Scan, sodass Scan-Fenster und Abläufe gleich bleiben. Dazu „Öffnen mit“ und „Teilen“ für PDFs.
+**Beleg für den Protokollumfang:** Die Protokolle der echten Geräte (Brother MFC-9142CDN, EPSON L5290) zeigen Fund über WSD und „0 eSCL“. Nur eSCL (AirScan) reicht daher nicht; die WSD-Logik aus tools/pdfmy-scan/Wsd.cs wird übertragen.
+**Reihenfolge:** (1) Android-Gerüst mit Oberfläche und Dateiöffnen. (2) Scannersuche und Scan, Test mit echtem Tablet im Netz der GF. (3) Veröffentlichung im Play Store. (4) iPad getrennt prüfen: braucht Mac und Apple-Konto, WSD-Rundruf nach bisheriger Kenntnis zusätzlich eine Apple-Genehmigung (vor dem Bau klären).
+**Grenzen:** Ein Scanner im anderen Netz oder hinter Gäste-WLAN wird nicht gefunden. Nur wenn der Scanner weder eSCL noch WSD im Netz anbietet, bleibt die Kamera. Updates laufen über den Play Store, sind also langsamer als auf der Website.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Scans gehen nur vom Scanner im eigenen Netz aufs Gerät, kein Upload. Play-Store-Datenschutzangabe: keine Datenerhebung; kein Analyse- oder Absturz-SDK |
+| 2 Kein Server, keine Fremddienste | passt mit Auflage: Oberfläche ist eingebaut, pdfmy.de bleibt statisch; der Store ist nur Vertriebsweg (Google-Konto des Nutzers wie bei jeder App) |
+| 3 Kostenlos, ohne Konto, ohne Werbung | passt für den Nutzer. Einmalige Gebühr und Entwicklerkonto trägt die Mentor GmbH |
+| 4 So einfach wie möglich | passt: das ist der Zweck – keine Konsole, kein Zusatzprogramm, kein PC |
+| 5 Normgerecht und prüfbar | passt mit Auflage: gleiche PDF-Erzeugung; Quelltext im Repo; Barrierefreiheit (TalkBack) und Test auf echtem Gerät; Lizenzprüfung für PolyForm NC im Store durch GF offen |
+| 6 Wenig aktive Inhalte | passt (betrifft keine PDF) |
+| 7 Besser als der Wettbewerb | passt: Scannen ohne Herstellersoftware, ohne Konto |
+**Entscheidung:** Android zuerst umsetzen (Auftrag GF 31.10.2026). **Offen, nur durch GF:** Google-Play-Entwicklerkonto der Mentor GmbH; Freigabe für die Installation der Android-Bauumgebung; ein Android-Tablet zum Testen im Netz mit den Scannern.
+
 ### Entschieden 25.10.2026: Bug-Melder ausbauen
 **Anlass (GF 25.10.2026):** „Bug-Melder einbauen“. Vorhanden war „Mehr → Problem melden“ (E-Mail mit Versionen und Protokoll, Unkenntlichmachen, Vorschau). Lücken: schwer zu finden (nur im Menü „Mehr“); Programmfehler werden nur still protokolliert, PDFMy bietet nie von sich aus das Melden an; nur ein Freitextfeld (keine Art, keine Schritte zum Nachstellen, kein erwartetes Ergebnis); bei Programmfehlern keine Aufrufkette; von Hilfe-, Scanner- und Werkzeugseiten aus kein Weg zum Melden.
 **Umfang:** (1) Knopf „Fehler melden“ dauerhaft in der Fußleiste. (2) Nach einem unerwarteten Programmfehler einmal je Sitzung ein Hinweis unten „Da ist etwas schiefgelaufen – Fehler melden / Schließen“; der Fehler ist im Bericht vorbelegt; harmlose Meldungen (Browser-Erweiterungen fremder Herkunft, abgebrochene Downloads, ResizeObserver) lösen ihn nicht aus. (3) Formular: Art (Fehler / Verbesserungsvorschlag), „Was haben Sie gemacht?“, „Was ist passiert?“, „Was hätten Sie erwartet?“ – alles freiwillig. (4) Technik im Bericht: Fehler mit gekürzter Aufrufkette (Pfade unkenntlich), Anzahl der Fehler seit dem Start. (5) Hilfe- und Webseiten: Link „Fehler melden“ öffnet PDFMy mit dem Melde-Fenster (`?melden`).

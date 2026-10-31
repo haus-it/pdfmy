@@ -550,7 +550,7 @@ header{height:64px;padding:0 20px!important;gap:20px;flex-wrap:nowrap;position:r
 #btnSave .ic{stroke:currentColor}
 body:not(.has-doc) .hsep{display:none}
 .menu-list{top:calc(100% + 8px);min-width:290px;padding:6px;border-radius:12px;box-shadow:var(--sh-lg);max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}.menu-list>*{flex-shrink:0}
-.mi{justify-content:flex-start;align-items:center;gap:12px;padding:0 10px;height:38px;font-weight:500;color:var(--text)}
+.mi{justify-content:flex-start;align-items:center;gap:12px;padding:0 10px;min-height:38px;white-space:normal;font-weight:500;color:var(--text)}
 .mi:hover{background:var(--hover)}
 .mi .ic{color:var(--muted)}
 .mi:hover .ic{color:var(--accent)}
@@ -708,7 +708,7 @@ footer{min-height:30px;padding:4px 20px;font-size:12.5px}
 #mobBar{display:none}
 @media (max-width:700px){
   body.has-doc #mobBar{display:flex;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.06)}
-  #mobBar button{flex:1;height:46px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15.5px;font-weight:600;border-radius:12px}
+  #mobBar button{flex:1 1 0;min-width:0;padding:0 6px;height:46px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15.5px;font-weight:600;border-radius:12px}#mobBar button span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#mobBar button svg{flex:none}
   #mobBar button[hidden]{display:none}
   body.has-doc #btnShareTop,body.has-doc #btnFile,body.has-doc #btnSave,body.has-doc #btnSaveAs{display:none}
 }
@@ -845,9 +845,12 @@ label[role=button]:focus-visible,.thumb:focus-visible,#viewer:focus-visible,.car
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important} }
 .danger-outline{color:var(--bad)!important;border-color:color-mix(in srgb,var(--bad) 45%,var(--line))!important;margin-top:6px}
-.updbanner{position:fixed;left:50%;transform:translateX(-50%);top:74px;z-index:40;display:flex;align-items:center;gap:14px;max-width:min(760px,94vw);padding:10px 12px 10px 16px;border-radius:10px;background:var(--panel);border:1px solid color-mix(in srgb,var(--warn) 55%,var(--line));box-shadow:var(--sh-lg);font-weight:500}
+.formjump{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:35;padding:0 18px;height:44px;border-radius:22px;box-shadow:var(--sh-lg);white-space:nowrap}
+.bannerstack{position:fixed;left:50%;transform:translateX(-50%);top:74px;z-index:40;display:flex;flex-direction:column;gap:8px;width:max-content;max-width:min(760px,94vw);pointer-events:none}
+body:has(.updbanner:not([hidden])) .toast{top:auto;bottom:96px}
+.updbanner{pointer-events:auto;display:flex;align-items:center;gap:14px;max-width:min(760px,94vw);padding:10px 12px 10px 16px;border-radius:10px;background:var(--panel);border:1px solid color-mix(in srgb,var(--warn) 55%,var(--line));box-shadow:var(--sh-lg);font-weight:500}
 .updbanner a.btn{height:34px;padding:0 14px;white-space:nowrap}
-@media (max-width:700px){ .updbanner{flex-wrap:wrap;top:120px} }
+@media (max-width:700px){ .bannerstack{left:3vw;right:3vw;transform:none;width:auto;max-width:none;top:120px} .updbanner{flex-wrap:wrap} }
 .brand{cursor:pointer}
 #scanErrDlg.logmode ul,#scanErrDlg.logmode #scanErrRetry{display:none}
 .brand:hover .pdfmark{opacity:.85}
@@ -907,7 +910,7 @@ body:not(.has-doc) #btnShareTop{display:none}
 .camtop,.cambottom{grid-column:1;position:relative;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top))}
 .camtop{grid-row:1;background:linear-gradient(rgba(0,0,0,.6),transparent)}
 .cambottom{grid-row:3;background:linear-gradient(transparent,rgba(0,0,0,.7));padding-bottom:max(18px,env(safe-area-inset-bottom));justify-content:space-between}
-.camhint{flex:1;text-align:center;font-size:15px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.camtop{flex-wrap:wrap}.camhint{flex:1 1 100%;order:-1;text-align:center;font-size:15px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.7)}
 .camic{width:44px;height:44px;border-radius:50%!important;border:0;background:rgba(255,255,255,.14);color:#fff;justify-content:center;padding:0}
 .camic:hover{background:rgba(255,255,255,.26)}
 .camic[aria-pressed="true"]{background:#fde047;color:#000}
@@ -1532,7 +1535,7 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" id="signCancel">Abbrechen</button><button type="button" id="signOk" class="primary">Übernehmen</button></div>
 </dialog>
 
-<dialog id="expDlg">
+<dialog id="expDlg" aria-labelledby="x-title">
   <form method="dialog" id="expForm">
     <h3 class="dlgtitle" id="x-title">Speichern</h3>
     <p class="hint" id="x-task" hidden></p>
@@ -1625,8 +1628,8 @@ html.i18n-wait body{visibility:hidden}
   </form>
 </dialog>
 
-<dialog id="scanDlg">
-  <h3 class="dlgtitle">Scannen</h3>
+<dialog id="scanDlg" aria-labelledby="scanDlgT">
+  <h3 class="dlgtitle" id="scanDlgT">Scannen</h3>
   <div id="scanReady" hidden>
     <div id="scanUpdate" class="scanupdate" hidden><b>pdfmy Scan <span class="scanVerNew"></span></b> ist verfügbar – installiert ist <span id="scanVerOld"></span>. <a id="scanUpdateLink" download>Version <span class="scanVerNew"></span> herunterladen</a>, Datei öffnen, fertig.</div>
     <div id="scanList" class="scanlist" role="radiogroup" aria-label="Scanner"></div>
@@ -1704,8 +1707,8 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint" id="scanWait">Suche Scanner …</p>
 </dialog>
 
-<dialog id="scanErrDlg">
-  <h3 class="dlgtitle">Scannen hat nicht geklappt</h3>
+<dialog id="scanErrDlg" aria-labelledby="scanErrDlgT">
+  <h3 class="dlgtitle" id="scanErrDlgT">Scannen hat nicht geklappt</h3>
   <p id="scanErrMsg"></p>
   <ul class="help">
     <li>Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Vorlage“ können Sie das Glas wählen.</li>
@@ -1821,7 +1824,7 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint" style="margin:-6px 0 12px">PDFMy arbeitet in Ihrem Browser. Hier sehen Sie, welche Verbindungen dieses Fenster seit dem Öffnen aufgebaut hat – und ob dabei Daten gesendet wurden.</p>
   <p id="netOnline" role="status" aria-live="polite"></p>
   <p id="netSent" class="netsent"></p>
-  <ul id="netList" class="netlist"></ul>
+  <ul id="netList" class="netlist" tabindex="0"></ul>
   <div id="netVer" class="netver" role="status" aria-live="polite" hidden></div>
   <details class="nethow"><summary>So prüfen Sie es selbst</summary><ol>
     <li>WLAN ausschalten oder das Netzwerkkabel ziehen.</li>
@@ -1896,9 +1899,9 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint">Lesezeichen erscheinen in PDF-Programmen und Browsern als Inhaltsverzeichnis. Sie werden beim Speichern in die PDF geschrieben.</p>
   <div class="dlgrow"><button type="button" id="tocClose">Schließen</button></div>
 </dialog>
-<dialog id="helpDlg">
+<dialog id="helpDlg" aria-labelledby="helpDlgT">
   <form method="dialog">
-    <h3 class="dlgtitle">So einfach geht's</h3>
+    <h3 class="dlgtitle" id="helpDlgT">So einfach geht's</h3>
     <div class="helpsearch" role="search"><input id="helpQ" type="search" placeholder="Hilfe durchsuchen, z. B. Scanner, unterschreiben" aria-label="Hilfe durchsuchen" autocomplete="off" enterkeyhint="search"><button type="button" id="helpQBtn"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>Suchen</button></div>
     <ol class="help">
       <li><b>Öffnen</b> – oder Datei ins Fenster ziehen. Mit <b>Scanner verbinden</b> kommen neue Scans automatisch.</li>
@@ -1926,7 +1929,7 @@ html.i18n-wait body{visibility:hidden}
   </form>
 </dialog>
 
-<dialog id="cmdDlg" class="cmddlg">
+<dialog id="cmdDlg" class="cmddlg" aria-label="Funktion suchen">
   <div class="cmdq"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="cmdQ" role="combobox" aria-expanded="true" aria-controls="cmdOut" aria-autocomplete="list" aria-label="Funktion suchen" placeholder="Was möchten Sie tun? z. B. schwärzen, Word, Fristen …" autocomplete="off" spellcheck="false"></div>
   <div id="cmdOut" class="cmdout" role="listbox" aria-label="Gefundene Funktionen"></div>
   <p class="hint cmdfoot"><kbd>↑</kbd> <kbd>↓</kbd> auswählen · <kbd>Enter</kbd> ausführen · <kbd>Esc</kbd> schließen</p>
@@ -1942,7 +1945,7 @@ html.i18n-wait body{visibility:hidden}
     <button type="button" id="camTorch" class="camic" hidden aria-pressed="false" title="Licht"><svg class="ic" aria-hidden="true"><use href="#i-flashlight"/></svg></button>
   </div>
   <div class="cambottom">
-    <div id="camStrip" class="camstrip" aria-label="Aufgenommene Seiten (antippen zum Verwerfen)"></div>
+    <div id="camStrip" class="camstrip" role="group" aria-label="Aufgenommene Seiten (antippen zum Ansehen)"></div>
     <button type="button" id="camShutter" class="camshutter" title="Jetzt aufnehmen"><span id="camRing"></span></button>
     <button type="button" id="camDone" class="primary camdone" disabled>Fertig</button>
   </div>
@@ -1953,8 +1956,8 @@ html.i18n-wait body{visibility:hidden}
   </div>
 </dialog>
 
-<dialog id="reportDlg" class="sharedlg">
-  <h3 class="dlgtitle">Problem melden</h3>
+<dialog id="reportDlg" class="sharedlg" aria-labelledby="reportDlgT">
+  <h3 class="dlgtitle" id="reportDlgT">Problem melden</h3>
   <p class="hint" style="margin:-8px 0 10px">Der Bericht geht an <b id="repTo"></b>. Er enthält die Versionen, das Protokoll von pdfmy Scan und die letzten Meldungen – keine Dokumente. Unter „Inhalt des Berichts“ sehen Sie vorher genau, was gesendet wird.</p>
   <label class="setauto" style="margin:0 0 10px"><input type="checkbox" id="repMask" checked> Dateinamen, Absender und E-Mail-Adressen unkenntlich machen</label>
   <fieldset class="reptype"><legend>Worum geht es?</legend><label><input type="radio" name="repType" value="bug" checked> Fehler</label><label><input type="radio" name="repType" value="idea"> Verbesserungsvorschlag</label></fieldset>
@@ -1964,9 +1967,12 @@ html.i18n-wait body{visibility:hidden}
   <details class="sec"><summary><b>Inhalt des Berichts</b></summary><pre id="repText" class="errdetail" style="max-height:220px"></pre></details>
   <div class="dlgrow"><button type="button" id="repCancel">Abbrechen</button><button type="button" id="repMailto" title="Öffnet das Standard-Mailprogramm; das vollständige Protokoll liegt zusätzlich in der Zwischenablage">E-Mail-Programm</button><button type="button" class="primary" id="repOutlook"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>E-Mail mit Anhang (Outlook)</button></div>
 </dialog>
+<button type="button" id="formJump" class="formjump primary" hidden>Formular ausfüllen</button>
+<div class="bannerstack">
 <div id="errBanner" class="updbanner errbanner" role="alert" hidden><span>Da ist etwas schiefgelaufen. Möchten Sie uns den Fehler melden? Ihre Dokumente sind nicht betroffen und werden nicht gesendet.</span><button type="button" id="errBannerGo" class="primary">Fehler melden</button><button type="button" id="errBannerLater" class="linkbtn">Schließen</button></div>
 <div id="closedBanner" class="updbanner" role="status" hidden><span id="closedText"></span><button type="button" id="closedUndo" class="primary">Wieder öffnen</button><button type="button" id="closedX" class="linkbtn" aria-label="Hinweis schließen">Schließen</button></div>
-<div id="updBanner" class="updbanner" hidden><span id="updBannerText"></span><a id="updBannerGo" class="btn primary" download>Jetzt aktualisieren</a><button type="button" id="updBannerLater" class="linkbtn">Später</button></div>
+<div id="updBanner" class="updbanner" role="status" hidden><span id="updBannerText"></span><a id="updBannerGo" class="btn primary" download>Jetzt aktualisieren</a><button type="button" id="updBannerLater" class="linkbtn">Später</button></div>
+</div>
 
 <dialog id="openDlg" class="sharedlg" aria-labelledby="openT">
   <h3 class="dlgtitle" id="openT">Datei öffnen</h3>
@@ -2051,8 +2057,8 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" id="setLater">Später</button><button type="button" id="setDone" class="primary">Fertig</button></div>
 </dialog>
 
-<dialog id="shareDlg" class="sharedlg">
-  <h3 class="dlgtitle">Teilen</h3>
+<dialog id="shareDlg" class="sharedlg" aria-labelledby="shareDlgT">
+  <h3 class="dlgtitle" id="shareDlgT">Teilen</h3>
   <p class="hint" id="shName" style="margin:-8px 0 14px"></p>
   <button type="button" class="shbtn primary" id="shSystem"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg><span><b>Teilen …</b><small id="shSystemHint"></small></span></button>
   <button type="button" class="shbtn" id="shMail"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span><b>E-Mail mit Anhang (Outlook)</b><small>Neue Nachricht mit dem PDF als Anhang – Empfänger eintragen, senden</small></span></button>
@@ -2060,8 +2066,8 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" id="shCancel">Schließen</button></div>
 </dialog>
 
-<dialog id="taxDlg">
-  <h3 class="dlgtitle">Belege für den Steuerberater</h3>
+<dialog id="taxDlg" aria-labelledby="taxDlgT">
+  <h3 class="dlgtitle" id="taxDlgT">Belege für den Steuerberater</h3>
   <p class="hint" style="margin:-8px 0 14px">Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und eine Importdatei für DATEV Unternehmen online.</p>
   <div class="xrow"><label class="xl" for="taxMonth">Monat</label><div class="chips"><input id="taxMonth" type="month"></div></div>
   <div class="xrow"><span class="xl" id="taxTypesL">Belegarten</span><div class="chips" id="taxTypes" role="group" aria-labelledby="taxTypesL"></div></div>
@@ -2072,22 +2078,22 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" id="taxCancel">Abbrechen</button><button type="button" class="primary" id="taxGo">ZIP erstellen …</button></div>
 </dialog>
 
-<dialog id="jDlg" class="wide">
-  <h3 class="dlgtitle">Posteingangsbuch &amp; Akten</h3>
+<dialog id="jDlg" class="wide" aria-labelledby="jDlgT">
+  <h3 class="dlgtitle" id="jDlgT">Posteingangsbuch &amp; Akten</h3>
   <div class="seg jview" role="group" aria-label="Ansicht"><button type="button" id="jvList" aria-pressed="true">Dokumente</button><button type="button" id="jvCases" aria-pressed="false">Akten</button></div>
   <div class="jbar"><input id="jq" type="search" placeholder="Suchen – Absender, Betreff, Betrag, Zeichen, auch im Text aller Briefe der Ablage">
     <select id="jAkte" aria-label="Akte"><option value="">Alle Akten</option></select><select id="jTag" aria-label="Schlagwort"><option value="">Alle Schlagwörter</option></select><select id="jYear" aria-label="Jahr"><option value="">Alle Jahre</option></select><select id="jf" aria-label="Filter"><option value="all">Alle</option><option value="mine">Meine Post</option><option value="open">Offen</option><option value="due">Mit Frist (offen)</option><option value="paid">Bezahlt</option><option value="done">Erledigt</option><option value="expired">Aufbewahrung abgelaufen</option></select>
     <button type="button" id="jBank" class="linkbtn" title="Umsätze aus dem Online-Banking (CAMT-XML oder CSV) einlesen – bezahlte Rechnungen werden erkannt und auf „bezahlt“ gesetzt">Kontoauszug abgleichen …</button><input id="jBankFile" type="file" accept=".xml,.csv,.txt,text/csv,application/xml" hidden>
     <button type="button" id="jRetainMove" class="linkbtn" hidden title="Abgelaufene Belege in den Unterordner „_Aufbewahrung abgelaufen“ verschieben – nichts wird gelöscht">In Ordner „_Aufbewahrung abgelaufen“ verschieben …</button>
     <span class="hint" id="jCount"></span></div>
-  <div class="jcases" id="jCases" hidden></div><div class="jmain"><div class="jwrap" id="jWrap"><table class="jtab"><thead><tr><th>Status</th><th>Zuständig</th><th>Akte</th><th>Eingang</th><th>Absender</th><th>Typ</th><th>Betreff</th><th>Frist</th><th>Betrag</th><th>Zeichen</th><th>Datei</th></tr></thead><tbody id="jBody"></tbody></table></div><aside class="jprev" id="jPrev" hidden aria-label="Vorschau" aria-live="polite"></aside></div>
+  <div class="jcases" id="jCases" hidden></div><div class="jmain"><div class="jwrap" id="jWrap" tabindex="0"><table class="jtab"><thead><tr><th>Status</th><th>Zuständig</th><th>Akte</th><th>Eingang</th><th>Absender</th><th>Typ</th><th>Betreff</th><th>Frist</th><th>Betrag</th><th>Zeichen</th><th>Datei</th></tr></thead><tbody id="jBody"></tbody></table></div><aside class="jprev" id="jPrev" hidden aria-label="Vorschau" aria-live="polite"></aside></div>
   <p class="hint"><span id="jIdx"></span> <span id="jHint"></span></p>
   <div class="dlgrow"><button type="button" id="jTax"><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg>Steuerberater-Export …</button><button type="button" id="jAudit" title="Prüft alle abgelegten Dateien (SHA-256), die Siegel der Einträge und die Eingangsnummern und speichert ein Protokoll mit Verfahrensbeschreibung als PDF">GoBD-Prüfprotokoll …</button><button type="button" id="jVerify" title="Prüft per SHA-256-Prüfsumme, ob abgelegte Dateien seit dem Ablegen verändert wurden">Unverändert? Prüfen</button><button type="button" id="jExport">Als Excel-Tabelle (CSV) speichern …</button><button type="button" class="primary" id="jClose">Schließen</button></div>
 </dialog>
 
-<dialog id="fwdDlg">
+<dialog id="fwdDlg" aria-labelledby="fwdDlgT">
   <form id="fwdForm">
-    <h3 class="dlgtitle">Weiterleiten</h3>
+    <h3 class="dlgtitle" id="fwdDlgT">Weiterleiten</h3>
     <p class="hint" id="fwdWhat"></p>
     <div class="field"><label for="fwdTo">An (Name oder Kürzel)</label><input id="fwdTo" list="teamList" autocomplete="off" placeholder="z. B. AB"></div>
     <div class="field"><label for="fwdMail">E-Mail (optional, wird für das Team gemerkt)</label><input id="fwdMail" type="email" placeholder="name@firma.de"></div>
@@ -2200,8 +2206,8 @@ html.i18n-wait body{visibility:hidden}
   <ul class="batchres" id="hotLog" aria-label="Verarbeitete Dateien"></ul>
   <p class="hint">Dieses Fenster bitte offen lassen – solange es läuft, verarbeitet PDFMy neue Dateien automatisch. Einstellungen ändern: im Hauptfenster „Ordner überwachen“ wählen und neu starten.</p>
 </section>
-<dialog id="cmpDlg" class="wide">
-  <h3 class="dlgtitle">Dokumente vergleichen</h3>
+<dialog id="cmpDlg" class="wide" aria-labelledby="cmpDlgT">
+  <h3 class="dlgtitle" id="cmpDlgT">Dokumente vergleichen</h3>
   <p class="cmpnames" id="cmpNames"></p>
   <div class="seg cmpmode" role="group" aria-label="Ansicht"><button type="button" id="cmpModeText" aria-pressed="true">Text</button><button type="button" id="cmpModeVis" aria-pressed="false" title="Seiten als Bild übereinanderlegen – zeigt auch geänderte Bilder, Stempel, Layout und Unterschriften">Bild (Überlagerung)</button></div>
   <div id="cmpVis" hidden>
@@ -2217,11 +2223,11 @@ html.i18n-wait body{visibility:hidden}
   <div class="dlgrow"><button type="button" class="primary" id="cmpClose">Schließen</button></div>
 </dialog>
 
-<dialog id="pwDlg">
+<dialog id="pwDlg" aria-labelledby="pwTitle">
   <form method="dialog">
     <h3 class="dlgtitle" id="pwTitle">Passwort</h3>
     <p class="hint" id="pwHint"></p>
-    <input id="pwIn" type="password" autocomplete="current-password" style="width:100%">
+    <input id="pwIn" aria-labelledby="pwTitle" type="password" autocomplete="current-password" style="width:100%">
     <div class="dlgrow">
       <button type="submit" value="cancel">Abbrechen</button>
       <button type="submit" value="ok" class="primary">Öffnen</button>

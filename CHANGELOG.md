@@ -2,6 +2,40 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-10-31
+
+### Prüfrunde 2: PDF-Korrektheit und Bedienung (app-v204)
+Prüfung mit echten Läufen, pikepdf und veraPDF sowie im laufenden Programm (1366×800 und 360×800, hell/dunkel, en-GB, fr, ru).
+
+**Schwärzen (hoch, Datenschutz)**
+- Enthielt ein Dokument interne Links, blieb eine geschwärzte oder nicht mitgespeicherte Zielseite als verwaistes Objekt im Klartext in der Datei – unsichtbar in der Ansicht, aber auslesbar. Auch „Bereinigen“ und das Extrahieren einzelner Seiten waren betroffen.
+- Behoben: Link-Ziele zeigen auf die Seiten der Ausgabe, alles vom Dokument aus nicht Erreichbare wird vor dem Speichern entfernt.
+
+**Formulare**
+- Wurde sonst nichts geändert, bleibt die PDF ausfüllbar – unverändert oder mit eingetragenen Werten (vorher ging das Formular beim Speichern verloren).
+- Flache Fassung: Schaltflächen und versteckte Felder werden nicht mehr auf die Seite gemalt (versteckte Werte wurden sichtbar).
+- Signaturfelder ohne Ansicht, Felder ohne Seite, Rich-Text-Felder: Die übrigen Eingaben bleiben erhalten, ein einzelnes Feld kostet nicht mehr das ganze Formular.
+- Verschlüsselte PDF mit leerem Passwort: Feldnamen lesbar, Ausfüllen und Speichern funktionieren.
+- Vollbild-Scan mit Formularfeldern oder Signatur wird nicht mehr als Bild übernommen.
+- Schnelles Speichern verliert die letzte Eingabe nicht mehr; Auswahlfelder lassen sich wieder leeren.
+- Rückfall beim Zeichnen: Mittelstufe zeichnet Kommentare ohne Felder (die bisherige Stufe entsprach dem Standard), mit Hinweis an den Nutzer.
+
+**Weitere PDF-Korrekturen**: Eingefügte Inhalte richten sich nach dem sichtbaren Seitenbereich (CropBox); sehr große Seiten bleiben nicht mehr leer; PDF ohne Seiten bekommt eine klare Meldung.
+
+**Bedienung und Barrierefreiheit**
+- Hinweise (Fehler, „Wieder öffnen“, Update) liegen nicht mehr übereinander; am Handy volle Breite.
+- „Mehr“ schließt mit Esc; nach Dialogen aus dem Menü bleibt der Fokus nicht im Nichts; Fokus springt auf „Wieder öffnen“, die Frist ruht unter der Maus.
+- Zwölf Dialoge und das Passwortfeld haben einen Namen für Screenreader; scrollbare Bereiche sind per Tastatur erreichbar.
+- Handy: Knopf „Formular ausfüllen“; untere Leiste und Kamera-Kopfzeile laufen nicht mehr über; lange Menütexte brechen um.
+- Der Prüfbericht zur Barrierefreiheit öffnet sich nur noch nach „PDF barrierefrei machen“, beim Speichern als PDF/A genügt die Statuszeile.
+- Weitere deutsche Reste übersetzt.
+
+**Bug-Melder**: Bei leerer Beschreibung einmalige Rückfrage; die letzten 10 Meldungen stehen auch im E-Mail-Text.
+
+**Getestet**: Klartextsuche in der Ausgabe (pikepdf), Link-Ziele im Seitenbaum, Formular-Beispieldateien, veraPDF PDF/A-2b und PDF/UA-1 je zwei Stichproben, axe in beiden Größen ohne Verstöße, frühere Prüfskripte ohne Rückschritt.
+
+**Offen**: Ebenen (OCG), Struktur-Tags, XMP, Seitenbezeichnungen und benannte Ziele gehen beim Neuaufbau einer PDF verloren; PDF/A verwirft Formularfelder und Nicht-PDF/A-Anhänge ohne Hinweis; Reparatur beschädigter PDFs rettet teils nur Seiten mit eigener MediaBox; keine XFA-Warnung; Auswahlfelder mit Exportwerten zeigen beim Öffnen teils leer. Die Leistungsmessung ist abgebrochen und steht noch aus.
+
 ## 2026-10-26
 
 ### Formularseiten, die der PDF-Renderer nicht zeichnen konnte (app-v203)

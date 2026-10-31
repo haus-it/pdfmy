@@ -260,6 +260,13 @@ function untouchedOriginal(pages, o = {}) {
   const same = pages.length === d.js?.numPages && pages.every((p, i) => p.kind === 'pdf' && state.docs[p.docIdx] === d && p.pageIdx === i && !p.rotation && !p.annots.length);
   return same ? d.bytes : null;
 }
+// Formular, an dem nur Felder ausgefüllt wurden: die Datei selbst ausgeben – die Felder bleiben ausfüllbar (Kopieren in eine neue PDF verlöre das Formular)
+function keptForm(pages, o = {}) {
+  const d = pages[0]?.kind === 'pdf' ? state.docs[pages[0].docIdx] : null;
+  if (!d?.fields?.length || d.repaired || o.password || hasStamp(o) || state.meta.docProps) return null;
+  const same = pages.length === d.js?.numPages && pages.every((p, i) => p.kind === 'pdf' && state.docs[p.docIdx] === d && p.pageIdx === i && !p.rotation && !p.annots.length);
+  return same ? (d.filled ? d.filledForm : d.unlocked ? null : d.bytes) || null : null;
+}
 function signedOriginal(pages, o = {}) {
   const d = pages[0]?.kind === 'pdf' ? state.docs[pages[0].docIdx] : null;
   if (!d?.sigs?.some(r => !r.usageRights) || d.filled || o.password || hasStamp(o)) return null;
@@ -507,6 +514,7 @@ async function importPdf(file) {
     bytes = await doc.save();
     js = await openPdf(bytes.slice());
   }
+  if (!js.numPages) throw new Error('Die PDF enthält keine Seiten.');
   const docIdx = state.docs.push({ bytes, js, lib: null, name: file.name, unlocked: password != null, repaired: file.repaired || 0, handle: window.pdfmyHandles?.get(file) || null }) - 1;
   try { js = (await importMarkup(state.docs[docIdx])) || js; } catch (e) { console.warn('Markierungen übernehmen:', e); }
   const formCheck = detectForm(docIdx);   // läuft parallel; Anzeige erst, wenn die Seiten da sind
@@ -529,6 +537,9 @@ async function importPdf(file) {
     window.attRefresh?.();
   } catch (e) { console.warn('Dateianhänge:', e); }
   // Scanseiten werden parallel in Workern aufbereitet, während die nächsten Seiten gezeichnet werden; eingefügt wird in Seitenreihenfolge
+  await formCheck;
+  // Vollbild-Scan mit Formularfeldern oder Signatur: nicht als Bild übernehmen – Felder und Signatur gingen sonst ohne Meldung verloren
+  const keepLive = state.docs[docIdx].fields?.length > 0 || (bytes.length < 2e8 && new TextDecoder('latin1').decode(bytes).includes('/ByteRange'));
   const pend = [], flush = async (keep = 0) => { while (pend.length > keep) state.pages.push(await pend.shift()); };
   for (let i = 1; i <= js.numPages; i++) {
     const pg = await js.getPage(i);
@@ -541,7 +552,7 @@ async function importPdf(file) {
       const mk = state.docs[docIdx].markup?.get(i - 1);
       if (mk) { const vp = pg.getViewport({ scale: 1, rotation: p.rotation }); for (const m of mk) { const an = markupAnnot(m, vp); if (an) p.annots.push(an); } }
     } catch (e) { noteError(e, `Markierungen S. ${i}`); }
-    if (!p.native && S.scanPdf && await isScannedPage(pg)) {
+    if (!p.native && S.scanPdf && !keepLive && await isScannedPage(pg)) {
       // Scan-PDF: Seite als Bild übernehmen und wie einen Scan aufbereiten (gerade richten, Ausrichtung, Kompakt-Speicherung)
       status(`Bereite Scan auf: ${file.name}, Seite ${i} von ${js.numPages} …`, (i - 1) / js.numPages);
       const vp = pg.getViewport({ scale: 1 });
@@ -577,17 +588,25 @@ function reprocess(p) {
 
 async function renderPdf(p, dpi) {
   const pg = await state.docs[p.docIdx].js.getPage(p.pageIdx + 1);
-  const vp = pg.getViewport({ scale: dpi / 72, rotation: p.rotation });
+  // Browser-Canvas sind begrenzt: sehr große Seiten (Pläne) blieben sonst ohne Meldung leer
+  const v0 = pg.getViewport({ scale: 1, rotation: p.rotation }), vp = pg.getViewport({ scale: Math.min(dpi / 72, 8000 / Math.max(v0.width, v0.height)), rotation: p.rotation });
+  p.ptW = v0.width; p.ptH = v0.height;
   const c = Imaging.canvas(Math.round(vp.width), Math.round(vp.height));
   const ctx = c.getContext('2d');
   // intent 'print' rendert ohne requestAnimationFrame – läuft so auch in Hintergrund-Tabs weiter.
   // Manche Formularfelder bringen den Renderer zum Absturz („Cannot read properties of null“, Fehlerbericht 26.10.2026, S. 4–6
   // eines Formulars): dann mit den gespeicherten Feldansichten, notfalls ganz ohne Feldebene zeichnen – der Seiteninhalt kommt immer
-  const AM = pdfjsLib.AnnotationMode, modes = [undefined, AM?.ENABLE, AM?.DISABLE];
+  const AM = pdfjsLib.AnnotationMode, modes = [undefined, AM?.ENABLE_FORMS, AM?.DISABLE];   // Standard zeichnet alles; ENABLE_FORMS ohne Felder, aber mit Kommentaren
   for (const [k, mode] of modes.entries()) {
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
     try { await pg.render({ canvasContext: ctx, viewport: vp, intent: 'print', ...(mode != null ? { annotationMode: mode } : {}) }).promise; return c; }
-    catch (e) { if (k === modes.length - 1) throw e; if (k === 0) noteError(e, `Seite ${p.pageIdx + 1} zeichnen (Rückfall ohne Formularfelder)`); }
+    catch (e) {
+      if (k === modes.length - 1) throw e;
+      if (k === 0) {
+        noteError(e, `Seite ${p.pageIdx + 1} zeichnen (Rückfall ohne Formularfelder)`);
+        const d = state.docs[p.docIdx]; if (d && !d.renderWarned) { d.renderWarned = true; toast(I18N.t('Einige Formularfelder lassen sich nicht anzeigen – bitte die Eingaben rechts im Formularbereich prüfen.'), 9000); }
+      }
+    }
   }
   return c;
 }
@@ -670,7 +689,7 @@ function renderThumbs() {
     if (p.blank === undefined && p.processed) p.blank = Imaging.isBlank(p.processed);
     const d = document.createElement('div');
     d.className = 'thumb' + (i === state.sel ? ' sel' : '') + (state.picked.has(p.id) ? ' picked' : '') + (p.splitAfter ? ' split' : '');
-    d.draggable = true; d.title = p.label + ' – Strg/Umschalt+Klick für Mehrfachauswahl';
+    d.draggable = true; d.title = p.label + ' – ' + I18N.t('Strg/Umschalt+Klick für Mehrfachauswahl');
     d.tabIndex = 0; d.setAttribute('role', 'group'); d.setAttribute('aria-label', `Seite ${i + 1} von ${state.pages.length}${p.blank ? ', leer' : ''}`);
     if (i === state.sel) d.setAttribute('aria-current', 'page');
     d.onkeydown = e => { if (e.target !== d) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickPage(i, e); refresh(); $('#thumbs').children[i]?.focus(); } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); d.nextElementSibling?.focus(); } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); d.previousElementSibling?.focus(); } };
@@ -679,7 +698,7 @@ function renderThumbs() {
     const nHits = hitCount(p);
     if (nHits) d.classList.add('hit');
     d.innerHTML = `<img alt="Seite ${i + 1}"><div class="tmeta"><span>${i + 1}</span>${badge ? `<span class="badge">${badge}</span>` : ''}${nHits ? `<span class="hits" title="${nHits} Treffer für „${esc(state.query)}“">${nHits}×</span>` : ''}` +
-      `<span><button class="tcut" title="Hier endet ein Brief (für „Stapel trennen“)">✂</button><button class="tdel" title="Seite löschen">×</button></span></div>`;
+      `<span><button class="tcut" title="${I18N.t('Hier endet ein Brief (für „Stapel trennen“)')}">✂</button><button class="tdel" title="${I18N.t('Seite löschen')}">×</button></span></div>`;
     if (p.thumb) d.querySelector('img').src = p.thumb; else lazyImg(d.querySelector('img'), p);
     d.onclick = e => { if (e.target.closest('button')) return; pickPage(i, e); state.annSel = null; state.crop = null; refresh(); };
     d.querySelector('.tdel').onclick = () => deletePages([p.id]);
@@ -2516,15 +2535,16 @@ async function nativeWords(p) {
 }
 
 /* Quelldokument für pdf-lib: ausgefülltes Formular bevorzugen, Rechte-Schutz (nur Besitzer-Passwort) entfernen */
+async function plainLib(bytes) {
+  const lib = await PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false });
+  if (!lib.isEncrypted) return lib;
+  const C = await getCrypt();
+  const plain = await (await C.PDFDocument.load(bytes, { ignoreEncryption: true, password: '', updateMetadata: false })).save();
+  return PDFDocument.load(plain, { updateMetadata: false });
+}
 async function libFor(d) {
   if (d.lib) return d.lib;
-  let lib = await PDFDocument.load(d.filled || d.bytes, { ignoreEncryption: true, updateMetadata: false });
-  if (lib.isEncrypted) {
-    const C = await getCrypt();
-    const plain = await (await C.PDFDocument.load(d.filled || d.bytes, { ignoreEncryption: true, password: '', updateMetadata: false })).save();
-    lib = await PDFDocument.load(plain, { updateMetadata: false });
-  }
-  return d.lib = lib;
+  return d.lib = await plainLib(d.filled || d.bytes);
 }
 
 // Kopfzeile oben mittig, Fußzeile unten links, Bates-Nummer unten rechts – mit Platzhaltern {seite} {seiten} {datum} {datei} {bates}
@@ -2898,9 +2918,61 @@ const compactPool = (() => {
   }
   return { run };
 })();
+/* Link-Ziele und Verweise einer kopierten Seite (/Dest, /A /D, /P) zeigen auf die Quellseite – pdf-lib kopiert sie als eigenes, verwaistes
+   Seitenobjekt mit vollem Inhalt. Eine geschwärzte oder nicht mitgespeicherte Seite stünde so im Klartext in der Datei (Prüfung 30.10.2026).
+   Darum: Link-Ziele auf die Seiten der Ausgabe umbiegen, danach alles entfernen, was vom Dokument aus nicht mehr erreichbar ist. */
+function linkDest(annot) {
+  const L = PDFLib; if (!(annot instanceof L.PDFDict)) return null;
+  let dest = annot.lookup(L.PDFName.of('Dest'));
+  if (!dest) { const a = annot.lookup(L.PDFName.of('A')); if (a instanceof L.PDFDict && a.lookup(L.PDFName.of('S')) === L.PDFName.of('GoTo')) dest = a.lookup(L.PDFName.of('D')); }
+  return dest instanceof L.PDFArray && dest.size() ? dest : null;
+}
+async function retargetLinks(linked, placed) {
+  const L = PDFLib, index = new Map();
+  for (const { p, page } of linked) {
+    try {
+      const lib = await libFor(state.docs[p.docIdx]);
+      if (!index.has(lib)) index.set(lib, new Map(lib.getPages().map((q, i) => [q.ref.tag, i])));
+      const sa = lib.getPages()[p.pageIdx]?.node.Annots(), da = page.node.Annots();
+      if (!sa || !da || sa.size() !== da.size()) continue;   // z. B. „Bereinigen“ hat Anmerkungen entfernt
+      for (let k = 0; k < sa.size(); k++) {
+        const sd = linkDest(sa.lookup(k)), dd = linkDest(da.lookup(k)), t = sd?.get(0);
+        if (!dd || !(t instanceof L.PDFRef)) continue;
+        const to = placed.get(`${p.docIdx}:${index.get(lib).get(t.tag)}`);
+        if (to) dd.set(0, to.ref);
+      }
+    } catch (e) { noteError(e, 'Link-Ziele'); }
+  }
+}
+function pruneOrphans(out) {
+  const L = PDFLib, ctx = out.context, tree = new Set(out.getPages().map(p => p.ref.tag)), T = L.PDFName.of('Type'), PG = L.PDFName.of('Page');
+  const orphan = r => { if (tree.has(r.tag)) return false; const o = ctx.lookup(r); return o instanceof L.PDFDict && o.get(T) === PG; };
+  const seen = new Set(), todo = [];
+  const see = r => { if (!seen.has(r.tag)) { seen.add(r.tag); todo.push(ctx.lookup(r)); } };
+  const ti = ctx.trailerInfo;
+  for (const v of [ti.Root, ti.Info, ti.Encrypt, ti.ID]) { if (v instanceof L.PDFRef) see(v); else if (v) todo.push(v); }
+  while (todo.length) {
+    let o = todo.pop();
+    if (o instanceof L.PDFStream) o = o.dict;
+    if (o instanceof L.PDFDict) {
+      for (const [k, v] of o.entries()) {
+        if (v instanceof L.PDFRef) { if (orphan(v)) o.delete(k); else see(v); }
+        else if (v instanceof L.PDFDict || v instanceof L.PDFArray) todo.push(v);
+      }
+    } else if (o instanceof L.PDFArray) {
+      for (let i = 0; i < o.size(); i++) {
+        const v = o.get(i);
+        if (v instanceof L.PDFRef) { if (orphan(v)) o.set(i, L.PDFNull); else see(v); }
+        else if (v instanceof L.PDFDict || v instanceof L.PDFArray) todo.push(v);
+      }
+    }
+  }
+  for (const [r] of ctx.enumerateIndirectObjects()) if (!seen.has(r.tag)) ctx.delete(r);
+}
 async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
   header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false } = {}) {
   GRAY = gray;
+  await flushForms();   // letzte Formulareingabe nicht verlieren (wird sonst erst nach 600 ms übernommen)
   try { return await buildPdfInner(...arguments); } finally { GRAY = false; }
 }
 async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
@@ -2980,6 +3052,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     }
   };
 
+  const placed = new Map(), linked = [];   // Quellseite → Seite der Ausgabe (für Link-Ziele)
   for (const [i, p] of pages.entries()) {
     onPage ? onPage(i) : status(`Erzeuge Seite ${i + 1} von ${pages.length} …`, i / pages.length);
     prefetch(i);
@@ -3010,7 +3083,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       if (p.kind === 'image') {
         W = 595.28; H = W * c.height / c.width;
         if (Math.abs(H / 841.89 - 1) < 0.04) H = 841.89; // A4 glätten
-      } else { W = c.width * 72 / preset.dpi; H = c.height * 72 / preset.dpi; }
+      } else { W = p.ptW || c.width * 72 / preset.dpi; H = p.ptH || c.height * 72 / preset.dpi; }
       page = out.addPage([W, H]);
       T?.page(page);
       T?.artifact();   // das Scanbild selbst ist Artefakt – der Inhalt steckt in der getaggten Textebene
@@ -3039,9 +3112,10 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       if (clean) deepClean(out, page); else if (bea) beaClean(out, page);
       T?.page(page);
       page.setRotation(degrees(p.rotation));
-      const mb = page.getMediaBox(); W = mb.width; H = mb.height; ox = mb.x; oy = mb.y;
+      const mb = page.getCropBox(); W = mb.width; H = mb.height; ox = mb.x; oy = mb.y;   // sichtbarer Bereich – Ansicht und Eingaben beziehen sich darauf
       if (!p.native) words = p.ocr?.words;
     }
+    if (p.kind === 'pdf') { const k = `${p.docIdx}:${p.pageIdx}`; if (!placed.has(k)) placed.set(k, page); if (!raster) linked.push({ p, page }); }
     /* Barrierefrei: vom Nutzer beschriebene Abbildungen (Dialog „Bilder beschreiben“) als Figure mit Alternativtext – der Bildausschnitt
        liegt deckungsgleich über dem Seitenbild und steht in der Lesereihenfolge dort, wo er auf der Seite steht. */
     const figs = T && figSrc ? (p.figs || []).filter(f => !f.deco && f.alt?.trim()).sort((a, b) => a.y - b.y) : [];
@@ -3209,7 +3283,9 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   out.setCreationDate(now); out.setModificationDate(now);
   if (!pdfa && !clean) await window.reqInfo?.(out, pages, now);   // Unterschriftsanfrage reist in der PDF mit (js/pro.js, js/sigreq.js); nicht bei PDF/A-2b (keine solche Anlage erlaubt)
   if (T) T.finish();
+  await retargetLinks(linked, placed);
   if (pdfa) await makePdfA(out, { title, author, subject, keywords: keywords.join('; '), now, ua: !!T, lang });
+  pruneOrphans(out);
   return out.save();
 }
 
@@ -3282,6 +3358,7 @@ function outlineFor(pages) {
 // „PDF barrierefrei machen“ (Kachel, Menü, Prüfdialog): Speichern als PDF/A + PDF/UA mit Gliederung; danach prüft a11yAfterSave die Datei
 async function a11yMake() {
   if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich barrierefrei machen.'); return; }
+  window.a11yWanted = true;
   try { await a11yFigures(); } catch (e) { console.warn('Bilder suchen', e); }   // Bilder finden und beschreiben lassen (js/pro.js)
   openExport({ format: 'pdfa', task: { title: 'Barrierefrei speichern', hint: 'Gespeichert wird als PDF/UA (zugleich PDF/A) mit Überschriften, Listen, Tabellen und Bildbeschreibungen für Screenreader. Die Datei wird dadurch meist größer, weil Schriften und Seitenbilder eingebettet werden. Nach dem Speichern prüft PDFMy die Datei.' } });
   status('PDF barrierefrei machen: auf „Speichern“ klicken. PDFMy erkennt Überschriften, Absätze, Listen und Tabellen, speichert als PDF/UA (zugleich PDF/A) und prüft danach die Datei.');
@@ -3660,13 +3737,16 @@ async function doExport(o) {
   } else {
     if (o.format === 'pdfa' && pages.some(p => p.kind === 'pdf' && !p.native)) await waitForOcr(pages);
     else if (pages.some(p => p.kind === 'image' && !p.ocr && !p.blank)) await waitForOcr(pages.filter(p => p.kind === 'image'));
+    await flushForms();
     const opts = { pdfa: o.format === 'pdfa', size: o.size, ...st };
     const orig = einvOriginal(pages, { ...st, password: o.password });
     const sOrig = !orig && signedOriginal(pages, { ...st, password: o.password });
+    const fKeep = !orig && !sOrig && o.format === 'pdf' && !o.sign ? keptForm(pages, { ...st, password: o.password }) : null;
     if (orig) { data = orig; status('E-Rechnung: Original unverändert gespeichert (mit eingebettetem XML).'); }
     else if (sOrig) { data = sOrig.slice(); status(o.sign ? 'Signiertes Original unverändert übernommen – Ihre Signatur wird angehängt.' : 'Signiertes Original unverändert gespeichert – die Signaturen bleiben gültig.'); }
+    else if (fKeep) { data = fKeep.slice(); keptOrig = false; }
     else data = await buildPdf(pages, meta, opts);
-    if (o.size === 'small' && !orig && !sOrig) {
+    if (o.size === 'small' && !orig && !sOrig && !fKeep) {
       // "Klein" darf nie größer werden als "Ausgewogen" (z. B. bei reinen Text-PDFs)
       const alt = await buildPdf(pages, meta, { ...opts, size: 'balanced' });
       if (alt.length < data.length) data = alt;
@@ -3715,6 +3795,8 @@ async function a11yAfterSave(bytes, nPages) {
     const s = lastTagStats, parts = [s.h && `${s.h} Überschrift(en)`, s.table && `${s.table} Tabelle(n)`, s.list && `${s.list} Liste(n)`, s.fig && `${s.fig} beschriebene(s) Bild(er)`].filter(Boolean).join(', ');
     const msg = I18N.t(`Barrierefreiheit geprüft: ${ok} von ${checked.length} Punkten erfüllt (PDF/UA-1)`) + (parts ? ' · ' + I18N.t(`erkannt: ${parts}`) : '');
     status($('#msg').textContent + ' · ' + msg);
+    // Beim gewöhnlichen Speichern als PDF/A wirkte das Fenster wie ein weiterer Pflichtschritt – nur nach „PDF barrierefrei machen“ öffnen
+    if (!window.a11yWanted) return; window.a11yWanted = false;
     // Ergebnis als Fenster (nicht nur in der Statuszeile): Prüfbericht der gespeicherten Datei
     const esc1 = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
     $('#a11yWhat').textContent = I18N.t('Prüfung der gespeicherten Datei');
@@ -4419,7 +4501,7 @@ function resetDoc() {
   $('#assignee').value = ''; $('#akte').value = ''; state.akteTouched = false; $('#tags').value = '';
   $('#formHint').hidden = true;
   Object.assign(state, { files: [], filesDirty: false, marks: null, einv: null, assignee: '', akte: '', fromArchive: null, tags: '', cf: {}, cfTouched: false, pages: [], docs: [], sel: -1, annSel: null, editing: null, crop: null, undo: [], touched: {}, dirty: false, meta: emptyMeta(),
-    picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0, fromScanner: false, scanDone: false, autoArmed: null, wv: '', metaShown: false, letterLikeWas: undefined });
+    picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0, fromScanner: false, scanDone: false, autoArmed: null, wv: '', metaShown: false, letterLikeWas: undefined, formJumped: false });
   if ($('#m-wv')) $('#m-wv').value = '';
   window.cfRender?.(); window.reqReset?.();
   setLbl('#btnGrid', 'Seitenübersicht'); renderForm();
@@ -4572,7 +4654,7 @@ function applyIntent() {
     case 'sign': setTool('sign'); status('Auf die Stelle klicken, an der die Unterschrift stehen soll.'); break;
     case 'form': {
       const d = state.docs[state.pages[0]?.docIdx];
-      if (d?.fields?.length) { status(`Formular mit ${d.fields.length} Feldern erkannt – rechts ausfüllen, dann speichern.`); $('#formSec')?.scrollIntoView({ behavior: 'smooth' }); }
+      if (d?.fields?.length) { status(`Formular mit ${d.fields.length} Feldern erkannt – Felder ausfüllen, dann speichern.`); $('#formSec')?.scrollIntoView({ behavior: 'smooth' }); }
       else { status('Keine ausfüllbaren Felder – PDFMy sucht Schreiblinien und Kästchen …'); window.autoForm?.(true); }
       break;
     }
@@ -4663,9 +4745,9 @@ function renderGrid() {
 async function detectForm(docIdx) {
   const d = state.docs[docIdx];
   try {
-    const lib = await PDFDocument.load(d.bytes, { ignoreEncryption: true, updateMetadata: false });
-    const L = PDFLib, fields = [];
-    for (const f of lib.getForm().getFields()) {
+    const lib = await plainLib(d.bytes);
+    const L = PDFLib, fields = []; let odd = 0;
+    for (const f of lib.getForm().getFields()) try {
       const name = f.getName(), ro = f.isReadOnly();
       if (/^pdfmy_[a-z0-9]+_\d+$/.test(name)) continue;   // Felder einer Unterschriftsanfrage (js/pro.js) – nicht als eigenes Formular zeigen
       if (f instanceof L.PDFTextField) { const sc = FormCalc.readScripts(fieldScripts(f)); fields.push({ name, kind: 'text', value: f.getText() || '', multi: f.isMultiline(), max: f.getMaxLength(), ro, req: f.isRequired(), fmt: sc.kind || '', calc: sc.calc || '' }); }
@@ -4673,12 +4755,13 @@ async function detectForm(docIdx) {
       else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected()[0] || '', ro });
       else if (f instanceof L.PDFRadioGroup) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected() || '', ro });
       if (fields.at(-1)?.name === name) try { fields.at(-1).tip = f.acroField.dict.lookup(L.PDFName.of('TU'))?.decodeText?.() || ''; } catch {}   // Kurzinfo (für „Meine Angaben“)
-    }
+    } catch (e) { odd++; console.warn('Formularfeld:', e); }   // ein ungewöhnliches Feld darf nicht das ganze Formular verstecken
     d.fields = fields; d.values = {};
-  } catch (e) { console.warn('Formular:', e); d.fields = []; }
+    if (odd) setTimeout(() => toast(I18N.t(`${odd} Formularfeld(er) lassen sich hier nicht bearbeiten.`), 8000), 800);
+  } catch (e) { noteError(e, 'Formular lesen'); d.fields = []; }
   try { renderForm(); } catch (e) { noteError(e, 'Formular anzeigen'); }   // Anzeigefehler darf das Öffnen nicht abbrechen
   if (d.fields.length) {
-    status(`Formular mit ${d.fields.length} Feldern erkannt – rechts ausfüllen, dann speichern.`);
+    status(`Formular mit ${d.fields.length} Feldern erkannt – Felder ausfüllen, dann speichern.`);
     if (state.intent === 'form') $('#formSec').scrollIntoView({ behavior: 'smooth' });
   } else if (state.intent !== 'form') formHint(docIdx);   // Kachel „Formular“: Suche nach Schreiblinien startet in applyIntent, wenn die Seiten da sind
 }
@@ -4758,14 +4841,16 @@ function renderForm() {
       el.addEventListener(f.kind === 'text' ? 'input' : 'change', () => {
         d.values[f.name] = f.kind === 'check' ? el.checked : el.value;
         state.dirty = true; formLive(d, box);
-        clearTimeout(formTimers[d.name]); formTimers[d.name] = setTimeout(() => applyForm(d), 600);
+        clearTimeout(formTimers[d.name]); formTimers[d.name] = setTimeout(() => { delete formTimers[d.name]; applyForm(d); }, 600);
       });
       box.append(wrap);
     }
     formLive(d, box, true);
   }
   if (!docs.length) $('#formCheckMsg').hidden = true;
+  $('#formJump').hidden = !docs.length || state.formJumped || !matchMedia('(max-width:900px)').matches;   // am Handy liegen die Felder weit unterhalb der Seite
 }
+$('#formJump').onclick = () => { state.formJumped = true; $('#formJump').hidden = true; $('#formSec').scrollIntoView({ behavior: 'smooth' }); $('#formFields').querySelector('input:not([disabled]),select:not([disabled]),textarea:not([disabled])')?.focus({ preventScroll: true }); };
 // Rechenfelder aktualisieren, Meldungen an die Felder schreiben (still = beim ersten Anzeigen nur Rechnen, Fehler erst nach Eingabe)
 function formLive(d, box, still) {
   const r = formEvaluate(d);
@@ -4780,26 +4865,54 @@ function formLive(d, box, still) {
   }
   const sum = formSummary(); $('#formCheckMsg').hidden = !sum || still; $('#formCheckMsg').textContent = sum ? `Formular: ${sum}.` : '';
 }
-async function applyForm(d) {
+// Formularbereich: Eingaben eintragen. d.filledForm behält die Felder (Ausgabe, wenn sonst nichts geändert wurde), d.filled ist flach (Anzeige,
+// Zusammenstellen mit anderen Seiten). Ein einzelnes Feld oder das Flachmachen darf die übrigen Eingaben nicht kosten.
+function applyForm(d) {
+  const run = (d.applying || Promise.resolve()).then(() => applyFormRun(d));
+  return d.applying = run.finally(() => { if (d.applying === run) d.applying = null; });
+}
+async function flushForms() {
+  for (const d of state.docs) {
+    if (!d) continue;
+    if (formTimers[d.name]) { clearTimeout(formTimers[d.name]); delete formTimers[d.name]; await applyForm(d); }
+    else if (d.applying) await d.applying;
+  }
+}
+async function applyFormRun(d) {
   try {
-    const lib = await PDFDocument.load(d.base || d.bytes, { ignoreEncryption: true, updateMetadata: false });   // base: ohne übernommene Markierungen
+    const lib = await plainLib(d.base || d.bytes);   // base: ohne übernommene Markierungen; verschlüsselte Dateien entschlüsselt
     lib.registerFontkit(await loadFontkit());
     const font = await lib.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
-    const form = lib.getForm(), L = PDFLib;
+    const form = lib.getForm(), L = PDFLib; let bad = 0;
     for (const [name, v] of Object.entries(d.values)) {
-      const f = form.getField(name);
-      if (f instanceof L.PDFTextField) f.setText(String(v));
-      else if (f instanceof L.PDFCheckBox) v ? f.check() : f.uncheck();
-      else if ((f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) && v) f.select(v);
-      else if (f instanceof L.PDFRadioGroup && v) f.select(v);
+      try {
+        const f = form.getField(name);
+        if (f instanceof L.PDFTextField) f.setText(String(v));
+        else if (f instanceof L.PDFCheckBox) v ? f.check() : f.uncheck();
+        else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) v ? f.select(v) : f.clear();
+        else if (f instanceof L.PDFRadioGroup) v ? f.select(v) : f.clear();
+      } catch (e) { bad++; noteError(e, `Feld „${name}“`); }
     }
-    form.updateFieldAppearances(font);
-    form.flatten();
-    d.filled = await lib.save(); d.lib = null;
-    d.js = await openPdf(d.filled.slice());
+    // Feld für Feld: ein Rich-Text-Feld o. Ä. darf die übrigen Eingaben nicht kosten
+    for (const f of form.getFields()) { try { if (f.needsAppearancesUpdate()) f.defaultUpdateAppearances(font); } catch (e) { console.warn('Feldansicht', e); } }
+    const keep = await lib.save({ updateFieldAppearances: false });
+    // Flache Fassung: Schaltflächen, versteckte Felder und Signaturfelder ohne Ansicht würden sonst auf die Seite gemalt bzw. brächen das Flachmachen ab
+    let filled = keep;
+    try {
+      const flat = await PDFDocument.load(keep, { updateMetadata: false }), ff = flat.getForm(), AP = L.PDFName.of('AP');
+      for (const f of ff.getFields()) {
+        const ws = f.acroField.getWidgets();
+        const skip = f instanceof L.PDFButton || ws.every(w => (w.getFlags() & 34) !== 0) || (f instanceof L.PDFSignature && ws.every(w => !w.dict.has(AP)));
+        if (skip) try { ff.removeField(f); } catch {}
+      }
+      ff.flatten({ updateFieldAppearances: false }); filled = await flat.save({ updateFieldAppearances: false });
+    } catch (e) { noteError(e, 'Formular flach machen'); }   // dann mit den Feldern weiter – die Eingaben bleiben erhalten
+    const js = await openPdf(filled.slice());
+    d.filledForm = keep; d.filled = filled; d.lib = null; d.js = js;
     for (const p of state.pages) if (p.kind === 'pdf' && state.docs[p.docIdx] === d) { await renderPdfPreview(p); p.thumbL = null; }
     renderThumbs(); renderStage(); if (state.view === 'grid') renderGrid();
-  } catch (e) { console.error(e); status(`Formular konnte nicht übernommen werden: ${e.message}`); }
+    if (bad) toast(I18N.t(`${bad} Feld(er) konnten nicht übernommen werden.`), 8000);
+  } catch (e) { noteError(e, 'Formular'); status(`Formular konnte nicht übernommen werden: ${e.message}`); toast(`Formular konnte nicht übernommen werden: ${e.message}`, 10000); }
 }
 
 document.addEventListener('keydown', e => {
@@ -4866,6 +4979,9 @@ $('#moreMenu').addEventListener('toggle', () => {
   const r = ml.getBoundingClientRect(); if (r.left < 8) ml.style.right = (r.left - 8) + 'px';
 });
 $('#moreMenu').addEventListener('click', e => { if (e.target.closest('.mi') && !e.target.closest('label')) closeMenu(); });
+$('#moreMenu').addEventListener('keydown', e => { if (e.key === 'Escape' && $('#moreMenu').open) { e.stopPropagation(); closeMenu(); $('#moreMenu summary')?.focus(); } });
+// Dialog aus dem zugeklappten Menü geschlossen: Fokus nicht im Nichts lassen, sondern zurück auf „Mehr“
+document.addEventListener('close', e => { if (e.target?.tagName === 'DIALOG') setTimeout(() => { if (document.activeElement === document.body && !document.querySelector('dialog[open]')) $('#moreMenu summary')?.focus({ preventScroll: true }); }, 0); }, true);
 $('#camIn').addEventListener('change', closeMenu);
 document.addEventListener('click', e => { if (!e.target.closest('#moreMenu')) closeMenu(); });
 $('#btnPrint').onclick = $('#btnPrintTb').onclick = printDoc;

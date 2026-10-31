@@ -32,9 +32,9 @@
   }
   function sync() {
     const act = $('#hotDlg').querySelector('[name=hotAct]:checked')?.value || 'ocr';
-    $('#hotInName').textContent = cfg.inDir ? cfg.inDir.name : 'noch nicht gewählt';
+    $('#hotInName').textContent = cfg.inDir ? cfg.inDir.name : I18N.t('noch nicht gewählt');
     $('#hotOutRow').hidden = act === 'file'; $('#hotNameSet').hidden = act === 'file';
-    $('#hotOutName').textContent = cfg.outDir ? cfg.outDir.name : 'noch nicht gewählt';
+    $('#hotOutName').textContent = cfg.outDir ? cfg.outDir.name : I18N.t('noch nicht gewählt');
     $('#hotFileNote').hidden = act !== 'file';
     $('#hotFileNote').textContent = state.outDir ? `Abgelegt wird wie gewohnt im Ablageordner „${state.outDir.name}“, mit Eintrag im Posteingangsbuch.` : 'Für „Briefe ablegen“ bitte zuerst unter „Mehr → Einrichtung“ einen Ablageordner wählen.';
   }
