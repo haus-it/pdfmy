@@ -1,0 +1,6 @@
+{
+  "appId": "de.pdfmy.app",
+  "appName": "PDFMy",
+  "webDir": "www",
+  "android": { "allowMixedContent": false, "captureInput": true, "webContentsDebuggingEnabled": false, "backgroundColor": "#DDE5DC" }
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scanner im eigenen Netz sprechen meist unverschlüsseltes HTTP. Android kennt keine Ausnahme für Adressbereiche; die Oberfläche selbst lädt nur aus der App, und ScanCore fragt nur Geräte im eigenen Netz an. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

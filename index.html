@@ -339,7 +339,10 @@ details summary{cursor:pointer;color:var(--muted)}
 .opts{display:flex;flex-direction:column;gap:5px;margin-top:6px}
 .opts h3{font-size:12px;margin:8px 0 0;color:var(--muted);font-weight:600}
 footer{display:flex;align-items:center;gap:12px;padding:6px 16px;border-top:1px solid var(--line);background:var(--panel);font-size:12.5px;color:var(--muted);min-height:32px}
-#msg{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#msg{flex:1 1 180px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Reicht die Breite nicht (Tablet), umbrechen statt überstehen: sonst verkleinert der Browser die ganze Seite und es entstehen Ränder */
+footer{flex-wrap:wrap;row-gap:2px}
+@media (pointer:coarse){.cmdbtn kbd{display:none}}
 .pageind{flex:none;border:1px solid var(--line)!important;background:var(--panel-2)!important;height:auto!important;padding:2px 10px!important;border-radius:6px;font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums;cursor:pointer}
 .pageind:hover,.pageind:focus-visible{border-color:var(--accent)!important}
 #pageGo{width:72px;height:24px;padding:0 6px;font:inherit;font-size:12.5px;border:1px solid var(--accent);border-radius:6px;background:var(--panel);color:var(--text)}
@@ -1026,6 +1029,7 @@ body:not(.has-doc) #btnShareTop{display:none}
   .dlgrow button{min-height:44px}
   .toclist .tocact{width:44px;height:44px;opacity:1}
   footer .verbar{display:none}
+  html.native #btnInbox{display:inline-flex!important}
 }
 /* Handy und Tablet (≤ 900 px): „Mehr“ als Auswahlfeld von unten – die seitlich scrollende Kopfzeile würde ein Klappmenü abschneiden */
 @media (max-width:900px){

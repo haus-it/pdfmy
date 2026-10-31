@@ -4,6 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-31
 
+### Tablet- und Handy-Ansicht (app-v206)
+- Tablet: Die Fußzeile war breiter als der Bildschirm. Der Browser verkleinerte deshalb die ganze Seite, rechts und unten entstanden Ränder. Sie bricht jetzt um; „Strg K“ und der Link zur Browser-Erweiterung entfallen auf Touch-Geräten.
+- Handy: Die Fußzeile ist nur noch etwa halb so hoch (Links in einer Zeile zum Wischen), der Einstieg bleibt sichtbar.
+- Geprüft: 1183, 800 und 375 px ohne seitlichen Überlauf, axe hell und dunkel ohne Verstöße.
+
+### Android-App, Vorbereitung (noch nicht veröffentlicht)
+- tools/pdfmy-android: dieselbe Oberfläche als App, mit eigener Scannersuche (AirScan und WSD) im Gerät statt pdfmy Scan. Kein lokaler Server, kein offener Port.
+- Geprüft gegen nachgebaute Scanner (test/run.sh) und mit nachgestellter App-Schnittstelle in der Oberfläche. Der Test auf einem echten Tablet mit echtem Scanner steht aus. Im Browser ändert sich dadurch nichts.
+
+
 ### Eigener Stil „Schreibtisch“ (app-v205)
 - Anlass: Rückmeldung eines Lesers, die Webseite erinnere an PDF24. Auftrag GF: nicht vergleichbar, ein eigener, persönlicher Stil.
 - Startseite: Briefschlitz als Einstieg statt Ablagefläche, Stempel „Bleibt hier – kein Upload“, Überschrift „Was soll mit Ihrer Post passieren?“, die Werkzeuge als Zeilen auf einem Blatt (Laufzettel-Optik) statt Kachelwand. Alle 27 Funktionen bleiben, Abläufe unverändert; das Abhaken mehrerer Schritte aus dem Entwurf ist noch nicht gebaut.

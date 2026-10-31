@@ -2390,7 +2390,7 @@ let installEvt = null, justInstalled = false;
 const runsAsApp = () => matchMedia('(display-mode: standalone), (display-mode: window-controls-overlay), (display-mode: minimal-ui)').matches || navigator.standalone === true;
 const iosSafari = IS_IOS && !/CriOS|FxiOS|EdgiOS/.test(navigator.userAgent);   // iPhone: Installation nur über Safari „Zum Home-Bildschirm“
 const macSafari = IS_MAC && /Safari/.test(navigator.userAgent) && !/Chrome|Chromium|Edg\/|Firefox/.test(navigator.userAgent);   // Mac-Safari 17+: „Zum Dock hinzufügen“
-function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !(installEvt || iosSafari || macSafari); }
+function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !!window.Capacitor?.isNativePlatform?.() || !(installEvt || iosSafari || macSafari); }
 // Chrome/Edge/Android melden, dass die App installierbar ist – bei bereits installierter App kommt dieses Ereignis nicht
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
 addEventListener('appinstalled', () => { installEvt = null; justInstalled = true; renderInstall(); toast('PDFMy ist jetzt als App installiert – Sie finden es im Startmenü bzw. auf dem Startbildschirm.', 7000); });

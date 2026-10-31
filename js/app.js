@@ -135,6 +135,39 @@ function status(msg, pct) {
 // Handys (Android, iPhone/iPad): weniger Speicher – iOS bricht ab etwa 300 MB Canvas-Speicher ab
 const IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const IS_MOBILE = IS_IOS || /Android|Mobile/i.test(navigator.userAgent);
+// Android-App (tools/pdfmy-android): dieselbe Oberfläche, Scanner und Dateien über die App statt über Browser und pdfmy Scan. Die Daten
+// bleiben auf dem Gerät; Stückweise über die Brücke, damit große PDFs den Speicher nicht sprengen.
+const NATIVE = window.Capacitor?.isNativePlatform?.() ? (() => {
+  const call = (m, o = {}) => window.Capacitor.nativePromise('PdfmyScan', m, o);
+  const b64 = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 32768) s += String.fromCharCode.apply(null, u8.subarray(i, i + 32768)); return btoa(s); };
+  const bytes = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const put = async data => {
+    const u8 = new Uint8Array(await new Blob([data]).arrayBuffer());
+    for (let i = 0, first = true; first || i < u8.length; i += 3145728, first = false) await call('writeChunk', { b64: b64(u8.subarray(i, i + 3145728)), first });
+  };
+  const n = {
+    scan: async (path, opts = {}) => { const r = await call('request', { method: opts.method || 'GET', path, body: opts.body || null }); return new Response(bytes(r.b64), { status: r.status, headers: { 'Content-Type': r.mime } }); },
+    save: async (data, name, mime) => { await put(data); const r = await call('saveFile', { name, mime: mime || 'application/octet-stream' }); if (r.saved) toast(name + ' (Downloads)', 5000); },
+    opened: async () => {
+      const out = [];
+      for (;;) {
+        const f = await call('nextOpened'); if (!f.name) return out;
+        const parts = []; for (let o = 0; o < f.size; o += 3145728) parts.push(bytes((await call('readOpened', { offset: o, length: 3145728 })).b64));
+        out.push(new File(parts, f.name, { type: f.mime || 'application/pdf' }));
+      }
+    }
+  };
+  document.documentElement.classList.add('native');   // Scan-Knopf auch auf kleinen Geräten (index.html)
+  // Nur die Hilfe und die Rechtstexte liegen in der App; alles andere öffnet im Browser des Geräts
+  document.addEventListener('click', e => { const a = e.target.closest?.('a[href]'), h = a?.getAttribute('href') || ''; if (/^[\w-]+\.html/.test(h) && !/^(index|hilfe|datenschutz|impressum|barrierefreiheit)\.html/.test(h)) a.href = 'https://pdfmy.de/' + h; }, true);
+  // Der App-Browser kennt kein Teilen-Menü: hier das von Android (alle Stellen im Code nutzen weiter navigator.share)
+  navigator.canShare = () => true;
+  navigator.share = async ({ files, text } = {}) => {
+    if (files?.[0]) { await put(files[0]); await call('shareFile', { name: files[0].name, mime: files[0].type, text: text || null }); }
+    else await call('shareText', { text: text || '' });
+  };
+  return n;
+})() : null;
 const IS_MAC = !IS_IOS && /Macintosh|Mac OS X/.test(navigator.userAgent);
 const IS_LINUX = !IS_MAC && !IS_IOS && /Linux|X11/.test(navigator.userAgent) && !/Android|CrOS/.test(navigator.userAgent);
 const IS_CHROMEOS = /CrOS/.test(navigator.userAgent);   // Chromebook: kein pdfmy Scan (läuft dort nicht) – eingebaute Wege von Chrome OS   // Linux-PC: pdfmy Scan für Linux   // Mac: kein pdfmy Scan (Windows), Scannen über „Digitale Bilder“ + Scan-Ordner
@@ -2135,6 +2168,7 @@ const mimeOf = name => MIMES[(/\.([a-z0-9]+)$/i.exec(name || '') || [])[1]?.toLo
 // PDF/A-Datei? (Kennung pdfaid:part in den XMP-Metadaten)
 const isPdfA = b => { if (!b || b[0] !== 0x25 || b[1] !== 0x50) return false; const s = new TextDecoder('latin1').decode(b.subarray(0, Math.min(b.length, 4 << 20))); return /pdfaid:part\s*(>|=)\s*["']?[1-4]/.test(s); };
 function download(data, name, type) {
+  if (NATIVE) { NATIVE.save(data, name, type).catch(e => status(e.message)); return; }
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type }));
   a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 5000);
 }
@@ -3655,7 +3689,7 @@ async function deliver(data, name, mime, meta, saveAs = false) {
     const w = await fh.createWritable(); await w.write(data); await w.close();
     return fh.name;
   }
-  if (IS_MOBILE && navigator.canShare) {
+  if (IS_MOBILE && navigator.canShare && !NATIVE) {   // die Android-App legt direkt in „Downloads“ ab
     const file = new File([data], name, { type: mime });
     if (navigator.canShare({ files: [file] })) {
       try { await navigator.share({ files: [file], title: name.replace(/\.[^.]+$/, '') }); return name + ' (geteilt/gesichert)'; }
@@ -4158,6 +4192,7 @@ async function useInbox(dir, catchUp) {
 const SCAN_PORTS = Array.from({ length: 10 }, (_, i) => 52880 + i);
 let SCAN_API = 'http://127.0.0.1:' + (SCAN_PORTS.includes(LS.get('scanPort')) ? LS.get('scanPort') : 52880);
 const scanApi = async (path, opts = {}, ms = 30000) => {
+  if (NATIVE) return NATIVE.scan(path, opts);   // Android-App: gleiche Schnittstelle, aber ohne Port und Hilfsprogramm
   const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), ms);
   try {
     const r = await fetch(SCAN_API + path, { ...opts, signal: ctl.signal, headers: { 'X-Pdfmy': '1', ...(opts.body ? { 'Content-Type': 'application/json' } : {}) } });
@@ -4189,6 +4224,7 @@ let scanSearched = false, scanFinding = null;
 // meldet /status „ownUser: true“ – der Helfer hat selbst geprüft, dass die Anfrage vom eigenen Benutzer kommt. Ältere Helfer prüfen das
 // nicht; antwortet einer, wird einmal je Seitenaufruf nach einem eigenen neueren gesucht (Übergang, bis alle Helfer aktualisiert sind).
 function scanFind() {
+  if (NATIVE) return NATIVE.scan('/status').then(r => r.json()).then(d => ({ ...d, version: SCAN_LATEST }));
   return scanFinding || (scanFinding = (async () => {
     const cur = +SCAN_API.split(':').pop(), d = await scanProbe(cur);
     if (d && (d.ownUser || scanSearched)) return d;
@@ -4583,6 +4619,8 @@ addEventListener('load', async () => {   // erst wenn alle Programmteile geladen
   } catch (e) { console.warn('Geteilte Datei', e); status(`Die geteilte Datei ließ sich nicht übernehmen: ${e.message}`); }
   finally { state.importing--; }
 });
+// Android-App: aus anderen Apps geöffnete oder geteilte Dateien
+if (NATIVE) { const take = () => NATIVE.opened().then(fs => { if (fs.length) (window.openWithChoice || importFiles)(fs); }).catch(e => status(e.message)); addEventListener('pdfmyOpen', take); setTimeout(take, 0); }
 if ('launchQueue' in window) launchQueue.setConsumer(async params => {
   if (!params.files?.length) return;
   let files;
@@ -5133,7 +5171,7 @@ async function checkUpdates(manual) {
     status(msg + scanOld); toast(msg + (scanOld ? ' pdfmy Scan kann aktualisiert werden.' : ''));
   }
 }
-if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !NATIVE) {
   const hadController = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.register('sw.js').then(reg => {
     upd.reg = reg;

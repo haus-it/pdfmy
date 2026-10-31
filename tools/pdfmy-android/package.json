@@ -1,0 +1,14 @@
+{
+  "name": "pdfmy-android",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PDFMy als Android-App: dieselbe Oberfläche wie pdfmy.de, dazu Scannersuche im Netzwerk (eSCL, WSD)",
+  "scripts": {
+    "sync": "node sync-web.js && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/cli": "^8.6.0",
+    "@capacitor/core": "^8.6.0"
+  }
+}
