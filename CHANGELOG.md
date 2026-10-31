@@ -9,6 +9,7 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 - Startseite: Briefschlitz als Einstieg statt Ablagefläche, Stempel „Bleibt hier – kein Upload“, Überschrift „Was soll mit Ihrer Post passieren?“, die Werkzeuge als Zeilen auf einem Blatt (Laufzettel-Optik) statt Kachelwand. Alle 27 Funktionen bleiben, Abläufe unverändert; das Abhaken mehrerer Schritte aus dem Entwurf ist noch nicht gebaut.
 - Farben: Aktendeckel-Grün, Tinte, Stempelviolett, Rot nur für Warnungen; hell und dunkel, App und Webseiten.
 - Schriften: Bricolage Grotesque, Instrument Sans, IBM Plex Mono (SIL Open Font License), lokal von pdfmy.de ausgeliefert und offline verfügbar; ersetzen Archivo und Source Sans 3. Griechisch und Kyrillisch nutzen wie bisher die Systemschrift.
+- Pressebilder auf der Presseseite im neuen Stil neu erstellt (Startseite, Brief erkannt, Unterschrift, Text ändern).
 - Getestet: axe hell, dunkel und Handy ohne Verstöße, kein seitlicher Überlauf, Schriften laden lokal, Dokumentansicht und Hilfe angesehen, frühere Prüfskripte.
 
 
