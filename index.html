@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="icons/app-maskable-512.png">
 <title>PDFMy</title>
 <meta name="description" content="Briefe scannen, als durchsuchbares PDF ablegen und bearbeiten – lokal, ohne Upload.">
-<meta name="theme-color" content="#0f6e8c">
+<meta name="theme-color" content="#4B2FBF">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/mentor-192.png">
 <script src="js/config.js"></script>
@@ -399,19 +399,21 @@ details.sec[open] > summary::after{content:" ▾"}
 .ann.ink svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 #overlay.t-ink{cursor:crosshair} #overlay.t-stamp{cursor:copy}
 /* ---------- Mentor-Group-Design (nur interne Edition, aktiviert über js/config.js) ---------- */
-@font-face{font-family:"Archivo";src:url(vendor/fonts/archivo-latin-standard-normal.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
-@font-face{font-family:"Source Sans 3";src:url(vendor/fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-style:normal;font-display:swap}
-:root[data-brand="mentor"]{--bg:#F5F6F8;--panel:#FFFFFF;--panel-2:#F5F6F8;--line:#E3E4E8;--text:#1B1D23;--muted:#50545F;--accent:#4A5280;--accent-text:#FFFFFF;--accent-soft:#EEF0F6;--sel:#4A5280;--danger:#B42318}
+@font-face{font-family:"Bricolage Grotesque";src:url(vendor/fonts/bricolage-grotesque-latin-standard-normal.woff2) format("woff2");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Instrument Sans";src:url(vendor/fonts/instrument-sans-latin-wght-normal.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(vendor/fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(vendor/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+:root[data-brand="mentor"]{--bg:#DDE5DC;--panel:#FFFFFF;--panel-2:#EEF2ED;--line:#C3CEC2;--text:#1D1A33;--muted:#47485A;--accent:#4B2FBF;--accent-text:#FFFFFF;--accent-soft:#E9E6F8;--sel:#4B2FBF;--danger:#B42D0C}
 @media (prefers-color-scheme: dark){
-  :root[data-brand="mentor"]:not([data-theme="light"]){--bg:#15171C;--panel:#1D2027;--panel-2:#23262E;--line:#343842;--text:#E8E9ED;--muted:#A6AAB6;--accent:#9AA3D9;--accent-text:#12141A;--accent-soft:#2A2F4A;--sel:#9AA3D9}
+  :root[data-brand="mentor"]:not([data-theme="light"]){--bg:#15141F;--panel:#1F1D2C;--panel-2:#292638;--line:#3D3A50;--text:#EEEDF5;--muted:#B5B3C6;--accent:#A99BFF;--accent-text:#15141F;--accent-soft:#2D2850;--sel:#A99BFF;--danger:#FF8A70}
 }
-:root[data-brand="mentor"][data-theme="dark"]{--bg:#15171C;--panel:#1D2027;--panel-2:#23262E;--line:#343842;--text:#E8E9ED;--muted:#A6AAB6;--accent:#9AA3D9;--accent-text:#12141A;--accent-soft:#2A2F4A;--sel:#9AA3D9}
-[data-brand="mentor"] body{font-family:"Source Sans 3","Segoe UI",system-ui,sans-serif;font-size:15px}
-[data-brand="mentor"] h1,[data-brand="mentor"] h2,[data-brand="mentor"] h3,[data-brand="mentor"] h4,[data-brand="mentor"] .dlgtitle,[data-brand="mentor"] .tile b{font-family:"Archivo","Segoe UI",sans-serif}
+:root[data-brand="mentor"][data-theme="dark"]{--bg:#15141F;--panel:#1F1D2C;--panel-2:#292638;--line:#3D3A50;--text:#EEEDF5;--muted:#B5B3C6;--accent:#A99BFF;--accent-text:#15141F;--accent-soft:#2D2850;--sel:#A99BFF;--danger:#FF8A70}
+[data-brand="mentor"] body{font-family:"Instrument Sans","Segoe UI",system-ui,sans-serif;font-size:15px}
+[data-brand="mentor"] h1,[data-brand="mentor"] h2,[data-brand="mentor"] h3,[data-brand="mentor"] h4,[data-brand="mentor"] .dlgtitle,[data-brand="mentor"] .tile b{font-family:"Bricolage Grotesque","Segoe UI",sans-serif}
 [data-brand="mentor"] #side h2{font-weight:800;letter-spacing:1px}
 [data-brand="mentor"] .btn,[data-brand="mentor"] button,[data-brand="mentor"] select,[data-brand="mentor"] input{border-radius:4px}
 [data-brand="mentor"] button.primary,[data-brand="mentor"] a.btn.primary{font-weight:700}
-[data-brand="mentor"] button.primary:hover{background:#363D66;border-color:#363D66}
+[data-brand="mentor"] button.primary:hover{background:color-mix(in srgb,var(--accent) 82%,#000);border-color:color-mix(in srgb,var(--accent) 82%,#000)}
 [data-brand="mentor"] .tile,[data-brand="mentor"] .card,[data-brand="mentor"] .way,[data-brand="mentor"] .thumb{border-radius:6px}
 [data-brand="mentor"] .tile{box-shadow:none;border:1px solid var(--line)}
 [data-brand="mentor"] .tile i{border-radius:4px}
@@ -426,13 +428,37 @@ details.sec[open] > summary::after{content:" ▾"}
 [data-brand="mentor"] .powered .brandlogo{height:13px}
 [data-brand="mentor"] .brandsep{width:1px;height:24px;background:var(--line)}
 [data-brand="mentor"] #brand{display:flex;align-items:center;gap:12px}
-[data-brand="mentor"] .pdfmark{font-family:"Archivo",sans-serif;font-style:italic;font-weight:900;font-stretch:125%;font-size:18px;letter-spacing:.5px;color:var(--accent)}
-[data-brand="mentor"] .home-title{font-family:"Archivo",sans-serif;font-style:italic;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:46px;line-height:1.04;letter-spacing:-.3px}
-[data-brand="mentor"] .home-title span{display:inline;font-size:inherit;font-weight:inherit;margin:0;color:var(--accent)}
-[data-brand="mentor"] .home-title::before{content:"";display:block;width:150px;height:12px;margin:0 auto 22px;transform:skewX(-18deg);border-radius:2px;background:linear-gradient(90deg,#E3E4E8 0 22%,transparent 22% 26%,#C9CBD3 26% 48%,transparent 48% 52%,#9A9DAA 52% 74%,transparent 74% 78%,#4A5280 78% 100%)}
-[data-brand="mentor"] .home-sub{display:block;max-width:620px;margin:-6px auto 24px;color:var(--muted);font-size:18px;line-height:1.5}
+[data-brand="mentor"] .pdfmark{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--text)}
+[data-brand="mentor"] .home-title{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(52px,8vw,104px);line-height:.95;letter-spacing:-.03em;margin:24px 0 20px}
+[data-brand="mentor"] .home-title span{display:block;font-size:inherit;font-weight:inherit;margin:0;color:var(--accent)}
+[data-brand="mentor"] .home-sub{display:block;max-width:34em;margin:0 0 28px;color:var(--text);font-size:20px;line-height:1.45}
 @media (prefers-color-scheme: dark){ [data-brand="mentor"]:not([data-theme="light"]) .brandlogo{background:#FFFFFF;padding:3px 6px;border-radius:4px} [data-brand="mentor"]:not([data-theme="light"]) .powered .brandlogo{padding:1px 3px;border-radius:2px} }
-@media (max-width:900px){ [data-brand="mentor"] .home-title{font-size:30px} [data-brand="mentor"] .brandlogo{height:24px} [data-brand="mentor"] .powered .brandlogo{height:11px} }
+@media (max-width:900px){ [data-brand="mentor"] .brandlogo{height:24px} [data-brand="mentor"] .powered .brandlogo{height:11px} }
+/* ---------- Eigener Stil „Schreibtisch“: Briefschlitz statt Kachelwand, Laufzettel, Stempel (Entwurf 31.10.2026) ---------- */
+[data-brand="mentor"] .home{position:relative;max-width:1120px;text-align:left}
+[data-brand="mentor"] .drop{max-width:760px;margin:0;align-items:flex-start;gap:12px;padding:58px 28px 28px;position:relative;border:0;border-radius:20px;background:#1D1A33;color:#FFFFFF}
+[data-brand="mentor"] .drop::before{content:"";position:absolute;left:28px;right:28px;top:28px;height:14px;border-radius:7px;background:#000;box-shadow:inset 0 3px 5px rgba(255,255,255,.22)}
+[data-brand="mentor"] .drop:hover{transform:none}
+[data-brand="mentor"] .drop:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+[data-brand="mentor"] .drop b{background:#FFFFFF;color:#1D1A33;border-radius:12px;padding:14px 26px;font-size:18px}
+[data-brand="mentor"] .drop span{color:#FFFFFF;font-family:"IBM Plex Mono",monospace;font-size:14px;text-align:left}
+[data-brand="mentor"] .camstart{border-radius:12px;background:#FFFFFF;color:#1D1A33;border:2px solid #1D1A33;box-shadow:none;margin:0 0 12px;max-width:760px}
+[data-brand="mentor"] .trust{justify-content:flex-start;color:var(--text);font-size:14px;margin:18px 0 40px}
+.hero-stamp{position:absolute;right:48px;top:64px;transform:rotate(-9deg);border:4px solid var(--accent);border-radius:10px;padding:10px 16px;color:var(--accent);font-family:"IBM Plex Mono",monospace;font-weight:500;text-align:center;line-height:1.25;font-size:22px;letter-spacing:.06em;pointer-events:none}
+.hero-stamp small{display:block;font-size:13px;letter-spacing:0}
+.laufzettel-h{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(30px,4vw,44px);line-height:1.05;letter-spacing:-.02em;margin:0 0 24px}
+[data-brand="mentor"] .tgroups{background:var(--panel);border-radius:20px;padding:36px;gap:32px}
+[data-brand="mentor"] .tgh{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:14px;letter-spacing:0;text-transform:none;color:var(--accent);margin:0 0 6px;padding-bottom:8px;border-bottom:2px solid var(--text)}
+[data-brand="mentor"] .tiles{gap:0 28px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+[data-brand="mentor"] .tile{border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;background:transparent;box-shadow:none!important;padding:12px 2px;min-height:64px;grid-template-columns:30px 1fr;column-gap:12px}
+[data-brand="mentor"] .tile:hover{transform:none;background:var(--accent-soft);border-color:var(--text)!important;box-shadow:none!important}
+[data-brand="mentor"] .tile i{width:30px;height:30px;background:transparent;color:var(--accent)}
+[data-brand="mentor"] .tile b{font-family:"Instrument Sans",sans-serif;font-weight:600;font-size:16px}
+[data-brand="mentor"] .tile span{font-size:13px;color:var(--muted)}
+@media (max-width:980px){.hero-stamp{display:none}}
+@media (prefers-color-scheme:dark){:root[data-brand="mentor"]:not([data-theme="light"]) .drop{border:1px solid #3D3A50}}
+:root[data-brand="mentor"][data-theme="dark"] .drop{border:1px solid #3D3A50}
+@media (max-width:700px){[data-brand="mentor"] .tgroups{padding:20px 16px;border-radius:16px}[data-brand="mentor"] .tiles{grid-template-columns:1fr}}
 /* Startseite */
 .home{max-width:1080px;margin:8px auto 40px;padding:0 4px;text-align:center}
 .home-title{font-size:30px;line-height:1.2;margin:18px 0 18px;font-weight:700;letter-spacing:-.3px}
@@ -587,7 +613,7 @@ body:not(.has-doc) .menu-list hr.msep:first-of-type{display:none}
 /* Seitenleiste rechts */
 #side{padding:18px 18px 24px;gap:22px}
 #side h2{font-size:11.5px;letter-spacing:1.1px;color:var(--muted);margin:0 0 10px}
-#anaHint{font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted);font-family:"Source Sans 3",system-ui,sans-serif}
+#anaHint{font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted);font-family:"Instrument Sans",system-ui,sans-serif}
 .field{gap:4px;margin-bottom:10px}
 .field label,.kd label{font-size:12.5px;color:var(--muted);font-weight:500}
 .kd{gap:8px 8px}
@@ -614,8 +640,8 @@ body:not(.has-doc) .menu-list hr.msep:first-of-type{display:none}
 .tile b{font-size:15px;font-weight:700;letter-spacing:.1px;margin-bottom:3px}
 .tile span{font-size:13px;line-height:1.4}
 .deadlines{border-radius:var(--r);box-shadow:var(--sh-sm);padding:14px 16px;margin:0 0 18px}
-.dl-head b{font-family:"Archivo",sans-serif;font-size:15px}
-.dl-badge{font-family:"Source Sans 3",sans-serif;font-weight:700;font-size:11.5px;padding:2px 8px;vertical-align:1px}
+.dl-head b{font-family:"Bricolage Grotesque",sans-serif;font-size:15px}
+.dl-badge{font-family:"Instrument Sans",sans-serif;font-weight:700;font-size:11.5px;padding:2px 8px;vertical-align:1px}
 .dl{height:auto;border-radius:7px;padding:8px 10px;font-weight:400}
 .dl:hover{background:var(--hover)}
 .dl.overdue .dl-when{color:var(--bad)} .dl.soon .dl-when{color:var(--warn)}
@@ -683,7 +709,7 @@ footer{min-height:30px;padding:4px 20px;font-size:12.5px}
 .promo-tag{position:absolute;top:8px;right:12px;font-size:11px;letter-spacing:.4px;color:var(--muted)}
 .promo-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:var(--accent);color:var(--accent-text)}
 .promo-icon .ic{width:24px;height:24px}
-.promo-title{display:block;font-family:"Archivo","Segoe UI",sans-serif;font-size:16.5px;font-weight:800;margin-bottom:4px}
+.promo-title{display:block;font-family:"Bricolage Grotesque","Segoe UI",sans-serif;font-size:16.5px;font-weight:800;margin-bottom:4px}
 .promo-body p{margin:0 0 8px;font-size:14px;line-height:1.5;color:var(--text)}
 .promo-points{display:flex;flex-wrap:wrap;gap:6px 8px;list-style:none;margin:0;padding:0}
 .promo-points li{font-size:12.5px;font-weight:600;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent)}
@@ -694,7 +720,7 @@ footer{min-height:30px;padding:4px 20px;font-size:12.5px}
 #btnInstall.installbtn:hover{filter:brightness(1.08)}
 #btnInstall[hidden]{display:none!important}
 .readydlg{max-width:420px;border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;background:var(--panel);color:var(--text);box-shadow:var(--sh-lg,0 20px 50px rgba(0,0,0,.25))}
-.readydlg h3{margin:0 0 8px;font-family:"Archivo","Segoe UI",sans-serif;font-size:18px}
+.readydlg h3{margin:0 0 8px;font-family:"Bricolage Grotesque","Segoe UI",sans-serif;font-size:18px}
 .readydlg p{margin:0 0 18px;line-height:1.5}
 .readydlg .row{display:flex;justify-content:flex-end;gap:10px}
 .readydlg button{height:40px;padding:0 18px}
@@ -828,7 +854,7 @@ body:not(.has-doc) .docbtn{display:none}
 .fb{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;margin:22px 0 0;padding:16px 20px;text-align:left;border:1px dashed color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:var(--r);background:var(--panel)}
 .fb-icon{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent)}
 .fb-icon .ic{width:20px;height:20px}
-.fb-title{margin:0 0 4px;font-family:"Archivo","Segoe UI",sans-serif;font-size:15.5px;font-weight:800}
+.fb-title{margin:0 0 4px;font-family:"Bricolage Grotesque","Segoe UI",sans-serif;font-size:15.5px;font-weight:800}
 .fb-body p{margin:0;font-size:14px;line-height:1.5}
 .fb-go{height:40px;padding:0 16px;gap:8px;white-space:nowrap}
 .fb-go .ic{width:16px;height:16px}
@@ -1223,7 +1249,7 @@ html.i18n-wait body{visibility:hidden}
     <div id="todo" class="todo" hidden role="status" aria-live="polite"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span id="todoText"></span><span class="todo-acts"><button type="button" data-act="stop" class="stopbtn" hidden>Stopp</button><button type="button" data-act="pay"><svg class="ic" aria-hidden="true"><use href="#i-scan-line"/></svg>Überweisen</button><button type="button" data-act="cal"><svg class="ic" aria-hidden="true"><use href="#i-calendar-plus"/></svg>Frist eintragen</button><button type="button" data-act="reply"><svg class="ic" aria-hidden="true"><use href="#i-pen-line"/></svg>Antworten</button><button type="button" data-act="fwd"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Weiterleiten</button><button type="button" data-act="file" class="primary"><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg>Ablegen</button></span></div>
     <div id="findBar" class="findbar" role="search" hidden><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="findQ" type="search" placeholder="Im Dokument suchen" aria-label="Im Dokument suchen" autocomplete="off" enterkeyhint="search"><span id="findN" class="findn" role="status" aria-live="polite"></span><button type="button" id="findPrev" title="Vorheriger Treffer (Umschalt+Enter)" aria-label="Vorheriger Treffer">▲</button><button type="button" id="findNext" title="Nächster Treffer (Enter, F3)" aria-label="Nächster Treffer">▼</button><button type="button" id="findMark" class="txt" title="Alle Treffer im ganzen Dokument mit dem Textmarker markieren – Farbe und Art wie beim Werkzeug „Markieren“">Alle markieren</button><button type="button" id="findReplT" class="txt" aria-expanded="false" aria-controls="findRepl" title="Ersetzen ein-/ausblenden">Ersetzen …</button><span id="findRepl" class="findrepl" hidden><input id="replQ" type="text" placeholder="Ersetzen durch" aria-label="Ersetzen durch" autocomplete="off"><button type="button" id="replOne" class="txt" title="Aktuellen Treffer ersetzen (Enter)">Ersetzen</button><button type="button" id="replAll" class="txt" title="Alle Treffer ersetzen (Strg+Enter)">Alle ersetzen</button></span><button type="button" id="findClose" title="Suche schließen (Esc)" aria-label="Suche schließen">✕</button></div>
     <div id="viewer" tabindex="0" role="region" aria-label="Seitenansicht – Enter setzt das gewählte Werkzeug, N wählt das nächste Element, Pfeiltasten verschieben es, Entf löscht"><div id="flow"><div id="flowBefore" class="flowpart"></div><div id="stage" hidden><canvas id="cv" role="img" aria-label="Seite"></canvas><div id="overlay"></div></div><div id="flowAfter" class="flowpart"></div></div><div id="empty" class="home">
-      <h1 class="home-title">Post rein. <span>PDF raus.</span></h1><span class="home-sub">Briefe scannen, Text erkennen, schwärzen, unterschreiben und ablegen – direkt im Browser. Ihre Dokumente verlassen Ihr Gerät nie.</span>
+      <div class="hero-stamp" aria-hidden="true">BLEIBT HIER<small>kein Upload</small></div><h1 class="home-title">Post rein. <span>PDF raus.</span></h1><span class="home-sub">Briefe scannen, Text erkennen, schwärzen, unterschreiben und ablegen – direkt im Browser. Ihre Dokumente verlassen Ihr Gerät nie.</span>
       <button type="button" class="camstart mobonly" id="homeCam"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Mit der Kamera scannen</button>
       <label class="drop" role="button" tabindex="0" aria-label="Dateien wählen – PDF, JPG, PNG oder E-Rechnung"><input id="dropIn" type="file" multiple accept="image/*,.heic,.heif,.tif,.tiff,application/pdf,.pdf,.xml,.eml,.msg,.txt,.md,.csv,text/plain,text/markdown,text/csv,.docx,.xlsx,.odt,.ods,.epub" hidden>
         <b>Dateien wählen</b><span>oder hierher ziehen · PDF, JPG, PNG, E-Mails (.eml/.msg) · beliebig viele</span></label>
@@ -1231,6 +1257,7 @@ html.i18n-wait body{visibility:hidden}
       <div id="deadlines" class="deadlines" hidden></div>
       <section id="rescue" class="deadlines recent rescue" hidden aria-labelledby="rescueT"></section>
       <section id="recent" class="deadlines recent" hidden aria-labelledby="recentT"></section>
+      <h2 class="laufzettel-h">Was soll mit Ihrer Post passieren?</h2>
       <div class="tgroups">
       <section class="tgroup" aria-labelledby="tgScan"><h2 class="tgh" id="tgScan">Scannen und Text</h2>
       <div class="tiles">

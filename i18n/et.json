@@ -3078,5 +3078,7 @@
  "Link-Ziele": "Link-Ziele",
  "Ohne Beschreibung lässt sich das Problem schwer finden. Trotzdem senden? „Abbrechen“ führt zurück zum Eintragen.": "Ilma kirjelduseta on probleemi raske leida. Kas saata siiski? „Loobu“ viib tagasi sisestamise juurde.",
  "Seite löschen": "Kustuta lehekülg",
- "Strg/Umschalt+Klick für Mehrfachauswahl": "Ctrl/Shift+klõps mitme valimiseks"
+ "Strg/Umschalt+Klick für Mehrfachauswahl": "Ctrl/Shift+klõps mitme valimiseks",
+ "BLEIBT HIER<small>kein Upload</small>": "JÄÄB SIIA<small>üleslaadimiseta</small>",
+ "Was soll mit Ihrer Post passieren?": "Mis peaks teie postiga juhtuma?"
 }

@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-10-31
 
+### Eigener Stil „Schreibtisch“ (app-v205)
+- Anlass: Rückmeldung eines Lesers, die Webseite erinnere an PDF24. Auftrag GF: nicht vergleichbar, ein eigener, persönlicher Stil.
+- Startseite: Briefschlitz als Einstieg statt Ablagefläche, Stempel „Bleibt hier – kein Upload“, Überschrift „Was soll mit Ihrer Post passieren?“, die Werkzeuge als Zeilen auf einem Blatt (Laufzettel-Optik) statt Kachelwand. Alle 27 Funktionen bleiben, Abläufe unverändert; das Abhaken mehrerer Schritte aus dem Entwurf ist noch nicht gebaut.
+- Farben: Aktendeckel-Grün, Tinte, Stempelviolett, Rot nur für Warnungen; hell und dunkel, App und Webseiten.
+- Schriften: Bricolage Grotesque, Instrument Sans, IBM Plex Mono (SIL Open Font License), lokal von pdfmy.de ausgeliefert und offline verfügbar; ersetzen Archivo und Source Sans 3. Griechisch und Kyrillisch nutzen wie bisher die Systemschrift.
+- Getestet: axe hell, dunkel und Handy ohne Verstöße, kein seitlicher Überlauf, Schriften laden lokal, Dokumentansicht und Hilfe angesehen, frühere Prüfskripte.
+
+
 ### Prüfrunde 2: PDF-Korrektheit und Bedienung (app-v204)
 Prüfung mit echten Läufen, pikepdf und veraPDF sowie im laufenden Programm (1366×800 und 360×800, hell/dunkel, en-GB, fr, ru).
 

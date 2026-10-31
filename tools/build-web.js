@@ -87,31 +87,32 @@ const page = (title, body, head = '', multi = true) =>   // multi: Sprachauswahl
  `<!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="${CSP}">
-<title>${title} – PDFMy</title>${head}${multi ? '<script src="js/i18n.js" data-dict="site"></script>' : ''}<link rel="icon" href="icons/mentor-192.png"><meta name="theme-color" content="#4A5280">
+<title>${title} – PDFMy</title>${head}${multi ? '<script src="js/i18n.js" data-dict="site"></script>' : ''}<link rel="icon" href="icons/mentor-192.png"><meta name="theme-color" content="#4B2FBF">
 <style>
-@font-face{font-family:"Archivo";src:url(vendor/fonts/archivo-latin-standard-italic.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:italic;font-display:swap}
-@font-face{font-family:"Archivo";src:url(vendor/fonts/archivo-latin-standard-normal.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
-@font-face{font-family:"Source Sans 3";src:url(vendor/fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap}
-:root{--bg:#F5F6F8;--panel:#fff;--text:#1B1D23;--muted:#50545F;--accent:#4A5280;--line:#E3E4E8}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15171C;--panel:#1D2027;--text:#E8E9ED;--muted:#A6AAB6;--accent:#9AA3D9;--line:#343842}}
-:root[data-theme="dark"]{--bg:#15171C;--panel:#1D2027;--text:#E8E9ED;--muted:#A6AAB6;--accent:#9AA3D9;--line:#343842}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Source Sans 3","Segoe UI",system-ui,sans-serif}
+@font-face{font-family:"Bricolage Grotesque";src:url(vendor/fonts/bricolage-grotesque-latin-standard-normal.woff2) format("woff2");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Instrument Sans";src:url(vendor/fonts/instrument-sans-latin-wght-normal.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(vendor/fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(vendor/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+:root{--bg:#DDE5DC;--panel:#fff;--text:#1D1A33;--muted:#47485A;--accent:#4B2FBF;--line:#C3CEC2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15141F;--panel:#1F1D2C;--text:#EEEDF5;--muted:#B5B3C6;--accent:#A99BFF;--line:#3D3A50}}
+:root[data-theme="dark"]{--bg:#15141F;--panel:#1F1D2C;--text:#EEEDF5;--muted:#B5B3C6;--accent:#A99BFF;--line:#3D3A50}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Instrument Sans","Segoe UI",system-ui,sans-serif}
 header{background:var(--panel);border-bottom:1px solid var(--line);padding:12px 20px}
 .bugline{font-size:14px;color:var(--muted);margin:14px 4px}.bugline a{color:var(--accent)}
 .brand{display:inline-flex;flex-direction:column;gap:3px;line-height:1;color:inherit;text-decoration:none}
-.brand b{font-family:"Archivo",sans-serif;font-style:italic;font-weight:900;font-stretch:125%;font-size:22px;letter-spacing:.3px;color:var(--accent)}
+.brand b{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:24px;letter-spacing:-.02em;color:var(--text)}
 .brand span{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)}
 .brand img{height:13px;width:auto}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand img{background:#fff;padding:1px 3px;border-radius:2px}}
 main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px 24px}
-h1,h2{font-family:"Archivo","Segoe UI",sans-serif} h1{font-size:26px;margin:8px 0 16px;font-style:italic;font-weight:900;font-stretch:125%;text-transform:uppercase}
+.card{background:var(--panel);border:0;border-radius:20px;padding:28px}
+h1,h2{font-family:"Bricolage Grotesque","Segoe UI",sans-serif} h1{font-size:40px;line-height:1.05;margin:8px 0 18px;font-weight:800;letter-spacing:-.02em}
 h2{font-size:17px;margin:22px 0 6px} a{color:var(--accent)}
 .back{display:inline-block;margin-bottom:8px}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .lang select{font:inherit;font-size:14px;max-width:46vw;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--text)}
 html.i18n-wait body{visibility:hidden}
-html[lang="de"] .lang-note,html:not([lang]) .lang-note{display:none}.lang-note{border-left:4px solid #4A5280;padding:6px 12px;background:var(--bg)}
+html[lang="de"] .lang-note,html:not([lang]) .lang-note{display:none}.lang-note{border-left:4px solid #4B2FBF;padding:6px 12px;background:var(--bg)}
 </style></head><body><header><a class="brand" href="./" translate="no"><b>PDFMy</b><span>powered by <img src="icons/mentor-group.png" alt="Mentor Group"></span></a>${multi ? '<span class="lang"><select id="siteLang" aria-label="Sprache"></select></span><script src="sprache.js"></script>' : ''}</header>
 <main><a class="back" href="./">← zurück zu PDFMy</a><div class="card"><h1>${title}</h1>${body}</div><p class="bugline">Fehler gefunden oder eine Idee? <a href="./?melden">Fehler melden</a> – per E-Mail aus Ihrem Mailprogramm, ohne Dokumente.</p></main></body></html>
 `;
@@ -375,13 +376,13 @@ write('scanner.html', page('Scanner einrichten', `
 <p>pdfmy übernimmt Scans automatisch, sobald Ihr Scanner oder Multifunktionsgerät sie in einen Ordner auf Ihrem PC legt.
 Das funktioniert mit jedem Hersteller (Brother, Canon, HP, Kyocera, Ricoh, Epson, Konica Minolta …). Einmal einrichten, danach gilt: <b>Papier einlegen, Scan drücken, fertig.</b></p>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px">
-<a href="download/${scanFile}" download style="flex:1 1 220px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4A5280;border-radius:6px;padding:12px 16px">pdfmy Scan für Windows ${scanVer}<br><small style="font-weight:400">Windows 10/11 · ca. ${scanKb} KB</small></a>
-<a href="download/${macZip}" download style="flex:1 1 220px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4A5280;border-radius:6px;padding:12px 16px">pdfmy Scan für Mac ${macVer}<br><small style="font-weight:400">macOS · ZIP, ca. ${Math.round(fs.statSync(path.join(OUT, 'download', macZip)).size / 1024)} KB</small></a>
-<a href="download/${linuxSh}" download style="flex:1 1 220px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4A5280;border-radius:6px;padding:12px 16px">pdfmy Scan für Linux ${macVer}<br><small style="font-weight:400">Ubuntu, Debian, Mint, Fedora, openSUSE, Arch …</small></a>
+<a href="download/${scanFile}" download style="flex:1 1 220px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">pdfmy Scan für Windows ${scanVer}<br><small style="font-weight:400">Windows 10/11 · ca. ${scanKb} KB</small></a>
+<a href="download/${macZip}" download style="flex:1 1 220px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">pdfmy Scan für Mac ${macVer}<br><small style="font-weight:400">macOS · ZIP, ca. ${Math.round(fs.statSync(path.join(OUT, 'download', macZip)).size / 1024)} KB</small></a>
+<a href="download/${linuxSh}" download style="flex:1 1 220px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">pdfmy Scan für Linux ${macVer}<br><small style="font-weight:400">Ubuntu, Debian, Mint, Fedora, openSUSE, Arch …</small></a>
 </div>
 <p style="margin:10px 0"><b>Gerät nicht dabei?</b> → <a href="#geraet-fehlt">Kurz melden – wir machen den Rest</a>.</p>
 <p style="margin:10px 0"><b>Funktioniert mein Gerät?</b> → <a href="scanner-geraete.html">Geräteliste mit Suche</a>: Brother, Epson, HP, Canon, Kyocera, Ricoh, Konica Minolta, Sharp, Xerox, Lexmark, Dell, Samsung und Dokumentenscanner (ScanSnap, fi, Canon DR, Brother ADS, Epson DS) – mit Angabe zu beidseitigem Scannen.</p>
-<div id="zertifizierung" style="border-left:4px solid #4A5280;background:var(--bg);padding:10px 14px;margin:14px 0">
+<div id="zertifizierung" style="border-left:4px solid #4B2FBF;background:var(--bg);padding:10px 14px;margin:14px 0">
 <p style="margin:0 0 6px"><b>Windows:</b> pdfmy Scan ist digital signiert – Herausgeber <b>Mentor GmbH</b> (Microsoft Artifact Signing, öffentlich vertrauenswürdiges Zertifikat). Windows zeigt beim Öffnen „Mentor GmbH“ als verifizierten Herausgeber. <b>Mac:</b> Die Zertifizierung bei Apple ist in Vorbereitung; bis dahin warnt macOS beim ersten Mal. Das ist normal und kein Hinweis auf ein Problem. So geht es weiter:</p>
 <p style="margin:6px 0 2px"><b>Windows</b></p>
 <ul style="margin:0">
@@ -439,7 +440,7 @@ oder direkt: <code>curl -fsSL https://${site.domain}/download/${linuxSh} | sh</c
 <h2 id="chromebook">Auf dem Chromebook (Chrome OS)</h2>
 <p>Auf dem <b>Chromebook</b> braucht PDFMy kein Zusatzprogramm – pdfmy Scan läuft unter Chrome OS nicht, wird aber auch nicht gebraucht: Chrome OS steuert viele Netzwerk- und USB-Scanner selbst an (AirScan/eSCL, ohne Treiber). Scanner einrichten unter <i>Einstellungen → Erweitert → Drucken und Scannen</i>, dann mit der App <b>„Scannen“</b> als PDF oder JPG in einen Ordner scannen, z. B. <i>Meine Dateien › Scans</i>. In PDFMy im Scan-Fenster <i>„Diesen Ordner als Scan-Ordner verbinden“</i> – jeder neue Scan erscheint automatisch, mit Texterkennung. PDFMy über <i>„App herunterladen“</i> installieren: Dann öffnet die App „Dateien“ PDFs mit <i>Öffnen mit → PDFMy</i>; Drucken geht über <i>„Als PDF speichern“</i>, Google Drive ist in der App „Dateien“ eingebunden (als Ablageordner wählbar).</p>
 <h2 id="geraet-fehlt">Ihr Drucker oder Scanner ist noch nicht dabei?</h2>
-<div style="border-left:4px solid #4A5280;background:var(--bg);padding:10px 14px;margin:14px 0">
+<div style="border-left:4px solid #4B2FBF;background:var(--bg);padding:10px 14px;margin:14px 0">
 <p style="margin:0 0 8px"><b>Kein Problem – kurz Bescheid geben, wir machen den Rest.</b> Wir prüfen Ihr Modell, passen pdfmy Scan bei Bedarf an und melden uns mit einer Lösung. Kostenlos.</p>
 <p style="margin:0 0 8px"><b>Am schnellsten:</b> in PDFMy <i>„… Mehr → Problem melden …“</i> – Versionen und Protokoll von pdfmy Scan sind dann automatisch dabei. Oder per E-Mail an <a href="mailto:${esc(APPSUPPORT)}?subject=Scanner%20fehlt%20in%20pdfmy%20Scan&amp;body=Hersteller und Modell: %0D%0ASystem (Windows/macOS/Linux, Version): %0D%0Apdfmy Scan Version: %0D%0AVerbindung (WLAN/Kabel/USB): %0D%0AIP-Adresse des Geräts: %0D%0AWas geht schon (Drucken? Hersteller-Software?): %0D%0AGlas oder Einzug, ein- oder beidseitig: %0D%0ARückruf unter: %0D%0A%0D%0AProtokoll aus dem Scan-Fenster:%0D%0A">${esc(APPSUPPORT)}</a> (die Vorlage füllt die E-Mail vor).</p>
 <p style="margin:0 0 4px"><b>Diese Angaben helfen uns:</b></p>

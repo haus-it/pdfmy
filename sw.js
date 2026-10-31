@@ -5,7 +5,7 @@
    Updates laden nur geänderte Dateien (Update-Strategie, KONZEPT.md): Der Offline-Speicher bleibt über Versionen bestehen; beim
    Installieren wird jede gespeicherte Datei mit ihrer Prüfsumme in pruefsummen.json verglichen und nur bei Abweichung neu geladen.
    Bei 100.000 Nutzern spart das je Veröffentlichung Terabytes (vorher: alle ~18 MB je Gerät bei jeder neuen VERSION). */
-const VERSION = 'app-v204';
+const VERSION = 'app-v205';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',
@@ -39,7 +39,7 @@ async function fetchRetry(f, tries = 3) {
    klein und wichtig (iPhone-Fotos HEIC, Schriften der Unterschrift und Oberfläche, Verschlüsselung) immer; die großen Schriften für
    Word-Import und „Text ändern“ (~10 MB) nur im WLAN bzw. ohne Datensparmodus. Dazu die OCR-Sprache der Oberfläche. */
 const EXTRA = ['vendor/libheif/libheif.js', 'vendor/libheif/libheif.wasm', 'vendor/forge.min.js',
-  'vendor/fonts/archivo-latin-standard-normal.woff2', 'vendor/fonts/archivo-latin-standard-italic.woff2', 'vendor/fonts/source-sans-3-latin-wght-normal.woff2',
+  'vendor/fonts/bricolage-grotesque-latin-standard-normal.woff2', 'vendor/fonts/instrument-sans-latin-wght-normal.woff2', 'vendor/fonts/ibm-plex-mono-latin-400-normal.woff2', 'vendor/fonts/ibm-plex-mono-latin-500-normal.woff2',
   ...['allura', 'caveat', 'dancing-script', 'great-vibes', 'homemade-apple'].map(n => `vendor/fonts/sign/${n}.woff2`)];
 const HEAVY = [...['Sans-Oblique', 'Sans-BoldOblique', 'SansMono', 'Serif-Bold', 'Serif-Italic', 'Serif-BoldItalic'].map(n => `vendor/dejavu/DejaVu${n}.ttf`),
   ...['Caladea', 'LiberationMono', 'LiberationSans', 'LiberationSerif', 'PDFMySansC'].flatMap(f => ['Regular', 'Bold', 'Italic', 'BoldItalic'].map(s => `vendor/fonts/metric/${f}-${s}.ttf`))];

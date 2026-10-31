@@ -3078,5 +3078,7 @@
  "Link-Ziele": "Link-Ziele",
  "Ohne Beschreibung lässt sich das Problem schwer finden. Trotzdem senden? „Abbrechen“ führt zurück zum Eintragen.": "Sans description, le problème est difficile à trouver. Envoyer quand même ? « Annuler » ramène à la saisie.",
  "Seite löschen": "Supprimer la page",
- "Strg/Umschalt+Klick für Mehrfachauswahl": "Ctrl/Maj+clic pour une sélection multiple"
+ "Strg/Umschalt+Klick für Mehrfachauswahl": "Ctrl/Maj+clic pour une sélection multiple",
+ "BLEIBT HIER<small>kein Upload</small>": "RESTE ICI<small>sans envoi en ligne</small>",
+ "Was soll mit Ihrer Post passieren?": "Que doit-il advenir de votre courrier ?"
 }
