@@ -98,6 +98,54 @@
     if (blob) { sh.blob = blob; c.width = 0; c.height = 0; } else sh.canvas = c;   // ohne JPEG (Speicher knapp) bleibt das Bild, wie es ist
     return sh;
   }
+  /* Zwischenstand: Stürzt der Browser beim Scannen ab, wären die Aufnahmen weg, denn der Absturzschutz greift erst im Dokument.
+     Jede Aufnahme liegt deshalb sofort in der IndexedDB dieses Browsers (nichts verlässt das Gerät). Gelöscht beim Verwerfen,
+     sobald der Absturzschutz die Seiten übernommen hat oder gespeichert wurde, sonst nach 7 Tagen (renderRescue in pro.js). */
+  const BACKUP_DAYS = 7;
+  let cid = '', shotNo = 0, saveQ = Promise.resolve(), saveWarned = false;
+  const handed = [];
+  const shotKey = id => 'camshot-' + id;
+  const queue = fn => (saveQ = saveQ.then(fn).catch(e => {
+    console.warn('Kamera-Zwischenstand:', e);
+    if (!saveWarned) { saveWarned = true; window.toast?.(I18N.t('Zwischenstand konnte nicht gesichert werden (Gerätespeicher voll?). Die Aufnahmen bleiben, solange diese Seite offen ist.'), 8000); }
+  }));
+  const manifests = async () => (await idb.get('camscans')) || [];
+  // Erst die Bilder, dann die Liste: Bricht es dazwischen ab, zeigt die Liste nie auf ein fehlendes Bild
+  function persist() {
+    if (!cid) return;
+    const id = cid, list = shots.filter(s => s.blob);
+    queue(async () => {
+      for (const sh of list) if (!sh.saved) { sh.id ||= `${id}-${++shotNo}`; await idb.put(shotKey(sh.id), sh.blob); sh.saved = true; }
+      const all = await manifests(), old = all.find(x => x.cid === id), keep = new Set(list.map(s => s.id));
+      const rest = all.filter(x => x.cid !== id);
+      if (list.length) rest.unshift({ cid: id, sid: SID, at: Date.now(), items: list.map(s => s.id) });
+      await idb.put('camscans', rest);
+      for (const k of old?.items || []) if (!keep.has(k)) await idb.del(shotKey(k));
+    });
+  }
+  function dropBackup(id) {
+    const h = handed.indexOf(id); if (h >= 0) handed.splice(h, 1);
+    return queue(async () => {
+      const all = await manifests(), e = all.find(x => x.cid === id); if (!e) return;
+      await idb.put('camscans', all.filter(x => x.cid !== id));
+      for (const k of e.items) await idb.del(shotKey(k));
+    });
+  }
+  // Zwischenstände anderer, beendeter Sitzungen; zu alte werden dabei gelöscht
+  async function backups() {
+    const all = await manifests();
+    for (const e of all) if (Date.now() - e.at >= BACKUP_DAYS * 864e5) await dropBackup(e.cid);
+    return all.filter(e => Date.now() - e.at < BACKUP_DAYS * 864e5);
+  }
+  async function restoreBackup(id) {
+    const e = (await manifests()).find(x => x.cid === id), list = [];
+    for (const k of e?.items || []) {
+      const blob = await idb.get(shotKey(k)); if (!blob) continue;
+      list.push(await shotCanvas({ blob }));
+    }
+    if (list.length) handed.push(id);
+    return list;
+  }
   async function shotCanvas(sh) {
     if (sh.canvas) return sh.canvas;
     const bmp = await createImageBitmap(sh.blob), c = Imaging.canvas(bmp.width, bmp.height);
@@ -189,6 +237,7 @@
       if (Math.max(page.width, page.height) > 2600) { const s = Imaging.scaled(page, 2600); if (page !== full) { page.width = 0; page.height = 0; } page = s; }
       if (page !== full) { full.width = 0; full.height = 0; }
       shots.push(await packShot(page, !!use));
+      persist();
       $('#camFlash').classList.remove('go'); void $('#camFlash').offsetWidth; $('#camFlash').classList.add('go');
       navigator.vibrate?.(35);
       renderStrip();
@@ -267,10 +316,13 @@
     stream?.getTracks().forEach(t => t.stop()); stream = null;
     $('#camDlg').close();
     if (revUrl) { URL.revokeObjectURL(revUrl); revUrl = ''; }
-    const list = [];
+    const list = [], id = cid;
+    cid = '';
     try { if (deliver) for (const sh of shots) list.push(await shotCanvas(sh)); shots = []; }
     finally { closing = false; }
-    if (deliver && list.length && onDone) onDone(list);
+    // Übergeben: Der Zwischenstand bleibt, bis der Absturzschutz die Seiten gesichert hat (rescueSave in pro.js)
+    if (deliver && list.length && onDone) { handed.push(id); onDone(list); }
+    else dropBackup(id);
   }
   async function open(done, fallback) {
     onDone = done;
@@ -282,7 +334,7 @@
       if (e.name === 'NotAllowedError') alert('Der Kamerazugriff wurde nicht erlaubt. Bitte in den Browser-Einstellungen die Kamera für diese Seite freigeben – oder ein Foto aus der Galerie wählen.');
       fallback?.(); return;
     }
-    shots = []; shutter = new AutoShutter(); auto = (() => { try { return localStorage.getItem('mpdf.camAuto') !== '0'; } catch { return true; } })();
+    shots = []; cid = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); shutter = new AutoShutter(); auto =(() => { try { return localStorage.getItem('mpdf.camAuto') !== '0'; } catch { return true; } })();
     $('#camAuto').checked = auto;
     const v = $('#camVideo'); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); v.muted = true; v.playsInline = true; v.srcObject = stream;
     $('#camDlg').showModal(); guardOn(); wakeOn(); renderStrip();
@@ -307,8 +359,8 @@
     $('#camPhotoApp').onclick = () => { const had = shots.length; close(true); setTimeout(() => document.querySelector('#camIn')?.click(), had ? 400 : 0); };
     $('#camRevBack').onclick = closeReview;
     $('#camRevOk').onclick = closeReview;   // vorher Inline-onclick – auf pdfmy.de von der CSP blockiert, „Passt“ tat nichts
-    $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); renderStrip(); closeReview(); };
-    $('#camRevRot').onclick = async () => { const i = reviewIdx, sh = shots[i]; if (!sh) return; const c = await shotCanvas(sh), r = Imaging.rotate90(c, 90); c.width = 0; const blurry = sh.blurry; shots[i] = await packShot(r, sh.cropped); shots[i].blurry = blurry; renderStrip(); review(i); };
+    $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); persist(); renderStrip(); closeReview(); };
+    $('#camRevRot').onclick = async () => { const i = reviewIdx, sh = shots[i]; if (!sh) return; const c = await shotCanvas(sh), r = Imaging.rotate90(c, 90); c.width = 0; const blurry = sh.blurry; shots[i] = await packShot(r, sh.cropped); shots[i].blurry = blurry; persist(); renderStrip(); review(i); };
     $('#camDone').onclick = () => close(true);
     // Anruf oder App-Wechsel: Das Handy kann die Seite im Hintergrund beenden – bisherige Aufnahmen ins Dokument übernehmen
     // (dort greift der Absturzschutz); weiterscannen mit „Kamera“ hängt neue Seiten hinten an
@@ -317,5 +369,5 @@
     $('#camAuto').onchange = e => { auto = e.target.checked; try { localStorage.setItem('mpdf.camAuto', auto ? '1' : '0'); } catch {} shutter = new AutoShutter(); };
     $('#camTorch').onclick = async () => { const on = $('#camTorch').getAttribute('aria-pressed') !== 'true'; if (await torch(on)) $('#camTorch').setAttribute('aria-pressed', String(on)); };
   }
-  root.Camera = { open, close, get shots() { return shots; } };
+  root.Camera = { open, close, backups, restoreBackup, dropBackup, get handed() { return handed; }, get shots() { return shots; } };
 })(typeof self !== 'undefined' ? self : this);

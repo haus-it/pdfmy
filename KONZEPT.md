@@ -417,3 +417,8 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
+
+### Umgesetzt 01.11.2026: Zwischenstand beim Kamera-Scan (app-v210)
+**Anlass:** Der Absturzschutz greift erst im Dokument. Stürzt der Browser beim Scannen ab, waren die Aufnahmen verloren.
+**Leitplanken:** 1 gewahrt (nur IndexedDB des Geräts, kein Upload). 2 gewahrt (keine neue Verbindung). 3 gewahrt (kein Konto, kein Tracking). 4 gewahrt (Anzeige im bekannten Feld „Nicht gespeicherte Arbeit“, keine neue Bedienung). 5 nicht betroffen, axe läuft nach der Änderung. 6 nicht betroffen.
+**Abwägung:** Sensible Aufnahmen bleiben nach einem Absturz bis zu 7 Tage auf dem Gerät. Das gilt schon für den Absturzschutz. Deshalb neu „Alle verwerfen“; „Alle lokal gespeicherten Daten löschen“ erfasst auch den Zwischenstand.

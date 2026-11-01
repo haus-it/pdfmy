@@ -3798,6 +3798,7 @@ function closeTab(i) {
   const s = i === tabCur ? snapshot() : tabs[i].snap, unsaved = s && s.dirty && s.pages.length;
   if (unsaved && !confirm(`„${tabName(i)}“ schließen? Die ${s.pages.length} Seite(n) wurden noch nicht gespeichert.\n\nZum Behalten „Abbrechen“ wählen und dann „Speichern“, „Ablegen“ oder „Teilen“ wählen.`)) return;
   if (s && s.pages.length) { offerReopen(s, tabName(i)); logLine(`Dokument geschlossen: ${s.pages.length} Seite(n)${unsaved ? ', nicht gespeichert' : ''}`); }
+  if (i === tabCur) Camera.handed.slice().forEach(Camera.dropBackup);
   if (tabs.length === 1) { resetDoc(); tabs[0].snap = null; renderTabs(); status('Bereit.'); return; }
   if (i !== tabCur) tabs[tabCur].snap = snapshot();
   rescueDrop(tabs[i].rid); tabs.splice(i, 1);
@@ -3836,18 +3837,19 @@ navigator.locks?.request('pdfmy-sess-' + SID, () => new Promise(() => {})).catch
 let rescueTimer = null, rescueBusy = false, rescueSig = '', rescueUndo = null, rescueWasDirty = false;
 const rescueList = async () => (await idb.get('rescue')) || [];
 async function rescueDrop(rid) { const l = await rescueList(); if (l.some(x => x.rid === rid)) await idb.set('rescue', l.filter(x => x.rid !== rid)); }
-const rescueJob = () => ({ rid: tabs[tabCur].rid, pages: state.pages.slice(), meta: state.meta, dirty: state.dirty && state.pages.length > 0, name: (state.docs.length === 1 && state.docs[0].name) || filename() });
+const rescueJob = () => ({ rid: tabs[tabCur].rid, pages: state.pages.slice(), meta: state.meta, dirty: state.dirty && state.pages.length > 0, name: (state.docs.length === 1 && state.docs[0].name) || filename(), cam: Camera.handed.slice() });
 async function rescueSave(job) {
   if (rescueBusy) { clearTimeout(rescueTimer); rescueTimer = setTimeout(() => rescueSave(job), 1500); return; }
   rescueBusy = true;
   try {
-    if (!job.dirty) await rescueDrop(job.rid);
+    if (!job.dirty) { await rescueDrop(job.rid); job.cam.forEach(Camera.dropBackup); }
     else if (job.pages.length <= RESCUE_PAGES) {
       const bytes = await buildPdf(job.pages, job.meta, { noOcr: true, onPage: () => {} });
       let meta = null; try { meta = JSON.parse(JSON.stringify(job.meta)); } catch {}
       const l = (await rescueList()).filter(x => x.rid !== job.rid);
       l.unshift({ rid: job.rid, sid: SID, name: job.name, at: Date.now(), pages: job.pages.length, bytes, meta });
-      await idb.set('rescue', l.slice(0, RESCUE_MAX));
+      await idb.put('rescue', l.slice(0, RESCUE_MAX));
+      job.cam.forEach(Camera.dropBackup);   // Seiten sind jetzt im Absturzschutz, der Kamera-Zwischenstand wird nicht mehr gebraucht
     }
   } catch (e) {
     console.warn('Absturzschutz', e);
@@ -3878,24 +3880,38 @@ async function renderRescue() {
   if (fresh.length !== list.length) { list = fresh; await idb.set('rescue', list); }
   let held = new Set();
   try { held = new Set(((await navigator.locks?.query())?.held || []).map(l => l.name)); } catch {}
-  const show = list.filter(e => e.sid !== SID && !held.has('pdfmy-sess-' + e.sid));
+  const cams = (await Camera.backups()).map(e => ({ cam: e.cid, sid: e.sid, name: I18N.t('Kamera-Scan'), at: e.at, pages: e.items.length }));
+  const show = [...cams, ...list].filter(e => e.sid !== SID && !held.has('pdfmy-sess-' + e.sid));
   renderRescue.list = show;
   if (!show.length || state.pages.length) { box.hidden = true; return; }
   box.hidden = false;
-  box.innerHTML = `<div class="dl-head"><b id="rescueT">Nicht gespeicherte Arbeit</b></div>
+  box.innerHTML = `<div class="dl-head"><b id="rescueT">Nicht gespeicherte Arbeit</b>${show.length > 1 ? '<span><button type="button" class="linkbtn" data-rsall>Alle verwerfen</button></span>' : ''}</div>
     <p class="rs-hint">PDFMy wurde geschlossen, bevor gespeichert wurde. Ihre Änderungen sind hier sicher aufbewahrt – nur auf diesem Gerät.</p>
     <div class="rc-list">${show.map((e, i) => `<div class="rc"><button type="button" class="rc-open" data-rs="${i}" title="${esc(e.name)} wiederherstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span class="rc-name">${esc(e.name)} <small>(${e.pages} ${e.pages === 1 ? 'Seite' : 'Seiten'})</small></span><span class="rc-when">${whenStr(e.at)}</span></button><button type="button" class="rs-go" data-rs="${i}">Wiederherstellen</button><button type="button" class="rc-del" data-rsdel="${i}" aria-label="${esc(e.name)} verwerfen" title="Verwerfen">✕</button></div>`).join('')}</div>`;
 }
 $('#rescue').addEventListener('click', async ev => {
   const b = ev.target.closest('button'); if (!b) return;
   const list = renderRescue.list || [];
+  if (b.dataset.rsall != null) {
+    if (!confirm(`Alle ${list.length} gesicherten Dokumente endgültig verwerfen?`)) return;
+    for (const e of list) { if (e.cam) await Camera.dropBackup(e.cam); else await rescueDrop(e.rid); }
+    renderRescue(); status('Gesicherte Änderungen verworfen.'); return;
+  }
   if (b.dataset.rsdel != null) {
     const e = list[+b.dataset.rsdel]; if (!e || !confirm(`Die gesicherten Änderungen an „${e.name}“ endgültig verwerfen?`)) return;
-    await rescueDrop(e.rid); renderRescue(); status('Gesicherte Änderungen verworfen.'); return;
+    if (e.cam) await Camera.dropBackup(e.cam); else await rescueDrop(e.rid);
+    renderRescue(); status('Gesicherte Änderungen verworfen.'); return;
   }
   const e = list[+b.dataset.rs]; if (!e) return;
   $('#rescue').hidden = true;
   state.intent = null;
+  if (e.cam) {
+    const pages = await Camera.restoreBackup(e.cam);
+    if (!pages.length) { await Camera.dropBackup(e.cam); renderRescue(); return status('Die gesicherten Aufnahmen konnten nicht gelesen werden.'); }
+    addCameraPages(pages);
+    status(`Wiederhergestellt: ${pages.length} Seite(n) aus dem Kamera-Scan – bitte jetzt speichern.`);
+    return;
+  }
   await importFiles([new File([e.bytes], e.name, { type: 'application/pdf' })]);
   if (e.meta) { Object.assign(state.meta, e.meta); renderForm(); }
   tabs[tabCur].rid = e.rid;   // weitere Änderungen ersetzen diese Sicherung

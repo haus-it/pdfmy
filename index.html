@@ -1000,6 +1000,9 @@ body:not(.has-doc) #btnShareTop{display:none}
 @media (max-width:1280px){ #rdAuto span{display:none} #rdAuto{width:34px;padding:0;justify-content:center} }
 @media (max-width:1100px){ .actions > button .lbl,.actions > .btn .lbl,.menu > summary .lbl{display:none} #btnFile .lbl,#btnSave .lbl{display:inline} }
 .dl-badge{white-space:nowrap}
+/* Fristen: Spalten richten sich nach dem längsten Eintrag („seit 103 Tagen überfällig“ lief sonst in den Text) */
+@media (min-width:701px){ .dl-list{grid-template-columns:auto minmax(0,1fr) auto} .dl-list>.dl{grid-column:1/-1;grid-template-columns:subgrid} }
+@supports not (grid-template-columns:subgrid){ @media (min-width:701px){ .dl-list{grid-template-columns:minmax(0,1fr)} .dl-list>.dl{grid-template-columns:230px minmax(0,1fr) auto} } }
 @media (max-width:700px){ .dl{grid-template-columns:1fr auto;gap:0 10px;white-space:normal} .dl .dl-when{grid-column:1/-1;font-size:13px} .dl-head{flex-wrap:wrap;row-gap:4px} .home{padding:8px 16px 40px} }
 @media (max-width:900px){ header{height:auto;min-height:60px;flex-wrap:wrap;padding:8px 14px!important;row-gap:6px} .actions{flex-wrap:nowrap;overflow-x:auto;width:100%;margin-left:0;scrollbar-width:none} #btnFile .lbl,#btnSaveAs{display:none} .hsep{margin:0 4px} .tmeta{flex-wrap:nowrap} }
 

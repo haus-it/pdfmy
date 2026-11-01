@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Zwischenstand beim Kamera-Scan (app-v210)
+- Jede Aufnahme liegt sofort im Browser-Speicher des Geräts. Stürzt der Browser vor „Fertig“ ab, bietet die Startseite den Scan unter „Nicht gespeicherte Arbeit“ an. Gelöscht wird beim Verwerfen, sobald der Absturzschutz die Seiten übernommen hat oder gespeichert wurde, sonst nach 7 Tagen.
+- Absturzschutz: Speicherfehler wurden verschluckt, die Warnung „Gerätespeicher voll?“ erschien deshalb nicht. Jetzt wird der Fehler gemeldet.
+- „Nicht gespeicherte Arbeit“: neu „Alle verwerfen“.
+- Fristen auf der Startseite: Längere Angaben wie „seit 103 Tagen überfällig“ überlappen den Text nicht mehr (Meldung GF).
+
 ### Kamera-Scan robuster (app-v209)
 - Aufgenommene Seiten liegen bis „Fertig“ als JPEG im Speicher statt unkomprimiert. Lange Stapel sollen dadurch den Tab seltener zum Absturz bringen. Nach „Fertig“ braucht die Weiterverarbeitung weiter viel Speicher.
 - Der Bildschirm bleibt während des Scannens an, wo der Browser das erlaubt.

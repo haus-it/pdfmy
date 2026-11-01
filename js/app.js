@@ -4218,9 +4218,15 @@ const idb = {
     try { const db = await this.db(); return await new Promise((res, rej) => { const q = db.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); }); }
     catch { return null; }
   },
-  async set(k, v) {
-    try { const db = await this.db(); await new Promise((res, rej) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }); }
-    catch {}
+  // Wie set, meldet aber Fehler (Speicher voll bricht die Transaktion ab, ohne onerror)
+  async put(k, v) {
+    const db = await this.db();
+    await new Promise((res, rej) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = t.onabort = () => rej(t.error || new Error('IndexedDB abgebrochen')); });
+  },
+  async set(k, v) { try { await this.put(k, v); } catch {} },
+  async del(k) {
+    const db = await this.db();
+    await new Promise((res, rej) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').delete(k); t.oncomplete = res; t.onerror = t.onabort = () => rej(t.error || new Error('IndexedDB abgebrochen')); });
   },
 };
 async function permitted(h, mode, ask) {
