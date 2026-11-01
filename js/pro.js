@@ -1871,7 +1871,7 @@ $('#btnSummary').onclick = () => { closeMenu(); openSummary(); };
 
 
 /* ---------- Befehlssuche (Strg+K): jede Funktion per Tastatur finden – Kacheln, Werkzeuge, Menü, Kopfzeile ---------- */
-const CMD_SYNONYMS = { scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
+const CMD_SYNONYMS = { booklet: 'heft falten drucken', nup: 'n-up seiten pro blatt drucken', poster: 'groß plakat kacheln drucken mehrere blätter', a4: 'seitengröße letter format', trim: 'zuschneiden ränder', gray: 'schwarzweiß grau toner', invert: 'invertieren negativ dunkel hell', labels: 'römisch seitenbeschriftung seitenzahlen vorspann', clean: 'metadaten bereinigen sanitize autor kommentare', flat: 'kopieren sperren rastern bild abflachen flatten', ai: 'ki chatgpt claude markdown llm', scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
   protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', btnPreflight: 'prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight', btnSummary: 'ki zusammenfassung zusammenfassen frage chat kernpunkte ai', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
   bates: 'nummerieren akte', btnCam: 'foto handy smartphone kamera abfotografieren', tileCam: 'foto handy smartphone kamera abfotografieren', btnTax: 'datev buchhaltung steuer belege monat export', tileTax: 'datev buchhaltung steuer belege monat export', pdfa: 'archiv revisionssicher', btnJournal: 'fristen post liste', btnSettings: 'optionen kürzel', btnFile: 'ablage archivieren' };
 function commands() {
@@ -1889,6 +1889,12 @@ function commands() {
   if (hasDoc) document.querySelectorAll('[data-tool]').forEach(b => add(b, 'Werkzeug: ' + b.textContent, 'Bearbeiten'));
   if (hasDoc) ['#btnGrid', '#reOcr', '#rotL', '#rotR', '#undo', '#redo', '#btnCrop', '#rdAuto'].forEach(s => { const b = $(s); if (b) add(b, b.querySelector('.lbl,span')?.textContent || b.title.split('(')[0], 'Seite'); });
   document.querySelectorAll('.tile').forEach(b => add(b, b.querySelector('b').textContent, 'Aufgaben'));
+  // Mit offenem Dokument ist die Startseite ausgeblendet: Aufgaben, die nur den Speichern-Dialog voreinstellen, bleiben trotzdem auffindbar
+  if (hasDoc) document.querySelectorAll('.tile[data-intent]').forEach(b => {
+    const k = b.dataset.intent, label = b.querySelector('b').textContent.trim(); if (seen.has(label) || !(k === 'ai' || EXPORT_INTENTS[k])) return;
+    seen.add(label);
+    out.push({ label, group: 'Aufgaben', el: { click() { state.intent = k; applyIntent(); }, querySelector: q => b.querySelector(q), dataset: b.dataset }, hay: (label + ' ' + b.querySelector('span').textContent + ' ' + (CMD_SYNONYMS[k] || '')).toLowerCase() });
+  });
   return out;
 }
 let cmdList = [], cmdSel = 0;

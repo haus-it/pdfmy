@@ -707,7 +707,8 @@ footer{min-height:30px;padding:4px 20px;font-size:12.5px}
 .gridbar button{height:34px}
 
 .menu{border:0;padding:0}
-/* Banner Haus iT (Anzeige) */
+/* Hinweis auf eigene Angebote (Anzeige): statisch, wechselt nur beim nächsten Aufruf (js/app.js) */
+.promo[hidden]{display:none}
 .promo{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;margin:22px 0 0;padding:20px 22px;text-align:left;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 9%,var(--panel)) 0%,var(--panel) 60%);box-shadow:var(--sh-sm)}
 .promo-tag{position:absolute;top:8px;right:12px;font-size:11px;letter-spacing:.4px;color:var(--muted)}
 .promo-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:var(--accent);color:var(--accent-text)}
@@ -1283,6 +1284,7 @@ html.i18n-wait body{visibility:hidden}
         <button class="tile" data-intent="img2pdf"><i><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg></i><b>Bilder in PDF</b><span>JPG und PNG zu einem PDF, auch vom Handy</span></button>
         <button class="tile" data-intent="pdf2img"><i><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg></i><b>PDF in Bilder</b><span>Jede Seite als JPG, gesammelt als ZIP</span></button>
         <button class="tile" data-intent="imgout"><i><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg></i><b>Bilder aus PDF</b><span>Fotos und Logos in Originalgröße herausholen</span></button>
+        <button class="tile" data-intent="ai"><i><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg></i><b>Für KI vorbereiten</b><span>Sauberer Text mit Tabellen und Seitenmarken, ohne Upload</span></button>
       </div></section>
       <section class="tgroup" aria-labelledby="tgEdit"><h2 class="tgh" id="tgEdit">Bearbeiten und unterschreiben</h2>
       <div class="tiles">
@@ -1293,10 +1295,23 @@ html.i18n-wait body{visibility:hidden}
         <button class="tile" data-intent="bates"><i><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg></i><b>Akten nummerieren</b><span>Fortlaufende Seitennummern (Bates) und Kopfzeile für Akten und Gericht</span></button>
         <button class="tile" data-intent="compare"><i><svg class="ic" aria-hidden="true"><use href="#i-git-compare"/></svg></i><b>Dokumente vergleichen</b><span>Zwei Fassungen: Was wurde geändert?</span></button>
       </div></section>
+      <section class="tgroup" aria-labelledby="tgPrint"><h2 class="tgh" id="tgPrint">Drucken und Format</h2>
+      <div class="tiles">
+        <button class="tile" data-intent="booklet"><i><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg></i><b>Broschüre</b><span>Zum Falten: beidseitig drucken, in der Mitte knicken</span></button>
+        <button class="tile" data-intent="nup"><i><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg></i><b>Mehrere Seiten pro Blatt</b><span>2 oder 4 Seiten verkleinert auf ein A4-Blatt</span></button>
+        <button class="tile" data-intent="poster"><i><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg></i><b>Als Poster drucken</b><span>Eine Seite groß auf 4 oder 9 A4-Blättern</span></button>
+        <button class="tile" data-intent="a4"><i><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg></i><b>Alle Seiten auf A4</b><span>Letter, Quittungen und gemischte Formate angleichen</span></button>
+        <button class="tile" data-intent="trim"><i><svg class="ic" aria-hidden="true"><use href="#i-crop"/></svg></i><b>Weiße Ränder entfernen</b><span>Leeren Rand um den Inhalt abschneiden</span></button>
+        <button class="tile" data-intent="gray"><i><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg></i><b>In Graustufen</b><span>Spart Farbtoner, wirkt wie eine Schwarzweiß-Kopie</span></button>
+        <button class="tile" data-intent="invert"><i><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg></i><b>Farben umkehren</b><span>Dunkle Folien tonersparend drucken</span></button>
+        <button class="tile" data-intent="labels"><i><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg></i><b>Seiten beschriften</b><span>Vorspann i, ii, iii, danach 1, 2, 3</span></button>
+      </div></section>
       <section class="tgroup" aria-labelledby="tgSafe"><h2 class="tgh" id="tgSafe">Schützen</h2>
       <div class="tiles">
         <button class="tile" data-intent="protect"><i><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></i><b>Mit Passwort schützen</b><span>Nur mit Passwort zu öffnen; Drucken und Kopieren erlauben oder sperren</span></button>
         <button class="tile" data-intent="unlock"><i><svg class="ic" aria-hidden="true"><use href="#i-lock-open"/></svg></i><b>PDF entsperren</b><span>Passwort entfernen (Passwort erforderlich)</span></button>
+        <button class="tile" data-intent="clean"><i><svg class="ic" aria-hidden="true"><use href="#i-eraser"/></svg></i><b>Versteckte Daten entfernen</b><span>Autor, Kommentare, Skripte und Anhänge vor dem Weitergeben</span></button>
+        <button class="tile" data-intent="flat"><i><svg class="ic" aria-hidden="true"><use href="#i-eye-off"/></svg></i><b>Text nicht kopierbar</b><span>Jede Seite als Bild, ohne Textebene</span></button>
       </div></section>
       <section class="tgroup" aria-labelledby="tgCheck"><h2 class="tgh" id="tgCheck">Prüfen, barrierefrei, archivieren</h2>
       <div class="tiles">
@@ -1335,15 +1350,65 @@ html.i18n-wait body{visibility:hidden}
         <button type="button" class="btn fb-go" id="fbReport"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Herausforderung melden</button>
       </section>
       <!-- Urheberhinweis und Banner der Mentor GmbH / Haus iT: muss nach den Lizenzbedingungen (NOTICE) sichtbar und unverändert erhalten bleiben -->
-      <aside class="promo" aria-label="Anzeige: Haus iT">
+      <aside class="promo" aria-label="Anzeige: Haus iT Caller ID">
         <span class="promo-tag">Anzeige</span>
         <div class="promo-icon" aria-hidden="true"><svg class="ic"><use href="#i-phone-call"/></svg></div>
         <div class="promo-body">
-          <b class="promo-title">Haus iT – Cloud-Kommunikation für Unternehmen</b>
-          <p><b>Haus iT Caller ID</b> für Webex Calling: <i>Beim Klingeln wissen, wer anruft.</i> Name, Firma und Kundennummer erscheinen direkt aus Ihrem CRM oder ERP. Dazu Rückrufliste, Click-and-Call und Auswertungen.</p>
-          <ul class="promo-points"><li>Webex Calling</li><li>CRM/ERP-Anbindung</li><li>Server in Deutschland</li><li>14 Tage kostenlos testen</li></ul>
+          <b class="promo-title">Beim Klingeln wissen, wer anruft</b>
+          <p><b>Haus iT Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.</p>
+          <ul class="promo-points"><li>Server in Deutschland</li><li>14 Tage kostenlos testen</li></ul>
         </div>
-        <a class="btn primary promo-go" href="https://www.haus-it.de" target="_blank" rel="noopener noreferrer">Mehr auf haus-it.de<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+        <a class="btn promo-go" href="https://www.hausit-portal.de" target="_blank" rel="noopener noreferrer">Mehr auf hausit-portal.de<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+      </aside>
+      <aside class="promo" hidden aria-label="Anzeige: Glasfaser von Haus iT">
+        <span class="promo-tag">Anzeige</span>
+        <div class="promo-icon" aria-hidden="true"><svg class="ic"><use href="#i-share-2"/></svg></div>
+        <div class="promo-body">
+          <b class="promo-title">Glasfaser für Ihr Unternehmen</b>
+          <p>Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&amp;1 Versatel Solution Partner.</p>
+          <ul class="promo-points"><li>Kostenlose Prüfung Ihrer Adresse</li><li>bundesweit</li></ul>
+        </div>
+        <a class="btn promo-go" href="https://www.haus-it.de/glasfaser-fuer-unternehmen/" target="_blank" rel="noopener noreferrer">Mehr auf haus-it.de<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+      </aside>
+      <aside class="promo" hidden aria-label="Anzeige: Cloud-Telefonanlage von Haus iT">
+        <span class="promo-tag">Anzeige</span>
+        <div class="promo-icon" aria-hidden="true"><svg class="ic"><use href="#i-phone-call"/></svg></div>
+        <div class="promo-body">
+          <b class="promo-title">Cloud-Telefonanlage für alle Standorte</b>
+          <p>Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.</p>
+          <ul class="promo-points"><li>Placetel Platin Partner</li><li>Webex Calling</li></ul>
+        </div>
+        <a class="btn promo-go" href="https://www.haus-it.de/cloud-telefonanlage/" target="_blank" rel="noopener noreferrer">Mehr auf haus-it.de<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+      </aside>
+      <aside class="promo" hidden aria-label="Anzeige: KI-Telefonassistent von Haus iT">
+        <span class="promo-tag">Anzeige</span>
+        <div class="promo-icon" aria-hidden="true"><svg class="ic"><use href="#i-sparkles"/></svg></div>
+        <div class="promo-body">
+          <b class="promo-title">KI-Telefonassistent</b>
+          <p>Nimmt Anrufe rund um die Uhr entgegen, beantwortet Standardfragen, bucht Termine und leitet wichtige Anliegen weiter.</p>
+          <ul class="promo-points"><li>Hosting in der EU</li><li>Einrichtung aus Paderborn</li></ul>
+        </div>
+        <a class="btn promo-go" href="https://www.haus-it.de/ki-telefonassistenten/" target="_blank" rel="noopener noreferrer">Mehr auf haus-it.de<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+      </aside>
+      <aside class="promo" hidden aria-label="Anzeige: mySupermail">
+        <span class="promo-tag">Anzeige</span>
+        <div class="promo-icon" aria-hidden="true"><svg class="ic"><use href="#i-send"/></svg></div>
+        <div class="promo-body">
+          <b class="promo-title">mySupermail für Ihr Team</b>
+          <p>E-Mail im Browser, auf Handy und Tablet, mit gemeinsamen Postfächern. Die Mails bleiben bei Ihrem Anbieter.</p>
+          <ul class="promo-points"><li>Für Unternehmen</li><li>14 Tage kostenlos testen</li></ul>
+        </div>
+        <a class="btn promo-go" href="https://www.mysupermail.app" target="_blank" rel="noopener noreferrer">Mehr auf mysupermail.app<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+      </aside>
+      <aside class="promo" hidden aria-label="Anzeige: Mentor Consulting">
+        <span class="promo-tag">Anzeige</span>
+        <div class="promo-icon" aria-hidden="true"><svg class="ic"><use href="#i-briefcase-business"/></svg></div>
+        <div class="promo-body">
+          <b class="promo-title">Digitalisierung und KI für den Mittelstand</b>
+          <p><b>Mentor Consulting</b> berät Mittelstand und Handwerk seit 2001 aus Paderborn: Strategie und Umsetzung aus einer Hand.</p>
+          <ul class="promo-points"><li>Beim BAFA registriert</li><li>Unverbindliches Erstgespräch</li></ul>
+        </div>
+        <a class="btn promo-go" href="https://www.mentor-consulting.de" target="_blank" rel="noopener noreferrer">Mehr auf mentor-consulting.de<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg><span class="sr-only"> (öffnet in neuem Tab)</span></a>
       </aside>
       <input id="intentIn" type="file" hidden>
     </div><div id="grid" hidden></div></div>
@@ -1617,7 +1682,7 @@ html.i18n-wait body{visibility:hidden}
       <div class="xrow" id="x-fmt-row"><span class="xl" aria-hidden="true">Format</span><div class="chips" role="group" aria-label="Seitenformat">
         <label class="cb" title="Schneidet leere weiße Ränder um den Inhalt jeder Seite ab (der Inhalt selbst bleibt unverändert)"><input id="x-trim" type="checkbox"> Weiße Ränder entfernen</label>
         <label class="cb" title="Bringt jede Seite auf A4 (hoch oder quer) – Inhalt maßstabsgetreu und mittig, z. B. für US-Letter, Quittungen oder gemischte Formate"><input id="x-a4" type="checkbox"> Alle Seiten auf A4</label>
-        <span id="x-sheet-wrap" title="Mehrere Seiten verkleinert auf ein A4-Blatt; Broschüre: beidseitig drucken (an der kurzen Kante wenden), in der Mitte falten"><select id="x-sheet" aria-label="Seiten pro Blatt"><option value="1">1 Seite pro Blatt</option><option value="2">2 Seiten pro Blatt</option><option value="4">4 Seiten pro Blatt</option><option value="booklet">Broschüre (A4 gefaltet)</option></select></span>
+        <span id="x-sheet-wrap" title="Mehrere Seiten verkleinert auf ein A4-Blatt; Broschüre: beidseitig drucken (an der kurzen Kante wenden), in der Mitte falten"><select id="x-sheet" aria-label="Seiten pro Blatt"><option value="1">1 Seite pro Blatt</option><option value="2">2 Seiten pro Blatt</option><option value="4">4 Seiten pro Blatt</option><option value="booklet">Broschüre (A4 gefaltet)</option><option value="poster4">Poster auf 4 A4-Blättern</option><option value="poster9">Poster auf 9 A4-Blättern</option></select></span>
       </div></div>
       <p class="hint" id="x-ph" style="margin:2px 0 8px">Platzhalter: {seite} {seiten} {datum} {datei} {bates}</p>
       <div id="x-sec-pdf">
@@ -1627,9 +1692,15 @@ html.i18n-wait body{visibility:hidden}
         </div></div>
         <div class="xrow" id="x-clean-row"><span class="xl" aria-hidden="true">Bereinigen</span><div class="chips" role="group" aria-label="Bereinigen">
           <label class="cb" title="Entfernt Kommentare, Notizen und Markierungen der Vorlage, Skripte, eingebettete Dateien und Mediendateien sowie Autor, Betreff und Stichwörter – vor dem Weitergeben an Dritte"><input id="x-clean" type="checkbox"> Versteckte Daten entfernen</label>
+          <span id="x-flat-wrap"><label class="cb" title="Speichert jede Seite als Bild ohne Textebene, Formularfelder und Links. Text lässt sich dann nicht mehr markieren oder kopieren. Eine Texterkennung kann ihn aber wieder lesen, und Schwärzen ersetzt das nicht."><input id="x-flat" type="checkbox"> Seiten als Bilder (Text nicht kopierbar)</label></span>
         </div></div>
         <div class="xrow" id="x-gray-row"><span class="xl" aria-hidden="true">Farbe</span><div class="chips" role="group" aria-label="Farbe">
           <label class="cb" title="Alle Seiten, Stempel, Markierungen, Unterschriften und Bilder in Graustufen – spart Farbtoner und wirkt wie eine Schwarzweiß-Kopie. Seiten werden dabei als Bild mit durchsuchbarer Textebene gespeichert."><input id="x-gray" type="checkbox"> In Graustufen</label>
+          <span id="x-invert-wrap"><label class="cb" title="Kehrt alle Farben um, z. B. um dunkle Folien tonersparend zu drucken. Text bleibt Text."><input id="x-invert" type="checkbox"> Farben umkehren</label></span>
+        </div></div>
+        <div class="xrow" id="x-roman-row"><span class="xl" aria-hidden="true">Beschriftung</span><div class="chips" role="group" aria-label="Seitenbeschriftung">
+          <label class="cb" title="Der Vorspann heißt i, ii, iii, danach beginnt die Zählung bei 1. Das ändert die Seitennamen im PDF-Programm, nicht den Seiteninhalt."><input id="x-roman" type="checkbox"> Vorspann römisch</label>
+          <input id="x-roman-n" type="number" min="1" value="1" style="width:72px" aria-label="Seiten im Vorspann"><span class="hint">Seiten, danach 1, 2, 3</span>
         </div></div>
         <div class="xrow" id="x-sign-row"><span class="xl" aria-hidden="true">Signatur</span><div class="chips" role="group" aria-label="Digitale Signatur">
           <label class="cb"><input id="x-sign" type="checkbox"> Digital signieren</label>

@@ -88,11 +88,39 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 
 1. **Alles bleibt auf dem Rechner des Kunden:** Dokumente, erkannter Text, Eingaben und die Verarbeitung (auch KI) verlassen den Rechner nicht – kein Upload, auch nicht an Server im eigenen Netz. Ausnahmen gibt es nur, wenn der Kunde selbst etwas versendet oder speichert (E-Mail, Teilen, Ablage in einem Ordner seiner Wahl) – nie automatisch, nie im Hintergrund.
 2. **Kein Server, keine Fremddienste:** pdfmy.de liefert nur statische Dateien. Alle Bibliotheken, Schriften und Sprachdaten kommen von pdfmy.de. Die Sicherheitsrichtlinie (CSP) erlaubt Verbindungen nur zu pdfmy.de und zum eigenen Rechner (pdfmy Scan, lokale KI – localhost/127.0.0.1).
-3. **Kostenlos, ohne Konto, ohne Limit, ohne Werbung/Tracking.**
+3. **Kostenlos, ohne Konto, ohne Limit, ohne Tracking und ohne fremde Werbung.** Erlaubt ist nur der dezente, gekennzeichnete und statische Hinweis auf eigene Angebote auf der Startseite (Entscheidung GF, 01.11.2026).
 4. **So einfach wie möglich:** keine Konsole, keine Skripte beim Nutzer; neue Funktionen dürfen Bestehendes nicht verstecken.
 5. **Normgerecht und prüfbar:** PDF/A und PDF/UA (veraPDF), E-Rechnung (KoSIT), WCAG 2.1 AA (axe), ISO 27001/9001-Nachweis in docs/ISO-Konformitaet.md.
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
+
+### Entschieden 01.11.2026: Hinweise auf eigene Angebote im Wechsel
+**Auftrag GF:** Anzeige auf der Startseite im Wechsel, immer dezent und immer statisch (Haus iT, Haus iT Caller ID, mySupermail, Mentor Consulting, z. B. Glasfaser).
+**Umsetzung:** Mentor GmbH und Mertens GmbH gehören zur Mentor Group, es sind also eigene Angebote. Sechs feste Texte in der Seite, je Aufruf der nächste, kein Wechsel während der Arbeit, keine Bewegung. Nur auf der Startseite, nie im geöffneten Dokument. Aussagen von den jeweiligen Webseiten übernommen (Stand 01.11.2026).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: keine Dokumentdaten; Zähler nur im Browser |
+| 2 Kein Server, keine Fremddienste | passt: nichts wird nachgeladen, CSP unverändert, Link ohne Referrer und ohne Kampagnen-Parameter |
+| 3 Ohne Tracking | passt: keine Klickzählung, kein Pixel. Leitplanke um „fremde Werbung“ präzisiert |
+| 4 So einfach wie möglich | passt: ruhiger Knopf statt Hauptfarbe, steht unter den Werkzeugen |
+| 5 Prüfbar | passt: Texte stehen im Quelltext; Datenschutzerklärung Nr. 6c angepasst |
+| 6 Wenig aktive Inhalte | passt: kein Einfluss auf erzeugte PDFs |
+
+### Prüfung 01.11.2026: Leserkommentare bei Borncity und SumatraPDF
+**Quelle:** Kommentare zu „Digital Independence Day: Adobe PDF Reader-Alternativen“ (borncity.com, 01.11.2026), Stichprobe von 13 Kommentaren, also Hinweise und keine Statistik.
+
+| Rückmeldung | Bedeutung für PDFMy | Entscheidung |
+|---|---|---|
+| Viewer ohne JavaScript aus Sicherheitsgründen | PDFMy führt Skripte aus PDFs nicht aus (im Code geprüft: kein eval, keine PDF.js-Skriptausführung) | In der Hilfe genannt |
+| Foxit & Co. speichern Formulare teils fehlerhaft | Formulartreue ist ein Vorteil | Weiter testen (app-v202 bis v204), ohne Vergleichsbehauptung |
+| Sumatra druckt sehr langsam | Druckzeit messen | Offen |
+| Tägliche Updates, Download beim Start, UAC bei jedem Start (Pdfcraft) | PDFMy startet ohne UAC; Update-Takt prüfen | Stufe 2 der Update-Strategie |
+| Team nutzt BentoPDF, on-premises per Docker, etwa 85 € | Firmen wollen selbst betreiben | Entscheidung GF, wegen Lizenz |
+| Liste nach Einsatzzweck fehlt (Dokumente, Formulare, Grafik/Druck) | Aufgabengruppen auf der Startseite und den Einstiegsseiten | Umgesetzt mit „Drucken und Format“ |
+| Hohe Ansprüche an Schrift und Farbe | Ansicht und Druck für Grafiker sind kein Schwerpunkt | Nicht versprechen |
+
+### Entschieden 01.11.2026: Vergleich mit BentoPDF – siehe CHANGELOG
 
 ### Prüfung 21.10.2026
 | Funktion | Ergebnis |

@@ -207,9 +207,9 @@ Richten Sie den Drucker „PDFMy“ ein, legt Windows gedruckte Dokumente in ein
 was die E-Mail enthält (Versionen, Browser, Protokoll, aufgetretene Programmfehler und – wenn pdfmy Scan läuft – interne Netzwerkadresse und Rechnername; keine Dokumente). Dateinamen, Absender und E-Mail-Adressen werden standardmäßig unkenntlich gemacht.
 Wir verwenden Ihre Nachricht nur, um das Problem zu lösen und Ihnen zu antworten (Art. 6 Abs. 1 lit. b und f DSGVO), und löschen sie, wenn sie dafür nicht mehr benötigt wird,
 spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen.</p>
-<h2>6c. Hinweis auf Haus iT</h2>
-<p>Auf der Startseite steht ein als Anzeige gekennzeichneter Hinweis auf Haus iT. Es ist ein einfacher Link ohne eingebundene Inhalte, Zählpixel oder Cookies. Erst wenn Sie ihn anklicken,
-öffnet sich www.haus-it.de in einem neuen Tab; dabei wird keine Herkunftsadresse (Referrer) übermittelt. Für diese Website gilt die Datenschutzerklärung ihres Betreibers.</p>
+<h2>6c. Hinweise auf eigene Angebote</h2>
+<p>Auf der Startseite steht ein als Anzeige gekennzeichneter Hinweis auf ein Angebot der Mentor GmbH (Haus iT, Haus iT Caller ID, mySupermail) oder der Mertens GmbH (Mentor Consulting). Es ist ein einfacher Link ohne eingebundene Inhalte, Zählpixel oder Cookies. Welcher Hinweis als Nächstes erscheint, merkt sich nur Ihr Browser; diese Angabe wird nicht übertragen. Erst wenn Sie ihn anklicken,
+öffnet sich die jeweilige Website (www.haus-it.de, www.hausit-portal.de, www.mysupermail.app oder www.mentor-consulting.de) in einem neuen Tab; dabei wird keine Herkunftsadresse (Referrer) übermittelt. Für diese Website gilt die Datenschutzerklärung ihres Betreibers.</p>
 <h2>6d. KI-Assistent</h2>
 <p>Zusammenfassen, Fragen zum Dokument und Übersetzen nutzen die KI, die Ihr Browser mitbringt. Sie arbeitet auf Ihrem Gerät; der Text wird nicht übertragen. Das KI-Modell lädt Ihr Browser einmalig vom Browser-Hersteller, nicht von uns. Unter „… Mehr → KI-Assistent“ lässt sich die Funktion ausschalten. Auf eigenen Wunsch kann dort stattdessen ein KI-Programm auf Ihrem eigenen Rechner gewählt werden (z. B. Ollama oder LM Studio); PDFMy verbindet sich dann nur mit diesem Programm auf demselben Rechner (localhost) – der Text verlässt Ihren Rechner nicht, Adressen im Netz oder im Internet werden abgelehnt.</p>
 <h2>7. Ihre Rechte</h2>

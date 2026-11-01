@@ -1,186 +1,742 @@
 [
   {
-    "slug": "pdf-zusammenfuegen", "target": "merge", "label": "PDFs zusammenfügen",
+    "slug": "pdf-zusammenfuegen",
+    "target": "merge",
+    "label": "PDFs zusammenfügen",
     "title": "PDF zusammenfügen – kostenlos und ohne Upload",
     "description": "Mehrere PDF-Dateien kostenlos zu einer zusammenfügen – direkt im Browser, ohne Upload und ohne Anmeldung. Reihenfolge per Ziehen ändern, Lesezeichen bleiben erhalten.",
     "intro": "Fügen Sie mehrere PDFs, Scans und Bilder zu einem einzigen Dokument zusammen. Die Dateien werden nicht hochgeladen – PDFMy arbeitet vollständig auf Ihrem Gerät.",
-    "steps": ["Auf „PDFs zusammenfügen“ klicken und die Dateien wählen (oder ins Fenster ziehen).", "Die Reihenfolge der Seiten per Ziehen anpassen, Seiten drehen oder löschen.", "Auf „Speichern“ klicken – fertig ist die gemeinsame PDF."],
-    "faq": [["Bleiben die Lesezeichen erhalten?", "Ja. Vorhandene Lesezeichen bleiben erhalten; beim Zusammenfügen stehen die Kapitel jeder Datei unter ihrem Dateinamen."], ["Gibt es eine Begrenzung?", "Nein. Keine Seitenlimits, keine Dateigrößen-Grenze außer dem Arbeitsspeicher Ihres Geräts."]]
+    "steps": [
+      "Auf „PDFs zusammenfügen“ klicken und die Dateien wählen (oder ins Fenster ziehen).",
+      "Die Reihenfolge der Seiten per Ziehen anpassen, Seiten drehen oder löschen.",
+      "Auf „Speichern“ klicken – fertig ist die gemeinsame PDF."
+    ],
+    "faq": [
+      [
+        "Bleiben die Lesezeichen erhalten?",
+        "Ja. Vorhandene Lesezeichen bleiben erhalten; beim Zusammenfügen stehen die Kapitel jeder Datei unter ihrem Dateinamen."
+      ],
+      [
+        "Gibt es eine Begrenzung?",
+        "Nein. Keine Seitenlimits, keine Dateigrößen-Grenze außer dem Arbeitsspeicher Ihres Geräts."
+      ]
+    ]
   },
   {
-    "slug": "pdf-verkleinern", "target": "compress", "label": "PDF verkleinern",
+    "slug": "pdf-verkleinern",
+    "target": "compress",
+    "label": "PDF verkleinern",
     "title": "PDF verkleinern – Dateigröße reduzieren ohne Upload",
     "description": "PDF kostenlos verkleinern und komprimieren – mit Vorschau der neuen Größe. Ohne Upload, ohne Anmeldung, Schrift bleibt scharf.",
     "intro": "Zu groß für die E-Mail oder das Portal? PDFMy verkleinert PDFs und Scans deutlich – Schrift bleibt scharf, Ihre Datei verlässt den Rechner nicht.",
-    "steps": ["Auf „PDF verkleinern“ klicken und die Datei wählen.", "Größe „Klein“ wählen – PDFMy zeigt vorab, wie groß die Datei wird.", "Speichern."],
-    "faq": [["Wie stark wird die Datei kleiner?", "Bei Scans oft um 80 bis 95 %. Typisch sind 30 bis 60 KB pro gescannter Briefseite."], ["Leidet die Lesbarkeit?", "Nein. Die Kompakt-Speicherung trennt Schrift und Hintergrund und hält die Schrift scharf."]]
+    "steps": [
+      "Auf „PDF verkleinern“ klicken und die Datei wählen.",
+      "Größe „Klein“ wählen – PDFMy zeigt vorab, wie groß die Datei wird.",
+      "Speichern."
+    ],
+    "faq": [
+      [
+        "Wie stark wird die Datei kleiner?",
+        "Bei Scans oft um 80 bis 95 %. Typisch sind 30 bis 60 KB pro gescannter Briefseite."
+      ],
+      [
+        "Leidet die Lesbarkeit?",
+        "Nein. Die Kompakt-Speicherung trennt Schrift und Hintergrund und hält die Schrift scharf."
+      ]
+    ]
   },
   {
-    "slug": "pdf-schwaerzen", "target": "redact", "label": "Schwärzen",
+    "slug": "pdf-schwaerzen",
+    "target": "redact",
+    "label": "Schwärzen",
     "title": "PDF schwärzen – Inhalte sicher entfernen",
     "description": "PDF kostenlos schwärzen: Namen, IBAN, Adressen sicher entfernen – auch aus der Textebene, nicht nur übermalen. Ohne Upload, DSGVO-freundlich.",
     "intro": "Beim Schwärzen in vielen Programmen bleibt der Text darunter lesbar. PDFMy entfernt die Inhalte wirklich – auch aus der unsichtbaren Textebene.",
-    "steps": ["Auf „Schwärzen“ klicken und die PDF öffnen.", "Bereiche aufziehen – oder einen Begriff suchen und „Alle Treffer schwärzen“.", "Speichern: Der Inhalt unter den Balken ist endgültig entfernt."],
-    "faq": [["Findet PDFMy persönliche Daten automatisch?", "Ja, auf Wunsch schlägt PDFMy IBAN, E-Mail-Adressen, Telefonnummern, Steuer-ID und Geburtsdaten zum Schwärzen vor."], ["Wird die Datei hochgeladen?", "Nein. Gerade bei vertraulichen Unterlagen wichtig: alles passiert auf Ihrem Gerät."]]
+    "steps": [
+      "Auf „Schwärzen“ klicken und die PDF öffnen.",
+      "Bereiche aufziehen – oder einen Begriff suchen und „Alle Treffer schwärzen“.",
+      "Speichern: Der Inhalt unter den Balken ist endgültig entfernt."
+    ],
+    "faq": [
+      [
+        "Findet PDFMy persönliche Daten automatisch?",
+        "Ja, auf Wunsch schlägt PDFMy IBAN, E-Mail-Adressen, Telefonnummern, Steuer-ID und Geburtsdaten zum Schwärzen vor."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. Gerade bei vertraulichen Unterlagen wichtig: alles passiert auf Ihrem Gerät."
+      ]
+    ]
   },
   {
-    "slug": "pdf-unterschreiben", "target": "sign", "label": "Unterschreiben",
+    "slug": "pdf-unterschreiben",
+    "target": "sign",
+    "label": "Unterschreiben",
     "title": "PDF unterschreiben – handschriftlich oder digital signieren",
     "description": "PDF kostenlos unterschreiben: Unterschrift zeichnen und platzieren oder digital signieren mit Zertifikat bzw. Signaturkarte. Ohne Upload.",
     "intro": "Unterschreiben Sie Verträge und Formulare direkt am PC, Tablet oder Handy – oder signieren Sie digital mit Ihrem Zertifikat.",
-    "steps": ["Auf „Unterschreiben“ klicken und die PDF öffnen.", "Unterschrift einmal zeichnen und an die richtige Stelle klicken.", "Speichern – auf Wunsch zusätzlich „Digital signieren“ anhaken."],
-    "faq": [["Ist eine digitale Signatur möglich?", "Ja, mit eigenem Zertifikat (.p12/.pfx) direkt im Browser, unter Windows auch mit Windows-Zertifikaten und Signaturkarten – auch qualifiziert."], ["Wird meine Unterschrift gespeichert?", "Nur wenn Sie es wünschen, und dann nur in Ihrem Browser."]]
+    "steps": [
+      "Auf „Unterschreiben“ klicken und die PDF öffnen.",
+      "Unterschrift einmal zeichnen und an die richtige Stelle klicken.",
+      "Speichern – auf Wunsch zusätzlich „Digital signieren“ anhaken."
+    ],
+    "faq": [
+      [
+        "Ist eine digitale Signatur möglich?",
+        "Ja, mit eigenem Zertifikat (.p12/.pfx) direkt im Browser, unter Windows auch mit Windows-Zertifikaten und Signaturkarten – auch qualifiziert."
+      ],
+      [
+        "Wird meine Unterschrift gespeichert?",
+        "Nur wenn Sie es wünschen, und dann nur in Ihrem Browser."
+      ]
+    ]
   },
   {
-    "slug": "pdf-in-word", "target": "docx", "label": "PDF in Word",
+    "slug": "pdf-in-word",
+    "target": "docx",
+    "label": "PDF in Word",
     "title": "PDF in Word umwandeln – auch Scans, ohne Upload",
     "description": "PDF kostenlos in ein bearbeitbares Word-Dokument (.docx) umwandeln – auch gescannte Briefe dank Texterkennung. Ohne Upload, ohne Anmeldung.",
     "intro": "Machen Sie aus PDFs und Scans bearbeitbare Word-Dokumente. Gescannte Seiten liest PDFMy mit Texterkennung – direkt auf Ihrem Gerät.",
-    "steps": ["Auf „PDF in Word“ klicken und die Datei wählen.", "PDFMy erkennt den Text, auch bei Scans.", "Als Word-Dokument speichern und in Word weiterbearbeiten."],
-    "faq": [["Funktioniert das auch mit Scans?", "Ja. Die Texterkennung liest gedruckten Text in über 40 Sprachen."], ["Brauche ich Word?", "Zum Umwandeln nicht. Die .docx-Datei öffnen Sie danach in Word, LibreOffice oder Pages."], ["Bleiben Tabellen und Überschriften erhalten?", "Ja. PDFMy setzt Absätze wieder zusammen, macht aus Überschriften echte Word-Überschriften und aus Tabellen Word-Tabellen mit den Spaltenbreiten des Originals. Aufwendige Layouts werden vereinfacht."]]
+    "steps": [
+      "Auf „PDF in Word“ klicken und die Datei wählen.",
+      "PDFMy erkennt den Text, auch bei Scans.",
+      "Als Word-Dokument speichern und in Word weiterbearbeiten."
+    ],
+    "faq": [
+      [
+        "Funktioniert das auch mit Scans?",
+        "Ja. Die Texterkennung liest gedruckten Text in über 40 Sprachen."
+      ],
+      [
+        "Brauche ich Word?",
+        "Zum Umwandeln nicht. Die .docx-Datei öffnen Sie danach in Word, LibreOffice oder Pages."
+      ],
+      [
+        "Bleiben Tabellen und Überschriften erhalten?",
+        "Ja. PDFMy setzt Absätze wieder zusammen, macht aus Überschriften echte Word-Überschriften und aus Tabellen Word-Tabellen mit den Spaltenbreiten des Originals. Aufwendige Layouts werden vereinfacht."
+      ]
+    ]
   },
   {
-    "slug": "pdf-texterkennung-ocr", "target": "scan", "label": "Scannen & Text erkennen",
+    "slug": "pdf-texterkennung-ocr",
+    "target": "scan",
+    "label": "Scannen & Text erkennen",
     "title": "Texterkennung (OCR) – Scans durchsuchbar machen",
     "description": "Kostenlose OCR: Scans und Fotos in durchsuchbare PDFs umwandeln – in über 40 Sprachen, direkt im Browser, ohne Upload. Briefdaten werden automatisch erkannt.",
     "intro": "Aus Fotos und Scans werden durchsuchbare PDFs. PDFMy erkennt den Text in über 40 Sprachen und liest gleich Absender, Betrag und Frist aus Briefen.",
-    "steps": ["Auf „Scannen & Text erkennen“ klicken – oder mit dem Handy bzw. Scanner scannen.", "PDFMy richtet die Seiten gerade und erkennt den Text automatisch.", "Als durchsuchbare PDF speichern oder direkt ablegen."],
-    "faq": [["Welche Sprachen erkennt PDFMy?", "Über 40 Sprachen – darunter Deutsch, Englisch, Französisch, Spanisch, Polnisch, Türkisch, Russisch und Ukrainisch, Arabisch, Hebräisch, Chinesisch, Japanisch und Koreanisch. Die Sprache wird automatisch erkannt."], ["Läuft die Texterkennung in der Cloud?", "Nein. Die Texterkennung läuft auf Ihrem Gerät; kein Dokument geht an einen Online-Dienst."]]
+    "steps": [
+      "Auf „Scannen & Text erkennen“ klicken – oder mit dem Handy bzw. Scanner scannen.",
+      "PDFMy richtet die Seiten gerade und erkennt den Text automatisch.",
+      "Als durchsuchbare PDF speichern oder direkt ablegen."
+    ],
+    "faq": [
+      [
+        "Welche Sprachen erkennt PDFMy?",
+        "Über 40 Sprachen – darunter Deutsch, Englisch, Französisch, Spanisch, Polnisch, Türkisch, Russisch und Ukrainisch, Arabisch, Hebräisch, Chinesisch, Japanisch und Koreanisch. Die Sprache wird automatisch erkannt."
+      ],
+      [
+        "Läuft die Texterkennung in der Cloud?",
+        "Nein. Die Texterkennung läuft auf Ihrem Gerät; kein Dokument geht an einen Online-Dienst."
+      ]
+    ]
   },
   {
-    "slug": "e-rechnung-erstellen", "target": "#tileEinv", "label": "E-Rechnung schreiben",
+    "slug": "e-rechnung-erstellen",
+    "target": "#tileEinv",
+    "label": "E-Rechnung schreiben",
     "title": "E-Rechnung erstellen – ZUGFeRD und XRechnung kostenlos",
     "description": "E-Rechnung kostenlos erstellen: ZUGFeRD-PDF oder XRechnung nach EN 16931, geprüft mit dem KoSIT-Validator. Ohne Abo, ohne Upload.",
     "intro": "Seit 2025 müssen Unternehmen E-Rechnungen empfangen können, schrittweise folgt das Schreiben. Mit PDFMy erstellen Sie gültige E-Rechnungen ohne zusätzliche Software.",
-    "steps": ["Auf „E-Rechnung schreiben“ klicken.", "Ihre Firmendaten (werden gemerkt), Empfänger und Positionen eintragen.", "Als ZUGFeRD-PDF oder XRechnung speichern."],
-    "faq": [["Sind die Rechnungen gültig?", "Ja. Sie entsprechen EN 16931 und wurden mit dem offiziellen KoSIT-Validator geprüft."], ["Kann PDFMy E-Rechnungen auch lesen?", "Ja. ZUGFeRD-PDFs und XRechnungen einfach öffnen – PDFMy zeigt sie lesbar an und übernimmt Betrag, Frist und IBAN."]]
+    "steps": [
+      "Auf „E-Rechnung schreiben“ klicken.",
+      "Ihre Firmendaten (werden gemerkt), Empfänger und Positionen eintragen.",
+      "Als ZUGFeRD-PDF oder XRechnung speichern."
+    ],
+    "faq": [
+      [
+        "Sind die Rechnungen gültig?",
+        "Ja. Sie entsprechen EN 16931 und wurden mit dem offiziellen KoSIT-Validator geprüft."
+      ],
+      [
+        "Kann PDFMy E-Rechnungen auch lesen?",
+        "Ja. ZUGFeRD-PDFs und XRechnungen einfach öffnen – PDFMy zeigt sie lesbar an und übernimmt Betrag, Frist und IBAN."
+      ]
+    ]
   },
   {
-    "slug": "pdf-reparieren", "target": "repair", "label": "PDF reparieren",
+    "slug": "pdf-reparieren",
+    "target": "repair",
+    "label": "PDF reparieren",
     "title": "PDF reparieren – beschädigte Dateien retten",
     "description": "Beschädigte oder abgeschnittene PDF kostenlos reparieren und lesbare Seiten retten – direkt im Browser, ohne Upload.",
     "intro": "Abgebrochener Download, unvollständiger E-Mail-Anhang? PDFMy repariert beschädigte PDFs beim Öffnen und rettet alle noch lesbaren Seiten.",
-    "steps": ["Auf „PDF reparieren“ klicken und die Datei wählen.", "PDFMy repariert die Datei automatisch und meldet, wie viele Seiten gerettet wurden.", "Prüfen und neu speichern."],
-    "faq": [["Was kann PDFMy reparieren?", "Abgeschnittene Dateien, kaputte Querverweistabellen, fehlende Dateienden und Datenmüll vor der PDF."], ["Wird die Datei hochgeladen?", "Nein, die Reparatur läuft vollständig auf Ihrem Gerät."]]
+    "steps": [
+      "Auf „PDF reparieren“ klicken und die Datei wählen.",
+      "PDFMy repariert die Datei automatisch und meldet, wie viele Seiten gerettet wurden.",
+      "Prüfen und neu speichern."
+    ],
+    "faq": [
+      [
+        "Was kann PDFMy reparieren?",
+        "Abgeschnittene Dateien, kaputte Querverweistabellen, fehlende Dateienden und Datenmüll vor der PDF."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein, die Reparatur läuft vollständig auf Ihrem Gerät."
+      ]
+    ]
   },
   {
-    "slug": "pdf-passwort-schuetzen", "target": "protect", "label": "Mit Passwort schützen",
+    "slug": "pdf-passwort-schuetzen",
+    "target": "protect",
+    "label": "Mit Passwort schützen",
     "title": "PDF mit Passwort schützen – verschlüsseln ohne Upload",
     "description": "PDF kostenlos mit Passwort schützen (AES-Verschlüsselung) und Rechte für Drucken und Kopieren festlegen. Ohne Upload, ohne Anmeldung.",
     "intro": "Schützen Sie vertrauliche PDFs mit einem Passwort. PDFMy verschlüsselt mit AES – und das Passwort verlässt nie Ihr Gerät.",
-    "steps": ["Auf „Mit Passwort schützen“ klicken und die Datei wählen.", "Passwort eingeben und auf Wunsch Drucken oder Kopieren sperren.", "Speichern."],
-    "faq": [["Kann ich den Schutz wieder entfernen?", "Ja, mit „PDF entsperren“ – dafür brauchen Sie das Passwort."], ["Wo wird das Passwort gespeichert?", "Nirgends. Es wird nur zum Verschlüsseln verwendet."]]
+    "steps": [
+      "Auf „Mit Passwort schützen“ klicken und die Datei wählen.",
+      "Passwort eingeben und auf Wunsch Drucken oder Kopieren sperren.",
+      "Speichern."
+    ],
+    "faq": [
+      [
+        "Kann ich den Schutz wieder entfernen?",
+        "Ja, mit „PDF entsperren“ – dafür brauchen Sie das Passwort."
+      ],
+      [
+        "Wo wird das Passwort gespeichert?",
+        "Nirgends. Es wird nur zum Verschlüsseln verwendet."
+      ]
+    ]
   },
   {
-    "slug": "bilder-in-pdf", "target": "img2pdf", "label": "Bilder in PDF",
+    "slug": "bilder-in-pdf",
+    "target": "img2pdf",
+    "label": "Bilder in PDF",
     "title": "Bilder in PDF umwandeln – JPG und PNG zu einer PDF",
     "description": "JPG- und PNG-Bilder kostenlos in eine PDF umwandeln – auch vom Handy, Fotos werden automatisch zugeschnitten. Ohne Upload.",
     "intro": "Machen Sie aus Fotos, Belegen und Screenshots eine ordentliche PDF. Handyfotos von Dokumenten schneidet PDFMy automatisch zu und entzerrt sie.",
-    "steps": ["Auf „Bilder in PDF“ klicken und die Bilder wählen.", "Reihenfolge prüfen – Fotos von Blättern werden automatisch zugeschnitten.", "Speichern."],
-    "faq": [["Welche Formate gehen?", "JPG, PNG, TIFF, WebP, HEIC und weitere übliche Bildformate."], ["Geht das auf dem Handy?", "Ja – PDFMy läuft auch auf iPhone und Android, auf Wunsch als App."]]
+    "steps": [
+      "Auf „Bilder in PDF“ klicken und die Bilder wählen.",
+      "Reihenfolge prüfen – Fotos von Blättern werden automatisch zugeschnitten.",
+      "Speichern."
+    ],
+    "faq": [
+      [
+        "Welche Formate gehen?",
+        "JPG, PNG, TIFF, WebP, HEIC und weitere übliche Bildformate."
+      ],
+      [
+        "Geht das auf dem Handy?",
+        "Ja – PDFMy läuft auch auf iPhone und Android, auf Wunsch als App."
+      ]
+    ]
   },
   {
-    "slug": "pdf-bearbeiten", "target": "open", "label": "PDF bearbeiten",
+    "slug": "pdf-bearbeiten",
+    "target": "open",
+    "label": "PDF bearbeiten",
     "title": "PDF bearbeiten – Text ändern, ergänzen, markieren ohne Upload",
     "description": "PDF kostenlos bearbeiten: vorhandenen Text ändern, Text und Bilder einfügen, markieren, Notizen und Formularfelder – direkt im Browser, ohne Upload und ohne Anmeldung.",
     "intro": "Tippfehler im Vertrag, neue Adresse im Formular, eine Notiz für die Kollegin: PDFMy bearbeitet PDFs direkt im Browser – und schreibt geänderten Text nach Möglichkeit in der Originalschrift weiter.",
-    "steps": ["PDF mit „Öffnen“ laden oder ins Fenster ziehen.", "Werkzeug wählen: „Text ändern“, „Text“, „Markieren“, „Notiz“, „Unterschrift“ oder „Formularfeld“.", "Speichern – auf Wunsch auch als PDF/A."],
-    "faq": [["Kann ich vorhandenen Text ändern?", "Ja. Mit „Text ändern“ auf eine Zeile klicken und tippen. Ist die Schrift in der PDF eingebettet, schreibt PDFMy mit genau dieser Schrift weiter, sonst mit einer Schrift gleicher Breite."], ["Geht das auch bei Scans?", "Ja. PDFMy erkennt den Text gescannter Seiten (OCR) und macht ihn durchsuchbar; Änderungen setzen Sie mit „Abdecken und Text“."]]
+    "steps": [
+      "PDF mit „Öffnen“ laden oder ins Fenster ziehen.",
+      "Werkzeug wählen: „Text ändern“, „Text“, „Markieren“, „Notiz“, „Unterschrift“ oder „Formularfeld“.",
+      "Speichern – auf Wunsch auch als PDF/A."
+    ],
+    "faq": [
+      [
+        "Kann ich vorhandenen Text ändern?",
+        "Ja. Mit „Text ändern“ auf eine Zeile klicken und tippen. Ist die Schrift in der PDF eingebettet, schreibt PDFMy mit genau dieser Schrift weiter, sonst mit einer Schrift gleicher Breite."
+      ],
+      [
+        "Geht das auch bei Scans?",
+        "Ja. PDFMy erkennt den Text gescannter Seiten (OCR) und macht ihn durchsuchbar; Änderungen setzen Sie mit „Abdecken und Text“."
+      ]
+    ]
   },
   {
-    "slug": "word-in-pdf", "target": "open", "label": "Word in PDF",
+    "slug": "word-in-pdf",
+    "target": "open",
+    "label": "Word in PDF",
     "title": "Word in PDF umwandeln – auch Excel und LibreOffice, ohne Upload",
     "description": "Word, Excel, LibreOffice/OpenOffice, EPUB, Text, Markdown und CSV kostenlos in PDF umwandeln – mit Tabellen, Bildern, Kopf- und Fußzeilen. Ohne Upload, direkt im Browser.",
     "intro": "Ein Angebot aus Word, eine Liste aus Excel, ein Text aus LibreOffice: PDFMy wandelt Office-Dateien direkt im Browser in PDF um – die Datei verlässt Ihren Rechner nicht.",
-    "steps": ["Auf „Öffnen“ klicken und die Word-, Excel- oder LibreOffice-Datei wählen (oder ins Fenster ziehen).", "PDFMy zeigt die Seiten als PDF – bei Bedarf Seiten ergänzen, unterschreiben oder zusammenfügen.", "Als PDF oder PDF/A speichern."],
-    "faq": [["Welche Formate gehen?", "Word (.docx), Excel (.xlsx), LibreOffice/OpenOffice (.odt, .ods), E-Books (.epub), Text, Markdown und CSV."], ["Sieht das PDF aus wie in Word?", "Absätze, Tabellen, Bilder sowie Kopf- und Fußzeilen werden übernommen. Bei sehr aufwendigen Layouts kann es kleine Abweichungen geben – prüfen Sie die Vorschau vor dem Speichern."]]
+    "steps": [
+      "Auf „Öffnen“ klicken und die Word-, Excel- oder LibreOffice-Datei wählen (oder ins Fenster ziehen).",
+      "PDFMy zeigt die Seiten als PDF – bei Bedarf Seiten ergänzen, unterschreiben oder zusammenfügen.",
+      "Als PDF oder PDF/A speichern."
+    ],
+    "faq": [
+      [
+        "Welche Formate gehen?",
+        "Word (.docx), Excel (.xlsx), LibreOffice/OpenOffice (.odt, .ods), E-Books (.epub), Text, Markdown und CSV."
+      ],
+      [
+        "Sieht das PDF aus wie in Word?",
+        "Absätze, Tabellen, Bilder sowie Kopf- und Fußzeilen werden übernommen. Bei sehr aufwendigen Layouts kann es kleine Abweichungen geben – prüfen Sie die Vorschau vor dem Speichern."
+      ]
+    ]
   },
   {
-    "slug": "pdf-aufteilen", "target": "split", "label": "PDF aufteilen",
+    "slug": "pdf-aufteilen",
+    "target": "split",
+    "label": "PDF aufteilen",
     "title": "PDF aufteilen – nach Seiten, Lesezeichen oder Dateigröße",
     "description": "PDF kostenlos aufteilen: alle N Seiten, an Lesezeichen oder nach Dateigröße für E-Mail und Portale – auch gescannte Stapel an Trennblättern. Ohne Upload.",
     "intro": "Zu groß fürs Portal, mehrere Briefe in einem Scan oder ein Kapitel herauslösen: PDFMy teilt PDFs so, wie Sie es brauchen – direkt im Browser.",
-    "steps": ["Auf „PDF aufteilen“ klicken und die Datei wählen.", "Art wählen: alle N Seiten, an Lesezeichen oder nach höchstens erlaubter Dateigröße.", "Speichern – die Teile kommen gesammelt als ZIP oder direkt in einen Ordner."],
-    "faq": [["Kann ich einen Scan-Stapel in einzelne Briefe trennen?", "Ja. Legen Sie Trennblätter (QR- oder Patchcode) zwischen die Briefe oder lassen Sie PDFMy am Inhalt erkennen, wo ein neuer Brief beginnt."], ["Bleiben Text und Qualität erhalten?", "Ja. Beim Aufteilen wird nichts neu gerastert; durchsuchbarer Text bleibt durchsuchbar."]]
+    "steps": [
+      "Auf „PDF aufteilen“ klicken und die Datei wählen.",
+      "Art wählen: alle N Seiten, an Lesezeichen oder nach höchstens erlaubter Dateigröße.",
+      "Speichern – die Teile kommen gesammelt als ZIP oder direkt in einen Ordner."
+    ],
+    "faq": [
+      [
+        "Kann ich einen Scan-Stapel in einzelne Briefe trennen?",
+        "Ja. Legen Sie Trennblätter (QR- oder Patchcode) zwischen die Briefe oder lassen Sie PDFMy am Inhalt erkennen, wo ein neuer Brief beginnt."
+      ],
+      [
+        "Bleiben Text und Qualität erhalten?",
+        "Ja. Beim Aufteilen wird nichts neu gerastert; durchsuchbarer Text bleibt durchsuchbar."
+      ]
+    ]
   },
   {
-    "slug": "pdf-seiten-bearbeiten", "target": "organize", "label": "PDF-Seiten drehen und löschen",
+    "slug": "pdf-seiten-bearbeiten",
+    "target": "organize",
+    "label": "PDF-Seiten drehen und löschen",
     "title": "PDF-Seiten drehen, löschen und sortieren – kostenlos ohne Upload",
     "description": "Seiten einer PDF drehen, löschen, sortieren, einfügen oder halbieren – per Ziehen in der Vorschau. Kostenlos, ohne Anmeldung, ohne Upload.",
     "intro": "Eine Seite steht kopf, eine ist doppelt, die Reihenfolge stimmt nicht: In PDFMy ordnen Sie Seiten per Ziehen – und sehen sofort das Ergebnis.",
-    "steps": ["Auf „Seiten organisieren“ klicken und die PDF wählen.", "Seiten ziehen, drehen, löschen oder Seiten aus einer anderen Datei einfügen.", "Speichern."],
-    "faq": [["Kann ich Doppelseiten-Scans teilen?", "Ja. „Seiten halbieren“ teilt aufgeschlagene Bücher und A3-Bögen in zwei Seiten – senkrecht oder waagerecht."], ["Verliere ich dabei Text oder Formularfelder?", "Nein. Drehen, Sortieren und Löschen ändern nur die Seitenreihenfolge und -lage."]]
+    "steps": [
+      "Auf „Seiten organisieren“ klicken und die PDF wählen.",
+      "Seiten ziehen, drehen, löschen oder Seiten aus einer anderen Datei einfügen.",
+      "Speichern."
+    ],
+    "faq": [
+      [
+        "Kann ich Doppelseiten-Scans teilen?",
+        "Ja. „Seiten halbieren“ teilt aufgeschlagene Bücher und A3-Bögen in zwei Seiten – senkrecht oder waagerecht."
+      ],
+      [
+        "Verliere ich dabei Text oder Formularfelder?",
+        "Nein. Drehen, Sortieren und Löschen ändern nur die Seitenreihenfolge und -lage."
+      ]
+    ]
   },
   {
-    "slug": "pdf-in-jpg", "target": "pdf2img", "label": "PDF in JPG",
+    "slug": "pdf-in-jpg",
+    "target": "pdf2img",
+    "label": "PDF in JPG",
     "title": "PDF in JPG umwandeln – jede Seite als Bild, ohne Upload",
     "description": "PDF kostenlos in JPG-Bilder umwandeln: jede Seite als Bild, gesammelt als ZIP. Ohne Upload und ohne Anmeldung.",
     "intro": "Für Präsentationen, Webseiten oder Messenger: PDFMy macht aus jeder PDF-Seite ein Bild – direkt im Browser.",
-    "steps": ["Auf „PDF in Bilder“ klicken und die PDF wählen.", "Im Speichern-Dialog ist das Format „Bilder“ schon gewählt.", "Speichern – alle Bilder kommen gesammelt als ZIP."],
-    "faq": [["Kann ich die Bilder aus einer PDF in Originalgröße herausholen?", "Ja. „Bilder aus PDF“ holt Fotos und Logos so heraus, wie sie in der Datei stecken."], ["Und umgekehrt?", "„Bilder in PDF“ macht aus JPG- und PNG-Dateien ein PDF – auch Fotos vom Handy."]]
+    "steps": [
+      "Auf „PDF in Bilder“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist das Format „Bilder“ schon gewählt.",
+      "Speichern – alle Bilder kommen gesammelt als ZIP."
+    ],
+    "faq": [
+      [
+        "Kann ich die Bilder aus einer PDF in Originalgröße herausholen?",
+        "Ja. „Bilder aus PDF“ holt Fotos und Logos so heraus, wie sie in der Datei stecken."
+      ],
+      [
+        "Und umgekehrt?",
+        "„Bilder in PDF“ macht aus JPG- und PNG-Dateien ein PDF – auch Fotos vom Handy."
+      ]
+    ]
   },
   {
-    "slug": "pdf-vergleichen", "target": "compare", "label": "PDF vergleichen",
+    "slug": "pdf-vergleichen",
+    "target": "compare",
+    "label": "PDF vergleichen",
     "title": "PDF vergleichen – Unterschiede zweier Fassungen finden",
     "description": "Zwei PDF-Fassungen kostenlos vergleichen: eingefügte und entfernte Wörter oder Überlagerung der Seiten in Rot und Grün. Ohne Upload – auch für Verträge.",
     "intro": "Was hat die Gegenseite im Vertrag geändert? PDFMy vergleicht zwei Fassungen Wort für Wort oder legt die Seiten übereinander – vertrauliche Dokumente bleiben auf Ihrem Rechner.",
-    "steps": ["Auf „Dokumente vergleichen“ klicken und die beiden Fassungen wählen.", "Ansicht wählen: „Text“ (eingefügte und entfernte Wörter) oder „Bild (Überlagerung)“.", "Unterschiede durchgehen – gestrichelte Rahmen zeigen jede geänderte Stelle."],
-    "faq": [["Und bei Scans oder Plänen?", "Für Scans, Pläne und Zeichnungen eignet sich die Überlagerung: Rot ist nur in der ersten, Grün nur in der zweiten Fassung."], ["Werden meine Verträge hochgeladen?", "Nein. Der Vergleich läuft vollständig in Ihrem Browser."]]
+    "steps": [
+      "Auf „Dokumente vergleichen“ klicken und die beiden Fassungen wählen.",
+      "Ansicht wählen: „Text“ (eingefügte und entfernte Wörter) oder „Bild (Überlagerung)“.",
+      "Unterschiede durchgehen – gestrichelte Rahmen zeigen jede geänderte Stelle."
+    ],
+    "faq": [
+      [
+        "Und bei Scans oder Plänen?",
+        "Für Scans, Pläne und Zeichnungen eignet sich die Überlagerung: Rot ist nur in der ersten, Grün nur in der zweiten Fassung."
+      ],
+      [
+        "Werden meine Verträge hochgeladen?",
+        "Nein. Der Vergleich läuft vollständig in Ihrem Browser."
+      ]
+    ]
   },
   {
-    "slug": "pdf-vor-dem-versand-pruefen", "target": "preflight", "label": "PDF vor dem Versand prüfen",
+    "slug": "pdf-vor-dem-versand-pruefen",
+    "target": "preflight",
+    "label": "PDF vor dem Versand prüfen",
     "title": "PDF prüfen für beA, ePA, BITV und GoBD – kostenlos, ohne Upload",
     "description": "PDF vor dem Versand prüfen: Gericht (beA, ERVB 2025), elektronische Patientenakte (ePA), barrierefrei (BITV 2.0, PDF/UA) und Archiv (GoBD, PDF/A) – mit Bericht und automatischer Korrektur. Direkt im Browser, ohne Upload.",
     "intro": "Gerichte, Praxisverwaltungen und Archive lehnen Dateien ab, wenn Schriften fehlen, Skripte enthalten sind oder das Format nicht stimmt. PDFMy prüft vorher – auf Ihrem Gerät, ohne dass die Datei hochgeladen wird – und behebt die Fehler auf Wunsch selbst.",
-    "steps": ["Auf „PDF vor dem Versand prüfen“ klicken und die Datei wählen.", "Empfänger wählen: beA/Gericht, ePA, barrierefrei oder GoBD-Archiv – PDFMy zeigt, was erfüllt ist und was fehlt.", "„Automatisch beheben“ oder den Bericht als PDF für die Akte speichern."],
-    "faq": [["Ersetzt das eine vollständige Prüfung?", "Es ist eine Kurzprüfung der häufigsten Ablehnungsgründe nach den genannten Vorgaben. Für eine vollständige Validierung gibt es Spezialwerkzeuge wie veraPDF."], ["Warum vor dem Versand an das Gericht prüfen?", "Gerichte können Dateien zurückweisen, die nicht den technischen Vorgaben entsprechen – das kostet Zeit und gefährdet Fristen. Eine Prüfung vor der Einreichung vermeidet das; der Bericht mit Fingerabdruck dokumentiert sie."]]
+    "steps": [
+      "Auf „PDF vor dem Versand prüfen“ klicken und die Datei wählen.",
+      "Empfänger wählen: beA/Gericht, ePA, barrierefrei oder GoBD-Archiv – PDFMy zeigt, was erfüllt ist und was fehlt.",
+      "„Automatisch beheben“ oder den Bericht als PDF für die Akte speichern."
+    ],
+    "faq": [
+      [
+        "Ersetzt das eine vollständige Prüfung?",
+        "Es ist eine Kurzprüfung der häufigsten Ablehnungsgründe nach den genannten Vorgaben. Für eine vollständige Validierung gibt es Spezialwerkzeuge wie veraPDF."
+      ],
+      [
+        "Warum vor dem Versand an das Gericht prüfen?",
+        "Gerichte können Dateien zurückweisen, die nicht den technischen Vorgaben entsprechen – das kostet Zeit und gefährdet Fristen. Eine Prüfung vor der Einreichung vermeidet das; der Bericht mit Fingerabdruck dokumentiert sie."
+      ]
+    ]
   },
   {
-    "slug": "pdf-barrierefrei-machen", "target": "a11y", "label": "PDF barrierefrei machen",
+    "slug": "pdf-barrierefrei-machen",
+    "target": "a11y",
+    "label": "PDF barrierefrei machen",
     "title": "PDF barrierefrei machen – PDF/UA kostenlos, ohne Upload",
     "description": "PDF und Scans kostenlos barrierefrei machen (PDF/UA): Überschriften, Absätze, Listen und Tabellen für Screenreader, Inhaltsverzeichnis, Sprache und Titel – mit Prüfbericht. Direkt im Browser, ohne Upload.",
     "intro": "Seit dem Barrierefreiheitsstärkungsgesetz (BFSG) müssen viele Dokumente für Screenreader lesbar sein. PDFMy erkennt Überschriften, Absätze, Aufzählungen und Tabellen und speichert ein PDF/UA – auch aus Scans, alles auf Ihrem Gerät.",
-    "steps": ["Auf „PDF barrierefrei machen“ klicken und die PDF oder den Scan wählen.", "PDFMy erkennt den Text und gliedert ihn: Überschriften, Absätze, Listen, Tabellen.", "Speichern – PDFMy prüft die fertige Datei und zeigt das Ergebnis."],
-    "faq": [["Was bedeutet PDF/UA?", "PDF/UA (ISO 14289) ist die Norm für barrierefreie PDFs: Der Inhalt ist mit Tags gekennzeichnet, damit Screenreader Überschriften, Listen und Tabellen richtig vorlesen und man darin springen kann."], ["Reicht das automatisch erzeugte Ergebnis?", "Für die meisten Briefe, Bescheide und Rechnungen ja. Bei Veröffentlichungen empfehlen wir eine Stichprobe mit einem Screenreader – Bilder in Scans bekommen keine automatische Beschreibung."]]
+    "steps": [
+      "Auf „PDF barrierefrei machen“ klicken und die PDF oder den Scan wählen.",
+      "PDFMy erkennt den Text und gliedert ihn: Überschriften, Absätze, Listen, Tabellen.",
+      "Speichern – PDFMy prüft die fertige Datei und zeigt das Ergebnis."
+    ],
+    "faq": [
+      [
+        "Was bedeutet PDF/UA?",
+        "PDF/UA (ISO 14289) ist die Norm für barrierefreie PDFs: Der Inhalt ist mit Tags gekennzeichnet, damit Screenreader Überschriften, Listen und Tabellen richtig vorlesen und man darin springen kann."
+      ],
+      [
+        "Reicht das automatisch erzeugte Ergebnis?",
+        "Für die meisten Briefe, Bescheide und Rechnungen ja. Bei Veröffentlichungen empfehlen wir eine Stichprobe mit einem Screenreader – Bilder in Scans bekommen keine automatische Beschreibung."
+      ]
+    ]
   },
   {
-    "slug": "pdf-a-erstellen", "target": "pdfa", "label": "PDF/A erstellen",
+    "slug": "pdf-a-erstellen",
+    "target": "pdfa",
+    "label": "PDF/A erstellen",
     "title": "PDF/A erstellen – revisionssicher archivieren, geprüft",
     "description": "PDF und Scans kostenlos in PDF/A-2b umwandeln – mit Texterkennung, eingebetteten Schriften und Farbprofil, geprüft mit veraPDF; zugleich barrierefrei nach PDF/UA. Ohne Upload.",
     "intro": "Für Finanzamt, Behörden und das eigene Archiv: PDFMy speichert Dokumente im Langzeitformat PDF/A – mit dem unabhängigen Prüfwerkzeug veraPDF getestet.",
-    "steps": ["Auf „PDF/A archivieren“ klicken und die Datei wählen.", "PDFMy erkennt bei Scans den Text und bettet Schriften und Farbprofil ein.", "Als PDF/A speichern – vorhandene Dateien prüft die „Vorabprüfung“ (Empfänger „PDF/A“)."],
-    "faq": [["Welche PDF/A-Stufe?", "PDF/A-2b. Aus Scans und Fotos entsteht zugleich ein barrierefreies PDF nach PDF/UA-1 mit Tags, Sprache und Titel."], ["Kann ich viele Dateien auf einmal umwandeln?", "Ja – mit der Stapelverarbeitung oder automatisch über „Ordner überwachen“."]]
+    "steps": [
+      "Auf „PDF/A archivieren“ klicken und die Datei wählen.",
+      "PDFMy erkennt bei Scans den Text und bettet Schriften und Farbprofil ein.",
+      "Als PDF/A speichern – vorhandene Dateien prüft die „Vorabprüfung“ (Empfänger „PDF/A“)."
+    ],
+    "faq": [
+      [
+        "Welche PDF/A-Stufe?",
+        "PDF/A-2b. Aus Scans und Fotos entsteht zugleich ein barrierefreies PDF nach PDF/UA-1 mit Tags, Sprache und Titel."
+      ],
+      [
+        "Kann ich viele Dateien auf einmal umwandeln?",
+        "Ja – mit der Stapelverarbeitung oder automatisch über „Ordner überwachen“."
+      ]
+    ]
   },
   {
-    "slug": "pdf-formular-ausfuellen", "target": "form", "label": "PDF-Formular ausfüllen",
+    "slug": "pdf-formular-ausfuellen",
+    "target": "form",
+    "label": "PDF-Formular ausfüllen",
     "title": "PDF-Formular ausfüllen und erstellen – mit Rechenfeldern",
     "description": "PDF-Formulare kostenlos ausfüllen und speichern – oder eigene Formulare erstellen, die rechnen (Summe, MwSt.) und prüfen (E-Mail, IBAN, PLZ). Ohne Upload.",
     "intro": "Antrag, Bestellung, Anmeldung: PDFMy füllt PDF-Formulare direkt im Browser aus – und baut auf Wunsch eigene Formulare, die selbst rechnen und Eingaben prüfen.",
-    "steps": ["Auf „Formular ausfüllen“ klicken und die PDF wählen.", "Felder ausfüllen – Pflichtfelder und falsche Eingaben zeigt PDFMy an.", "Speichern; fehlen Felder ohne Formular, setzt sie das Werkzeug „Formularfeld“."],
-    "faq": [["Kann ich Formulare ohne Felder ausfüllen?", "Ja. Mit „Text“ schreiben Sie an jede Stelle; PDFMy erkennt bei vielen Formularen die Linien und Kästchen und schlägt Felder vor."], ["Rechnen die Felder auch in Acrobat?", "Ja. Rechen- und Prüffelder funktionieren in gängigen PDF-Programmen; in PDF/A bleiben Formulare ohne Skripte."]]
+    "steps": [
+      "Auf „Formular ausfüllen“ klicken und die PDF wählen.",
+      "Felder ausfüllen – Pflichtfelder und falsche Eingaben zeigt PDFMy an.",
+      "Speichern; fehlen Felder ohne Formular, setzt sie das Werkzeug „Formularfeld“."
+    ],
+    "faq": [
+      [
+        "Kann ich Formulare ohne Felder ausfüllen?",
+        "Ja. Mit „Text“ schreiben Sie an jede Stelle; PDFMy erkennt bei vielen Formularen die Linien und Kästchen und schlägt Felder vor."
+      ],
+      [
+        "Rechnen die Felder auch in Acrobat?",
+        "Ja. Rechen- und Prüffelder funktionieren in gängigen PDF-Programmen; in PDF/A bleiben Formulare ohne Skripte."
+      ]
+    ]
   },
   {
-    "slug": "pdf-seitenzahlen-wasserzeichen", "target": "stamp", "label": "Seitenzahlen und Wasserzeichen",
+    "slug": "pdf-seitenzahlen-wasserzeichen",
+    "target": "stamp",
+    "label": "Seitenzahlen und Wasserzeichen",
     "title": "PDF Seitenzahlen und Wasserzeichen einfügen – kostenlos",
     "description": "Seitenzahlen, Kopf- und Fußzeilen, Wasserzeichen wie „KOPIE“ oder „ENTWURF“ und Bates-Nummern kostenlos in PDFs einfügen. Ohne Upload, ohne Anmeldung.",
     "intro": "Nummerieren für die Akte, „ENTWURF“ quer über jede Seite oder fortlaufende Bates-Nummern fürs Gericht: PDFMy stempelt PDFs direkt im Browser.",
-    "steps": ["Auf „Seitenzahlen & Wasserzeichen“ klicken und die PDF wählen.", "Seitenzahl-Format, Text des Wasserzeichens und Position wählen.", "Speichern."],
-    "faq": [["Kann ich fortlaufend über mehrere Dateien nummerieren?", "Ja – mit „Bates & Kopfzeile“ für Akten und Gerichtsunterlagen."], ["Lassen sich eigene Stempel setzen?", "Ja. Neben „KOPIE“ und „ENTWURF“ gibt es Stempel wie „Bezahlt“ oder „Eingegangen“."]]
+    "steps": [
+      "Auf „Seitenzahlen & Wasserzeichen“ klicken und die PDF wählen.",
+      "Seitenzahl-Format, Text des Wasserzeichens und Position wählen.",
+      "Speichern."
+    ],
+    "faq": [
+      [
+        "Kann ich fortlaufend über mehrere Dateien nummerieren?",
+        "Ja – mit „Bates & Kopfzeile“ für Akten und Gerichtsunterlagen."
+      ],
+      [
+        "Lassen sich eigene Stempel setzen?",
+        "Ja. Neben „KOPIE“ und „ENTWURF“ gibt es Stempel wie „Bezahlt“ oder „Eingegangen“."
+      ]
+    ]
   },
   {
-    "slug": "pdf-entsperren", "target": "unlock", "label": "PDF entsperren",
+    "slug": "pdf-entsperren",
+    "target": "unlock",
+    "label": "PDF entsperren",
     "title": "PDF entsperren – Passwortschutz entfernen (mit Passwort)",
     "description": "Passwortgeschützte PDF kostenlos entsperren, wenn Sie das Passwort kennen – danach ohne Passwort öffnen, drucken und weitergeben. Ohne Upload.",
     "intro": "Das Passwort bei jedem Öffnen eintippen nervt? Wenn Sie es kennen, speichert PDFMy eine Kopie ohne Schutz – die Datei bleibt dabei auf Ihrem Rechner.",
-    "steps": ["Auf „PDF entsperren“ klicken und die Datei wählen.", "Das Passwort eingeben.", "Ohne Passwortschutz speichern."],
-    "faq": [["Kann PDFMy ein unbekanntes Passwort knacken?", "Nein. Zum Entsperren ist das richtige Passwort nötig."], ["Und umgekehrt schützen?", "„Mit Passwort schützen“ verschlüsselt mit AES-256 und regelt Drucken und Kopieren."]]
+    "steps": [
+      "Auf „PDF entsperren“ klicken und die Datei wählen.",
+      "Das Passwort eingeben.",
+      "Ohne Passwortschutz speichern."
+    ],
+    "faq": [
+      [
+        "Kann PDFMy ein unbekanntes Passwort knacken?",
+        "Nein. Zum Entsperren ist das richtige Passwort nötig."
+      ],
+      [
+        "Und umgekehrt schützen?",
+        "„Mit Passwort schützen“ verschlüsselt mit AES-256 und regelt Drucken und Kopieren."
+      ]
+    ]
   },
   {
-    "slug": "pdf-drucker", "target": "printer", "label": "PDF-Drucker",
+    "slug": "pdf-drucker",
+    "target": "printer",
+    "label": "PDF-Drucker",
     "title": "PDF-Drucker kostenlos – aus jedem Programm in PDFMy drucken",
     "description": "Kostenloser PDF-Drucker für Windows und Mac: in Word, Browser oder Warenwirtschaft „Drucken“ wählen – das Dokument öffnet sich sofort in PDFMy. Ohne eigenen Treiber, ohne Upload.",
     "intro": "Aus jedem Programm ein PDF – und gleich bearbeiten, unterschreiben oder archivieren: Mit dem Drucker „PDFMy“ landet jedes gedruckte Dokument direkt in PDFMy.",
-    "steps": ["pdfmy Scan installieren (kostenlos, für Windows und Mac).", "In PDFMy unter „Mehr“ auf „Drucker „PDFMy“ einrichten“ klicken – unter Windows einmal bestätigen.", "In einem beliebigen Programm drucken und „PDFMy“ wählen (Mac: im Druckdialog „PDF“ → „In PDFMy öffnen“)."],
-    "faq": [["Braucht der Drucker einen eigenen Treiber?", "Nein. Unter Windows nutzt er den eingebauten Treiber „Microsoft Print to PDF“, am Mac das PDF-Menü des Druckdialogs."], ["Können andere Benutzer meine Ausdrucke sehen?", "Nein. Unter Windows bekommt jeder Benutzer einen eigenen Drucker und einen Ordner, auf den nur er Zugriff hat. Auf Terminalservern wird der Drucker nicht angeboten."]]
+    "steps": [
+      "pdfmy Scan installieren (kostenlos, für Windows und Mac).",
+      "In PDFMy unter „Mehr“ auf „Drucker „PDFMy“ einrichten“ klicken – unter Windows einmal bestätigen.",
+      "In einem beliebigen Programm drucken und „PDFMy“ wählen (Mac: im Druckdialog „PDF“ → „In PDFMy öffnen“)."
+    ],
+    "faq": [
+      [
+        "Braucht der Drucker einen eigenen Treiber?",
+        "Nein. Unter Windows nutzt er den eingebauten Treiber „Microsoft Print to PDF“, am Mac das PDF-Menü des Druckdialogs."
+      ],
+      [
+        "Können andere Benutzer meine Ausdrucke sehen?",
+        "Nein. Unter Windows bekommt jeder Benutzer einen eigenen Drucker und einen Ordner, auf den nur er Zugriff hat. Auf Terminalservern wird der Drucker nicht angeboten."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-broschuere",
+    "target": "booklet",
+    "label": "Broschüre erstellen",
+    "title": "PDF als Broschüre drucken – kostenlos und ohne Upload",
+    "description": "Aus einer PDF eine Broschüre zum Falten machen: Seiten werden automatisch in Heftreihenfolge auf A4 quer gelegt. Direkt im Browser, ohne Upload.",
+    "intro": "Machen Sie aus jeder PDF ein Heft: PDFMy ordnet die Seiten so an, dass Sie nur beidseitig drucken und in der Mitte falten müssen.",
+    "steps": [
+      "Auf „Broschüre erstellen“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist „Broschüre (A4 gefaltet)“ schon gewählt – auf „Speichern“ klicken.",
+      "Beidseitig drucken, an der kurzen Kante wenden und in der Mitte falten."
+    ],
+    "faq": [
+      [
+        "Was passiert bei einer ungeraden Seitenzahl?",
+        "PDFMy füllt mit Leerseiten auf ein Vielfaches von 4 auf."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-mehrere-seiten-pro-blatt",
+    "target": "nup",
+    "label": "Mehrere Seiten pro Blatt",
+    "title": "Mehrere PDF-Seiten auf ein Blatt – kostenlos und ohne Upload",
+    "description": "2 oder 4 PDF-Seiten verkleinert auf ein A4-Blatt legen und Papier sparen. Text bleibt Text. Direkt im Browser, ohne Upload.",
+    "intro": "Legen Sie 2 oder 4 Seiten auf ein A4-Blatt, zum Beispiel für Handzettel oder um Papier zu sparen.",
+    "steps": [
+      "Auf „Mehrere Seiten pro Blatt“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog „2 Seiten pro Blatt“ oder „4 Seiten pro Blatt“ wählen.",
+      "Auf „Speichern“ klicken."
+    ],
+    "faq": [
+      [
+        "Bleibt der Text scharf?",
+        "Ja. Die Seiten werden nur verkleinert, nicht in Bilder umgewandelt."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-als-poster-drucken",
+    "target": "poster",
+    "label": "Als Poster drucken",
+    "title": "PDF als Poster drucken – auf mehrere A4-Blätter, ohne Upload",
+    "description": "Eine PDF-Seite groß auf 4 oder 9 A4-Blättern drucken, mit Überlappung zum Zusammenkleben. Kostenlos, direkt im Browser, ohne Upload.",
+    "intro": "Drucken Sie Pläne und Aushänge groß mit einem normalen A4-Drucker: PDFMy verteilt jede Seite auf mehrere Blätter.",
+    "steps": [
+      "Auf „Als Poster drucken“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog „Poster auf 4 A4-Blättern“ oder „Poster auf 9 A4-Blättern“ wählen.",
+      "Speichern, drucken und die Blätter an der Überlappung von 1 cm zusammenkleben."
+    ],
+    "faq": [
+      [
+        "Bleibt die Schärfe erhalten?",
+        "Text und Grafiken bleiben scharf. Fotos und Scans werden nur so scharf, wie ihre Auflösung es zulässt."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-farben-umkehren",
+    "target": "invert",
+    "label": "Farben umkehren",
+    "title": "PDF-Farben umkehren – kostenlos und ohne Upload",
+    "description": "Die Farben einer PDF umkehren, zum Beispiel um dunkle Folien tonersparend zu drucken. Text bleibt Text. Direkt im Browser, ohne Upload.",
+    "intro": "Aus dunklem Hintergrund wird heller: Das spart beim Drucken dunkler Folien viel Toner.",
+    "steps": [
+      "Auf „Farben umkehren“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist „Farben umkehren“ schon gewählt.",
+      "Auf „Speichern“ klicken."
+    ],
+    "faq": [
+      [
+        "Werden auch Bilder umgekehrt?",
+        "Ja. Alles auf der Seite wird umgekehrt, auch Fotos."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-metadaten-entfernen",
+    "target": "clean",
+    "label": "Versteckte Daten entfernen",
+    "title": "PDF-Metadaten und versteckte Daten entfernen – ohne Upload",
+    "description": "Autor, Kommentare, Skripte und eingebettete Dateien vor dem Weitergeben aus einer PDF entfernen. Kostenlos, direkt im Browser, ohne Upload.",
+    "intro": "Bevor eine PDF an Dritte geht: PDFMy entfernt Kommentare, Notizen, Skripte, eingebettete Dateien sowie Autor, Betreff und Stichwörter.",
+    "steps": [
+      "Auf „Versteckte Daten entfernen“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist die Einstellung schon gewählt.",
+      "Auf „Speichern“ klicken."
+    ],
+    "faq": [
+      [
+        "Ersetzt das Schwärzen?",
+        "Nein. Sichtbarer Text bleibt stehen. Dafür gibt es „Schwärzen“."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-text-nicht-kopierbar",
+    "target": "flat",
+    "label": "Text nicht kopierbar",
+    "title": "PDF-Text nicht kopierbar machen – kostenlos und ohne Upload",
+    "description": "Jede PDF-Seite als Bild speichern, ohne Textebene, Formularfelder und Links. Kostenlos, direkt im Browser, ohne Upload.",
+    "intro": "Der Text lässt sich danach nicht mehr markieren oder kopieren, die Seite sieht aber gleich aus.",
+    "steps": [
+      "Auf „Text nicht kopierbar“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist die Einstellung schon gewählt.",
+      "Auf „Speichern“ klicken."
+    ],
+    "faq": [
+      [
+        "Ist der Text damit sicher?",
+        "Nicht vollständig. Eine Texterkennung kann ihn wieder lesen. Vertrauliches also immer schwärzen."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-fuer-ki-vorbereiten",
+    "target": "ai",
+    "label": "Für KI vorbereiten",
+    "title": "PDF für KI vorbereiten – als Markdown, ohne Upload",
+    "description": "PDF und Scans in sauberes Markdown mit Überschriften, Tabellen und Seitenmarken umwandeln, zum Beispiel für KI-Assistenten. Kostenlos und ohne Upload.",
+    "intro": "KI-Assistenten lesen strukturierten Text besser als eine PDF. PDFMy erzeugt ihn auf Ihrem Gerät, auch aus Scans.",
+    "steps": [
+      "Auf „Für KI vorbereiten“ klicken und die Datei wählen.",
+      "Auf „Speichern“ klicken. Sie erhalten eine Markdown-Datei.",
+      "Die Datei selbst dort verwenden, wo Sie sie brauchen."
+    ],
+    "faq": [
+      [
+        "Schickt PDFMy etwas an eine KI?",
+        "Nein. PDFMy erstellt nur die Datei. Erst wenn Sie sie selbst bei einem KI-Dienst hochladen, verlässt der Inhalt Ihr Gerät."
+      ],
+      [
+        "Geht das auch mit Scans?",
+        "Ja. Die Texterkennung läuft vorher automatisch."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-auf-a4",
+    "target": "a4",
+    "label": "Alle Seiten auf A4",
+    "title": "PDF-Seiten auf A4 bringen – kostenlos und ohne Upload",
+    "description": "Letter, Quittungen und gemischte Formate auf A4 angleichen, Inhalt maßstabsgetreu und mittig. Direkt im Browser, ohne Upload.",
+    "intro": "Bringen Sie alle Seiten einer PDF auf A4, hoch oder quer, ohne den Inhalt zu verzerren.",
+    "steps": [
+      "Auf „Alle Seiten auf A4“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist die Einstellung schon gewählt.",
+      "Auf „Speichern“ klicken."
+    ],
+    "faq": [
+      [
+        "Bleiben Links und Formularfelder erhalten?",
+        "Ja, sie wandern mit."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-graustufen",
+    "target": "gray",
+    "label": "In Graustufen",
+    "title": "PDF in Graustufen umwandeln – kostenlos und ohne Upload",
+    "description": "Eine farbige PDF in Schwarzweiß umwandeln und Farbtoner sparen. Text bleibt durchsuchbar. Direkt im Browser, ohne Upload.",
+    "intro": "Machen Sie aus einer farbigen PDF eine Graustufen-Fassung, die wie eine Schwarzweiß-Kopie wirkt.",
+    "steps": [
+      "Auf „In Graustufen“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist die Einstellung schon gewählt.",
+      "Auf „Speichern“ klicken."
+    ],
+    "faq": [
+      [
+        "Bleibt der Text durchsuchbar?",
+        "Ja. Die Seiten werden als Bild mit durchsuchbarer Textebene gespeichert."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
   }
 ]

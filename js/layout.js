@@ -128,6 +128,33 @@
     }
     return out.save();
   }
+  // Poster: jede Seite vergrößert auf k×k A4-Blätter (je 1 cm Überlappung zum Zusammenkleben), bleibt Vektor/Text
+  async function poster(bytes, k = 2) {
+    const src = await PL().PDFDocument.load(bytes, { ignoreEncryption: true }), out = await newDoc(src);
+    const { embs, rots } = await embedAll(out, src), ov = 28.35;
+    embs.forEach((e, i) => {
+      const quer = rots[i] % 180 ? e.height > e.width : e.width > e.height, [W, H] = quer ? [A4[1], A4[0]] : A4;
+      const TW = k * W - (k - 1) * ov, TH = k * H - (k - 1) * ov;
+      for (let r = 0; r < k; r++) for (let c = 0; c < k; c++) place(out.addPage([W, H]), e, rots[i], -c * (W - ov), -(k - 1 - r) * (H - ov), TW, TH);
+    });
+    return out.save();
+  }
+  // Farben umkehren (z. B. dunkle Folien tonersparend drucken): weißes Blatt unter die Seite, darüber Weiß im Mischmodus „Differenz“ – Text bleibt Text
+  function invert(doc) {
+    const L = PL(), ctx = doc.context, N = L.PDFName.of;
+    for (const page of doc.getPages()) {
+      const { x, y, width, height } = page.getMediaBox();
+      const a = ctx.register(ctx.flateStream(`q 1 1 1 rg ${x} ${y} ${width} ${height} re f Q\n`));
+      const raw = page.node.get(N('Contents')), cur = page.node.lookup(N('Contents'));
+      if (cur instanceof L.PDFArray) cur.insert(0, a); else page.node.set(N('Contents'), ctx.obj(raw ? [a, raw] : [a]));
+      page.drawRectangle({ x, y, width, height, color: L.rgb(1, 1, 1), blendMode: L.BlendMode.Difference });
+    }
+  }
+  // Seitenbeschriftung (ISO 32000, 12.4.2): die ersten n Seiten i, ii, iii …, danach 1, 2, 3 …
+  function romanFront(doc, n) {
+    const nums = [0, { S: 'r' }]; if (n < doc.getPageCount()) nums.push(n, { S: 'D' });
+    doc.catalog.set(PL().PDFName.of('PageLabels'), doc.context.obj({ Nums: nums }));
+  }
   async function booklet(bytes) {
     const src = await PL().PDFDocument.load(bytes, { ignoreEncryption: true }), out = await newDoc(src);
     const { embs, rots } = await embedAll(out, src), W = A4[1], H = A4[0], half = W / 2, m = 10;
@@ -186,6 +213,6 @@
     return done;
   }
 
-  const api = { fit, nup, booklet, bookletOrder, padBox, fitMatrix, A4, halve, halfBoxes };
+  const api = { fit, nup, poster, invert, romanFront, booklet, bookletOrder, padBox, fitMatrix, A4, halve, halfBoxes };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Layout = api;
 })(typeof self !== 'undefined' ? self : globalThis);

@@ -2586,7 +2586,7 @@ function stampTexts(i, n, o) {
   const v = { seite: i + 1, seiten: n, datum: o.date || new Date().toLocaleDateString('de-DE'), datei: o.docName || '', bates: o.bates ? Tools.bates(o.bates.prefix, o.bates.start + i) : '' };
   return { head: Tools.fillStamp(o.header, v).trim(), foot: Tools.fillStamp(o.footer, v).trim(), bates: v.bates };
 }
-const hasStamp = o => !!o.filesDirty || (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates || !!o.letterhead || !!o.clean || !!o.trim || !!o.a4 || !!o.gray || (!!o.sheet && o.sheet !== '1');
+const hasStamp = o => !!o.filesDirty || (o.pageNumbers && o.pageNumbers !== 'none') || !!o.watermark || !!o.header || !!o.footer || !!o.bates || !!o.letterhead || !!o.clean || !!o.trim || !!o.a4 || !!o.gray || !!o.invert || !!o.flat || !!o.romanFront || (!!o.sheet && o.sheet !== '1');
 // Bereich mit Inhalt je Seite (PDF-Koordinaten) für „Weiße Ränder entfernen“: die fertige PDF grob zeichnen und dunkle Pixel suchen.
 // Einzelne Staubkörner (Scans) zählen nicht – eine Zeile/Spalte gilt erst ab einigen dunklen Pixeln als Inhalt.
 async function inkBoxes(bytes) {
@@ -3004,13 +3004,13 @@ function pruneOrphans(out) {
   for (const [r] of ctx.enumerateIndirectObjects()) if (!seen.has(r.tag)) ctx.delete(r);
 }
 async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
-  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false } = {}) {
+  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false, invert = false, flat = false, romanFront = 0 } = {}) {
   GRAY = gray;
   await flushForms();   // letzte Formulareingabe nicht verlieren (wird sonst erst nach 600 ms übernommen)
   try { return await buildPdfInner(...arguments); } finally { GRAY = false; }
 }
 async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
-  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false } = {}) {
+  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false, invert = false, flat = false, romanFront = 0 } = {}) {
   const preset = SIZES[size] || SIZES.balanced, stamps = { pageNumbers, watermark: (watermark || '').trim(), header, footer, bates, docName, date };
   const hasStamps = hasStamp(stamps);
   const out = await PDFDocument.create({ updateMetadata: false });
@@ -3055,7 +3055,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     return fontsUsed[path];
   };
 
-  const rasterOf = p => p.kind === 'image' || p.annots.some(a => a.type === 'rd' || a.type === 'wo') || pdfa || preset.rasterAll || gray ||
+  const rasterOf = p => p.kind === 'image' || p.annots.some(a => a.type === 'rd' || a.type === 'wo') || pdfa || preset.rasterAll || gray || flat ||
     (p.rotation !== 0 && (p.annots.length > 0 || !!p.ocr || hasStamps));
   /* Unveränderte PDF-Seiten je Quelldokument in einem Durchgang kopieren: gemeinsame Schriften und Bilder werden dabei nur einmal
      übernommen – bei Hunderten Seiten viel schneller und die Datei bleibt klein (Seite für Seite kopiert jede Seite ihre Schriften neu) */
@@ -3097,7 +3097,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       // Als Bild übernommene PDF-Seiten brauchen eine Textebene: vorhandenen Text übernehmen, sonst OCR
       if (p.kind === 'pdf' && !p.ocr) {
         if (p.native !== false) { const nw = await nativeWords(p); if (nw?.length) words = nw; }   // auch noch nicht angezeigte Seiten (Stapel)
-        if (!words && !noOcr) { try { await ocrPage(p); } catch (e) { console.warn(e); } }
+        if (!words && !noOcr && !flat) { try { await ocrPage(p); } catch (e) { console.warn(e); } }
       }
       // Abdeckung ohne Text: immer erkennen – sonst greift der Fälschungsschutz (Urkunde/Kontoauszug/Nachweis) bei Scans nicht
       if (!words && !p.ocr && cover.some(a => a.type === 'wo')) { try { await ocrPage(p); } catch (e) { console.warn(e); } }
@@ -3163,7 +3163,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       }
     };
     // Unsichtbare Textebene (Render-Modus 3) → durchsuchbar und kopierbar
-    if (words?.length) {
+    if (words?.length && !flat) {
       page.pushOperators(pushGraphicsState(), setTextRenderingMode(TextRenderingMode.Invisible));
       let glfName = null;
       const lineItems = line =>
@@ -3229,6 +3229,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     if (figs.length) await emitFigs(2);   // Abbildungen unter dem letzten Text bzw. auf Seiten ohne Text
     for (const a of p.annots) {
       const x = ox + a.x * W, y = oy + H - (a.y + a.h) * H, w = a.w * W, h = a.h * H;
+      if (flat && (a.type === 'field' || a.type === 'link')) continue;   // Seite als Bild: keine Felder, keine Links
       if (a.type === 'field') fieldQ.push({ page, x, y, w, h, a });
       else if (a.type === 'link') linkQ.push({ page, x, y, w, h, a });
       else if (a.type === 'hl') hlQ.push({ page, x, y, w, h, a });
@@ -3294,6 +3295,8 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   if (hlQ.length) addHighlights(out, hlQ, T);
   // Seitenformat: weiße Ränder entfernen und/oder alles auf A4 (js/layout.js) – nach Links, Markierungen, Feldern, damit alles mitwandert
   if (trim || a4) Layout.fit(out, { trim, a4, boxes: trim ? await inkBoxes(await out.save()) : [] });
+  if (invert) Layout.invert(out);
+  if (romanFront) Layout.romanFront(out, romanFront);
   // Dateianhänge (Menü → Dateianhänge): nicht beim Bereinigen; PDF/A-2b erlaubt nur PDF/A-Dateien als Anhang (ISO 19005-2, 6.8)
   for (const f of clean ? [] : (files ?? state.files ?? []).filter(f => !pdfa || isPdfA(f.data))) {
     await out.attach(f.data, f.name, { mimeType: mimeOf(f.name), description: f.desc || undefined, modificationDate: f.date || undefined });
@@ -3655,7 +3658,7 @@ const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.doc
 // Stempel-Optionen aus dem Export-Dialog für PDF und Bilder
 const stampOpts = (o, base) => ({ pageNumbers: o.pageNumbers, watermark: o.watermark, header: o.header, footer: o.footer,
   bates: o.batesOn ? { prefix: o.batesPrefix, start: o.batesStart } : null, docName: base, date: new Date().toLocaleDateString('de-DE'),
-  clean: !!o.clean, gray: !!o.gray && (o.format === 'pdf' || o.format === 'pdfa'), filesDirty: !!state.filesDirty, trim: !!o.trim, a4: !!o.a4, letterhead: o.letterhead && o.format === 'pdf' && typeof letterhead !== 'undefined' && letterhead?.bytes ? letterhead.bytes : null });
+  clean: !!o.clean, gray: !!o.gray && (o.format === 'pdf' || o.format === 'pdfa'), invert: !!o.invert && o.format === 'pdf', flat: !!o.flat && o.format === 'pdf', romanFront: o.format === 'pdf' || o.format === 'pdfa' ? +o.romanFront || 0 : 0, filesDirty: !!state.filesDirty, trim: !!o.trim, a4: !!o.a4, letterhead: o.letterhead && o.format === 'pdf' && typeof letterhead !== 'undefined' && letterhead?.bytes ? letterhead.bytes : null });
 // Kleiner Dialog „fertig – jetzt speichern“: Der Klick darauf darf das Speichern-Fenster öffnen
 function readyToSave(name, pick) {
   return new Promise(resolve => {
@@ -3730,8 +3733,9 @@ async function doExport(o) {
     const words = [];
     for (const p of pages) words.push(p.ocr?.words || (p.kind === 'pdf' && p.native ? await nativeWords(p) : null) || []);
     const blocks = Tools.docBlocks(words), title = meta.subject || '';
-    data = new TextEncoder().encode(o.format === 'md' ? Tools.toMarkdown(blocks, { title }) : Tools.toHtml(blocks, { title: title || base, lang: docLang(pages) }));
-    name = base + (o.format === 'md' ? '.md' : '.html'); mime = o.format === 'md' ? 'text/markdown' : 'text/html';
+    const aiHead = o.ai ? `---\nsource: ${JSON.stringify(base)}\npages: ${pages.length}\nlanguage: ${docLang(pages)}\ncreated_with: PDFMy\n---\n\n` : '';   // „Für KI vorbereiten“: Angaben zum Dokument, Seitenmarken stehen schon im Text
+    data = new TextEncoder().encode(o.format === 'md' ? aiHead + Tools.toMarkdown(blocks, { title }) : Tools.toHtml(blocks, { title: title || base, lang: docLang(pages) }));
+    name = base + (o.ai ? '_KI' : '') + (o.format === 'md' ? '.md' : '.html'); mime = o.format === 'md' ? 'text/markdown' : 'text/html';
   } else if (o.format === 'txt') {
     await waitForOcr(pages);
     data = new TextEncoder().encode(pages.map((p, i) => `--- Seite ${i + 1} ---\n${pageText(p).trim()}\n`).join('\n').replace(/\n/g, '\r\n'));
@@ -3865,11 +3869,12 @@ function readExport() {
     password: $('#x-pw').value, allowPrint: $('#x-print').checked, allowCopy: $('#x-copy').checked, sign: $('#x-sign').checked,
     orig: !$('#x-orig-row').hidden && $('#x-orig').checked, letterhead: $('#x-lh').checked, clean: $('#x-clean').checked,
     trim: $('#x-trim').checked, a4: $('#x-a4').checked, gray: $('#x-gray').checked, sheet: $('#x-sheet').value,
+    invert: $('#x-invert').checked, flat: $('#x-flat').checked, romanFront: $('#x-roman').checked ? Math.max(1, parseInt($('#x-roman-n').value, 10) || 1) : 0, ai: !!state.exportAi && xv('x-format') === 'md',
   };
 }
 // Abläufe (wie „Workflows“ bei iLovePDF und Sejda): Speichern-Einstellungen unter einem Namen merken und mit einem Klick
 // wieder anwenden – im Speichern-Dialog und in der Stapelverarbeitung. Passwort und Signatur werden bewusst nicht gespeichert.
-const FLOW_KEYS = ['format', 'size', 'pageNumbers', 'watermark', 'dropBlank', 'header', 'footer', 'batesOn', 'batesPrefix', 'letterhead', 'clean', 'trim', 'a4', 'gray', 'sheet'];
+const FLOW_KEYS = ['format', 'size', 'pageNumbers', 'watermark', 'dropBlank', 'header', 'footer', 'batesOn', 'batesPrefix', 'letterhead', 'clean', 'trim', 'a4', 'gray', 'invert', 'flat', 'romanFront', 'sheet'];
 const flows = () => { const l = LS.get('flows', []); return Array.isArray(l) ? l.filter(f => f && f.name && f.o) : []; };
 const flowFrom = o => Object.fromEntries(FLOW_KEYS.map(k => [k, o[k]]));
 function flowApply(f) {
@@ -3877,9 +3882,9 @@ function flowApply(f) {
   $('#x-pnum').value = f.pageNumbers || 'none'; $('#x-wm').value = f.watermark || ''; $('#x-head').value = f.header || ''; $('#x-foot').value = f.footer || '';
   if (!$('#x-blank-row').hidden) $('#x-blank').checked = !!f.dropBlank;
   $('#x-bates').checked = !!f.batesOn; $('#x-bpre').value = f.batesPrefix || '';
-  $('#x-lh').checked = !!f.letterhead && !$('#x-lh').disabled; $('#x-clean').checked = !!f.clean; $('#x-trim').checked = !!f.trim; $('#x-a4').checked = !!f.a4; $('#x-gray').checked = !!f.gray;
+  $('#x-lh').checked = !!f.letterhead && !$('#x-lh').disabled; $('#x-clean').checked = !!f.clean; $('#x-trim').checked = !!f.trim; $('#x-a4').checked = !!f.a4; $('#x-gray').checked = !!f.gray; $('#x-invert').checked = !!f.invert; $('#x-flat').checked = !!f.flat; $('#x-roman').checked = !!f.romanFront; $('#x-roman-n').value = f.romanFront || 1;
   $('#x-sheet').value = f.sheet || '1';
-  $('#x-more').open = !!(f.pageNumbers && f.pageNumbers !== 'none') || !!f.header || !!f.footer || !!f.watermark || !!f.batesOn || !!f.letterhead || !!f.clean || !!f.trim || !!f.a4 || !!f.gray || (f.sheet && f.sheet !== '1');
+  $('#x-more').open = !!(f.pageNumbers && f.pageNumbers !== 'none') || !!f.header || !!f.footer || !!f.watermark || !!f.batesOn || !!f.letterhead || !!f.clean || !!f.trim || !!f.a4 || !!f.gray || !!f.invert || !!f.flat || !!f.romanFront || (f.sheet && f.sheet !== '1');
   updateExportUi();
 }
 function flowList(sel = '') {
@@ -3918,7 +3923,9 @@ function openExport(pre = {}) {
   $('#x-pnum').value = last.pageNumbers || 'none'; $('#x-wm').value = '';
   $('#x-head').value = last.header || ''; $('#x-foot').value = last.footer || ''; $('#x-bates').checked = !!pre.bates;
   $('#x-bpre').value = last.batesPrefix ?? ''; $('#x-bstart').value = LS.get('batesNext', 1);
-  $('#x-trim').checked = $('#x-a4').checked = $('#x-gray').checked = false; $('#x-sheet').value = '1';
+  $('#x-trim').checked = !!pre.trim; $('#x-a4').checked = !!pre.a4; $('#x-gray').checked = !!pre.gray; $('#x-sheet').value = pre.sheet || '1';
+  $('#x-invert').checked = !!pre.invert; $('#x-flat').checked = !!pre.flat; $('#x-roman').checked = !!pre.roman; $('#x-roman-n').value = 1; if (pre.clean) $('#x-clean').checked = true;
+  state.exportAi = !!pre.ai;
   $('#x-pw').value = ''; $('#x-pw2').value = ''; $('#x-print').checked = true; $('#x-copy').checked = false;
   const blanks = state.pages.filter(p => p.blank && !p.keepBlank).length;
   $('#x-blank').checked = blanks > 0; $('#x-blank-n').textContent = blanks; $('#x-blank-row').hidden = !blanks;
@@ -3926,7 +3933,7 @@ function openExport(pre = {}) {
   const od = origDoc();
   $('#x-orig-row').hidden = !od; if (od) { $('#x-orig-n').textContent = od.name; $('#x-orig').checked = !state.outDir; }
   $('#x-dest').textContent = state.outDir ? `Ziel: ${state.outDir.name}${targetPath(state.meta) ? '\\' + targetPath(state.meta) : ''}` : '';
-  $('#x-more').open = pre.focus === 'password' || pre.focus === 'stamp' || !!pre.bates || (!!last.pageNumbers && last.pageNumbers !== 'none') || !!last.header || !!last.footer;
+  $('#x-more').open = pre.focus === 'password' || pre.focus === 'stamp' || !!pre.bates || !!pre.more || (!!last.pageNumbers && last.pageNumbers !== 'none') || !!last.header || !!last.footer;
   $('#x-go').textContent = state.outDir ? 'In Ablage speichern' : 'Speichern';
   flowList();
   updateExportUi();
@@ -3944,6 +3951,7 @@ function updateExportUi() {
   $('#x-imgfmt-row').hidden = o.format !== 'img';
   $('#x-sec-pdf').hidden = !isPdf;
   $('#x-lh-row').hidden = o.format !== 'pdf';
+  $('#x-invert-wrap').hidden = $('#x-flat-wrap').hidden = o.format !== 'pdf';
   $('#x-sheet-wrap').hidden = o.format !== 'pdf';   // Bögen (2/4 pro Blatt, Broschüre) nur für normale PDF – zum Drucken gedacht   // Briefbogen nur für normale PDF (bei PDF/A wird die Seite als Bild neu aufgebaut)
   if (origDoc()) $('#x-orig-row').hidden = !isPdf;
   for (const id of ['#x-stamp-row', '#x-hf-row', '#x-bates-row', '#x-ph']) $(id).hidden = textOnly;
@@ -4657,6 +4665,11 @@ addEventListener('message', e => {
 document.documentElement.dataset.pdfmyImport = '1';
 postMessage({ type: 'pdfmy:ready' }, location.origin);
 
+/* ---------- Startseite: Hinweis auf eigene Angebote ---------- */
+// Alle Texte stehen fest in der Seite, nichts wird nachgeladen oder gezählt. Je Aufruf der nächste Hinweis (Zähler nur im eigenen Browser), kein Wechsel während man arbeitet
+{ const ads = [...document.querySelectorAll('.promo')], i = (+LS.get('promoNext', 0) || 0) % ads.length;
+  ads.forEach((a, k) => { a.hidden = k !== i; }); LS.set('promoNext', i + 1); }
+
 /* ---------- Startseite: Aufgaben ---------- */
 const INTENTS = {
   scan: 'image/*,application/pdf,.pdf,.xml,.eml,.msg', merge: 'application/pdf,.pdf', organize: 'application/pdf,.pdf,image/*',
@@ -4664,6 +4677,7 @@ const INTENTS = {
   sign: 'application/pdf,.pdf,image/*', form: 'application/pdf,.pdf', protect: 'application/pdf,.pdf', unlock: 'application/pdf,.pdf',
   stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', a11y: 'application/pdf,.pdf,image/*', preflight: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
   docx: 'application/pdf,.pdf,image/*', bates: 'application/pdf,.pdf,image/*',
+  booklet: 'application/pdf,.pdf,image/*', nup: 'application/pdf,.pdf,image/*', poster: 'application/pdf,.pdf,image/*', a4: 'application/pdf,.pdf,image/*', trim: 'application/pdf,.pdf,image/*', gray: 'application/pdf,.pdf,image/*', invert: 'application/pdf,.pdf,image/*', labels: 'application/pdf,.pdf,image/*', clean: 'application/pdf,.pdf,image/*', flat: 'application/pdf,.pdf,image/*', ai: 'application/pdf,.pdf,image/*',
   compare: 'application/pdf,.pdf,image/*', split: 'application/pdf,.pdf', batch: 'application/pdf,.pdf,image/*', imgout: 'application/pdf,.pdf', repair: 'application/pdf,.pdf',
 };
 document.querySelectorAll('[data-intent]').forEach(b => b.onclick = () => {
@@ -4678,7 +4692,14 @@ $('#intentIn').onchange = e => {
 };
 $('#dropIn').onchange = e => { state.intent = null; importFiles([...e.target.files]); e.target.value = ''; };
 
+// Aufgaben, die eine Einstellung im Speichern-Dialog sind: direkt mit dieser Einstellung öffnen
+const EXPORT_INTENTS = {
+  booklet: { sheet: 'booklet' }, nup: { sheet: '2' }, poster: { sheet: 'poster4' }, a4: { a4: true }, trim: { trim: true }, gray: { gray: true }, invert: { invert: true }, labels: { roman: true },
+  clean: { clean: true }, flat: { flat: true, clean: true },
+};
 function applyIntent() {
+  if (state.intent === 'ai') return openExport({ format: 'md', ai: true, task: { title: 'Für KI vorbereiten', hint: 'Gespeichert wird Markdown mit Überschriften, Tabellen und Seitenmarken. Die Datei bleibt auf Ihrem Gerät – erst wenn Sie sie selbst bei einem KI-Dienst hochladen, verlässt der Inhalt Ihr Gerät.' } });
+  if (EXPORT_INTENTS[state.intent]) return openExport({ format: 'pdf', more: true, ...EXPORT_INTENTS[state.intent] });
   window.showTask?.(state.intent);   // Aufgabenleiste: nächster Schritt, Hilfsknopf, „Fertig & speichern“ (js/pro.js)
   switch (state.intent) {
     case 'merge': setView('grid'); status(`${state.docs.length} Datei(en), ${state.pages.length} Seiten. Reihenfolge per Ziehen ändern, dann „Speichern“.`); break;
@@ -4982,7 +5003,7 @@ function printDoc() {
   $('#printDlg').showModal();
 }
 // 2 oder 4 Seiten pro Blatt bzw. Broschüre (js/layout.js)
-const sheetLayout = (bytes, sheet) => sheet === 'booklet' ? Layout.booklet(bytes) : Layout.nup(bytes, +sheet);
+const sheetLayout = (bytes, sheet) => sheet === 'booklet' ? Layout.booklet(bytes) : sheet === 'poster4' ? Layout.poster(bytes, 2) : sheet === 'poster9' ? Layout.poster(bytes, 3) : Layout.nup(bytes, +sheet);
 async function printPages(pages, sheet = '1') {
   try {
     let bytes = await quickPdf(pages);

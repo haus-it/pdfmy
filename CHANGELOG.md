@@ -2,6 +2,16 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-01
+
+### Mehr Aufgaben direkt auffindbar, neue Werkzeuge (app-v207)
+- Anlass: Vergleich mit BentoPDF. Viele Funktionen standen nur im Speichern-Dialog. Neue Gruppe „Drucken und Format“ und neue Aufgaben, die auch „Funktion suchen“ findet, dazu neue Einstiegsseiten.
+- Neu: Poster auf 4 oder 9 A4-Blättern, Farben umkehren, römischer Vorspann als Seitenbeschriftung, Seiten als Bilder (Text nicht kopierbar), „Für KI vorbereiten“ (Markdown mit Dokumentangaben, lokal).
+- Grenze: „Seiten als Bilder“ ersetzt das Schwärzen nicht.
+- Startseite: Der Hinweis auf eigene Angebote wechselt je Aufruf (Caller ID, Glasfaser, Cloud-Telefonanlage, KI-Telefonassistent, mySupermail, Mentor Consulting). Statisch, ohne Nachladen und ohne Zählung, mit ruhigerem Knopf.
+- „Funktion suchen“ findet diese Aufgaben jetzt auch bei offenem Dokument.
+- Leserkommentare bei Borncity ausgewertet (KONZEPT.md). In der Hilfe steht jetzt, dass PDFMy JavaScript aus PDFs nicht ausführt.
+
 ## 2026-10-31
 
 ### Tablet- und Handy-Ansicht (app-v206)
