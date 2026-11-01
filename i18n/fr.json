@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Au bureau ou en télétravail : tout le monde téléphone sous un seul numéro, avec Placetel ou Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symétrique de 300 Mbit/s à 10 Gbit/s, également comme ligne de secours. Haus iT est 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Premier entretien sans engagement"
+ "Unverbindliches Erstgespräch": "Premier entretien sans engagement",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Ce PDF contient : {0}. Ces éléments seront perdus si les pages sont reconstruites lors de l’enregistrement.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Ce formulaire utilise XFA (Adobe LiveCycle). PDFMy affiche uniquement la vue enregistrée ; les parties dynamiques sont perdues lors de l’enregistrement.",
+ "Ebenen": "Calques",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Vos prises de vue sont en sécurité. Pour terminer, appuyez sur « Terminé ».",
+ "Leseposition": "Position de lecture",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A : les pièces jointes ({0}) ne sont pas au format PDF/A et ne seront pas reprises.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A : les champs de formulaire sont intégrés définitivement aux pages et ne pourront plus être remplis ensuite.",
+ "Seitenbezeichnungen": "Libellés de page",
+ "Struktur-Tags": "Balises de structure",
+ "Weiter auf Seite {0}.": "Reprise à la page {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulaire XFA : les parties dynamiques sont perdues lors de l’enregistrement.",
+ "Ganze Wörter": "Mots entiers",
+ "Nur ganze Wörter": "Mots entiers uniquement"
 }

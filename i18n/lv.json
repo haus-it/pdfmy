@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Birojā vai mājās: visi zvana ar vienu numuru, izmantojot Placetel vai Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simetriski no 300 Mbit/s līdz 10 Gbit/s, arī kā rezerves līnija. Haus iT ir 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Nesaistoša pirmā saruna"
+ "Unverbindliches Erstgespräch": "Nesaistoša pirmā saruna",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Šajā PDF ir: {0}. Ja saglabājot lapas tiek veidotas no jauna, tas tiks zaudēts.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Šajā veidlapā tiek izmantots XFA (Adobe LiveCycle). PDFMy rāda tikai saglabāto skatu, bet dinamiskās daļas saglabājot tiek zaudētas.",
+ "Ebenen": "Slāņi",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Jūsu attēli ir drošībā. Lai pabeigtu, pieskarieties „Gatavs”.",
+ "Leseposition": "Lasīšanas vieta",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: failu pielikumi ({0}) nav PDF/A un netiks iekļauti.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: veidlapas lauki tiek neatgriezeniski iestrādāti lapās, un pēc tam tos vairs nevar aizpildīt.",
+ "Seitenbezeichnungen": "Lapu etiķetes",
+ "Struktur-Tags": "Struktūras tagi",
+ "Weiter auf Seite {0}.": "Turpinājums {0}. lapā.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA veidlapa: dinamiskās daļas saglabājot tiek zaudētas.",
+ "Ganze Wörter": "Veseli vārdi",
+ "Nur ganze Wörter": "Tikai veseli vārdi"
 }

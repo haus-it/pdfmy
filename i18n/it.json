@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "In ufficio o in smart working: tutti telefonano con un unico numero, con Placetel o Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simmetrica da 300 Mbit/s a 10 Gbit/s, anche come linea di backup. Haus iT è 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Primo colloquio senza impegno"
+ "Unverbindliches Erstgespräch": "Primo colloquio senza impegno",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Questo PDF contiene: {0}. Se durante il salvataggio le pagine vengono ricostruite, questi elementi vanno persi.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Questo modulo utilizza XFA (Adobe LiveCycle). PDFMy mostra solo la vista memorizzata; le parti dinamiche vanno perse durante il salvataggio.",
+ "Ebenen": "Livelli",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Le Sue acquisizioni sono al sicuro. Per terminare, tocchi «Fatto».",
+ "Leseposition": "Posizione di lettura",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: gli allegati ({0}) non sono PDF/A e non verranno inclusi.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: i campi modulo vengono integrati in modo fisso nelle pagine e in seguito non potranno più essere compilati.",
+ "Seitenbezeichnungen": "Etichette di pagina",
+ "Struktur-Tags": "Tag di struttura",
+ "Weiter auf Seite {0}.": "Si riprende da pagina {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Modulo XFA: le parti dinamiche vanno perse durante il salvataggio.",
+ "Ganze Wörter": "Parole intere",
+ "Nur ganze Wörter": "Solo parole intere"
 }

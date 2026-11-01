@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Op kantoor of thuis: iedereen belt onder één nummer, met Placetel of Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symmetrisch van 300 Mbit/s tot 10 Gbit/s, ook als back-uplijn. Haus iT is 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Vrijblijvend eerste gesprek"
+ "Unverbindliches Erstgespräch": "Vrijblijvend eerste gesprek",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Deze pdf bevat {0}. Als pagina's bij het opslaan opnieuw worden opgebouwd, gaat dit verloren.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Dit formulier gebruikt XFA (Adobe LiveCycle). PDFMy toont alleen de opgeslagen weergave; dynamische delen gaan bij het opslaan verloren.",
+ "Ebenen": "Lagen",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Uw opnamen zijn veilig. Tik op „Klaar” om af te ronden.",
+ "Leseposition": "Leespositie",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: bijlagen ({0}) zijn geen PDF/A en worden niet overgenomen.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: de formuliervelden worden vast in de pagina's opgenomen en kunnen daarna niet meer worden ingevuld.",
+ "Seitenbezeichnungen": "Paginalabels",
+ "Struktur-Tags": "Structuurtags",
+ "Weiter auf Seite {0}.": "Verder op pagina {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-formulier: dynamische delen gaan bij het opslaan verloren.",
+ "Ganze Wörter": "Hele woorden",
+ "Nur ganze Wörter": "Alleen hele woorden"
 }

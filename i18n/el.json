@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Στο γραφείο ή από το σπίτι: όλοι τηλεφωνούν με έναν αριθμό, με Placetel ή Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Συμμετρικά από 300 Mbit/s έως 10 Gbit/s, και ως εφεδρική γραμμή. Η Haus iT είναι 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Πρώτη συζήτηση χωρίς δέσμευση"
+ "Unverbindliches Erstgespräch": "Πρώτη συζήτηση χωρίς δέσμευση",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Αυτό το PDF περιέχει: {0}. Αν οι σελίδες ανακατασκευαστούν κατά την αποθήκευση, αυτά θα χαθούν.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Αυτή η φόρμα χρησιμοποιεί XFA (Adobe LiveCycle). Το PDFMy εμφανίζει μόνο την αποθηκευμένη προβολή· τα δυναμικά μέρη χάνονται κατά την αποθήκευση.",
+ "Ebenen": "Επίπεδα",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Οι λήψεις σας είναι ασφαλείς. Για να ολοκληρώσετε, πατήστε «Τέλος».",
+ "Leseposition": "Θέση ανάγνωσης",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: Τα συνημμένα αρχεία ({0}) δεν είναι PDF/A και δεν θα συμπεριληφθούν.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: Τα πεδία φόρμας ενσωματώνονται μόνιμα στις σελίδες και στη συνέχεια δεν μπορούν πλέον να συμπληρωθούν.",
+ "Seitenbezeichnungen": "Ετικέτες σελίδων",
+ "Struktur-Tags": "Ετικέτες δομής",
+ "Weiter auf Seite {0}.": "Συνέχεια στη σελίδα {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Φόρμα XFA: Τα δυναμικά μέρη χάνονται κατά την αποθήκευση.",
+ "Ganze Wörter": "Ολόκληρες λέξεις",
+ "Nur ganze Wörter": "Μόνο ολόκληρες λέξεις"
 }

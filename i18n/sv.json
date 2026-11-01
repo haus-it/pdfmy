@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "På kontoret eller hemifrån: alla ringer under ett nummer, med Placetel eller Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symmetriskt från 300 Mbit/s till 10 Gbit/s, även som reservlinje. Haus iT är 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Förutsättningslöst första samtal"
+ "Unverbindliches Erstgespräch": "Förutsättningslöst första samtal",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Denna PDF innehåller {0}. Om sidorna byggs om när filen sparas går detta förlorat.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Detta formulär använder XFA (Adobe LiveCycle). PDFMy visar bara den lagrade vyn, och dynamiska delar går förlorade när filen sparas.",
+ "Ebenen": "Lager",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Dina bilder är säkra. Tryck på ”Klart” för att avsluta.",
+ "Leseposition": "Läsposition",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: Bifogade filer ({0}) är inte PDF/A och tas inte med.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: Formulärfälten bäddas in fast i sidorna och kan sedan inte längre fyllas i.",
+ "Seitenbezeichnungen": "Sidetiketter",
+ "Struktur-Tags": "Strukturtaggar",
+ "Weiter auf Seite {0}.": "Fortsätter på sida {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-formulär: Dynamiska delar går förlorade när filen sparas.",
+ "Ganze Wörter": "Hela ord",
+ "Nur ganze Wörter": "Endast hela ord"
 }

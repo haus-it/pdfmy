@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "V kancelárii aj z domu: všetci telefonujú pod jedným číslom, s Placetel alebo Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symetricky od 300 Mbit/s do 10 Gbit/s, aj ako záložná linka. Haus iT je 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Nezáväzná úvodná konzultácia"
+ "Unverbindliches Erstgespräch": "Nezáväzná úvodná konzultácia",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Toto PDF obsahuje: {0}. Ak sa strany pri ukladaní znova zostavia, tento obsah sa stratí.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Tento formulár používa XFA (Adobe LiveCycle). PDFMy zobrazuje iba uložené zobrazenie, dynamické časti sa pri ukladaní stratia.",
+ "Ebenen": "Vrstvy",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Vaše snímky sú v bezpečí. Na dokončenie ťuknite na „Hotovo“.",
+ "Leseposition": "Pozícia čítania",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: prílohy ({0}) nie sú PDF/A a nebudú prevzaté.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: polia formulára sa pevne vložia do strán a potom ich už nebude možné vypĺňať.",
+ "Seitenbezeichnungen": "Označenia strán",
+ "Struktur-Tags": "Štruktúrne značky",
+ "Weiter auf Seite {0}.": "Pokračovanie na strane {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulár XFA: dynamické časti sa pri ukladaní stratia.",
+ "Ganze Wörter": "Celé slová",
+ "Nur ganze Wörter": "Iba celé slová"
 }

@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Am Büro oder am Homeoffice: Jiddereen telefonéiert ënner enger Nummer, mat Placetel oder Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symmetresch vun 300 Mbit/s bis 10 Gbit/s, och als Backup-Leitung. Haus iT ass 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Onverbindlecht éischt Gespréich"
+ "Unverbindliches Erstgespräch": "Onverbindlecht éischt Gespréich",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Dësen PDF enthält {0}. Wa Säiten beim Späicheren nei opgebaut ginn, geet dat verluer.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Dëse Formulaire benotzt XFA (Adobe LiveCycle). PDFMy weist nëmmen déi gespäichert Usiicht, dynamesch Deeler gi beim Späicheren verluer.",
+ "Ebenen": "Schichten",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Är Opnamen si sécher. Fir opzehalen, tippt op „Fäerdeg“.",
+ "Leseposition": "Liesplaz",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: D'Fichiersunhäng ({0}) sinn net PDF/A a ginn net iwwerholl.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: D'Formulairesfelder gi fest an d'Säiten iwwerholl a kënnen duerno net méi ausgefëllt ginn.",
+ "Seitenbezeichnungen": "Säitebezeechnungen",
+ "Struktur-Tags": "Struktur-Tags",
+ "Weiter auf Seite {0}.": "Et geet weider op der Säit {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-Formulaire: Dynamesch Deeler gi beim Späicheren verluer.",
+ "Ganze Wörter": "Ganz Wierder",
+ "Nur ganze Wörter": "Nëmme ganz Wierder"
 }

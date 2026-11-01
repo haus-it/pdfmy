@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Yn y swyddfa neu gartref: mae pawb yn ffonio dan un rhif, gyda Placetel neu Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Cymesur o 300 Mbit/s i 10 Gbit/s, hefyd fel llinell wrth gefn. Mae Haus iT yn 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Sgwrs gyntaf heb ymrwymiad"
+ "Unverbindliches Erstgespräch": "Sgwrs gyntaf heb ymrwymiad",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Mae’r PDF hwn yn cynnwys {0}. Os caiff tudalennau eu hailadeiladu wrth gadw, bydd y rhain yn cael eu colli.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Mae’r ffurflen hon yn defnyddio XFA (Adobe LiveCycle). Dim ond yr olwg sydd wedi’i storio y mae PDFMy yn ei dangos, a chaiff rhannau dynamig eu colli wrth gadw.",
+ "Ebenen": "Haenau",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Mae eich delweddau’n ddiogel. I orffen, tapiwch ‘Wedi gorffen’.",
+ "Leseposition": "Safle darllen",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: nid yw’r ffeiliau atodedig ({0}) yn PDF/A ac ni fyddant yn cael eu cynnwys.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: caiff meysydd y ffurflen eu gosod yn barhaol ar y tudalennau ac ni ellir eu llenwi wedyn.",
+ "Seitenbezeichnungen": "Labeli tudalennau",
+ "Struktur-Tags": "Tagiau strwythur",
+ "Weiter auf Seite {0}.": "Yn parhau ar dudalen {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Ffurflen XFA: caiff rhannau dynamig eu colli wrth gadw.",
+ "Ganze Wörter": "Geiriau cyfan",
+ "Nur ganze Wörter": "Geiriau cyfan yn unig"
 }

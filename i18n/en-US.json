@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Whether in the office or working from home: everyone calls under one number, with Placetel or Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symmetrical from 300 Mbit/s to 10 Gbit/s, also as a backup line. Haus iT is a 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "No-obligation initial consultation"
+ "Unverbindliches Erstgespräch": "No-obligation initial consultation",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "This PDF contains {0}. These will be lost if pages are rebuilt when saving.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "This form uses XFA (Adobe LiveCycle). PDFMy only shows the stored view; dynamic parts are lost when saving.",
+ "Ebenen": "Layers",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Your captures are safe. Tap “Done” to finish.",
+ "Leseposition": "Reading position",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: {0} file attachment(s) are not PDF/A and will not be included.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: The form fields are fixed into the pages and can no longer be filled in afterward.",
+ "Seitenbezeichnungen": "Page labels",
+ "Struktur-Tags": "Structure tags",
+ "Weiter auf Seite {0}.": "Continuing on page {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA form: dynamic parts are lost when saving.",
+ "Ganze Wörter": "Whole words",
+ "Nur ganze Wörter": "Whole words only"
 }

@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Fl-uffiċċju jew mid-dar: kulħadd iċempel taħt numru wieħed, b’Placetel jew Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simmetriku minn 300 Mbit/s sa 10 Gbit/s, anke bħala linja ta’ riżerva. Haus iT hija 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "L-ewwel konversazzjoni mingħajr obbligu"
+ "Unverbindliches Erstgespräch": "L-ewwel konversazzjoni mingħajr obbligu",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Dan il-PDF fih: {0}. Jekk il-paġni jerġgħu jinbnew waqt is-salvataġġ, dan jintilef.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Din il-formola tuża XFA (Adobe LiveCycle). PDFMy juri biss il-veduta maħżuna; il-partijiet dinamiċi jintilfu waqt is-salvataġġ.",
+ "Ebenen": "Saffi",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "L-immaġnijiet tiegħek huma sikuri. Biex tispiċċa, agħfas “Lest”.",
+ "Leseposition": "Pożizzjoni tal-qari",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: Il-fajls mehmuża ({0}) mhumiex PDF/A u mhux se jiġu inklużi.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: L-oqsma tal-formola jiġu integrati b’mod fiss fil-paġni u wara ma jistgħux jibqgħu jimtlew.",
+ "Seitenbezeichnungen": "Tikketti tal-paġni",
+ "Struktur-Tags": "Tikketti tal-istruttura",
+ "Weiter auf Seite {0}.": "Inkomplu fil-paġna {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formola XFA: Il-partijiet dinamiċi jintilfu waqt is-salvataġġ.",
+ "Ganze Wörter": "Kliem sħiħ",
+ "Nur ganze Wörter": "Kliem sħiħ biss"
 }

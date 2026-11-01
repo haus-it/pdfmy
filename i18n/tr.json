@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Ofiste veya evden: herkes Placetel veya Webex ile tek numara üzerinden görüşür.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "300 Mbit/s ile 10 Gbit/s arasında simetrik, yedek hat olarak da. Haus iT, 1&1 Versatel Solution Partner’dır.",
- "Unverbindliches Erstgespräch": "Bağlayıcı olmayan ilk görüşme"
+ "Unverbindliches Erstgespräch": "Bağlayıcı olmayan ilk görüşme",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Bu PDF şunları içeriyor: {0}. Kaydederken sayfalar yeniden oluşturulursa bunlar kaybolur.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Bu form XFA (Adobe LiveCycle) kullanıyor. PDFMy yalnızca depolanmış görünümü gösterir; dinamik bölümler kaydederken kaybolur.",
+ "Ebenen": "Katmanlar",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Çekimleriniz güvende. Bitirmek için “Bitti” düğmesine dokunun.",
+ "Leseposition": "Okuma konumu",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: Dosya ekleri ({0}) PDF/A değildir ve aktarılmayacaktır.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: Form alanları sayfalara kalıcı olarak işlenir ve sonrasında artık doldurulamaz.",
+ "Seitenbezeichnungen": "Sayfa etiketleri",
+ "Struktur-Tags": "Yapı etiketleri",
+ "Weiter auf Seite {0}.": "{0}. sayfadan devam ediliyor.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA formu: Dinamik bölümler kaydederken kaybolur.",
+ "Ganze Wörter": "Tam sözcükler",
+ "Nur ganze Wörter": "Yalnızca tam sözcükler"
 }

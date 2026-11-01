@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Irodában vagy otthonról: mindenki egy számon telefonál, Placetel vagy Webex használatával.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Szimmetrikusan 300 Mbit/s-tól 10 Gbit/s-ig, tartalék vonalként is. A Haus iT 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Kötelezettség nélküli első beszélgetés"
+ "Unverbindliches Erstgespräch": "Kötelezettség nélküli első beszélgetés",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Ez a PDF a következőket tartalmazza: {0}. Ha mentéskor az oldalak újraépülnek, ezek elvesznek.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Ez az űrlap XFA-t (Adobe LiveCycle) használ. A PDFMy csak a tárolt nézetet jeleníti meg, a dinamikus részek mentéskor elvesznek.",
+ "Ebenen": "Rétegek",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "A felvételei biztonságban vannak. A befejezéshez koppintson a „Kész” gombra.",
+ "Leseposition": "Olvasási pozíció",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: a fájlmellékletek ({0}) nem PDF/A formátumúak, ezért nem kerülnek át.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: az űrlapmezők véglegesen az oldalakba kerülnek, és ezután már nem tölthetők ki.",
+ "Seitenbezeichnungen": "Oldalcímkék",
+ "Struktur-Tags": "Szerkezeti címkék",
+ "Weiter auf Seite {0}.": "Folytatás a(z) {0}. oldalon.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-űrlap: a dinamikus részek mentéskor elvesznek.",
+ "Ganze Wörter": "Teljes szavak",
+ "Nur ganze Wörter": "Csak teljes szavak"
 }

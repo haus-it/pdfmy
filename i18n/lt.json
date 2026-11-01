@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Biure ar namuose: visi skambina vienu numeriu, su Placetel arba Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simetriškai nuo 300 Mbit/s iki 10 Gbit/s, taip pat kaip atsarginė linija. Haus iT yra 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Neįpareigojantis pirmas pokalbis"
+ "Unverbindliches Erstgespräch": "Neįpareigojantis pirmas pokalbis",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Šiame PDF yra: {0}. Jei įrašant puslapiai bus atkurti iš naujo, tai bus prarasta.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Šioje formoje naudojama XFA (Adobe LiveCycle). PDFMy rodo tik išsaugotą rodinį, o dinaminės dalys įrašant prarandamos.",
+ "Ebenen": "Sluoksniai",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Jūsų nuotraukos saugios. Norėdami baigti, palieskite „Baigta“.",
+ "Leseposition": "Skaitymo vieta",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: failų priedai ({0}) nėra PDF/A ir nebus įtraukti.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: formos laukai bus visam laikui įterpti į puslapius ir vėliau jų nebus galima užpildyti.",
+ "Seitenbezeichnungen": "Puslapių etiketės",
+ "Struktur-Tags": "Struktūros žymės",
+ "Weiter auf Seite {0}.": "Tęsiama nuo {0} puslapio.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA forma: dinaminės dalys įrašant prarandamos.",
+ "Ganze Wörter": "Ištisi žodžiai",
+ "Nur ganze Wörter": "Tik ištisi žodžiai"
 }

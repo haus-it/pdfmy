@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "W biurze lub w domu: wszyscy dzwonią pod jednym numerem, z Placetel lub Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symetrycznie od 300 Mbit/s do 10 Gbit/s, także jako łącze zapasowe. Haus iT jest 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Niezobowiązująca pierwsza rozmowa"
+ "Unverbindliches Erstgespräch": "Niezobowiązująca pierwsza rozmowa",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Ten plik PDF zawiera: {0}. Jeśli strony zostaną odbudowane podczas zapisywania, zostanie to utracone.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Ten formularz używa XFA (Adobe LiveCycle). PDFMy pokazuje tylko zapisany widok, a części dynamiczne zostaną utracone podczas zapisywania.",
+ "Ebenen": "Warstwy",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Państwa zdjęcia są bezpieczne. Aby zakończyć, proszę dotknąć „Gotowe”.",
+ "Leseposition": "Pozycja czytania",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: załączone pliki ({0}) nie są w formacie PDF/A i nie zostaną przeniesione.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: pola formularza zostaną trwale osadzone na stronach i potem nie będzie można ich wypełnić.",
+ "Seitenbezeichnungen": "Etykiety stron",
+ "Struktur-Tags": "Znaczniki struktury",
+ "Weiter auf Seite {0}.": "Kontynuacja od strony {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formularz XFA: części dynamiczne zostaną utracone podczas zapisywania.",
+ "Ganze Wörter": "Całe wyrazy",
+ "Nur ganze Wörter": "Tylko całe wyrazy"
 }

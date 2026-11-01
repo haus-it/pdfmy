@@ -94,6 +94,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Entschieden 01.11.2026: Paket „Keine stillen Verluste“
+**Inhalt:** Hinweise im Speichern-Dialog (Ebenen, Struktur-Tags, Seitenbezeichnungen, XFA, PDF/A-Felder und -Anhänge), Suche mit „ß“ = „ss“, ganzen Wörtern und Wortgruppen, Leseposition. **Nicht enthalten:** die Inhalte selbst zu erhalten, das bleibt ein eigener Umbau.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Leseposition nur im Browser, als Prüfsumme und Seite, ohne Dateiname |
+| 2 Kein Server | passt: keine neue Verbindung |
+| 3 Ohne Tracking | passt: nichts wird übertragen; löschbar über „Alle lokal gespeicherten Daten löschen“ |
+| 4 Einfach | passt: Hinweise nur, wenn sie zutreffen; ein zusätzliches Häkchen bei der Suche |
+| 5 Prüfbar | passt: Browser-Tests, axe; bei Schwärzen findet die Suche nun mehr, also eher zu viel als zu wenig |
+| 6 Wenig aktive Inhalte | passt: kein Einfluss auf erzeugte PDFs |
+
 ### Entschieden 01.11.2026: Hinweise auf eigene Angebote im Wechsel
 **Auftrag GF:** Anzeige auf der Startseite im Wechsel, immer dezent und immer statisch (Haus iT, Haus iT Caller ID, mySupermail, Mentor Consulting, z. B. Glasfaser).
 **Umsetzung:** Mentor GmbH und Mertens GmbH gehören zur Mentor Group, es sind also eigene Angebote. Sechs feste Texte in der Seite, je Aufruf der nächste, kein Wechsel während der Arbeit, keine Bewegung. Nur auf der Startseite, nie im geöffneten Dokument. Aussagen von den jeweiligen Webseiten übernommen (Stand 01.11.2026).

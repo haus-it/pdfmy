@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "No escritório ou em teletrabalho: todos telefonam com um único número, com Placetel ou Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simétrica de 300 Mbit/s a 10 Gbit/s, também como linha de reserva. A Haus iT é 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Primeira conversa sem compromisso"
+ "Unverbindliches Erstgespräch": "Primeira conversa sem compromisso",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Este PDF contém: {0}. Se as páginas forem reconstruídas ao guardar, isto perde-se.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Este formulário utiliza XFA (Adobe LiveCycle). O PDFMy mostra apenas a vista armazenada; as partes dinâmicas perdem-se ao guardar.",
+ "Ebenen": "Camadas",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "As suas capturas estão seguras. Para terminar, toque em «Concluído».",
+ "Leseposition": "Posição de leitura",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: os anexos ({0}) não são PDF/A e não serão incluídos.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: os campos de formulário são integrados de forma fixa nas páginas e depois já não podem ser preenchidos.",
+ "Seitenbezeichnungen": "Etiquetas de página",
+ "Struktur-Tags": "Etiquetas de estrutura",
+ "Weiter auf Seite {0}.": "A continuar na página {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulário XFA: as partes dinâmicas perdem-se ao guardar.",
+ "Ganze Wörter": "Palavras inteiras",
+ "Nur ganze Wörter": "Apenas palavras inteiras"
 }

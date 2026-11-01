@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "San oifig nó sa bhaile: glaonn gach duine faoi uimhir amháin, le Placetel nó Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Siméadrach ó 300 Mbit/s go 10 Gbit/s, mar líne chúltaca freisin. Is 1&1 Versatel Solution Partner é Haus iT.",
- "Unverbindliches Erstgespräch": "Céad chomhrá gan cheangal"
+ "Unverbindliches Erstgespräch": "Céad chomhrá gan cheangal",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Tá {0} sa PDF seo. Caillfear iad seo má atógtar leathanaigh agus an comhad á shábháil.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Úsáideann an fhoirm seo XFA (Adobe LiveCycle). Ní thaispeánann PDFMy ach an t-amharc stóráilte; cailltear codanna dinimiciúla agus an comhad á shábháil.",
+ "Ebenen": "Sraitheanna",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Tá do chuid íomhánna slán. Chun críochnú, tapáil “Críochnaithe”.",
+ "Leseposition": "Áit léitheoireachta",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: Ní PDF/A iad na ceangaltáin chomhaid ({0}) agus ní chuirfear san áireamh iad.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: Socraítear na réimsí foirme sna leathanaigh agus ní féidir iad a líonadh ina dhiaidh sin.",
+ "Seitenbezeichnungen": "Lipéid leathanach",
+ "Struktur-Tags": "Clibeanna struchtúir",
+ "Weiter auf Seite {0}.": "Ag leanúint ar leathanach {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Foirm XFA: Cailltear codanna dinimiciúla agus an comhad á shábháil.",
+ "Ganze Wörter": "Focail iomlána",
+ "Nur ganze Wörter": "Focail iomlána amháin"
 }

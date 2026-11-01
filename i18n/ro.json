@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "La birou sau de acasă: toți telefonează sub un singur număr, cu Placetel sau Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simetric de la 300 Mbit/s la 10 Gbit/s, și ca linie de rezervă. Haus iT este 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Prima discuție fără obligații"
+ "Unverbindliches Erstgespräch": "Prima discuție fără obligații",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Acest PDF conține: {0}. Dacă paginile sunt reconstruite la salvare, acestea se pierd.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Acest formular folosește XFA (Adobe LiveCycle). PDFMy afișează doar vizualizarea stocată, iar părțile dinamice se pierd la salvare.",
+ "Ebenen": "Straturi",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Capturile dvs. sunt în siguranță. Pentru a încheia, atingeți „Gata”.",
+ "Leseposition": "Poziție de citire",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: fișierele atașate ({0}) nu sunt PDF/A și nu vor fi preluate.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: câmpurile de formular sunt integrate permanent în pagini și nu mai pot fi completate ulterior.",
+ "Seitenbezeichnungen": "Etichete de pagină",
+ "Struktur-Tags": "Etichete de structură",
+ "Weiter auf Seite {0}.": "Se continuă la pagina {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formular XFA: părțile dinamice se pierd la salvare.",
+ "Ganze Wörter": "Cuvinte întregi",
+ "Nur ganze Wörter": "Doar cuvinte întregi"
 }

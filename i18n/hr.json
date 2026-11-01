@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "U uredu ili od kuće: svi telefoniraju pod jednim brojem, s Placetel ili Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simetrično od 300 Mbit/s do 10 Gbit/s, također kao pričuvna linija. Haus iT je 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Neobvezujući prvi razgovor"
+ "Unverbindliches Erstgespräch": "Neobvezujući prvi razgovor",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Ovaj PDF sadrži: {0}. Ako se stranice pri spremanju ponovno izgrade, to će se izgubiti.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Ovaj obrazac koristi XFA (Adobe LiveCycle). PDFMy prikazuje samo pohranjeni prikaz, a dinamički se dijelovi pri spremanju gube.",
+ "Ebenen": "Slojevi",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Vaše su snimke sigurne. Za završetak dodirnite „Gotovo“.",
+ "Leseposition": "Položaj čitanja",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: privitci ({0}) nisu PDF/A i neće biti preuzeti.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: polja obrasca trajno se ugrađuju u stranice i nakon toga se više ne mogu ispunjavati.",
+ "Seitenbezeichnungen": "Oznake stranica",
+ "Struktur-Tags": "Strukturne oznake",
+ "Weiter auf Seite {0}.": "Nastavak na stranici {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA obrazac: dinamički se dijelovi pri spremanju gube.",
+ "Ganze Wörter": "Cijele riječi",
+ "Nur ganze Wörter": "Samo cijele riječi"
 }

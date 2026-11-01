@@ -199,7 +199,27 @@
     const tr = stream?.getVideoTracks()[0];
     try { await tr.applyConstraints({ advanced: [{ torch: on }] }); return true; } catch { return false; }
   }
+  // Zurück-Geste und Herunterziehen zum Neuladen passieren beim Ausrichten leicht und würden die Seite verlassen, die Aufnahmen wären weg:
+  // eigener Verlaufseintrag und kein Neuladen per Geste, solange die Kamera offen ist
+  let histGuard = false;
+  function guardOn() {
+    document.documentElement.classList.add('camguard');
+    if (!histGuard) { try { history.pushState({ pdfmyCam: 1 }, ''); histGuard = true; } catch {} }
+  }
+  function guardOff() {
+    document.documentElement.classList.remove('camguard');
+    if (histGuard) { histGuard = false; try { if (history.state?.pdfmyCam) history.back(); } catch {} }
+  }
+  // Zurück: ohne Aufnahmen die Kamera schließen, mit Aufnahmen weiterscannen (beenden über „Fertig“ oder ×)
+  function onBack() {
+    if (!$('#camDlg').open) return;
+    if (reviewIdx >= 0) closeReview();
+    if (shots.length) { window.toast?.('Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.', 4000); return true; }
+    close(false); return false;
+  }
+  addEventListener('popstate', () => { if (!histGuard) return; histGuard = false; if (onBack()) guardOn(); });
   function close(deliver) {
+    guardOff();
     cancelAnimationFrame(raf); raf = 0;
     stream?.getTracks().forEach(t => t.stop()); stream = null;
     $('#camDlg').close();
@@ -221,7 +241,7 @@
     shots = []; shutter = new AutoShutter(); auto = (() => { try { return localStorage.getItem('mpdf.camAuto') !== '0'; } catch { return true; } })();
     $('#camAuto').checked = auto;
     const v = $('#camVideo'); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); v.muted = true; v.playsInline = true; v.srcObject = stream;
-    $('#camDlg').showModal(); renderStrip();
+    $('#camDlg').showModal(); guardOn(); renderStrip();
     try { await v.play(); } catch {}
     const track = stream.getVideoTracks()[0], caps = track.getCapabilities?.() || {};
     // Viele Handys starten mit mittlerer Auflösung – die höchste anfordern (iPhone oft 4K), damit auch kleine Schrift scharf ist
@@ -237,6 +257,7 @@
   if (document.readyState !== 'loading') wire(); else document.addEventListener('DOMContentLoaded', wire);
   function wire() {
     if (!$('#camDlg')) return;
+    $('#camDlg').addEventListener('cancel', e => { e.preventDefault(); onBack(); });   // Android-Zurück schließt Dialoge sonst selbst, die Kamera liefe weiter
     $('#camShutter').onclick = () => capture(lastDet);
     // Foto-App: volle Auflösung der Handykamera (iPhone liefert im Browser nur ein Videobild); bisherige Aufnahmen werden übernommen
     $('#camPhotoApp').onclick = () => { const had = shots.length; close(true); setTimeout(() => document.querySelector('#camIn')?.click(), had ? 400 : 0); };
@@ -249,7 +270,6 @@
     // (dort greift der Absturzschutz); weiterscannen mit „Kamera“ hängt neue Seiten hinten an
     document.addEventListener('visibilitychange', () => { if (document.hidden && stream && shots.length) close(true); });
     $('#camClose').onclick = () => { if (shots.length && !confirm(`${shots.length} aufgenommene Seite(n) verwerfen?`)) return; close(false); };
-    $('#camDlg').addEventListener('cancel', e => { e.preventDefault(); $('#camClose').click(); });
     $('#camAuto').onchange = e => { auto = e.target.checked; try { localStorage.setItem('mpdf.camAuto', auto ? '1' : '0'); } catch {} shutter = new AutoShutter(); };
     $('#camTorch').onclick = async () => { const on = $('#camTorch').getAttribute('aria-pressed') !== 'true'; if (await torch(on)) $('#camTorch').setAttribute('aria-pressed', String(on)); };
   }

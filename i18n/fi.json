@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Toimistolla tai etätöissä: kaikki soittavat yhdellä numerolla, Placetelilla tai Webexillä.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Symmetrisesti 300 Mbit/s – 10 Gbit/s, myös varayhteytenä. Haus iT on 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Sitoutumaton ensitapaaminen"
+ "Unverbindliches Erstgespräch": "Sitoutumaton ensitapaaminen",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Tämä PDF sisältää seuraavat: {0}. Jos sivut muodostetaan tallennettaessa uudelleen, ne menetetään.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Tämä lomake käyttää XFA:ta (Adobe LiveCycle). PDFMy näyttää vain tallennetun näkymän, ja dynaamiset osat menetetään tallennettaessa.",
+ "Ebenen": "Tasot",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Kuvanne ovat turvassa. Lopeta napauttamalla ”Valmis”.",
+ "Leseposition": "Lukukohta",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: tiedostoliitteet ({0}) eivät ole PDF/A-muotoisia, eikä niitä sisällytetä.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: lomakekentät kiinnitetään sivuille, eikä niitä voi sen jälkeen enää täyttää.",
+ "Seitenbezeichnungen": "Sivutunnisteet",
+ "Struktur-Tags": "Rakennetunnisteet",
+ "Weiter auf Seite {0}.": "Jatketaan sivulta {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-lomake: dynaamiset osat menetetään tallennettaessa.",
+ "Ganze Wörter": "Kokonaiset sanat",
+ "Nur ganze Wörter": "Vain kokonaiset sanat"
 }

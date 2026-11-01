@@ -219,7 +219,32 @@ async function importFilesRun(files, fromCamera) {
   refresh();
   status(`${added} Seite(n) importiert.` + (failed.length ? ` Nicht geöffnet: ${failed.length} Datei(en).` : ''));
   applyIntent();
+  if (!before) await restoreReadPos();
   if (S.autoOcr) runOcrAll(); else analyze();
+}
+
+/* Leseposition: längere PDFs öffnen dort, wo man aufgehört hat. Gemerkt wird nur Prüfsumme → Seite, im eigenen Browser, kein Dateiname. */
+const READ_MIN = 5, READ_KEEP = 30;
+async function restoreReadPos() {
+  const d = state.docs[0]; if (state.docs.length !== 1 || !d?.bytes || !crypto.subtle) return;
+  try {
+    d.readKey = [...new Uint8Array(await crypto.subtle.digest('SHA-256', d.bytes))].slice(0, 12).map(b => b.toString(16).padStart(2, '0')).join('');
+    const n = LS.get('readPos', {})[d.readKey];
+    if (!state.intent && n > 0 && n < state.pages.length && state.pages.length >= READ_MIN && state.docs.length === 1 && state.sel === 0) {
+      state.sel = n; refresh(); toast(`Weiter auf Seite ${n + 1}.`, 4000);
+    }
+  } catch (e) { console.warn('Leseposition', e); }
+}
+let readT = null;
+function saveReadPos() {
+  const d = state.docs.length === 1 && state.docs[0]; if (!d?.readKey || state.pages.length < READ_MIN) return;
+  clearTimeout(readT);
+  readT = setTimeout(() => {
+    const all = LS.get('readPos', {}); delete all[d.readKey];
+    if (state.sel > 0) all[d.readKey] = state.sel;
+    const keys = Object.keys(all); for (const k of keys.slice(0, Math.max(0, keys.length - READ_KEEP))) delete all[k];
+    LS.set('readPos', all);
+  }, 800);
 }
 
 /* E-Mail (.eml aus Outlook im Web/Thunderbird, .msg aus Outlook): PDF-, Bild- und E-Rechnungs-Anhänge übernehmen.
@@ -802,7 +827,7 @@ async function rotateTargets(dir) {
 
 /* ---------- Editor ---------- */
 function refresh() {
-  renderThumbs(); renderStage(); renderSide();
+  renderThumbs(); renderStage(); renderSide(); saveReadPos();
   const n = state.pages.length;
   $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = $('#btnTranslate').disabled = $('#btnSummary').disabled = !n;
   $('#btnFile').hidden = !n;
@@ -1005,8 +1030,9 @@ function renderAnns() {
       words = p.nwords;
     }
     const fc = state.findCur && state.findCur.id === p.id ? state.findCur.k : -1; let fi = 0;
-    for (const w of words || []) if (w.t.toLowerCase().includes(state.query) && !coveredWord(p, w)) {
-      const f = document.createElement('div'); f.className = fi++ === fc ? 'found cur' : 'found'; placeEl(f, w); ov.append(f);
+    for (const ws of wordHits(p, words)) {
+      const cls = fi++ === fc ? 'found cur' : 'found';
+      for (const w of ws) { const f = document.createElement('div'); f.className = cls; placeEl(f, w); ov.append(f); }
     }
   }
   let editEl = null;
@@ -1515,10 +1541,30 @@ async function suggestRedactions() {
     : 'Keine persönlichen Daten gefunden (IBAN, E-Mail, Telefon, Steuer-ID, Geburtsdatum, SV-Nummer).');
 }
 // Suchen & Schwärzen: jedes Vorkommen eines Begriffs (ohne Groß-/Kleinschreibung, Leerzeichen flexibel)
+// Suchmuster für alle Suchen (Liste, Markierung, Ersetzen, Schwärzen): Groß/klein egal, „ß“ = „ss“, Leerraum flexibel; optional nur ganze Wörter
+function searchRe(term, flags = 'giu', gap = '\\s+') {
+  const body = term.trim().split(/\s+/).filter(Boolean).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join(gap).replace(/ss|ß/gi, '(?:ss|ß)');
+  return new RegExp(state.qWhole ? `(?<![\\p{L}\\p{N}])${body}(?![\\p{L}\\p{N}])` : body, flags);
+}
+// Trifft das Muster genau die Wortfolge (beginnt im ersten, endet im letzten Wort)?
+function wordsMatch(ws, re) {
+  const s = ws.map(w => w.t).join(' '), m = re.exec(s); if (!m) return false;
+  return m.index < ws[0].t.length && m.index + m[0].length > s.length - ws[ws.length - 1].t.length;
+}
+// Treffer auf einer Seite aus der Wortebene: je Treffer die beteiligten Wörter (auch Wortgruppen wie „15. November“)
+function wordHits(p, words, q = state.query) {
+  const n = q.trim().split(/\s+/).length, re = searchRe(q, 'iu'), out = [];
+  if (!q.trim()) return out;
+  // Bei PDFs mit Textebene ist ein „Wort“ oft eine ganze Zeile: Wortgruppen darum auch in weniger Einträgen suchen
+  for (let i = 0; i < (words || []).length; i++) for (let k = 1; k <= n && i + k <= words.length; k++) {
+    const ws = words.slice(i, i + k);
+    if (wordsMatch(ws, re)) { if (!ws.some(w => coveredWord(p, w))) out.push(ws); i += k - 1; break; }
+  }
+  return out;
+}
 function findTerm(term) {
-  const parts = term.trim().split(/\s+/).filter(Boolean).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  if (!parts.length) return () => [];
-  const re = new RegExp(parts.join('\\s*'), 'gi');
+  if (!term.trim()) return () => [];
+  const re = searchRe(term, 'giu', '\\s*');
   return text => [...text.matchAll(re)].map(m => ({ start: m.index, end: m.index + m[0].length, kind: `„${term.trim()}“` }));
 }
 async function redactSearch() {
@@ -2180,9 +2226,13 @@ $('#btnIcs').onclick = () => {
 
 /* ---------- Suche ---------- */
 $('#q').addEventListener('input', e => { state.query = e.target.value.trim().toLowerCase(); $('#qRedact').hidden = state.query.length < 2; renderResults(); renderAnns(); renderThumbs(); });
+// „Nur ganze Wörter“ gilt für beide Suchfelder
+function setWhole(on) { state.qWhole = on; $('#qWhole').checked = $('#findWhole').checked = on; renderResults(); renderAnns(); renderThumbs(); if (!$('#findBar').hidden) findFirst(); }
+$('#qWhole').onchange = e => setWhole(e.target.checked);
+$('#findWhole').onchange = e => setWhole(e.target.checked);
 $('#q').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); nextHit(e.shiftKey ? -1 : 1); } });
 // Suchtreffer je Seite (für Seitenvorschauen und „nächster Treffer“)
-function hitCount(p) { const q = state.query; if (!q || q.length < 2) return 0; const lo = pageText(p).replace(/\s+/g, ' ').toLowerCase(); let n = 0, at = lo.indexOf(q); while (at >= 0 && n < 99) { n++; at = lo.indexOf(q, at + q.length); } return n; }
+function hitCount(p) { const q = state.query; if (!q || q.length < 2) return 0; let n = 0; for (const m of pageText(p).replace(/\s+/g, ' ').matchAll(searchRe(q))) if (++n >= 99 || !m) break; return n; }
 function nextHit(dir = 1) {
   const n = state.pages.length; if (!n || !state.query) return;
   for (let k = 1; k <= n; k++) { const i = (state.sel + dir * k + n * k) % n; if (hitCount(state.pages[i])) { state.sel = i; refresh(); return; } }
@@ -2193,12 +2243,13 @@ function renderResults() {
   const pagesHit = state.pages.filter(hitCount).length, total = state.pages.reduce((s, p) => s + hitCount(p), 0);
   if (total) { const h = document.createElement('div'); h.className = 'hint'; h.textContent = `${total} Treffer auf ${pagesHit} Seite(n) – Enter springt zur nächsten Seite mit Treffer.`; box.append(h); }
   state.pages.forEach((p, i) => {
-    const t = pageText(p).replace(/\s+/g, ' '), lo = t.toLowerCase(); let at = lo.indexOf(q);
-    while (at >= 0 && hits < 30) {
+    const t = pageText(p).replace(/\s+/g, ' ');
+    for (const m of t.matchAll(searchRe(q))) {
+      if (hits >= 30) break;
       const b = document.createElement('button');
-      b.textContent = `S. ${i + 1}: …${t.slice(Math.max(0, at - 30), at + q.length + 40)}…`;
+      b.textContent = `S. ${i + 1}: …${t.slice(Math.max(0, m.index - 30), m.index + m[0].length + 40)}…`;
       b.onclick = () => { state.sel = i; refresh(); };
-      box.append(b); hits++; at = lo.indexOf(q, at + q.length);
+      box.append(b); hits++;
     }
   });
   if (!hits) box.innerHTML = '<div class="hint">Keine Treffer.</div>';
@@ -2504,8 +2555,7 @@ async function replaceOnPage(p, q, repl, only = null) {
   if (!words || !words.length) return { n: 0 };
   const prot = pageProt(p);
   if (prot === 'urkunde') return { n: 0, blocked: true };
-  const ql = q.toLowerCase();
-  let hits = words.filter(w => w.t.toLowerCase().includes(ql) && !coveredWord(p, w));
+  let hits = wordHits(p, words, q).map(ws => ws[0]);
   if (only != null) hits = hits[only] ? [hits[only]] : [];
   const seen = new Set(), lines = [];
   for (const h of hits) {
@@ -2513,7 +2563,7 @@ async function replaceOnPage(p, q, repl, only = null) {
     if (!seen.has(key)) { seen.add(key); lines.push(l); }
   }
   if (!lines.length) return { n: 0 };
-  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  const re = searchRe(q);
   pushUndo(p);
   let n = 0;
   for (const l of lines) {
@@ -3860,6 +3910,23 @@ function exportPages() {
   if (which === 'range') { const idx = Tools.parseRange($('#x-range').value, state.pages.length); return idx ? idx.map(i => state.pages[i]) : null; }
   return state.pages;
 }
+// Hinweis im Speichern-Dialog: was bei dieser Datei und diesem Format nicht erhalten bleibt
+function exportLosses(format) {
+  if (format !== 'pdf' && format !== 'pdfa') return '';
+  const pdfa = format === 'pdfa', out = [], docs = state.docs.filter(d => d?.lossy), any = k => docs.some(d => d.lossy[k]);
+  const parts = [];
+  if (any('ocg')) parts.push('Ebenen');
+  if (any('tags') && !pdfa) parts.push('Struktur-Tags');
+  if (any('labels')) parts.push('Seitenbezeichnungen');
+  if (parts.length) out.push(`Diese PDF enthält ${parts.join(', ')}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.`);
+  if (any('xfa')) out.push('XFA-Formular: Dynamische Teile gehen beim Speichern verloren.');
+  if (pdfa) {
+    if (state.docs.some(d => d?.fields?.length)) out.push('PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.');
+    const n = (state.files || []).filter(f => !isPdfA(f.data)).length;
+    if (n) out.push(`PDF/A: ${n} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.`);
+  }
+  return out.map(t => I18N.t(t)).join(' ');
+}
 function readExport() {
   return {
     format: xv('x-format'), size: xv('x-size'), imgFmt: $('#x-imgfmt').value || 'jpg', pages: exportPages(), name: $('#x-name').value.trim(),
@@ -3964,6 +4031,7 @@ function updateExportUi() {
   else if (o.password && o.format === 'pdfa') err = 'PDF/A erlaubt keine Verschlüsselung – bitte Format „PDF“ wählen.';
   else if (o.sign && o.password) err = 'Signieren und Passwortschutz gleichzeitig geht nicht – bitte eines von beiden wählen.';
   else if (o.sign && !window.signCertName?.()) err = 'Zum Signieren zuerst „Zertifikat wählen …“ (.p12/.pfx).';
+  { const w = exportLosses(o.format); $('#x-warn').hidden = !w; $('#x-warn').textContent = w; }
   $('#x-err').textContent = err; $('#x-go').disabled = $('#x-saveas').disabled = !!err;
   $('#x-ext').textContent = { pdf: '.pdf', pdfa: '.pdf', img: o.pages?.length > 1 ? '_Bilder.zip' : '.' + (o.imgFmt === 'tiff' ? 'tif' : o.imgFmt), txt: '.txt', docx: '.docx', xlsx: '.xlsx', md: '.md', html: '.html', pptx: '.pptx' }[o.format];
   clearTimeout(estTimer); $('#x-est').textContent = '';
@@ -4557,7 +4625,7 @@ $('#btnNew').onclick = () => {
   if (state.dirty && state.pages.length && !confirm('Aktuelles Dokument verwerfen? Es wurde noch nicht gespeichert.')) return;
   resetDoc(); status('Bereit.');
 };
-addEventListener('beforeunload', e => { if (state.dirty && state.pages.length) { e.preventDefault(); e.returnValue = ''; } });
+addEventListener('beforeunload', e => { if ((state.dirty && state.pages.length) || window.Camera?.shots?.length) { e.preventDefault(); e.returnValue = ''; } });
 // "Öffnen mit" für die installierte App
 // Doppelklick im Explorer/Finder (installierte App): neue Datei ersetzt das offene Dokument – nach Rückfrage, wenn ungespeichert
 // Übergebene Datei sofort vollständig einlesen: Outlook (v. a. am Mac) legt Anhänge nur als kurzlebige Kopie ab und entfernt
@@ -4805,6 +4873,10 @@ async function detectForm(docIdx) {
   const d = state.docs[docIdx];
   try {
     const lib = await plainLib(d.bytes);
+    // Was beim Neuaufbau der Seiten nicht mitkommt: im Speichern-Dialog sagen, nicht still verlieren (exportLosses)
+    { const N = PDFLib.PDFName.of, cat = lib.catalog, acro = cat.lookup(N('AcroForm'));
+      d.lossy = { ocg: cat.has(N('OCProperties')), tags: cat.has(N('StructTreeRoot')), labels: cat.has(N('PageLabels')), xfa: !!acro?.has?.(N('XFA')) };
+      if (d.lossy.xfa) setTimeout(() => toast('Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.', 10000), 900); }
     const L = PDFLib, fields = []; let odd = 0;
     for (const f of lib.getForm().getFields()) try {
       const name = f.getName(), ro = f.isReadOnly();

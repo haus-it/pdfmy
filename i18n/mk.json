@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Во канцеларија или од дома: сите телефонираат под еден број, со Placetel или Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Симетрично од 300 Mbit/s до 10 Gbit/s, исто така како резервна линија. Haus iT е 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Необврзувачки прв разговор"
+ "Unverbindliches Erstgespräch": "Необврзувачки прв разговор",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Овој PDF содржи: {0}. Ако при зачувување страниците повторно се изградат, тоа ќе се изгуби.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Овој формулар користи XFA (Adobe LiveCycle). PDFMy го прикажува само зачуваниот приказ, а динамичните делови се губат при зачувување.",
+ "Ebenen": "Слоеви",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Вашите снимки се безбедни. За да завршите, допрете „Готово“.",
+ "Leseposition": "Позиција на читање",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: прилозите ({0}) не се PDF/A и нема да бидат преземени.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: полињата од формуларот трајно се вградуваат во страниците и потоа не можат да се пополнуваат.",
+ "Seitenbezeichnungen": "Ознаки на страници",
+ "Struktur-Tags": "Структурни ознаки",
+ "Weiter auf Seite {0}.": "Продолжување на страница {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Формулар XFA: динамичните делови се губат при зачувување.",
+ "Ganze Wörter": "Цели зборови",
+ "Nur ganze Wörter": "Само цели зборови"
 }

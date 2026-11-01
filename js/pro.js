@@ -3554,7 +3554,7 @@ $('#cmtCopy').onclick = async () => {
 function findHits() {
   const out = [], q = state.query;
   state.pages.forEach((p, i) => {
-    const ws = p.ocr?.words || p.nwords, n = ws && q ? ws.filter(w => w.t.toLowerCase().includes(q) && !coveredWord(p, w)).length : hitCount(p);
+    const ws = p.ocr?.words || p.nwords, n = ws && q ? wordHits(p, ws).length : hitCount(p);
     for (let k = 0; k < n; k++) out.push({ i, k });
   });
   return out;
@@ -3644,14 +3644,9 @@ async function markAll() {
   if (q.length < 2) return status('Bitte zuerst einen Suchbegriff mit mindestens 2 Zeichen eingeben.');
   const signed = state.pages.find(p => { const d = p.kind === 'pdf' && state.docs[p.docIdx]; return d && (d.sigs ? d.sigs.some(r => !r.usageRights) : d.signed) && !d.sigWarned; });
   if (signed && sigWarn(signed, markAll)) return;
-  const toks = q.split(' '), norm = t => String(t).toLowerCase();
-  // Treffer ab Wort i: ein Wort enthält den Begriff; bei Wortgruppen endet das erste Wort mit dem Anfang, mittlere stimmen, das letzte beginnt mit dem Ende
-  const matchAt = (seq, i) => {
-    if (toks.length === 1) return norm(seq[i].w.t).includes(q) ? i : -1;
-    if (i + toks.length > seq.length || !norm(seq[i].w.t).endsWith(toks[0])) return -1;
-    for (let k = 1; k < toks.length; k++) { const t = norm(seq[i + k].w.t); if (k < toks.length - 1 ? t !== toks[k] : !t.startsWith(toks[k])) return -1; }
-    return i + toks.length - 1;
-  };
+  const n0 = q.split(' ').length, re = searchRe(q, 'iu');
+  // Treffer ab Wort i: dasselbe Muster wie die Suche („ß“ = „ss“, optional ganze Wörter), auch über mehrere Wörter
+  const matchAt = (seq, i) => i + n0 <= seq.length && wordsMatch(seq.slice(i, i + n0).map(x => x.w), re) ? i + n0 - 1 : -1;
   let n = 0, pages = 0, noText = 0, already = 0;
   await undoGroup(async () => {   // alles zusammen mit einem Strg+Z rückgängig
     for (const [pi, p] of state.pages.entries()) {

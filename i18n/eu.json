@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Bulegoan edo etxetik: denek zenbaki bakarrarekin deitzen dute, Placetel edo Webex bidez.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simetrikoa 300 Mbit/s-tik 10 Gbit/s-ra, baita ordezko linea gisa ere. Haus iT 1&1 Versatel Solution Partner da.",
- "Unverbindliches Erstgespräch": "Konpromisorik gabeko lehen elkarrizketa"
+ "Unverbindliches Erstgespräch": "Konpromisorik gabeko lehen elkarrizketa",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "PDF honek hau dauka: {0}. Gordetzean orrialdeak berreraikitzen badira, galdu egingo da.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Inprimaki honek XFA (Adobe LiveCycle) erabiltzen du. PDFMy-k gordetako ikuspegia bakarrik erakusten du; zati dinamikoak galdu egiten dira gordetzean.",
+ "Ebenen": "Geruzak",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Zure argazkiak seguru daude. Amaitzeko, sakatu «Eginda».",
+ "Leseposition": "Irakurketa-posizioa",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: fitxategi-eranskinak ({0}) ez dira PDF/A eta ez dira sartuko.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: inprimaki-eremuak orrialdeetan finkatzen dira, eta gero ezin dira bete.",
+ "Seitenbezeichnungen": "Orrialde-etiketak",
+ "Struktur-Tags": "Egitura-etiketak",
+ "Weiter auf Seite {0}.": "{0}. orrialdean jarraitzen.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA inprimakia: zati dinamikoak galdu egiten dira gordetzean.",
+ "Ganze Wörter": "Hitz osoak",
+ "Nur ganze Wörter": "Hitz osoak soilik"
 }

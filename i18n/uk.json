@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "В офісі чи вдома: усі телефонують під одним номером, із Placetel або Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Симетрично від 300 Mbit/s до 10 Gbit/s, також як резервна лінія. Haus iT – 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Перша розмова без зобов’язань"
+ "Unverbindliches Erstgespräch": "Перша розмова без зобов’язань",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Цей PDF містить: {0}. Якщо під час збереження сторінки буде перебудовано, це буде втрачено.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Ця форма використовує XFA (Adobe LiveCycle). PDFMy показує лише збережене подання, динамічні частини під час збереження буде втрачено.",
+ "Ebenen": "Шари",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Ваші знімки в безпеці. Щоб завершити, натисніть «Готово».",
+ "Leseposition": "Позиція читання",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: вкладення ({0}) не відповідають PDF/A і не будуть перенесені.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: поля форми буде закріплено на сторінках, і після цього їх уже не можна буде заповнити.",
+ "Seitenbezeichnungen": "Мітки сторінок",
+ "Struktur-Tags": "Структурні теги",
+ "Weiter auf Seite {0}.": "Продовження зі сторінки {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Форма XFA: динамічні частини під час збереження буде втрачено.",
+ "Ganze Wörter": "Цілі слова",
+ "Nur ganze Wörter": "Лише цілі слова"
 }

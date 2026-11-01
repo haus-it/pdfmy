@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Kontoris või kodus: kõik helistavad ühe numbri all, Placeteli või Webexiga.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Sümmeetriliselt 300 Mbit/s kuni 10 Gbit/s, ka varuliinina. Haus iT on 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Siduvuseta esimene vestlus"
+ "Unverbindliches Erstgespräch": "Siduvuseta esimene vestlus",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "See PDF sisaldab järgmist: {0}. Kui lehed salvestamisel uuesti üles ehitatakse, läheb see kaotsi.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "See vorm kasutab XFA-d (Adobe LiveCycle). PDFMy näitab ainult salvestatud vaadet, dünaamilised osad lähevad salvestamisel kaotsi.",
+ "Ebenen": "Kihid",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Teie jäädvustused on kindlas kohas. Lõpetamiseks puudutage nuppu „Valmis“.",
+ "Leseposition": "Lugemiskoht",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: failimanused ({0}) ei ole PDF/A ja neid ei kaasata.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: vormiväljad lisatakse lehtedele püsivalt ja neid ei saa pärast enam täita.",
+ "Seitenbezeichnungen": "Lehekülgede sildid",
+ "Struktur-Tags": "Struktuurisildid",
+ "Weiter auf Seite {0}.": "Jätkamine leheküljelt {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-vorm: dünaamilised osad lähevad salvestamisel kaotsi.",
+ "Ganze Wörter": "Terved sõnad",
+ "Nur ganze Wörter": "Ainult terved sõnad"
 }

@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Á skrifstofunni eða heima: allir hringja undir einu númeri, með Placetel eða Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Samhverft frá 300 Mbit/s upp í 10 Gbit/s, einnig sem varalína. Haus iT er 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Óskuldbindandi fyrsta samtal"
+ "Unverbindliches Erstgespräch": "Óskuldbindandi fyrsta samtal",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Þetta PDF-skjal inniheldur: {0}. Ef síður eru endurbyggðar við vistun glatast þetta.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Þetta eyðublað notar XFA (Adobe LiveCycle). PDFMy sýnir aðeins vistaða yfirlitið og breytilegir hlutar glatast við vistun.",
+ "Ebenen": "Lög",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "Myndirnar þínar eru öruggar. Ýttu á „Lokið“ til að ljúka.",
+ "Leseposition": "Lestrarstaða",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: Skráaviðhengi ({0}) eru ekki PDF/A og verða ekki tekin með.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: Eyðublaðsreitir eru festir varanlega á síðurnar og ekki er hægt að fylla þá út eftir það.",
+ "Seitenbezeichnungen": "Síðumerkingar",
+ "Struktur-Tags": "Formgerðarmerki",
+ "Weiter auf Seite {0}.": "Haldið áfram á síðu {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-eyðublað: Breytilegir hlutar glatast við vistun.",
+ "Ganze Wörter": "Heil orð",
+ "Nur ganze Wörter": "Aðeins heil orð"
 }

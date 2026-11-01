@@ -3143,5 +3143,19 @@
  "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.": "Na oficina ou na casa: todos chaman cun mesmo número, con Placetel ou Webex.",
  "Placetel Platin Partner": "Placetel Platin Partner",
  "Symmetrisch von 300 Mbit/s bis 10 Gbit/s, auch als Backup-Leitung. Haus iT ist 1&1 Versatel Solution Partner.": "Simétrica de 300 Mbit/s a 10 Gbit/s, tamén como liña de reserva. Haus iT é 1&1 Versatel Solution Partner.",
- "Unverbindliches Erstgespräch": "Primeira conversa sen compromiso"
+ "Unverbindliches Erstgespräch": "Primeira conversa sen compromiso",
+ "(?:ss|ß)": "(?:ss|ß)",
+ "Diese PDF enthält {0}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.": "Este PDF contén: {0}. Se ao gardar se reconstrúen as páxinas, perderase.",
+ "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.": "Este formulario usa XFA (Adobe LiveCycle). PDFMy só mostra a vista almacenada; as partes dinámicas pérdense ao gardar.",
+ "Ebenen": "Capas",
+ "Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.": "As súas capturas están a salvo. Para rematar, toque «Feito».",
+ "Leseposition": "Posición de lectura",
+ "PDF/A: {0} Dateianhang/-anhänge sind nicht PDF/A und werden nicht übernommen.": "PDF/A: os ficheiros anexos ({0}) non son PDF/A e non se incluirán.",
+ "PDF/A: Die Formularfelder werden fest in die Seiten übernommen und lassen sich danach nicht mehr ausfüllen.": "PDF/A: os campos de formulario intégranse de forma fixa nas páxinas e despois xa non se poden encher.",
+ "Seitenbezeichnungen": "Etiquetas de páxina",
+ "Struktur-Tags": "Etiquetas de estrutura",
+ "Weiter auf Seite {0}.": "Continuando na páxina {0}.",
+ "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulario XFA: as partes dinámicas pérdense ao gardar.",
+ "Ganze Wörter": "Palabras completas",
+ "Nur ganze Wörter": "Só palabras completas"
 }

@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Keine stillen Verluste (app-v208)
+- Kamera-Scan (Meldung GF): Die Zurück-Geste und das Herunterziehen zum Neuladen konnten die Seite verlassen. Jetzt bleibt die Kamera mit ihren Aufnahmen offen. Ohne offenes Dokument gingen die Aufnahmen vorher ohne Nachfrage verloren; das Verlassen fragt nun nach.
+- Speichern-Dialog: nennt vorab, wenn Ebenen, Struktur-Tags, Seitenbezeichnungen oder XFA-Teile verloren gehen oder PDF/A Formularfelder fest übernimmt und Anhänge verwirft. Beim Öffnen eines XFA-Formulars erscheint ein Hinweis.
+- Suche: „ß“ und „ss“ gelten als gleich, neu „Nur ganze Wörter“, Wortgruppen werden auch in der Suchleiste gefunden und markiert. Gilt einheitlich für Markieren, Ersetzen und „Alle Treffer schwärzen“.
+- Leseposition: PDFs ab 5 Seiten öffnen auf der zuletzt gelesenen Seite (nur Prüfsumme und Seitenzahl, nur im Browser).
+- Datenschutzerklärung Nr. 6c nennt die Mentor Group.
+- Offen bleibt: Ebenen, Tags und Seitenbezeichnungen beim Neuaufbau zu erhalten; Auswahlfelder mit Exportwerten; Grenzen der Reparatur.
+
 ### Mehr Aufgaben direkt auffindbar, neue Werkzeuge (app-v207)
 - Anlass: Vergleich mit BentoPDF. Viele Funktionen standen nur im Speichern-Dialog. Neue Gruppe „Drucken und Format“ und neue Aufgaben, die auch „Funktion suchen“ findet, dazu neue Einstiegsseiten.
 - Neu: Poster auf 4 oder 9 A4-Blättern, Farben umkehren, römischer Vorspann als Seitenbeschriftung, Seiten als Bilder (Text nicht kopierbar), „Für KI vorbereiten“ (Markdown mit Dokumentangaben, lokal).
