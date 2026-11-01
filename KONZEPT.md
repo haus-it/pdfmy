@@ -94,6 +94,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Entschieden 01.11.2026: Kamera-Scan robuster
+**Inhalt:** Aufnahmen als JPEG statt unkomprimiert im Speicher, Bildschirm bleibt an, Kamera startet nach Unterbrechung neu, Hinweis auf unscharfe Seiten. **Noch offen:** Zwischenstand nach Absturz, Ecken von Hand korrigieren, Licht-Hinweise, Verarbeitung im Hintergrund.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Bilder nur im Arbeitsspeicher des Geräts |
+| 2 Kein Server | passt: nur Browser-Schnittstellen, keine neue Verbindung |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: läuft von selbst, der Schärfe-Hinweis hält nichts auf und löscht nichts |
+| 5 Prüfbar | mit Auflage: JPEG 92 % darf die Texterkennung nicht merklich verschlechtern; Schwellwert der Schärfe an echten Fotos nachprüfen |
+| 6 Wenig aktive Inhalte | passt |
+
 ### Entschieden 01.11.2026: Paket „Keine stillen Verluste“
 **Inhalt:** Hinweise im Speichern-Dialog (Ebenen, Struktur-Tags, Seitenbezeichnungen, XFA, PDF/A-Felder und -Anhänge), Suche mit „ß“ = „ss“, ganzen Wörtern und Wortgruppen, Leseposition. **Nicht enthalten:** die Inhalte selbst zu erhalten, das bleibt ein eigener Umbau.
 

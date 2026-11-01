@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Fortsætter på side {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-formular: Dynamiske dele går tabt ved lagring.",
  "Ganze Wörter": "Hele ord",
- "Nur ganze Wörter": "Kun hele ord"
+ "Nur ganze Wörter": "Kun hele ord",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Side {0} virker uskarp – tryk for at kontrollere"
 }

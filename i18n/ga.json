@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Ag leanúint ar leathanach {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Foirm XFA: Cailltear codanna dinimiciúla agus an comhad á shábháil.",
  "Ganze Wörter": "Focail iomlána",
- "Nur ganze Wörter": "Focail iomlána amháin"
+ "Nur ganze Wörter": "Focail iomlána amháin",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Is cosúil go bhfuil leathanach {0} doiléir – tapáil chun seiceáil"
 }

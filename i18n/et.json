@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Jätkamine leheküljelt {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-vorm: dünaamilised osad lähevad salvestamisel kaotsi.",
  "Ganze Wörter": "Terved sõnad",
- "Nur ganze Wörter": "Ainult terved sõnad"
+ "Nur ganze Wörter": "Ainult terved sõnad",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Lehekülg {0} tundub udune – puudutage kontrollimiseks"
 }

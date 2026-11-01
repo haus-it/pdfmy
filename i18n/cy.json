@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Yn parhau ar dudalen {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Ffurflen XFA: caiff rhannau dynamig eu colli wrth gadw.",
  "Ganze Wörter": "Geiriau cyfan",
- "Nur ganze Wörter": "Geiriau cyfan yn unig"
+ "Nur ganze Wörter": "Geiriau cyfan yn unig",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Mae tudalen {0} yn ymddangos yn aneglur – tapiwch i wirio"
 }

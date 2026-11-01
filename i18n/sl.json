@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Nadaljevanje na strani {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Obrazec XFA: dinamični deli se pri shranjevanju izgubijo.",
  "Ganze Wörter": "Cele besede",
- "Nur ganze Wörter": "Samo cele besede"
+ "Nur ganze Wörter": "Samo cele besede",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Stran {0} je videti zamegljena – tapnite za preverjanje"
 }

@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Kontynuacja od strony {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formularz XFA: części dynamiczne zostaną utracone podczas zapisywania.",
  "Ganze Wörter": "Całe wyrazy",
- "Nur ganze Wörter": "Tylko całe wyrazy"
+ "Nur ganze Wörter": "Tylko całe wyrazy",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Strona {0} wygląda na nieostrą – dotknij, aby sprawdzić"
 }

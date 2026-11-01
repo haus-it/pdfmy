@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Folytatás a(z) {0}. oldalon.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-űrlap: a dinamikus részek mentéskor elvesznek.",
  "Ganze Wörter": "Teljes szavak",
- "Nur ganze Wörter": "Csak teljes szavak"
+ "Nur ganze Wörter": "Csak teljes szavak",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "{0}. oldal homályosnak tűnik – koppintson az ellenőrzéshez"
 }

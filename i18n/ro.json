@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Se continuă la pagina {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formular XFA: părțile dinamice se pierd la salvare.",
  "Ganze Wörter": "Cuvinte întregi",
- "Nur ganze Wörter": "Doar cuvinte întregi"
+ "Nur ganze Wörter": "Doar cuvinte întregi",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Pagina {0} pare neclară – atingeți pentru verificare"
 }

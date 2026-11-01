@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "A continuar na página {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulário XFA: as partes dinâmicas perdem-se ao guardar.",
  "Ganze Wörter": "Palavras inteiras",
- "Nur ganze Wörter": "Apenas palavras inteiras"
+ "Nur ganze Wörter": "Apenas palavras inteiras",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "A página {0} parece desfocada – toque para verificar"
 }

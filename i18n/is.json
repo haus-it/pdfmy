@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Haldið áfram á síðu {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-eyðublað: Breytilegir hlutar glatast við vistun.",
  "Ganze Wörter": "Heil orð",
- "Nur ganze Wörter": "Aðeins heil orð"
+ "Nur ganze Wörter": "Aðeins heil orð",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Síða {0} virðist óskýr – ýtið til að athuga"
 }

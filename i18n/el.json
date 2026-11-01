@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Συνέχεια στη σελίδα {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Φόρμα XFA: Τα δυναμικά μέρη χάνονται κατά την αποθήκευση.",
  "Ganze Wörter": "Ολόκληρες λέξεις",
- "Nur ganze Wörter": "Μόνο ολόκληρες λέξεις"
+ "Nur ganze Wörter": "Μόνο ολόκληρες λέξεις",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Η σελίδα {0} φαίνεται θολή – πατήστε για έλεγχο"
 }

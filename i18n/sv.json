@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Fortsätter på sida {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-formulär: Dynamiska delar går förlorade när filen sparas.",
  "Ganze Wörter": "Hela ord",
- "Nur ganze Wörter": "Endast hela ord"
+ "Nur ganze Wörter": "Endast hela ord",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Sida {0} verkar suddig – tryck för att kontrollera"
 }

@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Verder op pagina {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-formulier: dynamische delen gaan bij het opslaan verloren.",
  "Ganze Wörter": "Hele woorden",
- "Nur ganze Wörter": "Alleen hele woorden"
+ "Nur ganze Wörter": "Alleen hele woorden",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Pagina {0} lijkt onscherp – tik om te controleren"
 }

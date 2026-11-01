@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Працяг са старонкі {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Форма XFA: дынамічныя часткі пры захаванні будуць страчаны.",
  "Ganze Wörter": "Цэлыя словы",
- "Nur ganze Wörter": "Толькі цэлыя словы"
+ "Nur ganze Wörter": "Толькі цэлыя словы",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Старонка {0} здаецца размытай – націсніце для праверкі"
 }

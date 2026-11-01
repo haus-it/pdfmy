@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Turpinājums {0}. lapā.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA veidlapa: dinamiskās daļas saglabājot tiek zaudētas.",
  "Ganze Wörter": "Veseli vārdi",
- "Nur ganze Wörter": "Tikai veseli vārdi"
+ "Nur ganze Wörter": "Tikai veseli vārdi",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Lapa {0} šķiet izplūdusi – pieskarieties, lai pārbaudītu"
 }

@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Es continua a la pàgina {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulari XFA: les parts dinàmiques es perden en desar.",
  "Ganze Wörter": "Paraules senceres",
- "Nur ganze Wörter": "Només paraules senceres"
+ "Nur ganze Wörter": "Només paraules senceres",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "La pàgina {0} sembla borrosa – toqueu per comprovar-la"
 }

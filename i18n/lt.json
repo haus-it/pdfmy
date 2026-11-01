@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Tęsiama nuo {0} puslapio.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA forma: dinaminės dalys įrašant prarandamos.",
  "Ganze Wörter": "Ištisi žodžiai",
- "Nur ganze Wörter": "Tik ištisi žodžiai"
+ "Nur ganze Wörter": "Tik ištisi žodžiai",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "{0} puslapis atrodo neryškus – palieskite, kad patikrintumėte"
 }

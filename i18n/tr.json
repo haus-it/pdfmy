@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "{0}. sayfadan devam ediliyor.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA formu: Dinamik bölümler kaydederken kaybolur.",
  "Ganze Wörter": "Tam sözcükler",
- "Nur ganze Wörter": "Yalnızca tam sözcükler"
+ "Nur ganze Wörter": "Yalnızca tam sözcükler",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Sayfa {0} bulanık görünüyor – kontrol etmek için dokunun"
 }

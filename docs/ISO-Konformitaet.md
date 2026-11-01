@@ -257,3 +257,5 @@ Nachtrag 01.11.2026 (Werkzeuge – app-v207): Neue Funktionen vorab gegen die Le
 Nachtrag 01.11.2026 (Hinweise auf eigene Angebote – app-v207): Sechs statische Texte im Wechsel, keine externen Inhalte, keine Zählung, CSP unverändert (ISO 27001 A.8.26, Datensparsamkeit). Leitplanke 3 in KONZEPT.md auf Entscheidung der GF präzisiert; Datenschutzerklärung Nr. 6c angepasst.
 
 Nachtrag 01.11.2026 (Keine stillen Verluste – app-v208): Nutzer werden vor dem Speichern über nicht erhaltene Inhalte informiert (ISO 9001 8.5.5, 8.7). Einheitliches Suchmuster auch für „Alle Treffer schwärzen“, das „ß“ und „ss“ gemeinsam erfasst und damit weniger Fundstellen übersieht (ISO 27001 A.8.11). Leseposition lokal als gekürzte SHA-256-Prüfsumme und Seitenzahl ohne Dateinamen (Datensparsamkeit, A.8.10). Die Verluste selbst sind damit nicht behoben, sondern transparent.
+
+Nachtrag 01.11.2026 (Kamera-Scan – app-v209): Weniger Speicherbedarf bis zum Abschluss des Scans senkt das Risiko von Datenverlust (ISO 27001 A.8.14, ISO 9001 8.5.1). Keine neue Verbindung, Bilder verbleiben im Arbeitsspeicher. Test auf echten Geräten steht aus.

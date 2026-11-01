@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Kamera-Scan robuster (app-v209)
+- Aufgenommene Seiten liegen bis „Fertig“ als JPEG im Speicher statt unkomprimiert. Lange Stapel sollen dadurch den Tab seltener zum Absturz bringen. Nach „Fertig“ braucht die Weiterverarbeitung weiter viel Speicher.
+- Der Bildschirm bleibt während des Scannens an, wo der Browser das erlaubt.
+- Nach einer Unterbrechung startet die Kamera neu, wenn das Bild steht.
+- Unscharfe Seiten bekommen einen gelben Rahmen und einen Hinweis. Die Seite bleibt erhalten.
+
 ### Keine stillen Verluste (app-v208)
 - Kamera-Scan (Meldung GF): Die Zurück-Geste und das Herunterziehen zum Neuladen konnten die Seite verlassen. Jetzt bleibt die Kamera mit ihren Aufnahmen offen. Ohne offenes Dokument gingen die Aufnahmen vorher ohne Nachfrage verloren; das Verlassen fragt nun nach.
 - Speichern-Dialog: nennt vorab, wenn Ebenen, Struktur-Tags, Seitenbezeichnungen oder XFA-Teile verloren gehen oder PDF/A Formularfelder fest übernimmt und Anhänge verwirft. Beim Öffnen eines XFA-Formulars erscheint ein Hinweis.

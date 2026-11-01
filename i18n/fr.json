@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Reprise à la page {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulaire XFA : les parties dynamiques sont perdues lors de l’enregistrement.",
  "Ganze Wörter": "Mots entiers",
- "Nur ganze Wörter": "Mots entiers uniquement"
+ "Nur ganze Wörter": "Mots entiers uniquement",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "La page {0} semble floue – appuyez pour vérifier"
 }

@@ -60,6 +60,7 @@
 
   /* ------------------------------ Kamera-Ansicht ------------------------------ */
   const $ = s => document.querySelector(s);
+  const BLUR_LIMIT = 45;
   let stream = null, raf = 0, shots = [], shutter = null, auto = true, lastDet = null, busy = false, onDone = null, lastTick = 0, smooth = null, searchSince = 0, reviewIdx = -1;
   const small = document.createElement('canvas');
   function fingerprint(cv, det) {
@@ -82,6 +83,26 @@
       s += l; s2 += l * l; n++;
     }
     return n ? s2 / n - (s / n) ** 2 : 0;
+  }
+  // Fertige Seite unscharf? Nur ein Hinweis, die Aufnahme bleibt. Fast leere Seiten haben keine Kanten und gelten nicht als unscharf.
+  function looksBlurry(cv) {
+    const s = Imaging.scaled(cv, 800), d = s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data;
+    let dark = 0; for (let i = 1; i < d.length; i += 16) if (d[i] < 120) dark++;
+    return dark / (d.length / 16) > 0.004 && sharpness(s) < BLUR_LIMIT;
+  }
+  // Seiten als JPEG im Speicher: unkomprimiert wären es rund 19 MB je Seite, bei langen Stapeln schließt Android sonst den Tab
+  async function packShot(c, cropped) {
+    const sh = { w: c.width, h: c.height, cropped, blurry: false, thumb: Imaging.scaled(c, 120).toDataURL('image/jpeg', 0.7) };
+    try { sh.blurry = looksBlurry(c); } catch (e) { console.warn('Schärfe:', e); }
+    const blob = await new Promise(res => c.toBlob(res, 'image/jpeg', 0.92));
+    if (blob) { sh.blob = blob; c.width = 0; c.height = 0; } else sh.canvas = c;   // ohne JPEG (Speicher knapp) bleibt das Bild, wie es ist
+    return sh;
+  }
+  async function shotCanvas(sh) {
+    if (sh.canvas) return sh.canvas;
+    const bmp = await createImageBitmap(sh.blob), c = Imaging.canvas(bmp.width, bmp.height);
+    c.getContext('2d').drawImage(bmp, 0, 0); bmp.close?.();
+    return c;
   }
   function drawOverlay(det, st) {
     const v = $('#camVideo'), o = $('#camOverlay'), r = v.getBoundingClientRect();
@@ -114,7 +135,7 @@
     drawOverlay(det, st);
     $('#camRing').style.setProperty('--p', st.state === 'hold' ? st.progress : 0);
     if (st.state === 'fire') capture(det);
-    else if (st.state === 'wait') setHint(`Seite ${shots.length} aufgenommen – nächstes Blatt hinlegen oder „Fertig“`);
+    else if (st.state === 'wait') setHint(shots.at(-1)?.blurry ? `Seite ${shots.length} wirkt unscharf – antippen zum Prüfen` : `Seite ${shots.length} aufgenommen – nächstes Blatt hinlegen oder „Fertig“`);
     else if (st.state === 'hold') setHint(auto ? 'Blatt erkannt – ruhig halten …' : 'Blatt erkannt – auf den Auslöser tippen');
     else if (searchSince && t - searchSince > 4500) setHint('Kein Blatt erkannt – auf einen dunklen Untergrund legen, etwas Abstand halten oder selbst auslösen');
     else setHint(shots.length ? `${shots.length} Seite(n) – nächstes Blatt ins Bild` : 'Blatt auf eine dunkle Fläche legen und ins Bild halten');
@@ -167,7 +188,7 @@
       // Speicher sparen (wichtig auf dem iPhone): Seite auf max. 2600 px begrenzen, Vollbild sofort freigeben
       if (Math.max(page.width, page.height) > 2600) { const s = Imaging.scaled(page, 2600); if (page !== full) { page.width = 0; page.height = 0; } page = s; }
       if (page !== full) { full.width = 0; full.height = 0; }
-      shots.push({ canvas: page, cropped: !!use });
+      shots.push(await packShot(page, !!use));
       $('#camFlash').classList.remove('go'); void $('#camFlash').offsetWidth; $('#camFlash').classList.add('go');
       navigator.vibrate?.(35);
       renderStrip();
@@ -177,8 +198,8 @@
   function renderStrip() {
     const s = $('#camStrip'); s.innerHTML = '';
     shots.forEach((sh, i) => {
-      const t = Imaging.scaled(sh.canvas, 120), im = new Image(); im.src = t.toDataURL('image/jpeg', 0.7); im.alt = `Seite ${i + 1}`;
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'camthumb'; b.title = `Seite ${i + 1} ansehen, drehen oder löschen`;
+      const im = new Image(); im.src = sh.thumb ||= Imaging.scaled(sh.canvas, 120).toDataURL('image/jpeg', 0.7); im.alt = `Seite ${i + 1}`;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'camthumb' + (sh.blurry ? ' camblur' : ''); b.title = sh.blurry ? `Seite ${i + 1} wirkt unscharf – antippen zum Prüfen` : `Seite ${i + 1} ansehen, drehen oder löschen`;
       b.append(im); const n = document.createElement('span'); n.textContent = i + 1; b.append(n);
       b.onclick = () => review(i);
       s.append(b);
@@ -190,10 +211,13 @@
   // Prüfansicht einer aufgenommenen Seite: groß ansehen, drehen, löschen
   function review(i) {
     reviewIdx = i; const sh = shots[i]; if (!sh) return closeReview();
-    $('#camRevImg').src = Imaging.scaled(sh.canvas, 1400).toDataURL('image/jpeg', 0.85);
+    if (revUrl) URL.revokeObjectURL(revUrl);
+    revUrl = sh.blob ? URL.createObjectURL(sh.blob) : '';
+    $('#camRevImg').src = revUrl || Imaging.scaled(sh.canvas, 1400).toDataURL('image/jpeg', 0.85);
     $('#camRevTitle').textContent = `Seite ${i + 1} von ${shots.length}`;
     $('#camReview').hidden = false;
   }
+  let revUrl = '';
   function closeReview() { reviewIdx = -1; $('#camReview').hidden = true; }
   async function torch(on) {
     const tr = stream?.getVideoTracks()[0];
@@ -218,21 +242,41 @@
     close(false); return false;
   }
   addEventListener('popstate', () => { if (!histGuard) return; histGuard = false; if (onBack()) guardOn(); });
-  function close(deliver) {
-    guardOff();
+  // Bildschirm während des Scannens anlassen (lange Stapel); der Browser gibt die Sperre im Hintergrund selbst frei
+  let wake = null;
+  async function wakeOn() { try { if (!wake && navigator.wakeLock) { wake = await navigator.wakeLock.request('screen'); wake.addEventListener('release', () => { wake = null; }); } } catch (e) { console.warn('Bildschirm wach halten:', e); } }
+  function wakeOff() { wake?.release().catch(() => {}); wake = null; }
+  const CAM_VIDEO = { audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 4096 }, height: { ideal: 3072 }, aspectRatio: { ideal: 4 / 3 } } };   // 4:3 nutzt den ganzen Kamerasensor (16:9 schneidet oben/unten ab) – das Blatt bekommt mehr Bildpunkte
+  // Zurück aus Anruf oder App-Wechsel: Bild kann eingefroren sein, die Kamera dann neu holen
+  async function resume() {
+    wakeOn();
+    const v = $('#camVideo'), tr = stream?.getVideoTracks()[0];
+    if (tr && tr.readyState === 'live' && !tr.muted) { try { await v.play(); } catch {} return; }
+    try {
+      stream?.getTracks().forEach(t => t.stop());
+      stream = await navigator.mediaDevices.getUserMedia(CAM_VIDEO);
+      v.srcObject = stream; await v.play();
+    } catch (e) { console.warn('Kamera neu starten:', e); setHint('Kamera startet …'); }
+  }
+  let closing = false;
+  async function close(deliver) {
+    if (closing) return;
+    closing = true;
+    guardOff(); wakeOff();
     cancelAnimationFrame(raf); raf = 0;
     stream?.getTracks().forEach(t => t.stop()); stream = null;
     $('#camDlg').close();
-    const list = deliver ? shots.map(s => s.canvas) : [];
-    shots = [];
+    if (revUrl) { URL.revokeObjectURL(revUrl); revUrl = ''; }
+    const list = [];
+    try { if (deliver) for (const sh of shots) list.push(await shotCanvas(sh)); shots = []; }
+    finally { closing = false; }
     if (deliver && list.length && onDone) onDone(list);
   }
   async function open(done, fallback) {
     onDone = done;
     if (!navigator.mediaDevices?.getUserMedia) { fallback?.(); return; }
     try {
-      // 4:3 nutzt den ganzen Kamerasensor (16:9 schneidet oben/unten ab) – das Blatt bekommt mehr Bildpunkte
-      stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 4096 }, height: { ideal: 3072 }, aspectRatio: { ideal: 4 / 3 } } });
+      stream = await navigator.mediaDevices.getUserMedia(CAM_VIDEO);
     } catch (e) {
       console.warn('Kamera:', e);
       if (e.name === 'NotAllowedError') alert('Der Kamerazugriff wurde nicht erlaubt. Bitte in den Browser-Einstellungen die Kamera für diese Seite freigeben – oder ein Foto aus der Galerie wählen.');
@@ -241,7 +285,7 @@
     shots = []; shutter = new AutoShutter(); auto = (() => { try { return localStorage.getItem('mpdf.camAuto') !== '0'; } catch { return true; } })();
     $('#camAuto').checked = auto;
     const v = $('#camVideo'); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); v.muted = true; v.playsInline = true; v.srcObject = stream;
-    $('#camDlg').showModal(); guardOn(); renderStrip();
+    $('#camDlg').showModal(); guardOn(); wakeOn(); renderStrip();
     try { await v.play(); } catch {}
     const track = stream.getVideoTracks()[0], caps = track.getCapabilities?.() || {};
     // Viele Handys starten mit mittlerer Auflösung – die höchste anfordern (iPhone oft 4K), damit auch kleine Schrift scharf ist
@@ -264,11 +308,11 @@
     $('#camRevBack').onclick = closeReview;
     $('#camRevOk').onclick = closeReview;   // vorher Inline-onclick – auf pdfmy.de von der CSP blockiert, „Passt“ tat nichts
     $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); renderStrip(); closeReview(); };
-    $('#camRevRot').onclick = () => { const sh = shots[reviewIdx]; if (!sh) return; const r = Imaging.rotate90(sh.canvas, 90); sh.canvas.width = 0; sh.canvas = r; renderStrip(); review(reviewIdx); };
+    $('#camRevRot').onclick = async () => { const i = reviewIdx, sh = shots[i]; if (!sh) return; const c = await shotCanvas(sh), r = Imaging.rotate90(c, 90); c.width = 0; const blurry = sh.blurry; shots[i] = await packShot(r, sh.cropped); shots[i].blurry = blurry; renderStrip(); review(i); };
     $('#camDone').onclick = () => close(true);
     // Anruf oder App-Wechsel: Das Handy kann die Seite im Hintergrund beenden – bisherige Aufnahmen ins Dokument übernehmen
     // (dort greift der Absturzschutz); weiterscannen mit „Kamera“ hängt neue Seiten hinten an
-    document.addEventListener('visibilitychange', () => { if (document.hidden && stream && shots.length) close(true); });
+    document.addEventListener('visibilitychange', () => { if (document.hidden && stream && shots.length) close(true); else if (!document.hidden && $('#camDlg').open) resume(); });
     $('#camClose').onclick = () => { if (shots.length && !confirm(`${shots.length} aufgenommene Seite(n) verwerfen?`)) return; close(false); };
     $('#camAuto').onchange = e => { auto = e.target.checked; try { localStorage.setItem('mpdf.camAuto', auto ? '1' : '0'); } catch {} shutter = new AutoShutter(); };
     $('#camTorch').onclick = async () => { const on = $('#camTorch').getAttribute('aria-pressed') !== 'true'; if (await torch(on)) $('#camTorch').setAttribute('aria-pressed', String(on)); };

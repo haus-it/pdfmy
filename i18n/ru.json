@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Продолжение со страницы {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Форма XFA: динамические части при сохранении будут потеряны.",
  "Ganze Wörter": "Слова целиком",
- "Nur ganze Wörter": "Только слова целиком"
+ "Nur ganze Wörter": "Только слова целиком",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Страница {0} кажется размытой – нажмите, чтобы проверить"
 }

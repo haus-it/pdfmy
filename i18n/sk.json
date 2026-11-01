@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Pokračovanie na strane {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Formulár XFA: dynamické časti sa pri ukladaní stratia.",
  "Ganze Wörter": "Celé slová",
- "Nur ganze Wörter": "Iba celé slová"
+ "Nur ganze Wörter": "Iba celé slová",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Strana {0} sa zdá rozmazaná – ťuknutím skontrolujte"
 }

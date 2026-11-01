@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Continuing on page {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA form: dynamic parts are lost when saving.",
  "Ganze Wörter": "Whole words",
- "Nur ganze Wörter": "Whole words only"
+ "Nur ganze Wörter": "Whole words only",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Page {0} looks blurry – tap to check"
 }

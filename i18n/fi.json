@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Jatketaan sivulta {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA-lomake: dynaamiset osat menetetään tallennettaessa.",
  "Ganze Wörter": "Kokonaiset sanat",
- "Nur ganze Wörter": "Vain kokonaiset sanat"
+ "Nur ganze Wörter": "Vain kokonaiset sanat",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "Sivu {0} vaikuttaa epätarkalta – tarkista napauttamalla"
 }

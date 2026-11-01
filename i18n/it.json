@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "Si riprende da pagina {0}.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "Modulo XFA: le parti dinamiche vanno perse durante il salvataggio.",
  "Ganze Wörter": "Parole intere",
- "Nur ganze Wörter": "Solo parole intere"
+ "Nur ganze Wörter": "Solo parole intere",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "La pagina {0} sembra sfocata – tocchi per controllare"
 }

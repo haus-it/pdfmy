@@ -3157,5 +3157,9 @@
  "Weiter auf Seite {0}.": "{0}. orrialdean jarraitzen.",
  "XFA-Formular: Dynamische Teile gehen beim Speichern verloren.": "XFA inprimakia: zati dinamikoak galdu egiten dira gordetzean.",
  "Ganze Wörter": "Hitz osoak",
- "Nur ganze Wörter": "Hitz osoak soilik"
+ "Nur ganze Wörter": "Hitz osoak soilik",
+ "Bildschirm wach halten:": "Bildschirm wach halten:",
+ "Kamera neu starten:": "Kamera neu starten:",
+ "Schärfe:": "Schärfe:",
+ "Seite {0} wirkt unscharf – antippen zum Prüfen": "{0}. orrialdeak lausoa dirudi – sakatu egiaztatzeko"
 }
