@@ -434,6 +434,77 @@
     return { blocks: out, page: { size: [419.53, 595.28], margin: 42.5 }, title };   // A5 – handlich wie ein Buch
   }
 
-  const api = { readZip, parseXml, docx, xlsx, odt, ods, epub };
+  // ---------- RTF: nur der Text ----------
+  function rtf(bytes) {
+    const raw = new TextDecoder('latin1').decode(bytes);
+    if (!raw.startsWith('{\\rtf')) throw new Error('Keine RTF-Datei.');
+    const cp = /\\ansicpg(\d+)/.exec(raw)?.[1] || '1252';
+    let dec; try { dec = new TextDecoder('windows-' + cp); } catch { dec = new TextDecoder('windows-1252'); }
+    const SKIP = /^(fonttbl|colortbl|stylesheet|info|pict|object|header|footer|headerl|headerr|footerl|footerr|themedata|datastore|latentstyles|listtable|listoverridetable|rsidtbl|generator|xmlnstbl)$/;
+    const stack = []; let skip = false, uc = 1, drop = 0, out = '', hexes = [];
+    const flush = () => { if (hexes.length) { out += dec.decode(Uint8Array.from(hexes)); hexes = []; } };
+    const re = /\\([a-zA-Z]+)(-?\d+)? ?|\\'([0-9a-fA-F]{2})|\\([^a-zA-Z])|([{}])|\r|\n|([^\\{}\r\n]+)/g;
+    let m, first = false;
+    while ((m = re.exec(raw))) {
+      if (m[5] === '{') { flush(); stack.push({ skip, uc }); first = true; continue; }
+      if (m[5] === '}') { flush(); const s = stack.pop(); if (s) ({ skip, uc } = s); first = false; continue; }
+      if (m[4] === '*') { skip = true; continue; }
+      if (m[1]) {
+        if (first && SKIP.test(m[1])) skip = true;
+        first = false;
+        if (skip) continue;
+        const w = m[1], n = m[2] === undefined ? null : +m[2];
+        if (w === 'uc') uc = n ?? 1;
+        else if (w === 'u') { flush(); out += String.fromCharCode(n < 0 ? n + 65536 : n); drop = uc; }
+        else if (w === 'par' || w === 'sect' || w === 'page') { flush(); out += '\n\n'; }
+        else if (w === 'line' || w === 'row') { flush(); out += '\n'; }
+        else if (w === 'tab' || w === 'cell') { flush(); out += '\t'; }
+        else if (w === 'emdash' || w === 'endash') { flush(); out += w === 'emdash' ? '—' : '–'; }
+        else if (w === 'lquote' || w === 'rquote') { flush(); out += w === 'lquote' ? '‘' : '’'; }
+        else if (w === 'ldblquote' || w === 'rdblquote') { flush(); out += w === 'ldblquote' ? '“' : '”'; }
+        continue;
+      }
+      first = false;
+      if (skip) continue;
+      if (m[3]) { if (drop > 0) { drop--; continue; } hexes.push(parseInt(m[3], 16)); continue; }
+      if (m[4]) { if (drop > 0) { drop--; continue; } flush(); out += m[4] === '~' ? '\u00a0' : m[4] === '-' || m[4] === '_' ? '' : m[4]; continue; }
+      if (m[6]) { flush(); let t = m[6]; if (drop > 0) { const d = Math.min(drop, t.length); t = t.slice(d); drop -= d; } out += t; }
+    }
+    flush();
+    return out.replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  // ---------- XPS: Text mit Position und Bilder je Seite ----------
+  async function xps(bytes) {
+    const z = readZip(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes));
+    const names = [...z.files.keys()].filter(n => /\.fpage$/i.test(n)).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    if (!names.length) throw new Error('Keine XPS-Datei (keine Seiten gefunden).');
+    const mul = (a, b) => [a[0] * b[0] + a[1] * b[2], a[0] * b[1] + a[1] * b[3], a[2] * b[0] + a[3] * b[2], a[2] * b[1] + a[3] * b[3], a[4] * b[0] + a[5] * b[2] + b[4], a[4] * b[1] + a[5] * b[3] + b[5]];
+    const parseM = s => { const n = String(s || '').split(/[\s,]+/).map(Number); return n.length === 6 && n.every(Number.isFinite) ? n : null; };
+    const pages = [];
+    for (const name of names) {
+      const root = parseXml(await z.text(name) || ''), fp = all(root, 'FixedPage')[0]; if (!fp) continue;
+      const pg = { w: +fp.attrs.Width || 816, h: +fp.attrs.Height || 1056, texts: [], images: [] };
+      const walk = async (el, M) => {
+        for (const k of els(el)) {
+          const own = parseM(k.attrs.RenderTransform) || parseM(els(k).find(c => /\.RenderTransform$/.test(tag(c)))?.kids?.map?.(x => x.attrs?.Matrix).find(Boolean));
+          const T = own ? mul(own, M) : M, t = tag(k);
+          if (t === 'glyphs' && k.attrs.UnicodeString) {
+            const x = +k.attrs.OriginX || 0, y = +k.attrs.OriginY || 0, size = (+k.attrs.FontRenderingEmSize || 12) * Math.abs(T[3] || 1);
+            pg.texts.push({ text: k.attrs.UnicodeString.replace(/^\{\}/, ''), x: x * T[0] + y * T[2] + T[4], y: x * T[1] + y * T[3] + T[5], size });
+          } else if (t === 'imagebrush') {
+            const v = String(k.attrs.Viewport || '').split(/[\s,]+/).map(Number), src = String(k.attrs.ImageSource || '').replace(/^\//, '');
+            const data = src && (await z.get(src) || await z.get(decodeURI(src)));
+            if (data && v.length === 4 && /\.(jpe?g|png)$/i.test(src)) pg.images.push({ data, jpg: /\.jpe?g$/i.test(src), x: v[0] * T[0] + v[1] * T[2] + T[4], y: v[0] * T[1] + v[1] * T[3] + T[5], w: v[2] * T[0], h: v[3] * T[3] });
+          }
+          await walk(k, T);
+        }
+      };
+      await walk(fp, [1, 0, 0, 1, 0, 0]);
+      pages.push(pg);
+    }
+    return pages;
+  }
+  const api = { readZip, parseXml, docx, xlsx, odt, ods, epub, rtf, xps };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Office = api;
 })(typeof self !== 'undefined' ? self : this);

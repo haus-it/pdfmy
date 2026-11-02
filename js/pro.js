@@ -3559,6 +3559,7 @@ $('#cmtCopy').onclick = async () => {
 function findHits() {
   const out = [], q = state.query;
   state.pages.forEach((p, i) => {
+    if (state.qRange && !state.qRange.has(i)) return;
     const ws = p.ocr?.words || p.nwords, n = ws && q ? wordHits(p, ws).length : hitCount(p);
     for (let k = 0; k < n; k++) out.push({ i, k });
   });

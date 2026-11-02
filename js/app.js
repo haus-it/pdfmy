@@ -199,10 +199,12 @@ async function importFilesRun(files, fromCamera) {
       else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
       else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
       else if (/\.(docx|xlsx|odt|ods|epub)$/.test(n)) await importOffice(f);
+      else if (/\.rtf$/.test(n)) await importRtf(f);
+      else if (/\.o?xps$/.test(n)) await importXps(f);
       else if (/\.(doc|xls|ppt|pptx|odp)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, Markdown, CSV oder E-Rechnung als XML)`); failed.push(f.name); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)`); failed.push(f.name); continue; }
       state.inputBytes += f.size;
     } catch (e) {
       noteError(e, 'Öffnen');
@@ -392,6 +394,31 @@ async function importText(file) {
   const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
   const bytes = await TextPdf.build(PDFLib, { text, kind, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono } });
   await importPdf(new File([bytes], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
+}
+// RTF: nur der Text mit Absätzen, Formatierungen und Bilder übernimmt PDFMy nicht
+async function importRtf(file) {
+  const text = Office.rtf(new Uint8Array(await file.arrayBuffer()));
+  await importText(new File([text], file.name.replace(/\.[^.]+$/, '') + '.txt', { type: 'text/plain' }));
+  status(`${file.name} umgewandelt. Aus RTF übernimmt PDFMy den Text, aber keine Formatierung und keine Bilder.`);
+}
+// XPS (Windows-Druckformat): Text an seiner Position und Bilder; Linien und Flächen übernimmt PDFMy nicht
+async function importXps(file) {
+  status(`${file.name} wird in PDF umgewandelt …`);
+  const pages = await Office.xps(new Uint8Array(await file.arrayBuffer())), L = PDFLib, doc = await PDFDocument.create();
+  doc.registerFontkit(await loadFontkit());
+  const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
+  for (const pg of pages) {
+    const k = 72 / 96, page = doc.addPage([pg.w * k, pg.h * k]);
+    for (const im of pg.images) {
+      try { const e = im.jpg ? await doc.embedJpg(im.data) : await doc.embedPng(im.data); page.drawImage(e, { x: im.x * k, y: (pg.h - im.y - im.h) * k, width: im.w * k, height: im.h * k }); } catch (err) { console.warn('XPS-Bild', err); }
+    }
+    for (const t of pg.texts) {
+      const s = [...t.text].filter(ch => cs.has(ch.codePointAt(0))).join(''); if (!s.trim()) continue;
+      page.drawText(s, { x: t.x * k, y: (pg.h - t.y) * k, size: Math.max(1, t.size * k), font, color: L.rgb(0, 0, 0) });
+    }
+  }
+  await importPdf(new File([await doc.save()], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
+  status(`${file.name} umgewandelt. Aus XPS übernimmt PDFMy Text und Bilder vereinfacht, aber keine Linien und Flächen. Für ein exaktes Abbild über den Drucker „PDFMy“ drucken.`);
 }
 async function importImage(file, fromCamera) {
   if (isTiff(file) || isHeic(file)) {
@@ -599,9 +626,10 @@ async function importPdf(file) {
   // Vollbild-Scan mit Formularfeldern oder Signatur: nicht als Bild übernehmen – Felder und Signatur gingen sonst ohne Meldung verloren
   const keepLive = state.docs[docIdx].fields?.length > 0 || (bytes.length < 2e8 && new TextDecoder('latin1').decode(bytes).includes('/ByteRange'));
   const pend = [], flush = async (keep = 0) => { while (pend.length > keep) state.pages.push(await pend.shift()); };
+  const lost = []; let gone = 0;   // eine unlesbare Seite darf die folgenden nicht kosten
   for (let i = 1; i <= js.numPages; i++) {
-    const pg = await js.getPage(i);
-    const tc = await pg.getTextContent();
+    let pg; try { pg = await js.getPage(i); } catch (e) { noteError(e, `Seite ${i} lesen`); lost.push(i); gone++; continue; }
+    const tc = await pg.getTextContent().catch(e => { noteError(e, `Text S. ${i}`); lost.push(i); return { items: [] }; });
     const text = tc.items.map(it => it.str + (it.hasEOL ? '\n' : ' ')).join('').trim();
     const p = { id: ++uid, kind: 'pdf', docIdx, pageIdx: i - 1, rotation: pg.rotate || 0, annots: [], ocr: null,
       native: text.length > 20 ? text : null, hasText: /\S/.test(text), label: `${file.name} S. ${i}` };
@@ -630,6 +658,11 @@ async function importPdf(file) {
   }
   await flush();
   await formCheck;
+  if (lost.length) {
+    if (gone === js.numPages) throw new Error('Die Datei ist zu stark beschädigt – es ließen sich keine Seiten retten.');
+    toast(`„${file.name}“ ist beschädigt: ${lost.length} von ${js.numPages} Seiten fehlen oder sind unvollständig (S. ${lost.slice(0, 12).join(', ')}${lost.length > 12 ? ' …' : ''}). Bitte das Original neu beschaffen.`, 12000);
+    logLine(`Beschädigte Seiten in ${file.name}: ${lost.join(', ')}`);
+  }
   try { renderForm(); } catch (e) { noteError(e, 'Formular anzeigen'); }   // die Seiten sind schon da – nicht als „nicht geöffnet“ melden
   try { window.reqAfterImport?.(docIdx); } catch (e) { noteError(e, 'Unterschriftsanfrage'); }
 }
@@ -2232,7 +2265,15 @@ $('#qWhole').onchange = e => setWhole(e.target.checked);
 $('#findWhole').onchange = e => setWhole(e.target.checked);
 $('#q').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); nextHit(e.shiftKey ? -1 : 1); } });
 // Suchtreffer je Seite (für Seitenvorschauen und „nächster Treffer“)
-function hitCount(p) { const q = state.query; if (!q || q.length < 2) return 0; let n = 0; for (const m of pageText(p).replace(/\s+/g, ' ').matchAll(searchRe(q))) if (++n >= 99 || !m) break; return n; }
+// Suche auf Seiten begrenzen („2-5, 8“); ungültige Angabe: ganzes Dokument
+function setFindPages(v) {
+  $('#qPages').value = $('#findPages').value = v;
+  state.qRange = v.trim() ? new Set(Tools.parseRange(v, state.pages.length) || state.pages.map((_, i) => i)) : null;
+  renderResults(); renderThumbs(); if (!$('#findBar').hidden) findFirst();
+}
+$('#qPages').addEventListener('input', e => setFindPages(e.target.value));
+$('#findPages').addEventListener('input', e => setFindPages(e.target.value));
+function hitCount(p) { const q = state.query; if (!q || q.length < 2) return 0; if (state.qRange && !state.qRange.has(state.pages.indexOf(p))) return 0; let n = 0; for (const m of pageText(p).replace(/\s+/g, ' ').matchAll(searchRe(q))) if (++n >= 99 || !m) break; return n; }
 function nextHit(dir = 1) {
   const n = state.pages.length; if (!n || !state.query) return;
   for (let k = 1; k <= n; k++) { const i = (state.sel + dir * k + n * k) % n; if (hitCount(state.pages[i])) { state.sel = i; refresh(); return; } }
@@ -2243,6 +2284,7 @@ function renderResults() {
   const pagesHit = state.pages.filter(hitCount).length, total = state.pages.reduce((s, p) => s + hitCount(p), 0);
   if (total) { const h = document.createElement('div'); h.className = 'hint'; h.textContent = `${total} Treffer auf ${pagesHit} Seite(n) – Enter springt zur nächsten Seite mit Treffer.`; box.append(h); }
   state.pages.forEach((p, i) => {
+    if (state.qRange && !state.qRange.has(i)) return;
     const t = pageText(p).replace(/\s+/g, ' ');
     for (const m of t.matchAll(searchRe(q))) {
       if (hits >= 30) break;
@@ -3011,6 +3053,75 @@ function linkDest(annot) {
   if (!dest) { const a = annot.lookup(L.PDFName.of('A')); if (a instanceof L.PDFDict && a.lookup(L.PDFName.of('S')) === L.PDFName.of('GoTo')) dest = a.lookup(L.PDFName.of('D')); }
   return dest instanceof L.PDFArray && dest.size() ? dest : null;
 }
+/* Beim Neuaufbau erhalten, was sonst nur im Quelldokument steht: Seitenbezeichnungen, benannte Sprungziele, Ebenen, XMP, Struktur-Tags.
+   Tags nur, wenn das ganze Dokument unverändert aufgebaut wird: Fehlende Seiten ließen Verweise ins Leere zeigen. */
+const samePageSet = (pages, d) => pages.length === d.js?.numPages && new Set(pages.map(p => p.pageIdx)).size === pages.length && pages.every(p => p.kind === 'pdf' && state.docs[p.docIdx] === d);
+async function keepStructure(out, pages, { placed, copiers, pdfa, clean, bea, rasterOf, docProps }) {
+  const L = PDFLib, N = L.PDFName.of, ctx = out.context, cat = out.catalog;
+  const ids = [...new Set(pages.filter(p => p.kind === 'pdf').map(p => p.docIdx))]; if (!ids.length) return;
+  const docs = ids.map(i => [i, state.docs[i]]);
+  // Seitenbezeichnungen: je Seite als Text, damit sie auch nach dem Umsortieren oder Zusammenfügen stimmen
+  if (out.getPageCount() === pages.length) {
+    const labels = new Map(); for (const [i, d] of docs) { const l = await d.js.getPageLabels().catch(() => null); if (l) labels.set(i, l); }
+    if (labels.size) {
+      const nums = []; pages.forEach((p, k) => { const t = p.kind === 'pdf' ? labels.get(p.docIdx)?.[p.pageIdx] : null; nums.push(k, ctx.obj({ P: L.PDFHexString.fromText(t || String(k + 1)) })); });
+      cat.set(N('PageLabels'), ctx.obj({ Nums: nums }));
+    }
+  }
+  if (clean || bea) return;
+  // Benannte Sprungziele: Links in den kopierten Seiten verweisen weiter über den Namen. Bei gleichen Namen gilt die erste Datei.
+  const dests = ctx.obj({});
+  for (const [i, d] of docs) {
+    // pdf.js listet Ziele aus /Dests nicht zuverlässig auf, deshalb die Namen selbst lesen und jedes Ziel einzeln auflösen
+    const names = new Set(Object.keys(await d.js.getDestinations().catch(() => null) || {})), lib = await libFor(d);
+    const old = lib.catalog.lookup(N('Dests')); if (old instanceof L.PDFDict) for (const k of old.keys()) names.add(k.decodeText());
+    const walk = (t, depth = 0) => {
+      if (!(t instanceof L.PDFDict) || depth > 30) return;
+      const ns = t.lookup(N('Names')); if (ns instanceof L.PDFArray) for (let k = 0; k < ns.size(); k += 2) { const v = ns.lookup(k); if (v?.decodeText) names.add(v.decodeText()); }
+      const ks = t.lookup(N('Kids')); if (ks instanceof L.PDFArray) for (let k = 0; k < ks.size(); k++) walk(ks.lookup(k), depth + 1);
+    };
+    const nt = lib.catalog.lookup(N('Names')); if (nt instanceof L.PDFDict) walk(nt.lookup(N('Dests')));
+    for (const name of names) {
+      const a = await d.js.getDestination(name).catch(() => null);
+      if (!Array.isArray(a) || dests.has(N(name))) continue;
+      const idx = typeof a[0] === 'number' ? a[0] : await d.js.getPageIndex(a[0]).catch(() => -1), to = placed.get(`${i}:${idx}`); if (!to) continue;
+      dests.set(N(name), ctx.obj([to.ref, N(a[1]?.name || 'Fit'), ...a.slice(2).map(v => v == null ? L.PDFNull : ctx.obj(v))]));
+    }
+  }
+  if (dests.keys().length) cat.set(N('Dests'), ctx.register(dests));
+  if (pdfa) return;
+  // Ebenen: nur aus Quelldateien, deren Seiten nicht zu Bildern werden
+  const merged = { OCGs: [], Order: [], ON: [], OFF: [] }; let base = null;
+  for (const [i] of docs) {
+    const c = copiers.get(i); if (!c || pages.some(p => p.docIdx === i && rasterOf(p))) continue;
+    const oc = c.lib.catalog.lookup(N('OCProperties')); if (!(oc instanceof L.PDFDict)) continue;
+    const co = c.copier.copy(oc), D = co.lookup(N('D')), arr = (o, k) => { const a = o?.lookup?.(N(k)); return a instanceof L.PDFArray ? a.asArray() : []; };
+    merged.OCGs.push(...arr(co, 'OCGs')); merged.Order.push(...arr(D, 'Order')); merged.ON.push(...arr(D, 'ON')); merged.OFF.push(...arr(D, 'OFF'));
+    base ||= { co, D };
+  }
+  if (base) {
+    for (const k of ['Order', 'ON', 'OFF']) if (merged[k].length) base.D.set(N(k), ctx.obj(merged[k])); else base.D.delete(N(k));
+    base.co.set(N('OCGs'), ctx.obj(merged.OCGs)); cat.set(N('OCProperties'), ctx.register(base.co));
+  }
+  if (docs.length !== 1) return;
+  const [i, d] = docs[0], c = copiers.get(i); if (!c) return;
+  // XMP: PDF/A- und PDF/UA-Angaben stimmen nach dem Neuaufbau nicht mehr, solche Metadaten bleiben weg
+  const meta = c.lib.catalog.lookup(N('Metadata'));
+  if (meta instanceof L.PDFStream && !docProps) {
+    const xml = new TextDecoder().decode(meta instanceof L.PDFRawStream ? L.decodePDFRawStream(meta).decode() : meta.getContents());
+    if (!/pdfa(?:id|Extension)|pdfuaid/.test(xml)) {
+      const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+      const x = xml.replace(/(xmp:(?:ModifyDate|MetadataDate)\s*=\s*")[^"]*/g, `$1${now}`).replace(/(<xmp:(?:ModifyDate|MetadataDate)>)[^<]*/g, `$1${now}`);
+      cat.set(N('Metadata'), ctx.register(ctx.stream(new TextEncoder().encode(x), { Type: 'Metadata', Subtype: 'XML' })));
+    }
+  }
+  // Struktur-Tags
+  const root = c.lib.catalog.lookup(N('StructTreeRoot'));
+  if (root instanceof L.PDFDict && samePageSet(pages, d) && !pages.some(rasterOf)) {
+    cat.set(N('StructTreeRoot'), ctx.register(c.copier.copy(root)));
+    const mi = c.lib.catalog.lookup(N('MarkInfo')); if (mi) cat.set(N('MarkInfo'), c.copier.copy(mi));
+  }
+}
 async function retargetLinks(linked, placed) {
   const L = PDFLib, index = new Map();
   for (const { p, page } of linked) {
@@ -3110,6 +3221,16 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   /* Unveränderte PDF-Seiten je Quelldokument in einem Durchgang kopieren: gemeinsame Schriften und Bilder werden dabei nur einmal
      übernommen – bei Hunderten Seiten viel schneller und die Datei bleibt klein (Seite für Seite kopiert jede Seite ihre Schriften neu) */
   const preCopied = new Map();
+  // Ein Kopierer je Quelldatei: Struktur-Tags und Ebenen verweisen danach auf genau die kopierten Seiten und Objekte (keepStructure)
+  const copiers = new Map();
+  const copyPage = async (docIdx, pageIdx) => {
+    const lib = await libFor(state.docs[docIdx]);
+    let c = copiers.get(docIdx);
+    if (!c) { await lib.flush(); c = { lib, copier: PDFLib.PDFObjectCopier.for(lib.context, out.context), pages: lib.getPages() }; copiers.set(docIdx, c); }
+    const src = c.pages[pageIdx], node = c.copier.copy(src.node), ref = out.context.register(node);
+    if (!c.copier.traversedObjects.has(src.ref)) c.copier.traversedObjects.set(src.ref, ref);
+    return PDFLib.PDFPage.of(node, ref, out);
+  };
   {
     const byDoc = new Map();
     for (const p of pages) {
@@ -3120,8 +3241,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     }
     for (const [docIdx, g] of byDoc) {
       if (g.idx.length < 2) continue;
-      const copied = await out.copyPages(await libFor(state.docs[docIdx]), g.idx);
-      g.ps.forEach((p, k) => preCopied.set(p, copied[k]));
+      for (const [k, p] of g.ps.entries()) preCopied.set(p, await copyPage(docIdx, g.idx[k]));
     }
   }
 
@@ -3191,7 +3311,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     } else {
       const d = state.docs[p.docIdx];
       page = preCopied.get(p); preCopied.delete(p);
-      if (!page) [page] = await out.copyPages(await libFor(d), [p.pageIdx]);
+      if (!page) page = await copyPage(p.docIdx, p.pageIdx);
       out.addPage(page);
       if (clean) deepClean(out, page); else if (bea) beaClean(out, page);
       T?.page(page);
@@ -3346,6 +3466,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   // Seitenformat: weiße Ränder entfernen und/oder alles auf A4 (js/layout.js) – nach Links, Markierungen, Feldern, damit alles mitwandert
   if (trim || a4) Layout.fit(out, { trim, a4, boxes: trim ? await inkBoxes(await out.save()) : [] });
   if (invert) Layout.invert(out);
+  await keepStructure(out, pages, { placed, copiers, pdfa, clean, bea, rasterOf, docProps: !!meta.docProps }).catch(e => noteError(e, 'Struktur erhalten'));
   if (romanFront) Layout.romanFront(out, romanFront);
   // Dateianhänge (Menü → Dateianhänge): nicht beim Bereinigen; PDF/A-2b erlaubt nur PDF/A-Dateien als Anhang (ISO 19005-2, 6.8)
   for (const f of clean ? [] : (files ?? state.files ?? []).filter(f => !pdfa || isPdfA(f.data))) {
@@ -3915,9 +4036,10 @@ function exportLosses(format) {
   if (format !== 'pdf' && format !== 'pdfa') return '';
   const pdfa = format === 'pdfa', out = [], docs = state.docs.filter(d => d?.lossy), any = k => docs.some(d => d.lossy[k]);
   const parts = [];
-  if (any('ocg')) parts.push('Ebenen');
-  if (any('tags') && !pdfa) parts.push('Struktur-Tags');
-  if (any('labels')) parts.push('Seitenbezeichnungen');
+  // Bleibt beim Neuaufbau erhalten (keepStructure), außer Seiten werden zu Bildern; Tags zudem nur bei vollständigem Dokument
+  const toImage = pdfa || $('#x-gray')?.checked || $('#x-flat')?.checked || $('#x-clean')?.checked || state.pages.some(p => p.annots?.some(a => a.type === 'rd' || a.type === 'wo'));
+  if (any('ocg') && toImage) parts.push('Ebenen');
+  if (any('tags') && !pdfa && (toImage || docs.length !== 1 || !samePageSet(state.pages, docs[0]))) parts.push('Struktur-Tags');
   if (parts.length) out.push(`Diese PDF enthält ${parts.join(', ')}. Werden Seiten beim Speichern neu aufgebaut, gehen sie verloren.`);
   if (any('xfa')) out.push('XFA-Formular: Dynamische Teile gehen beim Speichern verloren.');
   if (pdfa) {
@@ -4891,7 +5013,7 @@ async function detectForm(docIdx) {
       if (/^pdfmy_[a-z0-9]+_\d+$/.test(name)) continue;   // Felder einer Unterschriftsanfrage (js/pro.js) – nicht als eigenes Formular zeigen
       if (f instanceof L.PDFTextField) { const sc = FormCalc.readScripts(fieldScripts(f)); fields.push({ name, kind: 'text', value: f.getText() || '', multi: f.isMultiline(), max: f.getMaxLength(), ro, req: f.isRequired(), fmt: sc.kind || '', calc: sc.calc || '' }); }
       else if (f instanceof L.PDFCheckBox) fields.push({ name, kind: 'check', value: f.isChecked(), ro });
-      else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected()[0] || '', ro });
+      else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) { const sel = f.getSelected()[0] || ''; fields.push({ name, kind: 'select', options: f.getOptions(), value: optionPairs(f).find(o => o.value === sel)?.display ?? sel, ro }); }
       else if (f instanceof L.PDFRadioGroup) fields.push({ name, kind: 'select', options: f.getOptions(), value: f.getSelected() || '', ro });
       if (fields.at(-1)?.name === name) try { fields.at(-1).tip = f.acroField.dict.lookup(L.PDFName.of('TU'))?.decodeText?.() || ''; } catch {}   // Kurzinfo (für „Meine Angaben“)
     } catch (e) { odd++; console.warn('Formularfeld:', e); }   // ein ungewöhnliches Feld darf nicht das ganze Formular verstecken
@@ -5017,23 +5139,29 @@ async function flushForms() {
     else if (d.applying) await d.applying;
   }
 }
+// Auswahlfelder können je Eintrag einen Anzeigetext und einen abweichenden Exportwert haben; gespeichert ist der Exportwert
+const optionPairs = f => { try { return f.acroField.getOptions().map(o => ({ value: o.value.decodeText(), display: (o.display || o.value).decodeText() })); } catch { return []; } };
 async function applyFormRun(d) {
   try {
     const lib = await plainLib(d.base || d.bytes);   // base: ohne übernommene Markierungen; verschlüsselte Dateien entschlüsselt
     lib.registerFontkit(await loadFontkit());
     const font = await lib.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
-    const form = lib.getForm(), L = PDFLib; let bad = 0;
+    const form = lib.getForm(), L = PDFLib, exported = []; let bad = 0;
     for (const [name, v] of Object.entries(d.values)) {
       try {
         const f = form.getField(name);
         if (f instanceof L.PDFTextField) f.setText(String(v));
         else if (f instanceof L.PDFCheckBox) v ? f.check() : f.uncheck();
-        else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) v ? f.select(v) : f.clear();
+        else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) {
+          v ? f.select(v) : f.clear();
+          const o = v && optionPairs(f).find(x => x.display === v); if (o && o.value !== v) exported.push([f, o.value]);
+        }
         else if (f instanceof L.PDFRadioGroup) v ? f.select(v) : f.clear();
       } catch (e) { bad++; noteError(e, `Feld „${name}“`); }
     }
     // Feld für Feld: ein Rich-Text-Feld o. Ä. darf die übrigen Eingaben nicht kosten
     for (const f of form.getFields()) { try { if (f.needsAppearancesUpdate()) f.defaultUpdateAppearances(font); } catch (e) { console.warn('Feldansicht', e); } }
+    for (const [f, val] of exported) f.acroField.dict.set(L.PDFName.of('V'), L.PDFHexString.fromText(val));   // erst jetzt: Die Ansicht zeigt den Anzeigetext, gespeichert wird der Exportwert
     const keep = await lib.save({ updateFieldAppearances: false });
     // Flache Fassung: Schaltflächen, versteckte Felder und Signaturfelder ohne Ansicht würden sonst auf die Seite gemalt bzw. brächen das Flachmachen ab
     let filled = keep;

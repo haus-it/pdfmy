@@ -201,3 +201,10 @@ test('Word: Tabelle mit Spaltenbreiten aus dem Raster, fetter Kopfzeile und Ausr
   const pdf = await TP.build(L, { blocks, fonts });
   assert.ok(pdfText(pdf).includes('450,00 €'));
 });
+
+test('RTF: Text, Sonderzeichen, Tabellen der Datei werden übersprungen', () => {
+  const bs = String.fromCharCode(92);
+  const r = `{${bs}rtf1${bs}ansi${bs}ansicpg1252{${bs}fonttbl{${bs}f0 Arial;}}{${bs}*${bs}generator X}Gr${bs}'fc${bs}'dfe ${bs}u8364? {${bs}b fett}${bs}par Zeile 2}`;
+  assert.equal(Office.rtf(new TextEncoder().encode(r)), 'Grüße € fett\n\nZeile 2');
+  assert.throws(() => Office.rtf(new TextEncoder().encode('kein rtf')));
+});

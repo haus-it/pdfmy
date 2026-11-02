@@ -54,12 +54,13 @@
     if (!prev || quadDelta(prev, cur) > 0.08) return cur.map(p => p.slice());
     return cur.map(([x, y], i) => [prev[i][0] + (x - prev[i][0]) * k, prev[i][1] + (y - prev[i][1]) * k]);
   }
-  const api = { quadArea, quadDelta, anglesOk, plausible, fpDiff, AutoShutter, smoothCorners };
+  const tooDark = mean => mean < 45;   // mittlere Helligkeit 0–255: Texterkennung und Blatterkennung werden darunter unzuverlässig
+  const api = { quadArea, quadDelta, anglesOk, plausible, fpDiff, AutoShutter, smoothCorners, tooDark };
   if (typeof module === 'object' && module.exports) { module.exports = api; return; }
   root.CamLogic = api;
 
   /* ------------------------------ Kamera-Ansicht ------------------------------ */
-  const $ = s => document.querySelector(s);
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   const BLUR_LIMIT = 45;
   let stream = null, raf = 0, shots = [], shutter = null, auto = true, lastDet = null, busy = false, onDone = null, lastTick = 0, smooth = null, searchSince = 0, reviewIdx = -1;
   const small = document.createElement('canvas');
@@ -165,6 +166,11 @@
     x.lineWidth = 3 * devicePixelRatio; x.strokeStyle = `rgba(${col},.95)`; x.stroke();
   }
   function setHint(t) { $('#camHint').textContent = t; }
+  function meanLight(cv) {
+    const d = cv.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, cv.width, cv.height).data;
+    let s = 0, n = 0; for (let i = 1; i < d.length; i += 40) { s += d[i]; n++; }
+    return n ? s / n : 255;
+  }
   function tick(t) {
     raf = requestAnimationFrame(tick);
     const v = $('#camVideo');
@@ -185,6 +191,7 @@
     if (st.state === 'fire') capture(det);
     else if (st.state === 'wait') setHint(shots.at(-1)?.blurry ? `Seite ${shots.length} wirkt unscharf – antippen zum Prüfen` : `Seite ${shots.length} aufgenommen – nächstes Blatt hinlegen oder „Fertig“`);
     else if (st.state === 'hold') setHint(auto ? 'Blatt erkannt – ruhig halten …' : 'Blatt erkannt – auf den Auslöser tippen');
+    else if (tooDark(meanLight(small))) setHint(stream?.getVideoTracks()[0]?.getCapabilities?.().torch ? 'Zu dunkel – mehr Licht oder die Taschenlampe einschalten' : 'Zu dunkel – bitte für mehr Licht sorgen');
     else if (searchSince && t - searchSince > 4500) setHint('Kein Blatt erkannt – auf einen dunklen Untergrund legen, etwas Abstand halten oder selbst auslösen');
     else setHint(shots.length ? `${shots.length} Seite(n) – nächstes Blatt ins Bild` : 'Blatt auf eine dunkle Fläche legen und ins Bild halten');
   }
@@ -220,6 +227,10 @@
         if (det && plausible(det) && (sameAspect || full.width === v.videoWidth)) use = Imaging.detectDocument(full, 1400, det.corners);
         else { const d2 = Imaging.detectDocument(full, 700); if (plausible(d2)) use = Imaging.detectDocument(full, 1400, d2.corners); }
       } catch (e) { console.warn('Blatterkennung:', e); use = det && plausible(det) ? det : null; }
+      // Ausgangsbild für „Ecken anpassen“ aufbewahren (als JPEG, höchstens 2600 px)
+      let source = null;
+      try { const s = Imaging.scaled(full, 2600); source = await new Promise(res => s.toBlob(res, 'image/jpeg', 0.85)); if (s !== full) s.width = 0; } catch (e) { console.warn('Ausgangsbild:', e); }
+      const corners = use ? use.corners.map(p => p.slice()) : [[0.03, 0.03], [0.97, 0.03], [0.97, 0.97], [0.03, 0.97]];
       let page = use ? Imaging.warp(full, use.corners) : full;
       if (use && extra.length) {
         // jedes weitere Bild an den eigenen Blattkanten ausrichten; verwackelte (Ecken weit weg) auslassen
@@ -236,7 +247,8 @@
       // Speicher sparen (wichtig auf dem iPhone): Seite auf max. 2600 px begrenzen, Vollbild sofort freigeben
       if (Math.max(page.width, page.height) > 2600) { const s = Imaging.scaled(page, 2600); if (page !== full) { page.width = 0; page.height = 0; } page = s; }
       if (page !== full) { full.width = 0; full.height = 0; }
-      shots.push(await packShot(page, !!use));
+      const sh = await packShot(page, !!use); sh.source = source; sh.corners = corners;
+      shots.push(sh);
       persist();
       $('#camFlash').classList.remove('go'); void $('#camFlash').offsetWidth; $('#camFlash').classList.add('go');
       navigator.vibrate?.(35);
@@ -264,9 +276,41 @@
     revUrl = sh.blob ? URL.createObjectURL(sh.blob) : '';
     $('#camRevImg').src = revUrl || Imaging.scaled(sh.canvas, 1400).toDataURL('image/jpeg', 0.85);
     $('#camRevTitle').textContent = `Seite ${i + 1} von ${shots.length}`;
+    $('#camRevCorners').hidden = !sh.source;
     $('#camReview').hidden = false;
   }
   let revUrl = '';
+  // Ecken von Hand: falls die Blatterkennung danebenlag. Griffe per Finger, Maus oder Pfeiltasten verschieben.
+  let edit = null, cornUrl = '';
+  const cornDraw = () => {
+    if (!edit) return;
+    $$('.camhandle').forEach((b, k) => { const [x, y] = edit.c[k]; b.style.left = x * 100 + '%'; b.style.top = y * 100 + '%'; });
+    $('#camCornPoly').setAttribute('points', edit.c.map(([x, y]) => `${x * 100},${y * 100}`).join(' '));
+  };
+  function cornFit() {
+    const im = $('#camCornImg'), a = $('#camCornArea'), box = $('#camCornBox'); if (!im.naturalWidth) return;
+    const cs = getComputedStyle(a), W = a.clientWidth - parseFloat(cs.paddingLeft) * 2, H = a.clientHeight - parseFloat(cs.paddingTop) * 2, k = Math.min(W / im.naturalWidth, H / im.naturalHeight);
+    box.style.width = im.naturalWidth * k + 'px'; box.style.height = im.naturalHeight * k + 'px';
+  }
+  function cornOpen() {
+    const sh = shots[reviewIdx]; if (!sh?.source) return;
+    edit = { i: reviewIdx, c: sh.corners.map(p => p.slice()) };
+    if (cornUrl) URL.revokeObjectURL(cornUrl);
+    cornUrl = URL.createObjectURL(sh.source);
+    $('#camCornImg').onload = cornFit; $('#camCornImg').src = cornUrl;
+    $('#camCorners').hidden = false; cornDraw(); $$('.camhandle')[0].focus();
+  }
+  function cornClose() { edit = null; $('#camCorners').hidden = true; $('#camCornImg').removeAttribute('src'); if (cornUrl) { URL.revokeObjectURL(cornUrl); cornUrl = ''; } }
+  async function cornApply() {
+    if (!edit) return;
+    const { i, c } = edit, sh = shots[i]; if (!sh) return cornClose();
+    const src = await shotCanvas({ blob: sh.source });
+    let page = Imaging.warp(src, c);
+    src.width = 0; src.height = 0;
+    if (Math.max(page.width, page.height) > 2600) { const s = Imaging.scaled(page, 2600); if (s !== page) page.width = 0; page = s; }
+    const n = await packShot(page, true); n.source = sh.source; n.corners = c;
+    shots[i] = n; persist(); cornClose(); renderStrip(); review(i);
+  }
   function closeReview() { reviewIdx = -1; $('#camReview').hidden = true; }
   async function torch(on) {
     const tr = stream?.getVideoTracks()[0];
@@ -286,6 +330,7 @@
   // Zurück: ohne Aufnahmen die Kamera schließen, mit Aufnahmen weiterscannen (beenden über „Fertig“ oder ×)
   function onBack() {
     if (!$('#camDlg').open) return;
+    if (edit) cornClose();
     if (reviewIdx >= 0) closeReview();
     if (shots.length) { window.toast?.('Ihre Aufnahmen sind sicher. Zum Beenden auf „Fertig“ tippen.', 4000); return true; }
     close(false); return false;
@@ -359,6 +404,14 @@
     $('#camPhotoApp').onclick = () => { const had = shots.length; close(true); setTimeout(() => document.querySelector('#camIn')?.click(), had ? 400 : 0); };
     $('#camRevBack').onclick = closeReview;
     $('#camRevOk').onclick = closeReview;   // vorher Inline-onclick – auf pdfmy.de von der CSP blockiert, „Passt“ tat nichts
+    $('#camRevCorners').onclick = cornOpen; $('#camCornCancel').onclick = cornClose; $('#camCornOk').onclick = cornApply;
+    addEventListener('resize', () => { if (edit) cornFit(); });
+    $$('.camhandle').forEach((b, k) => {
+      b.onpointerdown = e => { b.setPointerCapture(e.pointerId); b.dataset.drag = '1'; e.preventDefault(); };
+      b.onpointerup = b.onpointercancel = () => { delete b.dataset.drag; };
+      b.onpointermove = e => { if (!b.dataset.drag || !edit) return; const r = $('#camCornBox').getBoundingClientRect(); edit.c[k] = [Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (e.clientY - r.top) / r.height))]; cornDraw(); };
+      b.onkeydown = e => { const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key]; if (!d || !edit) return; e.preventDefault(); const s = e.shiftKey ? 0.002 : 0.01; edit.c[k] = [Math.max(0, Math.min(1, edit.c[k][0] + d[0] * s)), Math.max(0, Math.min(1, edit.c[k][1] + d[1] * s))]; cornDraw(); };
+    });
     $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); persist(); renderStrip(); closeReview(); };
     $('#camRevRot').onclick = async () => { const i = reviewIdx, sh = shots[i]; if (!sh) return; const c = await shotCanvas(sh), r = Imaging.rotate90(c, 90); c.width = 0; const blurry = sh.blurry; shots[i] = await packShot(r, sh.cropped); shots[i].blurry = blurry; persist(); renderStrip(); review(i); };
     $('#camDone').onclick = () => close(true);

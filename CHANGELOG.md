@@ -4,6 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Lücken geschlossen (app-v212)
+- Neuaufbau einer PDF: Seitenbezeichnungen, benannte Sprungziele, Ebenen und XMP-Metadaten bleiben erhalten. Struktur-Tags bleiben, wenn alle Seiten einer einzigen Datei ohne Umwandlung in Bilder gespeichert werden. Der Speichern-Dialog warnt nur noch, wenn wirklich etwas verloren geht.
+- Formulare: Auswahlfelder mit Exportwerten zeigen den richtigen Eintrag und speichern den Exportwert.
+- Suche: auf Seiten begrenzbar, zum Beispiel „2-5, 8“. „Alle markieren“ gilt weiter für das ganze Dokument.
+- Öffnen: RTF (nur Text) und XPS (Text und Bilder, vereinfacht).
+- Kamera: „Ecken anpassen“ und Hinweis bei zu wenig Licht.
+- Beschädigte PDFs: Eine unlesbare Seite bricht das Öffnen nicht mehr ab, die übrigen Seiten kommen an und die fehlenden werden genannt.
+- Gemessen, Werte in KONZEPT.md: Geschwindigkeit, Grenzen der Reparatur, Vergleich Word nach PDF mit LibreOffice.
+- Offen bleibt: Struktur-Tags bei Teilmengen und zusammengefügten Dateien, Verarbeitung der Kamera im Hintergrund, DjVu, CBZ und PSD, Abläufe über mehrere Werkzeuge. Word nach PDF bleibt vereinfacht.
+
 ### Fehlende Aufgaben aus dem PDFCraft-Vergleich (app-v211)
 - Neu: „Abwechselnd zusammenfügen“ für getrennt gescannte Vorder- und Rückseiten, mit „Zweite Datei umdrehen“.
 - Neu: „Zusammenfügen und verkleinern“.

@@ -427,3 +427,29 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 **Befund:** PDFCraft ist AGPL, es wird kein Code übernommen. Netzwerk-Nachweis, Entfernen von Anmerkungen und eigene Abläufe im Stapel gab es bei PDFMy bereits. Neu sind nur abwechselndes Zusammenfügen, Zusammenfügen und verkleinern sowie Stapel-Vorlagen.
 **Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Kacheln und Vorlagen statt Workflow-Editor. 5: Ausgabe läuft über den bestehenden PDF-Aufbau. 6 nicht betroffen.
 **Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate (RTF, XPS, DjVu, CBZ, PSD) bleiben offen.
+
+### Umgesetzt 02.11.2026: Lücken geschlossen (app-v212)
+**Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Eingaben nur bei Bedarf sichtbar. 5: PDF/A-2b und PDF/UA-1 mit veraPDF geprüft, axe ohne Befund. 6 nicht betroffen.
+**Grenze Struktur-Tags:** Nur bei allen Seiten einer einzigen Datei, sonst zeigten Verweise ins Leere. Darüber warnt der Speichern-Dialog.
+**Messwerte (Server mit 8 Kernen, Headless-Chrome, künstliche Dateien; auf Handys deutlich langsamer, dort nicht gemessen):**
+| Datei | Öffnen | Speichern mit Seitenzahlen |
+|---|---|---|
+| 100 Textseiten | 1,1 s | 0,2 s |
+| 500 Textseiten | 2,9 s | 1,1 s |
+| 1.000 Textseiten | 4,2 s | 1,7 s |
+| 20 Scanseiten | 5,0 s | 4,9 s |
+| 100 Scanseiten | 20,9 s | 28,4 s |
+
+**Reparatur (20 Seiten, Seiten gerettet):**
+| Schaden | klassische PDF | PDF mit Objekt-Streams |
+|---|---|---|
+| Ende 10 % fehlt | 18 | 0 |
+| Ende 50 % fehlt | 10 | 0 |
+| Anfang 10 % fehlt | 0 | 0 |
+| Querverweis zerstört | nicht gemessen | 20 |
+
+| Mitte 5 % genullt | 9 | alle Seiten kommen an, beschädigte werden genannt |
+| 0,1 % Bytefehler verteilt | 17 | 0 |
+
+Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Dateiende. Sind sie weg, ist ohne Seitenbaum nichts mehr zuzuordnen.
+**Word nach PDF, eine künstliche Datei gegen LibreOffice:** Wörter zu 99,2 % gleich, Tabelle und Umlaute vorhanden. PDFMy 1,5 s und 5 Seiten, LibreOffice 9,6 s (mit Programmstart) und 3 Seiten. PDFMy setzt in eigener, breiterer Schrift; das Layout ist kein Abbild des Originals. Kein Vergleich mit Word selbst.
