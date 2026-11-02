@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Fehlende Aufgaben aus dem PDFCraft-Vergleich (app-v211)
+- Neu: „Abwechselnd zusammenfügen“ für getrennt gescannte Vorder- und Rückseiten, mit „Zweite Datei umdrehen“.
+- Neu: „Zusammenfügen und verkleinern“.
+- Stapelverarbeitung: drei fertige Vorlagen (Zur Weitergabe vorbereiten, Graustufen und verkleinern, Seitenzahlen ergänzen).
+- „Funktion suchen“ findet „Versteckte Daten entfernen“ jetzt auch unter „Anmerkungen entfernen“.
+- Bewusst nicht gebaut: Linearisieren (große neue Bibliothek oder eigener PDF-Schreiber, kaum Nutzen bei lokalen Dateien) und ein visueller Workflow-Editor (Leitplanke 4).
+
 ### Zwischenstand beim Kamera-Scan (app-v210)
 - Jede Aufnahme liegt sofort im Browser-Speicher des Geräts. Stürzt der Browser vor „Fertig“ ab, bietet die Startseite den Scan unter „Nicht gespeicherte Arbeit“ an. Gelöscht wird beim Verwerfen, sobald der Absturzschutz die Seiten übernommen hat oder gespeichert wurde, sonst nach 7 Tagen.
 - Absturzschutz: Speicherfehler wurden verschluckt, die Warnung „Gerätespeicher voll?“ erschien deshalb nicht. Jetzt wird der Fehler gemeldet.

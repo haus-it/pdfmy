@@ -363,6 +363,12 @@
     return `<!doctype html>\n<html lang="${esc(lang)}">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="generator" content="PDFMy (pdfmy.de)">\n<title>${esc(title || 'Dokument')}</title>\n` +
       `<style>body{font:16px/1.55 system-ui,sans-serif;max-width:46rem;margin:2rem auto;padding:0 1rem;color:#1a1a1a;background:#fff}table{border-collapse:collapse;margin:1rem 0}th,td{border:1px solid #bbb;padding:.3rem .5rem;text-align:left;vertical-align:top}th{background:#f2f2f2}hr{border:0;border-top:1px dashed #bbb;margin:2rem 0}</style>\n</head>\n<body>\n<main>\n${out.join('\n')}\n</main>\n</body>\n</html>\n`;
   }
-  const api = { crc32, zip, parseRange, formatBytes, docx, diffWords, pixelDiff, fillStamp, bates, tableRows, deNumber, xlsx, docBlocks, toMarkdown, toHtml };
+  // Abwechselnd aus mehreren Listen: 1. aus A, 1. aus B, 2. aus A …; Überhang der längeren Liste am Ende
+  function interleave(groups) {
+    const out = [], n = Math.max(0, ...groups.map(g => g.length));
+    for (let i = 0; i < n; i++) for (const g of groups) if (i < g.length) out.push(g[i]);
+    return out;
+  }
+  const api = { interleave, crc32, zip, parseRange, formatBytes, docx, diffWords, pixelDiff, fillStamp, bates, tableRows, deNumber, xlsx, docBlocks, toMarkdown, toHtml };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Tools = api;
 })(typeof self !== 'undefined' ? self : this);

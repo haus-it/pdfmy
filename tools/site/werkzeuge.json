@@ -738,5 +738,24 @@
         "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
       ]
     ]
+  },
+  {
+    "slug": "pdf-seiten-abwechselnd-zusammenfuegen",
+    "target": "zipper",
+    "label": "Abwechselnd zusammenfügen",
+    "title": "PDF abwechselnd zusammenfügen – Vorder- und Rückseiten mischen",
+    "description": "Getrennt gescannte Vorder- und Rückseiten kostenlos zu einer PDF mischen – im Browser, ohne Upload und ohne Anmeldung.",
+    "intro": "Ihr Scanner hat keinen Duplex-Einzug? Fügen Sie zwei PDFs Seite für Seite abwechselnd zusammen. Die Dateien werden nicht hochgeladen.",
+    "steps": [
+      "Auf „Abwechselnd zusammenfügen“ klicken und beide PDFs wählen, zuerst die Vorderseiten.",
+      "Vorschau prüfen. Stehen die Rückseiten falsch herum, auf „Zweite Datei umdrehen“ tippen.",
+      "Auf „Speichern“ klicken."
+    ],
+    "faq": [
+      [
+        "Was passiert, wenn eine Datei mehr Seiten hat?",
+        "Die übrigen Seiten der längeren Datei stehen am Ende."
+      ]
+    ]
   }
 ]

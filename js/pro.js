@@ -1431,6 +1431,11 @@ async function batchFiles(files) {
   if (done.length) openJournal();
 }
 // Verkleinern / PDF/A / durchsuchbar: jede Datei einzeln laden, umwandeln, sammeln
+const BATCH_TPL = {
+  share: { name: 'Weitergabe', o: { format: 'pdf', size: 'small', clean: true } },
+  gray: { name: 'Graustufen', o: { format: 'pdf', size: 'small', gray: true } },
+  number: { name: 'Seitenzahlen', o: { format: 'pdf', size: 'balanced', pageNumbers: 'right' } },
+};
 async function batchConvert(files, { act, out }) {
   let dir = null;
   if (out === 'dir') { try { dir = await showDirectoryPicker({ id: 'mpdf-batch', mode: 'readwrite' }); } catch (e) { if (e.name === 'AbortError') return; throw e; } }
@@ -1438,7 +1443,7 @@ async function batchConvert(files, { act, out }) {
   $('#batchSetup').hidden = true; $('#batchRun').hidden = false; $('#batchGo').hidden = true; $('#batchCancel').textContent = 'Anhalten';
   const hadDoc = state.pages.length > 0;
   if (hadDoc) newTab();   // eigener Reiter: das geöffnete Dokument bleibt unangetastet
-  const flow = act.startsWith('flow:') ? flows()[+act.slice(5)] : null;   // eigener Ablauf aus dem Speichern-Dialog
+  const flow = act.startsWith('tpl:') ? BATCH_TPL[act.slice(4)] : act.startsWith('flow:') ? flows()[+act.slice(5)] : null;   // Vorlage oder eigener Ablauf aus dem Speichern-Dialog
   if (act.startsWith('flow:') && !flow) { status('Dieser Ablauf existiert nicht mehr.'); return; }
   const results = [], suffix = flow ? '_' + flow.name.replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').trim().replace(/\s+/g, '_').slice(0, 30) : { small: '_klein', pdfa: '_PDFA', ocr: '_durchsuchbar' }[act], used = new Set();
   const label = flow ? flow.name : { small: 'Verkleinern', pdfa: 'PDF/A', ocr: 'Texterkennung' }[act];
@@ -1871,7 +1876,7 @@ $('#btnSummary').onclick = () => { closeMenu(); openSummary(); };
 
 
 /* ---------- Befehlssuche (Strg+K): jede Funktion per Tastatur finden – Kacheln, Werkzeuge, Menü, Kopfzeile ---------- */
-const CMD_SYNONYMS = { booklet: 'heft falten drucken', nup: 'n-up seiten pro blatt drucken', poster: 'groß plakat kacheln drucken mehrere blätter', a4: 'seitengröße letter format', trim: 'zuschneiden ränder', gray: 'schwarzweiß grau toner', invert: 'invertieren negativ dunkel hell', labels: 'römisch seitenbeschriftung seitenzahlen vorspann', clean: 'metadaten bereinigen sanitize autor kommentare', flat: 'kopieren sperren rastern bild abflachen flatten', ai: 'ki chatgpt claude markdown llm', scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
+const CMD_SYNONYMS = { booklet: 'heft falten drucken', nup: 'n-up seiten pro blatt drucken', poster: 'groß plakat kacheln drucken mehrere blätter', a4: 'seitengröße letter format', trim: 'zuschneiden ränder', gray: 'schwarzweiß grau toner', invert: 'invertieren negativ dunkel hell', labels: 'römisch seitenbeschriftung seitenzahlen vorspann', clean: 'metadaten bereinigen sanitize autor kommentare anmerkungen annotationen entfernen', zipper: 'abwechselnd alternate duplex vorderseiten rückseiten reißverschluss mischen wenden', mergesmall: 'kombinieren komprimieren kleiner mailen', flat: 'kopieren sperren rastern bild abflachen flatten', ai: 'ki chatgpt claude markdown llm', scan: 'scanner einlesen', merge: 'kombinieren verbinden', compress: 'komprimieren kleiner', redact: 'anonymisieren dsgvo',
   protect: 'verschlüsseln sperren', btnTranslate: 'übersetzen sprache englisch translate', btnPreflight: 'prüfen pdf/a archiv validieren konform langzeit iso 19005 verapdf bea gericht justiz erv ervb einreichen barrierefreiheit barrierefrei bitv pdf/ua screenreader epa patientenakte gobd preflight', btnSummary: 'ki zusammenfassung zusammenfassen frage chat kernpunkte ai', docx: 'word umwandeln konvertieren', compare: 'unterschiede diff', batch: 'mehrere dateien automatisch',
   bates: 'nummerieren akte', btnCam: 'foto handy smartphone kamera abfotografieren', tileCam: 'foto handy smartphone kamera abfotografieren', btnTax: 'datev buchhaltung steuer belege monat export', tileTax: 'datev buchhaltung steuer belege monat export', pdfa: 'archiv revisionssicher', btnJournal: 'fristen post liste', btnSettings: 'optionen kürzel', btnFile: 'ablage archivieren' };
 function commands() {
@@ -4645,7 +4650,21 @@ $('#metaShow').onclick = () => { state.metaShown = true; renderSide(); $('#m-dat
 
 /* ---------- Aufgabenleiste (Usability-Gutachten: Anleitungen nicht nur in der Statuszeile) ----------
    Nach einer Kachel-Aufgabe steht über der Seite, was jetzt zu tun ist – mit passendem Hilfsknopf und „Fertig & speichern“. */
+// Vorder- und Rückseiten aus zwei Dateien mischen, etwa nach dem Scannen ohne Duplex. Rechnet immer vom Original aus, Umdrehen ist also wiederholbar.
+window.zipperPages = rev => {
+  // Aufbereitete Scan-Seiten sind Bilder ohne docIdx/pageIdx, ihre Herkunft steht in der Bezeichnung („vorn.pdf S. 2“)
+  const src = p => { const s = p.kind === 'pdf' ? null : /^(.*) S\. (\d+)/.exec(p.label || ''); return s ? [s[1], +s[2]] : [p.docIdx, p.pageIdx]; };
+  const m = new Map();
+  for (const p of state.pages) { const k = src(p)[0]; if (!m.has(k)) m.set(k, []); m.get(k).push(p); }
+  const groups = [...m.values()].map(g => g.sort((a, b) => src(a)[1] - src(b)[1]));
+  if (groups.length < 2) return status('Bitte eine zweite PDF hinzufügen, zum Beispiel die Rückseiten.');
+  if (rev) groups.at(-1).reverse();
+  state.pages = Tools.interleave(groups); state.zipRev = !!rev; state.dirty = true; refresh();
+  status(`${groups.length} Dateien abwechselnd zusammengefügt, ${state.pages.length} Seiten. Vorschau prüfen, dann „Speichern“.`);
+};
 const TASKS = {
+  zipper: { text: 'Abwechselnd zusammenfügen: Stehen die Rückseiten falsch herum, die zweite Datei umdrehen.', help: ['Zweite Datei umdrehen', () => window.zipperPages(!state.zipRev)] },
+  mergesmall: { text: 'Zusammenfügen und verkleinern: Reihenfolge per Ziehen ändern, dann „Fertig“ – die Datei wird klein gespeichert.', help: ['Weitere Dateien hinzufügen', () => $('#fileIn').click()] },
   merge: { text: 'Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.', help: ['Weitere Dateien hinzufügen', () => $('#fileIn').click()] },
   organize: { text: 'Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.' },
   img2pdf: { text: 'Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.', help: ['Weitere Bilder hinzufügen', () => $('#fileIn').click()] },
@@ -4661,5 +4680,5 @@ window.showTask = intent => {
   const h = $('#taskHelp'); h.hidden = !t.help; if (t.help) { h.textContent = I18N.t(t.help[0]); h.onclick = t.help[1]; }
   bar.hidden = false;
 };
-$('#taskDone').onclick = () => { $('#taskBar').hidden = true; openExport(); };
+$('#taskDone').onclick = () => { $('#taskBar').hidden = true; openExport(state.intent === 'mergesmall' ? { size: 'small' } : undefined); };
 $('#taskClose').onclick = () => { $('#taskBar').hidden = true; };

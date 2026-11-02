@@ -422,3 +422,8 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 **Anlass:** Der Absturzschutz greift erst im Dokument. Stürzt der Browser beim Scannen ab, waren die Aufnahmen verloren.
 **Leitplanken:** 1 gewahrt (nur IndexedDB des Geräts, kein Upload). 2 gewahrt (keine neue Verbindung). 3 gewahrt (kein Konto, kein Tracking). 4 gewahrt (Anzeige im bekannten Feld „Nicht gespeicherte Arbeit“, keine neue Bedienung). 5 nicht betroffen, axe läuft nach der Änderung. 6 nicht betroffen.
 **Abwägung:** Sensible Aufnahmen bleiben nach einem Absturz bis zu 7 Tage auf dem Gerät. Das gilt schon für den Absturzschutz. Deshalb neu „Alle verwerfen“; „Alle lokal gespeicherten Daten löschen“ erfasst auch den Zwischenstand.
+
+### Umgesetzt 02.11.2026: Vergleich mit PDFCraft (app-v211)
+**Befund:** PDFCraft ist AGPL, es wird kein Code übernommen. Netzwerk-Nachweis, Entfernen von Anmerkungen und eigene Abläufe im Stapel gab es bei PDFMy bereits. Neu sind nur abwechselndes Zusammenfügen, Zusammenfügen und verkleinern sowie Stapel-Vorlagen.
+**Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Kacheln und Vorlagen statt Workflow-Editor. 5: Ausgabe läuft über den bestehenden PDF-Aufbau. 6 nicht betroffen.
+**Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate (RTF, XPS, DjVu, CBZ, PSD) bleiben offen.

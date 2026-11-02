@@ -184,7 +184,7 @@ async function loadBitmap(file) {
 // Canvas-Speicher sofort freigeben (iOS gibt ihn sonst erst spät zurück)
 const freeCanvas = c => { if (c && c.width) { c.width = 0; c.height = 0; } };
 // Aufgaben, bei denen PDF-Seiten ohne Textebene nicht automatisch erkannt werden müssen (schneller)
-const NO_OCR_INTENTS = new Set(['merge', 'organize', 'compress', 'pdf2img', 'protect', 'unlock', 'stamp', 'form', 'sign', 'bates']);
+const NO_OCR_INTENTS = new Set(['merge', 'mergesmall', 'zipper', 'organize', 'compress', 'pdf2img', 'protect', 'unlock', 'stamp', 'form', 'sign', 'bates']);
 async function importFiles(files, { fromCamera = false } = {}) {
   state.importing = (state.importing || 0) + 1;   // läuft – kein Update-Neuladen (das Dokument ist bis zur ersten Seite leer)
   try { await importFilesRun(files, fromCamera); } finally { state.importing--; }
@@ -3197,7 +3197,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       T?.page(page);
       page.setRotation(degrees(p.rotation));
       const mb = page.getCropBox(); W = mb.width; H = mb.height; ox = mb.x; oy = mb.y;   // sichtbarer Bereich – Ansicht und Eingaben beziehen sich darauf
-      if (!p.native) words = p.ocr?.words;
+      if (!p.native && !p.hasText) words = p.ocr?.words;   // kurzer vorhandener Text bekäme sonst eine zweite, unsichtbare Textebene
     }
     if (p.kind === 'pdf') { const k = `${p.docIdx}:${p.pageIdx}`; if (!placed.has(k)) placed.set(k, page); if (!raster) linked.push({ p, page }); }
     /* Barrierefrei: vom Nutzer beschriebene Abbildungen (Dialog „Bilder beschreiben“) als Figure mit Alternativtext – der Bildausschnitt
@@ -4746,7 +4746,7 @@ postMessage({ type: 'pdfmy:ready' }, location.origin);
 
 /* ---------- Startseite: Aufgaben ---------- */
 const INTENTS = {
-  scan: 'image/*,application/pdf,.pdf,.xml,.eml,.msg', merge: 'application/pdf,.pdf', organize: 'application/pdf,.pdf,image/*',
+  scan: 'image/*,application/pdf,.pdf,.xml,.eml,.msg', merge: 'application/pdf,.pdf', mergesmall: 'application/pdf,.pdf', zipper: 'application/pdf,.pdf', organize: 'application/pdf,.pdf,image/*',
   compress: 'application/pdf,.pdf', img2pdf: 'image/*', pdf2img: 'application/pdf,.pdf', redact: 'application/pdf,.pdf,image/*',
   sign: 'application/pdf,.pdf,image/*', form: 'application/pdf,.pdf', protect: 'application/pdf,.pdf', unlock: 'application/pdf,.pdf',
   stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', a11y: 'application/pdf,.pdf,image/*', preflight: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
@@ -4777,6 +4777,8 @@ function applyIntent() {
   window.showTask?.(state.intent);   // Aufgabenleiste: nächster Schritt, Hilfsknopf, „Fertig & speichern“ (js/pro.js)
   switch (state.intent) {
     case 'merge': setView('grid'); status(`${state.docs.length} Datei(en), ${state.pages.length} Seiten. Reihenfolge per Ziehen ändern, dann „Speichern“.`); break;
+    case 'mergesmall': setView('grid'); status(`${state.docs.length} Datei(en), ${state.pages.length} Seiten. Reihenfolge prüfen, dann „Fertig“.`); break;
+    case 'zipper': setView('grid'); window.zipperPages?.(false); break;
     case 'organize': setView('grid'); status('Seiten anklicken (Strg/Umschalt für mehrere), ziehen, drehen, löschen – dann „Speichern“.'); break;
     case 'img2pdf': setView('grid'); status('Reihenfolge prüfen, dann „Speichern“.'); break;
     case 'compress': openExport({ size: 'small' }); break;

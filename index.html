@@ -1280,6 +1280,8 @@ html.i18n-wait body{visibility:hidden}
       <section class="tgroup" aria-labelledby="tgPages"><h2 class="tgh" id="tgPages">Seiten und Dateien</h2>
       <div class="tiles">
         <button class="tile" data-intent="merge"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>PDFs zusammenfügen</b><span>Mehrere Dateien zu einer, Reihenfolge per Ziehen</span></button>
+        <button class="tile" data-intent="mergesmall"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>Zusammenfügen und verkleinern</b><span>Mehrere Dateien zu einer, gleich klein zum Mailen</span></button>
+        <button class="tile" data-intent="zipper"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>Abwechselnd zusammenfügen</b><span>Vorder- und Rückseiten aus zwei Dateien mischen</span></button>
         <button class="tile" data-intent="split"><i><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg></i><b>PDF aufteilen</b><span>Alle N Seiten, an Lesezeichen oder nach Dateigröße</span></button>
         <button class="tile" data-intent="organize"><i><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg></i><b>Seiten organisieren</b><span>Sortieren, drehen, löschen, einfügen, teilen</span></button>
         <button class="tile" data-intent="compress"><i><svg class="ic" aria-hidden="true"><use href="#i-minimize-2"/></svg></i><b>PDF verkleinern</b><span>Dateigröße reduzieren, mit Vorschau der Größe</span></button>
@@ -2267,6 +2269,9 @@ html.i18n-wait body{visibility:hidden}
       <label class="prrow"><input type="radio" name="batchAct" value="small" checked> <span><b>Verkleinern</b> <small>– kleinere Dateien zum Mailen und Hochladen; ist das Original kleiner, bleibt es</small></span></label>
       <label class="prrow"><input type="radio" name="batchAct" value="pdfa"> <span><b>Archivieren (PDF/A)</b> <small>– Langzeitformat mit Texterkennung, barrierefrei</small></span></label>
       <label class="prrow"><input type="radio" name="batchAct" value="ocr"> <span><b>Durchsuchbar machen</b> <small>– Texterkennung für Scans, sonst unverändert</small></span></label>
+      <label class="prrow"><input type="radio" name="batchAct" value="tpl:share"> <span><b>Zur Weitergabe vorbereiten</b> <small>– verkleinern, Autor, Kommentare, Skripte und Anhänge entfernen</small></span></label>
+      <label class="prrow"><input type="radio" name="batchAct" value="tpl:gray"> <span><b>Graustufen und verkleinern</b> <small>– spart Toner und Speicherplatz</small></span></label>
+      <label class="prrow"><input type="radio" name="batchAct" value="tpl:number"> <span><b>Seitenzahlen ergänzen</b> <small>– unten rechts auf jeder Seite</small></span></label>
       <div id="batchFlows"></div>
       <label class="prrow"><input type="radio" name="batchAct" value="file"> <span><b>Briefe erkennen und ablegen</b> <small>– Briefdaten, Dateiname, Ablageordner, Posteingangsbuch</small></span></label>
     </fieldset>

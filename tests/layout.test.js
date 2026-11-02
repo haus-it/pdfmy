@@ -93,3 +93,10 @@ test('Seiten halbieren: oben/unten und rechts zuerst', async () => {
   await Layout.halve(e, { rtl: true });
   assert.deepEqual(arr(e.getPage(0), 'MediaBox'), [421, 0, 842, 595]);
 });
+
+test('Abwechselnd zusammenfügen: Überhang am Ende', () => {
+  const Tools = require('../js/tools.js');
+  assert.deepEqual(Tools.interleave([[1, 2, 3], ['a']]), [1, 'a', 2, 3]);
+  assert.deepEqual(Tools.interleave([[1, 2], ['a', 'b']]), [1, 'a', 2, 'b']);
+  assert.deepEqual(Tools.interleave([]), []);
+});
