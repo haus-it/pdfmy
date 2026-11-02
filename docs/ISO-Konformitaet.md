@@ -262,6 +262,8 @@ Nachtrag 01.11.2026 (Kamera-Scan – app-v209): Weniger Speicherbedarf bis zum A
 
 Nachtrag 01.11.2026 (Zwischenstand Kamera-Scan – app-v210): Aufnahmen liegen vor dem Abschluss als JPEG in der IndexedDB des Browsers, um Datenverlust beim Absturz zu vermeiden (ISO 27001 A.8.14, ISO 9001 8.5.1). Keine neue Verbindung, kein Upload (KONZEPT.md Leitplanke 1). Löschung: beim Verwerfen, nach Übernahme durch den Absturzschutz oder Speichern, spätestens nach 7 Tagen sowie über „Alle lokal gespeicherten Daten löschen“ (ISO 27001 A.8.10). Geprüft mit echtem Renderer-Absturz im nachgestellten Handy-Browser mit simulierter Kamera; nicht auf einem echten Handy.
 
+Nachtrag 02.11.2026 (Scan-Dialog – app-v213): Papierquelle verständlich benannt, Verhalten je Gerät angezeigt (ISO 9001 8.5.1). Keine neue Verbindung. Ohne echtes Gerät geprüft.
+
 Nachtrag 02.11.2026 (Lücken geschlossen – app-v212): Struktur und Metadaten bleiben beim Neuaufbau erhalten, unlesbare Seiten werden gemeldet statt das Öffnen abzubrechen (ISO 9001 8.5.1, 8.7; ISO 27001 A.8.14). PDF/A-2b und PDF/UA-1 mit veraPDF geprüft, axe ohne Befund, Messwerte in KONZEPT.md. Nicht auf echten Handys geprüft.
 
 Nachtrag 02.11.2026 (Vergleich PDFCraft – app-v211): Neue Aufgaben nutzen den bestehenden PDF-Aufbau, keine neue Verbindung und keine neue Bibliothek. Korrektur: Seiten mit kurzem vorhandenem Text erhalten keine zweite Textebene aus der Texterkennung mehr (ISO 9001 8.5.1, 8.7). Geprüft im Browser mit Text- und Bild-PDFs sowie axe.

@@ -4468,7 +4468,7 @@ async function loadScanners(refresh) {
       const inp = l.querySelector('input'); inp.value = sc.id; inp.checked = sc.id === last || (!last && i === 0);
       l.querySelector('b').textContent = sc.name;
       l.querySelector('small').textContent = (sc.kind === 'escl' ? 'Netzwerk, ohne Treiber' : sc.kind === 'wsd' ? 'Netzwerk (WSD), ohne Treiber' : 'Windows-Treiber') + (sc.feeder ? ' · Einzug' : '') + (sc.duplex ? ' · beidseitig möglich' : '');
-      inp.dataset.duplex = sc.duplex; inp.dataset.feeder = sc.feeder;
+      inp.dataset.duplex = sc.duplex; inp.dataset.feeder = sc.feeder; inp.dataset.kind = sc.kind;
       box.append(l);
     });
     if (!d.scanners.length) box.innerHTML = '<p class="hint">Kein Scanner gefunden. Ist das Gerät eingeschaltet und im selben Netzwerk? Sie können es auch per IP-Adresse hinzufügen (steht am Gerätedisplay unter Netzwerk/TCP-IP).</p><p class="hint">Ihr Gerät ist nicht dabei? <a href="https://pdfmy.de/scanner.html#geraet-fehlt" target="_blank" rel="noopener">Kurz melden – wir machen den Rest</a>.</p>';
@@ -4485,7 +4485,22 @@ function updateScanOpts() {
   $('#scanFlip').checked = LS.get('scanFlip', false);
   if ($('#scanKind').value === 'photo') { $('#scanDuplexRow').hidden = true; $('#scanFlipRow').hidden = true; }   // Fotos: einzeln vom Glas
   $('#scanGo').disabled = !sel;
+  scanSourceUi();
 }
+// Papierquelle: Gerät ohne Einzug kann nur vom Glas; der Hinweis sagt, was „Automatisch“ bei diesem Gerät tatsächlich tut
+function scanSourceUi() {
+  const sel = document.querySelector('#scanList input:checked'), src = $('#scanSource'), photo = $('#scanKind').value === 'photo', noFeeder = !!sel && sel.dataset.feeder !== 'true';
+  src.disabled = photo || noFeeder;
+  if (photo || noFeeder) src.value = 'platen'; else if (src.value === 'platen' && src.dataset.forced) src.value = LS.get('scanSource', 'auto');
+  if (photo || noFeeder) src.dataset.forced = '1'; else delete src.dataset.forced;
+  $('#scanSrcHint').textContent = photo ? 'Fotos werden einzeln vom Glas gescannt.'
+    : noFeeder ? 'Dieser Scanner hat keinen Einzug: Bitte das Papier aufs Glas legen.'
+    : src.value === 'feeder' ? 'Es wird nur der Einzug gescannt.'
+    : src.value === 'platen' ? 'Es wird nur das Glas gescannt. Der Einzug muss dafür meist leer sein.'
+    : sel?.dataset.kind === 'escl' ? 'PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.'
+    : 'Dieser Scanner meldet nicht, wo das Papier liegt. PDFMy versucht zuerst den Einzug, dann das Glas. Das Glas ist schneller, wenn Sie es oben fest einstellen.';
+}
+$('#scanSource').addEventListener('change', scanSourceUi);
 // Art „Dokument“ oder „Foto“: Fotos in Farbe oder Schwarzweiß (Graustufen), immer vom Glas
 const SCAN_COLORS = { auto: [['auto', 'Automatisch erkennen'], ['gray', 'Graustufen'], ['color', 'Farbe'], ['bw', 'Schwarzweiß']], doc: [['gray', 'Graustufen (empfohlen)'], ['color', 'Farbe'], ['bw', 'Schwarzweiß']], photo: [['color', 'Farbe'], ['gray', 'Schwarzweiß']] };
 function applyScanKind() {
@@ -4571,7 +4586,7 @@ $('#scanGo').onclick = async () => {
   const sel = document.querySelector('#scanList input:checked'); if (!sel) return;
   const kind = $('#scanKind').value, photo = kind === 'photo';
   LS.set('scanner', sel.value); LS.set('scanKind', kind); LS.set({ auto: 'scanAutoColor', photo: 'scanPhotoColor' }[kind] || 'scanColor', $('#scanColor').value);
-  if (!photo) LS.set('scanSource', $('#scanSource').value);
+  if (!photo && !$('#scanSource').disabled) LS.set('scanSource', $('#scanSource').value);
   if (!$('#scanDuplexRow').hidden) LS.set('scanDuplex', $('#scanDuplex').checked);
   const flip = !$('#scanFlipRow').hidden && $('#scanFlip').checked;
   if (!$('#scanFlipRow').hidden) LS.set('scanFlip', flip);

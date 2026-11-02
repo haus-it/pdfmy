@@ -1762,11 +1762,12 @@ html.i18n-wait body{visibility:hidden}
     <div class="scanopts">
       <label title="Automatisch: PDFMy erkennt Fotos selbst und schneidet sie aus. Foto: vom Glas, 600 dpi, Farben unverändert, ohne Texterkennung">Art <select id="scanKind"><option value="auto">Automatisch</option><option value="doc">Dokument</option><option value="photo">Foto</option></select></label>
       <label>Farbe <select id="scanColor"><option value="gray">Graustufen (empfohlen)</option><option value="color">Farbe</option><option value="bw">Schwarzweiß</option></select></label>
-      <label>Vorlage <select id="scanSource"><option value="auto">Automatisch</option><option value="feeder">Einzug</option><option value="platen">Glas</option></select></label>
+      <label>Papier liegt <select id="scanSource"><option value="auto">Automatisch erkennen</option><option value="feeder">im Einzug</option><option value="platen">auf dem Glas</option></select></label>
       <label class="cb" id="scanDuplexRow" title="Vorder- und Rückseite in einem Durchgang. Leere Rückseiten entfernt PDFMy automatisch."><input id="scanDuplex" type="checkbox"> Beidseitig</label>
       <label class="cb" id="scanFlipRow" hidden title="Für Einzüge ohne Duplex: erst die Vorderseiten, dann den Stapel wenden und die Rückseiten scannen – PDFMy sortiert die Seiten richtig ein."><input id="scanFlip" type="checkbox"> Beidseitig durch Wenden</label>
     </div>
     <p class="hint" id="scanPhotoHint" hidden>Foto mit der Bildseite nach unten aufs Glas legen und auf „Scannen“ klicken. PDFMy schneidet das Foto aus und lässt die Farben unverändert.</p>
+    <p class="hint" id="scanSrcHint" role="status"></p>
     <p class="hint" id="scanHint">Papier in den Einzug legen (oder aufs Glas) und auf „Scannen“ klicken. <a class="devList" target="_blank">Funktioniert mein Gerät?</a></p>
     <div class="dlgrow" style="justify-content:space-between">
       <span><span class="hint" id="scanVerInfo"></span> · <button type="button" class="linkbtn" id="scanLog" title="Was pdfmy Scan und der Scanner-Treiber zuletzt gemeldet haben – zum Kopieren für den Support">Protokoll</button> · <button type="button" class="linkbtn" id="scanRefresh">Neu suchen</button> · <button type="button" class="linkbtn" id="scanWake" title="Für Geräte im Energiesparmodus: pdfmy Scan spricht die bekannten Scanner direkt an (und sendet Wake-on-LAN), dann wird neu gesucht">Scanner aufwecken</button> · <button type="button" class="linkbtn" id="scanAddIp">Gerät per IP-Adresse hinzufügen</button></span>
@@ -1837,7 +1838,7 @@ html.i18n-wait body{visibility:hidden}
   <h3 class="dlgtitle" id="scanErrDlgT">Scannen hat nicht geklappt</h3>
   <p id="scanErrMsg"></p>
   <ul class="help">
-    <li>Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Vorlage“ können Sie das Glas wählen.</li>
+    <li>Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.</li>
     <li>Ist das Gerät frei (kein Kopier- oder Druckauftrag, keine Fehlermeldung am Display)?</li>
     <li>Hilft das nicht: „Andere Farbe“ wählen oder den Scanner kurz aus- und einschalten.</li>
   </ul>

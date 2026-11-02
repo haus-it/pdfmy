@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Scan-Dialog: Papierquelle verständlich (app-v213)
+- „Vorlage“ heißt jetzt „Papier liegt“ mit „Automatisch erkennen“, „im Einzug“ und „auf dem Glas“ (Meldung GF). Der Hinweis darunter nennt, was der gewählte Scanner tatsächlich tut. Geräte ohne Einzug scannen fest vom Glas.
+- Offen: Echte Erkennung über WSD ist nicht eingebaut. Dort versucht PDFMy zuerst den Einzug, dann das Glas.
+
 ### Lücken geschlossen (app-v212)
 - Neuaufbau einer PDF: Seitenbezeichnungen, benannte Sprungziele, Ebenen und XMP-Metadaten bleiben erhalten. Struktur-Tags bleiben, wenn alle Seiten einer einzigen Datei ohne Umwandlung in Bilder gespeichert werden. Der Speichern-Dialog warnt nur noch, wenn wirklich etwas verloren geht.
 - Formulare: Auswahlfelder mit Exportwerten zeigen den richtigen Eintrag und speichern den Exportwert.
