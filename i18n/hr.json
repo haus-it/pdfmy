@@ -3213,5 +3213,7 @@
  "im Einzug": "u uvlakaču",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Leži li papir ispravno u <b>uvlakaču</b> ili na <b>staklu</b>? Pod „Papir leži“ to možete trajno postaviti.",
  "Papier liegt": "Papir leži",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pita skener ima li papira u uvlakaču, inače skenira staklo."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pita skener ima li papira u uvlakaču, inače skenira staklo.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instalirano: PDFMy (nepoznato), pdfmy Scan nije pokrenut. Kliknite za traženje ažuriranja.",
+ "PDFMy ·": "PDFMy ·"
 }

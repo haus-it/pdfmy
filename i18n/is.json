@@ -3213,5 +3213,7 @@
  "im Einzug": "í mataranum",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Liggur pappírinn rétt í <b>mataranum</b> eða á <b>glerinu</b>? Undir „Pappír liggur“ getið þér stillt það fast.",
  "Papier liegt": "Pappír liggur",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy spyr skannann hvort pappír sé í mataranum, annars skannar hann glerið."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy spyr skannann hvort pappír sé í mataranum, annars skannar hann glerið.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Uppsett: PDFMy (óþekkt), pdfmy Scan ekki ræst. Smellið til að leita að uppfærslum.",
+ "PDFMy ·": "PDFMy ·"
 }

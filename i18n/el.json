@@ -3213,5 +3213,7 @@
  "im Einzug": "στον τροφοδότη",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Είναι το χαρτί σωστά τοποθετημένο στον <b>τροφοδότη</b> ή στο <b>γυαλί</b>; Στο «Το χαρτί βρίσκεται» μπορείτε να το ορίσετε μόνιμα.",
  "Papier liegt": "Το χαρτί βρίσκεται",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "Το PDFMy ρωτά τον σαρωτή αν υπάρχει χαρτί στον τροφοδότη, αλλιώς σαρώνει το γυαλί."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "Το PDFMy ρωτά τον σαρωτή αν υπάρχει χαρτί στον τροφοδότη, αλλιώς σαρώνει το γυαλί.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Εγκατεστημένο: PDFMy (άγνωστο), το pdfmy Scan δεν έχει ξεκινήσει. Κάντε κλικ για αναζήτηση ενημερώσεων.",
+ "PDFMy ·": "PDFMy ·"
 }

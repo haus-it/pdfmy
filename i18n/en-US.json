@@ -3213,5 +3213,7 @@
  "im Einzug": "in the feeder",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Is the paper placed correctly in the <b>feeder</b> or on the <b>glass</b>? You can set this under “Paper is”.",
  "Papier liegt": "Paper is",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy asks the scanner whether there is paper in the feeder; otherwise it scans the glass."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy asks the scanner whether there is paper in the feeder; otherwise it scans the glass.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installed: PDFMy (unknown), pdfmy Scan not started. Click to check for updates.",
+ "PDFMy ·": "PDFMy ·"
 }

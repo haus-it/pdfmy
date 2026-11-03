@@ -3213,5 +3213,7 @@
  "im Einzug": "v podavači",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Leží papír správně v <b>podavači</b> nebo na <b>skle</b>? V části „Papír leží“ to můžete pevně nastavit.",
  "Papier liegt": "Papír leží",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy se ptá skeneru, zda je v podavači papír, jinak skenuje sklo."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy se ptá skeneru, zda je v podavači papír, jinak skenuje sklo.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Nainstalováno: PDFMy (neznámé), pdfmy Scan nespuštěn. Kliknutím vyhledáte aktualizace.",
+ "PDFMy ·": "PDFMy ·"
 }

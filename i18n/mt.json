@@ -3213,5 +3213,7 @@
  "im Einzug": "fil-feeder",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Il-karta qiegħda sew fil-<b>feeder</b> jew fuq il-<b>ħġieġ</b>? Taħt “Il-karta qiegħda” tista’ tissettjaha.",
  "Papier liegt": "Il-karta qiegħda",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy jistaqsi lill-iscanner jekk hemmx karta fil-feeder, inkella jiskennja l-ħġieġ."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy jistaqsi lill-iscanner jekk hemmx karta fil-feeder, inkella jiskennja l-ħġieġ.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installat: PDFMy (mhux magħruf), pdfmy Scan mhux mibdi. Ikklikkja biex tfittex aġġornamenti.",
+ "PDFMy ·": "PDFMy ·"
 }

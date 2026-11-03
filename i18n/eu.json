@@ -3213,5 +3213,7 @@
  "im Einzug": "elikatzailean",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Papera ondo al dago <b>elikatzailean</b> edo <b>kristalean</b>? «Paperaren tokia» atalean finka dezakezu.",
  "Papier liegt": "Paperaren tokia",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy-k eskanerrari galdetzen dio elikatzailean paperik dagoen; bestela, kristala eskaneatzen du."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy-k eskanerrari galdetzen dio elikatzailean paperik dagoen; bestela, kristala eskaneatzen du.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instalatua: PDFMy (ezezaguna), pdfmy Scan ez da abiarazi. Egin klik eguneraketak bilatzeko.",
+ "PDFMy ·": "PDFMy ·"
 }

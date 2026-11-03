@@ -78,7 +78,7 @@ Object.assign(man, { id: '/', name: 'PDFMy', short_name: 'PDFMy', description: '
 write('manifest.webmanifest', JSON.stringify(man, null, 2) + '\n');
 const stamp = new Date().toISOString().replace(/\D/g, '').slice(0, 12);
 write('sw.js', fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8')
-  .replace(/const VERSION = '[^']+';/, `const VERSION = 'pdfmy-${stamp}';`)
+  .replace(/const VERSION = 'app-(v\d+)';/, (m, nr) => `const VERSION = 'pdfmy-${stamp}-${nr}';`)   // Zeitstempel + Versionsnummer (Statuszeile, Fehlerbericht)
   .replace("'js/tools.js',", "'js/tools.js', 'impressum.html', 'datenschutz.html', 'barrierefreiheit.html', 'hilfe.html', 'hilfe.js', 'sprache.js',"));
 
 // Rechtstexte und Infoseiten. multi: mehrsprachig (Hilfe, Scanner) – Sprachwahl oben rechts wie in der App, Wörterbuch i18n/site/<code>.json.

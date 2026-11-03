@@ -3213,5 +3213,7 @@
  "im Einzug": "në ushqyes",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "A është letra vendosur saktë në <b>ushqyes</b> ose mbi <b>xham</b>? Te „Letra ndodhet“ mund ta caktoni.",
  "Papier liegt": "Letra ndodhet",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy e pyet skanerin nëse ka letër në ushqyes, përndryshe skanon xhamin."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy e pyet skanerin nëse ka letër në ushqyes, përndryshe skanon xhamin.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instaluar: PDFMy (i panjohur), pdfmy Scan nuk është nisur. Klikoni për të kërkuar përditësime.",
+ "PDFMy ·": "PDFMy ·"
 }

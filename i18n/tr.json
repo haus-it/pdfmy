@@ -3213,5 +3213,7 @@
  "im Einzug": "besleyicide",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Kâğıt <b>besleyicide</b> veya <b>camda</b> doğru yerleştirildi mi? “Kâğıdın konumu” altında bunu sabit olarak ayarlayabilirsiniz.",
  "Papier liegt": "Kâğıdın konumu",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy tarayıcıya besleyicide kâğıt olup olmadığını sorar, yoksa camı tarar."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy tarayıcıya besleyicide kâğıt olup olmadığını sorar, yoksa camı tarar.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Yüklü: PDFMy (bilinmiyor), pdfmy Scan başlatılmadı. Güncellemeleri aramak için tıklayın.",
+ "PDFMy ·": "PDFMy ·"
 }

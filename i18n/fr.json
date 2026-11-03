@@ -3213,5 +3213,7 @@
  "im Einzug": "dans le chargeur",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Le papier est-il bien placé dans le <b>chargeur</b> ou sur la <b>vitre</b> ? Sous « Le papier est », vous pouvez le fixer.",
  "Papier liegt": "Le papier est",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy demande au scanner s’il y a du papier dans le chargeur ; sinon, il numérise la vitre."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy demande au scanner s’il y a du papier dans le chargeur ; sinon, il numérise la vitre.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installé : PDFMy (inconnu), pdfmy Scan non démarré. Cliquez pour rechercher des mises à jour.",
+ "PDFMy ·": "PDFMy ·"
 }

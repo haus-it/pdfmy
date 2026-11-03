@@ -3213,5 +3213,7 @@
  "im Einzug": "v podajalniku",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Ali je papir pravilno v <b>podajalniku</b> ali na <b>steklu</b>? Pod „Papir je“ lahko to trajno nastavite.",
  "Papier liegt": "Papir je",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy vpraša skener, ali je v podajalniku papir, sicer skenira steklo."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy vpraša skener, ali je v podajalniku papir, sicer skenira steklo.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Nameščeno: PDFMy (neznano), pdfmy Scan ni zagnan. Kliknite za iskanje posodobitev.",
+ "PDFMy ·": "PDFMy ·"
 }

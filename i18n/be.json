@@ -3213,5 +3213,7 @@
  "im Einzug": "у аўтападавальніку",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Ці правільна ляжыць папера ў <b>аўтападавальніку</b> або на <b>шкле</b>? У раздзеле «Папера ляжыць» гэта можна задаць.",
  "Papier liegt": "Папера ляжыць",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy пытаецца ў сканера, ці ёсць папера ў аўтападавальніку, інакш скануе шкло."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy пытаецца ў сканера, ці ёсць папера ў аўтападавальніку, інакш скануе шкло.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Усталявана: PDFMy (невядома), pdfmy Scan не запушчаны. Націсніце, каб праверыць абнаўленні.",
+ "PDFMy ·": "PDFMy ·"
 }

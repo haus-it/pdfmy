@@ -3213,5 +3213,7 @@
  "im Einzug": "sööturis",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Kas paber on õigesti <b>sööturis</b> või <b>klaasil</b>? Jaotises „Paber on“ saate selle kindlaks määrata.",
  "Papier liegt": "Paber on",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy küsib skannerilt, kas sööturis on paberit, muidu skannib klaasilt."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy küsib skannerilt, kas sööturis on paberit, muidu skannib klaasilt.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Paigaldatud: PDFMy (teadmata), pdfmy Scan pole käivitatud. Klõpsake uuenduste otsimiseks.",
+ "PDFMy ·": "PDFMy ·"
 }

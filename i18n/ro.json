@@ -3213,5 +3213,7 @@
  "im Einzug": "în alimentator",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Este hârtia așezată corect în <b>alimentator</b> sau pe <b>geam</b>? La „Hârtia este” puteți seta acest lucru fix.",
  "Papier liegt": "Hârtia este",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy întreabă scanerul dacă există hârtie în alimentator, altfel scanează geamul."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy întreabă scanerul dacă există hârtie în alimentator, altfel scanează geamul.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instalat: PDFMy (necunoscut), pdfmy Scan nepornit. Faceți clic pentru a căuta actualizări.",
+ "PDFMy ·": "PDFMy ·"
 }

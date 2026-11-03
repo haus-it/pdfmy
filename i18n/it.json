@@ -3213,5 +3213,7 @@
  "im Einzug": "nell'alimentatore",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "La carta è posizionata correttamente nell'<b>alimentatore</b> o sul <b>vetro</b>? In «La carta è» può impostarlo in modo fisso.",
  "Papier liegt": "La carta è",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy chiede allo scanner se c'è carta nell'alimentatore, altrimenti scansiona il vetro."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy chiede allo scanner se c'è carta nell'alimentatore, altrimenti scansiona il vetro.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installato: PDFMy (sconosciuto), pdfmy Scan non avviato. Fare clic per cercare aggiornamenti.",
+ "PDFMy ·": "PDFMy ·"
 }

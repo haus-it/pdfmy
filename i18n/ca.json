@@ -3213,5 +3213,7 @@
  "im Einzug": "a l'alimentador",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "El paper està ben col·locat a l'<b>alimentador</b> o sobre el <b>vidre</b>? A «El paper és» ho podeu fixar.",
  "Papier liegt": "El paper és",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pregunta a l'escàner si hi ha paper a l'alimentador; si no, escaneja el vidre."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pregunta a l'escàner si hi ha paper a l'alimentador; si no, escaneja el vidre.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instal·lat: PDFMy (desconegut), pdfmy Scan no iniciat. Feu clic per cercar actualitzacions.",
+ "PDFMy ·": "PDFMy ·"
 }

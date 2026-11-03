@@ -1,3 +1,7 @@
+Geändert von Mentor GmbH (03.11.2026) in vendor/pdf-lib-crypt.min.js: parseString löst Escape-Folgen
+vor dem Entschlüsseln auf (PDFString.asBytes, dann decryptBytes, Ergebnis als PDFHexString).
+Test: tests/pdfcrypt-strings.test.js
+
 MIT License
 
 Copyright (c) 2019 Andrew Dillon

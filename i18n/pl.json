@@ -3213,5 +3213,7 @@
  "im Einzug": "w podajniku",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Czy papier leży prawidłowo w <b>podajniku</b> lub na <b>szybie</b>? W sekcji „Papier leży” możesz to ustawić na stałe.",
  "Papier liegt": "Papier leży",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pyta skaner, czy w podajniku jest papier, w przeciwnym razie skanuje szybę."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pyta skaner, czy w podajniku jest papier, w przeciwnym razie skanuje szybę.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Zainstalowano: PDFMy (nieznany), pdfmy Scan nieuruchomiony. Kliknij, aby sprawdzić aktualizacje.",
+ "PDFMy ·": "PDFMy ·"
 }

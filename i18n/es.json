@@ -3213,5 +3213,7 @@
  "im Einzug": "en el alimentador",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "¿Está el papel bien colocado en el <b>alimentador</b> o sobre el <b>cristal</b>? En «El papel está» puede fijarlo.",
  "Papier liegt": "El papel está",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pregunta al escáner si hay papel en el alimentador; si no, escanea el cristal."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy pregunta al escáner si hay papel en el alimentador; si no, escanea el cristal.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Instalado: PDFMy (desconocido), pdfmy Scan no iniciado. Haga clic para buscar actualizaciones.",
+ "PDFMy ·": "PDFMy ·"
 }

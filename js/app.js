@@ -5372,14 +5372,18 @@ $('#signNew').onclick = () => openSign(null, 'sign');
 // Offline-Speicher + Update-Hinweis: Ein offener Tab läuft mit dem Stand weiter, mit dem er geladen wurde.
 // Kommt eine neue Version, bieten wir das Neuladen an (nie automatisch – ungespeicherte Arbeit bleibt erhalten).
 /* ---------- Updates: automatisch erkennen, ohne offenes Dokument sofort anwenden; „Updates suchen“ im Menü ---------- */
-// Versionsstand = Name des Offline-Speichers (Build-Zeitstempel, z. B. pdfmy-202610150012 → „Stand 15.10.2026, 02:12 Uhr“)
+// Versionsstand = Name des Offline-Speichers (Build-Zeitstempel und Nummer, z. B. pdfmy-202610150012-v215 → „Stand 15.10.2026, 02:12 Uhr“, „v215“)
+async function versionKey() {
+  // Stand der aktiven Fassung: der Service Worker legt ihn im dauerhaften Speicher ab (Name „pdfmy-dateien“ trägt keine Version mehr)
+  const mark = await caches.match('__version__').catch(() => null);
+  return mark ? (await mark.text()).trim() : (await caches.keys()).find(x => /^(pdfmy|mentor|app)-\d/.test(x)) || '';
+}
+async function versionNo() { try { return ((await versionKey()).match(/(?:^app-|-)(v\d+)$/) || [])[1] || ''; } catch { return ''; } }
 async function versionLabel(report) {   // report: für Fehlerberichte immer deutsch, sonst im Format der Oberfläche
   try {
-    // Stand der aktiven Fassung: der Service Worker legt ihn im dauerhaften Speicher ab (Name „pdfmy-dateien“ trägt keine Version mehr)
-    const mark = await caches.match('__version__').catch(() => null);
-    const k = mark ? (await mark.text()).trim() : (await caches.keys()).find(x => /^(pdfmy|mentor|app)-\d/.test(x)) || '';
+    const k = await versionKey();
     const m = k.match(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/);
-    if (!m) return k ? `Version ${k.replace(/^app-/, '')}` : '';
+    if (!m) return k ? `Version ${k.replace(/^app-/, '')}` : '';   // Entwicklungsstand: „Version v215“
     const d = new Date(Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5]));
     if (report) return `Stand ${d.toLocaleDateString('de-DE')}, ${d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} Uhr`;
     return `Stand ${I18N.fmtDate(d)}, ${I18N.fmtTime(d)} Uhr`;
@@ -5472,5 +5476,5 @@ function iosOfflineHint() {
   toast(I18N.t('Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.'), 12000);
 }
 $('#btnUpdate').onclick = () => checkUpdates(true);
-I18N.ready().then(versionLabel).then(v => { if (v) { $('#verInfo').textContent = `${APP.name} · ${I18N.t(v)}`; $('#btnUpdate').title = `Nach einer neuen Version suchen – installiert: ${v}`; } });
+I18N.ready().then(versionLabel).then(async v => { const nr = await versionNo(); if (v) { $('#verInfo').textContent = `${APP.name}${nr && !v.includes(nr) ? ' ' + nr : ''} · ${I18N.t(v)}`; $('#btnUpdate').title = `Nach einer neuen Version suchen – installiert: ${v}`; } });
 refresh();

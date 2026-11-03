@@ -3213,5 +3213,7 @@
  "im Einzug": "in de invoer",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Ligt het papier goed in de <b>invoer</b> of op de <b>glasplaat</b>? Onder „Papier ligt” kunt u dit vast instellen.",
  "Papier liegt": "Papier ligt",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy vraagt de scanner of er papier in de invoer ligt, anders scant het de glasplaat."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy vraagt de scanner of er papier in de invoer ligt, anders scant het de glasplaat.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Geïnstalleerd: PDFMy (onbekend), pdfmy Scan niet gestart. Klik om naar updates te zoeken.",
+ "PDFMy ·": "PDFMy ·"
 }

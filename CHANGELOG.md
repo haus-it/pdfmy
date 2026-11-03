@@ -4,6 +4,18 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Verschlüsselte PDFs: Schrift wieder lesbar (app-v215)
+- Fehler aus dem Fehlerbericht vom 03.11.2026 behoben: Bei manchen PDFs mit Rechte-Schutz (RC4, ohne Öffnen-Passwort) erschien der Text als Kästchen, auch in „Erkannter Text“. Ursache: Die Bibliothek pdf-lib-crypt entschlüsselte Zeichenketten mit Escape-Folgen, ohne diese vorher aufzulösen. Dadurch wurden die Schriftangaben unbrauchbar.
+- Korrektur in `vendor/pdf-lib-crypt.min.js`, vermerkt in `vendor/licenses/_cantoo_pdf-lib.txt`. Test: `tests/pdfcrypt-strings.test.js`. Mit der gemeldeten Rechnung geprüft.
+- Versionsnummer sichtbar: Unten rechts steht jetzt z. B. „PDFMy v215 · 03.11.2026 15:30“, ebenso im Menü und im Fehlerbericht („Version 215, Stand …“). So lässt sich bei Rückfragen sofort sagen, welche Fassung läuft.
+- Ausrollen: Das Vorab-Übersetzen der Webseiten bricht einen hängenden Browser-Befehl nach 60 Sekunden ab (`tools/prerender.js`), statt den Build endlos zu blockieren.
+
+### Saubere Seiten bei Scans und Handyfotos (app-v214)
+- Farbdokumente: Schatten und Lichtverlauf werden ausgeglichen, Logos behalten ihre Farbe. Farbiges Papier bleibt unverändert.
+- Lochungen werden entfernt, wenn mindestens zwei gleich große runde Flecken auf einer Linie am selben Rand liegen und daneben kein Text steht.
+- Schmale graue Ränder werden weiß. Farbige und breite Randstreifen bleiben. Der Modus „Original“ ändert nichts davon.
+- Geprüft mit Testbildern und `tests/imaging.test.js`. Mit echten Handyfotos noch nicht gemessen.
+
 ### Scan-Dialog: Papierquelle verständlich (app-v213)
 - „Vorlage“ heißt jetzt „Papier liegt“ mit „Automatisch erkennen“, „im Einzug“ und „auf dem Glas“ (Meldung GF). Der Hinweis darunter nennt, was der gewählte Scanner tatsächlich tut. Geräte ohne Einzug scannen fest vom Glas.
 - Offen: Echte Erkennung über WSD ist nicht eingebaut. Dort versucht PDFMy zuerst den Einzug, dann das Glas.

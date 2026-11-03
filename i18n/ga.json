@@ -3213,5 +3213,7 @@
  "im Einzug": "san fhothaire",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "An bhfuil an páipéar suite i gceart san <b>fhothaire</b> nó ar an <b>ngloine</b>? Faoi “Tá an páipéar” is féidir leat é a shocrú.",
  "Papier liegt": "Tá an páipéar",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "Fiafraíonn PDFMy den scanóir an bhfuil páipéar san fhothaire; mura bhfuil, scanann sé an ghloine."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "Fiafraíonn PDFMy den scanóir an bhfuil páipéar san fhothaire; mura bhfuil, scanann sé an ghloine.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Suiteáilte: PDFMy (anaithnid), níor tosaíodh pdfmy Scan. Cliceáil chun nuashonruithe a lorg.",
+ "PDFMy ·": "PDFMy ·"
 }

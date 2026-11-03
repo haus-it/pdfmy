@@ -55,6 +55,15 @@
     return paper > 150 && dark > n * 0.002 && mid < dark * 0.8 && light / n < 0.04;
   }
 
+  // Maximum über die Nachbarn (Schrift-Lücken schließen), dann glätten
+  function backdrop(sm, sw, sh) {
+    const mx = new Float32Array(sw * sh);
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { let m = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < sh && xx >= 0 && xx < sw && sm[yy * sw + xx] > m) m = sm[yy * sw + xx]; } mx[y * sw + x] = m; }
+    const bl = new Float32Array(sw * sh);
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { let s = 0, n = 0; for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < sh && xx >= 0 && xx < sw) { s += mx[yy * sw + xx]; n++; } } bl[y * sw + x] = s / n; }
+    return bl;
+  }
+
   /* Papierhintergrund schätzen und herausrechnen (Schatten, Lichtverlauf bei Handyfotos):
      grob verkleinern, Schrift per Maximum-Filter entfernen, weich vergrößern; Pixel / Hintergrund → Papier wird gleichmäßig hell */
   function flatten(g, W, H) {
@@ -64,12 +73,7 @@
       for (let yy = y * k; yy < y1; yy += 2) for (let xx = x * k; xx < x1; xx += 2) { const v = g[yy * W + xx]; if (v > m) m = v; }
       sm[y * sw + x] = m;
     }
-    // Maximum über die Nachbarn (Schrift-Lücken schließen), dann glätten
-    const mx = new Float32Array(sw * sh);
-    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { let m = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < sh && xx >= 0 && xx < sw && sm[yy * sw + xx] > m) m = sm[yy * sw + xx]; } mx[y * sw + x] = m; }
-    const bl = new Float32Array(sw * sh);
-    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { let s = 0, n = 0; for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < sh && xx >= 0 && xx < sw) { s += mx[yy * sw + xx]; n++; } } bl[y * sw + x] = s / n; }
-    const out = new Uint8ClampedArray(W * H);
+    const bl = backdrop(sm, sw, sh), out = new Uint8ClampedArray(W * H);
     for (let y = 0; y < H; y++) {
       const fy = Math.min(sh - 1.001, Math.max(0, y / k - 0.5)), y0 = fy | 0, ty = fy - y0;
       for (let x = 0; x < W; x++) {
@@ -80,6 +84,112 @@
     }
     return out;
   }
+  /* Wie flatten, aber für Farbseiten: Licht nur aus grauen, hellen Papierflächen schätzen, die Lücken (Logos, Bilder) von den Nachbarn füllen,
+     alle drei Kanäle gleich aufhellen. Farbiges Papier oder zu wenig Papierfläche: keine Änderung (false). */
+  function colorFlatten(d, W, H) {
+    const k = Math.max(8, Math.round(Math.max(W, H) / 64)), sw = Math.ceil(W / k), sh = Math.ceil(H / k), sm = new Float32Array(sw * sh), vals = [];
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) {
+      let m = 0, grey = 0, all = 0; const y1 = Math.min(H, (y + 1) * k), x1 = Math.min(W, (x + 1) * k);
+      for (let yy = y * k; yy < y1; yy += 2) for (let xx = x * k; xx < x1; xx += 2) {
+        const j = (yy * W + xx) * 4, r = d[j], g = d[j + 1], b = d[j + 2]; all++;
+        if (Math.max(r, g, b) - Math.min(r, g, b) < 28) { grey++; const v = r * 0.299 + g * 0.587 + b * 0.114; if (v > m) m = v; }
+      }
+      if (grey >= all * 0.25) { sm[y * sw + x] = m; vals.push(m); }
+    }
+    if (vals.length < sw * sh * 0.3) return false;
+    const floor = vals.sort((a, b) => a - b)[Math.floor(vals.length * 0.9)] * 0.45;
+    for (let i = 0; i < sm.length; i++) if (sm[i] < floor) sm[i] = 0;
+    for (let open = true; open;) {
+      open = false; const prev = sm.slice();
+      for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) {
+        if (prev[y * sw + x]) continue;
+        let s = 0, n = 0; for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const xx = x + dx, yy = y + dy; if (xx >= 0 && yy >= 0 && xx < sw && yy < sh && prev[yy * sw + xx]) { s += prev[yy * sw + xx]; n++; } }
+        if (n) sm[y * sw + x] = s / n; else open = true;
+      }
+    }
+    const bl = backdrop(sm, sw, sh);
+    for (let y = 0; y < H; y++) {
+      const fy = Math.min(sh - 1.001, Math.max(0, y / k - 0.5)), y0 = fy | 0, ty = fy - y0;
+      for (let x = 0; x < W; x++) {
+        const fx = Math.min(sw - 1.001, Math.max(0, x / k - 0.5)), x0 = fx | 0, tx = fx - x0, i = y0 * sw + x0, j = (y * W + x) * 4;
+        const b = (bl[i] * (1 - tx) + bl[i + 1] * tx) * (1 - ty) + (bl[i + sw] * (1 - tx) + bl[i + sw + 1] * tx) * ty, gain = Math.min(3, 250 / b);
+        d[j] = Math.min(255, d[j] * gain); d[j + 1] = Math.min(255, d[j + 1] * gain); d[j + 2] = Math.min(255, d[j + 2] * gain);
+      }
+    }
+    return true;
+  }
+
+  /* Lochung finden: dunkle, runde, gefüllte Flecken am Blattrand. Es zählen nur mindestens zwei gleich große, auf einer Linie am selben Rand –
+     so bleiben einzelne Punkte und Logos unberührt. d: RGBA. → [{ x, y, r }] in Pixeln */
+  function findHoles(d, W, H) {
+    const S = Math.min(W, H), L = Math.max(W, H), st = Math.max(1, Math.floor(S / 700)), w = Math.floor(W / st), h = Math.floor(H / st), band = 0.1 * S / st;
+    const lum = (x, y) => { const j = (y * st * W + x * st) * 4; return d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114; };
+    const hist = new Uint32Array(256); let n = 0;
+    for (let y = 0; y < h; y += 2) for (let x = 0; x < w; x += 2) { hist[lum(x, y) | 0]++; n++; }
+    let paper = 0; for (let acc = 0; paper < 255 && (acc += hist[paper]) < n * 0.55;) paper++;
+    const thr = paper * 0.6, seen = new Uint8Array(w * h), blobs = [];
+    const inBand = (x, y) => x < band || y < band || x >= w - band || y >= h - band;
+    for (let y0 = 0; y0 < h; y0++) for (let x0 = 0; x0 < w; x0++) {
+      if (seen[y0 * w + x0] || !inBand(x0, y0) || lum(x0, y0) >= thr) continue;
+      let a = x0, b = x0, c = y0, e = y0, count = 0; const stack = [y0 * w + x0]; seen[stack[0]] = 1;
+      while (stack.length) {
+        const i = stack.pop(), x = i % w, y = (i - x) / w; count++;
+        if (x < a) a = x; if (x > b) b = x; if (y < c) c = y; if (y > e) e = y;
+        for (const [xx, yy] of [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]) if (xx >= 0 && yy >= 0 && xx < w && yy < h && !seen[yy * w + xx] && inBand(xx, yy) && lum(xx, yy) < thr) { seen[yy * w + xx] = 1; stack.push(yy * w + xx); }
+      }
+      const bw = b - a + 1, bh = e - c + 1, dia = Math.max(bw, bh);
+      if (a === 0 || c === 0 || b === w - 1 || e === h - 1 || dia * st < 0.018 * S || dia * st > 0.05 * S || dia / Math.min(bw, bh) > 1.3 || count / (bw * bh) < 0.68) continue;
+      const cx = (a + b + 1) / 2, cy = (c + e + 1) / 2, r = dia / 2;
+      let light = 0; for (let t = 0; t < 16; t++) { const x = Math.round(cx + Math.cos(t * Math.PI / 8) * r * 1.5), y = Math.round(cy + Math.sin(t * Math.PI / 8) * r * 1.5); if (x >= 0 && y >= 0 && x < w && y < h && lum(x, y) >= thr) light++; }
+      if (light >= 14) blobs.push({ x: cx * st, y: cy * st, r: r * st });
+    }
+    const out = new Set(), sides = [b => b.x < 0.1 * S, b => b.x >= W - 0.1 * S, b => b.y < 0.1 * S, b => b.y >= H - 0.1 * S];
+    sides.forEach((on, s) => {
+      // Richtung Blattmitte muss neben dem Fleck Papier liegen: Aufzählungspunkte haben dort ihren Text
+      const clear = b => { for (let q = 1.5; q <= 3.5; q += 0.25) for (let t = -1; t <= 1; t += 0.25) { const u = q * b.r * (s % 2 ? -1 : 1), v = t * b.r, x = Math.round((b.x + (s < 2 ? u : v)) / st), y = Math.round((b.y + (s < 2 ? v : u)) / st); if (x >= 0 && y >= 0 && x < w && y < h && lum(x, y) < thr) return false; } return true; };
+      const list = blobs.filter(b => on(b) && clear(b)), vert = s < 2;
+      for (const p of list) for (const q of list) {
+        if (p === q) continue;
+        const across = vert ? Math.abs(p.x - q.x) : Math.abs(p.y - q.y), along = vert ? Math.abs(p.y - q.y) : Math.abs(p.x - q.x);
+        if (across < 0.015 * S && along > 0.15 * L && Math.max(p.r, q.r) / Math.min(p.r, q.r) < 1.3) { out.add(p); out.add(q); }
+      }
+    });
+    return [...out];
+  }
+  // Lochung mit der Papierfarbe aus dem Ring darum füllen
+  function fillHoles(d, W, H, holes) {
+    for (const { x, y, r } of holes) {
+      const c = [0, 0, 0]; let n = 0;
+      for (let t = 0; t < 32; t++) { const xx = Math.round(x + Math.cos(t * Math.PI / 16) * r * 1.6), yy = Math.round(y + Math.sin(t * Math.PI / 16) * r * 1.6); if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue; const j = (yy * W + xx) * 4; c[0] += d[j]; c[1] += d[j + 1]; c[2] += d[j + 2]; n++; }
+      if (!n) continue;
+      const R = r * 1.3, y1 = Math.min(H - 1, Math.ceil(y + R)), x1 = Math.min(W - 1, Math.ceil(x + R));
+      for (let yy = Math.max(0, Math.floor(y - R)); yy <= y1; yy++) for (let xx = Math.max(0, Math.floor(x - R)); xx <= x1; xx++) {
+        if ((xx - x) ** 2 + (yy - y) ** 2 > R * R) continue;
+        const j = (yy * W + xx) * 4; d[j] = c[0] / n; d[j + 1] = c[1] / n; d[j + 2] = c[2] / n;
+      }
+    }
+    return holes.length;
+  }
+  /* Grauen Scannerrand entfernen: nur graue Streifen, die am äußersten Pixel beginnen, schmal bleiben (max. 1,5 % der kurzen Seite) und
+     auf mindestens 30 % der Kantenlänge vorkommen. Farbige oder breite Randstreifen gehören zum Dokument und bleiben. */
+  function cleanEdges(d, W, H) {
+    const depth = Math.max(2, Math.round(Math.min(W, H) * 0.015));
+    const at = [(p, q) => q * W + p, (p, q) => (H - 1 - q) * W + p, (p, q) => p * W + q, (p, q) => p * W + W - 1 - q];
+    let cleaned = 0;
+    at.forEach((idx, s) => {
+      const len = s < 2 ? W : H, runs = new Uint16Array(len); let hit = 0;
+      for (let p = 0; p < len; p++) {
+        let q = 0;
+        for (; q < depth; q++) { const j = idx(p, q) * 4, r = d[j], g = d[j + 1], b = d[j + 2]; if (Math.max(r, g, b) - Math.min(r, g, b) >= 40 || r * 0.299 + g * 0.587 + b * 0.114 >= 225) break; }
+        if (q > 0 && q < depth) { runs[p] = q; hit++; }
+      }
+      if (hit < len * 0.3) return;
+      cleaned++;
+      for (let p = 0; p < len; p++) for (let q = 0; q < runs[p]; q++) { const j = idx(p, q) * 4; d[j] = d[j + 1] = d[j + 2] = 255; }
+    });
+    return cleaned;
+  }
+
   // Leicht nachschärfen (unscharfe Handyfotos): v + a·(v − Mittel 3×3)
   function sharpen(g, W, H, a = 0.6) {
     const out = new Uint8ClampedArray(g.length);
@@ -98,6 +208,8 @@
       const c = canvas(src.width, src.height), ctx = c.getContext('2d', { willReadFrequently: true });
       ctx.drawImage(src, 0, 0);
       const img = ctx.getImageData(0, 0, c.width, c.height), d = img.data, n = d.length / 4, hist = new Uint32Array(256);
+      fillHoles(d, c.width, c.height, findHoles(d, c.width, c.height));
+      colorFlatten(d, c.width, c.height);
       for (let j = 0; j < d.length; j += 4) hist[(d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114) | 0]++;
       const pct = q => { let acc = 0; const t = n * q; for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= t) return v; } return 255; };
       const paper = pct(0.55), lo = Math.min(pct(0.005), paper - 80), t = otsu(hist, n);
@@ -105,6 +217,7 @@
       const lut = new Uint8ClampedArray(256);
       for (let v = 0; v < 256; v++) lut[v] = Math.round(Math.pow(clamp((v - lo) / (hi - lo)), 1.3) * 255);
       for (let j = 0; j < d.length; j += 4) { d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]]; }
+      cleanEdges(d, c.width, c.height);
       ctx.putImageData(img, 0, 0);
       return c;
     }
@@ -113,6 +226,7 @@
     ctx.drawImage(src, 0, 0);
     if (mode === 'original') return c;
     const img = ctx.getImageData(0, 0, c.width, c.height), d = img.data, n = d.length / 4;
+    if (mode !== 'gray') fillHoles(d, c.width, c.height, findHoles(d, c.width, c.height));
     let g = new Uint8Array(n); const hist = new Uint32Array(256);
     for (let i = 0, j = 0; i < n; i++, j += 4) g[i] = (d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114) | 0;
     if (mode === 'document' || mode === 'bw') { g = flatten(g, c.width, c.height); if (Math.max(c.width, c.height) < 2600) g = sharpen(g, c.width, c.height, 0.5); }
@@ -132,6 +246,7 @@
       for (let v = 0; v < 256; v++) lut[v] = v > t ? 255 : 0;
     }
     for (let i = 0, j = 0; i < n; i++, j += 4) { const v = lut[g[i]]; d[j] = d[j + 1] = d[j + 2] = v; }
+    if (mode !== 'gray') cleanEdges(d, c.width, c.height);
     ctx.putImageData(img, 0, 0);
     return c;
   }
@@ -361,5 +476,5 @@
     return c;
   }
 
-  root.Imaging = { canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
+  root.Imaging = { colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
 })(self);

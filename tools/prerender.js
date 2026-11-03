@@ -68,7 +68,11 @@ async function chrome() {
     if (m.id && wait.has(m.id)) { const [r, j] = wait.get(m.id); wait.delete(m.id); m.error ? j(new Error(m.error.message)) : r(m.result); }
     else if (m.method && m.sessionId && handlers.has(m.sessionId)) handlers.get(m.sessionId)(m);
   };
-  const send = (method, params = {}, sessionId) => new Promise((r, j) => { const i = ++id; wait.set(i, [r, j]); ws.send(JSON.stringify({ id: i, method, params, sessionId })); });
+  // Zeitlimit je Befehl: eine hängende Seite darf den Build (und damit das Ausrollen) nicht endlos blockieren
+  const send = (method, params = {}, sessionId) => new Promise((r, j) => {
+    const i = ++id, t = setTimeout(() => { wait.delete(i); j(new Error(`${method}: keine Antwort nach 60 s`)); }, 60000);
+    wait.set(i, [x => { clearTimeout(t); r(x); }, e => { clearTimeout(t); j(e); }]); ws.send(JSON.stringify({ id: i, method, params, sessionId }));
+  });
   const close = () => { try { ws.close(); } catch {} try { proc.kill(); } catch {} setTimeout(() => { try { fs.rmSync(dir, { recursive: true, force: true }); } catch {} }, 500); };
   return { send, handlers, close };
 }

@@ -3213,5 +3213,7 @@
  "im Einzug": "i arkføderen",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Ligger papiret korrekt i <b>arkføderen</b> eller på <b>glasset</b>? Under »Papiret ligger« kan De indstille det fast.",
  "Papier liegt": "Papiret ligger",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy spørger scanneren, om der ligger papir i arkføderen, ellers scanner den glasset."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy spørger scanneren, om der ligger papir i arkføderen, ellers scanner den glasset.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Installeret: PDFMy (ukendt), pdfmy Scan ikke startet. Klik for at søge efter opdateringer.",
+ "PDFMy ·": "PDFMy ·"
 }

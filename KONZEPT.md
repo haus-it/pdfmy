@@ -428,6 +428,16 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 **Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Kacheln und Vorlagen statt Workflow-Editor. 5: Ausgabe läuft über den bestehenden PDF-Aufbau. 6 nicht betroffen.
 **Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate (RTF, XPS, DjVu, CBZ, PSD) bleiben offen.
 
+### Umgesetzt 02.11.2026: Saubere Seiten (app-v214)
+
+Anlass: Vergleich Handyfoto und Scanner desselben Belegs (wolkiger Hintergrund, dunkle Lochung, grauer Scannerrand).
+
+**Leitplanken:** 1 gewahrt (alles im Gerät). 2 gewahrt (keine neue Verbindung). 3 gewahrt. 4 gewahrt (keine neue Bedienung, Modus „Original“ bleibt der Ausweg). 5 nicht betroffen, keine neue Oberfläche. 6 nicht betroffen.
+
+**Gemessen** (Testbild 2480 × 3508 mit Schatten, zwei Lochungen, grauem Rand, im Chrome auf dem Entwicklungsrechner): Farbdokument 453 ms, Dokument 309 ms, Graustufen ohne diese Schritte 218 ms. Schatten, Lochung und Rand danach weiß, Logo weiter rot, Schriftmenge praktisch unverändert. Nicht gemessen: echte Handyfotos, Laufzeit auf Handys.
+
+**Bewusste Grenze:** Einzelne Lochungen bleiben stehen, weil nur Paare sicher von Punkten und Logos zu trennen sind. Ein zu knapper Zuschnitt oben lässt sich weiter nur über „Ecken anpassen“ beheben.
+
 ### Umgesetzt 02.11.2026: Lücken geschlossen (app-v212)
 **Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Eingaben nur bei Bedarf sichtbar. 5: PDF/A-2b und PDF/UA-1 mit veraPDF geprüft, axe ohne Befund. 6 nicht betroffen.
 **Grenze Struktur-Tags:** Nur bei allen Seiten einer einzigen Datei, sonst zeigten Verweise ins Leere. Darüber warnt der Speichern-Dialog.

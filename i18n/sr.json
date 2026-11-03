@@ -3213,5 +3213,7 @@
  "im Einzug": "у увлакачу",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Да ли је папир исправно у <b>увлакачу</b> или на <b>стаклу</b>? Под „Папир лежи“ то можете трајно подесити.",
  "Papier liegt": "Папир лежи",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy пита скенер да ли има папира у увлакачу, иначе скенира стакло."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "PDFMy пита скенер да ли има папира у увлакачу, иначе скенира стакло.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Инсталирано: PDFMy (непознато), pdfmy Scan није покренут. Кликните за тражење ажурирања.",
+ "PDFMy ·": "PDFMy ·"
 }

@@ -2035,7 +2035,7 @@ $('#scanPhoneMac').onclick = openCamera;   // am Mac dieselbe Kamera wie unter W
 
 /* ---------- Installierte Versionen immer sichtbar (Statuszeile unten): PDFMy-Stand und pdfmy Scan ---------- */
 async function renderVerBar() {
-  const v = (await versionLabel()).replace(/^Stand /, '').replace(/, (.+?) Uhr$/, ' $1');
+  const nr = await versionNo(), v = [nr, (await versionLabel()).replace(/^(Stand|Version) /, '').replace(/, (.+?) Uhr$/, ' $1')].filter((x, i, a) => x && a.indexOf(x) === i).join(' · ');
   const running = await scanHelperRunning();
   let scan = '';
   if (running) scan = scanOutdated() ? ` · <span class="vs">pdfmy Scan ${esc(state.scanVersion)} <b>(Update ${scanLatest()})</b></span>` : ` · <span class="vs">pdfmy Scan ${esc(state.scanVersion)}</span>`;
@@ -2058,7 +2058,7 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 const SUPPORT = APP.supportMail || 'wumertens@mentor-group.de';
 let repBase = '';
 async function buildReport(context) {
-  const v = await versionLabel(true), running = await scanHelperRunning();
+  const nr = await versionNo(), v = [nr && nr.replace(/^v/, 'Version '), await versionLabel(true)].filter(Boolean).join(', '), running = await scanHelperRunning();
   let scanLog = '', net = '';
   if (running) {
     try {

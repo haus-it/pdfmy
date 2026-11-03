@@ -3213,5 +3213,7 @@
  "im Einzug": "az adagolóban",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "Megfelelően van a papír az <b>adagolóban</b> vagy az <b>üvegen</b>? A „A papír helye” alatt rögzítheti.",
  "Papier liegt": "A papír helye",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "A PDFMy megkérdezi a szkennert, van-e papír az adagolóban, különben az üveget szkenneli."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "A PDFMy megkérdezi a szkennert, van-e papír az adagolóban, különben az üveget szkenneli.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Telepítve: PDFMy (ismeretlen), a pdfmy Scan nem indult el. Kattintson a frissítések kereséséhez.",
+ "PDFMy ·": "PDFMy ·"
 }

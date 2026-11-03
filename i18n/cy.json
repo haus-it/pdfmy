@@ -3213,5 +3213,7 @@
  "im Einzug": "yn y porthwr",
  "Liegt das Papier richtig im <b>Einzug</b> oder auf dem <b>Glas</b>? Unter „Papier liegt“ können Sie es fest einstellen.": "A yw’r papur yn gywir yn y <b>porthwr</b> neu ar y <b>gwydr</b>? Dan ‘Mae’r papur’ gallwch ei osod.",
  "Papier liegt": "Mae’r papur",
- "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "Mae PDFMy yn gofyn i’r sganiwr a oes papur yn y porthwr, fel arall mae’n sganio’r gwydr."
+ "PDFMy fragt den Scanner, ob Papier im Einzug liegt, sonst scannt es das Glas.": "Mae PDFMy yn gofyn i’r sganiwr a oes papur yn y porthwr, fel arall mae’n sganio’r gwydr.",
+ "Installiert: PDFMy (unbekannt), pdfmy Scan nicht gestartet. Klicken: nach Updates suchen.": "Wedi’i osod: PDFMy (anhysbys), pdfmy Scan heb ddechrau. Cliciwch i chwilio am ddiweddariadau.",
+ "PDFMy ·": "PDFMy ·"
 }
