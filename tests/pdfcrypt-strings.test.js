@@ -20,7 +20,7 @@ function rc4(key, data) {
 // Literal-String mit oktalen Escapes für alle Bytes außerhalb von Buchstaben und Ziffern
 const lit = b => '(' + [...b].map(c => /[A-Za-z0-9]/.test(String.fromCharCode(c)) ? String.fromCharCode(c) : '\\' + c.toString(8).padStart(3, '0')).join('') + ')';
 
-function encryptedPdf(title) {
+function encryptedPdf(title, hex) {
   const id = Buffer.from('ADEDEA5E9F4FD21CC854AC325F9E0C2D', 'hex'), P = -1324;
   let ok = rc4(md5(PAD).subarray(0, 16), PAD); for (let i = 0; i < 50; i++) ok = md5(ok); // Algorithmus 3, Besitzer = Benutzer = leer
   let o = rc4(ok, PAD); for (let i = 1; i < 20; i++) o = rc4(Buffer.from(ok.map(c => c ^ i)), o);
@@ -30,7 +30,7 @@ function encryptedPdf(title) {
   u = Buffer.concat([u, Buffer.alloc(16)]);
   const objKey = n => md5(key, Buffer.from([n & 255, (n >> 8) & 255, 0, 0, 0])).subarray(0, 16);
   const objs = ['<< /Type /Catalog /Pages 2 0 R >>', '<< /Type /Pages /Kids [3 0 R] /Count 1 >>', '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 200] >>',
-    `<< /Title ${lit(rc4(objKey(4), Buffer.from(title, 'latin1')))} >>`,
+    `<< /Title ${(enc => hex ? `<${enc.toString('hex')}>` : lit(enc))(rc4(objKey(4), Buffer.from(title, 'latin1')))} >>`,
     `<< /Filter /Standard /V 2 /R 3 /Length 128 /P ${P} /O <${o.toString('hex')}> /U <${u.toString('hex')}> >>`];
   let s = '%PDF-1.4\n'; const off = [];
   objs.forEach((x, i) => { off.push(s.length); s += `${i + 1} 0 obj\n${x}\nendobj\n`; });
@@ -42,5 +42,10 @@ function encryptedPdf(title) {
 
 test('pdf-lib-crypt: Literal-Strings mit Escapes werden richtig entschlüsselt', async () => {
   const doc = await C.PDFDocument.load(encryptedPdf('Adobe-Identity (Test)'), { ignoreEncryption: true, password: '', updateMetadata: false });
+  assert.equal(doc.getTitle(), 'Adobe-Identity (Test)');
+});
+
+test('pdf-lib-crypt: Hex-Strings werden richtig entschlüsselt', async () => {
+  const doc = await C.PDFDocument.load(encryptedPdf('Adobe-Identity (Test)', true), { ignoreEncryption: true, password: '', updateMetadata: false });
   assert.equal(doc.getTitle(), 'Adobe-Identity (Test)');
 });

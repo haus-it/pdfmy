@@ -135,6 +135,8 @@ const hl = (s, q) => esc(s).replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, 
 const fmtDate = iso => iso ? I18N.fmtDate(iso.slice(0, 10)) : '';   // Anzeige im Format der Oberflächensprache
 const inDays = d => d < -1 ? `seit ${-d} Tagen überfällig` : d === -1 ? 'seit gestern überfällig' : d === 0 ? 'heute' : d === 1 ? 'morgen' : `in ${d} Tagen`;
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+// Art des Schreibens (Rechnung, Bescheid …) in der Oberflächensprache, Absender bzw. Dateiname unverändert (Inhalt des Nutzers)
+const dlWhat = e => (e.type ? esc(I18N.t(e.type)) + (e.sender ? ' · ' : '') : '') + (e.sender || (!e.type && e.file) ? `<span translate="no">${esc(e.sender || e.file)}</span>` : '');
 function renderDeadlines(list = jLocal()) {
   const box = $('#deadlines'); if (!box) return;
   const due = Journal.deadlines(list), n = list.length;
@@ -142,10 +144,11 @@ function renderDeadlines(list = jLocal()) {
   box.hidden = false;
   const urgent = due.filter(e => e.state !== 'later').length;
   const my = S.author ? list.filter(e => Journal.mine(e, S.author) && !Journal.isClosed(e)).length : 0;
-  box.innerHTML = `<div class="dl-head"><b>${due.length ? `Fristen${urgent ? ` <span class="dl-badge">${urgent} dringend</span>` : ''}` : 'Keine offenen Fristen'}</b>
+  // „Fristen“ und „N dringend“ als eigene Elemente – zusammen in einem Element fand die Übersetzung keinen passenden Schlüssel
+  box.innerHTML = `<div class="dl-head"><b>${due.length ? `<span>Fristen</span>${urgent ? ` <span class="dl-badge">${esc(I18N.t(`Dringend (${urgent})`))}</span>` : ''}` : 'Keine offenen Fristen'}</b>
     <span>${my ? `<button type="button" class="linkbtn" data-j="mine">Meine Post (${my})</button> · ` : ''}<button type="button" class="linkbtn" data-j="open">Posteingangsbuch (${n}) →</button></span></div>
-    <div class="dl-list">${Journal.resubmit(list).slice(0, 5).map(e => `<button type="button" class="dl wv" data-id="${esc(e.id)}"><span class="dl-when">Wiedervorlage</span><span class="dl-what">${esc([e.type, e.sender].filter(Boolean).join(' · ') || e.file)}</span><span class="dl-date">${fmtDate(e.wv)}</span></button>`).join('')}${due.slice(0, 5).map(e => `<button type="button" class="dl ${e.state}" data-id="${esc(e.id)}"><span class="dl-when">${inDays(e.days)}</span>
-    <span class="dl-what">${esc([e.type, e.sender].filter(Boolean).join(' · ') || e.file)}</span><span class="dl-date">${fmtDate(e.deadline)}</span></button>`).join('')}</div>`;
+    <div class="dl-list">${Journal.resubmit(list).slice(0, 5).map(e => `<button type="button" class="dl wv" data-id="${esc(e.id)}"><span class="dl-when">Wiedervorlage</span><span class="dl-what">${dlWhat(e)}</span><span class="dl-date">${fmtDate(e.wv)}</span></button>`).join('')}${due.slice(0, 5).map(e => `<button type="button" class="dl ${e.state}" data-id="${esc(e.id)}"><span class="dl-when">${inDays(e.days)}</span>
+    <span class="dl-what">${dlWhat(e)}</span><span class="dl-date">${fmtDate(e.deadline)}</span></button>`).join('')}</div>`;
   box.onclick = ev => {
     const b = ev.target.closest('button'); if (!b) return;
     if (b.dataset.j === 'remind') return enableReminders();
@@ -2033,9 +2036,14 @@ $('#scanPhone').onclick = openCamera;
 $('#scanPhoneMac').onclick = openCamera;   // am Mac dieselbe Kamera wie unter Windows (vorher Dateiauswahl)
 
 
+// Aufrufe an pdfmy Scan mit Zeitlimit: hängt das Hilfsprogramm, bleibt die Oberfläche nicht auf „wird vorbereitet …“ stehen
+// (Abfragen 15 s; Aufträge 3 min – Windows kann dabei nach einer Bestätigung fragen)
+const scanFetch = (p, o = {}) => fetch(SCAN_API + p, { signal: AbortSignal.timeout(o.method === 'POST' ? 180000 : 15000), ...o });
+
 /* ---------- Installierte Versionen immer sichtbar (Statuszeile unten): PDFMy-Stand und pdfmy Scan ---------- */
 async function renderVerBar() {
   const nr = await versionNo(), v = [nr, (await versionLabel()).replace(/^(Stand|Version) /, '').replace(/, (.+?) Uhr$/, ' $1')].filter((x, i, a) => x && a.indexOf(x) === i).join(' · ');
+  if (!$('#verBar').textContent) $('#verBar').textContent = `${APP.name} ${v}`;   // sofort zeigen – die Abfrage von pdfmy Scan kann einige Sekunden dauern
   const running = await scanHelperRunning();
   let scan = '';
   if (running) scan = scanOutdated() ? ` · <span class="vs">pdfmy Scan ${esc(state.scanVersion)} <b>(Update ${scanLatest()})</b></span>` : ` · <span class="vs">pdfmy Scan ${esc(state.scanVersion)}</span>`;
@@ -2281,7 +2289,7 @@ $('#btnPrinter').onclick = async () => {
   if (st === 'nodriver') {   // pdfmy Scan ab 1.10.1 öffnet das Windows-Fenster zum Einschalten selbst (unabhängig von der Sprache)
     if (verLess(state.scanVersion, '1.10.1')) { alert(T('Der in Windows eingebaute Drucker „Microsoft Print to PDF“ ist ausgeschaltet.\n\nEinschalten: Windows-Suche „Windows-Features aktivieren oder deaktivieren“ → Haken bei „Microsoft Print to PDF“ → OK. Danach hier noch einmal klicken.')); return; }
     if (!confirm(T('Der in Windows eingebaute PDF-Treiber „Microsoft Print to PDF“ ist ausgeschaltet.\n\nSoll pdfmy Scan das Windows-Fenster zum Einschalten öffnen? Dort den Haken bei „Microsoft Print to PDF“ setzen und OK klicken – danach den Drucker hier noch einmal einrichten.'))) return;
-    const r = await fetch(SCAN_API + '/printer?on=1', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json()).catch(() => ({}));
+    const r = await scanFetch('/printer?on=1', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json()).catch(() => ({}));
     status(r.error || T('Das hat nicht geklappt.'));
     return;
   }
@@ -2290,7 +2298,7 @@ $('#btnPrinter').onclick = async () => {
          : !confirm(T('Der Drucker „{0}“ ist eingerichtet. Wieder entfernen?\n\nWindows fragt dafür einmal nach Ihrer Bestätigung.', name))) return;
   status(on ? T('Drucker wird eingerichtet – bitte die Windows-Abfrage bestätigen …') : T('Drucker wird entfernt – bitte die Windows-Abfrage bestätigen …'));
   try {
-    const r = await fetch(SCAN_API + '/printer?on=' + (on ? 1 : 0), { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json());
+    const r = await scanFetch('/printer?on=' + (on ? 1 : 0), { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json());
     state.scanPrinter = r.printer || state.scanPrinter;
     if (!r.ok) { const m = r.error || T('Das hat nicht geklappt.'); status(m); alert(m); return; }
     status(on ? T('Drucker „{0}“ ist eingerichtet. Zum Ausprobieren: in einem beliebigen Programm drucken und „{0}“ wählen.', name) : T('Drucker „{0}“ wurde entfernt.', name));
@@ -2323,7 +2331,7 @@ $('#btnOffice').onclick = async () => {
       : 'Dafür wird das kleine Windows-Programm „pdfmy Scan“ ab Version 1.11.0 benötigt. Es erkennt Ihre Office-Programme und öffnet das Dokument darin – die Datei bleibt auf Ihrem Rechner.\n\nJetzt herunterladen?')) location.href = dl(mac ? SCAN_FILE_UNIX() : SCAN_FILE);
     return;
   }
-  const r = await fetch(SCAN_API + '/office', { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' }).then(x => x.json()).catch(() => ({ apps: [] }));
+  const r = await scanFetch('/office', { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' }).then(x => x.json()).catch(() => ({ apps: [] }));
   const apps = r.apps || [], list = $('#officeList'), last = LS.get('officeChoice', '');
   list.textContent = '';
   for (const [i, a] of apps.entries()) {
@@ -2346,9 +2354,12 @@ $('#officeForm').addEventListener('submit', async e => {
   try {
     const docx = sel.dataset.fmt === 'docx';   // Textprogramme bekommen das gegliederte Word-Dokument (Absätze, Überschriften, Tabellen)
     let bytes;
-    if (docx) { await waitForOcr(state.pages); bytes = Tools.docx(await Promise.all(state.pages.map(pageBlocks)), { title: state.meta.subject || baseName(), author: state.meta.sender, lang: docLang(state.pages) }); }
-    else bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
-    const res = await fetch(SCAN_API + '/office', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + (docx ? '.docx' : '.pdf'), data: b64Bytes(bytes) }) }).then(x => x.json());
+    // Fehler beim Erzeugen nicht als „pdfmy Scan antwortet nicht“ melden (wie beim Speichern im Cloud-Ordner)
+    try {
+      if (docx) { await waitForOcr(state.pages); bytes = Tools.docx(await Promise.all(state.pages.map(pageBlocks)), { title: state.meta.subject || baseName(), author: state.meta.sender, lang: docLang(state.pages) }); }
+      else bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
+    } catch (err) { console.error(err); status(`Dokument konnte nicht erzeugt werden: ${err.message}`); return; }
+    const res = await scanFetch('/office', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + (docx ? '.docx' : '.pdf'), data: b64Bytes(bytes) }) }).then(x => x.json());
     if (!res.ok) { status(res.error || 'Das hat nicht geklappt.'); alert(res.error || 'Das hat nicht geklappt.'); return; }
     status(sel.value === 'word' ? `Geöffnet in ${app}. Word fragt einmal, ob es die PDF umwandeln soll – mit „OK“ bestätigen. Zurück zu PDFMy: in Word drucken und den Drucker „PDFMy“ wählen.`
       : `Geöffnet in ${app}. Ergebnis dort mit „Speichern unter“ sichern – zurück zu PDFMy: im Programm drucken und den Drucker „PDFMy“ wählen.`);
@@ -2367,7 +2378,7 @@ $('#btnDefaultPdf').onclick = async () => {
     const fm = 'So öffnet ein Doppelklick im Dateimanager jede PDF in PDFMy:\n\n1. Rechtsklick auf eine PDF → „Öffnen mit“ bzw. „Mit anderer Anwendung öffnen“.\n2. „PDFMy“ wählen und „Als Standard festlegen“ bzw. „Immer verwenden“ anhaken.';
     if (await scanHelperRunning() && state.scanLinux) {
       if (state.pdfDefault) { toast('PDFMy ist bereits Ihr Standard-Programm für PDF-Dateien.', 5000); return; }
-      const r = await fetch(SCAN_API + '/defaultapps', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json()).catch(() => ({}));
+      const r = await scanFetch('/defaultapps', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json()).catch(() => ({}));
       if (r.isDefault) { state.pdfDefault = true; toast('Fertig: PDF-Dateien öffnen sich jetzt per Doppelklick im Dateimanager in PDFMy.', 7000); } else alert(fm);
       return;
     }
@@ -2378,7 +2389,7 @@ $('#btnDefaultPdf').onclick = async () => {
     const finder = 'So öffnet ein Doppelklick im Finder jede PDF in PDFMy:\n\n1. Im Finder eine PDF mit Rechtsklick (oder ctrl-Klick) anklicken → „Informationen“.\n2. Unter „Öffnen mit“ „PDFMy“ wählen.\n3. Auf „Alle ändern …“ klicken und bestätigen.';
     if (await scanHelperRunning() && state.scanMac) {
       if (state.pdfDefault) { toast('PDFMy ist bereits Ihr Standard-Programm für PDF-Dateien.', 5000); return; }
-      const r = await fetch(SCAN_API + '/defaultapps', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json()).catch(() => ({}));
+      const r = await scanFetch('/defaultapps', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).then(x => x.json()).catch(() => ({}));
       if (r.isDefault) { state.pdfDefault = true; toast('Fertig: PDF-Dateien öffnen sich jetzt per Doppelklick im Finder in PDFMy.', 7000); } else alert(finder);
       return;
     }
@@ -2388,7 +2399,7 @@ $('#btnDefaultPdf').onclick = async () => {
   }
   if (await scanHelperRunning() && !verLess(state.scanVersion, '1.5.0')) {
     if (state.pdfDefault) { toast('PDFMy ist bereits Ihr Standard-Programm für PDF-Dateien.', 5000); return; }
-    await fetch(SCAN_API + '/defaultapps', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).catch(() => {});
+    await scanFetch('/defaultapps', { method: 'POST', headers: { 'X-Pdfmy': '1' } }).catch(() => {});
     alert('Die Windows-Einstellungen öffnen sich.\n\nDort bei „.pdf“ auf das bisherige Programm klicken, „PDFMy (pdfmy Scan)“ wählen und mit „Standard festlegen“ bestätigen.\n\nDanach öffnet ein Doppelklick auf eine PDF-Datei sie direkt in PDFMy.');
     return;
   }
@@ -3845,7 +3856,8 @@ const rescueList = async () => (await idb.get('rescue')) || [];
 async function rescueDrop(rid) { const l = await rescueList(); if (l.some(x => x.rid === rid)) await idb.set('rescue', l.filter(x => x.rid !== rid)); }
 const rescueJob = () => ({ rid: tabs[tabCur].rid, pages: state.pages.slice(), meta: state.meta, dirty: state.dirty && state.pages.length > 0, name: (state.docs.length === 1 && state.docs[0].name) || filename(), cam: Camera.handed.slice() });
 async function rescueSave(job) {
-  if (rescueBusy) { clearTimeout(rescueTimer); rescueTimer = setTimeout(() => rescueSave(job), 1500); return; }
+  // nicht während eines Speichervorgangs sichern – der Nutzer soll nicht auf die Sicherung warten
+  if (rescueBusy || buildPdf.active) { clearTimeout(rescueTimer); rescueTimer = setTimeout(() => rescueSave(job), 1500); return; }
   rescueBusy = true;
   try {
     if (!job.dirty) { await rescueDrop(job.rid); job.cam.forEach(Camera.dropBackup); }
@@ -4079,7 +4091,7 @@ function imgToCanvas(o) {
   x.putImageData(id, 0, 0); return c;
 }
 const hasAlpha = c => { const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 3; i < d.length; i += 4 * 7) if (d[i] < 250) return true; return false; };
-const canvasToPng = c => new Promise(res => c.toBlob(b => b.arrayBuffer().then(a => res(new Uint8Array(a))), 'image/png'));
+const canvasToPng = c => canvasBlob(c, 'image/png');
 async function collectImages(pages, onPage) {
   const OPS = pdfjsLib.OPS, seen = new Set(), out = [];
   for (const [n, p] of pages.entries()) {
@@ -4478,7 +4490,7 @@ $('#btnCloud').onclick = async () => {
       : 'Dafür wird das kleine Windows-Programm „pdfmy Scan“ ab Version 1.12.0 benötigt. Es findet die Ordner von Nextcloud, Dropbox & Co. auf Ihrem Rechner und legt die PDF dort ab – PDFMy selbst lädt nichts hoch.\n\nJetzt herunterladen?')) location.href = dl(mac ? SCAN_FILE_UNIX() : SCAN_FILE);
     return;
   }
-  const r = await fetch(SCAN_API + '/cloud', { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' }).then(x => x.json()).catch(() => ({ folders: [] }));
+  const r = await scanFetch('/cloud', { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' }).then(x => x.json()).catch(() => ({ folders: [] }));
   const fl = r.folders || [], list = $('#cloudList'), last = LS.get('cloudChoice', '');
   list.textContent = '';
   for (const [i, f] of fl.entries()) {
@@ -4494,7 +4506,7 @@ $('#btnCloud').onclick = async () => {
   $('#cloudDlg').showModal();
 };
 $('#cloudClose').onclick = () => $('#cloudDlg').close();
-$('#cloudShow').onclick = () => fetch(SCAN_API + '/cloud/show', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ path: cloudSaved }) }).catch(() => {});
+$('#cloudShow').onclick = () => scanFetch('/cloud/show', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ path: cloudSaved }) }).catch(() => {});
 $('#cloudForm').addEventListener('submit', async e => {
   e.preventDefault();
   const sel = $('#cloudDlg').querySelector('[name=cloudF]:checked'); if (!sel) return;
@@ -4506,7 +4518,7 @@ $('#cloudForm').addEventListener('submit', async e => {
   try { bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} }); }
   catch (err) { console.error(err); status(`PDF konnte nicht erzeugt werden: ${err.message}`); $('#cloudGo').disabled = false; return; }
   try {
-    const res = await fetch(SCAN_API + '/cloud', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + '.pdf', data: b64Bytes(bytes) }) }).then(x => x.json());
+    const res = await scanFetch('/cloud', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + '.pdf', data: b64Bytes(bytes) }) }).then(x => x.json());
     if (!res.ok) { status(res.error || 'Das hat nicht geklappt.'); alert(res.error || 'Das hat nicht geklappt.'); return; }
     cloudSaved = res.path || ''; state.dirty = false;
     const msg = I18N.t(`Gespeichert in ${name}: ${res.path} – Ihr Sync-Programm lädt die Datei hoch.`);

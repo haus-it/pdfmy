@@ -582,7 +582,10 @@ Require valid-user
 
 // Webseiten je Sprache vorab übersetzen (für Suchmaschinen, tools/prerender.js) – beim Ausrollen: deploy.ps1 setzt PDFMY_PRERENDER=1.
 // Beim ersten Mal einige Minuten, danach nur geänderte Seiten. Fehler brechen den Build ab.
-if (process.env.PDFMY_PRERENDER === '1') require('child_process').execFileSync(process.execPath, [path.join(ROOT, 'tools', 'prerender.js')], { stdio: 'inherit' });
+if (process.env.PDFMY_PRERENDER === '1') {
+  try { require('child_process').execFileSync(process.execPath, [path.join(ROOT, 'tools', 'prerender.js')], { stdio: 'inherit' }); }
+  catch (e) { console.error(`Vorab-Übersetzung abgebrochen (${e.signal ? 'Signal ' + e.signal : 'Code ' + e.status}) – Protokoll: .deploy/logs/prerender-*.log`); process.exit(1); }
+}
 
 // Prüfsummenliste (ISO-Maßnahme M10): jede ausgelieferte Datei mit SHA-256, im Format von „sha256sum -c“.
 // Ihr Fingerabdruck steht im Release-Protokoll auf GitHub – so lässt sich prüfen, dass pdfmy.de genau diesen Stand ausliefert.

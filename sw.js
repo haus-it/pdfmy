@@ -5,7 +5,7 @@
    Updates laden nur geänderte Dateien (Update-Strategie, KONZEPT.md): Der Offline-Speicher bleibt über Versionen bestehen; beim
    Installieren wird jede gespeicherte Datei mit ihrer Prüfsumme in pruefsummen.json verglichen und nur bei Abweichung neu geladen.
    Bei 100.000 Nutzern spart das je Veröffentlichung Terabytes (vorher: alle ~18 MB je Gerät bei jeder neuen VERSION). */
-const VERSION = 'app-v215';
+const VERSION = 'app-v217';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',
@@ -28,9 +28,10 @@ async function published() {
   return null;
 }
 // Abruf am HTTP-Cache vorbei, mit Wiederholung (Mobilfunk) → Antwort oder null
-async function fetchRetry(f, tries = 3) {
+// want: erwartete Prüfsumme – eine abweichende Datei (z. B. mitten im Hochladen einer neuen Fassung erwischt) gilt als nicht geladen
+async function fetchRetry(f, tries = 3, want = null) {
   for (let i = 0; i < tries; i++) {
-    try { const res = await fetch(new Request(f, { cache: 'reload' })); if (res.ok) return res; if (res.status === 404) return null; } catch {}
+    try { const res = await fetch(new Request(f, { cache: 'reload' })); if (res.ok && (!want || await shaOf(res) === want)) return res; if (res.status === 404) return null; } catch {}
     await new Promise(r => setTimeout(r, 800 * (i + 1)));
   }
   return null;
@@ -57,7 +58,8 @@ self.addEventListener('message', e => {
   const d = e.data || {};
   if (d.type !== 'pdfmy:offline') return;
   const langs = (d.langs || []).filter(l => /^[a-z_]{3,8}$/.test(l)).map(l => `vendor/tesseract/lang/${l}.traineddata.gz`);
-  const base = [...CORE, ...VENDOR], more = [...EXTRA, ...langs, ...(d.heavy ? HEAVY : [])];
+  const ui = /^[a-z]{2}(-[A-Z]{2})?$/.test(d.ui || '') && d.ui !== 'de' ? [`i18n/${d.ui}.json`] : [];   // Wörterbuch der Oberflächensprache
+  const base = [...CORE, ...VENDOR], more = [...EXTRA, ...langs, ...ui, ...(d.heavy ? HEAVY : [])];
   e.waitUntil((async () => {
     const core = await ensure(base, true), extra = await ensure(more, d.load !== false);
     e.source?.postMessage({ type: 'pdfmy:offline', ready: !core.missing.length, coreMissing: core.missing.length, extraMissing: extra.missing.length, heavy: !!d.heavy });
@@ -84,8 +86,8 @@ self.addEventListener('install', e => {
     await Promise.all([...CORE, ...VENDOR].map(async f => {
       const req = new Request(f), want = sums?.[rel(req.url)], have = want && await stored(req);
       if (have && await shaOf(have) === want) { if (!await store.match(req, { ignoreSearch: true })) await stage.put(req, have); kept++; return; }   // aus altem Speicher je VERSION übernehmen
-      const res = await fetchRetry(f);
-      if (!res) { if (CORE.includes(f)) throw new Error(`${f}: nicht ladbar`); missed++; return; }
+      const res = await fetchRetry(f, 3, want);
+      if (!res) { if (CORE.includes(f)) throw new Error(`${f}: nicht ladbar oder Prüfsumme falsch`); missed++; return; }
       await stage.put(req, res); loaded++;
     }));
     // Zur Laufzeit gespeicherte Dateien (z. B. weitere OCR-Sprachen): veraltete merken – beim Aktivieren entfernt, bei Bedarf neu geladen
@@ -142,7 +144,8 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
   if (url.pathname.includes('/download/')) return;   // Downloads direkt vom Server, nicht im Offline-Speicher ablegen
   if (url.pathname.includes('/vendor/')) {
-    e.respondWith(fromStore(e.request).then(hit => hit || fetch(e.request).then(res => {
+    // am HTTP-Cache vorbei (Bibliotheken haben 30 Tage max-age ohne Versionsnamen – sonst käme nach einem Update evtl. die alte Fassung)
+    e.respondWith(fromStore(e.request).then(hit => hit || fetch(url.href, { cache: 'no-cache', credentials: 'same-origin' }).then(res => {
       if (res.ok) { const copy = res.clone(); caches.open(STORE).then(c => c.put(e.request, copy)); }
       return res;
     })));

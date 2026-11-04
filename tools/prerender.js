@@ -12,6 +12,11 @@ const ROOT = path.join(__dirname, '..'), site = JSON.parse(fs.readFileSync(path.
 const OUT = path.join(ROOT, 'dist', site.domain), CACHE = path.join(ROOT, '.deploy', 'prerender'), BASE = 'https://' + site.domain + '/';
 const REV = '2';   // bei Änderungen an diesem Skript erhöhen → alles neu übersetzen
 const sha = s => crypto.createHash('sha256').update(s).digest('hex');
+// Protokoll in .deploy/logs: zeigt auch nach einem Abbruch beim Ausrollen, wie weit die Vorab-Übersetzung kam und woran es lag
+const LOG = path.join(ROOT, '.deploy', 'logs', `prerender-${new Date().toISOString().slice(0, 10)}.log`);
+try { fs.mkdirSync(path.dirname(LOG), { recursive: true }); } catch {}
+for (const k of ['log', 'warn', 'error']) { const o = console[k]; console[k] = (...a) => { o(...a); try { fs.appendFileSync(LOG, `${new Date().toISOString()} ${k} ${a.join(' ')}\n`); } catch {} }; }
+process.on('exit', c => { try { fs.appendFileSync(LOG, `${new Date().toISOString()} Ende, Code ${c}\n`); } catch {} });
 const LANGS = fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f)).map(f => f.slice(0, -5)).filter(c => c !== 'de').sort();
 const PAGES = fs.readdirSync(OUT).filter(f => f.endsWith('.html') && fs.readFileSync(path.join(OUT, f), 'utf8').includes('data-dict="site"')).sort();
 const CHROME = [process.env.PDFMY_CHROME, 'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
@@ -131,6 +136,7 @@ async function render(cr, port, page, code) {
     }
   }
   const t0 = Date.now(); let done = 0, failed = 0;
+  console.log(`Vorab-Übersetzung: ${jobs.length} Seiten neu zu übersetzen`);
   if (jobs.length) {
     const srv = await serve(), port = srv.address().port, cr = await chrome();
     try {
@@ -142,7 +148,10 @@ async function render(cr, port, page, code) {
             fs.mkdirSync(path.join(OUT, j.code), { recursive: true }); fs.writeFileSync(path.join(OUT, j.code, j.page), out);
             man[j.key] = j.h; done++;
             if (done % 100 === 0) { fs.writeFileSync(manFile, JSON.stringify(man)); console.log(`  … ${done} Seiten übersetzt`); }
-          } catch (e) { failed++; console.warn(`  ${j.key}: ${e.message}`); }
+          } catch (e) {
+            if (!j.retry) { j.retry = true; jobs.push(j); console.warn(`  ${j.key}: ${e.message} – zweiter Versuch`); }
+            else { failed++; console.warn(`  ${j.key}: ${e.message}`); }
+          }
         }
       };
       await Promise.all(Array.from({ length: Math.min(6, jobs.length) }, worker));

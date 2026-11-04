@@ -9,7 +9,21 @@ import argparse, hashlib, io, json, os, posixpath, stat, sys, time
 import paramiko
 
 MANIFEST = '.deploy-manifest.json'
-LAST = ('sw.js', 'index.html')  # zuletzt hochladen, damit Besucher nie eine halbe Version sehen
+# zuletzt hochladen, damit Besucher nie eine halbe Version sehen – sw.js ganz am Schluss: erst dann installiert ein Browser
+# die neue Fassung, und alle Dateien, die er dafür lädt (auch index.html), sind schon neu
+LAST = ('index.html', 'sw.js')
+
+
+def put_atomic(sftp, src, target):
+    """Erst in eine Zwischendatei schreiben, dann umbenennen: ein Besucher bekommt nie eine halb geschriebene Datei."""
+    tmp = target + '.upload-tmp'
+    sftp.put(src, tmp)
+    try:
+        sftp.posix_rename(tmp, target)       # ersetzt atomar (OpenSSH-Erweiterung)
+    except (IOError, OSError):
+        try: sftp.remove(target)             # Server ohne posix-rename: kurzes Fenster, aber nie eine halbe Datei
+        except FileNotFoundError: pass
+        sftp.rename(tmp, target)
 
 
 def sha(path):
@@ -105,7 +119,7 @@ def main():
     for i, rel in enumerate(changed, 1):
         target = posixpath.join(root, rel)
         ensure_dir(sftp, posixpath.dirname(target), made)
-        sftp.put(files[rel], target)
+        put_atomic(sftp, files[rel], target)
         remote[rel] = hashes[rel]
         print(f'  [{i}/{len(changed)}] {rel}')
     for rel in stale:

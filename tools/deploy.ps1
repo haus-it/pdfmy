@@ -13,6 +13,9 @@
 param([switch]$Test, [switch]$DryRun, [switch]$NoBuild, [ValidateSet('prod', 'test')][string]$Target = 'prod', [string]$TestUrl = '', [switch]$Rollback, [string]$Release = '', [ValidateRange(0, 100)][int]$ScanRollout = -1)
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
+# Protokoll jedes Laufs in .deploy/logs (nicht im Repository) – bei einem Abbruch steht dort, an welcher Stelle und warum
+$logDir = Join-Path $root '.deploy\logs'; New-Item -ItemType Directory -Force $logDir | Out-Null
+try { Start-Transcript -Path (Join-Path $logDir ("deploy-{0:yyyyMMdd-HHmmss}.log" -f (Get-Date))) | Out-Null } catch {}
 $dir = Join-Path (Split-Path $PSScriptRoot -Parent) '.deploy'
 $credFile = Join-Path $dir 'credential.xml'
 $py = Join-Path $dir 'venv\Scripts\python.exe'
@@ -113,8 +116,8 @@ if (-not $Test -and -not $NoBuild) {
   }
   if ($ScanRollout -ge 0) { $env:PDFMY_SCAN_ROLLOUT = "$ScanRollout" }   # Freigabe in Stufen für pdfmy Scan (download/version.json „rollout“)
   $env:PDFMY_PRERENDER = '1'   # Webseiten je Sprache vorab übersetzen (tools/prerender.js)
-  & node (Join-Path $PSScriptRoot 'build-web.js')
-  if ($LASTEXITCODE) { throw 'Build fehlgeschlagen.' }
+  & node (Join-Path $PSScriptRoot 'build-web.js') | Out-Host   # über die Pipeline, damit die Ausgabe im Protokoll landet
+  if ($LASTEXITCODE) { throw "Build fehlgeschlagen (Code $LASTEXITCODE) – Einzelheiten in .deploy\logs." }
 }
 if (-not $Test) { Invoke-Smoke @('--dir', $distDir) }
 

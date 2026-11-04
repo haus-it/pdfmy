@@ -95,7 +95,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
 ### Entschieden 01.11.2026: Kamera-Scan robuster
-**Inhalt:** Aufnahmen als JPEG statt unkomprimiert im Speicher, Bildschirm bleibt an, Kamera startet nach Unterbrechung neu, Hinweis auf unscharfe Seiten. **Noch offen:** Zwischenstand nach Absturz, Ecken von Hand korrigieren, Licht-Hinweise, Verarbeitung im Hintergrund.
+**Inhalt:** Aufnahmen als JPEG statt unkomprimiert im Speicher, Bildschirm bleibt an, Kamera startet nach Unterbrechung neu, Hinweis auf unscharfe Seiten. **Noch offen:** Licht-Hinweise, Verarbeitung im Hintergrund. (Zwischenstand nach Absturz umgesetzt in app-v210, Ecken von Hand korrigieren in app-v212 – Stand 03.11.2026.)
 
 | Leitplanke | Prüfung |
 |---|---|
@@ -426,7 +426,19 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 ### Umgesetzt 02.11.2026: Vergleich mit PDFCraft (app-v211)
 **Befund:** PDFCraft ist AGPL, es wird kein Code übernommen. Netzwerk-Nachweis, Entfernen von Anmerkungen und eigene Abläufe im Stapel gab es bei PDFMy bereits. Neu sind nur abwechselndes Zusammenfügen, Zusammenfügen und verkleinern sowie Stapel-Vorlagen.
 **Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Kacheln und Vorlagen statt Workflow-Editor. 5: Ausgabe läuft über den bestehenden PDF-Aufbau. 6 nicht betroffen.
-**Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate (RTF, XPS, DjVu, CBZ, PSD) bleiben offen.
+**Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate DjVu, CBZ und PSD bleiben offen (RTF und XPS umgesetzt in app-v212).
+
+### Umgesetzt 03.11.2026: Seite zuschneiden (app-v217)
+**Anlass:** Wettbewerbsvergleich (Acrobat, PDF24, iLovePDF, Sejda, Stirling-PDF haben es; PDFMy hatte nur automatisches „Weiße Ränder entfernen“).
+**Lösung:** Werkzeug „Zuschneiden“ wie die übrigen Rechteck-Werkzeuge (Rückgängig, Verschieben, Größe, Entf). Beim Speichern MediaBox und CropBox auf den Ausschnitt – verlustfrei, Text bleibt durchsuchbar.
+**Leitplanken:** 1 und 2 gewahrt (rein lokal, keine neue Bibliothek, keine Verbindung). 3 gewahrt. 4: ein Knopf in der vorhandenen Werkzeugleiste, Optionen nur bei gewähltem Werkzeug. 5: PDF/A-Ausgabe mit veraPDF geprüft. 6 nicht betroffen. Hinweis in Hilfe und Statuszeile: Inhalt außerhalb bleibt in der Datei (zum Entfernen „Schwärzen“).
+
+### Nächste Schritte aus der Systemprüfung vom 03.11.2026
+- **Große PDFs:** Markierungen über pdf.js erkennen statt die ganze Datei als Text zu wandeln und mit pdf-lib komplett zu laden (js/app.js importMarkup); Kopien der Bytes vermeiden.
+- **Absturzschutz:** je Sicherung eigener Speicherschlüssel, Quelle einmal speichern und danach nur den Seitenzustand nachführen; bei pagehide nur den schnellen Stand sichern.
+- **Update während der Sitzung:** neue Fassung erst aktivieren, wenn nichts in Arbeit ist, oder Bibliotheken mit Prüfsumme im Namen ausliefern.
+- **Tests:** Verschlüsseln → wieder öffnen, Zusammenfügen mit Formularfeldern, OCR-Textebene, PDF/A mit veraPDF im Smoke-Test.
+- **Aus dem Wettbewerbsvergleich (nach Nutzen/Aufwand):** Rechtsklick im Explorer „In PDFMy öffnen/zusammenfügen“ über pdfmy Scan; PowerPoint und alte .doc/.xls über vorhandenes Office; Browser-Erweiterung im Chrome Web Store; Formulardaten exportieren/importieren (CSV/XFDF); Zwei-Seiten-Ansicht; Antworten und Status bei Kommentaren; GiroCode/QR stempeln; Übersetzen mit erhaltenem Layout (nur Browser-KI – Alleinstellung, da alle Mitbewerber Cloud nutzen).
 
 ### Umgesetzt 02.11.2026: Saubere Seiten (app-v214)
 

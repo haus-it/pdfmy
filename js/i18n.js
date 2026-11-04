@@ -6,6 +6,7 @@
    Wörterbücher: i18n/<code>.json, erzeugt mit tools/i18n-extract.js (Texte sammeln) und übersetzt.
    Bereiche mit Inhalten der Nutzer (Dokumenttext, Eingaben) tragen translate="no" und bleiben unverändert. */
 (function (root) {
+  let dictMissing = false;   // Wörterbuch der gewählten Sprache nicht ladbar (offline erstmals gewählt)
   // Code, Eigenname, deutscher Name, Tesseract-Sprache (Texterkennung), BCP-47 (PDF-Sprache, Vorlesen), Schrift
   const LANGS = [
     ['de', 'Deutsch', 'Deutsch', 'deu', 'de-DE'],
@@ -225,7 +226,8 @@
       // Wörterbuch: i18n/<code>.json (App); Webseiten wählen mit data-dict="site" ihr eigenes (i18n/site/<code>.json)
       const cs = document.currentScript, sub = cs && cs.dataset && /^[a-z]+$/.test(cs.dataset.dict || '') ? cs.dataset.dict + '/' : '';
       const base = (cs && cs.src) ? new URL('../i18n/' + sub, cs.src).href : 'i18n/' + sub;
-      ready = fetch(base + lang + '.json').then(r => r.ok ? r.json() : {}).catch(() => ({})).then(d => new Promise(res => {
+      // fehlt das Wörterbuch (offline erstmals gewählt): Oberfläche bleibt deutsch, app.js zeigt einen Hinweis (I18N.missing())
+      ready = fetch(base + lang + '.json').then(r => r.ok ? r.json() : Promise.reject()).catch(() => { dictMissing = true; return {}; }).then(d => new Promise(res => {
         compile(d); patchDialogs();
         const go = () => { apply(); document.documentElement.classList.remove('i18n-wait'); res(); };   // erst nach dem Übersetzen erfüllt
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go, { once: true }); else go();
@@ -286,6 +288,6 @@
     try { const u = new URL(location.href); u.searchParams.delete('lang'); location.replace(u.href); } catch (e) { location.reload(); }
   }
 
-  const api = { LANGS, OCR_EXTRA, lang, info, t, fmtDate, fmtTime, fmtDateTime, fmtNum, fmtMoney, picker, ready: () => ready, apply, translateTree, collect, setLang, byCode, byOcr, ocrName, pick, _compile: compile };
+  const api = { missing: () => dictMissing, LANGS, OCR_EXTRA, lang, info, t, fmtDate, fmtTime, fmtDateTime, fmtNum, fmtMoney, picker, ready: () => ready, apply, translateTree, collect, setLang, byCode, byOcr, ocrName, pick, _compile: compile };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.I18N = api;
 })(typeof self !== 'undefined' ? self : this);

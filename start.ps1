@@ -49,6 +49,8 @@ try {
         $res.ContentType = if ($types.ContainsKey($ext)) { $types[$ext] } else { 'application/octet-stream' }
         $res.Headers['Cache-Control'] = 'no-cache'
         $res.Headers['X-Content-Type-Options'] = 'nosniff'
+        # Gleiche Content-Security-Policy wie auf pdfmy.de (tools/build-web.js): nur eigene Dateien, kein eval, keine fremden Server
+        if ($ext -eq '.html') { $res.Headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; connect-src 'self' blob: data: http://127.0.0.1:* http://localhost:*; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; frame-src 'self' blob:; base-uri 'self'; form-action 'none'; manifest-src 'self'; frame-ancestors 'none'" }
         $res.ContentLength64 = $bytes.Length
         $res.OutputStream.Write($bytes, 0, $bytes.Length)
       } else {

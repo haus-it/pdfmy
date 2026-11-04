@@ -4,6 +4,23 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Seite zuschneiden, robusteres Speichern und Ausrollen (app-v217)
+- Neu: **Seite zuschneiden** – Ausschnitt aufziehen (z. B. Paketlabel aus A4), auf alle Seiten übertragen, beim Speichern wird die Seite verlustfrei auf den Bereich gesetzt (MediaBox/CropBox, Text und Grafik bleiben Vektor). Bisher gab es nur „Weiße Ränder entfernen“ (automatisch). Vorbild: Acrobat, PDF24, iLovePDF, Sejda, Stirling-PDF.
+- Speichern hängt nicht mehr ohne Meldung, wenn der Browser eine Seite mangels Speicher nicht umwandeln kann – stattdessen eine verständliche Meldung (alle Umwandlungen über eine gemeinsame Funktion mit Zeitlimit).
+- PDF-Erzeugung läuft nacheinander: Der Absturzschutz konnte bisher parallel zu „Speichern in Graustufen“ laufen und die Ausgabe teilweise farbig machen bzw. den Barrierefreiheits-Bericht verfälschen. Der Absturzschutz wartet jetzt, bis ein Speichervorgang fertig ist.
+- pdfmy Scan: alle Aufrufe mit Zeitlimit (Abfragen 15 s, Aufträge 3 min) – die Oberfläche bleibt nicht mehr auf „wird vorbereitet …“ stehen. „In Office-Programm öffnen“ meldet Fehler beim Erzeugen des Dokuments richtig statt „pdfmy Scan antwortet nicht“.
+- Offline/Update: Der Service Worker prüft beim Installieren jede geladene Datei gegen die veröffentlichte Prüfsumme (eine mitten im Hochladen erwischte Datei wird erneut geladen statt dauerhaft gespeichert) und lädt Bibliotheken am HTTP-Cache vorbei. Das Ausrollen ersetzt Dateien atomar (Zwischendatei, dann umbenennen) und lädt `sw.js` als letzte Datei hoch.
+- Sicherheit: pdf.js zeichnet Schriften ohne `eval` (zweite Sicherung neben der CSP); die lokale Fassung (`start.ps1`) liefert dieselbe Content-Security-Policy wie pdfmy.de.
+- Sprachen: Das Wörterbuch der Oberflächensprache wird offline vorgehalten; fehlt es doch (offline erstmals gewählt), erscheint ein Hinweis statt still deutscher Oberfläche.
+- KONZEPT.md auf den Stand gebracht (erledigte Punkte als erledigt markiert).
+- Posteingang, Fristen-Zeile: „Fristen“, das Abzeichen „Dringend (N)“ und die Art des Schreibens (z. B. „Bescheid“) erscheinen jetzt in der gewählten Oberflächensprache (gemeldet mit Bildschirmfoto, bulgarische Oberfläche); Absender bleiben unverändert.
+
+### Versionsnummer schon beim ersten Besuch, Ausrollen mit Protokoll (app-v216)
+- Die Versionsnummer steht unten rechts jetzt sofort und auch beim allerersten Besuch (vorher erst nach dem zweiten Laden bzw. nach der Abfrage von pdfmy Scan). „Nach Updates suchen“ nennt die Nummer mit („Sie haben die neueste Version (v216, Stand …)“).
+- Startseite „Neu in PDFMy“: neuer Punkt „Saubere Scans“ (Schatten, Lochungen, graue Ränder).
+- Verschlüsselte PDFs: zusätzlicher Test für Hex-Zeichenketten (`tests/pdfcrypt-strings.test.js`); die gemeldete Rechnung besteht nach dem Speichern als PDF/A die veraPDF-Prüfung (PDF/A-2b und PDF/UA-1).
+- Ausrollen: `tools/deploy.ps1` schreibt jeden Lauf nach `.deploy/logs` (nicht im Repository), `tools/prerender.js` protokolliert ebenfalls dorthin und versucht eine fehlgeschlagene Seite ein zweites Mal; ein Abbruch nennt Code bzw. Signal.
+
 ### Verschlüsselte PDFs: Schrift wieder lesbar (app-v215)
 - Fehler aus dem Fehlerbericht vom 03.11.2026 behoben: Bei manchen PDFs mit Rechte-Schutz (RC4, ohne Öffnen-Passwort) erschien der Text als Kästchen, auch in „Erkannter Text“. Ursache: Die Bibliothek pdf-lib-crypt entschlüsselte Zeichenketten mit Escape-Folgen, ohne diese vorher aufzulösen. Dadurch wurden die Schriftangaben unbrauchbar.
 - Korrektur in `vendor/pdf-lib-crypt.min.js`, vermerkt in `vendor/licenses/_cantoo_pdf-lib.txt`. Test: `tests/pdfcrypt-strings.test.js`. Mit der gemeldeten Rechnung geprüft.

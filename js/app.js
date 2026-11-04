@@ -1069,7 +1069,8 @@ function renderAnns() {
     }
   }
   let editEl = null;
-  for (const a of p.annots) {
+  // Zuschnitt zuerst einfügen: liegt unter allen anderen Anmerkungen und verdeckt sie nicht für Klicks
+  for (const a of [...p.annots].sort((u, v) => (v.type === 'crop') - (u.type === 'crop'))) {
     const el = document.createElement('div');
     el.className = `ann ${a.type}${a.id === state.annSel ? ' sel' : ''}`; el.dataset.id = a.id;
     el.setAttribute('translate', 'no');   // Inhalt des Dokuments (Stempel, Notiz, Text) – nicht in die Oberflächensprache übersetzen
@@ -1283,9 +1284,10 @@ $('#overlay').addEventListener('pointerdown', e => {
       status(`${a.style === 'ul' ? 'Unterstrichen' : a.style === 'st' ? 'Durchgestrichen' : 'Markiert'}${a.text ? `: „${a.text.length > 60 ? a.text.slice(0, 60) + ' …' : a.text}“` : ''} – Farbe und Art oben ändern, Entf löscht.`);
       renderAnns();
     });
-  } else if (['rd', 'wo', 'field', 'link'].includes(state.tool)) {
+  } else if (['rd', 'wo', 'field', 'link', 'crop'].includes(state.tool)) {
     if (state.tool === 'wo' && pageProt(p) !== 'urkunde' && sigWarn(p, () => status('Jetzt den Bereich zum Abdecken aufziehen.'))) { e.preventDefault(); return; }
     pushUndo(p);
+    if (state.tool === 'crop') p.annots = p.annots.filter(o => o.type !== 'crop');   // je Seite ein Ausschnitt
     const a = { id: ++uid, type: state.tool, x: s.x, y: s.y, w: 0, h: 0 };
     if (a.type === 'field') { a.ftype = $('#fieldType').value; a.name = $('#fieldName').value.trim(); a.req = $('#fieldReq').checked; if (CALC_TYPES.has(a.ftype) && $('#fieldCalc').value.trim()) a.calc = $('#fieldCalc').value.trim(); }
     p.annots.push(a); renderAnns();
@@ -1295,6 +1297,11 @@ $('#overlay').addEventListener('pointerdown', e => {
       a.x = Math.min(s.x, q.x); a.y = Math.min(s.y, q.y); a.w = Math.abs(q.x - s.x); a.h = Math.abs(q.y - s.y); placeEl(el, a);
     }, () => {
       if (a.type === 'field') { fieldDone(p, a); renderAnns(); return; }
+      if (a.type === 'crop') {
+        if (a.w < 0.03 || a.h < 0.03) { p.annots.splice(p.annots.indexOf(a), 1); state.undo.pop(); }
+        else { state.dirty = true; state.annSel = a.id; status('Zuschnitt: Beim Speichern wird die Seite auf diesen Ausschnitt gesetzt (Rahmen verschieben oder an der Ecke ändern; Entf hebt ihn auf). Der Inhalt außerhalb bleibt in der Datei – zum Entfernen „Schwärzen“ nutzen.'); }
+        renderAnns(); return;
+      }
       if (a.type === 'link') { if (a.w < 0.01 || a.h < 0.006 || !linkAsk(p, a)) { p.annots.splice(p.annots.indexOf(a), 1); state.undo.pop(); } renderAnns(); return; }
       const prot = a.type === 'wo' ? pageProt(p) : '';
       if (prot === 'urkunde') { p.annots.splice(p.annots.indexOf(a), 1); state.undo.pop(); status(PROT_MSG.urkunde); }
@@ -1510,12 +1517,25 @@ function updateToolbar() {
   $('#hlOpts').hidden = !(state.tool === 'hl' || a?.type === 'hl');
   if (!$('#hlOpts').hidden) hlSync(a?.type === 'hl' ? a : null);
   // Optionen des gewählten Werkzeugs sichtbar machen (die Leiste ist breiter als schmale Fenster)
-  const og = ['#signOpts', '#fieldOpts', '#stampOpts', '#shapeOpts', '#rdOpts', '#hlOpts', '#textOpts'].map(id => $(id)).find(g => g && !g.hidden);
+  const og = ['#signOpts', '#fieldOpts', '#stampOpts', '#shapeOpts', '#rdOpts', '#cropOpts', '#hlOpts', '#textOpts'].map(id => $(id)).find(g => g && !g.hidden);
   if (og && state.tool !== updateToolbar.last) requestAnimationFrame(() => og.scrollIntoView({ block: 'nearest', inline: 'nearest' }));
   updateToolbar.last = state.tool;
   $('#rdOpts').hidden = state.tool !== 'rd';
+  $('#cropOpts').hidden = state.tool !== 'crop';
   $('#scanOpts').hidden = !p || p.kind !== 'image';
 }
+// Zuschneiden: Ausschnitt der aktuellen Seite auf alle Seiten übertragen bzw. aufheben
+$('#cropAll').onclick = () => {
+  const c = cur()?.annots.find(a => a.type === 'crop');
+  if (!c) return status('Zuerst auf dieser Seite einen Ausschnitt aufziehen.');
+  let n = 0;
+  for (const q of state.pages) { if (q === cur()) continue; pushUndo(q); q.annots = q.annots.filter(a => a.type !== 'crop'); q.annots.push({ id: ++uid, type: 'crop', x: c.x, y: c.y, w: c.w, h: c.h }); n++; }
+  state.dirty = true; renderThumbs(); status(n ? `Ausschnitt auf ${n} weitere Seite(n) übertragen.` : 'Das Dokument hat nur diese Seite.');
+};
+$('#cropOff').onclick = () => {
+  const p = cur(); if (!p || !p.annots.some(a => a.type === 'crop')) return status('Diese Seite ist nicht zugeschnitten.');
+  pushUndo(p); p.annots = p.annots.filter(a => a.type !== 'crop'); state.dirty = true; renderAnns(); status('Zuschnitt aufgehoben.');
+};
 document.querySelectorAll('[data-tool]').forEach(b => b.onclick = () => { setTool(b.dataset.tool); if (b.dataset.tool === 'sign') { if ($('#signMenu').hidden) openSignMenu(); else closeSignMenu(); } else closeSignMenu(); });
 // Textmarker: Farbe und Art – gilt für neue Markierungen und für die gewählte
 function hlSync(a) {
@@ -1551,7 +1571,8 @@ $('#imgIn').onchange = async e => {
     const url = URL.createObjectURL(f), im = new Image(); im.src = url; await im.decode(); URL.revokeObjectURL(url);
     const k = Math.min(1, 2000 / Math.max(im.naturalWidth, im.naturalHeight)), c = Imaging.canvas(Math.max(1, Math.round(im.naturalWidth * k)), Math.max(1, Math.round(im.naturalHeight * k)));
     const jpg = /jpe?g/i.test(f.type), x = c.getContext('2d'); if (jpg) { x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); } x.drawImage(im, 0, 0, c.width, c.height);
-    const img = await new Promise(res => { const fr = new FileReader(); c.toBlob(b => { fr.onload = () => res(fr.result); fr.readAsDataURL(b); }, jpg ? 'image/jpeg' : 'image/png', 0.9); });
+    const type = jpg ? 'image/jpeg' : 'image/png', bytes = await canvasBlob(c, type, 0.9);
+    const img = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(new Blob([bytes], { type })); });
     pushUndo(p);
     const ar = c.height / c.width, w = Math.min(0.4, 0.4 / Math.max(1, ar * p.h / p.w * 0.9)), h = w * ar * p.w / p.h;
     const a = { id: ++uid, type: 'img', img, ar, x: (1 - w) / 2, y: clamp(0.35 - h / 2, 0, 1 - h), w, h, alt: f.name.replace(/\.[a-z0-9]+$/i, '') };
@@ -2299,7 +2320,12 @@ function renderResults() {
 
 /* ---------- PDF erzeugen ---------- */
 // Bild speichern als JPG, PNG, WebP (Browser) oder TIFF (UTIF.js, verlustfrei) – alles lokal
-const canvasBlob = (c, type, q) => new Promise(res => c.toBlob(b => b.arrayBuffer().then(a => res(new Uint8Array(a))), type, q));
+// Leinwand → Bytes. Bei zu großer Leinwand oder knappem Speicher liefert der Browser null – dann verständlich abbrechen statt endlos zu warten.
+const canvasBlob = (c, type, q) => new Promise((res, rej) => {
+  const t = setTimeout(() => rej(new Error('Seite konnte nicht umgewandelt werden (Zeitüberschreitung) – bitte erneut versuchen oder eine geringere Auflösung wählen.')), 120000);
+  c.toBlob(b => { if (!b) { clearTimeout(t); return rej(new Error('Zu wenig Arbeitsspeicher für diese Seite – bitte andere Programme oder Reiter schließen oder eine geringere Auflösung wählen.')); }
+    b.arrayBuffer().then(a => { clearTimeout(t); res(new Uint8Array(a)); }, e => { clearTimeout(t); rej(e); }); }, type, q);
+});
 async function encodeImage(c, fmt, q) {
   if (fmt === 'png') return { data: await canvasBlob(c, 'image/png'), ext: 'png', mime: 'image/png' };
   if (fmt === 'webp' && WEBP_OK) return { data: await canvasBlob(c, 'image/webp', Math.max(q, 0.8)), ext: 'webp', mime: 'image/webp' };
@@ -2314,13 +2340,13 @@ const WEBP_OK = (() => { try { const c = document.createElement('canvas'); c.wid
 if (!WEBP_OK) $('#x-imgfmt').querySelector('[value=webp]')?.remove();
 $('#x-imgfmt').value = LS.get('imgFmt', 'jpg'); if (!$('#x-imgfmt').value) $('#x-imgfmt').value = 'jpg';
 $('#x-imgfmt').addEventListener('change', () => { LS.set('imgFmt', $('#x-imgfmt').value); updateExportUi(); });
-const canvasToJpeg = (c, q) => new Promise(res => c.toBlob(b => b.arrayBuffer().then(a => res(new Uint8Array(a))), 'image/jpeg', q));
+const canvasToJpeg = (c, q) => canvasBlob(c, 'image/jpeg', q);
 // Bild ins PDF: JPEG, wenn der Browser es erzeugen kann – sonst (manche WebKit-Varianten) verlustfrei als PNG
 const isJpeg = b => b && b[0] === 0xFF && b[1] === 0xD8;
 async function embedCanvas(out, c, q) {
   const j = await canvasToJpeg(c, q);
   if (isJpeg(j)) return out.embedJpg(j);
-  return out.embedPng(await new Promise(res => c.toBlob(b => b.arrayBuffer().then(a => res(new Uint8Array(a))), 'image/png')));
+  return out.embedPng(await canvasBlob(c, 'image/png'));
 }
 const hexRgb = c => rgb(...[1, 3, 5].map(k => parseInt(c.slice(k, k + 2), 16) / 255));
 const overlaps = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
@@ -3166,10 +3192,18 @@ function pruneOrphans(out) {
 }
 async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
   header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false, invert = false, flat = false, romanFront = 0 } = {}) {
-  GRAY = gray;
-  await flushForms();   // letzte Formulareingabe nicht verlieren (wird sonst erst nach 600 ms übernommen)
-  try { return await buildPdfInner(...arguments); } finally { GRAY = false; }
+  // Nacheinander statt gleichzeitig: GRAY und lastTagStats sind global – eine parallel laufende Sicherung (Absturzschutz)
+  // würde sonst eine Graustufen-PDF teilweise farbig machen oder den Barrierefreiheits-Bericht verfälschen
+  const args = arguments, prev = buildPdf.queue;
+  let done; buildPdf.queue = new Promise(r => { done = r; }); buildPdf.active = (buildPdf.active || 0) + 1;
+  try {
+    await prev;
+    GRAY = gray;
+    await flushForms();   // letzte Formulareingabe nicht verlieren (wird sonst erst nach 600 ms übernommen)
+    return await buildPdfInner(...args);
+  } finally { GRAY = false; buildPdf.active--; done(); }
 }
+buildPdf.queue = Promise.resolve();
 async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
   header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false, invert = false, flat = false, romanFront = 0 } = {}) {
   const preset = SIZES[size] || SIZES.balanced, stamps = { pageNumbers, watermark: (watermark || '').trim(), header, footer, bates, docName, date };
@@ -3399,6 +3433,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     if (figs.length) await emitFigs(2);   // Abbildungen unter dem letzten Text bzw. auf Seiten ohne Text
     for (const a of p.annots) {
       const x = ox + a.x * W, y = oy + H - (a.y + a.h) * H, w = a.w * W, h = a.h * H;
+      if (a.type === 'crop') { page.setMediaBox(x, y, w, h); page.setCropBox(x, y, w, h); continue; }   // Zuschneiden
       if (flat && (a.type === 'field' || a.type === 'link')) continue;   // Seite als Bild: keine Felder, keine Links
       if (a.type === 'field') fieldQ.push({ page, x, y, w, h, a });
       else if (a.type === 'link') linkQ.push({ page, x, y, w, h, a });
@@ -5376,7 +5411,12 @@ $('#signNew').onclick = () => openSign(null, 'sign');
 async function versionKey() {
   // Stand der aktiven Fassung: der Service Worker legt ihn im dauerhaften Speicher ab (Name „pdfmy-dateien“ trägt keine Version mehr)
   const mark = await caches.match('__version__').catch(() => null);
-  return mark ? (await mark.text()).trim() : (await caches.keys()).find(x => /^(pdfmy|mentor|app)-\d/.test(x)) || '';
+  if (mark) return (await mark.text()).trim();
+  const k = (await caches.keys()).find(x => /^(pdfmy|mentor|app)-\d/.test(x));
+  if (k) return k;
+  // erster Besuch: der Service Worker ist noch nicht eingerichtet – Kennung direkt aus sw.js lesen (eigener Server, einmal je Sitzung)
+  versionKey.sw ??= fetch('sw.js', { cache: 'no-cache' }).then(r => r.ok ? r.text() : '').then(t => (t.match(/const VERSION = '([^']+)'/) || [])[1] || '').catch(() => '');
+  return versionKey.sw;
 }
 async function versionNo() { try { return ((await versionKey()).match(/(?:^app-|-)(v\d+)$/) || [])[1] || ''; } catch { return ''; } }
 async function versionLabel(report) {   // report: für Fehlerberichte immer deutsch, sonst im Format der Oberfläche
@@ -5415,7 +5455,7 @@ async function checkUpdates(manual) {
   const scanOld = scanOutdated() ? ` · pdfmy Scan ${scanLatest()} ist verfügbar (installiert: ${state.scanVersion}) – unter „Scannen“ aktualisieren` : '';
   if (upd.reg.installing || upd.reg.waiting) { status(`Update gefunden – wird geladen …${scanOld}`); toast('Update gefunden – wird geladen …'); }
   else {
-    const v = await versionLabel(), msg = `Sie haben die neueste Version${v ? ` (${v})` : ''}.`;
+    const nr = await versionNo(), l = await versionLabel(), v = [nr, l].filter((x, i) => x && !(i && nr && x.endsWith(nr))).join(', '), msg = `Sie haben die neueste Version${v ? ` (${v})` : ''}.`;
     status(msg + scanOld); toast(msg + (scanOld ? ' pdfmy Scan kann aktualisiert werden.' : ''));
   }
 }
@@ -5454,7 +5494,7 @@ function offlineReady() {
   const c = navigator.connection, heavy = !!c && !c.saveData && c.type !== 'cellular' && !/^(slow-)?2g$/.test(c.effectiveType || '');
   const ask = () => navigator.serviceWorker.ready.then(reg => {
     const langs = typeof ocrPrimary === 'function' ? String(ocrPrimary() || '').split('+').filter(l => l && l !== 'deu') : [];
-    reg.active?.postMessage({ type: 'pdfmy:offline', langs, heavy, load: navigator.onLine });
+    reg.active?.postMessage({ type: 'pdfmy:offline', langs, ui: I18N.lang, heavy, load: navigator.onLine });   // ui: Wörterbuch der Oberflächensprache offline vorhalten
   });
   navigator.serviceWorker.addEventListener('message', e => {
     if (e.data?.type !== 'pdfmy:offline') return;
@@ -5476,5 +5516,7 @@ function iosOfflineHint() {
   toast(I18N.t('Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.'), 12000);
 }
 $('#btnUpdate').onclick = () => checkUpdates(true);
+// Sprache gewählt, aber Wörterbuch offline nicht vorhanden: nicht still deutsch bleiben, sondern erklären (zweisprachig, da unübersetzt)
+I18N.ready().then(() => { if (I18N.missing()) toast('Die gewählte Sprache ist offline noch nicht verfügbar – bitte PDFMy einmal mit Internet öffnen. · This language is not available offline yet – please open PDFMy once while online.', 12000); });
 I18N.ready().then(versionLabel).then(async v => { const nr = await versionNo(); if (v) { $('#verInfo').textContent = `${APP.name}${nr && !v.includes(nr) ? ' ' + nr : ''} · ${I18N.t(v)}`; $('#btnUpdate').title = `Nach einer neuen Version suchen – installiert: ${v}`; } });
 refresh();
