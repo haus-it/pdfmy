@@ -790,6 +790,7 @@ footer{min-height:30px;padding:4px 20px;font-size:12.5px}
 .einvdlg{width:min(1060px,96vw)}
 .einvgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .einvgrid fieldset{border:1px solid var(--line);border-radius:10px;padding:8px 12px 4px;margin:0}
+.fdgrid fieldset{border:1px solid var(--line);border-radius:10px;padding:8px 12px 6px;margin:0 0 10px}.fdgrid legend{font-weight:600;padding:0 4px}.fdgrid progress{flex:1;min-width:120px}
 .einvgrid legend{font-weight:700;padding:0 6px}
 .einvgrid input,.einvgrid select{width:100%}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
@@ -1453,7 +1454,7 @@ html.i18n-wait body{visibility:hidden}
       <h2>Formular</h2>
       <div id="formFields"></div>
       <p id="formCheckMsg" class="ferrsum" role="status" hidden></p>
-      <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap"><button type="button" id="fpFill" title="Leere Felder mit Ihren gespeicherten Angaben füllen (Name, Anschrift, IBAN …)"><svg class="ic" aria-hidden="true"><use href="#i-user-round"/></svg><span>Mit meinen Angaben ausfüllen</span></button><button type="button" id="fpEdit" class="linkbtn">Meine Angaben …</button></div>
+      <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap"><button type="button" id="fpFill" title="Leere Felder mit Ihren gespeicherten Angaben füllen (Name, Anschrift, IBAN …)"><svg class="ic" aria-hidden="true"><use href="#i-user-round"/></svg><span>Mit meinen Angaben ausfüllen</span></button><button type="button" id="fpEdit" class="linkbtn">Meine Angaben …</button><button type="button" id="fdBtn" class="linkbtn" title="Eingaben speichern oder laden (XFDF, FDF, CSV), Formular für viele Empfänger aus einer Tabelle ausfüllen">Formulardaten …</button></div>
       <div class="hint">Wird beim Speichern fest in die Seiten übernommen.</div>
     </section>
 
@@ -2174,6 +2175,26 @@ html.i18n-wait body{visibility:hidden}
   <div class="field"><label for="bewGast">Gastgeber (Name, Firma)</label><input id="bewGast" required></div>
   <div class="dlgrow"><button type="button" id="bewCancel">Abbrechen</button><button type="submit" class="primary">Seite anfügen</button></div>
 </form></dialog>
+<dialog id="fdDlg" class="sharedlg propdlg fdgrid" aria-labelledby="fdT"><form id="fdForm" method="dialog">
+  <h3 class="dlgtitle" id="fdT">Formulardaten</h3>
+  <p class="hint" style="margin-top:0">Eingaben sichern, in ein anderes Exemplar übernehmen oder ein Formular für viele Empfänger auf einmal ausfüllen. Alles bleibt auf diesem Gerät.</p>
+  <fieldset><legend>Eingaben speichern</legend>
+    <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap"><button type="button" id="fdXfdf">Als XFDF (Acrobat)</button><button type="button" id="fdCsv">Als CSV (Excel)</button></div></fieldset>
+  <fieldset><legend>Eingaben laden</legend>
+    <div class="dlgrow" style="justify-content:flex-start"><button type="button" id="fdLoad">Datei wählen … (XFDF, FDF, CSV, Excel)</button></div>
+    <p id="fdLoadMsg" class="hint" role="status"></p></fieldset>
+  <fieldset><legend>Serienausfüllung</legend>
+    <p class="hint">Eine Tabelle mit einer Zeile je Empfänger; die erste Zeile enthält die Feldnamen. Tipp: erst „Als CSV“ speichern und in Excel weitere Zeilen ergänzen. Was Sie im Formular schon eingetragen haben (z. B. Datum), gilt für alle.</p>
+    <div class="dlgrow" style="justify-content:flex-start"><button type="button" id="fdSerTable">Tabelle wählen … (CSV, Excel)</button></div>
+    <div id="fdSer" hidden>
+      <p id="fdSerMsg" role="status"></p>
+      <div class="field"><label for="fdSerName">Dateiname ergänzen um Spalte</label><select id="fdSerName"></select></div>
+      <label><input type="checkbox" id="fdSerFlat" checked> Eingaben fest in die Seiten übernehmen (nicht mehr änderbar)</label>
+      <div class="dlgrow" style="justify-content:flex-start"><button type="button" id="fdSerGo" class="primary">PDFs erstellen (ZIP)</button><progress id="fdSerProg" max="1" value="0" hidden></progress></div>
+    </div></fieldset>
+  <input type="file" id="fdIn" hidden accept=".xfdf,.fdf,.xml,.json,.csv,.txt,.xlsx">
+  <div class="dlgrow"><button type="submit">Schließen</button></div>
+</form></dialog>
 <dialog id="anlDlg" class="sharedlg propdlg" aria-labelledby="anlT"><form id="anlForm">
   <h3 class="dlgtitle" id="anlT">Anlagen nummerieren</h3>
   <p class="hint" style="margin-top:0">Jede geöffnete Datei wird eine Anlage – in der Reihenfolge der Seitenübersicht.</p>
@@ -2419,6 +2440,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/pptx.js"></script>
 <script src="js/letter.js"></script>
 <script src="js/fristen.js"></script>
+<script src="js/formdaten.js"></script>
 <script src="js/patchcode.js"></script>
 <script src="js/qr.js"></script>
 <script src="js/formdetect.js"></script>

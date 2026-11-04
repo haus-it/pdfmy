@@ -5194,43 +5194,50 @@ async function flushForms() {
 const optionPairs = f => { try { return f.acroField.getOptions().map(o => ({ value: o.value.decodeText(), display: (o.display || o.value).decodeText() })); } catch { return []; } };
 async function applyFormRun(d) {
   try {
-    const lib = await plainLib(d.base || d.bytes);   // base: ohne übernommene Markierungen; verschlüsselte Dateien entschlüsselt
-    lib.registerFontkit(await loadFontkit());
-    const font = await lib.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
-    const form = lib.getForm(), L = PDFLib, exported = []; let bad = 0;
-    for (const [name, v] of Object.entries(d.values)) {
-      try {
-        const f = form.getField(name);
-        if (f instanceof L.PDFTextField) f.setText(String(v));
-        else if (f instanceof L.PDFCheckBox) v ? f.check() : f.uncheck();
-        else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) {
-          v ? f.select(v) : f.clear();
-          const o = v && optionPairs(f).find(x => x.display === v); if (o && o.value !== v) exported.push([f, o.value]);
-        }
-        else if (f instanceof L.PDFRadioGroup) v ? f.select(v) : f.clear();
-      } catch (e) { bad++; noteError(e, `Feld „${name}“`); }
-    }
-    // Feld für Feld: ein Rich-Text-Feld o. Ä. darf die übrigen Eingaben nicht kosten
-    for (const f of form.getFields()) { try { if (f.needsAppearancesUpdate()) f.defaultUpdateAppearances(font); } catch (e) { console.warn('Feldansicht', e); } }
-    for (const [f, val] of exported) f.acroField.dict.set(L.PDFName.of('V'), L.PDFHexString.fromText(val));   // erst jetzt: Die Ansicht zeigt den Anzeigetext, gespeichert wird der Exportwert
-    const keep = await lib.save({ updateFieldAppearances: false });
-    // Flache Fassung: Schaltflächen, versteckte Felder und Signaturfelder ohne Ansicht würden sonst auf die Seite gemalt bzw. brächen das Flachmachen ab
-    let filled = keep;
-    try {
-      const flat = await PDFDocument.load(keep, { updateMetadata: false }), ff = flat.getForm(), AP = L.PDFName.of('AP');
-      for (const f of ff.getFields()) {
-        const ws = f.acroField.getWidgets();
-        const skip = f instanceof L.PDFButton || ws.every(w => (w.getFlags() & 34) !== 0) || (f instanceof L.PDFSignature && ws.every(w => !w.dict.has(AP)));
-        if (skip) try { ff.removeField(f); } catch {}
-      }
-      ff.flatten({ updateFieldAppearances: false }); filled = await flat.save({ updateFieldAppearances: false });
-    } catch (e) { noteError(e, 'Formular flach machen'); }   // dann mit den Feldern weiter – die Eingaben bleiben erhalten
+    const { keep, filled, bad } = await fillFormBytes(d.base || d.bytes, d.values);   // base: ohne übernommene Markierungen
     const js = await openPdf(filled.slice());
     d.filledForm = keep; d.filled = filled; d.lib = null; d.js = js;
     for (const p of state.pages) if (p.kind === 'pdf' && state.docs[p.docIdx] === d) { await renderPdfPreview(p); p.thumbL = null; }
     renderThumbs(); renderStage(); if (state.view === 'grid') renderGrid();
     if (bad) toast(I18N.t(`${bad} Feld(er) konnten nicht übernommen werden.`), 8000);
   } catch (e) { noteError(e, 'Formular'); status(`Formular konnte nicht übernommen werden: ${e.message}`); toast(`Formular konnte nicht übernommen werden: ${e.message}`, 10000); }
+}
+/* Werte in eine Formular-PDF schreiben → { keep: mit Feldern, filled: Felder fest in den Seiten, bad: Anzahl nicht übernommener Felder }.
+   Auch für die Serienausfüllung (js/pro.js): jede Zeile einer Tabelle ergibt eine eigene PDF. */
+async function fillFormBytes(src, values, { flatten = true } = {}) {
+  const lib = await plainLib(src);   // verschlüsselte Dateien entschlüsselt
+  lib.registerFontkit(await loadFontkit());
+  const font = await lib.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true });
+  const form = lib.getForm(), L = PDFLib, exported = []; let bad = 0;
+  for (const [name, v] of Object.entries(values)) {
+    try {
+      const f = form.getField(name);
+      if (f instanceof L.PDFTextField) f.setText(String(v));
+      else if (f instanceof L.PDFCheckBox) v ? f.check() : f.uncheck();
+      else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) {
+        v ? f.select(v) : f.clear();
+        const o = v && optionPairs(f).find(x => x.display === v); if (o && o.value !== v) exported.push([f, o.value]);
+      }
+      else if (f instanceof L.PDFRadioGroup) v ? f.select(v) : f.clear();
+    } catch (e) { bad++; noteError(e, `Feld „${name}“`); }
+  }
+  // Feld für Feld: ein Rich-Text-Feld o. Ä. darf die übrigen Eingaben nicht kosten
+  for (const f of form.getFields()) { try { if (f.needsAppearancesUpdate()) f.defaultUpdateAppearances(font); } catch (e) { console.warn('Feldansicht', e); } }
+  for (const [f, val] of exported) f.acroField.dict.set(L.PDFName.of('V'), L.PDFHexString.fromText(val));   // erst jetzt: Die Ansicht zeigt den Anzeigetext, gespeichert wird der Exportwert
+  const keep = await lib.save({ updateFieldAppearances: false });
+  if (!flatten) return { keep, filled: keep, bad };
+  // Flache Fassung: Schaltflächen, versteckte Felder und Signaturfelder ohne Ansicht würden sonst auf die Seite gemalt bzw. brächen das Flachmachen ab
+  let filled = keep;
+  try {
+    const flat = await PDFDocument.load(keep, { updateMetadata: false }), ff = flat.getForm(), AP = L.PDFName.of('AP');
+    for (const f of ff.getFields()) {
+      const ws = f.acroField.getWidgets();
+      const skip = f instanceof L.PDFButton || ws.every(w => (w.getFlags() & 34) !== 0) || (f instanceof L.PDFSignature && ws.every(w => !w.dict.has(AP)));
+      if (skip) try { ff.removeField(f); } catch {}
+    }
+    ff.flatten({ updateFieldAppearances: false }); filled = await flat.save({ updateFieldAppearances: false });
+  } catch (e) { noteError(e, 'Formular flach machen'); }   // dann mit den Feldern weiter – die Eingaben bleiben erhalten
+  return { keep, filled, bad };
 }
 
 document.addEventListener('keydown', e => {

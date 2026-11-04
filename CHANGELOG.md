@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Formulardaten und Serienausfüllung (app-v220)
+- Neu: **Formulardaten** im Formular-Bereich – Eingaben als XFDF (Acrobat-kompatibel, ISO 19444-1) oder CSV (Excel) speichern; XFDF, FDF, CSV und Excel wieder laden, auch in ein leeres Exemplar. Felder werden über den Namen zugeordnet (auch ohne Groß/klein, Leer- und Satzzeichen oder über die Kurzinfo des Felds).
+- Neu: **Serienausfüllung** – ein Formular aus einer Tabelle (CSV/Excel) für viele Empfänger ausfüllen; je Zeile eine PDF, zusammen als ZIP, Dateiname mit wählbarer Spalte. Bisher vor allem in Acrobat Pro (Datenzusammenführung) und Sejda (kostenpflichtig) – bei PDFMy kostenlos und ohne Upload. Logik in `js/formdaten.js`, Tests in `tests/formdaten.test.js`.
+- Meldung nach dem Schließen: „1 Seite“ / „90 Seiten“ statt „Seite(n)“.
+
 ### Meldung „geschlossen“ aufgeräumt (app-v219)
 - Nach dem Schließen eines Dokuments steht die Meldung mit „Wieder öffnen“ auf einer Zeile: lange Dateinamen werden in der Mitte gekürzt (Anfang und Endung bleiben lesbar, voller Name als Tooltip), die Knöpfe brechen nicht mehr um.
 

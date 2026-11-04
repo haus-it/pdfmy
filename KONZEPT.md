@@ -428,6 +428,12 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 **Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Kacheln und Vorlagen statt Workflow-Editor. 5: Ausgabe läuft über den bestehenden PDF-Aufbau. 6 nicht betroffen.
 **Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate DjVu, CBZ und PSD bleiben offen (RTF und XPS umgesetzt in app-v212).
 
+### Umgesetzt 04.11.2026: Formulardaten und Serienausfüllung (app-v220)
+**Anlass:** Wettbewerbsvergleich (Punkt „Formulardaten exportieren/importieren“ aus der Systemprüfung vom 03.11.2026). Acrobat Pro: Export/Import FDF/XFDF/TXT, Datenzusammenführung nur in Pro; Sejda: Serienausfüllung kostenpflichtig, mit Upload; PDF24, iLovePDF, Smallpdf: nichts Vergleichbares.
+**Lösung:** Dialog „Formulardaten …“ im Formular-Bereich: speichern (XFDF, CSV), laden (XFDF, FDF, CSV, Excel), Serienausfüllung aus CSV/Excel als ZIP. Bibliothek js/formdaten.js (rein, getestet); das Füllen nutzt dieselbe Funktion wie das normale Speichern (fillFormBytes in js/app.js).
+**Leitplanken:** 1 und 2 gewahrt (Empfängerlisten bleiben im Gerät, keine Verbindung, keine neue Bibliothek – Excel über das vorhandene js/office.js). 3 gewahrt. 4: ein Link im vorhandenen Formular-Bereich, alles in einem Dialog. 5: Prüfung der Werte, Hinweise statt stiller Fehler; Tests. 6 nicht betroffen.
+**Grenzen (bewusst):** Je Zeile eine Datei (kein Zusammenfügen zu einer großen PDF); bei Excel zählt das erste Blatt mit Werten; ungültige Auswahlwerte bleiben leer bzw. beim gemeinsamen Wert.
+
 ### Umgesetzt 04.11.2026: Frist berechnen, Belegnummer, Bewirtungsbeleg (app-v218)
 **Anlass:** Prüfung „Was können Rechtsanwälte und Steuerberater gut gebrauchen?“. Vorhanden waren bereits beA-Vorabprüfung, Anlagen nummerieren, Schwärzen, qeS, Einspruchsfrist bei Bescheiden, Belege für den Steuerberater mit DATEV-Datei.
 **Lösung:** Fristenrechner als eigene, getestete Bibliothek (js/fristen.js) mit den häufigsten Gerichts- und Behördenfristen, Vorfrist, landesweiten Feiertagen je Bundesland und Rechenweg; Belegnummer als Variante des vorhandenen Stempels; Bewirtungsbeleg als erzeugte Seite hinter der Rechnung.
@@ -445,7 +451,7 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 - **Absturzschutz:** je Sicherung eigener Speicherschlüssel, Quelle einmal speichern und danach nur den Seitenzustand nachführen; bei pagehide nur den schnellen Stand sichern.
 - **Update während der Sitzung:** neue Fassung erst aktivieren, wenn nichts in Arbeit ist, oder Bibliotheken mit Prüfsumme im Namen ausliefern.
 - **Tests:** Verschlüsseln → wieder öffnen, Zusammenfügen mit Formularfeldern, OCR-Textebene, PDF/A mit veraPDF im Smoke-Test.
-- **Aus dem Wettbewerbsvergleich (nach Nutzen/Aufwand):** Rechtsklick im Explorer „In PDFMy öffnen/zusammenfügen“ über pdfmy Scan; PowerPoint und alte .doc/.xls über vorhandenes Office; Browser-Erweiterung im Chrome Web Store; Formulardaten exportieren/importieren (CSV/XFDF); Zwei-Seiten-Ansicht; Antworten und Status bei Kommentaren; GiroCode/QR stempeln; Übersetzen mit erhaltenem Layout (nur Browser-KI – Alleinstellung, da alle Mitbewerber Cloud nutzen).
+- **Aus dem Wettbewerbsvergleich (nach Nutzen/Aufwand):** Rechtsklick im Explorer „In PDFMy öffnen/zusammenfügen“ über pdfmy Scan; PowerPoint und alte .doc/.xls über vorhandenes Office; Browser-Erweiterung im Chrome Web Store; Formulardaten exportieren/importieren (CSV/XFDF) – umgesetzt in app-v220; Zwei-Seiten-Ansicht; Antworten und Status bei Kommentaren; GiroCode/QR stempeln; Übersetzen mit erhaltenem Layout (nur Browser-KI – Alleinstellung, da alle Mitbewerber Cloud nutzen).
 
 ### Umgesetzt 02.11.2026: Saubere Seiten (app-v214)
 

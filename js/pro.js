@@ -3932,7 +3932,8 @@ function offerReopen(snap, name) {
   lastClosed = { snap, name };
   // Lange Dateinamen in der Mitte kürzen (Anfang und Endung bleiben lesbar), voller Name im Tooltip
   const short = name.length > 42 ? name.slice(0, 26).replace(/[\s_-]+$/, '') + '…' + name.slice(-13).replace(/^[\s_-]+/, '') : name;
-  $('#closedText').textContent = `„${short}“ geschlossen (${snap.pages.length} Seite(n)).`;
+  const np = snap.pages.length;
+  $('#closedText').textContent = np === 1 ? `„${short}“ geschlossen (1 Seite).` : `„${short}“ geschlossen (${np} Seiten).`;
   $('#closedText').title = name;
   const b = $('#closedBanner'); b.hidden = false;
   const arm = () => { clearTimeout(b._h); b._h = setTimeout(() => { b.hidden = true; lastClosed = null; }, 20000); };
@@ -4565,6 +4566,92 @@ function fpFill() {
 $('#fpFill').onclick = fpFill;
 $('#fpEdit').onclick = () => fpOpen();
 $('#btnProfile').onclick = () => fpOpen();
+
+/* ---------- Formulardaten: speichern/laden (XFDF, FDF, CSV, Excel) und Serienausfüllung aus einer Tabelle (js/formdaten.js) ---------- */
+// Formular der aktuellen Seite, sonst das erste geöffnete Formular
+const fdDoc = () => { const p = cur(), d = p?.kind === 'pdf' ? state.docs[p.docIdx] : null; return d?.fields?.length ? d : fpDocs()[0] || null; };
+const fdBase = d => d.name.replace(/\.[^.]+$/, '');
+const fdCurrent = d => Object.fromEntries(d.fields.map(f => [f.name, d.values[f.name] ?? f.value]));
+let fdTable = null;
+// Meldung aus ganzen Sätzen, je Satz ein eigenes Element – so wird jeder Satz für sich übersetzt
+const fdMsg = (el, parts) => el.replaceChildren(...parts.filter(Boolean).flatMap((t, i) => { const s = document.createElement('span'); s.textContent = t; return i ? [' ', s] : [s]; }));
+async function fdReadTable(file) {
+  const buf = new Uint8Array(await file.arrayBuffer());
+  if (/\.xlsx$/i.test(file.name)) { const t = (await Office.xlsx(buf)).blocks.find(b => b.type === 'table'); return t ? t.rows : []; }
+  let t; try { t = new TextDecoder('utf-8', { fatal: true }).decode(buf); } catch { t = new TextDecoder('windows-1252').decode(buf); }   // ältere Excel-CSV
+  return TextPdf.parseCsv(t);
+}
+const fdIsTable = n => /\.(csv|txt|xlsx)$/i.test(n);
+function fdOpen() {
+  const d = fdDoc(); if (!d) return;
+  fdTable = null; $('#fdSer').hidden = true; $('#fdLoadMsg').textContent = ''; $('#fdSerProg').hidden = true;
+  $('#fdDlg').showModal();
+}
+$('#fdBtn').onclick = fdOpen;
+$('#fdXfdf').onclick = () => { const d = fdDoc(); if (!d) return; download(new TextEncoder().encode(FormDaten.toXfdf(fdCurrent(d), d.name)), fdBase(d) + '.xfdf', 'application/vnd.adobe.xfdf'); status(`Formulardaten als „${fdBase(d)}.xfdf“ gespeichert – lassen sich in PDFMy oder Acrobat wieder laden.`); };
+$('#fdCsv').onclick = () => { const d = fdDoc(); if (!d) return; download(new TextEncoder().encode(FormDaten.toCsv(d.fields, d.values)), fdBase(d) + '.csv', 'text/csv'); status(`Formulardaten als „${fdBase(d)}.csv“ gespeichert – in Excel öffnen, weitere Zeilen ergänzen und für die Serienausfüllung verwenden.`); };
+$('#fdLoad').onclick = () => { $('#fdIn').dataset.mode = 'load'; $('#fdIn').click(); };
+$('#fdSerTable').onclick = () => { $('#fdIn').dataset.mode = 'serie'; $('#fdIn').accept = '.csv,.txt,.xlsx'; $('#fdIn').click(); };
+$('#fdIn').onchange = async e => {
+  const file = e.target.files[0], mode = e.target.dataset.mode; e.target.value = ''; e.target.accept = '.xfdf,.fdf,.xml,.json,.csv,.txt,.xlsx';
+  const d = fdDoc(); if (!file || !d) return;
+  try {
+    if (mode === 'serie') return fdSerie(d, await fdReadTable(file), file.name);
+    let rec, more = 0;
+    if (fdIsTable(file.name)) {
+      const rows = (await fdReadTable(file)).filter(r => r.some(Boolean));
+      if (rows.length < 2) throw new Error('Die Tabelle braucht eine Kopfzeile mit den Feldnamen und darunter eine Zeile mit Werten.');
+      rec = Object.fromEntries(rows[0].map((h, i) => [h, rows[1][i] ?? ''])); more = rows.length - 2;
+    } else rec = FormDaten.parse(await file.text(), file.name);
+    const r = FormDaten.applyRecord(rec, d.fields), n = Object.keys(r.values).length;
+    if (!n) throw new Error('Keines der Felder in der Datei passt zu diesem Formular.');
+    Object.assign(d.values, r.values); state.dirty = true; renderForm(); applyForm(d);
+    const notes = [`${n} Feld(er) übernommen.`];
+    if (r.bad.length) notes.push(`Nicht passende Auswahl: ${r.bad.slice(0, 3).join(' · ')}`);
+    if (r.unknown.length) notes.push(`Ohne passendes Feld: ${r.unknown.slice(0, 5).join(', ')}${r.unknown.length > 5 ? ' …' : ''}`);
+    if (more) notes.push(`Die Tabelle hat ${more + 1} Datenzeilen – übernommen wurde die erste. Für alle Zeilen: „Serienausfüllung“.`);
+    fdMsg($('#fdLoadMsg'), notes);
+    status(`Formulardaten aus „${file.name}“ geladen: ${n} Feld(er) – bitte prüfen.`);
+  } catch (err) { $('#fdLoadMsg').textContent = `Konnte nicht geladen werden: ${err.message}`; }
+};
+function fdSerie(d, rows, name) {
+  rows = rows.filter(r => r.some(Boolean));
+  const header = rows[0] || [], data = rows.slice(1), map = FormDaten.matchColumns(header, d.fields);
+  fdTable = { header, data, map, name };
+  const miss = header.filter((h, i) => h && !map.some(m => m.col === i));
+  fdMsg($('#fdSerMsg'), !data.length ? [`„${name}“ enthält keine Datenzeilen unter der Kopfzeile.`]
+    : !map.length ? [`Keine Spalte von „${name}“ passt zu einem Formularfeld. Die erste Zeile muss die Feldnamen enthalten – am einfachsten erst „Als CSV“ speichern und diese Datei ergänzen.`]
+    : [`${data.length} Datensätze · ${map.length} von ${header.length} Spalten passen zu Feldern.`, miss.length && `Ohne passendes Feld: ${miss.slice(0, 5).join(', ')}${miss.length > 5 ? ' …' : ''}`]);
+  const sel = $('#fdSerName'); sel.innerHTML = '';
+  sel.append(new Option(I18N.t('nur fortlaufende Nummer'), ''));
+  header.forEach((h, i) => h && sel.append(new Option(h, String(i))));
+  const pref = map.find(m => /name|firma|empf|kunde|mitglied/i.test(header[m.col])) || map[0];
+  sel.value = pref ? String(pref.col) : '';
+  $('#fdSer').hidden = false; $('#fdSerGo').disabled = !data.length || !map.length; $('#fdSerProg').hidden = true;
+}
+$('#fdSerGo').onclick = async () => {
+  const d = fdDoc(), t = fdTable; if (!d || !t) return;
+  const go = $('#fdSerGo'), prog = $('#fdSerProg'), flatten = $('#fdSerFlat').checked, col = $('#fdSerName').value;
+  const base = Object.fromEntries(Object.entries(d.values).filter(([k]) => !d.fields.find(f => f.name === k)?.ro));
+  go.disabled = true; prog.hidden = false; prog.max = t.data.length; prog.value = 0;
+  const files = [], bad = []; let fieldErr = 0;
+  try {
+    for (const [i, row] of t.data.entries()) {
+      const r = FormDaten.rowValues(row, t.map, d.fields);
+      if (r.bad.length) bad.push(`${I18N.t(`Zeile ${i + 2}`)}: ${r.bad[0]}`);
+      const out = await fillFormBytes(d.base || d.bytes, { ...base, ...r.values }, { flatten });
+      fieldErr += out.bad;
+      files.push({ name: FormDaten.fileName(fdBase(d), i, t.data.length, col === '' ? '' : row[+col]), data: out.filled });
+      prog.value = i + 1; status(`Serienausfüllung: ${i + 1} von ${t.data.length} …`, (i + 1) / t.data.length);
+      if (i % 5 === 4) await new Promise(r => setTimeout(r));   // Oberfläche bleibt bedienbar
+    }
+    const zipName = `${fdBase(d)}_Serie_${files.length}.zip`;
+    download(Tools.zip(files), zipName, 'application/zip');
+    fdMsg($('#fdSerMsg'), [`${files.length} PDFs erstellt und als „${zipName}“ heruntergeladen.`, bad.length && `Nicht passende Auswahl: ${bad.slice(0, 3).join(' · ')}${bad.length > 3 ? ' …' : ''}`, fieldErr && `${fieldErr} Feld(er) konnten nicht übernommen werden.`]);
+    status(`Serienausfüllung fertig: ${files.length} PDFs („${zipName}“).`);
+  } catch (err) { noteError(err, 'Serienausfüllung'); fdMsg($('#fdSerMsg'), [`Serienausfüllung abgebrochen: ${err.message}`]); status('Bereit.'); }
+  finally { go.disabled = false; prog.hidden = true; }
+};
 
 /* ---------- Lesemodus: Text neu umbrechen (js/reflow.js) – bequem lesen auf dem Handy ---------- */
 const readFont = () => Math.min(32, Math.max(12, LS.get('readFont', 18)));
