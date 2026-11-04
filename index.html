@@ -889,6 +889,8 @@ label[role=button]:focus-visible,.thumb:focus-visible,#viewer:focus-visible,.car
 body:has(.updbanner:not([hidden])) .toast{top:auto;bottom:96px}
 .updbanner{pointer-events:auto;display:flex;align-items:center;gap:14px;max-width:min(760px,94vw);padding:10px 12px 10px 16px;border-radius:10px;background:var(--panel);border:1px solid color-mix(in srgb,var(--warn) 55%,var(--line));box-shadow:var(--sh-lg);font-weight:500}
 .updbanner a.btn{height:34px;padding:0 14px;white-space:nowrap}
+.updbanner>button{white-space:nowrap;flex:none}
+#closedText{min-width:0;overflow-wrap:anywhere}
 @media (max-width:700px){ .bannerstack{left:3vw;right:3vw;transform:none;width:auto;max-width:none;top:120px} .updbanner{flex-wrap:wrap} }
 .brand{cursor:pointer}
 #scanErrDlg.logmode ul,#scanErrDlg.logmode #scanErrRetry{display:none}

@@ -4,6 +4,9 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Meldung „geschlossen“ aufgeräumt (app-v219)
+- Nach dem Schließen eines Dokuments steht die Meldung mit „Wieder öffnen“ auf einer Zeile: lange Dateinamen werden in der Mitte gekürzt (Anfang und Endung bleiben lesbar, voller Name als Tooltip), die Knöpfe brechen nicht mehr um.
+
 ### Für Kanzleien und Steuerberater: Frist berechnen, Belegnummer, Bewirtungsbeleg (app-v218)
 - Neu: **Frist berechnen** (Mehr-Menü und „Berechnen“ neben dem Frist-Feld) – Berufung, Revision, Einspruch gegen Versäumnisurteil/Vollstreckungsbescheid/Strafbefehl/Bußgeldbescheid, sofortige Beschwerde, Kündigungsschutzklage, Einspruch gegen Steuerbescheid, Klage FG/VG, Widerspruch und eigene Fristen. Mit Vorfrist, Feiertagen des Bundeslands (nur landesweite), Monatsletztem, Bekanntgabe am vierten Tag (§ 122 Abs. 2, § 122a AO, § 41 VwVfG) und vollständigem Rechenweg; Kalenderdatei mit Fristablauf und Vorfrist. Rechenlogik in `js/fristen.js`, Tests in `tests/fristen.test.js`.
 - Neu: **Belegnummer** im Stempel-Werkzeug – fortlaufend je Vorsatz, „Alle Belege nummerieren“ für alle geöffneten Dateien; bereits nummerierte Belege behalten ihre Nummer (keine Lücken).

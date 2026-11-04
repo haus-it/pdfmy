@@ -3930,7 +3930,10 @@ function newTab() {
 let lastClosed = null;
 function offerReopen(snap, name) {
   lastClosed = { snap, name };
-  $('#closedText').textContent = `„${name}“ geschlossen (${snap.pages.length} Seite(n)).`;
+  // Lange Dateinamen in der Mitte kürzen (Anfang und Endung bleiben lesbar), voller Name im Tooltip
+  const short = name.length > 42 ? name.slice(0, 26).replace(/[\s_-]+$/, '') + '…' + name.slice(-13).replace(/^[\s_-]+/, '') : name;
+  $('#closedText').textContent = `„${short}“ geschlossen (${snap.pages.length} Seite(n)).`;
+  $('#closedText').title = name;
   const b = $('#closedBanner'); b.hidden = false;
   const arm = () => { clearTimeout(b._h); b._h = setTimeout(() => { b.hidden = true; lastClosed = null; }, 20000); };
   arm(); b.onmouseenter = () => clearTimeout(b._h); b.onmouseleave = arm;
