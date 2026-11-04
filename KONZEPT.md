@@ -428,6 +428,13 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 **Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Kacheln und Vorlagen statt Workflow-Editor. 5: Ausgabe läuft über den bestehenden PDF-Aufbau. 6 nicht betroffen.
 **Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate DjVu, CBZ und PSD bleiben offen (RTF und XPS umgesetzt in app-v212).
 
+### Umgesetzt 04.11.2026: Frist berechnen, Belegnummer, Bewirtungsbeleg (app-v218)
+**Anlass:** Prüfung „Was können Rechtsanwälte und Steuerberater gut gebrauchen?“. Vorhanden waren bereits beA-Vorabprüfung, Anlagen nummerieren, Schwärzen, qeS, Einspruchsfrist bei Bescheiden, Belege für den Steuerberater mit DATEV-Datei.
+**Lösung:** Fristenrechner als eigene, getestete Bibliothek (js/fristen.js) mit den häufigsten Gerichts- und Behördenfristen, Vorfrist, landesweiten Feiertagen je Bundesland und Rechenweg; Belegnummer als Variante des vorhandenen Stempels; Bewirtungsbeleg als erzeugte Seite hinter der Rechnung.
+**Leitplanken:** 1 und 2 gewahrt (rein lokal, keine Verbindung, Feiertage werden berechnet statt abgerufen). 3 gewahrt. 4: Fristenrechner im Mehr-Menü und direkt am Frist-Feld, Belegnummer im vorhandenen Stempel-Werkzeug. 5: Rechenweg nachvollziehbar, Tests; erzeugte Seiten gehen durch den normalen PDF-Aufbau (PDF/A, PDF/UA). 6 nicht betroffen.
+**Grenzen (bewusst):** Nur landesweite Feiertage (regionale wie Mariä Himmelfahrt in Teilen Bayerns oder Fronleichnam in Teilen Sachsens/Thüringens werden nicht angenommen – so wird eine Frist nie zu spät berechnet). Kein Ersatz für den Fristenkalender der Kanzlei.
+**Nächste Ideen für Kanzleien:** beA-/XJustiz-Export (ZIP) öffnen und Aktenzeichen, Gericht und Zustelldatum ins Posteingangsbuch übernehmen; Fundstellen „Bl. … d. A.“ in elektronischen Akten zitieren; Pakete über 200 MB bzw. 1.000 Dateien automatisch auf mehrere beA-Nachrichten verteilen; Seite „PDFMy für Kanzleien“ mit dem Argument Mandantengeheimnis (§ 203 StGB, § 43e BRAO): nichts verlässt den Rechner.
+
 ### Umgesetzt 03.11.2026: Seite zuschneiden (app-v217)
 **Anlass:** Wettbewerbsvergleich (Acrobat, PDF24, iLovePDF, Sejda, Stirling-PDF haben es; PDFMy hatte nur automatisches „Weiße Ränder entfernen“).
 **Lösung:** Werkzeug „Zuschneiden“ wie die übrigen Rechteck-Werkzeuge (Rückgängig, Verschieben, Größe, Entf). Beim Speichern MediaBox und CropBox auf den Ausschnitt – verlustfrei, Text bleibt durchsuchbar.

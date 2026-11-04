@@ -1372,9 +1372,10 @@ $('#overlay').addEventListener('pointerdown', e => {
     });
   } else if (state.tool === 'stamp') {
     e.preventDefault(); pushUndo(p);
-    const word = $('#stampText').value, today = new Date().toLocaleDateString('de-DE');
+    const beleg = $('#stampText').value === 'BELEG', today = new Date().toLocaleDateString('de-DE');
+    const word = beleg ? belegNext() : $('#stampText').value;   // fortlaufende Belegnummer (js/pro.js)
     const w = 0.26, h = w * 0.36 * p.w / p.h;
-    const a = { id: ++uid, type: 'stamp', text: word + ($('#stampDate').checked ? '\n' + today : ''), color: STAMP_COLORS[word] || '#c8102e',
+    const a = { id: ++uid, type: 'stamp', text: word + ($('#stampDate').checked ? '\n' + today : ''), color: beleg ? '#1e3a8a' : STAMP_COLORS[word] || '#c8102e', ...(beleg ? { beleg: true } : {}),
       x: clamp(s.x - w / 2, 0, 1 - w), y: clamp(s.y - h / 2, 0, 1 - h), w, h };
     p.annots.push(a); state.annSel = a.id; state.dirty = true; renderAnns();
     status(`Stempel „${word}“ gesetzt. Weitere Klicks setzen weitere Stempel, Esc beendet.`);

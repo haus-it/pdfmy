@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Für Kanzleien und Steuerberater: Frist berechnen, Belegnummer, Bewirtungsbeleg (app-v218)
+- Neu: **Frist berechnen** (Mehr-Menü und „Berechnen“ neben dem Frist-Feld) – Berufung, Revision, Einspruch gegen Versäumnisurteil/Vollstreckungsbescheid/Strafbefehl/Bußgeldbescheid, sofortige Beschwerde, Kündigungsschutzklage, Einspruch gegen Steuerbescheid, Klage FG/VG, Widerspruch und eigene Fristen. Mit Vorfrist, Feiertagen des Bundeslands (nur landesweite), Monatsletztem, Bekanntgabe am vierten Tag (§ 122 Abs. 2, § 122a AO, § 41 VwVfG) und vollständigem Rechenweg; Kalenderdatei mit Fristablauf und Vorfrist. Rechenlogik in `js/fristen.js`, Tests in `tests/fristen.test.js`.
+- Neu: **Belegnummer** im Stempel-Werkzeug – fortlaufend je Vorsatz, „Alle Belege nummerieren“ für alle geöffneten Dateien; bereits nummerierte Belege behalten ihre Nummer (keine Lücken).
+- Neu: **Bewirtungsbeleg ausfüllen** – Angaben nach § 4 Abs. 5 Satz 1 Nr. 2 EStG als eigene Seite direkt hinter der Gaststättenrechnung, Vorschläge aus der erkannten Rechnung und „Meine Angaben“.
+- Doppelt angelegtes Symbol in der Symboldatei entfernt (aus app-v217, ohne sichtbare Folgen).
+
 ### Seite zuschneiden, robusteres Speichern und Ausrollen (app-v217)
 - Neu: **Seite zuschneiden** – Ausschnitt aufziehen (z. B. Paketlabel aus A4), auf alle Seiten übertragen, beim Speichern wird die Seite verlustfrei auf den Bereich gesetzt (MediaBox/CropBox, Text und Grafik bleiben Vektor). Bisher gab es nur „Weiße Ränder entfernen“ (automatisch). Vorbild: Acrobat, PDF24, iLovePDF, Sejda, Stirling-PDF.
 - Speichern hängt nicht mehr ohne Meldung, wenn der Browser eine Seite mangels Speicher nicht umwandeln kann – stattdessen eine verständliche Meldung (alle Umwandlungen über eine gemeinsame Funktion mit Zeitlimit).

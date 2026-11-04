@@ -2908,6 +2908,139 @@ function anlRender() {
   }).join('');
   $('#anlRows').querySelectorAll('input').forEach(inp => inp.oninput = () => { anlList[+inp.dataset.i].title = inp.value; });
 }
+/* ---------- Frist berechnen (js/fristen.js): Gerichts- und Behördenfristen mit Vorfrist ---------- */
+{
+  const grp = {};
+  for (const a of Fristen.ARTEN) (grp[a.grp] ||= []).push(a);
+  $('#frArt').innerHTML = Object.entries(grp).map(([g, l]) => `<optgroup label="${esc(g)}">${l.map(a => `<option value="${a.id}">${esc(a.label)}${a.law ? ' – ' + esc(a.law) : ''}</option>`).join('')}</optgroup>`).join('');
+  $('#frLand').innerHTML = '<option value="">– nur bundesweite Feiertage –</option>' + Fristen.LAENDER.map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('');
+}
+let fristRes = null;
+function fristCalc() {
+  const art = Fristen.ARTEN.find(a => a.id === $('#frArt').value), bek = art.start === 'bekanntgabe';
+  $('#frEigen').hidden = art.id !== 'eigen'; $('#frWegRow').hidden = !bek;
+  $('#frDatumL').textContent = art.startLabel || (bek ? ($('#frWeg').value === 'abruf' ? 'Bereitgestellt am' : $('#frWeg').value === 'datum' ? 'Zugestellt am' : 'Datum des Bescheids') : art.start === 'zugang' ? 'Zugegangen am' : 'Zugestellt am');
+  LS.set('frLand', $('#frLand').value); LS.set('frVor', $('#frVor').value);
+  fristRes = Fristen.berechne({ art: art.id, n: art.id === 'eigen' ? +$('#frN').value : undefined, unit: art.id === 'eigen' ? $('#frUnit').value : undefined,
+    datum: $('#frDatum').value, land: $('#frLand').value, weg: $('#frWeg').value, vorfrist: +$('#frVor').value });
+  const r = fristRes, de = Fristen.de, wd = s => ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'][new Date(s + 'T00:00:00Z').getUTCDay()];
+  $('#frIcs').disabled = $('#frTake').disabled = !r; $('#frTake').hidden = !state.pages.length;
+  $('#frOut').innerHTML = !r ? '<span class="hint">Bitte das Datum eintragen.</span>'
+    : `<div class="frend">Fristende: ${wd(r.ende)}, ${de(r.ende)}</div>${r.vorfrist ? `<div class="frvor">Vorfrist: ${wd(r.vorfrist)}, ${de(r.vorfrist)}</div>` : ''}
+       <ol>${r.schritte.map(s => `<li>${esc(s)}</li>`).join('')}</ol>${r.hinweise.map(h => `<p class="frwarn">${esc(h)}</p>`).join('')}`;
+}
+function openFrist() {
+  // Vorbelegung aus dem geöffneten Schreiben: Bescheid mit Rechtsbehelfsbelehrung → Einspruch/Widerspruch ab Bescheiddatum
+  const m = state.meta || {};
+  $('#frArt').value = m.appealRule === 'widerspruch' ? 'widerspruch' : m.appealRule ? 'einspruchao' : LS.get('frArt', 'berufung');
+  $('#frWeg').value = 'post';
+  $('#frDatum').value = m.appealRule && m.date ? m.date : new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+  $('#frLand').value = LS.get('frLand', 'NW'); $('#frVor').value = LS.get('frVor', '7');
+  fristCalc(); $('#fristDlg').showModal();
+}
+['frArt', 'frN', 'frUnit', 'frDatum', 'frWeg', 'frLand', 'frVor'].forEach(id => $('#' + id).addEventListener('input', () => { if (id === 'frArt') LS.set('frArt', $('#frArt').value); fristCalc(); }));
+$('#btnFrist').onclick = () => { closeMenu?.(); openFrist(); };
+$('#btnFristCalc').onclick = openFrist;
+$('#frClose').onclick = () => $('#fristDlg').close();
+const fristTitle = () => { const a = Fristen.ARTEN.find(x => x.id === $('#frArt').value); return [a.id === 'eigen' ? 'Frist' : a.label, state.meta?.reference, state.meta?.sender].filter(Boolean).join(' – '); };
+$('#frIcs').onclick = () => {
+  if (!fristRes) return;
+  download(Fristen.ics(fristRes, fristTitle()), `Frist_${fristRes.ende}.ics`, 'text/calendar');
+  status('Kalenderdatei mit Fristablauf' + (fristRes.vorfrist ? ' und Vorfrist' : '') + ' erstellt – öffnen, um sie in Outlook zu übernehmen.');
+};
+$('#fristForm').onsubmit = e => {
+  e.preventDefault(); if (!fristRes || !state.pages.length) return;
+  state.meta.deadline = fristRes.ende; state.touched.deadline = true; state.dirty = true;
+  $('#btnIcs').disabled = false; renderSide(); $('#fristDlg').close();
+  status(`Frist ${Fristen.de(fristRes.ende)} übernommen${fristRes.vorfrist ? ` – Vorfrist ${Fristen.de(fristRes.vorfrist)} bitte im Kalender eintragen („In Kalender“)` : ''}.`);
+};
+
+/* ---------- Belegnummer: fortlaufend je Vorsatz (z. B. „2026-0001“), merkt sich die nächste Nummer ---------- */
+const belegPre = () => $('#belegPre').value;
+function belegSync() {
+  const on = $('#stampText').value === 'BELEG'; $('#belegOpts').hidden = !on; if (!on) return;
+  if (!$('#belegPre').value) $('#belegPre').value = LS.get('belegPre', new Date().getFullYear() + '-');
+  $('#belegNext').value = LS.get('belegNr:' + belegPre(), 1);
+}
+// nächste Nummer vergeben und weiterzählen
+function belegNext() {
+  const pre = belegPre(), n = Math.max(1, +$('#belegNext').value || 1);
+  LS.set('belegPre', pre); LS.set('belegNr:' + pre, n + 1); $('#belegNext').value = n + 1;
+  return `Beleg-Nr. ${pre}${String(n).padStart(4, '0')}`;
+}
+$('#stampText').addEventListener('change', belegSync);
+$('#belegPre').addEventListener('change', () => { LS.set('belegPre', belegPre()); $('#belegNext').value = LS.get('belegNr:' + belegPre(), 1); });
+$('#belegNext').addEventListener('change', () => LS.set('belegNr:' + belegPre(), Math.max(1, +$('#belegNext').value || 1)));
+$('#belegAll').onclick = async () => {
+  if (!state.pages.length) return;
+  const groups = anlGroups(), date = $('#stampDate').checked ? '\n' + new Date().toLocaleDateString('de-DE') : '';
+  let first = '', last = '', kept = 0;
+  await undoGroup(async () => {
+    for (const g of groups) {
+      const p = g.pages[0];
+      if (p.annots.some(a => a.beleg)) { kept++; continue; }   // bereits nummeriert: Nummer behalten – keine Lücken in der Folge
+      pushUndo(p);
+      const text = belegNext(), w = 0.26, h = w * 0.36 * (p.w && p.h ? p.w / p.h : 0.707);
+      p.annots.push({ id: ++uid, type: 'stamp', beleg: true, text: text + date, color: '#1e3a8a', x: 1 - w - 0.03, y: 0.02, w, h });
+      first ||= text; last = text;
+    }
+  });
+  state.dirty = true; renderAnns(); renderThumbs();
+  const n = groups.length - kept, keptTxt = kept ? ` ${kept} hatte(n) schon eine Nummer und behalten sie.` : '';
+  status(!n ? 'Alle Belege haben schon eine Nummer.' : (n === 1 ? `${first} gesetzt.` : `${n} Belege nummeriert: ${first} bis ${last.replace('Beleg-Nr. ', '')}.`) + keptTxt);
+};
+
+/* ---------- Bewirtungsbeleg: Angaben nach § 4 Abs. 5 Satz 1 Nr. 2 EStG als Seite hinter dem Beleg ---------- */
+$('#btnBewirt').onclick = () => {
+  closeMenu?.();
+  if (!state.pages.length) return status('Zuerst den Gaststättenbeleg öffnen oder fotografieren.');
+  const m = state.meta || {};
+  $('#bewTag').value = m.date || ''; $('#bewOrt').value = m.sender || ''; $('#bewBetrag').value = m.amount || '';
+  const prof = LS.get('profile', {}) || {};   // Vorschlag aus „Meine Angaben“
+  $('#bewGast').value = LS.get('bewGast', [[prof.vorname, prof.nachname].filter(Boolean).join(' ') || S.author, prof.firma].filter(Boolean).join(', '));
+  $('#bewDlg').showModal(); (m.date ? $('#bewPers') : $('#bewTag')).focus();
+};
+$('#bewCancel').onclick = () => $('#bewDlg').close();
+async function bewPdf(v) {
+  const doc = await PDFDocument.create(); doc.registerFontkit(await loadFontkit());
+  const font = await doc.embedFont(await asset('font', 'vendor/DejaVuSans.ttf'), { subset: true }), cs = new Set(font.getCharacterSet());
+  const safe = s => [...String(s)].filter(ch => ch === '\n' || cs.has(ch.codePointAt(0))).join('');
+  const W = 595.28, H = 841.89, L = mm(22), R = W - mm(20), dark = rgb(0.1, 0.1, 0.1), grey = rgb(0.4, 0.4, 0.4), page = doc.addPage([W, H]);
+  let y = mm(25);
+  const txt = (t, x, yy, s = 11, c = dark) => page.drawText(safe(t), { x, y: H - yy, size: s, font, color: c });
+  const wrap = (t, x, s = 11) => { for (const para of safe(t).split('\n')) { let line = '';
+    for (const w of para.split(/\s+/)) { const tt = line ? line + ' ' + w : w; if (font.widthOfTextAtSize(tt, s) > R - x) { txt(line, x, y, s); y += s * 1.45; line = w; } else line = tt; }
+    txt(line, x, y, s); y += s * 1.45; } };
+  txt('Bewirtungsbeleg', L, y, 17); y += 16;
+  y += 2; wrap('Angaben zum Nachweis der Höhe und der betrieblichen Veranlassung von Bewirtungsaufwendungen (§ 4 Abs. 5 Satz 1 Nr. 2 EStG)', L, 8.5); y += 14;
+  const field = (label, value) => { txt(label, L, y, 9, grey); y += 14; wrap(value || '–', L); y += 10; page.drawLine({ start: { x: L, y: H - y + 6 }, end: { x: R, y: H - y + 6 }, thickness: 0.4, color: rgb(0.8, 0.8, 0.8) }); y += 8; };
+  field('Tag der Bewirtung', v.tag ? Fristen.de(v.tag) : '');
+  field('Ort der Bewirtung', v.ort);
+  field('Bewirtete Personen', v.pers);
+  field('Anlass der Bewirtung', v.anlass);
+  field('Höhe der Aufwendungen', [v.betrag && 'Betrag laut Rechnung: ' + v.betrag, v.trink && 'Trinkgeld: ' + v.trink].filter(Boolean).join('\n'));
+  field('Gastgeber', v.gast);
+  y += 30; txt('Ort, Datum', L, y + 14, 8.5, grey); txt('Unterschrift des Gastgebers', L + mm(80), y + 14, 8.5, grey);
+  page.drawLine({ start: { x: L, y: H - y }, end: { x: L + mm(65), y: H - y }, thickness: 0.6, color: dark });
+  page.drawLine({ start: { x: L + mm(80), y: H - y }, end: { x: R, y: H - y }, thickness: 0.6, color: dark });
+  y += 40; wrap('Gehört zur beigefügten Rechnung der Gaststätte (maschinell erstellt, mit Angaben der technischen Sicherheitseinrichtung). Die Rechnung muss den Namen des bewirtenden Unternehmens enthalten, wenn der Rechnungsbetrag 250 € übersteigt.', L, 8);
+  doc.setTitle('Bewirtungsbeleg'); doc.setLanguage('de-DE');
+  return doc.save();
+}
+$('#bewForm').onsubmit = async e => {
+  e.preventDefault();
+  const v = { tag: $('#bewTag').value, ort: $('#bewOrt').value.trim(), pers: $('#bewPers').value.trim(), anlass: $('#bewAnlass').value.trim(),
+    betrag: $('#bewBetrag').value.trim(), trink: $('#bewTrink').value.trim(), gast: $('#bewGast').value.trim() };
+  LS.set('bewGast', v.gast); $('#bewDlg').close();
+  // hinter der letzten Seite des aktuellen Belegs einfügen (nicht ans Ende aller geöffneten Dateien)
+  const g = anlGroups().find(x => x.pages.includes(cur())) || { pages: [state.pages[state.pages.length - 1]] }, after = g.pages[g.pages.length - 1];
+  const before = state.pages.length;
+  await importFiles([new File([await bewPdf(v)], 'Bewirtungsbeleg.pdf', { type: 'application/pdf' })]);
+  const added = state.pages.splice(before);
+  if (added.length) { const at = state.pages.indexOf(after) + 1; state.pages.splice(at, 0, ...added); state.sel = at; state.dirty = true; refresh(); }
+  status('Bewirtungsbeleg angefügt – jetzt unterschreiben (Werkzeug „Unterschrift“) und speichern.');
+};
+
 $('#btnAnl').onclick = () => {
   if (!state.pages.length) return;
   anlList = anlGroups();
