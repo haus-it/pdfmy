@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Satır başına bir sayfa.",
  "Zwei Seiten": "İki sayfa",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "İki sayfa yan yana – geri dönmek için “İki sayfa” (D tuşu).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "İki sayfayı açık bir kitap gibi yan yana göster (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "İki sayfayı açık bir kitap gibi yan yana göster (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"{2}. sayfadaki {1} için yanıt\" placeholder=\"Yanıt yazın …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Yanıtla</button></div>",
+ "Abgebrochen": "İptal edildi",
+ "Accepted": "Accepted",
+ "Angenommen": "Kabul edildi",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "{0} için yanıt eklendi (sayfa {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Yanıt silindi (Ctrl+Z geri alır).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "ile yanıtlayın. Yanıtlar ve durum PDF ile birlikte kaydedilir – Acrobat ve diğer PDF programları bunları konuşma dizisi olarak gösterir.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Notlar ve işaretlemelerde: bir durum seçin veya",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "{0} durumu (sayfa {1}): {2}.",
+ "Unbekannter Status:": "Bilinmeyen durum:"
 }

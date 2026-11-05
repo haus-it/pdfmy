@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Një faqe për rresht.",
  "Zwei Seiten": "Dy faqe",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dy faqe krah për krah – kthehuni me „Dy faqe“ (tasti D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Shfaq dy faqe krah për krah, si një libër i hapur (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Shfaq dy faqe krah për krah, si një libër i hapur (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Përgjigje për {1} në faqen {2}\" placeholder=\"Shkruani një përgjigje …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Përgjigju</button></div>",
+ "Abgebrochen": "Anuluar",
+ "Accepted": "Accepted",
+ "Angenommen": "Pranuar",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "U shtua përgjigja për {0} (faqja {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Përgjigja u fshi (Ctrl+Z e zhbën).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "për t’u përgjigjur. Përgjigjet dhe statusi ruhen me PDF-në – Acrobat dhe programe të tjera PDF i shfaqin si fije bisede.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Te shënimet dhe theksimet: zgjidhni një status ose përdorni",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Statusi i {0} (faqja {1}): {2}.",
+ "Unbekannter Status:": "Status i panjohur:"
 }

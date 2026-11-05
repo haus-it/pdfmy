@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Ein síða í hverri röð.",
  "Zwei Seiten": "Tvær síður",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Tvær síður hlið við hlið – til baka með „Tvær síður“ (lykill D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Sýna tvær síður hlið við hlið, eins og opna bók (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Sýna tvær síður hlið við hlið, eins og opna bók (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Svar við {1} á síðu {2}\" placeholder=\"Skrifa svar …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Svara</button></div>",
+ "Abgebrochen": "Hætt við",
+ "Accepted": "Accepted",
+ "Angenommen": "Samþykkt",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Svari við {0} (síða {1}) bætt við.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Svari eytt (Ctrl+Z afturkallar).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "til að svara. Svör og staða vistast með PDF-skjalinu – Acrobat og önnur PDF-forrit sýna þau sem þráð.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Við athugasemdir og yfirstrikanir: veljið stöðu eða notið",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Staða {0} (síða {1}): {2}.",
+ "Unbekannter Status:": "Óþekkt staða:"
 }

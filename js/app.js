@@ -538,7 +538,16 @@ async function importMarkup(d) {
   let n = 0;
   lib.getPages().forEach((page, pi) => {
     const arr = page.node.Annots(); if (!arr) return;
-    const drop = new Set();
+    const drop = new Set(), replies = [];
+    // Antworten und Status (Text-Anmerkungen mit /IRT) einsammeln – sie wandern mit der Markierung (js/kommentare.js)
+    for (let k = 0; k < arr.size(); k++) {
+      const ref = arr.get(k), dict = lib.context.lookup(ref);
+      if (!(dict instanceof PDFLib.PDFDict) || String(dict.get(PDFName.of('Subtype'))) !== '/Text') continue;
+      const irt = dict.get(PDFName.of('IRT')); if (!irt) continue;
+      const s = key => { try { const v = dict.lookup(PDFName.of(key)); return v?.decodeText ? v.decodeText().trim() : v ? String(v).replace(/^\//, '') : ''; } catch { return ''; } };
+      replies.push({ ref: String(ref), irt: String(irt), contents: s('Contents'), by: s('T'), m: s('M'), stateModel: s('StateModel'), state: s('State'), popup: dict.get(PDFName.of('Popup')) });
+    }
+    const thr = Kommentare.threads(replies);
     for (let k = 0; k < arr.size(); k++) {
       const ref = arr.get(k), dict = lib.context.lookup(ref);
       if (!(dict instanceof PDFLib.PDFDict)) continue;
@@ -548,8 +557,10 @@ async function importMarkup(d) {
       const col = dict.lookup(PDFName.of('C')), c = col instanceof PDFLib.PDFArray && col.size() === 3 ? col.asArray().map(num) : null;
       const txt = key => { try { return dict.lookup(PDFName.of(key))?.decodeText?.().trim() || ''; } catch { return ''; } };
       const list = found.get(pi) || []; found.set(pi, list);
-      list.push({ quads: q.asArray().map(num), style, color: c ? '#' + c.map(v => Math.round(Math.min(1, Math.max(0, v)) * 255).toString(16).padStart(2, '0')).join('') : '#ffd400', comment: txt('Contents'), author: txt('T') });
+      const th = thr.get(String(ref));
+      list.push({ quads: q.asArray().map(num), style, color: c ? '#' + c.map(v => Math.round(Math.min(1, Math.max(0, v)) * 255).toString(16).padStart(2, '0')).join('') : '#ffd400', comment: txt('Contents'), author: txt('T'), ...(th ? { replies: th.replies, state: th.state, stateBy: th.stateBy, stateT: th.stateT } : {}) });
       drop.add(String(ref)); const pop = dict.get(PDFName.of('Popup')); if (pop) drop.add(String(pop));   // zugehöriges Kommentarfenster
+      for (const r of replies) if (r.irt === String(ref)) { drop.add(r.ref); if (r.popup) drop.add(String(r.popup)); }   // Antworten und Status
     }
     for (let k = arr.size() - 1; k >= 0; k--) if (drop.has(String(arr.get(k)))) { arr.remove(k); n++; }
   });
@@ -571,6 +582,7 @@ function markupAnnot(m, vp) {
   if (!rs.length) return null;
   const x0 = Math.min(...rs.map(r => r.x)), y0 = Math.min(...rs.map(r => r.y)), x1 = Math.max(...rs.map(r => r.x + r.w)), y1 = Math.max(...rs.map(r => r.y + r.h));
   return { id: ++uid, type: 'hl', color: m.color, style: m.style, imp: true, comment: m.comment, author: m.author, text: '',
+    ...(m.replies?.length ? { replies: m.replies } : {}), ...(m.state ? { state: m.state, stateBy: m.stateBy, stateT: m.stateT } : {}),
     x: x0, y: y0, w: x1 - x0, h: y1 - y0, rects: rs.map(r => ({ x: (r.x - x0) / (x1 - x0), y: (r.y - y0) / (y1 - y0), w: r.w / (x1 - x0), h: r.h / (y1 - y0) })) };
 }
 async function importPdf(file) {
@@ -1090,7 +1102,7 @@ function renderAnns() {
     if (a.type === 'text' || a.type === 'note') {
       el.textContent = a.text; el.style.fontSize = a.fs * W + 'px';
       if (a.type === 'text') { ofontCheck(a); el.style.color = a.color; el.style.fontFamily = origCss(a) + FONT_CSS[fontFam(a)]; if (a.lh) el.style.lineHeight = a.lh; if (a.bold && !origCss(a)) el.style.fontWeight = '700'; if (a.italic && fontFam(a) !== 'mono' && !origCss(a)) el.style.fontStyle = 'italic'; }
-      else el.dataset.head = noteHead(a);
+      else { el.dataset.head = noteHead(a); const rl = Kommentare.replyLines(a); if (rl.length) el.dataset.replies = rl.join('\n'); }
       if (state.editing === a.id) { el.contentEditable = 'true'; editEl = el; el.addEventListener('focusout', () => finishEdit(p, a, el)); }
     } else if (a.id === state.annSel) { const h = document.createElement('div'); h.className = 'handle'; el.append(h); }
     ov.append(el);
@@ -1106,7 +1118,9 @@ function renderAnns() {
     const s = getSelection(); s.removeAllRanges(); s.addRange(r);
   }
 }
-const noteHead = a => 'Notiz · ' + a.at + (a.by ? ' · ' + a.by : '');
+const noteHead = a => 'Notiz · ' + a.at + (a.by ? ' · ' + a.by : '') + (a.state ? ' · ' + Kommentare.label(a.state) : '');
+// Notiztext mit Antworten darunter (für PDF und Bild; auf dem Bildschirm zeigt CSS die Antworten aus data-replies)
+const noteBody = a => [a.text, ...Kommentare.replyLines(a)].join('\n');
 // Zeilenumbruch nach Breite (für Notizen in PDF und Bild)
 function wrapLines(text, maxW, meas) {
   const out = [];
@@ -2943,7 +2957,35 @@ function addHighlights(out, list, T) {
     const ref = ctx.register(dict);
     page.node.addAnnot(ref);
     if (T) T.widget(dict, page, 'Annot', { Alt: PDFHexString.fromText(a.comment || (text ? `${what}: ${text}` : what)) });
+    threadAnnots(ctx, page, ref, rect, a, T);
     if (!tabbed.has(page)) { page.node.set(PDFName.of('Tabs'), PDFName.of('S')); tabbed.add(page); }
+  }
+}
+/* Antworten und Status (js/kommentare.js) wie in Acrobat: je Antwort eine Text-Anmerkung mit /IRT auf den Kommentar
+   und /RT /R, der Status als Text-Anmerkung mit /StateModel (Review) und /State. Erscheinungsbild leer (unsichtbar,
+   die Notiz selbst steht schon auf der Seite), Druck-Flag gesetzt und nicht versteckt – so bleibt PDF/A erfüllt. */
+function threadAnnots(ctx, page, parent, rect, a, T) {
+  if (!Kommentare.hasThread(a)) return;
+  const ap = ctx.register(ctx.stream('', { Type: 'XObject', Subtype: 'Form', BBox: rect }));
+  const add = (contents, by, t, extra = {}) => {
+    const dict = ctx.obj({ Type: 'Annot', Subtype: 'Text', Rect: rect, F: 4, Name: 'Comment', IRT: parent, RT: 'R', Contents: PDFHexString.fromText(contents),
+      AP: ctx.obj({ N: ap }), ...(by ? { T: PDFHexString.fromText(by) } : {}), ...(t ? { M: PDFString.of(Kommentare.pdfDate(t)) } : {}), ...extra });
+    page.node.addAnnot(ctx.register(dict));
+    if (T) T.widget(dict, page, 'Annot', { Alt: PDFHexString.fromText(contents) });
+  };
+  for (const r of a.replies || []) add(r.text, r.by, r.t);
+  if (a.state) add(`Status: ${Kommentare.label(a.state)}`, a.stateBy, a.stateT, { StateModel: PDFString.of('Review'), State: PDFString.of(a.state) });
+}
+// Notiz mit Verlauf: zusätzlich als Kommentar (Text-Anmerkung) über dem Notizzettel, damit Acrobat Antworten und Status zuordnen kann
+function addNoteThreads(out, list, T) {
+  const ctx = out.context;
+  for (const { page, rect, a } of list) {
+    const ap = ctx.register(ctx.stream('', { Type: 'XObject', Subtype: 'Form', BBox: rect }));
+    const dict = ctx.obj({ Type: 'Annot', Subtype: 'Text', Rect: rect, F: 4, Name: 'Comment', Contents: PDFHexString.fromText(a.text || 'Notiz'), AP: ctx.obj({ N: ap }),
+      ...(a.by ? { T: PDFHexString.fromText(a.by) } : {}) });
+    const ref = ctx.register(dict); page.node.addAnnot(ref);
+    if (T) T.widget(dict, page, 'Annot', { Alt: PDFHexString.fromText('Notiz: ' + (a.text || '')) });
+    threadAnnots(ctx, page, ref, rect, a, T);
   }
 }
 // beA (ERVB 2025): aus übernommenen Seiten Anhänge, Medien, JavaScript- und Startbefehle entfernen (Links und Formularfelder bleiben)
@@ -3220,7 +3262,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   const safe = s => [...s].filter(ch => charset.has(ch.codePointAt(0))).join('');
   stamps.watermark = safe(stamps.watermark); stamps.safe = safe;
   const T = pdfa ? makeTagger(out) : null;   // barrierefrei (PDF/UA-1) zusammen mit PDF/A
-  const fieldQ = [], linkQ = [], hlQ = [];   // Formularfelder und Links: nach den Seiten als echte PDF-Objekte anlegen
+  const fieldQ = [], linkQ = [], hlQ = [], noteQ = [];   // Formularfelder und Links: nach den Seiten als echte PDF-Objekte anlegen
   const heads = [];   // erkannte Überschriften (barrierefrei): werden Lesezeichen, wenn das Dokument keine eigenen hat
   lastTagStats = { h: 0, table: 0, list: 0, fig: 0 };
   /* Barrierefrei: Kopf- und Fußzeilen und Seitenzahlen sind Artefakte (Screenreader lesen sie sonst auf jeder Seite vor).
@@ -3473,8 +3515,9 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
       else if (a.type === 'note') {
         T?.open('P');
         const sz = a.fs * W, pad = sz * 0.45, lh = sz * 1.25, meas = t => font.widthOfTextAtSize(t, sz);
-        const lines = wrapLines(safe(a.text), w - 2 * pad, meas), head = safe(noteHead(a)), top = oy + H - a.y * H;
+        const lines = wrapLines(noteBody(a).split('\n').map(safe).join('\n'), w - 2 * pad, meas), head = safe(noteHead(a)), top = oy + H - a.y * H;
         const bh = pad * 2 + lh * (lines.length + 1);
+        if (Kommentare.hasThread(a)) noteQ.push({ page, a, rect: [x, top - bh, x + w, top].map(v => +v.toFixed(2)) });
         page.drawRectangle({ x, y: top - bh, width: w, height: bh, color: rgb(1, 0.953, 0.64), borderColor: rgb(0.88, 0.71, 0), borderWidth: 0.6 });
         page.drawText(head, { x: x + pad, y: top - pad - sz * 0.85, size: sz * 0.8, font, color: rgb(0.54, 0.43, 0) });
         lines.forEach((t, li) => { if (t) page.drawText(t, { x: x + pad, y: top - pad - lh * (li + 1) - sz * 0.9, size: sz, font, color: rgb(0.23, 0.18, 0) }); });
@@ -3502,6 +3545,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   if (fieldQ.length) addFormFields(out, fieldQ, T, font);
   if (linkQ.length) addLinks(out, linkQ, pages, T);
   if (hlQ.length) addHighlights(out, hlQ, T);
+  if (noteQ.length) addNoteThreads(out, noteQ, T);
   // Seitenformat: weiße Ränder entfernen und/oder alles auf A4 (js/layout.js) – nach Links, Markierungen, Feldern, damit alles mitwandert
   if (trim || a4) Layout.fit(out, { trim, a4, boxes: trim ? await inkBoxes(await out.save()) : [] });
   if (invert) Layout.invert(out);
@@ -3827,7 +3871,7 @@ async function drawAnnotsInner(x, p, W, H) {
     else if (a.type === 'note') {
       const sz = a.fs * W, pad = sz * 0.45, lh = sz * 1.25;
       x.save(); x.font = `${sz}px "DejaVu Sans"`;
-      const lines = wrapLines(a.text, aw - 2 * pad, t => x.measureText(t).width), bh = pad * 2 + lh * (lines.length + 1);
+      const lines = wrapLines(noteBody(a), aw - 2 * pad, t => x.measureText(t).width), bh = pad * 2 + lh * (lines.length + 1);
       x.fillStyle = '#fff3a3'; x.fillRect(ax, ay, aw, bh); x.strokeStyle = '#e0b400'; x.lineWidth = Math.max(1, sz * 0.06); x.strokeRect(ax, ay, aw, bh);
       x.textBaseline = 'alphabetic'; x.fillStyle = '#8a6d00'; x.font = `bold ${sz * 0.8}px "DejaVu Sans"`; x.fillText(noteHead(a), ax + pad, ay + pad + sz * 0.85);
       x.fillStyle = '#3a2f00'; x.font = `${sz}px "DejaVu Sans"`; lines.forEach((t, li) => x.fillText(t, ax + pad, ay + pad + lh * (li + 1) + sz * 0.9));

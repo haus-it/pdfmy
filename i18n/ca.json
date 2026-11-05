@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Una pàgina per fila.",
  "Zwei Seiten": "Dues pàgines",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dues pàgines una al costat de l'altra; per tornar, «Dues pàgines» (tecla D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostra dues pàgines una al costat de l'altra, com un llibre obert (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostra dues pàgines una al costat de l'altra, com un llibre obert (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Resposta a {1} a la pàgina {2}\" placeholder=\"Escriviu una resposta…\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Respon</button></div>",
+ "Abgebrochen": "Cancel·lat",
+ "Accepted": "Accepted",
+ "Angenommen": "Acceptat",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "S'ha afegit la resposta a {0} (pàgina {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Resposta eliminada (Ctrl+Z ho desfà).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "per respondre. Les respostes i l'estat es desen amb el PDF: l'Acrobat i altres programes de PDF els mostren com a fil.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "En notes i marques: trieu un estat o feu servir",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Estat de {0} (pàgina {1}): {2}.",
+ "Unbekannter Status:": "Estat desconegut:"
 }

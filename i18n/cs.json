@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Jedna strana na řádek.",
  "Zwei Seiten": "Dvě strany",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dvě strany vedle sebe – zpět pomocí „Dvě strany“ (klávesa D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Zobrazit dvě strany vedle sebe jako otevřenou knihu (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Zobrazit dvě strany vedle sebe jako otevřenou knihu (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Odpověď na {1} na straně {2}\" placeholder=\"Napsat odpověď …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Odpovědět</button></div>",
+ "Abgebrochen": "Zrušeno",
+ "Accepted": "Accepted",
+ "Angenommen": "Přijato",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Odpověď na {0} (strana {1}) přidána.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Odpověď smazána (Ctrl+Z vrátí zpět).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "odpovězte. Odpovědi a stav se ukládají s PDF – Acrobat a další programy PDF je zobrazují jako vlákno.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "U poznámek a zvýraznění: zvolte stav nebo pomocí",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Stav {0} (strana {1}): {2}.",
+ "Unbekannter Status:": "Neznámý stav:"
 }

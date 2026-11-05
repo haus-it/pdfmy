@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Orri bat errenkadako.",
  "Zwei Seiten": "Bi orri",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Bi orri elkarren ondoan – itzultzeko, «Bi orri» (D tekla).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Erakutsi bi orri elkarren ondoan, liburu ireki bat bezala (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Erakutsi bi orri elkarren ondoan, liburu ireki bat bezala (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Erantzuna {1}(r)i, {2}. orrialdean\" placeholder=\"Idatzi erantzun bat …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Erantzun</button></div>",
+ "Abgebrochen": "Bertan behera",
+ "Accepted": "Accepted",
+ "Angenommen": "Onartuta",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "{0}(r)i erantzuna gehitu zaio ({1}. orrialdea).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Erantzuna ezabatuta (Ctrl+Z sakatuta desegin daiteke).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "erantzuteko. Erantzunak eta egoera PDFarekin gordetzen dira – Acrobatek eta beste PDF programa batzuek hari gisa erakusten dituzte.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Oharretan eta nabarmentzeetan: aukeratu egoera bat edo erabili",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "{0}(r)en egoera ({1}. orrialdea): {2}.",
+ "Unbekannter Status:": "Egoera ezezaguna:"
 }

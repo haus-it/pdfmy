@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Leathanach amháin in aghaidh na sraithe.",
  "Zwei Seiten": "Dhá leathanach",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dhá leathanach taobh le taobh – ar ais le “Dhá leathanach” (eochair D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Taispeáin dhá leathanach taobh le taobh, cosúil le leabhar oscailte (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Taispeáin dhá leathanach taobh le taobh, cosúil le leabhar oscailte (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Freagra ar {1} ar leathanach {2}\" placeholder=\"Scríobh freagra …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Freagair</button></div>",
+ "Abgebrochen": "Cealaithe",
+ "Accepted": "Accepted",
+ "Angenommen": "Glactha",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Cuireadh freagra ar {0} leis (leathanach {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Scriosadh an freagra (cealaíonn Ctrl+Z é).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "chun freagra a thabhairt. Sábháiltear freagraí agus stádas leis an PDF – taispeánann Acrobat agus cláir PDF eile iad mar shnáithe.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Do nótaí agus aibhsithe: roghnaigh stádas nó úsáid",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Stádas {0} (leathanach {1}): {2}.",
+ "Unbekannter Status:": "Stádas anaithnid:"
 }

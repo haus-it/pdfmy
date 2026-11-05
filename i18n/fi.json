@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Yksi sivu riviä kohden.",
  "Zwei Seiten": "Kaksi sivua",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Kaksi sivua vierekkäin – takaisin painikkeella ”Kaksi sivua” (näppäin D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Näytä kaksi sivua vierekkäin kuin avattu kirja (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Näytä kaksi sivua vierekkäin kuin avattu kirja (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Vastaus kohteeseen {1} sivulla {2}\" placeholder=\"Kirjoita vastaus …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Vastaa</button></div>",
+ "Abgebrochen": "Peruttu",
+ "Accepted": "Accepted",
+ "Angenommen": "Hyväksytty",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Vastaus kohteeseen {0} (sivu {1}) lisätty.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Vastaus poistettu (Ctrl+Z kumoaa).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "vastataksesi. Vastaukset ja tila tallennetaan PDF-tiedoston mukana – Acrobat ja muut PDF-ohjelmat näyttävät ne keskusteluketjuna.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Muistiinpanoissa ja korostuksissa: valitse tila tai käytä painiketta",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Kohteen {0} tila (sivu {1}): {2}.",
+ "Unbekannter Status:": "Tuntematon tila:"
 }

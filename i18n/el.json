@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Μία σελίδα ανά γραμμή.",
  "Zwei Seiten": "Δύο σελίδες",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Δύο σελίδες δίπλα-δίπλα – επιστροφή με «Δύο σελίδες» (πλήκτρο D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Εμφάνιση δύο σελίδων δίπλα-δίπλα, σαν ανοιχτό βιβλίο (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Εμφάνιση δύο σελίδων δίπλα-δίπλα, σαν ανοιχτό βιβλίο (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Απάντηση σε {1} στη σελίδα {2}\" placeholder=\"Γράψτε μια απάντηση …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Απάντηση</button></div>",
+ "Abgebrochen": "Ακυρώθηκε",
+ "Accepted": "Accepted",
+ "Angenommen": "Έγινε αποδεκτό",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Προστέθηκε απάντηση σε {0} (σελίδα {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Η απάντηση διαγράφηκε (Ctrl+Z για αναίρεση).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "για απάντηση. Οι απαντήσεις και η κατάσταση αποθηκεύονται με το PDF – το Acrobat και άλλα προγράμματα PDF τις εμφανίζουν ως νήμα.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Σε σημειώσεις και επισημάνσεις: επιλέξτε κατάσταση ή χρησιμοποιήστε το",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Κατάσταση {0} (σελίδα {1}): {2}.",
+ "Unbekannter Status:": "Άγνωστη κατάσταση:"
 }

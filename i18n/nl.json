@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Eén pagina per rij.",
  "Zwei Seiten": "Twee pagina's",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Twee pagina's naast elkaar – terug met „Twee pagina's” (toets D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Twee pagina's naast elkaar tonen, zoals een opengeslagen boek (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Twee pagina's naast elkaar tonen, zoals een opengeslagen boek (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwoord op {1} op pagina {2}\" placeholder=\"Antwoord schrijven …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Beantwoorden</button></div>",
+ "Abgebrochen": "Geannuleerd",
+ "Accepted": "Accepted",
+ "Angenommen": "Geaccepteerd",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Antwoord op {0} (pagina {1}) toegevoegd.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Antwoord verwijderd (Ctrl+Z maakt het ongedaan).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "om te antwoorden. Antwoorden en status worden met de PDF opgeslagen – Acrobat en andere PDF-programma's tonen ze als discussie.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Bij notities en markeringen: kies een status of gebruik",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Status van {0} (pagina {1}): {2}.",
+ "Unbekannter Status:": "Onbekende status:"
 }

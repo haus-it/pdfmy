@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Une page par ligne.",
  "Zwei Seiten": "Deux pages",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Deux pages côte à côte – retour avec « Deux pages » (touche D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Afficher deux pages côte à côte, comme un livre ouvert (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Afficher deux pages côte à côte, comme un livre ouvert (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Réponse à {1} en page {2}\" placeholder=\"Écrire une réponse…\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Répondre</button></div>",
+ "Abgebrochen": "Annulé",
+ "Accepted": "Accepted",
+ "Angenommen": "Accepté",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Réponse à {0} (page {1}) ajoutée.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Réponse supprimée (Ctrl+Z pour annuler).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "pour répondre. Les réponses et le statut sont enregistrés avec le PDF – Acrobat et les autres logiciels PDF les affichent sous forme de fil de discussion.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Pour les notes et les surlignages : choisissez un statut ou utilisez",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Statut de {0} (page {1}) : {2}.",
+ "Unbekannter Status:": "Statut inconnu :"
 }

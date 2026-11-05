@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Paġna waħda għal kull ringiela.",
  "Zwei Seiten": "Żewġ paġni",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Żewġ paġni ħdejn xulxin – lura b’“Żewġ paġni” (buttuna D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Uri żewġ paġni ħdejn xulxin, bħal ktieb miftuħ (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Uri żewġ paġni ħdejn xulxin, bħal ktieb miftuħ (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Tweġiba għal {1} fil-paġna {2}\" placeholder=\"Ikteb tweġiba …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Wieġeb</button></div>",
+ "Abgebrochen": "Ikkanċellat",
+ "Accepted": "Accepted",
+ "Angenommen": "Aċċettat",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Żdiedet tweġiba għal {0} (paġna {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Tweġiba mħassra (Ctrl+Z jerġa’ lura).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "biex twieġeb. It-tweġibiet u l-istatus jiġu ssejvjati mal-PDF – Acrobat u programmi PDF oħra juruhom bħala thread.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Għal noti u mmarkar: agħżel status jew uża",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Status ta’ {0} (paġna {1}): {2}.",
+ "Unbekannter Status:": "Status mhux magħruf:"
 }

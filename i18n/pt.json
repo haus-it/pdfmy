@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Uma página por linha.",
  "Zwei Seiten": "Duas páginas",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Duas páginas lado a lado – voltar com «Duas páginas» (tecla D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostrar duas páginas lado a lado, como um livro aberto (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostrar duas páginas lado a lado, como um livro aberto (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Resposta a {1} na página {2}\" placeholder=\"Escrever uma resposta …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Responder</button></div>",
+ "Abgebrochen": "Cancelado",
+ "Accepted": "Accepted",
+ "Angenommen": "Aceite",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Resposta a {0} (página {1}) adicionada.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Resposta eliminada (Ctrl+Z anula).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "para responder. As respostas e o estado são guardados com o PDF – o Acrobat e outros programas de PDF mostram-nos como conversa.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Em notas e destaques: escolha um estado ou use",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Estado de {0} (página {1}): {2}.",
+ "Unbekannter Status:": "Estado desconhecido:"
 }

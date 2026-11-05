@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Antworten und Status bei Kommentaren (app-v222)
+- Neu: In **Kommentare und Markierungen** lassen sich Notizen und Markierungen **beantworten** und mit einem **Status** versehen (Offen, Angenommen, Abgelehnt, Abgebrochen, Erledigt) – wie die Kommentar-Verläufe in Acrobat. Filter nach Status, Suche auch in Antworten, „Als Text kopieren“ mit Verlauf.
+- Beim Speichern werden Antworten und Status als PDF-Kommentare nach ISO 32000 geschrieben (Text-Anmerkungen mit /IRT bzw. /StateModel Review) – Acrobat, Foxit und Co. zeigen den Verlauf. Notizen mit Verlauf erscheinen dort zusätzlich in der Kommentarliste.
+- Beim Öffnen übernimmt PDFMy Antworten und Status, die andere Programme zu Markierungen geschrieben haben.
+- Auf dem Notizzettel stehen Antworten unter dem Text und der Status in der Kopfzeile (auch im Ausdruck und als Bild).
+- Behoben: Zeilenumbrüche in Notizen gingen in der gespeicherten PDF verloren (Text lief in einer Zeile weiter).
+
 ### Zwei-Seiten-Ansicht (app-v221)
 - Neu: **Zwei Seiten** nebeneinander (Knopf über der Seite, Taste D) – fortlaufend wie ein aufgeschlagenes Buch; Bearbeiten auf der gewählten Seite wie gewohnt, Scrollen und Seitenwahl laufen mit. Einstellung bleibt gespeichert; unter 600 px Breite automatisch eine Seite. Vorbild: Acrobat „Zweiseitenansicht“, Edge/Chrome-PDF-Ansicht.
 

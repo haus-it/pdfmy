@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Ena stran na vrstico.",
  "Zwei Seiten": "Dve strani",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dve strani drugo ob drugi – nazaj z „Dve strani“ (tipka D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Prikaži dve strani drugo ob drugi kot odprto knjigo (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Prikaži dve strani drugo ob drugi kot odprto knjigo (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Odgovor na {1} na strani {2}\" placeholder=\"Napišite odgovor …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Odgovori</button></div>",
+ "Abgebrochen": "Preklicano",
+ "Accepted": "Accepted",
+ "Angenommen": "Sprejeto",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Odgovor na {0} (stran {1}) dodan.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Odgovor izbrisan (Ctrl+Z razveljavi).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "odgovorite. Odgovori in stanje se shranijo s PDF-jem – Acrobat in drugi programi PDF jih prikažejo kot nit.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Pri opombah in oznakah: izberite stanje ali z gumbom",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Stanje {0} (stran {1}): {2}.",
+ "Unbekannter Status:": "Neznano stanje:"
 }

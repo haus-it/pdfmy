@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Én side pr. række.",
  "Zwei Seiten": "To sider",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "To sider side om side – tilbage med »To sider« (tasten D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Vis to sider side om side som en opslået bog (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Vis to sider side om side som en opslået bog (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Svar på {1} på side {2}\" placeholder=\"Skriv et svar …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Svar</button></div>",
+ "Abgebrochen": "Annulleret",
+ "Accepted": "Accepted",
+ "Angenommen": "Accepteret",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Svar på {0} (side {1}) tilføjet.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Svar slettet (Ctrl+Z fortryder).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "for at svare. Svar og status gemmes med PDF'en – Acrobat og andre PDF-programmer viser dem som tråd.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Ved noter og markeringer: vælg en status, eller brug",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Status for {0} (side {1}): {2}.",
+ "Unbekannter Status:": "Ukendt status:"
 }

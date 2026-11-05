@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Un dudalen i bob rhes.",
  "Zwei Seiten": "Dwy dudalen",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dwy dudalen ochr yn ochr – yn ôl gyda “Dwy dudalen” (bysell D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Dangos dwy dudalen ochr yn ochr, fel llyfr agored (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Dangos dwy dudalen ochr yn ochr, fel llyfr agored (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Ateb i {1} ar dudalen {2}\" placeholder=\"Ysgrifennwch ateb …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Ateb</button></div>",
+ "Abgebrochen": "Wedi’i ganslo",
+ "Accepted": "Accepted",
+ "Angenommen": "Derbyniwyd",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Ychwanegwyd ateb i {0} (tudalen {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Ateb wedi’i ddileu (mae Ctrl+Z yn ei ddadwneud).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "i ateb. Mae atebion a statws yn cael eu cadw gyda’r PDF – mae Acrobat a rhaglenni PDF eraill yn eu dangos fel edefyn.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Ar gyfer nodiadau ac amlygiadau: dewiswch statws neu defnyddiwch",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Statws {0} (tudalen {1}): {2}.",
+ "Unbekannter Status:": "Statws anhysbys:"
 }

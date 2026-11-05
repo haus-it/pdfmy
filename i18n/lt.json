@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Vienas puslapis eilutėje.",
  "Zwei Seiten": "Du puslapiai",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Du puslapiai greta – grįžti mygtuku „Du puslapiai“ (klavišas D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Rodyti du puslapius greta, kaip atverstą knygą (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Rodyti du puslapius greta, kaip atverstą knygą (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Atsakymas į {1} {2} puslapyje\" placeholder=\"Rašyti atsakymą …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Atsakyti</button></div>",
+ "Abgebrochen": "Atšaukta",
+ "Accepted": "Accepted",
+ "Angenommen": "Priimta",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Pridėtas atsakymas į {0} ({1} psl.).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Atsakymas ištrintas (Ctrl+Z atšaukia).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "atsakyti. Atsakymai ir būsena įrašomi kartu su PDF – Acrobat ir kitos PDF programos rodo juos kaip giją.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Pastaboms ir žymėjimams: pasirinkite būseną arba naudokite",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "{0} būsena ({1} psl.): {2}.",
+ "Unbekannter Status:": "Nežinoma būsena:"
 }

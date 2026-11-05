@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "One page per row.",
  "Zwei Seiten": "Two pages",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Two pages side by side – switch back with ‘Two pages’ (D key).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Show two pages side by side, like an open book (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Show two pages side by side, like an open book (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Reply to {1} on page {2}\" placeholder=\"Write a reply …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Reply</button></div>",
+ "Abgebrochen": "Cancelled",
+ "Accepted": "Accepted",
+ "Angenommen": "Accepted",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Reply to {0} (page {1}) added.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Reply deleted (Ctrl+Z undoes it).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "to reply. Replies and status are saved with the PDF – Acrobat and other PDF programs show them as a thread.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "For notes and highlights: choose a status or use",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Status of {0} (page {1}): {2}.",
+ "Unbekannter Status:": "Unknown status:"
 }

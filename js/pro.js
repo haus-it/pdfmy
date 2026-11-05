@@ -3658,29 +3658,69 @@ async function cmtCollect() {
       else if (a.type === 'field') t = `${a.name} (${{ text: 'Textfeld', multi: 'mehrzeilig', date: 'Datum', check: 'Kontrollkästchen', select: 'Auswahlliste', radio: 'Optionsfeld' }[a.ftype] || ''})`;
       else if (a.type === 'hl') t = a.text || (words || []).filter(w => { const cx = w.x + w.w / 2, cy = w.y + w.h / 2; return cx >= a.x && cx <= a.x + a.w && cy >= a.y && cy <= a.y + a.h; }).map(w => w.t).join(' ');
       t = t.replace(/\s+/g, ' ').trim();
-      rows.push({ i, p, a, kind: a.type, label: a.type === 'sign' && a.kind ? SIG_KINDS[a.kind] : CMT_KIND[a.type], text: t, by: a.type === 'note' ? [a.at, a.by].filter(Boolean).join(' · ') : '' });
+      rows.push({ i, p, a, kind: a.type, label: a.type === 'sign' && a.kind ? SIG_KINDS[a.kind] : CMT_KIND[a.type], text: t,
+        by: a.type === 'note' ? [a.at, a.by].filter(Boolean).join(' · ') : a.type === 'hl' ? a.author || '' : '', thread: a.type === 'note' || a.type === 'hl' });
     }
   }
   return rows;
 }
+let cmtReply = null;   // Kommentar, unter dem gerade das Antwortfeld offen ist
+const cmtHay = r => [r.text, r.label, r.by, ...(r.a.replies || []).map(x => x.by + ' ' + x.text)].join(' ').toLowerCase();
+function cmtThread(r) {
+  if (!r.thread) return '';
+  const id = r.a.id, reps = (r.a.replies || []).map((x, k) => `<li><span><small class="hint">${esc([x.at, x.by].filter(Boolean).join(' · '))}</small> ${esc(x.text)}</span><button type="button" class="tocact" data-crdel="${id}:${k}" title="Antwort löschen" aria-label="Antwort ${k + 1} löschen">✕</button></li>`).join('');
+  const form = cmtReply === id ? `<div class="crform"><input type="text" data-crin="${id}" autocomplete="off" aria-label="Antwort auf ${esc(r.label)} auf Seite ${r.i + 1}" placeholder="Antwort schreiben …"><button type="button" class="primary" data-crsend="${id}">Antworten</button></div>` : '';
+  return reps || form ? `<div class="cthr">${reps ? `<ul>${reps}</ul>` : ''}${form}</div>` : '';
+}
 function cmtRender() {
-  const q = $('#cmtQ').value.trim().toLowerCase(), k = $('#cmtType').value;
-  const list = cmtRows.filter(r => (!k || r.kind === k) && (!q || (r.text + ' ' + r.label + ' ' + r.by).toLowerCase().includes(q)));
+  const q = $('#cmtQ').value.trim().toLowerCase(), k = $('#cmtType').value, st = $('#cmtState').value;
+  const list = cmtRows.filter(r => (!k || r.kind === k) && (!st || (r.thread && (st === 'open' ? !r.a.state : r.a.state === st))) && (!q || cmtHay(r).includes(q)));
   const by = {}; cmtRows.forEach(r => by[r.label] = (by[r.label] || 0) + 1);
   $('#cmtSum').textContent = cmtRows.length ? `${cmtRows.length} Einträge: ` + Object.entries(by).map(([l, n]) => `${n} × ${l}`).join(', ') + (list.length !== cmtRows.length ? ` – ${list.length} angezeigt` : '') : '';
-  $('#cmtList').innerHTML = list.map(r => `<li><button type="button" class="tocgo" data-cmt="${r.a.id}"><span><span class="ckind">${esc(r.label)}</span>${esc(r.text || '–')}${r.by ? ` <small class="hint">(${esc(r.by)})</small>` : ''}</span><span class="pg">S. ${r.i + 1}</span></button><button type="button" class="tocact" data-cdel="${r.a.id}" title="Löschen" aria-label="${esc(r.label)} auf Seite ${r.i + 1} löschen">✕</button></li>`).join('')
+  const stSel = r => `<select class="cstate${r.a.state ? ' set' : ''}" data-cst="${r.a.id}" aria-label="Status von ${esc(r.label)} auf Seite ${r.i + 1}">${Kommentare.STATES.map(([v, l]) => `<option value="${v}"${(r.a.state || '') === v ? ' selected' : ''}>${l}</option>`).join('')}</select>`;
+  $('#cmtList').innerHTML = list.map(r => `<li class="${r.thread ? 'cmtl' : ''}"><button type="button" class="tocgo" data-cmt="${r.a.id}"><span><span class="ckind">${esc(r.label)}</span>${esc(r.text || '–')}${r.by ? ` <small class="hint">(${esc(r.by)})</small>` : ''}</span><span class="pg">S. ${r.i + 1}</span></button>${r.thread ? stSel(r) + `<button type="button" class="tocact crep" data-crep="${r.a.id}" title="Antworten" aria-label="Auf ${esc(r.label)} auf Seite ${r.i + 1} antworten" aria-expanded="${cmtReply === r.a.id}"><svg class="ic" aria-hidden="true"><use href="#i-reply"/></svg></button>` : ''}<button type="button" class="tocact" data-cdel="${r.a.id}" title="Löschen" aria-label="${esc(r.label)} auf Seite ${r.i + 1} löschen">✕</button>${cmtThread(r)}</li>`).join('')
     || `<li class="empty">${cmtRows.length ? 'Nichts gefunden.' : 'Dieses Dokument hat noch keine Kommentare oder Markierungen. Werkzeuge dafür: Notiz, Markieren, Text, Stempel, Unterschrift.'}</li>`;
 }
 async function openComments() {
   if (!state.pages.length) return;
   closeMenu?.(); cmtRows = await cmtCollect();
-  $('#cmtQ').value = ''; $('#cmtType').value = ''; cmtRender();
+  $('#cmtQ').value = ''; $('#cmtType').value = ''; $('#cmtState').value = ''; cmtReply = null; cmtRender();
   if (!$('#cmtDlg').open) $('#cmtDlg').showModal(); $('#cmtQ').focus();
 }
 $('#btnComments').onclick = openComments;
-$('#cmtQ').oninput = cmtRender; $('#cmtType').onchange = cmtRender;
+$('#cmtQ').oninput = cmtRender; $('#cmtType').onchange = cmtRender; $('#cmtState').onchange = cmtRender;
+// Antworten und Status (js/kommentare.js): gehen mit in die PDF, Acrobat zeigt sie als Verlauf
+const cmtFind = id => cmtRows.find(x => x.a.id === +id);
+function cmtSend(id) {
+  const r = cmtFind(id), inp = $(`[data-crin="${id}"]`); if (!r || !inp) return;
+  if (!inp.value.trim()) { inp.focus(); return; }
+  pushUndo(r.p); Kommentare.reply(r.a, inp.value, S.author); state.dirty = true; cmtReply = null; refresh(); cmtRender();
+  status(`Antwort auf ${r.label} (Seite ${r.i + 1}) hinzugefügt.`);
+  $(`[data-crep="${id}"]`)?.focus();
+}
+$('#cmtList').addEventListener('change', e => {
+  const sel = e.target.closest('[data-cst]'); if (!sel) return;
+  const r = cmtFind(sel.dataset.cst); if (!r) return;
+  pushUndo(r.p); Kommentare.setState(r.a, sel.value, S.author); state.dirty = true; refresh();
+  sel.classList.toggle('set', !!sel.value);
+  status(`Status von ${r.label} (Seite ${r.i + 1}): ${Kommentare.label(sel.value)}.`);
+  if ($('#cmtState').value) cmtRender();
+});
+$('#cmtList').addEventListener('keydown', e => {
+  const inp = e.target.closest('[data-crin]'); if (!inp) return;
+  if (e.key === 'Enter') { e.preventDefault(); cmtSend(inp.dataset.crin); }
+  else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); const id = cmtReply; cmtReply = null; cmtRender(); $(`[data-crep="${id}"]`)?.focus(); }
+});
 $('#cmtClose').onclick = () => $('#cmtDlg').close();
 $('#cmtList').addEventListener('click', async e => {
+  const rep = e.target.closest('[data-crep]'), send = e.target.closest('[data-crsend]'), rdel = e.target.closest('[data-crdel]');
+  if (rep) { cmtReply = cmtReply === +rep.dataset.crep ? null : +rep.dataset.crep; cmtRender(); (cmtReply ? $(`[data-crin="${cmtReply}"]`) : $(`[data-crep="${rep.dataset.crep}"]`))?.focus(); return; }
+  if (send) { cmtSend(send.dataset.crsend); return; }
+  if (rdel) {
+    const [id, k] = rdel.dataset.crdel.split(':').map(Number), r = cmtFind(id); if (!r?.a.replies?.[k]) return;
+    pushUndo(r.p); r.a.replies.splice(k, 1); if (!r.a.replies.length) delete r.a.replies; state.dirty = true; refresh(); cmtRender();
+    status('Antwort gelöscht (Strg+Z macht es rückgängig).'); $(`[data-crep="${id}"]`)?.focus(); return;
+  }
   const del = e.target.closest('[data-cdel]'), go = e.target.closest('[data-cmt]');
   const r = cmtRows.find(x => x.a.id === +(del || go)?.dataset[del ? 'cdel' : 'cmt']); if (!r) return;
   if (del) {
@@ -3693,7 +3733,7 @@ $('#cmtList').addEventListener('click', async e => {
 });
 $('#cmtCopy').onclick = async () => {
   const name = (state.docs.length === 1 && state.docs[0].name) || filename();
-  const txt = `Kommentare und Markierungen – ${name}\n\n` + cmtRows.map(r => `Seite ${r.i + 1} · ${r.label}${r.by ? ' (' + r.by + ')' : ''}: ${r.text || '–'}`).join('\n');
+  const txt = `Kommentare und Markierungen – ${name}\n\n` + cmtRows.map(r => [`Seite ${r.i + 1} · ${r.label}${r.by ? ' (' + r.by + ')' : ''}: ${r.text || '–'}`, ...Kommentare.plain(r.a)].join('\n')).join('\n');
   try { await navigator.clipboard.writeText(txt); status(`${cmtRows.length} Einträge in die Zwischenablage kopiert.`); } catch { status('Kopieren nicht möglich.'); }
 };
 

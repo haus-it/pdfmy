@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Üks lehekülg rea kohta.",
  "Zwei Seiten": "Kaks lehekülge",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Kaks lehekülge kõrvuti – tagasi nupuga „Kaks lehekülge“ (klahv D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Näita kahte lehekülge kõrvuti nagu avatud raamatut (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Näita kahte lehekülge kõrvuti nagu avatud raamatut (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Vastus kirjele {1} leheküljel {2}\" placeholder=\"Kirjuta vastus …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Vasta</button></div>",
+ "Abgebrochen": "Tühistatud",
+ "Accepted": "Accepted",
+ "Angenommen": "Nõustutud",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Vastus kirjele {0} (lk {1}) lisatud.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Vastus kustutatud (Ctrl+Z võtab tagasi).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "vastamiseks. Vastused ja olek salvestatakse koos PDF-iga – Acrobat ja teised PDF-programmid näitavad neid lõimena.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Märgete ja esiletõstude puhul: valige olek või kasutage nuppu",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Kirje {0} olek (lk {1}): {2}.",
+ "Unbekannter Status:": "Tundmatu olek:"
 }

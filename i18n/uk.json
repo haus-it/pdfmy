@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Одна сторінка в рядку.",
  "Zwei Seiten": "Дві сторінки",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Дві сторінки поруч – повернутися кнопкою «Дві сторінки» (клавіша D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Показати дві сторінки поруч, як у розгорнутій книзі (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Показати дві сторінки поруч, як у розгорнутій книзі (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Відповідь на {1} на сторінці {2}\" placeholder=\"Написати відповідь…\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Відповісти</button></div>",
+ "Abgebrochen": "Скасовано",
+ "Accepted": "Accepted",
+ "Angenommen": "Прийнято",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Відповідь на {0} (сторінка {1}) додано.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Відповідь видалено (Ctrl+Z скасовує).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "для відповіді. Відповіді й статус зберігаються разом із PDF – Acrobat та інші PDF-програми показують їх як ланцюжок.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Для нотаток і позначок: виберіть статус або натисніть",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Статус {0} (сторінка {1}): {2}.",
+ "Unbekannter Status:": "Невідомий статус:"
 }

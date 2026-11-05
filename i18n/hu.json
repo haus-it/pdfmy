@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Soronként egy oldal.",
  "Zwei Seiten": "Két oldal",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Két oldal egymás mellett – vissza a „Két oldal” gombbal (D billentyű).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Két oldal megjelenítése egymás mellett, mint egy nyitott könyv (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Két oldal megjelenítése egymás mellett, mint egy nyitott könyv (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Válasz erre: {1}, {2}. oldal\" placeholder=\"Válasz írása …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Válasz</button></div>",
+ "Abgebrochen": "Visszavonva",
+ "Accepted": "Accepted",
+ "Angenommen": "Elfogadva",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Válasz hozzáadva ehhez: {0} ({1}. oldal).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Válasz törölve (Ctrl+Z visszavonja).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "gombbal válaszoljon. A válaszok és az állapot a PDF-fel együtt mentődnek – az Acrobat és más PDF-programok szálként jelenítik meg őket.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Jegyzeteknél és kiemeléseknél: válasszon állapotot, vagy a",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "{0} állapota ({1}. oldal): {2}.",
+ "Unbekannter Status:": "Ismeretlen állapot:"
 }

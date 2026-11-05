@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Una pagina per riga.",
  "Zwei Seiten": "Due pagine",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Due pagine affiancate – per tornare: «Due pagine» (tasto D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostra due pagine affiancate, come un libro aperto (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostra due pagine affiancate, come un libro aperto (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Risposta a {1} a pagina {2}\" placeholder=\"Scrivi una risposta …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Rispondi</button></div>",
+ "Abgebrochen": "Annullato",
+ "Accepted": "Accepted",
+ "Angenommen": "Accettato",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Risposta a {0} (pagina {1}) aggiunta.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Risposta eliminata (Ctrl+Z annulla).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "per rispondere. Risposte e stato vengono salvati con il PDF – Acrobat e altri programmi PDF li mostrano come discussione.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Per note ed evidenziazioni: scelga uno stato o usi",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Stato di {0} (pagina {1}): {2}.",
+ "Unbekannter Status:": "Stato sconosciuto:"
 }

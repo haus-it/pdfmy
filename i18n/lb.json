@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Eng Säit pro Zeil.",
  "Zwei Seiten": "Zwou Säiten",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Zwou Säiten nieftenee – zréck mat „Zwou Säiten“ (Tast D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Zwou Säiten nieftenee weisen, wéi en opgeschloe Buch (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Zwou Säiten nieftenee weisen, wéi en opgeschloe Buch (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Äntwert op {1} op Säit {2}\" placeholder=\"Äntwert schreiwen …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Äntweren</button></div>",
+ "Abgebrochen": "Ofgebrach",
+ "Accepted": "Accepted",
+ "Angenommen": "Ugeholl",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Äntwert op {0} (Säit {1}) derbäigesat.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Äntwert geläscht (Ctrl+Z mécht et réckgängeg).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "äntweren. Äntwerten a Status gi mat der PDF gespäichert – Acrobat an aner PDF-Programmer weisen se als Verlaf.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Bei Notizen a Markéierungen: Status wielen oder mat",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Status vu(n) {0} (Säit {1}): {2}.",
+ "Unbekannter Status:": "Onbekannte Status:"
 }

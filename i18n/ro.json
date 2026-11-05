@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "O pagină pe rând.",
  "Zwei Seiten": "Două pagini",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Două pagini alăturate – reveniți cu „Două pagini” (tasta D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Afișați două pagini alăturate, ca o carte deschisă (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Afișați două pagini alăturate, ca o carte deschisă (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Răspuns la {1} pe pagina {2}\" placeholder=\"Scrieți un răspuns …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Răspundeți</button></div>",
+ "Abgebrochen": "Anulat",
+ "Accepted": "Accepted",
+ "Angenommen": "Acceptat",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Răspuns la {0} (pagina {1}) adăugat.",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Răspuns șters (Ctrl+Z anulează).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "pentru a răspunde. Răspunsurile și starea se salvează cu PDF-ul – Acrobat și alte programe PDF le afișează ca fir de discuție.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "La note și evidențieri: alegeți o stare sau folosiți",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Starea pentru {0} (pagina {1}): {2}.",
+ "Unbekannter Status:": "Stare necunoscută:"
 }

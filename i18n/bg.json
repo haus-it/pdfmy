@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "По една страница на ред.",
  "Zwei Seiten": "Две страници",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Две страници една до друга – обратно с „Две страници“ (клавиш D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Показване на две страници една до друга, като отворена книга (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Показване на две страници една до друга, като отворена книга (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Отговор на {1} на страница {2}\" placeholder=\"Напишете отговор …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Отговор</button></div>",
+ "Abgebrochen": "Отменено",
+ "Accepted": "Accepted",
+ "Angenommen": "Прието",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Добавен е отговор на {0} (страница {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Отговорът е изтрит (Ctrl+Z го отменя).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "за отговор. Отговорите и статусът се запазват с PDF файла – Acrobat и други PDF програми ги показват като нишка.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "При бележки и маркирания: изберете статус или използвайте",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "Статус на {0} (страница {1}): {2}.",
+ "Unbekannter Status:": "Неизвестен статус:"
 }

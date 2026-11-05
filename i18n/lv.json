@@ -3463,5 +3463,22 @@
  "Eine Seite je Zeile.": "Viena lappuse katrā rindā.",
  "Zwei Seiten": "Divas lappuses",
  "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Divas lappuses blakus – atpakaļ ar „Divas lappuses” (taustiņš D).",
- "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Rādīt divas lappuses blakus kā atvērtu grāmatu (D)"
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Rādīt divas lappuses blakus kā atvērtu grāmatu (D)",
+ "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Antwort auf {1} auf Seite {2}\" placeholder=\"Antwort schreiben …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Antworten</button></div>": "<div class=\"crform\"><input type=\"text\" data-crin=\"{0}\" autocomplete=\"off\" aria-label=\"Atbilde uz {1} lapā {2}\" placeholder=\"Rakstīt atbildi …\"><button type=\"button\" class=\"primary\" data-crsend=\"{3}\">Atbildēt</button></div>",
+ "Abgebrochen": "Atcelts",
+ "Accepted": "Accepted",
+ "Angenommen": "Pieņemts",
+ "Antwort auf {0} (Seite {1}) hinzugefügt.": "Pievienota atbilde uz {0} (lapa {1}).",
+ "Antwort gelöscht (Strg+Z macht es rückgängig).": "Atbilde dzēsta (Ctrl+Z atsauc).",
+ "antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.": "lai atbildētu. Atbildes un statuss tiek saglabāti kopā ar PDF – Acrobat un citas PDF programmas tos rāda kā pavedienu.",
+ "Bei Notizen und Markierungen: Status wählen oder mit": "Piezīmēm un iezīmēm: izvēlieties statusu vai izmantojiet",
+ "Cancelled": "Cancelled",
+ "Comment": "Comment",
+ "Completed": "Completed",
+ "None": "None",
+ "Rejected": "Rejected",
+ "Review": "Review",
+ "State": "State",
+ "Status von {0} (Seite {1}): {2}.": "{0} statuss (lapa {1}): {2}.",
+ "Unbekannter Status:": "Nezināms statuss:"
 }
