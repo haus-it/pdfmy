@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Masseutfylling: {0} av {1} …",
  "Tabelle wählen … (CSV, Excel)": "Velg tabell … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rad {0}"
+ "Zeile {0}": "Rad {0}",
+ "Eine Seite je Zeile.": "Én side per rad.",
+ "Zwei Seiten": "To sider",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "To sider ved siden av hverandre – tilbake med «To sider» (tasten D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Vis to sider ved siden av hverandre, som en oppslått bok (D)"
 }

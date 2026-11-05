@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Масово попълване: {0} от {1} …",
  "Tabelle wählen … (CSV, Excel)": "Избор на таблица … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Ред {0}"
+ "Zeile {0}": "Ред {0}",
+ "Eine Seite je Zeile.": "По една страница на ред.",
+ "Zwei Seiten": "Две страници",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Две страници една до друга – обратно с „Две страници“ (клавиш D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Показване на две страници една до друга, като отворена книга (D)"
 }

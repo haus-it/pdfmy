@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Compilazione in serie: {0} di {1} …",
  "Tabelle wählen … (CSV, Excel)": "Scegli tabella … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Riga {0}"
+ "Zeile {0}": "Riga {0}",
+ "Eine Seite je Zeile.": "Una pagina per riga.",
+ "Zwei Seiten": "Due pagine",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Due pagine affiancate – per tornare: «Due pagine» (tasto D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostra due pagine affiancate, come un libro aperto (D)"
 }

@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Emplenament en sèrie: {0} de {1}…",
  "Tabelle wählen … (CSV, Excel)": "Trieu una taula… (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Fila {0}"
+ "Zeile {0}": "Fila {0}",
+ "Eine Seite je Zeile.": "Una pàgina per fila.",
+ "Zwei Seiten": "Dues pàgines",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dues pàgines una al costat de l'altra; per tornar, «Dues pàgines» (tecla D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostra dues pàgines una al costat de l'altra, com un llibre obert (D)"
 }

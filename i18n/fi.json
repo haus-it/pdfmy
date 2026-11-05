@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Joukkotäyttö: {0}/{1} …",
  "Tabelle wählen … (CSV, Excel)": "Valitse taulukko … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rivi {0}"
+ "Zeile {0}": "Rivi {0}",
+ "Eine Seite je Zeile.": "Yksi sivu riviä kohden.",
+ "Zwei Seiten": "Kaksi sivua",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Kaksi sivua vierekkäin – takaisin painikkeella ”Kaksi sivua” (näppäin D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Näytä kaksi sivua vierekkäin kuin avattu kirja (D)"
 }

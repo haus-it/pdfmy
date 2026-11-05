@@ -78,7 +78,7 @@ const META_KEYS = ['date', 'type', 'sender', 'subject', 'deadline', 'amount', 'i
 const emptyMeta = () => Object.fromEntries(META_KEYS.map(k => [k, '']));
 
 const state = {
-  files: [], filesDirty: false, pages: [], docs: [], sel: -1, tool: 'select', zoom: 1, annSel: null, editing: null, query: '', crop: null, undo: [],
+  files: [], filesDirty: false, pages: [], docs: [], sel: -1, tool: 'select', zoom: 1, spread: !!LS.get('spread', false), annSel: null, editing: null, query: '', crop: null, undo: [],
   meta: emptyMeta(), touched: {}, signature: LS.get('signature', null),
   outDir: null, inDir: null, seen: new Set(), sizes: {}, dirty: false,
   picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0,
@@ -897,7 +897,10 @@ function renderStage() {
     src = { width: p.w || 1000, height: p.h || 1414, pending: true };
   }
   const avail = Math.max(240, $('#viewer').clientWidth - 32);
-  const w = Math.round(Math.min(avail, 900) * state.zoom), h = Math.round(w * src.height / src.width);
+  // Zwei Seiten nebeneinander (wie ein aufgeschlagenes Buch) – nur in der fortlaufenden Ansicht und wenn genug Platz ist
+  const two = state.spread && !cropping && state.pages.length > 1 && avail >= 600;
+  $('#flow').classList.toggle('spread', two);
+  const w = Math.round(Math.min(two ? (avail - 20) / 2 : avail, two ? 700 : 900) * state.zoom), h = Math.round(w * src.height / src.width);
   stage.style.width = w + 'px'; stage.style.height = h + 'px';
   const cv = $('#cv'), dpr = window.devicePixelRatio || 1;
   cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
@@ -4983,6 +4986,15 @@ function applyIntent() {
 
 /* ---------- Seitenübersicht ---------- */
 function setView(v) { state.view = v; setLbl('#btnGrid', v === 'grid' ? 'Einzelseite' : 'Seitenübersicht'); refresh(); }
+// Zwei-Seiten-Ansicht ein/aus – bleibt für das nächste Dokument gespeichert
+function setSpread(on) {
+  state.spread = on; LS.set('spread', on);
+  $('#btnSpread').setAttribute('aria-pressed', String(on)); $('#btnSpread').classList.toggle('on', on);
+  if (state.view === 'grid') setView('page'); else renderStage();
+  status(on ? 'Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).' : 'Eine Seite je Zeile.');
+}
+$('#btnSpread').onclick = () => setSpread(!state.spread);
+$('#btnSpread').setAttribute('aria-pressed', String(state.spread)); $('#btnSpread').classList.toggle('on', state.spread);
 $('#btnGrid').onclick = () => setView(state.view === 'grid' ? 'page' : 'grid');
 function makeThumbL(c) {
   const t = Imaging.canvas(320, Math.round(c.height * 320 / c.width));
@@ -5243,6 +5255,7 @@ async function fillFormBytes(src, values, { flatten = true } = {}) {
 document.addEventListener('keydown', e => {
   if (e.target.matches('input,textarea,select,[contenteditable="true"]') || !state.pages.length || $('#expDlg').open) return;
   if (e.key.toLowerCase() === 'g' && !e.ctrlKey && !e.metaKey && !e.altKey) setView(state.view === 'grid' ? 'page' : 'grid');
+  else if (e.key.toLowerCase() === 'd' && !e.ctrlKey && !e.metaKey && !e.altKey && !document.querySelector('dialog[open]')) setSpread(!state.spread);
   else if (e.key.toLowerCase() === 'i' && !e.ctrlKey && !e.metaKey && !e.altKey && !$('#btnToc').hidden && !document.querySelector('dialog[open]')) window.openToc?.();
   else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a' && state.view === 'grid') { e.preventDefault(); state.picked = new Set(state.pages.map(p => p.id)); refresh(); }
   else if (e.key === 'Delete' && state.view === 'grid' && state.picked.size) deletePages([...state.picked]);

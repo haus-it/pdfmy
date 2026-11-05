@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Fjöldaútfylling: {0} af {1} …",
  "Tabelle wählen … (CSV, Excel)": "Velja töflu … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Lína {0}"
+ "Zeile {0}": "Lína {0}",
+ "Eine Seite je Zeile.": "Ein síða í hverri röð.",
+ "Zwei Seiten": "Tvær síður",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Tvær síður hlið við hlið – til baka með „Tvær síður“ (lykill D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Sýna tvær síður hlið við hlið, eins og opna bók (D)"
 }

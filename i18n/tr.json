@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Toplu doldurma: {0} / {1} …",
  "Tabelle wählen … (CSV, Excel)": "Tablo seç … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Satır {0}"
+ "Zeile {0}": "Satır {0}",
+ "Eine Seite je Zeile.": "Satır başına bir sayfa.",
+ "Zwei Seiten": "İki sayfa",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "İki sayfa yan yana – geri dönmek için “İki sayfa” (D tuşu).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "İki sayfayı açık bir kitap gibi yan yana göster (D)"
 }

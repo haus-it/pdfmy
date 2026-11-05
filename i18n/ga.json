@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Líonadh bulc: {0} as {1} …",
  "Tabelle wählen … (CSV, Excel)": "Roghnaigh tábla … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Sraith {0}"
+ "Zeile {0}": "Sraith {0}",
+ "Eine Seite je Zeile.": "Leathanach amháin in aghaidh na sraithe.",
+ "Zwei Seiten": "Dhá leathanach",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dhá leathanach taobh le taobh – ar ais le “Dhá leathanach” (eochair D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Taispeáin dhá leathanach taobh le taobh, cosúil le leabhar oscailte (D)"
 }

@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Serienausfëllen: {0} vun {1} …",
  "Tabelle wählen … (CSV, Excel)": "Tabell wielen … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Zeil {0}"
+ "Zeile {0}": "Zeil {0}",
+ "Eine Seite je Zeile.": "Eng Säit pro Zeil.",
+ "Zwei Seiten": "Zwou Säiten",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Zwou Säiten nieftenee – zréck mat „Zwou Säiten“ (Tast D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Zwou Säiten nieftenee weisen, wéi en opgeschloe Buch (D)"
 }

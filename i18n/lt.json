@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Masinis pildymas: {0} iš {1} …",
  "Tabelle wählen … (CSV, Excel)": "Pasirinkti lentelę … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Eilutė {0}"
+ "Zeile {0}": "Eilutė {0}",
+ "Eine Seite je Zeile.": "Vienas puslapis eilutėje.",
+ "Zwei Seiten": "Du puslapiai",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Du puslapiai greta – grįžti mygtuku „Du puslapiai“ (klavišas D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Rodyti du puslapius greta, kaip atverstą knygą (D)"
 }

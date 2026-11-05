@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Plotësim në seri: {0} nga {1} …",
  "Tabelle wählen … (CSV, Excel)": "Zgjidh tabelën … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rreshti {0}"
+ "Zeile {0}": "Rreshti {0}",
+ "Eine Seite je Zeile.": "Një faqe për rresht.",
+ "Zwei Seiten": "Dy faqe",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dy faqe krah për krah – kthehuni me „Dy faqe“ (tasti D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Shfaq dy faqe krah për krah, si një libër i hapur (D)"
 }

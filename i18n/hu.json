@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Tömeges kitöltés: {0} / {1} …",
  "Tabelle wählen … (CSV, Excel)": "Táblázat kiválasztása … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "{0}. sor"
+ "Zeile {0}": "{0}. sor",
+ "Eine Seite je Zeile.": "Soronként egy oldal.",
+ "Zwei Seiten": "Két oldal",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Két oldal egymás mellett – vissza a „Két oldal” gombbal (D billentyű).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Két oldal megjelenítése egymás mellett, mint egy nyitott könyv (D)"
 }

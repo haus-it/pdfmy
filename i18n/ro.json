@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Completare în serie: {0} din {1} …",
  "Tabelle wählen … (CSV, Excel)": "Alegeți tabelul … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rândul {0}"
+ "Zeile {0}": "Rândul {0}",
+ "Eine Seite je Zeile.": "O pagină pe rând.",
+ "Zwei Seiten": "Două pagini",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Două pagini alăturate – reveniți cu „Două pagini” (tasta D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Afișați două pagini alăturate, ca o carte deschisă (D)"
 }

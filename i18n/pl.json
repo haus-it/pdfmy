@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Wypełnianie seryjne: {0} z {1} …",
  "Tabelle wählen … (CSV, Excel)": "Wybierz tabelę … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Wiersz {0}"
+ "Zeile {0}": "Wiersz {0}",
+ "Eine Seite je Zeile.": "Jedna strona w wierszu.",
+ "Zwei Seiten": "Dwie strony",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dwie strony obok siebie – powrót przyciskiem „Dwie strony” (klawisz D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Pokaż dwie strony obok siebie, jak w otwartej książce (D)"
 }

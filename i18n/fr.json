@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Remplissage en série : {0} sur {1}…",
  "Tabelle wählen … (CSV, Excel)": "Choisir un tableau… (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Ligne {0}"
+ "Zeile {0}": "Ligne {0}",
+ "Eine Seite je Zeile.": "Une page par ligne.",
+ "Zwei Seiten": "Deux pages",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Deux pages côte à côte – retour avec « Deux pages » (touche D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Afficher deux pages côte à côte, comme un livre ouvert (D)"
 }

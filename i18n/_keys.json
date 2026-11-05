@@ -1396,6 +1396,7 @@
 "Eine neue Version ist geladen – ein Klick aktiviert sie",
 "Eine neue Version von {0} ist bereit – unten rechts „jetzt neu laden“ (nach dem Speichern).",
 "Eine Seite groß auf 4 oder 9 A4-Blättern",
+"Eine Seite je Zeile.",
 "Eine Tabelle mit einer Zeile je Empfänger; die erste Zeile enthält die Feldnamen. Tipp: erst „Als CSV“ speichern und in Excel weitere Zeilen ergänzen. Was Sie im Formular schon eingetragen haben (z. B. Datum), gilt für alle.",
 "einen Ordner wählen, z. B. „Scans“, Format „PDF“. Dann",
 "einen weiteren Eintrag",
@@ -3456,6 +3457,9 @@
 "Zustellung",
 "Zustellung mit Datum (z. B. Zustellungsurkunde)",
 "Zwei Fassungen: Was wurde geändert?",
+"Zwei Seiten",
+"Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).",
+"Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)",
 "Zweite Datei umdrehen",
 "Zwischen zwei Briefe legen und den ganzen Stapel auf einmal scannen.",
 "Zwischenstand konnte nicht gesichert werden (Gerätespeicher voll?). Die Aufnahmen bleiben, solange diese Seite offen ist."]

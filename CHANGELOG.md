@@ -4,6 +4,9 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Zwei-Seiten-Ansicht (app-v221)
+- Neu: **Zwei Seiten** nebeneinander (Knopf über der Seite, Taste D) – fortlaufend wie ein aufgeschlagenes Buch; Bearbeiten auf der gewählten Seite wie gewohnt, Scrollen und Seitenwahl laufen mit. Einstellung bleibt gespeichert; unter 600 px Breite automatisch eine Seite. Vorbild: Acrobat „Zweiseitenansicht“, Edge/Chrome-PDF-Ansicht.
+
 ### Formulardaten und Serienausfüllung (app-v220)
 - Neu: **Formulardaten** im Formular-Bereich – Eingaben als XFDF (Acrobat-kompatibel, ISO 19444-1) oder CSV (Excel) speichern; XFDF, FDF, CSV und Excel wieder laden, auch in ein leeres Exemplar. Felder werden über den Namen zugeordnet (auch ohne Groß/klein, Leer- und Satzzeichen oder über die Kurzinfo des Felds).
 - Neu: **Serienausfüllung** – ein Formular aus einer Tabelle (CSV/Excel) für viele Empfänger ausfüllen; je Zeile eine PDF, zusammen als ZIP, Dateiname mit wählbarer Spalte. Bisher vor allem in Acrobat Pro (Datenzusammenführung) und Sejda (kostenpflichtig) – bei PDFMy kostenlos und ohne Upload. Logik in `js/formdaten.js`, Tests in `tests/formdaten.test.js`.

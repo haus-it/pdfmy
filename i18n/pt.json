@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Preenchimento em série: {0} de {1} …",
  "Tabelle wählen … (CSV, Excel)": "Escolher tabela … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Linha {0}"
+ "Zeile {0}": "Linha {0}",
+ "Eine Seite je Zeile.": "Uma página por linha.",
+ "Zwei Seiten": "Duas páginas",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Duas páginas lado a lado – voltar com «Duas páginas» (tecla D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Mostrar duas páginas lado a lado, como um livro aberto (D)"
 }

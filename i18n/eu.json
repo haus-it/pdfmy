@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Betetze masiboa: {0}/{1} …",
  "Tabelle wählen … (CSV, Excel)": "Aukeratu taula … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "{0}. errenkada"
+ "Zeile {0}": "{0}. errenkada",
+ "Eine Seite je Zeile.": "Orri bat errenkadako.",
+ "Zwei Seiten": "Bi orri",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Bi orri elkarren ondoan – itzultzeko, «Bi orri» (D tekla).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Erakutsi bi orri elkarren ondoan, liburu ireki bat bezala (D)"
 }

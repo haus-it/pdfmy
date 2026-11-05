@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Masveida aizpilde: {0} no {1} …",
  "Tabelle wählen … (CSV, Excel)": "Izvēlēties tabulu … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rinda {0}"
+ "Zeile {0}": "Rinda {0}",
+ "Eine Seite je Zeile.": "Viena lappuse katrā rindā.",
+ "Zwei Seiten": "Divas lappuses",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Divas lappuses blakus – atpakaļ ar „Divas lappuses” (taustiņš D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Rādīt divas lappuses blakus kā atvērtu grāmatu (D)"
 }

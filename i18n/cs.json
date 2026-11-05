@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Hromadné vyplnění: {0} z {1} …",
  "Tabelle wählen … (CSV, Excel)": "Vybrat tabulku … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Řádek {0}"
+ "Zeile {0}": "Řádek {0}",
+ "Eine Seite je Zeile.": "Jedna strana na řádek.",
+ "Zwei Seiten": "Dvě strany",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dvě strany vedle sebe – zpět pomocí „Dvě strany“ (klávesa D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Zobrazit dvě strany vedle sebe jako otevřenou knihu (D)"
 }

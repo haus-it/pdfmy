@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Mili bil-massa: {0} minn {1} …",
  "Tabelle wählen … (CSV, Excel)": "Agħżel tabella … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Ringiela {0}"
+ "Zeile {0}": "Ringiela {0}",
+ "Eine Seite je Zeile.": "Paġna waħda għal kull ringiela.",
+ "Zwei Seiten": "Żewġ paġni",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Żewġ paġni ħdejn xulxin – lura b’“Żewġ paġni” (buttuna D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Uri żewġ paġni ħdejn xulxin, bħal ktieb miftuħ (D)"
 }

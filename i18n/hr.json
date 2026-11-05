@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Skupno popunjavanje: {0} od {1} …",
  "Tabelle wählen … (CSV, Excel)": "Odaberi tablicu … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Redak {0}"
+ "Zeile {0}": "Redak {0}",
+ "Eine Seite je Zeile.": "Jedna stranica po retku.",
+ "Zwei Seiten": "Dvije stranice",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dvije stranice jedna uz drugu – natrag s „Dvije stranice“ (tipka D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Prikaži dvije stranice jednu uz drugu, kao otvorenu knjigu (D)"
 }

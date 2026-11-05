@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Hulgitäitmine: {0}/{1} …",
  "Tabelle wählen … (CSV, Excel)": "Vali tabel … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rida {0}"
+ "Zeile {0}": "Rida {0}",
+ "Eine Seite je Zeile.": "Üks lehekülg rea kohta.",
+ "Zwei Seiten": "Kaks lehekülge",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Kaks lehekülge kõrvuti – tagasi nupuga „Kaks lehekülge“ (klahv D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Näita kahte lehekülge kõrvuti nagu avatud raamatut (D)"
 }

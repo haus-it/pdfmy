@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Llenwi swmp: {0} o {1} …",
  "Tabelle wählen … (CSV, Excel)": "Dewis tabl … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rhes {0}"
+ "Zeile {0}": "Rhes {0}",
+ "Eine Seite je Zeile.": "Un dudalen i bob rhes.",
+ "Zwei Seiten": "Dwy dudalen",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dwy dudalen ochr yn ochr – yn ôl gyda “Dwy dudalen” (bysell D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Dangos dwy dudalen ochr yn ochr, fel llyfr agored (D)"
 }

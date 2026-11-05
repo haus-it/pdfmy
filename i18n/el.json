@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Μαζική συμπλήρωση: {0} από {1} …",
  "Tabelle wählen … (CSV, Excel)": "Επιλογή πίνακα … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Γραμμή {0}"
+ "Zeile {0}": "Γραμμή {0}",
+ "Eine Seite je Zeile.": "Μία σελίδα ανά γραμμή.",
+ "Zwei Seiten": "Δύο σελίδες",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Δύο σελίδες δίπλα-δίπλα – επιστροφή με «Δύο σελίδες» (πλήκτρο D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Εμφάνιση δύο σελίδων δίπλα-δίπλα, σαν ανοιχτό βιβλίο (D)"
 }

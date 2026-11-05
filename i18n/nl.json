@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "In bulk invullen: {0} van {1} …",
  "Tabelle wählen … (CSV, Excel)": "Tabel kiezen … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Rij {0}"
+ "Zeile {0}": "Rij {0}",
+ "Eine Seite je Zeile.": "Eén pagina per rij.",
+ "Zwei Seiten": "Twee pagina's",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Twee pagina's naast elkaar – terug met „Twee pagina's” (toets D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Twee pagina's naast elkaar tonen, zoals een opengeslagen boek (D)"
 }

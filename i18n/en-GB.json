@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Bulk fill: {0} of {1} …",
  "Tabelle wählen … (CSV, Excel)": "Choose spreadsheet … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Row {0}"
+ "Zeile {0}": "Row {0}",
+ "Eine Seite je Zeile.": "One page per row.",
+ "Zwei Seiten": "Two pages",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Two pages side by side – switch back with ‘Two pages’ (D key).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Show two pages side by side, like an open book (D)"
 }

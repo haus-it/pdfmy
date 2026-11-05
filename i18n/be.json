@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Масавае запаўненне: {0} з {1} …",
  "Tabelle wählen … (CSV, Excel)": "Выбраць табліцу … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Радок {0}"
+ "Zeile {0}": "Радок {0}",
+ "Eine Seite je Zeile.": "Адна старонка ў радку.",
+ "Zwei Seiten": "Дзве старонкі",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Дзве старонкі побач – вярнуцца кнопкай «Дзве старонкі» (клавіша D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Паказаць дзве старонкі побач, як у разгорнутай кнізе (D)"
 }

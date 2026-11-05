@@ -303,6 +303,7 @@
 "<b>Zusammenfügen und Seiten organisieren:</b> mehrere Dateien öffnen, in der Seitenübersicht (<kbd>G</kbd>) sortieren, drehen, löschen, Leerseiten einfügen, aufteilen.",
 "<b>Zuschneiden:</b> Werkzeug <i>„Zuschneiden“</i> in der Leiste über der Seite – die vier blauen Ecken auf die gewünschten Kanten ziehen und <i>„Übernehmen“</i>. Schräg aufgenommene Blätter werden dabei entzerrt; bei Fotos bleibt das Seitenverhältnis erhalten.",
 "<b>Zuschneiden</b> von Handyfotos (Ecken verschieben) erfordert Maus oder Touch; die automatische Blatterkennung macht es meist überflüssig.",
+"<b>Zwei Seiten nebeneinander:</b> Knopf <i>„Zwei Seiten“</i> über der Seite (oder Taste <kbd>D</kbd>) zeigt das Dokument wie ein aufgeschlagenes Buch – praktisch für Verträge, Broschüren und zum Vergleichen aufeinanderfolgender Seiten. Bearbeiten geht weiter wie gewohnt auf der gewählten Seite; ein Klick auf die Nachbarseite wählt diese. PDFMy merkt sich die Einstellung. Auf schmalen Bildschirmen bleibt es bei einer Seite.",
 "<i>„… Mehr → Büro → Zur Unterschrift senden …“</i>: Namen und E-Mail-Adressen der Personen in der gewünschten Reihenfolge eintragen, dazu Ihre eigene Adresse für die Rückmeldung und auf Wunsch eine <b>Frist</b>. Haben Sie eine <b>Vorlage</b> gespeichert, oben auswählen – Personen, Felder, Nachricht und Frist werden übernommen.",
 "<i>„Antworten“</i> schreibt einen Brief nach DIN 5008: Anschrift und Bezug sind schon eingetragen, dazu Textbausteine (z. B. Widerspruch, Zahlungsbestätigung). Auf Wunsch mit Ihrem eigenen Briefbogen.",
 "<i>„Senden …“</i>: PDFMy bereitet die E-Mail mit der PDF an die erste Person vor (die .eml-Datei öffnen und senden). Mit Ablageordner liegt eine Kopie in der Ablage, und im Posteingangsbuch steht der Stand.",
@@ -1284,4 +1285,5 @@
 "Zusammenfassen, Fragen zum Dokument und Übersetzen nutzen die KI, die Ihr Browser mitbringt. Sie arbeitet auf Ihrem Gerät; der Text wird nicht übertragen. Das KI-Modell lädt Ihr Browser einmalig vom Browser-Hersteller, nicht von uns. Unter „… Mehr → KI-Assistent“ lässt sich die Funktion ausschalten. Auf eigenen Wunsch kann dort stattdessen ein KI-Programm auf Ihrem eigenen Rechner gewählt werden (z. B. Ollama oder LM Studio); PDFMy verbindet sich dann nur mit diesem Programm auf demselben Rechner (localhost) – der Text verlässt Ihren Rechner nicht, Adressen im Netz oder im Internet werden abgelehnt.",
 "zusammenfügen",
 "Zusammenfügen",
-"Zwei PDF-Fassungen kostenlos vergleichen: eingefügte und entfernte Wörter oder Überlagerung der Seiten in Rot und Grün. Ohne Upload – auch für Verträge."]
+"Zwei PDF-Fassungen kostenlos vergleichen: eingefügte und entfernte Wörter oder Überlagerung der Seiten in Rot und Grün. Ohne Upload – auch für Verträge.",
+"Zwei Seiten nebeneinander ein/aus"]

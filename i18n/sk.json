@@ -3459,5 +3459,9 @@
  "Serienausfüllung: {0} von {1} …": "Hromadné vyplnenie: {0} z {1} …",
  "Tabelle wählen … (CSV, Excel)": "Vybrať tabuľku … (CSV, Excel)",
  "Yes": "Yes",
- "Zeile {0}": "Riadok {0}"
+ "Zeile {0}": "Riadok {0}",
+ "Eine Seite je Zeile.": "Jedna strana na riadok.",
+ "Zwei Seiten": "Dve strany",
+ "Zwei Seiten nebeneinander – zurück mit „Zwei Seiten“ (Taste D).": "Dve strany vedľa seba – späť pomocou „Dve strany“ (kláves D).",
+ "Zwei Seiten nebeneinander anzeigen, wie ein aufgeschlagenes Buch (D)": "Zobraziť dve strany vedľa seba ako otvorenú knihu (D)"
 }
