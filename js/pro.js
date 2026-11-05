@@ -3737,6 +3737,63 @@ $('#cmtCopy').onclick = async () => {
   try { await navigator.clipboard.writeText(txt); status(`${cmtRows.length} Einträge in die Zwischenablage kopiert.`); } catch { status('Kopieren nicht möglich.'); }
 };
 
+/* ---------- QR-Code einfügen (Mehr-Menü): GiroCode nach EPC oder Link/Text als Bild auf die aktuelle Seite (js/qrstempel.js) ---------- */
+// Wie „Bild einfügen“: danach verschieben und skalieren; Alt-Text für PDF/UA. Eigene Bankdaten bleiben nur auf diesem Gerät (localStorage).
+let qrTried = false, qrErr = '';
+const qrKind = () => $('#qrForm input[name="qrKind"]:checked').value;
+function qrData() {
+  if (qrKind() === 'giro') {
+    const d = { name: $('#qrName').value.trim(), iban: $('#qrIban').value, bic: $('#qrBic').value.trim(), amount: $('#qrAmount').value, purpose: $('#qrPurpose').value.trim() };
+    const r = QrStempel.epc(d);
+    return { ...r, caption: 'GiroCode', alt: QrStempel.alt('giro', { name: d.name, iban: r.iban, amount: r.amount, purpose: d.purpose }), save: { name: d.name, iban: QrStempel.ibanFmt(r.iban), bic: d.bic.toUpperCase() } };
+  }
+  const r = QrStempel.link($('#qrText').value);
+  return { ...r, alt: QrStempel.alt('link', { text: r.payload }) };
+}
+function qrMatrix(payload) { qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8']; const q = qrcode(0, 'M'); q.addData(payload, 'Byte'); q.make(); return q; }
+function qrPreview() {
+  let d; try { d = qrData(); } catch (e) { qrErr = e.message; $('#qrPrev').innerHTML = ''; $('#qrMsg').textContent = qrTried ? e.message : ''; return null; }
+  try { $('#qrPrev').innerHTML = qrMatrix(d.payload).createSvgTag({ cellSize: 3, margin: 2, scalable: true }); } catch { $('#qrPrev').innerHTML = ''; }
+  $('#qrMsg').textContent = ''; return d;
+}
+function qrSwitch() { const g = qrKind() === 'giro'; $('#qrGiro').hidden = !g; $('#qrLink').hidden = g; qrPreview(); }
+// QR als PNG: 10 px je Modul, Ruhezone 4 Module (ISO/IEC 18004), darunter auf Wunsch „GiroCode“
+function qrCanvas(d) {
+  const q = qrMatrix(d.payload), n = q.getModuleCount(), cell = 10, m = 4 * cell, size = n * cell + 2 * m, capH = d.caption ? Math.round(size * 0.12) : 0;
+  const c = Imaging.canvas(size, size + capH), x = c.getContext('2d');
+  x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.fillStyle = '#000';
+  for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) x.fillRect(m + k * cell, m + r * cell, cell, cell);
+  if (capH) { x.font = `600 ${Math.round(capH * 0.7)}px "DejaVu Sans", Verdana, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(d.caption, size / 2, size - m / 2 + capH / 2); }
+  return c;
+}
+$('#btnQrIns').onclick = async () => {
+  closeMenu?.();
+  if (!cur()) { status('Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.'); return; }
+  try { await loadQrcode(); } catch { status('Der QR-Code-Baustein konnte nicht geladen werden.'); return; }
+  const v = QrStempel.prefill(state.meta || {}, LS.get('qrGiro', {}) || {}, S.ownName || '');
+  $('#qrName').value = v.name; $('#qrIban').value = v.iban; $('#qrBic').value = v.bic; $('#qrAmount').value = v.amount; $('#qrPurpose').value = v.purpose; $('#qrText').value = '';
+  qrTried = false; qrSwitch(); $('#qrDlg').showModal();
+  (qrKind() === 'giro' ? [...document.querySelectorAll('#qrGiro input')].find(i => !i.value && i.id !== 'qrBic') || $('#qrName') : $('#qrText')).focus();
+};
+$('#qrForm').addEventListener('input', () => qrPreview());
+document.querySelectorAll('#qrForm input[name="qrKind"]').forEach(r => r.onchange = () => { qrSwitch(); (qrKind() === 'giro' ? $('#qrName') : $('#qrText')).focus(); });
+$('#qrCancel').onclick = () => $('#qrDlg').close();
+$('#qrForm').addEventListener('submit', e => {
+  e.preventDefault(); qrTried = true;
+  const d = qrPreview(), p = cur();
+  if (!d || !p) {   // Cursor ins betroffene Feld
+    const m = qrErr, id = qrKind() !== 'giro' ? 'qrText' : /IBAN/.test(m) ? 'qrIban' : /BIC/.test(m) ? 'qrBic' : /Betrag/.test(m) ? 'qrAmount' : /Verwendungszweck/.test(m) ? 'qrPurpose' : 'qrName';
+    $('#' + id).focus(); return;
+  }
+  const c = qrCanvas(d), ar = c.height / c.width, w = d.caption ? 0.17 : 0.15, h = w * ar * p.w / p.h;
+  pushUndo(p);
+  const a = { id: ++uid, type: 'img', img: c.toDataURL('image/png'), ar, x: 1 - w - 0.05, y: clamp(1 - h - 0.05, 0, 1 - h), w, h, alt: d.alt };
+  p.annots.push(a); state.annSel = a.id; state.dirty = true;
+  if (d.save) LS.set('qrGiro', d.save);
+  $('#qrDlg').close(); setTool('select'); refresh();
+  status(d.caption ? 'GiroCode unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.' : 'QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.');
+});
+
 /* ---------- Suchen im Dokument (Strg+F, wie Acrobat/Word): Leiste über der Seite, „3 von 12“, Treffer für Treffer ---------- */
 // Nutzt dieselbe Suche wie „Suche im Dokument“ rechts (state.query); Treffer je Seite zählt hitCount()
 // Treffer je Seite: aus der Wortebene (wie die Markierungen), ohne schon ersetzte/abgedeckte Stellen; sonst aus dem Seitentext
