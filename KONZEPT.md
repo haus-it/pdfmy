@@ -451,7 +451,7 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 - **Absturzschutz:** je Sicherung eigener Speicherschlüssel, Quelle einmal speichern und danach nur den Seitenzustand nachführen; bei pagehide nur den schnellen Stand sichern.
 - **Update während der Sitzung:** neue Fassung erst aktivieren, wenn nichts in Arbeit ist, oder Bibliotheken mit Prüfsumme im Namen ausliefern.
 - **Tests:** Verschlüsseln → wieder öffnen, Zusammenfügen mit Formularfeldern, OCR-Textebene, PDF/A mit veraPDF im Smoke-Test.
-- **Aus dem Wettbewerbsvergleich (nach Nutzen/Aufwand):** Rechtsklick im Explorer „In PDFMy öffnen/zusammenfügen“ über pdfmy Scan; PowerPoint und alte .doc/.xls über vorhandenes Office; Browser-Erweiterung im Chrome Web Store; Formulardaten exportieren/importieren (CSV/XFDF) – umgesetzt in app-v220; Zwei-Seiten-Ansicht – umgesetzt in app-v221; Antworten und Status bei Kommentaren – umgesetzt in app-v222; GiroCode/QR stempeln – umgesetzt in app-v223; Übersetzen mit erhaltenem Layout (nur Browser-KI – Alleinstellung, da alle Mitbewerber Cloud nutzen).
+- **Aus dem Wettbewerbsvergleich (nach Nutzen/Aufwand):** Rechtsklick im Explorer „In PDFMy öffnen/zusammenfügen“ über pdfmy Scan; PowerPoint und alte .doc/.xls über vorhandenes Office; Browser-Erweiterung im Chrome Web Store; Formulardaten exportieren/importieren (CSV/XFDF) – umgesetzt in app-v220; Zwei-Seiten-Ansicht – umgesetzt in app-v221; Antworten und Status bei Kommentaren – umgesetzt in app-v222 (Kommentare anderer Programme in der Liste: app-v224); GiroCode/QR stempeln – umgesetzt in app-v223; Übersetzen mit erhaltenem Layout (nur Browser-KI – Alleinstellung, da alle Mitbewerber Cloud nutzen).
 
 ### Umgesetzt 02.11.2026: Saubere Seiten (app-v214)
 

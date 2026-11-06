@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Umetni QR kod",
  "QR-Code einfügen …": "Umetni QR kod …",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "QR kod umetnut dolje desno – povucite za pomjeranje, veličina ručicom dolje desno, Delete briše.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Prvo otvorite dokument – QR kod se postavlja na trenutnu stranicu."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Prvo otvorite dokument – QR kod se postavlja na trenutnu stranicu.",
+ "Aus anderen Programmen": "Iz drugih programa",
+ "Dateianhang": "Prilog datoteke",
+ "Einfügemarke": "Umetni tekst",
+ "Kommentar": "Komentar",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Komentari iz drugih PDF programa (npr. bilješke iz Acrobata) nalaze se na listi s niti, ali se ovdje ne mogu mijenjati.",
+ "Kommentare lesen:": "Čitanje komentara:",
+ "Textkommentar": "Okvir za tekst",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Iz drugog PDF programa – samo prikaz\"",
+ "Tonkommentar": "Zvučni komentar",
+ "Watermark": "Watermark"
 }

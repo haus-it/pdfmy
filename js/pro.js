@@ -3643,10 +3643,19 @@ $('#sigCosign').onclick = () => {
 /* ---------- Kommentare und Markierungen (wie die Kommentarleiste in Acrobat): alle Anmerkungen auf einen Blick ---------- */
 const CMT_KIND = { link: 'Link', note: 'Notiz', hl: 'Markierung', text: 'Text', stamp: 'Stempel', sign: 'Unterschrift', ink: 'Freihand', shape: 'Form', img: 'Bild', field: 'Formularfeld', rd: 'Schwärzung', wo: 'Abdeckung' };
 let cmtRows = [];
+// Kommentare anderer Programme auf PDF-Seiten (js/kommentare.js, fromPdfJs) – je Dokument einmal lesen, nur Anzeige
+async function extComments(p) {
+  const d = state.docs[p.docIdx]; if (p.kind !== 'pdf' || !d?.js) return [];
+  if (p.extFor === d.js) return p.extCmt;
+  let list = [];
+  try { const pg = await d.js.getPage(p.pageIdx + 1); list = Kommentare.fromPdfJs(await pg.getAnnotations()).map(e => ({ ...e, id: ++uid, pid: e.id })); } catch (e) { console.warn('Kommentare lesen:', e); }
+  p.extCmt = list; p.extFor = d.js; return list;
+}
 async function cmtCollect() {
   const rows = [];
   for (const [i, p] of state.pages.entries()) {
-    if (!p.annots.length) continue;
+    const ext = await extComments(p);
+    if (!p.annots.length) { for (const e of ext) rows.push({ i, p, a: e, ext: true, kind: 'ext', label: e.label, text: e.text, by: [e.at, e.by].filter(Boolean).join(' · ') }); continue; }
     let words = p.ocr?.words || p.nwords;
     if (!words && p.kind === 'pdf' && p.native && p.annots.some(a => a.type === 'hl')) { p.nwords = await nativeWords(p).catch(() => null) || []; words = p.nwords; }
     for (const a of p.annots) {
@@ -3661,12 +3670,17 @@ async function cmtCollect() {
       rows.push({ i, p, a, kind: a.type, label: a.type === 'sign' && a.kind ? SIG_KINDS[a.kind] : CMT_KIND[a.type], text: t,
         by: a.type === 'note' ? [a.at, a.by].filter(Boolean).join(' · ') : a.type === 'hl' ? a.author || '' : '', thread: a.type === 'note' || a.type === 'hl' });
     }
+    for (const e of ext) rows.push({ i, p, a: e, ext: true, kind: 'ext', label: e.label, text: e.text, by: [e.at, e.by].filter(Boolean).join(' · ') });
   }
   return rows;
 }
 let cmtReply = null;   // Kommentar, unter dem gerade das Antwortfeld offen ist
 const cmtHay = r => [r.text, r.label, r.by, ...(r.a.replies || []).map(x => x.by + ' ' + x.text)].join(' ').toLowerCase();
 function cmtThread(r) {
+  if (r.ext) {   // aus einem anderen Programm: Verlauf nur anzeigen
+    const reps = (r.a.replies || []).map(x => `<li><span><small class="hint">${esc([x.at, x.by].filter(Boolean).join(' · '))}</small> ${esc(x.text)}</span></li>`).join('');
+    return reps ? `<div class="cthr"><ul>${reps}</ul></div>` : '';
+  }
   if (!r.thread) return '';
   const id = r.a.id, reps = (r.a.replies || []).map((x, k) => `<li><span><small class="hint">${esc([x.at, x.by].filter(Boolean).join(' · '))}</small> ${esc(x.text)}</span><button type="button" class="tocact" data-crdel="${id}:${k}" title="Antwort löschen" aria-label="Antwort ${k + 1} löschen">✕</button></li>`).join('');
   const form = cmtReply === id ? `<div class="crform"><input type="text" data-crin="${id}" autocomplete="off" aria-label="Antwort auf ${esc(r.label)} auf Seite ${r.i + 1}" placeholder="Antwort schreiben …"><button type="button" class="primary" data-crsend="${id}">Antworten</button></div>` : '';
@@ -3674,11 +3688,11 @@ function cmtThread(r) {
 }
 function cmtRender() {
   const q = $('#cmtQ').value.trim().toLowerCase(), k = $('#cmtType').value, st = $('#cmtState').value;
-  const list = cmtRows.filter(r => (!k || r.kind === k) && (!st || (r.thread && (st === 'open' ? !r.a.state : r.a.state === st))) && (!q || cmtHay(r).includes(q)));
+  const list = cmtRows.filter(r => (!k || r.kind === k) && (!st || ((r.thread || r.ext) && (st === 'open' ? !r.a.state : r.a.state === st))) && (!q || cmtHay(r).includes(q)));
   const by = {}; cmtRows.forEach(r => by[r.label] = (by[r.label] || 0) + 1);
   $('#cmtSum').textContent = cmtRows.length ? `${cmtRows.length} Einträge: ` + Object.entries(by).map(([l, n]) => `${n} × ${l}`).join(', ') + (list.length !== cmtRows.length ? ` – ${list.length} angezeigt` : '') : '';
   const stSel = r => `<select class="cstate${r.a.state ? ' set' : ''}" data-cst="${r.a.id}" aria-label="Status von ${esc(r.label)} auf Seite ${r.i + 1}">${Kommentare.STATES.map(([v, l]) => `<option value="${v}"${(r.a.state || '') === v ? ' selected' : ''}>${l}</option>`).join('')}</select>`;
-  $('#cmtList').innerHTML = list.map(r => `<li class="${r.thread ? 'cmtl' : ''}"><button type="button" class="tocgo" data-cmt="${r.a.id}"><span><span class="ckind">${esc(r.label)}</span>${esc(r.text || '–')}${r.by ? ` <small class="hint">(${esc(r.by)})</small>` : ''}</span><span class="pg">S. ${r.i + 1}</span></button>${r.thread ? stSel(r) + `<button type="button" class="tocact crep" data-crep="${r.a.id}" title="Antworten" aria-label="Auf ${esc(r.label)} auf Seite ${r.i + 1} antworten" aria-expanded="${cmtReply === r.a.id}"><svg class="ic" aria-hidden="true"><use href="#i-reply"/></svg></button>` : ''}<button type="button" class="tocact" data-cdel="${r.a.id}" title="Löschen" aria-label="${esc(r.label)} auf Seite ${r.i + 1} löschen">✕</button>${cmtThread(r)}</li>`).join('')
+  $('#cmtList').innerHTML = list.map(r => `<li class="${r.thread || r.ext ? 'cmtl' : ''}"><button type="button" class="tocgo" data-cmt="${r.a.id}"${r.ext ? ' title="Aus einem anderen PDF-Programm – nur Anzeige"' : ''}><span><span class="ckind">${esc(r.label)}</span>${esc(r.text || '–')}${r.by ? ` <small class="hint">(${esc(r.by)})</small>` : ''}</span><span class="pg">S. ${r.i + 1}</span></button>${r.thread ? stSel(r) + `<button type="button" class="tocact crep" data-crep="${r.a.id}" title="Antworten" aria-label="Auf ${esc(r.label)} auf Seite ${r.i + 1} antworten" aria-expanded="${cmtReply === r.a.id}"><svg class="ic" aria-hidden="true"><use href="#i-reply"/></svg></button>` : ''}${r.ext ? (r.a.state ? `<span class="cstate set ro">${esc(Kommentare.label(r.a.state))}</span>` : '') : `<button type="button" class="tocact" data-cdel="${r.a.id}" title="Löschen" aria-label="${esc(r.label)} auf Seite ${r.i + 1} löschen">✕</button>`}${cmtThread(r)}</li>`).join('')
     || `<li class="empty">${cmtRows.length ? 'Nichts gefunden.' : 'Dieses Dokument hat noch keine Kommentare oder Markierungen. Werkzeuge dafür: Notiz, Markieren, Text, Stempel, Unterschrift.'}</li>`;
 }
 async function openComments() {

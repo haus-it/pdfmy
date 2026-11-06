@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Insertar código QR",
  "QR-Code einfügen …": "Insertar código QR…",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "Código QR insertado abajo a la derecha: arrastre para moverlo, tamaño con el tirador inferior derecho, Supr lo elimina.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Abra primero un documento: el código QR se coloca en la página actual."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Abra primero un documento: el código QR se coloca en la página actual.",
+ "Aus anderen Programmen": "De otros programas",
+ "Dateianhang": "Archivo adjunto",
+ "Einfügemarke": "Insertar texto",
+ "Kommentar": "Comentario",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Los comentarios de otros programas PDF (p. ej., notas de Acrobat) aparecen en la lista con su hilo, pero aquí no se pueden modificar.",
+ "Kommentare lesen:": "Lectura de comentarios:",
+ "Textkommentar": "Cuadro de texto",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"De otro programa PDF: solo visualización\"",
+ "Tonkommentar": "Comentario de sonido",
+ "Watermark": "Watermark"
 }

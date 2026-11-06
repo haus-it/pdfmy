@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Sett inn QR-kode",
  "QR-Code einfügen …": "Sett inn QR-kode …",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "QR-kode satt inn nederst til høyre – dra for å flytte, størrelse med håndtaket nederst til høyre, Del sletter.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Åpne et dokument først – QR-koden plasseres på gjeldende side."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Åpne et dokument først – QR-koden plasseres på gjeldende side.",
+ "Aus anderen Programmen": "Fra andre programmer",
+ "Dateianhang": "Filvedlegg",
+ "Einfügemarke": "Sett inn tekst",
+ "Kommentar": "Kommentar",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Kommentarer fra andre PDF-programmer (f.eks. notater fra Acrobat) står med tråd i listen, men kan ikke endres her.",
+ "Kommentare lesen:": "Lese kommentarer:",
+ "Textkommentar": "Tekstboks",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Fra et annet PDF-program – bare visning\"",
+ "Tonkommentar": "Lydkommentar",
+ "Watermark": "Watermark"
 }

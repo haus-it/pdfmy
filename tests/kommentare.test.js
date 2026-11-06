@@ -49,6 +49,22 @@ test('Verläufe aus fremder PDF: Antworten nach Zeit, jüngster Review-Status z�
   assert.equal(th.state, 'Completed'); assert.equal(th.stateBy, 'B');
   assert.equal(th.replies[0].at, '05.11.2026');
 });
+test('Kommentare anderer Programme aus pdf.js: Verlauf, Status, ausgeblendete und Links übergangen', () => {
+  const r = K.fromPdfJs([
+    { id: '10R', subtype: 'Text', contentsObj: { str: 'Bitte  prüfen' }, titleObj: { str: 'Anna' }, modificationDate: 'D:20261104090000Z' },
+    { id: '11R', subtype: 'Text', inReplyTo: '10R', contentsObj: { str: 'Erledigt' }, titleObj: { str: 'Bernd' }, modificationDate: 'D:20261104100000Z' },
+    { id: '12R', subtype: 'Text', inReplyTo: '10R', stateModel: 'Review', state: 'Completed', titleObj: { str: 'Bernd' }, modificationDate: 'D:20261104110000Z', annotationFlags: 30 },
+    { id: '13R', subtype: 'Popup' }, { id: '14R', subtype: 'Link' }, { id: '15R', subtype: 'Widget' },
+    { id: '16R', subtype: 'Square', annotationFlags: 2 },
+    { id: '17R', subtype: 'FreeText', contentsObj: { str: 'Hinweis' } },
+    { id: '18R', subtype: 'Squarish' },
+  ]);
+  assert.deepEqual(r.map(x => x.id), ['10R', '17R', '18R']);
+  assert.equal(r[0].label, 'Notiz'); assert.equal(r[0].text, 'Bitte prüfen'); assert.equal(r[0].by, 'Anna'); assert.equal(r[0].at, '04.11.2026');
+  assert.deepEqual(r[0].replies.map(x => x.text), ['Erledigt']); assert.equal(r[0].state, 'Completed');
+  assert.equal(r[1].label, 'Textkommentar'); assert.deepEqual(r[1].replies, []); assert.equal(r[2].label, 'Kommentar');
+  assert.deepEqual(K.fromPdfJs(null), []);
+});
 test('Klartext für die Zwischenablage', () => {
   const a = { replies: [{ text: 'Ok', by: 'WM', at: '05.11.2026' }], state: 'Rejected' };
   assert.deepEqual(K.plain(a), ['    ↳ 05.11.2026 · WM: Ok', '    Status: Abgelehnt']);

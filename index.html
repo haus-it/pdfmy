@@ -780,7 +780,7 @@ footer{min-height:30px;padding:4px 20px;font-size:12.5px}
 .toclist .empty{padding:10px 12px;color:var(--muted)}
 .toclist .ckind{color:var(--muted);font-size:12.5px;white-space:nowrap;margin-right:8px}
 .toclist li.cmtl{flex-wrap:wrap}.toclist .cstate{flex:none;width:auto;max-width:130px;padding:3px 6px;font-size:12.5px;margin:0 2px;color:var(--muted)}.toclist .cstate.set{color:var(--text);font-weight:600}
-.toclist .crep .ic{width:16px;height:16px}
+.toclist .crep .ic{width:16px;height:16px}.toclist .cstate.ro{border:0;padding:3px 8px;align-self:center}
 .toclist .cthr{flex-basis:100%;padding:0 8px 8px 28px}.toclist .cthr ul{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}.toclist .cthr li{padding:2px 0 2px 10px;justify-content:space-between;gap:8px}.toclist .cthr li>span{overflow-wrap:anywhere}
 .toclist .crform{display:flex;gap:8px;margin-top:6px}.toclist .crform input{flex:1;min-width:0;width:auto}.toclist .crform button{width:auto;flex:none;padding:6px 12px;border:1px solid var(--accent);border-radius:6px;background:var(--accent);color:var(--accent-text);font-weight:600}
 #cmtDlg{width:min(680px,94vw)}
@@ -2023,11 +2023,12 @@ html.i18n-wait body{visibility:hidden}
 <dialog id="cmtDlg" class="sharedlg" aria-labelledby="cmtT">
   <h3 class="dlgtitle" id="cmtT">Kommentare und Markierungen</h3>
   <div class="tocbar"><div class="field"><label for="cmtQ">Suchen</label><input id="cmtQ" type="search" autocomplete="off" placeholder="Text, Name, Stempel …"></div>
-  <div class="field" style="flex:0 1 190px"><label for="cmtType">Art</label><select id="cmtType"><option value="">Alle</option><option value="note">Notizen</option><option value="hl">Markierungen</option><option value="text">Texte</option><option value="stamp">Stempel</option><option value="sign">Unterschriften</option><option value="ink">Freihand</option><option value="field">Formularfelder</option><option value="link">Links</option><option value="rd">Schwärzungen</option><option value="wo">Abdeckungen</option></select></div>
+  <div class="field" style="flex:0 1 190px"><label for="cmtType">Art</label><select id="cmtType"><option value="">Alle</option><option value="note">Notizen</option><option value="hl">Markierungen</option><option value="text">Texte</option><option value="stamp">Stempel</option><option value="sign">Unterschriften</option><option value="ink">Freihand</option><option value="field">Formularfelder</option><option value="link">Links</option><option value="rd">Schwärzungen</option><option value="wo">Abdeckungen</option><option value="ext">Aus anderen Programmen</option></select></div>
   <div class="field" style="flex:0 1 160px"><label for="cmtState">Status</label><select id="cmtState"><option value="">Alle</option><option value="open">Offen</option><option value="Accepted">Angenommen</option><option value="Rejected">Abgelehnt</option><option value="Cancelled">Abgebrochen</option><option value="Completed">Erledigt</option></select></div></div>
   <p class="hint" id="cmtSum" role="status" aria-live="polite"></p>
   <ul id="cmtList" class="toclist"></ul>
   <p class="hint">Bei Notizen und Markierungen: Status wählen oder mit <svg class="ic" aria-hidden="true" style="width:14px;height:14px;vertical-align:-2px"><use href="#i-reply"/></svg> antworten. Antworten und Status werden mit der PDF gespeichert – Acrobat und andere PDF-Programme zeigen sie als Verlauf.</p>
+  <p class="hint">Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.</p>
   <div class="dlgrow"><button type="button" id="cmtCopy" style="margin-right:auto">Als Text kopieren</button><button type="button" id="cmtClose">Schließen</button></div>
 </dialog>
 <dialog id="sigDlg" class="sharedlg" aria-labelledby="sigT">

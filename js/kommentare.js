@@ -78,5 +78,23 @@
     return map;
   }
 
-  return { STATES, label, reply, setState, hasThread, replyLines, plain, pdfDate, parsePdfDate, threads };
+  /* Kommentare anderer Programme (Acrobat-Notizzettel, Textkommentare, Formen …) aus den Anmerkungsdaten von pdf.js
+     (page.getAnnotations()) für die Kommentarliste: nur Anzeige, mit Antworten und Status. Ausgeblendete, Links,
+     Formularfelder und Kommentarfenster (Popup) zählen nicht. */
+  const EXT_LABEL = { Text: 'Notiz', FreeText: 'Textkommentar', Square: 'Form', Circle: 'Form', Line: 'Form', Polygon: 'Form', PolyLine: 'Form',
+    Ink: 'Freihand', Stamp: 'Stempel', Caret: 'Einfügemarke', FileAttachment: 'Dateianhang', Highlight: 'Markierung', Underline: 'Markierung',
+    StrikeOut: 'Markierung', Squiggly: 'Markierung', Sound: 'Tonkommentar', Redact: 'Schwärzung' };
+  const SKIP = new Set(['Link', 'Widget', 'Popup', 'PrinterMark', 'TrapNet', 'Watermark', '3D', 'Screen', 'Movie', 'RichMedia']);
+  const str = (o, raw) => String((o && o.str) || raw || '').replace(/\s+/g, ' ').trim();
+  function fromPdfJs(annots) {
+    const list = Array.isArray(annots) ? annots : [];
+    const th = threads(list.filter(a => a.inReplyTo).map(a => ({ irt: a.inReplyTo, contents: str(a.contentsObj, a.contents), by: str(a.titleObj, a.title), m: a.modificationDate || '', stateModel: a.stateModel || '', state: a.state || '' })));
+    return list.filter(a => !a.inReplyTo && a.subtype && !SKIP.has(a.subtype) && !((a.annotationFlags || 0) & 2)).map(a => {
+      const t = th.get(a.id) || { replies: [] }, d = parsePdfDate(a.modificationDate || a.creationDate);
+      return { id: a.id, subtype: a.subtype, label: EXT_LABEL[a.subtype] || 'Kommentar', text: str(a.contentsObj, a.contents), by: str(a.titleObj, a.title), at: d ? day(d) : '',
+        replies: t.replies, ...(t.state ? { state: t.state, stateBy: t.stateBy } : {}) };
+    });
+  }
+
+  return { STATES, label, reply, setState, hasThread, replyLines, plain, pdfDate, parsePdfDate, threads, fromPdfJs };
 });

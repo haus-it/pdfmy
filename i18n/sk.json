@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Vložiť QR kód",
  "QR-Code einfügen …": "Vložiť QR kód …",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "QR kód vložený vpravo dole – presuniete ho potiahnutím, veľkosť úchytom vpravo dole, Del odstráni.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Najprv otvorte dokument – QR kód sa umiestni na aktuálnu stranu."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Najprv otvorte dokument – QR kód sa umiestni na aktuálnu stranu.",
+ "Aus anderen Programmen": "Z iných programov",
+ "Dateianhang": "Príloha súboru",
+ "Einfügemarke": "Vložiť text",
+ "Kommentar": "Komentár",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Komentáre z iných programov PDF (napr. poznámky z Acrobatu) sú v zozname aj s vláknom, ale tu ich nemožno meniť.",
+ "Kommentare lesen:": "Čítanie komentárov:",
+ "Textkommentar": "Textové pole",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Z iného programu PDF – len zobrazenie\"",
+ "Tonkommentar": "Zvukový komentár",
+ "Watermark": "Watermark"
 }

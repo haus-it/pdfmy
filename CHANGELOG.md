@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-01
 
+### Kommentare aus anderen Programmen in der Kommentarliste (app-v224)
+- Neu: **Kommentare und Markierungen** zeigt auch Kommentare, die andere PDF-Programme angelegt haben – Acrobat-Notizzettel, Textkommentare, Formen, Stempel, Freihand, Dateianhänge – mit Autor, Datum, Antworten und Status (nur Anzeige). Filter „Aus anderen Programmen“, Suche und „Als Text kopieren“ schließen sie ein.
+- Bisher waren solche Kommentare zwar auf der Seite sichtbar, fehlten aber in der Liste; Antworten und Status waren gar nicht zu sehen.
+
 ### QR-Code einfügen: GiroCode und Link (app-v223)
 - Neu: **QR-Code einfügen** (Mehr-Menü) – GiroCode nach EPC-Standard (Version 002) auf eine vorhandene PDF setzen, z. B. auf die eigene Rechnung aus Word: Empfänger, IBAN (geprüft), BIC, Betrag und Verwendungszweck; Vorschau im Dialog, Vorschläge aus dem erkannten Dokument, eigene Bankdaten nur auf dem Gerät gemerkt. Alternativ QR-Code mit Link oder Text.
 - Der Code wird als Bild mit Ruhezone und Alternativtext eingefügt (PDF/UA), lässt sich verschieben und skalieren; PDFMy liest den eigenen GiroCode aus der gespeicherten PDF wieder.

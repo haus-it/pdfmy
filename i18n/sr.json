@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Уметни QR кôд",
  "QR-Code einfügen …": "Уметни QR кôд …",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "QR кôд уметнут доле десно – превуците за померање, величина ручицом доле десно, Delete брише.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Прво отворите документ – QR кôд се поставља на тренутну страницу."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Прво отворите документ – QR кôд се поставља на тренутну страницу.",
+ "Aus anderen Programmen": "Из других програма",
+ "Dateianhang": "Прилог датотеке",
+ "Einfügemarke": "Уметни текст",
+ "Kommentar": "Коментар",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Коментари из других PDF програма (нпр. белешке из Acrobat-а) налазе се на листи са нити, али се овде не могу мењати.",
+ "Kommentare lesen:": "Читање коментара:",
+ "Textkommentar": "Оквир за текст",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Из другог PDF програма – само приказ\"",
+ "Tonkommentar": "Звучни коментар",
+ "Watermark": "Watermark"
 }

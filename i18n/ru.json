@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Вставить QR-код",
  "QR-Code einfügen …": "Вставить QR-код …",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "QR-код вставлен внизу справа – перетащите для перемещения, размер – маркером внизу справа, Delete удаляет.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Сначала откройте документ – QR-код размещается на текущей странице."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Сначала откройте документ – QR-код размещается на текущей странице.",
+ "Aus anderen Programmen": "Из других программ",
+ "Dateianhang": "Вложенный файл",
+ "Einfügemarke": "Вставка текста",
+ "Kommentar": "Комментарий",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Комментарии из других PDF-программ (например, заметки Acrobat) показываются в списке с цепочкой, но изменить их здесь нельзя.",
+ "Kommentare lesen:": "Чтение комментариев:",
+ "Textkommentar": "Текстовое поле",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Из другой PDF-программы – только просмотр\"",
+ "Tonkommentar": "Звуковой комментарий",
+ "Watermark": "Watermark"
 }

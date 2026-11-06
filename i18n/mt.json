@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Daħħal kodiċi QR",
  "QR-Code einfügen …": "Daħħal kodiċi QR …",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "Kodiċi QR imdaħħal isfel fuq il-lemin – kaxkar biex tiċċaqlaq, daqs bil-manku isfel fuq il-lemin, Del iħassar.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "L-ewwel iftaħ dokument – il-kodiċi QR jitqiegħed fuq il-paġna kurrenti."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "L-ewwel iftaħ dokument – il-kodiċi QR jitqiegħed fuq il-paġna kurrenti.",
+ "Aus anderen Programmen": "Minn programmi oħra",
+ "Dateianhang": "Fajl mehmuż",
+ "Einfügemarke": "Daħħal test",
+ "Kommentar": "Kumment",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Kummenti minn programmi PDF oħra (eż. noti ta’ Acrobat) jidhru fil-lista bit-thread tagħhom, iżda ma jistgħux jinbidlu hawn.",
+ "Kommentare lesen:": "Qari tal-kummenti:",
+ "Textkommentar": "Kaxxa tat-test",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Minn programm PDF ieħor – wiri biss\"",
+ "Tonkommentar": "Kumment bil-ħoss",
+ "Watermark": "Watermark"
 }

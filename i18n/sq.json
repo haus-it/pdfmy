@@ -3503,5 +3503,15 @@
  "QR-Code einfügen": "Fut kod QR",
  "QR-Code einfügen …": "Fut kod QR …",
  "QR-Code unten rechts eingefügt – zum Verschieben ziehen, Größe am Anfasser unten rechts, Entf löscht.": "Kodi QR u fut poshtë djathtas – tërhiqeni për ta zhvendosur, madhësia me dorezën poshtë djathtas, Delete e fshin.",
- "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Hapni fillimisht një dokument – kodi QR vendoset në faqen aktuale."
+ "Zuerst ein Dokument öffnen – der QR-Code kommt auf die aktuelle Seite.": "Hapni fillimisht një dokument – kodi QR vendoset në faqen aktuale.",
+ "Aus anderen Programmen": "Nga programe të tjera",
+ "Dateianhang": "Skedar i bashkëngjitur",
+ "Einfügemarke": "Fut tekst",
+ "Kommentar": "Koment",
+ "Kommentare aus anderen PDF-Programmen (z. B. Acrobat-Notizzettel) stehen mit Verlauf in der Liste, lassen sich hier aber nicht ändern.": "Komentet nga programe të tjera PDF (p.sh. shënimet e Acrobat) shfaqen në listë me fijen e tyre, por këtu nuk mund të ndryshohen.",
+ "Kommentare lesen:": "Leximi i komenteve:",
+ "Textkommentar": "Kuti teksti",
+ "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Nga një program tjetër PDF – vetëm shfaqje\"",
+ "Tonkommentar": "Koment me zë",
+ "Watermark": "Watermark"
 }
