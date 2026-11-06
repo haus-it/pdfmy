@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-06
+
+### Große PDFs schneller öffnen (app-v225)
+- Beim Öffnen sucht PDFMy Signatur und Markierungen direkt in den Bytes der Datei, statt sie bis zu dreimal komplett in Text umzuwandeln. Das Ergebnis wird gemerkt; die Signaturprüfung liest die Datei nicht noch einmal ein, wenn keine Signatur darin steht.
+- Große komprimierte PDFs (ab 8 MB) lädt PDFMy nur noch dann zusätzlich mit pdf-lib, wenn pdf.js darin tatsächlich Markierungen findet.
+- Gemessen (Prüfschritte beim Öffnen, Median aus 5 Läufen): 60 MB 1,6 s → 0,07 s, 200 MB 4,9 s → 0,24 s; kleine Dateien unverändert. Signierte PDFs bleiben unangetastet (geprüft: Signatur gültig, Datei bytegleich).
+
 ## 2026-11-01
 
 ### Kommentare aus anderen Programmen in der Kommentarliste (app-v224)

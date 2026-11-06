@@ -447,7 +447,7 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 **Leitplanken:** 1 und 2 gewahrt (rein lokal, keine neue Bibliothek, keine Verbindung). 3 gewahrt. 4: ein Knopf in der vorhandenen Werkzeugleiste, Optionen nur bei gewähltem Werkzeug. 5: PDF/A-Ausgabe mit veraPDF geprüft. 6 nicht betroffen. Hinweis in Hilfe und Statuszeile: Inhalt außerhalb bleibt in der Datei (zum Entfernen „Schwärzen“).
 
 ### Nächste Schritte aus der Systemprüfung vom 03.11.2026
-- **Große PDFs:** Markierungen über pdf.js erkennen statt die ganze Datei als Text zu wandeln und mit pdf-lib komplett zu laden (js/app.js importMarkup); Kopien der Bytes vermeiden.
+- **Große PDFs:** Markierungen über pdf.js erkennen statt die ganze Datei als Text zu wandeln und mit pdf-lib komplett zu laden (js/app.js importMarkup); Kopien der Bytes vermeiden. – **Umgesetzt in app-v225:** Byte-Suche statt Textkopie, einmal je Dokument; pdf.js-Vorprüfung ab 8 MB; Signaturprüfung ohne zweite Kopie. Offen: die Kopie für pdf.js (`bytes.slice()`), weil pdf.js den Puffer an seinen Worker abgibt.
 - **Absturzschutz:** je Sicherung eigener Speicherschlüssel, Quelle einmal speichern und danach nur den Seitenzustand nachführen; bei pagehide nur den schnellen Stand sichern.
 - **Update während der Sitzung:** neue Fassung erst aktivieren, wenn nichts in Arbeit ist, oder Bibliotheken mit Prüfsumme im Namen ausliefern.
 - **Tests:** Verschlüsseln → wieder öffnen, Zusammenfügen mit Formularfeldern, OCR-Textebene, PDF/A mit veraPDF im Smoke-Test.

@@ -3574,6 +3574,9 @@ $('#signNextSpot').onclick = () => {
 /* ---------- Digitale Signaturen prüfen (wie die Signaturleiste in Acrobat) ---------- */
 window.checkSignatures = async (docIdx, file) => {
   const d = state.docs[docIdx]; if (!d || !file?.arrayBuffer) return;
+  // beim Öffnen schon durchsucht (js/app.js importMarkup): keine Signatur – keine zweite Kopie der Datei. Reparierte und entsperrte
+  // Dateien sind neu geschrieben (Signaturangaben können darin komprimiert stehen) – dort zählt weiter das Original.
+  if (d.byteRange === false && !d.repaired && !d.unlocked) return;
   try {
     const bytes = new Uint8Array(await file.arrayBuffer());
     if (!PdfVerify.hasSignature(bytes)) return;

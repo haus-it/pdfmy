@@ -528,10 +528,28 @@ async function repairPdf(bytes) {
    aus der Arbeitskopie entfernen – sonst stünden sie doppelt im Seitenbild und in der gespeicherten Datei – und als PDFMy-Markierung
    anlegen (Farbe, Art, Kommentar und Autor bleiben). Digital signierte PDFs und ausgeblendete Markierungen bleiben unangetastet. */
 const MARKUP = { Highlight: 'hl', Underline: 'ul', Squiggly: 'ul', StrikeOut: 'st' };
+// Gibt es auf irgendeiner Seite eine sichtbare Markierung? Über die Anmerkungsdaten von pdf.js, je 16 Seiten gleichzeitig
+async function hasMarkup(js) {
+  if (!js) return true;   // ohne pdf.js-Dokument wie bisher gründlich prüfen
+  for (let a = 1; a <= js.numPages; a += 16) {
+    const nums = []; for (let n = a; n < a + 16 && n <= js.numPages; n++) nums.push(n);
+    const found = await Promise.all(nums.map(async n => {
+      try { return (await (await js.getPage(n)).getAnnotations()).some(x => MARKUP[x.subtype] && !(x.annotationFlags & 2)); } catch { return true; }
+    }));
+    if (found.some(Boolean)) return true;
+  }
+  return false;
+}
 async function importMarkup(d) {
-  const raw = d.bytes instanceof Uint8Array ? d.bytes : new Uint8Array(d.bytes), head = new TextDecoder('latin1').decode(raw);
-  // Schnelltest: Markierung im Klartext – oder komprimierte Objekt-Streams (dann steht sie nicht lesbar in der Datei)
-  if (!/\/(Highlight|Underline|StrikeOut|Squiggly)\b|\/ObjStm\b/.test(head) || /\/ByteRange\s*\[/.test(head)) return null;
+  const raw = d.bytes instanceof Uint8Array ? d.bytes : new Uint8Array(d.bytes);
+  // Schnelltest direkt in den Bytes: Markierung im Klartext – oder komprimierte Objekt-Streams (dann steht sie nicht lesbar in der Datei).
+  // Signierte Dateien bleiben unangetastet.
+  const names = PdfVerify.scanNames(raw, ['Highlight', 'Underline', 'StrikeOut', 'Squiggly', 'ObjStm', 'ByteRange']);
+  d.byteRange = names.has('ByteRange');   // gemerkt für das Öffnen und die Signaturprüfung – die Datei wird nur einmal durchsucht
+  if (d.byteRange || !names.size) return null;
+  // Nur komprimiert und groß: erst über pdf.js nachsehen, ob es überhaupt sichtbare Markierungen gibt – pdf-lib lädt sonst die ganze
+  // Datei umsonst in den Speicher. Kleine Dateien lädt pdf-lib schneller, als pdf.js alle Seiten durchsieht (gemessen: 1500 Seiten, 0,4 MB).
+  if (!['Highlight', 'Underline', 'StrikeOut', 'Squiggly'].some(n => names.has(n)) && raw.length > 8e6 && !(await hasMarkup(d.js))) return null;
   const lib = await PDFDocument.load(raw, { ignoreEncryption: true, updateMetadata: false });
   if (lib.isEncrypted) return null;
   const found = new Map(), num = x => (x && typeof x.asNumber === 'function') ? x.asNumber() : +String(x);
@@ -636,7 +654,7 @@ async function importPdf(file) {
   // Scanseiten werden parallel in Workern aufbereitet, während die nächsten Seiten gezeichnet werden; eingefügt wird in Seitenreihenfolge
   await formCheck;
   // Vollbild-Scan mit Formularfeldern oder Signatur: nicht als Bild übernehmen – Felder und Signatur gingen sonst ohne Meldung verloren
-  const keepLive = state.docs[docIdx].fields?.length > 0 || (bytes.length < 2e8 && new TextDecoder('latin1').decode(bytes).includes('/ByteRange'));
+  const keepLive = state.docs[docIdx].fields?.length > 0 || (state.docs[docIdx].byteRange ?? PdfVerify.hasSignature(bytes));
   const pend = [], flush = async (keep = 0) => { while (pend.length > keep) state.pages.push(await pend.shift()); };
   const lost = []; let gone = 0;   // eine unlesbare Seite darf die folgenden nicht kosten
   for (let i = 1; i <= js.numPages; i++) {

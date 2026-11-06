@@ -141,7 +141,24 @@
     out.forEach((r, k) => { if (k < out.length - 1 && !r.wholeFile) { r.laterSigned = true; r.problems = r.problems.filter(p => !/angehängt/.test(p)); } });
     return out;
   }
-  const hasSignature = bytes => { const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes); return latin1(u8.subarray(0, u8.length)).includes('/ByteRange'); };
-  const api = { verify, find, hasSignature };
+  /* PDF-Namen (/ByteRange, /Highlight …) direkt in den Bytes suchen – ohne die ganze Datei in eine Zeichenkette zu wandeln
+     (bei 100 MB sonst mehrere hundert MB Speicher). Ein Durchlauf für alle gesuchten Namen; ein Name zählt nur, wenn danach ein
+     PDF-Trennzeichen folgt (/Highlight ja, /HighlightX nein). Liefert die Menge der gefundenen Namen ohne Schrägstrich. */
+  const DELIM = new Uint8Array(256); for (const c of [0, 9, 10, 12, 13, 32, 40, 41, 60, 62, 91, 93, 123, 125, 47, 37]) DELIM[c] = 1;   // Leerraum und ( ) < > [ ] { } / %
+  function scanNames(bytes, names) {
+    const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes), want = names.map(n => [n, Uint8Array.from(n, c => c.charCodeAt(0))]), hit = new Set();
+    const first = new Uint8Array(256); for (const [, t] of want) first[t[0]] = 1;
+    for (let i = u8.indexOf(47); i >= 0 && hit.size < want.length; i = u8.indexOf(47, i + 1)) {   // indexOf: im Browser gut doppelt so schnell wie eine eigene Schleife
+      if (!first[u8[i + 1]]) continue;
+      for (const [n, t] of want) {
+        if (hit.has(n) || i + t.length + 1 > u8.length) continue;
+        let k = 0; while (k < t.length && u8[i + 1 + k] === t[k]) k++;
+        if (k === t.length && (i + 1 + k === u8.length || DELIM[u8[i + 1 + k]])) hit.add(n);
+      }
+    }
+    return hit;
+  }
+  const hasSignature = bytes => scanNames(bytes, ['ByteRange']).has('ByteRange');
+  const api = { verify, find, hasSignature, scanNames };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfVerify = api;
 })(typeof self !== 'undefined' ? self : globalThis);

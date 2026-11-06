@@ -107,3 +107,17 @@ test('Mehrere Personen signieren nacheinander: alle Signaturen bleiben gültig (
   const doc = await PDFLib.PDFDocument.load(third);
   assert.equal(doc.getPageCount(), 1);
 });
+
+test('PDF-Namen direkt in den Bytes finden (Signatur, Markierungen) – nur ganze Namen, auch am Dateiende, auch bei 50 MB', () => {
+  const b = s => new Uint8Array(Buffer.from(s, 'latin1'));
+  assert.deepEqual([...Verify.scanNames(b('<</Subtype/Highlight/C[1 0 0]>> 4 0 obj<</Type/ObjStm>>'), ['Highlight', 'Underline', 'ObjStm'])].sort(), ['Highlight', 'ObjStm']);
+  assert.equal(Verify.scanNames(b('/HighlightX /Underlined'), ['Highlight', 'Underline']).size, 0);
+  assert.ok(Verify.scanNames(b('x /StrikeOut'), ['StrikeOut']).has('StrikeOut'));
+  assert.ok(Verify.hasSignature(b('/Sig/ByteRange [0 10 20 30]')));
+  assert.ok(!Verify.hasSignature(b('/ByteRang /Byte Range')));
+  const dense = new Uint8Array(1e5).fill(47); dense.set(b('/ByteRange '), dense.length - 11);   // lauter Schrägstriche
+  assert.ok(Verify.hasSignature(dense)); assert.ok(!Verify.hasSignature(dense.subarray(0, 1e5 - 11)));
+  const big = new Uint8Array(50e6); for (let o = 0; o < big.length; o += 65536) crypto.randomFillSync(big.subarray(o, o + 65536));   // wie Bild- und Schriftdaten
+  big.set(b('/ByteRange '), big.length - 11);
+  const t0 = Date.now(); assert.ok(Verify.hasSignature(big)); assert.ok(Date.now() - t0 < 1500, `${Date.now() - t0} ms`);
+});
