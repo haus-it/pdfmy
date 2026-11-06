@@ -515,6 +515,7 @@
 "Die optionale Erweiterung für Chrome und Edge lädt eine PDF, die Sie im Browser öffnen oder per Rechtsklick wählen, von der jeweiligen Webseite und übergibt sie innerhalb Ihres Browsers an pdfmy. Dabei werden keine Daten an uns oder Dritte übertragen; es gibt keinen Verlauf, keine Statistik und keine Fernkonfiguration. Gespeichert werden nur Ihre zwei Einstellungen (automatisch öffnen an/aus, Ziel) im Browser sowie für wenige Minuten die Adresse der zuletzt übergebenen PDF, damit „Zurück“ nicht erneut umleitet (nur im Arbeitsspeicher des Browsers). Den Zugriff auf Webseiten erteilen Sie ausdrücklich beim Einschalten; beim Ausschalten wird er entzogen.",
 "Die Person öffnet die PDF auf pdfmy.de, klickt in ihrem markierten Feld auf <i>„Hier unterschreiben“</i> und dann auf <i>„Unterschrieben – weitersenden“</i>. Die E-Mail an die nächste Person ist vorbereitet, mit Ihnen in Kopie.",
 "Die Reihenfolge der Seiten per Ziehen anpassen, Seiten drehen oder löschen.",
+"Die Sicherung bremst auch bei großen Dokumenten nicht: Jedes gesicherte Dokument liegt für sich, und bei einer Änderung schreibt PDFMy nur dieses eine neu.",
 "Die Texterkennung ist ein neuronales Netz und läuft auf Ihrem Gerät. Alles Weitere – Betrag, Frist, Ablage – sind nachvollziehbare Regeln. Kein Dokument geht an einen KI-Dienst im Internet.",
 "Die Texterkennung liest Fehler.",
 "Die übrigen Seiten der längeren Datei stehen am Ende.",

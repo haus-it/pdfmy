@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-06
 
+### Absturzschutz: jede Sicherung für sich (app-v226)
+- Der Absturzschutz legt jedes gesicherte Dokument unter einem eigenen Schlüssel im Gerätespeicher ab. Bisher standen alle (bis zu 5) Sicherungen in einem Wert, und jede Sicherung schrieb sie alle komplett neu – bei mehreren großen Dokumenten Hunderte MB je Änderung. Jetzt wird nur das geänderte Dokument geschrieben.
+- Sicherungen aus älteren Fassungen werden beim nächsten Start einmal umgezogen und lassen sich wie bisher wiederherstellen. Fehlt eine gesicherte Datei, meldet PDFMy das, statt ein leeres Dokument zu öffnen.
+
 ### Große PDFs schneller öffnen (app-v225)
 - Beim Öffnen sucht PDFMy Signatur und Markierungen direkt in den Bytes der Datei, statt sie bis zu dreimal komplett in Text umzuwandeln. Das Ergebnis wird gemerkt; die Signaturprüfung liest die Datei nicht noch einmal ein, wenn keine Signatur darin steht.
 - Große komprimierte PDFs (ab 8 MB) lädt PDFMy nur noch dann zusätzlich mit pdf-lib, wenn pdf.js darin tatsächlich Markierungen findet.

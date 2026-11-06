@@ -4103,8 +4103,16 @@ const SID = newRid(), RESCUE_DAYS = 7, RESCUE_MAX = 5, RESCUE_PAGES = 300;
 // Solange dieses Fenster offen ist, hält es eine Sperre – andere Fenster bieten seine Sicherungen dann nicht an
 navigator.locks?.request('pdfmy-sess-' + SID, () => new Promise(() => {})).catch(() => {});
 let rescueTimer = null, rescueBusy = false, rescueSig = '', rescueUndo = null, rescueWasDirty = false;
+// Die Liste „rescue“ enthält nur Name, Zeit und Seitenzahl; die PDF jeder Sicherung liegt unter einem eigenen Schlüssel. Früher stand alles
+// in einem Wert – jede Sicherung schrieb dann alle (bis zu 5) gesicherten PDFs komplett neu, bei großen Dateien Hunderte MB je Änderung.
+const rescueKey = rid => 'rescue:' + rid;
 const rescueList = async () => (await idb.get('rescue')) || [];
-async function rescueDrop(rid) { const l = await rescueList(); if (l.some(x => x.rid === rid)) await idb.set('rescue', l.filter(x => x.rid !== rid)); }
+const rescueBytes = async e => e.bytes || await idb.get(rescueKey(e.rid));   // e.bytes: Sicherungen bis app-v225
+async function rescueDrop(rid) {
+  const l = await rescueList();
+  if (l.some(x => x.rid === rid)) await idb.set('rescue', l.filter(x => x.rid !== rid));
+  await idb.del(rescueKey(rid)).catch(() => {});
+}
 const rescueJob = () => ({ rid: tabs[tabCur].rid, pages: state.pages.slice(), meta: state.meta, dirty: state.dirty && state.pages.length > 0, name: (state.docs.length === 1 && state.docs[0].name) || filename(), cam: Camera.handed.slice() });
 async function rescueSave(job) {
   // nicht während eines Speichervorgangs sichern – der Nutzer soll nicht auf die Sicherung warten
@@ -4115,9 +4123,11 @@ async function rescueSave(job) {
     else if (job.pages.length <= RESCUE_PAGES) {
       const bytes = await buildPdf(job.pages, job.meta, { noOcr: true, onPage: () => {} });
       let meta = null; try { meta = JSON.parse(JSON.stringify(job.meta)); } catch {}
+      await idb.put(rescueKey(job.rid), bytes);   // erst die Datei, dann der Eintrag – ein Eintrag zeigt nie auf eine fehlende Datei
       const l = (await rescueList()).filter(x => x.rid !== job.rid);
-      l.unshift({ rid: job.rid, sid: SID, name: job.name, at: Date.now(), pages: job.pages.length, bytes, meta });
+      l.unshift({ rid: job.rid, sid: SID, name: job.name, at: Date.now(), pages: job.pages.length, meta });
       await idb.put('rescue', l.slice(0, RESCUE_MAX));
+      for (const x of l.slice(RESCUE_MAX)) await idb.del(rescueKey(x.rid)).catch(() => {});
       job.cam.forEach(Camera.dropBackup);   // Seiten sind jetzt im Absturzschutz, der Kamera-Zwischenstand wird nicht mehr gebraucht
     }
   } catch (e) {
@@ -4146,7 +4156,13 @@ async function renderRescue() {
   const box = $('#rescue'); if (!box) return;
   let list = await rescueList();
   const fresh = list.filter(e => Date.now() - e.at < RESCUE_DAYS * 864e5);
-  if (fresh.length !== list.length) { list = fresh; await idb.set('rescue', list); }
+  // Sicherungen im alten Format (PDF in der Liste) einmal auf eigene Schlüssel umziehen
+  let moved = false;
+  for (const e of fresh) if (e.bytes) { try { await idb.put(rescueKey(e.rid), e.bytes); delete e.bytes; moved = true; } catch {} }
+  if (fresh.length !== list.length || moved) {
+    for (const e of list) if (!fresh.includes(e)) await idb.del(rescueKey(e.rid)).catch(() => {});
+    list = fresh; await idb.set('rescue', list);
+  }
   let held = new Set();
   try { held = new Set(((await navigator.locks?.query())?.held || []).map(l => l.name)); } catch {}
   const cams = (await Camera.backups()).map(e => ({ cam: e.cid, sid: e.sid, name: I18N.t('Kamera-Scan'), at: e.at, pages: e.items.length }));
@@ -4181,7 +4197,9 @@ $('#rescue').addEventListener('click', async ev => {
     status(`Wiederhergestellt: ${pages.length} Seite(n) aus dem Kamera-Scan – bitte jetzt speichern.`);
     return;
   }
-  await importFiles([new File([e.bytes], e.name, { type: 'application/pdf' })]);
+  const bytes = await rescueBytes(e);
+  if (!bytes) { await rescueDrop(e.rid); renderRescue(); return status('Die gesicherten Änderungen konnten nicht gelesen werden.'); }
+  await importFiles([new File([bytes], e.name, { type: 'application/pdf' })]);
   if (e.meta) { Object.assign(state.meta, e.meta); renderForm(); }
   tabs[tabCur].rid = e.rid;   // weitere Änderungen ersetzen diese Sicherung
   state.dirty = true; rescueWasDirty = false; refresh();
