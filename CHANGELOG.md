@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-07
 
+### Aufgaben ohne Büro-Ballast (app-v228)
+- Wer auf der Startseite eine einfache Aufgabe wählt (Zusammenfügen, Unterschreiben, Verkleinern, Seiten organisieren, Aufteilen, Stempeln, Passwort, Druckformate …), sieht jetzt nur, was die Aufgabe braucht: Die rechte Leiste mit Briefdaten, Ablage, Schlüsseldaten und erkanntem Text bleibt zu, und „Ablegen & nächster“ (legt einen Brief ab und trägt ihn ins Posteingangsbuch ein) wird nicht angeboten. „Speichern“ ist damit auch am Handy der Hauptknopf.
+- Mit dem Pfeil am rechten Rand oder der Taste ] lässt sich die Leiste in der Aufgabe trotzdem öffnen. Beim normalen Öffnen, beim Scannen und bei Formularen (die Felder stehen rechts) ändert sich nichts; die gemerkte Einstellung der Leiste bleibt erhalten.
+- Anlass: Durchgang „PDFs zusammenfügen“ und „PDF unterschreiben“ als neuer Nutzer. Klicks wie bei iLovePDF (Kachel, Dateien, „Fertig & speichern“, „Speichern“), aber vorher viel Büro-Oberfläche, die für diese Aufgaben nicht gebraucht wird.
+
 ### Einfacher Einstieg: kein Einrichtungsfenster beim ersten Besuch (app-v227)
 - Beim ersten Besuch öffnete sich bisher sofort das Fenster „Willkommen bei PDFMy“ mit vier Büro-Einstellungen. Wer nur schnell PDFs zusammenfügen oder unterschreiben wollte, musste es erst wegklicken, und es verdeckte die Werkzeuge. PDF24, iLovePDF und Smallpdf zeigen sofort die Werkzeuge.
 - Jetzt steht auf der Startseite nur ein schmaler Hinweis „Für die Post im Büro: … Einrichten …“. Ein Klick öffnet die bekannte Einrichtung, ✕ blendet den Hinweis dauerhaft aus. Bestehende Nutzer sehen ihn nicht.

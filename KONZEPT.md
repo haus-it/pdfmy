@@ -418,6 +418,12 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
 
+### Umgesetzt 07.11.2026: Aufgaben ohne Büro-Ballast (app-v228)
+**Anlass:** Durchgang „PDFs zusammenfügen“ und „PDF unterschreiben“ als neuer Nutzer (GF-Vorgabe „besser als die Mitbewerber, immer einfach“). Klickzahl wie iLovePDF, aber Briefdaten-Leiste und „Ablegen & nächster“ lenkten ab; „Ablegen“ hätte eine zusammengefügte Datei ins Posteingangsbuch eingetragen.
+**Lösung:** Aufgabenmodus für einfache Werkzeuge (Liste LEAN in js/pro.js): rechte Leiste zu, „Ablegen & nächster“ aus, Leiste per Pfeil/] erreichbar. Nicht für Scannen, Formular, Text, Word, KI, Prüfen.
+**Geprüft und verworfen:** Speichern-Dialog verkürzen – mit normalen Textdateien schlägt er „PDF“ vor, das Ergebnis ist so groß wie die Originale (6 KB → 7 KB); ein Klick auf „Speichern“ genügt.
+**Leitplanken:** 1–3 gewahrt (keine neue Verbindung, nichts gezählt). 4 verbessert. 5: axe ohne Befund. 6 nicht betroffen.
+
 ### Umgesetzt 07.11.2026: Einfacher Einstieg (app-v227)
 **Anlass:** GF 07.11.2026: „pdfmy.de soll besser werden als die Mitbewerber und immer einfach zu bedienen.“ Durchgang als neuer Besucher: Das Einrichtungsfenster ging beim ersten Besuch von selbst auf und verdeckte die Werkzeuge; die Fußzeile meldete jedem Webbesucher „pdfmy Scan: nicht gestartet“. PDF24, iLovePDF und Smallpdf zeigen sofort die Werkzeuge.
 **Lösung:** Hinweis auf der Startseite statt Fenster (Einrichten … / ✕); Fußzeilen-Meldung nur, wenn pdfmy Scan auf dem Gerät schon lief.

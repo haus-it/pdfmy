@@ -4328,8 +4328,16 @@ addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && !e.shiftKey &
 /* ---------- Seitenleisten ein-/ausklappen: links Seitenvorschau, rechts Briefdaten (gemerkt, Tasten [ und ]) ---------- */
 const panels = LS.get('panels', { l: false, r: false });
 const LEFT = '<path d="m15 18-6-6 6-6"/>', RIGHT = '<path d="m9 18 6-6-6-6"/>';
+// Aufgaben von der Startseite, bei denen die Briefdaten (Absender, Ablage, Schlüsseldaten, erkannter Text) nur ablenken: rechte Leiste
+// zu, „Ablegen & nächster“ aus – wie bei PDF24/iLovePDF nur das, was die Aufgabe braucht (Prüfung 07.11.2026). Mit ] oder dem Pfeil
+// lässt sich die Leiste trotzdem öffnen. Nicht dabei: Scannen (Briefe), Formular (Felder stehen rechts), Text, Word, KI, Prüfen.
+const LEAN = new Set(['merge', 'mergesmall', 'zipper', 'organize', 'compress', 'img2pdf', 'pdf2img', 'imgout', 'sign', 'stamp', 'protect', 'unlock', 'split', 'repair', 'booklet', 'nup', 'poster', 'a4', 'trim', 'gray', 'invert', 'labels', 'bates']);
+let leanRight = false, leanWas = false;   // leanRight: Nutzer hat die Leiste in dieser Aufgabe selbst geöffnet
+window.leanTask = () => LEAN.has(state.intent) && state.pages.length > 0;
+window.syncLean = () => { const l = window.leanTask(); if (l === leanWas) return; leanWas = l; leanRight = false; applyPanels(); };
+const rightHidden = () => !!panels.r || (window.leanTask() && !leanRight);
 function applyPanels() {
-  document.body.classList.toggle('hide-left', !!panels.l); document.body.classList.toggle('hide-right', !!panels.r);
+  document.body.classList.toggle('hide-left', !!panels.l); document.body.classList.toggle('hide-right', rightHidden());
   const set = (b, hidden, what, key, openDir, closeDir) => {
     b.setAttribute('aria-expanded', String(!hidden));
     const t = `${what} ${hidden ? 'einblenden' : 'ausblenden'} ( ${key} )`;
@@ -4337,10 +4345,16 @@ function applyPanels() {
     b.querySelector('svg').innerHTML = hidden ? openDir : closeDir;
   };
   set($('#tglLeft'), panels.l, 'Seitenvorschau', '[', RIGHT, LEFT);
-  set($('#tglRight'), panels.r, 'Briefdaten', ']', LEFT, RIGHT);
+  set($('#tglRight'), rightHidden(), 'Briefdaten', ']', LEFT, RIGHT);
   dispatchEvent(new Event('resize'));   // Seite an die neue Breite anpassen
 }
-const togglePanel = side => { panels[side] = !panels[side]; LS.set('panels', panels); applyPanels(); };
+const togglePanel = side => {
+  if (side === 'r' && window.leanTask()) {   // in einer Aufgabe nur für diese Aufgabe umschalten; Öffnen hebt ein gemerktes „zu“ auf
+    leanRight = rightHidden(); if (leanRight && panels.r) { panels.r = false; LS.set('panels', panels); }
+    return applyPanels();
+  }
+  panels[side] = !panels[side]; LS.set('panels', panels); applyPanels();
+};
 $('#tglLeft').onclick = () => togglePanel('l');
 $('#tglRight').onclick = () => togglePanel('r');
 addEventListener('keydown', e => {

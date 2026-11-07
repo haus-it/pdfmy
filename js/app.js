@@ -893,7 +893,8 @@ function refresh() {
   renderThumbs(); renderStage(); renderSide(); saveReadPos();
   const n = state.pages.length;
   $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = $('#btnTranslate').disabled = $('#btnSummary').disabled = !n;
-  $('#btnFile').hidden = !n;
+  $('#btnFile').hidden = !n || !!window.leanTask?.();   // „Ablegen & nächster“ ist für Briefe – bei Zusammenfügen, Unterschreiben … nicht anbieten
+  window.syncLean?.();
   // Statuszeile: „Seite 2 von 11“ (wie in Word); Klick oder Strg+G springt zu einer Seite
   $('#pageNav').hidden = !n;
   if (n) $('#pageInd').textContent = state.view === 'grid' ? `${n === 1 ? `${n} Seite` : `${n} Seiten`}` : `Seite ${state.sel + 1} von ${n}`;
