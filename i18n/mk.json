@@ -3514,5 +3514,10 @@
  "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Од друга PDF-програма – само приказ\"",
  "Tonkommentar": "Звучен коментар",
  "Watermark": "Watermark",
- "Die gesicherten Änderungen konnten nicht gelesen werden.": "Зачуваните промени не можеа да се прочитаат."
+ "Die gesicherten Änderungen konnten nicht gelesen werden.": "Зачуваните промени не можеа да се прочитаат.",
+ "Für die Post im Büro:": "За поштата во канцеларија:",
+ "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Поставете име, папка за архивирање и скенер – по желба, трае две минути.",
+ "Einrichten …": "Постави …",
+ "Hinweis zur Einrichtung ausblenden": "Сокриј го советот за поставување",
+ "Ausblenden": "Сокриј"
 }

@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-07
+
+### Einfacher Einstieg: kein Einrichtungsfenster beim ersten Besuch (app-v227)
+- Beim ersten Besuch öffnete sich bisher sofort das Fenster „Willkommen bei PDFMy“ mit vier Büro-Einstellungen. Wer nur schnell PDFs zusammenfügen oder unterschreiben wollte, musste es erst wegklicken, und es verdeckte die Werkzeuge. PDF24, iLovePDF und Smallpdf zeigen sofort die Werkzeuge.
+- Jetzt steht auf der Startseite nur ein schmaler Hinweis „Für die Post im Büro: … Einrichten …“. Ein Klick öffnet die bekannte Einrichtung, ✕ blendet den Hinweis dauerhaft aus. Bestehende Nutzer sehen ihn nicht.
+- Die Fußzeile zeigt „pdfmy Scan: nicht gestartet“ nur noch, wenn pdfmy Scan auf diesem Gerät schon einmal lief. Vorher sah jeder Webbesucher diese Meldung, die wie ein Fehler wirkte.
+
 ## 2026-11-06
 
 ### Absturzschutz: jede Sicherung für sich (app-v226)

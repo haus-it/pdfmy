@@ -3514,5 +3514,10 @@
  "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"From another PDF program – display only\"",
  "Tonkommentar": "Sound",
  "Watermark": "Watermark",
- "Die gesicherten Änderungen konnten nicht gelesen werden.": "The backed-up changes could not be read."
+ "Die gesicherten Änderungen konnten nicht gelesen werden.": "The backed-up changes could not be read.",
+ "Für die Post im Büro:": "For office post:",
+ "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Set up your name, filing folder and scanner – optional, takes two minutes.",
+ "Einrichten …": "Set up …",
+ "Hinweis zur Einrichtung ausblenden": "Hide setup hint",
+ "Ausblenden": "Hide"
 }

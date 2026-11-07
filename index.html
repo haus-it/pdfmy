@@ -259,6 +259,13 @@ code.sel{user-select:all;-webkit-user-select:all}
 .recent .rc-del{border:0;background:transparent;color:var(--muted);width:30px;height:30px;border-radius:6px;cursor:pointer;flex:none}
 .recent .rc-del:hover,.recent .rc-del:focus-visible{color:var(--text);background:var(--panel)}
 .deadlines{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 14px;text-align:left;box-shadow:var(--shadow)}
+.setup-hint{display:flex;align-items:center;gap:10px;padding:8px 10px 8px 14px}
+.setup-hint p{flex:1;margin:0;font-size:14px;color:var(--text)}
+.setup-hint .sh-go{border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:5px 12px;cursor:pointer;font-weight:600;flex:none}
+.setup-hint .sh-go:hover,.setup-hint .sh-go:focus-visible{background:var(--accent);color:#fff}
+.setup-hint .sh-x{border:0;background:transparent;color:var(--muted);width:30px;height:30px;border-radius:6px;cursor:pointer;flex:none}
+.setup-hint .sh-x:hover,.setup-hint .sh-x:focus-visible{color:var(--text);background:var(--panel-2)}
+@media (max-width:560px){.setup-hint{flex-wrap:wrap}.setup-hint p{flex-basis:calc(100% - 40px)}}
 .dl-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
 .dl-badge{background:#c8102e;color:#fff;border-radius:999px;padding:1px 8px;font-size:12px;margin-left:6px}
 .dl-list{display:grid;gap:4px}
@@ -1306,6 +1313,7 @@ html.i18n-wait body{visibility:hidden}
       <div id="deadlines" class="deadlines" hidden></div>
       <section id="rescue" class="deadlines recent rescue" hidden aria-labelledby="rescueT"></section>
       <section id="recent" class="deadlines recent" hidden aria-labelledby="recentT"></section>
+      <section id="setupHint" class="deadlines setup-hint" hidden aria-labelledby="setupHintT"><p><b id="setupHintT">Für die Post im Büro:</b> Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.</p><button type="button" class="sh-go" id="setupHintGo">Einrichten …</button><button type="button" class="sh-x" id="setupHintX" aria-label="Hinweis zur Einrichtung ausblenden" title="Ausblenden">✕</button></section>
       <h2 class="laufzettel-h">Was soll mit Ihrer Post passieren?</h2>
       <div class="tgroups">
       <section class="tgroup" aria-labelledby="tgScan"><h2 class="tgh" id="tgScan">Scannen und Text</h2>

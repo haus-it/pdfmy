@@ -3514,5 +3514,10 @@
  "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"D'un altre programa de PDF: només visualització\"",
  "Tonkommentar": "Comentari de so",
  "Watermark": "Watermark",
- "Die gesicherten Änderungen konnten nicht gelesen werden.": "No s’han pogut llegir els canvis desats."
+ "Die gesicherten Änderungen konnten nicht gelesen werden.": "No s’han pogut llegir els canvis desats.",
+ "Für die Post im Büro:": "Per al correu de l’oficina:",
+ "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Configureu el nom, la carpeta d’arxiu i l’escàner – opcional, triga dos minuts.",
+ "Einrichten …": "Configura …",
+ "Hinweis zur Einrichtung ausblenden": "Amaga el consell de configuració",
+ "Ausblenden": "Amaga"
 }

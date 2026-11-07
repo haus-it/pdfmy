@@ -3514,5 +3514,10 @@
  "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"Z innego programu PDF – tylko do wglądu\"",
  "Tonkommentar": "Komentarz dźwiękowy",
  "Watermark": "Watermark",
- "Die gesicherten Änderungen konnten nicht gelesen werden.": "Nie udało się odczytać zapisanych zmian."
+ "Die gesicherten Änderungen konnten nicht gelesen werden.": "Nie udało się odczytać zapisanych zmian.",
+ "Für die Post im Büro:": "Dla poczty w biurze:",
+ "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Ustaw nazwisko, folder archiwum i skaner – opcjonalnie, zajmuje dwie minuty.",
+ "Einrichten …": "Skonfiguruj …",
+ "Hinweis zur Einrichtung ausblenden": "Ukryj wskazówkę o konfiguracji",
+ "Ausblenden": "Ukryj"
 }

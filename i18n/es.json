@@ -3514,5 +3514,10 @@
  "title=\"Aus einem anderen PDF-Programm – nur Anzeige\"": "title=\"De otro programa PDF: solo visualización\"",
  "Tonkommentar": "Comentario de sonido",
  "Watermark": "Watermark",
- "Die gesicherten Änderungen konnten nicht gelesen werden.": "No se pudieron leer los cambios guardados."
+ "Die gesicherten Änderungen konnten nicht gelesen werden.": "No se pudieron leer los cambios guardados.",
+ "Für die Post im Büro:": "Para el correo de la oficina:",
+ "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Configure su nombre, la carpeta de archivo y el escáner: opcional, tarda dos minutos.",
+ "Einrichten …": "Configurar …",
+ "Hinweis zur Einrichtung ausblenden": "Ocultar el aviso de configuración",
+ "Ausblenden": "Ocultar"
 }

@@ -2047,9 +2047,12 @@ async function renderVerBar() {
   const running = await scanHelperRunning();
   let scan = '';
   if (running) scan = scanOutdated() ? ` · <span class="vs">pdfmy Scan ${esc(state.scanVersion)} <b>(Update ${scanLatest()})</b></span>` : ` · <span class="vs">pdfmy Scan ${esc(state.scanVersion)}</span>`;
-  else if (!IS_MOBILE && !IS_CHROMEOS) scan = ' · <span class="vs">pdfmy Scan: nicht gestartet</span>';
+  // „nicht gestartet“ nur, wenn pdfmy Scan auf diesem Gerät schon einmal lief – sonst sah jeder Webbesucher einen vermeintlichen Fehler
+  if (running) LS.set('scanSeen', 1);
+  const missing = !running && !IS_MOBILE && !IS_CHROMEOS && LS.get('scanSeen', 0);
+  if (missing) scan = ' · <span class="vs">pdfmy Scan: nicht gestartet</span>';
   $('#verBar').innerHTML = `${esc(APP.name)} ${esc(v)}${scan}`;
-  $('#verBar').title = `Installiert: ${APP.name} (${v || 'unbekannt'})` + (running ? `, pdfmy Scan ${state.scanVersion}` + (scanOutdated() ? ` – Version ${scanLatest()} ist verfügbar` : ' – aktuell') : IS_MOBILE ? '' : ', pdfmy Scan nicht gestartet') + '. Klicken: nach Updates suchen.';
+  $('#verBar').title = `Installiert: ${APP.name} (${v || 'unbekannt'})` + (running ? `, pdfmy Scan ${state.scanVersion}` + (scanOutdated() ? ` – Version ${scanLatest()} ist verfügbar` : ' – aktuell') : missing ? ', pdfmy Scan nicht gestartet' : '') + '. Klicken: nach Updates suchen.';
   offerScanUpdate();
 }
 $('#verBar').onclick = async () => {
@@ -2494,15 +2497,20 @@ $('#setScan').onclick = async () => {
 $('#setScanAlt').onclick = () => scanDl(IS_MAC || IS_LINUX ? 'win' : 'mac');
 $('#setPdf').onclick = () => { if (IS_MOBILE) $('#btnInstall').click(); else $('#btnDefaultPdf').click(); setTimeout(renderSetup, 1500); };
 $('#setDone').onclick = $('#setLater').onclick = () => { LS.set('setupSeen', 1); $('#setupDlg').close(); };
-$('#setupDlg').addEventListener('close', () => LS.set('setupSeen', 1));
+$('#setupDlg').addEventListener('close', () => { LS.set('setupSeen', 1); renderSetupHint(); });
 // Während der Dialog offen ist: pdfmy Scan nach dem Download automatisch erkennen
 setInterval(() => { if ($('#setupDlg').open && !$('#stScan').classList.contains('ok')) renderSetup(); }, 4000);
-// Erster Start: nur auf der Startseite, nicht wenn eine Datei übergeben wurde
-setTimeout(() => {
-  if (LS.get('setupSeen', 0) || state.pages.length || location.hash || document.querySelector('dialog[open]')) return;
-  if (S.author || LS.get('journal', []).length) { LS.set('setupSeen', 1); return; }   // bestehende Nutzer nicht stören
-  openSetup();
-}, 1200);
+// Erster Start: früher öffnete sich hier das Einrichtungsfenster von selbst. Wer nur schnell PDFs zusammenfügen oder unterschreiben
+// wollte, musste es erst wegklicken, und es verdeckte die Werkzeuge (Prüfung 06.11.2026 – PDF24, iLovePDF, Smallpdf zeigen sofort die
+// Werkzeuge). Jetzt nur ein Hinweis auf der Startseite; die Einrichtung öffnet sich erst auf Klick.
+function renderSetupHint() {
+  const box = $('#setupHint'); if (!box) return;
+  if (!LS.get('setupSeen', 0) && (S.author || LS.get('journal', []).length)) LS.set('setupSeen', 1);   // bestehende Nutzer nicht stören
+  box.hidden = !!LS.get('setupSeen', 0);
+}
+$('#setupHintGo').onclick = () => openSetup();
+$('#setupHintX').onclick = () => { LS.set('setupSeen', 1); renderSetupHint(); $('.drop')?.focus(); };
+renderSetupHint();
 
 
 /* ---------- Aktionszeile „Was will dieser Brief von mir?“ über der Seite ---------- */
