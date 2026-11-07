@@ -418,6 +418,14 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
 
+### Umgesetzt 07.11.2026: App startet sofort, auch ohne Netz (app-v229)
+**Anlass (GF 07.11.2026):** „Handy- und Tablet-Version muss sich nicht immer neu laden; wenn kein Netz da ist, startet die App nicht – das möchte ich gelöst haben.“
+**Ursache:** sw.js lieferte App-Dateien „zuerst Netz“ ohne Zeitlimit. Bei echter Trennung schnell der Rückfall auf den Speicher, bei hängendem Netz (WLAN ohne Internet, Funkloch, Anmeldeportal) wartete jeder der rund 45 Abrufe.
+**Lösung:** App-Dateien (CORE) „zuerst Gerät“ – wie eine installierte App. Aktualität über sw.js: jede Veröffentlichung ändert sw.js, der Browser prüft es bei jedem Start, die neue Fassung wird im Hintergrund vollständig und geprüft geladen, dann Wechsel ohne laufende Arbeit. Übrige Dateien zuerst Netz mit 4-s-Zeitlimit.
+**Nebeneffekt:** Die App läuft immer als geschlossene, geprüfte Fassung (keine Mischung alter und neuer Dateien beim Start) – Teil des offenen Punkts „Update während der Sitzung“.
+**Android-App (Capacitor):** bringt ihre Dateien ohnehin im Paket mit und war nicht betroffen.
+**Leitplanken:** 1–3 gewahrt (keine neue Verbindung, weniger Abrufe beim Start, nichts gezählt). 4 verbessert. 5: Integrität über Prüfsummen unverändert. 6 nicht betroffen.
+
 ### Umgesetzt 07.11.2026: Aufgaben ohne Büro-Ballast (app-v228)
 **Anlass:** Durchgang „PDFs zusammenfügen“ und „PDF unterschreiben“ als neuer Nutzer (GF-Vorgabe „besser als die Mitbewerber, immer einfach“). Klickzahl wie iLovePDF, aber Briefdaten-Leiste und „Ablegen & nächster“ lenkten ab; „Ablegen“ hätte eine zusammengefügte Datei ins Posteingangsbuch eingetragen.
 **Lösung:** Aufgabenmodus für einfache Werkzeuge (Liste LEAN in js/pro.js): rechte Leiste zu, „Ablegen & nächster“ aus, Leiste per Pfeil/] erreichbar. Nicht für Scannen, Formular, Text, Word, KI, Prüfen.

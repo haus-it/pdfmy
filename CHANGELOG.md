@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-07
 
+### App startet sofort, auch ohne Netz (app-v229)
+- Die installierte App (Handy, Tablet, PC) startet jetzt immer sofort aus dem Gerätespeicher. Vorher fragte sie bei jedem Start jede App-Datei zuerst beim Server an – ohne Zeitlimit. Im Flugmodus ging das schnell, aber im WLAN ohne Internet, bei schwachem Mobilfunk oder hinter einem WLAN-Anmeldeportal wartete der Start, bis das Netz aufgab: Die App lud scheinbar immer neu oder startete gar nicht.
+- Updates bleiben automatisch: Bei jedem Start prüft der Browser im Hintergrund, ob es eine neue Fassung gibt, lädt sie vollständig und mit Prüfsummen geprüft und wechselt, wenn nichts in Arbeit ist (sonst „jetzt neu laden“).
+- Übrige Dateien (z. B. Wörterbücher, Hilfe) kommen weiter frisch vom Server; antwortet das Netz nicht binnen 4 Sekunden, gilt die gespeicherte Fassung.
+
 ### Aufgaben ohne Büro-Ballast (app-v228)
 - Wer auf der Startseite eine einfache Aufgabe wählt (Zusammenfügen, Unterschreiben, Verkleinern, Seiten organisieren, Aufteilen, Stempeln, Passwort, Druckformate …), sieht jetzt nur, was die Aufgabe braucht: Die rechte Leiste mit Briefdaten, Ablage, Schlüsseldaten und erkanntem Text bleibt zu, und „Ablegen & nächster“ (legt einen Brief ab und trägt ihn ins Posteingangsbuch ein) wird nicht angeboten. „Speichern“ ist damit auch am Handy der Hauptknopf.
 - Mit dem Pfeil am rechten Rand oder der Taste ] lässt sich die Leiste in der Aufgabe trotzdem öffnen. Beim normalen Öffnen, beim Scannen und bei Formularen (die Felder stehen rechts) ändert sich nichts; die gemerkte Einstellung der Leiste bleibt erhalten.

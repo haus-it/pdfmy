@@ -1,11 +1,12 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Service Worker: hält App, Bibliotheken und OCR-Daten offline vor.
-   App-Dateien: zuerst Netz (damit Updates sofort greifen), sonst Offline-Speicher. vendor/: Offline-Speicher zuerst.
+   App-Dateien (CORE) und vendor/: Offline-Speicher zuerst – die App startet sofort, auch ohne Netz (app-v229); Updates kommen über
+   eine geänderte sw.js. Übrige Dateien: zuerst Netz mit 4-s-Zeitlimit, sonst Offline-Speicher.
    Updates laden nur geänderte Dateien (Update-Strategie, KONZEPT.md): Der Offline-Speicher bleibt über Versionen bestehen; beim
    Installieren wird jede gespeicherte Datei mit ihrer Prüfsumme in pruefsummen.json verglichen und nur bei Abweichung neu geladen.
    Bei 100.000 Nutzern spart das je Veröffentlichung Terabytes (vorher: alle ~18 MB je Gerät bei jeder neuen VERSION). */
-const VERSION = 'app-v228';
+const VERSION = 'app-v229';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/fristen.js', 'js/formdaten.js', 'js/kommentare.js', 'js/qrstempel.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',
@@ -150,14 +151,31 @@ self.addEventListener('fetch', e => {
       return res;
     })));
   } else {
-    // App-Dateien immer frisch vom Server (am HTTP-Cache vorbei, Server antwortet bei unveränderter Datei nur mit „304“), offline aus dem Speicher
-    const net = e.request.mode === 'navigate' ? fetch(e.request) : fetch(url.href, { cache: 'no-cache', credentials: 'same-origin' });
-    e.respondWith(net.then(res => {
-      if (res.ok && !NOCACHE.test(url.pathname)) { const copy = res.clone(); caches.open(STORE).then(c => c.put(e.request, copy)); }
-      return res;
-    // Offline nur aus dem eigenen Speicher (nicht aus dem Zwischenspeicher einer halb geladenen neuen Fassung); index.html nur für
-    // Seitenaufrufe – ein fehlendes Skript als HTML auszuliefern erzeugte verwirrende Folgefehler
-    }).catch(() => fromStore(e.request).then(hit => hit || (e.request.mode === 'navigate' ? fromStore(new Request(new URL('index.html', BASE).href)) : null))
-      .then(hit => hit || new Response('Offline – nicht im Gerätespeicher', { status: 504, headers: { 'content-type': 'text/plain; charset=utf-8' } }))));
+    /* Schnellstart (07.11.2026): Die App selbst (CORE: index.html und js/…) kommt sofort aus dem Gerätespeicher – wie eine installierte
+       App. Vorher ging jede Datei zuerst ans Netz, ohne Zeitlimit: Im WLAN ohne Internet oder bei schwachem Mobilfunk wartete der Start,
+       bis das Netz aufgab, und die App startete nicht. Aktuell bleibt sie trotzdem: Jede Veröffentlichung ändert sw.js, der Browser
+       prüft sw.js bei jedem Start, lädt die neue Fassung im Hintergrund vollständig und geprüft (Prüfsummen) und meldet „aktualisiert“. */
+    const r = rel(e.request.url), nav = e.request.mode === 'navigate';
+    if (r && CORE.includes(r) && !NOCACHE.test(url.pathname)) {
+      e.respondWith(fromStore(new Request(new URL(r, BASE).href)).then(hit => hit ? (hit.redirected ? new Response(hit.body, hit) : hit) : fresh(e.request, url, nav)));
+      return;
+    }
+    e.respondWith(fresh(e.request, url, nav));
   }
 });
+// Übrige Dateien (Wörterbücher, Hilfe, Bilder): frisch vom Server (am HTTP-Cache vorbei, „304“ bei unveränderter Datei). Antwortet das
+// Netz nicht binnen 4 s und liegt die Datei im Gerät, gilt die gespeicherte – ein hängendes Netz hält die App nicht mehr auf.
+function fresh(req, url, nav) {
+  const offline = () => fromStore(req).then(hit => hit || (nav ? fromStore(new Request(new URL('index.html', BASE).href)) : null))
+    .then(hit => hit || new Response('Offline – nicht im Gerätespeicher', { status: 504, headers: { 'content-type': 'text/plain; charset=utf-8' } }));
+  return new Promise(resolve => {
+    let done = false; const fin = res => { if (!done) { done = true; resolve(res); } };
+    (nav ? fetch(req) : fetch(url.href, { cache: 'no-cache', credentials: 'same-origin' })).then(res => {
+      if (res.ok && !NOCACHE.test(url.pathname)) { const copy = res.clone(); caches.open(STORE).then(c => c.put(req, copy)); }
+      fin(res);
+    // Offline nur aus dem eigenen Speicher (nicht aus dem Zwischenspeicher einer halb geladenen neuen Fassung); index.html nur für
+    // Seitenaufrufe – ein fehlendes Skript als HTML auszuliefern erzeugte verwirrende Folgefehler
+    }).catch(() => offline().then(fin));
+    setTimeout(() => fromStore(req).then(hit => { if (hit) fin(hit); }), 4000);
+  });
+}
