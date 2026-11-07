@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Seadista nimi, arhiivikaust ja skanner – vabatahtlik, võtab kaks minutit.",
  "Einrichten …": "Seadista …",
  "Hinweis zur Einrichtung ausblenden": "Peida seadistamise vihje",
- "Ausblenden": "Peida"
+ "Ausblenden": "Peida",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – fail on juba optimaalselt tihendatud, originaal jääb muutmata"
 }

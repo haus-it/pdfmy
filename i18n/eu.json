@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Ezarri izena, artxibo-karpeta eta eskanerra – aukerakoa, bi minutu behar dira.",
  "Einrichten …": "Konfiguratu …",
  "Hinweis zur Einrichtung ausblenden": "Ezkutatu konfigurazio-iradokizuna",
- "Ausblenden": "Ezkutatu"
+ "Ausblenden": "Ezkutatu",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – fitxategia dagoeneko modu onenean konprimituta dago, jatorrizkoa aldatu gabe geratzen da"
 }

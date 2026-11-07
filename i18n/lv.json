@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Iestatiet vārdu, arhīva mapi un skeneri – pēc izvēles, aizņem divas minūtes.",
  "Einrichten …": "Iestatīt …",
  "Hinweis zur Einrichtung ausblenden": "Paslēpt iestatīšanas padomu",
- "Ausblenden": "Paslēpt"
+ "Ausblenden": "Paslēpt",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – fails jau ir optimāli saspiests, oriģināls paliek nemainīts"
 }

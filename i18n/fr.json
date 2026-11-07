@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Configurer votre nom, le dossier de classement et le scanner – facultatif, deux minutes suffisent.",
  "Einrichten …": "Configurer …",
  "Hinweis zur Einrichtung ausblenden": "Masquer le conseil de configuration",
- "Ausblenden": "Masquer"
+ "Ausblenden": "Masquer",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – le fichier est déjà compressé de façon optimale, l’original reste inchangé"
 }

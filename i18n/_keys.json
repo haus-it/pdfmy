@@ -508,6 +508,7 @@
 "<span>Fristen</span>{0}",
 "<td><input data-k=\"name\" aria-label=\"Bezeichnung\" value=\"{0}\" placeholder=\"z. B. Beratung\"></td> <td><input data-k=\"qty\" aria-label=\"Menge\" type=\"number\" min=\"0\" step=\"any\" value=\"{1}\" style=\"width:80px\"></td> <td><select data-k=\"unit\" aria-label=\"Einheit\">{2}</select></td> <td><input data-k=\"price\" aria-label=\"Einzelpreis netto in Euro\" type=\"number\" step=\"0.01\" value=\"{3}\" placeholder=\"0,00\" style=\"width:120px\"></td> <td><select data-k=\"vat\" aria-label=\"Umsatzsteuer\"><option value=\"19\">19 %</option><option value=\"7\" {4}>7 %</option><option value=\"0\" {5}>0 % (Kleinunternehmer)</option></select></td> <td class=\"num\" data-sum></td><td><button type=\"button\" class=\"linkbtn\" data-del aria-label=\"Position entfernen\" title=\"Position entfernen\">✕</button></td>",
 "<th>Echtheit</th>",
+"≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert",
 "● Mit dem Internet verbunden.",
 "● Offline – PDFMy arbeitet trotzdem weiter.",
 "⚠ {0} Programmdatei(en) weichen von der Prüfsummenliste ab: {1}. Nach einem Update bitte die Seite neu laden und erneut prüfen.",

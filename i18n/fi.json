@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Määritä nimi, arkistokansio ja skanneri – vapaaehtoista, vie kaksi minuuttia.",
  "Einrichten …": "Määritä …",
  "Hinweis zur Einrichtung ausblenden": "Piilota määritysvinkki",
- "Ausblenden": "Piilota"
+ "Ausblenden": "Piilota",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – tiedosto on jo pakattu optimaalisesti, alkuperäinen säilyy muuttumattomana"
 }

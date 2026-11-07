@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Név, iktatómappa és szkenner beállítása – nem kötelező, két percig tart.",
  "Einrichten …": "Beállítás …",
  "Hinweis zur Einrichtung ausblenden": "Beállítási tipp elrejtése",
- "Ausblenden": "Elrejtés"
+ "Ausblenden": "Elrejtés",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – a fájl már optimálisan tömörített, az eredeti változatlan marad"
 }

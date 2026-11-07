@@ -418,6 +418,11 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
 
+### Umgesetzt 07.11.2026: Verkleinern – ehrliche Größenanzeige (app-v230)
+**Anlass:** Durchgang „Verkleinern“ als neuer Nutzer: Vorschau „≈ 5 KB (Original: 2 KB)“ bei einer schon schlanken Datei – wirkt, als mache PDFMy die Datei größer; Speichern behielt aber schon das Original.
+**Lösung:** Vorschau rechnet wie doExport (untouchedOriginal bei „Klein“) und sagt „schon optimal komprimiert, das Original bleibt unverändert“. Wie iLovePDF/Smallpdf („bereits optimiert“), aber schon vor dem Speichern.
+**Leitplanken:** 1–3 gewahrt (rein lokal). 4 verbessert. 5 nicht betroffen (gleiche Ausgabe). 6 nicht betroffen.
+
 ### Umgesetzt 07.11.2026: App startet sofort, auch ohne Netz (app-v229)
 **Anlass (GF 07.11.2026):** „Handy- und Tablet-Version muss sich nicht immer neu laden; wenn kein Netz da ist, startet die App nicht – das möchte ich gelöst haben.“
 **Ursache:** sw.js lieferte App-Dateien „zuerst Netz“ ohne Zeitlimit. Bei echter Trennung schnell der Rückfall auf den Speicher, bei hängendem Netz (WLAN ohne Internet, Funkloch, Anmeldeportal) wartete jeder der rund 45 Abrufe.

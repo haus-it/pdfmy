@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Issettja l-isem, il-folder tal-arkivju u l-iskaner – mhux obbligatorju, jieħu żewġ minuti.",
  "Einrichten …": "Issettja …",
  "Hinweis zur Einrichtung ausblenden": "Aħbi l-ħjiel dwar is-setup",
- "Ausblenden": "Aħbi"
+ "Ausblenden": "Aħbi",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – il-fajl diġà kkompressat bl-aħjar mod, l-oriġinal jibqa’ mhux mibdul"
 }

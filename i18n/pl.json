@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Ustaw nazwisko, folder archiwum i skaner – opcjonalnie, zajmuje dwie minuty.",
  "Einrichten …": "Skonfiguruj …",
  "Hinweis zur Einrichtung ausblenden": "Ukryj wskazówkę o konfiguracji",
- "Ausblenden": "Ukryj"
+ "Ausblenden": "Ukryj",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – plik jest już optymalnie skompresowany, oryginał pozostaje bez zmian"
 }

@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-07
 
+### Verkleinern: ehrliche Größenanzeige (app-v230)
+- Bei „PDF verkleinern“ zeigte der Speichern-Dialog für schon schlanke Dateien z. B. „≈ 5 KB (Original: 2 KB)“ – als würde die Datei größer. Gespeichert wurde in diesem Fall längst das unveränderte Original, die Anzeige rechnete aber anders. Jetzt rechnet sie wie das Speichern und sagt: „≈ 2 KB – die Datei ist schon optimal komprimiert, das Original bleibt unverändert“.
+- Anlass: Durchgang „Verkleinern“ als neuer Nutzer; iLovePDF und Smallpdf melden in diesem Fall ebenfalls „bereits optimiert“.
+
 ### App startet sofort, auch ohne Netz (app-v229)
 - Die installierte App (Handy, Tablet, PC) startet jetzt immer sofort aus dem Gerätespeicher. Vorher fragte sie bei jedem Start jede App-Datei zuerst beim Server an – ohne Zeitlimit. Im Flugmodus ging das schnell, aber im WLAN ohne Internet, bei schwachem Mobilfunk oder hinter einem WLAN-Anmeldeportal wartete der Start, bis das Netz aufgab: Die App lud scheinbar immer neu oder startete gar nicht.
 - Updates bleiben automatisch: Bei jedem Start prüft der Browser im Hintergrund, ob es eine neue Fassung gibt, lädt sie vollständig und mit Prüfsummen geprüft und wechselt, wenn nichts in Arbeit ist (sonst „jetzt neu laden“).

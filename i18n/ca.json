@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Configureu el nom, la carpeta d’arxiu i l’escàner – opcional, triga dos minuts.",
  "Einrichten …": "Configura …",
  "Hinweis zur Einrichtung ausblenden": "Amaga el consell de configuració",
- "Ausblenden": "Amaga"
+ "Ausblenden": "Amaga",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0}: el fitxer ja està comprimit de manera òptima, l’original no es modifica"
 }

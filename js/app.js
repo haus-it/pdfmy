@@ -4267,8 +4267,16 @@ function updateExportUi() {
       const opts = { pdfa: o.format === 'pdfa', size: o.size, ...stampOpts(o, o.name), noOcr: true, onPage: () => {} };
       let b = await buildPdf(o.pages, state.meta, opts);
       if (o.format === 'pdf' && o.sheet && o.sheet !== '1') b = await sheetLayout(b, o.sheet);
-      if (o.size === 'small') { const alt = await buildPdf(o.pages, state.meta, { ...opts, size: 'balanced' }); if (alt.length < b.length) b = alt; }
-      if (seq === estSeq) $('#x-est').textContent = `≈ ${Tools.formatBytes(b.length)}` + (state.inputBytes ? ` (Original: ${Tools.formatBytes(state.inputBytes)})` : '');
+      let kept = false;
+      if (o.size === 'small') {
+        const alt = await buildPdf(o.pages, state.meta, { ...opts, size: 'balanced' }); if (alt.length < b.length) b = alt;
+        // wie beim Speichern (doExport): wird nichts kleiner und wurde nichts geändert, bleibt das Original – das auch hier anzeigen,
+        // sonst stand bei „PDF verkleinern“ z. B. „≈ 5 KB (Original: 2 KB)“ und man brach ab (Prüfung 07.11.2026)
+        const u = !o.password && !o.sign && !(o.format === 'pdf' && o.sheet && o.sheet !== '1') ? untouchedOriginal(o.pages, stampOpts(o, o.name)) : null;
+        if (u && u.length <= b.length) { b = u; kept = true; }
+      }
+      if (seq === estSeq) $('#x-est').textContent = kept ? I18N.t(`≈ ${Tools.formatBytes(b.length)} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert`)
+        : `≈ ${Tools.formatBytes(b.length)}` + (state.inputBytes ? ` (Original: ${Tools.formatBytes(state.inputBytes)})` : '');
     } catch (e) { if (seq === estSeq) $('#x-est').textContent = ''; console.warn(e); }
   }, 350);
 }

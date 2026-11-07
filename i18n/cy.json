@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Gosodwch eich enw, ffolder ffeilio a sganiwr – dewisol, yn cymryd dau funud.",
  "Einrichten …": "Gosod …",
  "Hinweis zur Einrichtung ausblenden": "Cuddio’r awgrym gosod",
- "Ausblenden": "Cuddio"
+ "Ausblenden": "Cuddio",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – mae’r ffeil eisoes wedi’i chywasgu’n optimaidd, mae’r gwreiddiol yn aros heb ei newid"
 }

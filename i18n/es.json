@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Configure su nombre, la carpeta de archivo y el escáner: opcional, tarda dos minutos.",
  "Einrichten …": "Configurar …",
  "Hinweis zur Einrichtung ausblenden": "Ocultar el aviso de configuración",
- "Ausblenden": "Ocultar"
+ "Ausblenden": "Ocultar",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0}: el archivo ya está comprimido de forma óptima, el original no se modifica"
 }

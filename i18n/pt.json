@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Configure o seu nome, a pasta de arquivo e o digitalizador – opcional, demora dois minutos.",
  "Einrichten …": "Configurar …",
  "Hinweis zur Einrichtung ausblenden": "Ocultar a sugestão de configuração",
- "Ausblenden": "Ocultar"
+ "Ausblenden": "Ocultar",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – o ficheiro já está comprimido de forma ideal, o original fica inalterado"
 }

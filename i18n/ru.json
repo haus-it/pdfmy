@@ -3519,5 +3519,6 @@
  "Name, Ablageordner und Scanner einrichten – freiwillig, dauert zwei Minuten.": "Настройте имя, папку для архива и сканер – по желанию, займёт две минуты.",
  "Einrichten …": "Настроить …",
  "Hinweis zur Einrichtung ausblenden": "Скрыть подсказку о настройке",
- "Ausblenden": "Скрыть"
+ "Ausblenden": "Скрыть",
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – файл уже оптимально сжат, оригинал остаётся без изменений"
 }
