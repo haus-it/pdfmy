@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.15.0";
+        public const string Version = "1.16.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -105,7 +105,7 @@ namespace PdfmyScan
                 PdfPrinter.Watch();
                 if (openPath != null) FileOpen.Open(openPath);
                 _ = hub.RefreshAsync();
-                Application.Run(new TrayContext(hub, args.Contains("--installed")));
+                Application.Run(new TrayContext(hub, args.Contains("--installed"), args.Contains("--updated")));
                 server.Stop();
             }
         }
@@ -174,7 +174,7 @@ namespace PdfmyScan
                 {
                     SetAutostart(true, target); Register(target);
                     Program.Log($"Installation: {Program.Version} ist bereits installiert – starte die installierte Version");
-                    Process.Start(new ProcessStartInfo(target, "--installed") { UseShellExecute = true });
+                    Process.Start(new ProcessStartInfo(target, "--installed" + (Environment.GetCommandLineArgs().Contains("--updated") ? " --updated" : "")) { UseShellExecute = true });
                     return true;
                 }
             }
@@ -201,7 +201,7 @@ namespace PdfmyScan
                 CreateShortcut(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "pdfmy Scan.lnk"), target);
                 Register(target);
                 Program.Log($"Installiert: {Program.Version} nach {target}");
-                Process.Start(new ProcessStartInfo(target, "--installed") { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(target, "--installed" + (Environment.GetCommandLineArgs().Contains("--updated") ? " --updated" : "")) { UseShellExecute = true });
                 return true;
             }
             catch (Exception e)
@@ -286,13 +286,13 @@ namespace PdfmyScan
     {
         readonly NotifyIcon icon;
         readonly ScannerHub hub;
-        readonly ToolStripMenuItem devicesItem, autostartItem, updateItem;
+        readonly ToolStripMenuItem devicesItem, autostartItem, updateItem, repairItem;
         readonly System.Windows.Forms.Timer updateTimer;
         string offered;   // Version, für die schon ein Hinweis kam
         Action onBalloon;  // was ein Klick auf die aktuelle Meldung auslöst (sonst: Update)
         readonly System.Windows.Forms.Timer assocTimer;
 
-        public TrayContext(ScannerHub hub, bool justInstalled)
+        public TrayContext(ScannerHub hub, bool justInstalled, bool updated = false)
         {
             this.hub = hub;
             var menu = new ContextMenuStrip();
@@ -319,7 +319,15 @@ namespace PdfmyScan
                 });
             };
             menu.Items.Add(printerItem);
-            menu.Opening += (s, e) => { printerItem.Visible = !PdfPrinter.TerminalServer; printerItem.Text = PdfPrinter.Installed() ? "Drucker „PDFMy“ entfernen …" : "Drucker „PDFMy“ einrichten …"; };
+            // Selbsttest: funktioniert der Drucker nicht, steht „reparieren“ fett oben im Menü (eine Windows-Bestätigung genügt)
+            repairItem = new ToolStripMenuItem("Drucker „PDFMy“ reparieren …") { Visible = false, Font = new Font(menu.Font, FontStyle.Bold) };
+            repairItem.Click += (s, e) => RepairPrinter();
+            menu.Items.Insert(2, repairItem);
+            menu.Opening += (s, e) =>
+            {
+                printerItem.Visible = !PdfPrinter.TerminalServer; printerItem.Text = PdfPrinter.Installed() ? "Drucker „PDFMy“ entfernen …" : "Drucker „PDFMy“ einrichten …";
+                repairItem.Visible = PdfPrinter.Problem() != null;
+            };
             devicesItem = new ToolStripMenuItem("Scanner werden gesucht …") { Enabled = false };
             menu.Items.Add(devicesItem);
             menu.Items.Add("Scanner neu suchen", null, async (s, e) => { await hub.RefreshAsync(); });
@@ -334,20 +342,42 @@ namespace PdfmyScan
             icon = new NotifyIcon { Icon = ico, Text = $"pdfmy Scan {Program.Version} – bereit", ContextMenuStrip = menu, Visible = true };
             icon.DoubleClick += (s, e) => Program.OpenPdfmy();
             hub.Changed += () => { try { menu.BeginInvoke((Action)UpdateDevices); } catch { } };
-            if (justInstalled)
+            if (updated) icon.ShowBalloonTip(5000, $"pdfmy Scan {Program.Version}", "pdfmy Scan wurde automatisch aktualisiert.", ToolTipIcon.Info);
+            else if (justInstalled)
                 icon.ShowBalloonTip(8000, $"pdfmy Scan {Program.Version} ist bereit", "Zurück zu pdfmy.de und auf „Scannen“ klicken.", ToolTipIcon.Info);
+            // Druck auf „PDFMy“: sofort Bescheid geben – bis das Dokument offen ist, vergehen einige Sekunden
+            PdfPrinter.Incoming = () => { try { menu.BeginInvoke((Action)(() => { onBalloon = null; icon.ShowBalloonTip(4000, "Druck kommt", "PDFMy öffnet das Dokument gleich …", ToolTipIcon.Info); })); } catch { } };
             // Regelmäßig nachsehen, ob es eine neue Version gibt – kurz nach dem Start und dann alle 6 Stunden
             icon.BalloonTipClicked += (s, e) => { var a = onBalloon; onBalloon = null; if (a != null) a(); else if (updateItem.Visible && updateItem.Tag != null) updateItem.PerformClick(); };
             icon.BalloonTipClosed += (s, e) => onBalloon = null;
             // PDF-Zuordnung: Browser-App aus „Öffnen mit“ ausblenden und auf die falsche Standard-App hinweisen – kurz nach dem Start, dann alle 30 Minuten
             assocTimer = new System.Windows.Forms.Timer { Interval = 20 * 1000 };
-            assocTimer.Tick += (s, e) => { assocTimer.Interval = 30 * 60 * 1000; CheckAssoc(); };
+            assocTimer.Tick += (s, e) => { assocTimer.Interval = 30 * 60 * 1000; CheckAssoc(); CheckPrinter(); };
             assocTimer.Start();
             // Prüfzeitpunkte mit Zufallsversatz: bei 100.000 Installationen fragen nicht alle gleichzeitig nach (z. B. alle um 8 Uhr beim Hochfahren)
             var jitter = new Random();
             updateTimer = new System.Windows.Forms.Timer { Interval = (60 + jitter.Next(0, 15 * 60)) * 1000 };   // erste Prüfung 1–16 Minuten nach dem Start
             updateTimer.Tick += async (s, e) => { updateTimer.Interval = (6 * 60 + jitter.Next(-45, 46)) * 60 * 1000; await CheckUpdate(false); };   // dann alle 6 h ± 45 min
             updateTimer.Start();
+        }
+
+        // Drucker-Selbsttest: bei einem Problem einmal am Tag melden, ein Klick auf die Meldung repariert
+        void CheckPrinter()
+        {
+            string pr = PdfPrinter.Problem(); if (pr == null) return;
+            string f = Path.Combine(Program.DataDir, "hinweis-drucker.txt"), today = DateTime.Now.ToString("yyyy-MM-dd");
+            try { if (File.Exists(f) && File.ReadAllText(f).Trim() == today) return; File.WriteAllText(f, today); } catch { }
+            onBalloon = RepairPrinter;
+            icon.ShowBalloonTip(15000, "Drucker „PDFMy“ funktioniert nicht", pr + " Hier klicken zum Reparieren.", ToolTipIcon.Warning);
+            Program.Log("Drucker-Selbsttest: " + pr);
+        }
+        void RepairPrinter()
+        {
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                string err = PdfPrinter.Repair();
+                try { icon.ContextMenuStrip.BeginInvoke((Action)(() => icon.ShowBalloonTip(9000, "Drucker „PDFMy“", err ?? "Repariert – Drucken auf „" + PdfPrinter.Name + "“ öffnet das Dokument wieder in PDFMy.", err == null ? ToolTipIcon.Info : ToolTipIcon.Warning))); } catch { }
+            });
         }
 
         void CheckAssoc()
@@ -369,6 +399,13 @@ namespace PdfmyScan
             // (stabile Zufallszahl je Installation); „Nach Updates suchen“ von Hand bekommt es immer
             if (!manual && new System.Version(latest) > new System.Version(Program.Version) && Updater.Bucket >= Updater.Rollout)
             { Program.Log($"Update {latest} noch nicht für diese Installation freigegeben ({Updater.Rollout} % – hier {Updater.Bucket})"); return; }
+            // Ohne Klick (seit 1.16.0): Ist gerade nichts in Arbeit (kein Scan, kein ankommender Druck), installiert sich das geprüfte
+            // Update selbst (SHA-256 und Signatur „Mentor GmbH“ wie beim Klick). Klappt das nicht, wird es wie bisher angeboten.
+            if (!manual && new System.Version(latest) > new System.Version(Program.Version) && LocalServer.Idle && !PdfPrinter.Pending)
+            {
+                Program.Log($"Update {latest} wird automatisch installiert");
+                if (await Updater.InstallAsync(latest, msg => Program.Log("Automatisches Update: " + msg), silent: true)) return;
+            }
             if (new System.Version(latest) > new System.Version(Program.Version))
             {
                 updateItem.Text = $"Update auf {latest} installieren"; updateItem.Tag = latest; updateItem.Visible = true;
@@ -424,7 +461,7 @@ namespace PdfmyScan
             }
             catch (Exception e) { Program.Log("Update-Prüfung: " + e.Message); return null; }
         }
-        public static async Task InstallAsync(string version, Action<string> fail)
+        public static async Task<bool> InstallAsync(string version, Action<string> fail, bool silent = false)
         {
             try
             {
@@ -445,9 +482,10 @@ namespace PdfmyScan
                 if (why != null) { try { File.Delete(file); } catch { } throw new Exception("Signaturprüfung: " + why + " – Update abgebrochen"); }
                 Program.Log($"Update {version}: Signatur „Mentor GmbH“ gültig");
                 Program.Log($"Update {version} geladen – starte Installation");
-                Process.Start(new ProcessStartInfo(file) { UseShellExecute = true });   // die neue Version beendet diese und installiert sich
+                Process.Start(new ProcessStartInfo(file, silent ? "--updated" : "") { UseShellExecute = true });   // die neue Version beendet diese und installiert sich
+                return true;
             }
-            catch (Exception e) { Program.Log("Update: " + e.Message); fail("Update fehlgeschlagen: " + e.Message + " – bitte auf pdfmy.de neu herunterladen."); }
+            catch (Exception e) { Program.Log("Update: " + e.Message); fail("Update fehlgeschlagen: " + e.Message + " – bitte auf pdfmy.de neu herunterladen."); return false; }
         }
 
     }
@@ -1595,6 +1633,7 @@ namespace PdfmyScan
 
     class LocalServer
     {
+        public static bool Idle => Volatile.Read(ref busy) == 0;   // kein Scan in Arbeit (für automatische Updates)
         public static bool IsAllowed(string origin) => Allowed.Contains(origin, StringComparer.OrdinalIgnoreCase);
 #if DEBUG
         static readonly string[] Allowed = { "https://pdfmy.de", "https://www.pdfmy.de", "http://localhost:8765", "http://localhost:8766", "http://127.0.0.1:8765", "http://127.0.0.1:8766" };
@@ -1606,7 +1645,7 @@ namespace PdfmyScan
         readonly ScannerHub hub; TcpListener listener; volatile bool stop;
         readonly ConcurrentDictionary<string, ScanJob> jobs = new ConcurrentDictionary<string, ScanJob>();
         readonly JavaScriptSerializer json = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
-        int busy;
+        static int busy;
 
         public LocalServer(ScannerHub hub) { this.hub = hub; }
 
@@ -1795,7 +1834,7 @@ namespace PdfmyScan
                 SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return;
             }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem() }, cors); return; }
             if (p == "/wake" && method == "POST")   // „Scanner aufwecken“: wecken, kurz warten, neu suchen
             {
                 hub.RefreshAsync().Wait(40000);   // die Suche weckt zuerst alle bekannten Geräte

@@ -4,6 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-07
 
+### Drucker „PDFMy“ ohne Aufwand (pdfmy Scan 1.16.0)
+- Anlass: „Der Druck auf PDF funktioniert nicht“ – Druck aus Outlook auf „PDFMy“, es passierte nichts. Untersuchung: Ein Druck, der nicht ankommt, blieb bisher still liegen, ohne Meldung und ohne Hinweis auf die Ursache.
+- **Erkennung am Anschluss:** pdfmy Scan findet seinen Drucker am Druckordner-Anschluss statt am Namen. Vorher blieb ein Druck still liegen, wenn der Drucker umbenannt wurde oder der Name nicht zum Benutzernamen passte (geprüft: umbenannter Drucker druckt jetzt wie gewohnt).
+- **Selbsttest:** pdfmy Scan prüft Druckwarteschlange, Windows-Treiber, Druckordner und den Zustand des Druckers (angehalten, Fehler, hängender Auftrag). Bei einem Problem meldet es sich einmal am Tag mit der Ursache; im Symbol unten rechts steht dann fett **„Drucker „PDFMy“ reparieren …“**.
+- **Reparieren mit einem Klick:** legt Drucker und Anschluss neu an, leert hängende Aufträge, startet die Druckwarteschlange und schaltet „Microsoft Print to PDF“ selbst ein, falls es abgeschaltet ist – eine Windows-Bestätigung, kein Fenster „Windows-Features“ mehr.
+- **Rückmeldung:** Sobald Windows einen Druck auf „PDFMy“ annimmt, erscheint unten rechts „Druck kommt – PDFMy öffnet das Dokument gleich …“. Vorher sah man einige Sekunden lang nichts.
+- **Updates ohne Klick:** pdfmy Scan installiert geprüfte Updates (SHA-256 und Signatur „Mentor GmbH“) selbst, wenn gerade nichts gescannt oder gedruckt wird, und meldet danach kurz „automatisch aktualisiert“. Klappt es nicht, wird das Update wie bisher angeboten. Das erste Update von 1.15 auf 1.16 braucht noch einmal den Klick.
+- `/status` meldet zusätzlich `printerProblem` (Grundlage für eine spätere Anzeige in PDFMy).
+- Hilfe: Absatz „Drucker „PDFMy“ ohne Aufwand“, dazu der Hinweis zu Remotedesktop: Ein Drucker mit „(redirected)“ gehört zum Gerät, von dem aus man sich anmeldet.
+
 ### Verkleinern: ehrliche Größenanzeige (app-v230)
 - Bei „PDF verkleinern“ zeigte der Speichern-Dialog für schon schlanke Dateien z. B. „≈ 5 KB (Original: 2 KB)“ – als würde die Datei größer. Gespeichert wurde in diesem Fall längst das unveränderte Original, die Anzeige rechnete aber anders. Jetzt rechnet sie wie das Speichern und sagt: „≈ 2 KB – die Datei ist schon optimal komprimiert, das Original bleibt unverändert“.
 - Anlass: Durchgang „Verkleinern“ als neuer Nutzer; iLovePDF und Smallpdf melden in diesem Fall ebenfalls „bereits optimiert“.

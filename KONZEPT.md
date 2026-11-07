@@ -418,6 +418,14 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
 
+### Umgesetzt 07.11.2026: Drucker „PDFMy“ ohne Aufwand (pdfmy Scan 1.16.0)
+**Anlass (GF 07.11.2026):** Druck aus Outlook auf „PDFMy“ – nichts passiert; Auftrag „so einfach und sauber wie möglich, ohne Aufwand“.
+**Befund:** Ein nicht ankommender Druck scheiterte still. Auf dem Remotedesktop-Server stand nur der durchgereichte Drucker des Client-Geräts („(redirected)“) zur Wahl – der Druck landete auf dem anderen Gerät. Der Drucker wurde am Namen erkannt; umbenannt oder bei abweichendem Benutzernamen wurde der Druckordner nicht überwacht.
+**Lösung:** Erkennung am Anschluss, Selbsttest mit Ursache, Reparatur mit einem Klick (eine UAC-Bestätigung, schaltet Druckdienst und „Microsoft Print to PDF“ selbst ein), Meldung „Druck kommt“, Updates ohne Klick bei Leerlauf (geprüft wie bisher).
+**Geprüft und verworfen:** Wächter, der pdfmy Scan über die Windows-Aufgabenplanung jede Minute neu startet – auf dem Testserver (eingebauter Administrator) sah die Aufgabe eine andere Registry/Dateiansicht und war nicht verlässlich nachweisbar; ungeprüft wird nichts ausgeliefert. Wiedervorlage, falls Berichte über nicht laufendes pdfmy Scan kommen (Test auf normalem Windows-11-Konto).
+**Wettbewerb:** PDF24 und Adobe nutzen eigene Druckertreiber mit Dienst; PDFMy bleibt ohne eigenen Treiber und ohne Dienst mit Administratorrechten – mit Selbsttest und Reparatur jetzt ebenso zuverlässig bedienbar.
+**Leitplanken:** 1–3 gewahrt (alles lokal; Updates nur von pdfmy.de wie bisher, nichts gezählt). 4 verbessert (Rückmeldung, Reparatur statt Fehlersuche). 5: Integrität der Updates unverändert (SHA-256, Signatur). 6 nicht betroffen.
+
 ### Umgesetzt 07.11.2026: Verkleinern – ehrliche Größenanzeige (app-v230)
 **Anlass:** Durchgang „Verkleinern“ als neuer Nutzer: Vorschau „≈ 5 KB (Original: 2 KB)“ bei einer schon schlanken Datei – wirkt, als mache PDFMy die Datei größer; Speichern behielt aber schon das Original.
 **Lösung:** Vorschau rechnet wie doExport (untouchedOriginal bei „Klein“) und sagt „schon optimal komprimiert, das Original bleibt unverändert“. Wie iLovePDF/Smallpdf („bereits optimiert“), aber schon vor dem Speichern.
