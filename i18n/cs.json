@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Po rozbalení by byl archiv větší než {0} MB – nejprve jej prosím rozbalte a soubory otevírejte jednotlivě.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Archiv obsahuje {0} souborů – PDFMy otevře najednou nejvýše {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Archiv je zašifrován heslem – nejprve jej prosím rozbalte a soubory otevírejte jednotlivě.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formát není podporován: {0} (použijte prosím PDF, obrázek, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, komiksový archiv CBZ nebo e-fakturu jako XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "V archivu není žádný soubor, který PDFMy dokáže otevřít (PDF, obrázek, Word, Excel, text …).",
- "Im Comic-Archiv sind keine Bilder.": "V komiksovém archivu nejsou žádné obrázky."
+ "Im Comic-Archiv sind keine Bilder.": "V komiksovém archivu nejsou žádné obrázky.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: načítá se obraz z Photoshopu …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Složený obraz souboru Photoshopu je neúplný.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Složený obraz tohoto souboru Photoshopu je zabalen pomocí ZIP – uložte jej prosím ve Photoshopu s volbou „Maximalizovat kompatibilitu“ nebo jej exportujte jako PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Obraz z Photoshopu s {0} × {1} pixely je pro prohlížeč příliš velký.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Tento barevný režim Photoshopu není podporován (např. Lab nebo vícekanálový) – uložte jej prosím ve Photoshopu jako RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formát není podporován: {0} (použijte prosím PDF, obrázek, Word, Excel, text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, komiksový archiv CBZ nebo e-fakturu jako XML)",
+ "Keine gültige Photoshop-Datei.": "Neplatný soubor Photoshopu."
 }

@@ -44,8 +44,8 @@
   // Grenzen gegen ZIP-Bomben: höchstens ARCHIVE_FILES Dateien und ARCHIVE_MB ausgepackt. Archive im Archiv, Systemdateien und
   // bei CBZ alles außer Bildern (z. B. ComicInfo.xml) bleiben liegen.
   const ARCHIVE_FILES = 2000, ARCHIVE_MB = 1500;
-  const IMG_EXT = /\.(jpe?g|png|webp|bmp|gif|tiff?|heic|heif)$/i;
-  const OPEN_EXT = /\.(pdf|jpe?g|png|webp|bmp|gif|tiff?|heic|heif|txt|md|markdown|csv|docx|xlsx|odt|ods|epub|rtf|o?xps|xml|eml|msg)$/i;
+  const IMG_EXT = /\.(jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd)$/i;
+  const OPEN_EXT = /\.(pdf|jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd|psb|txt|md|markdown|csv|docx|xlsx|odt|ods|epub|rtf|o?xps|xml|eml|msg)$/i;
   const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', bmp: 'image/bmp', tif: 'image/tiff', tiff: 'image/tiff', pdf: 'application/pdf' };
   function archiveList(z, comic) {
     const coll = new Intl.Collator('de', { numeric: true, sensitivity: 'base' });
@@ -65,6 +65,59 @@
       out.push({ name: base, path: n, data, type: MIME[ext] || '' });
     }
     return out;
+  }
+
+  // ---------- Photoshop (PSD/PSB): nur das gespeicherte Gesamtbild („Kompatibilität maximieren“), keine Ebenen ----------
+  // Farbmodi Bitmap, Graustufen, Indiziert, RGB, CMYK, Duplex (als Graustufen); 8, 16 oder 32 Bit; roh oder PackBits (RLE).
+  // Ergebnis: { width, height, rgba } – Transparenz ist im Gesamtbild schon auf Weiß verrechnet, Zusatzkanäle bleiben unbeachtet.
+  const PSD_MAX_PX = 120e6;
+  function psd(bytes) {
+    const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes), dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+    if (u8.length < 30 || dv.getUint32(0) !== 0x38425053) throw new Error('Keine gültige Photoshop-Datei.');
+    const ver = dv.getUint16(4), big = ver === 2, nch = dv.getUint16(12), h = dv.getUint32(14), w = dv.getUint32(18), depth = dv.getUint16(22), mode = dv.getUint16(24);
+    if (ver !== 1 && ver !== 2) throw new Error('Keine gültige Photoshop-Datei.');
+    if (!w || !h || w * h > PSD_MAX_PX) throw new Error(`Das Photoshop-Bild ist mit ${w} × ${h} Pixeln zu groß für den Browser.`);
+    if (![1, 8, 16, 32].includes(depth) || ![0, 1, 2, 3, 4, 8].includes(mode)) throw new Error('Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.');
+    let p = 26; const cmLen = dv.getUint32(p), palette = u8.subarray(p + 4, p + 4 + cmLen); p += 4 + cmLen;
+    p += 4 + dv.getUint32(p);                                                                // Bildressourcen
+    p += big ? 8 + Number(dv.getBigUint64(p)) : 4 + dv.getUint32(p);                         // Ebenen und Masken – übersprungen
+    const comp = dv.getUint16(p); p += 2;
+    if (comp > 1) throw new Error('Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.');
+    const rowBytes = depth === 1 ? Math.ceil(w / 8) : w * depth / 8, use = Math.min(nch, mode === 4 ? 4 : mode === 3 ? 3 : 1);
+    const plane = new Uint8Array(rowBytes * h), pdv = new DataView(plane.buffer), planes = [];
+    let counts = null;
+    if (comp === 1) { counts = p; p += nch * h * (big ? 4 : 2); }
+    for (let c = 0; c < use; c++) {
+      const out = new Uint8Array(w * h);
+      if (comp === 0) plane.set(u8.subarray(p, p + rowBytes * h)), p += rowBytes * h;
+      else for (let y = 0; y < h; y++) {
+        const ci = counts + (c * h + y) * (big ? 4 : 2), n = big ? dv.getUint32(ci) : dv.getUint16(ci), end = p + n;
+        let o = y * rowBytes; const stop = o + rowBytes;
+        while (p < end && o < stop) {
+          const k = u8[p] > 127 ? u8[p] - 256 : u8[p]; p++;
+          if (k >= 0) { const m = Math.min(k + 1, stop - o); plane.set(u8.subarray(p, p + m), o); o += m; p += k + 1; }
+          else if (k !== -128) { plane.fill(u8[p], o, Math.min(stop, o + 1 - k)); o += 1 - k; p++; }
+        }
+        p = end;
+      }
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const r = y * rowBytes;
+        out[y * w + x] = depth === 8 ? plane[r + x] : depth === 16 ? plane[r + 2 * x] : depth === 1 ? ((plane[r + (x >> 3)] >> (7 - (x & 7))) & 1 ? 0 : 255)
+          : Math.round(Math.min(1, Math.max(0, pdv.getFloat32(r + 4 * x))) ** (1 / 2.2) * 255)   // 32 Bit: lineare Gleitkommawerte;
+      }
+      planes.push(out);
+    }
+    if (planes.length < use) throw new Error('Das Gesamtbild der Photoshop-Datei ist unvollständig.');
+    const rgba = new Uint8ClampedArray(w * h * 4);
+    for (let i = 0, j = 0; i < w * h; i++, j += 4) {
+      let r, g, b;
+      if (mode === 3 && use === 3) { r = planes[0][i]; g = planes[1][i]; b = planes[2][i]; }
+      else if (mode === 4 && use === 4) { const k = planes[3][i] / 255; r = planes[0][i] * k; g = planes[1][i] * k; b = planes[2][i] * k; }   // PSD speichert CMYK invertiert (255 = keine Farbe)
+      else if (mode === 2 && palette.length >= 768) { const v = planes[0][i]; r = palette[v]; g = palette[256 + v]; b = palette[512 + v]; }
+      else r = g = b = planes[0][i];
+      rgba[j] = r; rgba[j + 1] = g; rgba[j + 2] = b; rgba[j + 3] = 255;
+    }
+    return { width: w, height: h, rgba };
   }
 
   // ---------- XML: kleiner Parser (Elemente, Attribute, Text) ----------
@@ -540,6 +593,6 @@
     }
     return pages;
   }
-  const api = { readZip, archive, archiveList, parseXml, docx, xlsx, odt, ods, epub, rtf, xps };
+  const api = { readZip, archive, archiveList, psd, parseXml, docx, xlsx, odt, ods, epub, rtf, xps };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Office = api;
 })(typeof self !== 'undefined' ? self : this);

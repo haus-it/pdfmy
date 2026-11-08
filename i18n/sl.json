@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Razširjen arhiv bi bil večji od {0} MB – najprej ga razširite in datoteke odpirajte posamično.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhiv vsebuje {0} datotek – PDFMy hkrati odpre največ {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhiv je šifriran z geslom – najprej ga razširite in datoteke odpirajte posamično.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format ni podprt: {0} (uporabite PDF, sliko, Word, Excel, besedilo, RTF, XPS, Markdown, CSV, ZIP, arhiv stripov CBZ ali e-račun kot XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "V arhivu ni datoteke, ki bi jo PDFMy lahko odprl (PDF, slika, Word, Excel, besedilo …).",
- "Im Comic-Archiv sind keine Bilder.": "V arhivu stripov ni slik."
+ "Im Comic-Archiv sind keine Bilder.": "V arhivu stripov ni slik.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: branje slike Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Sestavljena slika datoteke Photoshop je nepopolna.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Sestavljena slika te datoteke Photoshop je stisnjena z ZIP – shranite jo v Photoshopu z možnostjo „Maximize Compatibility“ ali jo izvozite kot PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Slika Photoshop z {0} × {1} slikovnimi pikami je prevelika za brskalnik.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Ta barvni način Photoshopa ni podprt (npr. Lab ali večkanalni) – shranite jo v Photoshopu kot RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format ni podprt: {0} (uporabite PDF, sliko, Word, Excel, besedilo, RTF, XPS, Photoshop, Markdown, CSV, ZIP, arhiv stripov CBZ ali e-račun kot XML)",
+ "Keine gültige Photoshop-Datei.": "Ni veljavna datoteka Photoshop."
 }

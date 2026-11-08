@@ -472,7 +472,7 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 ### Umgesetzt 02.11.2026: Vergleich mit PDFCraft (app-v211)
 **Befund:** PDFCraft ist AGPL, es wird kein Code übernommen. Netzwerk-Nachweis, Entfernen von Anmerkungen und eigene Abläufe im Stapel gab es bei PDFMy bereits. Neu sind nur abwechselndes Zusammenfügen, Zusammenfügen und verkleinern sowie Stapel-Vorlagen.
 **Leitplanken:** 1 und 2 gewahrt (alles lokal, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: Kacheln und Vorlagen statt Workflow-Editor. 5: Ausgabe läuft über den bestehenden PDF-Aufbau. 6 nicht betroffen.
-**Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weitere Eingabeformate DjVu und PSD bleiben offen (RTF und XPS umgesetzt in app-v212; ZIP und CBZ umgesetzt in app-v237, 08.11.2026).
+**Nicht gebaut:** Linearisieren und visueller Workflow-Editor. Weiteres Eingabeformat DjVu bleibt offen (PSD umgesetzt in app-v238, 09.11.2026) (RTF und XPS umgesetzt in app-v212; ZIP und CBZ umgesetzt in app-v237, 08.11.2026).
 
 ### Umgesetzt 04.11.2026: Formulardaten und Serienausfüllung (app-v220)
 **Anlass:** Wettbewerbsvergleich (Punkt „Formulardaten exportieren/importieren“ aus der Systemprüfung vom 03.11.2026). Acrobat Pro: Export/Import FDF/XFDF/TXT, Datenzusammenführung nur in Pro; Sejda: Serienausfüllung kostenpflichtig, mit Upload; PDF24, iLovePDF, Smallpdf: nichts Vergleichbares.
@@ -539,3 +539,9 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Befund:** Wer Scans, Fotos oder Rechnungen gesammelt als ZIP bekommt, musste bisher erst auspacken. Comic-Archive (CBZ) konnte PDFMy gar nicht öffnen.
 **Umsetzung:** Auspacken im Browser über den vorhandenen ZIP-Leser (js/office.js, DecompressionStream), Dateien in natürlicher Reihenfolge durch den normalen Import. CBZ-Seiten im Modus „Original“ ohne Zuschneiden. Grenzen gegen ZIP-Bomben (2000 Dateien, 1500 MB), verschlüsselte Archive mit Hinweis.
 **Leitplanken:** 1 und 2 gewahrt (alles im Gerät, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: keine neue Bedienung – das Archiv einfach öffnen oder hineinziehen. 5: Tests für Reihenfolge, Filter und Grenzen; Ausgabe über den bestehenden PDF-Aufbau. 6 nicht betroffen.
+
+### Umgesetzt 09.11.2026: Photoshop-Dateien öffnen, Dateinamen von Bildern behalten (app-v238)
+**Befund:** PSD-Dateien (Plakate, Flyer, Entwürfe von Agenturen) ließen sich nicht öffnen. Beim Prüfen der Archiv-Namen fiel auf: die Regel „aussagekräftigen Originalnamen behalten“ wirkte nur für PDFs, bei Bildern nie (Feld `srcName` wurde nirgends gesetzt). Außerdem Datum im Vorschlagsnamen nach UTC statt Ortszeit.
+**Umsetzung:** Eigener kleiner PSD-Leser (js/office.js `psd`, keine Bibliothek): Gesamtbild roh oder PackBits, alle üblichen Farbmodi, Grenzen gegen Übergröße (120 Megapixel). Ebenen werden bewusst nicht ausgewertet. Namen: Scanner-Eingang und Überwachter Ordner ausgenommen.
+**Leitplanken:** 1 und 2 gewahrt (alles im Gerät, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: keine neue Bedienung, klare Hinweise statt stiller Fehler. 5: Tests für alle Farbmodi, PSB und Fehlerfälle; Ausgabe über den bestehenden PDF-Aufbau. 6 nicht betroffen.
+**Grenze:** Ohne echtes Photoshop hier geprüft mit nach der Adobe-Formatbeschreibung erzeugten Dateien; Test mit Dateien aus Photoshop/GIMP steht aus.

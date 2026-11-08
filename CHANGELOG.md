@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-09
+
+### Photoshop-Dateien öffnen, Dateinamen behalten (app-v238)
+- PDFMy öffnet Photoshop-Dateien (PSD, PSB): Übernommen wird das gespeicherte Gesamtbild in Originalfarben (RGB, Graustufen, CMYK, Indiziert, Bitmap; 8/16/32 Bit). Ohne „Kompatibilität maximieren“ gespeicherte Dateien und nicht unterstützte Farbmodi melden einen klaren Hinweis.
+- Fehler behoben: Geöffnete Bilder behielten ihren Namen beim Speichern nicht („Rechnung Telekom.jpg“ wurde zu „Scan_Datum.pdf“) – die Namensregel für Bilder war seit dem Usability-Umbau wirkungslos. Jetzt gilt sie wie bei PDFs; ZIP- und CBZ-Archive geben ihren Namen weiter. Nichtssagende Namen von Kameras und Scannern, Scanner-Eingang und Überwachter Ordner bleiben beim Namen aus den Briefdaten.
+- Fehler behoben: Kurz nach Mitternacht trugen „Scan_Datum.pdf“, Posteingangsbuch-Export, Stapel-ZIP und Antwortbriefe noch das Datum des Vortags (UTC statt Ortszeit).
+
 ## 2026-11-08
 
 ### ZIP und Comic-Archive (CBZ) öffnen (app-v237)

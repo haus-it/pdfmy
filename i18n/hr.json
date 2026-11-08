@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Raspakirana arhiva bila bi veća od {0} MB – molimo prvo je raspakirajte i otvorite datoteke pojedinačno.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhiva sadrži {0} datoteka – PDFMy otvara najviše {1} odjednom.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhiva je šifrirana lozinkom – molimo prvo je raspakirajte i otvorite datoteke pojedinačno.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format nije podržan: {0} (molimo PDF, sliku, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, strip-arhivu CBZ ili e-račun kao XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "U arhivi nema datoteke koju PDFMy može otvoriti (PDF, slika, Word, Excel, tekst …).",
- "Im Comic-Archiv sind keine Bilder.": "U strip-arhivi nema slika."
+ "Im Comic-Archiv sind keine Bilder.": "U strip-arhivi nema slika.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: čita se Photoshop slika …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Ukupna slika Photoshop datoteke je nepotpuna.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Ukupna slika ove Photoshop datoteke komprimirana je ZIP-om – molimo spremite je u Photoshopu s opcijom „Maximize Compatibility” ili izvezite kao PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshop slika od {0} × {1} piksela prevelika je za preglednik.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Ovaj Photoshop način boja nije podržan (npr. Lab ili višekanalni) – molimo spremite u Photoshopu kao RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format nije podržan: {0} (molimo PDF, sliku, Word, Excel, tekst, RTF, XPS, Photoshop, Markdown, CSV, ZIP, strip-arhivu CBZ ili e-račun kao XML)",
+ "Keine gültige Photoshop-Datei.": "Nije valjana Photoshop datoteka."
 }

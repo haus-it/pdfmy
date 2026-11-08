@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "I shpaketuar, arkivi do të ishte më i madh se {0} MB – ju lutemi shpaketojeni fillimisht dhe hapni skedarët një nga një.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arkivi përmban {0} skedarë – PDFMy hap njëherësh deri në {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arkivi është i enkriptuar me fjalëkalim – ju lutemi shpaketojeni fillimisht dhe hapni skedarët një nga një.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, arkiv komiksesh CBZ ose e-faturë si XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Në arkiv nuk ka asnjë skedar që PDFMy mund ta hapë (PDF, imazh, Word, Excel, tekst …).",
- "Im Comic-Archiv sind keine Bilder.": "Në arkivin e komikseve nuk ka imazhe."
+ "Im Comic-Archiv sind keine Bilder.": "Në arkivin e komikseve nuk ka imazhe.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: po lexohet imazhi Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Imazhi i përbërë i skedarit Photoshop është i paplotë.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Imazhi i përbërë i këtij skedari Photoshop është i ngjeshur me ZIP – ju lutemi ruajeni në Photoshop me „Maximize Compatibility“ ose eksportojeni si PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Imazhi Photoshop me {0} × {1} piksela është shumë i madh për shfletuesin.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Ky modalitet ngjyrash i Photoshop nuk mbështetet (p.sh. Lab ose shumëkanalësh) – ju lutemi ruajeni në Photoshop si RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, Word, Excel, tekst, RTF, XPS, Photoshop, Markdown, CSV, ZIP, arkiv komiksesh CBZ ose e-faturë si XML)",
+ "Keine gültige Photoshop-Datei.": "Nuk është skedar i vlefshëm Photoshop."
 }

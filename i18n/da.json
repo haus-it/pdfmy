@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Udpakket ville arkivet være større end {0} MB – pak det venligst ud først, og åbn filerne enkeltvis.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arkivet indeholder {0} filer – PDFMy åbner højst {1} ad gangen.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arkivet er krypteret med adgangskode – pak det venligst ud først, og åbn filerne enkeltvis.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format ikke understøttet: {0} (brug venligst PDF, billede, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, tegneseriearkiv CBZ eller e-faktura som XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arkivet indeholder ingen fil, som PDFMy kan åbne (PDF, billede, Word, Excel, tekst …).",
- "Im Comic-Archiv sind keine Bilder.": "Tegneseriearkivet indeholder ingen billeder."
+ "Im Comic-Archiv sind keine Bilder.": "Tegneseriearkivet indeholder ingen billeder.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: Photoshop-billede læses …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Det samlede billede i Photoshop-filen er ufuldstændigt.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Det samlede billede i denne Photoshop-fil er pakket med ZIP – gem den venligst i Photoshop med »Maksimer kompatibilitet«, eller eksportér som PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshop-billedet er med {0} × {1} pixel for stort til browseren.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Denne Photoshop-farvetilstand understøttes ikke (f.eks. Lab eller flerkanal) – gem venligst i Photoshop som RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format ikke understøttet: {0} (brug venligst PDF, billede, Word, Excel, tekst, RTF, XPS, Photoshop, Markdown, CSV, ZIP, tegneseriearkiv CBZ eller e-faktura som XML)",
+ "Keine gültige Photoshop-Datei.": "Ikke en gyldig Photoshop-fil."
 }

@@ -198,7 +198,7 @@ async function unpackArchive(f) {
   status(`${f.name} wird ausgepackt …`);
   const items = await Office.archive(new Uint8Array(await f.arrayBuffer()), { comic });
   if (!items.length) throw new Error(comic ? 'Im Comic-Archiv sind keine Bilder.' : 'Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).');
-  return items.map(it => Object.assign(new File([it.data], it.name, { type: it.type }), { fromArchive: true, asIs: comic }));
+  return items.map(it => Object.assign(new File([it.data], it.name, { type: it.type }), { fromArchive: true, asIs: comic, archiveName: f.name }));
 }
 async function importFilesRun(files, fromCamera) {
   const before = state.pages.length, failed = [], queue = [...files];
@@ -207,8 +207,9 @@ async function importFilesRun(files, fromCamera) {
     try {
       status(`Importiere ${f.name} …`);
       if (!f.fromArchive && (/\.(zip|cbz)$/.test(n) || /^application\/(x-)?(zip|zip-compressed|cbz)$/.test(f.type))) { queue.splice(i + 1, 0, ...await unpackArchive(f)); continue; }
-      asIsImport = !!f.asIs;
+      asIsImport = !!f.asIs; const mark = state.pages.length;
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
+      else if (/\.ps[db]$/.test(n) || f.type === 'image/vnd.adobe.photoshop') await importPsd(f);
       else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
       else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
       else if (/\.(docx|xlsx|odt|ods|epub)$/.test(n)) await importOffice(f);
@@ -217,8 +218,11 @@ async function importFilesRun(files, fromCamera) {
       else if (/\.(doc|xls|ppt|pptx|odp)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
       state.inputBytes += f.size;
+      // Name für den Vorschlag beim Speichern (ownName): Bilder und Seiten aus einem Archiv tragen den Namen ihrer Datei bzw. des Archivs
+      // Nicht bei Scanner und Überwachtem Ordner: deren Namen („SKM_C258…“) sind nichtssagend, dort bleibt der Name aus den Briefdaten.
+      if (!state.fromScanner && !window.hotfolderImport) for (let k = mark; k < state.pages.length; k++) { const q = state.pages[k]; q.srcName ??= f.name; if (f.archiveName) q.archiveName ??= f.archiveName; }
     } catch (e) {
       noteError(e, 'Öffnen');
       status(e.name === 'AbortError' ? `${f.name}: Öffnen abgebrochen.` : unreadable(f.name, e));
@@ -432,6 +436,15 @@ async function importXps(file) {
   }
   await importPdf(new File([await doc.save()], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
   status(`${file.name} umgewandelt. Aus XPS übernimmt PDFMy Text und Bilder vereinfacht, aber keine Linien und Flächen. Für ein exaktes Abbild über den Drucker „PDFMy“ drucken.`);
+}
+// Photoshop (PSD/PSB): das gespeicherte Gesamtbild (js/office.js psd) – wie ein Bild, aber unverändert (Modus „Original“, kein Zuschneiden)
+async function importPsd(file) {
+  status(`${file.name}: Photoshop-Bild wird gelesen …`);
+  const im = Office.psd(new Uint8Array(await file.arrayBuffer())), k = Math.min(1, MAX_SIDE / Math.max(im.width, im.height));
+  const full = Imaging.canvas(im.width, im.height); full.getContext('2d').putImageData(new ImageData(im.rgba, im.width, im.height), 0, 0);
+  const c = Imaging.canvas(Math.round(im.width * k), Math.round(im.height * k)); c.getContext('2d').drawImage(full, 0, 0, c.width, c.height); freeCanvas(full);
+  const was = asIsImport; asIsImport = true;
+  try { state.pages.push(await scanAsync(c, file.name)); } finally { asIsImport = was; }
 }
 async function importImage(file, fromCamera) {
   if (isTiff(file) || isHeic(file)) {
@@ -2258,7 +2271,7 @@ function filename() {
 const GENERIC_NAME = /^([\d\s_\-.()]*|(scan|scans|scanned|img|image|bild|foto|photo|dok|doc|dokument|document|unbenannt|untitled|neu|new|file|datei|ocr|druck|print|kopie|copy|pdf|attachment|anhang|merged|zusammengefügt)[\s_\-.()]*[\d\s_\-.()]*|(dsc|img|pxl|scn|brn|epson|canon|hp|xerox|ricoh|kyocera)[\s_\-]?[\w\-]*\d[\w\-]*|scan_\d{4}-\d{2}-\d{2}.*)$/i;
 function ownName() {
   const p = state.pages.find(q => q.kind === 'pdf') || state.pages[0], d = p && state.docs[p.docIdx];
-  const raw = p?.kind === 'pdf' ? d?.name : p?.srcName;
+  const raw = p?.archiveName || (p?.kind === 'pdf' ? d?.name : p?.srcName);
   const stem = String(raw || '').replace(/\.[a-z0-9]{2,5}$/i, '').trim();
   return stem && !GENERIC_NAME.test(stem) ? stem + '.pdf' : '';
 }

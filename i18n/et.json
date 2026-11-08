@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Lahtipakituna oleks arhiiv suurem kui {0} MB – palun pakkige see esmalt lahti ja avage failid ükshaaval.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhiivis on {0} faili – PDFMy avab korraga kuni {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhiiv on parooliga krüpteeritud – palun pakkige see esmalt lahti ja avage failid ükshaaval.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, koomiksiarhiiv CBZ või e-arve XML-ina)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arhiivis pole ühtegi faili, mida PDFMy saaks avada (PDF, pilt, Word, Excel, tekst …).",
- "Im Comic-Archiv sind keine Bilder.": "Koomiksiarhiivis pole pilte."
+ "Im Comic-Archiv sind keine Bilder.": "Koomiksiarhiivis pole pilte.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: Photoshopi pilti loetakse …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Photoshopi faili koondpilt on puudulik.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Selle Photoshopi faili koondpilt on pakitud ZIP-iga – palun salvestage see Photoshopis valikuga „Maximize Compatibility“ või eksportige PNG/JPG-na.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshopi pilt mõõtudega {0} × {1} pikslit on brauseri jaoks liiga suur.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Seda Photoshopi värvirežiimi ei toetata (nt Lab või mitmekanaliline) – palun salvestage Photoshopis RGB-na.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, Word, Excel, tekst, RTF, XPS, Photoshop, Markdown, CSV, ZIP, koomiksiarhiiv CBZ või e-arve XML-ina)",
+ "Keine gültige Photoshop-Datei.": "Ei ole kehtiv Photoshopi fail."
 }

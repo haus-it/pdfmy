@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Išskleistas archyvas būtų didesnis nei {0} MB – pirmiausia jį išskleiskite ir atidarykite failus po vieną.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Archyve yra {0} failų – PDFMy vienu metu atidaro ne daugiau kaip {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Archyvas užšifruotas slaptažodžiu – pirmiausia jį išskleiskite ir atidarykite failus po vieną.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, vaizdą, Word, Excel, tekstą, RTF, XPS, Markdown, CSV, ZIP, komiksų archyvą CBZ arba e. sąskaitą XML formatu)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Archyve nėra failo, kurį PDFMy galėtų atidaryti (PDF, vaizdas, Word, Excel, tekstas …).",
- "Im Comic-Archiv sind keine Bilder.": "Komiksų archyve nėra vaizdų."
+ "Im Comic-Archiv sind keine Bilder.": "Komiksų archyve nėra vaizdų.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: skaitomas Photoshop vaizdas …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Photoshop failo bendrasis vaizdas nepilnas.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Šio Photoshop failo bendrasis vaizdas suglaudintas ZIP – išsaugokite jį Photoshop su „Maximize Compatibility“ arba eksportuokite kaip PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "{0} × {1} pikselių Photoshop vaizdas per didelis naršyklei.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Šis Photoshop spalvų režimas nepalaikomas (pvz., Lab arba daugiakanalis) – išsaugokite Photoshop kaip RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, vaizdą, Word, Excel, tekstą, RTF, XPS, Photoshop, Markdown, CSV, ZIP, komiksų archyvą CBZ arba e. sąskaitą XML formatu)",
+ "Keine gültige Photoshop-Datei.": "Netinkamas Photoshop failas."
 }

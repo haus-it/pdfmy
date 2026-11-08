@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "След разархивиране архивът би бил по-голям от {0} MB – моля, първо го разархивирайте и отворете файловете поотделно.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Архивът съдържа {0} файла – PDFMy отваря най-много {1} наведнъж.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Архивът е шифрован с парола – моля, първо го разархивирайте и отворете файловете поотделно.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, Word, Excel, текст, RTF, XPS, Markdown, CSV, ZIP, архив с комикси CBZ или е-фактура като XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "В архива няма файл, който PDFMy може да отвори (PDF, изображение, Word, Excel, текст …).",
- "Im Comic-Archiv sind keine Bilder.": "В архива с комикси няма изображения."
+ "Im Comic-Archiv sind keine Bilder.": "В архива с комикси няма изображения.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: изображението от Photoshop се чете …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Общото изображение на файла от Photoshop е непълно.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Общото изображение на този файл от Photoshop е компресирано със ZIP – моля, запазете го в Photoshop с „Maximize Compatibility“ или го експортирайте като PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Изображението от Photoshop с {0} × {1} пиксела е твърде голямо за браузъра.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Този цветови режим на Photoshop не се поддържа (напр. Lab или многоканален) – моля, запазете в Photoshop като RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, Word, Excel, текст, RTF, XPS, Photoshop, Markdown, CSV, ZIP, архив с комикси CBZ или е-фактура като XML)",
+ "Keine gültige Photoshop-Datei.": "Невалиден файл от Photoshop."
 }

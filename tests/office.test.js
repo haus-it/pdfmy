@@ -233,3 +233,43 @@ test('ZIP: Auspacken bricht ab, wenn mehr herauskommt als erlaubt (falsche Grö�
   await assert.rejects(z.get('null.txt', 1e6), e => e.tooBig === true);
   assert.equal((await z.get('null.txt', 4e6)).length, 3e6);
 });
+
+// PSD bauen: planes = Kanäle (je w*h Bytes bzw. bei 16 Bit 2*w*h), comp 0 = roh, 1 = PackBits (je Zeile ein Literal-Lauf)
+function makePsd({ w, h, mode, depth = 8, planes, comp = 0, palette = null, psb = false }) {
+  const rowB = depth === 1 ? Math.ceil(w / 8) : w * depth / 8, parts = [];
+  const hd = Buffer.alloc(26); hd.write('8BPS', 0); hd.writeUInt16BE(psb ? 2 : 1, 4); hd.writeUInt16BE(planes.length, 12); hd.writeUInt32BE(h, 14); hd.writeUInt32BE(w, 18); hd.writeUInt16BE(depth, 22); hd.writeUInt16BE(mode, 24);
+  const cm = palette ? Buffer.from(palette) : Buffer.alloc(0), u32 = n => { const b = Buffer.alloc(4); b.writeUInt32BE(n); return b; };
+  parts.push(hd, u32(cm.length), cm, u32(0), psb ? Buffer.alloc(8) : u32(0));
+  const c = Buffer.alloc(2); c.writeUInt16BE(comp); parts.push(c);
+  if (comp === 0) parts.push(...planes.map(p => Buffer.from(p)));
+  else {
+    const rows = planes.map(p => Uint8Array.from(p)).flatMap(p => Array.from({ length: h }, (_, y) => { const r = Buffer.from(p.subarray(y * rowB, (y + 1) * rowB)); return Buffer.concat([Buffer.from([r.length - 1]), r]); }));
+    parts.push(...rows.map(r => { const b = Buffer.alloc(psb ? 4 : 2); psb ? b.writeUInt32BE(r.length) : b.writeUInt16BE(r.length); return b; }), ...rows);
+  }
+  return new Uint8Array(Buffer.concat(parts));
+}
+const px = (im, i) => [...im.rgba.subarray(i * 4, i * 4 + 4)];
+test('Photoshop: Gesamtbild in RGB, Graustufen (RLE), CMYK, 16 Bit, Indiziert, Bitmap und PSB', () => {
+  let im = Office.psd(makePsd({ w: 2, h: 1, mode: 3, planes: [[255, 0], [0, 0], [0, 255], [9, 9]] }));   // 4. Kanal (Alpha) bleibt unbeachtet
+  assert.deepEqual([im.width, im.height, px(im, 0), px(im, 1)], [2, 1, [255, 0, 0, 255], [0, 0, 255, 255]]);
+  im = Office.psd(makePsd({ w: 3, h: 2, mode: 1, comp: 1, planes: [new Uint8Array([0, 128, 255, 10, 20, 30])] }));
+  assert.deepEqual([px(im, 1), px(im, 5)], [[128, 128, 128, 255], [30, 30, 30, 255]]);
+  im = Office.psd(makePsd({ w: 1, h: 1, mode: 4, planes: [[255], [0], [0], [255]] }));   // invertiert: Magenta und Gelb voll → Rot
+  assert.deepEqual(px(im, 0), [255, 0, 0, 255]);
+  im = Office.psd(makePsd({ w: 1, h: 1, mode: 3, depth: 16, planes: [[0xff, 0x00], [0x80, 0x00], [0x00, 0xff]] }));
+  assert.deepEqual(px(im, 0), [255, 128, 0, 255]);
+  const pal = new Uint8Array(768); pal[5] = 10; pal[256 + 5] = 20; pal[512 + 5] = 30;
+  im = Office.psd(makePsd({ w: 1, h: 1, mode: 2, planes: [[5]], palette: pal }));
+  assert.deepEqual(px(im, 0), [10, 20, 30, 255]);
+  im = Office.psd(makePsd({ w: 9, h: 1, mode: 0, depth: 1, planes: [[0b10000000, 0b10000000]] }));
+  assert.deepEqual([px(im, 0)[0], px(im, 1)[0], px(im, 8)[0]], [0, 255, 0]);
+  im = Office.psd(makePsd({ w: 2, h: 2, mode: 3, comp: 1, psb: true, planes: [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]] }));
+  assert.deepEqual(px(im, 3), [4, 8, 12, 255]);
+});
+test('Photoshop: klare Fehler bei ZIP-gepacktem Gesamtbild, Lab-Modus, Übergröße und fremden Dateien', () => {
+  const zipd = makePsd({ w: 1, h: 1, mode: 3, planes: [[1], [2], [3]] }); zipd[26 + 12 + 1] = 2;
+  assert.throws(() => Office.psd(zipd), /Kompatibilität maximieren/);
+  assert.throws(() => Office.psd(makePsd({ w: 1, h: 1, mode: 9, planes: [[1], [2], [3]] })), /Farbmodus/);
+  assert.throws(() => Office.psd(makePsd({ w: 20000, h: 20000, mode: 1, planes: [] })), /zu groß/);
+  assert.throws(() => Office.psd(new Uint8Array(40)), /Keine gültige Photoshop-Datei/);
+});

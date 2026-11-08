@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Kicsomagolva az archívum nagyobb lenne {0} MB-nál – kérjük, előbb csomagolja ki, és egyenként nyissa meg a fájlokat.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Az archívum {0} fájlt tartalmaz – a PDFMy egyszerre legfeljebb {1} fájlt nyit meg.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Az archívum jelszóval titkosított – kérjük, előbb csomagolja ki, és egyenként nyissa meg a fájlokat.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, Word, Excel, szöveg, RTF, XPS, Markdown, CSV, ZIP, CBZ képregény-archívum vagy XML e-számla)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Az archívumban nincs olyan fájl, amelyet a PDFMy meg tud nyitni (PDF, kép, Word, Excel, szöveg …).",
- "Im Comic-Archiv sind keine Bilder.": "A képregény-archívumban nincsenek képek."
+ "Im Comic-Archiv sind keine Bilder.": "A képregény-archívumban nincsenek képek.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: Photoshop-kép beolvasása …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "A Photoshop-fájl összesített képe hiányos.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Ennek a Photoshop-fájlnak az összesített képe ZIP-pel tömörített – kérjük, mentse a Photoshopban a „Maximize Compatibility” beállítással, vagy exportálja PNG/JPG formátumba.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "A {0} × {1} képpontos Photoshop-kép túl nagy a böngészőnek.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Ez a Photoshop-színmód nem támogatott (pl. Lab vagy többcsatornás) – kérjük, mentse a Photoshopban RGB-ként.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, Word, Excel, szöveg, RTF, XPS, Photoshop, Markdown, CSV, ZIP, CBZ képregény-archívum vagy XML e-számla)",
+ "Keine gültige Photoshop-Datei.": "Nem érvényes Photoshop-fájl."
 }

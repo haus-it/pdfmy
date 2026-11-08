@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Deskonprimatuta, artxiboa {0} MB baino handiagoa litzateke – deskonprimatu lehenik eta ireki fitxategiak banan-banan.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Artxiboak {0} fitxategi ditu – PDFMy-k gehienez {1} irekitzen ditu aldi berean.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Artxiboa pasahitzarekin enkriptatuta dago – deskonprimatu lehenik eta ireki fitxategiak banan-banan.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, Word, Excel, testua, RTF, XPS, Markdown, CSV, ZIP, komiki-artxiboa CBZ edo e-faktura XML gisa)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Artxiboan ez dago PDFMy-k ireki dezakeen fitxategirik (PDF, irudia, Word, Excel, testua …).",
- "Im Comic-Archiv sind keine Bilder.": "Komiki-artxiboan ez dago irudirik."
+ "Im Comic-Archiv sind keine Bilder.": "Komiki-artxiboan ez dago irudirik.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: Photoshop irudia irakurtzen …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Photoshop fitxategiaren irudi konposatua osatu gabe dago.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Photoshop fitxategi honen irudi konposatua ZIP bidez konprimatuta dago – gorde Photoshopen «Maximize Compatibility» aukerarekin edo esportatu PNG/JPG gisa.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "{0} × {1} pixeleko Photoshop irudia handiegia da nabigatzailearentzat.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Photoshopen kolore modu hau ez da onartzen (adib. Lab edo kanal anitzekoa) – gorde Photoshopen RGB gisa.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, Word, Excel, testua, RTF, XPS, Photoshop, Markdown, CSV, ZIP, komiki-artxiboa CBZ edo e-faktura XML gisa)",
+ "Keine gültige Photoshop-Datei.": "Ez da Photoshop fitxategi baliozkoa."
 }

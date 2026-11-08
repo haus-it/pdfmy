@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Після розпакування архів перевищив би {0} МБ – спочатку розпакуйте його та відкривайте файли окремо.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Архів містить {0} файлів – PDFMy відкриває не більше {1} за раз.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Архів зашифровано паролем – спочатку розпакуйте його та відкривайте файли окремо.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, зображення, Word, Excel, текст, RTF, XPS, Markdown, CSV, ZIP, архів коміксів CBZ або електронний рахунок у форматі XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "В архіві немає файлу, який може відкрити PDFMy (PDF, зображення, Word, Excel, текст …).",
- "Im Comic-Archiv sind keine Bilder.": "В архіві коміксів немає зображень."
+ "Im Comic-Archiv sind keine Bilder.": "В архіві коміксів немає зображень.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: зчитується зображення Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Складене зображення файлу Photoshop неповне.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Складене зображення цього файлу Photoshop стиснуто ZIP – збережіть його в Photoshop із параметром «Maximize Compatibility» або експортуйте як PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Зображення Photoshop розміром {0} × {1} пікселів завелике для браузера.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Цей колірний режим Photoshop не підтримується (напр. Lab або багатоканальний) – збережіть файл у Photoshop як RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, зображення, Word, Excel, текст, RTF, XPS, Photoshop, Markdown, CSV, ZIP, архів коміксів CBZ або електронний рахунок у форматі XML)",
+ "Keine gültige Photoshop-Datei.": "Недійсний файл Photoshop."
 }

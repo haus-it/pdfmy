@@ -1098,7 +1098,7 @@ $('#jBody').addEventListener('focusin', ev => {
   if (e) jPreview(e, tr);
 });
 $('#jExport').onclick = async () => {
-  const where = await deliver(new TextEncoder().encode(Journal.toCsv(jList)), `Posteingangsbuch_${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv', null, true);
+  const where = await deliver(new TextEncoder().encode(Journal.toCsv(jList)), `Posteingangsbuch_${new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10)}.csv`, 'text/csv', null, true);
   if (where) status(`Posteingangsbuch gespeichert: ${where} – öffnet sich in Excel.`);
 };
 $('#jClose').onclick = () => $('#jDlg').close();
@@ -1490,7 +1490,7 @@ async function batchConvert(files, { act, out }) {
   const ok = results.filter(r => !r.error), bad = results.length - ok.length;
   const before = ok.reduce((s, r) => s + r.before, 0), after = ok.reduce((s, r) => s + r.after, 0);
   let where = '';
-  if (ok.length && !dir) { const zipName = `PDFMy_${label.replace('/', '')}_${new Date().toISOString().slice(0, 10)}.zip`; download(Tools.zip(ok.map(r => ({ name: r.name, data: r.data }))), zipName, 'application/zip'); where = `ZIP „${zipName}“ heruntergeladen`; }
+  if (ok.length && !dir) { const zipName = `PDFMy_${label.replace('/', '')}_${new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10)}.zip`; download(Tools.zip(ok.map(r => ({ name: r.name, data: r.data }))), zipName, 'application/zip'); where = `ZIP „${zipName}“ heruntergeladen`; }
   else if (dir) where = `gespeichert in „${dir.name}“`;
   $('#batchRun').hidden = true; $('#batchResult').hidden = false; $('#batchCancel').textContent = 'Schließen';
   $('#batchSum').textContent = `${ok.length} von ${files.length} Datei(en) fertig${batchStop ? ' (angehalten)' : ''}${where ? ' – ' + where : ''}.` + (act === 'small' && before ? ` Zusammen ${Tools.formatBytes(before)} → ${Tools.formatBytes(after)} (−${Math.max(0, Math.round((1 - after / before) * 100))} %).` : '') + (bad ? ` ${bad} Fehler.` : '');
@@ -2813,7 +2813,7 @@ function replyValues() {
   LS.set('ownAddress', $('#rpFrom').value.trim()); LS.set('signName', $('#rpName').value.trim());
   return { to: $('#rpTo').value, subject: $('#rpSubject').value.trim(), body: $('#rpBody').value, from: $('#rpFrom').value, name: $('#rpName').value.trim() };
 }
-const replyName = v => `${new Date().toISOString().slice(0, 10)}_Antwort_${(v.to.split('\n')[0] || 'Brief').replace(/[\\/:*?"<>|]+/g, ' ').trim().slice(0, 50)}.pdf`;
+const replyName = v => `${new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10)}_Antwort_${(v.to.split('\n')[0] || 'Brief').replace(/[\\/:*?"<>|]+/g, ' ').trim().slice(0, 50)}.pdf`;
 $('#replyForm').onsubmit = async e => {
   e.preventDefault();
   const v = replyValues(), bytes = await buildLetterPdf(v);

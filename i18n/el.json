@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Μετά την αποσυμπίεση το αρχείο θα ήταν μεγαλύτερο από {0} MB – αποσυμπιέστε το πρώτα και ανοίξτε τα αρχεία ένα-ένα.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Το αρχείο περιέχει {0} αρχεία – το PDFMy ανοίγει έως {1} τη φορά.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Το αρχείο είναι κρυπτογραφημένο με κωδικό – αποσυμπιέστε το πρώτα και ανοίξτε τα αρχεία ένα-ένα.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, Word, Excel, κείμενο, RTF, XPS, Markdown, CSV, ZIP, αρχείο κόμικ CBZ ή ηλεκτρονικό τιμολόγιο ως XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Στο αρχείο δεν υπάρχει αρχείο που μπορεί να ανοίξει το PDFMy (PDF, εικόνα, Word, Excel, κείμενο …).",
- "Im Comic-Archiv sind keine Bilder.": "Το αρχείο κόμικ δεν περιέχει εικόνες."
+ "Im Comic-Archiv sind keine Bilder.": "Το αρχείο κόμικ δεν περιέχει εικόνες.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: ανάγνωση εικόνας Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Η σύνθετη εικόνα του αρχείου Photoshop είναι ελλιπής.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Η σύνθετη εικόνα αυτού του αρχείου Photoshop είναι συμπιεσμένη με ZIP – αποθηκεύστε το στο Photoshop με «Maximize Compatibility» ή εξαγάγετέ το ως PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Η εικόνα Photoshop με {0} × {1} pixel είναι πολύ μεγάλη για το πρόγραμμα περιήγησης.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Αυτή η λειτουργία χρώματος του Photoshop δεν υποστηρίζεται (π.χ. Lab ή πολυκαναλική) – αποθηκεύστε στο Photoshop ως RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, Word, Excel, κείμενο, RTF, XPS, Photoshop, Markdown, CSV, ZIP, αρχείο κόμικ CBZ ή ηλεκτρονικό τιμολόγιο ως XML)",
+ "Keine gültige Photoshop-Datei.": "Μη έγκυρο αρχείο Photoshop."
 }

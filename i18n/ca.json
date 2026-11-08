@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Descomprimit, l’arxiu superaria els {0} MB – descomprimiu-lo primer i obriu els fitxers d’un en un.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "L’arxiu conté {0} fitxers – PDFMy n’obre com a màxim {1} alhora.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "L’arxiu està xifrat amb contrasenya – descomprimiu-lo primer i obriu els fitxers d’un en un.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, arxiu de còmic CBZ o factura electrònica en XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "L’arxiu no conté cap fitxer que PDFMy pugui obrir (PDF, imatge, Word, Excel, text …).",
- "Im Comic-Archiv sind keine Bilder.": "L’arxiu de còmic no conté cap imatge."
+ "Im Comic-Archiv sind keine Bilder.": "L’arxiu de còmic no conté cap imatge.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: s’està llegint la imatge de Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "La imatge composta del fitxer de Photoshop és incompleta.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "La imatge composta d’aquest fitxer de Photoshop està comprimida amb ZIP – deseu-lo a Photoshop amb «Maximize Compatibility» o exporteu-lo com a PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "La imatge de Photoshop, de {0} × {1} píxels, és massa gran per al navegador.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Aquest mode de color de Photoshop no és compatible (p. ex. Lab o multicanal) – deseu-lo a Photoshop com a RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, Word, Excel, text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, arxiu de còmic CBZ o factura electrònica en XML)",
+ "Keine gültige Photoshop-Datei.": "No és un fitxer de Photoshop vàlid."
 }

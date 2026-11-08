@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Распакувана, архивата би била поголема од {0} MB – прво распакувајте ја и отворете ги датотеките една по една.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Архивата содржи {0} датотеки – PDFMy отвора најмногу {1} одеднаш.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Архивата е шифрирана со лозинка – прво распакувајте ја и отворете ги датотеките една по една.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Форматот не е поддржан: {0} (користете PDF, слика, Word, Excel, текст, RTF, XPS, Markdown, CSV, ZIP, архива со стрипови CBZ или е-фактура како XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Во архивата нема датотека што PDFMy може да ја отвори (PDF, слика, Word, Excel, текст …).",
- "Im Comic-Archiv sind keine Bilder.": "Во архивата со стрипови нема слики."
+ "Im Comic-Archiv sind keine Bilder.": "Во архивата со стрипови нема слики.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: се чита Photoshop-слика …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Вкупната слика на Photoshop-датотеката е нецелосна.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Вкупната слика на оваа Photoshop-датотека е компримирана со ZIP – зачувајте ја во Photoshop со „Maximize Compatibility“ или извезете ја како PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshop-сликата од {0} × {1} пиксели е преголема за прелистувачот.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Овој режим на бои на Photoshop не е поддржан (на пр. Lab или повеќеканален) – зачувајте ја во Photoshop како RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Форматот не е поддржан: {0} (користете PDF, слика, Word, Excel, текст, RTF, XPS, Photoshop, Markdown, CSV, ZIP, архива со стрипови CBZ или е-фактура како XML)",
+ "Keine gültige Photoshop-Datei.": "Невалидна Photoshop-датотека."
 }

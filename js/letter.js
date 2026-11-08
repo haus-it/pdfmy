@@ -174,7 +174,7 @@
     const subj = m.type && (m.subject || '').toLowerCase().startsWith(m.type.toLowerCase()) ? m.subject.slice(m.type.length) : m.subject;
     const n = [m.date, m.type, m.sender, subj]
       .map(s => clean((s || '').replace(/^[\s:.,–—-]+/, ''))).filter(Boolean).join('_').slice(0, 140).replace(/[ .]+$/, '');
-    return (n || 'Scan_' + new Date().toISOString().slice(0, 10)) + '.pdf';
+    return (n || 'Scan_' + new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10)   /* Ortszeit, nicht UTC (kurz nach Mitternacht sonst der Vortag) */) + '.pdf';
   }
 
   // Ordnername für die Ablage (ohne verbotene Zeichen)

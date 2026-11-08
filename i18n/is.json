@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Afþjappað yrði safnið stærra en {0} MB – vinsamlegast afþjappaðu það fyrst og opnaðu skrárnar eina í einu.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Safnið inniheldur {0} skrár – PDFMy opnar að hámarki {1} í einu.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Safnið er dulkóðað með lykilorði – vinsamlegast afþjappaðu það fyrst og opnaðu skrárnar eina í einu.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, Word, Excel, texti, RTF, XPS, Markdown, CSV, ZIP, myndasögusafn CBZ eða rafrænn reikningur sem XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Í safninu er engin skrá sem PDFMy getur opnað (PDF, mynd, Word, Excel, texti …).",
- "Im Comic-Archiv sind keine Bilder.": "Engar myndir eru í myndasögusafninu."
+ "Im Comic-Archiv sind keine Bilder.": "Engar myndir eru í myndasögusafninu.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: Photoshop-mynd lesin …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Samsetta mynd Photoshop-skrárinnar er ófullgerð.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Samsetta mynd þessarar Photoshop-skrár er þjöppuð með ZIP – vinsamlegast vistaðu hana í Photoshop með „Maximize Compatibility“ eða fluttu hana út sem PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshop-myndin, {0} × {1} dílar, er of stór fyrir vafrann.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Þessi litahamur Photoshop er ekki studdur (t.d. Lab eða fjölrása) – vinsamlegast vistaðu í Photoshop sem RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, Word, Excel, texti, RTF, XPS, Photoshop, Markdown, CSV, ZIP, myndasögusafn CBZ eða rafrænn reikningur sem XML)",
+ "Keine gültige Photoshop-Datei.": "Ekki gild Photoshop-skrá."
 }

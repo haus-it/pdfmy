@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Po rozpakowaniu archiwum byłoby większe niż {0} MB – najpierw je rozpakuj i otwieraj pliki pojedynczo.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Archiwum zawiera {0} plików – PDFMy otwiera naraz najwyżej {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Archiwum jest zaszyfrowane hasłem – najpierw je rozpakuj i otwieraj pliki pojedynczo.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, Word, Excel, tekstu, RTF, XPS, Markdown, CSV, ZIP, archiwum komiksu CBZ lub e-faktury w formacie XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "W archiwum nie ma pliku, który PDFMy może otworzyć (PDF, obraz, Word, Excel, tekst …).",
- "Im Comic-Archiv sind keine Bilder.": "W archiwum komiksu nie ma obrazów."
+ "Im Comic-Archiv sind keine Bilder.": "W archiwum komiksu nie ma obrazów.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: odczytywanie obrazu Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Obraz złożony pliku Photoshop jest niekompletny.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Obraz złożony tego pliku Photoshop jest spakowany w ZIP – zapisz go w programie Photoshop z opcją „Maksymalizuj zgodność” lub wyeksportuj jako PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Obraz Photoshop o wymiarach {0} × {1} pikseli jest za duży dla przeglądarki.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Ten tryb kolorów programu Photoshop nie jest obsługiwany (np. Lab lub wielokanałowy) – zapisz go w programie Photoshop jako RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, Word, Excel, tekstu, RTF, XPS, Photoshop, Markdown, CSV, ZIP, archiwum komiksu CBZ lub e-faktury w formacie XML)",
+ "Keine gültige Photoshop-Datei.": "Nieprawidłowy plik Photoshop."
 }

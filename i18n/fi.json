@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Purettuna arkisto olisi suurempi kuin {0} Mt – pura se ensin ja avaa tiedostot yksitellen.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arkistossa on {0} tiedostoa – PDFMy avaa kerralla enintään {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arkisto on salattu salasanalla – pura se ensin ja avaa tiedostot yksitellen.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, Word-, Excel-, teksti-, RTF-, XPS-, Markdown-, CSV- tai ZIP-tiedostoa, sarjakuva-arkistoa CBZ tai XML-muotoista e-laskua)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arkistossa ei ole tiedostoa, jonka PDFMy voi avata (PDF, kuva, Word, Excel, teksti …).",
- "Im Comic-Archiv sind keine Bilder.": "Sarjakuva-arkistossa ei ole kuvia."
+ "Im Comic-Archiv sind keine Bilder.": "Sarjakuva-arkistossa ei ole kuvia.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: luetaan Photoshop-kuvaa …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Photoshop-tiedoston yhdistelmäkuva on puutteellinen.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Tämän Photoshop-tiedoston yhdistelmäkuva on pakattu ZIP-menetelmällä – tallenna se Photoshopissa valinnalla ”Maksimoi yhteensopivuus” tai vie se PNG/JPG-muotoon.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshop-kuva on kooltaan {0} × {1} pikseliä, mikä on liian suuri selaimelle.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Tätä Photoshopin väritilaa ei tueta (esim. Lab tai monikanava) – tallenna Photoshopissa RGB-muotoon.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, Word-, Excel-, teksti-, RTF-, XPS-, Photoshop-, Markdown-, CSV- tai ZIP-tiedostoa, sarjakuva-arkistoa CBZ tai XML-muotoista e-laskua)",
+ "Keine gültige Photoshop-Datei.": "Ei kelvollinen Photoshop-tiedosto."
 }

@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Ausgepaakt wier d’Archiv méi grouss wéi {0} MB – w.e.g. fir d’éischt auspaken an d’Fichieren eenzel opmaachen.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "D’Archiv enthält {0} Fichieren – PDFMy mécht héchstens {1} op eemol op.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "D’Archiv ass mat engem Passwuert verschlësselt – w.e.g. fir d’éischt auspaken an d’Fichieren eenzel opmaachen.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Am Archiv ass kee Fichier, deen PDFMy opmaache kann (PDF, Bild, Word, Excel, Text …).",
- "Im Comic-Archiv sind keine Bilder.": "Am Comic-Archiv sinn keng Biller."
+ "Im Comic-Archiv sind keine Bilder.": "Am Comic-Archiv sinn keng Biller.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: Photoshop-Bild gëtt gelies …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "D’Gesamtbild vum Photoshop-Fichier ass onvollstänneg.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "D’Gesamtbild vun dësem Photoshop-Fichier ass mat ZIP gepaakt – w.e.g. am Photoshop mat „Maximize Compatibility“ späicheren oder als PNG/JPG exportéieren.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "D’Photoshop-Bild ass mat {0} × {1} Pixel ze grouss fir de Browser.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Dëse Photoshop-Faarfmodus gëtt net ënnerstëtzt (z. B. Lab oder Multikanal) – w.e.g. am Photoshop als RGB späicheren.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)",
+ "Keine gültige Photoshop-Datei.": "Kee gëltege Photoshop-Fichier."
 }

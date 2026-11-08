@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Izpakots arhīvs būtu lielāks par {0} MB – lūdzu, vispirms to izpakojiet un atveriet failus pa vienam.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhīvā ir {0} faili – PDFMy vienlaikus atver ne vairāk kā {1}.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhīvs ir šifrēts ar paroli – lūdzu, vispirms to izpakojiet un atveriet failus pa vienam.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, Word, Excel, teksts, RTF, XPS, Markdown, CSV, ZIP, komiksu arhīvs CBZ vai e-rēķins kā XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arhīvā nav neviena faila, ko PDFMy var atvērt (PDF, attēls, Word, Excel, teksts …).",
- "Im Comic-Archiv sind keine Bilder.": "Komiksu arhīvā nav attēlu."
+ "Im Comic-Archiv sind keine Bilder.": "Komiksu arhīvā nav attēlu.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: nolasa Photoshop attēlu …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Photoshop faila kopattēls ir nepilnīgs.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Šī Photoshop faila kopattēls ir saspiests ar ZIP – lūdzu, saglabājiet to Photoshop ar „Maximize Compatibility” vai eksportējiet kā PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshop attēls ar {0} × {1} pikseļiem pārlūkam ir par lielu.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Šis Photoshop krāsu režīms netiek atbalstīts (piem., Lab vai daudzkanālu) – lūdzu, saglabājiet Photoshop kā RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, Word, Excel, teksts, RTF, XPS, Photoshop, Markdown, CSV, ZIP, komiksu arhīvs CBZ vai e-rēķins kā XML)",
+ "Keine gültige Photoshop-Datei.": "Nav derīgs Photoshop fails."
 }

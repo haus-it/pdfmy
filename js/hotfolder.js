@@ -117,7 +117,7 @@
     say(`Verarbeite „${f.name}“ …`);
     resetDoc(); state.intent = null; state.dirty = false;
     try {
-      await importFiles([f]);
+      window.hotfolderImport = true; try { await importFiles([f]); } finally { window.hotfolderImport = false; }
       let pages = docPages(); if (!pages.length) throw new Error('keine Seiten');
       let result;
       if (cfg.act === 'file') {

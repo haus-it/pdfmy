@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Once extracted, the archive would be larger than {0} MB – please extract it first and open the files one by one.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "The archive contains {0} files – PDFMy opens at most {1} at a time.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "The archive is password-protected – please extract it first and open the files one by one.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, a comic book archive (CBZ) or an e-invoice as XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "The archive contains no file that PDFMy can open (PDF, image, Word, Excel, text …).",
- "Im Comic-Archiv sind keine Bilder.": "The comic book archive contains no images."
+ "Im Comic-Archiv sind keine Bilder.": "The comic book archive contains no images.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: reading Photoshop image …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "The composite image of the Photoshop file is incomplete.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "The composite image of this Photoshop file is ZIP-compressed – please save it in Photoshop with ‘Maximize Compatibility’ or export it as PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "At {0} × {1} pixels, the Photoshop image is too large for the browser.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "This Photoshop colour mode is not supported (e.g. Lab or Multichannel) – please save it in Photoshop as RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, Word, Excel, text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, a comic book archive (CBZ) or an e-invoice as XML)",
+ "Keine gültige Photoshop-Datei.": "Not a valid Photoshop file."
 }

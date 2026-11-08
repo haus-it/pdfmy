@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Dezarhivată, arhiva ar depăși {0} MB – vă rugăm să o dezarhivați mai întâi și să deschideți fișierele pe rând.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhiva conține {0} fișiere – PDFMy deschide cel mult {1} odată.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhiva este criptată cu parolă – vă rugăm să o dezarhivați mai întâi și să deschideți fișierele pe rând.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, arhivă de benzi desenate CBZ sau factură electronică ca XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arhiva nu conține niciun fișier pe care PDFMy îl poate deschide (PDF, imagine, Word, Excel, text …).",
- "Im Comic-Archiv sind keine Bilder.": "Arhiva de benzi desenate nu conține imagini."
+ "Im Comic-Archiv sind keine Bilder.": "Arhiva de benzi desenate nu conține imagini.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: se citește imaginea Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Imaginea compusă a fișierului Photoshop este incompletă.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Imaginea compusă a acestui fișier Photoshop este comprimată cu ZIP – vă rugăm să îl salvați în Photoshop cu „Maximize Compatibility” sau să îl exportați ca PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Cu {0} × {1} pixeli, imaginea Photoshop este prea mare pentru browser.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Acest mod de culoare Photoshop nu este acceptat (de ex. Lab sau multicanal) – vă rugăm să salvați în Photoshop ca RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, Word, Excel, text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, arhivă de benzi desenate CBZ sau factură electronică ca XML)",
+ "Keine gültige Photoshop-Datei.": "Nu este un fișier Photoshop valid."
 }

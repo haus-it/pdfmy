@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Una volta estratto, l’archivio supererebbe {0} MB – estrarlo prima e aprire i file uno alla volta.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "L’archivio contiene {0} file – PDFMy ne apre al massimo {1} alla volta.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "L’archivio è protetto da password – estrarlo prima e aprire i file uno alla volta.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, immagine, Word, Excel, testo, RTF, XPS, Markdown, CSV, ZIP, archivio fumetti CBZ o fattura elettronica come XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Nell’archivio non c’è alcun file che PDFMy possa aprire (PDF, immagine, Word, Excel, testo …).",
- "Im Comic-Archiv sind keine Bilder.": "Nell’archivio fumetti non ci sono immagini."
+ "Im Comic-Archiv sind keine Bilder.": "Nell’archivio fumetti non ci sono immagini.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: lettura dell’immagine Photoshop …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "L’immagine composita del file Photoshop è incompleta.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "L’immagine composita di questo file Photoshop è compressa con ZIP – salvarlo in Photoshop con «Massimizza compatibilità» o esportarlo come PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Con {0} × {1} pixel l’immagine Photoshop è troppo grande per il browser.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Questo metodo colore di Photoshop non è supportato (ad es. Lab o multicanale) – salvarlo in Photoshop come RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, immagine, Word, Excel, testo, RTF, XPS, Photoshop, Markdown, CSV, ZIP, archivio fumetti CBZ o fattura elettronica come XML)",
+ "Keine gültige Photoshop-Datei.": "File Photoshop non valido."
 }

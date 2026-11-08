@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Uitgepakt zou het archief groter zijn dan {0} MB – pak het eerst uit en open de bestanden afzonderlijk.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Het archief bevat {0} bestanden – PDFMy opent er maximaal {1} tegelijk.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Het archief is met een wachtwoord versleuteld – pak het eerst uit en open de bestanden afzonderlijk.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, afbeelding, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, stripboekarchief CBZ of e-factuur als XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Het archief bevat geen bestand dat PDFMy kan openen (PDF, afbeelding, Word, Excel, tekst …).",
- "Im Comic-Archiv sind keine Bilder.": "Het stripboekarchief bevat geen afbeeldingen."
+ "Im Comic-Archiv sind keine Bilder.": "Het stripboekarchief bevat geen afbeeldingen.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: Photoshop-afbeelding wordt gelezen …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "De samengestelde afbeelding van het Photoshop-bestand is onvolledig.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "De samengestelde afbeelding van dit Photoshop-bestand is met ZIP gecomprimeerd – sla het in Photoshop op met „Compatibiliteit maximaliseren” of exporteer het als PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "De Photoshop-afbeelding is met {0} × {1} pixels te groot voor de browser.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Deze Photoshop-kleurmodus wordt niet ondersteund (bijv. Lab of Multikanaals) – sla het in Photoshop op als RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, afbeelding, Word, Excel, tekst, RTF, XPS, Photoshop, Markdown, CSV, ZIP, stripboekarchief CBZ of e-factuur als XML)",
+ "Keine gültige Photoshop-Datei.": "Geen geldig Photoshop-bestand."
 }

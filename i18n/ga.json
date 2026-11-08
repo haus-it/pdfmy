@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Tar éis díphacála bheadh an chartlann níos mó ná {0} MB – díphacáil ar dtús í agus oscail na comhaid ceann ar cheann.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Tá {0} comhad sa chartlann – osclaíonn PDFMy {1} ar a mhéad ag an am céanna.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Tá an chartlann criptithe le pasfhocal – díphacáil ar dtús í agus oscail na comhaid ceann ar cheann.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, Word, Excel, téacs, RTF, XPS, Markdown, CSV, ZIP, cartlann chartún CBZ nó r-shonrasc mar XML le do thoil)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Níl aon chomhad sa chartlann is féidir le PDFMy a oscailt (PDF, íomhá, Word, Excel, téacs …).",
- "Im Comic-Archiv sind keine Bilder.": "Níl aon íomhánna sa chartlann chartún."
+ "Im Comic-Archiv sind keine Bilder.": "Níl aon íomhánna sa chartlann chartún.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: íomhá Photoshop á léamh …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Tá íomhá chomhchodach an chomhaid Photoshop neamhiomlán.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Tá íomhá chomhchodach an chomhaid Photoshop seo comhbhrúite le ZIP – sábháil i Photoshop é le “Maximize Compatibility” nó easpórtáil mar PNG/JPG é le do thoil.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Tá an íomhá Photoshop de {0} × {1} picteilín rómhór don bhrabhsálaí.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Ní thacaítear leis an mód datha Photoshop seo (m.sh. Lab nó ilchainéil) – sábháil i Photoshop mar RGB é le do thoil.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, Word, Excel, téacs, RTF, XPS, Photoshop, Markdown, CSV, ZIP, cartlann chartún CBZ nó r-shonrasc mar XML le do thoil)",
+ "Keine gültige Photoshop-Datei.": "Ní comhad Photoshop bailí é."
 }

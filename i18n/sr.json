@@ -3541,7 +3541,13 @@
  "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Распакована архива била би већа од {0} MB – прво је распакујте и отворите датотеке појединачно.",
  "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Архива садржи {0} датотека – PDFMy отвара највише {1} одједном.",
  "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Архива је шифрована лозинком – прво је распакујте и отворите датотеке појединачно.",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Формат није подржан: {0} (користите PDF, слику, Word, Excel, текст, RTF, XPS, Markdown, CSV, ZIP, стрип-архиву CBZ или е-рачун као XML)",
  "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "У архиви нема датотеке коју PDFMy може да отвори (PDF, слика, Word, Excel, текст …).",
- "Im Comic-Archiv sind keine Bilder.": "У стрип-архиви нема слика."
+ "Im Comic-Archiv sind keine Bilder.": "У стрип-архиви нема слика.",
+ "{0}: Photoshop-Bild wird gelesen …": "{0}: чита се Photoshop слика …",
+ "Das Gesamtbild der Photoshop-Datei ist unvollständig.": "Укупна слика Photoshop датотеке је непотпуна.",
+ "Das Gesamtbild dieser Photoshop-Datei ist mit ZIP gepackt – bitte in Photoshop mit „Kompatibilität maximieren“ speichern oder als PNG/JPG exportieren.": "Укупна слика ове Photoshop датотеке компримована је ZIP-ом – сачувајте је у Photoshop-у са опцијом „Maximize Compatibility“ или извезите као PNG/JPG.",
+ "Das Photoshop-Bild ist mit {0} × {1} Pixeln zu groß für den Browser.": "Photoshop слика од {0} × {1} пиксела превелика је за прегледач.",
+ "Dieser Photoshop-Farbmodus wird nicht unterstützt (z. B. Lab oder Mehrkanal) – bitte in Photoshop als RGB speichern.": "Овај Photoshop режим боја није подржан (нпр. Lab или вишеканални) – сачувајте у Photoshop-у као RGB.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Формат није подржан: {0} (користите PDF, слику, Word, Excel, текст, RTF, XPS, Photoshop, Markdown, CSV, ZIP, стрип-архиву CBZ или е-рачун као XML)",
+ "Keine gültige Photoshop-Datei.": "Није важећа Photoshop датотека."
 }
