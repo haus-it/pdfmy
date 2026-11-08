@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-08
 
+### Schneller in Bing & Co. gefunden: IndexNow
+- Anlass: Statistik 10.10.–08.11.2026 – nur 0,5 % der Besuche kommen über Suchmaschinen. Technisch war die Website schon gut auffindbar (Sitemap mit 1.678 Adressen, hreflang für 41 Sprachfassungen, eigene kanonische Adresse, übersetzte Titel und Beschreibungen, strukturierte Daten).
+- Neu: Nach jeder Auslieferung meldet `tools/deploy.py` die geänderten öffentlichen Seiten per IndexNow an Bing, Yandex, Seznam u. a. (Bing beliefert auch DuckDuckGo, Yahoo, Ecosia sowie die Suche von ChatGPT und Copilot). Schlüsseldatei `338cffd73ed849d192fa0f2825371a35.txt` im Webspace.
+- Nur beim Ausliefern auf dem eigenen Rechner, nie im Browser der Nutzer; gemeldet werden nur Adressen öffentlicher Seiten (keine Downloads, Zählseiten oder die interne Fassung). Ein Fehler bricht die Auslieferung nicht ab.
+
 ### Schlanke Fußleiste am Handy (app-v234)
 - Am Handy war die Fußleiste drei Zeilen hoch (Links, „Bereit.“, „Fehler melden“). Jetzt eine Zeile (29 px): Impressum, Datenschutz, Barrierefreiheit, „offline bereit“ und „Fehler melden“ als Symbol. Hilfe, Weiterempfehlen, Werkzeuge usw. stehen im Menü „Mehr“. Zeigt die Statuszeile eine Meldung (z. B. beim Speichern), hat sie Vorrang vor den Links. Am PC unverändert.
 - Trennpunkte zwischen den Links kommen jetzt aus dem Stil – ausgeblendete Links hinterlassen keine doppelten Punkte.

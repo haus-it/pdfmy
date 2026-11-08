@@ -418,6 +418,12 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
 
+### Umgesetzt 08.11.2026: IndexNow (Auffindbarkeit)
+**Anlass:** 0,5 % Suchmaschinen-Anteil. Technische Grundlagen (Sitemap, hreflang, kanonisch, Titel, strukturierte Daten) waren vorhanden; die Lücke war die Anbindung an Bing.
+**Lösung:** Geänderte öffentliche Seiten nach jeder Auslieferung per IndexNow melden (tools/deploy.py).
+**Offen (GF):** Bing Webmaster Tools anmelden (Microsoft-Konto; Inhaberschaft über die vorhandene Google Search Console übernehmbar) – zeigt Suchanfragen und Fehler; Verlinkungen von Partnerseiten (Mentor Group, Haus iT, Verbände) sind der größte Hebel für Google.
+**Leitplanken:** 1–3 gewahrt (kein Kontakt aus dem Browser der Nutzer, keine Nutzerdaten, nichts gezählt). 4–6 nicht betroffen.
+
 ### Umgesetzt 08.11.2026: PDFMy weiterempfehlen (app-v232)
 **Anlass (GF 08.11.2026):** „Button ‚PDFMy weiterempfehlen‘ – Teilen auf Facebook, LinkedIn usw.“ Statistik: 96 % Direktaufrufe, 0,5 % Suchmaschinen – Empfehlungen sind der wichtigste Weg zu neuen Nutzern.
 **Lösung:** Menü „Mehr“, Fußzeile, einmaliger Hinweis nach 60 Nutzungstagen (Vorgabe GF, zuerst 10, am selben Tag auf 60 geändert; wer nur ausprobiert, wird nie gefragt – Zählung nur im Gerät). Teilen-Menü des Geräts, sonst Links zu E-Mail, WhatsApp, LinkedIn, XING (für den deutschen Mittelstand), Facebook, X; „Link kopieren“.

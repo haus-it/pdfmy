@@ -67,6 +67,7 @@ def main():
     ap.add_argument('--test', action='store_true')
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--subdir', default='', help='Unterverzeichnis im Webspace (z. B. für die Testadresse)')
+    ap.add_argument('--indexnow', default='', help='Domain: geänderte Seiten nach dem Hochladen per IndexNow melden (nur Produktion)')
     a = ap.parse_args()
     user, pw = os.environ.get('PDFMY_SFTP_USER'), os.environ.get('PDFMY_SFTP_PASS')
     if not user or not pw:
@@ -145,6 +146,36 @@ def main():
         f.write(json.dumps(remote, indent=1, sort_keys=True))
     print(f'Fertig in {time.time() - t0:.1f} s.')
     client.close()
+    if a.indexnow:
+        indexnow(a.indexnow, changed)
+
+
+# IndexNow (08.11.2026): geänderte öffentliche Seiten sofort an Bing & Co. melden (Bing beliefert auch DuckDuckGo, Yahoo, Ecosia,
+# die Suche von ChatGPT und Copilot) – statt auf den nächsten Besuch des Crawlers zu warten. Läuft nur hier beim Ausliefern, nie im
+# Browser der Nutzer; übertragen werden nur Adressen öffentlicher Seiten. Fehler brechen die Auslieferung nicht ab.
+INDEXNOW_KEY = '338cffd73ed849d192fa0f2825371a35'
+def indexnow(domain, changed):
+    import urllib.request
+    skip = ('download/', 'mentor/', 'scanner/', 'google')
+    urls = []
+    for r in changed:
+        if not r.endswith('.html') or r.startswith(skip):
+            continue
+        urls.append(f'https://{domain}/' + ('' if r == 'index.html' else r[:-10] if r.endswith('/index.html') else r))
+    if not urls:
+        return
+    body = json.dumps({'host': domain, 'key': INDEXNOW_KEY, 'keyLocation': f'https://{domain}/{INDEXNOW_KEY}.txt', 'urlList': urls[:10000]}).encode()
+    try:
+        req = urllib.request.Request('https://api.indexnow.org/indexnow', data=body, headers={'Content-Type': 'application/json; charset=utf-8'})
+        with urllib.request.urlopen(req, timeout=30) as res:
+            print(f'IndexNow: {len(urls)} Seite(n) gemeldet (Antwort {res.status})')
+    except Exception as e:
+        why = ''
+        try:
+            why = ' ' + json.loads(e.read()).get('errorCode', '')   # z. B. SiteVerificationNotCompleted: Schlüssel wird noch geprüft, später erneut
+        except Exception:
+            pass
+        print(f'IndexNow: nicht gemeldet ({e}{why}) – ohne Folgen, Suchmaschinen finden die Seiten über die Sitemap')
 
 
 if __name__ == '__main__':

@@ -560,7 +560,8 @@ write('presse.html', page('Presse', fs.readFileSync(path.join(ROOT, 'tools', 'si
 fs.cpSync(path.join(ROOT, 'tools', 'site', 'presse'), path.join(OUT, 'presse'), { recursive: true });   // Pressetexte (Word) und Bilder
 write('scanner-geraete.html', page('Welche Scanner funktionieren?', fs.readFileSync(path.join(ROOT, 'tools', 'site', 'geraete.html'), 'utf8')));
 copy('tools/site/geraete.js', 'geraete.js');
-copy('tools/site/google3c0638e01aa028c9.html', 'google3c0638e01aa028c9.html');   // Google Search Console: Inhaberschaft (nicht entfernen)
+copy('tools/site/google3c0638e01aa028c9.html', 'google3c0638e01aa028c9.html');
+copy('tools/site/338cffd73ed849d192fa0f2825371a35.txt', '338cffd73ed849d192fa0f2825371a35.txt');   // IndexNow (Bing, Yandex, Seznam …): Schlüsseldatei – öffentlich gewollt, nicht entfernen; tools/deploy.py meldet geänderte Seiten   // Google Search Console: Inhaberschaft (nicht entfernen)
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: https://${site.domain}/sitemap.xml\n`);
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://${site.domain}/</loc></url>\n  <url><loc>https://${site.domain}/hilfe.html</loc></url>\n  <url><loc>https://${site.domain}/scanner.html</loc></url>\n  <url><loc>https://${site.domain}/scanner-geraete.html</loc></url>\n  <url><loc>https://${site.domain}/erweiterung.html</loc></url>\n  <url><loc>https://${site.domain}/werkzeuge.html</loc></url>\n  <url><loc>https://${site.domain}/presse.html</loc></url>\n${tools.map(t => `  <url><loc>https://${site.domain}/${t.slug}.html</loc></url>\n`).join('')}</urlset>\n`);
 

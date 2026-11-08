@@ -50,6 +50,7 @@ function Invoke-Upload([string]$localDir, [string]$subdir = '') {
     if ($subdir) { $pyArgs += @('--subdir', $subdir) }
     if ($Test) { $pyArgs += '--test' }
     if ($DryRun) { $pyArgs += '--dry-run' }
+    if (-not $Test -and -not $DryRun -and -not $subdir -and $localDir -eq $distDir) { $pyArgs += @('--indexnow', $site.domain) }   # nur Produktion: geänderte Seiten an Bing & Co. melden
     $log = & $py -I @pyArgs 2>&1 | Out-String
     Write-Host $log.TrimEnd()
     if ($LASTEXITCODE) { throw "Upload fehlgeschlagen (Code $LASTEXITCODE)." }
