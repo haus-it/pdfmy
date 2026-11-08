@@ -4147,7 +4147,11 @@ window.renderTabs = renderTabs;
 
 /* ---------- Absturzschutz (wie Word): ungespeicherte Arbeit laufend lokal sichern und beim nächsten Start anbieten ----------
    Nur im Browser (IndexedDB), nichts verlässt das Gerät. Gelöscht beim Speichern oder Schließen, per „Verwerfen“ oder nach 7 Tagen. */
-const SID = newRid(), RESCUE_DAYS = 7, RESCUE_MAX = 5, RESCUE_PAGES = 300;
+// Grenze nach Größe statt Seitenzahl (08.11.2026): gemessen sichert PDFMy 1.200 Textseiten in 1,1 s – die frühere Grenze von 300 Seiten
+// ließ große Dokumente still ohne Schutz. Große Dokumente werden seltener gesichert (BIG_*), über RESCUE_MB gar nicht – mit Hinweis.
+const SID = newRid(), RESCUE_DAYS = 7, RESCUE_MAX = 5, RESCUE_MB = 400, BIG_MB = 40, BIG_PAGES = 300, BIG_QUIET = 15000, BIG_GAP = 60000;
+const docMB = () => state.docs.reduce((n, d) => n + (d?.bytes?.length || d?.bytes?.byteLength || 0), 0) / 1e6;
+let rescueLast = 0, rescueTooBig = '';
 // Solange dieses Fenster offen ist, hält es eine Sperre – andere Fenster bieten seine Sicherungen dann nicht an
 navigator.locks?.request('pdfmy-sess-' + SID, () => new Promise(() => {})).catch(() => {});
 let rescueTimer = null, rescueBusy = false, rescueSig = '', rescueUndo = null, rescueWasDirty = false;
@@ -4161,15 +4165,20 @@ async function rescueDrop(rid) {
   if (l.some(x => x.rid === rid)) await idb.set('rescue', l.filter(x => x.rid !== rid));
   await idb.del(rescueKey(rid)).catch(() => {});
 }
-const rescueJob = () => ({ rid: tabs[tabCur].rid, pages: state.pages.slice(), meta: state.meta, dirty: state.dirty && state.pages.length > 0, name: (state.docs.length === 1 && state.docs[0].name) || filename(), cam: Camera.handed.slice() });
+const rescueJob = () => ({ rid: tabs[tabCur].rid, mb: docMB(), pages: state.pages.slice(), meta: state.meta, dirty: state.dirty && state.pages.length > 0, name: (state.docs.length === 1 && state.docs[0].name) || filename(), cam: Camera.handed.slice() });
 async function rescueSave(job) {
   // nicht während eines Speichervorgangs sichern – der Nutzer soll nicht auf die Sicherung warten
   if (rescueBusy || buildPdf.active) { clearTimeout(rescueTimer); rescueTimer = setTimeout(() => rescueSave(job), 1500); return; }
   rescueBusy = true;
   try {
     if (!job.dirty) { await rescueDrop(job.rid); job.cam.forEach(Camera.dropBackup); }
-    else if (job.pages.length <= RESCUE_PAGES) {
-      const bytes = await buildPdf(job.pages, job.meta, { noOcr: true, onPage: () => {} });
+    else if (job.mb > RESCUE_MB) {
+      // zu groß für den Gerätespeicher des Browsers: ehrlich sagen statt still nicht zu sichern (einmal je Dokument)
+      if (rescueTooBig !== job.rid) { rescueTooBig = job.rid; toast(I18N.t('Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).'), 10000); }
+    } else {
+      rescueLast = Date.now();
+      // memo: Scanseiten als JPEG (ohne die teure Zerlegung in Schrift-/Hintergrundebene), unveränderte Seiten aus dem Zwischenspeicher
+      const bytes = await buildPdf(job.pages, job.meta, { noOcr: true, onPage: () => {}, memo: true });
       let meta = null; try { meta = JSON.parse(JSON.stringify(job.meta)); } catch {}
       await idb.put(rescueKey(job.rid), bytes);   // erst die Datei, dann der Eintrag – ein Eintrag zeigt nie auf eine fehlende Datei
       const l = (await rescueList()).filter(x => x.rid !== job.rid);
@@ -4189,12 +4198,14 @@ async function rescueSave(job) {
 window.rescueTick = () => {
   const dirty = state.dirty && state.pages.length > 0;
   if (!dirty) { if (rescueWasDirty) { rescueWasDirty = false; rescueSig = ''; clearTimeout(rescueTimer); rescueTimer = null; rescueSave(rescueJob()); } return; }
-  let sig = state.pages.map(p => `${p.id}:${p.rot || 0}:${p.annots ? p.annots.length : 0}`).join(',');
+  let sig = state.pages.map(p => `${p.id}:${p.rotation || 0}:${p.annots ? p.annots.length : 0}`).join(',');   // Drehung: p.rotation (früher fälschlich p.rot)
   try { sig += JSON.stringify(state.meta); } catch {}
   const u = state.undo[state.undo.length - 1];
   if (rescueWasDirty && sig === rescueSig && u === rescueUndo) return;
   rescueWasDirty = true; rescueSig = sig; rescueUndo = u;
-  clearTimeout(rescueTimer); rescueTimer = setTimeout(() => { rescueTimer = null; rescueSave(rescueJob()); }, 3000);
+  // große Dokumente: längere Ruhe und höchstens einmal je Minute, damit das Bearbeiten nicht stockt (beim Verlassen wird trotzdem gesichert)
+  const big = state.pages.length > BIG_PAGES || docMB() > BIG_MB, wait = big ? Math.max(BIG_QUIET, rescueLast + BIG_GAP - Date.now()) : 3000;
+  clearTimeout(rescueTimer); rescueTimer = setTimeout(() => { rescueTimer = null; rescueSave(rescueJob()); }, wait);
 };
 function rescueFlush() { if (rescueTimer) { clearTimeout(rescueTimer); rescueTimer = null; rescueSave(rescueJob()); } }
 addEventListener('pagehide', rescueFlush);

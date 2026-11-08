@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-08
 
+### Absturzschutz auch für große Dokumente (app-v236)
+- Bisher sicherte der Absturzschutz Dokumente über 300 Seiten still gar nicht – wer an einem großen Dokument arbeitete, verließ sich auf eine Sicherung, die es nicht gab. Gemessen: 1.200 Textseiten sichert PDFMy in 1,1 s; die Grenze richtet sich jetzt nach der Größe (400 MB) statt nach der Seitenzahl.
+- Scanseiten: Jede Sicherung zerlegte bisher alle Seiten neu in Schrift- und Hintergrundebene (150 Scanseiten: 31 s – bei jeder Änderung). Jetzt kodiert die Sicherung jede Seite einmal als JPEG und verwendet das Ergebnis wieder, solange die Seite unverändert ist (gleiches Beispiel: einmal 27 s, danach 4 s).
+- Große Dokumente (über 300 Seiten oder 40 MB) werden nach 15 s Ruhe und höchstens einmal pro Minute gesichert, damit das Bearbeiten nicht stockt; beim Verlassen wird wie bisher sofort gesichert.
+- Über 400 MB sagt PDFMy einmal je Dokument, dass der Absturzschutz nicht greift und man zwischendurch speichern sollte – statt still nichts zu tun.
+
 ### Kamera-Scan: Hinweis auf Spiegelungen und zu wenig Licht (app-v235)
 - Spiegelung auf dem Blatt (glänzendes Papier, Deckenlampe, Blitz): PDFMy erkennt ausgebrannte Stellen im erkannten Blatt und rät schon vor der Aufnahme, das Handy etwas schräg zu halten oder das Licht von der Seite kommen zu lassen. Ist die Seite trotzdem mit Spiegelung aufgenommen, bekommt ihr Vorschaubild den gelben Rahmen wie bei unscharfen Seiten – antippen, prüfen, ggf. löschen.
 - „Zu dunkel“ erscheint jetzt auch, wenn das Blatt schon erkannt ist (vorher nur bei der Suche), mit Hinweis auf die Taschenlampe, wenn das Gerät eine hat.

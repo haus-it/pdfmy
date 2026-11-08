@@ -1283,6 +1283,7 @@
 "Dieser Scanner meldet nicht, wo das Papier liegt. PDFMy versucht zuerst den Einzug, dann das Glas. Das Glas ist schneller, wenn Sie es oben fest einstellen.",
 "Dieses Dokument hat keine Lesezeichen – „Inhalt“ im Menü legt welche an.",
 "Dieses Dokument hat noch keine Kommentare oder Markierungen. Werkzeuge dafür: Notiz, Markieren, Text, Stempel, Unterschrift.",
+"Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).",
 "Dieses Fenster bitte offen lassen – solange es läuft, verarbeitet PDFMy neue Dateien automatisch. Einstellungen ändern: im Hauptfenster „Ordner überwachen“ wählen und neu starten.",
 "Dieses Formular ist nicht ausfüllbar. PDFMy kann die Felder (z. B. Name, Straße, Telefon) erkennen und daraus ein ausfüllbares Formular machen.",
 "Dieses Formular nutzt XFA (Adobe LiveCycle). PDFMy zeigt nur die hinterlegte Ansicht, dynamische Teile gehen beim Speichern verloren.",

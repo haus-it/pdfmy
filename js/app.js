@@ -2381,6 +2381,10 @@ $('#x-imgfmt').addEventListener('change', () => { LS.set('imgFmt', $('#x-imgfmt'
 const canvasToJpeg = (c, q) => canvasBlob(c, 'image/jpeg', q);
 // Bild ins PDF: JPEG, wenn der Browser es erzeugen kann – sonst (manche WebKit-Varianten) verlustfrei als PNG
 const isJpeg = b => b && b[0] === 0xFF && b[1] === 0xD8;
+/* Absturzschutz (memo): fertig kodiertes JPEG je Seitenbild merken. Seitenbilder (p.processed) werden nie verändert, sondern bei jeder
+   Bearbeitung ersetzt – das alte Bild fällt dann samt Eintrag weg (WeakMap). So kodiert nur die erste Sicherung alle Scanseiten,
+   jede weitere nur die geänderten (gemessen 08.11.2026: 150 Scanseiten 31 s je Sicherung → einmalig, danach Sekundenbruchteile). */
+const memoJpg = new WeakMap();
 async function embedCanvas(out, c, q) {
   const j = await canvasToJpeg(c, q);
   if (isJpeg(j)) return out.embedJpg(j);
@@ -3271,7 +3275,7 @@ async function buildPdf(pages, meta, { pdfa = false, bea = false, onPage, size =
 }
 buildPdf.queue = Promise.resolve();
 async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, size = 'balanced', pageNumbers = 'none', watermark = '', noOcr = false,
-  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false, invert = false, flat = false, romanFront = 0 } = {}) {
+  header = '', footer = '', bates = null, docName = '', date = '', bookmarks = true, letterhead: lhBytes = null, clean = false, trim = false, a4 = false, files = null, gray = false, invert = false, flat = false, romanFront = 0, memo = false } = {}) {
   const preset = SIZES[size] || SIZES.balanced, stamps = { pageNumbers, watermark: (watermark || '').trim(), header, footer, bates, docName, date };
   const hasStamps = hasStamp(stamps);
   const out = await PDFDocument.create({ updateMetadata: false });
@@ -3345,7 +3349,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
     }
   }
 
-  const compactOf = p => p.kind === 'image' && S.compact && size !== 'original' && effMode(p) !== 'original' && !p.lowRes;
+  const compactOf = p => p.kind === 'image' && S.compact && !memo && size !== 'original' && effMode(p) !== 'original' && !p.lowRes;
   const layerArgs = c => { const small = size === 'small', pxPerIn = c.width / A4W_IN; return [Math.min(2.5, (small ? 240 : 300) / pxPerIn), Math.min(1, (small ? 72 : 100) / pxPerIn)]; };
   const ahead = new Map(), AHEAD = 6;
   const prefetch = from => {
@@ -3403,6 +3407,10 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
           const name = page.node.newXObject('Ink', xo);
           page.pushOperators(pushGraphicsState(), setFillingRgbColor(...L.color), concatTransformationMatrix(W, 0, 0, H, 0, 0), drawObject(name), popGraphicsState());
         }
+      } else if (memo && p.kind === 'image' && p.processed && !gray && !cover.length) {
+        let j = memoJpg.get(p.processed);
+        if (!j) { j = await canvasToJpeg(c, preset.q); if (isJpeg(j)) memoJpg.set(p.processed, j); }
+        page.drawImage(isJpeg(j) ? await out.embedJpg(j) : await embedCanvas(out, c, preset.q), { x: 0, y: 0, width: W, height: H });
       } else {
         page.drawImage(await embedCanvas(out, c, preset.q), { x: 0, y: 0, width: W, height: H });
       }
