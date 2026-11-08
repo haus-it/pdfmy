@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-08
 
+### ZIP und Comic-Archive (CBZ) öffnen (app-v237)
+- PDFMy öffnet ZIP-Dateien und Comic-Archive (CBZ) direkt: Das Archiv wird im Browser ausgepackt, die enthaltenen PDFs, Bilder und Dokumente werden in natürlicher Reihenfolge der Dateinamen geöffnet („Seite 2“ vor „Seite 10“). Nichts verlässt das Gerät.
+- Comic-Seiten bleiben unverändert (kein Zuschneiden, kein Geraderichten, Originalfarben); Begleitdateien wie ComicInfo.xml, Mac-Systemdateien und Archive im Archiv bleiben liegen.
+- Schutz vor ZIP-Bomben: höchstens 2000 Dateien und 1500 MB ausgepackt, sonst ein klarer Hinweis; verschlüsselte Archive werden mit Hinweis abgelehnt.
+
 ### Fünf neue Werkzeugseiten für die Suche
 - Neu auf pdfmy.de (in allen 41 Sprachfassungen): „PDF drehen“, „Excel in PDF“, „PDF zuschneiden: weiße Ränder entfernen“, „Bilder aus PDF extrahieren“ und „PDF in Text“. Die Funktionen gab es in PDFMy schon – es fehlte nur eine Seite, die Suchende finden. Jede Seite führt mit einem Klick ins passende Werkzeug.
 - Alle Aussagen der Seiten am Programm geprüft (z. B. Ränder werden beim Speichern abgeschnitten, Bilder aus PDF speichert direkt, ein Bild einzeln, mehrere als ZIP; Excel: sichtbare Blätter mit Zahlen- und Datumsformaten, keine Diagramme).

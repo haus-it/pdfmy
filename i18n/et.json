@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Tekst lk {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Liiga pime – palun lisage valgust",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Liiga pime – lisage valgust või lülitage taskulamp sisse",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, Word, Excel, tekst, RTF, XPS, Markdown, CSV või e-arve XML-ina)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "klaasil",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Soovita",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Peegeldus lehel – kallutage telefoni veidi või valgustage küljelt",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Lehel {0} on peegeldus – puudutage kontrollimiseks",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "See dokument on krahhikaitse jaoks liiga suur – salvestage vahepeal (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "See dokument on krahhikaitse jaoks liiga suur – salvestage vahepeal (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} pakitakse lahti …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Lahtipakituna oleks arhiiv suurem kui {0} MB – palun pakkige see esmalt lahti ja avage failid ükshaaval.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhiivis on {0} faili – PDFMy avab korraga kuni {1}.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhiiv on parooliga krüpteeritud – palun pakkige see esmalt lahti ja avage failid ükshaaval.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Vormingut ei toetata: {0} (palun PDF, pilt, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, koomiksiarhiiv CBZ või e-arve XML-ina)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arhiivis pole ühtegi faili, mida PDFMy saaks avada (PDF, pilt, Word, Excel, tekst …).",
+ "Im Comic-Archiv sind keine Bilder.": "Koomiksiarhiivis pole pilte."
 }

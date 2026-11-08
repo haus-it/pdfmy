@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Text p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Too dark – please provide more light",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Too dark – add more light or turn on the flashlight",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, Word, Excel, text, RTF, XPS, Markdown, CSV, or an e-invoice as XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "on the glass",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Recommend",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Glare on the sheet – tilt the phone slightly or light it from the side",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Page {0} has glare – tap to check",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "This document is too large for crash protection – please save from time to time (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "This document is too large for crash protection – please save from time to time (Ctrl+S).",
+ "{0} wird ausgepackt …": "Extracting {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Once extracted, the archive would be larger than {0} MB – please extract it first and open the files one by one.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "The archive contains {0} files – PDFMy opens at most {1} at a time.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "The archive is password-protected – please extract it first and open the files one by one.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format not supported: {0} (please use PDF, an image, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, a comic book archive (CBZ), or an e-invoice as XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "The archive contains no file that PDFMy can open (PDF, image, Word, Excel, text …).",
+ "Im Comic-Archiv sind keine Bilder.": "The comic book archive contains no images."
 }

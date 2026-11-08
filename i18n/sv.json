@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Text s. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "För mörkt – se till att det finns mer ljus",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "För mörkt – mer ljus eller tänd ficklampan",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, bild, Word, Excel, text, RTF, XPS, Markdown, CSV eller e-faktura som XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "på glaset",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Rekommendera",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Reflex på arket – luta telefonen lite eller belys från sidan",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Sida {0} har en reflex – tryck för att kontrollera",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Det här dokumentet är för stort för kraschskyddet – spara då och då (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Det här dokumentet är för stort för kraschskyddet – spara då och då (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} packas upp …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Uppackat skulle arkivet bli större än {0} MB – packa upp det först och öppna filerna en i taget.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arkivet innehåller {0} filer – PDFMy öppnar högst {1} åt gången.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arkivet är krypterat med lösenord – packa upp det först och öppna filerna en i taget.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formatet stöds inte: {0} (använd PDF, bild, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, seriearkiv CBZ eller e-faktura som XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arkivet innehåller ingen fil som PDFMy kan öppna (PDF, bild, Word, Excel, text …).",
+ "Im Comic-Archiv sind keine Bilder.": "Seriearkivet innehåller inga bilder."
 }

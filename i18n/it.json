@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Testo p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Troppo scuro – procuri più luce",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Troppo scuro – più luce o accenda la torcia",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, immagine, Word, Excel, testo, RTF, XPS, Markdown, CSV o fattura elettronica come XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "sul vetro",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Consiglia",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Riflesso sul foglio – inclina leggermente il telefono o illumina di lato",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "La pagina {0} ha un riflesso – tocca per controllare",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Questo documento è troppo grande per la protezione dai crash – salva di tanto in tanto (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Questo documento è troppo grande per la protezione dai crash – salva di tanto in tanto (Ctrl+S).",
+ "{0} wird ausgepackt …": "Estrazione di {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Una volta estratto, l’archivio supererebbe {0} MB – estrarlo prima e aprire i file uno alla volta.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "L’archivio contiene {0} file – PDFMy ne apre al massimo {1} alla volta.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "L’archivio è protetto da password – estrarlo prima e aprire i file uno alla volta.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formato non supportato: {0} (usare PDF, immagine, Word, Excel, testo, RTF, XPS, Markdown, CSV, ZIP, archivio fumetti CBZ o fattura elettronica come XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Nell’archivio non c’è alcun file che PDFMy possa aprire (PDF, immagine, Word, Excel, testo …).",
+ "Im Comic-Archiv sind keine Bilder.": "Nell’archivio fumetti non ci sono immagini."
 }

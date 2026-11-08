@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Teksti s. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Liian pimeää – lisää valoa",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Liian pimeää – lisää valoa tai sytytä taskulamppu",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, Word-, Excel-, teksti-, RTF-, XPS-, Markdown- tai CSV-tiedostoa tai XML-muotoista e-laskua)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "lasilla",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Suosittele",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Heijastus arkissa – kallista puhelinta hieman tai valaise sivulta",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Sivulla {0} on heijastus – tarkista napauttamalla",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Tämä asiakirja on liian suuri kaatumissuojalle – tallenna välillä (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Tämä asiakirja on liian suuri kaatumissuojalle – tallenna välillä (Ctrl+S).",
+ "{0} wird ausgepackt …": "Puretaan {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Purettuna arkisto olisi suurempi kuin {0} Mt – pura se ensin ja avaa tiedostot yksitellen.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arkistossa on {0} tiedostoa – PDFMy avaa kerralla enintään {1}.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arkisto on salattu salasanalla – pura se ensin ja avaa tiedostot yksitellen.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Muotoa ei tueta: {0} (käytä PDF-, kuva-, Word-, Excel-, teksti-, RTF-, XPS-, Markdown-, CSV- tai ZIP-tiedostoa, sarjakuva-arkistoa CBZ tai XML-muotoista e-laskua)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arkistossa ei ole tiedostoa, jonka PDFMy voi avata (PDF, kuva, Word, Excel, teksti …).",
+ "Im Comic-Archiv sind keine Bilder.": "Sarjakuva-arkistossa ei ole kuvia."
 }

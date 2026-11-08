@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Text p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Massa fosc: procureu tenir més llum",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Massa fosc: més llum o enceneu la llanterna",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, Word, Excel, text, RTF, XPS, Markdown, CSV o factura electrònica en XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "sobre el vidre",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Recomana",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Reflex al full – inclineu una mica el mòbil o poseu la llum de costat",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "La pàgina {0} té un reflex – toqueu per comprovar-ho",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Aquest document és massa gran per a la protecció contra bloquejos – deseu-lo de tant en tant (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Aquest document és massa gran per a la protecció contra bloquejos – deseu-lo de tant en tant (Ctrl+S).",
+ "{0} wird ausgepackt …": "S’està descomprimint {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Descomprimit, l’arxiu superaria els {0} MB – descomprimiu-lo primer i obriu els fitxers d’un en un.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "L’arxiu conté {0} fitxers – PDFMy n’obre com a màxim {1} alhora.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "L’arxiu està xifrat amb contrasenya – descomprimiu-lo primer i obriu els fitxers d’un en un.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format no compatible: {0} (utilitzeu PDF, imatge, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, arxiu de còmic CBZ o factura electrònica en XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "L’arxiu no conté cap fitxer que PDFMy pugui obrir (PDF, imatge, Word, Excel, text …).",
+ "Im Comic-Archiv sind keine Bilder.": "L’arxiu de còmic no conté cap imatge."
 }

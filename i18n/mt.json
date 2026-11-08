@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Test p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Dlam wisq – jekk jogħġbok ipprovdi aktar dawl",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Dlam wisq – aktar dawl jew ixgħel it-torċa",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, stampa, Word, Excel, test, RTF, XPS, Markdown, CSV jew fattura elettronika bħala XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "fuq il-ħġieġ",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Irrakkomanda",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Rifless fuq il-folja – ixxaqleb ftit il-mowbajl jew dawwal mill-ġenb",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Il-paġna {0} għandha rifless – agħfas biex tiċċekkja",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dan id-dokument huwa kbir wisq għall-protezzjoni kontra l-ħabtiet – issejvja minn żmien għal żmien (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dan id-dokument huwa kbir wisq għall-protezzjoni kontra l-ħabtiet – issejvja minn żmien għal żmien (Ctrl+S).",
+ "{0} wird ausgepackt …": "Qed jinfetaħ {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Meta jinfetaħ, l-arkivju jkun akbar minn {0} MB – jekk jogħġbok iftħu l-ewwel u iftaħ il-fajls wieħed wieħed.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "L-arkivju fih {0} fajls – PDFMy jiftaħ l-aktar {1} f’daqqa.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "L-arkivju huwa kriptat b’password – jekk jogħġbok iftħu l-ewwel u iftaħ il-fajls wieħed wieħed.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format mhux appoġġjat: {0} (jekk jogħġbok PDF, stampa, Word, Excel, test, RTF, XPS, Markdown, CSV, ZIP, arkivju tal-komiks CBZ jew fattura elettronika bħala XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Fl-arkivju m’hemm l-ebda fajl li PDFMy jista’ jiftaħ (PDF, stampa, Word, Excel, test …).",
+ "Im Comic-Archiv sind keine Bilder.": "Fl-arkivju tal-komiks m’hemmx stampi."
 }

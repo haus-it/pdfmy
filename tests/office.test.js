@@ -208,3 +208,28 @@ test('RTF: Text, Sonderzeichen, Tabellen der Datei werden übersprungen', () => 
   assert.equal(Office.rtf(new TextEncoder().encode(r)), 'Grüße € fett\n\nZeile 2');
   assert.throws(() => Office.rtf(new TextEncoder().encode('kein rtf')));
 });
+
+test('ZIP und CBZ: öffnbare Dateien in natürlicher Reihenfolge, Systemdateien und Archive im Archiv bleiben liegen', async () => {
+  const z = await zipDeflate({ 'Heft/Seite 10.jpg': PNG, 'Heft/Seite 2.png': PNG, 'Heft/Seite 1.png': PNG, 'ComicInfo.xml': '<ComicInfo/>', '__MACOSX/Heft/._Seite 1.png': PNG, '.DS_Store': 'x', 'innen.zip': 'PK', 'Rechnung.pdf': '%PDF-1.4', 'leer/': '' });
+  const comic = await Office.archive(z, { comic: true });
+  assert.deepEqual(comic.map(f => f.name), ['Seite 1.png', 'Seite 2.png', 'Seite 10.jpg']);
+  assert.equal(comic[2].type, 'image/jpeg');
+  assert.deepEqual([...comic[0].data], [...PNG]);
+  const all = await Office.archive(z);
+  assert.deepEqual(all.map(f => f.path), ['ComicInfo.xml', 'Heft/Seite 1.png', 'Heft/Seite 2.png', 'Heft/Seite 10.jpg', 'Rechnung.pdf']);
+});
+
+test('ZIP: Schutz vor ZIP-Bomben und verschlüsselten Archiven', async () => {
+  const many = {}; for (let i = 0; i < 2001; i++) many[`b${i}.png`] = PNG;
+  await assert.rejects(Office.archive(await zipDeflate(many)), /höchstens 2000/);
+  const big = await zipDeflate({ 'a.png': PNG }); big.set([0xff, 0xff, 0xff, 0x7f], big.length - 22 - 46 - 5 + 24);   // ausgepackte Größe im Verzeichnis ≈ 2 GB
+  await assert.rejects(Office.archive(big), /größer als 1500 MB/);
+  const enc = await zipDeflate({ 'a.png': PNG }); enc[enc.length - 22 - 46 - 5 + 8] |= 1;   // Bit 0 = verschlüsselt
+  await assert.rejects(Office.archive(enc), /Kennwort/);
+});
+
+test('ZIP: Auspacken bricht ab, wenn mehr herauskommt als erlaubt (falsche Größe im Verzeichnis)', async () => {
+  const z = Office.readZip(await zipDeflate({ 'null.txt': new Uint8Array(3e6) }));
+  await assert.rejects(z.get('null.txt', 1e6), e => e.tooBig === true);
+  assert.equal((await z.get('null.txt', 4e6)).length, 3e6);
+});

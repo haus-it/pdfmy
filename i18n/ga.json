@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Téacs lch {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Ródhorcha – cuir tuilleadh solais ar fáil le do thoil",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Ródhorcha – tuilleadh solais nó cas an tóirse air",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, Word, Excel, téacs, RTF, XPS, Markdown, CSV nó r-shonrasc mar XML le do thoil)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "ar an ngloine",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Mol",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Frithchaitheamh ar an mbileog – claon an fón beagán nó cuir solas ón taobh",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Tá frithchaitheamh ar leathanach {0} – tapáil chun seiceáil",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Tá an doiciméad seo rómhór don chosaint ar thuairteáil – sábháil anois is arís (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Tá an doiciméad seo rómhór don chosaint ar thuairteáil – sábháil anois is arís (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} á dhíphacáil …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Tar éis díphacála bheadh an chartlann níos mó ná {0} MB – díphacáil ar dtús í agus oscail na comhaid ceann ar cheann.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Tá {0} comhad sa chartlann – osclaíonn PDFMy {1} ar a mhéad ag an am céanna.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Tá an chartlann criptithe le pasfhocal – díphacáil ar dtús í agus oscail na comhaid ceann ar cheann.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formáid gan tacaíocht: {0} (PDF, íomhá, Word, Excel, téacs, RTF, XPS, Markdown, CSV, ZIP, cartlann chartún CBZ nó r-shonrasc mar XML le do thoil)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Níl aon chomhad sa chartlann is féidir le PDFMy a oscailt (PDF, íomhá, Word, Excel, téacs …).",
+ "Im Comic-Archiv sind keine Bilder.": "Níl aon íomhánna sa chartlann chartún."
 }

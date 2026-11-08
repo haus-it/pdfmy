@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Tekst p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Te donker – zorg voor meer licht",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Te donker – meer licht of zet de zaklamp aan",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, afbeelding, Word, Excel, tekst, RTF, XPS, Markdown, CSV of e-factuur als XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "op de glasplaat",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Aanbevelen",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Schittering op het vel – houd de telefoon iets schuin of licht van opzij",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Pagina {0} heeft een schittering – tik om te controleren",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dit document is te groot voor de crashbeveiliging – sla tussendoor op (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dit document is te groot voor de crashbeveiliging – sla tussendoor op (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} wordt uitgepakt …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Uitgepakt zou het archief groter zijn dan {0} MB – pak het eerst uit en open de bestanden afzonderlijk.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Het archief bevat {0} bestanden – PDFMy opent er maximaal {1} tegelijk.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Het archief is met een wachtwoord versleuteld – pak het eerst uit en open de bestanden afzonderlijk.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Indeling niet ondersteund: {0} (gebruik PDF, afbeelding, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, stripboekarchief CBZ of e-factuur als XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Het archief bevat geen bestand dat PDFMy kan openen (PDF, afbeelding, Word, Excel, tekst …).",
+ "Im Comic-Archiv sind keine Bilder.": "Het stripboekarchief bevat geen afbeeldingen."
 }

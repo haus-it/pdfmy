@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Texte p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Trop sombre – veuillez prévoir plus de lumière",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Trop sombre – plus de lumière ou allumez la lampe torche",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Format non pris en charge : {0} (veuillez utiliser PDF, une image, Word, Excel, du texte, RTF, XPS, Markdown, CSV ou une facture électronique en XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "sur la vitre",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Recommander",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Reflet sur la feuille – inclinez un peu le téléphone ou éclairez de côté",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "La page {0} présente un reflet – appuyez pour vérifier",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ce document est trop volumineux pour la protection contre les plantages – enregistrez régulièrement (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ce document est trop volumineux pour la protection contre les plantages – enregistrez régulièrement (Ctrl+S).",
+ "{0} wird ausgepackt …": "Décompression de {0}…",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Une fois décompressée, l’archive dépasserait {0} Mo – veuillez d’abord la décompresser et ouvrir les fichiers un par un.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "L’archive contient {0} fichiers – PDFMy en ouvre au maximum {1} à la fois.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "L’archive est chiffrée par mot de passe – veuillez d’abord la décompresser et ouvrir les fichiers un par un.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format non pris en charge : {0} (veuillez utiliser PDF, une image, Word, Excel, du texte, RTF, XPS, Markdown, CSV, ZIP, une archive de BD CBZ ou une facture électronique en XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "L’archive ne contient aucun fichier que PDFMy peut ouvrir (PDF, image, Word, Excel, texte…).",
+ "Im Comic-Archiv sind keine Bilder.": "L’archive de BD ne contient aucune image."
 }

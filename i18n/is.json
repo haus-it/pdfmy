@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Texti bls. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Of dimmt – vinsamlegast tryggið meiri birtu",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Of dimmt – meiri birta eða kveikið á vasaljósinu",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, Word, Excel, texti, RTF, XPS, Markdown, CSV eða rafrænn reikningur sem XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "á glerinu",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Mæla með",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Glampi á blaðinu – hallaðu símanum aðeins eða lýstu frá hlið",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Glampi er á síðu {0} – ýttu til að athuga",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Þetta skjal er of stórt fyrir hrunvörnina – vistaðu reglulega (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Þetta skjal er of stórt fyrir hrunvörnina – vistaðu reglulega (Ctrl+S).",
+ "{0} wird ausgepackt …": "Verið er að afþjappa {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Afþjappað yrði safnið stærra en {0} MB – vinsamlegast afþjappaðu það fyrst og opnaðu skrárnar eina í einu.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Safnið inniheldur {0} skrár – PDFMy opnar að hámarki {1} í einu.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Safnið er dulkóðað með lykilorði – vinsamlegast afþjappaðu það fyrst og opnaðu skrárnar eina í einu.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Snið ekki stutt: {0} (vinsamlegast PDF, mynd, Word, Excel, texti, RTF, XPS, Markdown, CSV, ZIP, myndasögusafn CBZ eða rafrænn reikningur sem XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Í safninu er engin skrá sem PDFMy getur opnað (PDF, mynd, Word, Excel, texti …).",
+ "Im Comic-Archiv sind keine Bilder.": "Engar myndir eru í myndasögusafninu."
 }

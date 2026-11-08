@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Testun t. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Rhy dywyll – sicrhewch fwy o olau",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Rhy dywyll – mwy o olau neu trowch y fflachlamp ymlaen",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, delwedd, Word, Excel, testun, RTF, XPS, Markdown, CSV neu e-anfoneb fel XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "ar y gwydr",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Argymell",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Adlewyrchiad ar y ddalen – gogwyddwch y ffôn ychydig neu rhowch olau o’r ochr",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Mae adlewyrchiad ar dudalen {0} – tapiwch i wirio",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Mae’r ddogfen hon yn rhy fawr ar gyfer yr amddiffyniad rhag chwalu – cadwch hi o bryd i’w gilydd (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Mae’r ddogfen hon yn rhy fawr ar gyfer yr amddiffyniad rhag chwalu – cadwch hi o bryd i’w gilydd (Ctrl+S).",
+ "{0} wird ausgepackt …": "Wrthi’n dadbacio {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Wedi’i ddadbacio, byddai’r archif yn fwy na {0} MB – dadbaciwch hi yn gyntaf ac agorwch y ffeiliau fesul un.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Mae’r archif yn cynnwys {0} ffeil – mae PDFMy yn agor {1} ar y mwyaf ar y tro.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Mae’r archif wedi’i hamgryptio â chyfrinair – dadbaciwch hi yn gyntaf ac agorwch y ffeiliau fesul un.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Fformat heb ei gefnogi: {0} (defnyddiwch PDF, delwedd, Word, Excel, testun, RTF, XPS, Markdown, CSV, ZIP, archif comig CBZ neu e-anfoneb fel XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Does dim ffeil yn yr archif y gall PDFMy ei hagor (PDF, delwedd, Word, Excel, testun …).",
+ "Im Comic-Archiv sind keine Bilder.": "Does dim delweddau yn yr archif comig."
 }

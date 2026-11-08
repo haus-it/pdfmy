@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Текст стр. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Претамно – обезбедите више светла",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Претамно – више светла или укључите батеријску лампу",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Формат није подржан: {0} (користите PDF, слику, Word, Excel, текст, RTF, XPS, Markdown, CSV или е-рачун као XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "на стаклу",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Препоручи",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Одсјај на листу – мало нагните телефон или осветлите са стране",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Страница {0} има одсјај – додирните за проверу",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Овај документ је превелик за заштиту од пада – повремено га сачувајте (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Овај документ је превелик за заштиту од пада – повремено га сачувајте (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} се распакује …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Распакована архива била би већа од {0} MB – прво је распакујте и отворите датотеке појединачно.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Архива садржи {0} датотека – PDFMy отвара највише {1} одједном.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Архива је шифрована лозинком – прво је распакујте и отворите датотеке појединачно.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Формат није подржан: {0} (користите PDF, слику, Word, Excel, текст, RTF, XPS, Markdown, CSV, ZIP, стрип-архиву CBZ или е-рачун као XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "У архиви нема датотеке коју PDFMy може да отвори (PDF, слика, Word, Excel, текст …).",
+ "Im Comic-Archiv sind keine Bilder.": "У стрип-архиви нема слика."
 }

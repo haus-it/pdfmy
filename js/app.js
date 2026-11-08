@@ -190,12 +190,24 @@ async function importFiles(files, { fromCamera = false } = {}) {
   state.importing = (state.importing || 0) + 1;   // läuft – kein Update-Neuladen (das Dokument ist bis zur ersten Seite leer)
   try { await importFilesRun(files, fromCamera); } finally { state.importing--; }
 }
+/* ZIP und Comic-Archiv (CBZ) im Browser auspacken (js/office.js archive). Die Dateien laufen danach wie einzeln geöffnet durch,
+   in natürlicher Reihenfolge. Comic-Seiten bleiben, wie sie sind: kein Zuschneiden, kein Geraderichten, Modus „Original“. */
+let asIsImport = false;
+async function unpackArchive(f) {
+  const comic = /\.cbz$/i.test(f.name) || /cbz/.test(f.type);
+  status(`${f.name} wird ausgepackt …`);
+  const items = await Office.archive(new Uint8Array(await f.arrayBuffer()), { comic });
+  if (!items.length) throw new Error(comic ? 'Im Comic-Archiv sind keine Bilder.' : 'Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).');
+  return items.map(it => Object.assign(new File([it.data], it.name, { type: it.type }), { fromArchive: true, asIs: comic }));
+}
 async function importFilesRun(files, fromCamera) {
-  const before = state.pages.length, failed = [];
-  for (const f of files) {
-    const n = f.name.toLowerCase(); (window.seenFileNames ||= new Set()).add(f.name);   // für das Unkenntlichmachen im Fehlerbericht
+  const before = state.pages.length, failed = [], queue = [...files];
+  for (let i = 0; i < queue.length; i++) {
+    const f = queue[i], n = f.name.toLowerCase(); (window.seenFileNames ||= new Set()).add(f.name);   // für das Unkenntlichmachen im Fehlerbericht
     try {
       status(`Importiere ${f.name} …`);
+      if (!f.fromArchive && (/\.(zip|cbz)$/.test(n) || /^application\/(x-)?(zip|zip-compressed|cbz)$/.test(f.type))) { queue.splice(i + 1, 0, ...await unpackArchive(f)); continue; }
+      asIsImport = !!f.asIs;
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
       else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
       else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
@@ -205,16 +217,16 @@ async function importFilesRun(files, fromCamera) {
       else if (/\.(doc|xls|ppt|pptx|odp)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)`); failed.push(f.name); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
       state.inputBytes += f.size;
     } catch (e) {
       noteError(e, 'Öffnen');
       status(e.name === 'AbortError' ? `${f.name}: Öffnen abgebrochen.` : unreadable(f.name, e));
       if (e.name !== 'AbortError') failed.push(f.name);
-    }
+    } finally { asIsImport = false; }
   }
   // Bei mehreren Dateien überschrieb die nächste Meldung den Fehler – am Ende zusammenfassen
-  if (failed.length && files.length > 1) toast(`Nicht geöffnet: ${failed.join(', ')}`, 10000);
+  if (failed.length && queue.length > 1) toast(`Nicht geöffnet: ${failed.join(', ')}`, 10000);
   if (state.pages.length === before) return;
   state.dirty = true;
   if (state.sel < 0) state.sel = 0;
@@ -442,7 +454,8 @@ async function importImage(file, fromCamera) {
 /* Scan-Aufbereitung für Fotos, Bilddateien und gescannte PDF-Seiten: zuschneiden, gerade richten, aufbereiten (Imaging.prepScan) */
 // Foto-Scan (state.scanPhoto = 'color' | 'gray'): Foto ausschneiden, nicht geraderichten (das Geraderichten richtet sich nach Textzeilen),
 // Farben bzw. Grautöne unverändert lassen; Fotos werden nicht per Texterkennung gelesen
-const scanOpts = fromCamera => state.scanPhoto && state.scanPhoto !== 'auto' ? { crop: true, straighten: false, fromCamera: false, mode: state.scanPhoto === 'gray' ? 'gray' : 'original', photo: true }
+const scanOpts = fromCamera => asIsImport ? { crop: false, straighten: false, fromCamera: false, mode: 'original', photo: true }
+  : state.scanPhoto && state.scanPhoto !== 'auto' ? { crop: true, straighten: false, fromCamera: false, mode: state.scanPhoto === 'gray' ? 'gray' : 'original', photo: true }
   : { crop: S.autoCrop, straighten: S.autoDeskew, fromCamera, mode: state.scanPhoto === 'auto' ? 'auto' : S.mode, detectPhoto: state.scanPhoto === 'auto' };
 // Erkannte Art beim Scan „Automatisch“ – steht in der Seitenbeschriftung
 const SCAN_KIND_LABEL = r => I18N.t(r.photo ? 'Foto' : r.autoMode === 'colordoc' ? 'Farbdokument' : r.autoMode === 'bw' ? 'Schwarzweiß-Dokument' : 'Graustufen-Dokument');   // „Automatisch“: Fotos selbst erkennen

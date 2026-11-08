@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Text S. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Ze däischter – suergt w.e.g. fir méi Liicht",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Ze däischter – méi Liicht oder d'Täscheluucht uschalten",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "op dem Glas",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Weiderrecommandéieren",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Spigelung um Blat – Handy e bësse schréi halen oder Liicht vun der Säit",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Säit {0} huet eng Spigelung – tippen fir ze kontrolléieren",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dëst Dokument ass ze grouss fir de Crash-Schutz – w.e.g. zwëschenduerch späicheren (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dëst Dokument ass ze grouss fir de Crash-Schutz – w.e.g. zwëschenduerch späicheren (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} gëtt ausgepaakt …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Ausgepaakt wier d’Archiv méi grouss wéi {0} MB – w.e.g. fir d’éischt auspaken an d’Fichieren eenzel opmaachen.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "D’Archiv enthält {0} Fichieren – PDFMy mécht héchstens {1} op eemol op.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "D’Archiv ass mat engem Passwuert verschlësselt – w.e.g. fir d’éischt auspaken an d’Fichieren eenzel opmaachen.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format net ënnerstëtzt: {0} (w.e.g. PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Am Archiv ass kee Fichier, deen PDFMy opmaache kann (PDF, Bild, Word, Excel, Text …).",
+ "Im Comic-Archiv sind keine Bilder.": "Am Comic-Archiv sinn keng Biller."
 }

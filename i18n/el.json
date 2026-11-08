@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Κείμενο σ. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Πολύ σκοτεινά – φροντίστε για περισσότερο φως",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Πολύ σκοτεινά – περισσότερο φως ή ανάψτε τον φακό",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, Word, Excel, κείμενο, RTF, XPS, Markdown, CSV ή ηλεκτρονικό τιμολόγιο ως XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "στο γυαλί",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Πρόταση",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Αντανάκλαση στο φύλλο – γείρετε λίγο το κινητό ή φωτίστε από το πλάι",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Η σελίδα {0} έχει αντανάκλαση – πατήστε για έλεγχο",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Αυτό το έγγραφο είναι πολύ μεγάλο για την προστασία από κατάρρευση – αποθηκεύετε ενδιάμεσα (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Αυτό το έγγραφο είναι πολύ μεγάλο για την προστασία από κατάρρευση – αποθηκεύετε ενδιάμεσα (Ctrl+S).",
+ "{0} wird ausgepackt …": "Αποσυμπίεση {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Μετά την αποσυμπίεση το αρχείο θα ήταν μεγαλύτερο από {0} MB – αποσυμπιέστε το πρώτα και ανοίξτε τα αρχεία ένα-ένα.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Το αρχείο περιέχει {0} αρχεία – το PDFMy ανοίγει έως {1} τη φορά.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Το αρχείο είναι κρυπτογραφημένο με κωδικό – αποσυμπιέστε το πρώτα και ανοίξτε τα αρχεία ένα-ένα.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Μη υποστηριζόμενη μορφή: {0} (χρησιμοποιήστε PDF, εικόνα, Word, Excel, κείμενο, RTF, XPS, Markdown, CSV, ZIP, αρχείο κόμικ CBZ ή ηλεκτρονικό τιμολόγιο ως XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Στο αρχείο δεν υπάρχει αρχείο που μπορεί να ανοίξει το PDFMy (PDF, εικόνα, Word, Excel, κείμενο …).",
+ "Im Comic-Archiv sind keine Bilder.": "Το αρχείο κόμικ δεν περιέχει εικόνες."
 }

@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Text p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Prea întuneric – vă rugăm să asigurați mai multă lumină",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Prea întuneric – mai multă lumină sau porniți lanterna",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, Word, Excel, text, RTF, XPS, Markdown, CSV sau factură electronică ca XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "pe geam",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Recomandă",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Reflexie pe foaie – înclinați puțin telefonul sau luminați din lateral",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Pagina {0} are o reflexie – atingeți pentru a verifica",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Acest document este prea mare pentru protecția la blocare – salvați din când în când (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Acest document este prea mare pentru protecția la blocare – salvați din când în când (Ctrl+S).",
+ "{0} wird ausgepackt …": "Se dezarhivează {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Dezarhivată, arhiva ar depăși {0} MB – vă rugăm să o dezarhivați mai întâi și să deschideți fișierele pe rând.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhiva conține {0} fișiere – PDFMy deschide cel mult {1} odată.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhiva este criptată cu parolă – vă rugăm să o dezarhivați mai întâi și să deschideți fișierele pe rând.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format neacceptat: {0} (vă rugăm PDF, imagine, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, arhivă de benzi desenate CBZ sau factură electronică ca XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arhiva nu conține niciun fișier pe care PDFMy îl poate deschide (PDF, imagine, Word, Excel, text …).",
+ "Im Comic-Archiv sind keine Bilder.": "Arhiva de benzi desenate nu conține imagini."
 }

@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Szöveg {0}. o.",
  "Zu dunkel – bitte für mehr Licht sorgen": "Túl sötét – kérjük, gondoskodjon több fényről",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Túl sötét – több fény vagy kapcsolja be a zseblámpát",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, Word, Excel, szöveg, RTF, XPS, Markdown, CSV vagy XML e-számla)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "az üvegen",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Ajánlás",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Tükröződés a lapon – döntse meg kissé a telefont, vagy világítson oldalról",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "A(z) {0}. oldalon tükröződés van – koppintson az ellenőrzéshez",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ez a dokumentum túl nagy az összeomlás elleni védelemhez – mentsen időnként (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ez a dokumentum túl nagy az összeomlás elleni védelemhez – mentsen időnként (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} kicsomagolása …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Kicsomagolva az archívum nagyobb lenne {0} MB-nál – kérjük, előbb csomagolja ki, és egyenként nyissa meg a fájlokat.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Az archívum {0} fájlt tartalmaz – a PDFMy egyszerre legfeljebb {1} fájlt nyit meg.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Az archívum jelszóval titkosított – kérjük, előbb csomagolja ki, és egyenként nyissa meg a fájlokat.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Nem támogatott formátum: {0} (kérjük, PDF, kép, Word, Excel, szöveg, RTF, XPS, Markdown, CSV, ZIP, CBZ képregény-archívum vagy XML e-számla)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Az archívumban nincs olyan fájl, amelyet a PDFMy meg tud nyitni (PDF, kép, Word, Excel, szöveg …).",
+ "Im Comic-Archiv sind keine Bilder.": "A képregény-archívumban nincsenek képek."
 }

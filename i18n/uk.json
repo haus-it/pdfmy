@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Текст с. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Занадто темно – забезпечте більше світла",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Занадто темно – більше світла або увімкніть ліхтарик",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, зображення, Word, Excel, текст, RTF, XPS, Markdown, CSV або електронний рахунок у форматі XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "на склі",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Порекомендувати",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Відблиск на аркуші – трохи нахиліть телефон або освітліть збоку",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "На сторінці {0} є відблиск – торкніться, щоб перевірити",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Цей документ завеликий для захисту від збоїв – зберігайте його час від часу (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Цей документ завеликий для захисту від збоїв – зберігайте його час від часу (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} розпаковується …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Після розпакування архів перевищив би {0} МБ – спочатку розпакуйте його та відкривайте файли окремо.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Архів містить {0} файлів – PDFMy відкриває не більше {1} за раз.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Архів зашифровано паролем – спочатку розпакуйте його та відкривайте файли окремо.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Формат не підтримується: {0} (використовуйте PDF, зображення, Word, Excel, текст, RTF, XPS, Markdown, CSV, ZIP, архів коміксів CBZ або електронний рахунок у форматі XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "В архіві немає файлу, який може відкрити PDFMy (PDF, зображення, Word, Excel, текст …).",
+ "Im Comic-Archiv sind keine Bilder.": "В архіві коміксів немає зображень."
 }

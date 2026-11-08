@@ -15,21 +15,56 @@
     let p = dv.getUint32(e + 16, true); const n = dv.getUint16(e + 10, true);
     for (let i = 0; i < n; i++) {
       if (dv.getUint32(p, true) !== 0x02014b50) break;
-      const method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true), nlen = dv.getUint16(p + 28, true), xlen = dv.getUint16(p + 30, true), clen = dv.getUint16(p + 32, true), off = dv.getUint32(p + 42, true);
+      const flags = dv.getUint16(p + 8, true), method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true), usize = dv.getUint32(p + 24, true), nlen = dv.getUint16(p + 28, true), xlen = dv.getUint16(p + 30, true), clen = dv.getUint16(p + 32, true), off = dv.getUint32(p + 42, true);
       const name = new TextDecoder().decode(u8.subarray(p + 46, p + 46 + nlen));
-      files.set(name, { method, csize, off });
+      files.set(name, { method, csize, usize, off, locked: !!(flags & 1) });
       p += 46 + nlen + xlen + clen;
     }
-    const get = async name => {
+    const get = async (name, limit = Infinity) => {   // limit: höchstens so viele Bytes auspacken (Schutz, falls das Verzeichnis eine falsche Größe angibt)
       const f = files.get(name); if (!f) return null;
       const lh = f.off, start = lh + 30 + dv.getUint16(lh + 26, true) + dv.getUint16(lh + 28, true), data = u8.subarray(start, start + f.csize);
+      if (f.locked) throw new Error('Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.');
       if (f.method === 0) return data;
       if (f.method !== 8) throw new Error('Nicht unterstützte Komprimierung in der Office-Datei.');
       const ds = new DecompressionStream('deflate-raw'), out = new Blob([data]).stream().pipeThrough(ds);
-      return new Uint8Array(await new Response(out).arrayBuffer());
+      if (limit === Infinity) return new Uint8Array(await new Response(out).arrayBuffer());
+      const rd = out.getReader(), parts = []; let n = 0;
+      for (;;) {
+        const { done, value } = await rd.read(); if (done) break;
+        if ((n += value.length) > limit) { rd.cancel().catch(() => {}); throw Object.assign(new Error(), { tooBig: true }); }
+        parts.push(value);
+      }
+      const r = new Uint8Array(n); let o = 0; for (const p of parts) { r.set(p, o); o += p.length; } return r;
     };
     const text = async name => { const b = await get(name); return b ? new TextDecoder().decode(b) : null; };
     return { files, get, text };
+  }
+
+  // ---------- ZIP und Comic-Archiv (CBZ): Dateien auspacken, die PDFMy öffnen kann – natürliche Reihenfolge (Seite 2 vor Seite 10) ----------
+  // Grenzen gegen ZIP-Bomben: höchstens ARCHIVE_FILES Dateien und ARCHIVE_MB ausgepackt. Archive im Archiv, Systemdateien und
+  // bei CBZ alles außer Bildern (z. B. ComicInfo.xml) bleiben liegen.
+  const ARCHIVE_FILES = 2000, ARCHIVE_MB = 1500;
+  const IMG_EXT = /\.(jpe?g|png|webp|bmp|gif|tiff?|heic|heif)$/i;
+  const OPEN_EXT = /\.(pdf|jpe?g|png|webp|bmp|gif|tiff?|heic|heif|txt|md|markdown|csv|docx|xlsx|odt|ods|epub|rtf|o?xps|xml|eml|msg)$/i;
+  const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', bmp: 'image/bmp', tif: 'image/tiff', tiff: 'image/tiff', pdf: 'application/pdf' };
+  function archiveList(z, comic) {
+    const coll = new Intl.Collator('de', { numeric: true, sensitivity: 'base' });
+    return [...z.files.entries()].filter(([n, f]) => !n.endsWith('/') && !/(^|\/)(__MACOSX\/|\.|thumbs\.db$|desktop\.ini$)/i.test(n) && (comic ? IMG_EXT : OPEN_EXT).test(n) && f.usize !== 0)
+      .map(([n]) => n).sort(coll.compare);
+  }
+  async function archive(bytes, { comic = false } = {}) {
+    const z = readZip(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes)), names = archiveList(z, comic);
+    if (names.length > ARCHIVE_FILES) throw new Error(`Das Archiv enthält ${names.length} Dateien – PDFMy öffnet höchstens ${ARCHIVE_FILES} auf einmal.`);
+    const tooBig = () => new Error(`Ausgepackt wäre das Archiv größer als ${ARCHIVE_MB} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.`);
+    if (names.reduce((a, n) => a + z.files.get(n).usize, 0) > ARCHIVE_MB * 1e6) throw tooBig();
+    const out = []; let left = ARCHIVE_MB * 1e6;
+    for (const n of names) {
+      let data; try { data = await z.get(n, left); } catch (e) { throw e.tooBig ? tooBig() : e; }
+      if ((left -= data.length) < 0) throw tooBig();
+      const base = n.split('/').pop(), ext = base.toLowerCase().split('.').pop();
+      out.push({ name: base, path: n, data, type: MIME[ext] || '' });
+    }
+    return out;
   }
 
   // ---------- XML: kleiner Parser (Elemente, Attribute, Text) ----------
@@ -505,6 +540,6 @@
     }
     return pages;
   }
-  const api = { readZip, parseXml, docx, xlsx, odt, ods, epub, rtf, xps };
+  const api = { readZip, archive, archiveList, parseXml, docx, xlsx, odt, ods, epub, rtf, xps };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Office = api;
 })(typeof self !== 'undefined' ? self : this);

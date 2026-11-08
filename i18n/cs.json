@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Text s. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Příliš tma – zajistěte prosím více světla",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Příliš tma – více světla nebo zapněte svítilnu",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formát není podporován: {0} (použijte prosím PDF, obrázek, Word, Excel, text, RTF, XPS, Markdown, CSV nebo e-fakturu jako XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "na skle",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Doporučit",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Odlesk na listu – telefon mírně nakloňte nebo svěťte ze strany",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Strana {0} má odlesk – klepnutím zkontrolujte",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Tento dokument je pro ochranu před pádem příliš velký – průběžně ukládejte (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Tento dokument je pro ochranu před pádem příliš velký – průběžně ukládejte (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} se rozbaluje …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Po rozbalení by byl archiv větší než {0} MB – nejprve jej prosím rozbalte a soubory otevírejte jednotlivě.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Archiv obsahuje {0} souborů – PDFMy otevře najednou nejvýše {1}.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Archiv je zašifrován heslem – nejprve jej prosím rozbalte a soubory otevírejte jednotlivě.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formát není podporován: {0} (použijte prosím PDF, obrázek, Word, Excel, text, RTF, XPS, Markdown, CSV, ZIP, komiksový archiv CBZ nebo e-fakturu jako XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "V archivu není žádný soubor, který PDFMy dokáže otevřít (PDF, obrázek, Word, Excel, text …).",
+ "Im Comic-Archiv sind keine Bilder.": "V komiksovém archivu nejsou žádné obrázky."
 }

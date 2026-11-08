@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Texto páx. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Demasiado escuro: procure ter máis luz",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Demasiado escuro: máis luz ou acenda a lanterna",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formato non compatible: {0} (use PDF, imaxe, Word, Excel, texto, RTF, XPS, Markdown, CSV ou factura electrónica en XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "sobre o cristal",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Recomendar",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Reflexo na folla – incline un pouco o móbil ou ilumine dende un lado",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "A páxina {0} ten un reflexo – toque para comprobar",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Este documento é demasiado grande para a protección contra bloqueos – gárdeo de cando en vez (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Este documento é demasiado grande para a protección contra bloqueos – gárdeo de cando en vez (Ctrl+S).",
+ "{0} wird ausgepackt …": "Descomprimindo {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Descomprimido, o arquivo superaría os {0} MB – descomprímao primeiro e abra os ficheiros un a un.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "O arquivo contén {0} ficheiros – PDFMy abre como máximo {1} á vez.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "O arquivo está cifrado con contrasinal – descomprímao primeiro e abra os ficheiros un a un.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formato non compatible: {0} (use PDF, imaxe, Word, Excel, texto, RTF, XPS, Markdown, CSV, ZIP, arquivo de cómic CBZ ou factura electrónica en XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "O arquivo non contén ningún ficheiro que PDFMy poida abrir (PDF, imaxe, Word, Excel, texto …).",
+ "Im Comic-Archiv sind keine Bilder.": "O arquivo de cómic non contén imaxes."
 }

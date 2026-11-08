@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Tekst f. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Shumë errët – ju lutemi siguroni më shumë dritë",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Shumë errët – më shumë dritë ose ndizni elektrik dore",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, Word, Excel, tekst, RTF, XPS, Markdown, CSV ose e-faturë si XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "mbi xham",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Rekomando",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Reflektim në fletë – anoni pak telefonin ose ndriçoni nga anash",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Faqja {0} ka reflektim – prekni për ta kontrolluar",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ky dokument është shumë i madh për mbrojtjen nga rrëzimet – ruajeni herë pas here (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ky dokument është shumë i madh për mbrojtjen nga rrëzimet – ruajeni herë pas here (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} po shpaketohet …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "I shpaketuar, arkivi do të ishte më i madh se {0} MB – ju lutemi shpaketojeni fillimisht dhe hapni skedarët një nga një.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arkivi përmban {0} skedarë – PDFMy hap njëherësh deri në {1}.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arkivi është i enkriptuar me fjalëkalim – ju lutemi shpaketojeni fillimisht dhe hapni skedarët një nga një.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Format i pambështetur: {0} (ju lutemi PDF, imazh, Word, Excel, tekst, RTF, XPS, Markdown, CSV, ZIP, arkiv komiksesh CBZ ose e-faturë si XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Në arkiv nuk ka asnjë skedar që PDFMy mund ta hapë (PDF, imazh, Word, Excel, tekst …).",
+ "Im Comic-Archiv sind keine Bilder.": "Në arkivin e komikseve nuk ka imazhe."
 }

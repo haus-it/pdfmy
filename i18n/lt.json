@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Tekstas p. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Per tamsu – pasirūpinkite daugiau šviesos",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Per tamsu – daugiau šviesos arba įjunkite žibintuvėlį",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, vaizdą, Word, Excel, tekstą, RTF, XPS, Markdown, CSV arba e. sąskaitą XML formatu)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "ant stiklo",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Rekomenduoti",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Atspindys lape – šiek tiek pakreipkite telefoną arba apšvieskite iš šono",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "{0} puslapyje yra atspindys – palieskite, kad patikrintumėte",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Šis dokumentas per didelis apsaugai nuo strigčių – retkarčiais išsaugokite (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Šis dokumentas per didelis apsaugai nuo strigčių – retkarčiais išsaugokite (Ctrl+S).",
+ "{0} wird ausgepackt …": "Išskleidžiama {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Išskleistas archyvas būtų didesnis nei {0} MB – pirmiausia jį išskleiskite ir atidarykite failus po vieną.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Archyve yra {0} failų – PDFMy vienu metu atidaro ne daugiau kaip {1}.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Archyvas užšifruotas slaptažodžiu – pirmiausia jį išskleiskite ir atidarykite failus po vieną.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formatas nepalaikomas: {0} (naudokite PDF, vaizdą, Word, Excel, tekstą, RTF, XPS, Markdown, CSV, ZIP, komiksų archyvą CBZ arba e. sąskaitą XML formatu)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Archyve nėra failo, kurį PDFMy galėtų atidaryti (PDF, vaizdas, Word, Excel, tekstas …).",
+ "Im Comic-Archiv sind keine Bilder.": "Komiksų archyve nėra vaizdų."
 }

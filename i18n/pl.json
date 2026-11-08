@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Tekst str. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Zbyt ciemno – proszę zapewnić więcej światła",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Zbyt ciemno – więcej światła lub włącz latarkę",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, Word, Excel, tekstu, RTF, XPS, Markdown, CSV lub e-faktury w formacie XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "na szybie",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Poleć",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Odblask na kartce – lekko przechyl telefon lub oświetl z boku",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Strona {0} ma odblask – dotknij, aby sprawdzić",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ten dokument jest za duży dla ochrony przed awarią – zapisuj go co jakiś czas (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Ten dokument jest za duży dla ochrony przed awarią – zapisuj go co jakiś czas (Ctrl+S).",
+ "{0} wird ausgepackt …": "Rozpakowywanie {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Po rozpakowaniu archiwum byłoby większe niż {0} MB – najpierw je rozpakuj i otwieraj pliki pojedynczo.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Archiwum zawiera {0} plików – PDFMy otwiera naraz najwyżej {1}.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Archiwum jest zaszyfrowane hasłem – najpierw je rozpakuj i otwieraj pliki pojedynczo.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Nieobsługiwany format: {0} (użyj PDF, obrazu, Word, Excel, tekstu, RTF, XPS, Markdown, CSV, ZIP, archiwum komiksu CBZ lub e-faktury w formacie XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "W archiwum nie ma pliku, który PDFMy może otworzyć (PDF, obraz, Word, Excel, tekst …).",
+ "Im Comic-Archiv sind keine Bilder.": "W archiwum komiksu nie ma obrazów."
 }

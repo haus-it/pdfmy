@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Metin s. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Çok karanlık – lütfen daha fazla ışık sağlayın",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Çok karanlık – daha fazla ışık veya el fenerini açın",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, görüntü, Word, Excel, metin, RTF, XPS, Markdown, CSV veya XML olarak e-fatura)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "camda",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Tavsiye et",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Sayfada yansıma – telefonu biraz eğin veya ışığı yandan verin",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "{0}. sayfada yansıma var – kontrol etmek için dokunun",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Bu belge çökme koruması için çok büyük – lütfen ara ara kaydedin (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Bu belge çökme koruması için çok büyük – lütfen ara ara kaydedin (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} açılıyor …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Açıldığında arşiv {0} MB’tan büyük olur – lütfen önce arşivi açın ve dosyaları tek tek açın.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arşivde {0} dosya var – PDFMy aynı anda en fazla {1} dosya açar.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arşiv parolayla şifrelenmiş – lütfen önce arşivi açın ve dosyaları tek tek açın.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Desteklenmeyen biçim: {0} (lütfen PDF, görüntü, Word, Excel, metin, RTF, XPS, Markdown, CSV, ZIP, CBZ çizgi roman arşivi veya XML olarak e-fatura)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arşivde PDFMy’nin açabileceği bir dosya yok (PDF, görüntü, Word, Excel, metin …).",
+ "Im Comic-Archiv sind keine Bilder.": "Çizgi roman arşivinde görüntü yok."
 }

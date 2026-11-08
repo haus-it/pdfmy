@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Testua or. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Ilunegi dago – mesedez, ziurtatu argi gehiago dagoela",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Ilunegi dago – argi gehiago edo piztu linterna",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, Word, Excel, testua, RTF, XPS, Markdown, CSV edo e-faktura XML gisa)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "kristalean",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Gomendatu",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Islada orrian – okertu pixka bat telefonoa edo jarri argia alboan",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "{0}. orrialdeak islada du – ukitu egiaztatzeko",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dokumentu hau handiegia da hutsegiteen aurkako babeserako – gorde noizean behin (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Dokumentu hau handiegia da hutsegiteen aurkako babeserako – gorde noizean behin (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} deskonprimatzen …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Deskonprimatuta, artxiboa {0} MB baino handiagoa litzateke – deskonprimatu lehenik eta ireki fitxategiak banan-banan.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Artxiboak {0} fitxategi ditu – PDFMy-k gehienez {1} irekitzen ditu aldi berean.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Artxiboa pasahitzarekin enkriptatuta dago – deskonprimatu lehenik eta ireki fitxategiak banan-banan.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formatua ez da onartzen: {0} (erabili PDF, irudia, Word, Excel, testua, RTF, XPS, Markdown, CSV, ZIP, komiki-artxiboa CBZ edo e-faktura XML gisa)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Artxiboan ez dago PDFMy-k ireki dezakeen fitxategirik (PDF, irudia, Word, Excel, testua …).",
+ "Im Comic-Archiv sind keine Bilder.": "Komiki-artxiboan ez dago irudirik."
 }

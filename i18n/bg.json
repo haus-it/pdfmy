@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Текст стр. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Твърде тъмно – моля, осигурете повече светлина",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Твърде тъмно – повече светлина или включете фенерчето",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, Word, Excel, текст, RTF, XPS, Markdown, CSV или е-фактура като XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "върху стъклото",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Препоръчайте",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Отблясък върху листа – наклонете леко телефона или осветете отстрани",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Страница {0} има отблясък – докоснете за проверка",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Този документ е твърде голям за защитата при срив – моля, записвайте междувременно (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Този документ е твърде голям за защитата при срив – моля, записвайте междувременно (Ctrl+S).",
+ "{0} wird ausgepackt …": "{0} се разархивира …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "След разархивиране архивът би бил по-голям от {0} MB – моля, първо го разархивирайте и отворете файловете поотделно.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Архивът съдържа {0} файла – PDFMy отваря най-много {1} наведнъж.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Архивът е шифрован с парола – моля, първо го разархивирайте и отворете файловете поотделно.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Форматът не се поддържа: {0} (моля, PDF, изображение, Word, Excel, текст, RTF, XPS, Markdown, CSV, ZIP, архив с комикси CBZ или е-фактура като XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "В архива няма файл, който PDFMy може да отвори (PDF, изображение, Word, Excel, текст …).",
+ "Im Comic-Archiv sind keine Bilder.": "В архива с комикси няма изображения."
 }

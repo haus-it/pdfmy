@@ -3197,7 +3197,6 @@
  "Text S. {0}": "Teksts lpp. {0}",
  "Zu dunkel – bitte für mehr Licht sorgen": "Pārāk tumšs – lūdzu, nodrošiniet vairāk gaismas",
  "Zu dunkel – mehr Licht oder die Taschenlampe einschalten": "Pārāk tumšs – vairāk gaismas vai ieslēdziet lukturīti",
- "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, Word, Excel, teksts, RTF, XPS, Markdown, CSV vai e-rēķins kā XML)",
  "Dests": "Dests",
  "Order": "Order",
  "auf dem Glas": "uz stikla",
@@ -3537,5 +3536,12 @@
  "Weiterempfehlen": "Ieteikt",
  "Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite": "Atspīdums uz lapas – nedaudz sašķiebiet tālruni vai apgaismojiet no sāniem",
  "Seite {0} hat eine Spiegelung – antippen zum Prüfen": "Lapā {0} ir atspīdums – pieskarieties, lai pārbaudītu",
- "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Šis dokuments ir pārāk liels avāriju aizsardzībai – laiku pa laikam saglabājiet (Ctrl+S)."
+ "Dieses Dokument ist zu groß für den Absturzschutz – bitte zwischendurch speichern (Strg+S).": "Šis dokuments ir pārāk liels avāriju aizsardzībai – laiku pa laikam saglabājiet (Ctrl+S).",
+ "{0} wird ausgepackt …": "Izpako {0} …",
+ "Ausgepackt wäre das Archiv größer als {0} MB – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Izpakots arhīvs būtu lielāks par {0} MB – lūdzu, vispirms to izpakojiet un atveriet failus pa vienam.",
+ "Das Archiv enthält {0} Dateien – PDFMy öffnet höchstens {1} auf einmal.": "Arhīvā ir {0} faili – PDFMy vienlaikus atver ne vairāk kā {1}.",
+ "Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.": "Arhīvs ir šifrēts ar paroli – lūdzu, vispirms to izpakojiet un atveriet failus pa vienam.",
+ "Format nicht unterstützt: {0} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)": "Formāts netiek atbalstīts: {0} (lūdzu, PDF, attēls, Word, Excel, teksts, RTF, XPS, Markdown, CSV, ZIP, komiksu arhīvs CBZ vai e-rēķins kā XML)",
+ "Im Archiv ist keine Datei, die PDFMy öffnen kann (PDF, Bild, Word, Excel, Text …).": "Arhīvā nav neviena faila, ko PDFMy var atvērt (PDF, attēls, Word, Excel, teksts …).",
+ "Im Comic-Archiv sind keine Bilder.": "Komiksu arhīvā nav attēlu."
 }
