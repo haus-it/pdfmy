@@ -2,6 +2,15 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-08
+
+### PDFMy weiterempfehlen und klarere Erweiterungsseite (app-v232)
+- **Weiterempfehlen:** *Mehr → PDFMy weiterempfehlen …* und ein Link „Weiterempfehlen“ in der Fußzeile von pdfmy.de. Auf Handy, Tablet und in Windows (Chrome, Edge) zuerst das Teilen-Menü des Geräts, sonst E-Mail, WhatsApp, LinkedIn, XING, Facebook, X und „Link kopieren“ mit vorbereitetem Text.
+- Datenschutz: einfache Links statt Teilen-Knöpfen der Netzwerke (die senden schon beim Laden Daten) – erst der Klick öffnet den Dienst, PDFMy zählt nichts.
+- Nach zehn Tagen Nutzung (gezählt werden Tage, an denen PDFMy geöffnet wurde – nur Anzahl und letzter Tag, im Gerät) einmal nach einem erfolgreichen Speichern ein dezenter Hinweis „Gefällt Ihnen PDFMy? Empfehlen Sie es weiter“ – danach nie wieder (Vorgabe GF 08.11.2026).
+- Erweiterungsseite: Nutzen zuerst, großer Download-Knopf, „Brauche ich das?“ (PDFMy geht auch ohne) und eine Beruhigung zum „Entwicklermodus“. Anlass: 62 Seitenaufrufe, 1 Download (Statistik 10.10.–08.11.2026, viele Aufrufe von Crawlern).
+- Teilen-Dialoge: Untertitel im Hauptknopf ohne Transparenz (Kontrast, axe).
+
 ## 2026-11-07
 
 ### Drucker „PDFMy“ ohne Aufwand (pdfmy Scan 1.16.0)

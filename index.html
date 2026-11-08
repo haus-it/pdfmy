@@ -953,8 +953,19 @@ body:has(.updbanner:not([hidden])) .toast{top:auto;bottom:96px}
 @media (max-width:520px){.fpgrid{grid-template-columns:minmax(0,1fr)}}
 .shbtn{display:flex!important;width:100%;height:auto!important;min-height:60px;padding:10px 14px!important;margin:0 0 8px;gap:14px;text-align:left;justify-content:flex-start;white-space:normal}
 .shbtn[hidden]{display:none!important}
+.recgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.recgrid button{display:flex;align-items:center;justify-content:flex-start;gap:10px;min-height:44px;height:auto;padding:8px 12px;font-weight:600}
+.recgrid button .ic{width:18px;height:18px}
+.recgrid .reccopy{grid-column:1/-1}
+.rechint{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:55;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:8px 8px 8px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);box-shadow:var(--sh-md)}
+.rechint[hidden]{display:none}
+.rechint p{margin:0;font-size:14px}
+.rechint .sh-go{border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:5px 12px;cursor:pointer;font-weight:600;flex:none}
+.rechint .sh-x{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:16px;padding:4px 8px;flex:none}
+@media (max-width:600px){.rechint{left:16px;right:16px;transform:none;max-width:none;flex-wrap:wrap;bottom:52px}.rechint p{flex:1 1 calc(100% - 40px)}.rechint .sh-x{order:-1;margin-left:auto}.rechint p{order:-2}}
 .shbtn span{display:flex;flex-direction:column;gap:2px}
 .shbtn small{font-weight:400;font-size:12.5px;opacity:.8}
+.shbtn.primary small{opacity:1}
 .shbtn .ic{width:22px;height:22px}
 body:not(.has-doc) #btnShareTop{display:none}
 /* Kamera */
@@ -1190,6 +1201,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi" id="btnSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einstellungen</span></button>
           <button class="mi" id="btnAi" title="KI-Assistent einrichten: KI des Browsers auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>KI-Assistent …</span></button>
           <button class="mi" id="btnNet" title="Selbst nachprüfen, dass Ihre Dokumente dieses Gerät nicht verlassen"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>Datenschutz selbst prüfen …</span></button>
+          <button class="mi" id="btnRecommend" title="PDFMy Freunden, Kollegen oder im Netzwerk empfehlen – per E-Mail, WhatsApp, LinkedIn, XING, Facebook oder X"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg><span>PDFMy weiterempfehlen …</span></button>
           <button class="mi" id="btnReport" title="Fehlerbericht mit Protokoll per E-Mail an den Support senden"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span>Problem melden …</span></button>
           <button class="mi" id="btnUpdate" title="Nach einer neuen Version suchen"><svg class="ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg><span>Updates suchen</span></button>
           <button class="mi" id="btnHelp"><svg class="ic" aria-hidden="true"><use href="#i-circle-help"/></svg><span>Hilfe &amp; Tastenkürzel</span><kbd>?</kbd></button>
@@ -1565,6 +1577,7 @@ html.i18n-wait body{visibility:hidden}
 </main>
 
 <div id="toast" class="toast" role="status" hidden></div>
+<aside id="recHint" class="rechint" hidden aria-label="PDFMy weiterempfehlen"><p>Gefällt Ihnen PDFMy? Empfehlen Sie es weiter – das hilft uns sehr.</p><button type="button" id="recHintGo" class="sh-go">Weiterempfehlen …</button><button type="button" id="recHintX" class="sh-x" aria-label="Hinweis zum Weiterempfehlen ausblenden" title="Ausblenden">✕</button></aside>
 <div id="present" class="present" hidden role="dialog" aria-modal="true" aria-label="Präsentation" tabindex="-1"><canvas id="presCv" aria-hidden="true"></canvas><div id="presBlack" class="presblack" hidden></div><div id="presBar" class="presbar"><button type="button" id="presPrev" aria-label="Vorherige Seite">‹</button><span id="presNum" aria-live="polite"></span><button type="button" id="presNext" aria-label="Nächste Seite">›</button><button type="button" id="presExit" aria-label="Präsentation beenden">Beenden (Esc)</button></div></div>
 <nav id="mobBar" aria-label="Dokument speichern und teilen"><button type="button" id="mbShare"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg>Teilen</button><button type="button" id="mbFile" hidden><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg>Ablegen</button><button type="button" id="mbSave" class="primary"><svg class="ic" aria-hidden="true"><use href="#i-save"/></svg>Speichern</button></nav>
 <footer><span id="pageNav" hidden><button type="button" id="pageInd" class="pageind" title="Zu einer Seite springen (Strg+G)">Seite 1 von 1</button><label class="sr-only" for="pageGo">Seitenzahl</label><input id="pageGo" type="number" min="1" inputmode="numeric" hidden></span><span id="msg" role="status">Bereit.</span><span id="offState" class="offstate" hidden></span><button type="button" id="bugBtn" class="bugbtn" title="Fehler oder Verbesserungsvorschlag melden – per E-Mail aus Ihrem Mailprogramm, ohne Dokumente"><svg class="ic" aria-hidden="true"><use href="#i-bug"/></svg><span>Fehler melden</span></button><button type="button" id="verBar" class="verbar" title="Installierte Versionen – klicken, um nach Updates zu suchen"></button><button type="button" id="updBtn" class="upd" hidden title="Eine neue Version ist geladen – ein Klick aktiviert sie">Neue Version verfügbar – jetzt neu laden</button><div class="bar" id="bar"><i></i></div></footer>
@@ -2295,6 +2308,23 @@ html.i18n-wait body{visibility:hidden}
   <button type="button" class="shbtn" id="shMail"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span><b>E-Mail mit Anhang (Outlook)</b><small>Neue Nachricht mit dem PDF als Anhang – Empfänger eintragen, senden</small></span></button>
   <button type="button" class="shbtn" id="shSave"><svg class="ic" aria-hidden="true"><use href="#i-save"/></svg><span><b>Speichern unter …</b><small>Datei speichern und selbst versenden</small></span></button>
   <div class="dlgrow"><button type="button" id="shCancel">Schließen</button></div>
+</dialog>
+
+<dialog id="recDlg" class="sharedlg" aria-labelledby="recDlgT">
+  <h3 class="dlgtitle" id="recDlgT">PDFMy weiterempfehlen</h3>
+  <p class="hint" style="margin:-8px 0 14px">Danke! Jede Empfehlung hilft, dass mehr Menschen ein PDF-Programm nutzen, bei dem alles auf dem eigenen Rechner bleibt.</p>
+  <button type="button" class="shbtn primary" id="recSystem" hidden><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg><span><b>Teilen …</b><small>Über das Teilen-Menü dieses Geräts – Messenger, Mail, Netzwerke</small></span></button>
+  <div class="recgrid">
+    <button type="button" data-rec="mail"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>E-Mail</button>
+    <button type="button" data-rec="wa" translate="no"><svg class="ic" aria-hidden="true"><use href="#i-phone-call"/></svg>WhatsApp</button>
+    <button type="button" data-rec="li" translate="no"><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg>LinkedIn</button>
+    <button type="button" data-rec="xing" translate="no"><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg>XING</button>
+    <button type="button" data-rec="fb" translate="no"><svg class="ic" aria-hidden="true"><use href="#i-share-2"/></svg>Facebook</button>
+    <button type="button" data-rec="x" translate="no"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>X</button>
+    <button type="button" data-rec="copy" class="reccopy"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg>Link kopieren</button>
+  </div>
+  <p class="hint" style="margin:12px 0 0">Ohne Teilen-Knöpfe der Netzwerke: Erst Ihr Klick öffnet den jeweiligen Dienst – vorher erfährt niemand etwas.</p>
+  <div class="dlgrow"><button type="button" id="recClose">Schließen</button></div>
 </dialog>
 
 <dialog id="taxDlg" aria-labelledby="taxDlgT">

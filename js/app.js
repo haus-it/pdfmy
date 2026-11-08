@@ -4087,7 +4087,7 @@ async function doExport(o) {
   const where = await deliver(data, name, mime, mime === 'application/pdf' && !o.password ? meta : null, o.saveAs);
   if (!where) { status('Speichern abgebrochen.'); return; }
   // Nur eine PDF gilt als gesichert – ein Export als Text, Word, Bild … enthält Anmerkungen, Unterschriften, Formular nicht
-  if (mime === 'application/pdf') state.dirty = false;
+  if (mime === 'application/pdf') { state.dirty = false; window.recAfterSave?.(); }
   if (o.batesOn && !['txt', 'docx', 'md', 'html', 'pptx'].includes(o.format)) LS.set('batesNext', o.batesStart + pages.length);   // nächstes Dokument zählt weiter
   if (mime === 'application/pdf' && !o.password) journalAdd(meta, where, pages.length);
   $('#btnNew').classList.add('next'); setTimeout(() => $('#btnNew').classList.remove('next'), 8000);

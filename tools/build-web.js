@@ -54,7 +54,7 @@ rep('<title>PDFMy</title>', `<title>${esc(W.title)}</title>
 <meta property="og:image" content="https://${site.domain}/icons/mentor-512.png">`);
 rep('content="Briefe scannen, als durchsuchbares PDF ablegen und bearbeiten – lokal, ohne Upload."',
   `content="${esc(W.description)}"`);
-rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a href="hilfe.html">${N.hilfe}</a> · <a href="werkzeuge.html">${N.werkzeuge}</a> · <span class="ext"><a href="erweiterung.html">${N.erweiterung}</a> · </span><a href="presse.html">${N.presse}</a> · <a href="impressum.html">${N.impressum}</a> · <a href="datenschutz.html">${N.datenschutz}</a> · <a href="barrierefreiheit.html">${N.barrierefreiheit}</a> · <a href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
+rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a href="#weiterempfehlen">${N.weiterempfehlen}</a> · <a href="hilfe.html">${N.hilfe}</a> · <a href="werkzeuge.html">${N.werkzeuge}</a> · <span class="ext"><a href="erweiterung.html">${N.erweiterung}</a> · </span><a href="presse.html">${N.presse}</a> · <a href="impressum.html">${N.impressum}</a> · <a href="datenschutz.html">${N.datenschutz}</a> · <a href="barrierefreiheit.html">${N.barrierefreiheit}</a> · <a href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
 rep('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} @media (pointer:coarse){footer .legal .ext{display:none}} @media (max-width:760px){footer .legal .ext{display:none} footer{padding:4px 12px} footer .legal{order:-1;flex:1 1 100%;min-width:0;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 90%,transparent);mask-image:linear-gradient(90deg,#000 90%,transparent)} footer .legal::-webkit-scrollbar{display:none}}\n</style>');
 // Suchmaschinen: kanonische Adresse und strukturierte Daten (schema.org) der Anwendung
 rep('</head>', `<link rel="canonical" href="https://${site.domain}/">
@@ -346,8 +346,11 @@ const extFiles = [];
 const extZip = `pdfmy-erweiterung-${extVer}.zip`;
 write('download/' + extZip, Buffer.from(require(path.join(ROOT, 'js', 'tools.js')).zip(extFiles, new Date(2026, 0, 1))));
 write('erweiterung.html', page('PDFs direkt in PDFMy öffnen', `
-<p>Mit der Browser-Erweiterung öffnen sich PDFs, die Sie in <b>Chrome</b> oder <b>Edge</b> anklicken – unter Windows und am <b>Mac</b> –, direkt in PDFMy – statt in einem anderen PDF-Programm oder im eingebauten Viewer.
-Die Datei wird dabei <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDFMy.</p>
+<p><b>Ein Klick auf eine PDF im Browser – und sie ist in PDFMy offen.</b> Für PDFs aus Webportalen, Webmail, Behörden- und Bankseiten: ausfüllen, unterschreiben, schwärzen, speichern – ohne Umweg über den Download-Ordner. Die Datei wird <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDFMy.</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px">
+<a href="download/${extZip}" download style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Erweiterung herunterladen<br><small style="font-weight:400">Chrome und Edge · Windows und Mac</small></a>
+</div>
+<p><b>Brauche ich das?</b> Nur, wenn Sie PDFs oft im Browser öffnen. PDFMy selbst funktioniert ohne Erweiterung; PDFs auf Ihrem PC öffnen sich mit <a href="scanner.html">pdfmy Scan</a> per Doppelklick in PDFMy.</p>
 <h2>Installation (ca. 2 Minuten)</h2>
 <ol>
 <li><a href="download/${extZip}" download>PDFMy-Erweiterung ${extVer} herunterladen</a> (ZIP, ca. ${Math.round(fs.statSync(path.join(OUT, 'download', extZip)).size / 1024)} KB).</li>
@@ -357,6 +360,7 @@ Die Datei wird dabei <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDF
 <li>Auf <b>Entpackte Erweiterung laden</b> klicken und den Ordner aus Schritt 2 auswählen.</li>
 <li>Es öffnet sich die Seite „Fast fertig“: auf <b>PDFs automatisch in PDFMy öffnen</b> klicken und die Rückfrage des Browsers mit <b>Zulassen</b> bestätigen.</li>
 </ol>
+<p><b>Keine Sorge wegen „Entwicklermodus“:</b> Der Schalter erlaubt dem Browser nur, eine Erweiterung aus einem Ordner zu laden statt aus dem Store – sonst ändert sich nichts. Sobald PDFMy im Chrome Web Store steht, entfällt dieser Schritt.</p>
 <p>Fertig. Tipp: Über das Puzzle-Symbol neben der Adresszeile das PDFMy-Symbol <b>anheften</b> – dort schalten Sie das automatische Öffnen an und aus.
 Den Ordner aus Schritt 2 bitte nicht löschen, der Browser lädt die Erweiterung daraus.</p>
 <h2>Bedienung</h2>

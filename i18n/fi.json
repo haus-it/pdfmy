@@ -3520,5 +3520,19 @@
  "Einrichten …": "Määritä …",
  "Hinweis zur Einrichtung ausblenden": "Piilota määritysvinkki",
  "Ausblenden": "Piilota",
- "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – tiedosto on jo pakattu optimaalisesti, alkuperäinen säilyy muuttumattomana"
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – tiedosto on jo pakattu optimaalisesti, alkuperäinen säilyy muuttumattomana",
+ "Danke! Jede Empfehlung hilft, dass mehr Menschen ein PDF-Programm nutzen, bei dem alles auf dem eigenen Rechner bleibt.": "Kiitos! Jokainen suositus auttaa useampia käyttämään PDF-ohjelmaa, jossa kaikki pysyy omalla tietokoneella.",
+ "Gefällt Ihnen PDFMy? Empfehlen Sie es weiter – das hilft uns sehr.": "Pidätkö PDFMy:stä? Suosittele sitä – se auttaa meitä paljon.",
+ "Hinweis zum Weiterempfehlen ausblenden": "Piilota suosittelun vinkki",
+ "Link kopieren": "Kopioi linkki",
+ "Link kopiert – jetzt einfügen, wo Sie möchten.": "Linkki kopioitu – liitä se mihin haluat.",
+ "Ohne Teilen-Knöpfe der Netzwerke: Erst Ihr Klick öffnet den jeweiligen Dienst – vorher erfährt niemand etwas.": "Ei verkostojen jakopainikkeita: vasta napsautuksesi avaa palvelun – sitä ennen kukaan ei saa tietää mitään.",
+ "PDFMy – das kostenlose PDF-Programm: scannen, bearbeiten, unterschreiben, zusammenfügen. Alles bleibt auf dem eigenen Rechner – ohne Upload, ohne Konto.": "PDFMy – maksuton PDF-ohjelma: skannaa, muokkaa, allekirjoita, yhdistä. Kaikki pysyy omalla tietokoneellasi – ei latausta verkkoon, ei tiliä.",
+ "PDFMy Freunden, Kollegen oder im Netzwerk empfehlen – per E-Mail, WhatsApp, LinkedIn, XING, Facebook oder X": "Suosittele PDFMy:tä ystäville, kollegoille tai verkostollesi – sähköpostilla, WhatsAppissa, LinkedInissä, XINGissä, Facebookissa tai X:ssä",
+ "PDFMy weiterempfehlen": "Suosittele PDFMy:tä",
+ "PDFMy weiterempfehlen …": "Suosittele PDFMy:tä …",
+ "Tipp: PDFMy – kostenloses PDF-Programm": "Vinkki: PDFMy – maksuton PDF-ohjelma",
+ "Über das Teilen-Menü dieses Geräts – Messenger, Mail, Netzwerke": "Tämän laitteen jakovalikon kautta – viestisovellukset, sähköposti, verkostot",
+ "Weiterempfehlen …": "Suosittele …",
+ "Weiterempfehlen": "Suosittele"
 }

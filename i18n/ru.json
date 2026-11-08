@@ -3520,5 +3520,19 @@
  "Einrichten …": "Настроить …",
  "Hinweis zur Einrichtung ausblenden": "Скрыть подсказку о настройке",
  "Ausblenden": "Скрыть",
- "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – файл уже оптимально сжат, оригинал остаётся без изменений"
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – файл уже оптимально сжат, оригинал остаётся без изменений",
+ "Danke! Jede Empfehlung hilft, dass mehr Menschen ein PDF-Programm nutzen, bei dem alles auf dem eigenen Rechner bleibt.": "Спасибо! Каждая рекомендация помогает большему числу людей пользоваться PDF-программой, в которой всё остаётся на их собственном компьютере.",
+ "Gefällt Ihnen PDFMy? Empfehlen Sie es weiter – das hilft uns sehr.": "Нравится PDFMy? Порекомендуйте его – это нам очень помогает.",
+ "Hinweis zum Weiterempfehlen ausblenden": "Скрыть подсказку о рекомендации",
+ "Link kopieren": "Копировать ссылку",
+ "Link kopiert – jetzt einfügen, wo Sie möchten.": "Ссылка скопирована – вставьте её, куда хотите.",
+ "Ohne Teilen-Knöpfe der Netzwerke: Erst Ihr Klick öffnet den jeweiligen Dienst – vorher erfährt niemand etwas.": "Без кнопок «Поделиться» от соцсетей: сервис открывает только ваш щелчок – до этого никто ничего не узнаёт.",
+ "PDFMy – das kostenlose PDF-Programm: scannen, bearbeiten, unterschreiben, zusammenfügen. Alles bleibt auf dem eigenen Rechner – ohne Upload, ohne Konto.": "PDFMy – бесплатная программа для PDF: сканировать, редактировать, подписывать, объединять. Всё остаётся на вашем компьютере – без загрузки, без учётной записи.",
+ "PDFMy Freunden, Kollegen oder im Netzwerk empfehlen – per E-Mail, WhatsApp, LinkedIn, XING, Facebook oder X": "Порекомендуйте PDFMy друзьям, коллегам или в своей сети – по почте, в WhatsApp, LinkedIn, XING, Facebook или X",
+ "PDFMy weiterempfehlen": "Порекомендовать PDFMy",
+ "PDFMy weiterempfehlen …": "Порекомендовать PDFMy …",
+ "Tipp: PDFMy – kostenloses PDF-Programm": "Совет: PDFMy – бесплатная программа для PDF",
+ "Über das Teilen-Menü dieses Geräts – Messenger, Mail, Netzwerke": "Через меню «Поделиться» этого устройства – мессенджеры, почта, сети",
+ "Weiterempfehlen …": "Порекомендовать …",
+ "Weiterempfehlen": "Порекомендовать"
 }

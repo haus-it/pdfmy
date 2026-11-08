@@ -2181,6 +2181,46 @@ $('#repMailto').onclick = async () => {
 };
 $('#repCancel').onclick = () => $('#reportDlg').close();
 $('#btnReport').onclick = () => openReport('');
+
+/* ---------- PDFMy weiterempfehlen (07.11.2026) ----------
+   Nur einfache Links bzw. das Teilen-Menü des Geräts – keine Teilen-Skripte von Facebook, LinkedIn & Co. (die senden schon beim
+   Laden der Seite Daten). Erst der Klick öffnet den jeweiligen Dienst; PDFMy zählt nichts (Leitplanke 3). Einmaliger Hinweis nach einem
+   erfolgreichen Speichern ab dem 10. Nutzungstag (Vorgabe GF 08.11.2026) – dann hat man den Nutzen erlebt; er kommt nur einmal. */
+const REC_URL = 'https://pdfmy.de/';
+const recText = () => I18N.t('PDFMy – das kostenlose PDF-Programm: scannen, bearbeiten, unterschreiben, zusammenfügen. Alles bleibt auf dem eigenen Rechner – ohne Upload, ohne Konto.');
+function openRecommend() {
+  $('#recHint').hidden = true;
+  $('#recSystem').hidden = !navigator.share;
+  $('#recDlg').showModal();
+}
+$('#recSystem').onclick = () => navigator.share?.({ title: 'PDFMy', text: recText(), url: REC_URL }).then(() => $('#recDlg').close()).catch(() => {});
+$('#recDlg').addEventListener('click', async e => {
+  const b = e.target.closest('[data-rec]'); if (!b) return;
+  const t = recText(), u = REC_URL, enc = encodeURIComponent;
+  if (b.dataset.rec === 'copy') {
+    try { await navigator.clipboard.writeText(t + ' ' + u); toast(I18N.t('Link kopiert – jetzt einfügen, wo Sie möchten.')); } catch { toast(u); }
+    return;
+  }
+  if (b.dataset.rec === 'mail') { location.href = `mailto:?subject=${enc(I18N.t('Tipp: PDFMy – kostenloses PDF-Programm'))}&body=${enc(t + '\n\n' + u)}`; return; }
+  const href = { wa: `https://wa.me/?text=${enc(t + ' ' + u)}`, li: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(u)}`, xing: `https://www.xing.com/spi/shares/new?url=${enc(u)}`,
+    fb: `https://www.facebook.com/sharer/sharer.php?u=${enc(u)}`, x: `https://x.com/intent/post?text=${enc(t)}&url=${enc(u)}` }[b.dataset.rec];
+  if (href) window.open(href, '_blank', 'noopener');
+});
+$('#recClose').onclick = () => $('#recDlg').close();
+$('#btnRecommend').onclick = () => { $('#moreMenu').open = false; openRecommend(); };
+$('#recHintGo').onclick = () => { LS.set('recAsked', 1); openRecommend(); };
+$('#recHintX').onclick = () => { LS.set('recAsked', 1); $('#recHint').hidden = true; };
+// Nutzungstage zählen (nur im Gerät: Anzahl und letzter Tag, kein Verlauf) – wer PDFMy nur einmal ausprobiert, wird nie gefragt
+const REC_DAYS = 10;
+{ const today = new Date().toISOString().slice(0, 10); if (LS.get('recDay') !== today) { LS.set('recDay', today); LS.set('recDays', (+LS.get('recDays', 0) || 0) + 1); } }
+window.recAfterSave = () => {
+  if ((+LS.get('recDays', 0) || 0) < REC_DAYS || LS.get('recAsked')) return;
+  LS.set('recAsked', 1);   // höchstens einmal – auch wenn der Hinweis übersehen wird
+  setTimeout(() => { if (!document.querySelector('dialog[open]')) $('#recHint').hidden = false; }, 2500);
+};
+// Link „Weiterempfehlen“ in der Fußzeile und von den Infoseiten (…/#weiterempfehlen)
+const recHash = () => { if (location.hash === '#weiterempfehlen') { history.replaceState(null, '', location.pathname + location.search); openRecommend(); } };
+addEventListener('hashchange', recHash); setTimeout(recHash, 800);
 $('#bugBtn').onclick = () => openReport('');
 $('#errBannerGo').onclick = () => { $('#errBanner').hidden = true; openReport('Programmfehler: ' + ($('#errBanner').dataset.msg || '')); };
 $('#errBannerLater').onclick = () => { $('#errBanner').hidden = true; };

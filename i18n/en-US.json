@@ -3520,5 +3520,19 @@
  "Einrichten …": "Set up …",
  "Hinweis zur Einrichtung ausblenden": "Hide setup hint",
  "Ausblenden": "Hide",
- "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – the file is already optimally compressed, the original stays unchanged"
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – the file is already optimally compressed, the original stays unchanged",
+ "Danke! Jede Empfehlung hilft, dass mehr Menschen ein PDF-Programm nutzen, bei dem alles auf dem eigenen Rechner bleibt.": "Thank you! Every recommendation helps more people use a PDF program where everything stays on their own computer.",
+ "Gefällt Ihnen PDFMy? Empfehlen Sie es weiter – das hilft uns sehr.": "Do you like PDFMy? Recommend it – that helps us a lot.",
+ "Hinweis zum Weiterempfehlen ausblenden": "Hide recommendation hint",
+ "Link kopieren": "Copy link",
+ "Link kopiert – jetzt einfügen, wo Sie möchten.": "Link copied – now paste it wherever you like.",
+ "Ohne Teilen-Knöpfe der Netzwerke: Erst Ihr Klick öffnet den jeweiligen Dienst – vorher erfährt niemand etwas.": "No share buttons from the networks: only your click opens the service – nobody learns anything before that.",
+ "PDFMy – das kostenlose PDF-Programm: scannen, bearbeiten, unterschreiben, zusammenfügen. Alles bleibt auf dem eigenen Rechner – ohne Upload, ohne Konto.": "PDFMy – the free PDF program: scan, edit, sign, merge. Everything stays on your own computer – no upload, no account.",
+ "PDFMy Freunden, Kollegen oder im Netzwerk empfehlen – per E-Mail, WhatsApp, LinkedIn, XING, Facebook oder X": "Recommend PDFMy to friends, colleagues or your network – by email, WhatsApp, LinkedIn, XING, Facebook or X",
+ "PDFMy weiterempfehlen": "Recommend PDFMy",
+ "PDFMy weiterempfehlen …": "Recommend PDFMy …",
+ "Tipp: PDFMy – kostenloses PDF-Programm": "Tip: PDFMy – free PDF program",
+ "Über das Teilen-Menü dieses Geräts – Messenger, Mail, Netzwerke": "Via this device’s share menu – messengers, mail, networks",
+ "Weiterempfehlen …": "Recommend …",
+ "Weiterempfehlen": "Recommend"
 }

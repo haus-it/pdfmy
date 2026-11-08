@@ -3520,5 +3520,19 @@
  "Einrichten …": "Seadista …",
  "Hinweis zur Einrichtung ausblenden": "Peida seadistamise vihje",
  "Ausblenden": "Peida",
- "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – fail on juba optimaalselt tihendatud, originaal jääb muutmata"
+ "≈ {0} – die Datei ist schon optimal komprimiert, das Original bleibt unverändert": "≈ {0} – fail on juba optimaalselt tihendatud, originaal jääb muutmata",
+ "Danke! Jede Empfehlung hilft, dass mehr Menschen ein PDF-Programm nutzen, bei dem alles auf dem eigenen Rechner bleibt.": "Aitäh! Iga soovitus aitab rohkematel inimestel kasutada PDF-programmi, kus kõik jääb nende enda arvutisse.",
+ "Gefällt Ihnen PDFMy? Empfehlen Sie es weiter – das hilft uns sehr.": "Kas PDFMy meeldib teile? Soovitage seda – see aitab meid väga.",
+ "Hinweis zum Weiterempfehlen ausblenden": "Peida soovitamise vihje",
+ "Link kopieren": "Kopeeri link",
+ "Link kopiert – jetzt einfügen, wo Sie möchten.": "Link kopeeritud – kleepige see, kuhu soovite.",
+ "Ohne Teilen-Knöpfe der Netzwerke: Erst Ihr Klick öffnet den jeweiligen Dienst – vorher erfährt niemand etwas.": "Ilma võrgustike jagamisnuppudeta: teenuse avab alles teie klõps – enne seda ei saa keegi midagi teada.",
+ "PDFMy – das kostenlose PDF-Programm: scannen, bearbeiten, unterschreiben, zusammenfügen. Alles bleibt auf dem eigenen Rechner – ohne Upload, ohne Konto.": "PDFMy – tasuta PDF-programm: skannida, muuta, allkirjastada, ühendada. Kõik jääb teie arvutisse – ilma üleslaadimise ja kontota.",
+ "PDFMy Freunden, Kollegen oder im Netzwerk empfehlen – per E-Mail, WhatsApp, LinkedIn, XING, Facebook oder X": "Soovitage PDFMy-d sõpradele, kolleegidele või oma võrgustikule – e-posti, WhatsAppi, LinkedIni, XINGi, Facebooki või X-i kaudu",
+ "PDFMy weiterempfehlen": "Soovita PDFMy-d",
+ "PDFMy weiterempfehlen …": "Soovita PDFMy-d …",
+ "Tipp: PDFMy – kostenloses PDF-Programm": "Vihje: PDFMy – tasuta PDF-programm",
+ "Über das Teilen-Menü dieses Geräts – Messenger, Mail, Netzwerke": "Selle seadme jagamismenüü kaudu – sõnumid, e-post, võrgustikud",
+ "Weiterempfehlen …": "Soovita …",
+ "Weiterempfehlen": "Soovita"
 }

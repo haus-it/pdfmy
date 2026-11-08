@@ -418,6 +418,13 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
 
+### Umgesetzt 08.11.2026: PDFMy weiterempfehlen (app-v232)
+**Anlass (GF 08.11.2026):** „Button ‚PDFMy weiterempfehlen‘ – Teilen auf Facebook, LinkedIn usw.“ Statistik: 96 % Direktaufrufe, 0,5 % Suchmaschinen – Empfehlungen sind der wichtigste Weg zu neuen Nutzern.
+**Lösung:** Menü „Mehr“, Fußzeile, einmaliger Hinweis nach zehn Nutzungstagen (Vorgabe GF; wer nur ausprobiert, wird nie gefragt – Zählung nur im Gerät). Teilen-Menü des Geräts, sonst Links zu E-Mail, WhatsApp, LinkedIn, XING (für den deutschen Mittelstand), Facebook, X; „Link kopieren“.
+**Geprüft und verworfen:** Teilen-Knöpfe/SDKs der Netzwerke (laden Fremdskripte, setzen Cookies – verletzt Punkt 1–3); Zähler für Empfehlungen oder Empfehlungs-Codes (Tracking); wiederholte Hinweise (nervt).
+**Leitplanken:** 1 gewahrt (Dokumente nicht betroffen). 2 gewahrt (keine Verbindung ohne Klick). 3 gewahrt (nichts gezählt, keine Fremdwerbung). 4: ein Menüpunkt, ein Hinweis höchstens einmal. 5: axe ohne Befund. 6 nicht betroffen.
+**Erweiterungsseite (gleicher Release):** Nutzen zuerst, Download-Knopf, „Brauche ich das?“, Hinweis zum Entwicklermodus. Die eigentliche Hürde bleibt die Installation ohne Store – Veröffentlichung im Chrome Web Store / bei Edge-Add-ons weiter offen (Entscheidung und Entwicklerkonto GF).
+
 ### Umgesetzt 07.11.2026: Drucker „PDFMy“ ohne Aufwand (pdfmy Scan 1.16.0)
 **Anlass (GF 07.11.2026):** Druck aus Outlook auf „PDFMy“ – nichts passiert; Auftrag „so einfach und sauber wie möglich, ohne Aufwand“.
 **Befund:** Ein nicht ankommender Druck scheiterte still. Auf dem Remotedesktop-Server stand nur der durchgereichte Drucker des Client-Geräts („(redirected)“) zur Wahl – der Druck landete auf dem anderen Gerät. Der Drucker wurde am Namen erkannt; umbenannt oder bei abweichendem Benutzernamen wurde der Druckordner nicht überwacht.
