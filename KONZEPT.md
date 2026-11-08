@@ -421,6 +421,7 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 ### Umgesetzt 08.11.2026: IndexNow (Auffindbarkeit)
 **Anlass:** 0,5 % Suchmaschinen-Anteil. Technische Grundlagen (Sitemap, hreflang, kanonisch, Titel, strukturierte Daten) waren vorhanden; die Lücke war die Anbindung an Bing.
 **Lösung:** Geänderte öffentliche Seiten nach jeder Auslieferung per IndexNow melden (tools/deploy.py).
+**Ergänzt 08.11.2026:** fünf Werkzeugseiten für häufige Suchbegriffe, deren Funktion es schon gab (PDF drehen, Excel in PDF, Ränder entfernen, Bilder aus PDF, PDF in Text) – Leitplanken unverändert (statische Seiten, kein Tracking).
 **Offen (GF):** Bing Webmaster Tools anmelden (Microsoft-Konto; Inhaberschaft über die vorhandene Google Search Console übernehmbar) – zeigt Suchanfragen und Fehler; Verlinkungen von Partnerseiten (Mentor Group, Haus iT, Verbände) sind der größte Hebel für Google.
 **Leitplanken:** 1–3 gewahrt (kein Kontakt aus dem Browser der Nutzer, keine Nutzerdaten, nichts gezählt). 4–6 nicht betroffen.
 

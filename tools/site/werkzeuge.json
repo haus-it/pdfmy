@@ -757,5 +757,120 @@
         "Die übrigen Seiten der längeren Datei stehen am Ende."
       ]
     ]
+  },
+  {
+    "slug": "pdf-drehen",
+    "target": "organize",
+    "label": "PDF drehen",
+    "title": "PDF drehen und dauerhaft speichern – kostenlos ohne Upload",
+    "description": "Einzelne Seiten oder die ganze PDF um 90 oder 180 Grad drehen und gedreht speichern. Kostenlos, ohne Anmeldung, direkt im Browser.",
+    "intro": "Ein Scan liegt quer, eine Seite steht kopf: In PDFMy drehen Sie einzelne Seiten oder alle auf einmal – und die Drehung bleibt beim Speichern erhalten.",
+    "steps": [
+      "Auf „Seiten organisieren“ klicken und die PDF wählen.",
+      "Seiten anklicken (Strg oder Umschalt für mehrere, Strg+A für alle) und auf Drehen klicken.",
+      "Speichern – die Seiten bleiben dauerhaft gedreht."
+    ],
+    "faq": [
+      [
+        "Wird nur die Ansicht gedreht?",
+        "Nein. Die Drehung wird in der PDF gespeichert und gilt in jedem PDF-Programm."
+      ],
+      [
+        "Geht dabei Text verloren?",
+        "Nein. Text, Links und Formularfelder bleiben erhalten, die Seite wird nur anders ausgerichtet."
+      ]
+    ]
+  },
+  {
+    "slug": "excel-in-pdf",
+    "target": "open",
+    "label": "Excel in PDF",
+    "title": "Excel in PDF umwandeln – kostenlos, ohne Upload und ohne Office",
+    "description": "Excel-Tabellen (.xlsx) und LibreOffice-Tabellen (.ods) kostenlos in PDF umwandeln – mit Zahlen- und Datumsformaten, jedes Blatt mit Überschrift. Ohne Upload.",
+    "intro": "Eine Preisliste, eine Abrechnung, ein Dienstplan: PDFMy macht aus Excel-Tabellen ein PDF, ohne dass Excel installiert sein muss – und ohne die Datei hochzuladen.",
+    "steps": [
+      "Auf „Öffnen“ klicken und die Excel- oder LibreOffice-Tabelle wählen (oder ins Fenster ziehen).",
+      "PDFMy setzt jedes sichtbare Blatt als Tabelle mit Überschrift.",
+      "Als PDF oder PDF/A speichern."
+    ],
+    "faq": [
+      [
+        "Werden Datum, Währung und Prozent richtig angezeigt?",
+        "Ja. Zahlen-, Währungs-, Prozent- und Datumsformate aus der Tabelle werden übernommen. Ausgeblendete Blätter bleiben draußen."
+      ],
+      [
+        "Kommen auch Diagramme mit?",
+        "Nein, übernommen werden die Werte der Zellen. Für Diagramme in Excel selbst „Als PDF speichern“ oder den Drucker „PDFMy“ verwenden."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-raender-entfernen",
+    "target": "trim",
+    "label": "Weiße Ränder entfernen",
+    "title": "PDF zuschneiden: weiße Ränder entfernen – kostenlos ohne Upload",
+    "description": "Leere weiße Ränder um den Inhalt einer PDF automatisch abschneiden – für bessere Lesbarkeit am Handy und beim Ausdruck. Kostenlos, ohne Upload.",
+    "intro": "Breite leere Ränder machen eine PDF am Handy winzig. PDFMy erkennt den Inhalt jeder Seite und schneidet den leeren Rand darum ab.",
+    "steps": [
+      "Auf „Weiße Ränder entfernen“ klicken und die PDF wählen.",
+      "Im Speichern-Dialog ist die Einstellung schon gewählt.",
+      "Auf „Speichern“ klicken – jede Seite wird auf ihren Inhalt zugeschnitten."
+    ],
+    "faq": [
+      [
+        "Wird der abgeschnittene Inhalt gelöscht?",
+        "Nein. Nur der sichtbare Seitenbereich wird kleiner; was außerhalb liegt, bleibt in der Datei. Zum endgültigen Entfernen vertraulicher Inhalte „Schwärzen“ verwenden."
+      ],
+      [
+        "Kann ich auch von Hand zuschneiden?",
+        "Ja. In der Werkzeugleiste gibt es „Zuschneiden“ für einen frei gezogenen Bereich."
+      ]
+    ]
+  },
+  {
+    "slug": "bilder-aus-pdf-extrahieren",
+    "target": "imgout",
+    "label": "Bilder aus PDF",
+    "title": "Bilder aus PDF extrahieren – in Originalgröße, ohne Upload",
+    "description": "Fotos, Logos und Grafiken aus einer PDF in Originalauflösung herausholen, mehrere gesammelt als ZIP. Kostenlos, ohne Anmeldung, direkt im Browser.",
+    "intro": "Ein Foto aus einem Prospekt, ein Logo aus einem Briefbogen: PDFMy holt die Bilder so aus der PDF, wie sie darin stecken – ohne Qualitätsverlust durch Bildschirmfotos.",
+    "steps": [
+      "Auf „Bilder aus PDF“ klicken und die PDF wählen.",
+      "PDFMy sucht alle eingebetteten Bilder heraus und speichert sie gleich.",
+      "Ein Bild kommt als JPG oder PNG, mehrere gesammelt als ZIP."
+    ],
+    "faq": [
+      [
+        "Warum fehlt ein Bild?",
+        "Grafiken, die in der PDF als Linien und Flächen gezeichnet sind (z. B. viele Diagramme), sind keine Bilder. Dafür „PDF in JPG“ verwenden – das macht aus jeder Seite ein Bild."
+      ],
+      [
+        "Wird die Datei hochgeladen?",
+        "Nein. PDFMy arbeitet vollständig auf Ihrem Gerät."
+      ]
+    ]
+  },
+  {
+    "slug": "pdf-in-text",
+    "target": "text",
+    "label": "Text extrahieren",
+    "title": "PDF in Text umwandeln – auch Scans, ohne Upload",
+    "description": "Den Text einer PDF als .txt-Datei speichern – bei Scans mit Texterkennung (OCR). Kostenlos, ohne Anmeldung, direkt im Browser.",
+    "intro": "Zum Weiterverarbeiten, Zitieren oder Durchsuchen: PDFMy speichert den Text einer PDF als einfache Textdatei. Bei gescannten Seiten liest die Texterkennung den Text vorher aus dem Bild.",
+    "steps": [
+      "Auf „Text extrahieren“ klicken und die PDF wählen.",
+      "Bei Scans erkennt PDFMy den Text automatisch – auf Ihrem Gerät.",
+      "Als .txt speichern."
+    ],
+    "faq": [
+      [
+        "Sind die Seiten noch erkennbar?",
+        "Ja. Jede Seite beginnt in der Textdatei mit einer Markierung wie „--- Seite 1 ---“."
+      ],
+      [
+        "Und wenn ich Überschriften und Tabellen behalten möchte?",
+        "„PDF in Word“ übernimmt Überschriften, Aufzählungen und Tabellen; „Für KI vorbereiten“ speichert Markdown."
+      ]
+    ]
   }
 ]

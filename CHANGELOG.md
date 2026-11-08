@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-08
 
+### Fünf neue Werkzeugseiten für die Suche
+- Neu auf pdfmy.de (in allen 41 Sprachfassungen): „PDF drehen“, „Excel in PDF“, „PDF zuschneiden: weiße Ränder entfernen“, „Bilder aus PDF extrahieren“ und „PDF in Text“. Die Funktionen gab es in PDFMy schon – es fehlte nur eine Seite, die Suchende finden. Jede Seite führt mit einem Klick ins passende Werkzeug.
+- Alle Aussagen der Seiten am Programm geprüft (z. B. Ränder werden beim Speichern abgeschnitten, Bilder aus PDF speichert direkt, ein Bild einzeln, mehrere als ZIP; Excel: sichtbare Blätter mit Zahlen- und Datumsformaten, keine Diagramme).
+- Die neuen Seiten werden nach der Auslieferung automatisch per IndexNow gemeldet.
+
 ### Absturzschutz auch für große Dokumente (app-v236)
 - Bisher sicherte der Absturzschutz Dokumente über 300 Seiten still gar nicht – wer an einem großen Dokument arbeitete, verließ sich auf eine Sicherung, die es nicht gab. Gemessen: 1.200 Textseiten sichert PDFMy in 1,1 s; die Grenze richtet sich jetzt nach der Größe (400 MB) statt nach der Seitenzahl.
 - Scanseiten: Jede Sicherung zerlegte bisher alle Seiten neu in Schrift- und Hintergrundebene (150 Scanseiten: 31 s – bei jeder Änderung). Jetzt kodiert die Sicherung jede Seite einmal als JPEG und verwendet das Ergebnis wieder, solange die Seite unverändert ist (gleiches Beispiel: einmal 27 s, danach 4 s).
