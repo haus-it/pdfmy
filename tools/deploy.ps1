@@ -140,6 +140,8 @@ Add-ReleaseLine "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | $web | $($ver.pdfmyS
 New-Item -ItemType Directory -Force $releases | Out-Null
 $zipPath = Join-Path $releases "$web.zip"
 if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
-Compress-Archive -Path (Join-Path $distDir '*') -DestinationPath $zipPath -CompressionLevel Fastest
+# Python statt Compress-Archive: Compress-Archive brauchte für die rund 1.700 Dateien 45 min bis viele Stunden (08.11.2026), Python ~3 min
+& $py -I -c "import shutil, sys; shutil.make_archive(sys.argv[1][:-4], 'zip', sys.argv[2])" $zipPath $distDir
+if ($LASTEXITCODE -or -not (Test-Path $zipPath)) { Write-Warning 'Fassung für den Rückweg konnte nicht gepackt werden – die Auslieferung selbst ist fertig.' }
 Get-ChildItem $releases -Filter '*.zip' | Sort-Object LastWriteTime -Descending | Select-Object -Skip 5 | Remove-Item -Force
 Write-Host "Fassung $web für den Rückweg aufbewahrt (tools\deploy.ps1 -Rollback)." -ForegroundColor Green

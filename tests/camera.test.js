@@ -55,3 +55,15 @@ test('Plausibel mit Kantenbestätigung (neue Blatterkennung)', () => {
   assert.equal(C.plausible({ found: true, corners: page, score: 0.9 }), true);
   assert.equal(C.plausible({ found: true, corners: page, score: 0.2, fill: 1 }), false);
 });
+
+test('Licht: Spiegelung, zu dunkel, gleichmäßig hell', () => {
+  const fill = (n, v) => Array(n).fill(v);
+  const paper = [...fill(900, 210), ...fill(100, 40)];                  // Papier mit Schrift, normal belichtet
+  assert.equal(C.lightIssue(C.lightStats(paper)), '');
+  assert.equal(C.lightIssue(C.lightStats([...paper, ...fill(120, 255)])), 'glare');   // ausgebrannter Fleck
+  assert.equal(C.lightIssue(C.lightStats([...fill(900, 252), ...fill(100, 30)])), '');  // ganzes Papier sehr hell: keine Spiegelung
+  assert.equal(C.lightIssue(C.lightStats([...paper, ...fill(5, 255)])), '');          // einzelne helle Punkte zählen nicht
+  assert.equal(C.lightIssue(C.lightStats(fill(500, 30))), 'dark');
+  const s = C.lightStats([0, 10, 20, 255]);
+  assert.equal(s.sat, 0.25); assert.equal(s.p50, 10); assert.equal(s.mean, 71.25);
+});

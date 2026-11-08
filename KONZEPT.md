@@ -95,7 +95,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
 ### Entschieden 01.11.2026: Kamera-Scan robuster
-**Inhalt:** Aufnahmen als JPEG statt unkomprimiert im Speicher, Bildschirm bleibt an, Kamera startet nach Unterbrechung neu, Hinweis auf unscharfe Seiten. **Noch offen:** Licht-Hinweise, Verarbeitung im Hintergrund. (Zwischenstand nach Absturz umgesetzt in app-v210, Ecken von Hand korrigieren in app-v212 – Stand 03.11.2026.)
+**Inhalt:** Aufnahmen als JPEG statt unkomprimiert im Speicher, Bildschirm bleibt an, Kamera startet nach Unterbrechung neu, Hinweis auf unscharfe Seiten. **Noch offen:** Verarbeitung im Hintergrund. (Licht-Hinweise – Spiegelung und zu dunkel – umgesetzt in app-v235, 08.11.2026; Leitplanken 1–3 gewahrt, alles im Gerät; 4: nur Hinweise, keine neue Bedienung; 5: axe ohne Befund.) (Zwischenstand nach Absturz umgesetzt in app-v210, Ecken von Hand korrigieren in app-v212 – Stand 03.11.2026.)
 
 | Leitplanke | Prüfung |
 |---|---|

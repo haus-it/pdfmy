@@ -55,7 +55,22 @@
     return cur.map(([x, y], i) => [prev[i][0] + (x - prev[i][0]) * k, prev[i][1] + (y - prev[i][1]) * k]);
   }
   const tooDark = mean => mean < 45;   // mittlere Helligkeit 0–255: Texterkennung und Blatterkennung werden darunter unzuverlässig
-  const api = { quadArea, quadDelta, anglesOk, plausible, fpDiff, AutoShutter, smoothCorners, tooDark };
+  // Licht auf dem Blatt: Grauwerte (0–255) → Mittel, Anteil ausgebrannter Stellen (≥ 250) und Median
+  function lightStats(gray) {
+    const h = new Uint32Array(256); let s = 0;
+    for (const v of gray) { h[v]++; s += v; }
+    const n = gray.length || 1; let sat = 0; for (let v = 250; v < 256; v++) sat += h[v];
+    let p50 = 0; for (let c = 0; p50 < 255 && (c += h[p50]) < n / 2; p50++);
+    return { mean: s / n, sat: sat / n, p50 };
+  }
+  /* 'dark': zu wenig Licht. 'glare': Spiegelung – ein Teil des Blatts ist ausgebrannt (Schrift dort verloren), während das übrige
+     Papier normal belichtet ist. Gleichmäßig sehr helles Papier (Median ≥ 235) gilt nicht als Spiegelung. */
+  function lightIssue({ mean, sat, p50 }) {
+    if (tooDark(mean)) return 'dark';
+    if (sat > 0.03 && sat < 0.5 && p50 < 235) return 'glare';
+    return '';
+  }
+  const api = { quadArea, quadDelta, anglesOk, plausible, fpDiff, AutoShutter, smoothCorners, tooDark, lightStats, lightIssue };
   if (typeof module === 'object' && module.exports) { module.exports = api; return; }
   root.CamLogic = api;
 
@@ -91,10 +106,25 @@
     let dark = 0; for (let i = 1; i < d.length; i += 16) if (d[i] < 120) dark++;
     return dark / (d.length / 16) > 0.004 && sharpness(s) < BLUR_LIMIT;
   }
+  // Grauwerte eines Ausschnitts (Anteile 0–1, ohne Rand) – jeder 3. Bildpunkt reicht
+  function grayOf(cv, x0 = 0, y0 = 0, x1 = 1, y1 = 1) {
+    const W = cv.width, H = cv.height, ix = Math.max(0, Math.floor(x0 * W)), iy = Math.max(0, Math.floor(y0 * H));
+    const w = Math.max(1, Math.min(W - ix, Math.floor((x1 - x0) * W))), h = Math.max(1, Math.min(H - iy, Math.floor((y1 - y0) * H)));
+    const d = cv.getContext('2d', { willReadFrequently: true }).getImageData(ix, iy, w, h).data, out = [];
+    for (let i = 0; i < d.length; i += 12) out.push((d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11) | 0);
+    return out;
+  }
+  // Licht im erkannten Blatt (umschließendes Rechteck, 10 % eingerückt, damit der Untergrund nicht mitzählt)
+  function sheetLight(cv, det) {
+    const xs = det.corners.map(p => p[0]), ys = det.corners.map(p => p[1]);
+    const ax = Math.min(...xs), bx = Math.max(...xs), ay = Math.min(...ys), by = Math.max(...ys), mx = (bx - ax) * 0.1, my = (by - ay) * 0.1;
+    return lightIssue(lightStats(grayOf(cv, ax + mx, ay + my, bx - mx, by - my)));
+  }
   // Seiten als JPEG im Speicher: unkomprimiert wären es rund 19 MB je Seite, bei langen Stapeln schließt Android sonst den Tab
   async function packShot(c, cropped) {
-    const sh = { w: c.width, h: c.height, cropped, blurry: false, thumb: Imaging.scaled(c, 120).toDataURL('image/jpeg', 0.7) };
+    const sh = { w: c.width, h: c.height, cropped, blurry: false, glare: false, thumb: Imaging.scaled(c, 120).toDataURL('image/jpeg', 0.7) };
     try { sh.blurry = looksBlurry(c); } catch (e) { console.warn('Schärfe:', e); }
+    try { if (cropped) { const s = Imaging.scaled(c, 400); sh.glare = lightIssue(lightStats(grayOf(s, 0.05, 0.05, 0.95, 0.95))) === 'glare'; if (s !== c) s.width = 0; } } catch (e) { console.warn('Licht:', e); }
     const blob = await new Promise(res => c.toBlob(res, 'image/jpeg', 0.92));
     if (blob) { sh.blob = blob; c.width = 0; c.height = 0; } else sh.canvas = c;   // ohne JPEG (Speicher knapp) bleibt das Bild, wie es ist
     return sh;
@@ -166,6 +196,9 @@
     x.lineWidth = 3 * devicePixelRatio; x.strokeStyle = `rgba(${col},.95)`; x.stroke();
   }
   function setHint(t) { $('#camHint').textContent = t; }
+  const darkHint = () => stream?.getVideoTracks()[0]?.getCapabilities?.().torch ? 'Zu dunkel – mehr Licht oder die Taschenlampe einschalten' : 'Zu dunkel – bitte für mehr Licht sorgen';
+  // Hinweis zu einer fertigen Seite (leer, wenn alles gut aussieht); die Aufnahme bleibt immer erhalten
+  const shotNote = (sh, n) => sh?.blurry ? `Seite ${n} wirkt unscharf – antippen zum Prüfen` : sh?.glare ? `Seite ${n} hat eine Spiegelung – antippen zum Prüfen` : '';
   function meanLight(cv) {
     const d = cv.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, cv.width, cv.height).data;
     let s = 0, n = 0; for (let i = 1; i < d.length; i += 40) { s += d[i]; n++; }
@@ -189,9 +222,12 @@
     drawOverlay(det, st);
     $('#camRing').style.setProperty('--p', st.state === 'hold' ? st.progress : 0);
     if (st.state === 'fire') capture(det);
-    else if (st.state === 'wait') setHint(shots.at(-1)?.blurry ? `Seite ${shots.length} wirkt unscharf – antippen zum Prüfen` : `Seite ${shots.length} aufgenommen – nächstes Blatt hinlegen oder „Fertig“`);
-    else if (st.state === 'hold') setHint(auto ? 'Blatt erkannt – ruhig halten …' : 'Blatt erkannt – auf den Auslöser tippen');
-    else if (tooDark(meanLight(small))) setHint(stream?.getVideoTracks()[0]?.getCapabilities?.().torch ? 'Zu dunkel – mehr Licht oder die Taschenlampe einschalten' : 'Zu dunkel – bitte für mehr Licht sorgen');
+    else if (st.state === 'wait') setHint(shotNote(shots.at(-1), shots.length) || `Seite ${shots.length} aufgenommen – nächstes Blatt hinlegen oder „Fertig“`);
+    else if (st.state === 'hold') {
+      const li = ok ? sheetLight(small, det) : '';
+      setHint(li === 'dark' ? darkHint() : li === 'glare' ? 'Spiegelung auf dem Blatt – Handy etwas schräg halten oder Licht von der Seite' : auto ? 'Blatt erkannt – ruhig halten …' : 'Blatt erkannt – auf den Auslöser tippen');
+    }
+    else if (tooDark(meanLight(small))) setHint(darkHint());
     else if (searchSince && t - searchSince > 4500) setHint('Kein Blatt erkannt – auf einen dunklen Untergrund legen, etwas Abstand halten oder selbst auslösen');
     else setHint(shots.length ? `${shots.length} Seite(n) – nächstes Blatt ins Bild` : 'Blatt auf eine dunkle Fläche legen und ins Bild halten');
   }
@@ -260,7 +296,7 @@
     const s = $('#camStrip'); s.innerHTML = '';
     shots.forEach((sh, i) => {
       const im = new Image(); im.src = sh.thumb ||= Imaging.scaled(sh.canvas, 120).toDataURL('image/jpeg', 0.7); im.alt = `Seite ${i + 1}`;
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'camthumb' + (sh.blurry ? ' camblur' : ''); b.title = sh.blurry ? `Seite ${i + 1} wirkt unscharf – antippen zum Prüfen` : `Seite ${i + 1} ansehen, drehen oder löschen`;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'camthumb' + (sh.blurry || sh.glare ? ' camblur' : ''); b.title = shotNote(sh, i + 1) || `Seite ${i + 1} ansehen, drehen oder löschen`;
       b.append(im); const n = document.createElement('span'); n.textContent = i + 1; b.append(n);
       b.onclick = () => review(i);
       s.append(b);
@@ -413,7 +449,7 @@
       b.onkeydown = e => { const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key]; if (!d || !edit) return; e.preventDefault(); const s = e.shiftKey ? 0.002 : 0.01; edit.c[k] = [Math.max(0, Math.min(1, edit.c[k][0] + d[0] * s)), Math.max(0, Math.min(1, edit.c[k][1] + d[1] * s))]; cornDraw(); };
     });
     $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); persist(); renderStrip(); closeReview(); };
-    $('#camRevRot').onclick = async () => { const i = reviewIdx, sh = shots[i]; if (!sh) return; const c = await shotCanvas(sh), r = Imaging.rotate90(c, 90); c.width = 0; const blurry = sh.blurry; shots[i] = await packShot(r, sh.cropped); shots[i].blurry = blurry; persist(); renderStrip(); review(i); };
+    $('#camRevRot').onclick = async () => { const i = reviewIdx, sh = shots[i]; if (!sh) return; const c = await shotCanvas(sh), r = Imaging.rotate90(c, 90); c.width = 0; const { blurry, glare } = sh; shots[i] = await packShot(r, sh.cropped); Object.assign(shots[i], { blurry, glare }); persist(); renderStrip(); review(i); };
     $('#camDone').onclick = () => close(true);
     // Anruf oder App-Wechsel: Das Handy kann die Seite im Hintergrund beenden – bisherige Aufnahmen ins Dokument übernehmen
     // (dort greift der Absturzschutz); weiterscannen mit „Kamera“ hängt neue Seiten hinten an

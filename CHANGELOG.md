@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-08
 
+### Kamera-Scan: Hinweis auf Spiegelungen und zu wenig Licht (app-v235)
+- Spiegelung auf dem Blatt (glänzendes Papier, Deckenlampe, Blitz): PDFMy erkennt ausgebrannte Stellen im erkannten Blatt und rät schon vor der Aufnahme, das Handy etwas schräg zu halten oder das Licht von der Seite kommen zu lassen. Ist die Seite trotzdem mit Spiegelung aufgenommen, bekommt ihr Vorschaubild den gelben Rahmen wie bei unscharfen Seiten – antippen, prüfen, ggf. löschen.
+- „Zu dunkel“ erscheint jetzt auch, wenn das Blatt schon erkannt ist (vorher nur bei der Suche), mit Hinweis auf die Taschenlampe, wenn das Gerät eine hat.
+- Gleichmäßig sehr helles Papier gilt nicht als Spiegelung; einzelne helle Punkte zählen nicht. Die Aufnahme wird nie verworfen, es bleibt ein Hinweis. Alles im Gerät berechnet.
+
 ### Schneller in Bing & Co. gefunden: IndexNow
 - Anlass: Statistik 10.10.–08.11.2026 – nur 0,5 % der Besuche kommen über Suchmaschinen. Technisch war die Website schon gut auffindbar (Sitemap mit 1.678 Adressen, hreflang für 41 Sprachfassungen, eigene kanonische Adresse, übersetzte Titel und Beschreibungen, strukturierte Daten).
 - Neu: Nach jeder Auslieferung meldet `tools/deploy.py` die geänderten öffentlichen Seiten per IndexNow an Bing, Yandex, Seznam u. a. (Bing beliefert auch DuckDuckGo, Yahoo, Ecosia sowie die Suche von ChatGPT und Copilot). Schlüsseldatei `338cffd73ed849d192fa0f2825371a35.txt` im Webspace.
