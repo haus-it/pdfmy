@@ -54,8 +54,10 @@ rep('<title>PDFMy</title>', `<title>${esc(W.title)}</title>
 <meta property="og:image" content="https://${site.domain}/icons/mentor-512.png">`);
 rep('content="Briefe scannen, als durchsuchbares PDF ablegen und bearbeiten – lokal, ohne Upload."',
   `content="${esc(W.description)}"`);
-rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a href="#weiterempfehlen">${N.weiterempfehlen}</a> · <a href="hilfe.html">${N.hilfe}</a> · <a href="werkzeuge.html">${N.werkzeuge}</a> · <span class="ext"><a href="erweiterung.html">${N.erweiterung}</a> · </span><a href="presse.html">${N.presse}</a> · <a href="impressum.html">${N.impressum}</a> · <a href="datenschutz.html">${N.datenschutz}</a> · <a href="barrierefreiheit.html">${N.barrierefreiheit}</a> · <a href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
-rep('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} @media (pointer:coarse){footer .legal .ext{display:none}} @media (max-width:760px){footer .legal .ext{display:none} footer{padding:4px 12px} footer .legal{order:-1;flex:1 1 100%;min-width:0;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 90%,transparent);mask-image:linear-gradient(90deg,#000 90%,transparent)} footer .legal::-webkit-scrollbar{display:none}}\n</style>');
+rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a class="lx" href="#weiterempfehlen">${N.weiterempfehlen}</a><a class="lx" href="hilfe.html">${N.hilfe}</a><a class="lx" href="werkzeuge.html">${N.werkzeuge}</a><a class="lx ext" href="erweiterung.html">${N.erweiterung}</a><a class="lx" href="presse.html">${N.presse}</a><a href="impressum.html">${N.impressum}</a><a href="datenschutz.html">${N.datenschutz}</a><a href="barrierefreiheit.html">${N.barrierefreiheit}</a><a class="lx" href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
+// Fußzeile am Handy (Rückmeldung GF 08.11.2026 „der Fuß ist zu hoch – sei sparsamer“): eine Zeile – Impressum, Datenschutz,
+// Barrierefreiheit (Pflichtangaben); Hilfe, Weiterempfehlen usw. stehen im Menü „Mehr“. Zeigt die Statuszeile eine Meldung, hat sie Vorrang.
+rep('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} footer .legal a+a::before{content:"·";display:inline-block;margin:0 5px;color:var(--muted);text-decoration:none} @media (pointer:coarse){footer .legal .ext{display:none}} @media (max-width:760px){footer .legal .lx{display:none} footer .legal{display:flex;gap:10px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none} footer .legal a+a::before{content:none} footer .legal::-webkit-scrollbar{display:none} footer:not(.st-idle) .legal{display:none}}\n</style>');
 // Suchmaschinen: kanonische Adresse und strukturierte Daten (schema.org) der Anwendung
 rep('</head>', `<link rel="canonical" href="https://${site.domain}/">
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebApplication', name: 'PDFMy', url: `https://${site.domain}/`,
@@ -345,6 +347,20 @@ const extFiles = [];
 })(EXT);
 const extZip = `pdfmy-erweiterung-${extVer}.zip`;
 write('download/' + extZip, Buffer.from(require(path.join(ROOT, 'js', 'tools.js')).zip(extFiles, new Date(2026, 0, 1))));
+// Download-Ordner (Fehlerbericht 08.11.2026, „Ist keine .exe – man dreht sich im Kreis“): Eine noch offene ältere PDFMy-Fassung
+// verlinkt die Datei der Vorversion, die beim Deploy gelöscht wird; der Server lieferte dafür die Startseite (ErrorDocument) aus,
+// und die landete als „Download“ beim Nutzer. Jetzt: alte Versionsnummern → aktuelle Datei (302), sonst eine klare 404-Meldung.
+write('download/.htaccess', `# Downloads: alte Versionen auf die aktuelle Datei umleiten, fehlende Dateien nie als Webseite ausliefern
+ErrorDocument 404 "Datei nicht gefunden. Bitte auf https://${site.domain}/scanner.html neu herunterladen."
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteOptions Inherit
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^pdfmy-Scan-[0-9.]+\\.exe$ /download/${scanFile} [R=302,L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^pdfmy-erweiterung-[0-9.]+\\.zip$ /download/${extZip} [R=302,L]
+</IfModule>
+`);
 write('erweiterung.html', page('PDFs direkt in PDFMy öffnen', `
 <p><b>Ein Klick auf eine PDF im Browser – und sie ist in PDFMy offen.</b> Für PDFs aus Webportalen, Webmail, Behörden- und Bankseiten: ausfüllen, unterschreiben, schwärzen, speichern – ohne Umweg über den Download-Ordner. Die Datei wird <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDFMy.</p>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px">

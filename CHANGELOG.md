@@ -4,10 +4,22 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-08
 
+### Schlanke Fußleiste am Handy (app-v234)
+- Am Handy war die Fußleiste drei Zeilen hoch (Links, „Bereit.“, „Fehler melden“). Jetzt eine Zeile (29 px): Impressum, Datenschutz, Barrierefreiheit, „offline bereit“ und „Fehler melden“ als Symbol. Hilfe, Weiterempfehlen, Werkzeuge usw. stehen im Menü „Mehr“. Zeigt die Statuszeile eine Meldung (z. B. beim Speichern), hat sie Vorrang vor den Links. Am PC unverändert.
+- Trennpunkte zwischen den Links kommen jetzt aus dem Stil – ausgeblendete Links hinterlassen keine doppelten Punkte.
+
+### Fehler behoben: Download von pdfmy Scan lieferte eine Webseite statt der .exe
+- Meldung aus den Philippinen: „pdfmy Scan 1.16.0 ist keine .exe – nach dem Download landet man wieder auf der Webseite. 3 Downloads, keine Installation.“
+- Ursache: Eine noch geöffnete ältere PDFMy-Fassung verlinkt die Datei der Vorversion (`pdfmy-Scan-1.15.0.exe`), die beim Ausrollen von 1.16.0 gelöscht wurde. Für fehlende Dateien lieferte der Server die Startseite aus – sie wurde als „Download“ gespeichert.
+- Lösung: `download/.htaccess` leitet alte Versionsnummern von pdfmy Scan und der Browser-Erweiterung auf die aktuelle Datei um (302); fehlt im Download-Ordner trotzdem eine Datei, kommt eine klare Meldung statt der Startseite.
+
+### Weiterempfehlen-Hinweis erst nach 60 Nutzungstagen (app-v233)
+- Der einmalige Hinweis „Gefällt Ihnen PDFMy? Empfehlen Sie es weiter“ kommt jetzt erst nach 60 statt 10 Tagen, an denen PDFMy geöffnet wurde (Vorgabe GF 08.11.2026). Bereits gezählte Tage bleiben erhalten.
+
 ### PDFMy weiterempfehlen und klarere Erweiterungsseite (app-v232)
 - **Weiterempfehlen:** *Mehr → PDFMy weiterempfehlen …* und ein Link „Weiterempfehlen“ in der Fußzeile von pdfmy.de. Auf Handy, Tablet und in Windows (Chrome, Edge) zuerst das Teilen-Menü des Geräts, sonst E-Mail, WhatsApp, LinkedIn, XING, Facebook, X und „Link kopieren“ mit vorbereitetem Text.
 - Datenschutz: einfache Links statt Teilen-Knöpfen der Netzwerke (die senden schon beim Laden Daten) – erst der Klick öffnet den Dienst, PDFMy zählt nichts.
-- Nach zehn Tagen Nutzung (gezählt werden Tage, an denen PDFMy geöffnet wurde – nur Anzahl und letzter Tag, im Gerät) einmal nach einem erfolgreichen Speichern ein dezenter Hinweis „Gefällt Ihnen PDFMy? Empfehlen Sie es weiter“ – danach nie wieder (Vorgabe GF 08.11.2026).
+- Nach 60 Tagen Nutzung (gezählt werden Tage, an denen PDFMy geöffnet wurde – nur Anzahl und letzter Tag, im Gerät) einmal nach einem erfolgreichen Speichern ein dezenter Hinweis „Gefällt Ihnen PDFMy? Empfehlen Sie es weiter“ – danach nie wieder (Vorgabe GF 08.11.2026).
 - Erweiterungsseite: Nutzen zuerst, großer Download-Knopf, „Brauche ich das?“ (PDFMy geht auch ohne) und eine Beruhigung zum „Entwicklermodus“. Anlass: 62 Seitenaufrufe, 1 Download (Statistik 10.10.–08.11.2026, viele Aufrufe von Crawlern).
 - Teilen-Dialoge: Untertitel im Hauptknopf ohne Transparenz (Kontrast, axe).
 

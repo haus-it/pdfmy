@@ -125,6 +125,7 @@ addEventListener('unhandledrejection', e => appError(e.reason?.message || e.reas
 function status(msg, pct) {
   if (pct == null && msg !== $('#msg').textContent) logLine(msg);
   $('#msg').textContent = msg;
+  document.querySelector('footer')?.classList.toggle('st-idle', !msg || msg === 'Bereit.');   // Leerlauf: am Handy Platz für die Pflichtlinks
   const bar = $('#bar');
   if (pct == null) bar.style.visibility = 'hidden';
   else { bar.style.visibility = 'visible'; bar.firstElementChild.style.width = Math.round(pct * 100) + '%'; }

@@ -2185,7 +2185,7 @@ $('#btnReport').onclick = () => openReport('');
 /* ---------- PDFMy weiterempfehlen (07.11.2026) ----------
    Nur einfache Links bzw. das Teilen-Menü des Geräts – keine Teilen-Skripte von Facebook, LinkedIn & Co. (die senden schon beim
    Laden der Seite Daten). Erst der Klick öffnet den jeweiligen Dienst; PDFMy zählt nichts (Leitplanke 3). Einmaliger Hinweis nach einem
-   erfolgreichen Speichern ab dem 10. Nutzungstag (Vorgabe GF 08.11.2026) – dann hat man den Nutzen erlebt; er kommt nur einmal. */
+   erfolgreichen Speichern ab dem 60. Nutzungstag (Vorgabe GF 08.11.2026) – dann hat man den Nutzen erlebt; er kommt nur einmal. */
 const REC_URL = 'https://pdfmy.de/';
 const recText = () => I18N.t('PDFMy – das kostenlose PDF-Programm: scannen, bearbeiten, unterschreiben, zusammenfügen. Alles bleibt auf dem eigenen Rechner – ohne Upload, ohne Konto.');
 function openRecommend() {
@@ -2211,7 +2211,7 @@ $('#btnRecommend').onclick = () => { $('#moreMenu').open = false; openRecommend(
 $('#recHintGo').onclick = () => { LS.set('recAsked', 1); openRecommend(); };
 $('#recHintX').onclick = () => { LS.set('recAsked', 1); $('#recHint').hidden = true; };
 // Nutzungstage zählen (nur im Gerät: Anzahl und letzter Tag, kein Verlauf) – wer PDFMy nur einmal ausprobiert, wird nie gefragt
-const REC_DAYS = 10;
+const REC_DAYS = 60;
 { const today = new Date().toISOString().slice(0, 10); if (LS.get('recDay') !== today) { LS.set('recDay', today); LS.set('recDays', (+LS.get('recDays', 0) || 0) + 1); } }
 window.recAfterSave = () => {
   if ((+LS.get('recDays', 0) || 0) < REC_DAYS || LS.get('recAsked')) return;

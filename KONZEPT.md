@@ -420,7 +420,7 @@ Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läu
 
 ### Umgesetzt 08.11.2026: PDFMy weiterempfehlen (app-v232)
 **Anlass (GF 08.11.2026):** „Button ‚PDFMy weiterempfehlen‘ – Teilen auf Facebook, LinkedIn usw.“ Statistik: 96 % Direktaufrufe, 0,5 % Suchmaschinen – Empfehlungen sind der wichtigste Weg zu neuen Nutzern.
-**Lösung:** Menü „Mehr“, Fußzeile, einmaliger Hinweis nach zehn Nutzungstagen (Vorgabe GF; wer nur ausprobiert, wird nie gefragt – Zählung nur im Gerät). Teilen-Menü des Geräts, sonst Links zu E-Mail, WhatsApp, LinkedIn, XING (für den deutschen Mittelstand), Facebook, X; „Link kopieren“.
+**Lösung:** Menü „Mehr“, Fußzeile, einmaliger Hinweis nach 60 Nutzungstagen (Vorgabe GF, zuerst 10, am selben Tag auf 60 geändert; wer nur ausprobiert, wird nie gefragt – Zählung nur im Gerät). Teilen-Menü des Geräts, sonst Links zu E-Mail, WhatsApp, LinkedIn, XING (für den deutschen Mittelstand), Facebook, X; „Link kopieren“.
 **Geprüft und verworfen:** Teilen-Knöpfe/SDKs der Netzwerke (laden Fremdskripte, setzen Cookies – verletzt Punkt 1–3); Zähler für Empfehlungen oder Empfehlungs-Codes (Tracking); wiederholte Hinweise (nervt).
 **Leitplanken:** 1 gewahrt (Dokumente nicht betroffen). 2 gewahrt (keine Verbindung ohne Klick). 3 gewahrt (nichts gezählt, keine Fremdwerbung). 4: ein Menüpunkt, ein Hinweis höchstens einmal. 5: axe ohne Befund. 6 nicht betroffen.
 **Erweiterungsseite (gleicher Release):** Nutzen zuerst, Download-Knopf, „Brauche ich das?“, Hinweis zum Entwicklermodus. Die eigentliche Hürde bleibt die Installation ohne Store – Veröffentlichung im Chrome Web Store / bei Edge-Add-ons weiter offen (Entscheidung und Entwicklerkonto GF).
