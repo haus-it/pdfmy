@@ -72,3 +72,18 @@ test('Rand: breiter oder farbiger Streifen gehört zum Dokument', () => {
   const farbig = sheet((x, y) => y < 4 ? [200, 30, 30] : [255, 255, 255]);
   assert.equal(I.cleanEdges(farbig, W, H), 0);
 });
+
+test('Leerseite: weißes Blatt und durchscheinende Rückseite sind leer, helle oder farbige Grafik und kurzer Text nicht', () => {
+  const blank = sheet(() => [245, 245, 242]);
+  assert.equal(I.blankData(blank, W, H), true);
+  const through = sheet((x, y) => (y % 40 < 2 && y > 300 && y < 900 && x > 100 && x < 700) || (x % 25 < 2 && y > 300 && y < 330) ? [150, 150, 150] : [245, 245, 242]);   // Rückseite scheint als dünne, blasse Striche durch
+  assert.equal(I.blankData(through, W, H), true);
+  const pastel = sheet((x, y) => x > 200 && x < 640 && y > 300 && y < 700 ? [150, 190, 235] : [255, 255, 255]);   // hellblaues Logo, nichts unter Grau 110
+  assert.equal(I.blankData(pastel, W, H), false);
+  const gray = sheet((x, y) => x > 200 && x < 640 && y > 300 && y < 700 ? [199, 199, 199] : [255, 255, 255]);   // dasselbe Logo im Modus Graustufen
+  assert.equal(I.blankData(gray, W, H), false);
+  const marker = sheet((x, y) => y > 500 && y < 520 && x > 100 && x < 600 ? [255, 240, 60] : [255, 255, 255]);    // Textmarker-Strich
+  assert.equal(I.blankData(marker, W, H), false);
+  const text = sheet(); for (let x = 150; x < 650; x += 30) disc(text, x, 600, 6);   // eine kurze Zeile
+  assert.equal(I.blankData(text, W, H), false);
+});

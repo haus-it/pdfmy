@@ -545,3 +545,8 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Umsetzung:** Eigener kleiner PSD-Leser (js/office.js `psd`, keine Bibliothek): Gesamtbild roh oder PackBits, alle üblichen Farbmodi, Grenzen gegen Übergröße (120 Megapixel). Ebenen werden bewusst nicht ausgewertet. Namen: Scanner-Eingang und Überwachter Ordner ausgenommen.
 **Leitplanken:** 1 und 2 gewahrt (alles im Gerät, keine neue Verbindung, keine neue Bibliothek). 3 gewahrt. 4: keine neue Bedienung, klare Hinweise statt stiller Fehler. 5: Tests für alle Farbmodi, PSB und Fehlerfälle; Ausgabe über den bestehenden PDF-Aufbau. 6 nicht betroffen.
 **Grenze:** Ohne echtes Photoshop hier geprüft mit nach der Adobe-Formatbeschreibung erzeugten Dateien; Test mit Dateien aus Photoshop/GIMP steht aus.
+
+### Umgesetzt 09.11.2026: Leerseiten-Erkennung ohne Datenverlust bei hellen Grafiken (app-v239)
+**Befund:** Beim Test der ZIP-Funktion galt eine Grafik als „leer“. Ursache: Die Erkennung zählte nur Pixel dunkler als Grau 110. Helle Logos, Farbflächen, Textmarker und Comic-Seiten wurden als leer markiert, und „leere Seite(n) weglassen“ ist beim Speichern vorab angehakt – stiller Datenverlust möglich.
+**Umsetzung:** Leer nur, wenn kaum dunkle Pixel, kaum Farbe und kaum Flächen, die deutlich vom Papier abweichen. Dünne, blasse Striche (durchscheinende Rückseite) bleiben leer. Geprüft in allen Scan-Modi im Browser.
+**Leitplanken:** 1–3 gewahrt (rein lokal). 4 verbessert (kein Seitenverlust ohne Zutun). 5: Tests in tests/imaging.test.js. 6 nicht betroffen.

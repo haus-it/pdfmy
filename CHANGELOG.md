@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-09
 
+### Leerseiten-Erkennung genauer (app-v239)
+- Fehler behoben: Seiten mit hellen oder farbigen Grafiken (Pastell-Logo, Farbfläche, Textmarker, Comic-Seite) galten als „leer“, weil nur dunkle Pixel zählten – beim Speichern war „leere Seite(n) weglassen“ dann vorab angehakt und die Seite wäre verloren gegangen.
+- Jetzt zählt auch Farbe und jede Fläche, die deutlich vom Papier abweicht. Blass durchscheinende Schrift der Rückseite (dünne Striche) gilt weiterhin als leer.
+
 ### Photoshop-Dateien öffnen, Dateinamen behalten (app-v238)
 - PDFMy öffnet Photoshop-Dateien (PSD, PSB): Übernommen wird das gespeicherte Gesamtbild in Originalfarben (RGB, Graustufen, CMYK, Indiziert, Bitmap; 8/16/32 Bit). Ohne „Kompatibilität maximieren“ gespeicherte Dateien und nicht unterstützte Farbmodi melden einen klaren Hinweis.
 - Fehler behoben: Geöffnete Bilder behielten ihren Namen beim Speichern nicht („Rechnung Telekom.jpg“ wurde zu „Scan_Datum.pdf“) – die Namensregel für Bilder war seit dem Usability-Umbau wirkungslos. Jetzt gilt sie wie bei PDFs; ZIP- und CBZ-Archive geben ihren Namen weiter. Nichtssagende Namen von Kameras und Scannern, Scanner-Eingang und Überwachter Ordner bleiben beim Namen aus den Briefdaten.

@@ -391,7 +391,27 @@
     for (let y = Math.round(H * 0.06); y < H * 0.94; y++) for (let x = Math.round(W * 0.06); x < W * 0.94; x++) { n++; if (g[y * W + x] < 110) dark++; }
     return n ? dark / n : 0;
   }
-  const isBlank = src => inkRatio(src) < 0.0004;
+  /* Leerseite: kaum dunkle Pixel UND kaum Farbe UND kaum größere Flächen, die deutlich vom Papier abweichen.
+     Früher zählten nur dunkle Pixel – helle oder farbige Grafiken (Pastell-Logo, Textmarker, Comic-Seite) galten als leer und
+     „leere Seiten weglassen“ war beim Speichern vorab angehakt. Durchscheinende Rückseiten bleiben leer (blass, ohne Farbe). */
+  function blankOf(d, W, H) {
+    const x0 = Math.round(W * 0.06), x1 = Math.floor(W * 0.94), y0 = Math.round(H * 0.06), y1 = Math.floor(H * 0.94), hist = new Uint32Array(256), g = new Uint8Array(W * H);
+    for (let i = 0, j = 0; i < g.length; i++, j += 4) g[i] = (d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114) | 0;
+    for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) hist[g[y * W + x]]++;
+    let bg = 255; for (let v = 0; v < 256; v++) if (hist[v] > hist[bg]) bg = v;   // häufigster Grauwert = Papier
+    const off = i => Math.abs(g[i] - bg) > 40;
+    let n = 0, dark = 0, solid = 0, color = 0;
+    for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+      const i = y * W + x, j = i * 4; n++;
+      if (g[i] < 110) dark++;
+      if (Math.max(d[j], d[j + 1], d[j + 2]) - Math.min(d[j], d[j + 1], d[j + 2]) > 50) color++;
+      // Fläche statt Strich: auch die Nachbarn im Abstand 2 weichen ab (dünne, blasse Linien = durchscheinende Rückseite)
+      if (off(i) && y >= y0 + 2 && y < y1 - 2 && x >= x0 + 2 && x < x1 - 2 && off(i - 2) && off(i + 2) && off(i - 2 * W) && off(i + 2 * W)) solid++;
+    }
+    return { dark: n ? dark / n : 0, solid: n ? solid / n : 0, color: n ? color / n : 0 };
+  }
+  const blankData = (d, W, H) => { const s = blankOf(d, W, H); return s.dark < 0.0004 && s.solid < 0.003 && s.color < 0.002; };
+  const isBlank = src => { const s = scaled(src, 600); return blankData(s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data, s.width, s.height); };
 
   /* Kompakt-Speicherung nach dem MRC-Prinzip (wie ABBYY/Acrobat):
      Ebene 1 = Schrift als 1-Bit-Maske in hoher Auflösung (scharf, sehr klein mit Flate),
@@ -476,5 +496,5 @@
     return c;
   }
 
-  root.Imaging = { colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, prepScan };
+  root.Imaging = { colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
 })(self);
