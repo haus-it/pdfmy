@@ -4,6 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-09
 
+### Unterschriften wie bei DocuSign – ohne Server (app-v243)
+- **Zugangscode:** Die PDF reist auf Wunsch mit AES-256 verschlüsselt; PDFMy erzeugt einen Code mit 12 Zeichen, den der Absender auf einem zweiten Weg mitteilt (Telefon, SMS; am Handy direkt „Per SMS senden“). Beim Weitersenden und Weitergeben wird mit demselben Code verschlüsselt. Eingabe in PDFMy ohne Rücksicht auf Groß-/Kleinschreibung und Leerzeichen.
+- **Kalender:** Beim Senden .ics mit Terminen zum Nachfassen (nach 3 und 7 Tagen, Fristtag, Ablauf; Erinnerung 9 Uhr); an der E-Mail an die unterschreibende Person „Frist.ics“ mit Erinnerung am Vortag; im Posteingangsbuch „Kalender“.
+- **Gültig bis:** Ablaufdatum der Anfrage; danach Hinweis beim Öffnen und Rückfrage vor dem Unterschreiben (ohne Server keine Sperre – so in der Hilfe beschrieben).
+- **Zahlung anfordern:** Betrag, Empfänger, IBAN, Verwendungszweck; Text in den E-Mails und GiroCode (EPC-QR) auf der Seite „Prüfprotokoll“ nach der letzten Unterschrift. Kartenzahlung bewusst nicht (bräuchte einen Dienst).
+- **Weitergeben an Vertretung** (Urlaub, andere Zuständigkeit): Person wird ersetzt, Felder bleiben, Absender in Kopie, „Vertretung für …“ im Prüfprotokoll.
+- **Zurückziehen** im Posteingangsbuch: E-Mail „bitte nicht mehr unterschreiben“, Eintrag erledigt; zurückkommende Fassungen zeigen beim Absender „zurückgezogen“.
+- **Vor Ort unterschreiben lassen:** Tablet oder Laptop weiterreichen, optional mit PIN zum Zurückholen; die Person zeichnet selbst, die gespeicherte Unterschrift des Absenders wird nie angeboten und nicht verändert. Mehrere Personen nacheinander vor Ort oder Rest per E-Mail; am Ende PDF mit Prüfprotokoll („vor Ort, Gerät des Absenders“) und Kopie an alle.
+- Geprüft: 7 neue Regressionstests (tests/sigpaket.test.js), Ablauf im Browser mit 31 Prüfpunkten (Verschlüsselung, Öffnen mit Code, Weitergeben, Weitersenden, Zurückziehen, Vor Ort mit PIN, GiroCode mit jsQR gelesen, Ablauf), Dialog am PC und in Handybreite ohne Überlauf.
+
 ### Stabiler Start ohne Netz, Android-App vervollständigt (app-v242)
 - Fehler behoben: Mit einer anderen Oberflächensprache als Deutsch blieb die App bei hängendem Netz (WLAN ohne Internet, Funkloch, Anmeldeportal) 2,8 s leer, erschien dann deutsch und wechselte erst nach 4,3 s in die eigene Sprache. Das Wörterbuch kommt jetzt sofort aus dem Gerät (gemessen: 0,6 s, gleich in der richtigen Sprache); veraltete Wörterbücher ersetzt jedes Update anhand der Prüfsummen.
 - Android-App (Handy und Tablet): Hilfe und Rechtstexte jetzt in allen Sprachen auch offline (vorher nur deutsch); Versionsanzeige und Version im Fehlerbericht (fehlten).

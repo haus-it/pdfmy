@@ -631,7 +631,7 @@ function markupAnnot(m, vp) {
     x: x0, y: y0, w: x1 - x0, h: y1 - y0, rects: rs.map(r => ({ x: (r.x - x0) / (x1 - x0), y: (r.y - y0) / (y1 - y0), w: r.w / (x1 - x0), h: r.h / (y1 - y0) })) };
 }
 async function importPdf(file) {
-  let bytes = new Uint8Array(await file.arrayBuffer()), password = null, js;
+  let bytes = new Uint8Array(await file.arrayBuffer()), password = null, retry = null, js;
   // Passwortgeschützt? Passwort abfragen, Datei für die Weiterverarbeitung entschlüsseln
   for (;;) {
     try { js = await openPdf(bytes.slice(), { password: password ?? undefined }); break; }
@@ -644,8 +644,11 @@ async function importPdf(file) {
         bytes = fixed.bytes; file.repaired = fixed.pages;
         continue;
       }
+      // Zugangscode einer Unterschriftsanfrage: zweiter Versuch ohne Leerzeichen/Bindestriche und in Großbuchstaben (js/sigreq.js)
+      if (retry != null) { password = retry; retry = null; continue; }
       password = await askPassword(file.name, e.code === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD);
       if (password == null) { const err = new Error('abgebrochen'); err.name = 'AbortError'; throw err; }
+      const norm = password.replace(/[\s-]+/g, '').toUpperCase(); if (norm !== password && /^[A-Z0-9]{8,32}$/.test(norm)) retry = norm;
     }
   }
   if (file.repaired) { toast(`„${file.name}“ war beschädigt und wurde repariert: ${file.repaired === 1 ? `${file.repaired} Seite` : `${file.repaired} Seiten`} gerettet. Bitte prüfen und neu speichern.`, 9000); logLine(`Reparatur: ${file.name}, ${file.repaired} Seite(n)`); }
@@ -670,7 +673,7 @@ async function importPdf(file) {
       if (d) { state.einv = { data: d, xml, xmlName: a.filename, original: password == null ? bytes.slice() : null, docIdx }; status(`E-Rechnung erkannt (${d.format}) – Daten aus dem eingebetteten XML übernommen.`); break; }
     }
   } catch (e) { console.warn('E-Rechnung:', e); }
-  try { for (const a of await pdfAttachments(js)) if (a.filename === window.SigReq?.FILE && a.content) window.reqLoad?.(new TextDecoder().decode(a.content), docIdx, bytes); } catch (e) { console.warn('Unterschriftsanfrage:', e); }
+  try { for (const a of await pdfAttachments(js)) if (a.filename === window.SigReq?.FILE && a.content) window.reqLoad?.(new TextDecoder().decode(a.content), docIdx, bytes, password); } catch (e) { console.warn('Unterschriftsanfrage:', e); }
   // Dateianhänge der Vorlage (Tabellen, Fotos, XML …) reisen beim Speichern mit – anzeigen, speichern, entfernen: Menü → Dateianhänge
   try {
     const own = (await pdfAttachments(js)).filter(a => a.content && a.filename && a.filename !== window.SigReq?.FILE);
@@ -1806,9 +1809,11 @@ function openSign(cb, kind = 'sign') {
   document.querySelector(`[name=sigKind][value="${kind}"]`).checked = true;
   strokes = []; upImg = null; drawPad(); $('#sgErr').textContent = '';
   const pv = $('#sgUpPrev'); pv.width = pv.height = 10; pv.hidden = true; $('#sgDropHint').hidden = false;
-  $('#sgRemember').checked = LS.get('keepSign', true);   // ab Werk merken – sonst ist die Unterschrift nach dem Neuladen weg
+  $('#sgRemember').checked = !window.sigGuest && LS.get('keepSign', true);   // ab Werk merken – sonst ist die Unterschrift nach dem Neuladen weg
+  $('#sgRemember').closest('label')?.toggleAttribute('hidden', !!window.sigGuest);   // vor Ort: nichts merken
   showSaved();
-  $('#sgName').value = kind === 'initials' ? initialsOf(S.author || '') : (S.author && S.author.length > 4 ? S.author : '');
+  const who = window.sigGuest || S.author || '';
+  $('#sgName').value = kind === 'initials' ? initialsOf(who) : (who.length > 4 ? who : '');
   $('#sgKeepColor').checked = kind === 'stamp';
   setSigMode(kind === 'stamp' ? 'upload' : 'draw');
   $('#signDlg').showModal();
@@ -1951,9 +1956,12 @@ $('#signOk').onclick = async () => {
   const t = trimSig(c); if (!t) return void ($('#sgErr').textContent = 'Nichts zu übernehmen.');
   const kind = sigKindSel(); state.sigs[kind] = t.toDataURL('image/png');
   state.signature = state.sigs.sign || null;
-  const keep = $('#sgRemember').checked; LS.set('keepSign', keep);
-  sigStore(kind, keep ? state.sigs[kind] : null);   // nur diese Art speichern bzw. entfernen – die anderen bleiben
-  $('#keepSign').checked = keep;
+  // Vor Ort (js/pro.js): Unterschrift einer anderen Person am Gerät – nie speichern, die eigene gespeicherte bleibt unberührt
+  if (!window.sigGuest) {
+    const keep = $('#sgRemember').checked; LS.set('keepSign', keep);
+    sigStore(kind, keep ? state.sigs[kind] : null);   // nur diese Art speichern bzw. entfernen – die anderen bleiben
+    $('#keepSign').checked = keep;
+  }
   $('#signDlg').close();
   if (signCb) signCb(kind); else armSign(kind);   // ohne Ziel: Unterschrift hängt am Mauszeiger, Klick setzt sie
 };

@@ -1134,6 +1134,7 @@ html.i18n-wait body{visibility:hidden}
 .reqf input[type=text]{flex:1;min-width:0;font:inherit;font-size:12px;border:1px solid currentColor;border-radius:3px;padding:0 4px;background:var(--panel);color:var(--text)}.reqf label{display:flex;gap:4px;align-items:center}.reqf .rfl{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#reqType{font:inherit;font-size:13px;padding:1px 4px}
 .reqf button{font:inherit;font-weight:700;border:1px solid currentColor;background:var(--panel);color:inherit;border-radius:4px;padding:1px 6px;cursor:pointer}
 @keyframes reqpulse{50%{box-shadow:0 0 0 4px rgba(200,16,46,.25)}}@media (prefers-reduced-motion:reduce){.reqf.mine{animation:none}}
+.reqcode{font:700 1.7em/1.3 ui-monospace,Consolas,"DejaVu Sans Mono",monospace;letter-spacing:.12em;text-align:center;margin:.6em 0;user-select:all}.reqcode span+span{margin-left:.6em}#reqMore{margin:.4em 0}#reqMore summary{cursor:pointer}.reqhere #reqText{font-weight:600}
 .reqok{color:#1d6b3a;font-weight:600}.reqwarn{color:#8a5a00;font-weight:600}.reqlate{color:#a11d1d}.reqsteps{white-space:nowrap;line-height:1.5}.reqsteps small{color:var(--muted,#555)}.jact [data-sigrem][data-urgent]{font-weight:700;color:#a11d1d}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .reqok{color:#7fd39b}:root:not([data-theme="light"]) .reqwarn{color:#f0c060}}[data-theme="dark"] .reqok{color:#7fd39b}[data-theme="dark"] .reqwarn{color:#f0c060}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .reqlate,:root:not([data-theme="light"]) .jact [data-sigrem][data-urgent]{color:#ff8a8a}}[data-theme="dark"] .reqlate,[data-theme="dark"] .jact [data-sigrem][data-urgent]{color:#ff8a8a}
 .reqtab{width:100%;border-collapse:collapse;font-size:13.5px}.reqtab th,.reqtab td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}.reqtab code{font-size:11px;word-break:break-all}
@@ -2392,6 +2393,16 @@ html.i18n-wait body{visibility:hidden}
     <div class="field"><label for="reqCc">Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie</label><input id="reqCc" type="text" inputmode="email" autocomplete="off" placeholder="z. B. steuer@kanzlei.de, buchhaltung@firma.de"></div>
     <div class="row2"><div class="field"><label for="reqMe">Ihr Name</label><input id="reqMe" autocomplete="name"></div><div class="field"><label for="reqMeMail">Ihre E-Mail-Adresse (für die Rückmeldung)</label><input id="reqMeMail" type="email" autocomplete="email"></div></div>
     <div class="field"><label for="reqMsg">Nachricht (optional)</label><textarea id="reqMsg" rows="2" placeholder="z. B. Bitte bis Freitag unterschreiben."></textarea></div>
+    <details id="reqMore"><summary>Mehr: Gültigkeit, Zugangscode, Zahlung, Kalender</summary>
+      <div class="row2"><div class="field"><label for="reqExp">Gültig bis (optional) – danach weist PDFMy auf den Ablauf hin</label><input id="reqExp" type="date"></div>
+      <div class="field" style="align-self:end"><label class="cb"><input id="reqIcs" type="checkbox" checked> Erinnerungen zum Nachfassen in meinen Kalender (.ics)</label></div></div>
+      <label class="cb"><input id="reqLock" type="checkbox"> Mit Zugangscode schützen (AES-256) – den Code teilen Sie auf einem zweiten Weg mit, z. B. per Telefon oder SMS</label>
+      <label class="cb"><input id="reqPay" type="checkbox"> Zahlung anfordern – nach der letzten Unterschrift steht ein GiroCode in der PDF</label>
+      <div id="reqPayBox" hidden>
+        <div class="row2"><div class="field"><label for="reqPayAmt">Betrag in Euro (leer = Banking-App fragt)</label><input id="reqPayAmt" inputmode="decimal" autocomplete="off" placeholder="z. B. 250,00"></div><div class="field"><label for="reqPayName">Zahlungsempfänger</label><input id="reqPayName" maxlength="70" autocomplete="organization"></div></div>
+        <div class="row2"><div class="field"><label for="reqPayIban">IBAN</label><input id="reqPayIban" autocomplete="off" spellcheck="false"></div><div class="field"><label for="reqPayPurp">Verwendungszweck</label><input id="reqPayPurp" maxlength="140" autocomplete="off"></div></div>
+      </div>
+    </details>
     <div class="xerr" id="reqErr" role="alert"></div>
     <div class="dlgrow"><button type="button" id="reqCancel">Abbrechen</button><button type="submit" class="primary">Weiter: Felder setzen</button></div>
   </form>
@@ -2403,6 +2414,23 @@ html.i18n-wait body{visibility:hidden}
     <div class="field"><label for="reqDecWhy">Begründung (optional)</label><textarea id="reqDecWhy" rows="3" maxlength="500" placeholder="z. B. Die Miete in § 3 stimmt nicht mit unserer Absprache überein."></textarea></div>
     <div class="dlgrow"><button type="button" id="reqDecCancel">Abbrechen</button><button type="submit" class="primary">Ablehnen und Absender informieren</button></div>
   </form>
+</dialog>
+<dialog id="reqDelDlg" aria-labelledby="reqDelT">
+  <form id="reqDelForm">
+    <h3 class="dlgtitle" id="reqDelT">An Vertretung weitergeben</h3>
+    <p class="hint">Zum Beispiel bei Urlaub oder wenn eine andere Person zuständig ist. Die Vertretung bekommt eine vorbereitete E-Mail mit der PDF, der Absender eine Kopie. Im Prüfprotokoll steht, wer an wen weitergegeben hat.</p>
+    <div class="row2"><div class="field"><label for="reqDelName">Name</label><input id="reqDelName" list="teamList" autocomplete="off" required></div><div class="field"><label for="reqDelMail">E-Mail-Adresse</label><input id="reqDelMail" type="email" autocomplete="off" required></div></div>
+    <div class="field"><label for="reqDelWhy">Begründung (optional)</label><input id="reqDelWhy" maxlength="200" placeholder="z. B. Ich bin bis 30.11. im Urlaub."></div>
+    <div class="xerr" id="reqDelErr" role="alert"></div>
+    <div class="dlgrow"><button type="button" id="reqDelCancel">Abbrechen</button><button type="submit" class="primary">Weitergeben</button></div>
+  </form>
+</dialog>
+<dialog id="reqCodeDlg" aria-labelledby="reqCodeT">
+  <h3 class="dlgtitle" id="reqCodeT">Zugangscode</h3>
+  <p>Die PDF ist mit diesem Code verschlüsselt (AES-256). Teilen Sie ihn jeder Person auf einem zweiten Weg mit – am Telefon oder per SMS, nicht in derselben E-Mail.</p>
+  <p class="reqcode" id="reqCode" translate="no"></p>
+  <p class="hint">Der Code steht auf diesem Gerät auch im Posteingangsbuch bei der Anfrage. In PDFMy spielen Groß- und Kleinschreibung und Leerzeichen beim Eingeben keine Rolle; in anderen PDF-Programmen den Code genau so eingeben (Großbuchstaben, ohne Leerzeichen).</p>
+  <div class="dlgrow"><button type="button" id="reqCodeCopy">Kopieren</button><a id="reqCodeSms" class="btn" hidden>Per SMS senden …</a><button type="button" id="reqCodeOk" class="primary">Fertig</button></div>
 </dialog>
 <dialog id="reqInfoDlg" aria-labelledby="reqInfoT">
   <h3 class="dlgtitle" id="reqInfoT">Wer hat unterschrieben?</h3>

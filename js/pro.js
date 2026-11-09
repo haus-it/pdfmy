@@ -248,6 +248,8 @@ async function openCase(name) {
   state.akte = name; $('#akte').value = name; state.akteTouched = true;
   status(`Akte „${name}“: ${files.length === 1 ? '1 Dokument' : `${files.length} Dokumente`} geöffnet${missing.length ? ` – ${missing.length} nicht gefunden` : ''}.`);
 }
+// Unterschriftsanfrage im Posteingangsbuch: Termine zum Nachfassen und Zurückziehen (app-v243)
+const jSigBtns = e => ` <button type="button" class="linkbtn" data-sigics title="Termine zum Nachfassen in den eigenen Kalender (.ics)">Kalender</button> <button type="button" class="linkbtn" data-sigwd title="${esc(I18N.t(`Anfrage beenden und ${e.sigName || e.sigTo} per E-Mail informieren`))}">Zurückziehen</button>`;
 function renderJournal(focusId) {
   if (!$('#jCases').hidden) return renderCases();
   const q = $('#jq').value.trim().toLowerCase(), f = $('#jf').value, today = Journal.deadlines(jList);
@@ -283,10 +285,10 @@ function renderJournal(focusId) {
     return `<tr data-id="${esc(e.id)}" class="${closed ? 'done' : ''}${e.id === focusId ? ' focus' : ''} st-${(e.status || '').replace(' ', '-')}">
       <td>${e.extra ? '' : `<select data-st title="Status">${Journal.STATUS.map(s => `<option${s === e.status ? ' selected' : ''}>${s}</option>`).join('')}</select>`}</td>
       <td>${e.extra ? '' : `<input data-as list="teamList" value="${esc(e.assignee)}" placeholder="–" title="Zuständig" size="6">`}</td><td>${e.extra ? '' : `<input data-akte list="caseList" value="${esc(e.akte)}" placeholder="–" title="Akte" aria-label="Akte">`}</td><td>${e.extra ? '<span class="hint">Ablage</span>' : esc(fmtDate(e.savedAt))}${e.inNo ? `<br><small class="hint">Nr. ${esc(e.inNo)}</small>` : ''}</td>
-      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${e.sigReads?.length ? `<small class="jcf" translate="no">✓✓ ${esc(I18N.t('Gelesen'))}: ${e.sigReads.map(x => esc(x.n) + ' (' + esc(SigReq.fmt(x.at)) + ')').join(', ')}</small>` : ''}${+e.remN ? `<small class="jcf">Erinnert: ${esc(e.remN)}× · zuletzt ${esc(fmtDate(e.remAt))}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
+      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${e.sigReads?.length ? `<small class="jcf" translate="no">✓✓ ${esc(I18N.t('Gelesen'))}: ${e.sigReads.map(x => esc(x.n) + ' (' + esc(SigReq.fmt(x.at)) + ')').join(', ')}</small>` : ''}${+e.remN ? `<small class="jcf">Erinnert: ${esc(e.remN)}× · zuletzt ${esc(fmtDate(e.remAt))}</small>` : ''}${e.sigCode && e.status === 'in Arbeit' ? `<small class="jcf">${esc(I18N.t('Zugangscode'))}: <code translate="no">${esc(SigReq.codeFmt(e.sigCode))}</code></small>` : ''}${e.sigWd ? `<small class="jcf">${esc(I18N.t('Zurückgezogen'))} ${esc(fmtDate(e.sigWd))}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
       <td class="jdl ${d ? d.state : ''}">${e.deadline ? fmtDate(e.deadline) + (d ? `<small>${inDays(d.days)}</small>` : '') : ''}${e.wv ? `<small class="wvtag">WV ${fmtDate(e.wv)} <button type="button" class="linkbtn" data-wvclear="${esc(e.id)}" title="Wiedervorlage erledigt" aria-label="Wiedervorlage entfernen">✕</button></small>` : ''}</td>
       <td>${esc(e.amount)}</td><td>${esc(e.reference || e.invoiceNo)}</td>
-      <td class="jact">${+e.ver > 1 ? `<small class="ver" title="${esc(`${e.ver} Fassungen – frühere liegen unverändert im Ordner „_Versionen“`)}">v${esc(e.ver)}</small> ` : ''}${e.file && state.outDir ? `<button type="button" class="linkbtn" data-open title="${esc(e.file)}">Öffnen</button>` : `<span class="hint" title="${esc(e.file)}">${esc((e.file || '').split('\\').pop().slice(0, 28))}</span>`}${e.file && state.outDir ? ` <button type="button" class="linkbtn" data-share title="Per WhatsApp, Telegram, Webex oder E-Mail senden">Teilen</button>` : ''}${e.extra ? '' : ` <button type="button" class="linkbtn" data-fwd title="An Kollegen weitergeben: zuständig setzen und E-Mail mit allen Briefdaten öffnen">Weiterleiten</button>`}${e.sigreq && e.sigTo && e.status === 'in Arbeit' ? ` <button type="button" class="linkbtn" data-sigrem${SigReq.urgent(e.sigSince || e.savedAt, e.deadline) ? ' data-urgent' : ''} title="${esc(`Erinnerungs-E-Mail an ${e.sigName || e.sigTo} vorbereiten`)}">Erinnern</button>` : ''}</td></tr>`;
+      <td class="jact">${+e.ver > 1 ? `<small class="ver" title="${esc(`${e.ver} Fassungen – frühere liegen unverändert im Ordner „_Versionen“`)}">v${esc(e.ver)}</small> ` : ''}${e.file && state.outDir ? `<button type="button" class="linkbtn" data-open title="${esc(e.file)}">Öffnen</button>` : `<span class="hint" title="${esc(e.file)}">${esc((e.file || '').split('\\').pop().slice(0, 28))}</span>`}${e.file && state.outDir ? ` <button type="button" class="linkbtn" data-share title="Per WhatsApp, Telegram, Webex oder E-Mail senden">Teilen</button>` : ''}${e.extra ? '' : ` <button type="button" class="linkbtn" data-fwd title="An Kollegen weitergeben: zuständig setzen und E-Mail mit allen Briefdaten öffnen">Weiterleiten</button>`}${e.sigreq && e.sigTo && e.status === 'in Arbeit' ? ` <button type="button" class="linkbtn" data-sigrem${SigReq.urgent(e.sigSince || e.savedAt, e.deadline) ? ' data-urgent' : ''} title="${esc(`Erinnerungs-E-Mail an ${e.sigName || e.sigTo} vorbereiten`)}">Erinnern</button>` + jSigBtns(e) : ''}</td></tr>`;
   }).join('') || `<tr><td colspan="11" class="hint" style="padding:18px">${jList.length ? 'Keine Treffer.' : 'Noch leer. Jeder abgelegte Brief wird hier automatisch eingetragen – mit Absender, Betreff, Betrag und Frist.'}</td></tr>`;
   $('#jBody tr.focus')?.scrollIntoView({ block: 'center' });
   // Vorschau behalten, solange die Zeile noch in der Liste steht
@@ -426,7 +428,10 @@ let req = null, reqDoc = -1, reqArm = -1, reqDraft = false, reqHash = '', reqSig
 let reqTrack = -1, reqSeen = new Set(), reqFromMe = false;   // reqFromMe: dieser Rechner ist der Absender (für Handlungstipps)   // Person, deren Lesen gerade festgehalten wird, und angesehene Seiten
 const RQ_ICON = { sign: '✍', initials: '✍', date: '📅', name: '👤', text: '✎', check: '☑' };
 const reqMine = () => req && !reqDraft ? SigReq.next(req) : -1;
-window.reqReset = () => { reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
+/* Signatur-Paket (app-v243): reqPw = Zugangscode dieser Anfrage (nur im Speicher; beim Absender zusätzlich im Posteingangsbuch),
+   reqHere = Vor-Ort-Modus (Gerät wird weitergereicht), reqPin = PIN zum Zurückholen, reqWantIcs = Kalender-Erinnerungen beim Senden */
+let reqPw = '', reqHere = false, reqPin = '', reqWantIcs = false;
+window.reqReset = () => { reqPw = ''; reqHere = false; reqPin = ''; reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
 function reqRow(s = {}, i = 0) {
   return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button></div>`;
 }
@@ -440,8 +445,15 @@ $('#btnSigReq').onclick = () => {
   $('#reqMsg').value = cur?.message || ''; $('#reqDue').value = cur?.due || ''; $('#reqCc').value = (cur?.cc || []).join(', '); $('#reqErr').textContent = '';
   reqTplFill(cur ? '' : null);
   $('#reqSerial').checked = !!cur?.serial; $('#reqList').value = cur?.serial ? cur.serial.map(s => `${s.name}; ${s.email}`).join('\n') : ''; reqSerialUi();
+  // Mehr: Gültigkeit, Zugangscode, Zahlung (Empfänger und IBAN wie beim GiroCode-Stempel vorbelegt), Kalender
+  const g = LS.get('qrGiro', {}) || {};
+  $('#reqExp').value = cur?.expires || ''; $('#reqLock').checked = !!cur?.lock; $('#reqIcs').checked = cur ? reqWantIcs : true;
+  $('#reqPay').checked = !!cur?.pay; $('#reqPayAmt').value = cur?.pay?.amount != null ? SigReq.money(cur.pay.amount).replace(/\s*€$/, '') : '';
+  $('#reqPayName').value = cur?.pay?.name || g.name || S.ownName || ''; $('#reqPayIban').value = cur?.pay ? SigReq.ibanFmt(cur.pay.iban) : g.iban || ''; $('#reqPayPurp').value = cur?.pay?.purpose || '';
+  $('#reqPayBox').hidden = !$('#reqPay').checked; $('#reqMore').open = !!(cur?.expires || cur?.lock || cur?.pay);
   $('#reqDlg').showModal(); $('#reqRows input').focus();
 };
+$('#reqPay').onchange = () => { $('#reqPayBox').hidden = !$('#reqPay').checked; if ($('#reqPay').checked && !$('#reqPayPurp').value) $('#reqPayPurp').value = $('#reqTitle').value.slice(0, 140); };
 // Serienversand: Empfängerliste statt Reihenfolge
 function reqSerialUi() {
   const on = $('#reqSerial').checked; $('#reqSerialBox').hidden = !on; document.querySelector('#reqDlg .reqsig').hidden = on;
@@ -493,8 +505,16 @@ $('#reqForm').onsubmit = ev => {
   const serial = $('#reqSerial').checked ? SigReq.recipients($('#reqList').value).list : null;
   if (serial && !serial.length) { $('#reqErr').textContent = 'Bitte mindestens einen Empfänger mit E-Mail-Adresse eintragen.'; return; }
   const signers = serial ? [serial[0]] : [...$('#reqRows').children].map(r => ({ name: r.querySelector('[data-rn]').value, email: r.querySelector('[data-rm]').value }));
-  const r = SigReq.create({ title: $('#reqTitle').value, requester: { name: $('#reqMe').value, email: $('#reqMeMail').value }, signers, message: $('#reqMsg').value, due: $('#reqDue').value, cc: $('#reqCc').value, id: reqDraft && req ? req.id : undefined });
+  let pay = null;
+  if ($('#reqPay').checked) {
+    try { const e = QrStempel.epc({ name: $('#reqPayName').value, iban: $('#reqPayIban').value, amount: $('#reqPayAmt').value, purpose: $('#reqPayPurp').value }); pay = { name: $('#reqPayName').value, iban: e.iban, amount: e.amount, purpose: $('#reqPayPurp').value }; }
+    catch (e) { $('#reqMore').open = true; $('#reqErr').textContent = I18N.t('Zahlung anfordern:') + ' ' + I18N.t(e.message); return; }
+  }
+  if (serial && $('#reqLock').checked) { $('#reqMore').open = true; $('#reqErr').textContent = 'Der Zugangscode ist beim Serienversand nicht möglich – bitte einzeln senden oder den Haken entfernen.'; return; }
+  const r = SigReq.create({ title: $('#reqTitle').value, requester: { name: $('#reqMe').value, email: $('#reqMeMail').value }, signers, message: $('#reqMsg').value, due: $('#reqDue').value, cc: $('#reqCc').value, id: reqDraft && req ? req.id : undefined,
+    expires: $('#reqExp').value, lock: $('#reqLock').checked, pay });
   const pr = SigReq.problems(r); if (pr.length) { $('#reqErr').textContent = pr.join(' '); return; }
+  reqWantIcs = $('#reqIcs').checked;
   // Felder behalten, soweit die Person noch dabei ist
   if (reqDraft && req) r.fields = req.fields.map(f => ({ ...f, s: r.signers.findIndex(s => s.email === req.signers[f.s]?.email) })).filter(f => f.s >= 0);
   // Vorlage gewählt: ihre Felder übernehmen (Seiten, die es im Dokument nicht gibt, entfallen; Personen über die Reihenfolge)
@@ -587,15 +607,25 @@ async function reqSignNow() {
   const mine = req.fields.filter(f => f.s === i && f.pg); if (!mine.length) return status('Für Sie ist in diesem Dokument kein Unterschriftsfeld gesetzt.');
   const miss = SigReq.missing(req, i).filter(f => f.pg);
   if (miss.length) { reqGoto(miss[0]); renderAnns(); document.querySelector(`#overlay [data-rfval="${req.fields.indexOf(miss[0])}"]`)?.focus(); return status(`Bitte zuerst ausfüllen: ${miss.map(f => f.label || 'Text').join(', ')}.`); }
-  // gezeichnete Unterschrift bzw. Kürzel holen (gespeichert oder neu zeichnen)
-  const need = k => mine.some(f => (f.t || 'sign') === k) && !state.sigs[k] ? new Promise(res => { reqGoto(mine.find(f => (f.t || 'sign') === k)); openSign(() => res(), k); }) : Promise.resolve();
-  await need('sign'); await need('initials');
+  // gezeichnete Unterschrift bzw. Kürzel holen (gespeichert oder neu zeichnen).
+  // Vor Ort: immer neu zeichnen lassen – die gespeicherte Unterschrift des Absenders darf hier nie erscheinen und bleibt unverändert.
+  const own = reqHere ? { sigs: state.sigs, signature: state.signature } : null;
+  if (own) { state.sigs = {}; state.signature = null; window.sigGuest = req.signers[i].name || ' '; }
+  const need = k => mine.some(f => (f.t || 'sign') === k) && !state.sigs[k] ? new Promise(res => {
+    reqGoto(mine.find(f => (f.t || 'sign') === k)); openSign(() => res(true), k);
+    $('#signDlg').addEventListener('close', () => setTimeout(() => res(false), 0), { once: true });   // abgebrochen
+  }) : Promise.resolve(true);
+  let ok;
+  try { ok = await need('sign') && await need('initials'); }
+  finally { if (own) { window.reqGuestSigs = state.sigs; state.sigs = own.sigs; state.signature = own.signature; window.sigGuest = null; } }
+  if (!ok) return status('Unterschrift abgebrochen.');
+  const sigs = own ? window.reqGuestSigs : state.sigs;
   const img = async src => { const im = new Image(); im.src = src; await im.decode(); return im; };
   const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
   for (const f of mine) {
     const p = f.pg, t = f.t || 'sign'; pushUndo(p);
     if (t === 'sign' || t === 'initials') {
-      const src = state.sigs[t]; if (!src) continue;
+      const src = sigs[t]; if (!src) continue;
       const im = await img(src), ar = im.height / im.width; let w = f.w, h = w * ar * p.w / p.h;
       if (h > f.h) { h = f.h; w = h / (ar * p.w / p.h); }
       p.annots.push({ id: ++uid, type: 'sign', kind: t, img: src, ar, x: f.x + (f.w - w) / 2, y: f.y + f.h - h, w, h }); reqSignedIds.add(uid);
@@ -607,8 +637,9 @@ async function reqSignNow() {
     const asp = (p.w || 1) / (p.h || 1.414), fs = Math.min(0.016, f.h / asp * (t === 'check' ? 0.95 : 0.72));
     p.annots.push({ id: ++uid, type: 'text', x: f.x + (t === 'check' ? f.w * 0.15 : 0.004), y: f.y + Math.max(0, f.h - fs * asp * 1.2), w: 0, h: 0, text, fs, color: '#1B1D23' }); reqSignedIds.add(uid);
   }
+  window.reqGuestSigs = null;
   reqSigned = true; state.dirty = true; reqGoto(mine[0]); renderAnns(); renderReqBar();
-  status('Unterschrift gesetzt. Jetzt „Unterschrieben – weitersenden“.');
+  status(reqHere ? 'Unterschrift gesetzt. Jetzt „Fertig – Gerät zurückgeben“.' : 'Unterschrift gesetzt. Jetzt „Unterschrieben – weitersenden“.');
 }
 // Als eingebettete Datei (lesbar in jedem PDF-Programm unter „Anlagen“); pdf.js liefert eigene Info-Einträge nicht zuverlässig
 window.reqInfo = async (out, pages, when = new Date()) => {
@@ -665,8 +696,11 @@ async function reqReadForm(r, bytes) {
   }
   return ext;
 }
-window.reqLoad = (json, docIdx, bytes) => {
+window.reqLoad = (json, docIdx, bytes, pw) => {
   let r = SigReq.parse(json); if (!r) return;
+  reqPw = r.lock && pw ? pw : ''; reqHere = false; reqPin = '';   // Zugangscode: beim Weitersenden wieder damit verschlüsseln
+  // Vom Absender zurückgezogen (steht nur auf seinem Gerät – ohne Server erfährt es der Empfänger über die E-Mail)
+  const wd = (LS.get('reqWithdrawn', []) || []).find(x => x.id === r.id); if (wd && !r.withdrawn) r = { ...r, withdrawn: wd.at };
   // „Empfangen“: die Person, die dran ist, hat die PDF in PDFMy geöffnet – nicht, wenn der Absender seine Kopie ansieht
   const me = String(LS.get('reqMail', '') || '').toLowerCase(), nx = SigReq.next(r), mineReq = me ? me === r.requester.email : !!S.author && S.author === r.requester.name;
   reqTrack = -1; reqSeen = new Set(); reqFromMe = mineReq;
@@ -702,6 +736,18 @@ async function reqAuditPage(out) {
   let page = out.addPage([W, H]), y = H - 64;
   const style = { h: [16, bold, 26], s: [12, bold, 20], b: [10.5, bold, 15], p: [10, font, 14], m: [8, font, 11.5], n: [8.5, font, 12], g: [6, font, 6] };
   for (const [k, text] of SigReq.auditLines(req, '', s => I18N.t(s))) {   // Prüfprotokoll in der Sprache der Oberfläche
+    if (k === 'q') {   // GiroCode (EPC-QR) für „Zahlung anfordern“: 4 cm, Ruhezone 4 Module, darunter „GiroCode“
+      try {
+        await loadQrcode();
+        const pl = QrStempel.epc({ name: req.pay.name, iban: req.pay.iban, amount: req.pay.amount, purpose: req.pay.purpose }).payload, q = qrMatrix(pl), n = q.getModuleCount(), size = 113, cell = size / n;
+        if (y - size - 30 < 60) { page = out.addPage([W, H]); y = H - 64; }
+        const x0 = L, y0 = y - size - 6;
+        for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) page.drawRectangle({ x: x0 + c * cell, y: y0 + size - (r + 1) * cell, width: cell + 0.15, height: cell + 0.15, color: rgb(0, 0, 0) });
+        page.drawText('GiroCode', { x: x0 + (size - bold.widthOfTextAtSize('GiroCode', 9)) / 2, y: y0 - 13, size: 9, font: bold, color: rgb(0.1, 0.1, 0.1) });
+        y = y0 - 30;
+      } catch (e) { console.warn('GiroCode im Prüfprotokoll:', e); }
+      continue;
+    }
     const [size, f, lh] = style[k] || style.p;
     for (const line of k === 'g' ? [''] : wrapLines(safe(text), RW, x => f.widthOfTextAtSize(x, size))) {
       if (y < 60) { page = out.addPage([W, H]); y = H - 64; }
@@ -770,9 +816,27 @@ async function openEml(bytes, name) {
 }
 window.openEml = openEml;
 const emlDone = (opened, to) => opened ? `E-Mail an ${to} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `E-Mail an ${to} vorbereitet – die .eml-Datei öffnen und senden.`;
+// Zugangscode: die PDF für den Versand verschlüsseln (AES-256, wie „Speichern mit Passwort“); die Ablage-Kopie bleibt unverschlüsselt
+async function reqSeal(bytes) { return req?.lock && reqPw ? encryptPdf(bytes, { password: reqPw, allowPrint: true, allowCopy: true }) : bytes; }
+// Nach dem Senden: Kalender-Erinnerungen für den Absender, Zugangscode anzeigen
+function reqAfterSend(r) {
+  if (reqWantIcs) download(new TextEncoder().encode(SigReq.senderIcs({ id: r.id, title: r.title, due: r.due, expires: r.expires, name: r.signers[0]?.name }, { tr: s => I18N.t(s) })), reqFile(r, ' – Erinnerungen.ics'), 'text/calendar');
+  if (r.lock && reqPw) reqShowCode(reqPw, r);
+}
+function reqShowCode(code, r) {
+  $('#reqCode').innerHTML = SigReq.codeFmt(code).split('-').map(x => `<span>${esc(x)}</span>`).join('');
+  const sms = $('#reqCodeSms'); sms.hidden = !matchMedia('(pointer: coarse)').matches;
+  sms.href = 'sms:?&body=' + encodeURIComponent(I18N.t(`Zugangscode für „${r.title}“:`) + ' ' + code);
+  $('#reqCodeDlg').showModal();
+}
+$('#reqCodeCopy').onclick = async () => { try { await navigator.clipboard.writeText($('#reqCode').textContent); status('Zugangscode kopiert.'); } catch { status('Kopieren nicht möglich – bitte den Code markieren und kopieren.'); } };
+$('#reqCodeOk').onclick = () => $('#reqCodeDlg').close();
 async function reqMail(r, bytes, pdfName) {
   const m = SigReq.mail(r, { from: S.author, tr: s => I18N.t(s) });   // E-Mail in der Sprache der Oberfläche
-  const eml = Journal.emlDraft({ to: m.to, cc: m.cc, notify: m.notify, subject: m.subject, body: m.body, attachments: [{ name: pdfName, mime: 'application/pdf', bytes }] });
+  const att = [{ name: pdfName, mime: 'application/pdf', bytes }], nx = SigReq.next(r);
+  // Frist als Kalendertermin für die Person, die unterschreiben soll (öffnet ihr eigener Kalender, Erinnerung am Vortag)
+  if (nx >= 0 && r.due) { const c = SigReq.signerIcs(r, nx, { tr: s => I18N.t(s) }); if (c) att.push({ name: I18N.t('Frist') + '.ics', mime: 'text/calendar', bytes: new TextEncoder().encode(c) }); }
+  const eml = Journal.emlDraft({ to: m.to, cc: m.cc, notify: m.notify, subject: m.subject, body: m.body, attachments: att });
   m.opened = await openEml(new TextEncoder().encode(eml), pdfName.replace(/\.pdf$/i, '') + '.eml');
   return m;
 }
@@ -781,8 +845,8 @@ async function reqJournal(r, add) {
   const all = await journalAll(), has = all.some(x => x.sigreq === r.id);
   const nx = SigReq.next(r), cur = r.signers[nx];
   // Frist erscheint unter „Fristen“ (erledigt → erledigt sich mit); wer gerade dran ist, für „Erinnern“
-  const patch = { sigs: SigReq.summaryText(r), status: SigReq.complete(r) ? 'erledigt' : SigReq.declined(r) >= 0 ? 'offen' : 'in Arbeit', upd: updStamp(),
-    deadline: nx >= 0 && r.due ? r.due : '', ...(r.rt ? { sigRt: r.rt } : {}), sigSince: SigReq.waiting(r)?.since || '', sigTo: cur?.email || '', sigName: cur?.name || '', sigN: SigReq.doneCount(r) };
+  const patch = { sigs: SigReq.summaryText(r) + (r.withdrawn ? ` · ${I18N.t('zurückgezogen')}` : ''), status: SigReq.complete(r) || r.withdrawn ? 'erledigt' : SigReq.declined(r) >= 0 ? 'offen' : 'in Arbeit', upd: updStamp(),
+    deadline: nx >= 0 && r.due ? r.due : '', ...(r.rt ? { sigRt: r.rt } : {}), ...(r.lock && reqPw && reqFromMe ? { sigCode: reqPw } : {}), ...(r.expires ? { sigExp: r.expires } : {}), sigSince: SigReq.waiting(r)?.since || '', sigTo: cur?.email || '', sigName: cur?.name || '', sigN: SigReq.doneCount(r) };
   let list;
   if (has) list = all.map(x => x.sigreq === r.id ? { ...x, ...patch } : x);
   else if (add) {
@@ -796,12 +860,26 @@ async function reqJournal(r, add) {
 // Erinnerung aus dem Posteingangsbuch: E-Mail an die Person, die dran ist; hat noch niemand unterschrieben, hängt die abgelegte PDF an
 async function reqRemind(e) {
   let bytes = null;
-  if (!+e.sigN && e.file && state.outDir) try { bytes = new Uint8Array(await (await archiveFile(e.file)).arrayBuffer()); } catch {}
+  if (!+e.sigN && e.file && state.outDir) try { bytes = new Uint8Array(await (await archiveFile(e.file)).arrayBuffer()); if (e.sigCode) bytes = await encryptPdf(bytes, { password: e.sigCode, allowPrint: true, allowCopy: true }); } catch { bytes = null; }
   const m = SigReq.reminder({ title: e.subject, to: e.sigTo, name: e.sigName, due: e.deadline, from: S.author, attached: !!bytes, tr: s => I18N.t(s) });
   const name = (e.file || 'Dokument.pdf').split('\\').pop();
   const opened = await openEml(new TextEncoder().encode(Journal.emlDraft({ ...m, notify: LS.get('reqMail', '') || '', attachments: bytes ? [{ name, mime: 'application/pdf', bytes }] : [] })), `Erinnerung – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`);
   try { await updateEntry(e.id, { remN: (+e.remN || 0) + 1, remAt: stamp() }); renderJournal(); } catch {}
   status(opened ? `Erinnerung an ${e.sigName || e.sigTo} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `Erinnerung an ${e.sigName || e.sigTo} vorbereitet – die .eml-Datei öffnen und senden.`);
+}
+/* Zurückziehen aus dem Posteingangsbuch: E-Mail an die Person, die das Dokument gerade hat; Eintrag „zurückgezogen“.
+   Öffnet der Absender später eine zurückkommende Fassung, zeigt PDFMy „zurückgezogen“ (nur auf diesem Gerät – ohne Server
+   erfährt der Empfänger es allein über die E-Mail). */
+async function reqWithdraw(e) {
+  const why = prompt(I18N.t(`Anfrage „${e.subject}“ zurückziehen? ${e.sigName || e.sigTo} bekommt eine vorbereitete E-Mail. Begründung (optional):`), '');
+  if (why == null) return;
+  const m = SigReq.withdrawMail({ title: e.subject, to: e.sigTo, name: e.sigName, from: S.author, reason: why, tr: s => I18N.t(s) });
+  const opened = await openEml(new TextEncoder().encode(Journal.emlDraft(m)), `Zurückgezogen – ${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)}.eml`);
+  const at = new Date().toISOString();
+  LS.set('reqWithdrawn', [{ id: e.sigreq, at }, ...(LS.get('reqWithdrawn', []) || []).filter(x => x.id !== e.sigreq)].slice(0, 500));
+  try { await updateEntry(e.id, { status: 'erledigt', sigWd: stamp(), deadline: '', sigTo: '', sigs: `${e.sigs || ''} · ${I18N.t('zurückgezogen')}` }); renderJournal(); renderDeadlines(jList); } catch {}
+  if (req?.id === e.sigreq) { req = SigReq.withdraw(req, { reason: why }); renderReqBar(); }
+  status(opened ? `Zurückgezogen. Die E-Mail an ${e.sigName || e.sigTo} ist in Ihrem Mail-Programm geöffnet – prüfen und senden.` : `Zurückgezogen. Die E-Mail an ${e.sigName || e.sigTo} ist vorbereitet – die .eml-Datei öffnen und senden.`);
 }
 // Serienversand: je Empfänger eine eigene Anfrage (eigene Kennung, gleiche Felder), E-Mail-Entwurf und Eintrag im Posteingangsbuch.
 // Bis 10 Empfänger mit pdfmy Scan direkt im Mail-Programm, sonst alle Entwürfe als ZIP (in Outlook per Doppelklick öffnen).
@@ -843,14 +921,16 @@ async function reqSend() {
   if (miss.length) return status(`Für ${miss.map(s => s.name).join(', ')} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.`);
   try {
     status('Bereite die Unterschriftsanfrage vor …');
+    if (req.lock && !reqPw) reqPw = SigReq.newCode();
     req = SigReq.markSent(req, 0);
     const bytes = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
     let rel = '', sha = '';
     if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(bytes); }
-    const m = await reqMail(req, bytes, name);
+    const m = await reqMail(req, await reqSeal(bytes), name);
     await reqJournal(req, { rel, sha });
     reqDraft = false; reqArm = -1; renderReqBar(); renderAnns();
     status(`${emlDone(m.opened, m.to)}${rel ? ` Kopie in der Ablage: ${rel}.` : ''} Den Stand sehen Sie im Posteingangsbuch.`);
+    reqAfterSend(req);
   } catch (e) { console.error(e); status(`Senden nicht möglich: ${e.message}`); }
 }
 /* ---------- Unterschriftsanfrage per Messenger (WhatsApp, Signal, Teams …) mit Lesebestätigung – ohne Server ----------
@@ -864,12 +944,15 @@ async function reqSendMessenger() {
   try {
     status('Bereite die Unterschriftsanfrage vor …');
     req.rt ||= SigReq.newToken(); req.via = 'messenger';
+    if (req.lock && !reqPw) reqPw = SigReq.newCode();
     req = SigReq.markSent(req, 0);
-    const bytes = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
+    const plain = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
     let rel = '', sha = '';
-    if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(bytes); }
+    if (state.outDir) { const w = await deliver(plain, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(plain); }
     await reqJournal(req, { rel, sha });
     reqDraft = false; reqArm = -1; renderReqBar(); renderAnns();
+    const bytes = await reqSeal(plain), sent = req;
+    setTimeout(() => reqAfterSend(sent), 0);   // Code und Kalender nach dem Teilen-Menü
     const file = new File([bytes], name, { type: 'application/pdf' });
     const text = I18N.t(`Bitte unterschreiben: „${req.title}“. Die PDF in PDFMy öffnen (pdfmy.de, Datei ins Fenster ziehen) – die Felder sind markiert.`);
     if (navigator.canShare?.({ files: [file] })) {
@@ -919,7 +1002,7 @@ async function reqForward(ext = false) {
     let bytes = await reqIncremental(done);
     if (!bytes) { reqAudit = done; try { bytes = await reqPdf(); } finally { reqAudit = false; } }
     const name = reqFile(req, done ? ' – unterschrieben.pdf' : ' – zur Unterschrift.pdf');
-    const m = await reqMail(req, bytes, name);
+    const m = await reqMail(req, await reqSeal(bytes), name);
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
     status(done ? `Alle haben unterschrieben. ${emlDone(m.opened, m.to)}` : `Danke! ${emlDone(m.opened, m.to)}`);
   } catch (e) { console.error(e); status(`Weitersenden nicht möglich: ${e.message}`); }
@@ -931,16 +1014,111 @@ $('#reqDecForm').onsubmit = async ev => {
   try {
     req = SigReq.decline(req, i, { reason: $('#reqDecWhy').value });
     for (const p of docPages()) p.annots = p.annots.filter(a => !reqSignedIds.has(a.id));   // eigene, noch nicht versendete Unterschrift wieder entfernen
-    const bytes = await reqIncremental(false) || await reqPdf(), m = await reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
+    const bytes = await reqSeal(await reqIncremental(false) || await reqPdf()), m = await reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
     status(`Abgelehnt. ${emlDone(m.opened, m.to)}`);
   } catch (e) { console.error(e); status(`Ablehnen nicht möglich: ${e.message}`); }
 };
+/* ---------- Weitergeben an Vertretung: Person ersetzen, E-Mail an die Vertretung (Absender in Kopie) ---------- */
+$('#reqDelCancel').onclick = () => $('#reqDelDlg').close();
+$('#reqDelName').addEventListener('change', () => { const m = $('#reqDelMail'); if (!m.value && team[$('#reqDelName').value.trim()]) m.value = team[$('#reqDelName').value.trim()]; });
+$('#reqDelForm').onsubmit = async ev => {
+  ev.preventDefault();
+  const i = reqMine(); if (i < 0) return $('#reqDelDlg').close();
+  let r; try { r = SigReq.delegate(req, i, { name: $('#reqDelName').value, email: $('#reqDelMail').value, reason: $('#reqDelWhy').value }); }
+  catch (e) { $('#reqDelErr').textContent = I18N.t(e.message); return; }
+  $('#reqDelDlg').close();
+  try {
+    for (const p of docPages()) p.annots = p.annots.filter(a => !reqSignedIds.has(a.id));   // eigene, noch nicht versendete Eintragungen entfernen
+    reqSignedIds.clear(); reqSigned = false;
+    req = SigReq.markSent(r, i);
+    const bytes = await reqSeal(await reqIncremental(false) || await reqPdf()), m = await reqMail(req, bytes, reqFile(req, ' – zur Unterschrift.pdf'));
+    state.dirty = false; renderReqBar(); renderAnns();
+    status(`Weitergegeben an ${req.signers[i].name}. ${emlDone(m.opened, m.to)}${req.lock ? ' Den Zugangscode bekommt die Vertretung vom Absender.' : ''}`);
+  } catch (e) { console.error(e); status(`Weitergeben nicht möglich: ${e.message}`); }
+};
+/* ---------- Vor Ort unterschreiben: der Absender reicht sein Gerät (Tablet, Laptop) weiter ----------
+   Kein Versand nötig; im Protokoll steht „vor Ort, Gerät des Absenders“ und die Prüfsumme der gezeigten Fassung.
+   Optional mit PIN: Zurück zum Absender nur mit der PIN, damit am weitergereichten Gerät nichts anderes geändert wird. */
+async function reqHereHash() { reqHash = await sha256(await reqPdf()); }
+async function reqHereStart() {
+  const miss = req.signers.filter((s, i) => !req.fields.some(f => f.s === i && f.pg));
+  if (miss.length) return status(`Für ${miss.map(s => s.name).join(', ')} fehlt noch ein Unterschriftsfeld – Namen in der Leiste anklicken, dann die Stelle.`);
+  const pin = prompt(I18N.t('Gerät weitergeben: Optional eine PIN festlegen, die Sie zum Zurückholen eingeben (leer lassen = ohne PIN).'), '');
+  if (pin == null) return;
+  try {
+    status('Bereite die Unterschrift vor Ort vor …');
+    reqPin = pin.trim(); reqHere = true; reqFromMe = true; req.via = 'vorort'; delete req.lock;   // vor Ort reist keine Datei – kein Zugangscode
+    await reqHereHash();
+    req = SigReq.markHere(req, 0); reqDraft = false; reqArm = -1; reqSigned = false; reqSignedIds.clear();
+    await reqJournal(req, { rel: '', sha: reqHash });
+    renderReqBar(); renderAnns(); const f = req.fields.find(x => x.s === 0 && x.pg); if (f) reqGoto(f);
+    try { await document.documentElement.requestFullscreen?.(); } catch {}
+    status(`Bitte das Gerät an ${req.signers[0].name} weitergeben.`);
+  } catch (e) { console.error(e); reqHere = false; status(`Vor Ort nicht möglich: ${e.message}`); }
+}
+function reqHerePin() {
+  if (!reqPin) return true;
+  for (;;) {
+    const v = prompt(I18N.t('Zurück zum Absender: Bitte die PIN eingeben.'), ''); if (v == null) return false;
+    if (v.trim() === reqPin) return true; alert(I18N.t('Die PIN stimmt nicht.'));
+  }
+}
+async function reqHereFinish() {
+  const i = reqMine(); if (i < 0 || !reqSigned) return;
+  if (!reqHerePin()) return;
+  try {
+    req = SigReq.markSigned(req, i, { hash: reqHash, here: true }); reqSigned = false; reqSignedIds.clear();
+    const j = SigReq.next(req);
+    if (j >= 0) {
+      if (confirm(I18N.t(`${req.signers[i].name} hat unterschrieben. Unterschreibt ${req.signers[j].name} ebenfalls hier vor Ort?`))) {
+        await reqHereHash(); req = SigReq.markHere(req, j); await reqJournal(req);
+        renderReqBar(); renderAnns(); const f = req.fields.find(x => x.s === j && x.pg); if (f) reqGoto(f);
+        return status(`Bitte das Gerät an ${req.signers[j].name} weitergeben.`);
+      }
+      // Rest per E-Mail: wie gewohnt weiter zur nächsten Person
+      reqHere = false; try { await document.exitFullscreen?.(); } catch {}
+      req = SigReq.markSent(req, j);
+      const bytes = await reqPdf(), m = await reqMail(req, bytes, reqFile(req, ' – zur Unterschrift.pdf'));
+      await reqJournal(req); state.dirty = false; renderReqBar(); renderAnns();
+      return status(`${req.signers[i].name} hat vor Ort unterschrieben. ${emlDone(m.opened, m.to)}`);
+    }
+    // Alle fertig: Prüfprotokoll anhängen, ablegen und allen eine Kopie anbieten
+    reqHere = false; try { await document.exitFullscreen?.(); } catch {}
+    let bytes; reqAudit = true; try { bytes = await reqPdf(); } finally { reqAudit = false; }
+    const name = reqFile(req, ' – unterschrieben.pdf');
+    let rel = ''; if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; } else download(bytes, name, 'application/pdf');
+    await reqJournal(req, { rel, sha: await sha256(bytes) });
+    const m = await reqMail(req, bytes, name);
+    state.dirty = false; renderReqBar(); renderAnns();
+    status(`Alle haben vor Ort unterschrieben.${rel ? ` Abgelegt: ${rel}.` : ' Die PDF ist gespeichert.'} ${emlDone(m.opened, m.to)}`);
+  } catch (e) { console.error(e); status(`Abschließen nicht möglich: ${e.message}`); }
+}
+async function reqHereCancel() {
+  if (!reqHerePin()) return;
+  for (const p of docPages()) p.annots = p.annots.filter(a => !reqSignedIds.has(a.id));
+  reqSignedIds.clear(); reqSigned = false; reqHere = false;
+  try { await document.exitFullscreen?.(); } catch {}
+  const j = SigReq.next(req);
+  if (!SigReq.doneCount(req)) { reqDraft = true; renderReqBar(); renderAnns(); return status('Vor Ort abgebrochen – die Anfrage ist wieder im Entwurf.'); }
+  // Einige haben schon vor Ort unterschrieben: Rest per E-Mail oder später
+  if (j >= 0 && confirm(I18N.t(`Vor Ort beendet. Die Anfrage per E-Mail an ${req.signers[j].name} weitersenden?`))) {
+    try {
+      req = SigReq.markSent(req, j);
+      const m = await reqMail(req, await reqPdf(), reqFile(req, ' – zur Unterschrift.pdf'));
+      await reqJournal(req); state.dirty = false; renderReqBar(); renderAnns();
+      return status(emlDone(m.opened, m.to));
+    } catch (e) { console.error(e); return status(`Weitersenden nicht möglich: ${e.message}`); }
+  }
+  await reqJournal(req); renderReqBar(); renderAnns();
+  status('Vor Ort beendet. Der Stand steht im Posteingangsbuch.');
+}
 const reqSignedIds = new Set();
 async function reqInfoShow() {
   if (!req) return;
   // Echtheit: Steckt die Fassung, die jede Person bekommen hat, unverändert in dieser Datei? (nur bei einer geöffneten Fassung)
-  const ok = reqBytes && !reqDraft && window.PdfInc ? await PdfInc.contains(reqBytes, req.signers.map(s => s.hash)) : null;
+  // Mit Zugangscode wird die Datei für jede Person neu verschlüsselt – „unverändert enthalten“ lässt sich dann nicht nachrechnen
+  const ok = reqBytes && !reqDraft && !req.lock && window.PdfInc ? await PdfInc.contains(reqBytes, req.signers.map(s => s.hash)) : null;
   const signed = req.signers.filter(s => s.hash), good = ok ? req.signers.filter((s, i) => s.hash && ok[i]).length : 0;
   const head = !ok || !signed.length ? '' : good === signed.length
     ? `<p class="reqok">✓ Echtheit geprüft: Alle ${signed.length} unterschriebenen Fassungen sind unverändert in dieser Datei enthalten – spätere Schritte haben nur ergänzt.</p>`
@@ -957,7 +1135,11 @@ async function reqInfoShow() {
   const adv = reqFromMe ? SigReq.advice(w) : null;
   const wa = adv ? `<p class="${adv.urgent ? 'reqwarn' : 'hint'}" translate="no">➜ ${L(adv.text)}</p>` : '';
   const steps = s => SigReq.steps(s).map(x => `${x.label} <small>${esc(SigReq.fmt(x.at))}</small>`).join('<br>') || 'Offen – noch nicht gesendet';
-  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin}${wl}${wa}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
+  const extra = [req.withdrawn ? `<p class="reqwarn">${L('Zurückgezogen')} ${esc(SigReq.fmt(req.withdrawn))}</p>` : '',
+    req.expires ? `<p class="${SigReq.expired(req) ? 'reqwarn' : 'hint'}" translate="no">${T('Gültig bis {0}', esc(SigReq.day(req.expires)))}${SigReq.expired(req) ? ' – ' + L('abgelaufen') : ''}</p>` : '',
+    req.pay ? `<p class="hint" translate="no">${esc(SigReq.payText(req, s => I18N.t(s), SigReq.complete(req))).replace(/\n/g, '<br>')}</p>` : '',
+    req.lock ? `<p class="hint">Diese Anfrage reist mit Zugangscode: Die PDF wird für jede Person neu verschlüsselt. Die Prüfsummen belegen die Fassung je Person; der Nachweis „unverändert enthalten“ entfällt.</p>` : ''].join('');
+  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin}${wl}${wa + extra}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
   $('#reqInfoDlg').showModal();
 }
 $('#reqInfoClose').onclick = () => $('#reqInfoDlg').close();
@@ -968,10 +1150,17 @@ function renderReqBar() {
   const di = SigReq.declined(req);
   if (reqDraft) {
     text = req.serial ? `Serienversand „${req.title}“ an ${req.serial.length} Empfänger: Felder setzen` : `Unterschriftsanfrage „${req.title}“: Felder setzen`;
-    btns = `<label class="hint">Feldart <select id="reqType">${Object.entries(SigReq.TYPES).map(([k, v]) => `<option value="${k}"${k === reqType ? ' selected' : ''}>${v}</option>`).join('')}</select></label>` + req.signers.map((s, k) => { const c = req.fields.filter(f => f.s === k).length; return `<button type="button" class="linkbtn" data-rarm="${k}"${k === reqArm ? ' aria-pressed="true"' : ''}>${k === reqArm ? '➜ ' : ''}${req.serial ? 'Feld für Empfänger' : `Feld für ${esc(s.name)}`}${c ? ` (${c})` : ''}</button>`; }).join('') + b('send', req.serial ? `An ${req.serial.length} Empfänger senden …` : 'Per E-Mail senden …') + (req.serial ? '' : b('msend', 'Per Messenger senden …')) + b('edit', 'Ändern …') + b('tpl', 'Als Vorlage speichern …') + b('cancel', 'Abbrechen');
+    btns = `<label class="hint">Feldart <select id="reqType">${Object.entries(SigReq.TYPES).map(([k, v]) => `<option value="${k}"${k === reqType ? ' selected' : ''}>${v}</option>`).join('')}</select></label>` + req.signers.map((s, k) => { const c = req.fields.filter(f => f.s === k).length; return `<button type="button" class="linkbtn" data-rarm="${k}"${k === reqArm ? ' aria-pressed="true"' : ''}>${k === reqArm ? '➜ ' : ''}${req.serial ? 'Feld für Empfänger' : `Feld für ${esc(s.name)}`}${c ? ` (${c})` : ''}</button>`; }).join('') + b('send', req.serial ? `An ${req.serial.length} Empfänger senden …` : 'Per E-Mail senden …') + (req.serial ? '' : b('msend', 'Per Messenger senden …') + b('here', 'Vor Ort unterschreiben lassen …')) + b('edit', 'Ändern …') + b('tpl', 'Als Vorlage speichern …') + b('cancel', 'Abbrechen');
+  } else if (req.withdrawn) {
+    text = I18N.t(`Diese Anfrage wurde am ${SigReq.fmt(req.withdrawn)} zurückgezogen – bitte nicht mehr unterschreiben.`);
+    btns = b('info', 'Übersicht');
   } else if (di >= 0) {
     text = `„${req.title}“ wurde von ${req.signers[di].name} abgelehnt${req.signers[di].reason ? `: ${req.signers[di].reason}` : ''}`;
     btns = b('info', 'Übersicht');
+  } else if (i >= 0 && reqHere) {
+    // Vor Ort: großes, klares Feld für die Person am Gerät; zurück nur über „Fertig“ (mit PIN, falls gesetzt)
+    text = I18N.t(`Vor Ort: ${req.signers[i].name} unterschreibt auf diesem Gerät (${d} von ${n} unterschrieben)`);
+    btns = (reqSigned ? b('herefin', 'Fertig – Gerät zurückgeben', ' strong') : (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben', ' strong')) + b('hereback', 'Abbrechen');
   } else if (i >= 0) {
     const parts = [`${req.requester.name || req.requester.email} bittet um Unterschrift: ${req.signers[i].name} ist dran (${d} von ${n} unterschrieben)`];
     const need = req.fields.filter(f => f.s === i && f.t === 'text' && f.pg);
@@ -979,13 +1168,14 @@ function renderReqBar() {
     const wt = SigReq.waiting(req);
     if (wt?.due) parts.push(wt.dueDays < 0 ? `– Frist ${SigReq.day(wt.due)} ist überschritten` : wt.dueDays === 0 ? '– Frist: heute' : `– Frist: ${SigReq.day(wt.due)}`);
     if (reqExt && !reqSigned) parts.push(`– ${req.signers[i].name} hat offenbar in einem anderen PDF-Programm unterschrieben`);
+    if (SigReq.expired(req)) parts.push(`– abgelaufen am ${SigReq.day(req.expires)}: bitte beim Absender eine neue Anfrage anfordern`);
     text = parts.map(p => I18N.t(p)).join(' ');   // jeden Teil für sich übersetzen
-    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
+    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned ? '' : b('deleg', 'Weitergeben …')) + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
   } else {
     text = `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
     btns = b('info', 'Übersicht') + b('dsign', 'Zusätzlich digital signieren …');
   }
-  $('#reqText').textContent = text;
+  $('#reqText').textContent = text; bar.classList.toggle('reqhere', reqHere && i >= 0);
   $('#reqText').toggleAttribute('translate', i >= 0 && !reqDraft && SigReq.declined(req) < 0); if ($('#reqText').hasAttribute('translate')) $('#reqText').setAttribute('translate', 'no');
   $('#reqBtns').innerHTML = btns;
 }
@@ -997,8 +1187,12 @@ $('#reqBtns').addEventListener('click', ev => {
   else if (k === 'rconf') reqReadConfirm();
   else if (k === 'edit') $('#btnSigReq').click();
   else if (k === 'cancel') { window.reqReset(); renderAnns(); status('Unterschriftsanfrage verworfen.'); }
-  else if (k === 'sign') reqSignNow();
+  else if (k === 'sign') { if (SigReq.expired(req) && !reqHere && !confirm(I18N.t(`Diese Anfrage ist am ${SigReq.day(req.expires)} abgelaufen. Trotzdem unterschreiben?`))) return; reqSignNow(); }
   else if (k === 'fwd') reqForward();
+  else if (k === 'here') reqHereStart();
+  else if (k === 'herefin') reqHereFinish();
+  else if (k === 'hereback') reqHereCancel();
+  else if (k === 'deleg') { $('#reqDelName').value = ''; $('#reqDelMail').value = ''; $('#reqDelWhy').value = ''; $('#reqDelErr').textContent = ''; $('#reqDelDlg').showModal(); $('#reqDelName').focus(); }
   else if (k === 'tpl') reqTplSave();
   else if (k === 'nextf') reqNextField();
   else if (k === 'ext') {
@@ -1035,6 +1229,8 @@ $('#jBody').addEventListener('click', async ev => {
   if (!ev.target.closest('button, a, input, select, textarea, label')) return jPreview(e, tr);
   if (ev.target.closest('[data-fwd]')) openForward(e);
   else if (ev.target.closest('[data-sigrem]')) reqRemind(e);
+  else if (ev.target.closest('[data-sigics]')) download(new TextEncoder().encode(SigReq.senderIcs({ id: e.sigreq, title: e.subject, due: e.deadline, expires: e.sigExp, name: e.sigName }, { tr: s => I18N.t(s) })), `${String(e.subject || 'Dokument').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60)} – Erinnerungen.ics`, 'text/calendar');
+  else if (ev.target.closest('[data-sigwd]')) reqWithdraw(e);
   else if (ev.target.closest('[data-open]')) {
     try {
       let dir = state.outDir; const parts = e.file.split('\\'), name = parts.pop();

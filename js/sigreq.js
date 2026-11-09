@@ -19,30 +19,45 @@
   const day = d => isDay(d) ? d.split('-').reverse().join('.') : '';
   // „Zur Kenntnis“: Adressen, die nicht unterschreiben, aber das Ergebnis in Kopie bekommen (Komma, Semikolon oder Leerzeichen getrennt)
   const ccList = v => [...new Set((Array.isArray(v) ? v : String(v || '').split(/[\s,;]+/)).map(x => clean(x).toLowerCase()).filter(Boolean))].slice(0, 20);
-  function create({ title, requester = {}, signers = [], message = '', id, due = '', cc = '' } = {}) {
+  /* Zahlung anfordern (GiroCode auf der Abschlussseite): Empfänger, IBAN, Betrag in Euro (oder null = Banking-App fragt), Verwendungszweck.
+     Die genaue Prüfung (IBAN-Prüfziffer, Länge) macht QrStempel.epc beim Anlegen im Dialog; hier nur säubern. */
+  const cleanPay = p => {
+    if (!p || !p.iban) return null;
+    const amount = typeof p.amount === 'number' && p.amount >= 0.01 && p.amount <= 999999999.99 ? Math.round(p.amount * 100) / 100 : null;
+    return { name: clean(p.name).slice(0, 70), iban: String(p.iban).replace(/\s+/g, '').toUpperCase().slice(0, 34), amount, purpose: clean(p.purpose).slice(0, 140) };
+  };
+  /* expires: Ablaufdatum (danach weist PDFMy beim Öffnen darauf hin – nur ein Hinweis, ohne Server lässt sich das nicht erzwingen);
+     lock: die PDF reist mit Zugangscode (AES-256), den der Absender auf einem zweiten Weg mitteilt – der Code selbst steht nie in der Anfrage */
+  function create({ title, requester = {}, signers = [], message = '', id, due = '', cc = '', expires = '', lock = false, pay = null } = {}) {
     const list = signers.map(s => ({ name: clean(s.name), email: clean(s.email).toLowerCase() })).filter(s => s.name || s.email);
-    const kn = ccList(cc);
+    const kn = ccList(cc), py = cleanPay(pay);
     return {
       v: 1, id: id || Date.now().toString(36) + Math.random().toString(36).slice(2, 8), title: clean(title) || 'Dokument', created: now(),
       requester: { name: clean(requester.name), email: clean(requester.email).toLowerCase() }, message: String(message || '').slice(0, 2000), ...(isDay(due) ? { due } : {}), ...(kn.length ? { cc: kn } : {}),
+      ...(isDay(expires) ? { expires } : {}), ...(lock ? { lock: true } : {}), ...(py ? { pay: py } : {}),
       signers: list.map(s => ({ ...s, status: 'offen', signedAt: '', hash: '' })), fields: [],
       log: [{ at: now(), what: 'angefragt', by: clean(requester.name) || clean(requester.email) }],
     };
   }
   // Fehler beim Anlegen (für den Dialog): leere Liste, fehlende Namen/E-Mails, eigene Adresse
-  function problems(r) {
+  function problems(r, today = new Date()) {
     const p = [];
     if (!r.signers.length) p.push('Mindestens eine Person eintragen, die unterschreiben soll.');
     r.signers.forEach((s, i) => { if (!s.name) p.push(`Name von Person ${i + 1} fehlt.`); if (!isMail(s.email)) p.push(`E-Mail-Adresse von ${s.name || 'Person ' + (i + 1)} fehlt oder ist ungültig.`); });
     if (!isMail(r.requester.email)) p.push('Ihre eigene E-Mail-Adresse fehlt – dorthin kommt das unterschriebene Dokument zurück.');
     const bad = (r.cc || []).filter(x => !isMail(x)); if (bad.length) p.push(`Ungültige Adresse bei „Zur Kenntnis“: ${bad.join(', ')}.`);
+    if (r.expires && Date.parse(r.expires + 'T00:00:00Z') < utcDay(today)) p.push('Das Ablaufdatum liegt in der Vergangenheit.');
+    if (r.expires && r.due && r.expires < r.due) p.push('Das Ablaufdatum liegt vor der Frist – bitte ein späteres Datum wählen.');
+    if (r.pay && !r.pay.name) p.push('Bei „Zahlung anfordern“ fehlt der Empfänger.');
     return p;
   }
   function parse(json) {
     try {
       const r = typeof json === 'string' ? JSON.parse(json) : json;
       if (!r || r.v !== 1 || !Array.isArray(r.signers) || !Array.isArray(r.fields) || !r.id) return null;
-      r.log = Array.isArray(r.log) ? r.log : []; if (r.due && !isDay(r.due)) delete r.due;
+      r.log = Array.isArray(r.log) ? r.log : []; if (r.due && !isDay(r.due)) delete r.due; if (r.expires && !isDay(r.expires)) delete r.expires;
+      if (r.lock !== true) delete r.lock; if (r.withdrawn && isNaN(new Date(r.withdrawn))) delete r.withdrawn;
+      if (r.pay) { r.pay = cleanPay(r.pay); if (!r.pay) delete r.pay; }
       if (r.cc) { r.cc = ccList(r.cc).filter(isMail); if (!r.cc.length) delete r.cc; }
       r.fields = r.fields.filter(f => Number.isInteger(f.s) && f.s >= 0 && f.s < r.signers.length && Number.isInteger(f.page) && [f.x, f.y, f.w, f.h].every(v => typeof v === 'number' && v >= 0 && v <= 1))
         .map(f => ({ ...f, t: TYPES[f.t] ? f.t : 'sign', label: clean(f.label).slice(0, 80), v: f.v == null ? '' : String(f.v).slice(0, 500) }));
@@ -57,12 +72,15 @@
   // Abgelehnt? Dann ist die Anfrage beendet (Index der Person, sonst -1)
   const declined = r => r.signers.findIndex(s => s.status === DECLINED);
   // Wer ist dran? Erste Person in der Reihenfolge, die noch nicht unterschrieben hat (-1: alle fertig oder abgelehnt)
-  const next = r => declined(r) >= 0 ? -1 : r.signers.findIndex(s => s.status !== DONE);
+  const next = r => declined(r) >= 0 || r.withdrawn ? -1 : r.signers.findIndex(s => s.status !== DONE);
+  // Abgelaufen? (Ablaufdatum vorbei, Anfrage noch offen)
+  const expired = (r, today = new Date()) => isDay(r.expires) && utcDay(today) > Date.parse(r.expires + 'T00:00:00Z') && next(r) >= 0;
   const doneCount = r => r.signers.filter(s => s.status === DONE).length;
   const complete = r => r.signers.length > 0 && doneCount(r) === r.signers.length;
-  function markSigned(r, i, { hash = '', at = now(), ext = false } = {}) {   // ext: in einem anderen PDF-Programm unterschrieben
-    const signers = r.signers.map((s, j) => j === i ? { ...s, status: DONE, signedAt: at, hash, ...(ext ? { ext: true } : {}) } : s);
-    const out = { ...r, signers, log: [...r.log, { at, what: ext ? DONE + ' (anderes PDF-Programm)' : DONE, by: r.signers[i].name || r.signers[i].email, hash }] };
+  // ext: in einem anderen PDF-Programm unterschrieben; here: vor Ort auf dem Gerät des Absenders
+  function markSigned(r, i, { hash = '', at = now(), ext = false, here = false } = {}) {
+    const signers = r.signers.map((s, j) => j === i ? { ...s, status: DONE, signedAt: at, hash, ...(ext ? { ext: true } : {}), ...(here ? { here: true } : {}) } : s);
+    const out = { ...r, signers, log: [...r.log, { at, what: ext ? DONE + ' (anderes PDF-Programm)' : here ? DONE + ' (vor Ort)' : DONE, by: r.signers[i].name || r.signers[i].email, hash }] };
     if (complete(out)) out.log.push({ at, what: 'abgeschlossen', by: '' });
     return out;
   }
@@ -70,6 +88,22 @@
     const why = String(reason || '').replace(/\s+/g, ' ').trim().slice(0, 500);
     const signers = r.signers.map((s, j) => j === i ? { ...s, status: DECLINED, signedAt: at, reason: why } : s);
     return { ...r, signers, log: [...r.log, { at, what: DECLINED, by: r.signers[i].name || r.signers[i].email, reason: why }] };
+  }
+  /* Weitergeben an eine Vertretung (z. B. Urlaub, falsche Ansprechperson): Die Person wird in der Reihenfolge ersetzt, ihre Felder
+     gehen auf die Vertretung über; im Protokoll steht, wer an wen weitergegeben hat. Wirft einen verständlichen Fehler. */
+  function delegate(r, i, { name = '', email = '', reason = '', at = now() } = {}) {
+    const s = r.signers[i];
+    if (!s || s.status === DONE || s.status === DECLINED) throw new Error('Diese Person kann die Anfrage nicht mehr weitergeben.');
+    const nn = clean(name), ne = clean(email).toLowerCase(), why = clean(reason);
+    if (!nn || !isMail(ne)) throw new Error('Bitte Name und gültige E-Mail-Adresse der Vertretung angeben.');
+    if (ne === s.email || r.signers.some((x, j) => j !== i && x.email === ne)) throw new Error('Diese Person steht schon in der Reihenfolge.');
+    const signers = r.signers.map((x, j) => j === i ? { name: nn, email: ne, status: 'offen', signedAt: '', hash: '', from: { name: s.name, email: s.email }, ...(why ? { why } : {}) } : x);
+    return { ...r, signers, log: [...r.log, { at, what: 'weitergegeben', by: s.name || s.email, to: nn, ...(why ? { reason: why } : {}) }] };
+  }
+  // Zurückziehen (Absender): Die Anfrage ist beendet; öffnet der Absender später eine zurückkommende Fassung, zeigt PDFMy das an.
+  function withdraw(r, { reason = '', at = now() } = {}) {
+    const why = clean(reason);
+    return { ...r, withdrawn: at, log: [...r.log, { at, what: 'zurückgezogen', by: r.requester.name || r.requester.email, ...(why ? { reason: why } : {}) }] };
   }
   /* Zustellstand je Person – wie bei einem Messenger, aber ohne Server und deshalb ehrlich benannt:
      gesendet  = PDFMy hat die E-Mail mit der PDF an diese Person vorbereitet (sentAt),
@@ -81,6 +115,8 @@
     return { ...r, signers: r.signers.map((x, j) => j === i ? { ...x, ...patch } : x), log: [...r.log, { at: Object.values(patch)[0], what, by: s.name || s.email }] };
   };
   const markSent = (r, i, at = now()) => r.signers[i] ? setS(r, i, { sentAt: at }, 'gesendet') : r;
+  // Vor Ort: Der Absender reicht sein Gerät weiter (Tablet, Laptop) – zählt als gesendet und empfangen
+  const markHere = (r, i, at = now()) => r.signers[i] ? setS(r, i, { sentAt: at, openedAt: at }, 'vor Ort übergeben') : r;
   const markOpened = (r, i, at = now()) => r.signers[i] && !r.signers[i].openedAt && r.signers[i].status !== DONE ? setS(r, i, { openedAt: at }, 'empfangen') : r;
   function markRead(r, i, at = now()) {
     const s = r.signers[i]; if (!s || s.readAt || s.status === DONE) return r;
@@ -101,12 +137,14 @@
     const s = r.signers[i], since = s.sentAt || (i > 0 ? r.signers[i - 1].signedAt : '') || r.created;
     const t0 = utcDay(today), d0 = iso => { const d = new Date(iso); return isNaN(d) ? 0 : Math.max(0, Math.round((t0 - utcDay(d)) / 86400000)); };
     return { i, name: s.name || s.email, email: s.email, stage: stage(s), since, days: d0(since), after: r.signers[i + 1] ? r.signers[i + 1].name || r.signers[i + 1].email : '',
-      ...(isDay(r.due) ? { due: r.due, dueDays: Math.round((new Date(r.due + 'T00:00:00Z') - t0) / 86400000) } : {}) };
+      ...(isDay(r.due) ? { due: r.due, dueDays: Math.round((new Date(r.due + 'T00:00:00Z') - t0) / 86400000) } : {}),
+      ...(isDay(r.expires) ? { expires: r.expires, expDays: Math.round((new Date(r.expires + 'T00:00:00Z') - t0) / 86400000) } : {}) };
   }
   /* Nächster sinnvoller Schritt für den Absender (aus waiting()): { text, urgent } oder null, wenn nichts zu tun ist.
      Der Mehrwert gegenüber bloßen Häkchen: PDFMy sagt, wo es hängt und was hilft. */
   function advice(w) {
     if (!w) return null;
+    if (w.expDays < 0) return { urgent: true, text: 'Die Anfrage ist abgelaufen – neu senden oder im Posteingangsbuch zurückziehen.' };
     if (w.dueDays < 0) return { urgent: true, text: `Die Frist ist überschritten – ${w.name} erinnern oder eine neue Frist vereinbaren.` };
     if (w.dueDays <= 1) return { urgent: true, text: `Die Frist läuft ab – jetzt an ${w.name} erinnern.` };
     if (w.stage.key === 'gelesen' && w.days >= 2) return { urgent: true, text: `${w.name} hat das Dokument gelesen, aber noch nicht unterschrieben – vielleicht gibt es Fragen. Kurz anrufen oder nachfragen.` };
@@ -144,15 +182,19 @@
     if (i < 0) {
       return { to: r.requester.email, cc: [...r.signers.map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: say(tr, 'Unterschrieben: {0}', r.title),
         body: para(hello(tr), say(tr, 'Alle {0} Personen haben „{1}“ unterschrieben:', n, r.title), r.signers.map(s => `• ${s.name} – ${fmt(s.signedAt)}`).join('\n'),
-          say(tr, 'Das unterschriebene Dokument ist angehängt. In PDFMy (https://pdfmy.de) zeigt es beim Öffnen die Übersicht mit Prüfsummen.'), bye(tr, sig)) };
+          say(tr, 'Das unterschriebene Dokument ist angehängt. In PDFMy (https://pdfmy.de) zeigt es beim Öffnen die Übersicht mit Prüfsummen.'), payText(r, tr, true), bye(tr, sig)) };
     }
     const s = r.signers[i], after = r.signers[i + 1];
-    const cc = i > 0 && r.requester.email && r.requester.email !== s.email ? r.requester.email : '';
+    const cc = (i > 0 || s.from) && r.requester.email && r.requester.email !== s.email ? r.requester.email : '';
     return { to: s.email, cc, notify: r.requester.email && r.requester.email !== s.email ? r.requester.email : '', subject: say(tr, 'Bitte unterschreiben: {0}', r.title),
       body: para(hello(tr, s.name),
         n > 1 ? say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben (Person {2} von {3}).', req, r.title, i + 1, n) : say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben.', req, r.title),
+        s.from ? say(tr, '{0} hat diese Anfrage an Sie weitergegeben.', s.from.name || s.from.email) + (s.why ? ' ' + say(tr, 'Begründung: {0}', s.why) : '') : '',
         r.due ? say(tr, 'Bitte bis {0}.', day(r.due)) : '',
+        r.expires ? say(tr, 'Die Anfrage gilt bis {0}.', day(r.expires)) : '',
         r.message,
+        r.lock ? say(tr, 'Die PDF ist mit einem Zugangscode geschützt. Den Code bekommen Sie von {0} auf einem anderen Weg, z. B. per Telefon oder SMS – er steht bewusst nicht in dieser E-Mail.', req) : '',
+        payText(r, tr),
         [say(tr, 'So geht’s – kostenlos, ohne Anmeldung, die Datei wird nicht hochgeladen:'),
           say(tr, '1. https://pdfmy.de öffnen und die angehängte PDF ins Fenster ziehen. Ihr Unterschriftsfeld ist markiert.'),
           say(tr, '2. Auf „Hier unterschreiben“ klicken und unterschreiben.'),
@@ -162,6 +204,60 @@
         i > 0 ? say(tr, 'Bereits unterschrieben: {0}.', r.signers.slice(0, i).map(x => x.name).join(', ')) : '',
         bye(tr, sig)) };
   }
+  // Zahlungsaufforderung als Text (Betrag deutsch formatiert, IBAN in Vierergruppen); qr: der GiroCode steht schon auf der Abschlussseite
+  const money = a => a.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  const ibanFmt = i => String(i || '').replace(/(.{4})(?=.)/g, '$1 ');
+  function payText(r, tr = s => s, qr = false) {
+    const p = r.pay; if (!p) return '';
+    return [p.amount != null ? say(tr, 'Zahlung: Bitte überweisen Sie {0} an {1}.', money(p.amount), p.name) : say(tr, 'Zahlung: Bitte überweisen Sie den vereinbarten Betrag an {0}.', p.name),
+      say(tr, 'IBAN: {0}', ibanFmt(p.iban)) + (p.purpose ? ' · ' + say(tr, 'Verwendungszweck: {0}', p.purpose) : ''),
+      qr ? say(tr, 'Der GiroCode steht auf der letzten Seite der PDF – mit der Banking-App scannen.') : say(tr, 'Nach der letzten Unterschrift steht ein GiroCode auf der letzten Seite der PDF – mit der Banking-App scannen.')].join('\n');
+  }
+  // E-Mail: Anfrage zurückgezogen – an die Person, die das Dokument gerade hat
+  function withdrawMail({ title = 'Dokument', to = '', name = '', from = '', reason = '', tr = s => s } = {}) {
+    return { to, cc: '', subject: say(tr, 'Zurückgezogen: {0}', title),
+      body: para(hello(tr, name), say(tr, 'die Anfrage zur Unterschrift von „{0}“ ist zurückgezogen. Bitte nicht mehr unterschreiben.', title),
+        reason ? say(tr, 'Begründung: {0}', clean(reason)) : '',
+        say(tr, 'Falls Sie schon unterschrieben haben, ist das gegenstandslos. Eine neue Fassung bekommen Sie gegebenenfalls gesondert.'), bye(tr, from)) };
+  }
+  /* Kalender (.ics, RFC 5545): ganztägige Termine mit Erinnerung um 9 Uhr – ohne Dienst, die Datei öffnet der eigene Kalender.
+     Absender: nachfassen nach 3 und 7 Tagen, am Fristtag und am Ablaufdatum. Unterzeichner: Frist mit Erinnerung am Vortag. */
+  function ics(events, at = new Date()) {
+    const esc = s => String(s || '').replace(/\\/g, '\\\\').replace(/[;,]/g, c => '\\' + c).replace(/\n/g, '\\n');
+    const stamp = at.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z'), dd = d => d.replace(/-/g, '');
+    const fold = l => { const out = []; while (l.length > 74) { out.push(l.slice(0, 74)); l = ' ' + l.slice(74); } out.push(l); return out.join('\r\n'); };
+    const plus1 = d => new Date(Date.parse(d + 'T00:00:00Z') + 86400000).toISOString().slice(0, 10);
+    return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PDFMy//Unterschriften//DE', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+      ...events.flatMap(e => ['BEGIN:VEVENT', `UID:${e.uid}@pdfmy.de`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${dd(e.date)}`, `DTEND;VALUE=DATE:${dd(plus1(e.date))}`,
+        `SUMMARY:${esc(e.summary)}`, ...(e.desc ? [`DESCRIPTION:${esc(e.desc)}`] : []), 'TRANSP:TRANSPARENT',
+        'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${esc(e.summary)}`, `TRIGGER:${e.trigger || 'PT9H'}`, 'END:VALARM', 'END:VEVENT']),
+      'END:VCALENDAR'].map(fold).join('\r\n') + '\r\n';
+  }
+  function senderIcs({ id = '', title = 'Dokument', due = '', expires = '', name = '' } = {}, { today = new Date(), tr = s => s, at = new Date() } = {}) {
+    const t0 = utcDay(today), add = n => new Date(t0 + n * 86400000).toISOString().slice(0, 10), end = [due, expires].filter(isDay).sort()[0] || '';
+    const ev = [];
+    for (const n of [3, 7]) {
+      const d = add(n); if (end && d >= end) continue;
+      ev.push({ uid: `${id}-n${n}`, date: d, summary: say(tr, 'Unterschrift nachfassen: {0}', title),
+        desc: say(tr, 'Noch nicht zurück? In PDFMy im Posteingangsbuch auf „Erinnern“ klicken.') + (name ? ' ' + say(tr, 'Zuletzt dran: {0}', name) : '') });
+    }
+    if (isDay(due) && Date.parse(due + 'T00:00:00Z') >= t0) ev.push({ uid: `${id}-due`, date: due, summary: say(tr, 'Frist für Unterschriften: {0}', title) });
+    if (isDay(expires) && Date.parse(expires + 'T00:00:00Z') >= t0 && expires !== due) ev.push({ uid: `${id}-exp`, date: expires, summary: say(tr, 'Anfrage läuft ab: {0}', title) });
+    return ics(ev, at);
+  }
+  function signerIcs(r, i, { tr = s => s, at = new Date() } = {}) {
+    if (!isDay(r.due) || !r.signers[i]) return '';
+    return ics([{ uid: `${r.id}-s${i}`, date: r.due, trigger: '-PT15H', summary: say(tr, 'Unterschreiben: {0}', r.title),
+      desc: say(tr, '{0} bittet um Ihre Unterschrift bis {1}. Die PDF steckt in der E-Mail – auf https://pdfmy.de öffnen.', r.requester.name || r.requester.email, day(r.due)) }], at);
+  }
+  // Zugangscode: 12 Zeichen ohne verwechselbare Zeichen (kein 0/O, 1/I/L), ≈ 59 Bit; zum Vorlesen in Vierergruppen
+  function newCode() {
+    const A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', b = new Uint32Array(12); crypto.getRandomValues(b);
+    return [...b].map(x => A[x % A.length]).join('');
+  }
+  const codeFmt = c => String(c || '').replace(/(.{4})(?=.)/g, '$1-');
+  // Eingabe normalisieren: Leerzeichen und Bindestriche weg, Großbuchstaben (zweiter Versuch beim Öffnen)
+  const codeNorm = c => String(c || '').replace(/[\s-]+/g, '').toUpperCase();
   // Erinnerung an die Person, die gerade dran ist (aus dem Posteingangsbuch)
   function reminder({ title = 'Dokument', to = '', name = '', due = '', from = '', attached = false, tr = s => s } = {}) {
     return { to, cc: '', subject: say(tr, 'Erinnerung: Bitte unterschreiben: {0}', title),
@@ -183,17 +279,20 @@
   const dueIn = (days, today = new Date()) => days > 0 ? new Date(utcDay(today) + days * 86400000).toISOString().slice(0, 10) : '';
   // Zeilen der Prüfprotokoll-Seite (wird nach der letzten Unterschrift an die PDF angehängt)
   // tr wie bei mail(): jede Zeile über eine Vorlage mit Platzhaltern; Namen, Titel, Prüfsummen, Daten werden nie übersetzt
-  const LOGW = { gesendet: 'gesendet', empfangen: 'empfangen (in PDFMy geöffnet)', gelesen: 'gelesen (alle Seiten angesehen)', angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
+  const LOGW = { weitergegeben: 'weitergegeben', zurückgezogen: 'zurückgezogen', 'vor Ort übergeben': 'vor Ort übergeben (Gerät des Absenders)', [DONE + ' (vor Ort)']: 'unterschrieben (vor Ort, Gerät des Absenders)', gesendet: 'gesendet', empfangen: 'empfangen (in PDFMy geöffnet)', gelesen: 'gelesen (alle Seiten angesehen)', angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
   function auditLines(r, docHash = '', tr = s => s) {
     const L = [['h', say(tr, 'Prüfprotokoll – Unterschriftsanfrage')], ['p', say(tr, 'Dokument: {0}', r.title)], ['p', say(tr, 'Anfrage-ID: {0}', r.id)],
       ['p', say(tr, 'Erstellt: {0} von {1}{2}', fmt(r.created), r.requester.name || '', r.requester.email ? ` <${r.requester.email}>` : '')],
-      ['p', say(tr, 'Status: {0}', complete(r) ? say(tr, 'abgeschlossen – alle haben unterschrieben') : declined(r) >= 0 ? say(tr, 'abgelehnt') : say(tr, 'offen'))],
-      ...(r.cc?.length ? [['p', say(tr, 'Zur Kenntnis: {0}', r.cc.join(', '))]] : []), ['g', '']];
+      ['p', say(tr, 'Status: {0}', complete(r) ? say(tr, 'abgeschlossen – alle haben unterschrieben') : r.withdrawn ? say(tr, 'zurückgezogen') : declined(r) >= 0 ? say(tr, 'abgelehnt') : say(tr, 'offen'))],
+      ...(r.cc?.length ? [['p', say(tr, 'Zur Kenntnis: {0}', r.cc.join(', '))]] : []),
+      ...(r.expires ? [['p', say(tr, 'Gültig bis: {0}', day(r.expires))]] : []),
+      ...(r.lock ? [['p', say(tr, 'Zugangscode: ja – die PDF wurde verschlüsselt (AES-256) versendet, der Code auf einem anderen Weg mitgeteilt.')]] : []), ['g', '']];
     L.push(['s', say(tr, 'Unterzeichner')]);
     r.signers.forEach((s, i) => {
       L.push(['b', `${i + 1}. ${s.name}${s.email ? ` <${s.email}>` : ''}`]);
-      const st = s.status === DONE ? (s.ext ? say(tr, 'Unterschrieben in einem anderen PDF-Programm') : say(tr, 'Unterschrieben')) : s.status === DECLINED ? say(tr, 'Abgelehnt') : say(tr, 'Offen');
+      const st = s.status === DONE ? (s.ext ? say(tr, 'Unterschrieben in einem anderen PDF-Programm') : s.here ? say(tr, 'Unterschrieben vor Ort auf dem Gerät des Absenders') : say(tr, 'Unterschrieben')) : s.status === DECLINED ? say(tr, 'Abgelehnt') : say(tr, 'Offen');
       L.push(['p', st + (s.signedAt ? ' ' + say(tr, 'am {0}', fmt(s.signedAt)) : '') + (s.reason ? ' – ' + say(tr, 'Begründung: {0}', s.reason) : '')]);
+      if (s.from) L.push(['p', say(tr, 'Vertretung für {0}', s.from.name + (s.from.email ? ` <${s.from.email}>` : '')) + (s.why ? ' – ' + say(tr, 'Begründung: {0}', s.why) : '')]);
       const vals = r.fields.filter(f => f.s === i && f.v && (f.t === 'text' || f.t === 'check')).map(f => `${f.label || say(tr, TYPES[f.t])}: ${f.t === 'check' ? (f.v ? say(tr, 'angekreuzt') : say(tr, 'nicht angekreuzt')) : f.v}`);
       const tl = steps(s).filter(x => x.key !== DONE && x.key !== DECLINED);
       if (tl.length) L.push(['p', tl.map(x => say(tr, { gesendet: 'Gesendet am {0}', empfangen: 'Empfangen am {0}', gelesen: 'Gelesen am {0}' }[x.key], fmt(x.at))).join(' · ')]);
@@ -202,7 +301,9 @@
       L.push(['g', '']);
     });
     L.push(['g', ''], ['s', say(tr, 'Ablauf')]);
-    for (const l of r.log) L.push(['p', `${fmt(l.at)} – ${LOGW[l.what] ? say(tr, LOGW[l.what]) : l.what}${l.by ? ` – ${l.by}` : ''}${l.reason ? ` („${l.reason}“)` : ''}`]);
+    for (const l of r.log) L.push(['p', `${fmt(l.at)} – ${LOGW[l.what] ? say(tr, LOGW[l.what]) : l.what}${l.by ? ` – ${l.by}` : ''}${l.to ? ` → ${l.to}` : ''}${l.reason ? ` („${l.reason}“)` : ''}`]);
+    // Zahlung: Text und Platz für den GiroCode (Zeile „q“ zeichnet PDFMy als QR-Code)
+    if (r.pay && complete(r)) L.push(['g', ''], ['s', say(tr, 'Zahlung')], ...payText(r, tr, true).split('\n').map(t => ['p', t]), ['q', '']);
     if (docHash) L.push(['g', ''], ['m', say(tr, 'SHA-256 der letzten Fassung vor dieser Seite: {0}', docHash)]);
     L.push(['g', ''], ['n', say(tr, 'Erstellt mit PDFMy (pdfmy.de) – ohne Server: Die Angaben stehen auch als Anlage „pdfmy-unterschriften.json“ in dieser PDF. Gezeichnete Unterschriften sind einfache elektronische Signaturen (eIDAS Art. 3 Nr. 10); die Prüfsummen machen spätere Änderungen erkennbar. PDFMy hängt jede Unterschrift an, statt die Datei neu zu schreiben – unter „Übersicht“ prüft PDFMy, dass jede unterschriebene Fassung unverändert enthalten ist.')]);
     return L;
@@ -275,6 +376,6 @@
   }
   async function verifyRead(rt, p) { return !!(rt && p) && await readMac(rt, p.id, p.i, p.t, p.name) === p.mac; }
 
-  const api = { newToken, readLink, parseRead, verifyRead, advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
+  const api = { expired, delegate, withdraw, markHere, withdrawMail, payText, ics, senderIcs, signerIcs, newCode, codeFmt, codeNorm, ibanFmt, money, newToken, readLink, parseRead, verifyRead, advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.SigReq = api;
 })(typeof self !== 'undefined' ? self : globalThis);

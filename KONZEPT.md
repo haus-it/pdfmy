@@ -575,3 +575,19 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Ergebnis:** docs/Wettbewerb-2026-11.md (Acrobat, DocuSign, PDF24, iLovePDF, Smallpdf, Foxit, Nitro, PDFgear, Stirling-PDF, Sejda, PDF-XChange, Xodo, ABBYY, Yousign/Skribble; mit Quellen). Bei den Funktionen liegt PDFMy schon vorn; die Lücken liegen bei messbarer Qualität (OCR, Office-Treue), Verbreitung (Stores, Firmen-Rollout) und Feinheiten im Signatur-Workflow.
 **Reihenfolge (Top 10):** 1 OCR-Messkorpus + Modus „Genau“; 2 Office-Treue und PowerPoint-Eingabe; 3 Stores und Firmen-Setup (GF); 4 Signatur-Paket (Kalender-Erinnerungen, Zugangscode, GiroCode-Zahlung, Zurückziehen, Ablauf, Vertretung, Vor-Ort); 5 Abschlusszertifikat versiegeln; 6 EU-Vertrauensliste und PAdES B-LT; 7 Stufen-Reihenfolge und Anlagen vom Unterzeichner; 8 Objekte bearbeiten; 9 Vertragsakte; 10 Lesereihenfolge/Tags von Hand.
 **Nicht empfohlen (Leitplanken):** Cloud-KI, Videoident/SMS/eID über Dienste, Kartenzahlung, Server-Formulare, Server-API. QES über VDA: Entscheidung GF.
+### Umgesetzt 09.11.2026: Signatur-Paket nach DocuSign-Art, ohne Server (app-v243)
+**Anlass (GF 09.11.2026):** „Signatur-Paket (DocuSign)“ – Rang 4 aus docs/Wettbewerb-2026-11.md.
+**Inhalt:** Zugangscode (AES-256, Code auf zweitem Weg), Kalender-Erinnerungen (.ics für Absender und Unterzeichner), „Gültig bis“, Zahlung anfordern (GiroCode auf dem Prüfprotokoll), Weitergeben an Vertretung, Zurückziehen, Vor Ort unterschreiben (mit PIN).
+**Leitplanken vor dem Bau geprüft:**
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Verschlüsselung, Kalenderdateien und GiroCode entstehen im Browser; der Code wird nur angezeigt, nie übertragen |
+| 2 Kein Server | passt: keine neue Verbindung; Versand weiter über das eigene Mail-Programm bzw. Teilen-Menü; SMS nur als Link ins eigene SMS-Programm |
+| 3 Ohne Tracking | passt: kein Lese- oder Ablauf-Tracking; „Gültig bis“ ist ein Hinweis in der PDF, keine Abfrage |
+| 4 Einfach | passt: alles unter „Mehr“ im bekannten Dialog, Voreinstellung unverändert (Kalender angehakt); Vor Ort als eigener Knopf |
+| 5 Prüfbar | 7 Regressionstests, Browser-Ablauf mit 31 Prüfpunkten; Verschlüsselung = vorhandene AES-256-Funktion (Rev. 6) |
+| 6 Wenig aktive Inhalte | passt: keine Skripte in der PDF |
+
+**Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
+**Offen aus Rang 4–7:** Abschlusszertifikat versiegeln (Rang 5), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
