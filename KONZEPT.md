@@ -550,3 +550,9 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Befund:** Beim Test der ZIP-Funktion galt eine Grafik als „leer“. Ursache: Die Erkennung zählte nur Pixel dunkler als Grau 110. Helle Logos, Farbflächen, Textmarker und Comic-Seiten wurden als leer markiert, und „leere Seite(n) weglassen“ ist beim Speichern vorab angehakt – stiller Datenverlust möglich.
 **Umsetzung:** Leer nur, wenn kaum dunkle Pixel, kaum Farbe und kaum Flächen, die deutlich vom Papier abweichen. Dünne, blasse Striche (durchscheinende Rückseite) bleiben leer. Geprüft in allen Scan-Modi im Browser.
 **Leitplanken:** 1–3 gewahrt (rein lokal). 4 verbessert (kein Seitenverlust ohne Zutun). 5: Tests in tests/imaging.test.js. 6 nicht betroffen.
+
+### Umgesetzt 09.11.2026: Dateien während des Ladens nicht verlieren (app-v240)
+**Befund:** Im frischen Browser dauerte es lokal über 10 Sekunden, bis PDFMy bereit war; die Oberfläche mit „Öffnen“ und Ablagefeld ist aber schon vorher sichtbar. Gewählte Dateien gingen verloren, hineingezogene öffnete der Browser selbst.
+**Umsetzung:** Ein kleiner Wächter in js/config.js (erstes Skript im Kopf) nimmt Dateien bis zum Ende des Ladens an und übergibt sie dann dem normalen Öffnen. Keine neue Datei, keine neue Bedienung.
+**Leitplanken:** 1–3 gewahrt (nichts verlässt das Gerät). 4 verbessert. 5: Browser-Prüfung Wählen und Hineinziehen während des Ladens, Gegenprobe normales Öffnen. 6 nicht betroffen.
+**Nächster Schritt (offen):** Ladezeit beim ersten Besuch messen und senken (Skripte bei Bedarf nachladen).

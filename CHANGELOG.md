@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-09
 
+### Keine Datei geht beim Laden verloren (app-v240)
+- Fehler behoben: Der Knopf „Öffnen“ ist sichtbar, bevor PDFMy fertig geladen ist (beim ersten Besuch oder im langsamen Netz mehrere Sekunden). Eine in dieser Zeit gewählte Datei ging still verloren; beim Hineinziehen öffnete der Browser sie womöglich selbst und verließ PDFMy.
+- Jetzt merkt sich PDFMy früh gewählte oder hineingezogene Dateien (Mauszeiger „lädt“) und öffnet sie, sobald es bereit ist – auch Kamera-Fotos.
+
 ### Leerseiten-Erkennung genauer (app-v239)
 - Fehler behoben: Seiten mit hellen oder farbigen Grafiken (Pastell-Logo, Farbfläche, Textmarker, Comic-Seite) galten als „leer“, weil nur dunkle Pixel zählten – beim Speichern war „leere Seite(n) weglassen“ dann vorab angehakt und die Seite wäre verloren gegangen.
 - Jetzt zählt auch Farbe und jede Fläche, die deutlich vom Papier abweicht. Blass durchscheinende Schrift der Rückseite (dünne Striche) gilt weiterhin als leer.
