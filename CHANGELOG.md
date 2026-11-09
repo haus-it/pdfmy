@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-09
 
+### Abschluss versiegeln wie das „Certificate of Completion“ (app-v244)
+- **Siegel nach der letzten Unterschrift:** PDFMy versiegelt die fertige PDF samt Prüfprotokoll – mit dem eigenen Zertifikat (PAdES, mit Zeitstempel B-T, falls eingeschaltet) oder ohne Zertifikat mit einem **Dokumentzeitstempel** (PAdES-DTS, RFC 3161 über pdfmy Scan; übertragen wird nur der SHA-256-Prüfwert). Automatisch, wenn der Absender als Letzter unterschreibt oder alles vor Ort läuft; sonst Knopf „Abschluss versiegeln …“ beim Öffnen der fertigen PDF, danach Angebot, die versiegelte Fassung allen zu senden.
+- Das Siegel wird **angehängt** (inkrementell): Die Fassungen der einzelnen Personen bleiben Byte für Byte enthalten, „Echtheit geprüft“ gilt weiter. Die Übersicht zeigt „🔒 Versiegelt … seitdem unverändert“ bzw. „Siegel verletzt“; das Posteingangsbuch vermerkt das Siegel.
+- **Prüfprotokoll als PDF/A:** eigene Datei im Archivformat PDF/A-2b für die Akte.
+- **Signaturprüfung:** erkennt jetzt Dokumentzeitstempel (ETSI.RFC3161); mit Dateien aus Acrobat noch nicht gegengeprüft. Fehler behoben: Ein langer Grund oder Name einer Signatur (Umlaute, über etwa 50 Zeichen) wurde in der Prüfung nicht angezeigt.
+- Geprüft: 5 neue Regressionstests (tests/siegel.test.js), Dokumentzeitstempel live mit DigiCert, Sectigo, DFN und FreeTSA (je gültig), Browser-Ablauf mit 19 Prüfpunkten (vor Ort mit Zeitstempel, per E-Mail mit Zertifikat, Fassung erhalten, veränderte Datei erkannt, Prüfprotokoll als PDF/A), PDF/A-Prüfung des Prüfprotokolls mit der eingebauten Prüfung (alle Punkte erfüllt).
+
 ### Unterschriften wie bei DocuSign – ohne Server (app-v243)
 - **Zugangscode:** Die PDF reist auf Wunsch mit AES-256 verschlüsselt; PDFMy erzeugt einen Code mit 12 Zeichen, den der Absender auf einem zweiten Weg mitteilt (Telefon, SMS; am Handy direkt „Per SMS senden“). Beim Weitersenden und Weitergeben wird mit demselben Code verschlüsselt. Eingabe in PDFMy ohne Rücksicht auf Groß-/Kleinschreibung und Leerzeichen.
 - **Kalender:** Beim Senden .ics mit Terminen zum Nachfassen (nach 3 und 7 Tagen, Fristtag, Ablauf; Erinnerung 9 Uhr); an der E-Mail an die unterschreibende Person „Frist.ics“ mit Erinnerung am Vortag; im Posteingangsbuch „Kalender“.

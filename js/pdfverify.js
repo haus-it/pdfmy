@@ -32,7 +32,7 @@
       const hex = s.slice(l1, o2).replace(/[<>\s]/g, '');
       if (!/^[0-9a-f]+$/i.test(hex)) continue;
       // Wörterbuch der Signatur grob abgrenzen (rund um /ByteRange) für SubFilter, Name, Grund, Ort, Datum
-      const from = s.lastIndexOf('obj', m.index), to = s.indexOf('endobj', m.index), dict = s.slice(from < 0 ? m.index - 4000 : from, to < 0 ? m.index + 4000 : to).replace(/<[0-9a-fA-F\s]{200,}>/g, '<…>');
+      const from = s.lastIndexOf('obj', m.index), to = s.indexOf('endobj', m.index), dict = s.slice(from < 0 ? m.index - 4000 : from, to < 0 ? m.index + 4000 : to).replace(/<[0-9a-fA-F\s]{2000,}>/g, '<…>');   // nur den Signaturwert ausblenden – Grund/Name in UTF-16 (Hex) können einige hundert Zeichen lang sein
       const val = k => {   // Literal (…) oder Hex <…>
         const r = new RegExp('/' + k + '\\s*\\(((?:\\\\.|[^\\\\)])*)\\)').exec(dict); if (r) return decodeText(pdfStr(r[1]));
         const h = new RegExp('/' + k + '\\s*<([0-9a-fA-F\\s]*)>').exec(dict); if (!h) return '';
@@ -94,8 +94,22 @@
     const S = subtle(); if (!S) { r.problems.push('Prüfung im Browser nicht möglich'); return r; }
     // (1) Prüfsumme der signierten Bytes
     const data = new Uint8Array(l1 + l2); data.set(u8.subarray(o1, o1 + l1), 0); data.set(u8.subarray(o2, o2 + l2), l1);
-    const digest = new Uint8Array(await S.digest(hash, data));
-    let toVerify = data;
+    // Dokumentzeitstempel (ETSI.RFC3161): Der Dienst bestätigt den Prüfwert der Datei im TSTInfo (messageImprint);
+    // seine Signatur gilt dem TSTInfo. Also: (a) messageImprint = Prüfwert der Bytes, (b) messageDigest = Prüfwert des TSTInfo.
+    let mdOver = data, imprintOk = true;
+    if (sig.subFilter === 'ETSI.RFC3161') {
+      r.docTimestamp = true;
+      const encap = sd.value[2]; let c = encap.value[1].value[0];
+      const content = c.constructed ? c.value.map(x => x.value).join('') : c.value;
+      const tst = forge.asn1.fromDer(content, { strict: false }), mi = tst.value[2], ih = HASH[forge.asn1.derToOid(mi.value[0].value[0].value)];
+      if (!ih) { r.problems.push('Unbekanntes Prüfsummenverfahren'); return r; }
+      const fileHash = latin1(new Uint8Array(await S.digest(ih, data)));
+      imprintOk = mi.value[1].value === fileHash;
+      try { const g = tst.value[4].value; r.time = new Date(Date.UTC(+g.slice(0, 4), +g.slice(4, 6) - 1, +g.slice(6, 8), +g.slice(8, 10), +g.slice(10, 12), +g.slice(12, 14))); } catch {}
+      r.timestamp = true; mdOver = fromBin(content);
+    }
+    const digest = new Uint8Array(await S.digest(hash, mdOver));
+    let toVerify = mdOver;
     if (signed) {
       let md = null;
       for (const at of signed.value) {
@@ -103,10 +117,10 @@
         if (oid === OID.md) md = fromBin(v0.value);
         if (oid === OID.time) { try { r.time = timeOf(forge, v0); } catch {} }
       }
-      r.intact = !!md && md.length === digest.length && md.every((b, k) => b === digest[k]);
+      r.intact = imprintOk && !!md && md.length === digest.length && md.every((b, k) => b === digest[k]);
       // signierte Attribute als SET (Tag 0x31) – das ist, was tatsächlich signiert wurde
       const derAttrs = fromBin(forge.asn1.toDer(signed).getBytes()); derAttrs[0] = 0x31; toVerify = derAttrs;
-    } else r.intact = true;   // ohne Attribute wird direkt über die Daten signiert (wird unten mitgeprüft)
+    } else r.intact = imprintOk;   // ohne Attribute wird direkt über die Daten signiert (wird unten mitgeprüft)
     if (!r.intact) r.problems.push('Das Dokument wurde nach dem Signieren verändert');
     // (2) Kryptografische Signatur
     if (!cert) { r.problems.push('Kein Zertifikat in der Signatur'); return r; }

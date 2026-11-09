@@ -285,7 +285,7 @@ function renderJournal(focusId) {
     return `<tr data-id="${esc(e.id)}" class="${closed ? 'done' : ''}${e.id === focusId ? ' focus' : ''} st-${(e.status || '').replace(' ', '-')}">
       <td>${e.extra ? '' : `<select data-st title="Status">${Journal.STATUS.map(s => `<option${s === e.status ? ' selected' : ''}>${s}</option>`).join('')}</select>`}</td>
       <td>${e.extra ? '' : `<input data-as list="teamList" value="${esc(e.assignee)}" placeholder="–" title="Zuständig" size="6">`}</td><td>${e.extra ? '' : `<input data-akte list="caseList" value="${esc(e.akte)}" placeholder="–" title="Akte" aria-label="Akte">`}</td><td>${e.extra ? '<span class="hint">Ablage</span>' : esc(fmtDate(e.savedAt))}${e.inNo ? `<br><small class="hint">Nr. ${esc(e.inNo)}</small>` : ''}</td>
-      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${e.sigReads?.length ? `<small class="jcf" translate="no">✓✓ ${esc(I18N.t('Gelesen'))}: ${e.sigReads.map(x => esc(x.n) + ' (' + esc(SigReq.fmt(x.at)) + ')').join(', ')}</small>` : ''}${+e.remN ? `<small class="jcf">Erinnert: ${esc(e.remN)}× · zuletzt ${esc(fmtDate(e.remAt))}</small>` : ''}${e.sigCode && e.status === 'in Arbeit' ? `<small class="jcf">${esc(I18N.t('Zugangscode'))}: <code translate="no">${esc(SigReq.codeFmt(e.sigCode))}</code></small>` : ''}${e.sigWd ? `<small class="jcf">${esc(I18N.t('Zurückgezogen'))} ${esc(fmtDate(e.sigWd))}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
+      <td>${esc(e.sender)}</td><td>${esc(e.type)}</td><td class="jsub">${esc(e.subject)}${e.sigs ? `<small class="jcf" translate="no">✍ ${esc(e.sigs)}</small>` : ''}${e.sigReads?.length ? `<small class="jcf" translate="no">✓✓ ${esc(I18N.t('Gelesen'))}: ${e.sigReads.map(x => esc(x.n) + ' (' + esc(SigReq.fmt(x.at)) + ')').join(', ')}</small>` : ''}${+e.remN ? `<small class="jcf">Erinnert: ${esc(e.remN)}× · zuletzt ${esc(fmtDate(e.remAt))}</small>` : ''}${e.sigCode && e.status === 'in Arbeit' ? `<small class="jcf">${esc(I18N.t('Zugangscode'))}: <code translate="no">${esc(SigReq.codeFmt(e.sigCode))}</code></small>` : ''}${e.sigWd ? `<small class="jcf">${esc(I18N.t('Zurückgezogen'))} ${esc(fmtDate(e.sigWd))}</small>` : ''}${e.sigSeal ? `<small class="jcf">🔒 ${esc(I18N.t('Versiegelt'))} ${esc(fmtDate(e.sigSealAt))} · <span translate="no">${esc(e.sigSeal === 'Zeitstempel' ? I18N.t('Dokumentzeitstempel') : e.sigSeal)}</span>${e.sigSealFile ? ` · <span translate="no">${esc(e.sigSealFile)}</span>` : ''}</small>` : ''}${e.fields ? `<small class="jcf" translate="no">${esc(String(e.fields).replace(/; /g, ' · '))}</small>` : ''}${snip.has(e.id) ? `<small class="snip">${hl(snip.get(e.id), q)}</small>` : ''}${e.extra ? '' : `<div class="jtags">${Journal.tagList(e.tags).map(t => `<span class="tagw"><button type="button" class="tag" data-tag="${esc(t)}" title="Nur Dokumente mit diesem Schlagwort zeigen">${esc(t)}</button><button type="button" class="untag" data-untag="${esc(t)}" aria-label="${esc(`Schlagwort „${t}“ entfernen`)}" title="Entfernen">×</button></span>`).join('')}<input data-tags list="tagList" value="" placeholder="+ Schlagwort" aria-label="Schlagwort hinzufügen"></div>`}</td>
       <td class="jdl ${d ? d.state : ''}">${e.deadline ? fmtDate(e.deadline) + (d ? `<small>${inDays(d.days)}</small>` : '') : ''}${e.wv ? `<small class="wvtag">WV ${fmtDate(e.wv)} <button type="button" class="linkbtn" data-wvclear="${esc(e.id)}" title="Wiedervorlage erledigt" aria-label="Wiedervorlage entfernen">✕</button></small>` : ''}</td>
       <td>${esc(e.amount)}</td><td>${esc(e.reference || e.invoiceNo)}</td>
       <td class="jact">${+e.ver > 1 ? `<small class="ver" title="${esc(`${e.ver} Fassungen – frühere liegen unverändert im Ordner „_Versionen“`)}">v${esc(e.ver)}</small> ` : ''}${e.file && state.outDir ? `<button type="button" class="linkbtn" data-open title="${esc(e.file)}">Öffnen</button>` : `<span class="hint" title="${esc(e.file)}">${esc((e.file || '').split('\\').pop().slice(0, 28))}</span>`}${e.file && state.outDir ? ` <button type="button" class="linkbtn" data-share title="Per WhatsApp, Telegram, Webex oder E-Mail senden">Teilen</button>` : ''}${e.extra ? '' : ` <button type="button" class="linkbtn" data-fwd title="An Kollegen weitergeben: zuständig setzen und E-Mail mit allen Briefdaten öffnen">Weiterleiten</button>`}${e.sigreq && e.sigTo && e.status === 'in Arbeit' ? ` <button type="button" class="linkbtn" data-sigrem${SigReq.urgent(e.sigSince || e.savedAt, e.deadline) ? ' data-urgent' : ''} title="${esc(`Erinnerungs-E-Mail an ${e.sigName || e.sigTo} vorbereiten`)}">Erinnern</button>` + jSigBtns(e) : ''}</td></tr>`;
@@ -431,7 +431,7 @@ const reqMine = () => req && !reqDraft ? SigReq.next(req) : -1;
 /* Signatur-Paket (app-v243): reqPw = Zugangscode dieser Anfrage (nur im Speicher; beim Absender zusätzlich im Posteingangsbuch),
    reqHere = Vor-Ort-Modus (Gerät wird weitergereicht), reqPin = PIN zum Zurückholen, reqWantIcs = Kalender-Erinnerungen beim Senden */
 let reqPw = '', reqHere = false, reqPin = '', reqWantIcs = false;
-window.reqReset = () => { reqPw = ''; reqHere = false; reqPin = ''; reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; renderReqBar(); };
+window.reqReset = () => { reqPw = ''; reqHere = false; reqPin = ''; reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; reqIsSealed = false; renderReqBar(); };
 function reqRow(s = {}, i = 0) {
   return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button></div>`;
 }
@@ -707,6 +707,7 @@ window.reqLoad = (json, docIdx, bytes, pw) => {
   if (nx >= 0 && (!mineReq || r.signers[nx].email === r.requester.email)) { r = SigReq.markOpened(r, nx); reqTrack = nx; }
   req = r; reqDoc = docIdx; reqDraft = false; reqArm = -1; reqSigned = false; reqHash = ''; reqStart = state.pages.length;   // Seiten dieses Dokuments folgen ab hier (auch als Scan aufbereitete)
   reqBytes = new Uint8Array(bytes); reqCursor = -1;   // empfangene Fassung: Unterschriften werden daran angehängt (js/pdfinc.js)
+  reqIsSealed = SigReq.complete(r) && reqSealedIn(reqBytes);   // fertig und zuletzt versiegelt (Signatur bzw. Zeitstempel deckt die ganze Datei ab)
   sha256(bytes).then(h => { reqHash = h; });
   reqExt = false;
   reqReadForm(r, bytes).then(ext => { if (req === r && ext) { reqExt = true; renderReqBar(); renderAnns(); toast(`${r.signers[SigReq.next(r)]?.name || 'Die Person'} hat offenbar in einem anderen PDF-Programm unterschrieben – bitte prüfen und „Als unterschrieben übernehmen …“.`, 9000); } }).catch(e => console.warn('Formularfelder lesen:', e));
@@ -757,6 +758,70 @@ async function reqAuditPage(out) {
   }
 }
 async function reqPdf() { if (ocrRunning) await runOcrAll(); return buildPdf(docPages(), state.meta, { noOcr: true, onPage: () => {} }); }
+/* Abschluss versiegeln (wie das „Certificate of Completion“ bei DocuSign, aber ohne Server): Nach der letzten Unterschrift wird die
+   ganze PDF samt Prüfprotokoll versiegelt – mit dem eigenen Zertifikat (PAdES, mit Zeitstempel B-T, falls eingeschaltet) oder ohne
+   Zertifikat mit einem Dokumentzeitstempel (RFC 3161 über pdfmy Scan; übertragen wird nur der SHA-256-Prüfwert). Das Siegel wird
+   ANGEHÄNGT: Die Fassungen der einzelnen Personen bleiben Byte für Byte erhalten. Jede spätere Änderung macht das Siegel ungültig –
+   das zeigt jedes PDF-Programm (Acrobat: Signaturleiste; PDFMy: Signaturleiste und „Übersicht“). */
+let reqIsSealed = false;
+const reqSealWay = () => typeof signCert !== 'undefined' && signCert ? 'cert' : state.scanTsa ? 'ts' : '';
+const reqSealedIn = bytes => { if (!bytes || !PdfVerify.hasSignature(bytes)) return false; const f = PdfVerify.find(bytes), l = f[f.length - 1]; return !!l && !l.usageRights && l.end >= bytes.length - 2; };
+async function reqSealBytes(bytes) {
+  const reason = `${I18N.t('Abschluss versiegelt')} – ${req.title} (${req.id})`;
+  if (reqSealWay() === 'cert') { const out = await signFlow(bytes, { append: true, reason }); return out && { bytes: out, kind: 'cert', by: state.signer?.name || signCert.name }; }
+  if (reqSealWay() === 'ts') {
+    status('Versiegele mit Dokumentzeitstempel …'); await loadForge();
+    const r = await PdfSign.docTimestamp(bytes, tsaCall); return { bytes: r.bytes, kind: 'ts', at: r.time };
+  }
+  return null;
+}
+// Beim Abschluss auf dem Gerät des Absenders: versiegeln, wenn möglich – Abbruch oder Fehler lassen die PDF unversiegelt
+async function reqTrySeal(bytes) {
+  if (!reqSealWay()) return { bytes, sealed: null };
+  try { const s = await reqSealBytes(bytes); if (s) { reqIsSealed = true; return { bytes: s.bytes, sealed: s }; } }
+  catch (e) { console.warn('Versiegeln:', e); toast(`${I18N.t('Versiegeln nicht möglich')}: ${e.message}`, 8000); }
+  return { bytes, sealed: null };
+}
+async function reqSealNote(s, rel = '') {
+  const e = (await journalAll()).find(x => x.sigreq === req.id); if (!e) return;
+  await updateEntry(e.id, { sigSeal: s.kind === 'cert' ? s.by : 'Zeitstempel', sigSealAt: stamp(), ...(rel ? { sigSealFile: rel } : {}) });
+}
+const reqSealMsg = s => !s ? '' : s.kind === 'cert' ? ' ' + I18N.t(`Versiegelt mit dem Zertifikat von ${s.by}.`) : ' ' + I18N.t('Versiegelt mit Dokumentzeitstempel.');
+// Knopf „Abschluss versiegeln …“ in der Leiste (z. B. wenn die fertige PDF per E-Mail zurückkommt)
+let reqSealPending = 0;
+async function reqSealNow() {
+  if (!req || !reqBytes) return;
+  if (!reqSealWay()) {
+    if (confirm(I18N.t('Zum Versiegeln brauchen Sie ein eigenes Zertifikat (.p12 oder .pfx) – oder pdfmy Scan für einen Dokumentzeitstempel. Jetzt eine Zertifikatsdatei wählen?'))) { reqSealPending = Date.now(); $('#x-sign-file').click(); }
+    return;
+  }
+  try {
+    const s = await reqSealBytes(reqBytes); if (!s) return status('Versiegeln abgebrochen.');
+    const name = reqFile(req, ' – unterschrieben, versiegelt.pdf');
+    let rel = ''; if (state.outDir) { const w = await deliver(s.bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; } else download(s.bytes, name, 'application/pdf');
+    reqBytes = s.bytes; reqIsSealed = true; await reqSealNote(s, rel); renderReqBar();
+    const d = state.docs[reqDoc]; if (d) { d.byteRange = true; window.checkSignatures?.(reqDoc, new Blob([s.bytes])); }   // Signaturleiste zeigt das Siegel
+    status(`${I18N.t('Abschluss versiegelt.')}${reqSealMsg(s)}${rel ? ' ' + I18N.t(`Abgelegt: ${rel}.`) : ''}`);
+    if (!req.lock && reqFromMe && confirm(I18N.t('Die versiegelte Fassung jetzt allen Beteiligten per E-Mail senden?'))) {
+      const m = await reqMail(req, s.bytes, name); status(emlDone(m.opened, m.to));
+    }
+  } catch (e) { console.error(e); status(`${I18N.t('Versiegeln nicht möglich')}: ${e.message}`); }
+}
+// Prüfprotokoll als eigene PDF/A-2b für die Akte (ISO 19005-2): dieselbe Seite wie in der PDF, ohne Anlagen
+async function reqAuditPdf() {
+  if (!req) return;
+  try {
+    const doc = await PDFLib.PDFDocument.create(), now = new Date(Math.floor(Date.now() / 1000) * 1000);
+    await reqAuditPage(doc);
+    const title = `${I18N.t('Prüfprotokoll')} – ${req.title}`, author = req.requester.name || req.requester.email || '', keywords = `${I18N.t('Unterschriftsanfrage')} ${req.id}`;
+    doc.setTitle(title); doc.setLanguage(I18N.lang || 'de-DE'); if (author) doc.setAuthor(author); doc.setKeywords([keywords]);
+    doc.setCreator(APP.name); doc.setProducer(APP.name + ' (pdf-lib)'); doc.setCreationDate(now); doc.setModificationDate(now);
+    await makePdfA(doc, { title, author, subject: '', keywords, now, ua: false, lang: I18N.lang || 'de-DE' });
+    const bytes = await doc.save(), name = reqFile(req, ' – ' + I18N.t('Prüfprotokoll') + '.pdf');
+    let rel = ''; if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; } else download(bytes, name, 'application/pdf');
+    status(rel ? I18N.t(`Prüfprotokoll als PDF/A abgelegt: ${rel}.`) : I18N.t('Prüfprotokoll als PDF/A gespeichert.'));
+  } catch (e) { console.error(e); status(`${I18N.t('Prüfprotokoll nicht möglich')}: ${e.message}`); }
+}
 /* Nachweisbare Echtheit: Die Unterschrift wird an die empfangene Fassung ANGEHÄNGT statt die PDF neu zu schreiben (inkrementelles
    Speichern, ISO 32000). So bleibt jede Fassung Byte für Byte erhalten, und die Prüfsumme, die jede Person beim Unterschreiben
    festhält, lässt sich in der fertigen PDF nachrechnen. Nur wenn am Dokument sonst nichts geändert wurde (gleiche Seiten, gleiche
@@ -1001,10 +1066,13 @@ async function reqForward(ext = false) {
     if (!done) req = SigReq.markSent(req, SigReq.next(req));
     let bytes = await reqIncremental(done);
     if (!bytes) { reqAudit = done; try { bytes = await reqPdf(); } finally { reqAudit = false; } }
+    // Der Absender unterschreibt als Letzter: gleich versiegeln (mit Zugangscode nicht – die verschlüsselte Kopie würde das Siegel brechen)
+    let sealed = null; if (done && reqFromMe && !req.lock) { const sl = await reqTrySeal(bytes); bytes = sl.bytes; sealed = sl.sealed; }
     const name = reqFile(req, done ? ' – unterschrieben.pdf' : ' – zur Unterschrift.pdf');
     const m = await reqMail(req, await reqSeal(bytes), name);
+    if (sealed) await reqSealNote(sealed);
     reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
-    status(done ? `Alle haben unterschrieben. ${emlDone(m.opened, m.to)}` : `Danke! ${emlDone(m.opened, m.to)}`);
+    status(done ? `Alle haben unterschrieben. ${emlDone(m.opened, m.to) + reqSealMsg(sealed)}` : `Danke! ${emlDone(m.opened, m.to)}`);
   } catch (e) { console.error(e); status(`Weitersenden nicht möglich: ${e.message}`); }
 }
 $('#reqDecCancel').onclick = () => $('#reqDecDlg').close();
@@ -1086,12 +1154,14 @@ async function reqHereFinish() {
     // Alle fertig: Prüfprotokoll anhängen, ablegen und allen eine Kopie anbieten
     reqHere = false; try { await document.exitFullscreen?.(); } catch {}
     let bytes; reqAudit = true; try { bytes = await reqPdf(); } finally { reqAudit = false; }
+    const sl = await reqTrySeal(bytes); bytes = sl.bytes;   // Abschluss versiegeln (eigenes Zertifikat oder Dokumentzeitstempel)
     const name = reqFile(req, ' – unterschrieben.pdf');
     let rel = ''; if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; } else download(bytes, name, 'application/pdf');
     await reqJournal(req, { rel, sha: await sha256(bytes) });
+    if (sl.sealed) await reqSealNote(sl.sealed);
     const m = await reqMail(req, bytes, name);
     state.dirty = false; renderReqBar(); renderAnns();
-    status(`Alle haben vor Ort unterschrieben.${rel ? ` Abgelegt: ${rel}.` : ' Die PDF ist gespeichert.'} ${emlDone(m.opened, m.to)}`);
+    status(`Alle haben vor Ort unterschrieben.${rel ? ` Abgelegt: ${rel}.` : ' Die PDF ist gespeichert.'} ${emlDone(m.opened, m.to) + reqSealMsg(sl.sealed)}`);
   } catch (e) { console.error(e); status(`Abschließen nicht möglich: ${e.message}`); }
 }
 async function reqHereCancel() {
@@ -1132,6 +1202,14 @@ async function reqInfoShow() {
   const wl = w ? `<p class="reqwait" translate="no">${T('Wartet auf <b translate="no">{0}</b>{1} · {2}{3}{4}', esc(w.name), w.stage.key === 'offen' ? '' : ` – ${L(w.stage.label)} ${esc(SigReq.fmt(w.stage.at))}`, L(seit(w.days)), due, w.after ? ' ' + T('· danach: <span translate="no">{0}</span>', esc(w.after)) : '')}</p>` : '';
   const last = req.log.filter(l => l.what === 'abgeschlossen').pop(), dur = last ? Math.round((new Date(last.at) - new Date(req.created)) / 86400000) : -1;
   const fin = dur >= 0 ? `<p class="reqok" translate="no">${T('✓ Abgeschlossen {0} – {1}.', esc(SigReq.fmt(last.at)), L(dur < 1 ? 'am selben Tag' : dur === 1 ? 'nach 1 Tag' : `nach ${dur} Tagen`))}</p>` : '';
+  // Siegel: Signatur bzw. Dokumentzeitstempel über die ganze fertige Datei – gültig und seitdem unverändert?
+  let seal = '';
+  if (reqBytes && SigReq.complete(req) && reqSealedIn(reqBytes)) try {
+    await loadForge(); const v = await PdfVerify.verify(reqBytes), sl = v[v.length - 1], when = sl.time || sl.m;
+    const by = sl.docTimestamp ? T('Dokumentzeitstempel von {0}', esc(sl.signer?.cn || sl.signer?.o || '?')) : T('Zertifikat von {0}', esc([sl.signer?.cn || sl.name, sl.signer?.o].filter(Boolean).join(', ') || '?'));
+    seal = sl.intact && sl.valid ? `<p class="reqok" translate="no">🔒 ${T('Versiegelt {0} – {1}. Die Datei ist seitdem unverändert.', esc(when ? SigReq.fmt(when.toISOString()) : ''), by)}</p>`
+      : `<p class="reqwarn">🔓 ${L('Das Siegel ist verletzt: Die Datei wurde nach dem Versiegeln verändert oder das Siegel ist nicht prüfbar.')}</p>`;
+  } catch (e) { console.warn('Siegel prüfen:', e); }
   const adv = reqFromMe ? SigReq.advice(w) : null;
   const wa = adv ? `<p class="${adv.urgent ? 'reqwarn' : 'hint'}" translate="no">➜ ${L(adv.text)}</p>` : '';
   const steps = s => SigReq.steps(s).map(x => `${x.label} <small>${esc(SigReq.fmt(x.at))}</small>`).join('<br>') || 'Offen – noch nicht gesendet';
@@ -1139,7 +1217,7 @@ async function reqInfoShow() {
     req.expires ? `<p class="${SigReq.expired(req) ? 'reqwarn' : 'hint'}" translate="no">${T('Gültig bis {0}', esc(SigReq.day(req.expires)))}${SigReq.expired(req) ? ' – ' + L('abgelaufen') : ''}</p>` : '',
     req.pay ? `<p class="hint" translate="no">${esc(SigReq.payText(req, s => I18N.t(s), SigReq.complete(req))).replace(/\n/g, '<br>')}</p>` : '',
     req.lock ? `<p class="hint">Diese Anfrage reist mit Zugangscode: Die PDF wird für jede Person neu verschlüsselt. Die Prüfsummen belegen die Fassung je Person; der Nachweis „unverändert enthalten“ entfällt.</p>` : ''].join('');
-  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin}${wl}${wa + extra}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
+  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin + seal}${wl}${wa + extra}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
   $('#reqInfoDlg').showModal();
 }
 $('#reqInfoClose').onclick = () => $('#reqInfoDlg').close();
@@ -1172,8 +1250,8 @@ function renderReqBar() {
     text = parts.map(p => I18N.t(p)).join(' ');   // jeden Teil für sich übersetzen
     btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned ? '' : b('deleg', 'Weitergeben …')) + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
   } else {
-    text = `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
-    btns = b('info', 'Übersicht') + b('dsign', 'Zusätzlich digital signieren …');
+    text = reqIsSealed ? `Alle ${n} haben „${req.title}“ unterschrieben ✓ – versiegelt 🔒` : `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
+    btns = b('info', 'Übersicht') + (reqIsSealed ? '' : b('seal', 'Abschluss versiegeln …', ' strong')) + b('audit', 'Prüfprotokoll als PDF/A');
   }
   $('#reqText').textContent = text; bar.classList.toggle('reqhere', reqHere && i >= 0);
   $('#reqText').toggleAttribute('translate', i >= 0 && !reqDraft && SigReq.declined(req) < 0); if ($('#reqText').hasAttribute('translate')) $('#reqText').setAttribute('translate', 'no');
@@ -1202,7 +1280,8 @@ $('#reqBtns').addEventListener('click', ev => {
   }
   else if (k === 'info') reqInfoShow();
   else if (k === 'decline') { $('#reqDecWhy').value = ''; $('#reqDecDlg').showModal(); $('#reqDecWhy').focus(); }
-  else if (k === 'dsign') { openExport({ format: 'pdf' }); const x = $('#x-sign'); if (x && !x.checked) { x.checked = true; x.dispatchEvent(new Event('change', { bubbles: true })); } }
+  else if (k === 'seal') reqSealNow();
+  else if (k === 'audit') reqAuditPdf();
 });
 /* ---------- Schlagwörter ---------- */
 // Vorschläge auch für das zweite, dritte … Wort: die Liste enthält „bisherige Eingabe, Vorschlag“
@@ -2858,7 +2937,8 @@ function renderSignInfo() {
 $('#x-sign-ts').addEventListener('change', e => LS.set('signTs', e.target.checked));
 // Zeitstempel (RFC 3161) über pdfmy Scan – Zeitstempeldienste erlauben keine direkten Anfragen aus dem Browser (kein CORS).
 // Übertragen wird nur der Hashwert der Signatur (32 Byte in der Anfrage), nicht das Dokument. Bei Ausfall nächster Dienst.
-const tsaFetch = () => !$('#x-sign-ts').checked || !state.scanTsa ? undefined : async req => {
+const tsaFetch = () => !$('#x-sign-ts').checked || !state.scanTsa ? undefined : tsaCall;
+const tsaCall = async req => {
   let s = ''; for (const b of req) s += String.fromCharCode(b);
   let last = null;
   for (const url of PdfSign.TSA) {
@@ -2893,11 +2973,13 @@ $('#x-sign-file').onchange = async e => {
   signCert = { name: f.name, bytes: new Uint8Array(await f.arrayBuffer()) }; state.signer = null;
   idb.set('signCert', signCert);   // nur die (verschlüsselte) Zertifikatsdatei – nicht das Passwort
   $('#x-sign').checked = true; renderSignInfo(); updateExportUi();
+  if (reqSealPending && Date.now() - reqSealPending < 600000) { reqSealPending = 0; reqSealNow(); }   // „Abschluss versiegeln“ wartete auf das Zertifikat
 };
 let forgeLoading = null;
 const loadForge = () => forgeLoading ||= new Promise((res, rej) => { if (window.forge) return res(); const s = document.createElement('script'); s.src = 'vendor/forge.min.js'; s.onload = res; s.onerror = () => { forgeLoading = null; rej(new Error('Signatur-Baustein konnte nicht geladen werden.')); }; document.head.append(s); });
 // Passwort abfragen (einmal pro Sitzung), signieren; null = abgebrochen
-async function signFlow(bytes) {
+// extra: zusätzliche Signatur-Optionen, z. B. { append: true, reason } beim Versiegeln einer Unterschriftsanfrage
+async function signFlow(bytes, extra = {}) {
   if (signCert.type === 'win') {
     // Windows-Zertifikat/Signaturkarte: pdfmy Scan fragt nach und Windows nach der PIN – hier kein Passwort
     status(`Signiere mit ${signCert.name} – bitte im Fenster von pdfmy Scan bestätigen …`);
@@ -2909,7 +2991,7 @@ async function signFlow(bytes) {
       return Uint8Array.from(atob(d.cms), c => c.charCodeAt(0));
     } };
     state.signer = signer;
-    const so = { contact: S.author || '', tsa: tsaFetch() };
+    const so = { contact: S.author || '', tsa: tsaFetch(), ...extra };
     if (so.tsa) await loadForge();   // Zeitstempel einbauen braucht den Signatur-Baustein
     try { const out = await PdfSign.signPdf(bytes, signer, so); tsNote(so); return out; }
     catch (e) { if (/abgelehnt/.test(e.message)) return null; throw e; }
@@ -2932,7 +3014,7 @@ async function signFlow(bytes) {
   } else $('#pwSignReason').value = $('#pwSignReason').value || '';
   status(`Signiere als ${state.signer.name} …`);
   if (tsaFetch()) await loadForge();
-  const so = { reason: $('#pwSignReason').value.trim(), contact: S.author || '', tsa: tsaFetch() };
+  const so = { reason: $('#pwSignReason').value.trim(), contact: S.author || '', tsa: tsaFetch(), ...extra };
   const out = await PdfSign.signPdf(bytes, state.signer, so); tsNote(so); return out;
 }
 

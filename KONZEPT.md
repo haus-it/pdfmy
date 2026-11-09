@@ -590,4 +590,20 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 | 6 Wenig aktive Inhalte | passt: keine Skripte in der PDF |
 
 **Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
-**Offen aus Rang 4–7:** Abschlusszertifikat versiegeln (Rang 5), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
+**Offen aus Rang 4–7:** ~~Abschlusszertifikat versiegeln (Rang 5)~~ (umgesetzt app-v244, siehe unten), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
+
+### Umgesetzt 09.11.2026: Abschluss versiegeln (app-v244)
+**Anlass (GF 09.11.2026):** „Abschluss versiegeln“ – Rang 5 aus docs/Wettbewerb-2026-11.md (DocuSign „Certificate of Completion“).
+**Inhalt:** Siegel über die fertige PDF samt Prüfprotokoll: eigenes Zertifikat (PAdES, optional B-T) oder Dokumentzeitstempel (PAdES-DTS, RFC 3161 über pdfmy Scan). Angehängt statt neu geschrieben. Prüfprotokoll zusätzlich als PDF/A-2b.
+**Leitplanken vor dem Bau geprüft:**
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Signatur im Browser bzw. in Windows/auf der Karte; beim Zeitstempel verlässt nur der SHA-256-Prüfwert den Rechner (wie beim bereits entschiedenen Zeitstempel) |
+| 2 Kein Server | passt: kein eigener Dienst; Zeitstempel nur über pdfmy Scan an die vier bekannten Dienste, nur auf Wunsch (ohne Zertifikat und ohne pdfmy Scan kein Siegel) |
+| 3 Ohne Tracking | passt: nichts wird gezählt oder gemeldet |
+| 4 Einfach | passt: automatisch, wo möglich; sonst ein Knopf; keine neue Einstellung |
+| 5 Prüfbar | 5 Regressionstests, 4 echte Zeitstempeldienste, Browser-Ablauf mit 19 Prüfpunkten |
+| 6 Wenig aktive Inhalte | passt: keine Skripte in der PDF |
+
+**Ehrliche Grenzen (so in der Hilfe):** Mit Zugangscode wird nur die Ablage-Kopie versiegelt (Verschlüsseln schreibt die Datei neu). Ohne Zertifikat und ohne pdfmy Scan kein Siegel (Zeitstempeldienste erlauben keine Browser-Anfragen). Ein selbst ausgestelltes Zertifikat belegt Unverändertheit, nicht die Identität. Prüfung gegen die EU-Vertrauensliste und B-LT/LTA bleiben Rang 6.

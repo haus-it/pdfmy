@@ -145,11 +145,14 @@
     if (now > signer.notAfter) throw new Error(`Das Zertifikat ist am ${typeof I18N !== 'undefined' && I18N.fmtDate ? I18N.fmtDate(signer.notAfter) : signer.notAfter.toLocaleDateString('de-DE')} abgelaufen.`);
     // Schon signiert (andere Person): neue Signatur ANHÄNGEN (inkrementelles Update) – die vorhandenen Bytes bleiben unverändert,
     // damit frühere Signaturen gültig bleiben. Sonst wie bisher: Datei neu schreiben.
-    const already = bin(pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes)).includes('/ByteRange');
+    // o.append: immer anhängen (z. B. Abschluss einer Unterschriftsanfrage – die empfangenen Fassungen müssen Byte für Byte erhalten bleiben)
+    const already = o.append || bin(pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes)).includes('/ByteRange');
     const out = already ? await appendSigField(pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes), signer, o, now) : await newSigField(pdfBytes, signer, o, now);
     return finishSig(out, signer, o);
   }
   function sigDict(ctx, signer, o, now) {
+    // Dokumentzeitstempel (ISO 32000-2, 12.8.5; ETSI EN 319 142-1, PAdES-DTS): kein Zertifikat einer Person, nur Zeitpunkt + Prüfwert
+    if (o.docTs) return ctx.obj({ Type: 'DocTimeStamp', Filter: 'Adobe.PPKLite', SubFilter: 'ETSI.RFC3161', ByteRange: [0, 1111111111, 2222222222, 3333333333], Contents: PL.PDFHexString.of('0'.repeat(o.sigHex || SIG_HEX_TS)) });
     return ctx.obj({
       Type: 'Sig', Filter: 'Adobe.PPKLite', SubFilter: signer.cms && !signer.pades ? 'adbe.pkcs7.detached' : 'ETSI.CAdES.detached',
       ByteRange: [0, 1111111111, 2222222222, 3333333333],
@@ -243,17 +246,29 @@
 
     // CMS-Signatur über beide Bereiche (alles außer dem Signaturwert)
     let der;
-    if (signer.cms) {
+    if (o.docTs) {   // Dokumentzeitstempel: der Dienst bestätigt den SHA-256 der abgedeckten Bytes; das TimeStampToken ist der Inhalt
+      const md = forge.md.sha256.create(); md.update(bin(final.subarray(0, cStart))); md.update(bin(final.subarray(cEnd)));
+      const hash = md.digest().getBytes(), q = tsRequest(hash), t = tsToken(bin(await o.docTs(u8(q.der))), hash, q.nonce);
+      der = forge.asn1.toDer(t.token).getBytes(); o.tsTime = t.time;
+    } else if (signer.cms) {
       const covered = new Uint8Array(cStart + final.length - cEnd); covered.set(final.subarray(0, cStart)); covered.set(final.subarray(cEnd), cStart);
       der = bin(await signer.cms(covered));
     } else der = cadesDetached(bin(final.subarray(0, cStart)) + bin(final.subarray(cEnd)), signer);
-    if (o.tsa) { const t = await addTimestamp(der, o.tsa); der = t.der; o.tsTime = t.time; }   // PAdES B-T
+    if (o.tsa && !o.docTs) { const t = await addTimestamp(der, o.tsa); der = t.der; o.tsTime = t.time; }   // PAdES B-T
     const hex = Array.from(der, c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
     if (hex.length > sigHex) throw new Error('Zertifikatskette zu groß für den Signaturplatz.');
     const padded = hex + '0'.repeat(sigHex - hex.length);
     for (let i = 0; i < padded.length; i++) final[cStart + 1 + i] = padded.charCodeAt(i);
     return final;
   }
-  const api = { readP12, signPdf, addTimestamp, TSA };
+  /* Dokumentzeitstempel anhängen (PAdES-DTS): versiegelt den Stand der Datei ohne eigenes Zertifikat. Übertragen wird nur der
+     SHA-256-Prüfwert. fetchTs wie bei signPdf (o.tsa). Liefert { bytes, time }. */
+  async function docTimestamp(pdfBytes, fetchTs) {
+    libs();
+    const o = { append: true, docTs: fetchTs, sigHex: SIG_HEX_TS };
+    const out = await appendSigField(pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes), { name: 'Dokumentzeitstempel' }, o, new Date());
+    return { bytes: await finishSig(out, {}, o), time: o.tsTime };
+  }
+  const api = { readP12, signPdf, addTimestamp, docTimestamp, TSA };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfSign = api;
 })(typeof self !== 'undefined' ? self : globalThis);
