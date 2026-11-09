@@ -6,7 +6,7 @@
    Updates laden nur geänderte Dateien (Update-Strategie, KONZEPT.md): Der Offline-Speicher bleibt über Versionen bestehen; beim
    Installieren wird jede gespeicherte Datei mit ihrer Prüfsumme in pruefsummen.json verglichen und nur bei Abweichung neu geladen.
    Bei 100.000 Nutzern spart das je Veröffentlichung Terabytes (vorher: alle ~18 MB je Gerät bei jeder neuen VERSION). */
-const VERSION = 'app-v240';
+const VERSION = 'app-v242';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/fristen.js', 'js/formdaten.js', 'js/kommentare.js', 'js/qrstempel.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',
@@ -97,6 +97,7 @@ self.addEventListener('install', e => {
       const r = rel(req.url), want = r && sums[r];
       if (want && !CORE.includes(r) && !VENDOR.includes(r)) { const hit = await store.match(req); if (!hit || await shaOf(hit) !== want) stale.push(req.url); }
     }
+    else for (const req of await store.keys()) if (/^i18n\/[A-Za-z-]+\.json$/.test(rel(req.url) || '')) stale.push(req.url);   // ohne Prüfsummen (lokale Ausgabe): Wörterbücher neu laden
     await stage.put('__veraltet__', new Response(JSON.stringify(stale)));
     console.info(`PDFMy ${VERSION}: ${loaded} Datei(en) geladen, ${kept} unverändert übernommen${missed ? `, ${missed} später` : ''}`);
     await self.skipWaiting();
@@ -156,7 +157,10 @@ self.addEventListener('fetch', e => {
        bis das Netz aufgab, und die App startete nicht. Aktuell bleibt sie trotzdem: Jede Veröffentlichung ändert sw.js, der Browser
        prüft sw.js bei jedem Start, lädt die neue Fassung im Hintergrund vollständig und geprüft (Prüfsummen) und meldet „aktualisiert“. */
     const r = rel(e.request.url), nav = e.request.mode === 'navigate';
-    if (r && CORE.includes(r) && !NOCACHE.test(url.pathname)) {
+    // Wörterbücher der Oberflächensprache ebenso (09.11.2026): vorher bei hängendem Netz 2,8 s leere Seite, dann deutsch, nach 4,3 s
+    // übersetzt. Aktuell bleiben sie trotzdem – beim Installieren einer neuen Fassung prüft der Service Worker jede gespeicherte Datei
+    // gegen pruefsummen.json und entfernt veraltete beim Aktivieren; dann lädt die App das neue Wörterbuch frisch.
+    if (r && (CORE.includes(r) || /^i18n\/[A-Za-z-]+\.json$/.test(r)) && !NOCACHE.test(url.pathname)) {
       e.respondWith(fromStore(new Request(new URL(r, BASE).href)).then(hit => hit ? (hit.redirected ? new Response(hit.body, hit) : hit) : fresh(e.request, url, nav)));
       return;
     }

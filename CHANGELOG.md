@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-09
 
+### Stabiler Start ohne Netz, Android-App vervollständigt (app-v242)
+- Fehler behoben: Mit einer anderen Oberflächensprache als Deutsch blieb die App bei hängendem Netz (WLAN ohne Internet, Funkloch, Anmeldeportal) 2,8 s leer, erschien dann deutsch und wechselte erst nach 4,3 s in die eigene Sprache. Das Wörterbuch kommt jetzt sofort aus dem Gerät (gemessen: 0,6 s, gleich in der richtigen Sprache); veraltete Wörterbücher ersetzt jedes Update anhand der Prüfsummen.
+- Android-App (Handy und Tablet): Hilfe und Rechtstexte jetzt in allen Sprachen auch offline (vorher nur deutsch); Versionsanzeige und Version im Fehlerbericht (fehlten).
+- Geprüft: Start ohne Netz am PC (0,6 s) und in der Handyansicht (1,7 s), hängendes Netz, App-Umgebung ohne Internet auf Deutsch und Englisch – jeweils Öffnen, Texterkennung, Hilfe ohne Fehler.
+
 ### Schnellerer Start beim ersten Besuch (app-v241)
 - Der Browser lud die rund 40 Programmdateien bisher streng nacheinander (gemessen auf pdfmy.de: 3–7 s bis „bereit“, davon der größte Teil Warten). Jetzt kündigt die Seite alle Dateien im Kopf an, der Browser lädt sie gleichzeitig; die Reihenfolge der Ausführung bleibt gleich. Lokal gemessen: alle Dateien nach 0,2 s angefordert statt verteilt über 9 s.
 - Wiederkehrende Besuche starten wie bisher aus dem Offline-Speicher.
