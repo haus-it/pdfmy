@@ -72,6 +72,15 @@ if (stats.count >= 1000) {
   const k = Math.floor(stats.count / 1000) * 1000;
   rep('<ul class="trust">', `<ul class="trust"><li title="Stand ${esc(stats.asOf || '')}">Über ${k.toLocaleString('de-DE')} ${esc(stats.label || 'Nutzer')}</li>`);
 }
+// Ladezeit: Chrome holte die rund 40 Skripte am Ende der Seite streng nacheinander (gemessen 09.11.2026: pdfmy.de 3–7 s, lokal 10 s bis
+// „bereit“). Vorab-Hinweise im Kopf lassen den Browser alle parallel laden; die Reihenfolge der Ausführung bleibt die der <script>-Tags.
+const preloadScripts = h => {
+  const srcs = [...h.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m => m[1]).filter(x => !/js\/(config|i18n)\.js$/.test(x));
+  const at = '<script src="js/i18n.js"></script>';   // hinter die beiden Skripte im Kopf – die braucht die Seite zum Anzeigen zuerst
+  if (srcs.length < 10 || !h.includes(at)) throw new Error('index.html: Skripte für Vorab-Laden nicht gefunden');
+  return h.replace(at, at + '\n' + srcs.map(x => `<link rel="preload" as="script" href="${x}">`).join('\n'));
+};
+html = preloadScripts(html);
 write('index.html', html);
 
 // Manifest und Service Worker
@@ -585,7 +594,7 @@ if (!BUILD_MENTOR || !fs.existsSync(htpasswd)) {
   if (!mh.includes('<title>PDFMy</title>')) throw new Error('mentor: Titel nicht gefunden');
   mh = mh.replace('<title>PDFMy</title>', `<title>PDFMy – powered by Mentor Group</title>\n<meta http-equiv="Content-Security-Policy" content="${CSP}">\n<meta name="robots" content="noindex, nofollow">`)
     .replace('<link rel="manifest" href="manifest.webmanifest">', '<link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">');
-  write(M('index.html'), mh);
+  write(M('index.html'), preloadScripts(mh));
   const mm = JSON.parse(read('manifest.webmanifest')); Object.assign(mm, { id: '/mentor/', start_url: './', scope: './' });
   write(M('manifest.webmanifest'), JSON.stringify(mm, null, 2) + '\n');
   write(M('sw.js'), toVendor(read('sw.js').replace(/const VERSION = '[^']+';/, `const VERSION = 'mentor-${stamp}';`)));

@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-09
 
+### Schnellerer Start beim ersten Besuch (app-v241)
+- Der Browser lud die rund 40 Programmdateien bisher streng nacheinander (gemessen auf pdfmy.de: 3–7 s bis „bereit“, davon der größte Teil Warten). Jetzt kündigt die Seite alle Dateien im Kopf an, der Browser lädt sie gleichzeitig; die Reihenfolge der Ausführung bleibt gleich. Lokal gemessen: alle Dateien nach 0,2 s angefordert statt verteilt über 9 s.
+- Wiederkehrende Besuche starten wie bisher aus dem Offline-Speicher.
+
 ### Keine Datei geht beim Laden verloren (app-v240)
 - Fehler behoben: Der Knopf „Öffnen“ ist sichtbar, bevor PDFMy fertig geladen ist (beim ersten Besuch oder im langsamen Netz mehrere Sekunden). Eine in dieser Zeit gewählte Datei ging still verloren; beim Hineinziehen öffnete der Browser sie womöglich selbst und verließ PDFMy.
 - Jetzt merkt sich PDFMy früh gewählte oder hineingezogene Dateien (Mauszeiger „lädt“) und öffnet sie, sobald es bereit ist – auch Kamera-Fotos.

@@ -555,4 +555,10 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Befund:** Im frischen Browser dauerte es lokal über 10 Sekunden, bis PDFMy bereit war; die Oberfläche mit „Öffnen“ und Ablagefeld ist aber schon vorher sichtbar. Gewählte Dateien gingen verloren, hineingezogene öffnete der Browser selbst.
 **Umsetzung:** Ein kleiner Wächter in js/config.js (erstes Skript im Kopf) nimmt Dateien bis zum Ende des Ladens an und übergibt sie dann dem normalen Öffnen. Keine neue Datei, keine neue Bedienung.
 **Leitplanken:** 1–3 gewahrt (nichts verlässt das Gerät). 4 verbessert. 5: Browser-Prüfung Wählen und Hineinziehen während des Ladens, Gegenprobe normales Öffnen. 6 nicht betroffen.
-**Nächster Schritt (offen):** Ladezeit beim ersten Besuch messen und senken (Skripte bei Bedarf nachladen).
+**Nächster Schritt:** Ladezeit beim ersten Besuch – Schritt 1 umgesetzt in app-v241 (Skripte parallel statt nacheinander, siehe unten); Schritt 2 offen: selten genutzte Module erst bei Bedarf laden.
+
+### Umgesetzt 09.11.2026: Schnellerer Start beim ersten Besuch (app-v241)
+**Befund (gemessen):** pdfmy.de im frischen Chrome 3,2–7,5 s bis „bereit“ (850 KB übertragen, HTTP/2). Die Skripte am Seitenende wurden streng nacheinander geholt – der Browser fand sie nicht vorab. Bei 40 Dateien summieren sich die Wartezeiten.
+**Umsetzung:** tools/build-web.js setzt für jedes Skript einen Vorab-Hinweis (`<link rel="preload">`) in den Kopf, hinter die beiden Skripte, die die Seite zum Anzeigen braucht. Liste wird beim Bau aus den Skript-Tags erzeugt (veraltet nie). Ausführungsreihenfolge unverändert.
+**Leitplanken:** 1–3 gewahrt (keine neue Verbindung, gleiche Dateien). 4 verbessert. 5: Funktionsprobe (Öffnen während und nach dem Laden), Testsuite. 6 nicht betroffen.
+**Schritt 2 (offen):** Module, die nur einzelne Werkzeuge brauchen (Signatur, E-Rechnung, beA …), erst bei Bedarf laden; vorher messen, wie viel Ausführungszeit das spart.
