@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-10
+
+### pdfmy Scan 1.16.1: Outlook-Anhänge und Drucker „PDFMy“ öffnen wieder (app-v245)
+- Fehler behoben (Fehlerbericht 10.11.2026): Seit dem 10.11. (offenbar mit einem Chrome-Update, Chrome 157) darf der Browser beim Öffnen Dateien aus den Programmordnern (AppData, ProgramData) nicht mehr lesen – dort legt pdfmy Scan die Kopie eines Outlook-Anhangs bzw. die Druckdatei ab. Die Ersatzsuche, mit der pdfmy Scan die Datei an PDFMy nachreicht, fand beide nicht: Die Kopie behielt das Änderungsdatum des Anhangs (bei älteren E-Mails außerhalb der 30-Minuten-Grenze), und der Druckordner wurde gar nicht durchsucht. Meldung: „… konnte nicht gelesen werden“.
+- Jetzt zählt der jüngere Zeitpunkt (Änderung oder Anlage), und der eigene Druckordner wird zuerst durchsucht. Die Datei verlässt das Gerät weiterhin nicht; gesucht wird wie bisher nur nach genau diesem Dateinamen.
+- Geprüft: Ersatzsuche in der gebauten Datei (alte Anhang-Kopie gefunden, Druckdatei gefunden; fremder Name, Platzhalter und wirklich alte Dateien abgewiesen). pdfmy Scan aktualisiert sich von selbst.
+
 ## 2026-11-09
 
 ### Abschluss versiegeln wie das „Certificate of Completion“ (app-v244)

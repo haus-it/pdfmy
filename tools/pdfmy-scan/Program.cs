@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.16.0";
+        public const string Version = "1.16.1";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1338,16 +1338,23 @@ namespace PdfmyScan
             // [Ordner, Suchtiefe] – nur dort, wo Outlook Anhänge zum Öffnen ablegt; höchstens 8 Sekunden suchen
             // INetCache: klassisches Outlook (Content.Outlook) und Internet-Cache (IE\…\name[n].pdf – Outlook im Web-Modus, Webmail);
             // Olk/Paket: neues Outlook; zuletzt Temp und Downloads (nur Dateien der letzten 30 Minuten mit genau diesem Namen)
-            var roots = new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(copies, 2), new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\INetCache"), 4),
-                new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Olk"), 6), new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\Temporary Internet Files"), 4) };
+            // Eigene Druckdateien (Drucker „PDFMy“, ProgramData) und Kopien aus Outlook zuerst: Chrome 157 liest Dateien unter
+            // AppData/ProgramData beim Öffnen nicht mehr (Fehlerbericht 10.11.2026) – dann reicht pdfmy Scan sie hier nach.
+            var roots = new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(copies, 2) };
+            try { roots.Add(new KeyValuePair<string, int>(PdfPrinter.Folder, 0)); } catch { }
+            roots.AddRange(new[] { new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\INetCache"), 4),
+                new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Olk"), 6), new KeyValuePair<string, int>(Path.Combine(la, @"Microsoft\Windows\Temporary Internet Files"), 4) });
             try { foreach (var d in Directory.GetDirectories(Path.Combine(la, "Packages"), "Microsoft.OutlookForWindows_*")) roots.Add(new KeyValuePair<string, int>(d, 7)); } catch { }
             roots.Add(new KeyValuePair<string, int>(Path.GetTempPath(), 3));
             try { roots.Add(new KeyValuePair<string, int>(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"), 1)); } catch { }
             DateTime cutoff = DateTime.UtcNow.AddMinutes(-30), stop = DateTime.UtcNow.AddSeconds(8); FileInfo best = null;
+            DateTime Fresh(FileInfo x) => x.LastWriteTimeUtc > x.CreationTimeUtc ? x.LastWriteTimeUtc : x.CreationTimeUtc;
             void Walk(string dir, int left)
             {
                 if (DateTime.UtcNow > stop) return;
-                try { foreach (var f in Directory.GetFiles(dir, name)) { if (!string.Equals(Path.GetFileName(f), name, StringComparison.OrdinalIgnoreCase)) continue; var fi = new FileInfo(f); if (fi.LastWriteTimeUtc >= cutoff && fi.Length > 0 && (best == null || fi.LastWriteTimeUtc > best.LastWriteTimeUtc)) best = fi; } } catch { }
+                // Zeitpunkt = jüngerer von Änderung und Anlage: Eine Kopie (File.Copy) behält das Änderungsdatum des Anhangs –
+                // bei einer älteren E-Mail lag es vor der 30-Minuten-Grenze, die eigene Kopie wurde nie gefunden (Fehlerbericht 10.11.2026)
+                try { foreach (var f in Directory.GetFiles(dir, name)) { if (!string.Equals(Path.GetFileName(f), name, StringComparison.OrdinalIgnoreCase)) continue; var fi = new FileInfo(f); if (Fresh(fi) >= cutoff && fi.Length > 0 && (best == null || Fresh(fi) > Fresh(best))) best = fi; } } catch { }
                 if (left > 0) try { foreach (var d in Directory.GetDirectories(dir)) Walk(d, left - 1); } catch { }
             }
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);

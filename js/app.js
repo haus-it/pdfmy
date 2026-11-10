@@ -4557,7 +4557,7 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.16.0';
+const SCAN_LATEST = '1.16.1';
 const SCAN_MAC_LATEST = '1.7.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
