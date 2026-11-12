@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-12
+
+### Anlagen vom Unterzeichner, schnelleres Öffnen aus Outlook und vom Drucker (app-v246)
+- **Anlagen beifügen** (wie „Attachment“-Felder bei DocuSign): Im Dialog unter „Mehr“ „Bitte beifügen“ eintragen (z. B. Ausweiskopie, Vollmacht). Die unterschreibende Person sieht den Hinweis in E-Mail und Leiste und legt mit „Anlage beifügen …“ Dateien als Anlage in die PDF (höchstens 10 je Person, 25 MB zusammen); bis zum Weitersenden unter „Übersicht“ wieder entfernbar. Fehlt die angeforderte Anlage, fragt PDFMy vor dem Weitersenden nach. Name, Größe und SHA-256 stehen in der Anfrage und im Prüfprotokoll. Die Anlage wird angehängt – „Echtheit geprüft“ gilt weiter.
+- **Öffnen aus Outlook und vom Drucker „PDFMy“:** Kann der Browser die übergebene Datei nicht lesen, fragt PDFMy sofort pdfmy Scan, statt erst fünfmal zu warten (spart 2–3 s). Für Ausdrucke eine eigene Meldung statt des Outlook-Hinweises.
+- Geprüft: 5 neue Regressionstests (tests/anlagen.test.js), Browser-Ablauf mit 21 Prüfpunkten (Beifügen, Entfernen, Größengrenze, Anlage in der PDF, Fassung erhalten, Rückfrage, Prüfprotokoll, Nachreichen in 2 ms, Meldungen), Signatur-Paket (31) und Siegel (19) unverändert grün, Dialog in Handybreite ohne Überlauf.
+
 ## 2026-11-10
 
 ### pdfmy Scan 1.16.1: Outlook-Anhänge und Drucker „PDFMy“ öffnen wieder (app-v245)

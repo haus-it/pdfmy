@@ -431,7 +431,9 @@ const reqMine = () => req && !reqDraft ? SigReq.next(req) : -1;
 /* Signatur-Paket (app-v243): reqPw = Zugangscode dieser Anfrage (nur im Speicher; beim Absender zusätzlich im Posteingangsbuch),
    reqHere = Vor-Ort-Modus (Gerät wird weitergereicht), reqPin = PIN zum Zurückholen, reqWantIcs = Kalender-Erinnerungen beim Senden */
 let reqPw = '', reqHere = false, reqPin = '', reqWantIcs = false;
-window.reqReset = () => { reqPw = ''; reqHere = false; reqPin = ''; reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; reqIsSealed = false; renderReqBar(); };
+// Anlagen der unterschreibenden Person (app-v246): SHA-256 → { name, bytes, mime } – reisen beim Weitersenden als Anlage in der PDF mit
+const reqAttNew = new Map();
+window.reqReset = () => { reqAttNew.clear(); reqPw = ''; reqHere = false; reqPin = ''; reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; reqIsSealed = false; renderReqBar(); };
 function reqRow(s = {}, i = 0) {
   return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button></div>`;
 }
@@ -447,7 +449,7 @@ $('#btnSigReq').onclick = () => {
   $('#reqSerial').checked = !!cur?.serial; $('#reqList').value = cur?.serial ? cur.serial.map(s => `${s.name}; ${s.email}`).join('\n') : ''; reqSerialUi();
   // Mehr: Gültigkeit, Zugangscode, Zahlung (Empfänger und IBAN wie beim GiroCode-Stempel vorbelegt), Kalender
   const g = LS.get('qrGiro', {}) || {};
-  $('#reqExp').value = cur?.expires || ''; $('#reqLock').checked = !!cur?.lock; $('#reqIcs').checked = cur ? reqWantIcs : true;
+  $('#reqExp').value = cur?.expires || ''; $('#reqAttach').value = cur?.attach || ''; $('#reqLock').checked = !!cur?.lock; $('#reqIcs').checked = cur ? reqWantIcs : true;
   $('#reqPay').checked = !!cur?.pay; $('#reqPayAmt').value = cur?.pay?.amount != null ? SigReq.money(cur.pay.amount).replace(/\s*€$/, '') : '';
   $('#reqPayName').value = cur?.pay?.name || g.name || S.ownName || ''; $('#reqPayIban').value = cur?.pay ? SigReq.ibanFmt(cur.pay.iban) : g.iban || ''; $('#reqPayPurp').value = cur?.pay?.purpose || '';
   $('#reqPayBox').hidden = !$('#reqPay').checked; $('#reqMore').open = !!(cur?.expires || cur?.lock || cur?.pay);
@@ -512,7 +514,7 @@ $('#reqForm').onsubmit = ev => {
   }
   if (serial && $('#reqLock').checked) { $('#reqMore').open = true; $('#reqErr').textContent = 'Der Zugangscode ist beim Serienversand nicht möglich – bitte einzeln senden oder den Haken entfernen.'; return; }
   const r = SigReq.create({ title: $('#reqTitle').value, requester: { name: $('#reqMe').value, email: $('#reqMeMail').value }, signers, message: $('#reqMsg').value, due: $('#reqDue').value, cc: $('#reqCc').value, id: reqDraft && req ? req.id : undefined,
-    expires: $('#reqExp').value, lock: $('#reqLock').checked, pay });
+    expires: $('#reqExp').value, lock: $('#reqLock').checked, pay, attach: $('#reqAttach').value });
   const pr = SigReq.problems(r); if (pr.length) { $('#reqErr').textContent = pr.join(' '); return; }
   reqWantIcs = $('#reqIcs').checked;
   // Felder behalten, soweit die Person noch dabei ist
@@ -646,6 +648,7 @@ window.reqInfo = async (out, pages, when = new Date()) => {
   if (!req) return;
   if (reqAudit) await reqAuditPage(out);
   try { await reqFormFields(out, pages); } catch (e) { console.warn('Formularfelder der Unterschriftsanfrage:', e); }
+  for (const a of reqAttNew.values()) await out.attach(a.bytes, a.name, { mimeType: a.mime || 'application/octet-stream', description: a.who ? `Anlage von ${a.who} (Unterschriftsanfrage)` : 'Anlage (Unterschriftsanfrage)', creationDate: when, modificationDate: when });
   await out.attach(new TextEncoder().encode(SigReq.serialize(req, f => pages.indexOf(f.pg))), SigReq.FILE, { mimeType: 'application/json', description: 'PDFMy – Unterschriftsanfrage (Unterzeichner, Felder, Protokoll)', creationDate: when, modificationDate: when });
 };
 // Echte PDF-Formularfelder für die Person, die dran ist: So kann sie auch in Adobe Acrobat Reader, Vorschau (Mac) oder Edge
@@ -957,7 +960,7 @@ async function reqSendSerial() {
   try {
     for (const [i, rc] of list.entries()) {
       status(`Serienversand: ${i + 1} von ${list.length} – ${rc.name} …`, i / list.length);
-      const r = SigReq.create({ title: base.title, requester: base.requester, signers: [rc], message: base.message, due: base.due, cc: (base.cc || []).join(', ') });
+      const r = SigReq.create({ title: base.title, requester: base.requester, signers: [rc], message: base.message, due: base.due, cc: (base.cc || []).join(', '), attach: base.attach });
       r.fields = base.fields.filter(f => f.s === 0).map(f => ({ ...f, v: '', s: 0 }));
       req = SigReq.markSent(r, 0);
       const bytes = await reqPdf(), name = reqFile(r, ` – ${safe(rc.name)} – zur Unterschrift.pdf`);
@@ -1059,6 +1062,7 @@ readFromHash(); addEventListener('hashchange', readFromHash);
 async function reqForward(ext = false) {
   const i = reqMine(); if (i < 0) return;
   if (!reqSigned) return status('Bitte zuerst im markierten Feld unterschreiben.');
+  if (req.attach && !req.signers[i].att?.length && !confirm(I18N.t(`Angefordert ist: ${req.attach}. Es ist noch keine Anlage beigefügt. Trotzdem weitersenden?`))) return;
   try {
     req = SigReq.markSigned(req, i, { hash: reqHash, ext: ext === true });
     reqExt = false;
@@ -1071,7 +1075,7 @@ async function reqForward(ext = false) {
     const name = reqFile(req, done ? ' – unterschrieben.pdf' : ' – zur Unterschrift.pdf');
     const m = await reqMail(req, await reqSeal(bytes), name);
     if (sealed) await reqSealNote(sealed);
-    reqSigned = false; state.dirty = false; renderReqBar(); renderAnns();
+    reqSigned = false; reqAttNew.clear(); state.dirty = false; renderReqBar(); renderAnns();
     status(done ? `Alle haben unterschrieben. ${emlDone(m.opened, m.to) + reqSealMsg(sealed)}` : `Danke! ${emlDone(m.opened, m.to)}`);
   } catch (e) { console.error(e); status(`Weitersenden nicht möglich: ${e.message}`); }
 }
@@ -1217,10 +1221,35 @@ async function reqInfoShow() {
     req.expires ? `<p class="${SigReq.expired(req) ? 'reqwarn' : 'hint'}" translate="no">${T('Gültig bis {0}', esc(SigReq.day(req.expires)))}${SigReq.expired(req) ? ' – ' + L('abgelaufen') : ''}</p>` : '',
     req.pay ? `<p class="hint" translate="no">${esc(SigReq.payText(req, s => I18N.t(s), SigReq.complete(req))).replace(/\n/g, '<br>')}</p>` : '',
     req.lock ? `<p class="hint">Diese Anfrage reist mit Zugangscode: Die PDF wird für jede Person neu verschlüsselt. Die Prüfsummen belegen die Fassung je Person; der Nachweis „unverändert enthalten“ entfällt.</p>` : ''].join('');
-  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin + seal}${wl}${wa + extra}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
+  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin + seal}${wl}${wa + extra}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${reqAttList(s, i)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
   $('#reqInfoDlg').showModal();
 }
 $('#reqInfoClose').onclick = () => $('#reqInfoDlg').close();
+// Anlagen je Person in der Übersicht; eigene, noch nicht versandte Anlagen lassen sich wieder entfernen
+const reqAttList = (s, i) => (s.att || []).map(a => `<br><small translate="no">📎 ${esc(a.name)}</small>${i === reqMine() && reqAttNew.has(a.sha) ? ` <button type="button" class="linkbtn" data-attrm="${esc(a.sha)}">${esc(I18N.t('Entfernen'))}</button>` : ''}`).join('');
+$('#reqInfoBody').addEventListener('click', ev => {
+  const b = ev.target.closest('[data-attrm]'); if (!b || !req) return;
+  req = SigReq.removeAttachment(req, reqMine(), b.dataset.attrm); reqAttNew.delete(b.dataset.attrm);
+  renderReqBar(); reqInfoShow(); status('Anlage entfernt.');
+});
+// „Anlage beifügen …“: Datei(en) wählen – höchstens 20 MB je Datei und 25 MB zusammen (E-Mail-Anhang)
+$('#reqAttFile').onchange = async ev => {
+  const files = [...ev.target.files]; ev.target.value = '';
+  const i = reqMine(); if (i < 0 || !files.length) return;
+  let added = 0;
+  for (const f of files) {
+    const total = [...reqAttNew.values()].reduce((n, a) => n + a.bytes.length, 0);
+    if (f.size > 20 * 1048576 || total + f.size > 25 * 1048576) { toast(I18N.t(`„${f.name}“ ist zu groß – Anlagen dürfen zusammen höchstens 25 MB haben (E-Mail).`), 8000); continue; }
+    try {
+      const bytes = new Uint8Array(await f.arrayBuffer()), sha = await sha256(bytes);
+      req = SigReq.addAttachment(req, i, { name: f.name, sha, size: f.size });
+      reqAttNew.set(sha, { name: req.signers[i].att.find(a => a.sha === sha).name, bytes, mime: f.type, who: req.signers[i].name }); added++;
+    } catch (e) { toast(I18N.t(e.message), 6000); }
+  }
+  if (!added) return;
+  state.dirty = true; renderReqBar();
+  status(added === 1 ? 'Anlage beigefügt – sie reist beim Weitersenden in der PDF mit (unter „Übersicht“ wieder entfernen).' : `${added} Anlagen beigefügt – sie reisen beim Weitersenden in der PDF mit.`);
+};
 function renderReqBar() {
   const bar = $('#reqBar'); bar.hidden = !req; if (!req) return;
   const n = req.signers.length, d = SigReq.doneCount(req), i = reqMine(), b = (id, t, cls = '') => `<button type="button" class="linkbtn${cls}" data-rq="${id}">${t}</button>`;
@@ -1247,8 +1276,10 @@ function renderReqBar() {
     if (wt?.due) parts.push(wt.dueDays < 0 ? `– Frist ${SigReq.day(wt.due)} ist überschritten` : wt.dueDays === 0 ? '– Frist: heute' : `– Frist: ${SigReq.day(wt.due)}`);
     if (reqExt && !reqSigned) parts.push(`– ${req.signers[i].name} hat offenbar in einem anderen PDF-Programm unterschrieben`);
     if (SigReq.expired(req)) parts.push(`– abgelaufen am ${SigReq.day(req.expires)}: bitte beim Absender eine neue Anfrage anfordern`);
+    const nAtt = req.signers[i].att?.length || 0;
+    if (req.attach && !reqSigned) parts.push(nAtt ? `– beigefügt: ${nAtt === 1 ? '1 Anlage' : nAtt + ' Anlagen'}` : `– bitte beifügen: ${req.attach}`);
     text = parts.map(p => I18N.t(p)).join(' ');   // jeden Teil für sich übersetzen
-    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned ? '' : b('deleg', 'Weitergeben …')) + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
+    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + (reqSigned ? '' : b('att', req.signers[i].att?.length ? `Anlage beifügen (${req.signers[i].att.length}) …` : 'Anlage beifügen …', req.attach && !req.signers[i].att?.length ? ' strong' : '')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned ? '' : b('deleg', 'Weitergeben …')) + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
   } else {
     text = reqIsSealed ? `Alle ${n} haben „${req.title}“ unterschrieben ✓ – versiegelt 🔒` : `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
     btns = b('info', 'Übersicht') + (reqIsSealed ? '' : b('seal', 'Abschluss versiegeln …', ' strong')) + b('audit', 'Prüfprotokoll als PDF/A');
@@ -1269,6 +1300,7 @@ $('#reqBtns').addEventListener('click', ev => {
   else if (k === 'fwd') reqForward();
   else if (k === 'here') reqHereStart();
   else if (k === 'herefin') reqHereFinish();
+  else if (k === 'att') $('#reqAttFile').click();
   else if (k === 'hereback') reqHereCancel();
   else if (k === 'deleg') { $('#reqDelName').value = ''; $('#reqDelMail').value = ''; $('#reqDelWhy').value = ''; $('#reqDelErr').textContent = ''; $('#reqDelDlg').showModal(); $('#reqDelName').focus(); }
   else if (k === 'tpl') reqTplSave();

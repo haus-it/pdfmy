@@ -4926,10 +4926,10 @@ addEventListener('beforeunload', e => { if ((state.dirty && state.pages.length) 
 // Doppelklick im Explorer/Finder (installierte App): neue Datei ersetzt das offene Dokument – nach Rückfrage, wenn ungespeichert
 // Übergebene Datei sofort vollständig einlesen: Outlook (v. a. am Mac) legt Anhänge nur als kurzlebige Kopie ab und entfernt
 // oder sperrt sie wieder – ein späteres Lesen (z. B. nach der Auswahl „Wie öffnen?“) scheitert dann mit „NotReadableError“.
-async function readNow(h) {
+async function readNow(h, tries = 5) {
   for (let i = 0; ; i++) {
     try { const f = await h.getFile(), buf = await f.arrayBuffer(); return new File([buf], f.name, { type: f.type, lastModified: f.lastModified }); }
-    catch (e) { if (i >= 4 || e.name === 'NotFoundError') throw e; await new Promise(r => setTimeout(r, 250 * (i + 1))); }   // Datei wird evtl. noch geschrieben
+    catch (e) { if (i >= tries - 1 || e.name === 'NotFoundError') throw e; await new Promise(r => setTimeout(r, 250 * (i + 1))); }   // Datei wird evtl. noch geschrieben
   }
 }
 window.readNow = readNow;
@@ -4937,10 +4937,14 @@ const noRead = e => ['NotReadableError', 'NotFoundError', 'SecurityError'].inclu
 // Darf der Browser die übergebene Datei nicht lesen (Outlook-Anhang im geschützten Ordner am Mac, neues Outlook unter Windows,
 // Thunderbird-Anhang in /tmp bei Chromium als Snap): pdfmy Scan sucht die frisch abgelegte Datei gleichen Namens
 // und reicht sie über 127.0.0.1 nach (ab Windows 1.8.7, Mac/Linux 1.1.7). Die Datei verlässt das Gerät nicht.
+// Seit Chrome 157 (Fehlerbericht 10.11.2026) darf der Browser übergebene Dateien aus Programmordnern (AppData, ProgramData –
+// Outlook-Kopien, Drucker „PDFMy“) gar nicht lesen. Darum nach dem ersten Fehlversuch sofort pdfmy Scan fragen statt erst
+// fünfmal zu warten (spart 2–3 s); findet pdfmy Scan nichts, wie bisher erneut selbst versuchen (Datei evtl. noch im Entstehen).
 async function readLaunched(h) {
-  try { return await readNow(h); }
-  catch (e) {
-    if (!noRead(e)) throw e;
+  let first;
+  try { return await readNow(h, 1); }
+  catch (e) { if (!noRead(e)) throw e; first = e; }
+  {
     // Warum es nicht klappt, für eine genaue Meldung merken: pdfmy Scan fehlt/zu alt, kein Zugriff (macOS-Datenschutz) oder Datei nicht gefunden
     let why = 'nohelper';
     try {
@@ -4954,14 +4958,25 @@ async function readLaunched(h) {
         why = j.denied ? 'denied' : 'notfound';
       }
     } catch {}
-    try { e.pdfmyWhy = why; } catch {}
-    throw e;
+    try { return await readNow(h, 4); }
+    catch (e) {
+      const err = noRead(e) ? e : first;
+      try { err.pdfmyWhy = why; } catch {}
+      throw err;
+    }
   }
 }
 window.readLaunched = readLaunched;
 // Meldung je nach Ursache – mit dem passenden Ausweg (Ursache aus readLaunched)
 const unreadable = (name, e) => {
   if (!noRead(e)) return `Fehler bei ${name}: ${e?.message || e}`;
+  // Ausdruck über den Drucker „PDFMy“ (pdfmy Scan legt ihn als „Druck JJJJ-MM-TT …pdf“ ab) – hier nicht von Outlook reden
+  if (/^Druck \d{4}-\d\d-\d\d/.test(name)) {
+    const w = e?.pdfmyWhy;
+    if (w === 'old') return `Der Ausdruck „${name}“ konnte nicht geöffnet werden – das installierte pdfmy Scan (${state.scanVersion}) ist zu alt. Bitte aktualisieren (pdfmy.de/scanner.html) und noch einmal drucken.`;
+    if (w === 'nohelper') return `Der Ausdruck „${name}“ konnte nicht geöffnet werden – pdfmy Scan läuft nicht. Bitte starten und noch einmal drucken.`;
+    return `Der Ausdruck „${name}“ konnte nicht geöffnet werden. Bitte noch einmal drucken; hilft das nicht, über „Problem melden“ Bescheid geben.`;
+  }
   const head = `„${name}“ konnte nicht gelesen werden – Outlook legt Anhänge in einem geschützten Ordner ab, den der Browser nicht lesen darf.`, save = 'Sofort-Lösung: den Anhang in Outlook sichern („Speichern unter“) und dann öffnen.';
   const why = e?.pdfmyWhy;
   if (why === 'denied') return `${head} pdfmy Scan läuft, aber macOS verweigert ihm den Zugriff auf die Outlook-Anhänge. Dauerhafte Lösung: „PDFMy (pdfmy Scan)“ als Standardprogramm für PDF-Dateien einstellen (Menü → „Als Standard für PDFs festlegen …“) – dann gibt Outlook die Datei direkt weiter. Alternativ in den Systemeinstellungen → Datenschutz & Sicherheit → Festplattenvollzugriff „perl“ erlauben. ${save}`;

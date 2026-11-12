@@ -28,13 +28,17 @@
   };
   /* expires: Ablaufdatum (danach weist PDFMy beim Öffnen darauf hin – nur ein Hinweis, ohne Server lässt sich das nicht erzwingen);
      lock: die PDF reist mit Zugangscode (AES-256), den der Absender auf einem zweiten Weg mitteilt – der Code selbst steht nie in der Anfrage */
-  function create({ title, requester = {}, signers = [], message = '', id, due = '', cc = '', expires = '', lock = false, pay = null } = {}) {
+  /* attach: Text „Bitte beifügen“ (z. B. „Kopie des Personalausweises“) – die unterschreibende Person kann Dateien als Anlage
+     in die PDF legen (Name, Größe und SHA-256 stehen in der Anfrage und im Prüfprotokoll) */
+  const cleanAtt = a => (Array.isArray(a) ? a : []).filter(x => x && x.name && /^[0-9a-f]{64}$/.test(x.sha)).slice(0, 10)
+    .map(x => ({ name: clean(x.name).replace(/[\/:*?"<>|]+/g, '_').slice(0, 120), sha: x.sha, size: Number.isFinite(+x.size) && +x.size >= 0 ? Math.round(+x.size) : 0, at: isNaN(new Date(x.at)) ? '' : x.at }));
+  function create({ title, requester = {}, signers = [], message = '', id, due = '', cc = '', expires = '', lock = false, pay = null, attach = '' } = {}) {
     const list = signers.map(s => ({ name: clean(s.name), email: clean(s.email).toLowerCase() })).filter(s => s.name || s.email);
     const kn = ccList(cc), py = cleanPay(pay);
     return {
       v: 1, id: id || Date.now().toString(36) + Math.random().toString(36).slice(2, 8), title: clean(title) || 'Dokument', created: now(),
       requester: { name: clean(requester.name), email: clean(requester.email).toLowerCase() }, message: String(message || '').slice(0, 2000), ...(isDay(due) ? { due } : {}), ...(kn.length ? { cc: kn } : {}),
-      ...(isDay(expires) ? { expires } : {}), ...(lock ? { lock: true } : {}), ...(py ? { pay: py } : {}),
+      ...(isDay(expires) ? { expires } : {}), ...(lock ? { lock: true } : {}), ...(py ? { pay: py } : {}), ...(clean(attach) ? { attach: clean(attach) } : {}),
       signers: list.map(s => ({ ...s, status: 'offen', signedAt: '', hash: '' })), fields: [],
       log: [{ at: now(), what: 'angefragt', by: clean(requester.name) || clean(requester.email) }],
     };
@@ -59,6 +63,8 @@
       if (r.lock !== true) delete r.lock; if (r.withdrawn && isNaN(new Date(r.withdrawn))) delete r.withdrawn;
       if (r.pay) { r.pay = cleanPay(r.pay); if (!r.pay) delete r.pay; }
       if (r.cc) { r.cc = ccList(r.cc).filter(isMail); if (!r.cc.length) delete r.cc; }
+      if (r.attach != null) { r.attach = clean(r.attach); if (!r.attach) delete r.attach; }
+      r.signers = r.signers.map(x => { if (!x || typeof x !== 'object') return x; const y = { ...x }; if (y.att != null) { y.att = cleanAtt(y.att); if (!y.att.length) delete y.att; } return y; });
       r.fields = r.fields.filter(f => Number.isInteger(f.s) && f.s >= 0 && f.s < r.signers.length && Number.isInteger(f.page) && [f.x, f.y, f.w, f.h].every(v => typeof v === 'number' && v >= 0 && v <= 1))
         .map(f => ({ ...f, t: TYPES[f.t] ? f.t : 'sign', label: clean(f.label).slice(0, 80), v: f.v == null ? '' : String(f.v).slice(0, 500) }));
       return r;
@@ -99,6 +105,22 @@
     if (ne === s.email || r.signers.some((x, j) => j !== i && x.email === ne)) throw new Error('Diese Person steht schon in der Reihenfolge.');
     const signers = r.signers.map((x, j) => j === i ? { name: nn, email: ne, status: 'offen', signedAt: '', hash: '', from: { name: s.name, email: s.email }, ...(why ? { why } : {}) } : x);
     return { ...r, signers, log: [...r.log, { at, what: 'weitergegeben', by: s.name || s.email, to: nn, ...(why ? { reason: why } : {}) }] };
+  }
+  /* Anlage der unterschreibenden Person (Nachweis, Vollmacht, Ausweiskopie …): Name, Größe, SHA-256; die Datei selbst legt
+     PDFMy als Anlage in die PDF. Gleicher Prüfwert ein zweites Mal = nichts tun. Höchstens 10 Anlagen je Person. */
+  function addAttachment(r, i, { name = '', sha = '', size = 0, at = now() } = {}) {
+    const s = r.signers[i];
+    if (!s || s.status === DONE || s.status === DECLINED) throw new Error('Diese Person kann keine Anlage mehr beifügen.');
+    const [a] = cleanAtt([{ name, sha, size, at }]); if (!a) throw new Error('Die Anlage ist ungültig.');
+    const have = s.att || []; if (have.some(x => x.sha === a.sha)) return r;
+    if (have.length >= 10) throw new Error('Höchstens 10 Anlagen je Person.');
+    return { ...r, signers: r.signers.map((x, j) => j === i ? { ...x, att: [...have, a] } : x), log: [...r.log, { at, what: 'Anlage beigefügt', by: s.name || s.email, to: a.name }] };
+  }
+  function removeAttachment(r, i, sha) {
+    const s = r.signers[i]; if (!s?.att || s.status === DONE) return r;
+    const att = s.att.filter(x => x.sha !== sha); if (att.length === s.att.length) return r;
+    const signers = r.signers.map((x, j) => { if (j !== i) return x; const y = { ...x, att }; if (!att.length) delete y.att; return y; });
+    return { ...r, signers, log: r.log.filter(l => !(l.what === 'Anlage beigefügt' && l.by === (s.name || s.email) && l.to === s.att.find(x => x.sha === sha)?.name)) };
   }
   // Zurückziehen (Absender): Die Anfrage ist beendet; öffnet der Absender später eine zurückkommende Fassung, zeigt PDFMy das an.
   function withdraw(r, { reason = '', at = now() } = {}) {
@@ -193,6 +215,7 @@
         r.due ? say(tr, 'Bitte bis {0}.', day(r.due)) : '',
         r.expires ? say(tr, 'Die Anfrage gilt bis {0}.', day(r.expires)) : '',
         r.message,
+        r.attach ? say(tr, 'Bitte fügen Sie bei: {0}. In PDFMy geht das mit „Anlage beifügen …“ – die Datei reist in der PDF mit.', r.attach) : '',
         r.lock ? say(tr, 'Die PDF ist mit einem Zugangscode geschützt. Den Code bekommen Sie von {0} auf einem anderen Weg, z. B. per Telefon oder SMS – er steht bewusst nicht in dieser E-Mail.', req) : '',
         payText(r, tr),
         [say(tr, 'So geht’s – kostenlos, ohne Anmeldung, die Datei wird nicht hochgeladen:'),
@@ -279,13 +302,14 @@
   const dueIn = (days, today = new Date()) => days > 0 ? new Date(utcDay(today) + days * 86400000).toISOString().slice(0, 10) : '';
   // Zeilen der Prüfprotokoll-Seite (wird nach der letzten Unterschrift an die PDF angehängt)
   // tr wie bei mail(): jede Zeile über eine Vorlage mit Platzhaltern; Namen, Titel, Prüfsummen, Daten werden nie übersetzt
-  const LOGW = { weitergegeben: 'weitergegeben', zurückgezogen: 'zurückgezogen', 'vor Ort übergeben': 'vor Ort übergeben (Gerät des Absenders)', [DONE + ' (vor Ort)']: 'unterschrieben (vor Ort, Gerät des Absenders)', gesendet: 'gesendet', empfangen: 'empfangen (in PDFMy geöffnet)', gelesen: 'gelesen (alle Seiten angesehen)', angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
+  const LOGW = { 'Anlage beigefügt': 'Anlage beigefügt', weitergegeben: 'weitergegeben', zurückgezogen: 'zurückgezogen', 'vor Ort übergeben': 'vor Ort übergeben (Gerät des Absenders)', [DONE + ' (vor Ort)']: 'unterschrieben (vor Ort, Gerät des Absenders)', gesendet: 'gesendet', empfangen: 'empfangen (in PDFMy geöffnet)', gelesen: 'gelesen (alle Seiten angesehen)', angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
   function auditLines(r, docHash = '', tr = s => s) {
     const L = [['h', say(tr, 'Prüfprotokoll – Unterschriftsanfrage')], ['p', say(tr, 'Dokument: {0}', r.title)], ['p', say(tr, 'Anfrage-ID: {0}', r.id)],
       ['p', say(tr, 'Erstellt: {0} von {1}{2}', fmt(r.created), r.requester.name || '', r.requester.email ? ` <${r.requester.email}>` : '')],
       ['p', say(tr, 'Status: {0}', complete(r) ? say(tr, 'abgeschlossen – alle haben unterschrieben') : r.withdrawn ? say(tr, 'zurückgezogen') : declined(r) >= 0 ? say(tr, 'abgelehnt') : say(tr, 'offen'))],
       ...(r.cc?.length ? [['p', say(tr, 'Zur Kenntnis: {0}', r.cc.join(', '))]] : []),
       ...(r.expires ? [['p', say(tr, 'Gültig bis: {0}', day(r.expires))]] : []),
+      ...(r.attach ? [['p', say(tr, 'Angeforderte Anlage: {0}', r.attach)]] : []),
       ...(r.lock ? [['p', say(tr, 'Zugangscode: ja – die PDF wurde verschlüsselt (AES-256) versendet, der Code auf einem anderen Weg mitgeteilt.')]] : []), ['g', '']];
     L.push(['s', say(tr, 'Unterzeichner')]);
     r.signers.forEach((s, i) => {
@@ -297,6 +321,7 @@
       const tl = steps(s).filter(x => x.key !== DONE && x.key !== DECLINED);
       if (tl.length) L.push(['p', tl.map(x => say(tr, { gesendet: 'Gesendet am {0}', empfangen: 'Empfangen am {0}', gelesen: 'Gelesen am {0}' }[x.key], fmt(x.at))).join(' · ')]);
       if (vals.length) L.push(['p', say(tr, 'Angaben: {0}', vals.join('; '))]);
+      for (const a of s.att || []) L.push(['p', say(tr, 'Anlage: {0} ({1})', a.name, a.size >= 1048576 ? (a.size / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(a.size / 1024)) + ' KB')], ['m', say(tr, 'SHA-256 der Anlage: {0}', a.sha)]);
       if (s.hash) L.push(['m', say(tr, 'SHA-256 der erhaltenen Fassung: {0}', s.hash)]);
       L.push(['g', '']);
     });
@@ -376,6 +401,6 @@
   }
   async function verifyRead(rt, p) { return !!(rt && p) && await readMac(rt, p.id, p.i, p.t, p.name) === p.mac; }
 
-  const api = { expired, delegate, withdraw, markHere, withdrawMail, payText, ics, senderIcs, signerIcs, newCode, codeFmt, codeNorm, ibanFmt, money, newToken, readLink, parseRead, verifyRead, advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
+  const api = { addAttachment, removeAttachment, expired, delegate, withdraw, markHere, withdrawMail, payText, ics, senderIcs, signerIcs, newCode, codeFmt, codeNorm, ibanFmt, money, newToken, readLink, parseRead, verifyRead, advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.SigReq = api;
 })(typeof self !== 'undefined' ? self : globalThis);

@@ -592,6 +592,11 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
 **Offen aus Rang 4–7:** ~~Abschlusszertifikat versiegeln (Rang 5)~~ (umgesetzt app-v244, siehe unten), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
 
+### Umgesetzt 12.11.2026: Anlagen vom Unterzeichner (app-v246)
+**Anlass (GF 12.11.2026):** „Lücken finden und schließen“ – Rang 7 aus docs/Wettbewerb-2026-11.md, Teil „Anhänge vom Unterzeichner“.
+**Leitplanken vor dem Bau geprüft:** 1 und 2 gewahrt (Datei bleibt im Gerät und reist in der PDF über das eigene Mail-Programm, keine neue Verbindung). 3 gewahrt (nichts gezählt). 4: ein Feld im bekannten „Mehr“, ein Knopf in der Leiste, Entfernen in der Übersicht. 5: 5 Regressionstests, Browser-Ablauf mit 21 Prüfpunkten. 6: Anlagen werden nicht ausgeführt, nur angehängt; Hinweis zu PDF/A-3/beA: die Unterschriftsanfrage-PDF ist ohnehin kein PDF/A.
+**Grenzen:** 25 MB zusammen (E-Mail). Pflicht-Anlagen lassen sich ohne Server nicht erzwingen – nur Rückfrage. Nicht gebaut: parallele Stufen (bräuchten das Zusammenführen getrennt unterschriebener Fassungen beim Absender – eigene Aufgabe).
+
 ### Umgesetzt 09.11.2026: Abschluss versiegeln (app-v244)
 **Anlass (GF 09.11.2026):** „Abschluss versiegeln“ – Rang 5 aus docs/Wettbewerb-2026-11.md (DocuSign „Certificate of Completion“).
 **Inhalt:** Siegel über die fertige PDF samt Prüfprotokoll: eigenes Zertifikat (PAdES, optional B-T) oder Dokumentzeitstempel (PAdES-DTS, RFC 3161 über pdfmy Scan). Angehängt statt neu geschrieben. Prüfprotokoll zusätzlich als PDF/A-2b.

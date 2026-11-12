@@ -2393,9 +2393,10 @@ html.i18n-wait body{visibility:hidden}
     <div class="field"><label for="reqCc">Zur Kenntnis (optional) – bekommt das Ergebnis in Kopie</label><input id="reqCc" type="text" inputmode="email" autocomplete="off" placeholder="z. B. steuer@kanzlei.de, buchhaltung@firma.de"></div>
     <div class="row2"><div class="field"><label for="reqMe">Ihr Name</label><input id="reqMe" autocomplete="name"></div><div class="field"><label for="reqMeMail">Ihre E-Mail-Adresse (für die Rückmeldung)</label><input id="reqMeMail" type="email" autocomplete="email"></div></div>
     <div class="field"><label for="reqMsg">Nachricht (optional)</label><textarea id="reqMsg" rows="2" placeholder="z. B. Bitte bis Freitag unterschreiben."></textarea></div>
-    <details id="reqMore"><summary>Mehr: Gültigkeit, Zugangscode, Zahlung, Kalender</summary>
+    <details id="reqMore"><summary>Mehr: Gültigkeit, Zugangscode, Zahlung, Kalender, Anlagen</summary>
       <div class="row2"><div class="field"><label for="reqExp">Gültig bis (optional) – danach weist PDFMy auf den Ablauf hin</label><input id="reqExp" type="date"></div>
       <div class="field" style="align-self:end"><label class="cb"><input id="reqIcs" type="checkbox" checked> Erinnerungen zum Nachfassen in meinen Kalender (.ics)</label></div></div>
+      <div class="field"><label for="reqAttach">Bitte beifügen (optional) – z. B. Ausweiskopie, Vollmacht, Nachweis; die Person legt die Datei in PDFMy als Anlage in die PDF</label><input id="reqAttach" maxlength="200" autocomplete="off"></div>
       <label class="cb"><input id="reqLock" type="checkbox"> Mit Zugangscode schützen (AES-256) – den Code teilen Sie auf einem zweiten Weg mit, z. B. per Telefon oder SMS</label>
       <label class="cb"><input id="reqPay" type="checkbox"> Zahlung anfordern – nach der letzten Unterschrift steht ein GiroCode in der PDF</label>
       <div id="reqPayBox" hidden>
@@ -2407,6 +2408,7 @@ html.i18n-wait body{visibility:hidden}
     <div class="dlgrow"><button type="button" id="reqCancel">Abbrechen</button><button type="submit" class="primary">Weiter: Felder setzen</button></div>
   </form>
 </dialog>
+<input type="file" id="reqAttFile" multiple hidden aria-label="Anlage beifügen">
 <dialog id="reqDecDlg" aria-labelledby="reqDecT">
   <form id="reqDecForm">
     <h3 class="dlgtitle" id="reqDecT">Nicht unterschreiben</h3>
