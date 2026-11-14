@@ -16,12 +16,25 @@ echo "  pdfmy Scan für Linux __PDFMY_VERSION__ wird eingerichtet …"
 echo ""
 if [ "$(id -u)" = "0" ]; then echo "  ✗ Bitte ohne sudo starten – pdfmy Scan wird nur für Ihren Benutzer eingerichtet."; exit 1; fi
 PERL="$(command -v perl || true)"
-if [ -z "$PERL" ] || ! command -v curl >/dev/null 2>&1; then
-  echo "  ✗ Es fehlen Perl oder curl. Bitte installieren und erneut starten, z. B.:"
-  echo "      Debian/Ubuntu/Mint:  sudo apt install perl curl"
-  echo "      Fedora:              sudo dnf install perl curl"
-  echo "      openSUSE:            sudo zypper install perl curl"
-  echo "      Arch:                sudo pacman -S perl curl"
+# Herunterladen ohne Pflicht-Werkzeug: curl, sonst wget (unter Mint/Ubuntu fehlt curl manchmal – Fehlerbericht 14.11.2026)
+fetch() { { command -v curl >/dev/null 2>&1 && curl -sf -m 20 -o "$2" "$1"; } || { command -v wget >/dev/null 2>&1 && wget -q -T 20 -O "$2" "$1"; }; }
+# Mint, Ubuntu, Debian mit grafischer Paketinstallation: statt im Terminal weiter das Paket öffnen – dort nur „Paket installieren“ klicken
+if [ -z "${PDFMY_SKRIPT:-}" ] && [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ] && command -v dpkg >/dev/null 2>&1 && command -v gdebi-gtk >/dev/null 2>&1; then
+  DEB="${XDG_DOWNLOAD_DIR:-$HOME/Downloads}/pdfmy-scan-linux.deb"; mkdir -p "$(dirname "$DEB")"
+  if fetch https://pdfmy.de/download/pdfmy-scan-linux.deb "$DEB" && [ -s "$DEB" ]; then
+    echo "  ➜ Einfacher geht es mit dem Installationspaket: Die Paketinstallation öffnet sich jetzt."
+    echo "    Dort auf „Paket installieren“ klicken und mit Ihrem Passwort bestätigen – fertig."
+    echo ""
+    ( nohup gdebi-gtk "$DEB" >/dev/null 2>&1 & )
+    exit 0
+  fi
+fi
+if [ -z "$PERL" ]; then
+  echo "  ✗ Perl fehlt. Bitte installieren und erneut starten, z. B.:"
+  echo "      Debian/Ubuntu/Mint:  sudo apt install perl"
+  echo "      Fedora:              sudo dnf install perl"
+  echo "      openSUSE:            sudo zypper install perl"
+  echo "      Arch:                sudo pacman -S perl"
   exit 1
 fi
 if ! "$PERL" -MJSON::PP -MIO::Socket::INET -MIO::Select -MMIME::Base64 -MFile::Temp -MEncode -e1 >/dev/null 2>&1; then
@@ -31,6 +44,16 @@ if ! "$PERL" -MJSON::PP -MIO::Socket::INET -MIO::Select -MMIME::Base64 -MFile::T
   exit 1
 fi
 mkdir -p "$DIR" "$APPS" "$CONF/systemd/user"
+# Anfragen an pdfmy Scan (127.0.0.1) mit Perl statt curl: pdfmy-http.pl METHODE PFAD [mit-Origin] – Inhalt eines POST von der Standardeingabe
+cat > "$DIR/pdfmy-http.pl" <<'PDFMY_HTTP_END'
+use strict; use IO::Socket::INET;
+my ($m, $p, $o) = @ARGV; my $dir = $ENV{PDFMY_DIR} || (($ENV{XDG_DATA_HOME} || "$ENV{HOME}/.local/share") . '/pdfmy-scan');
+my $port = 52880; if (open(my $f, '<', "$dir/port")) { my $l = <$f> // ''; $port = $1 if $l =~ /(\d+)/; }
+my $b = $m eq 'POST' ? do { local $/; <STDIN> } // '' : '';
+my $s = IO::Socket::INET->new(PeerAddr => '127.0.0.1', PeerPort => $port, Timeout => 5) or exit 1;
+print $s "$m $p HTTP/1.0\r\nHost: 127.0.0.1:$port\r\nContent-Length:" . length($b) . "\r\n" . ($o ? "Origin: https://pdfmy.de\r\nX-Pdfmy: 1\r\n" : '') . "\r\n$b";
+local $/; my $r = <$s> // ''; my ($st) = $r =~ m{^HTTP/\S+\s+(\d+)}; $r =~ s/^.*?\r\n\r\n//s; print $r; exit($st && $st < 300 ? 0 : 1);
+PDFMY_HTTP_END
 
 # 1. Scan-Dienst
 cat > "$DIR/pdfmy-scan.pl" <<'PDFMY_PERL_END'
@@ -71,7 +94,7 @@ AUTO
   nohup "$PERL" "$DIR/pdfmy-scan.pl" >"$DIR/fehler.txt" 2>&1 &
   STARTER="( nohup $PERL \"$DIR/pdfmy-scan.pl\" >/dev/null 2>&1 & )"
 fi
-for i in 1 2 3 4 5 6 7 8; do sleep 1; if curl -s -m 2 "http://127.0.0.1:$(cat "$DIR/port" 2>/dev/null || echo 52880)/status" | grep -q pdfmy-scan; then ok=1; break; fi; done
+for i in 1 2 3 4 5 6 7 8; do sleep 1; if "$PERL" "$DIR/pdfmy-http.pl" GET /status </dev/null 2>/dev/null | grep -q pdfmy-scan; then ok=1; break; fi; done
 if [ -n "$ok" ]; then echo "  ✓ Scan-Dienst läuft (startet künftig mit der Anmeldung)"; else echo "  ✗ Der Scan-Dienst startet nicht. Details: journalctl --user -u pdfmy-scan  bzw.  $DIR/log.txt"; fi
 
 # 2. „PDFMy“ im Anwendungsmenü: öffnet PDFs per Doppelklick in PDFMy (die Datei bleibt auf dem Rechner)
@@ -79,7 +102,7 @@ cat > "$DIR/pdfmy-open" <<OPEN
 #!/bin/sh
 # Öffnet die übergebenen PDFs in PDFMy im Browser. Die Datei bleibt auf dem Rechner: pdfmy Scan gibt sie einmalig über 127.0.0.1 heraus.
 [ \$# -eq 0 ] && exec xdg-open https://pdfmy.de/
-send() { printf '%s' "\$1" | curl -sf -m 5 -X POST --data-binary @- "http://127.0.0.1:\$(cat "$DIR/port" 2>/dev/null || echo 52880)/open-local"; }   # eigener Port (bei mehreren angemeldeten Benutzern ggf. 52881–52889)
+send() { printf '%s' "\$1" | "$PERL" "$DIR/pdfmy-http.pl" POST /open-local; }   # eigener Port (bei mehreren angemeldeten Benutzern ggf. 52881–52889)
 # Als App installiertes PDFMy (Chrome/Edge legen dafür eine .desktop-Datei mit --app-id an): Datei direkt im App-Fenster öffnen
 pwa() {
   for d in "\${XDG_DATA_HOME:-\$HOME/.local/share}"/applications/*.desktop; do
@@ -104,7 +127,8 @@ for f in "\$@"; do
 done
 OPEN
 chmod +x "$DIR/pdfmy-open"
-curl -sf -m 10 -o "$DIR/pdfmy.png" https://pdfmy.de/icons/app-512.png || true
+fetch https://pdfmy.de/icons/app-512.png "$DIR/pdfmy.png" || true
+ICON="$DIR/pdfmy.png"; [ -s "$ICON" ] || ICON=application-pdf   # ohne Netz: allgemeines PDF-Symbol
 cat > "$APPS/pdfmy.desktop" <<DESK
 [Desktop Entry]
 Type=Application
@@ -112,7 +136,7 @@ Name=PDFMy
 GenericName=PDF-Programm
 Comment=PDFs öffnen, bearbeiten, unterschreiben und scannen – im Browser, ohne Upload
 Exec="$DIR/pdfmy-open" %F
-Icon=$DIR/pdfmy.png
+Icon=$ICON
 MimeType=application/pdf;
 Categories=Office;Viewer;Graphics;
 Terminal=false
@@ -127,7 +151,7 @@ if { : </dev/tty; } 2>/dev/null; then printf "  Sollen PDF-Dateien künftig per 
 case "$ans" in
   ""|j|J|ja|Ja|y|Y)
     if command -v xdg-mime >/dev/null 2>&1; then xdg-mime default pdfmy.desktop application/pdf >/dev/null 2>&1; fi
-    curl -s -m 5 -X POST -H 'Origin: https://pdfmy.de' -H 'X-Pdfmy: 1' "http://127.0.0.1:$(cat "$DIR/port" 2>/dev/null || echo 52880)/defaultapps" >/dev/null 2>&1
+    "$PERL" "$DIR/pdfmy-http.pl" POST /defaultapps 1 </dev/null >/dev/null 2>&1
     echo "  ✓ PDFMy ist jetzt Ihr Standard für PDF-Dateien (änderbar im Dateimanager: Rechtsklick → Öffnen mit)";;
 esac
 
