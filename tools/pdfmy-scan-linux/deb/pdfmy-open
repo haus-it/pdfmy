@@ -1,0 +1,36 @@
+#!/bin/sh
+# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# Öffnet die übergebenen PDFs in PDFMy im Browser (Paket-Fassung, für jeden Benutzer). Die Datei bleibt auf dem Rechner:
+# pdfmy Scan gibt sie einmalig über 127.0.0.1 heraus. Ohne Datei: pdfmy.de öffnen.
+DIR="${XDG_DATA_HOME:-$HOME/.local/share}/pdfmy-scan"
+[ $# -eq 0 ] && exec xdg-open https://pdfmy.de/
+port() { cat "$DIR/port" 2>/dev/null || echo 52880; }   # eigener Port (bei mehreren angemeldeten Benutzern ggf. 52881–52889)
+send() { printf '%s' "$1" | curl -sf -m 5 -X POST --data-binary @- "http://127.0.0.1:$(port)/open-local"; }
+start() {
+  if command -v systemctl >/dev/null 2>&1 && systemctl --user start pdfmy-scan.service >/dev/null 2>&1; then :; else
+    ( nohup /usr/bin/perl /opt/pdfmy-scan/pdfmy-scan.pl >/dev/null 2>&1 & ); fi
+  sleep 2
+}
+# Als App installiertes PDFMy (Chrome/Edge legen dafür eine .desktop-Datei mit --app-id an): Datei direkt im App-Fenster öffnen
+pwa() {
+  for d in "${XDG_DATA_HOME:-$HOME/.local/share}"/applications/*.desktop; do
+    [ -f "$d" ] && grep -q '^Name=PDFMy$' "$d" && grep -q -- '--app-id=' "$d" && grep -q 'application/pdf' "$d" && { printf '%s' "$d"; return 0; }
+  done
+  return 1
+}
+app=$(pwa)
+for f in "$@"; do
+  p=$(readlink -f -- "$f" 2>/dev/null || printf '%s' "$f")
+  if [ -n "$app" ]; then
+    e=$(sed -n 's/^Exec=//p' "$app" | head -n 1 | sed 's/ %[UuFf]//g')
+    if [ -n "$e" ]; then sh -c "$e \"\$1\"" pdfmy "$p" >/dev/null 2>&1 & continue; fi
+  fi
+  r=$(send "$p") || { start; r=$(send "$p"); }
+  u=$(printf '%s' "$r" | sed -n 's/.*"url":"\([^"]*\)".*/\1/p')
+  if [ -n "$u" ]; then xdg-open "$u" >/dev/null 2>&1 &
+  else
+    m="PDFMy konnte die Datei nicht öffnen, weil pdfmy Scan nicht läuft. Bitte einmal ab- und wieder anmelden oder das Paket „pdfmy Scan“ neu installieren."
+    command -v notify-send >/dev/null 2>&1 && notify-send "PDFMy" "$m" || { command -v zenity >/dev/null 2>&1 && zenity --error --text="$m"; } || echo "$m" >&2
+  fi
+done

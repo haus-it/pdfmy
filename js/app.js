@@ -4560,7 +4560,7 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
 const SCAN_LATEST = '1.16.1';
 const SCAN_MAC_LATEST = '1.7.1';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
-const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.sh' : 'pdfmy-Scan-Mac.zip';
+const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.deb' : 'pdfmy-Scan-Mac.zip';   // Linux: Paket (Doppelklick, ohne Terminal)
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
 const SCAN_FILE = `pdfmy-Scan-${SCAN_LATEST}.exe`;
 // Download-Zähler (KONZEPT.md, 25.10.2026): beim Herunterladen eine leere, statische Zählseite je Plattform abrufen (download/zaehlung/…) –
@@ -4675,8 +4675,9 @@ async function openScanDialog() {
   $('#scanDownload').href = dlBase + SCAN_FILE; $('#scanMacDownload').href = dlBase + 'pdfmy-Scan-Mac.zip';
   document.querySelectorAll('.scanAltMac').forEach(a => a.href = dlBase + 'pdfmy-Scan-Mac.zip');
   document.querySelectorAll('.scanAltWin').forEach(a => a.href = dlBase + SCAN_FILE);
-  document.querySelectorAll('.scanAltLinux').forEach(a => a.href = dlBase + 'pdfmy-scan-linux.sh');
-  $('#scanLinuxDownload').href = dlBase + 'pdfmy-scan-linux.sh';
+  document.querySelectorAll('.scanAltLinux').forEach(a => a.href = dlBase + 'pdfmy-scan-linux.deb');
+  document.querySelectorAll('.scanLinuxScript').forEach(a => a.href = dlBase + 'pdfmy-scan-linux.sh');
+  $('#scanLinuxDownload').href = dlBase + 'pdfmy-scan-linux.deb';
   document.querySelectorAll('.linuxGuide').forEach(a => a.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'scanner.html#linux');
   document.querySelectorAll('.devList').forEach(a => a.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'scanner-geraete.html');
   document.querySelectorAll('.scanVerNew').forEach(e => e.textContent = IS_MAC || IS_LINUX ? SCAN_MAC_LATEST : SCAN_LATEST);

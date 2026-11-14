@@ -1,0 +1,31 @@
+#!/bin/sh
+# Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# pdfmy Scan (.deb) – nach der Installation: Scan-Dienst für alle Benutzer bei der Anmeldung starten und für bereits
+# angemeldete Benutzer gleich jetzt. Eine frühere Einrichtung per Skript (nur für einen Benutzer, ~/.local/share/pdfmy-scan)
+# wird abgelöst: deren Dienst- und Menüeintrag würden sonst das Paket verdecken. Einstellungen und Geräteliste bleiben.
+set -e
+for h in $(getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 { print $6 }'); do
+  [ -d "$h" ] || continue
+  u="$h/.config/systemd/user/pdfmy-scan.service"
+  if [ -f "$u" ] && grep -q '/pdfmy-scan/pdfmy-scan.pl' "$u" && ! grep -q '/opt/pdfmy-scan/' "$u"; then
+    rm -f "$u" "$h/.config/systemd/user/default.target.wants/pdfmy-scan.service"
+  fi
+  a="$h/.config/autostart/pdfmy-scan.desktop"; [ -f "$a" ] && grep -q '/pdfmy-scan/pdfmy-scan.pl' "$a" && rm -f "$a"
+  d="$h/.local/share/applications/pdfmy.desktop"; [ -f "$d" ] && grep -q '/pdfmy-scan/pdfmy-open' "$d" && ! grep -q '/opt/pdfmy-scan/' "$d" && rm -f "$d"
+done
+if command -v systemctl >/dev/null 2>&1; then
+  systemctl --global enable pdfmy-scan.service >/dev/null 2>&1 || true
+  for r in /run/user/*; do
+    uid=${r##*/}
+    case "$uid" in ''|*[!0-9]*) continue;; esac
+    [ "$uid" -ge 1000 ] || continue
+    [ -S "$r/bus" ] || continue
+    n=$(getent passwd "$uid" | cut -d: -f1); [ -n "$n" ] || continue
+    pkill -u "$uid" -f '/.local/share/pdfmy-scan/pdfmy-scan.pl' >/dev/null 2>&1 || true
+    runuser -u "$n" -- env XDG_RUNTIME_DIR="$r" DBUS_SESSION_BUS_ADDRESS="unix:path=$r/bus" sh -c 'systemctl --user daemon-reload; systemctl --user restart pdfmy-scan.service' >/dev/null 2>&1 || true
+  done
+fi
+if command -v update-desktop-database >/dev/null 2>&1; then update-desktop-database -q /usr/share/applications || true; fi
+if command -v gtk-update-icon-cache >/dev/null 2>&1; then gtk-update-icon-cache -q -t /usr/share/icons/hicolor || true; fi   # PDFMy-Logo sofort im Menü
+exit 0

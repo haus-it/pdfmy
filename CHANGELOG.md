@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-14
 
+### Linux ohne Terminal: Installationspaket für Mint, Ubuntu, Debian (app-v249)
+- **pdfmy-scan-linux.deb:** Doppelklick → „Paket installieren“ → Passwort, fertig – kein Terminal mehr (Wunsch GF). Das Paket legt pdfmy Scan für alle Benutzer an (/opt/pdfmy-scan), startet den Scan-Dienst mit jeder Anmeldung und für bereits Angemeldete sofort, trägt „PDFMy“ mit Logo ins Anwendungsmenü und unter „Öffnen mit“ ein (Symbole, AppStream-Beschreibung mit Herausgeber Mentor GmbH) und empfiehlt die Scanner-Unterstützung (SANE, AirScan, avahi), die die Paketinstallation gleich mitbringt. Eine frühere Einrichtung per Skript wird abgelöst, Einstellungen und Geräteliste bleiben. Aktualisieren: neue .deb doppelklicken; Entfernen über die Anwendungsverwaltung.
+- PDFMy bietet unter Linux jetzt das Paket an (Einrichtung, Scan-Fenster, Update-Hinweis, Scanner-Seite); das Skript bleibt für Fedora, openSUSE, Arch.
+- Gebaut ohne fremde Werkzeuge (tools/deb.js: ar, tar, gzip; feste Zeitstempel). Geprüft: Aufbau (ar-Reihenfolge, Rechte, root:root, md5sums), Syntax aller Paketskripte (sh -n) und des eingepackten Programms (perl -c), keine Windows-Zeilenenden. **Noch nicht auf einem echten Linux installiert** – Probe auf dem Mint-Rechner der GF steht aus.
+
+
 ### Linux: schlafende Scanner werden gefunden, „App herunterladen“ in Firefox (pdfmy Scan für Mac/Linux 1.7.1, app-v248)
 - Fehlerbericht 14.11.2026 (Linux Mint, Firefox): Die Suche fand den Netzwerk-Scanner nicht. Wahrscheinliche Ursache: Das Gerät war im Tiefschlaf und auf diesem Rechner noch nie gefunden – pdfmy Scan weckte bisher nur bekannte Geräte, und die Netzsuche wartet nur kurz. Jetzt werden Geräte, die im Netz auf ARP antworten, aber keinen Port öffnen, geweckt (Verbindungsversuche, Wake-on-LAN) und mit längerer Wartezeit ein zweites Mal gefragt; das Protokoll nennt „Geweckt: … danach erreichbar: …“. Ausgeliefert mit app-v247.
 - Firefox am PC zeigte keinen Knopf „App herunterladen“ (Firefox kann keine Web-Apps installieren). Jetzt erklärt der Knopf den passenden Weg: Linux/Mac mit pdfmy Scan – „PDFMy“ steht schon im Anwendungsmenü; ohne pdfmy Scan – Anleitung; Windows – Edge oder Chrome.

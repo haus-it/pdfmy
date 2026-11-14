@@ -1857,10 +1857,10 @@ html.i18n-wait body{visibility:hidden}
     <p>Mit dem kleinen Programm <b>pdfmy Scan für Linux</b> (Version <span class="scanVerNew"></span>, kostenlos) scannen Sie direkt aus PDFMy. Es findet Netzwerkscanner und Multifunktionsgeräte <b>ohne Treiber</b> (AirScan/eSCL und WSD, z. B. Epson, Dell, Samsung, Brother, HP, Canon) und nutzt für USB-Scanner SANE, falls installiert.</p>
     <ol class="steps">
       <li><a id="scanLinuxDownload" class="btn primary" download>pdfmy Scan für Linux herunterladen</a> <a class="btn scanAltWin" download>Für Windows</a> <a class="btn scanAltMac" download>Für Mac</a></li>
-      <li>Im Terminal starten – ohne <code>sudo</code>: <code class="sel">sh ~/Downloads/pdfmy-scan-linux.sh</code><br><small class="hint">Oder direkt: <code class="sel">curl -fsSL https://pdfmy.de/download/pdfmy-scan-linux.sh | sh</code></small></li>
+      <li>Die heruntergeladene Datei <b>„pdfmy-scan-linux.deb“</b> doppelklicken, <i>„Paket installieren“</i> wählen und mit Ihrem Passwort bestätigen – ohne Terminal (Mint, Ubuntu, Debian).<br><small class="hint">Fedora, openSUSE, Arch: <a class="scanLinuxScript" download>Einrichtungsskript</a> herunterladen und im Terminal mit <code class="sel">sh ~/Downloads/pdfmy-scan-linux.sh</code> starten.</small></li>
       <li>Fertig – hier auf <button type="button" class="linkbtn" id="scanRecheckLinux">„Ist installiert“</button> klicken.</li>
     </ol>
-    <p class="hint">Für USB-Scanner zusätzlich: <code class="sel">sudo apt install sane-utils sane-airscan ipp-usb</code> (Fedora: <code>dnf install sane-backends sane-airscan ipp-usb</code>). <a class="linuxGuide" target="_blank">Anleitung für alle Distributionen</a></p>
+    <p class="hint">Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit. <a class="linuxGuide" target="_blank">Anleitung für alle Distributionen</a></p>
    </div>
    <div id="scanSetupCros" hidden>
     <p>Auf dem <b>Chromebook</b> braucht PDFMy kein Zusatzprogramm: Chrome OS steuert viele Netzwerk- und USB-Scanner selbst an (AirScan/eSCL, ohne Treiber).</p>

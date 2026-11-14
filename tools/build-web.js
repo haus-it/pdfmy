@@ -343,6 +343,25 @@ const linuxSh = 'pdfmy-scan-linux.sh';
 write('download/' + linuxSh, lfl('install.sh').replace('__PDFMY_PERL__', () => macPl.trimEnd()).replace(/__PDFMY_VERSION__/g, macVer));
 write('download/pdfmy-scan-linux-entfernen.sh', lfl('uninstall.sh'));
 const linuxSha = require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', linuxSh))).digest('hex');
+// Paket für Debian, Ubuntu, Mint (.deb): Doppelklick → Paketinstallation, ohne Terminal (Wunsch GF 14.11.2026). Für alle Benutzer:
+// Programm in /opt/pdfmy-scan, Scan-Dienst als systemd-Benutzerdienst für jede Anmeldung, „PDFMy“ mit Logo im Anwendungsmenü.
+const linuxDeb = 'pdfmy-scan-linux.deb', LDEB = f => fs.readFileSync(path.join(LNX, 'deb', f));
+write('download/' + linuxDeb, require('./deb.js').buildDeb({
+  control: { Package: 'pdfmy-scan', Version: macVer, Architecture: 'all', Maintainer: 'Mentor GmbH <wumertens@mentor-group.de>',
+    Depends: 'perl, curl, xdg-utils', Recommends: 'avahi-utils, sane-utils, sane-airscan, ipp-usb, libnotify-bin', Section: 'graphics', Priority: 'optional', Homepage: 'https://pdfmy.de',
+    Description: 'PDFMy – PDFs öffnen, bearbeiten, unterschreiben und scannen\npdfmy Scan von pdfmy.de (Mentor GmbH, Paderborn) verbindet Netzwerk- und\nUSB-Scanner mit PDFMy und legt „PDFMy“ im Anwendungsmenü an: PDF-Dateien\nöffnen sich per Doppelklick in PDFMy.\n\nAlles bleibt auf diesem Rechner – pdfmy Scan ist nur über 127.0.0.1\nerreichbar, Dokumente werden nicht hochgeladen.' },
+  scripts: { postinst: LDEB('postinst').toString(), prerm: LDEB('prerm').toString(), postrm: LDEB('postrm').toString() },
+  files: [
+    { path: '/opt/pdfmy-scan/pdfmy-scan.pl', data: macPl, mode: 0o755 },
+    { path: '/opt/pdfmy-scan/pdfmy-open', data: LDEB('pdfmy-open').toString(), mode: 0o755 },
+    { path: '/usr/lib/systemd/user/pdfmy-scan.service', data: `[Unit]\nDescription=pdfmy Scan – Scanner für PDFMy (nur 127.0.0.1)\nAfter=network-online.target\n\n[Service]\nExecStart=/usr/bin/perl /opt/pdfmy-scan/pdfmy-scan.pl\nRestart=always\nRestartSec=3\n\n[Install]\nWantedBy=default.target\n` },
+    { path: '/usr/share/applications/pdfmy.desktop', data: `[Desktop Entry]\nType=Application\nName=PDFMy\nGenericName=PDF-Programm\nComment=PDFs öffnen, bearbeiten, unterschreiben und scannen – im Browser, ohne Upload\nExec=/opt/pdfmy-scan/pdfmy-open %F\nIcon=pdfmy\nMimeType=application/pdf;\nCategories=Office;Viewer;Graphics;\nKeywords=PDF;Scan;Scanner;Unterschrift;OCR;\nTerminal=false\nStartupNotify=false\n` },
+    { path: '/usr/share/metainfo/de.pdfmy.PDFMy.metainfo.xml', data: LDEB('de.pdfmy.PDFMy.metainfo.xml').toString() },
+    { path: '/usr/share/icons/hicolor/192x192/apps/pdfmy.png', data: fs.readFileSync(path.join(ROOT, 'icons', 'app-192.png')) },
+    { path: '/usr/share/icons/hicolor/512x512/apps/pdfmy.png', data: fs.readFileSync(path.join(ROOT, 'icons', 'app-512.png')) },
+    { path: '/usr/share/doc/pdfmy-scan/copyright', data: `pdfmy Scan ${macVer} – Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de)\nLizenz: PolyForm Noncommercial 1.0.0 – https://polyformproject.org/licenses/noncommercial/1.0.0/\nQuelltext: https://github.com/haus-it/pdfmy\n` },
+  ],
+}));
 // Browser-Erweiterung „PDFMy – PDFs direkt öffnen“ (tools/pdfmy-extension): ZIP zum Download und für den Chrome Web Store
 const EXT = path.join(ROOT, 'tools', 'pdfmy-extension');
 const extVer = JSON.parse(fs.readFileSync(path.join(EXT, 'manifest.json'), 'utf8')).version;
@@ -430,7 +449,7 @@ Das funktioniert mit jedem Hersteller (Brother, Canon, HP, Kyocera, Ricoh, Epson
 <ul style="margin:0">
 <li>Keine Warnung, keine Zertifizierung nötig: Die Einrichtung ist ein lesbares Shell-Skript, läuft ohne <code>sudo</code> und richtet alles nur für Ihren Benutzer ein.</li>
 </ul>
-<p style="margin:8px 0 0;font-size:14px;color:var(--muted)">Echtheit prüfen (SHA-256): Windows ${esc(scanFile)} <code style="word-break:break-all">${scanSha || '–'}</code> · Mac ${esc(macZip)} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', macZip))).digest('hex')}</code> · Linux ${linuxSh} <code style="word-break:break-all">${linuxSha}</code>. Signatur prüfen unter Windows: Rechtsklick auf die Datei → <i>Eigenschaften</i> → <i>Digitale Signaturen</i> → „Mentor GmbH“.</p>
+<p style="margin:8px 0 0;font-size:14px;color:var(--muted)">Echtheit prüfen (SHA-256): Windows ${esc(scanFile)} <code style="word-break:break-all">${scanSha || '–'}</code> · Mac ${esc(macZip)} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', macZip))).digest('hex')}</code> · Linux ${linuxDeb} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', linuxDeb))).digest('hex')}</code> · Linux ${linuxSh} <code style="word-break:break-all">${linuxSha}</code>. Signatur prüfen unter Windows: Rechtsklick auf die Datei → <i>Eigenschaften</i> → <i>Digitale Signaturen</i> → „Mentor GmbH“.</p>
 </div>
 <h2>Der einfachste Weg: pdfmy Scan (Windows)</h2>
 <ol>
@@ -453,9 +472,9 @@ Lieber ohne Doppelklick? Im Terminal: <code>curl -fsSL https://${site.domain}/do
 <p><b>Ohne Zusatzprogramm:</b> Im Programm <i>„Digitale Bilder“</i> den Scanner wählen, bei <i>Scannen nach</i> einen Ordner einstellen und diesen Ordner in pdfmy unter „Scanner verbinden“ verbinden (Chrome oder Edge). Mit dem iPhone: Rechtsklick auf den Schreibtisch → <i>„Von iPhone oder iPad importieren“ → „Dokumente scannen“</i>.</p>
 <h2 id="linux">Unter Linux: pdfmy Scan für Linux</h2>
 <ol>
-<li><a href="download/${linuxSh}" download>pdfmy Scan für Linux ${macVer} herunterladen</a> und im Terminal starten: <code>sh ~/Downloads/${linuxSh}</code><br>
-oder direkt: <code>curl -fsSL https://${site.domain}/download/${linuxSh} | sh</code> (ohne <code>sudo</code>).</li>
-<li>Die Einrichtung startet den Scan-Dienst (systemd-Benutzerdienst, startet mit der Anmeldung), legt <b>„PDFMy“</b> im Anwendungsmenü und unter „Öffnen mit“ an und fragt, ob PDF-Dateien künftig per Doppelklick in PDFMy geöffnet werden sollen.</li>
+<li><b>Mint, Ubuntu, Debian:</b> <a href="download/${linuxDeb}" download>pdfmy Scan für Linux ${macVer} herunterladen (.deb)</a>, die Datei doppelklicken, <i>„Paket installieren“</i> wählen und mit Ihrem Passwort bestätigen – <b>ohne Terminal</b>. Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit und gilt für alle Benutzer des Rechners.</li>
+<li><b>Fedora, openSUSE, Arch und andere:</b> <a href="download/${linuxSh}" download>Einrichtungsskript herunterladen</a> und im Terminal starten: <code>sh ~/Downloads/${linuxSh}</code> (ohne <code>sudo</code>).</li>
+<li>pdfmy Scan startet mit jeder Anmeldung, legt <b>„PDFMy“</b> mit Logo im Anwendungsmenü und unter „Öffnen mit“ an. PDFs per Doppelklick in PDFMy: in PDFMy <i>Menü → „Als Standard für PDFs festlegen …“</i>.</li>
 <li>In <a href="./">pdfmy</a> heißt der Knopf oben jetzt <b>„Scannen“</b> – wie unter Windows und am Mac.</li>
 </ol>
 <p><b>Treiber?</b> Für Netzwerkscanner und Multifunktionsgeräte keine: pdfmy Scan spricht <b>AirScan/eSCL</b> (Suche über Avahi) und <b>WSD</b> direkt. Für <b>USB-Scanner und ältere Geräte</b> nutzt es <b>SANE</b>, wenn installiert:</p>
@@ -465,7 +484,7 @@ oder direkt: <code>curl -fsSL https://${site.domain}/download/${linuxSh} | sh</c
 <li>openSUSE: <code>sudo zypper install sane-backends sane-airscan ipp-usb avahi-utils</code> · Arch: <code>sudo pacman -S sane sane-airscan ipp-usb avahi</code></li>
 <li>Nur bei sehr alten Geräten ohne eSCL/WSD: Herstellertreiber – HP <code>hplip</code>, Brother <code>brscan4</code>/<code>brscan5</code>, Epson <code>epsonscan2</code>, Samsung/Xerox „Unified Linux Driver“.</li>
 </ul>
-<p>pdfmy Scan sucht über Bonjour/avahi, per WSD-Rundruf und fragt zusätzlich jede Adresse im eigenen Netz direkt (Port 80/443) – so findet es Geräte auch, wenn die Firewall Rundruf-Antworten verwirft (z. B. firewalld unter Fedora) oder das Paket <code>avahi-utils</code> fehlt. Das Protokoll im Scan-Fenster zeigt, welcher Weg was gefunden hat. Notfalls: <i>„Gerät per IP-Adresse hinzufügen“</i> – das geht immer. Entfernen: <a href="download/pdfmy-scan-linux-entfernen.sh" download>pdfmy-scan-linux-entfernen.sh</a> herunterladen und mit <code>sh</code> starten.</p>
+<p>pdfmy Scan sucht über Bonjour/avahi, per WSD-Rundruf und fragt zusätzlich jede Adresse im eigenen Netz direkt (Port 80/443) – so findet es Geräte auch, wenn die Firewall Rundruf-Antworten verwirft (z. B. firewalld unter Fedora) oder das Paket <code>avahi-utils</code> fehlt. Das Protokoll im Scan-Fenster zeigt, welcher Weg was gefunden hat. Notfalls: <i>„Gerät per IP-Adresse hinzufügen“</i> – das geht immer. Entfernen: beim Paket in der Anwendungsverwaltung „pdfmy-scan“ entfernen; nach dem Skript <a href="download/pdfmy-scan-linux-entfernen.sh" download>pdfmy-scan-linux-entfernen.sh</a> herunterladen und mit <code>sh</code> starten.</p>
 <h2 id="chromebook">Auf dem Chromebook (Chrome OS)</h2>
 <p>Auf dem <b>Chromebook</b> braucht PDFMy kein Zusatzprogramm – pdfmy Scan läuft unter Chrome OS nicht, wird aber auch nicht gebraucht: Chrome OS steuert viele Netzwerk- und USB-Scanner selbst an (AirScan/eSCL, ohne Treiber). Scanner einrichten unter <i>Einstellungen → Erweitert → Drucken und Scannen</i>, dann mit der App <b>„Scannen“</b> als PDF oder JPG in einen Ordner scannen, z. B. <i>Meine Dateien › Scans</i>. In PDFMy im Scan-Fenster <i>„Diesen Ordner als Scan-Ordner verbinden“</i> – jeder neue Scan erscheint automatisch, mit Texterkennung. PDFMy über <i>„App herunterladen“</i> installieren: Dann öffnet die App „Dateien“ PDFs mit <i>Öffnen mit → PDFMy</i>; Drucken geht über <i>„Als PDF speichern“</i>, Google Drive ist in der App „Dateien“ eingebunden (als Ablageordner wählbar).</p>
 <h2 id="geraet-fehlt">Ihr Drucker oder Scanner ist noch nicht dabei?</h2>

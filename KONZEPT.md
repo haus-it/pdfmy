@@ -592,6 +592,11 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
 **Offen aus Rang 4–7:** ~~Abschlusszertifikat versiegeln (Rang 5)~~ (umgesetzt app-v244, siehe unten), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
 
+### Umgesetzt 14.11.2026: Linux-Installationspaket (.deb) statt Terminal (app-v249)
+**Anlass (GF 14.11.2026):** „Der Terminal-Befehl soll automatisch ausgeführt werden – immer“ und im Erscheinungsbild von PDFMy. Browser dürfen heruntergeladene Dateien nicht selbst ausführen; der Weg ohne Terminal ist das Installationspaket der Distribution.
+**Leitplanken:** 1–3 gewahrt (gleiches Programm, nur 127.0.0.1, nichts gezählt; Paket von pdfmy.de wie die Windows-Datei). 4 deutlich verbessert (Doppelklick statt Terminal). 5: Aufbau- und Syntaxprüfung, echte Installation offen. 6 nicht betroffen.
+**Grenzen:** Fragt einmal das Administrator-Passwort (Installation für alle Benutzer). Keine automatischen Updates (eigene Paketquelle wäre der nächste Schritt). Nur Debian-Familie; andere Distributionen weiter per Skript. Paket nicht signiert (bei lokal heruntergeladenen .deb üblich).
+
 ### Umgesetzt 12.11.2026: Anlagen vom Unterzeichner (app-v246)
 **Anlass (GF 12.11.2026):** „Lücken finden und schließen“ – Rang 7 aus docs/Wettbewerb-2026-11.md, Teil „Anhänge vom Unterzeichner“.
 **Leitplanken vor dem Bau geprüft:** 1 und 2 gewahrt (Datei bleibt im Gerät und reist in der PDF über das eigene Mail-Programm, keine neue Verbindung). 3 gewahrt (nichts gezählt). 4: ein Feld im bekannten „Mehr“, ein Knopf in der Leiste, Entfernen in der Übersicht. 5: 5 Regressionstests, Browser-Ablauf mit 21 Prüfpunkten. 6: Anlagen werden nicht ausgeführt, nur angehängt; Hinweis zu PDF/A-3/beA: die Unterschriftsanfrage-PDF ist ohnehin kein PDF/A.

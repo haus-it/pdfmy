@@ -2724,7 +2724,7 @@ function offerScanUpdate() {
 $('#updBannerGo').addEventListener('click', () => {
   $('#updBanner').hidden = true;
   status(`pdfmy Scan ${scanLatest()} wird heruntergeladen – die Datei öffnen, das Update ersetzt die alte Version automatisch.`);
-  toast(state.scanLinux ? 'Im Terminal starten: sh ~/Downloads/pdfmy-scan-linux.sh – das Update ersetzt die alte Version.' : state.scanMac ? 'ZIP öffnen und „pdfmy-Scan-Mac.command“ doppelklicken – das Update ersetzt die alte Version.' : 'Heruntergeladene Datei öffnen – pdfmy Scan aktualisiert sich selbst.', 9000);
+  toast(state.scanLinux ? 'Die heruntergeladene Datei „pdfmy-scan-linux.deb“ doppelklicken und „Paket installieren“ wählen – das Update ersetzt die alte Version.' : state.scanMac ? 'ZIP öffnen und „pdfmy-Scan-Mac.command“ doppelklicken – das Update ersetzt die alte Version.' : 'Heruntergeladene Datei öffnen – pdfmy Scan aktualisiert sich selbst.', 9000);
 });
 $('#updBannerLater').onclick = () => { $('#updBanner').hidden = true; try { sessionStorage.setItem('mpdf.scanUpdLater', scanLatest()); } catch {} };
 
@@ -2911,7 +2911,7 @@ $('#btnDefaultPdf').onclick = async () => {
       if (r.isDefault) { state.pdfDefault = true; toast('Fertig: PDF-Dateien öffnen sich jetzt per Doppelklick im Dateimanager in PDFMy.', 7000); } else alert(fm);
       return;
     }
-    if (confirm('Dafür gibt es das kleine Programm „pdfmy Scan für Linux“: Es legt „PDFMy“ im Anwendungsmenü an, meldet es als PDF-Programm an und verbindet gleich Ihren Scanner. Die Dateien bleiben auf Ihrem Rechner.\n\nJetzt herunterladen? (Danach im Terminal: sh ~/Downloads/pdfmy-scan-linux.sh)')) scanDl('linux');
+    if (confirm('Dafür gibt es das kleine Programm „pdfmy Scan für Linux“: Es legt „PDFMy“ im Anwendungsmenü an, meldet es als PDF-Programm an und verbindet gleich Ihren Scanner. Die Dateien bleiben auf Ihrem Rechner.\n\nJetzt herunterladen? (Danach die Datei doppelklicken und „Paket installieren“ wählen.)')) scanDl('linux');
     return;
   }
   if (IS_MAC) {   // Mac: pdfmy Scan für Mac meldet die App „PDFMy“ bei macOS an (auch für Safari); sonst die installierte Web-App (Chrome/Edge)
@@ -3025,7 +3025,7 @@ $('#btnSetup').onclick = openSetup;
 $('#setAuthor').oninput = e => { S.author = e.target.value.trim(); saveSettings(); $('#author').value = S.author; $('#stName').classList.toggle('ok', !!S.author); };
 $('#setOut').onclick = async () => { await chooseOutDir(); renderSetup(); };
 const scanDl = kind => {
-  if (kind === 'linux') { location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-scan-linux.sh'); $('#setScanInfo').textContent = 'Download gestartet – im Terminal starten: sh ~/Downloads/pdfmy-scan-linux.sh (ohne sudo). Dieses Fenster erkennt es automatisch.'; return; }
+  if (kind === 'linux') { location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-scan-linux.deb'); $('#setScanInfo').textContent = 'Download gestartet – die Datei „pdfmy-scan-linux.deb“ doppelklicken und „Paket installieren“ wählen (Mint, Ubuntu, Debian). Dieses Fenster erkennt es automatisch.'; return; }
   if (kind === 'mac' || kind === true) { location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-Scan-Mac.zip'); $('#setScanInfo').textContent = 'Download gestartet – die ZIP-Datei öffnen und „pdfmy-Scan-Mac.command“ doppelklicken. Dieses Fenster erkennt es automatisch.'; return; }
   location.href = countDownload('https://pdfmy.de/download/pdfmy-Scan.exe'); $('#setScanInfo').textContent = 'Download gestartet – die Datei „pdfmy-Scan.exe“ unten im Browser öffnen. Dieses Fenster erkennt es automatisch.';
 };

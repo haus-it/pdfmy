@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de -->
+<!-- SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0 -->
+<!-- AppStream-Beschreibung: So zeigen Anwendungsverwaltung und Software-Center „PDFMy“ mit Logo, Herausgeber und Beschreibung -->
+<component type="desktop-application">
+  <id>de.pdfmy.PDFMy</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>PolyForm-Noncommercial-1.0.0</project_license>
+  <name>PDFMy</name>
+  <summary>PDFs öffnen, bearbeiten, unterschreiben und scannen – ohne Upload</summary>
+  <developer id="de.mentor-group">
+    <name>Mentor GmbH, Paderborn</name>
+  </developer>
+  <description>
+    <p>PDFMy ist das PDF-Programm von pdfmy.de: Briefe scannen, als durchsuchbares PDF ablegen, bearbeiten und unterschreiben. Die Dokumente bleiben auf diesem Rechner.</p>
+    <p>pdfmy Scan verbindet Netzwerk- und USB-Scanner (AirScan/eSCL, WSD, SANE) mit PDFMy und öffnet PDF-Dateien per Doppelklick in PDFMy. Es ist nur vom eigenen Rechner aus erreichbar (127.0.0.1).</p>
+  </description>
+  <launchable type="desktop-id">pdfmy.desktop</launchable>
+  <icon type="stock">pdfmy</icon>
+  <url type="homepage">https://pdfmy.de</url>
+  <url type="help">https://pdfmy.de/hilfe.html</url>
+  <categories>
+    <category>Office</category>
+    <category>Graphics</category>
+  </categories>
+  <provides>
+    <mediatype>application/pdf</mediatype>
+  </provides>
+  <content_rating type="oars-1.1"/>
+</component>
