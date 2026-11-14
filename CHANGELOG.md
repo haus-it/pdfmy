@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-14
+
+### Linux: schlafende Scanner werden gefunden, „App herunterladen“ in Firefox (pdfmy Scan für Mac/Linux 1.7.1, app-v248)
+- Fehlerbericht 14.11.2026 (Linux Mint, Firefox): Die Suche fand den Netzwerk-Scanner nicht. Wahrscheinliche Ursache: Das Gerät war im Tiefschlaf und auf diesem Rechner noch nie gefunden – pdfmy Scan weckte bisher nur bekannte Geräte, und die Netzsuche wartet nur kurz. Jetzt werden Geräte, die im Netz auf ARP antworten, aber keinen Port öffnen, geweckt (Verbindungsversuche, Wake-on-LAN) und mit längerer Wartezeit ein zweites Mal gefragt; das Protokoll nennt „Geweckt: … danach erreichbar: …“. Ausgeliefert mit app-v247.
+- Firefox am PC zeigte keinen Knopf „App herunterladen“ (Firefox kann keine Web-Apps installieren). Jetzt erklärt der Knopf den passenden Weg: Linux/Mac mit pdfmy Scan – „PDFMy“ steht schon im Anwendungsmenü; ohne pdfmy Scan – Anleitung; Windows – Edge oder Chrome.
+- Geprüft: ARP-Auswertung mit Beispieldaten (Linux und Mac), Perl-Syntax; Knopf im Browser mit Firefox-Kennung (Linux mit/ohne pdfmy Scan, Windows, Handy, Chrome unverändert) – 7 Prüfpunkte. Auf einem echten Linux-Rechner mit dem Scanner noch nicht getestet.
+
 ## 2026-11-12
 
 ### Gleichzeitig unterschreiben – Stufen (app-v247)

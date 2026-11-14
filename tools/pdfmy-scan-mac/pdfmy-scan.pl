@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.7.0';
+our $VERSION = '1.7.1';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -84,18 +84,20 @@ sub local_ipv4 {
 }
 
 # Netzsuche: welche Adressen im eigenen Netz (privat, /24) haben Port 80 oder 443 offen? Gleichzeitig, in Gruppen (macOS erlaubt nur 256 offene Dateien)
+# $only: nur diese Adressen (zweiter Durchlauf nach dem Wecken), $wait: Sekunden je Block (Standard 1,2)
 sub subnet_hosts {
-  my %t;
-  for my $lip (local_ipv4()) {
+  my ($only, $wait) = @_; my %t;
+  if ($only) { $t{$_} = 1 for @$only; }
+  else { for my $lip (local_ipv4()) {
     my @b = split /\./, $lip;
     next unless $b[0] == 10 || ($b[0] == 192 && $b[1] == 168) || ($b[0] == 172 && $b[1] >= 16 && $b[1] <= 31);
     $t{"$b[0].$b[1].$b[2].$_"} = 1 for grep { "$b[0].$b[1].$b[2].$_" ne $lip } 1 .. 254;
-  }
+  } }
   my @targets = map { my $ip = $_; map { [$ip, $_] } 80, 443, 631, 5357, 9100 } sort keys %t; my %open;   # Web und Druckerports (IPP, WSD, RAW)
   while (my @batch = splice @targets, 0, 150) {
     my %pending;
     for my $tp (@batch) { my $s = IO::Socket::INET->new(PeerAddr => $tp->[0], PeerPort => $tp->[1], Proto => 'tcp', Blocking => 0) or next; $pending{fileno $s} = [$s, @$tp]; }
-    my $sel = IO::Select->new(map { $_->[0] } values %pending); my $end = time + 1.2;
+    my $sel = IO::Select->new(map { $_->[0] } values %pending); my $end = time + ($wait || 1.2);
     while ($sel->count && (my $left = $end - time) > 0) {
       for my $s ($sel->can_write($left)) {
         my $e = getsockopt($s, Socket::SOL_SOCKET(), Socket::SO_ERROR()); my ($ip, $port) = @{ $pending{fileno $s} }[1, 2];
@@ -482,6 +484,18 @@ sub wake_host {
   my $pkt = ("\xFF" x 6) . (pack('H12', join '', split /:/, $mac) x 16);
   for my $to ('255.255.255.255', $h) { my $u = IO::Socket::INET->new(Proto => 'udp', PeerAddr => $to, PeerPort => 9, Broadcast => 1); if ($u) { $u->send($pkt); close $u; } }
 }
+# Geräte, die auf ARP antworten (Hardware-Adresse bekannt) – das tun Drucker/MFP auch im Tiefschlaf, wenn sie auf
+# Verbindungsversuche noch nicht reagieren. Nach der Netzsuche stehen alle Geräte des Netzes im ARP-Speicher.
+sub arp_hosts {
+  my %h;
+  if ($IS_MAC) { for (split /\n/, run_for(3, '/usr/sbin/arp', '-an')) { $h{$1} = 1 if /\((\d+\.\d+\.\d+\.\d+)\)\s+at\s+[0-9a-f]{1,2}(?::[0-9a-f]{1,2}){5}\b/i; } }
+  else { for (split /\n/, slurp('/proc/net/arp') // '') { my @f = split ' '; $h{$f[0]} = 1 if @f > 3 && $f[0] =~ /^\d+\.\d+\.\d+\.\d+$/ && $f[3] =~ /^([0-9a-f]{2}:){5}[0-9a-f]{2}$/i && $f[3] ne '00:00:00:00:00:00'; } }
+  delete @h{ local_ipv4() }; return [sort keys %h];
+}
+sub wake_list {
+  my @kids; for my $x (@_) { my $k = fork(); if (defined $k && $k == 0) { eval { wake_host($x) }; POSIX::_exit(0); } push @kids, $k if $k; }
+  waitpid($_, 0) for @kids;
+}
 sub wake_known {
   my %h;
   for my $d (@{ devices() }) { my $x = host_of($d->{base} // $d->{svc} // $d->{xaddr} // ''); $h{$x} = 1 if $x; }
@@ -537,7 +551,16 @@ sub discover {
   # Netzsuche (wie pdfmy Scan für Windows): jede Adresse im eigenen Netz direkt fragen – findet Geräte, wenn Bonjour/avahi fehlen
   # oder eine Firewall die Antworten auf den Rundruf verwirft (unter Linux häufig: firewalld/ufw)
   my %known = map { host_of($_->{base} // $_->{svc} // $_->{xaddr} // '') => 1 } values %dev;
-  my $open = safe(sub { subnet_hosts() }) || {}; my @hosts = grep { !$known{$_} } sort keys %$open; my @wsdHosts;
+  my $open = safe(sub { subnet_hosts() }) || {};
+  # Schlafende Geräte, die noch nie gefunden wurden (neuer Rechner, neue Adresse): Sie antworten auf ARP, aber auf keinen Port.
+  # Wecken (Verbindungsversuche, Wake-on-LAN) und nach einer Pause mit längerer Wartezeit noch einmal fragen (Fehlerbericht 14.11.2026)
+  my @sleepy = grep { !$open->{$_} && !$known{$_} } @{ safe(sub { arp_hosts() }) || [] };
+  if (@sleepy && @sleepy <= 64) {
+    safe(sub { wake_list(@sleepy) }); select(undef, undef, undef, 2.5);
+    my $more = safe(sub { subnet_hosts(\@sleepy, 4) }) || {}; $open->{$_} = $more->{$_} for keys %$more;
+    push @diag, 'Geweckt: ' . scalar(@sleepy) . ' Gerät(e), danach erreichbar: ' . scalar(keys %$more) . (%$more ? ' (' . join(', ', sort keys %$more) . ')' : '');
+  }
+  my @hosts = grep { !$known{$_} } sort keys %$open; my @wsdHosts;
   for my $ip (@hosts) {
     my $d; for my $base (($open->{$ip}{80} ? "http://$ip/eSCL" : ()), ($open->{$ip}{443} ? "https://$ip/eSCL" : ())) { $d = safe(sub { escl_probe($base) }) and last; }
     if ($d) { $dev{ $d->{id} } = $d; } else { push @wsdHosts, $ip; }

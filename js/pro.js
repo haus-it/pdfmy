@@ -2941,7 +2941,9 @@ let installEvt = null, justInstalled = false;
 const runsAsApp = () => matchMedia('(display-mode: standalone), (display-mode: window-controls-overlay), (display-mode: minimal-ui)').matches || navigator.standalone === true;
 const iosSafari = IS_IOS && !/CriOS|FxiOS|EdgiOS/.test(navigator.userAgent);   // iPhone: Installation nur über Safari „Zum Home-Bildschirm“
 const macSafari = IS_MAC && /Safari/.test(navigator.userAgent) && !/Chrome|Chromium|Edg\/|Firefox/.test(navigator.userAgent);   // Mac-Safari 17+: „Zum Dock hinzufügen“
-function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !!window.Capacitor?.isNativePlatform?.() || !(installEvt || iosSafari || macSafari); }
+// Firefox am PC kann Web-Apps nicht installieren (kein „beforeinstallprompt“) – der Knopf erklärt dort den passenden Weg (Fehlerbericht 14.11.2026, Linux Mint)
+const firefoxDesk = /Firefox\//.test(navigator.userAgent) && !IS_MOBILE && !IS_IOS;
+function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !!window.Capacitor?.isNativePlatform?.() || !(installEvt || iosSafari || macSafari || firefoxDesk); }
 // Chrome/Edge/Android melden, dass die App installierbar ist – bei bereits installierter App kommt dieses Ereignis nicht
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
 addEventListener('appinstalled', () => { installEvt = null; justInstalled = true; renderInstall(); toast('PDFMy ist jetzt als App installiert – Sie finden es im Startmenü bzw. auf dem Startbildschirm.', 7000); });
@@ -2953,10 +2955,21 @@ $('#btnInstall').onclick = async () => {
     if (outcome === 'accepted') { installEvt = null; justInstalled = true; }
     renderInstall(); return;
   }
+  if (firefoxDesk) { await firefoxApp(); return; }
   if (macSafari) { alert('So kommt PDFMy als App in Ihr Dock:\n\nIn Safari oben im Menü „Ablage“ → „Zum Dock hinzufügen …“ → „Hinzufügen“.\n\nTipp: Für den Scan-Ordner und „PDF per Doppelklick öffnen“ eignen sich Chrome oder Edge besser.'); return; }
   if (iosSafari) alert('So kommt PDFMy als App auf Ihr iPhone:\n\n1. Unten in Safari auf „Teilen“ tippen (Quadrat mit Pfeil nach oben).\n2. „Zum Home-Bildschirm“ wählen.\n3. Oben rechts auf „Hinzufügen“ tippen.\n\nDanach startet PDFMy wie eine App über das neue Symbol.');
 };
 renderInstall();
+async function firefoxApp() {
+  const site = APP.edition === 'web' ? '' : 'https://pdfmy.de/';
+  if (IS_LINUX || IS_MAC) {
+    const ok = await scanHelperRunning() && state.scanMac;
+    if (ok) { alert(IS_LINUX ? 'PDFMy ist auf diesem Rechner schon eingerichtet: „PDFMy“ steht im Anwendungsmenü, und unter „Öffnen mit“ öffnen sich PDFs per Doppelklick darin.\n\nEin eigenes Fenster ohne Browserleiste kann Firefox nicht anlegen. Dafür pdfmy.de in Chromium, Google Chrome oder Microsoft Edge öffnen und dort „App herunterladen“ wählen.' : 'PDFMy ist auf diesem Mac schon eingerichtet: „PDFMy“ steht bei den Programmen und unter „Öffnen mit“.\n\nEin eigenes Fenster ohne Browserleiste kann Firefox nicht anlegen. Dafür pdfmy.de in Safari („Ablage → Zum Dock hinzufügen“), Chrome oder Edge öffnen.'); return; }
+    if (confirm(IS_LINUX ? 'Firefox kann PDFMy nicht als App installieren. Das kleine Programm „pdfmy Scan für Linux“ legt „PDFMy“ ins Anwendungsmenü, öffnet PDFs per Doppelklick darin und verbindet Ihren Scanner – die Dateien bleiben auf Ihrem Rechner.\n\nZur Anleitung (zwei Schritte)?' : 'Firefox kann PDFMy nicht als App installieren. Das kleine Programm „pdfmy Scan für Mac“ meldet PDFMy als Programm an, öffnet PDFs per Doppelklick darin und verbindet Ihren Scanner – die Dateien bleiben auf Ihrem Mac.\n\nZur Anleitung?')) location.href = site + 'scanner.html#' + (IS_LINUX ? 'linux' : 'mac');
+    return;
+  }
+  alert('Firefox kann PDFMy nicht als App installieren.\n\nSo bekommt PDFMy ein eigenes Fenster und ein Symbol im Startmenü: pdfmy.de in Microsoft Edge oder Google Chrome öffnen und dort oben auf „App herunterladen“ klicken.\n\nPDFs per Doppelklick in PDFMy öffnen geht zusätzlich mit „pdfmy Scan“ (Menü → „Als Standard für PDFs festlegen …“).');
+}
 
 
 /* ---------- Handy: untere Aktionsleiste spiegelt Teilen / Ablegen / Speichern der Kopfzeile ---------- */
