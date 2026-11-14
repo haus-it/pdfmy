@@ -18,17 +18,38 @@ if [ "$(id -u)" = "0" ]; then echo "  ✗ Bitte ohne sudo starten – pdfmy Scan
 PERL="$(command -v perl || true)"
 # Herunterladen ohne Pflicht-Werkzeug: curl, sonst wget (unter Mint/Ubuntu fehlt curl manchmal – Fehlerbericht 14.11.2026)
 fetch() { { command -v curl >/dev/null 2>&1 && curl -sf -m 20 -o "$2" "$1"; } || { command -v wget >/dev/null 2>&1 && wget -q -T 20 -O "$2" "$1"; }; }
-# Mint, Ubuntu, Debian mit grafischer Paketinstallation: statt im Terminal weiter das Paket öffnen – dort nur „Paket installieren“ klicken
-if [ -z "${PDFMY_SKRIPT:-}" ] && [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ] && command -v dpkg >/dev/null 2>&1 && command -v gdebi-gtk >/dev/null 2>&1; then
-  DEB="${XDG_DOWNLOAD_DIR:-$HOME/Downloads}/pdfmy-scan-linux.deb"; mkdir -p "$(dirname "$DEB")"
-  if fetch https://pdfmy.de/download/pdfmy-scan-linux.deb "$DEB" && [ -s "$DEB" ]; then
-    echo "  ➜ Einfacher geht es mit dem Installationspaket: Die Paketinstallation öffnet sich jetzt."
-    echo "    Dort auf „Paket installieren“ klicken und mit Ihrem Passwort bestätigen – fertig."
-    echo ""
-    ( nohup gdebi-gtk "$DEB" >/dev/null 2>&1 & )
-    exit 0
+# Mit Arbeitsoberfläche: statt im Terminal weiterzumachen das passende Installationspaket holen und grafisch installieren –
+# Mint/Ubuntu/Debian (.deb), Fedora/openSUSE/RHEL (.rpm), Arch/Manjaro (.pkg.tar.gz). Paketverwaltung mit Fenster (gdebi, Pamac)
+# oder über pkexec: das System fragt im eigenen Fenster nach dem Passwort. Klappt das nicht, geht es unten wie bisher weiter (ohne sudo).
+pkg_gui() {
+  [ -z "${PDFMY_SKRIPT:-}" ] && [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ] || return 1
+  if command -v dpkg >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then EXT=deb
+  elif command -v rpm >/dev/null 2>&1 && { command -v dnf >/dev/null 2>&1 || command -v zypper >/dev/null 2>&1 || command -v yum >/dev/null 2>&1; }; then EXT=rpm
+  elif command -v pacman >/dev/null 2>&1; then EXT=pkg.tar.gz
+  else return 1; fi
+  PKG="${XDG_DOWNLOAD_DIR:-$HOME/Downloads}/pdfmy-scan-linux.$EXT"; mkdir -p "$(dirname "$PKG")"
+  fetch "https://pdfmy.de/download/pdfmy-scan-linux.$EXT" "$PKG" && [ -s "$PKG" ] || return 1
+  if [ "$EXT" = deb ] && command -v gdebi-gtk >/dev/null 2>&1; then
+    echo "  ➜ Die Paketinstallation öffnet sich jetzt: „Paket installieren“ klicken und mit Ihrem Passwort bestätigen – fertig."
+    ( nohup gdebi-gtk "$PKG" >/dev/null 2>&1 & ); exit 0
   fi
-fi
+  if [ "$EXT" = pkg.tar.gz ] && command -v pamac-installer >/dev/null 2>&1; then
+    echo "  ➜ Pamac öffnet sich jetzt: Installation bestätigen – fertig."
+    ( nohup pamac-installer "$PKG" >/dev/null 2>&1 & ); exit 0
+  fi
+  command -v pkexec >/dev/null 2>&1 || return 1
+  echo "  ➜ pdfmy Scan wird als Paket installiert. Bitte im Fenster Ihr Passwort eingeben …"
+  case "$EXT" in
+    deb) pkexec env DEBIAN_FRONTEND=noninteractive apt-get install -y "$PKG" ;;
+    rpm) if command -v dnf >/dev/null 2>&1; then pkexec dnf install -y "$PKG"
+         elif command -v zypper >/dev/null 2>&1; then pkexec zypper --non-interactive install --allow-unsigned-rpm "$PKG"
+         else pkexec yum install -y "$PKG"; fi ;;
+    *) pkexec pacman -U --noconfirm --needed "$PKG" ;;
+  esac >/dev/null 2>&1 || { echo "  (Paket nicht installiert – pdfmy Scan wird stattdessen nur für Ihren Benutzer eingerichtet.)"; return 1; }
+  echo ""; echo "  ✓ Fertig. In PDFMy (https://pdfmy.de) heißt der Knopf oben jetzt „Scannen“."; echo ""
+  exit 0
+}
+pkg_gui
 if [ -z "$PERL" ]; then
   echo "  ✗ Perl fehlt. Bitte installieren und erneut starten, z. B.:"
   echo "      Debian/Ubuntu/Mint:  sudo apt install perl"

@@ -1,7 +1,7 @@
 #!/bin/sh
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 # SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
-# pdfmy Scan (.deb) – nach der Installation: Scan-Dienst für alle Benutzer bei der Anmeldung starten und für bereits
+# pdfmy Scan (Paket: .deb, .rpm, Arch) – nach der Installation: Scan-Dienst für alle Benutzer bei der Anmeldung starten und für bereits
 # angemeldete Benutzer gleich jetzt. Eine frühere Einrichtung per Skript (nur für einen Benutzer, ~/.local/share/pdfmy-scan)
 # wird abgelöst: deren Dienst- und Menüeintrag würden sonst das Paket verdecken. Einstellungen und Geräteliste bleiben.
 set -e

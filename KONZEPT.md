@@ -592,6 +592,12 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
 **Offen aus Rang 4–7:** ~~Abschlusszertifikat versiegeln (Rang 5)~~ (umgesetzt app-v244, siehe unten), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
 
+### Umgesetzt 14.11.2026: Linux-Pakete für alle verbreiteten Distributionen (app-v250)
+**Anlass (GF 14.11.2026):** „bitte bei allen Linux-Systemen“ – ohne Terminal, im Erscheinungsbild von PDFMy.
+**Umsetzung:** .rpm (Fedora/openSUSE/RHEL) und Arch-Paket mit denselben Dateien wie die .deb; PDFMy wählt das passende (Meldung von pdfmy Scan, sonst Browser-Hinweis, sonst Wahl im Scan-Fenster); das Skript installiert selbst das Paket per Passwort-Fenster.
+**Leitplanken:** 1–3 gewahrt (gleiches Programm, nur 127.0.0.1, die Paketwahl bleibt im Browser des Nutzers, nichts wird gezählt oder gesendet). 4 verbessert. 5: Formatprüfung und Lesetest, echte Installation offen. 6 nicht betroffen.
+**Grenzen:** Pakete nicht signiert – Fedora/openSUSE fragen einmal nach „nicht vertrauenswürdiger Quelle“. Keine eigene Paketquelle, also keine automatischen Updates über die Systemaktualisierung (PDFMy meldet neue Versionen). Andere Familien (Gentoo, NixOS, Alpine) weiter über das Skript.
+
 ### Umgesetzt 14.11.2026: Linux-Installationspaket (.deb) statt Terminal (app-v249)
 **Anlass (GF 14.11.2026):** „Der Terminal-Befehl soll automatisch ausgeführt werden – immer“ und im Erscheinungsbild von PDFMy. Browser dürfen heruntergeladene Dateien nicht selbst ausführen; der Weg ohne Terminal ist das Installationspaket der Distribution.
 **Leitplanken:** 1–3 gewahrt (gleiches Programm, nur 127.0.0.1, nichts gezählt; Paket von pdfmy.de wie die Windows-Datei). 4 deutlich verbessert (Doppelklick statt Terminal). 5: Aufbau- und Syntaxprüfung, echte Installation offen. 6 nicht betroffen.

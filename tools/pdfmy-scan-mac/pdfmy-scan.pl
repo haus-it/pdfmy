@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.7.1';
+our $VERSION = '1.7.2';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -808,6 +808,18 @@ sub cloud_show {   # abgelegte Datei im Finder bzw. Dateimanager zeigen – nur 
   if ($k == 0) { POSIX::setsid(); open STDIN, '<', '/dev/null'; open STDOUT, '>', '/dev/null'; open STDERR, '>', '/dev/null'; exec(@cmd) or POSIX::_exit(1); }
 }
 # Mac: Eintrag „In PDFMy öffnen“ im PDF-Menü des Druckdialogs (Skript in ~/Library/PDF Services, legt die Einrichtung an)
+# Linux: welches Installationspaket passt zu diesem System (für Updates aus PDFMy: .deb, .rpm oder Arch-Paket) – aus /etc/os-release
+sub linux_pkg {
+  return '' if $IS_MAC;
+  my $r = ''; if (open(my $f, '<', '/etc/os-release')) { local $/; $r = <$f> // ''; close $f; }
+  my ($id) = $r =~ /^ID=["']?([^"'
+]*)/m; my ($like) = $r =~ /^ID_LIKE=["']?([^"'
+]*)/m;
+  my $t = lc(($id // '') . ' ' . ($like // ''));
+  return 'deb' if $t =~ /debian|ubuntu/; return 'rpm' if $t =~ /fedora|rhel|centos|suse|mageia|openmandriva/; return 'arch' if $t =~ /arch/;
+  for (['dpkg', 'deb'], ['pacman', 'arch'], ['rpm', 'rpm']) { return $_->[1] if -x "/usr/bin/$_->[0]"; }
+  return '';
+}
 sub print_service {
   return 'none' unless $IS_MAC;
   opendir(my $d, "$ENV{HOME}/Library/PDF Services") or return 'off';
@@ -936,7 +948,7 @@ sub handle {
     # /status muss sofort antworten: Standard-PDF-Programm nur aus dem Zwischenspeicher, Auffrischen im Hintergrund
     my $cf = "$DIR/pdfdefault.txt"; my $def = -f $cf && trim(slurp($cf)) eq '1';
     if (!-f $cf || -M $cf >= 0.0007) { my $k = fork(); if (defined $k && $k == 0) { pdf_default(); POSIX::_exit(0); } }
-    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false }, \%cors);
+    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, pkg => linux_pkg(), tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false }, \%cors);
   }
   if ($p =~ m{^/file/(\w+)$} && $method eq 'GET') {
     my ($data, $name) = take_file($1);

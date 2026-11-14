@@ -4558,9 +4558,19 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
 const SCAN_LATEST = '1.16.1';
-const SCAN_MAC_LATEST = '1.7.1';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_MAC_LATEST = '1.7.2';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
-const SCAN_FILE_UNIX = () => state.scanLinux ? 'pdfmy-scan-linux.deb' : 'pdfmy-Scan-Mac.zip';   // Linux: Paket (Doppelklick, ohne Terminal)
+/* Linux: passendes Paket (Doppelklick, ohne Terminal) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
+   Läuft pdfmy Scan schon, sagt es selbst, welches System es ist; sonst Hinweise aus dem Browser (Firefox nennt Ubuntu/Fedora) oder die letzte Wahl. */
+const LINUX_PKGS = { deb: 'pdfmy-scan-linux.deb', rpm: 'pdfmy-scan-linux.rpm', arch: 'pdfmy-scan-linux.pkg.tar.gz' };
+function linuxPkg() {
+  if (LINUX_PKGS[state.scanPkg]) return state.scanPkg;
+  try { const v = localStorage.getItem('pdfmy.linuxPkg'); if (LINUX_PKGS[v]) return v; } catch {}
+  const ua = navigator.userAgent;
+  return /Fedora|Red Hat|CentOS|Rocky|Alma|SUSE|Mageia/i.test(ua) ? 'rpm' : /Arch|Manjaro|Endeavour/i.test(ua) ? 'arch' : 'deb';
+}
+const linuxPkgFile = k => LINUX_PKGS[k || linuxPkg()];
+const SCAN_FILE_UNIX = () => state.scanLinux ? linuxPkgFile() : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
 const SCAN_FILE = `pdfmy-Scan-${SCAN_LATEST}.exe`;
 // Download-Zähler (KONZEPT.md, 25.10.2026): beim Herunterladen eine leere, statische Zählseite je Plattform abrufen (download/zaehlung/…) –
@@ -4597,7 +4607,7 @@ async function scanHelperRunning() {
   try {
     const d = await scanFind(); if (!d) return false;
     const changed = state.scanVersion !== d.version;
-    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
+    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll
     if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store', headers: { 'X-Pdfmy': '1' } }).catch(() => {});   // ab pdfmy Scan 1.14.1 nur mit eigenem Kopf
     if (changed && typeof renderVerBar === 'function') setTimeout(renderVerBar, 0);   // Statuszeile sofort nachziehen (z. B. nach einem Update)
@@ -4675,9 +4685,13 @@ async function openScanDialog() {
   $('#scanDownload').href = dlBase + SCAN_FILE; $('#scanMacDownload').href = dlBase + 'pdfmy-Scan-Mac.zip';
   document.querySelectorAll('.scanAltMac').forEach(a => a.href = dlBase + 'pdfmy-Scan-Mac.zip');
   document.querySelectorAll('.scanAltWin').forEach(a => a.href = dlBase + SCAN_FILE);
-  document.querySelectorAll('.scanAltLinux').forEach(a => a.href = dlBase + 'pdfmy-scan-linux.deb');
-  document.querySelectorAll('.scanLinuxScript').forEach(a => a.href = dlBase + 'pdfmy-scan-linux.sh');
-  $('#scanLinuxDownload').href = dlBase + 'pdfmy-scan-linux.deb';
+  document.querySelectorAll('.scanAltLinux').forEach(a => a.href = dlBase + linuxPkgFile());
+  $('#scanLinuxDownload').href = dlBase + linuxPkgFile();
+  document.querySelectorAll('.linuxPkgName').forEach(e => e.textContent = linuxPkgFile());
+  document.querySelectorAll('.linuxPkgLink').forEach(a => {
+    a.href = dlBase + linuxPkgFile(a.dataset.pkg); a.hidden = a.dataset.pkg === linuxPkg();
+    a.onclick = () => { try { localStorage.setItem('pdfmy.linuxPkg', a.dataset.pkg); } catch {} document.querySelectorAll('.linuxPkgName').forEach(e => e.textContent = linuxPkgFile(a.dataset.pkg)); };
+  });
   document.querySelectorAll('.linuxGuide').forEach(a => a.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'scanner.html#linux');
   document.querySelectorAll('.devList').forEach(a => a.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'scanner-geraete.html');
   document.querySelectorAll('.scanVerNew').forEach(e => e.textContent = IS_MAC || IS_LINUX ? SCAN_MAC_LATEST : SCAN_LATEST);

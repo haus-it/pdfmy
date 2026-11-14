@@ -47,4 +47,4 @@ function buildDeb({ control, scripts = {}, files }) {
     ...Object.entries(scripts).map(([k, v]) => ({ path: './' + k, data: Buffer.from(v.replace(/\r\n/g, '\n')), mode: 0o755 }))];
   return Buffer.concat([Buffer.from('!<arch>\n'), arEntry('debian-binary', Buffer.from('2.0\n')), arEntry('control.tar.gz', gz(tar(ctrl))), arEntry('data.tar.gz', gz(tar(data)))]);
 }
-module.exports = { buildDeb, tar };
+module.exports = { buildDeb, tar, tarHeader, gz, MTIME };

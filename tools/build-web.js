@@ -346,12 +346,7 @@ const linuxSha = require('node:crypto').createHash('sha256').update(fs.readFileS
 // Paket für Debian, Ubuntu, Mint (.deb): Doppelklick → Paketinstallation, ohne Terminal (Wunsch GF 14.11.2026). Für alle Benutzer:
 // Programm in /opt/pdfmy-scan, Scan-Dienst als systemd-Benutzerdienst für jede Anmeldung, „PDFMy“ mit Logo im Anwendungsmenü.
 const linuxDeb = 'pdfmy-scan-linux.deb', LDEB = f => fs.readFileSync(path.join(LNX, 'deb', f));
-write('download/' + linuxDeb, require('./deb.js').buildDeb({
-  control: { Package: 'pdfmy-scan', Version: macVer, Architecture: 'all', Maintainer: 'Mentor GmbH <wumertens@mentor-group.de>',
-    Depends: 'perl, curl, xdg-utils', Recommends: 'avahi-utils, sane-utils, sane-airscan, ipp-usb, libnotify-bin', Section: 'graphics', Priority: 'optional', Homepage: 'https://pdfmy.de',
-    Description: 'PDFMy – PDFs öffnen, bearbeiten, unterschreiben und scannen\npdfmy Scan von pdfmy.de (Mentor GmbH, Paderborn) verbindet Netzwerk- und\nUSB-Scanner mit PDFMy und legt „PDFMy“ im Anwendungsmenü an: PDF-Dateien\nöffnen sich per Doppelklick in PDFMy.\n\nAlles bleibt auf diesem Rechner – pdfmy Scan ist nur über 127.0.0.1\nerreichbar, Dokumente werden nicht hochgeladen.' },
-  scripts: { postinst: LDEB('postinst').toString(), prerm: LDEB('prerm').toString(), postrm: LDEB('postrm').toString() },
-  files: [
+const linuxFiles = [
     { path: '/opt/pdfmy-scan/pdfmy-scan.pl', data: macPl, mode: 0o755 },
     { path: '/opt/pdfmy-scan/pdfmy-open', data: LDEB('pdfmy-open').toString(), mode: 0o755 },
     { path: '/usr/lib/systemd/user/pdfmy-scan.service', data: `[Unit]\nDescription=pdfmy Scan – Scanner für PDFMy (nur 127.0.0.1)\nAfter=network-online.target\n\n[Service]\nExecStart=/usr/bin/perl /opt/pdfmy-scan/pdfmy-scan.pl\nRestart=always\nRestartSec=3\n\n[Install]\nWantedBy=default.target\n` },
@@ -360,7 +355,36 @@ write('download/' + linuxDeb, require('./deb.js').buildDeb({
     { path: '/usr/share/icons/hicolor/192x192/apps/pdfmy.png', data: fs.readFileSync(path.join(ROOT, 'icons', 'app-192.png')) },
     { path: '/usr/share/icons/hicolor/512x512/apps/pdfmy.png', data: fs.readFileSync(path.join(ROOT, 'icons', 'app-512.png')) },
     { path: '/usr/share/doc/pdfmy-scan/copyright', data: `pdfmy Scan ${macVer} – Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de)\nLizenz: PolyForm Noncommercial 1.0.0 – https://polyformproject.org/licenses/noncommercial/1.0.0/\nQuelltext: https://github.com/haus-it/pdfmy\n` },
-  ],
+];
+write('download/' + linuxDeb, require('./deb.js').buildDeb({
+  control: { Package: 'pdfmy-scan', Version: macVer, Architecture: 'all', Maintainer: 'Mentor GmbH <wumertens@mentor-group.de>',
+    Depends: 'perl, curl, xdg-utils', Recommends: 'avahi-utils, sane-utils, sane-airscan, ipp-usb, libnotify-bin', Section: 'graphics', Priority: 'optional', Homepage: 'https://pdfmy.de',
+    Description: 'PDFMy – PDFs öffnen, bearbeiten, unterschreiben und scannen\npdfmy Scan von pdfmy.de (Mentor GmbH, Paderborn) verbindet Netzwerk- und\nUSB-Scanner mit PDFMy und legt „PDFMy“ im Anwendungsmenü an: PDF-Dateien\nöffnen sich per Doppelklick in PDFMy.\n\nAlles bleibt auf diesem Rechner – pdfmy Scan ist nur über 127.0.0.1\nerreichbar, Dokumente werden nicht hochgeladen.' },
+  scripts: { postinst: LDEB('postinst').toString(), prerm: LDEB('prerm').toString(), postrm: LDEB('postrm').toString() },
+  files: linuxFiles,
+}));
+// Dieselben Dateien als .rpm (Fedora, openSUSE, RHEL, Rocky, Alma, Mageia) und für Arch/Manjaro – Doppelklick öffnet die Softwareverwaltung
+// (GNOME Software, KDE Discover, YaST, Pamac). Die Paketskripte liegen mit im Programmordner, damit alle drei Pakete dasselbe tun.
+const linuxRpm = 'pdfmy-scan-linux.rpm', linuxArch = 'pdfmy-scan-linux.pkg.tar.gz';
+const pkgFiles = linuxFiles.concat(['postinst', 'prerm'].map(f => ({ path: '/opt/pdfmy-scan/paket/' + f, data: LDEB(f).toString(), mode: 0o755 })));
+const pkgDesc = 'PDFMy – PDFs öffnen, bearbeiten, unterschreiben und scannen';
+const menuRefresh = 'command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database -q /usr/share/applications; command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache -q -t /usr/share/icons/hicolor; exit 0\n';
+write('download/' + linuxRpm, require('./linuxpkg.js').buildRpm({
+  name: 'pdfmy-scan', version: macVer, summary: pkgDesc, vendor: 'Mentor GmbH', packager: 'Mentor GmbH <wumertens@mentor-group.de>', url: 'https://pdfmy.de',
+  license: 'LicenseRef-PolyForm-Noncommercial-1.0.0',
+  description: 'pdfmy Scan von pdfmy.de (Mentor GmbH, Paderborn) verbindet Netzwerk- und USB-Scanner mit PDFMy und legt „PDFMy“ im Anwendungsmenü an: PDF-Dateien öffnen sich per Doppelklick in PDFMy. Alles bleibt auf diesem Rechner – pdfmy Scan ist nur über 127.0.0.1 erreichbar, Dokumente werden nicht hochgeladen.',
+  // Dateipfade statt Paketnamen: gelten unter Fedora (curl-minimal, perl-interpreter) wie unter openSUSE; Perl-Module einzeln, weil Fedora sie aufteilt
+  requires: ['/usr/bin/perl', '/usr/bin/curl', '/usr/bin/xdg-open', ...['JSON::PP', 'IO::Socket::INET', 'IO::Select', 'MIME::Base64', 'File::Temp', 'Encode', 'Unicode::Normalize', 'Time::HiRes', 'Socket'].map(m => `perl(${m})`)],
+  recommends: ['sane-backends', 'sane-airscan', 'ipp-usb', 'avahi-tools', 'avahi-utils', 'libnotify', 'libnotify-tools'],
+  scripts: { post: 'sh /opt/pdfmy-scan/paket/postinst configure; ' + menuRefresh, preun: '[ "$1" = 0 ] && sh /opt/pdfmy-scan/paket/prerm remove; exit 0\n', postun: menuRefresh },
+  files: pkgFiles, ownDirs: ['/opt/pdfmy-scan', '/opt/pdfmy-scan/paket', '/usr/share/doc/pdfmy-scan'],
+}));
+write('download/' + linuxArch, require('./linuxpkg.js').buildPacman({
+  name: 'pdfmy-scan', version: macVer, desc: pkgDesc + ' (Mentor GmbH)', url: 'https://pdfmy.de', packager: 'Mentor GmbH <wumertens@mentor-group.de>',
+  license: 'LicenseRef-PolyForm-Noncommercial-1.0.0', depends: ['perl', 'curl', 'xdg-utils'],
+  optdepends: ['sane: USB-Scanner', 'sane-airscan: Netzwerkscanner über SANE', 'ipp-usb: USB-Geräte mit AirScan', 'avahi: Scanner-Suche', 'libnotify: Meldungen'],
+  install: 'post_install() { sh /opt/pdfmy-scan/paket/postinst configure; }\npost_upgrade() { post_install; }\npre_remove() { sh /opt/pdfmy-scan/paket/prerm remove; }\n',
+  files: pkgFiles,
 }));
 // Browser-Erweiterung „PDFMy – PDFs direkt öffnen“ (tools/pdfmy-extension): ZIP zum Download und für den Chrome Web Store
 const EXT = path.join(ROOT, 'tools', 'pdfmy-extension');
@@ -380,6 +404,16 @@ write('download/' + extZip, Buffer.from(require(path.join(ROOT, 'js', 'tools.js'
 // und die landete als „Download“ beim Nutzer. Jetzt: alte Versionsnummern → aktuelle Datei (302), sonst eine klare 404-Meldung.
 write('download/.htaccess', `# Downloads: alte Versionen auf die aktuelle Datei umleiten, fehlende Dateien nie als Webseite ausliefern
 ErrorDocument 404 "Datei nicht gefunden. Bitte auf https://${site.domain}/scanner.html neu herunterladen."
+# Linux-Pakete: richtiger Typ, .pkg.tar.gz nie als „gzip-komprimiert“ ausliefern (sonst entpackt der Browser es beim Download)
+AddType application/vnd.debian.binary-package .deb
+AddType application/x-rpm .rpm
+<FilesMatch "\\.pkg\\.tar\\.gz$">
+  RemoveEncoding .gz
+  ForceType application/octet-stream
+  <IfModule mod_headers.c>
+    Header unset Content-Encoding
+  </IfModule>
+</FilesMatch>
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteOptions Inherit
@@ -447,9 +481,9 @@ Das funktioniert mit jedem Hersteller (Brother, Canon, HP, Kyocera, Ricoh, Epson
 </ul>
 <p style="margin:8px 0 2px"><b>Linux</b></p>
 <ul style="margin:0">
-<li>Keine Warnung, keine Zertifizierung nötig: Die Einrichtung ist ein lesbares Shell-Skript, läuft ohne <code>sudo</code> und richtet alles nur für Ihren Benutzer ein.</li>
+<li>Keine Warnung, keine Zertifizierung nötig: Die Pakete installiert die Softwareverwaltung Ihres Systems. Fragt sie nach einer „nicht vertrauenswürdigen Quelle“ oder einem „nicht signierten Paket“ (Fedora, openSUSE): bestätigen – das Paket kommt direkt von pdfmy.de, die Prüfsumme steht unten.</li>
 </ul>
-<p style="margin:8px 0 0;font-size:14px;color:var(--muted)">Echtheit prüfen (SHA-256): Windows ${esc(scanFile)} <code style="word-break:break-all">${scanSha || '–'}</code> · Mac ${esc(macZip)} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', macZip))).digest('hex')}</code> · Linux ${linuxDeb} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', linuxDeb))).digest('hex')}</code> · Linux ${linuxSh} <code style="word-break:break-all">${linuxSha}</code>. Signatur prüfen unter Windows: Rechtsklick auf die Datei → <i>Eigenschaften</i> → <i>Digitale Signaturen</i> → „Mentor GmbH“.</p>
+<p style="margin:8px 0 0;font-size:14px;color:var(--muted)">Echtheit prüfen (SHA-256): Windows ${esc(scanFile)} <code style="word-break:break-all">${scanSha || '–'}</code> · Mac ${esc(macZip)} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', macZip))).digest('hex')}</code> · Linux ${linuxDeb} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', linuxDeb))).digest('hex')}</code> · Linux ${linuxRpm} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', linuxRpm))).digest('hex')}</code> · Linux ${linuxArch} <code style="word-break:break-all">${require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', linuxArch))).digest('hex')}</code> · Linux ${linuxSh} <code style="word-break:break-all">${linuxSha}</code>. Signatur prüfen unter Windows: Rechtsklick auf die Datei → <i>Eigenschaften</i> → <i>Digitale Signaturen</i> → „Mentor GmbH“.</p>
 </div>
 <h2>Der einfachste Weg: pdfmy Scan (Windows)</h2>
 <ol>
@@ -472,8 +506,9 @@ Lieber ohne Doppelklick? Im Terminal: <code>curl -fsSL https://${site.domain}/do
 <p><b>Ohne Zusatzprogramm:</b> Im Programm <i>„Digitale Bilder“</i> den Scanner wählen, bei <i>Scannen nach</i> einen Ordner einstellen und diesen Ordner in pdfmy unter „Scanner verbinden“ verbinden (Chrome oder Edge). Mit dem iPhone: Rechtsklick auf den Schreibtisch → <i>„Von iPhone oder iPad importieren“ → „Dokumente scannen“</i>.</p>
 <h2 id="linux">Unter Linux: pdfmy Scan für Linux</h2>
 <ol>
-<li><b>Mint, Ubuntu, Debian:</b> <a href="download/${linuxDeb}" download>pdfmy Scan für Linux ${macVer} herunterladen (.deb)</a>, die Datei doppelklicken, <i>„Paket installieren“</i> wählen und mit Ihrem Passwort bestätigen – <b>ohne Terminal</b>. Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit und gilt für alle Benutzer des Rechners.</li>
-<li><b>Fedora, openSUSE, Arch und andere:</b> <a href="download/${linuxSh}" download>Einrichtungsskript herunterladen</a> und im Terminal starten: <code>sh ~/Downloads/${linuxSh}</code> (ohne <code>sudo</code>).</li>
+<li>Das Paket für Ihr System herunterladen: <a href="download/${linuxDeb}" download><b>Mint, Ubuntu, Debian</b> (.deb)</a> · <a href="download/${linuxRpm}" download><b>Fedora, openSUSE, RHEL</b> (.rpm)</a> · <a href="download/${linuxArch}" download><b>Arch, Manjaro</b> (.pkg.tar.gz)</a> – pdfmy Scan für Linux ${macVer}.</li>
+<li>Die Datei doppelklicken, <i>„Installieren“</i> wählen (Softwareverwaltung, GNOME Software, Discover, YaST oder Pamac) und mit Ihrem Passwort bestätigen – <b>ohne Terminal</b>. Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit und gilt für alle Benutzer des Rechners.</li>
+<li><small>Anderes Linux oder kein Administrator-Passwort: <a href="download/${linuxSh}" download>Einrichtungsskript</a> mit <code>sh ~/Downloads/${linuxSh}</code> starten – es installiert das passende Paket per Passwort-Fenster oder richtet pdfmy Scan nur für Ihren Benutzer ein.</small></li>
 <li>pdfmy Scan startet mit jeder Anmeldung, legt <b>„PDFMy“</b> mit Logo im Anwendungsmenü und unter „Öffnen mit“ an. PDFs per Doppelklick in PDFMy: in PDFMy <i>Menü → „Als Standard für PDFs festlegen …“</i>.</li>
 <li>In <a href="./">pdfmy</a> heißt der Knopf oben jetzt <b>„Scannen“</b> – wie unter Windows und am Mac.</li>
 </ol>

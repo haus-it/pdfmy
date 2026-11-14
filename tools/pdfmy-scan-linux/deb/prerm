@@ -1,7 +1,7 @@
 #!/bin/sh
 # Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 # SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
-# pdfmy Scan (.deb) – vor dem Entfernen: Scan-Dienst für alle Benutzer abmelden und stoppen. Bei einer Aktualisierung
+# pdfmy Scan (Paket: .deb, .rpm, Arch) – vor dem Entfernen: Scan-Dienst für alle Benutzer abmelden und stoppen. Bei einer Aktualisierung
 # nicht (postinst startet ihn danach neu). Einstellungen im Benutzerordner bleiben (wie bei Paketen üblich).
 set -e
 case "$1" in
