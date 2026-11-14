@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-12
 
+### Gleichzeitig unterschreiben – Stufen (app-v247)
+- **Mehrere Personen gleichzeitig** (wie die Routing-Reihenfolge bei DocuSign, aber ohne Server): Im Dialog bei einer Person „Gleichzeitig mit der vorherigen Person“ anhaken – gleiche Nummer = gleiche Stufe. Alle Personen der Stufe bekommen eine gemeinsame E-Mail mit derselben PDF; die nächste Stufe ist erst dran, wenn alle unterschrieben haben.
+- **Ohne Server zusammenführen:** Jede Person sendet ihre Fassung mit „Unterschrieben – zurücksenden“ an den Absender. PDFMy merkt sich jede geöffnete Fassung im Browser des Absenders, zeigt „eingegangen / es fehlt noch“ und hängt mit „Zusammenführen und weitersenden“ die Unterschriften (Bild, Werte, Anlagen) inkrementell an – die von allen erhaltene Fassung bleibt Byte für Byte enthalten, „Echtheit geprüft“ gilt für alle. Nicht übertragbare Fassungen (anderes PDF-Programm) liegen unverändert als Anlage bei.
+- „Ich bin …“, wenn PDFMy die Person am Gerät nicht kennt; Prüfprotokoll mit Stufe je Person und SHA-256 der zurückgesandten Fassung; Vorlagen merken „gleichzeitig“. Ohne Haken läuft alles exakt wie bisher.
+- Geprüft: 5 neue Regressionstests (tests/stufen.test.js), Browser-Ablauf mit 38 Prüfpunkten (Max und Eva gleichzeitig, danach die Bank; Absender selbst in der Stufe; Zusammenführen, Echtheit, Prüfprotokoll, Nacheinander unverändert, Dialog in Handybreite), Signatur-Paket, Anlagen und Siegel unverändert grün.
+
 ### Anlagen vom Unterzeichner, schnelleres Öffnen aus Outlook und vom Drucker (app-v246)
 - **Anlagen beifügen** (wie „Attachment“-Felder bei DocuSign): Im Dialog unter „Mehr“ „Bitte beifügen“ eintragen (z. B. Ausweiskopie, Vollmacht). Die unterschreibende Person sieht den Hinweis in E-Mail und Leiste und legt mit „Anlage beifügen …“ Dateien als Anlage in die PDF (höchstens 10 je Person, 25 MB zusammen); bis zum Weitersenden unter „Übersicht“ wieder entfernbar. Fehlt die angeforderte Anlage, fragt PDFMy vor dem Weitersenden nach. Name, Größe und SHA-256 stehen in der Anfrage und im Prüfprotokoll. Die Anlage wird angehängt – „Echtheit geprüft“ gilt weiter.
 - **Öffnen aus Outlook und vom Drucker „PDFMy“:** Kann der Browser die übergebene Datei nicht lesen, fragt PDFMy sofort pdfmy Scan, statt erst fünfmal zu warten (spart 2–3 s). Für Ausdrucke eine eigene Meldung statt des Outlook-Hinweises.

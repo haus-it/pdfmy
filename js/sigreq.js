@@ -13,6 +13,8 @@
   const now = () => new Date().toISOString().replace(/\.\d+Z$/, 'Z');
   const clean = s => String(s == null ? '' : s).replace(/[\r\n\t]+/g, ' ').trim().slice(0, 200);
   const isMail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || '').trim());
+  // Unterschriftsbild in der Anfrage (nur bei gleichzeitigen Stufen, zum Zusammenführen): PNG als data-URL, höchstens 300 KB
+  const isImg = s => typeof s === 'string' && s.length <= 300000 && /^data:image\/png;base64,[A-Za-z0-9+/]+=*$/.test(s);
 
   const utcDay = t => Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
   const isDay = d => /^\d{4}-\d{2}-\d{2}$/.test(String(d || '')) && !isNaN(new Date(d + 'T00:00:00Z'));
@@ -32,8 +34,14 @@
      in die PDF legen (Name, Größe und SHA-256 stehen in der Anfrage und im Prüfprotokoll) */
   const cleanAtt = a => (Array.isArray(a) ? a : []).filter(x => x && x.name && /^[0-9a-f]{64}$/.test(x.sha)).slice(0, 10)
     .map(x => ({ name: clean(x.name).replace(/[\/:*?"<>|]+/g, '_').slice(0, 120), sha: x.sha, size: Number.isFinite(+x.size) && +x.size >= 0 ? Math.round(+x.size) : 0, at: isNaN(new Date(x.at)) ? '' : x.at }));
+  /* Stufen (app-v247): par = „gleichzeitig mit der vorherigen Person“. Gespeichert wird je Person die Stufe g (0, 1, 2 …) –
+     nur wenn mindestens zwei Personen gleichzeitig unterschreiben; sonst bleibt die Anfrage Byte für Byte wie bisher. */
+  function withStages(list) {
+    if (!list.some((s, i) => i > 0 && s.par)) return list.map(({ par, ...s }) => s);
+    let g = -1; return list.map(({ par, ...s }, i) => ({ ...s, g: i > 0 && par ? g : ++g }));
+  }
   function create({ title, requester = {}, signers = [], message = '', id, due = '', cc = '', expires = '', lock = false, pay = null, attach = '' } = {}) {
-    const list = signers.map(s => ({ name: clean(s.name), email: clean(s.email).toLowerCase() })).filter(s => s.name || s.email);
+    const list = withStages(signers.map(s => ({ name: clean(s.name), email: clean(s.email).toLowerCase(), par: !!s.par })).filter(s => s.name || s.email));
     const kn = ccList(cc), py = cleanPay(pay);
     return {
       v: 1, id: id || Date.now().toString(36) + Math.random().toString(36).slice(2, 8), title: clean(title) || 'Dokument', created: now(),
@@ -64,21 +72,41 @@
       if (r.pay) { r.pay = cleanPay(r.pay); if (!r.pay) delete r.pay; }
       if (r.cc) { r.cc = ccList(r.cc).filter(isMail); if (!r.cc.length) delete r.cc; }
       if (r.attach != null) { r.attach = clean(r.attach); if (!r.attach) delete r.attach; }
-      r.signers = r.signers.map(x => { if (!x || typeof x !== 'object') return x; const y = { ...x }; if (y.att != null) { y.att = cleanAtt(y.att); if (!y.att.length) delete y.att; } return y; });
+      r.signers = r.signers.map(x => { if (!x || typeof x !== 'object') return x; const y = { ...x }; if (y.att != null) { y.att = cleanAtt(y.att); if (!y.att.length) delete y.att; } if (y.ret != null && !/^[0-9a-f]{64}$/.test(y.ret)) delete y.ret; return y; });
+      // Stufen: ganze Zahlen ab 0, nicht fallend, lückenlos – sonst (beschädigt, von Hand geändert) wieder nacheinander
+      const gs = r.signers.map(s => s?.g);
+      if (gs.some(g => g != null) && !(Number.isInteger(gs[0]) && gs[0] === 0 && gs.every((g, i) => Number.isInteger(g) && (i === 0 || g === gs[i - 1] || g === gs[i - 1] + 1)))) r.signers = r.signers.map(s => { if (!s || typeof s !== 'object') return s; const { g, ...y } = s; return y; });
       r.fields = r.fields.filter(f => Number.isInteger(f.s) && f.s >= 0 && f.s < r.signers.length && Number.isInteger(f.page) && [f.x, f.y, f.w, f.h].every(v => typeof v === 'number' && v >= 0 && v <= 1))
-        .map(f => ({ ...f, t: TYPES[f.t] ? f.t : 'sign', label: clean(f.label).slice(0, 80), v: f.v == null ? '' : String(f.v).slice(0, 500) }));
+        .map(f => { const { img, ...o } = f; return { ...o, t: TYPES[f.t] ? f.t : 'sign', label: clean(f.label).slice(0, 80), v: f.v == null ? '' : String(f.v).slice(0, 500), ...(isImg(img) && f.t !== 'date' && f.t !== 'name' && f.t !== 'text' && f.t !== 'check' ? { img } : {}) }; });
       return r;
     } catch { return null; }
   }
   // Für die PDF: nur die gespeicherten Angaben, ohne Verweise auf Seiten im Speicher
   function serialize(r, pageIndex = f => f.page) {
-    const out = { ...r, fields: r.fields.map(f => ({ s: f.s, t: f.t || 'sign', ...(f.label ? { label: f.label } : {}), ...(f.v ? { v: String(f.v) } : {}), page: pageIndex(f), x: +f.x.toFixed(4), y: +f.y.toFixed(4), w: +f.w.toFixed(4), h: +f.h.toFixed(4) })).filter(f => f.page >= 0) };
+    const out = { ...r, fields: r.fields.map(f => ({ s: f.s, t: f.t || 'sign', ...(f.label ? { label: f.label } : {}), ...(f.v ? { v: String(f.v) } : {}), ...(isImg(f.img) ? { img: f.img } : {}), page: pageIndex(f), x: +f.x.toFixed(4), y: +f.y.toFixed(4), w: +f.w.toFixed(4), h: +f.h.toFixed(4) })).filter(f => f.page >= 0) };
     return JSON.stringify(out);
   }
   // Abgelehnt? Dann ist die Anfrage beendet (Index der Person, sonst -1)
   const declined = r => r.signers.findIndex(s => s.status === DECLINED);
   // Wer ist dran? Erste Person in der Reihenfolge, die noch nicht unterschrieben hat (-1: alle fertig oder abgelehnt)
   const next = r => declined(r) >= 0 || r.withdrawn ? -1 : r.signers.findIndex(s => s.status !== DONE);
+  /* Stufen: Personen derselben Stufe unterschreiben gleichzeitig, die nächste Stufe ist erst dran, wenn alle unterschrieben haben.
+     Ohne g ist jede Person ihre eigene Stufe (nacheinander). next() bleibt „die erste offene Person“ – sie steht in der aktuellen Stufe. */
+  const stageOf = (r, i) => Number.isInteger(r.signers[i]?.g) ? r.signers[i].g : i;
+  const members = (r, g) => r.signers.map((s, i) => i).filter(i => stageOf(r, i) === g);
+  const together = (r, i) => i >= 0 && i < r.signers.length && members(r, stageOf(r, i)).length > 1;
+  const parallel = r => r.signers.some((s, i) => together(r, i));
+  // Alle offenen Personen der aktuellen Stufe ([] = fertig, abgelehnt oder zurückgezogen)
+  function open(r) { const i = next(r); return i < 0 ? [] : members(r, stageOf(r, i)).filter(j => r.signers[j].status !== DONE); }
+  // Stufennummer zum Anzeigen (1, 2 …) und Zahl der Stufen
+  const stages = r => [...new Set(r.signers.map((s, i) => stageOf(r, i)))];
+  const stageNo = (r, i) => stages(r).indexOf(stageOf(r, i)) + 1;
+  // Wer unterschreibt nach der Stufe von i? (Index der ersten Person der nächsten Stufe, -1: niemand)
+  const afterStage = (r, i) => { const m = members(r, stageOf(r, i)); const k = m[m.length - 1] + 1; return k < r.signers.length ? k : -1; };
+  // Gleichzeitig unterschrieben, aber noch nicht alle der Stufe in dieser Fassung → zurück an den Absender zum Zusammenführen
+  const backToSender = (r, i) => together(r, i) && open(r).some(j => stageOf(r, j) === stageOf(r, i));
+  // Alle offenen Personen der Stufe als „gesendet“ vermerken (nacheinander: genau die nächste Person, wie bisher)
+  const markSentOpen = (r, at = now()) => open(r).reduce((x, j) => markSent(x, j, at), r);
   // Abgelaufen? (Ablaufdatum vorbei, Anfrage noch offen)
   const expired = (r, today = new Date()) => isDay(r.expires) && utcDay(today) > Date.parse(r.expires + 'T00:00:00Z') && next(r) >= 0;
   const doneCount = r => r.signers.filter(s => s.status === DONE).length;
@@ -103,7 +131,7 @@
     const nn = clean(name), ne = clean(email).toLowerCase(), why = clean(reason);
     if (!nn || !isMail(ne)) throw new Error('Bitte Name und gültige E-Mail-Adresse der Vertretung angeben.');
     if (ne === s.email || r.signers.some((x, j) => j !== i && x.email === ne)) throw new Error('Diese Person steht schon in der Reihenfolge.');
-    const signers = r.signers.map((x, j) => j === i ? { name: nn, email: ne, status: 'offen', signedAt: '', hash: '', from: { name: s.name, email: s.email }, ...(why ? { why } : {}) } : x);
+    const signers = r.signers.map((x, j) => j === i ? { name: nn, email: ne, status: 'offen', signedAt: '', hash: '', ...(Number.isInteger(s.g) ? { g: s.g } : {}), from: { name: s.name, email: s.email }, ...(why ? { why } : {}) } : x);
     return { ...r, signers, log: [...r.log, { at, what: 'weitergegeben', by: s.name || s.email, to: nn, ...(why ? { reason: why } : {}) }] };
   }
   /* Anlage der unterschreibenden Person (Nachweis, Vollmacht, Ausweiskopie …): Name, Größe, SHA-256; die Datei selbst legt
@@ -155,10 +183,14 @@
     .filter(([, at]) => at).map(([key, at]) => ({ key, label: STAGE[key], at }));
   // Wer ist dran, seit wann wartet die Anfrage auf ihn, und wie steht die Frist? (Tage, ganzzahlig; due < 0: überfällig)
   function waiting(r, today = new Date()) {
-    const i = next(r); if (i < 0) return null;
-    const s = r.signers[i], since = s.sentAt || (i > 0 ? r.signers[i - 1].signedAt : '') || r.created;
+    const o = open(r), i = o[0]; if (!o.length) return null;
+    // Gleichzeitige Stufe: alle offenen Personen; seit dem frühesten Versand, Stand der am wenigsten weit gekommenen Person
+    const ss = o.map(j => r.signers[j]), f = members(r, stageOf(r, i))[0], ord = ['offen', 'gesendet', 'empfangen', 'gelesen'];
+    const s = ss.slice().sort((a, b) => ord.indexOf(stage(a).key) - ord.indexOf(stage(b).key))[0];
+    const since = ss.map(x => x.sentAt).filter(Boolean).sort()[0] || (f > 0 ? r.signers[f - 1].signedAt : '') || r.created;
     const t0 = utcDay(today), d0 = iso => { const d = new Date(iso); return isNaN(d) ? 0 : Math.max(0, Math.round((t0 - utcDay(d)) / 86400000)); };
-    return { i, name: s.name || s.email, email: s.email, stage: stage(s), since, days: d0(since), after: r.signers[i + 1] ? r.signers[i + 1].name || r.signers[i + 1].email : '',
+    const nx = afterStage(r, i), aft = nx < 0 ? [] : members(r, stageOf(r, nx)).map(j => r.signers[j].name || r.signers[j].email);
+    return { i, open: o, name: ss.map(x => x.name || x.email).join(', '), email: ss.map(x => x.email).join(', '), stage: stage(s), since, days: d0(since), after: aft.join(', '),
       ...(isDay(r.due) ? { due: r.due, dueDays: Math.round((new Date(r.due + 'T00:00:00Z') - t0) / 86400000) } : {}),
       ...(isDay(r.expires) ? { expires: r.expires, expDays: Math.round((new Date(r.expires + 'T00:00:00Z') - t0) / 86400000) } : {}) };
   }
@@ -193,8 +225,12 @@
   const hello = (tr, name) => name ? say(tr, 'Guten Tag {0},', name) : say(tr, 'Guten Tag,');
   const bye = (tr, sig) => say(tr, 'Viele Grüße') + (sig ? '\n' + sig : '');
   // E-Mail an die nächste Person bzw. – wenn alle unterschrieben haben – zurück an den Absender
-  function mail(r, { from = '', tr = s => s } = {}) {
-    const i = next(r), n = r.signers.length, sig = from || r.requester.name, di = declined(r), req = r.requester.name || r.requester.email;
+  /* back: Index der Person, die gleichzeitig mit anderen unterschrieben hat – die Fassung geht zurück an den Absender, der zusammenführt.
+     who: an wen (Indizes; Voreinstellung: alle offenen Personen der aktuellen Stufe – nacheinander also genau die nächste Person). */
+  function mail(r, { from = '', tr = s => s, back = -1, who = null } = {}) {
+    if (back >= 0 && r.signers[back]) return backMail(r, back, { tr });
+    const o = (who || open(r)).filter(j => r.signers[j] && r.signers[j].status !== DONE);
+    const i = o.length ? o[0] : next(r), n = r.signers.length, sig = from || r.requester.name, di = declined(r), req = r.requester.name || r.requester.email;
     if (di >= 0) {
       const d = r.signers[di], done = r.signers.filter(s => s.status === DONE).map(s => s.name).join(', ');
       return { to: r.requester.email, cc: [...r.signers.filter(s => s.status === DONE).map(s => s.email), ...(r.cc || [])].filter(Boolean).join(', '), subject: say(tr, 'Abgelehnt: {0}', r.title),
@@ -206,11 +242,14 @@
         body: para(hello(tr), say(tr, 'Alle {0} Personen haben „{1}“ unterschrieben:', n, r.title), r.signers.map(s => `• ${s.name} – ${fmt(s.signedAt)}`).join('\n'),
           say(tr, 'Das unterschriebene Dokument ist angehängt. In PDFMy (https://pdfmy.de) zeigt es beim Öffnen die Übersicht mit Prüfsummen.'), payText(r, tr, true), bye(tr, sig)) };
     }
-    const s = r.signers[i], after = r.signers[i + 1];
-    const cc = (i > 0 || s.from) && r.requester.email && r.requester.email !== s.email ? r.requester.email : '';
-    return { to: s.email, cc, notify: r.requester.email && r.requester.email !== s.email ? r.requester.email : '', subject: say(tr, 'Bitte unterschreiben: {0}', r.title),
-      body: para(hello(tr, s.name),
-        n > 1 ? say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben (Person {2} von {3}).', req, r.title, i + 1, n) : say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben.', req, r.title),
+    const s = r.signers[i], par = together(r, i), ak = afterStage(r, i), after = ak >= 0 ? r.signers[ak] : null;
+    const to = o.length > 1 ? o.map(j => r.signers[j].email) : [s.email], mine = r.requester.email && to.includes(r.requester.email);
+    const cc = (i > 0 || s.from || o.length > 1) && r.requester.email && !mine ? r.requester.email : '';
+    const names = j => members(r, stageOf(r, j)).map(k => r.signers[k].name || r.signers[k].email).join(', ');
+    return { to: to.join(', '), cc, notify: r.requester.email && !mine ? r.requester.email : '', subject: say(tr, 'Bitte unterschreiben: {0}', r.title),
+      body: para(o.length > 1 ? hello(tr) : hello(tr, s.name),
+        par ? say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben. Gleichzeitig unterschreiben: {2}.', req, r.title, names(i))
+          : n > 1 ? say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben (Person {2} von {3}).', req, r.title, i + 1, n) : say(tr, '{0} bittet Sie, „{1}“ zu unterschreiben.', req, r.title),
         s.from ? say(tr, '{0} hat diese Anfrage an Sie weitergegeben.', s.from.name || s.from.email) + (s.why ? ' ' + say(tr, 'Begründung: {0}', s.why) : '') : '',
         r.due ? say(tr, 'Bitte bis {0}.', day(r.due)) : '',
         r.expires ? say(tr, 'Die Anfrage gilt bis {0}.', day(r.expires)) : '',
@@ -221,12 +260,55 @@
         [say(tr, 'So geht’s – kostenlos, ohne Anmeldung, die Datei wird nicht hochgeladen:'),
           say(tr, '1. https://pdfmy.de öffnen und die angehängte PDF ins Fenster ziehen. Ihr Unterschriftsfeld ist markiert.'),
           say(tr, '2. Auf „Hier unterschreiben“ klicken und unterschreiben.'),
-          after ? say(tr, '3. Auf „Unterschrieben – weitersenden“ klicken. PDFMy bereitet die E-Mail an {0} vor.', after.name || after.email)
+          par && open(r).filter(j => stageOf(r, j) === stageOf(r, i)).length > 1 ? say(tr, '3. Auf „Unterschrieben – zurücksenden“ klicken. PDFMy bereitet die E-Mail zurück an {0} vor; dort werden die Unterschriften zusammengeführt.', req)
+            : after ? say(tr, '3. Auf „Unterschrieben – weitersenden“ klicken. PDFMy bereitet die E-Mail an {0} vor.', after.name || after.email)
             : say(tr, '3. Auf „Unterschrieben – weitersenden“ klicken. PDFMy bereitet die E-Mail zurück an {0} vor.', req)].join('\n'),
         say(tr, 'Ohne PDFMy geht es auch: die PDF in Ihrem PDF-Programm öffnen (z. B. Adobe Acrobat Reader, Vorschau am Mac, Microsoft Edge), die markierten Felder ausfüllen und unterschreiben, speichern und an {0} zurücksenden.', req + (r.requester.email && r.requester.name ? ` (${r.requester.email})` : '')),
-        i > 0 ? say(tr, 'Bereits unterschrieben: {0}.', r.signers.slice(0, i).map(x => x.name).join(', ')) : '',
+        r.signers.some(x => x.status === DONE) ? say(tr, 'Bereits unterschrieben: {0}.', r.signers.filter(x => x.status === DONE).map(x => x.name).join(', ')) : '',
         bye(tr, sig)) };
   }
+  // E-Mail zurück an den Absender: Person i hat gleichzeitig mit anderen unterschrieben – der Absender führt die Fassungen zusammen
+  function backMail(r, i, { tr = s => s } = {}) {
+    const s = r.signers[i], g = stageOf(r, i), all = members(r, g).map(j => r.signers[j].name || r.signers[j].email);
+    const miss = open(r).filter(j => stageOf(r, j) === g).map(j => r.signers[j].name || r.signers[j].email);
+    return { to: r.requester.email, cc: '', subject: say(tr, 'Unterschrieben, bitte zusammenführen: {0}', r.title),
+      body: para(hello(tr, r.requester.name), say(tr, '{0} hat „{1}“ unterschrieben.', s.name || s.email, r.title),
+        say(tr, 'Gleichzeitig unterschreiben: {0}. In dieser Fassung fehlt noch: {1}.', all.join(', '), miss.join(', ')),
+        say(tr, 'Bitte die angehängte PDF in PDFMy (https://pdfmy.de) öffnen. Sobald die Fassungen aller Personen dieser Stufe geöffnet sind, führt PDFMy die Unterschriften zusammen und bereitet die E-Mail für den nächsten Schritt vor.'),
+        s.att?.length ? say(tr, 'Beigefügt: {0}.', s.att.map(a => a.name).join(', ')) : '',
+        bye(tr, s.name)) };
+  }
+  /* Zusammenführen beim Absender: r = geöffnete Fassung (Grundlage), copies = [{ r, ret }] die übrigen zurückgesandten Fassungen
+     derselben Stufe (ret = SHA-256 der zurückgesandten Datei). Übernommen werden je Person der Stufe, die in einer Kopie unterschrieben
+     hat: ihr Stand, ihre Feldwerte und ihr Unterschriftsbild sowie die Protokolleinträge. Ergebnis: { r, added: [{ i, fields, imgs, copy }] } –
+     die Unterschriften zeichnet PDFMy danach an die Grundlage an (inkrementell). Die Bilder werden aus der Anfrage entfernt, sobald die
+     Stufe vollständig ist (sie stehen dann gezeichnet in der PDF). Wirft einen verständlichen Fehler. */
+  function merge(r, copies = [], { at = now(), by = '' } = {}) {
+    const i0 = next(r); if (i0 < 0) throw new Error('Diese Anfrage ist schon abgeschlossen.');
+    const g = stageOf(r, i0), mem = members(r, g);
+    const out = { ...r, signers: r.signers.map(s => ({ ...s })), fields: r.fields.map(f => ({ ...f })), log: [...r.log] };
+    const key = l => [l.at, l.what, l.by, l.to || ''].join('|'), have = new Set(out.log.map(key)), added = [];
+    for (const c of copies) {
+      const cr = c && c.r;
+      if (!cr || cr.id !== r.id || cr.signers.length !== r.signers.length || cr.fields.length !== r.fields.length) throw new Error('Eine Fassung gehört nicht zu dieser Anfrage.');
+      for (const j of mem) {
+        const s = cr.signers[j]; if (!s || s.status !== DONE || out.signers[j].status === DONE) continue;
+        out.signers[j] = { ...s, ...(Number.isInteger(r.signers[j].g) ? { g: r.signers[j].g } : {}), ...(c.ret ? { ret: c.ret } : {}) };
+        const fields = [], imgs = {};
+        cr.fields.forEach((f, k) => { if (f.s !== j) return; out.fields[k] = { ...out.fields[k], v: f.v || '' }; if (f.img) imgs[k] = f.img; fields.push(k); });
+        added.push({ i: j, fields, imgs, copy: c });
+      }
+      for (const l of cr.log) if (!have.has(key(l)) && l.what !== 'abgeschlossen') { out.log.push(l); have.add(key(l)); }
+    }
+    if (!added.length) return { r, added };
+    out.log = out.log.map((l, k) => [l, k]).sort((a, b) => a[0].at < b[0].at ? -1 : a[0].at > b[0].at ? 1 : a[1] - b[1]).map(x => x[0]);
+    out.log.push({ at, what: 'zusammengeführt', by: by || r.requester.name || r.requester.email, to: added.map(a => out.signers[a.i].name || out.signers[a.i].email).join(', ') });
+    if (mem.every(j => out.signers[j].status === DONE)) out.fields = out.fields.map(f => { if (!mem.includes(f.s) || !f.img) return f; const { img, ...o } = f; return o; });
+    if (complete(out)) out.log.push({ at, what: 'abgeschlossen', by: '' });
+    return { r: out, added };
+  }
+  // Welche Personen der Stufe g haben in dieser Fassung unterschrieben? (für die Zwischenstände beim Absender)
+  const signedIn = (r, g) => members(r, g).filter(j => r.signers[j].status === DONE);
   // Zahlungsaufforderung als Text (Betrag deutsch formatiert, IBAN in Vierergruppen); qr: der GiroCode steht schon auf der Abschlussseite
   const money = a => a.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
   const ibanFmt = i => String(i || '').replace(/(.{4})(?=.)/g, '$1 ');
@@ -296,13 +378,13 @@
   // Vorlagen: Personen, Felder, Nachricht und Frist (in Tagen) für wiederkehrende Dokumente
     function template(r, name, pageIndex = f => f.page, today = new Date()) {
     const days = isDay(r.due) ? Math.max(0, Math.round((new Date(r.due + 'T00:00:00Z') - utcDay(today)) / 86400000)) : 0;
-    return { name: clean(name).slice(0, 80) || r.title, title: r.title, message: r.message, days, ...(r.cc ? { cc: r.cc.slice() } : {}), signers: r.signers.map(s => ({ name: s.name, email: s.email })),
+    return { name: clean(name).slice(0, 80) || r.title, title: r.title, message: r.message, days, ...(r.cc ? { cc: r.cc.slice() } : {}), signers: r.signers.map((s, i) => ({ name: s.name, email: s.email, ...(i > 0 && stageOf(r, i) === stageOf(r, i - 1) ? { par: true } : {}) })),
       fields: r.fields.map(f => ({ s: f.s, t: f.t || 'sign', label: f.label || '', page: pageIndex(f), x: f.x, y: f.y, w: f.w, h: f.h })).filter(f => f.page >= 0) };
   }
   const dueIn = (days, today = new Date()) => days > 0 ? new Date(utcDay(today) + days * 86400000).toISOString().slice(0, 10) : '';
   // Zeilen der Prüfprotokoll-Seite (wird nach der letzten Unterschrift an die PDF angehängt)
   // tr wie bei mail(): jede Zeile über eine Vorlage mit Platzhaltern; Namen, Titel, Prüfsummen, Daten werden nie übersetzt
-  const LOGW = { 'Anlage beigefügt': 'Anlage beigefügt', weitergegeben: 'weitergegeben', zurückgezogen: 'zurückgezogen', 'vor Ort übergeben': 'vor Ort übergeben (Gerät des Absenders)', [DONE + ' (vor Ort)']: 'unterschrieben (vor Ort, Gerät des Absenders)', gesendet: 'gesendet', empfangen: 'empfangen (in PDFMy geöffnet)', gelesen: 'gelesen (alle Seiten angesehen)', angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
+  const LOGW = { zusammengeführt: 'zusammengeführt (gleichzeitig unterschriebene Fassungen)', 'Anlage beigefügt': 'Anlage beigefügt', weitergegeben: 'weitergegeben', zurückgezogen: 'zurückgezogen', 'vor Ort übergeben': 'vor Ort übergeben (Gerät des Absenders)', [DONE + ' (vor Ort)']: 'unterschrieben (vor Ort, Gerät des Absenders)', gesendet: 'gesendet', empfangen: 'empfangen (in PDFMy geöffnet)', gelesen: 'gelesen (alle Seiten angesehen)', angefragt: 'angefragt', [DONE]: 'unterschrieben', abgeschlossen: 'abgeschlossen', [DECLINED]: 'abgelehnt', [DONE + ' (anderes PDF-Programm)']: 'unterschrieben (anderes PDF-Programm)' };
   function auditLines(r, docHash = '', tr = s => s) {
     const L = [['h', say(tr, 'Prüfprotokoll – Unterschriftsanfrage')], ['p', say(tr, 'Dokument: {0}', r.title)], ['p', say(tr, 'Anfrage-ID: {0}', r.id)],
       ['p', say(tr, 'Erstellt: {0} von {1}{2}', fmt(r.created), r.requester.name || '', r.requester.email ? ` <${r.requester.email}>` : '')],
@@ -314,6 +396,7 @@
     L.push(['s', say(tr, 'Unterzeichner')]);
     r.signers.forEach((s, i) => {
       L.push(['b', `${i + 1}. ${s.name}${s.email ? ` <${s.email}>` : ''}`]);
+      if (parallel(r)) { const w = members(r, stageOf(r, i)).filter(j => j !== i).map(j => r.signers[j].name || r.signers[j].email); L.push(['p', say(tr, 'Stufe {0} von {1}', stageNo(r, i), stages(r).length) + (w.length ? ' – ' + say(tr, 'gleichzeitig mit {0}', w.join(', ')) : '')]); }
       const st = s.status === DONE ? (s.ext ? say(tr, 'Unterschrieben in einem anderen PDF-Programm') : s.here ? say(tr, 'Unterschrieben vor Ort auf dem Gerät des Absenders') : say(tr, 'Unterschrieben')) : s.status === DECLINED ? say(tr, 'Abgelehnt') : say(tr, 'Offen');
       L.push(['p', st + (s.signedAt ? ' ' + say(tr, 'am {0}', fmt(s.signedAt)) : '') + (s.reason ? ' – ' + say(tr, 'Begründung: {0}', s.reason) : '')]);
       if (s.from) L.push(['p', say(tr, 'Vertretung für {0}', s.from.name + (s.from.email ? ` <${s.from.email}>` : '')) + (s.why ? ' – ' + say(tr, 'Begründung: {0}', s.why) : '')]);
@@ -323,6 +406,7 @@
       if (vals.length) L.push(['p', say(tr, 'Angaben: {0}', vals.join('; '))]);
       for (const a of s.att || []) L.push(['p', say(tr, 'Anlage: {0} ({1})', a.name, a.size >= 1048576 ? (a.size / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(a.size / 1024)) + ' KB')], ['m', say(tr, 'SHA-256 der Anlage: {0}', a.sha)]);
       if (s.hash) L.push(['m', say(tr, 'SHA-256 der erhaltenen Fassung: {0}', s.hash)]);
+      if (s.ret) L.push(['m', say(tr, 'SHA-256 der zurückgesandten Fassung: {0}', s.ret)]);
       L.push(['g', '']);
     });
     L.push(['g', ''], ['s', say(tr, 'Ablauf')]);
@@ -401,6 +485,6 @@
   }
   async function verifyRead(rt, p) { return !!(rt && p) && await readMac(rt, p.id, p.i, p.t, p.name) === p.mac; }
 
-  const api = { addAttachment, removeAttachment, expired, delegate, withdraw, markHere, withdrawMail, payText, ics, senderIcs, signerIcs, newCode, codeFmt, codeNorm, ibanFmt, money, newToken, readLink, parseRead, verifyRead, advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
+  const api = { stageOf, members, together, parallel, open, stages, stageNo, afterStage, backToSender, markSentOpen, backMail, merge, signedIn, isImg, addAttachment, removeAttachment, expired, delegate, withdraw, markHere, withdrawMail, payText, ics, senderIcs, signerIcs, newCode, codeFmt, codeNorm, ibanFmt, money, newToken, readLink, parseRead, verifyRead, advice, urgent, markSent, markOpened, markRead, stage, steps, waiting, STAGE, recipients, reminder, formName, formField, template, dueIn, day, KEY, FILE, DONE, DECLINED, TYPES, SIZE, declined, decline, missing, auditLines, suggest, create, problems, parse, serialize, next, doneCount, complete, markSigned, summaryText, mail, fmt, isMail };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.SigReq = api;
 })(typeof self !== 'undefined' ? self : globalThis);

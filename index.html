@@ -1128,6 +1128,7 @@ html.i18n-wait body{visibility:hidden}
 .jtab td #cfDlg{width:min(480px,94vw)}#reqDlg{width:min(620px,94vw)}#reqDecDlg{width:min(520px,94vw)}#reqInfoDlg{width:min(680px,94vw)}
 .reqsig{border:1px solid var(--line);border-radius:8px;padding:8px 12px 10px;margin:0 0 12px}.reqsig legend{font-size:13px;font-weight:600;padding:0 4px}
 .reqrow{display:grid;grid-template-columns:1.6em 1fr 1.3fr auto;gap:8px;align-items:center;margin:6px 0}.reqrow b{color:var(--muted);text-align:right}.reqrow input{min-width:0}
+.reqrow .reqpar{grid-column:2/-1;display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--muted);margin:-4px 0 0;cursor:pointer}.reqrow .reqpar[hidden]{display:none}.reqrow .reqpar input{margin:0}.reqrow.par b{color:var(--accent)}
 .reqbtns [data-rq="send"],.reqbtns [data-rq="sign"],.reqbtns [data-rq="fwd"]{font-weight:700}.reqbtns{display:inline-flex;flex-wrap:wrap;gap:6px 12px;margin-left:8px}.sigbar.req{flex-wrap:wrap}
 .reqf{position:absolute;border:2px dashed var(--accent);background:rgba(15,110,140,.10);border-radius:4px;display:flex;align-items:flex-end;justify-content:space-between;gap:4px;padding:2px 4px;font-size:12px;line-height:1.2;color:var(--accent);box-sizing:border-box;pointer-events:auto;overflow:hidden}
 .reqf.mine{border-color:#c8102e;color:#c8102e;background:rgba(200,16,46,.08);animation:reqpulse 1.6s ease-in-out 3}

@@ -427,22 +427,42 @@ cfRender(); cfLoad();
 let req = null, reqDoc = -1, reqArm = -1, reqDraft = false, reqHash = '', reqSigned = false, reqStart = 0, reqType = 'sign', reqAudit = false, reqExt = false;
 let reqTrack = -1, reqSeen = new Set(), reqFromMe = false;   // reqFromMe: dieser Rechner ist der Absender (für Handlungstipps)   // Person, deren Lesen gerade festgehalten wird, und angesehene Seiten
 const RQ_ICON = { sign: '✍', initials: '✍', date: '📅', name: '👤', text: '✎', check: '☑' };
-const reqMine = () => req && !reqDraft ? SigReq.next(req) : -1;
+/* Wer unterschreibt auf diesem Gerät? Nacheinander: die nächste Person (wie bisher). Gleichzeitige Stufe (app-v247): die Person, die sich
+   gemeldet hat („Ich bin …“, reqWho) bzw. deren Adresse zu diesem Gerät passt; beim Absender nur er selbst, falls er in der Stufe steht. */
+let reqWho = -1, reqPar = null;   // reqPar: Zwischenstand beim Absender { g, have: [Index], miss: [Index] }
+function reqMine() {
+  if (!req || reqDraft) return -1;
+  const o = SigReq.open(req); if (!o.length) return -1;
+  if (o.length === 1 && !SigReq.together(req, o[0])) return o[0];
+  if (reqHere) return o[0];
+  if (o.includes(reqWho)) return reqWho;
+  if (reqFromMe) { const k = o.find(j => req.signers[j].email === req.requester.email); return k == null || reqPar?.have.includes(k) ? -1 : k; }   // eigene Fassung schon gemerkt → zusammenführen statt erneut unterschreiben
+  return o.length === 1 ? o[0] : -1;
+}
 /* Signatur-Paket (app-v243): reqPw = Zugangscode dieser Anfrage (nur im Speicher; beim Absender zusätzlich im Posteingangsbuch),
    reqHere = Vor-Ort-Modus (Gerät wird weitergereicht), reqPin = PIN zum Zurückholen, reqWantIcs = Kalender-Erinnerungen beim Senden */
 let reqPw = '', reqHere = false, reqPin = '', reqWantIcs = false;
 // Anlagen der unterschreibenden Person (app-v246): SHA-256 → { name, bytes, mime } – reisen beim Weitersenden als Anlage in der PDF mit
 const reqAttNew = new Map();
-window.reqReset = () => { reqAttNew.clear(); reqPw = ''; reqHere = false; reqPin = ''; reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; reqIsSealed = false; renderReqBar(); };
-function reqRow(s = {}, i = 0) {
-  return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button></div>`;
+window.reqReset = () => { reqWho = -1; reqPar = null; reqAttNew.clear(); reqPw = ''; reqHere = false; reqPin = ''; reqFromMe = false; reqConfirmed = false; reqTrack = -1; reqSeen = new Set(); req = null; reqDoc = -1; reqArm = -1; reqDraft = false; reqHash = ''; reqSigned = false; reqExt = false; reqBytes = null; reqBase = null; reqIsSealed = false; renderReqBar(); };
+const RQ_PAR = 'Gleichzeitig mit der vorherigen Person';
+// Zeile je Person; ab der zweiten „gleichzeitig mit der vorherigen Person“ (Stufen, app-v247). s.par aus Vorlagen, s.g aus einer Anfrage im Entwurf
+function reqRow(s = {}, i = 0, all = []) {
+  const par = s.par || (i > 0 && Number.isInteger(s.g) && s.g === all[i - 1]?.g);
+  return `<div class="reqrow"><b>${i + 1}.</b><input data-rn aria-label="Name" placeholder="Name" list="teamList" autocomplete="off" value="${esc(s.name || '')}"><input data-rm type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" value="${esc(s.email || '')}"><button type="button" class="linkbtn" data-rdel aria-label="Person entfernen" title="Person entfernen">✕</button><label class="reqpar" translate="no"><input type="checkbox" data-rp${par ? ' checked' : ''}> ${esc(I18N.t(RQ_PAR))}</label></div>`;
 }
-function reqRenumber() { [...$('#reqRows').children].forEach((r, i) => { r.querySelector('b').textContent = `${i + 1}.`; }); }
+// Nummern zeigen die Stufe: gleichzeitige Personen tragen dieselbe Nummer; die erste Zeile hat keinen Haken
+function reqRenumber() {
+  let g = 0; [...$('#reqRows').children].forEach((r, i) => {
+    const cb = r.querySelector('[data-rp]'); r.querySelector('.reqpar').hidden = i === 0; if (i === 0) cb.checked = false;
+    if (i > 0 && !cb.checked) g++; r.querySelector('b').textContent = `${g + 1}.`; r.classList.toggle('par', i > 0 && cb.checked);
+  });
+}
 $('#btnSigReq').onclick = () => {
   if (!state.pages.length) return status('Zuerst ein Dokument öffnen, das unterschrieben werden soll.');
   const cur = reqDraft && req ? req : null;
   $('#reqTitle').value = cur?.title || state.meta?.subject || filename().replace(/\.pdf$/i, '');
-  $('#reqRows').innerHTML = (cur?.signers.length ? cur.signers : [{}]).map(reqRow).join('');
+  $('#reqRows').innerHTML = (cur?.signers.length ? cur.signers : [{}]).map(reqRow).join(''); reqRenumber();
   $('#reqMe').value = cur?.requester.name || S.author || ''; $('#reqMeMail').value = cur?.requester.email || LS.get('reqMail', '') || team[S.author] || '';
   $('#reqMsg').value = cur?.message || ''; $('#reqDue').value = cur?.due || ''; $('#reqCc').value = (cur?.cc || []).join(', '); $('#reqErr').textContent = '';
   reqTplFill(cur ? '' : null);
@@ -483,7 +503,7 @@ $('#reqTpl').onchange = () => {
   const t = reqTpls()[+$('#reqTpl').value]; $('#reqTplDel').hidden = !t; if (!t) return;
   $('#reqTitle').value = t.title || $('#reqTitle').value; $('#reqMsg').value = t.message || '';
   $('#reqDue').value = SigReq.dueIn(t.days); $('#reqCc').value = (t.cc || []).join(', ');
-  $('#reqRows').innerHTML = (t.signers.length ? t.signers : [{}]).map(reqRow).join('');
+  $('#reqRows').innerHTML = (t.signers.length ? t.signers : [{}]).map(reqRow).join(''); reqRenumber();
 };
 $('#reqTplDel').onclick = () => {
   const i = +$('#reqTpl').value, t = reqTpls()[i]; if (!t || !confirm(`Vorlage „${t.name}“ löschen?`)) return;
@@ -497,7 +517,8 @@ function reqTplSave() {
   LS.set('reqTpl', [t, ...list].slice(0, 30));
   status(`Vorlage „${t.name}“ gespeichert – beim nächsten „Zur Unterschrift senden …“ oben auswählbar.`);
 }
-$('#reqAdd').onclick = () => { if ($('#reqRows').children.length >= 10) return; $('#reqRows').insertAdjacentHTML('beforeend', reqRow({}, $('#reqRows').children.length)); $('#reqRows').lastElementChild.querySelector('input').focus(); };
+$('#reqAdd').onclick = () => { if ($('#reqRows').children.length >= 10) return; $('#reqRows').insertAdjacentHTML('beforeend', reqRow({}, $('#reqRows').children.length)); reqRenumber(); $('#reqRows').lastElementChild.querySelector('input').focus(); };
+$('#reqRows').addEventListener('change', ev => { if (ev.target.matches('[data-rp]')) reqRenumber(); });
 $('#reqRows').addEventListener('click', ev => { if (!ev.target.closest('[data-rdel]')) return; ev.target.closest('.reqrow').remove(); if (!$('#reqRows').children.length) $('#reqRows').innerHTML = reqRow({}, 0); reqRenumber(); });
 // Name aus dem Team gewählt → E-Mail-Adresse ergänzen
 $('#reqRows').addEventListener('change', ev => { if (!ev.target.matches('[data-rn]')) return; const m = ev.target.parentElement.querySelector('[data-rm]'); if (!m.value && team[ev.target.value.trim()]) m.value = team[ev.target.value.trim()]; });
@@ -506,7 +527,7 @@ $('#reqForm').onsubmit = ev => {
   ev.preventDefault();
   const serial = $('#reqSerial').checked ? SigReq.recipients($('#reqList').value).list : null;
   if (serial && !serial.length) { $('#reqErr').textContent = 'Bitte mindestens einen Empfänger mit E-Mail-Adresse eintragen.'; return; }
-  const signers = serial ? [serial[0]] : [...$('#reqRows').children].map(r => ({ name: r.querySelector('[data-rn]').value, email: r.querySelector('[data-rm]').value }));
+  const signers = serial ? [serial[0]] : [...$('#reqRows').children].map((r, i) => ({ name: r.querySelector('[data-rn]').value, email: r.querySelector('[data-rm]').value, par: i > 0 && r.querySelector('[data-rp]').checked }));
   let pay = null;
   if ($('#reqPay').checked) {
     try { const e = QrStempel.epc({ name: $('#reqPayName').value, iban: $('#reqPayIban').value, amount: $('#reqPayAmt').value, purpose: $('#reqPayPurp').value }); pay = { name: $('#reqPayName').value, iban: e.iban, amount: e.amount, purpose: $('#reqPayPurp').value }; }
@@ -622,26 +643,34 @@ async function reqSignNow() {
   finally { if (own) { window.reqGuestSigs = state.sigs; state.sigs = own.sigs; state.signature = own.signature; window.sigGuest = null; } }
   if (!ok) return status('Unterschrift abgebrochen.');
   const sigs = own ? window.reqGuestSigs : state.sigs;
-  const img = async src => { const im = new Image(); im.src = src; await im.decode(); return im; };
   const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
   for (const f of mine) {
     const p = f.pg, t = f.t || 'sign'; pushUndo(p);
     if (t === 'sign' || t === 'initials') {
       const src = sigs[t]; if (!src) continue;
-      const im = await img(src), ar = im.height / im.width; let w = f.w, h = w * ar * p.w / p.h;
-      if (h > f.h) { h = f.h; w = h / (ar * p.w / p.h); }
-      p.annots.push({ id: ++uid, type: 'sign', kind: t, img: src, ar, x: f.x + (f.w - w) / 2, y: f.y + f.h - h, w, h }); reqSignedIds.add(uid);
+      if (SigReq.together(req, i) && !reqHere) f.img = src;   // gleichzeitige Stufe: Bild reist in der Anfrage mit – der Absender führt zusammen
+      await reqDrawSig(f, src);
       continue;
     }
     const text = t === 'date' ? today : t === 'name' ? req.signers[i].name : t === 'check' ? (f.v ? '✓' : '') : String(f.v || '').trim();
     if (t === 'date' || t === 'name') f.v = text;
-    if (!text) continue;
-    const asp = (p.w || 1) / (p.h || 1.414), fs = Math.min(0.016, f.h / asp * (t === 'check' ? 0.95 : 0.72));
-    p.annots.push({ id: ++uid, type: 'text', x: f.x + (t === 'check' ? f.w * 0.15 : 0.004), y: f.y + Math.max(0, f.h - fs * asp * 1.2), w: 0, h: 0, text, fs, color: '#1B1D23' }); reqSignedIds.add(uid);
+    reqDrawText(f, text);
   }
   window.reqGuestSigs = null;
   reqSigned = true; state.dirty = true; reqGoto(mine[0]); renderAnns(); renderReqBar();
   status(reqHere ? 'Unterschrift gesetzt. Jetzt „Fertig – Gerät zurückgeben“.' : 'Unterschrift gesetzt. Jetzt „Unterschrieben – weitersenden“.');
+}
+// Unterschriftsbild bzw. Text in ein Feld setzen – beim Unterschreiben und beim Zusammenführen gleichzeitiger Unterschriften
+async function reqDrawSig(f, src) {
+  const p = f.pg, im = new Image(); im.src = src; await im.decode();
+  const ar = im.height / im.width; let w = f.w, h = w * ar * p.w / p.h;
+  if (h > f.h) { h = f.h; w = h / (ar * p.w / p.h); }
+  p.annots.push({ id: ++uid, type: 'sign', kind: f.t || 'sign', img: src, ar, x: f.x + (f.w - w) / 2, y: f.y + f.h - h, w, h }); reqSignedIds.add(uid);
+}
+function reqDrawText(f, text) {
+  if (!text) return;
+  const p = f.pg, t = f.t, asp = (p.w || 1) / (p.h || 1.414), fs = Math.min(0.016, f.h / asp * (t === 'check' ? 0.95 : 0.72));
+  p.annots.push({ id: ++uid, type: 'text', x: f.x + (t === 'check' ? f.w * 0.15 : 0.004), y: f.y + Math.max(0, f.h - fs * asp * 1.2), w: 0, h: 0, text, fs, color: '#1B1D23' }); reqSignedIds.add(uid);
 }
 // Als eingebettete Datei (lesbar in jedem PDF-Programm unter „Anlagen“); pdf.js liefert eigene Info-Einträge nicht zuverlässig
 window.reqInfo = async (out, pages, when = new Date()) => {
@@ -662,10 +691,11 @@ async function reqFormFields(out, pages) {
   // … und aus dem Formularverzeichnis (beim Anhängen an die empfangene Fassung bleibt es sonst bestehen)
   const af = out.catalog.lookup(N('AcroForm')), flds = af instanceof L.PDFDict ? af.lookup(N('Fields')) : null;
   if (flds instanceof L.PDFArray) for (let k = flds.size() - 1; k >= 0; k--) { const d = flds.lookup(k), t = d instanceof L.PDFDict ? d.lookup(N('T')) : null; if (t?.decodeText && /^pdfmy_/.test(t.decodeText())) flds.remove(k); }
-  const i = SigReq.next(req); if (i < 0) return;
-  const mine = req.fields.map((f, k) => ({ f, k })).filter(({ f }) => f.s === i && pages.indexOf(f.pg) >= 0); if (!mine.length) return;
-  const form = out.getForm(), helv = await out.embedFont(L.StandardFonts.Helvetica), who = req.signers[i].name, red = [0.78, 0.06, 0.18];
+  const o = SigReq.open(req); if (!o.length) return;   // gleichzeitige Stufe: Felder aller offenen Personen der Stufe
+  const mine = req.fields.map((f, k) => ({ f, k })).filter(({ f }) => o.includes(f.s) && pages.indexOf(f.pg) >= 0); if (!mine.length) return;
+  const form = out.getForm(), helv = await out.embedFont(L.StandardFonts.Helvetica), red = [0.78, 0.06, 0.18];
   for (const { f, k } of mine) {
+    const who = req.signers[f.s].name;
     const page = outPages[pages.indexOf(f.pg)], mb = page.getMediaBox(), W = mb.width, H = mb.height, t = f.t || 'sign', name = SigReq.formName(req, k);
     const box = { x: mb.x + f.x * W, y: mb.y + H - (f.y + f.h) * H, width: f.w * W, height: f.h * H, borderWidth: 0.75, borderColor: L.rgb(...red), backgroundColor: L.rgb(1, 0.95, 0.95) };
     const tip = `${f.label || SigReq.TYPES[t]} – ${who}`;
@@ -683,17 +713,17 @@ async function reqFormFields(out, pages) {
 }
 // Kommt die Fassung aus einem anderen PDF-Programm zurück: Feldwerte übernehmen und erkennen, ob die Person dort unterschrieben hat
 async function reqReadForm(r, bytes) {
-  const L = PDFLib, lib = await PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false }), i = SigReq.next(r); let ext = false;
+  const L = PDFLib, lib = await PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false }), o = SigReq.open(r); let ext = false;
   for (const f of lib.getForm().getFields()) {
     const k = SigReq.formField(r, f.getName()); if (k < 0) continue;
-    const fd = r.fields[k], own = fd.s === i;
+    const fd = r.fields[k], own = o.includes(fd.s);
     if (f instanceof L.PDFTextField) { const v = (f.getText() || '').trim(); if (v && fd.t !== 'name') { fd.v = v; ext ||= own; } }
     else if (f instanceof L.PDFCheckBox) { if (f.isChecked()) { fd.v = 'ja'; ext ||= own; } }
     else if (f.acroField.dict.lookup(L.PDFName.of('V'))) ext ||= own;   // digital signiert
   }
   // „Ausfüllen & unterschreiben“ (Acrobat), Signatur in Vorschau: neue Freihand-, Text- oder Stempel-Anmerkungen auf den Seiten der Person
   const pgs = lib.getPages();
-  for (const n of new Set(r.fields.filter(f => f.s === i).map(f => f.page))) {
+  for (const n of new Set(r.fields.filter(f => o.includes(f.s)).map(f => f.page))) {
     const an = pgs[n]?.node.lookup(L.PDFName.of('Annots')); if (!(an instanceof L.PDFArray)) continue;
     for (let k = 0; k < an.size(); k++) { const d = an.lookup(k), st = d instanceof L.PDFDict ? d.lookup(L.PDFName.of('Subtype'))?.asString?.() : ''; if (['/Ink', '/FreeText', '/Stamp'].includes(st)) ext = true; }
   }
@@ -706,15 +736,19 @@ window.reqLoad = (json, docIdx, bytes, pw) => {
   const wd = (LS.get('reqWithdrawn', []) || []).find(x => x.id === r.id); if (wd && !r.withdrawn) r = { ...r, withdrawn: wd.at };
   // „Empfangen“: die Person, die dran ist, hat die PDF in PDFMy geöffnet – nicht, wenn der Absender seine Kopie ansieht
   const me = String(LS.get('reqMail', '') || '').toLowerCase(), nx = SigReq.next(r), mineReq = me ? me === r.requester.email : !!S.author && S.author === r.requester.name;
-  reqTrack = -1; reqSeen = new Set(); reqFromMe = mineReq;
-  if (nx >= 0 && (!mineReq || r.signers[nx].email === r.requester.email)) { r = SigReq.markOpened(r, nx); reqTrack = nx; }
+  reqTrack = -1; reqSeen = new Set(); reqFromMe = mineReq; reqWho = -1; reqPar = null;
+  // Gleichzeitige Stufe: wer hier unterschreibt, ergibt sich aus der Adresse dieses Geräts – sonst fragt die Leiste („Ich bin …“)
+  const o = SigReq.open(r), par = o.length > 1 || (nx >= 0 && SigReq.together(r, nx));
+  const cand = mineReq ? o.filter(j => r.signers[j].email === r.requester.email) : par ? (o.length === 1 ? o : o.filter(j => r.signers[j].email === me)) : o;
+  if (cand.length === 1 && !(mineReq && par)) { r = SigReq.markOpened(r, cand[0]); reqTrack = cand[0]; if (par && !mineReq) reqWho = cand[0]; }
   req = r; reqDoc = docIdx; reqDraft = false; reqArm = -1; reqSigned = false; reqHash = ''; reqStart = state.pages.length;   // Seiten dieses Dokuments folgen ab hier (auch als Scan aufbereitete)
   reqBytes = new Uint8Array(bytes); reqCursor = -1;   // empfangene Fassung: Unterschriften werden daran angehängt (js/pdfinc.js)
   reqIsSealed = SigReq.complete(r) && reqSealedIn(reqBytes);   // fertig und zuletzt versiegelt (Signatur bzw. Zeitstempel deckt die ganze Datei ab)
   sha256(bytes).then(h => { reqHash = h; });
   reqExt = false;
-  reqReadForm(r, bytes).then(ext => { if (req === r && ext) { reqExt = true; renderReqBar(); renderAnns(); toast(`${r.signers[SigReq.next(r)]?.name || 'Die Person'} hat offenbar in einem anderen PDF-Programm unterschrieben – bitte prüfen und „Als unterschrieben übernehmen …“.`, 9000); } }).catch(e => console.warn('Formularfelder lesen:', e));
+  reqReadForm(r, bytes).then(ext => { if (req === r && ext) { reqExt = true; renderReqBar(); renderAnns(); toast(`${r.signers[reqMine()]?.name || 'Die Person'} hat offenbar in einem anderen PDF-Programm unterschrieben – bitte prüfen und „Als unterschrieben übernehmen …“.`, 9000); } }).catch(e => console.warn('Formularfelder lesen:', e));
   reqJournal(r);
+  if (mineReq && par) reqParKeep(r, json, bytes);   // Absender: zurückgekommene Fassung merken, Zwischenstand zeigen
 };
 window.reqAfterImport = docIdx => {
   if (!req || reqDoc !== docIdx) return;
@@ -730,7 +764,7 @@ window.reqAfterImport = docIdx => {
 window.reqSeenPage = p => {
   if (reqTrack < 0 || !req || reqDraft || !reqBase || !p || !reqBase.pages.includes(p)) return;
   reqSeen.add(p.id);
-  if (reqBase.pages.every(x => reqSeen.has(x.id)) && SigReq.next(req) === reqTrack) { req = SigReq.markRead(req, reqTrack); reqTrack = -1; renderReqBar(); }
+  if (reqBase.pages.every(x => reqSeen.has(x.id)) && SigReq.open(req).includes(reqTrack)) { req = SigReq.markRead(req, reqTrack); reqTrack = -1; renderReqBar(); }
 };
 // Prüfprotokoll-Seite (A4) nach der letzten Unterschrift: Personen, Zeitpunkte, Prüfsummen, Ablauf
 async function reqAuditPage(out) {
@@ -899,9 +933,10 @@ function reqShowCode(code, r) {
 }
 $('#reqCodeCopy').onclick = async () => { try { await navigator.clipboard.writeText($('#reqCode').textContent); status('Zugangscode kopiert.'); } catch { status('Kopieren nicht möglich – bitte den Code markieren und kopieren.'); } };
 $('#reqCodeOk').onclick = () => $('#reqCodeDlg').close();
-async function reqMail(r, bytes, pdfName) {
-  const m = SigReq.mail(r, { from: S.author, tr: s => I18N.t(s) });   // E-Mail in der Sprache der Oberfläche
-  const att = [{ name: pdfName, mime: 'application/pdf', bytes }], nx = SigReq.next(r);
+// opts: { back: Index } = zurück an den Absender (gleichzeitige Stufe), { who: [Index] } = nur an diese Personen
+async function reqMail(r, bytes, pdfName, opts = {}) {
+  const m = SigReq.mail(r, { from: S.author, tr: s => I18N.t(s), ...opts });   // E-Mail in der Sprache der Oberfläche
+  const att = [{ name: pdfName, mime: 'application/pdf', bytes }], nx = opts.back >= 0 ? -1 : SigReq.next(r);
   // Frist als Kalendertermin für die Person, die unterschreiben soll (öffnet ihr eigener Kalender, Erinnerung am Vortag)
   if (nx >= 0 && r.due) { const c = SigReq.signerIcs(r, nx, { tr: s => I18N.t(s) }); if (c) att.push({ name: I18N.t('Frist') + '.ics', mime: 'text/calendar', bytes: new TextEncoder().encode(c) }); }
   const eml = Journal.emlDraft({ to: m.to, cc: m.cc, notify: m.notify, subject: m.subject, body: m.body, attachments: att });
@@ -911,7 +946,7 @@ async function reqMail(r, bytes, pdfName) {
 // Posteingangsbuch: Eintrag beim Senden anlegen, beim Öffnen einer zurückgekommenen Fassung fortschreiben
 async function reqJournal(r, add) {
   const all = await journalAll(), has = all.some(x => x.sigreq === r.id);
-  const nx = SigReq.next(r), cur = r.signers[nx];
+  const nx = SigReq.next(r), o = SigReq.open(r), cur = o.length > 1 ? { email: o.map(j => r.signers[j].email).join(', '), name: o.map(j => r.signers[j].name || r.signers[j].email).join(', ') } : r.signers[nx];   // gleichzeitige Stufe: alle offenen Personen
   // Frist erscheint unter „Fristen“ (erledigt → erledigt sich mit); wer gerade dran ist, für „Erinnern“
   const patch = { sigs: SigReq.summaryText(r) + (r.withdrawn ? ` · ${I18N.t('zurückgezogen')}` : ''), status: SigReq.complete(r) || r.withdrawn ? 'erledigt' : SigReq.declined(r) >= 0 ? 'offen' : 'in Arbeit', upd: updStamp(),
     deadline: nx >= 0 && r.due ? r.due : '', ...(r.rt ? { sigRt: r.rt } : {}), ...(r.lock && reqPw && reqFromMe ? { sigCode: reqPw } : {}), ...(r.expires ? { sigExp: r.expires } : {}), sigSince: SigReq.waiting(r)?.since || '', sigTo: cur?.email || '', sigName: cur?.name || '', sigN: SigReq.doneCount(r) };
@@ -983,6 +1018,13 @@ async function reqSendSerial() {
   window.reqReset(); renderAnns();
   status(`Serienversand vorbereitet: ${list.length} Exemplare.${opened ? ` ${opened} E-Mail(s) sind im Mail-Programm geöffnet – prüfen und senden.` : ''}${zipName ? ` Die E-Mail-Entwürfe liegen in „${zipName}“ – entpacken und jede .eml-Datei öffnen und senden.` : ''} Den Stand je Person zeigt das Posteingangsbuch.`);
 }
+/* Nach dem Versand ist die gesendete Fassung der Stand dieses Geräts: Unterschreibt der Absender selbst (z. B. in einer gleichzeitigen
+   Stufe), wird seine Unterschrift daran angehängt und seine Prüfsumme belegt die Fassung, die alle bekommen haben. */
+async function reqSentBase(bytes) {
+  const pages = docPages();
+  reqBytes = new Uint8Array(bytes); reqHash = await sha256(reqBytes); reqSignedIds.clear();
+  reqBase = { pages: pages.slice(), rot: pages.map(p => p.rotation), ids: new Set(pages.flatMap(p => p.annots.map(a => a.id))) };
+}
 async function reqSend() {
   if (req.serial) return reqSendSerial();
   const miss = req.signers.filter((s, i) => !req.fields.some(f => f.s === i && f.pg));
@@ -990,13 +1032,13 @@ async function reqSend() {
   try {
     status('Bereite die Unterschriftsanfrage vor …');
     if (req.lock && !reqPw) reqPw = SigReq.newCode();
-    req = SigReq.markSent(req, 0);
+    req = SigReq.markSentOpen(req);   // alle Personen der ersten Stufe (nacheinander: die erste Person)
     const bytes = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
     let rel = '', sha = '';
     if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(bytes); }
     const m = await reqMail(req, await reqSeal(bytes), name);
     await reqJournal(req, { rel, sha });
-    reqDraft = false; reqArm = -1; renderReqBar(); renderAnns();
+    reqDraft = false; reqArm = -1; await reqSentBase(bytes); renderReqBar(); renderAnns();
     status(`${emlDone(m.opened, m.to)}${rel ? ` Kopie in der Ablage: ${rel}.` : ''} Den Stand sehen Sie im Posteingangsbuch.`);
     reqAfterSend(req);
   } catch (e) { console.error(e); status(`Senden nicht möglich: ${e.message}`); }
@@ -1013,12 +1055,12 @@ async function reqSendMessenger() {
     status('Bereite die Unterschriftsanfrage vor …');
     req.rt ||= SigReq.newToken(); req.via = 'messenger';
     if (req.lock && !reqPw) reqPw = SigReq.newCode();
-    req = SigReq.markSent(req, 0);
+    req = SigReq.markSentOpen(req);
     const plain = await reqPdf(), name = reqFile(req, ' – zur Unterschrift.pdf');
     let rel = '', sha = '';
     if (state.outDir) { const w = await deliver(plain, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; sha = await sha256(plain); }
     await reqJournal(req, { rel, sha });
-    reqDraft = false; reqArm = -1; renderReqBar(); renderAnns();
+    reqDraft = false; reqArm = -1; await reqSentBase(plain); renderReqBar(); renderAnns();
     const bytes = await reqSeal(plain), sent = req;
     setTimeout(() => reqAfterSend(sent), 0);   // Code und Kalender nach dem Teilen-Menü
     const file = new File([bytes], name, { type: 'application/pdf' });
@@ -1066,8 +1108,9 @@ async function reqForward(ext = false) {
   try {
     req = SigReq.markSigned(req, i, { hash: reqHash, ext: ext === true });
     reqExt = false;
+    if (SigReq.backToSender(req, i)) return await reqBack(i);   // gleichzeitige Stufe: zurück an den Absender, der zusammenführt
     const done = SigReq.complete(req);
-    if (!done) req = SigReq.markSent(req, SigReq.next(req));
+    if (!done) req = SigReq.markSentOpen(req);   // nächste Stufe (nacheinander: die nächste Person)
     let bytes = await reqIncremental(done);
     if (!bytes) { reqAudit = done; try { bytes = await reqPdf(); } finally { reqAudit = false; } }
     // Der Absender unterschreibt als Letzter: gleich versiegeln (mit Zugangscode nicht – die verschlüsselte Kopie würde das Siegel brechen)
@@ -1079,11 +1122,120 @@ async function reqForward(ext = false) {
     status(done ? `Alle haben unterschrieben. ${emlDone(m.opened, m.to) + reqSealMsg(sealed)}` : `Danke! ${emlDone(m.opened, m.to)}`);
   } catch (e) { console.error(e); status(`Weitersenden nicht möglich: ${e.message}`); }
 }
+/* ---------- Gleichzeitig unterschreiben (Stufen, app-v247) ----------
+   Unterzeichner: Die Fassung geht zurück an den Absender. Unterschreibt der Absender selbst in der Stufe, bleibt sie auf seinem Gerät.
+   Absender: Jede zurückgekommene Fassung wird beim Öffnen gemerkt (IndexedDB „sigpar:<ID>“, nur dieses Gerät, gelöscht nach dem
+   Zusammenführen). Sind alle der Stufe da, hängt PDFMy die Unterschriften der übrigen Fassungen an die geöffnete an (inkrementell) –
+   alle haben dieselbe Fassung erhalten, sie bleibt am Anfang der Datei unverändert: „Echtheit geprüft“ gilt für alle. */
+const reqParKey = id => 'sigpar:' + id;
+const reqSafe = s => String(s || '').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 60);
+async function reqBack(i) {
+  let bytes = await reqIncremental(false);
+  if (!bytes) bytes = await reqPdf();
+  const s = req.signers[i], json = SigReq.serialize(req, f => docPages().indexOf(f.pg));
+  if (reqFromMe || (req.requester.email && s.email === req.requester.email)) {   // der Absender selbst: nichts senden, Fassung merken
+    await reqParKeep(req, json, bytes);
+    reqSigned = false; reqAttNew.clear(); state.dirty = false; renderReqBar(); renderAnns();
+    return status(I18N.t('Ihre Unterschrift ist gespeichert. Sobald die Fassungen der anderen zurück sind, diese hier öffnen – PDFMy führt dann zusammen.'));
+  }
+  const m = await reqMail(req, await reqSeal(bytes), reqFile(req, ` – ${reqSafe(s.name || s.email)} – unterschrieben.pdf`), { back: i });
+  reqSigned = false; reqAttNew.clear(); state.dirty = false; renderReqBar(); renderAnns();
+  status(`Danke! ${emlDone(m.opened, m.to)}`);
+}
+// Absender: zurückgekommene Fassung merken (nur, wenn darin jemand dieser Stufe unterschrieben hat) und Zwischenstand zeigen
+async function reqParKeep(r, json, bytes) {
+  try {
+    const nx = SigReq.next(r); if (nx < 0) return;
+    const g = SigReq.stageOf(r, nx), who = SigReq.signedIn(r, g), list = (await idb.get(reqParKey(r.id))) || [];
+    if (who.length) {
+      const sha = await sha256(bytes);
+      if (!list.some(x => x.sha === sha)) { list.push({ g, who, json, bytes: new Uint8Array(bytes), sha, at: new Date().toISOString() }); await idb.put(reqParKey(r.id), list); }
+    }
+    await reqParUpdate(list);
+  } catch (e) { console.warn('Zwischenstand merken:', e); toast(I18N.t('Diese Fassung ließ sich in diesem Browser nicht merken – bitte erneut öffnen.'), 8000); }
+}
+async function reqParUpdate(list) {
+  const r = req, nx = r && !reqDraft ? SigReq.next(r) : -1; if (nx < 0) { reqPar = null; return renderReqBar(); }
+  list ||= (await idb.get(reqParKey(r.id))) || [];
+  const g = SigReq.stageOf(r, nx), mem = SigReq.members(r, g), have = new Set(SigReq.signedIn(r, g));
+  for (const x of list) if (x.g === g) for (const j of x.who) have.add(j);
+  reqPar = { g, have: mem.filter(j => have.has(j)), miss: mem.filter(j => !have.has(j)) };
+  renderReqBar();
+}
+// Anlagen einer Person aus ihrer zurückgesandten Fassung holen (Prüfsumme muss zur Anfrage passen)
+async function reqParAtt(bytes, s) {
+  if (!s.att?.length || !bytes) return;
+  const list = await pdfAttachments(await openPdf(bytes.slice()));
+  for (const a of s.att) {
+    const f = list.find(x => x.filename === a.name && x.content); if (!f) continue;
+    const data = new Uint8Array(f.content); if (await sha256(data) !== a.sha) continue;
+    reqAttNew.set(a.sha, { name: a.name, bytes: data, mime: 'application/octet-stream', who: s.name });
+  }
+}
+async function reqMerge() {
+  if (!req || reqDraft || !reqFromMe) return;
+  const nx = SigReq.next(req); if (nx < 0) return;
+  try {
+    status('Führe die Unterschriften zusammen …');
+    if (!reqHash && reqBytes) reqHash = await sha256(reqBytes);
+    const g = SigReq.stageOf(req, nx), list = ((await idb.get(reqParKey(req.id))) || []).filter(x => x.g === g);
+    // Grundlage = die geöffnete Fassung; wer darin unterschrieben hat, bekommt deren Prüfsumme als „zurückgesandte Fassung“
+    for (const j of SigReq.signedIn(req, g)) if (!req.signers[j].ret && !req.signers[j].here && req.signers[j].email !== req.requester.email && reqHash) req.signers[j] = { ...req.signers[j], ret: reqHash };
+    const copies = list.filter(x => x.sha !== reqHash).map(x => ({ r: SigReq.parse(x.json), ret: x.sha, bytes: x.bytes })).filter(c => c.r);
+    const { r, added } = SigReq.merge(req, copies, { by: S.author || req.requester.name });
+    const miss = SigReq.members(r, g).filter(j => r.signers[j].status !== SigReq.DONE);
+    if (miss.length) return status(I18N.t(`Es fehlt noch die Fassung von ${miss.map(j => r.signers[j].name).join(', ')}.`));
+    req = r;
+    for (const a of added) {
+      const s = req.signers[a.i];
+      let drawn = true;
+      for (const k of a.fields) {
+        const f = req.fields[k], t = f.t || 'sign'; if (!f.pg) continue;
+        pushUndo(f.pg);
+        if (t === 'sign' || t === 'initials') { if (a.imgs[k]) await reqDrawSig(f, a.imgs[k]); else drawn = false; }
+        else reqDrawText(f, t === 'check' ? (f.v ? '✓' : '') : String(f.v || '').trim());
+      }
+      await reqParAtt(a.copy.bytes, s);
+      // Nicht übertragbar (anderes PDF-Programm) oder andere Ausgangsfassung (z. B. nach Weitergeben): zurückgesandte Fassung unverändert beilegen
+      const inBase = reqBytes && s.hash && window.PdfInc ? (await PdfInc.contains(reqBytes, [s.hash]))[0] : false;
+      if ((!drawn || s.ext || !inBase) && a.copy.bytes) {
+        const nm = `${I18N.t('Fassung')} – ${reqSafe(s.name || s.email)}.pdf`, sha = a.copy.ret || await sha256(a.copy.bytes);
+        req.signers[a.i] = { ...s, att: [...(s.att || []), { name: nm, sha, size: a.copy.bytes.length, at: new Date().toISOString() }].slice(-10) };
+        reqAttNew.set(sha, { name: nm, bytes: a.copy.bytes, mime: 'application/pdf', who: s.name });
+      }
+    }
+    const done = SigReq.complete(req);
+    if (!done) req = SigReq.markSentOpen(req);
+    let bytes = await reqIncremental(done);
+    if (!bytes) { reqAudit = done; try { bytes = await reqPdf(); } finally { reqAudit = false; } }
+    let sealed = null; if (done && !req.lock) { const sl = await reqTrySeal(bytes); bytes = sl.bytes; sealed = sl.sealed; }
+    const name = reqFile(req, done ? ' – unterschrieben.pdf' : ' – zur Unterschrift.pdf');
+    let rel = ''; if (state.outDir) { const w = await deliver(bytes, name, 'application/pdf'); rel = w?.slice(state.outDir.name.length + 1) || ''; }
+    const m = await reqMail(req, await reqSeal(bytes), name);
+    if (sealed) await reqSealNote(sealed, rel);
+    await reqJournal(req);
+    try { await idb.del(reqParKey(req.id)); } catch {}
+    // Die zusammengeführte Datei ist ab jetzt der Stand dieses Geräts (Übersicht, Versiegeln)
+    reqBytes = bytes; reqHash = await sha256(bytes); reqBase = { pages: docPages().slice(), rot: docPages().map(p => p.rotation), ids: new Set(docPages().flatMap(p => p.annots.map(a => a.id))) };
+    reqIsSealed = !!sealed; reqSignedIds.clear(); reqPar = null; reqSigned = false; reqAttNew.clear(); state.dirty = false; renderReqBar(); renderAnns();
+    const put = rel ? ' ' + I18N.t(`Abgelegt: ${rel}.`) : '';
+    status(done ? `${I18N.t('Zusammengeführt – alle haben unterschrieben.')} ${emlDone(m.opened, m.to) + reqSealMsg(sealed)}${put}` : `${I18N.t('Die Unterschriften sind zusammengeführt.')} ${emlDone(m.opened, m.to)}${put}`);
+  } catch (e) { console.error(e); status(`${I18N.t('Zusammenführen nicht möglich')}: ${I18N.t(e.message)}`); }
+}
+// Absender: In einer zurückgekommenen Fassung hat jemand der Stufe in einem anderen PDF-Programm unterschrieben
+async function reqParExt(k) {
+  const s = req.signers[k]; if (!s || !confirm(I18N.t(`${s.name} hat diese Fassung in einem anderen PDF-Programm ausgefüllt und unterschrieben?`))) return;
+  if (!reqHash && reqBytes) reqHash = await sha256(reqBytes);
+  req = SigReq.markSigned(req, k, { hash: reqHash, ext: true }); reqExt = false;
+  await reqParKeep(req, SigReq.serialize(req, f => docPages().indexOf(f.pg)), reqBytes);
+  renderAnns(); status(I18N.t(`Als unterschrieben übernommen: ${s.name}.`));
+}
 $('#reqDecCancel').onclick = () => $('#reqDecDlg').close();
 $('#reqDecForm').onsubmit = async ev => {
   ev.preventDefault(); $('#reqDecDlg').close();
   const i = reqMine(); if (i < 0) return;
   try {
+    req.fields.forEach(f => { if (f.s === i) delete f.img; });
     req = SigReq.decline(req, i, { reason: $('#reqDecWhy').value });
     for (const p of docPages()) p.annots = p.annots.filter(a => !reqSignedIds.has(a.id));   // eigene, noch nicht versendete Unterschrift wieder entfernen
     const bytes = await reqSeal(await reqIncremental(false) || await reqPdf()), m = await reqMail(req, bytes, reqFile(req, ' – abgelehnt.pdf'));
@@ -1102,9 +1254,9 @@ $('#reqDelForm').onsubmit = async ev => {
   $('#reqDelDlg').close();
   try {
     for (const p of docPages()) p.annots = p.annots.filter(a => !reqSignedIds.has(a.id));   // eigene, noch nicht versendete Eintragungen entfernen
-    reqSignedIds.clear(); reqSigned = false;
+    reqSignedIds.clear(); reqSigned = false; r.fields.forEach(f => { if (f.s === i) delete f.img; });
     req = SigReq.markSent(r, i);
-    const bytes = await reqSeal(await reqIncremental(false) || await reqPdf()), m = await reqMail(req, bytes, reqFile(req, ' – zur Unterschrift.pdf'));
+    const bytes = await reqSeal(await reqIncremental(false) || await reqPdf()), m = await reqMail(req, bytes, reqFile(req, ' – zur Unterschrift.pdf'), { who: [i] });
     state.dirty = false; renderReqBar(); renderAnns();
     status(`Weitergegeben an ${req.signers[i].name}. ${emlDone(m.opened, m.to)}${req.lock ? ' Den Zugangscode bekommt die Vertretung vom Absender.' : ''}`);
   } catch (e) { console.error(e); status(`Weitergeben nicht möglich: ${e.message}`); }
@@ -1150,7 +1302,7 @@ async function reqHereFinish() {
       }
       // Rest per E-Mail: wie gewohnt weiter zur nächsten Person
       reqHere = false; try { await document.exitFullscreen?.(); } catch {}
-      req = SigReq.markSent(req, j);
+      req = SigReq.markSentOpen(req);
       const bytes = await reqPdf(), m = await reqMail(req, bytes, reqFile(req, ' – zur Unterschrift.pdf'));
       await reqJournal(req); state.dirty = false; renderReqBar(); renderAnns();
       return status(`${req.signers[i].name} hat vor Ort unterschrieben. ${emlDone(m.opened, m.to)}`);
@@ -1178,7 +1330,7 @@ async function reqHereCancel() {
   // Einige haben schon vor Ort unterschrieben: Rest per E-Mail oder später
   if (j >= 0 && confirm(I18N.t(`Vor Ort beendet. Die Anfrage per E-Mail an ${req.signers[j].name} weitersenden?`))) {
     try {
-      req = SigReq.markSent(req, j);
+      req = SigReq.markSentOpen(req);
       const m = await reqMail(req, await reqPdf(), reqFile(req, ' – zur Unterschrift.pdf'));
       await reqJournal(req); state.dirty = false; renderReqBar(); renderAnns();
       return status(emlDone(m.opened, m.to));
@@ -1221,7 +1373,7 @@ async function reqInfoShow() {
     req.expires ? `<p class="${SigReq.expired(req) ? 'reqwarn' : 'hint'}" translate="no">${T('Gültig bis {0}', esc(SigReq.day(req.expires)))}${SigReq.expired(req) ? ' – ' + L('abgelaufen') : ''}</p>` : '',
     req.pay ? `<p class="hint" translate="no">${esc(SigReq.payText(req, s => I18N.t(s), SigReq.complete(req))).replace(/\n/g, '<br>')}</p>` : '',
     req.lock ? `<p class="hint">Diese Anfrage reist mit Zugangscode: Die PDF wird für jede Person neu verschlüsselt. Die Prüfsummen belegen die Fassung je Person; der Nachweis „unverändert enthalten“ entfällt.</p>` : ''].join('');
-  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin + seal}${wl}${wa + extra}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small></td><td class="reqsteps">${steps(s)}${reqAttList(s, i)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
+  $('#reqInfoBody').innerHTML = `<p><b translate="no">${esc(req.title)}</b> · ${SigReq.doneCount(req)} von ${req.signers.length} unterschrieben</p>${fin + seal}${wl}${wa + extra}${head}<table class="reqtab"><thead><tr><th>Person</th><th>Verlauf</th>${ok ? '<th>Echtheit</th>' : ''}<th>Prüfsumme (SHA-256)</th></tr></thead><tbody>${req.signers.map((s, i) => `<tr><td translate="no">${esc(s.name)}<br><small>${esc(s.email)}</small>${SigReq.parallel(req) ? `<br><small>${SigReq.together(req, i) ? T('Stufe {0} – gleichzeitig', SigReq.stageNo(req, i)) : T('Stufe {0}', SigReq.stageNo(req, i))}</small>` : ''}</td><td class="reqsteps">${steps(s)}${reqAttList(s, i)}${s.ext ? '<br><small>in einem anderen PDF-Programm</small>' : ''}${s.reason ? `<br><small translate="no">${esc(s.reason)}</small>` : ''}</td>${ok ? `<td>${cell(i)}</td>` : ''}<td><code>${esc(s.hash || '–')}</code></td></tr>`).join('')}</tbody></table><p class="hint">„Gesendet“: PDFMy hat die E-Mail vorbereitet. „Empfangen“ und „Gelesen“ hält PDFMy fest, wenn die Person die PDF in PDFMy öffnet und jede Seite ansieht – ohne Server sehen Sie das, sobald eine neuere Fassung bei Ihnen ankommt. Schneller geht es mit der Lesebestätigung, die jede Anfrage-E-Mail anfordert, wenn das Mail-Programm sie unterstützt.</p>`;
   $('#reqInfoDlg').showModal();
 }
 $('#reqInfoClose').onclick = () => $('#reqInfoDlg').close();
@@ -1250,6 +1402,13 @@ $('#reqAttFile').onchange = async ev => {
   state.dirty = true; renderReqBar();
   status(added === 1 ? 'Anlage beigefügt – sie reist beim Weitersenden in der PDF mit (unter „Übersicht“ wieder entfernen).' : `${added} Anlagen beigefügt – sie reisen beim Weitersenden in der PDF mit.`);
 };
+// „Ich bin …“: Person einer gleichzeitigen Stufe meldet sich auf diesem Gerät
+function reqIam(k) {
+  if (!req || !SigReq.open(req).includes(k)) return;
+  reqWho = k; req = SigReq.markOpened(req, k); reqTrack = k; reqSeen = new Set();
+  renderReqBar(); renderAnns(); const f = req.fields.find(x => x.s === k && x.pg); if (f) reqGoto(f);
+  window.reqSeenPage?.(cur());
+}
 function renderReqBar() {
   const bar = $('#reqBar'); bar.hidden = !req; if (!req) return;
   const n = req.signers.length, d = SigReq.doneCount(req), i = reqMine(), b = (id, t, cls = '') => `<button type="button" class="linkbtn${cls}" data-rq="${id}">${t}</button>`;
@@ -1270,6 +1429,8 @@ function renderReqBar() {
     btns = (reqSigned ? b('herefin', 'Fertig – Gerät zurückgeben', ' strong') : (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben', ' strong')) + b('hereback', 'Abbrechen');
   } else if (i >= 0) {
     const parts = [`${req.requester.name || req.requester.email} bittet um Unterschrift: ${req.signers[i].name} ist dran (${d} von ${n} unterschrieben)`];
+    const tw = SigReq.together(req, i) ? SigReq.members(req, SigReq.stageOf(req, i)).filter(j => j !== i).map(j => req.signers[j].name) : [];
+    if (tw.length) parts.push(`– gleichzeitig mit ${tw.join(', ')}`);
     const need = req.fields.filter(f => f.s === i && f.t === 'text' && f.pg);
     if (need.length && !reqSigned) parts.push(`– ${need.filter(f => String(f.v || '').trim()).length} von ${need.length} Angaben ausgefüllt`);
     const wt = SigReq.waiting(req);
@@ -1279,17 +1440,34 @@ function renderReqBar() {
     const nAtt = req.signers[i].att?.length || 0;
     if (req.attach && !reqSigned) parts.push(nAtt ? `– beigefügt: ${nAtt === 1 ? '1 Anlage' : nAtt + ' Anlagen'}` : `– bitte beifügen: ${req.attach}`);
     text = parts.map(p => I18N.t(p)).join(' ');   // jeden Teil für sich übersetzen
-    btns = (reqSigned ? b('fwd', 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + (reqSigned ? '' : b('att', req.signers[i].att?.length ? `Anlage beifügen (${req.signers[i].att.length}) …` : 'Anlage beifügen …', req.attach && !req.signers[i].att?.length ? ' strong' : '')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned ? '' : b('deleg', 'Weitergeben …')) + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
+    btns = (reqSigned ? b('fwd', SigReq.backToSender(SigReq.markSigned(req, i), i) ? 'Unterschrieben – zurücksenden' : 'Unterschrieben – weitersenden') : (reqExt ? b('ext', 'Als unterschrieben übernehmen …', ' strong') : '') + (reqMyFields().length > 1 ? b('nextf', 'Nächstes Feld →') : '') + b('sign', 'Hier unterschreiben')) + (reqSigned ? '' : b('att', req.signers[i].att?.length ? `Anlage beifügen (${req.signers[i].att.length}) …` : 'Anlage beifügen …', req.attach && !req.signers[i].att?.length ? ' strong' : '')) + b('info', 'Übersicht') + (req.via === 'messenger' && req.rt && req.signers[i].readAt && !reqConfirmed ? b('rconf', 'Lesebestätigung senden', ' strong') : '') + b('decline', 'Ablehnen …') + (reqSigned ? '' : b('deleg', 'Weitergeben …')) + (reqSigned || reqExt ? '' : b('ext', 'In anderem Programm unterschrieben …'));
+  } else if (SigReq.open(req).length && reqFromMe) {
+    // Absender, gleichzeitige Stufe: Zwischenstand der zurückgekommenen Fassungen, Zusammenführen sobald alle da sind
+    const o = SigReq.open(req), g = SigReq.stageOf(req, o[0]), mem = SigReq.members(req, g), nm = j => req.signers[j].name || req.signers[j].email;
+    const have = reqPar?.g === g ? reqPar.have : SigReq.signedIn(req, g), miss = mem.filter(j => !have.includes(j));
+    const parts = [`„${req.title}“: ${mem.map(nm).join(', ')} unterschreiben gleichzeitig (Stufe ${SigReq.stageNo(req, o[0])} von ${SigReq.stages(req).length})`];
+    if (have.length) parts.push(`– eingegangen: ${have.map(nm).join(', ')}`);
+    parts.push(miss.length ? `– es fehlt noch: ${miss.map(nm).join(', ')}` : '– alle Fassungen sind da');
+    text = parts.map(p => I18N.t(p)).join(' ');
+    btns = (miss.length ? '' : b('pmerge', SigReq.afterStage(req, o[0]) >= 0 ? 'Zusammenführen und weitersenden' : 'Zusammenführen und abschließen', ' strong'))
+      + (reqExt ? o.map(j => `<button type="button" class="linkbtn" data-rext="${j}">${esc(I18N.t(`${nm(j)}: in anderem Programm unterschrieben …`))}</button>`).join('') : '') + b('info', 'Übersicht');
+  } else if (SigReq.open(req).length) {
+    // Gleichzeitige Stufe, Person unbekannt: „Ich bin …“
+    const o = SigReq.open(req), nm = j => req.signers[j].name || req.signers[j].email;
+    text = I18N.t(`„${req.title}“: ${o.map(nm).join(', ')} unterschreiben gleichzeitig. Wer unterschreibt auf diesem Gerät?`);
+    btns = o.map(j => `<button type="button" class="linkbtn strong" data-rwho="${j}">${esc(I18N.t(`Ich bin ${nm(j)}`))}</button>`).join('') + b('info', 'Übersicht');
   } else {
     text = reqIsSealed ? `Alle ${n} haben „${req.title}“ unterschrieben ✓ – versiegelt 🔒` : `Alle ${n} haben „${req.title}“ unterschrieben ✓`;
     btns = b('info', 'Übersicht') + (reqIsSealed ? '' : b('seal', 'Abschluss versiegeln …', ' strong')) + b('audit', 'Prüfprotokoll als PDF/A');
   }
   $('#reqText').textContent = text; bar.classList.toggle('reqhere', reqHere && i >= 0);
-  $('#reqText').toggleAttribute('translate', i >= 0 && !reqDraft && SigReq.declined(req) < 0); if ($('#reqText').hasAttribute('translate')) $('#reqText').setAttribute('translate', 'no');
+  $('#reqText').toggleAttribute('translate', (i >= 0 || SigReq.open(req).length > 0) && !reqDraft && SigReq.declined(req) < 0 && !req.withdrawn); if ($('#reqText').hasAttribute('translate')) $('#reqText').setAttribute('translate', 'no');
   $('#reqBtns').innerHTML = btns;
 }
 $('#reqBtns').addEventListener('click', ev => {
   const a = ev.target.closest('[data-rarm]'); if (a) { reqArm = +a.dataset.rarm; renderReqBar(); toast(`Jetzt auf die Stelle klicken, an der ${req.signers[reqArm].name} unterschreiben soll.`, 6000); return; }
+  const w = ev.target.closest('[data-rwho]'); if (w) { reqIam(+w.dataset.rwho); return; }
+  const x = ev.target.closest('[data-rext]'); if (x) { reqParExt(+x.dataset.rext); return; }
   const k = ev.target.closest('[data-rq]')?.dataset.rq;
   if (k === 'send') reqSend();
   else if (k === 'msend') reqSendMessenger();
@@ -1313,6 +1491,7 @@ $('#reqBtns').addEventListener('click', ev => {
   else if (k === 'info') reqInfoShow();
   else if (k === 'decline') { $('#reqDecWhy').value = ''; $('#reqDecDlg').showModal(); $('#reqDecWhy').focus(); }
   else if (k === 'seal') reqSealNow();
+  else if (k === 'pmerge') reqMerge();
   else if (k === 'audit') reqAuditPdf();
 });
 /* ---------- Schlagwörter ---------- */

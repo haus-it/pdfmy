@@ -595,7 +595,31 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 ### Umgesetzt 12.11.2026: Anlagen vom Unterzeichner (app-v246)
 **Anlass (GF 12.11.2026):** „Lücken finden und schließen“ – Rang 7 aus docs/Wettbewerb-2026-11.md, Teil „Anhänge vom Unterzeichner“.
 **Leitplanken vor dem Bau geprüft:** 1 und 2 gewahrt (Datei bleibt im Gerät und reist in der PDF über das eigene Mail-Programm, keine neue Verbindung). 3 gewahrt (nichts gezählt). 4: ein Feld im bekannten „Mehr“, ein Knopf in der Leiste, Entfernen in der Übersicht. 5: 5 Regressionstests, Browser-Ablauf mit 21 Prüfpunkten. 6: Anlagen werden nicht ausgeführt, nur angehängt; Hinweis zu PDF/A-3/beA: die Unterschriftsanfrage-PDF ist ohnehin kein PDF/A.
-**Grenzen:** 25 MB zusammen (E-Mail). Pflicht-Anlagen lassen sich ohne Server nicht erzwingen – nur Rückfrage. Nicht gebaut: parallele Stufen (bräuchten das Zusammenführen getrennt unterschriebener Fassungen beim Absender – eigene Aufgabe).
+**Grenzen:** 25 MB zusammen (E-Mail). Pflicht-Anlagen lassen sich ohne Server nicht erzwingen – nur Rückfrage. Nicht gebaut: parallele Stufen (bräuchten das Zusammenführen getrennt unterschriebener Fassungen beim Absender – eigene Aufgabe, siehe nächster Abschnitt).
+
+### Umgesetzt 12.11.2026: Gleichzeitig unterschreiben – Stufen (app-v247)
+**Anlass (GF 12.11.2026):** Rang 7 aus docs/Wettbewerb-2026-11.md, zweiter Teil: „parallele bzw. stufenweise Reihenfolge“ (z. B. zwei Geschäftsführer gleichzeitig, danach die Bank). DocuSign, Yousign und Acrobat Sign können das – mit Server, der die Fassungen zusammenhält.
+**Kernproblem ohne Server:** Unterschreiben zwei Personen gleichzeitig, entstehen zwei getrennte Fassungen. Jemand muss sie zusammenführen, ohne dass der Nachweis „empfangene Fassung unverändert enthalten“ verloren geht.
+**Lösung – der Absender ist die Drehscheibe:**
+1. Daten: Jede Person bekommt eine Stufe (Feld `g` in `pdfmy-unterschriften.json`, nicht fallend). Ohne `g` gilt die Position als Stufe – alte Anfragen und Anfragen ohne „gleichzeitig“ laufen Byte für Byte wie bisher.
+2. Versand: Eine E-Mail an alle Personen der Stufe (der Absender in Kopie). Alle bekommen **dieselbe Fassung** (gleiche SHA-256).
+3. Unterschreiben: PDFMy erkennt die Person an der eigenen E-Mail-Adresse auf dem Gerät, sonst fragt die Leiste „Ich bin …“. Nach der Unterschrift geht die Fassung **zurück an den Absender** („Unterschrieben – zurücksenden“), nicht an die nächste Person. Zusätzlich stehen das Unterschriftsbild und die eingetragenen Werte der Person in der JSON (nur bei gleichzeitigen Stufen).
+4. Absender: Er öffnet jede zurückgekommene Fassung in PDFMy. PDFMy merkt sie sich je Anfrage-ID im Browser (IndexedDB, nur auf diesem Gerät) und zeigt „eingegangen: Max ✓ – es fehlt noch: Eva“. Sind alle da: **„Zusammenführen und weitersenden“** – die gerade geöffnete Fassung ist die Grundlage, die Unterschriften der anderen werden **inkrementell angehängt** (Bild bzw. Werte aus deren JSON, Anlagen aus deren PDF mit SHA-256 geprüft), die Protokolle vereinigt, die Prüfsumme jeder zurückgesandten Fassung festgehalten. Weil alle Personen der Stufe dieselbe Fassung erhalten haben und diese am Anfang der zusammengeführten Datei unverändert steht, gilt „Echtheit geprüft“ für alle.
+5. Lässt sich eine Unterschrift nicht übertragen (in einem anderen PDF-Programm unterschrieben, oder die Person hat eine andere Fassung erhalten, z. B. nach „Weitergeben“), legt PDFMy deren zurückgesandte Fassung **unverändert als Anlage** bei – der Nachweis bleibt vollständig.
+6. Danach wie bisher: E-Mail an die nächste Stufe bzw. Abschluss mit Prüfprotokoll und Siegel. Unterschreibt der Absender selbst in der Stufe, bleibt seine Fassung auf seinem Gerät.
+**Verworfen:** Kette innerhalb der Stufe (wäre wieder nacheinander); „der Letzte führt zusammen“ (ohne Server weiß niemand, wer der Letzte ist); Zwischenablage auf einem Server (L1, L2).
+**Leitplanken vor dem Bau geprüft:**
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Zwischenstände nur im Browser des Absenders (IndexedDB), gelöscht nach dem Zusammenführen; Versand nur über das eigene Mail-Programm |
+| 2 Kein Server | passt: keine neue Verbindung; der Absender führt zusammen |
+| 3 Ohne Tracking | passt: nichts wird gezählt; „eingegangen“ heißt nur: diese Fassung wurde hier geöffnet |
+| 4 Einfach | passt: ein Haken „gleichzeitig mit der vorherigen Person“ je Zeile; ohne Haken alles wie gewohnt; ein Knopf zum Zusammenführen |
+| 5 Prüfbar | Regressionstests (tests/stufen.test.js), Browser-Ablauf mit zwei gleichzeitigen Personen und einer dritten Stufe, Signatur-Paket unverändert grün |
+| 6 Wenig aktive Inhalte | passt: keine Skripte in der PDF |
+
+**Ehrliche Grenzen (so in der Hilfe):** Eine Runde mehr je Stufe (über den Absender) – dafür sieht er jeden Zwischenstand. Zusammengeführt wird in dem Browser, in dem alle Fassungen geöffnet wurden. Vor Ort unterschreibt eine Stufe am weitergereichten Gerät nacheinander. Serienversand ohne Stufen. Mit Zugangscode bekommen alle Personen einer Stufe denselben Code.
 
 ### Umgesetzt 09.11.2026: Abschluss versiegeln (app-v244)
 **Anlass (GF 09.11.2026):** „Abschluss versiegeln“ – Rang 5 aus docs/Wettbewerb-2026-11.md (DocuSign „Certificate of Completion“).
