@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### „Welche Scanner funktionieren?“ ergänzt – nur belegte Angaben (app-v264)
+- **Neu:** Abschnitt „Weitere Bürogeräte“ mit Fujifilm Apeos (eSCL/Mopria Scan und WSD), Toshiba e-STUDIO (WS Scan), Triumph-Adler/UTAX (358ci/458ci eSCL mit AirPrint- und Mopria-Scan; 4063i Scan to SMB, WIA/TWAIN), Develop ineo (Scan-to-DPWS), Pantum (Mopria Scan) – je mit Quelle beim Hersteller geprüft (Produktseite, Datenblatt); Konzernzugehörigkeit (TA/UTAX → Kyocera, Develop → Konica Minolta) laut Hersteller.
+- **Neu:** Abschnitt „Ohne PC: Handy, Tablet, Chromebook“ (Kamera-Scan; Chromebook über die App „Scannen“ und Scan-Ordner); die Suche findet auch „Chromebook“, „iPhone“, „Handy“.
+- **Praxistests beim Anwender** sichtbar: Brother MFC-L2730DW (Einzug und Glas; laut Brother AirPrint- und WSD-Scan, Einzug einseitig), Epson DS-730N (beidseitig über den Epson-Treiber; laut Epson-Handbuch WSD-Scan).
+- **Korrekturen:** Canon DR-S350NW „Mopria wahrscheinlich“ → „Mopria Scan laut Canon“ (eSCL; die Mopria Alliance veröffentlicht die eSCL-Spezifikation); „mit AirPrint oder Mopria“ → „mit AirPrint-Scan oder Mopria Scan“ (AirPrint nur fürs Drucken reicht nicht); Hinweis auf die Liste zertifizierter Geräte der Mopria Alliance. Stand November 2026, Quellenangabe präzisiert.
+- Übersetzt in alle Sprachen der Website.
+
 ### Unternehmen, Behörden, Kirchen, Wohlfahrtsverbände, Krankenhäuser: Unterlagen und Rechtsprüfung (app-v263)
 - **Neue Seite „Sicherheit und Compliance“** (`sicherheit.html`, deutsch): Netzwerk- und Proxy-Freigaben (Ports aus dem Quellcode), Datenschutz mit Baustein für das Verzeichnis von Verarbeitungstätigkeiten, Informationssicherheit, Normen, eigener Abschnitt für Behörden, Kirchen (KDG, DSG-EKD), Wohlfahrtsverbände und Krankenhäuser (§ 203 StGB, § 391 SGB V, ePA-Profil), NIS2-Lieferkette (§ 30 Abs. 2 Nr. 4, 5 BSIG), Cyberresilienz-Verordnung (Art. 14), KI-Verordnung, Meldeweg für Sicherheitslücken. Verlinkt auf „PDFMy in Firmen verteilen“ und in der Hilfe (40 Sprachen).
 - **`/.well-known/security.txt`** nach RFC 9116 (Expires < 1 Jahr, UTF-8-Text), **Software-Stückliste** `download/pdfmy-sbom.cdx.json` (CycloneDX 1.5; Bibliotheken byteweise gegen die npm-Pakete geprüft, gegen das offizielle Schema validiert), **ADMX/ADML-Vorlagen** `download/pdfmy-richtlinien-admx.zip` (de-DE, en-US) für DisableUpdates und DisablePrinter.
