@@ -106,10 +106,7 @@ span{display:block;margin-top:${Math.round(h * .05)}px;font-size:${Math.round(h 
   const pkgs = { chrome: [pick(/^pdfmy-erweiterung-[\d.]+\.zip$/)], edge: [pick(/^pdfmy-erweiterung-[\d.]+\.zip$/)], firefox: [pick(/^pdfmy-firefox-[\d.]+\.xpi$/)], thunderbird: [pick(/^pdfmy-thunderbird-[\d.]+\.xpi$/)],
     'microsoft-appsource': ['pdfmy-outlook.xml', 'pdfmy-office.xml'], 'microsoft-teams': ['pdfmy-teams.zip'], nextcloud: [pick(/^pdfmy-nextcloud-[\d.]+\.zip$/)], onlyoffice: [pick(/^pdfmy-onlyoffice-[\d.]+\.plugin$/)] };
   for (const [st, files] of Object.entries(pkgs)) for (const f of files) { const d = path.join(OUT, st, 'paket', f); fs.mkdirSync(path.dirname(d), { recursive: true }); fs.copyFileSync(path.join(dl, f), d); made.push(`${st}/paket/${f}`); }
-  fs.writeFileSync(path.join(OUT, 'LIESMICH.txt'), 'Store-Mappe von PDFMy – Anleitung und Texte zum Kopieren: docs/Store-Einreichung.md
-Entscheidungen: docs/Entscheidungen-Stores.md
-Je Store: paket\ (hochladen) und bilder\ (hochladen).
-');
+  fs.writeFileSync(path.join(OUT, 'LIESMICH.txt'), ['Store-Mappe von PDFMy – Anleitung und Texte zum Kopieren: docs/Store-Einreichung.md', 'Entscheidungen: docs/Entscheidungen-Stores.md', 'Je Store: Ordner paket (hochladen) und bilder (hochladen).', ''].join(String.fromCharCode(13, 10)));
   srv.close();
   console.log(`${made.length} Bilder in store/:`); for (const m of made) console.log('  ' + m);
 })().catch(e => { console.error(e); process.exit(1); });
