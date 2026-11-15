@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Edytuj, podpisuj i skanuj pliki PDF – bez przesyłania.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Skanuj, rób zdjęcia lub scalaj pliki – PDFMy dołącza wynik do tej wiadomości.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Przesyłanie niekompletne"
+ "Übertragung unvollständig": "Przesyłanie niekompletne",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Rozszerzenie przeglądarki:</b> pliki PDF klikane w przeglądarce otwierają się bezpośrednio w PDFMy – w Chrome i Edge, w Windows i na Macu; wersja dla Firefoksa pojawi się po weryfikacji przez Mozillę. <a href=\"erweiterung.html\">Do rozszerzenia →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> wersja dla Firefoksa jest gotowa i zostanie przesłana do Mozilli do weryfikacji. Gdy tylko zostanie zatwierdzona w serwisie Dodatki do Firefoksa, pojawi się tutaj przycisk „Dodaj do Firefoksa”."
 }

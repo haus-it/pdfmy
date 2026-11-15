@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Edite, asine e escanee PDF – sen cargar nada.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Escanee, faga fotos ou combine ficheiros – PDFMy anexa o resultado a este correo.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Transferencia incompleta"
+ "Übertragung unvollständig": "Transferencia incompleta",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Extensión do navegador:</b> os PDF nos que preme no navegador ábrense directamente en PDFMy, en Chrome e Edge, en Windows e en Mac; a versión para Firefox chegará despois da revisión de Mozilla. <a href=\"erweiterung.html\">Ir á extensión →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> a versión para Firefox está lista e enviarase a Mozilla para a súa revisión. En canto se aprobe en Complementos de Firefox, aparecerá aquí o botón «Engadir a Firefox»."
 }

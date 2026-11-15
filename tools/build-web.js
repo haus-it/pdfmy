@@ -202,7 +202,7 @@ Diese Daten bleiben in Ihrem Browser und werden nicht an uns übertragen.</p>
 <b>Vorlesen:</b> PDFMy nutzt nur Stimmen, die auf Ihrem Gerät installiert sind. Online-Stimmen, die den Text an einen fremden Server senden würden, werden bewusst nicht verwendet.
 <b>Teilen und Weiterleiten:</b> Teilen Sie ein Dokument per E-Mail, Messenger oder Windows-Teilen, geht es über die von Ihnen gewählte App an den von Ihnen gewählten Empfänger; PDFMy selbst überträgt dabei nichts.</p>
 <h2>6. Browser-Erweiterung „PDFMy – PDFs direkt öffnen“</h2>
-<p>Die optionale Erweiterung für Chrome und Edge lädt eine PDF, die Sie im Browser öffnen oder per Rechtsklick wählen, von der jeweiligen Webseite
+<p>Die optionale Erweiterung für Chrome, Edge und Firefox lädt eine PDF, die Sie im Browser öffnen oder per Rechtsklick wählen, von der jeweiligen Webseite
 und übergibt sie innerhalb Ihres Browsers an pdfmy. Dabei werden keine Daten an uns oder Dritte übertragen; es gibt keinen Verlauf, keine
 Statistik und keine Fernkonfiguration. Gespeichert werden nur Ihre zwei Einstellungen (automatisch öffnen an/aus, Ziel) im Browser sowie für
 wenige Minuten die Adresse der zuletzt übergebenen PDF, damit „Zurück“ nicht erneut umleitet (nur im Arbeitsspeicher des Browsers).
@@ -401,6 +401,17 @@ const extFiles = [];
 })(EXT);
 const extZip = `pdfmy-erweiterung-${extVer}.zip`;
 write('download/' + extZip, Buffer.from(require(path.join(ROOT, 'js', 'tools.js')).zip(extFiles, new Date(2026, 0, 1))));
+// Firefox (app-v255): derselbe Code, eigenes Manifest – Hintergrundskript statt Service Worker, Kennung für Firefox-Add-ons,
+// keine Datensammlung (data_collection_permissions). Installierbar in Firefox erst nach Signatur durch Mozilla (addons.mozilla.org).
+const ffManifest = (() => {
+  const m = JSON.parse(fs.readFileSync(path.join(EXT, 'manifest.json'), 'utf8'));
+  delete m.minimum_chrome_version;
+  m.background = { scripts: ['background.js'] };
+  m.browser_specific_settings = { gecko: { id: 'pdfmy-erweiterung@mentor-group.de', strict_min_version: '140.0', data_collection_permissions: { required: ['none'] } }, gecko_android: { strict_min_version: '142.0' } };
+  return m;
+})();
+const ffXpi = `pdfmy-firefox-${extVer}.xpi`;
+write('download/' + ffXpi, Buffer.from(require(path.join(ROOT, 'js', 'tools.js')).zip(extFiles.map(f => f.name === 'manifest.json' ? { name: f.name, data: new Uint8Array(Buffer.from(JSON.stringify(ffManifest, null, 2))) } : f), new Date(2026, 0, 1))));
 // Download-Ordner (Fehlerbericht 08.11.2026, „Ist keine .exe – man dreht sich im Kreis“): Eine noch offene ältere PDFMy-Fassung
 // verlinkt die Datei der Vorversion, die beim Deploy gelöscht wird; der Server lieferte dafür die Startseite (ErrorDocument) aus,
 // und die landete als „Download“ beim Nutzer. Jetzt: alte Versionsnummern → aktuelle Datei (302), sonst eine klare 404-Meldung.
@@ -484,7 +495,9 @@ write('erweiterung.html', page('PDFs direkt in PDFMy öffnen', `
 <p><b>Ein Klick auf eine PDF im Browser – und sie ist in PDFMy offen.</b> Für PDFs aus Webportalen, Webmail, Behörden- und Bankseiten: ausfüllen, unterschreiben, schwärzen, speichern – ohne Umweg über den Download-Ordner. Die Datei wird <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDFMy.</p>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px">
 <a href="download/${extZip}" download style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Erweiterung herunterladen<br><small style="font-weight:400">Chrome und Edge · Windows und Mac</small></a>
+${site.firefoxAmo ? `<a href="${esc(site.firefoxAmo)}" target="_blank" rel="noopener" style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Zu Firefox hinzufügen<br><small style="font-weight:400">Firefox-Add-ons · Windows, Mac, Linux</small></a>` : ''}
 </div>
+<p id="firefox"><b>Firefox:</b> ${site.firefoxAmo ? `Die Erweiterung steht bei <a href="${esc(site.firefoxAmo)}" target="_blank" rel="noopener">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.` : 'Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.'}</p>
 <p><b>Brauche ich das?</b> Nur, wenn Sie PDFs oft im Browser öffnen. PDFMy selbst funktioniert ohne Erweiterung; PDFs auf Ihrem PC öffnen sich mit <a href="scanner.html">pdfmy Scan</a> per Doppelklick in PDFMy.</p>
 <h2>Installation (ca. 2 Minuten)</h2>
 <ol>

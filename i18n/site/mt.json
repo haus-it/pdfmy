@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Editja, iffirma u skennja PDFs – mingħajr upload.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Skennja, ħu ritratt jew għaqqad fajls – PDFMy jehmeż ir-riżultat ma’ din l-email.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Trasferiment mhux komplut"
+ "Übertragung unvollständig": "Trasferiment mhux komplut",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Estensjoni tal-browser:</b> PDFs li tikklikkja fil-browser jinfetħu direttament f’PDFMy – f’Chrome u Edge, fuq Windows u fuq Mac; il-verżjoni għal Firefox se ssegwi wara r-reviżjoni minn Mozilla. <a href=\"erweiterung.html\">Għall-estensjoni →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Il-verżjoni għal Firefox hija lesta u qed tiġi sottomessa lil Mozilla għar-reviżjoni. Hekk kif tiġi approvata fuq Firefox Add-ons, hawn tidher il-buttuna “Żid ma’ Firefox”."
 }

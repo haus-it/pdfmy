@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Rediger, signer og skann PDF-er – uten opplasting.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Skann, fotografer eller slå sammen filer – PDFMy legger resultatet ved denne e-posten.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Overføringen er ufullstendig"
+ "Übertragung unvollständig": "Overføringen er ufullstendig",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Nettleserutvidelse:</b> PDF-er som du klikker på i nettleseren, åpnes direkte i PDFMy – i Chrome og Edge, under Windows og på Mac; Firefox-versjonen følger etter Mozillas gjennomgang. <a href=\"erweiterung.html\">Til utvidelsen →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Firefox-versjonen er ferdig og sendes til Mozilla for gjennomgang. Så snart den er godkjent på Firefox-tillegg, vises knappen «Legg til i Firefox» her."
 }

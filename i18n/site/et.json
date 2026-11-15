@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Redigeerige, allkirjastage ja skannige PDF-e – ilma üleslaadimiseta.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Skannige, pildistage või ühendage faile – PDFMy lisab tulemuse sellele meilile.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Edastus on poolik"
+ "Übertragung unvollständig": "Edastus on poolik",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Brauserilaiendus:</b> PDF-id, millel brauseris klõpsate, avanevad otse PDFMy-s – Chrome'is ja Edge'is, Windowsis ja Macis; Firefoxi versioon järgneb pärast Mozilla ülevaatust. <a href=\"erweiterung.html\">Laienduse juurde →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Firefoxi versioon on valmis ja esitatakse Mozillale ülevaatamiseks. Niipea kui see on Firefoxi lisades heaks kiidetud, ilmub siia nupp „Lisa Firefoxi“."
 }

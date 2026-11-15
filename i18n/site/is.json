@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Breyttu, undirritaðu og skannaðu PDF-skjöl – án upphleðslu.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Skannaðu, taktu mynd eða sameinaðu skrár – PDFMy hengir niðurstöðuna við þennan tölvupóst.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Flutningur ófullgerður"
+ "Übertragung unvollständig": "Flutningur ófullgerður",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Vafraviðbót:</b> PDF-skjöl sem þér smellið á í vafranum opnast beint í PDFMy – í Chrome og Edge, í Windows og á Mac; Firefox-útgáfan kemur eftir yfirferð Mozilla. <a href=\"erweiterung.html\">Að viðbótinni →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Firefox-útgáfan er tilbúin og verður send Mozilla til yfirferðar. Um leið og hún hefur verið samþykkt á Firefox-viðbótum birtist hnappurinn „Bæta við Firefox“ hér."
 }

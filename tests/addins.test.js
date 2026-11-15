@@ -68,3 +68,19 @@ test('Pakete: Office-Manifeste, Teams-App, Thunderbird – gültig und vollstän
   assert.match(A.htaccess, /einbetten\.html[\s\S]*frame-ancestors 'self' https:\/\/teams\.microsoft\.com/);
   assert.match(A.htaccess, /script-src 'self' https:\/\/appsforoffice\.microsoft\.com;/);
 });
+
+test('Browser-Erweiterung: Viewer-Adressen von Chrome- und Firefox-Erweiterungen werden erkannt (app-v255)', () => {
+  const noop = { addListener() {} };
+  for (const base of ['chrome-extension://abcdefghijklmnopabcdefghijklmnop/', 'moz-extension://0123abcd-0000-4000-8000-123456789abc/']) {
+    const box = {};
+    globalThis.chrome = { runtime: { getURL: () => base, onConnect: noop, onInstalled: noop, onMessage: noop, id: 'x' },
+      webRequest: { onHeadersReceived: noop, onBeforeRedirect: noop }, contextMenus: { onClicked: noop }, storage: { local: {}, session: {} } };
+    const code = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-extension', 'background.js'), 'utf8');
+    new Function('self', code)(box);
+    const { sourceOf } = box.pdfmy;
+    assert.equal(sourceOf('moz-extension://0123abcd-0000-4000-8000-123456789abc/viewer.html#https://a.de/x.pdf'), 'https://a.de/x.pdf');
+    assert.equal(sourceOf('chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://a.de/y.pdf'), 'https://a.de/y.pdf');
+    assert.equal(sourceOf('moz-extension://kein-uuid/https://a.de/z.pdf'), '');
+  }
+  delete globalThis.chrome;
+});

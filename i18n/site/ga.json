@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Cuir PDFanna in eagar, sínigh agus scan iad – gan uaslódáil.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Scan, tóg grianghraf nó cumaisc comhaid – ceanglaíonn PDFMy an toradh leis an ríomhphost seo.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Aistriú neamhiomlán"
+ "Übertragung unvollständig": "Aistriú neamhiomlán",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Breiseán brabhsálaí:</b> Osclaítear PDFanna a chliceálann tú sa bhrabhsálaí go díreach i PDFMy – in Chrome agus Edge, ar Windows agus ar Mac; leanfaidh an leagan Firefox nuair a bheidh sé athbhreithnithe ag Mozilla. <a href=\"erweiterung.html\">Chuig an mbreiseán →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Tá an leagan Firefox réidh agus á chur faoi bhráid Mozilla lena athbhreithniú. Chomh luath agus a bheidh sé ceadaithe ar Bhreiseáin Firefox, beidh an cnaipe “Cuir le Firefox” anseo."
 }

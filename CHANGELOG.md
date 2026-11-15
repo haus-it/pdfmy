@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### Browser-Erweiterung für Firefox (app-v255, Erweiterung 1.1.0)
+- **Firefox-Fassung** der Erweiterung „PDFMy – PDFs direkt öffnen“: derselbe Code wie für Chrome und Edge, eigenes Manifest (Hintergrundskript, Kennung pdfmy-erweiterung@mentor-group.de, ab Firefox 140, keine Datensammlung). Paket download/pdfmy-firefox-1.1.0.xpi zum Einreichen bei addons.mozilla.org (Anleitung und Store-Texte: tools/pdfmy-extension/FIREFOX.md).
+- Gemeinsamer Code: Viewer-Adressen anderer Firefox-Erweiterungen (moz-extension://) werden erkannt; Kontextmenü ohne Chrome-eigene Adressmuster; in Firefox schaltet das Popup das automatische Öffnen über die Willkommensseite ein (Firefox schließt das Popup bei der Rückfrage).
+- erweiterung.html zeigt „Zu Firefox hinzufügen“, sobald die Store-Adresse in tools/site.json (firefoxAmo) steht; bis dahin der Hinweis, dass die Fassung bei Mozilla geprüft wird. Datenschutzerklärung Nr. 6 und Hilfe ergänzt.
+- Geprüft: web-ext lint 0 Fehler/0 Warnungen; echter Firefox (vorübergehend geladen) – PDF-Link → PDFMy mit allen Seiten, Kennung entfernt; Chrome-Ende-zu-Ende-Test 15/15. **Noch nicht signiert:** Firefox installiert die Erweiterung erst nach Freigabe durch Mozilla (Konto der Mentor GmbH auf addons.mozilla.org).
+
 ### PDFMy in Outlook, Word, Excel, PowerPoint, Teams und Thunderbird (app-v254)
 - **Outlook-Add-in:** Knopf „PDFMy“ beim Lesen und Verfassen. Anhänge (PDF, Bilder, Word, Excel …) öffnen sich in PDFMy in einem großen Office-Fenster – bearbeiten, unterschreiben, schwärzen. Beim Verfassen: PDF-Anhang bearbeiten und ersetzen, oder „Neues PDF anhängen …“ (scannen, fotografieren, zusammenfügen); **„An E-Mail anhängen“** in PDFMy gibt das fertige PDF direkt an die E-Mail zurück.
 - **Word, Excel, PowerPoint:** Knopf „In PDFMy öffnen“ auf der Registerkarte „Start“. Word und PowerPoint übergeben das Dokument als PDF (von Office selbst erzeugt), Excel als Arbeitsmappe, die PDFMy umwandelt.

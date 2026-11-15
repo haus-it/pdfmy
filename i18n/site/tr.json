@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "PDF'leri düzenleyin, imzalayın ve tarayın – yükleme olmadan.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Tarayın, fotoğraf çekin veya dosyaları birleştirin – PDFMy sonucu bu e-postaya ekler.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Aktarım tamamlanmadı"
+ "Übertragung unvollständig": "Aktarım tamamlanmadı",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Tarayıcı uzantısı:</b> Web tarayıcısında tıkladığınız PDF’ler doğrudan PDFMy’de açılır – Chrome ve Edge’de, Windows’ta ve Mac’te; Firefox sürümü Mozilla’nın incelemesinden sonra gelecek. <a href=\"erweiterung.html\">Uzantıya git →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Firefox sürümü hazır ve incelenmek üzere Mozilla’ya gönderiliyor. Firefox Eklentileri’nde onaylanır onaylanmaz burada “Firefox’a ekle” düğmesi yer alacak."
 }

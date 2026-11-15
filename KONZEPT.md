@@ -597,6 +597,18 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Umsetzung:** Eigener Leser für PresentationML und ODF-Präsentationen mit fester Folienlage (nicht Fließtext wie bei Word): Master/Layout-Vererbung, Designfarben, Text mit Laufweiten-Schriften, Tabellen, Bilder, Formen, Gruppen, Diagramme aus gespeicherten Werten. Ausgeblendete Folien entfallen wie beim PDF-Export von PowerPoint.
 **Leitplanken:** 1–3 gewahrt (alles lokal, keine neue Verbindung, externe Bildverweise werden nicht geladen, keine Cloud-KI). 4: kein neuer Bedienschritt – Datei öffnen genügt; Hinweis nur bei Vereinfachungen. 5: tests/slides.test.js, Sichtvergleich mit LibreOffice. 6 nicht betroffen.
 
+### Umgesetzt 15.11.2026: Browser-Erweiterung für Firefox (app-v255)
+**Anlass:** Recherche „für welche Programme noch Add-ins“ (15.11.2026), Rang 1: Firefox hat in Deutschland rund 15 % (Statista, Juni 2025), die Erweiterung lief nur in Chrome und Edge. Entscheidung GF 15.11.2026: öffentlich bei addons.mozilla.org (Konto der Mentor GmbH). Weitere Kandidaten der Recherche: Nextcloud/openDesk (Dateiaktion „In PDFMy öffnen“), OneDrive/SharePoint-Dateihandler (braucht Microsoft-Anmeldung), LibreOffice, DATEV DMS (Marktplatz-Partnerschaft – Entscheidung GF), Safari (Apple-Konto). Nicht: Gmail/Google Docs (Google-Server, L1/L2), Apple Mail, eM Client, HCL Notes, Kanzleisoftware ohne Add-in-Schnittstelle.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: gleicher Datenweg wie in Chrome, kein Upload |
+| 2 Kein Server, keine Fremddienste | passt: keine neue Verbindung; Store-Updates kommen von Mozilla wie bei jedem Firefox-Add-on |
+| 3 Ohne Konto und Tracking | passt: data_collection_permissions „none“; Entwicklerkonto nur für die Mentor GmbH |
+| 4 Einfach | passt: nach Freigabe ein Klick „Zu Firefox hinzufügen“, kein Entwicklermodus |
+| 5 Prüfbar | web-ext lint, Test in echtem Firefox, Chrome-Test 15/15 |
+| 6 Wenig aktive Inhalte | passt |
+
 ### Umgesetzt 15.11.2026: PDFMy in Outlook, Word, Excel, PowerPoint, Teams und Thunderbird (app-v254)
 **Anlass (GF 15.11.2026):** „Baue Add-Ons für M365 und schaue, für welche wir dies noch benötigen.“ Frühere Zurückstellung (22.10.2026, „Office-Add-in braucht HTTPS-Seite, Office im Web liefert kein PDF, Senden an 127.0.0.1 ungeklärt“) gelöst: Die Datei geht nicht über pdfmy Scan, sondern per Office-Dialog direkt an PDFMy im Office-Fenster; Excel liefert die Arbeitsmappe, PDFMy wandelt um.
 **Bedarf geprüft:** Outlook (größter Nutzen: Anhänge bearbeiten, unterschreiben, zurück an die E-Mail), Word/Excel/PowerPoint (ersetzt den Umweg über den Drucker), Teams (persönliche App), Thunderbird (vollständig lokal). **Nicht gebaut:** Gmail- und Google-Docs-Add-ons (laufen auf Google-Servern – verletzt L1/L2; im Browser deckt die vorhandene Erweiterung Webmail ab), Apple Mail (keine Schnittstelle), OneNote (geringer Nutzen). LibreOffice (.oxt) bleibt vorgemerkt.

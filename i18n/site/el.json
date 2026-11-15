@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Επεξεργασία, υπογραφή και σάρωση PDF – χωρίς μεταφόρτωση.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Σάρωση, φωτογράφιση ή συγχώνευση αρχείων – το PDFMy επισυνάπτει το αποτέλεσμα σε αυτό το email.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Ελλιπής μεταφορά"
+ "Übertragung unvollständig": "Ελλιπής μεταφορά",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Επέκταση προγράμματος περιήγησης:</b> Τα PDF στα οποία κάνετε κλικ στο πρόγραμμα περιήγησης ανοίγουν απευθείας στο PDFMy – σε Chrome και Edge, σε Windows και σε Mac. Η έκδοση για Firefox θα ακολουθήσει μετά τον έλεγχο από τη Mozilla. <a href=\"erweiterung.html\">Στην επέκταση →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Η έκδοση για Firefox είναι έτοιμη και υποβάλλεται στη Mozilla για έλεγχο. Μόλις εγκριθεί στα Πρόσθετα Firefox, εδώ θα εμφανιστεί το κουμπί «Προσθήκη στο Firefox»."
 }

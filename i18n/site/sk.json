@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Upravujte, podpisujte a skenujte PDF – bez nahrávania.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Skenujte, fotografujte alebo zlučujte súbory – PDFMy pripojí výsledok k tomuto e-mailu.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Prenos neúplný"
+ "Übertragung unvollständig": "Prenos neúplný",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Rozšírenie prehliadača:</b> PDF súbory, na ktoré kliknete v prehliadači, sa otvoria priamo v PDFMy – v prehliadačoch Chrome a Edge, vo Windows aj na Macu; verzia pre Firefox bude nasledovať po kontrole zo strany Mozilly. <a href=\"erweiterung.html\">K rozšíreniu →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Verzia pre Firefox je hotová a bude odoslaná Mozille na kontrolu. Hneď ako bude schválená v Doplnkoch pre Firefox, zobrazí sa tu tlačidlo „Pridať do Firefoxu“."
 }

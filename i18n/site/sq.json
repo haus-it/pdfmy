@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Redaktoni, nënshkruani dhe skanoni PDF – pa ngarkim.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Skanoni, fotografoni ose bashkoni skedarë – PDFMy e bashkëngjit rezultatin në këtë email.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Transferim i paplotë"
+ "Übertragung unvollständig": "Transferim i paplotë",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Shtesa e shfletuesit:</b> PDF-të që klikoni në shfletues hapen drejtpërdrejt në PDFMy – në Chrome dhe Edge, në Windows dhe në Mac; versioni për Firefox do të vijë pas shqyrtimit nga Mozilla. <a href=\"erweiterung.html\">Te shtesa →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Versioni për Firefox është gati dhe do t’i dorëzohet Mozilla-s për shqyrtim. Sapo të miratohet te Shtesat e Firefox-it, këtu do të shfaqet butoni „Shtoje te Firefox-i“."
 }

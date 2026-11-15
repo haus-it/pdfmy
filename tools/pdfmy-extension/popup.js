@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 'use strict';
 const SITES = { origins: ['http://*/*', 'https://*/*'] };
+const FIREFOX = chrome.runtime.getURL('').startsWith('moz-extension:');
 const $ = s => document.querySelector(s);
 
 async function show() {
@@ -19,6 +20,8 @@ async function show() {
 $('#auto').onchange = async e => {
   const on = e.target.checked;
   // Zugriff auf Webseiten nur, wenn der Nutzer das automatische Öffnen will (Datenminimierung)
+  // Firefox schließt das Popup, sobald die Rückfrage erscheint – dort über die Willkommensseite einschalten
+  if (on && FIREFOX && !(await chrome.permissions.contains(SITES))) { chrome.tabs.create({ url: 'welcome.html' }); return window.close(); }
   if (on && !(await chrome.permissions.request(SITES))) { e.target.checked = false; return show(); }
   if (!on) await chrome.permissions.remove(SITES).catch(() => {});
   await chrome.storage.local.set({ auto: on });

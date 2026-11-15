@@ -7,6 +7,7 @@
 
 const TARGETS = { web: 'https://pdfmy.de/', mentor: 'https://pdfmy.de/mentor/' };
 const SITES = { origins: ['http://*/*', 'https://*/*'] };
+const FIREFOX = chrome.runtime.getURL('').startsWith('moz-extension:');   // derselbe Code läuft in Chrome, Edge und Firefox
 const MAX_BYTES = 300 * 1024 * 1024;
 const RECENT_MS = 10 * 60 * 1000;      // dieselbe PDF im selben Tab nicht erneut abfangen (z. B. „Zurück“)
 const jobs = new Map();                  // token → { url, name, data: Promise<{bytes,name}> }
@@ -30,7 +31,8 @@ function nameFrom(url, disposition = '') {
 function sourceOf(url) {
   if (!url) return '';
   if (/^https?:/i.test(url)) return url;
-  const m = url.match(/^chrome-extension:\/\/[a-p]{32}\/.*?(https?:\/\/.+)$/i) || url.match(/[?&](?:file|src|url)=(https?%3A[^&]+)/i);
+  // Firefox: moz-extension://<uuid>/…
+  const m = url.match(/^(?:chrome-extension:\/\/[a-p]{32}|moz-extension:\/\/[0-9a-f-]{36})\/.*?(https?:\/\/.+)$/i) || url.match(/[?&](?:file|src|url)=(https?%3A[^&]+)/i);
   if (!m) return '';
   try { return /^https?%3A/i.test(m[1]) ? decodeURIComponent(m[1]) : m[1]; } catch { return ''; }
 }
@@ -60,7 +62,7 @@ chrome.webRequest.onHeadersReceived.addListener(d => {
 
 chrome.webRequest.onBeforeRedirect.addListener(d => {
   // Umleitung einer .pdf-Adresse in den Viewer einer anderen Erweiterung (z. B. Adobe Acrobat)
-  if (d.method === 'GET' && /^chrome-extension:/i.test(d.redirectUrl) && pdfPath(d.url)) intercept(d.tabId, d.url, nameFrom(d.url));
+  if (d.method === 'GET' && /^(chrome|moz)-extension:/i.test(d.redirectUrl) && pdfPath(d.url)) intercept(d.tabId, d.url, nameFrom(d.url));
 }, { urls: ['http://*/*', 'https://*/*'], types: ['main_frame'] });
 
 /* ---------- Übergabe an PDFMy ---------- */
@@ -120,7 +122,7 @@ chrome.runtime.onInstalled.addListener(({ reason }) => {
   chrome.contextMenus.removeAll(() => {
     chrome.contextMenus.create({ id: 'pdfmy-link', title: 'In PDFMy öffnen', contexts: ['link'] });
     chrome.contextMenus.create({ id: 'pdfmy-page', title: 'Diese PDF in PDFMy öffnen', contexts: ['page', 'frame'],
-      documentUrlPatterns: ['*://*/*.pdf', '*://*/*.pdf?*', '*://*/*.PDF', '*://*/*.PDF?*', 'chrome-extension://*/*'] });
+      documentUrlPatterns: ['*://*/*.pdf', '*://*/*.pdf?*', '*://*/*.PDF', '*://*/*.PDF?*', ...(FIREFOX ? [] : ['chrome-extension://*/*'])] });   // Firefox zeigt PDFs (pdf.js) unter der Original-Adresse
   });
   if (reason === 'install') chrome.tabs.create({ url: 'welcome.html' });
 });

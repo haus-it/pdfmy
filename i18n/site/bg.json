@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Редактирайте, подписвайте и сканирайте PDF файлове – без качване.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Сканирайте, снимайте или обединявайте файлове – PDFMy прикачва резултата към този имейл.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Непълно предаване"
+ "Übertragung unvollständig": "Непълно предаване",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Разширение за браузъра:</b> PDF файлове, върху които щракнете в браузъра, се отварят директно в PDFMy – в Chrome и Edge, под Windows и на Mac; версията за Firefox ще последва след проверката от Mozilla. <a href=\"erweiterung.html\">Към разширението →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> Версията за Firefox е готова и ще бъде подадена за проверка в Mozilla. Щом бъде одобрена в Добавки за Firefox, тук ще се появи бутонът „Добавяне към Firefox“."
 }

@@ -1501,5 +1501,7 @@
  "PDFs bearbeiten, unterschreiben und scannen – ohne Upload.": "Modifichi, firmi e scansioni PDF – senza caricamento online.",
  "Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.": "Scansioni, fotografi o unisca file – PDFMy allega il risultato a questa e-mail.",
  "Thunderbird": "Thunderbird",
- "Übertragung unvollständig": "Trasferimento incompleto"
+ "Übertragung unvollständig": "Trasferimento incompleto",
+ "<b>Browser-Erweiterung:</b> PDFs, die Sie im Browser anklicken, öffnen sich direkt in PDFMy – in Chrome und Edge, unter Windows und am Mac; die Firefox-Fassung folgt nach der Prüfung durch Mozilla. <a href=\"erweiterung.html\">Zur Erweiterung →</a>": "<b>Estensione del browser:</b> i PDF su cui fa clic nel browser si aprono direttamente in PDFMy – in Chrome ed Edge, su Windows e su Mac; la versione per Firefox seguirà dopo la verifica da parte di Mozilla. <a href=\"erweiterung.html\">Vai all'estensione →</a>",
+ "<b>Firefox:</b> Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.": "<b>Firefox:</b> la versione per Firefox è pronta e viene inviata a Mozilla per la verifica. Non appena sarà approvata su Componenti aggiuntivi di Firefox, qui comparirà il pulsante «Aggiungi a Firefox»."
 }
