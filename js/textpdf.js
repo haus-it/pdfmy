@@ -1,7 +1,8 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Text, Markdown und CSV → PDF (A4, eingebettete DejaVu-Schriften). Ohne DOM: läuft im Browser und in Node-Tests.
-   TextPdf.build(PDFLib, { text, kind: 'txt'|'md'|'csv', title, fonts: { regular, bold, mono } }) → Uint8Array */
+   TextPdf.build(PDFLib, { text, kind: 'txt'|'md'|'csv', title, fonts: { regular, bold, mono }, aiNote }) → Uint8Array
+   aiNote: Hinweis für KI-erzeugte Inhalte (Betreff + Stichwörter in den Dokumenteigenschaften) */
 (function (root) {
   'use strict';
 
@@ -72,7 +73,7 @@
   // Satz: A4 hoch (Tabellen mit vielen Spalten: quer), Ränder 2 cm, Umbruch nach Wortbreite, Seitenzahl unten
   /* blocks: fertige Bausteine (z. B. aus js/office.js) statt text; page: { size: [w, h] in pt, margin, top, bottom, header: [Bausteine], footer: [Bausteine] }
      (sonst A4, 2 cm). Absätze mit runs: [{ t, b, i }] wechseln innerhalb der Zeile zwischen normal, fett und kursiv. {PAGE}/{NUMPAGES} in Kopf-/Fußzeile. */
-  async function build(L, { text, kind = 'txt', title = '', fonts, blocks: given = null, page: pg = null }) {
+  async function build(L, { text, kind = 'txt', title = '', fonts, blocks: given = null, page: pg = null, aiNote = '' }) {
     const doc = await L.PDFDocument.create();
     if (fonts.fontkit) doc.registerFontkit(fonts.fontkit);
     const F = { r: await doc.embedFont(fonts.regular, { subset: true }), b: await doc.embedFont(fonts.bold, { subset: true }), m: await doc.embedFont(fonts.mono, { subset: true }) };
@@ -210,6 +211,8 @@
       paginate = true;
     } else if (pages.length > 1) pages.forEach((p, i) => { const s = `${i + 1} / ${pages.length}`; p.drawText(s, { x: PW / 2 - F.r.widthOfTextAtSize(s, 8) / 2, y: M / 2, size: 8, font: F.r, color: gray }); });
     doc.setTitle(title || 'Dokument'); doc.setProducer('PDFMy (pdfmy.de)'); doc.setCreator('PDFMy');
+    // Maschinenlesbare Kennzeichnung KI-erzeugter Inhalte (vorsorglich nach Art. 50 Abs. 2 VO (EU) 2024/1689): Betreff und Stichwörter
+    if (aiNote) { doc.setSubject(aiNote); doc.setKeywords(['KI-generiert', 'AI-generated', 'machine-translated']); }
     return doc.save();
   }
 

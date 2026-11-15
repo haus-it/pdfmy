@@ -3784,5 +3784,7 @@
  "In {0} speichern": "{0} konumuna kaydet",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Açılamıyor: {0}",
- "Nutzungsbedingungen": "Kullanım koşulları"
+ "Nutzungsbedingungen": "Kullanım koşulları",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Yapay zekâ özeti – bu cihazdaki yapay zekâ ile oluşturuldu, lütfen kontrol edin.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Bu cihazdaki yapay zekâ ile makine çevirisi – göndermeden önce lütfen kontrol edin."
 }

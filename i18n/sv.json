@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Spara i {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Kan inte öppnas: {0}",
- "Nutzungsbedingungen": "Användarvillkor"
+ "Nutzungsbedingungen": "Användarvillkor",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AI-sammanfattning – skapad med AI på den här enheten, kontrollera den.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Maskinöversatt med AI på den här enheten – kontrollera före sändning."
 }

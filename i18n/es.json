@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Guardar en {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "No se puede abrir: {0}",
- "Nutzungsbedingungen": "Condiciones de uso"
+ "Nutzungsbedingungen": "Condiciones de uso",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Resumen de IA: creado con la IA de este dispositivo; revíselo.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Traducción automática con la IA de este dispositivo: revísela antes de enviarla."
 }

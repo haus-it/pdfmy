@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Cadw yn {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Methu agor: {0}",
- "Nutzungsbedingungen": "Telerau defnyddio"
+ "Nutzungsbedingungen": "Telerau defnyddio",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Crynodeb AI – wedi’i greu gyda’r AI ar y ddyfais hon, gwiriwch ef.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Wedi’i gyfieithu gan beiriant gyda’r AI ar y ddyfais hon – gwiriwch cyn ei anfon."
 }

@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Захаваць у {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Не ўдалося адкрыць: {0}",
- "Nutzungsbedingungen": "Умовы выкарыстання"
+ "Nutzungsbedingungen": "Умовы выкарыстання",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Зводка ШІ – створана ШІ на гэтай прыладзе, калі ласка, праверце.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Машынны пераклад з дапамогай ШІ на гэтай прыладзе – праверце перад адпраўкай."
 }

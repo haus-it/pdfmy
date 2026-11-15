@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Salvesta asukohta {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Avamine ei ole võimalik: {0}",
- "Nutzungsbedingungen": "Kasutustingimused"
+ "Nutzungsbedingungen": "Kasutustingimused",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Tehisintellekti kokkuvõte – loodud selle seadme tehisintellektiga, palun kontrollige.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Masintõlge selle seadme tehisintellektiga – palun kontrollige enne saatmist."
 }

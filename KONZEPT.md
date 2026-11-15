@@ -418,6 +418,22 @@ Wunsch: Wer möchte, verbindet selbst eine KI – nur auf eigenen Wunsch, jederz
 Empfehlung (nach dem obersten Ziel): Nur KI, die auf dem Rechner des Kunden läuft – die KI des Browsers (vorhanden) und auf Wunsch eine lokale KI auf demselben PC (z. B. Ollama, LM Studio unter localhost) als zusätzliche Wahl im Dialog „KI-Assistent“: aus als Voreinstellung, jederzeit abschaltbar, deutlich gekennzeichnet. KI-Server im Netz und Cloud-KI (ChatGPT, Claude, Gemini) passen nicht und werden nicht angebunden. **Entschieden und umgesetzt am 21.10.2026** (KI des Browsers und lokale KI; Cloud-KI und KI-Server im Netz nicht).
 
 
+### Geändert 15.11.2026: Werbe- und Empfehlungshinweis ohne Speicherung (§ 25 TDDDG)
+**Anlass:** Rechtsprüfung (docs/Rechtliche-Vorgaben.md). Nach DSK-Orientierungshilfe Digitale Dienste 1.2 (Rn. 74, 78, 80, 86) ist ein Speichern im Browser für Werbung nicht „unbedingt erforderlich“ und bräuchte eine Einwilligung. **Änderung der Entscheidung vom 01.11.2026 („je Aufruf der nächste“):** Der Hinweis auf eigene Angebote wird jetzt zufällig gewählt, ohne Zähler; der automatische Empfehlungshinweis nach 60 Nutzungstagen (app-v233) entfällt. Leitplanke 3 („ohne Tracking“) wird damit strenger erfüllt; kein Einwilligungsbanner nötig (Leitplanke 4).
+
+### Umgesetzt 15.11.2026: Unterlagen für Unternehmen, Behörden, Kirchen, Wohlfahrtsverbände und Krankenhäuser (app-v263)
+**Auftrag GF:** Lücken suchen, die PDFMy für große Unternehmen und Behörden interessant machen, und schließen – geprüft statt vermutet.
+**Umsetzung:** Seite `sicherheit.html` (Netzwerk-Freigaben mit Ports aus dem Quellcode, Datenschutz, Baustein für das Verzeichnis von Verarbeitungstätigkeiten, Informationssicherheit, Normen, Abschnitt für Behörden, Kirchen, Wohlfahrtsverbände und Krankenhäuser, Meldeweg für Sicherheitslücken), `/.well-known/security.txt` nach RFC 9116, Software-Stückliste `download/pdfmy-sbom.cdx.json` (CycloneDX 1.5, gegen das offizielle Schema geprüft, Bibliotheken byteweise gegen die npm-Pakete geprüft, lokale Änderung an `@cantoo/pdf-lib` als „pedigree“ gekennzeichnet), ADMX/ADML-Vorlagen für die bestehenden Richtlinien (Aufbau mit Microsofts eigenen ADMX-Dateien abgeglichen). **Bewusst nicht:** eigener Betrieb im Netz des Kunden (Lizenz/GF), zentrale Abschaltung des Werbehinweises (Entscheidung GF).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: reine Unterlagen und statische Dateien, keine neue Verarbeitung |
+| 2 Kein Server, keine Fremddienste | passt: statische Dateien auf pdfmy.de, CSP unverändert |
+| 3 Ohne Tracking | passt |
+| 4 So einfach wie möglich | passt: für Benutzer unsichtbar; IT findet alles auf einer Seite |
+| 5 Prüfbar | passt: Tests `tests/enterprise.test.js` (SBOM-Stände = ISO-Abschnitt 5, RFC-9116-Regeln, ADMX-Texte de/en, Schlüssel wie in pdfmy Scan) |
+| 6 Wenig aktive Inhalte | passt: kein Einfluss auf erzeugte PDFs |
+
 ### Umgesetzt 08.11.2026: IndexNow (Auffindbarkeit)
 **Anlass:** 0,5 % Suchmaschinen-Anteil. Technische Grundlagen (Sitemap, hreflang, kanonisch, Titel, strukturierte Daten) waren vorhanden; die Lücke war die Anbindung an Bing.
 **Lösung:** Geänderte öffentliche Seiten nach jeder Auslieferung per IndexNow melden (tools/deploy.py).

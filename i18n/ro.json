@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Salvare în {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Deschiderea nu este posibilă: {0}",
- "Nutzungsbedingungen": "Condiții de utilizare"
+ "Nutzungsbedingungen": "Condiții de utilizare",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Rezumat IA – creat cu IA de pe acest dispozitiv, vă rugăm să verificați.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Traducere automată cu IA de pe acest dispozitiv – verificați înainte de trimitere."
 }

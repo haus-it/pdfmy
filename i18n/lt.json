@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Įrašyti į {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Atidaryti neįmanoma: {0}",
- "Nutzungsbedingungen": "Naudojimo sąlygos"
+ "Nutzungsbedingungen": "Naudojimo sąlygos",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "DI santrauka – sukurta šio įrenginio DI, patikrinkite.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Mašininis vertimas šio įrenginio DI – patikrinkite prieš siųsdami."
 }

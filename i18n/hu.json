@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Mentés ide: {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "A megnyitás nem lehetséges: {0}",
- "Nutzungsbedingungen": "Felhasználási feltételek"
+ "Nutzungsbedingungen": "Felhasználási feltételek",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "MI-összefoglaló – az eszközön futó MI készítette, kérjük, ellenőrizze.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Gépi fordítás az eszközön futó MI-vel – küldés előtt kérjük, ellenőrizze."
 }

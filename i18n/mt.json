@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Issejvja f’{0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Ma jistax jinfetaħ: {0}",
- "Nutzungsbedingungen": "Termini tal-użu"
+ "Nutzungsbedingungen": "Termini tal-użu",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Sommarju tal-IA – maħluq bl-IA ta’ dan it-tagħmir, jekk jogħġbok iċċekkja.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Tradott awtomatikament bl-IA ta’ dan it-tagħmir – jekk jogħġbok iċċekkja qabel tibgħat."
 }

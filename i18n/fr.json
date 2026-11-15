@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Enregistrer dans {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Ouverture impossible : {0}",
- "Nutzungsbedingungen": "Conditions d’utilisation"
+ "Nutzungsbedingungen": "Conditions d’utilisation",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Résumé par IA – créé avec l’IA de cet appareil, veuillez vérifier.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Traduction automatique avec l’IA de cet appareil – veuillez vérifier avant l’envoi."
 }

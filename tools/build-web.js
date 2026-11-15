@@ -282,7 +282,7 @@ was die E-Mail enthält (Versionen, Browser, Protokoll, aufgetretene Programmfeh
 Wir verwenden Ihre Nachricht nur, um das Problem zu lösen und Ihnen zu antworten (Art. 6 Abs. 1 lit. b und f DSGVO), und löschen sie, wenn sie dafür nicht mehr benötigt wird,
 spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen.</p>
 <h2>6c. Hinweise auf eigene Angebote</h2>
-<p>Auf der Startseite steht ein als Anzeige gekennzeichneter Hinweis auf ein Angebot der Mentor Group: Mentor GmbH (Haus iT, Haus iT Caller ID, mySupermail) oder Mertens GmbH (Mentor Consulting). Es ist ein einfacher Link ohne eingebundene Inhalte, Zählpixel oder Cookies. Welcher Hinweis als Nächstes erscheint, merkt sich nur Ihr Browser; diese Angabe wird nicht übertragen. Erst wenn Sie ihn anklicken,
+<p>Auf der Startseite steht ein als Anzeige gekennzeichneter Hinweis auf ein Angebot der Mentor Group: Mentor GmbH (Haus iT, Haus iT Caller ID, mySupermail) oder Mertens GmbH (Mentor Consulting). Es ist ein einfacher Link ohne eingebundene Inhalte, Zählpixel oder Cookies. Welcher Hinweis erscheint, wird bei jedem Aufruf zufällig gewählt; dafür wird nichts auf Ihrem Gerät gespeichert. Erst wenn Sie ihn anklicken,
 öffnet sich die jeweilige Website (www.haus-it.de, www.hausit-portal.de, www.mysupermail.app oder www.mentor-consulting.de) in einem neuen Tab; dabei wird keine Herkunftsadresse (Referrer) übermittelt. Für diese Website gilt die Datenschutzerklärung ihres Betreibers.</p>
 <h2>6d. KI-Assistent</h2>
 <p>Zusammenfassen, Fragen zum Dokument und Übersetzen nutzen die KI, die Ihr Browser mitbringt. Sie arbeitet auf Ihrem Gerät; der Text wird nicht übertragen. Das KI-Modell lädt Ihr Browser einmalig vom Browser-Hersteller, nicht von uns. Unter „… Mehr → KI-Assistent“ lässt sich die Funktion ausschalten. Auf eigenen Wunsch kann dort stattdessen ein KI-Programm auf Ihrem eigenen Rechner gewählt werden (z. B. Ollama oder LM Studio); PDFMy verbindet sich dann nur mit diesem Programm auf demselben Rechner (localhost) – der Text verlässt Ihren Rechner nicht, Adressen im Netz oder im Internet werden abgelehnt.</p>
@@ -569,8 +569,80 @@ ${STORE.thunderbird ? '<p><b>Am einfachsten:</b> PDFMy bei <a href="go/thunderbi
 <li><b>Mac</b> (je Benutzer, z. B. als Skript der Geräteverwaltung im Benutzerkontext): <code>curl -fsSL https://${site.domain}/download/pdfmy-scan-mac.sh | bash</code></li>
 </ul>
 <h2>Datenschutz und Sicherheit</h2>
-<p>Dokumente verlassen den Rechner nicht: PDFMy arbeitet im Browser, pdfmy Scan ist nur vom eigenen Rechner aus erreichbar (127.0.0.1) und beantwortet nur Anfragen des angemeldeten Benutzers. Es gibt keine Telemetrie und kein Benutzerkonto. Updates prüft pdfmy Scan per SHA-256 und Signatur der Mentor GmbH. Fragen zur Verteilung: <a href="mailto:${esc(APPSUPPORT)}?subject=PDFMy%20in%20Firmen%20verteilen">${esc(APPSUPPORT)}</a></p>
+<p>Dokumente verlassen den Rechner nicht: PDFMy arbeitet im Browser, pdfmy Scan ist nur vom eigenen Rechner aus erreichbar (127.0.0.1) und beantwortet nur Anfragen des angemeldeten Benutzers. Es gibt keine Telemetrie und kein Benutzerkonto. Updates prüft pdfmy Scan per SHA-256 und Signatur der Mentor GmbH. Fragen zur Verteilung: <a href="mailto:${esc(APPSUPPORT)}?subject=PDFMy%20in%20Firmen%20verteilen">${esc(APPSUPPORT)}</a></p><p>Für IT-Sicherheit, Datenschutz und Beschaffung in Unternehmen und Behörden: <a href="sicherheit.html">Sicherheit und Compliance</a> · <a href="download/pdfmy-richtlinien-admx.zip">ADMX-Vorlagen</a> · <a href="download/pdfmy-sbom.cdx.json">SBOM</a></p>
 `));
+// Unternehmen und Behörden (15.11.2026): security.txt, SBOM (CycloneDX), ADMX-Vorlagen – tools/enterprise.js
+const ENT = require(path.join(ROOT, 'tools', 'enterprise.js'))({ write, zip: require(path.join(ROOT, 'js', 'tools.js')).zip, domain: site.domain,
+  company: op.company, email: op.email, webVersion: (fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/const VERSION = 'app-(v\d+)'/) || [])[1], scanVersion: scanVer });
+fs.appendFileSync(path.join(OUT, '.htaccess'), ENT.htaccess);
+// Steckbrief für IT-Sicherheit, Datenschutz und Beschaffung – nur deutsch (Prüfunterlage wie die Rechtstexte), ohne Sprachwahl
+write('sicherheit.html', page('Sicherheit und Compliance', `
+<p><b>Für IT-Sicherheit, Datenschutzbeauftragte und Beschaffung in Unternehmen und Behörden.</b> Diese Seite fasst zusammen, was für die Freigabe von PDFMy geprüft wird. Verteilung und Richtlinien: <a href="firmen.html">PDFMy in Firmen verteilen</a>.</p>
+<h2>Auf einen Blick</h2>
+<table class="facts">
+<tr><th scope="row">Verarbeitung der Dokumente</th><td>ausschließlich auf dem Gerät (Browser bzw. pdfmy Scan auf 127.0.0.1) – kein Upload, auch nicht an uns</td></tr>
+<tr><th scope="row">Konto, Telemetrie, Cookies</th><td>keine</td></tr>
+<tr><th scope="row">Server</th><td>nur statische Dateien von ${esc(site.domain)}; Hosting: IONOS SE, Montabaur (Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO)</td></tr>
+<tr><th scope="row">Fremddienste</th><td>keine; Ausnahmen nur auf Wunsch des Benutzers (siehe „Netzwerk“)</td></tr>
+<tr><th scope="row">Kosten, Vertrag</th><td>kostenlos, ohne Lizenz je Benutzer, ohne Vertragsabschluss (<a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>)</td></tr>
+<tr><th scope="row">Anbieter</th><td>${esc(op.company)}, ${esc(op.street)}, ${esc(op.zipCity)} (${esc(op.register)})</td></tr>
+<tr><th scope="row">Quellcode</th><td>öffentlich auf <a href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">GitHub</a> (PolyForm Noncommercial 1.0.0)</td></tr>
+</table>
+<h2>Netzwerk und Proxy</h2>
+<ul>
+<li><b>Freizugeben:</b> <code>https://${esc(site.domain)}</code> (TCP 443). Darüber kommen App, Sprachdaten der Texterkennung, Schriften und die Update-Prüfung von pdfmy Scan (<code>/download/version.json</code>). Nach dem ersten Aufruf läuft PDFMy auch ohne Netz (Service Worker).</li>
+<li><b>pdfmy Scan</b> lauscht nur auf <code>127.0.0.1</code>, Port 52880 (bei mehreren Benutzern auf einem Rechner 52881–52889), und nimmt nur Anfragen von PDFMy mit Herkunftsprüfung und Pflicht-Header an. Aus dem Netz ist es nicht erreichbar.</li>
+<li><b>Scanner im eigenen Netz</b> (nur wenn der Benutzer einen Scanner sucht): mDNS (UDP 5353), WS-Discovery (UDP 3702), eSCL/WSD per HTTP(S) zu den Geräten (TCP 80, 443, 5357, 8080); zum Wecken schlafender Geräte kurze Verbindungsversuche auf TCP 80, 443, 631, 5357, 8080, 9100 und Wake-on-LAN – nur private Adressbereiche (10/8, 172.16/12, 192.168/16).</li>
+<li><b>Zeitstempel</b> (nur wenn der Benutzer beim Signieren einen Zeitstempel wählt): RFC-3161-Dienst aus einer festen Liste, z. B. zeitstempel.dfn.de, timestamp.digicert.com, timestamp.sectigo.com, timestamp.globalsign.com, tsa.swisssign.net.</li>
+<li><b>Add-ins für Microsoft 365</b> laden <code>office.js</code> von appsforoffice.microsoft.com (Vorgabe von Microsoft). Ohne Add-ins entfällt das.</li>
+<li><b>KI-Assistent:</b> nutzt die KI des Browsers auf dem Gerät; das Modell lädt der Browser einmalig vom Browser-Hersteller. Abschaltbar in PDFMy unter „Mehr → KI-Assistent“ bzw. zentral über die Richtlinien des Browsers. Cloud-KI wird nicht angebunden.</li>
+</ul>
+<h2>Datenschutz</h2>
+<ul>
+<li>Dokumente, erkannter Text und Eingaben erreichen uns nicht. Nach unserer Einschätzung ist deshalb <b>kein Vertrag zur Auftragsverarbeitung</b> (Art. 28 DSGVO) nötig: Wir verarbeiten keine Daten in Ihrem Auftrag. Die Server-Protokolle beim Abruf der Website (IP-Adresse, Zeitpunkt, Datei) verarbeiten wir als eigener Verantwortlicher; Einzelheiten in der <a href="datenschutz.html">Datenschutzerklärung</a> (Nr. 3).</li>
+<li>Im Browser gespeichert werden nur Einstellungen und Inhalte von Funktionen, die der Benutzer selbst nutzt (z. B. Unterschrift oder Posteingangsbuch) – ohne Kennung, mit einem Klick löschbar („Mehr → Alle lokal gespeicherten Daten löschen“). Für Werbung oder Hinweise wird nichts gespeichert (§ 25 Abs. 2 Nr. 2 TDDDG; DSK-Orientierungshilfe Digitale Dienste, Version 1.2). Eine Einwilligungsabfrage („Cookie-Banner“) ist deshalb nicht nötig.</li>
+<li><b>Baustein für Ihr Verzeichnis von Verarbeitungstätigkeiten</b> (Art. 30 DSGVO): Bezeichnung „Bearbeiten, Scannen und Signieren von PDF-Dokumenten mit PDFMy“; Verarbeitung lokal auf dienstlichen Geräten; Empfänger: keine; Übermittlung in Drittländer: keine; technische Maßnahmen: keine Übertragung von Dokumenten, Verschlüsselung (TLS) beim Abruf der Anwendung, echtes Schwärzen, Löschfunktion.</li>
+</ul>
+<h2>Behörden, Kirchen, Wohlfahrtsverbände, Krankenhäuser und andere gemeinnützige Einrichtungen</h2>
+<ul>
+<li><b>Besondere Daten:</b> Sozialdaten (SGB X), Gesundheitsdaten (Art. 9 DSGVO) und Daten unter Schweigepflicht (§ 203 StGB) bleiben auf dem Gerät – es gibt keinen Dienstleister, dem sie offenbart würden. Das gilt gleichermaßen unter DSGVO, BDSG und Landesdatenschutzgesetzen wie unter kirchlichem Datenschutzrecht (KDG der katholischen Kirche, z. B. Caritas; DSG-EKD der evangelischen Kirche, z. B. Diakonie).</li>
+<li><b>Krankenhäuser und Pflege:</b> Patientendaten verlassen das Gerät nicht – kein Cloud-Dienst, keine Auftragsverarbeitung. Aufklärungsbögen und Einwilligungen lassen sich am Tablet ausfüllen und unterschreiben, Befunde schwärzen; die Vorabprüfung hat ein Profil für die <b>elektronische Patientenakte (ePA)</b> (PDF/A, Größe). Für die IT-Sicherheit nach dem Stand der Technik (§ 391 SGB V bzw. BSI-Gesetz) liefern Netzwerk-Angaben, Signatur, Prüfsummen und SBOM oben die Grundlage für die Risikoanalyse.</li>
+<li><b>Eigener Betrieb:</b> Die Lizenz des Quellcodes (PolyForm Noncommercial 1.0.0, Abschnitt „Noncommercial Organizations“) erlaubt die Nutzung ausdrücklich „charitable organization[s], educational institution[s], public research organization[s], public safety or health organization[s], environmental protection organization[s], or government institution[s]“ – unabhängig von der Finanzierung. Ob eine Einrichtung darunter fällt, prüft sie selbst; im Zweifel sprechen Sie uns an. Wer PDFMy im eigenen Netz betreiben möchte (z. B. ohne Internetzugang), spricht uns bitte an.</li>
+<li><b>Ehrenamt und gemischte Geräte:</b> PDFMy braucht keine Installation, kein Konto und keine Lizenzverwaltung – es läuft auf dienstlichen wie privaten Geräten (Windows, Mac, Linux, Android, iPhone) im Browser.</li>
+<li><b>Werbehinweis:</b> Auf der Startseite steht ein gekennzeichneter, statischer Hinweis auf Angebote der Mentor Group (ohne Zählung oder Cookies). Im geöffneten Dokument erscheint er nie.</li>
+</ul>
+<p class="muted">Keine Rechtsberatung – die Bewertung im Einzelfall trifft Ihre Datenschutzbeauftragte bzw. Ihr Datenschutzbeauftragter.</p>
+<h2>Informationssicherheit</h2>
+<ul>
+<li>Sicherheitsrichtlinie (CSP): Verbindungen nur zu ${esc(site.domain)} und zum eigenen Rechner. Dazu HSTS, X-Frame-Options, nosniff, Referrer-Policy no-referrer, Permissions-Policy.</li>
+<li>JavaScript in geöffneten PDFs wird nicht ausgeführt. Echtes Schwärzen entfernt auch den Text unter der Schwärzung.</li>
+<li>pdfmy Scan für Windows ist von der <b>${esc(op.company)}</b> signiert (Authenticode, Microsoft Artifact Signing); Updates werden vor dem Start per SHA-256 und Signatur geprüft und lassen sich per Richtlinie abschalten.</li>
+<li>Prüfsummen aller ausgelieferten Dateien je Version: <a href="pruefsummen.txt">pruefsummen.txt</a>. Software-Stückliste (SBOM, CycloneDX 1.5): <a href="${ENT.sbom}">pdfmy-sbom.cdx.json</a>.</li>
+<li>Entwicklung mit automatisierten Tests als Freigabe-Bedingung, Release-Protokoll und Maßnahmen orientiert an ISO/IEC 27001 und ISO 9001 – Nachweis öffentlich: <a href="https://github.com/haus-it/pdfmy/blob/main/docs/ISO-Konformitaet.md" target="_blank" rel="noopener">ISO-Konformität</a>. PDFMy ist nicht zertifiziert.</li>
+</ul>
+<h2>Normen und Fachverfahren</h2>
+<ul>
+<li><b>Barrierefreiheit:</b> Oberfläche weitgehend vereinbar mit WCAG 2.1 AA / EN 301 549 (Selbstbewertung, <a href="barrierefreiheit.html">Erklärung</a>) – Grundlage auch für BITV 2.0. Ausgaben im Format PDF/A sind zugleich PDF/UA-1.</li>
+<li><b>Archiv und E-Akte:</b> PDF/A-2b (ISO 19005-2), geprüft mit veraPDF; Prüfsummen und Versionen in der Ablage.</li>
+<li><b>E-Rechnung:</b> XRechnung und ZUGFeRD/Factur-X anzeigen, prüfen und erstellen.</li>
+<li><b>Justiz:</b> Prüfung für beA/elektronischen Rechtsverkehr nach ERVB 2025.</li>
+<li><b>Signaturen:</b> PAdES (ETSI EN 319 142) mit eigenem Zertifikat; unter Windows mit pdfmy Scan auch Windows-Zertifikate und Signaturkarten, auch qualifiziert (eIDAS). Prüfung vorhandener Signaturen auf dem Gerät.</li>
+</ul>
+<h2>Verteilung und Verwaltung</h2>
+<ul>
+<li>Stille Installation für alle Benutzer, Erkennungsregel für Intune und SCCM/MECM, Terminalserver: <a href="firmen.html">PDFMy in Firmen verteilen</a>.</li>
+<li>Gruppenrichtlinien (Updates, Drucker): Registrierung oder <b>ADMX-Vorlagen</b> (<a href="${ENT.admx}">pdfmy-richtlinien-admx.zip</a>, Deutsch und Englisch; in den Ordner PolicyDefinitions bzw. als ADMX-Import in Intune).</li>
+<li>Add-ins für Microsoft 365, Teams, Thunderbird, LibreOffice, Nextcloud und ONLYOFFICE zentral verteilbar.</li>
+</ul>
+<h2>NIS2, Cyberresilienz und KI-Verordnung</h2>
+<ul>
+<li><b>NIS2 / BSI-Gesetz:</b> Einrichtungen unter dem BSI-Gesetz müssen die Sicherheit ihrer Lieferkette und von erworbenen IT-Komponenten berücksichtigen (§ 30 Abs. 2 Nr. 4 und 5 BSIG). Diese Seite, die SBOM, die Prüfsummen und der Meldeweg unten sind die Angaben dafür; Fragebögen beantworten wir gern.</li>
+<li><b>Cyberresilienz-Verordnung (EU) 2024/2847:</b> Aktiv ausgenutzte Schwachstellen und schwere Sicherheitsvorfälle melden wir nach Art. 14 an die zuständigen Stellen und informieren betroffene Nutzer. Sicherheitsupdates von pdfmy Scan und der Erweiterungen sind kostenlos; die Web-App ist immer auf dem neuesten Stand.</li>
+<li><b>KI-Verordnung (EU) 2024/1689:</b> Der KI-Assistent arbeitet nur auf dem Gerät und nur, wenn der Benutzer „Zusammenfassen“ oder „Übersetzen“ wählt; er lässt sich unter „Mehr → KI-Assistent“ ganz ausschalten. Ergebnisse sind als KI-erzeugt gekennzeichnet: im Dialog, beim Kopieren einer Zusammenfassung und in übersetzten PDFs sichtbar sowie in den Dokumenteigenschaften.</li>
+</ul>
+<h2 id="schwachstellen">Sicherheitslücken melden</h2>
+<p>Bitte melden Sie vermutete Sicherheitslücken vertraulich an <a href="mailto:${esc(op.email)}?subject=PDFMy%20Sicherheit">${esc(op.email)}</a> (Deutsch oder Englisch), möglichst mit Schritten zum Nachvollziehen. Wir bestätigen den Eingang, beheben bestätigte Lücken vorrangig und nennen Sie auf Wunsch im Änderungsprotokoll. Bitte keine Tests, die andere Nutzer oder den Betrieb beeinträchtigen. Maschinenlesbar: <a href=".well-known/security.txt">security.txt</a>.</p>`, '<style>.facts{width:100%;border-collapse:collapse;font-size:15px}.facts th,.facts td{text-align:left;vertical-align:top;padding:7px 8px;border-bottom:1px solid var(--line)}.facts th{width:34%;font-weight:600}.muted{color:var(--muted);font-size:14px}@media (max-width:560px){.facts th,.facts td{display:block;width:auto;border:0;padding:2px 0}.facts td{padding-bottom:10px;border-bottom:1px solid var(--line)}}</style>', false));
+
 write('erweiterung.html', page('PDFs direkt in PDFMy öffnen', `
 <p><b>Ein Klick auf eine PDF im Browser – und sie ist in PDFMy offen.</b> Für PDFs aus Webportalen, Webmail, Behörden- und Bankseiten: ausfüllen, unterschreiben, schwärzen, speichern – ohne Umweg über den Download-Ordner. Die Datei wird <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDFMy.</p>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px">

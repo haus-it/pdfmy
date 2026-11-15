@@ -117,7 +117,7 @@ test('Webseiten: wechselnde Werte als Platzhalter, keine Erwähnung von /mentor,
   for (const f of fs.readdirSync(path.join(root, 'i18n', 'site')).filter(f => f.endsWith('.json'))) texts.push(fs.readFileSync(path.join(root, 'i18n', 'site', f), 'utf8'));
   for (const t of texts) assert.ok(!/pdfmy\.de\/mentor|\/mentor\b/.test(t), 'keine Seite erwähnt /mentor');
   const build = fs.readFileSync(path.join(root, 'tools', 'build-web.js'), 'utf8');
-  for (const p of ['impressum.html', 'datenschutz.html', 'nutzungsbedingungen.html', 'barrierefreiheit.html']) {
+  for (const p of ['impressum.html', 'datenschutz.html', 'nutzungsbedingungen.html', 'sicherheit.html', 'barrierefreiheit.html']) {
     const i = build.indexOf(`write('${p}', page(`), seg = build.slice(i, build.indexOf('\nwrite(', i + 10));
     assert.ok(i > 0 && !/,\s*true\)\);/.test(seg), p + ' ohne Sprachwahl (nur deutsch)');
   }

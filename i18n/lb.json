@@ -3784,5 +3784,7 @@
  "In {0} speichern": "An {0} späicheren",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Opmaachen net méiglech: {0}",
- "Nutzungsbedingungen": "Notzungsbedingungen"
+ "Nutzungsbedingungen": "Notzungsbedingungen",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "KI-Resumé – mat der KI op dësem Apparat erstallt, w.e.g. iwwerpréiwen.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Maschinell iwwersat mat der KI op dësem Apparat – w.e.g. virum Verschécken iwwerpréiwen."
 }

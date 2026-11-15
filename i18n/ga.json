@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Sábháil in {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Ní féidir oscailt: {0}",
- "Nutzungsbedingungen": "Téarmaí úsáide"
+ "Nutzungsbedingungen": "Téarmaí úsáide",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Achoimre IS – cruthaithe leis an IS ar an ngléas seo, seiceáil í le do thoil.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Aistrithe go meaisínte leis an IS ar an ngléas seo – seiceáil roimh sheoladh le do thoil."
 }

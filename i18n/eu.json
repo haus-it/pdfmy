@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Gorde hemen: {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Ezin da ireki: {0}",
- "Nutzungsbedingungen": "Erabilera-baldintzak"
+ "Nutzungsbedingungen": "Erabilera-baldintzak",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AA laburpena – gailu honetako AArekin sortua; egiaztatu, mesedez.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Itzulpen automatikoa gailu honetako AArekin – egiaztatu bidali aurretik, mesedez."
 }

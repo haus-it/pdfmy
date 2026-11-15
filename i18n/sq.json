@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Ruaj në {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Hapja nuk është e mundur: {0}",
- "Nutzungsbedingungen": "Kushtet e përdorimit"
+ "Nutzungsbedingungen": "Kushtet e përdorimit",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Përmbledhje nga IA – krijuar me IA-në e kësaj pajisjeje, ju lutemi kontrollojeni.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Përkthyer automatikisht me IA-në e kësaj pajisjeje – kontrollojeni para dërgimit."
 }

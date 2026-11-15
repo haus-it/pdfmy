@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Αποθήκευση στο {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Δεν είναι δυνατό το άνοιγμα: {0}",
- "Nutzungsbedingungen": "Όροι χρήσης"
+ "Nutzungsbedingungen": "Όροι χρήσης",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Σύνοψη ΤΝ – δημιουργήθηκε με την ΤΝ αυτής της συσκευής, ελέγξτε την.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Μηχανική μετάφραση με την ΤΝ αυτής της συσκευής – ελέγξτε πριν από την αποστολή."
 }

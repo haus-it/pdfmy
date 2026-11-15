@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Сачувај у {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Отварање није могуће: {0}",
- "Nutzungsbedingungen": "Услови коришћења"
+ "Nutzungsbedingungen": "Услови коришћења",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Резиме вештачке интелигенције – направљен помоћу ВИ на овом уређају, проверите га.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Машински преведено помоћу ВИ на овом уређају – проверите пре слања."
 }

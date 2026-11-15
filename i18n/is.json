@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Vista í {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Ekki hægt að opna: {0}",
- "Nutzungsbedingungen": "Notkunarskilmálar"
+ "Nutzungsbedingungen": "Notkunarskilmálar",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Gervigreindarsamantekt – búin til með gervigreind þessa tækis, vinsamlegast yfirfarið.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Vélþýtt með gervigreind þessa tækis – vinsamlegast yfirfarið fyrir sendingu."
 }

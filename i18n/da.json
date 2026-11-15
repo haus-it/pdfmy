@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Gem i {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Kan ikke åbnes: {0}",
- "Nutzungsbedingungen": "Brugsbetingelser"
+ "Nutzungsbedingungen": "Brugsbetingelser",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AI-resumé – oprettet med AI på denne enhed, kontrollér venligst.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Maskinoversat med AI på denne enhed – kontrollér venligst før afsendelse."
 }

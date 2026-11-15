@@ -5121,9 +5121,11 @@ document.documentElement.dataset.pdfmyImport = '1';
 postMessage({ type: 'pdfmy:ready' }, location.origin);
 
 /* ---------- Startseite: Hinweis auf eigene Angebote ---------- */
-// Alle Texte stehen fest in der Seite, nichts wird nachgeladen oder gezählt. Je Aufruf der nächste Hinweis (Zähler nur im eigenen Browser), kein Wechsel während man arbeitet
-{ const ads = [...document.querySelectorAll('.promo')], i = (+LS.get('promoNext', 0) || 0) % ads.length;
-  ads.forEach((a, k) => { a.hidden = k !== i; }); LS.set('promoNext', i + 1); }
+// Alle Texte stehen fest in der Seite, nichts wird nachgeladen oder gezählt. Je Aufruf ein zufällig gewählter Hinweis, kein Wechsel während man arbeitet.
+// Nichts wird im Browser gespeichert (15.11.2026): Ein Zähler für Werbung wäre nach § 25 TDDDG nicht „unbedingt erforderlich“
+// (DSK-Orientierungshilfe Digitale Dienste 1.2, Rn. 74, 78, 86) und bräuchte eine Einwilligung. Alten Zähler entfernen.
+{ const ads = [...document.querySelectorAll('.promo')], i = Math.floor(Math.random() * ads.length);
+  ads.forEach((a, k) => { a.hidden = k !== i; }); LS.del('promoNext'); }
 
 /* ---------- Startseite: Aufgaben ---------- */
 const INTENTS = {
@@ -5737,8 +5739,11 @@ function offlineReady() {
 // iPhone/iPad (Safari): ohne Installation löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung – einmal darauf hinweisen
 function iosOfflineHint() {
   const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  if (!ios || navigator.standalone || matchMedia('(display-mode: standalone)').matches || LS.get('iosOfflineHint', false)) return;
-  LS.set('iosOfflineHint', true);
+  // Merker nur im Arbeitsspeicher (höchstens einmal je Sitzung): Ein ohne Zutun gesetzter Eintrag im Browser wäre nach § 25 TDDDG
+  // nicht erforderlich (DSK-Orientierungshilfe Digitale Dienste 1.2, Rn. 80). Alten Eintrag entfernen.
+  LS.del('iosOfflineHint');
+  if (!ios || navigator.standalone || matchMedia('(display-mode: standalone)').matches || iosOfflineHint.shown) return;
+  iosOfflineHint.shown = true;
   toast(I18N.t('Tipp für den Offline-Betrieb: In Safari auf „Teilen“ und „Zum Home-Bildschirm“ tippen. Dann bleibt PDFMy auch ohne Internet dauerhaft verfügbar – sonst löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung.'), 12000);
 }
 $('#btnUpdate').onclick = () => checkUpdates(true);

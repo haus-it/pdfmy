@@ -2248,6 +2248,7 @@
 "KI-Modell für Fragen",
 "KI-Modell wird geladen … {0} % (einmalig, vom Browser)",
 "KI-Telefonassistent",
+"KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.",
 "Kids",
 "Klage beim Finanzgericht",
 "Klage beim Finanzgericht – § 47 Abs. 1 FGO",
@@ -2379,6 +2380,7 @@
 "Markierungen übernehmen:",
 "märz",
 "Maschinell auswertbar (Text erkannt)",
+"Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.",
 "Maßstab",
 "Maßstab 1:{0}{1}.",
 "Maßstab der Zeichnung – „Aus bekannter Strecke“ rechnet ihn aus einer gemessenen Strecke mit bekannter Länge aus",
@@ -2594,6 +2596,7 @@
 "Nur Seiten, z. B. 2-5, 8",
 "Nur Web- und E-Mail-Links sind erlaubt.",
 "Nur wichtig, wenn diese Datei unverändert eingereicht wird – „Automatisch beheben“ speichert alles zusammen beA-tauglich.",
+"Nutzungsbedingungen",
 "Nutzungsrechte-Signatur – technische Freischaltung von Formularfunktionen durch den Hersteller der Erstellungssoftware,",
 "o os de do da dos das que em para com um uma por não nao no na ao sua seu você voce é foi pelo",
 "Ob Büro oder Homeoffice: Alle telefonieren unter einer Rufnummer, mit Placetel oder Webex.",
@@ -3782,5 +3785,4 @@
 "Zweite Datei umdrehen",
 "Zwischen zwei Briefe legen und den ganzen Stapel auf einmal scannen.",
 "Zwischenstand konnte nicht gesichert werden (Gerätespeicher voll?). Die Aufnahmen bleiben, solange diese Seite offen ist.",
-"Zwischenstand merken:",
-"Nutzungsbedingungen"]
+"Zwischenstand merken:"]

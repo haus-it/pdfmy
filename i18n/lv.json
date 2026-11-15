@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Saglabāt {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Atvēršana nav iespējama: {0}",
- "Nutzungsbedingungen": "Lietošanas noteikumi"
+ "Nutzungsbedingungen": "Lietošanas noteikumi",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "MI kopsavilkums – izveidots ar šīs ierīces MI, lūdzu, pārbaudiet.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Mašīntulkots ar šīs ierīces MI – lūdzu, pārbaudiet pirms nosūtīšanas."
 }

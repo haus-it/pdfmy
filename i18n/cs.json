@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Uložit do {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Nelze otevřít: {0}",
- "Nutzungsbedingungen": "Podmínky použití"
+ "Nutzungsbedingungen": "Podmínky použití",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Shrnutí od AI – vytvořeno pomocí AI v tomto zařízení, zkontrolujte je prosím.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Strojově přeloženo pomocí AI v tomto zařízení – před odesláním prosím zkontrolujte."
 }

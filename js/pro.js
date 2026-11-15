@@ -2043,9 +2043,11 @@ $('#trForm').addEventListener('submit', async e => {
       }));
       else if (b.text) b.text = await t(b.text);
     }
-    const md = Tools.toMarkdown(blocks);
+    // Kennzeichnung (vorsorglich nach Art. 50 Abs. 2 VO (EU) 2024/1689): sichtbar als erste Zeile, maschinenlesbar in den Metadaten
+    const aiNote = I18N.t('Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.');
+    const md = `_${aiNote}_\n\n` + Tools.toMarkdown(blocks);
     const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
-    const bytes = await TextPdf.build(PDFLib, { text: md, kind: 'md', title: name, fonts: { fontkit: fk, regular, bold, mono } });
+    const bytes = await TextPdf.build(PDFLib, { text: md, kind: 'md', title: name, fonts: { fontkit: fk, regular, bold, mono }, aiNote });
     newTab();
     await importFiles([new File([bytes], `${name}_${to.toUpperCase()}.pdf`, { type: 'application/pdf' })]);
     state.dirty = true;
@@ -2289,7 +2291,7 @@ function openSummary() {
   $('#sumDlg').showModal();
 }
 $('#sumClose').onclick = () => $('#sumDlg').close();
-$('#sumCopy').onclick = async () => { try { await navigator.clipboard.writeText($('#sumOut').textContent); toast('In die Zwischenablage kopiert.'); } catch { toast('Kopieren nicht möglich.'); } };
+$('#sumCopy').onclick = async () => { try { await navigator.clipboard.writeText($('#sumOut').textContent + '\n\n— ' + I18N.t('KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.')); toast('In die Zwischenablage kopiert.'); } catch { toast('Kopieren nicht möglich.'); } };
 $('#sumGo').onclick = async () => {
   if (aiBusy) return; aiBusy = true; $('#sumGo').disabled = true; aiOut('Wird zusammengefasst …', true);
   let sm;
@@ -2694,16 +2696,13 @@ $('#recDlg').addEventListener('click', async e => {
 });
 $('#recClose').onclick = () => $('#recDlg').close();
 $('#btnRecommend').onclick = () => { $('#moreMenu').open = false; openRecommend(); };
-$('#recHintGo').onclick = () => { LS.set('recAsked', 1); openRecommend(); };
-$('#recHintX').onclick = () => { LS.set('recAsked', 1); $('#recHint').hidden = true; };
-// Nutzungstage zählen (nur im Gerät: Anzahl und letzter Tag, kein Verlauf) – wer PDFMy nur einmal ausprobiert, wird nie gefragt
-const REC_DAYS = 60;
-{ const today = new Date().toISOString().slice(0, 10); if (LS.get('recDay') !== today) { LS.set('recDay', today); LS.set('recDays', (+LS.get('recDays', 0) || 0) + 1); } }
-window.recAfterSave = () => {
-  if ((+LS.get('recDays', 0) || 0) < REC_DAYS || LS.get('recAsked')) return;
-  LS.set('recAsked', 1);   // höchstens einmal – auch wenn der Hinweis übersehen wird
-  setTimeout(() => { if (!document.querySelector('dialog[open]')) $('#recHint').hidden = false; }, 2500);
-};
+$('#recHintGo').onclick = () => openRecommend();
+$('#recHintX').onclick = () => { $('#recHint').hidden = true; };
+// Kein automatischer Empfehlungs-Hinweis mehr (15.11.2026): Das Zählen von Nutzungstagen im Browser für einen Werbehinweis ist nach
+// § 25 TDDDG nicht „unbedingt erforderlich“ (DSK-Orientierungshilfe Digitale Dienste 1.2, Rn. 74, 78, 80) und bräuchte eine Einwilligung.
+// „Weiterempfehlen“ bleibt im Menü „Mehr“ und in der Fußzeile. Früher gespeicherte Zähler entfernen.
+['recDay', 'recDays', 'recAsked'].forEach(k => LS.del(k));
+window.recAfterSave = () => {};
 // Link „Weiterempfehlen“ in der Fußzeile und von den Infoseiten (…/#weiterempfehlen)
 const recHash = () => { if (location.hash === '#weiterempfehlen') { history.replaceState(null, '', location.pathname + location.search); openRecommend(); } };
 addEventListener('hashchange', recHash); setTimeout(recHash, 800);

@@ -3784,5 +3784,7 @@
  "In {0} speichern": "Tallenna kohteeseen {0}",
  "Nextcloud": "Nextcloud",
  "Öffnen nicht möglich: {0}": "Avaaminen ei onnistu: {0}",
- "Nutzungsbedingungen": "Käyttöehdot"
+ "Nutzungsbedingungen": "Käyttöehdot",
+ "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Tekoälyn tiivistelmä – luotu tämän laitteen tekoälyllä, tarkista se.",
+ "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Konekäännetty tämän laitteen tekoälyllä – tarkista ennen lähettämistä."
 }
