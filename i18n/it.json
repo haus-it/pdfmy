@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Impossibile allegare: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Allega il PDF modificato all’e-mail da cui è stato aperto",
  "Das PDF hängt jetzt an der E-Mail.": "Il PDF è ora allegato all’e-mail.",
- "PDF für die E-Mail wird erstellt …": "Creazione del PDF per l’e-mail…"
+ "PDF für die E-Mail wird erstellt …": "Creazione del PDF per l’e-mail…",
+ "„{0}“ aus {1}": "«{0}» da {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Aprire «{0}» da {1} ({2}) in PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} segnala un errore: {1}",
+ "In {0} gespeichert: {1}": "Salvato in {0}: {1}",
+ "In {0} speichern": "Salva in {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Impossibile aprire: {0}"
 }

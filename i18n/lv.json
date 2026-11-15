@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Nevar pievienot: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Pievienot rediģēto PDF e-pastam, no kura tas tika atvērts",
  "Das PDF hängt jetzt an der E-Mail.": "PDF tagad ir pievienots e-pastam.",
- "PDF für die E-Mail wird erstellt …": "Tiek izveidots PDF e-pastam …"
+ "PDF für die E-Mail wird erstellt …": "Tiek izveidots PDF e-pastam …",
+ "„{0}“ aus {1}": "„{0}” no {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Vai atvērt „{0}” no {1} ({2}) PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} ziņo par kļūdu: {1}",
+ "In {0} gespeichert: {1}": "Saglabāts {0}: {1}",
+ "In {0} speichern": "Saglabāt {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Atvēršana nav iespējama: {0}"
 }

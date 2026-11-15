@@ -84,3 +84,66 @@ test('Browser-Erweiterung: Viewer-Adressen von Chrome- und Firefox-Erweiterungen
   }
   delete globalThis.chrome;
 });
+
+test('LibreOffice, Nextcloud, ONLYOFFICE: Pakete vollständig und in allen Sprachen (app-v256)', async () => {
+  const OUT = fs.mkdtempSync(path.join(os.tmpdir(), 'pdfmy-addins3-'));
+  fs.writeFileSync(path.join(OUT, 'index.html'), '<!doctype html><html><head></head><body></body></html>');
+  const write = (rel, data) => { fs.mkdirSync(path.dirname(path.join(OUT, rel)), { recursive: true }); fs.writeFileSync(path.join(OUT, rel), data); };
+  const A = require('../tools/addins.js')({ ROOT, OUT, write, zip: require('../js/tools.js').zip, domain: 'pdfmy.de' });
+  const open = f => Office.readZip(new Uint8Array(fs.readFileSync(path.join(OUT, 'download', f))));
+  // LibreOffice: Manifest, Beschreibung, Menü nach „Exportieren als“, Python mit eingesetzten Texten
+  const lo = open(A.loOxt);
+  for (const f of ['META-INF/manifest.xml', 'description.xml', 'Addons.xcu', 'python/pdfmy.py', 'icons/icon-16.png', 'icons/icon-26.png', 'description/de.txt', 'description/fr.txt']) assert.ok(lo.files.has(f), 'oxt: ' + f);
+  const xcu = await lo.text('Addons.xcu'), desc = await lo.text('description.xml'), py = await lo.text('python/pdfmy.py');
+  assert.match(xcu, /\.uno:PickList\\.uno:ExportAsMenu/); assert.match(xcu, new RegExp(`${A.loOxt.replace(/\./g, '\.')}\|python\|pdfmy\.py\$open_in_pdfmy`));
+  assert.match(desc, /<identifier value="de\.mentor-group\.pdfmy"\/>/); assert.match(desc, /libreoffice\.org\/extensions\/description\/2011/);
+  assert.ok(!py.includes('__TEXTE__'), 'Texte eingesetzt');
+  const texte = JSON.parse(py.match(/^TEXTE = (.*)$/m)[1]);
+  assert.ok(Object.keys(texte).length >= 40 && texte.fr.loNoScan.includes('{0}'));
+  // Nextcloud: App-Ordner pdfmy/, Bezeichnung in allen Sprachen eingesetzt
+  const nc = open(A.ncZip);
+  for (const f of ['pdfmy/appinfo/info.xml', 'pdfmy/lib/AppInfo/Application.php', 'pdfmy/lib/Listener/LoadScripts.php', 'pdfmy/js/pdfmy-main.js', 'pdfmy/img/app.svg']) assert.ok(nc.files.has(f), 'Nextcloud: ' + f);
+  const ncjs = await nc.text('pdfmy/js/pdfmy-main.js');
+  assert.ok(!ncjs.includes('__LABELS__')); assert.match(ncjs, /"fr":"[^"]+"/);
+  assert.match(ncjs, /const PDFMY = 'https:\/\/pdfmy\.de'/);
+  // ONLYOFFICE: config.json mit fester Kennung, Übersetzungen, plugins.js vom eigenen ONLYOFFICE (kein fremder Server)
+  const oo = open(A.ooPlugin), cfg = JSON.parse(await oo.text('config.json'));
+  assert.equal(cfg.guid, 'asc.{CE4224C6-2955-4D9F-9AB3-384A3EBED0B7}'); assert.deepEqual(cfg.variations[0].EditorsSupport, ['word', 'cell', 'slide', 'pdf']);
+  const langs = JSON.parse(await oo.text('translations/langs.json'));
+  assert.ok(langs.length >= 39); for (const l of langs) assert.ok(oo.files.has(`translations/${l}.json`));
+  assert.match(await oo.text('index.html'), /src="\.\.\/v1\/plugins\.js"/);
+  assert.ok(!/https?:\/\/(?!pdfmy\.de|mentor-group\.de)/.test((await oo.text('pdfmy.js')).replace(/^\s*\/\/.*$/gm, '')), 'Plugin spricht nur mit pdfmy.de');
+});
+
+test('Gastgeber Nextcloud/ONLYOFFICE: Seite kommt vom Server, damit das öffnende Fenster verbunden bleibt (app-v256)', () => {
+  const sw = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8'), web = fs.readFileSync(path.join(ROOT, 'tools', 'build-web.js'), 'utf8');
+  for (const s of [sw, web]) assert.match(s, /quelle=\(mysupermail\|nextcloud\|onlyoffice\)/);
+});
+
+test('Outlook-Manifest: Handy-Knopf beim Lesen, Übersetzungen als bt:Override (Microsoft-Schema) (app-v256)', () => {
+  const OUT = fs.mkdtempSync(path.join(os.tmpdir(), 'pdfmy-addins4-'));
+  fs.writeFileSync(path.join(OUT, 'index.html'), '<!doctype html><html><head></head><body></body></html>');
+  const write = (rel, data) => { fs.mkdirSync(path.dirname(path.join(OUT, rel)), { recursive: true }); fs.writeFileSync(path.join(OUT, rel), data); };
+  require('../tools/addins.js')({ ROOT, OUT, write, zip: require('../js/tools.js').zip, domain: 'pdfmy.de' });
+  const x = fs.readFileSync(path.join(OUT, 'download', 'pdfmy-outlook.xml'), 'utf8'), o = fs.readFileSync(path.join(OUT, 'download', 'pdfmy-office.xml'), 'utf8');
+  const mob = x.match(/<MobileFormFactor>[\s\S]*<\/MobileFormFactor>/)?.[0] || '';
+  assert.match(mob, /xsi:type="MobileMessageReadCommandSurface"/); assert.match(mob, /xsi:type="MobileButton"/); assert.match(mob, /xsi:type="bt:MobileIconList"/);
+  for (const n of [25, 32, 48]) for (const s of [1, 2, 3]) assert.ok(mob.includes(`<bt:Image size="${n}" scale="${s}" resid="Mobile.${n}"/>`), `Symbol ${n}@${s}`);
+  for (const n of [25, 32, 48]) assert.ok(fs.existsSync(path.join(OUT, 'office', 'icons', `mobile-${n}.png`)));
+  assert.ok(!/MobileMessageComposeCommandSurface/.test(x), 'kein Verfassen auf dem Handy (von Microsoft nicht unterstützt)');
+  for (const m of [x, o]) {
+    for (const s of m.match(/<bt:String [^>]*>[\s\S]*?<\/bt:String>/g) || []) assert.ok(!/<Override /.test(s), 'in bt:String nur bt:Override');
+    assert.ok(/<bt:Override Locale="fr-FR"/.test(m), 'Übersetzungen vorhanden');
+  }
+});
+
+test('pdfmy Scan: Rechtsklick und „Senden an“ für die Formate, die PDFMy öffnet (1.18.0)', () => {
+  const cs = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Program.cs'), 'utf8');
+  const ext = JSON.parse('[' + cs.match(/static readonly string\[\] MenuExt = \{([^}]+)\}/)[1] + ']');
+  // dieselben Endungen nimmt PDFMy über seine Übergabe-Schnittstelle an (OPEN_EXT in js/app.js)
+  const open = new RegExp(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8').match(/const OPEN_EXT = \/(.+?)\/;/)[1]);
+  for (const e of ext) assert.ok(open.test(e.slice(1)), 'PDFMy öffnet ' + e);
+  assert.ok(cs.includes('Software' + String.fromCharCode(92) + 'Classes' + String.fromCharCode(92) + 'SystemFileAssociations' + String.fromCharCode(92) + '{ext}' + String.fromCharCode(92) + 'shell' + String.fromCharCode(92) + 'PDFMy.Open'), 'Kontextmenü je Endung');
+  assert.match(cs, /file\.EndsWith\("\.pdf", StringComparison\.OrdinalIgnoreCase\) && OpenInApp\(file\)/, 'App-Fenster nur für PDFs');
+  assert.match(fs.readFileSync(path.join(ROOT, 'js', 'pro.js'), 'utf8'), /type: \/\\.pdf\$\/i\.test\(name\) \? 'application\/pdf' : mimeOf\(name\)/);
+});

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- PDFMy für Nextcloud – Mentor GmbH (https://pdfmy.de). Dateiaktion „In PDFMy öffnen“; die Datei geht nur vom Browser an PDFMy. -->
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>pdfmy</id>
+    <name>PDFMy</name>
+    <summary>PDFs in PDFMy öffnen, bearbeiten, unterschreiben – und zurück in Nextcloud speichern</summary>
+    <description><![CDATA[Fügt in „Dateien“ die Aktion **In PDFMy öffnen** hinzu (PDF, Bilder, Word, Excel, PowerPoint, OpenDocument). PDFMy (https://pdfmy.de) öffnet sich in einem neuen Tab; die Datei geht direkt vom Browser an PDFMy – kein Upload an Dritte. Mit **In Nextcloud speichern** kommt das Ergebnis zurück: eine PDF als neue Version derselben Datei, andere Formate als PDF daneben.]]></description>
+    <version>1.0.0</version>
+    <author homepage="https://pdfmy.de">Mentor GmbH</author>
+    <namespace>Pdfmy</namespace>
+    <category>office</category>
+    <category>files</category>
+    <website>https://pdfmy.de/</website>
+    <bugs>https://pdfmy.de/hilfe.html</bugs>
+    <dependencies>
+        <nextcloud min-version="28" max-version="35"/>
+    </dependencies>
+</info>

@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Ní féidir ceangal: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Ceangail an PDF curtha in eagar leis an ríomhphost ar osclaíodh as é",
  "Das PDF hängt jetzt an der E-Mail.": "Tá an PDF ceangailte leis an ríomhphost anois.",
- "PDF für die E-Mail wird erstellt …": "PDF á chruthú don ríomhphost…"
+ "PDF für die E-Mail wird erstellt …": "PDF á chruthú don ríomhphost…",
+ "„{0}“ aus {1}": "“{0}” ó {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Oscail “{0}” ó {1} ({2}) in PDFMy?",
+ "{0} meldet einen Fehler: {1}": "Tuairiscíonn {0} earráid: {1}",
+ "In {0} gespeichert: {1}": "Sábháilte in {0}: {1}",
+ "In {0} speichern": "Sábháil in {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Ní féidir oscailt: {0}"
 }

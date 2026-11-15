@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Methu atodi: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Atodi’r PDF wedi’i olygu i’r e-bost y cafodd ei agor ohono",
  "Das PDF hängt jetzt an der E-Mail.": "Mae’r PDF bellach wedi’i atodi i’r e-bost.",
- "PDF für die E-Mail wird erstellt …": "Wrthi’n creu PDF ar gyfer yr e-bost…"
+ "PDF für die E-Mail wird erstellt …": "Wrthi’n creu PDF ar gyfer yr e-bost…",
+ "„{0}“ aus {1}": "‘{0}’ o {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Agor ‘{0}’ o {1} ({2}) yn PDFMy?",
+ "{0} meldet einen Fehler: {1}": "Mae {0} yn adrodd gwall: {1}",
+ "In {0} gespeichert: {1}": "Wedi’i gadw yn {0}: {1}",
+ "In {0} speichern": "Cadw yn {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Methu agor: {0}"
 }

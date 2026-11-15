@@ -31,11 +31,38 @@ async function attach(f, replace) {
 }
 function openOne(a) {
   say('PDFMy wird geöffnet …');
+  if (mobile()) return openInline(a);
   PdfmyOffice.open({
     get: () => content(a), mode: compose ? 'compose' : '',
     onAttach: f => attach(f, /\.pdf$/i.test(a.name) ? a : null),
     onError: t => say(t, true), onClosed: () => say(''),
   });
+}
+// Outlook für iOS und Android (app-v256): Der Aufgabenbereich ist dort bildschirmfüllend – PDFMy öffnet sich direkt darin
+// (eingebettet, gleiche Herkunft pdfmy.de) statt im Office-Dialog, dessen Unterstützung auf dem Handy nicht zugesagt ist.
+function mobile() {
+  const p = String(Office.context.diagnostics?.platform || Office.context.platform || '');
+  return /^(iOS|Android)$/i.test(p) || new URLSearchParams(location.search).get('mobil') === '1';
+}
+async function openInline(a) {
+  let f;
+  try {
+    if (typeof Office.context.mailbox.item.getAttachmentContentAsync !== 'function') throw new Error(T('Diese Outlook-Fassung gibt Anhänge nicht an Add-ins weiter. Bitte den Anhang öffnen und über „Teilen“ an PDFMy senden.'));
+    f = await content(a);
+  } catch (e) { return say(e.message, true); }
+  const frame = document.createElement('iframe');
+  frame.title = 'PDFMy'; frame.className = 'inline-app'; frame.src = '../einbetten.html';
+  document.body.classList.add('inline'); document.body.append(frame);
+  const back = document.createElement('button'); back.type = 'button'; back.className = 'inline-back'; back.textContent = '← ' + T('Zurück zur E-Mail');
+  back.onclick = () => { frame.remove(); back.remove(); document.body.classList.remove('inline'); say(''); };
+  document.body.prepend(back);
+  await new Promise(res => {
+    const onMsg = e => { if (e.source === frame.contentWindow && e.origin === location.origin && e.data?.type === 'pdfmy:ready') { removeEventListener('message', onMsg); clearInterval(t); res(); } };
+    addEventListener('message', onMsg);
+    const t = setInterval(() => { try { frame.contentWindow.postMessage({ type: 'pdfmy:ping' }, location.origin); } catch { /* lädt */ } }, 300);
+  });
+  const bytes = PdfmyTransfer.fromB64(f.b64), buf = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+  frame.contentWindow.postMessage({ type: 'pdfmy:open-file', name: f.name, bytes: buf }, location.origin, [buf]);
 }
 async function render() {
   const ul = $('#list'); ul.textContent = '';

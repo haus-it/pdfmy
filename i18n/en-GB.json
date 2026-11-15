@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Cannot attach: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Attach the edited PDF to the email it was opened from",
  "Das PDF hängt jetzt an der E-Mail.": "The PDF is now attached to the email.",
- "PDF für die E-Mail wird erstellt …": "Creating PDF for the email…"
+ "PDF für die E-Mail wird erstellt …": "Creating PDF for the email…",
+ "„{0}“ aus {1}": "‘{0}’ from {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Open ‘{0}’ from {1} ({2}) in PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} reports an error: {1}",
+ "In {0} gespeichert: {1}": "Saved to {0}: {1}",
+ "In {0} speichern": "Save to {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Cannot open: {0}"
 }

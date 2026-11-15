@@ -597,6 +597,30 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Umsetzung:** Eigener Leser für PresentationML und ODF-Präsentationen mit fester Folienlage (nicht Fließtext wie bei Word): Master/Layout-Vererbung, Designfarben, Text mit Laufweiten-Schriften, Tabellen, Bilder, Formen, Gruppen, Diagramme aus gespeicherten Werten. Ausgeblendete Folien entfallen wie beim PDF-Export von PowerPoint.
 **Leitplanken:** 1–3 gewahrt (alles lokal, keine neue Verbindung, externe Bildverweise werden nicht geladen, keine Cloud-KI). 4: kein neuer Bedienschritt – Datei öffnen genügt; Hinweis nur bei Vereinfachungen. 5: tests/slides.test.js, Sichtvergleich mit LibreOffice. 6 nicht betroffen.
 
+### Umgesetzt 15.11.2026: Rechtsklick „In PDFMy öffnen“ und Outlook auf dem Handy (app-v256)
+**Anlass (GF 15.11.2026):** Vorschläge 1–3 freigegeben (Manifest-Prüfung, Rechtsklick, Outlook mobil). Microsoft erlaubt in Outlook mobil nur Knöpfe beim Lesen; Verfassen bleibt über „Teilen“.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Rechtsklick nutzt den bestehenden Weg über pdfmy Scan (127.0.0.1, Einmal-Kennwort); Outlook mobil reicht den Anhang im Add-in an das eingebettete PDFMy |
+| 2 Kein Server | passt: keine neue Verbindung; Manifest-Prüfung nur beim Bauen (Microsoft-Dienst, nur das öffentliche Manifest) |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: Menüpunkt dort, wo man ihn sucht; Standardprogramme bleiben unangetastet |
+| 5 Prüfbar | Microsoft-Prüfer „valid“, Registrierungstest, Browser-Test Handy-Modus; offen: echte Geräte |
+| 6 Wenig aktive Inhalte | passt |
+
+### Umgesetzt 15.11.2026: LibreOffice, Nextcloud und ONLYOFFICE (app-v256)
+**Anlass (GF 15.11.2026):** „Baue alles, was Du selber machen kannst“ und „ONLYOFFICE bitte auch schauen“. Aus der Recherche ohne fremde Konten machbar: LibreOffice (vorgemerkt seit 22.10.2026), Nextcloud/openDesk, ONLYOFFICE. **Weiter offen (braucht GF/Konten):** OneDrive/SharePoint-Dateihandler (Registrierung in Entra ID durch den Kunden-Admin), DATEV DMS (Marktplatz-Partnerschaft), Safari (Apple-Entwicklerkonto), Veröffentlichung in Nextcloud-App-Store (AGPL-kompatible Lizenz nötig) und ONLYOFFICE-Marktplatz. ONLYOFFICE-Desktop: Plugin-Schnittstelle liefert kein PDF (Hersteller) – Zurückstellung vom 22.10.2026 bestätigt, Weg bleibt der Drucker „PDFMy“.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: LibreOffice exportiert lokal, pdfmy Scan nur 127.0.0.1; Nextcloud/ONLYOFFICE: Datei kommt vom eigenen Server des Kunden in den Browser, Ergebnis nur zurück an diesen Server |
+| 2 Kein Server, keine Fremddienste | passt: keine Fremdbibliothek (ONLYOFFICE-plugins.js vom eigenen ONLYOFFICE des Kunden), keine neue Verbindung von PDFMy |
+| 3 Ohne Konto und Tracking | passt |
+| 4 Einfach | passt: ein Menüpunkt bzw. eine Dateiaktion im gewohnten Programm; Rückfrage nur beim ersten Öffnen aus fremder Adresse |
+| 5 Prüfbar | tests/addins.test.js, LibreOffice-Test mit echter Installation, Browser-Tests mit nachgebildetem Nextcloud/ONLYOFFICE; offen: echte Nextcloud- und ONLYOFFICE-Docs-Installation |
+| 6 Wenig aktive Inhalte | passt |
+
 ### Umgesetzt 15.11.2026: Browser-Erweiterung für Firefox (app-v255)
 **Anlass:** Recherche „für welche Programme noch Add-ins“ (15.11.2026), Rang 1: Firefox hat in Deutschland rund 15 % (Statista, Juni 2025), die Erweiterung lief nur in Chrome und Edge. Entscheidung GF 15.11.2026: öffentlich bei addons.mozilla.org (Konto der Mentor GmbH). Weitere Kandidaten der Recherche: Nextcloud/openDesk (Dateiaktion „In PDFMy öffnen“), OneDrive/SharePoint-Dateihandler (braucht Microsoft-Anmeldung), LibreOffice, DATEV DMS (Marktplatz-Partnerschaft – Entscheidung GF), Safari (Apple-Konto). Nicht: Gmail/Google Docs (Google-Server, L1/L2), Apple Mail, eM Client, HCL Notes, Kanzleisoftware ohne Add-in-Schnittstelle.
 

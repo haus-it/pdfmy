@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Ekki hægt að hengja við: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Hengja breytta PDF-skjalið við tölvupóstinn sem það var opnað úr",
  "Das PDF hängt jetzt an der E-Mail.": "PDF-skjalið er nú hengt við tölvupóstinn.",
- "PDF für die E-Mail wird erstellt …": "Býr til PDF fyrir tölvupóstinn…"
+ "PDF für die E-Mail wird erstellt …": "Býr til PDF fyrir tölvupóstinn…",
+ "„{0}“ aus {1}": "„{0}“ úr {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Opna „{0}“ úr {1} ({2}) í PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} tilkynnir villu: {1}",
+ "In {0} gespeichert: {1}": "Vistað í {0}: {1}",
+ "In {0} speichern": "Vista í {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Ekki hægt að opna: {0}"
 }

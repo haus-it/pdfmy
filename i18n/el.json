@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Η επισύναψη δεν είναι δυνατή: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Επισύναψη του επεξεργασμένου PDF στο email από το οποίο ανοίχτηκε",
  "Das PDF hängt jetzt an der E-Mail.": "Το PDF επισυνάφθηκε πλέον στο email.",
- "PDF für die E-Mail wird erstellt …": "Δημιουργία PDF για το email …"
+ "PDF für die E-Mail wird erstellt …": "Δημιουργία PDF για το email …",
+ "„{0}“ aus {1}": "«{0}» από {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Άνοιγμα του «{0}» από {1} ({2}) στο PDFMy;",
+ "{0} meldet einen Fehler: {1}": "Το {0} αναφέρει σφάλμα: {1}",
+ "In {0} gespeichert: {1}": "Αποθηκεύτηκε στο {0}: {1}",
+ "In {0} speichern": "Αποθήκευση στο {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Δεν είναι δυνατό το άνοιγμα: {0}"
 }

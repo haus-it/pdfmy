@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Uhänken net méiglech: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Dat beaarbechte PDF un d’E-Mail uhänken, aus där et opgemaach gouf",
  "Das PDF hängt jetzt an der E-Mail.": "De PDF hänkt elo un der E-Mail.",
- "PDF für die E-Mail wird erstellt …": "PDF fir d’E-Mail gëtt erstallt …"
+ "PDF für die E-Mail wird erstellt …": "PDF fir d’E-Mail gëtt erstallt …",
+ "„{0}“ aus {1}": "„{0}“ aus {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "„{0}“ aus {1} ({2}) am PDFMy opmaachen?",
+ "{0} meldet einen Fehler: {1}": "{0} mellt e Feeler: {1}",
+ "In {0} gespeichert: {1}": "An {0} gespäichert: {1}",
+ "In {0} speichern": "An {0} späicheren",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Opmaachen net méiglech: {0}"
 }

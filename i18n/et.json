@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Manustamine pole võimalik: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Lisa redigeeritud PDF meilile, millest see avati",
  "Das PDF hängt jetzt an der E-Mail.": "PDF on nüüd meilile lisatud.",
- "PDF für die E-Mail wird erstellt …": "Luuakse PDF meili jaoks …"
+ "PDF für die E-Mail wird erstellt …": "Luuakse PDF meili jaoks …",
+ "„{0}“ aus {1}": "„{0}“ – {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Kas avada „{0}“ ({1}, {2}) PDFMy-s?",
+ "{0} meldet einen Fehler: {1}": "{0} teatab veast: {1}",
+ "In {0} gespeichert: {1}": "Salvestatud asukohta {0}: {1}",
+ "In {0} speichern": "Salvesta asukohta {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Avamine ei ole võimalik: {0}"
 }

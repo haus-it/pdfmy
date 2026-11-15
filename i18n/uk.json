@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Неможливо додати: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Додати відредагований PDF до листа, з якого його було відкрито",
  "Das PDF hängt jetzt an der E-Mail.": "PDF додано до листа.",
- "PDF für die E-Mail wird erstellt …": "Створення PDF для листа…"
+ "PDF für die E-Mail wird erstellt …": "Створення PDF для листа…",
+ "„{0}“ aus {1}": "«{0}» з {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Відкрити «{0}» з {1} ({2}) у PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} повідомляє про помилку: {1}",
+ "In {0} gespeichert: {1}": "Збережено в {0}: {1}",
+ "In {0} speichern": "Зберегти в {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Не вдалося відкрити: {0}"
 }

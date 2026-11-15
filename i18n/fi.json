@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Liittäminen ei onnistu: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Liitä muokattu PDF sähköpostiin, josta se avattiin",
  "Das PDF hängt jetzt an der E-Mail.": "PDF on nyt liitetty sähköpostiin.",
- "PDF für die E-Mail wird erstellt …": "Luodaan PDF sähköpostia varten …"
+ "PDF für die E-Mail wird erstellt …": "Luodaan PDF sähköpostia varten …",
+ "„{0}“ aus {1}": "”{0}” – {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Avataanko ”{0}” ({1}, {2}) PDFMy:ssä?",
+ "{0} meldet einen Fehler: {1}": "{0} ilmoittaa virheestä: {1}",
+ "In {0} gespeichert: {1}": "Tallennettu kohteeseen {0}: {1}",
+ "In {0} speichern": "Tallenna kohteeseen {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Avaaminen ei onnistu: {0}"
 }

@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Impossible de joindre : {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Joindre le PDF modifié à l’e-mail depuis lequel il a été ouvert",
  "Das PDF hängt jetzt an der E-Mail.": "Le PDF est maintenant joint à l’e-mail.",
- "PDF für die E-Mail wird erstellt …": "Création du PDF pour l’e-mail…"
+ "PDF für die E-Mail wird erstellt …": "Création du PDF pour l’e-mail…",
+ "„{0}“ aus {1}": "« {0} » de {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Ouvrir « {0} » de {1} ({2}) dans PDFMy ?",
+ "{0} meldet einen Fehler: {1}": "{0} signale une erreur : {1}",
+ "In {0} gespeichert: {1}": "Enregistré dans {0} : {1}",
+ "In {0} speichern": "Enregistrer dans {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Ouverture impossible : {0}"
 }

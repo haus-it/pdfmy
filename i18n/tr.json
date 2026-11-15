@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Eklenemiyor: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Düzenlenen PDF'yi açıldığı e-postaya ekle",
  "Das PDF hängt jetzt an der E-Mail.": "PDF artık e-postaya ekli.",
- "PDF für die E-Mail wird erstellt …": "E-posta için PDF oluşturuluyor…"
+ "PDF für die E-Mail wird erstellt …": "E-posta için PDF oluşturuluyor…",
+ "„{0}“ aus {1}": "{1} kaynağından “{0}”",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "{1} ({2}) kaynağındaki “{0}” PDFMy’de açılsın mı?",
+ "{0} meldet einen Fehler: {1}": "{0} bir hata bildiriyor: {1}",
+ "In {0} gespeichert: {1}": "{0} konumuna kaydedildi: {1}",
+ "In {0} speichern": "{0} konumuna kaydet",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Açılamıyor: {0}"
 }

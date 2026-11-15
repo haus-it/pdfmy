@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Nie można dołączyć: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Dołącz edytowany plik PDF do wiadomości e-mail, z której został otwarty",
  "Das PDF hängt jetzt an der E-Mail.": "Plik PDF jest teraz dołączony do wiadomości e-mail.",
- "PDF für die E-Mail wird erstellt …": "Tworzenie pliku PDF dla wiadomości e-mail…"
+ "PDF für die E-Mail wird erstellt …": "Tworzenie pliku PDF dla wiadomości e-mail…",
+ "„{0}“ aus {1}": "„{0}” z {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Otworzyć „{0}” z {1} ({2}) w PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} zgłasza błąd: {1}",
+ "In {0} gespeichert: {1}": "Zapisano w {0}: {1}",
+ "In {0} speichern": "Zapisz w {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Nie można otworzyć: {0}"
 }

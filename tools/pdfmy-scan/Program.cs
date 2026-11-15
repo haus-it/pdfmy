@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.17.0";
+        public const string Version = "1.18.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -85,10 +85,11 @@ namespace PdfmyScan
             }   // aus „Installierte Apps“ – vor der Einzelinstanz-Prüfung
             if (args.Contains("--peer-test")) { Log("Peer-Test: " + Peer.SelfTest()); return; }   // Support: Besitzerprüfung gegen alle laufenden Prozesse (Terminalserver)
 
-            // Doppelklick auf eine PDF im Explorer: "pdfmy-Scan.exe --open <Datei>"
+            // Doppelklick auf eine PDF im Explorer: "pdfmy-Scan.exe --open <Datei>"; „Senden an → PDFMy“ übergibt mehrere Dateien (1.18.0)
             int oi = Array.IndexOf(args, "--open");
-            string openPath = oi >= 0 && oi + 1 < args.Length ? args[oi + 1] : null;
-            if (openPath != null && FileOpen.HandOver(openPath)) return;   // läuft schon → Datei an die laufende Instanz geben
+            var openPaths = oi >= 0 ? args.Skip(oi + 1).Where(a => !a.StartsWith("--")).Take(10).ToList() : new List<string>();
+            string openPath = openPaths.FirstOrDefault();
+            if (openPath != null && openPaths.All(FileOpen.HandOver)) return;   // läuft schon → Dateien an die laufende Instanz geben
             if (Machine.DeferToMachine(args)) return;   // für alle Benutzer installiert: eigene Kopie des Benutzers tritt zurück
 
             bool first;
@@ -107,7 +108,7 @@ namespace PdfmyScan
                 var server = new LocalServer(hub);
                 server.Start();
                 PdfPrinter.Watch();
-                if (openPath != null) FileOpen.Open(openPath);
+                foreach (var f in openPaths) FileOpen.Open(f);
                 _ = hub.RefreshAsync();
                 Application.Run(new TrayContext(hub, args.Contains("--installed"), args.Contains("--updated")));
                 server.Stop();
@@ -1300,7 +1301,8 @@ namespace PdfmyScan
                 file = Path.GetFullPath(file);
                 if (!File.Exists(file)) { Program.Log("Öffnen: Datei nicht gefunden: " + file); return; }
                 file = Secure(file);
-                if (Environment.GetEnvironmentVariable("PDFMY_TEST_NOBROWSER") != "1" && OpenInApp(file)) return;   // installierte PDFMy-App (Chrome/Edge): eigenes Fenster
+                // installierte PDFMy-App (Chrome/Edge): eigenes Fenster – nur für PDFs (die App nimmt laut Manifest nur .pdf an)
+                if (Environment.GetEnvironmentVariable("PDFMY_TEST_NOBROWSER") != "1" && file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) && OpenInApp(file)) return;
                 var b = new byte[16]; using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create()) rng.GetBytes(b);
                 string tok = BitConverter.ToString(b).Replace("-", "").ToLowerInvariant();
                 foreach (var old in tokens.Where(t => t.Value.Value < DateTime.UtcNow.AddMinutes(-5)).ToList()) tokens.TryRemove(old.Key, out _);
@@ -1558,6 +1560,14 @@ namespace PdfmyScan
                     using (var f = k.CreateSubKey("FileAssociations")) f.SetValue(".pdf", ProgId);
                 }
                 using (var k = Registry.CurrentUser.CreateSubKey(@"Software\RegisteredApplications")) k.SetValue("PDFMy", Caps);
+                // Rechtsklick „In PDFMy öffnen“ für alle Formate, die PDFMy umwandeln kann (1.18.0) – unabhängig vom Standardprogramm
+                foreach (var ext in MenuExt)
+                    using (var k = Registry.CurrentUser.CreateSubKey($@"Software\Classes\SystemFileAssociations\{ext}\shell\PDFMy.Open"))
+                    {
+                        k.SetValue("", MenuText()); k.SetValue("Icon", appIco); k.SetValue("MultiSelectModel", "Player");
+                        using (var c = k.CreateSubKey("command")) c.SetValue("", cmd);
+                    }
+                SendTo(exe, appIco, true);
                 RemoveOld();   // Eintrag von 1.6.0 (Mertens GmbH) entfernen; die Standard-App hängt an der ProgId und bleibt erhalten
                 SHChangeNotify(0x08000000, 0, IntPtr.Zero, IntPtr.Zero);   // Explorer: Zuordnungen neu lesen
             }
@@ -1568,11 +1578,47 @@ namespace PdfmyScan
             try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\" + ProgId, false); } catch { }
             try { using (var k = Registry.CurrentUser.OpenSubKey(@"Software\Classes\.pdf\OpenWithProgids", true)) k?.DeleteValue(ProgId, false); } catch { }
             try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\Applications\pdfmy-Scan.exe", false); } catch { }
+            foreach (var ext in MenuExt) try { Registry.CurrentUser.DeleteSubKeyTree($@"Software\Classes\SystemFileAssociations\{ext}\shell\PDFMy.Open", false); } catch { }
+            SendTo(null, null, false);
             try { Registry.CurrentUser.DeleteSubKeyTree(Root, false); } catch { }
             RemoveOld();
             DeleteIfEmpty(@"Software\Mentor GmbH");
             try { using (var k = Registry.CurrentUser.OpenSubKey(@"Software\RegisteredApplications", true)) k?.DeleteValue("PDFMy", false); } catch { }
             try { SHChangeNotify(0x08000000, 0, IntPtr.Zero, IntPtr.Zero); } catch { }
+        }
+        // Formate für Rechtsklick und „Senden an“: was PDFMy selbst öffnet bzw. umwandelt (Office, OpenDocument, Bilder, E-Mails, Text)
+        static readonly string[] MenuExt = { ".pdf", ".docx", ".xlsx", ".pptx", ".ppsx", ".odt", ".ods", ".odp", ".rtf", ".txt", ".csv", ".md", ".xps", ".oxps", ".eml", ".msg", ".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".tif", ".tiff", ".heic" };
+        // Text in der Sprache von Windows (häufigste Sprachen, sonst Englisch)
+        static string MenuText()
+        {
+            switch (System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
+            {
+                case "de": return "In PDFMy öffnen";
+                case "fr": return "Ouvrir dans PDFMy";
+                case "it": return "Apri in PDFMy";
+                case "es": return "Abrir en PDFMy";
+                case "nl": return "Openen in PDFMy";
+                case "pl": return "Otwórz w PDFMy";
+                case "pt": return "Abrir no PDFMy";
+                case "cs": return "Otevřít v PDFMy";
+                case "tr": return "PDFMy'de aç";
+                default: return "Open in PDFMy";
+            }
+        }
+        // „Senden an → PDFMy“: Verknüpfung im SendTo-Ordner des Benutzers (mehrere Dateien auf einmal)
+        static void SendTo(string exe, string ico, bool add)
+        {
+            string lnk = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SendTo), "PDFMy.lnk");
+            try
+            {
+                if (!add) { if (File.Exists(lnk)) File.Delete(lnk); return; }
+                dynamic sh = Activator.CreateInstance(Type.GetTypeFromProgID("WScript.Shell"));
+                dynamic sc = sh.CreateShortcut(lnk);
+                sc.TargetPath = exe; sc.Arguments = "--open"; sc.Description = MenuText();
+                if (ico != null) sc.IconLocation = ico.Trim('"').Split(',')[0] + ",0";
+                sc.Save();
+            }
+            catch (Exception e) { Program.Log("Senden an: " + e.Message); }
         }
         // Symbol aus dem Programm neben die EXE legen (Windows braucht für DefaultIcon eine Datei); null = nicht möglich.
         // Neuer Dateiname je Symbolstand: Windows hält Symbole im Cache – bei gleichem Pfad bliebe das alte (bis 1.8.0 leere) Symbol stehen.

@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Toevoegen niet mogelijk: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "De bewerkte pdf toevoegen aan de e-mail waaruit deze is geopend",
  "Das PDF hängt jetzt an der E-Mail.": "De pdf is nu aan de e-mail toegevoegd.",
- "PDF für die E-Mail wird erstellt …": "Pdf voor de e-mail wordt gemaakt…"
+ "PDF für die E-Mail wird erstellt …": "Pdf voor de e-mail wordt gemaakt…",
+ "„{0}“ aus {1}": "„{0}” uit {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "„{0}” uit {1} ({2}) openen in PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} meldt een fout: {1}",
+ "In {0} gespeichert: {1}": "Opgeslagen in {0}: {1}",
+ "In {0} speichern": "Opslaan in {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Openen niet mogelijk: {0}"
 }

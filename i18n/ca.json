@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "No es pot adjuntar: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Adjunta el PDF editat al correu des del qual es va obrir",
  "Das PDF hängt jetzt an der E-Mail.": "El PDF ja està adjuntat al correu.",
- "PDF für die E-Mail wird erstellt …": "S'està creant el PDF per al correu…"
+ "PDF für die E-Mail wird erstellt …": "S'està creant el PDF per al correu…",
+ "„{0}“ aus {1}": "«{0}» de {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Voleu obrir «{0}» de {1} ({2}) a PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} informa d'un error: {1}",
+ "In {0} gespeichert: {1}": "Desat a {0}: {1}",
+ "In {0} speichern": "Desa a {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "No es pot obrir: {0}"
 }

@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Kan ikke vedhæfte: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Vedhæft den redigerede PDF til den e-mail, den blev åbnet fra",
  "Das PDF hängt jetzt an der E-Mail.": "PDF'en er nu vedhæftet e-mailen.",
- "PDF für die E-Mail wird erstellt …": "Opretter PDF til e-mailen …"
+ "PDF für die E-Mail wird erstellt …": "Opretter PDF til e-mailen …",
+ "„{0}“ aus {1}": "»{0}« fra {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Åbn »{0}« fra {1} ({2}) i PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} melder en fejl: {1}",
+ "In {0} gespeichert: {1}": "Gemt i {0}: {1}",
+ "In {0} speichern": "Gem i {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Kan ikke åbnes: {0}"
 }

@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Ezin da erantsi: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Erantsi editatutako PDFa ireki zen mezuari",
  "Das PDF hängt jetzt an der E-Mail.": "PDFa mezuari erantsita dago orain.",
- "PDF für die E-Mail wird erstellt …": "Mezurako PDFa sortzen…"
+ "PDF für die E-Mail wird erstellt …": "Mezurako PDFa sortzen…",
+ "„{0}“ aus {1}": "«{0}» ({1})",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "«{0}» ({1}, {2}) PDFMy-n ireki?",
+ "{0} meldet einen Fehler: {1}": "{0}(e)k errore bat jakinarazi du: {1}",
+ "In {0} gespeichert: {1}": "{0}(e)n gordeta: {1}",
+ "In {0} speichern": "Gorde hemen: {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Ezin da ireki: {0}"
 }

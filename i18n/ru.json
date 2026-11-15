@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Невозможно прикрепить: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Прикрепить отредактированный PDF к письму, из которого он был открыт",
  "Das PDF hängt jetzt an der E-Mail.": "PDF прикреплён к письму.",
- "PDF für die E-Mail wird erstellt …": "Создание PDF для письма…"
+ "PDF für die E-Mail wird erstellt …": "Создание PDF для письма…",
+ "„{0}“ aus {1}": "«{0}» из {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Открыть «{0}» из {1} ({2}) в PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} сообщает об ошибке: {1}",
+ "In {0} gespeichert: {1}": "Сохранено в {0}: {1}",
+ "In {0} speichern": "Сохранить в {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Не удалось открыть: {0}"
 }

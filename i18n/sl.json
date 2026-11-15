@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Prilaganje ni mogoče: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Priloži urejeni PDF e-poštnemu sporočilu, iz katerega je bil odprt",
  "Das PDF hängt jetzt an der E-Mail.": "PDF je zdaj priložen e-poštnemu sporočilu.",
- "PDF für die E-Mail wird erstellt …": "Ustvarjanje PDF-ja za e-poštno sporočilo …"
+ "PDF für die E-Mail wird erstellt …": "Ustvarjanje PDF-ja za e-poštno sporočilo …",
+ "„{0}“ aus {1}": "„{0}“ iz {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Odprem „{0}“ iz {1} ({2}) v PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} sporoča napako: {1}",
+ "In {0} gespeichert: {1}": "Shranjeno v {0}: {1}",
+ "In {0} speichern": "Shrani v {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Odpiranje ni mogoče: {0}"
 }

@@ -22,7 +22,7 @@ pwa() {
 app=$(pwa)
 for f in "$@"; do
   p=$(readlink -f -- "$f" 2>/dev/null || printf '%s' "$f")
-  if [ -n "$app" ]; then
+  if [ -n "$app" ] && case "$p" in *.[pP][dD][fF]) true;; *) false;; esac; then   # App-Fenster nur für PDFs (die App nimmt nur .pdf an)
     e=$(sed -n 's/^Exec=//p' "$app" | head -n 1 | sed 's/ %[UuFf]//g')
     if [ -n "$e" ]; then sh -c "$e \"\$1\"" pdfmy "$p" >/dev/null 2>&1 & continue; fi
   fi

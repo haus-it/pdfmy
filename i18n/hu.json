@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Nem lehet csatolni: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "A szerkesztett PDF csatolása ahhoz az e-mailhez, amelyből megnyitották",
  "Das PDF hängt jetzt an der E-Mail.": "A PDF most már csatolva van az e-mailhez.",
- "PDF für die E-Mail wird erstellt …": "PDF készítése az e-mailhez…"
+ "PDF für die E-Mail wird erstellt …": "PDF készítése az e-mailhez…",
+ "„{0}“ aus {1}": "„{0}” – {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Megnyitja a PDFMy-ban a(z) „{0}” fájlt ({1}, {2})?",
+ "{0} meldet einen Fehler: {1}": "{0} hibát jelez: {1}",
+ "In {0} gespeichert: {1}": "Mentve ide ({0}): {1}",
+ "In {0} speichern": "Mentés ide: {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "A megnyitás nem lehetséges: {0}"
 }

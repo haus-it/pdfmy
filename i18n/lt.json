@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Pridėti nepavyko: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Pridėti redaguotą PDF prie el. laiško, iš kurio jis buvo atidarytas",
  "Das PDF hängt jetzt an der E-Mail.": "PDF pridėtas prie el. laiško.",
- "PDF für die E-Mail wird erstellt …": "Kuriamas PDF el. laiškui…"
+ "PDF für die E-Mail wird erstellt …": "Kuriamas PDF el. laiškui…",
+ "„{0}“ aus {1}": "„{0}“ iš {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Atidaryti „{0}“ iš {1} ({2}) PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} praneša apie klaidą: {1}",
+ "In {0} gespeichert: {1}": "Įrašyta į {0}: {1}",
+ "In {0} speichern": "Įrašyti į {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Atidaryti neįmanoma: {0}"
 }

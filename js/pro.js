@@ -2788,7 +2788,8 @@ async function openFromHash() {
     if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Fehler ' + r.status);
     const name = decodeURIComponent(r.headers.get('X-Pdfmy-Name') || 'Dokument.pdf');
     if (state.pages.length) { if (state.dirty && !confirm(`„${name}“ öffnen? Das aktuelle Dokument wurde noch nicht gespeichert und wird geschlossen.`)) return; resetDoc(); }
-    await importFiles([new File([await r.blob()], name, { type: 'application/pdf' })]);
+    // Rechtsklick „In PDFMy öffnen“ (pdfmy Scan 1.18.0): auch Word, Excel, Bilder, E-Mails – Dateityp aus dem Namen
+    await importFiles([new File([await r.blob()], name, { type: /\.pdf$/i.test(name) ? 'application/pdf' : mimeOf(name) })]);
     state.dirty = false;   // Original liegt unverändert auf dem Rechner
   } catch (e) { status(`Die Datei konnte nicht geöffnet werden: ${e.message}`); toast('Datei konnte nicht geöffnet werden – bitte noch einmal doppelt anklicken.', 6000); }
 }
@@ -5225,6 +5226,64 @@ $('#attList').addEventListener('click', e => {
     for (const o of MSM_ORIGINS) { try { window.opener.postMessage({ type: 'pdfmy:bereit', version: 1 }, o); } catch {} }
     setTimeout(hello, 500);
   };
+  hello();
+})();
+
+/* ---------- Schnittstelle Nextcloud und ONLYOFFICE Docs (Protokoll „host-pdfmy“ Version 1, app-v256) ----------
+   Die PDFMy-App für Nextcloud (tools/pdfmy-nextcloud) bzw. das ONLYOFFICE-Plugin (tools/pdfmy-onlyoffice) öffnet
+   https://pdfmy.de/?quelle=nextcloud bzw. ?quelle=onlyoffice und reicht die Datei herein:
+   1. PDFMy meldet sich: { type: 'pdfmy:bereit', version: 1 } (an das öffnende Fenster, jede Herkunft – verrät nichts)
+   2. Der Gastgeber schickt: { type: 'host:datei', version: 1, name, bytes, speichern }
+   3. „In Nextcloud speichern“: { type: 'pdfmy:ergebnis', version: 1, name, contentType, bytes } – nur an die Herkunft der Datei
+   4. Der Gastgeber bestätigt: { type: 'host:gespeichert', version: 1, name } oder { type: 'host:fehler', version: 1, grund }
+   Beide laufen auf beliebigen Servern der Kunden, darum fragt PDFMy vor dem Öffnen, ob die Datei von dieser Adresse kommen soll. */
+(() => {
+  const HOST = { nextcloud: 'Nextcloud', onlyoffice: 'ONLYOFFICE' }[new URLSearchParams(location.search).get('quelle')];
+  if (!HOST || !window.opener) return;
+  let from = null, got = false, origName = 'Dokument.pdf';
+  const bar = document.createElement('div');
+  bar.setAttribute('role', 'region');
+  bar.setAttribute('aria-label', HOST);
+  bar.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:none;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:#1f2333;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.25);font:14px system-ui,sans-serif;max-width:calc(100vw - 32px);flex-wrap:wrap';
+  bar.innerHTML = '<span class="nc-text" role="status"></span><button type="button" class="nc-save" style="border:0;border-radius:8px;padding:7px 14px;background:#0082c9;color:#fff;font-weight:600;cursor:pointer"></button>';
+  document.body.appendChild(bar);
+  const text = bar.querySelector('.nc-text'), save = bar.querySelector('.nc-save');
+  save.textContent = I18N.t(`In ${HOST} speichern`);
+  const say = s => { text.textContent = I18N.t(s); };   // Wörterbuch mit Platzhaltern: deutscher Text mit eingesetzten Werten
+  save.onclick = async () => {
+    if (!state.pages.length) return toast('Es ist kein Dokument geöffnet.');
+    save.disabled = true; say('PDF wird erstellt …');
+    try {
+      if (typeof ocrRunning !== 'undefined' && ocrRunning) await runOcrAll();
+      const bytes = await buildPdf(docPages(), state.meta, { noOcr: true, onPage: () => {} });
+      const buf = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+      window.opener.postMessage({ type: 'pdfmy:ergebnis', version: 1, name: origName.replace(/\.[^.]+$/, '') + '.pdf', contentType: 'application/pdf', bytes: buf }, from, [buf]);
+      say(`Wird in ${HOST} gespeichert …`);
+    } catch (e) { console.error(e); save.disabled = false; toast(`Speichern nicht möglich: ${e.message}`); }
+  };
+  addEventListener('message', async e => {
+    if (e.source !== window.opener || (from && e.origin !== from)) return;
+    const d = e.data;
+    if (!d || d.version !== 1) return;
+    if (d.type === 'host:gespeichert') { state.dirty = false; save.disabled = false; return say(`In ${HOST} gespeichert: ${String(d.name || '')}`); }
+    if (d.type === 'host:fehler') { save.disabled = false; return say(`${HOST} meldet einen Fehler: ${String(d.grund || '')}`); }
+    if (d.type !== 'host:datei' || got) return;
+    if (!(d.bytes instanceof ArrayBuffer) || !d.bytes.byteLength) return;
+    const name = String(d.name || 'Dokument.pdf').replace(/[\\/:*?"<>|\u0000-\u001f]/g, '_').slice(0, 180);
+    // Fremde Server: nur nach Rückfrage öffnen (wie ein Download)
+    if (!confirm(I18N.t(`„${name}“ aus ${HOST} (${new URL(e.origin).host}) in PDFMy öffnen?`))) return;
+    got = true; from = e.origin; origName = name;
+    try {
+      if (state.pages.length) resetDoc();
+      await importFiles([new File([d.bytes], name, { type: mimeOf(name) })]);
+      state.dirty = false;
+      say(`„${name}“ aus ${HOST}`);
+      save.hidden = !d.speichern;
+      bar.style.display = 'flex';
+    } catch (err) { console.error(err); toast(`Öffnen nicht möglich: ${err.message}`); }
+  });
+  let tries = 0;
+  const hello = () => { if (got || tries++ > 20 || !window.opener) return; try { window.opener.postMessage({ type: 'pdfmy:bereit', version: 1 }, '*'); } catch {} setTimeout(hello, 500); };
   hello();
 })();
 

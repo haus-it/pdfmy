@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.7.2';
+our $VERSION = '1.8.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -679,7 +679,8 @@ sub open_local {
   my $path = shift;
   return 0 unless defined $path && -f $path && -r _;
   $path = secure_copy($path);
-  if ($IS_MAC && -x '/usr/bin/open' && !$ENV{PDFMY_TEST_NOBROWSER} and my $app = pwa_app()) {
+  # App-Fenster (Chrome/Edge-App) nur für PDFs – die App nimmt laut Manifest nur .pdf an; Word, Bilder … über den Browser (1.8.0)
+  if ($IS_MAC && -x '/usr/bin/open' && !$ENV{PDFMY_TEST_NOBROWSER} && $path =~ /\.pdf$/i and my $app = pwa_app()) {
     if (system('/usr/bin/open', '-a', $app, $path) == 0) { logl("Öffnen in der PDFMy-App: $path"); return 'app'; }
   }
   make_path("$DIR/open");

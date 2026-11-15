@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Det går inte att bifoga: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Bifoga den redigerade PDF-filen i e-postmeddelandet som den öppnades från",
  "Das PDF hängt jetzt an der E-Mail.": "PDF-filen är nu bifogad i e-postmeddelandet.",
- "PDF für die E-Mail wird erstellt …": "Skapar PDF för e-postmeddelandet …"
+ "PDF für die E-Mail wird erstellt …": "Skapar PDF för e-postmeddelandet …",
+ "„{0}“ aus {1}": "”{0}” från {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Öppna ”{0}” från {1} ({2}) i PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} rapporterar ett fel: {1}",
+ "In {0} gespeichert: {1}": "Sparad i {0}: {1}",
+ "In {0} speichern": "Spara i {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Kan inte öppnas: {0}"
 }

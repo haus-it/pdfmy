@@ -88,6 +88,10 @@ if [ -d "$APP" ]; then
   $PB -c "Add :CFBundleDocumentTypes:0:LSHandlerRank string Alternate" "$PL"
   $PB -c "Add :CFBundleDocumentTypes:0:LSItemContentTypes array" "$PL"
   $PB -c "Add :CFBundleDocumentTypes:0:LSItemContentTypes:0 string com.adobe.pdf" "$PL"
+  # Weitere Formate (1.8.0): erscheinen in „Öffnen mit → PDFMy“, PDFMy wandelt sie um; Standard bleibt das bisherige Programm
+  i=1; for u in org.openxmlformats.wordprocessingml.document org.openxmlformats.spreadsheetml.sheet org.openxmlformats.presentationml.presentation org.oasis-open.opendocument.text org.oasis-open.opendocument.spreadsheet org.oasis-open.opendocument.presentation public.rtf public.plain-text public.comma-separated-values-text net.daringfireball.markdown com.apple.mail.email public.image; do
+    $PB -c "Add :CFBundleDocumentTypes:0:LSItemContentTypes:$i string $u" "$PL"; i=$((i+1))
+  done
   # Symbol von pdfmy.de (falls offline: Standardsymbol)
   if /usr/bin/curl -sf -m 10 -o "$DIR/icon.png" https://pdfmy.de/icons/mentor-512.png; then
     /usr/bin/sips -s format icns "$DIR/icon.png" --out "$APP/Contents/Resources/applet.icns" >/dev/null 2>&1

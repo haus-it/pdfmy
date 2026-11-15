@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Ma jistax jiġi mehmuż: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Ehmeż il-PDF editjat mal-email li minnha nfetaħ",
  "Das PDF hängt jetzt an der E-Mail.": "Il-PDF issa mehmuż mal-email.",
- "PDF für die E-Mail wird erstellt …": "Qed jinħoloq il-PDF għall-email…"
+ "PDF für die E-Mail wird erstellt …": "Qed jinħoloq il-PDF għall-email…",
+ "„{0}“ aus {1}": "“{0}” minn {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Tiftaħ “{0}” minn {1} ({2}) f’PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} jirrapporta żball: {1}",
+ "In {0} gespeichert: {1}": "Issejvjat f’{0}: {1}",
+ "In {0} speichern": "Issejvja f’{0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Ma jistax jinfetaħ: {0}"
 }

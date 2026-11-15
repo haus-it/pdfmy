@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Nu se poate atașa: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Atașați PDF-ul editat la e-mailul din care a fost deschis",
  "Das PDF hängt jetzt an der E-Mail.": "PDF-ul este acum atașat la e-mail.",
- "PDF für die E-Mail wird erstellt …": "Se creează PDF-ul pentru e-mail…"
+ "PDF für die E-Mail wird erstellt …": "Se creează PDF-ul pentru e-mail…",
+ "„{0}“ aus {1}": "„{0}” din {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Deschideți „{0}” din {1} ({2}) în PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} raportează o eroare: {1}",
+ "In {0} gespeichert: {1}": "Salvat în {0}: {1}",
+ "In {0} speichern": "Salvare în {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Deschiderea nu este posibilă: {0}"
 }

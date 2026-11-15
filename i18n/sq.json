@@ -3776,5 +3776,12 @@
  "Anhängen nicht möglich: {0}": "Bashkëngjitja nuk është e mundur: {0}",
  "Das bearbeitete PDF an die E-Mail anhängen, aus der es geöffnet wurde": "Bashkëngjite PDF-në e redaktuar në emailin nga i cili u hap",
  "Das PDF hängt jetzt an der E-Mail.": "PDF-ja tani është bashkëngjitur në email.",
- "PDF für die E-Mail wird erstellt …": "Po krijohet PDF-ja për emailin …"
+ "PDF für die E-Mail wird erstellt …": "Po krijohet PDF-ja për emailin …",
+ "„{0}“ aus {1}": "„{0}“ nga {1}",
+ "„{0}“ aus {1} ({2}) in PDFMy öffnen?": "Të hapet „{0}“ nga {1} ({2}) në PDFMy?",
+ "{0} meldet einen Fehler: {1}": "{0} raporton një gabim: {1}",
+ "In {0} gespeichert: {1}": "U ruajt në {0}: {1}",
+ "In {0} speichern": "Ruaj në {0}",
+ "Nextcloud": "Nextcloud",
+ "Öffnen nicht möglich: {0}": "Hapja nuk është e mundur: {0}"
 }

@@ -134,7 +134,7 @@ pwa() {
 app=\$(pwa)
 for f in "\$@"; do
   p=\$(readlink -f -- "\$f" 2>/dev/null || printf '%s' "\$f")
-  if [ -n "\$app" ]; then
+  if [ -n "\$app" ] && case "\$p" in *.[pP][dD][fF]) true;; *) false;; esac; then   # App-Fenster nur für PDFs (die App nimmt nur .pdf an)
     e=\$(sed -n 's/^Exec=//p' "\$app" | head -n 1 | sed 's/ %[UuFf]//g')
     if [ -n "\$e" ]; then sh -c "\$e \"\\\$1\"" pdfmy "\$p" >/dev/null 2>&1 & continue; fi
   fi
@@ -158,7 +158,7 @@ GenericName=PDF-Programm
 Comment=PDFs öffnen, bearbeiten, unterschreiben und scannen – im Browser, ohne Upload
 Exec="$DIR/pdfmy-open" %F
 Icon=$ICON
-MimeType=application/pdf;
+MimeType=application/pdf;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.presentationml.presentation;application/vnd.oasis.opendocument.text;application/vnd.oasis.opendocument.spreadsheet;application/vnd.oasis.opendocument.presentation;application/rtf;text/csv;text/markdown;message/rfc822;application/vnd.ms-outlook;application/oxps;application/vnd.ms-xpsdocument;image/png;image/jpeg;image/gif;image/webp;image/bmp;image/tiff;image/heic;
 Categories=Office;Viewer;Graphics;
 Terminal=false
 StartupNotify=false
