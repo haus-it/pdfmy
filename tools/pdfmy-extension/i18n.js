@@ -7,6 +7,15 @@ const T = (key, ...subs) => chrome.i18n.getMessage(key, subs.map(String)) || key
 (() => {
   document.documentElement.lang = chrome.i18n.getUILanguage().split('-')[0] || 'de';
   for (const el of document.querySelectorAll('[data-i18n]')) el.textContent = T(el.dataset.i18n);
-  for (const el of document.querySelectorAll('[data-i18n-html]')) el.innerHTML = T(el.dataset.i18nHtml);
+  // Ohne innerHTML: nur <b>…</b> und <a href="https://pdfmy.de/…">…</a> werden als Elemente aufgebaut, alles andere bleibt Text
+  for (const el of document.querySelectorAll('[data-i18n-html]')) {
+    el.textContent = '';
+    for (const part of T(el.dataset.i18nHtml).split(/(<b>[^<]*<\/b>|<a href="https:\/\/pdfmy\.de\/[^"]*"[^>]*>[^<]*<\/a>)/)) {
+      const b = /^<b>([^<]*)<\/b>$/.exec(part), a = /^<a href="(https:\/\/pdfmy\.de\/[^"]*)"[^>]*>([^<]*)<\/a>$/.exec(part);
+      if (b) { const e = document.createElement('b'); e.textContent = b[1]; el.append(e); }
+      else if (a) { const e = document.createElement('a'); e.href = a[1]; e.target = '_blank'; e.rel = 'noopener'; e.textContent = a[2]; el.append(e); }
+      else if (part) el.append(document.createTextNode(part));
+    }
+  }
   if (document.title && document.querySelector('title[data-i18n]')) document.title = T(document.querySelector('title').dataset.i18n);
 })();
