@@ -278,7 +278,6 @@
  "Scannen": "Scanadh",
  "Scanner einrichten": "Socraigh scanóir",
  "Scanner einrichten – PDFMy": "Socraigh scanóir – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Is fearr a oibríonn scananna ag 300 dpi i liathscála. Glac grianghraif fóin i solas maith agus gan scáthanna. Is féidir sonraí litreach a cheartú ar dheis am ar bith; meabhraíonn PDFMy ceartúcháin de réir seoltóra.",
  "Schlagwörter": "Clibeanna",
  "Schnellstart": "Tús tapa",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Scríobh chugainn go hachomair cad atá á lorg agat – cuirfimid leis an gcabhair agus déanfaimid teagmháil leat:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Polasaithe",
  "Unter": "Faoi",
  "Updates:": "Nuashonruithe:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan do gach úsáideoir"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan do gach úsáideoir",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Is fearr a oibríonn scananna ag 300 dpi i liathscála. Ullmhaíonn PDFMy féin grianghraif fóin ghráinneacha (solas íseal) agus leathanaigh a bhfuil solas míchothrom orthu roimh an aithint – ach is fearr fós iad a ghlacadh i solas maith agus gan scáthanna. Is féidir sonraí litreach a cheartú ar dheis am ar bith; meabhraíonn PDFMy ceartúcháin de réir seoltóra."
 }

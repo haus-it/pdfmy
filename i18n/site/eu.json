@@ -278,7 +278,6 @@
  "Scannen": "Eskaneatu",
  "Scanner einrichten": "Eskanerra konfiguratu",
  "Scanner einrichten – PDFMy": "Eskanerra konfiguratu – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "300 dpi-ko gris-eskalako eskaneatzeek funtzionatzen dute onena. Atera mugikorreko argazkiak argi onarekin eta itzalik gabe. Gutunaren datuak edonoiz zuzen daitezke eskuinean; PDFMy-k igorle bakoitzeko zuzenketak gogoratzen ditu.",
  "Schlagwörter": "Etiketak",
  "Schnellstart": "Hasiera azkarra",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Idatzi iezaguzu laburki zer bilatzen duzun; laguntza osatuko dugu eta erantzungo dizugu:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Gidalerroak",
  "Unter": "Gako honetan:",
  "Updates:": "Eguneratzeak:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan erabiltzaile guztientzat"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan erabiltzaile guztientzat",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "300 dpi-ko gris-eskalako eskaneatzeek funtzionatzen dute onena. PDFMy-k berak prestatzen ditu ezagutzaren aurretik mugikorreko argazki pikortsuak (argi gutxi) eta modu irregularrean argiztatutako orriak; hala ere, onena da argi onarekin eta itzalik gabe ateratzea. Gutunaren datuak edonoiz zuzen daitezke eskuinean; PDFMy-k igorle bakoitzeko zuzenketak gogoratzen ditu."
 }

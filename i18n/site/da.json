@@ -278,7 +278,6 @@
  "Scannen": "Scanning",
  "Scanner einrichten": "Opsæt scanner",
  "Scanner einrichten – PDFMy": "Opsæt scanner – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Scanninger med 300 dpi i gråtoner virker bedst. Tag mobilfotos i godt lys og uden skygger. Brevdata kan til enhver tid rettes til højre; PDFMy husker rettelser for hver afsender.",
  "Schlagwörter": "Tags",
  "Schnellstart": "Kom hurtigt i gang",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Skriv kort til os, hvad De søger – vi udvider hjælpen og vender tilbage:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Politikker",
  "Unter": "Under",
  "Updates:": "Opdateringer:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan for alle brugere"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan for alle brugere",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Scanninger med 300 dpi i gråtoner virker bedst. Kornede mobilfotos (lidt lys) og ujævnt belyste sider forbereder PDFMy selv før genkendelsen – men tag stadig helst billederne i godt lys og uden skygger. Brevdata kan til enhver tid rettes til højre; PDFMy husker rettelser for hver afsender."
 }

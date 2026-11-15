@@ -278,7 +278,6 @@
  "Scannen": "Skenuoti",
  "Scanner einrichten": "Skenerio nustatymas",
  "Scanner einrichten – PDFMy": "Skenerio nustatymas – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Geriausiai veikia 300 dpi pilkų atspalvių nuskaitymai. Telefonu fotografuokite gerai apšviestoje vietoje ir be šešėlių. Laiško duomenis dešinėje galima bet kada pataisyti; PDFMy įsimena pataisymus kiekvienam siuntėjui.",
  "Schlagwörter": "Žymos",
  "Schnellstart": "Greita pradžia",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Trumpai parašykite, ko ieškote – papildysime pagalbą ir atsakysime:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Strategijos",
  "Unter": "Rakte",
  "Updates:": "Naujinimai:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan visiems naudotojams"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan visiems naudotojams",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Geriausiai veikia 300 dpi pilkų atspalvių nuskaitymai. Grūdėtas telefono nuotraukas (silpnas apšvietimas) ir netolygiai apšviestus puslapius PDFMy prieš atpažinimą paruošia pats – vis dėlto geriausia fotografuoti gerai apšviestoje vietoje ir be šešėlių. Laiško duomenis dešinėje galima bet kada pataisyti; PDFMy įsimena pataisymus kiekvienam siuntėjui."
 }

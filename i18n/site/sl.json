@@ -278,7 +278,6 @@
  "Scannen": "Skeniranje",
  "Scanner einrichten": "Nastavitev skenerja",
  "Scanner einrichten – PDFMy": "Nastavitev skenerja – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Najbolje delujejo skeni s 300 dpi v sivinah. Fotografije s telefonom posnemite pri dobri svetlobi in brez senc. Podatke pisma lahko desno kadar koli popravite; PDFMy si zapomni popravke za vsakega pošiljatelja.",
  "Schlagwörter": "Oznake",
  "Schnellstart": "Hitri začetek",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Na kratko nam napišite, kaj iščete – dopolnili bomo pomoč in se Vam oglasili:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Pravilniki",
  "Unter": "Pod",
  "Updates:": "Posodobitve:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan za vse uporabnike"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan za vse uporabnike",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Najbolje delujejo skeni s 300 dpi v sivinah. Zrnate fotografije s telefonom (malo svetlobe) in neenakomerno osvetljene strani PDFMy pred prepoznavanjem pripravi sam – kljub temu je najbolje fotografirati pri dobri svetlobi in brez senc. Podatke pisma lahko desno kadar koli popravite; PDFMy si zapomni popravke za vsakega pošiljatelja."
 }

@@ -278,7 +278,6 @@
  "Scannen": "Scanare",
  "Scanner einrichten": "Configurare scaner",
  "Scanner einrichten – PDFMy": "Configurare scaner – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Scanările la 300 dpi în tonuri de gri funcționează cel mai bine. Fotografiați cu telefonul la lumină bună și fără umbre. Datele scrisorii pot fi corectate oricând în dreapta; PDFMy reține corecturile pentru fiecare expeditor.",
  "Schlagwörter": "Etichete",
  "Schnellstart": "Start rapid",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Scrieți-ne pe scurt ce căutați – completăm ajutorul și vă răspundem:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Politici",
  "Unter": "Sub",
  "Updates:": "Actualizări:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan pentru toți utilizatorii"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan pentru toți utilizatorii",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Scanările la 300 dpi în tonuri de gri funcționează cel mai bine. Fotografiile granulate făcute cu telefonul (lumină slabă) și paginile iluminate neuniform sunt pregătite de PDFMy înainte de recunoaștere – totuși, cel mai bine fotografiați la lumină bună și fără umbre. Datele scrisorii pot fi corectate oricând în dreapta; PDFMy reține corecturile pentru fiecare expeditor."
 }

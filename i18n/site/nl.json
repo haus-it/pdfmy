@@ -278,7 +278,6 @@
  "Scannen": "Scannen",
  "Scanner einrichten": "Scanner instellen",
  "Scanner einrichten – PDFMy": "Scanner instellen – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Scans met 300 dpi in grijstinten werken het best. Maak telefoonfoto's bij goed licht en zonder schaduw. Briefgegevens kunt u rechts altijd corrigeren; PDFMy onthoudt correcties per afzender.",
  "Schlagwörter": "Labels",
  "Schnellstart": "Snel starten",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Schrijf ons kort wat u zoekt – wij vullen de hulp aan en nemen contact op:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Beleidsregels",
  "Unter": "Onder",
  "Updates:": "Updates:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan voor alle gebruikers"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan voor alle gebruikers",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Scans met 300 dpi in grijstinten werken het best. Korrelige telefoonfoto’s (weinig licht) en ongelijkmatig belichte pagina’s bereidt PDFMy vóór de herkenning zelf voor – toch maakt u ze het best bij goed licht en zonder schaduw. Briefgegevens kunt u rechts altijd corrigeren; PDFMy onthoudt correcties per afzender."
 }

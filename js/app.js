@@ -2001,12 +2001,14 @@ function resetWorker(reason, slot) {
   }
   if (reason) console.warn('Texterkennung neu gestartet:', reason);
 }
+// Einstellungen der App für jeden Rechenkern (Sauvola-Schwellwert, siehe Imaging.OCR_PARAMS)
+const ocrSetup = async w => { await w.setParameters(Imaging.OCR_PARAMS); return w; };
 function startWorker(sl) {
   if (!pool.some(x => x.w)) status('Starte Texterkennung …', 0);
   sl.w = Tesseract.createWorker(ocrPrimary(), 1, {
     workerPath: abs('vendor/tesseract/worker.min.js'), corePath: abs('vendor/tesseract/core'), langPath: abs('vendor/tesseract/lang'),
     logger: m => { if (m.status === 'recognizing text' && state.ocrLabel && ocrBusyJobs === 1) status(`Texterkennung ${state.ocrLabel}: ${Math.round(m.progress * 100)} %`, m.progress); },
-  });
+  }).then(ocrSetup);
   sl.w.catch(() => { sl.w = null; });   // Start fehlgeschlagen → beim nächsten Mal neu versuchen
 }
 // Freien Rechenkern holen (oder warten, bis einer frei wird)
@@ -2026,7 +2028,7 @@ async function recognize(img) {
   let timer;
   try {
     const w = await sl.w;
-    const job = w.recognize(Imaging.unline(img), {}, { text: true, blocks: true });   // ohne Tabellenlinien – sonst liest Tesseract „|“/„[“ und lässt Zellen aus
+    const job = w.recognize(Imaging.ocrCopy(img), {}, { text: true, blocks: true });   // ohne Tabellenlinien (sonst liest Tesseract „|“/„[“ und lässt Zellen aus), körnige Fotos geglättet
     const timeout = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('Zeitüberschreitung der Texterkennung')), ocrTimeout()); });
     var { data } = await Promise.race([job, timeout]);
   } catch (e) { resetWorker(e.message, sl); throw e; }
@@ -2129,13 +2131,13 @@ function recognizeLangs(img, langs) {
     if (langCombo !== combo) {
       if (langWorker) (await langWorker.catch(() => null))?.terminate().catch(() => {});
       langCombo = combo;
-      langWorker = Tesseract.createWorker(langs, 1, { workerPath: abs('vendor/tesseract/worker.min.js'), corePath: abs('vendor/tesseract/core'), langPath: abs('vendor/tesseract/lang') });
+      langWorker = Tesseract.createWorker(langs, 1, { workerPath: abs('vendor/tesseract/worker.min.js'), corePath: abs('vendor/tesseract/core'), langPath: abs('vendor/tesseract/lang') }).then(ocrSetup);
       langWorker.catch(() => { langWorker = null; langCombo = ''; });
     }
     const w = await langWorker; let timer;
     try {
       const timeout = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('Zeitüberschreitung der Texterkennung')), ocrTimeout() * 1.5); });
-      const { data } = await Promise.race([w.recognize(Imaging.unline(img), {}, { text: true, blocks: true }), timeout]);
+      const { data } = await Promise.race([w.recognize(Imaging.ocrCopy(img), {}, { text: true, blocks: true }), timeout]);
       return ocrResult(data, img);
     } catch (e) { (await langWorker.catch(() => null))?.terminate().catch(() => {}); langWorker = null; langCombo = ''; throw e; }
     finally { clearTimeout(timer); }

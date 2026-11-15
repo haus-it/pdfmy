@@ -278,7 +278,6 @@
  "Scannen": "Escanejar",
  "Scanner einrichten": "Configurar l'escàner",
  "Scanner einrichten – PDFMy": "Configurar l'escàner – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Els escanejos a 300 ppp en escala de grisos són els que funcionen millor. Feu les fotos amb el mòbil amb bona llum i sense ombres. Les dades de la carta es poden corregir en qualsevol moment a la dreta; PDFMy recorda les correccions per remitent.",
  "Schlagwörter": "Etiquetes",
  "Schnellstart": "Inici ràpid",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Escriviu-nos breument què cerqueu; ampliarem l'ajuda i us respondrem:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Directives",
  "Unter": "A",
  "Updates:": "Actualitzacions:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan per a tots els usuaris"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan per a tots els usuaris",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Els escanejos a 300 ppp en escala de grisos són els que funcionen millor. PDFMy prepara automàticament abans del reconeixement les fotos de mòbil granulades (poca llum) i les pàgines il·luminades de manera desigual; tot i així, és millor fer les fotos amb bona llum i sense ombres. Les dades de la carta es poden corregir en qualsevol moment a la dreta; PDFMy recorda les correccions per remitent."
 }

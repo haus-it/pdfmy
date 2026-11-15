@@ -278,7 +278,6 @@
  "Scannen": "Tarama",
  "Scanner einrichten": "Tarayıcı kurulumu",
  "Scanner einrichten – PDFMy": "Tarayıcı kurulumu – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "300 dpi gri tonlamalı taramalar en iyi sonucu verir. Telefon fotoğraflarını iyi ışıkta ve gölgesiz çekin. Mektup verileri sağda her zaman düzeltilebilir; PDFMy düzeltmeleri gönderene göre hatırlar.",
  "Schlagwörter": "Etiketler",
  "Schnellstart": "Hızlı başlangıç",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Ne aradığınızı bize kısaca yazın – yardımı genişletir ve size dönüş yaparız:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "İlkeler",
  "Unter": "Şu anahtar altında:",
  "Updates:": "Güncellemeler:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: tüm kullanıcılar için pdfmy Scan"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: tüm kullanıcılar için pdfmy Scan",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "300 dpi gri tonlamalı taramalar en iyi sonucu verir. Grenli telefon fotoğraflarını (az ışık) ve eşit olmayan şekilde aydınlatılmış sayfaları PDFMy tanımadan önce kendisi hazırlar – yine de en iyisi iyi ışıkta ve gölgesiz çekmektir. Mektup verileri sağda her zaman düzeltilebilir; PDFMy düzeltmeleri gönderene göre hatırlar."
 }

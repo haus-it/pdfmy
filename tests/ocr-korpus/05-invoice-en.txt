@@ -1,0 +1,14 @@
+Northwind Supplies Ltd. · 221 Baker Street · London NW1 6XE
+Invoice No. INV-2026-0042
+Invoice date: 28 October 2026
+Due date: 27 November 2026
+Bill to: Mentor Example GmbH, Paderborn, Germany
+Description Qty Unit price Amount
+Laser toner cartridge black 4 89.50 358.00
+A4 paper, 80 g, box of 2,500 sheets 10 21.90 219.00
+Shipping and handling 1 15.00 15.00
+Subtotal 592.00
+VAT reverse charge 0.00
+Total due GBP 592.00
+Please quote the invoice number with your payment.
+Thank you for your business.

@@ -278,7 +278,6 @@
  "Scannen": "Skanuj",
  "Scanner einrichten": "Konfiguracja skanera",
  "Scanner einrichten – PDFMy": "Konfiguracja skanera – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Najlepiej sprawdzają się skany 300 dpi w skali szarości. Zdjęcia telefonem rób przy dobrym świetle i bez cieni. Dane pisma możesz w każdej chwili poprawić po prawej; PDFMy zapamiętuje poprawki dla każdego nadawcy.",
  "Schlagwörter": "Tagi",
  "Schnellstart": "Szybki start",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Napisz nam krótko, czego szukasz – uzupełnimy pomoc i odezwiemy się:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Zasady",
  "Unter": "W kluczu",
  "Updates:": "Aktualizacje:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan dla wszystkich użytkowników"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan dla wszystkich użytkowników",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Najlepiej sprawdzają się skany 300 dpi w skali szarości. Ziarniste zdjęcia z telefonu (słabe światło) i nierównomiernie oświetlone strony PDFMy sam przygotowuje przed rozpoznaniem – mimo to najlepiej rób zdjęcia przy dobrym świetle i bez cieni. Dane pisma możesz w każdej chwili poprawić po prawej; PDFMy zapamiętuje poprawki dla każdego nadawcy."
 }

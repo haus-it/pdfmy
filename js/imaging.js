@@ -485,6 +485,44 @@
     return { orig: c, processed: enhance(c, autoMode || mode), cropped, angle, autoMode };
   }
 
+  /* Körnung auf dem Papier (Handyfoto bei wenig Licht): mittlerer Helligkeitssprung zwischen Nachbarpunkten auf hellen Flächen
+     abseits der Schrift. Saubere Scans liegen unter 1, körnige Fotos nach der Aufbereitung bei 10 und mehr (Messkorpus tests/ocr-korpus). */
+  function grain(d, W, H) {
+    let s = 0, n = 0;
+    for (let y = 1; y < H - 1; y += 2) for (let x = 1; x < W - 2; x += 2) {
+      const i = (y * W + x) * 4, v = d[i], r = d[i + 4];
+      if (v < 170 || r < 170) continue;
+      let ok = true;
+      for (let dy = -1; dy <= 1 && ok; dy++) for (let dx = -1; dx <= 2; dx++) if (d[((y + dy) * W + x + dx) * 4] < 140) { ok = false; break; }
+      if (ok) { s += Math.abs(v - r); n++; }
+    }
+    return n ? s / n : 0;
+  }
+  // 3×3-Mittelwert (Graustufen) – glättet die Körnung, damit die Schwellwertbildung der Texterkennung keine Punkte als Zeichen liest
+  function smooth(d, W, H) {
+    const g = new Float32Array(W * H), t = new Float32Array(W * H);
+    for (let i = 0; i < g.length; i++) g[i] = d[i * 4] * 0.299 + d[i * 4 + 1] * 0.587 + d[i * 4 + 2] * 0.114;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; t[i] = (g[x ? i - 1 : i] + g[i] + g[x < W - 1 ? i + 1 : i]) / 3; }
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x, v = (t[y ? i - W : i] + t[i] + t[y < H - 1 ? i + W : i]) / 3; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v; }
+  }
+  const GRAIN_MAX = 4;
+  // Einstellungen für Tesseract: Sauvola-Schwellwert (örtlich statt global) – hält Lichtverlauf und Körnung aus (Messkorpus: Zeichenfehler 18 % → 0,4 %)
+  const OCR_PARAMS = { thresholding_method: '2' };
+
+  // Arbeitskopie für die Texterkennung: ohne Tabellenlinien (DocDetect.removeLines), körnige Fotos geglättet; sonst das Original
+  function ocrCopy(src) {
+    if (!src?.width) return src;
+    const c = canvas(src.width, src.height), ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(src, 0, 0);
+    const img = ctx.getImageData(0, 0, c.width, c.height);
+    const lines = typeof DocDetect !== 'undefined' && DocDetect.removeLines ? DocDetect.removeLines(img.data, c.width, c.height) : false;
+    const grainy = grain(img.data, c.width, c.height) > GRAIN_MAX;
+    if (grainy) smooth(img.data, c.width, c.height);
+    if (!lines && !grainy) return src;
+    ctx.putImageData(img, 0, 0);
+    return c;
+  }
+
   // Arbeitskopie ohne Tabellenlinien für die Texterkennung (DocDetect.removeLines); ohne Linien das Original
   function unline(src) {
     if (!src?.width || typeof DocDetect === 'undefined' || !DocDetect.removeLines) return src;
@@ -496,5 +534,5 @@
     return c;
   }
 
-  root.Imaging = { colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
+  root.Imaging = { grain, smooth, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
 })(self);

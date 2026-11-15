@@ -278,7 +278,6 @@
  "Scannen": "Skanna",
  "Scanner einrichten": "Konfigurera skanner",
  "Scanner einrichten – PDFMy": "Konfigurera skanner – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Skanningar med 300 dpi i gråskala fungerar bäst. Ta mobilfoton i bra ljus och utan skuggor. Brevdata kan när som helst korrigeras till höger; PDFMy kommer ihåg korrigeringar per avsändare.",
  "Schlagwörter": "Taggar",
  "Schnellstart": "Snabbstart",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Skriv kort till oss vad du söker – vi kompletterar hjälpen och hör av oss:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Principer",
  "Unter": "Under",
  "Updates:": "Uppdateringar:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan för alla användare"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan för alla användare",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Skanningar med 300 dpi i gråskala fungerar bäst. Korniga mobilfoton (lite ljus) och ojämnt belysta sidor förbereder PDFMy själv före igenkänningen – men ta ändå helst bilderna i bra ljus och utan skuggor. Brevdata kan när som helst korrigeras till höger; PDFMy kommer ihåg korrigeringar per avsändare."
 }

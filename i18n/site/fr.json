@@ -278,7 +278,6 @@
  "Scannen": "Numériser",
  "Scanner einrichten": "Configurer un scanner",
  "Scanner einrichten – PDFMy": "Configurer un scanner – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Les scans à 300 dpi en niveaux de gris donnent les meilleurs résultats. Prenez les photos au téléphone avec une bonne lumière et sans ombre. Les données du courrier peuvent être corrigées à tout moment à droite ; PDFMy mémorise les corrections pour chaque expéditeur.",
  "Schlagwörter": "Étiquettes",
  "Schnellstart": "Démarrage rapide",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Écrivez-nous brièvement ce que vous cherchez – nous compléterons l’aide et vous répondrons :",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Stratégies",
  "Unter": "Sous",
  "Updates:": "Mises à jour :",
- "Windows: pdfmy Scan für alle Benutzer": "Windows : pdfmy Scan pour tous les utilisateurs"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows : pdfmy Scan pour tous les utilisateurs",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Les scans à 300 dpi en niveaux de gris donnent les meilleurs résultats. PDFMy prépare lui-même avant la reconnaissance les photos de téléphone granuleuses (peu de lumière) et les pages éclairées de façon inégale – mieux vaut tout de même photographier avec une bonne lumière et sans ombre. Les données du courrier peuvent être corrigées à tout moment à droite ; PDFMy mémorise les corrections pour chaque expéditeur."
 }

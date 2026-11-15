@@ -592,6 +592,11 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
 **Offen aus Rang 4–7:** ~~Abschlusszertifikat versiegeln (Rang 5)~~ (umgesetzt app-v244, siehe unten), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
 
+### Umgesetzt 15.11.2026: Texterkennung gemessen, körnige Fotos lesbar (app-v252)
+**Anlass (GF 15.11.2026: „OCR Genau“):** Wettbewerbsvergleich 11/2026, Rang 1 – keine OCR-Messung vorhanden, Modus „Genau“ mit `tessdata_best` vorgeschlagen.
+**Umsetzung:** Messkorpus (6 Briefe, Grundwahrheit, Scanbedingungen von sauber bis körniges Handyfoto) mit Test-Gate; Messung im Tesseract-Kern der App mit derselben Aufbereitung. Befund: `tessdata_best` bringt 0,37 % statt 0,40 % Zeichenfehler bei doppelter Zeit → **kein Modus „Genau“** (L4: keine Auswahl ohne Nutzen). Stattdessen Sauvola-Schwellwert und Glättung körniger Bilder nur in der OCR-Kopie: Zeichenfehler gesamt 18,5 % → 0,40 %.
+**Leitplanken:** 1–3 gewahrt (alles lokal, keine neuen Dateien zum Laden, keine Cloud-KI). 4: keine neue Einstellung, wirkt von selbst. 5: Test-Gate tests/ocr.test.js, im Browser am echten Ablauf geprüft. 6 nicht betroffen.
+
 ### Umgesetzt 15.11.2026: PDFMy in Firmen verteilen (pdfmy Scan 1.17.0, app-v251)
 **Anlass (GF 15.11.2026: „weitere Lücken schließen“):** Wettbewerbsvergleich 11/2026, Rang 5 (c) – Acrobat und PDF24 bieten Firmenpakete, pdfmy Scan ließ sich nur je Benutzer einrichten.
 **Umsetzung:** Schalter `--install-all-users`/`--uninstall-all-users` (still mit `--quiet`), Programme-Ordner und Start für jede Anmeldung, keine Selbstaktualisierung (Updates verteilt die IT), Richtlinien `DisableUpdates` und `DisablePrinter`, Seite firmen.html. Ein MSI-Paket folgt nur bei Nachfrage (Intune, SCCM und Startskripte arbeiten mit der .exe).

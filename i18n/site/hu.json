@@ -278,7 +278,6 @@
  "Scannen": "Szkennelés",
  "Scanner einrichten": "Szkenner beállítása",
  "Scanner einrichten – PDFMy": "Szkenner beállítása – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "A 300 dpi-s, szürkeárnyalatos szkennelés működik a legjobban. A telefonos fényképeket jó fényben, árnyék nélkül készítse. A levéladatok jobb oldalt bármikor javíthatók; a PDFMy feladónként megjegyzi a javításokat.",
  "Schlagwörter": "Címkék",
  "Schnellstart": "Gyors kezdés",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Írja meg nekünk röviden, mit keres – kiegészítjük a súgót, és jelentkezünk:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Házirendek",
  "Unter": "A(z)",
  "Updates:": "Frissítések:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan minden felhasználónak"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan minden felhasználónak",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "A 300 dpi-s, szürkeárnyalatos szkennelés működik a legjobban. A szemcsés (gyenge fényben készült) telefonos fotókat és az egyenetlenül megvilágított oldalakat a PDFMy a felismerés előtt maga készíti elő – ennek ellenére a legjobb jó fényben, árnyék nélkül fényképezni. A levéladatok jobb oldalt bármikor javíthatók; a PDFMy feladónként megjegyzi a javításokat."
 }

@@ -278,7 +278,6 @@
  "Scannen": "Skannimine",
  "Scanner einrichten": "Skanneri seadistamine",
  "Scanner einrichten – PDFMy": "Skanneri seadistamine – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Kõige paremini toimivad 300 dpi halltoonides skaneeringud. Pildistage telefoniga hea valguse käes ja ilma varjudeta. Kirja andmeid saab paremal igal ajal parandada; PDFMy jätab parandused iga saatja kohta meelde.",
  "Schlagwörter": "Sildid",
  "Schnellstart": "Kiirjuhend",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Kirjutage meile lühidalt, mida otsite – täiendame abi ja võtame teiega ühendust:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Poliitikad",
  "Unter": "Võtmes",
  "Updates:": "Värskendused:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan kõigile kasutajatele"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan kõigile kasutajatele",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Kõige paremini toimivad 300 dpi halltoonides skaneeringud. Teralised telefonipildid (vähe valgust) ja ebaühtlaselt valgustatud lehed valmistab PDFMy enne tuvastamist ise ette – siiski on kõige parem pildistada hea valguse käes ja ilma varjudeta. Kirja andmeid saab paremal igal ajal parandada; PDFMy jätab parandused iga saatja kohta meelde."
 }

@@ -278,7 +278,6 @@
  "Scannen": "Σάρωση",
  "Scanner einrichten": "Ρύθμιση σαρωτή",
  "Scanner einrichten – PDFMy": "Ρύθμιση σαρωτή – PDFMy",
- "Scans mit 300 dpi in Graustufen funktionieren am besten. Handyfotos bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Οι σαρώσεις στα 300 dpi σε κλίμακα του γκρι λειτουργούν καλύτερα. Τραβήξτε φωτογραφίες με το κινητό σε καλό φωτισμό και χωρίς σκιές. Τα στοιχεία της επιστολής μπορούν να διορθωθούν δεξιά ανά πάσα στιγμή· το PDFMy απομνημονεύει τις διορθώσεις ανά αποστολέα.",
  "Schlagwörter": "Ετικέτες",
  "Schnellstart": "Γρήγορη έναρξη",
  "Schreiben Sie uns kurz, was Sie suchen – wir ergänzen die Hilfe und melden uns:": "Γράψτε μας σύντομα τι αναζητάτε – θα συμπληρώσουμε τη βοήθεια και θα επικοινωνήσουμε μαζί σας:",
@@ -1450,5 +1449,6 @@
  "Richtlinien": "Πολιτικές",
  "Unter": "Στο",
  "Updates:": "Ενημερώσεις:",
- "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan για όλους τους χρήστες"
+ "Windows: pdfmy Scan für alle Benutzer": "Windows: pdfmy Scan για όλους τους χρήστες",
+ "Scans mit 300 dpi in Graustufen funktionieren am besten. Körnige Handyfotos (wenig Licht) und ungleichmäßig belichtete Seiten bereitet PDFMy vor der Erkennung selbst auf – am besten trotzdem bei gutem Licht und ohne Schatten aufnehmen. Briefdaten lassen sich rechts jederzeit korrigieren; PDFMy merkt sich Korrekturen je Absender.": "Οι σαρώσεις στα 300 dpi σε κλίμακα του γκρι λειτουργούν καλύτερα. Τις κοκκώδεις φωτογραφίες κινητού (λίγο φως) και τις σελίδες με άνισο φωτισμό τις επεξεργάζεται το ίδιο το PDFMy πριν από την αναγνώριση – ωστόσο είναι καλύτερο να φωτογραφίζετε σε καλό φωτισμό και χωρίς σκιές. Τα στοιχεία της επιστολής μπορούν να διορθωθούν δεξιά ανά πάσα στιγμή· το PDFMy απομνημονεύει τις διορθώσεις ανά αποστολέα."
 }
