@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – atidaryti PDF tiesiai"
+ },
+ "extDesc": {
+  "message": "Vienu spustelėjimu atidaro naršyklės PDF failus PDFMy, o ne Adobe programoje. Vietoje, be įkėlimo. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Atidaryti PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Atidaryti šį PDF PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Failo nepavyko įkelti. Piktogramoje „PDFMy“ leiskite prieigą prie svetainių (jungiklis „Atidaryti automatiškai“)."
+ },
+ "errHttp": {
+  "message": "Serveris nepateikė failo (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Failas didesnis nei 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Nuoroda neveda į PDF failą."
+ },
+ "errNoUrl": {
+  "message": "PDF adresas nerastas."
+ },
+ "errExpired": {
+  "message": "Perdavimo laikas baigėsi. Dar kartą spustelėkite PDF."
+ },
+ "popupAuto": {
+  "message": "Automatiškai atidaryti PDF PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "o ne Adobe ar naršyklės peržiūros programoje"
+ },
+ "popupOpen": {
+  "message": "Atidaryti šį PDF PDFMy"
+ },
+ "popupTarget": {
+  "message": "Atidaryti"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy vidinis (Mentor)"
+ },
+ "popupHint": {
+  "message": "Dešinysis spustelėjimas ant nuorodos → „Atidaryti PDFMy“. Failas lieka jūsų įrenginyje – be įkėlimo."
+ },
+ "popupHelp": {
+  "message": "Pagalba"
+ },
+ "popupPrivacy": {
+  "message": "Duomenų apsauga"
+ },
+ "stateOn": {
+  "message": "Įjungta: spustelėti PDF failai atsidaro PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Norėdami įjungti, vieną kartą leiskite prieigą prie svetainių (bakstelėkite jungiklį)."
+ },
+ "stateOff": {
+  "message": "Išjungta: PDF failai atsidaro kaip įprasta. Dešinysis spustelėjimas → „Atidaryti PDFMy“ vis tiek veikia."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Sveiki"
+ },
+ "welcomeH1": {
+  "message": "Beveik baigta"
+ },
+ "welcomeP1": {
+  "message": "Nuo šiol naršyklėje spustelėti PDF failai atsidaro tiesiai <b>PDFMy</b> – skaityti, pasirašyti, užtamsinti, archyvuoti. Failas lieka jūsų įrenginyje, <b>be įkėlimo</b>."
+ },
+ "welcomeP2": {
+  "message": "Tam plėtiniui vieną kartą reikia jūsų leidimo įkelti PDF failus iš svetainių. Naršyklė tuoj paklaus."
+ },
+ "welcomeHowTo": {
+  "message": "Kaip naudotis PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Spustelėkite PDF</b> – jis atsidaro PDFMy, o ne Adobe ar naršyklės peržiūros programoje."
+ },
+ "welcomeStep2": {
+  "message": "<b>Dešinysis spustelėjimas ant nuorodos</b> → „Atidaryti PDFMy“ – net kai automatinis atidarymas išjungtas."
+ },
+ "welcomeStep3": {
+  "message": "<b>Piktograma „PDFMy“</b> viršuje dešinėje (jei reikia, prisekite per plėtinių piktogramą): automatinis atidarymas įj./išj., perimti dabartinį PDF."
+ },
+ "welcomeStep4": {
+  "message": "Vis dėlto norite matyti PDF senoje peržiūros programoje? Naršyklėje spustelėkite „Atgal“."
+ },
+ "welcomePrivacyH": {
+  "message": "Duomenų apsauga"
+ },
+ "welcomePrivacy": {
+  "message": "Plėtinys įkelia tik jūsų atidaromą PDF ir perduoda jį tiesiai naršyklėje į pdfmy.de. Jis nesiunčia duomenų Mentor Group ar trečiosioms šalims, nesaugo istorijos ir neturi statistikos. Prieigą prie svetainių bet kada galite vėl išjungti piktogramoje „PDFMy“. Teikėjas: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Rekvizitai</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Duomenų apsauga</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Įjungta. Galite uždaryti šį langą ir spustelėti PDF."
+ },
+ "welcomeDenied": {
+  "message": "Neįjungta. Dešinysis spustelėjimas → „Atidaryti PDFMy“ vis tiek veikia."
+ }
+}

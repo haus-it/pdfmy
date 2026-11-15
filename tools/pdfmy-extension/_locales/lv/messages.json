@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – atvērt PDF tieši"
+ },
+ "extDesc": {
+  "message": "Ar vienu klikšķi atver pārlūka PDF failus PDFMy, nevis Adobe skatītājā. Lokāli, bez augšupielādes. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Atvērt PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Atvērt šo PDF PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Failu neizdevās ielādēt. Lūdzu, ikonā „PDFMy” atļaujiet piekļuvi vietnēm (slēdzis „Atvērt automātiski”)."
+ },
+ "errHttp": {
+  "message": "Serveris nepiegādāja failu (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Fails ir lielāks par 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Saite neved uz PDF failu."
+ },
+ "errNoUrl": {
+  "message": "PDF adrese netika atrasta."
+ },
+ "errExpired": {
+  "message": "Nodošanas laiks ir beidzies. Lūdzu, noklikšķiniet uz PDF vēlreiz."
+ },
+ "popupAuto": {
+  "message": "Automātiski atvērt PDF PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "nevis Adobe vai pārlūka skatītājā"
+ },
+ "popupOpen": {
+  "message": "Atvērt šo PDF PDFMy"
+ },
+ "popupTarget": {
+  "message": "Atvērt"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy iekšējais (Mentor)"
+ },
+ "popupHint": {
+  "message": "Labais klikšķis uz saites → „Atvērt PDFMy”. Fails paliek jūsu ierīcē – bez augšupielādes."
+ },
+ "popupHelp": {
+  "message": "Palīdzība"
+ },
+ "popupPrivacy": {
+  "message": "Datu aizsardzība"
+ },
+ "stateOn": {
+  "message": "Ieslēgts: noklikšķinātie PDF faili atveras PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Lai ieslēgtu, vienreiz atļaujiet piekļuvi vietnēm (pieskarieties slēdzim)."
+ },
+ "stateOff": {
+  "message": "Izslēgts: PDF faili atveras kā parasti. Labais klikšķis → „Atvērt PDFMy” tomēr darbojas."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Laipni lūdzam"
+ },
+ "welcomeH1": {
+  "message": "Gandrīz gatavs"
+ },
+ "welcomeP1": {
+  "message": "Turpmāk PDF faili, uz kuriem noklikšķināt pārlūkā, atveras tieši <b>PDFMy</b> – lasīšanai, parakstīšanai, aizklāšanai, arhivēšanai. Fails paliek jūsu ierīcē, <b>bez augšupielādes</b>."
+ },
+ "welcomeP2": {
+  "message": "Šim nolūkam paplašinājumam vienreiz nepieciešama jūsu atļauja ielādēt PDF failus no vietnēm. Pārlūks drīz to jautās."
+ },
+ "welcomeHowTo": {
+  "message": "Kā lietot PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Noklikšķiniet uz PDF</b> – tas atveras PDFMy, nevis Adobe vai pārlūka skatītājā."
+ },
+ "welcomeStep2": {
+  "message": "<b>Labais klikšķis uz saites</b> → „Atvērt PDFMy” – arī tad, ja automātiskā atvēršana ir izslēgta."
+ },
+ "welcomeStep3": {
+  "message": "<b>Ikona „PDFMy”</b> augšā pa labi (ja nepieciešams, piespraudiet to ar paplašinājumu ikonu): automātiskā atvēršana ieslēgta/izslēgta, pārņemt pašreizējo PDF."
+ },
+ "welcomeStep4": {
+  "message": "Vēlaties tomēr skatīt PDF vecajā skatītājā? Pārlūkā noklikšķiniet uz „Atpakaļ”."
+ },
+ "welcomePrivacyH": {
+  "message": "Datu aizsardzība"
+ },
+ "welcomePrivacy": {
+  "message": "Paplašinājums ielādē tikai jūsu atvērto PDF un nodod to tieši pārlūkā vietnei pdfmy.de. Tas nesūta datus Mentor Group vai trešajām personām, nesaglabā vēsturi un nesatur statistiku. Piekļuvi vietnēm jebkurā laikā varat atkal izslēgt ikonā „PDFMy”. Pakalpojuma sniedzējs: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Impresums</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Datu aizsardzība</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Ieslēgts. Varat aizvērt šo logu un noklikšķināt uz PDF."
+ },
+ "welcomeDenied": {
+  "message": "Nav ieslēgts. Labais klikšķis → „Atvērt PDFMy” tomēr darbojas."
+ }
+}

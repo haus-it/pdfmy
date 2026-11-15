@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – Pdf's direct openen"
+ },
+ "extDesc": {
+  "message": "Opent pdf's uit de browser met één klik in PDFMy – in plaats van in de Adobe-viewer. Lokaal, zonder upload. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Openen in PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Deze pdf openen in PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Het bestand kon niet worden geladen. Sta in het pictogram „PDFMy” toegang tot websites toe (schakelaar „Automatisch openen”)."
+ },
+ "errHttp": {
+  "message": "De server heeft het bestand niet geleverd (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Het bestand is groter dan 300 MB."
+ },
+ "errNotPdf": {
+  "message": "De link leidt niet naar een pdf-bestand."
+ },
+ "errNoUrl": {
+  "message": "Geen pdf-adres gevonden."
+ },
+ "errExpired": {
+  "message": "De overdracht is verlopen. Klik nogmaals op de pdf."
+ },
+ "popupAuto": {
+  "message": "Pdf's automatisch openen in PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "in plaats van in de Adobe- of browserviewer"
+ },
+ "popupOpen": {
+  "message": "Deze pdf openen in PDFMy"
+ },
+ "popupTarget": {
+  "message": "Openen in"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy intern (Mentor)"
+ },
+ "popupHint": {
+  "message": "Rechtsklik op een link → „Openen in PDFMy”. Het bestand blijft op uw apparaat – geen upload."
+ },
+ "popupHelp": {
+  "message": "Hulp"
+ },
+ "popupPrivacy": {
+  "message": "Privacy"
+ },
+ "stateOn": {
+  "message": "Actief: aangeklikte pdf's openen in PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Sta om in te schakelen eenmalig toegang tot websites toe (tik op de schakelaar)."
+ },
+ "stateOff": {
+  "message": "Uit: pdf's openen zoals gewoonlijk. Rechtsklik → „Openen in PDFMy” werkt toch."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Welkom"
+ },
+ "welcomeH1": {
+  "message": "Bijna klaar"
+ },
+ "welcomeP1": {
+  "message": "Vanaf nu openen pdf's die u in de browser aanklikt direct in <b>PDFMy</b> – om te lezen, te ondertekenen, zwart te maken en te archiveren. Het bestand blijft op uw apparaat, er is <b>geen upload</b>."
+ },
+ "welcomeP2": {
+  "message": "Daarvoor heeft de extensie eenmalig uw toestemming nodig om pdf's van websites te laden. De browser vraagt daar zo meteen om."
+ },
+ "welcomeHowTo": {
+  "message": "Zo gebruikt u PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Klik op een pdf</b> – hij opent in PDFMy in plaats van in de Adobe- of browserviewer."
+ },
+ "welcomeStep2": {
+  "message": "<b>Rechtsklik op een link</b> → „Openen in PDFMy” – ook als automatisch openen uit staat."
+ },
+ "welcomeStep3": {
+  "message": "<b>Pictogram „PDFMy”</b> rechtsboven (zo nodig vastzetten via het pictogram Extensies): automatisch openen aan/uit, huidige pdf overnemen."
+ },
+ "welcomeStep4": {
+  "message": "Wilt u een pdf toch in de oude viewer zien? Klik in de browser op „Terug”."
+ },
+ "welcomePrivacyH": {
+  "message": "Privacy"
+ },
+ "welcomePrivacy": {
+  "message": "De extensie laadt alleen de pdf die u opent en geeft die direct in de browser door aan pdfmy.de. Ze verstuurt geen gegevens naar Mentor Group of derden, slaat geen geschiedenis op en bevat geen statistieken. U kunt de toegang tot websites op elk moment weer uitschakelen in het pictogram „PDFMy”. Aanbieder: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Colofon</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Privacy</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Ingeschakeld. U kunt dit venster sluiten en op een pdf klikken."
+ },
+ "welcomeDenied": {
+  "message": "Niet ingeschakeld. Rechtsklik → „Openen in PDFMy” werkt toch."
+ }
+}

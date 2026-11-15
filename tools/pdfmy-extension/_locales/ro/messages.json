@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – Deschideți PDF-urile direct"
+ },
+ "extDesc": {
+  "message": "Deschide PDF-urile din browser cu un clic în PDFMy, nu în vizualizatorul Adobe. Local, fără încărcare. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Deschidere în PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Deschideți acest PDF în PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Fișierul nu a putut fi încărcat. Permiteți accesul la site-uri în pictograma „PDFMy” (comutatorul „Deschidere automată”)."
+ },
+ "errHttp": {
+  "message": "Serverul nu a livrat fișierul (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Fișierul depășește 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Linkul nu duce la un fișier PDF."
+ },
+ "errNoUrl": {
+  "message": "Nu s-a găsit nicio adresă PDF."
+ },
+ "errExpired": {
+  "message": "Transferul a expirat. Faceți din nou clic pe PDF."
+ },
+ "popupAuto": {
+  "message": "Deschide automat PDF-urile în PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "în locul vizualizatorului Adobe sau al browserului"
+ },
+ "popupOpen": {
+  "message": "Deschideți acest PDF în PDFMy"
+ },
+ "popupTarget": {
+  "message": "Deschidere în"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy intern (Mentor)"
+ },
+ "popupHint": {
+  "message": "Clic dreapta pe un link → „Deschidere în PDFMy”. Fișierul rămâne pe dispozitivul dvs. – fără încărcare."
+ },
+ "popupHelp": {
+  "message": "Ajutor"
+ },
+ "popupPrivacy": {
+  "message": "Protecția datelor"
+ },
+ "stateOn": {
+  "message": "Activ: PDF-urile pe care faceți clic se deschid în PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Pentru activare, permiteți o dată accesul la site-uri (atingeți comutatorul)."
+ },
+ "stateOff": {
+  "message": "Dezactivat: PDF-urile se deschid ca de obicei. Clic dreapta → „Deschidere în PDFMy” funcționează în continuare."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Bun venit"
+ },
+ "welcomeH1": {
+  "message": "Aproape gata"
+ },
+ "welcomeP1": {
+  "message": "De acum, PDF-urile pe care faceți clic în browser se deschid direct în <b>PDFMy</b> – pentru citire, semnare, înnegrire, arhivare. Fișierul rămâne pe dispozitivul dvs., <b>fără încărcare</b>."
+ },
+ "welcomeP2": {
+  "message": "Pentru aceasta, extensia are nevoie o singură dată de permisiunea dvs. de a încărca PDF-uri de pe site-uri. Browserul vă va întreba imediat."
+ },
+ "welcomeHowTo": {
+  "message": "Cum folosiți PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Faceți clic pe un PDF</b> – se deschide în PDFMy în locul vizualizatorului Adobe sau al browserului."
+ },
+ "welcomeStep2": {
+  "message": "<b>Clic dreapta pe un link</b> → „Deschidere în PDFMy” – chiar și cu deschiderea automată dezactivată."
+ },
+ "welcomeStep3": {
+  "message": "<b>Pictograma „PDFMy”</b> din dreapta sus (dacă e nevoie, fixați-o prin pictograma Extensii): deschidere automată activată/dezactivată, preluarea PDF-ului curent."
+ },
+ "welcomeStep4": {
+  "message": "Doriți totuși să vedeți un PDF în vechiul vizualizator? Faceți clic pe „Înapoi” în browser."
+ },
+ "welcomePrivacyH": {
+  "message": "Protecția datelor"
+ },
+ "welcomePrivacy": {
+  "message": "Extensia încarcă doar PDF-ul pe care îl deschideți și îl transmite direct în browser către pdfmy.de. Nu trimite date către Mentor Group sau terți, nu salvează istoricul și nu conține statistici. Puteți dezactiva oricând accesul la site-uri din pictograma „PDFMy”. Furnizor: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Informații legale</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Protecția datelor</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Activat. Puteți închide această fereastră și face clic pe un PDF."
+ },
+ "welcomeDenied": {
+  "message": "Neactivat. Clic dreapta → „Deschidere în PDFMy” funcționează în continuare."
+ }
+}

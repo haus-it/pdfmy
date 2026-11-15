@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – Åbn PDF'er direkte"
+ },
+ "extDesc": {
+  "message": "Åbner PDF'er fra browseren i PDFMy med ét klik – i stedet for i Adobe-fremviseren. Lokalt, uden upload. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Åbn i PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Åbn denne PDF i PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Filen kunne ikke indlæses. Tillad adgang til websites i ikonet »PDFMy« (kontakten »Åbn automatisk«)."
+ },
+ "errHttp": {
+  "message": "Serveren leverede ikke filen (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Filen er større end 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Linket fører ikke til en PDF-fil."
+ },
+ "errNoUrl": {
+  "message": "Ingen PDF-adresse fundet."
+ },
+ "errExpired": {
+  "message": "Overførslen er udløbet. Klik på PDF'en igen."
+ },
+ "popupAuto": {
+  "message": "Åbn PDF'er automatisk i PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "i stedet for i Adobe- eller browserfremviseren"
+ },
+ "popupOpen": {
+  "message": "Åbn denne PDF i PDFMy"
+ },
+ "popupTarget": {
+  "message": "Åbn i"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy intern (Mentor)"
+ },
+ "popupHint": {
+  "message": "Højreklik på et link → »Åbn i PDFMy«. Filen bliver på Deres enhed – ingen upload."
+ },
+ "popupHelp": {
+  "message": "Hjælp"
+ },
+ "popupPrivacy": {
+  "message": "Databeskyttelse"
+ },
+ "stateOn": {
+  "message": "Aktiv: PDF'er, De klikker på, åbnes i PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "For at slå til skal De én gang tillade adgang til websites (tryk på kontakten)."
+ },
+ "stateOff": {
+  "message": "Fra: PDF'er åbnes som sædvanligt. Højreklik → »Åbn i PDFMy« virker stadig."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Velkommen"
+ },
+ "welcomeH1": {
+  "message": "Næsten færdig"
+ },
+ "welcomeP1": {
+  "message": "Fremover åbnes PDF'er, som De klikker på i browseren, direkte i <b>PDFMy</b> – til at læse, underskrive, sværte og arkivere. Filen bliver på Deres enhed, der er <b>ingen upload</b>."
+ },
+ "welcomeP2": {
+  "message": "Til det skal udvidelsen én gang have Deres tilladelse til at indlæse PDF'er fra websites. Browseren spørger om lidt."
+ },
+ "welcomeHowTo": {
+  "message": "Sådan bruger De PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Klik på en PDF</b> – den åbnes i PDFMy i stedet for i Adobe- eller browserfremviseren."
+ },
+ "welcomeStep2": {
+  "message": "<b>Højreklik på et link</b> → »Åbn i PDFMy« – også når automatisk åbning er slået fra."
+ },
+ "welcomeStep3": {
+  "message": "<b>Ikonet »PDFMy«</b> øverst til højre (fastgør det evt. via ikonet Udvidelser): automatisk åbning til/fra, overtag den aktuelle PDF."
+ },
+ "welcomeStep4": {
+  "message": "Vil De alligevel se en PDF i den gamle fremviser: Klik på »Tilbage« i browseren."
+ },
+ "welcomePrivacyH": {
+  "message": "Databeskyttelse"
+ },
+ "welcomePrivacy": {
+  "message": "Udvidelsen indlæser kun den PDF, De åbner, og overdrager den direkte i browseren til pdfmy.de. Den sender ingen data til Mentor Group eller tredjeparter, gemmer ingen historik og indeholder ingen statistik. De kan til enhver tid slå adgangen til websites fra igen i ikonet »PDFMy«. Udbyder: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Kolofon</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Databeskyttelse</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Slået til. De kan lukke dette vindue og klikke på en PDF."
+ },
+ "welcomeDenied": {
+  "message": "Ikke slået til. Højreklik → »Åbn i PDFMy« virker stadig."
+ }
+}

@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### Browser-Erweiterung in 29 Sprachen (app-v259, Erweiterung 1.2.0)
+- Popup, Willkommensseite, Kontextmenü, Fehlermeldungen sowie Name und Beschreibung im Store kommen jetzt aus den Sprachdateien des Browsers (_locales, Deutsch als Grundlage) – Englisch (USA/GB), Französisch, Italienisch, Spanisch, Portugiesisch, Niederländisch, Polnisch, Tschechisch, Slowakisch, Ungarisch, Rumänisch, Bulgarisch, Griechisch, Kroatisch, Slowenisch, Serbisch, Dänisch, Schwedisch, Norwegisch, Finnisch, Estnisch, Lettisch, Litauisch, Katalanisch, Türkisch, Russisch, Ukrainisch. Weitere Sprachen der Website (z. B. Isländisch, Irisch) kennt Chrome für Erweiterungen nicht; dort erscheint Deutsch bzw. die Sprache des Browsers.
+- Geprüft: jeder im Code verwendete Text in allen 29 Sprachen vorhanden; Chrome lädt die Erweiterung mit allen Sprachordnern. **Die Seiten selbst wurden nicht in jeder Sprache angesehen.**
+
 ### Store-Knöpfe und automatische Übernahme von Store-Freigaben (app-v258)
 - **Eingereicht 15.11.2026:** Firefox-Erweiterung bei addons.mozilla.org und Thunderbird-Erweiterung bei addons.thunderbird.net (Konto support@haus-it.de, Herausgeber „Mentor GmbH“), beide „Wartet auf Überprüfung“, 0 Fehler. Chrome Web Store: Unterlagen bereit, Einreichung durch die GF (Chrome lässt auf dem Web Store keine Erweiterungen und damit keine Fernsteuerung zu). Edge/AppSource/Teams: der Benutzer braucht im vorhandenen Partner-Center-Konto der Mentor GmbH die Rolle „Kontoadministrator“.
 - **pdfmy.de:** Knöpfe „Zu Chrome/Edge/Firefox hinzufügen“ auf erweiterung.html und der Thunderbird-Hinweis auf „PDFMy in Firmen verteilen“ erscheinen, sobald die Store-Adresse in tools/site.json („stores“) steht; die Seite verweist fest auf pdfmy.de/go/<store> (Umleitung in .htaccess), die Texte sind in 39 Sprachen vorübersetzt – eine Freigabe braucht keine neue Übersetzung.

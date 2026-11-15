@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – Åpne PDF-er direkte"
+ },
+ "extDesc": {
+  "message": "Åpner PDF-er fra nettleseren i PDFMy med ett klikk – i stedet for i Adobe. Lokalt, uten opplasting. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Åpne i PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Åpne denne PDF-en i PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Filen kunne ikke lastes inn. Tillat tilgang til nettsteder i ikonet «PDFMy» (bryteren «Åpne automatisk»)."
+ },
+ "errHttp": {
+  "message": "Serveren leverte ikke filen (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Filen er større enn 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Lenken fører ikke til en PDF-fil."
+ },
+ "errNoUrl": {
+  "message": "Fant ingen PDF-adresse."
+ },
+ "errExpired": {
+  "message": "Overleveringen er utløpt. Klikk på PDF-en på nytt."
+ },
+ "popupAuto": {
+  "message": "Åpne PDF-er automatisk i PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "i stedet for i Adobe- eller nettleservisningen"
+ },
+ "popupOpen": {
+  "message": "Åpne denne PDF-en i PDFMy"
+ },
+ "popupTarget": {
+  "message": "Åpne i"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy internt (Mentor)"
+ },
+ "popupHint": {
+  "message": "Høyreklikk på en lenke → «Åpne i PDFMy». Filen blir på enheten din – ingen opplasting."
+ },
+ "popupHelp": {
+  "message": "Hjelp"
+ },
+ "popupPrivacy": {
+  "message": "Personvern"
+ },
+ "stateOn": {
+  "message": "På: PDF-er du klikker på, åpnes i PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "For å slå på må du tillate tilgang til nettsteder én gang (trykk på bryteren)."
+ },
+ "stateOff": {
+  "message": "Av: PDF-er åpnes som vanlig. Høyreklikk → «Åpne i PDFMy» fungerer likevel."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Velkommen"
+ },
+ "welcomeH1": {
+  "message": "Nesten ferdig"
+ },
+ "welcomeP1": {
+  "message": "Fra nå av åpnes PDF-er du klikker på i nettleseren, direkte i <b>PDFMy</b> – for å lese, signere, sladde og arkivere. Filen blir på enheten din, det skjer <b>ingen opplasting</b>."
+ },
+ "welcomeP2": {
+  "message": "For dette trenger utvidelsen én gang tillatelsen din til å laste inn PDF-er fra nettsteder. Nettleseren spør deg straks."
+ },
+ "welcomeHowTo": {
+  "message": "Slik bruker du PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Klikk på en PDF</b> – den åpnes i PDFMy i stedet for i Adobe- eller nettleservisningen."
+ },
+ "welcomeStep2": {
+  "message": "<b>Høyreklikk på en lenke</b> → «Åpne i PDFMy» – også når automatisk åpning er slått av."
+ },
+ "welcomeStep3": {
+  "message": "<b>Ikonet «PDFMy»</b> øverst til høyre (fest det ved behov via ikonet Utvidelser): automatisk åpning på/av, hent gjeldende PDF."
+ },
+ "welcomeStep4": {
+  "message": "Vil du likevel se en PDF i den gamle visningen: klikk på «Tilbake» i nettleseren."
+ },
+ "welcomePrivacyH": {
+  "message": "Personvern"
+ },
+ "welcomePrivacy": {
+  "message": "Utvidelsen laster bare inn PDF-en du åpner, og overleverer den direkte i nettleseren til pdfmy.de. Den sender ingen data til Mentor Group eller tredjeparter, lagrer ingen historikk og inneholder ingen statistikk. Du kan når som helst slå av tilgangen til nettsteder i ikonet «PDFMy». Leverandør: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Kolofon</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Personvern</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Slått på. Du kan lukke dette vinduet og klikke på en PDF."
+ },
+ "welcomeDenied": {
+  "message": "Ikke slått på. Høyreklikk → «Åpne i PDFMy» fungerer likevel."
+ }
+}

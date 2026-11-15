@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – PDF-ek közvetlen megnyitása"
+ },
+ "extDesc": {
+  "message": "Egy kattintással a PDFMy-ban nyitja meg a böngésző PDF-jeit, nem az Adobe-ban. Helyben, feltöltés nélkül. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Megnyitás a PDFMy-ban"
+ },
+ "menuOpenPage": {
+  "message": "A PDF megnyitása a PDFMy-ban"
+ },
+ "errNoAccess": {
+  "message": "A fájl nem tölthető be. Engedélyezze a „PDFMy” ikonban a webhelyekhez való hozzáférést („Automatikus megnyitás” kapcsoló)."
+ },
+ "errHttp": {
+  "message": "A szerver nem küldte el a fájlt (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "A fájl nagyobb 300 MB-nál."
+ },
+ "errNotPdf": {
+  "message": "A hivatkozás nem PDF-fájlra mutat."
+ },
+ "errNoUrl": {
+  "message": "Nem található PDF-cím."
+ },
+ "errExpired": {
+  "message": "Az átadás lejárt. Kattintson újra a PDF-re."
+ },
+ "popupAuto": {
+  "message": "PDF-ek automatikus megnyitása a PDFMy-ban"
+ },
+ "popupAutoSub": {
+  "message": "az Adobe vagy a böngésző megjelenítője helyett"
+ },
+ "popupOpen": {
+  "message": "A PDF megnyitása a PDFMy-ban"
+ },
+ "popupTarget": {
+  "message": "Megnyitás itt:"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy belső (Mentor)"
+ },
+ "popupHint": {
+  "message": "Jobb kattintás egy hivatkozásra → „Megnyitás a PDFMy-ban”. A fájl az eszközén marad – nincs feltöltés."
+ },
+ "popupHelp": {
+  "message": "Súgó"
+ },
+ "popupPrivacy": {
+  "message": "Adatvédelem"
+ },
+ "stateOn": {
+  "message": "Bekapcsolva: a kattintott PDF-ek a PDFMy-ban nyílnak meg."
+ },
+ "stateNeedAccess": {
+  "message": "A bekapcsoláshoz egyszer engedélyezze a webhelyekhez való hozzáférést (koppintson a kapcsolóra)."
+ },
+ "stateOff": {
+  "message": "Kikapcsolva: a PDF-ek a megszokott módon nyílnak meg. A jobb kattintás → „Megnyitás a PDFMy-ban” így is működik."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Üdvözöljük"
+ },
+ "welcomeH1": {
+  "message": "Majdnem kész"
+ },
+ "welcomeP1": {
+  "message": "Mostantól a böngészőben kattintott PDF-ek közvetlenül a <b>PDFMy</b>-ban nyílnak meg – olvasáshoz, aláíráshoz, kitakaráshoz, iktatáshoz. A fájl közben az eszközén marad, <b>nincs feltöltés</b>."
+ },
+ "welcomeP2": {
+  "message": "Ehhez a bővítménynek egyszer szüksége van az engedélyére, hogy PDF-eket töltsön be webhelyekről. A böngésző mindjárt rákérdez."
+ },
+ "welcomeHowTo": {
+  "message": "Így használja a PDFMy-t"
+ },
+ "welcomeStep1": {
+  "message": "<b>Kattintson egy PDF-re</b> – az Adobe vagy a böngésző megjelenítője helyett a PDFMy-ban nyílik meg."
+ },
+ "welcomeStep2": {
+  "message": "<b>Jobb kattintás egy hivatkozásra</b> → „Megnyitás a PDFMy-ban” – kikapcsolt automatikus megnyitás esetén is."
+ },
+ "welcomeStep3": {
+  "message": "<b>„PDFMy” ikon</b> jobbra fent (szükség esetén rögzítse a Bővítmények ikonnal): automatikus megnyitás be/ki, az aktuális PDF átvétele."
+ },
+ "welcomeStep4": {
+  "message": "Mégis a régi megjelenítőben szeretné látni a PDF-et? Kattintson a böngészőben a „Vissza” gombra."
+ },
+ "welcomePrivacyH": {
+  "message": "Adatvédelem"
+ },
+ "welcomePrivacy": {
+  "message": "A bővítmény csak az Ön által megnyitott PDF-et tölti be, és közvetlenül a böngészőben adja át a pdfmy.de oldalnak. Nem küld adatokat a Mentor Group vagy harmadik felek részére, nem tárol előzményeket és nem tartalmaz statisztikát. A webhelyekhez való hozzáférést bármikor kikapcsolhatja a „PDFMy” ikonban. Szolgáltató: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Impresszum</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Adatvédelem</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Bekapcsolva. Bezárhatja ezt az ablakot, és rákattinthat egy PDF-re."
+ },
+ "welcomeDenied": {
+  "message": "Nincs bekapcsolva. A jobb kattintás → „Megnyitás a PDFMy-ban” így is működik."
+ }
+}

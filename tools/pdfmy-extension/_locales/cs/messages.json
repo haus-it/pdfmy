@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – otevírejte PDF přímo"
+ },
+ "extDesc": {
+  "message": "Otevírá PDF z prohlížeče jedním kliknutím v PDFMy – místo v prohlížeči Adobe. Lokálně, bez nahrávání. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Otevřít v PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Otevřít toto PDF v PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Soubor se nepodařilo načíst. Povolte prosím v ikoně „PDFMy“ přístup k webům (přepínač „Otevírat automaticky“)."
+ },
+ "errHttp": {
+  "message": "Server soubor nedodal (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Soubor je větší než 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Odkaz nevede na soubor PDF."
+ },
+ "errNoUrl": {
+  "message": "Adresa PDF nebyla nalezena."
+ },
+ "errExpired": {
+  "message": "Předání vypršelo. Klikněte prosím na PDF znovu."
+ },
+ "popupAuto": {
+  "message": "Automaticky otevírat PDF v PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "místo v Adobe nebo v prohlížeči"
+ },
+ "popupOpen": {
+  "message": "Otevřít toto PDF v PDFMy"
+ },
+ "popupTarget": {
+  "message": "Otevřít v"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy interní (Mentor)"
+ },
+ "popupHint": {
+  "message": "Pravé tlačítko na odkaz → „Otevřít v PDFMy“. Soubor zůstane ve vašem zařízení – žádné nahrávání."
+ },
+ "popupHelp": {
+  "message": "Nápověda"
+ },
+ "popupPrivacy": {
+  "message": "Ochrana osobních údajů"
+ },
+ "stateOn": {
+  "message": "Zapnuto: PDF, na která kliknete, se otevřou v PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Pro zapnutí jednou povolte přístup k webům (klepněte na přepínač)."
+ },
+ "stateOff": {
+  "message": "Vypnuto: PDF se otevírají jako obvykle. Pravé tlačítko → „Otevřít v PDFMy“ přesto funguje."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Vítejte"
+ },
+ "welcomeH1": {
+  "message": "Skoro hotovo"
+ },
+ "welcomeP1": {
+  "message": "Od teď se PDF, na která kliknete v prohlížeči, otevřou přímo v <b>PDFMy</b> – ke čtení, podepisování, začerňování a ukládání. Soubor přitom zůstane ve vašem zařízení, <b>žádné nahrávání</b>."
+ },
+ "welcomeP2": {
+  "message": "K tomu rozšíření jednou potřebuje vaše svolení načítat PDF z webů. Prohlížeč se vás hned zeptá."
+ },
+ "welcomeHowTo": {
+  "message": "Jak používat PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Klikněte na PDF</b> – otevře se v PDFMy místo v Adobe nebo v prohlížeči."
+ },
+ "welcomeStep2": {
+  "message": "<b>Pravé tlačítko na odkaz</b> → „Otevřít v PDFMy“ – i při vypnutém automatickém otevírání."
+ },
+ "welcomeStep3": {
+  "message": "<b>Ikona „PDFMy“</b> vpravo nahoře (případně připněte přes ikonu Rozšíření): automatické otevírání zap./vyp., převzít aktuální PDF."
+ },
+ "welcomeStep4": {
+  "message": "Chcete PDF přesto vidět ve starém prohlížeči? Klikněte v prohlížeči na „Zpět“."
+ },
+ "welcomePrivacyH": {
+  "message": "Ochrana osobních údajů"
+ },
+ "welcomePrivacy": {
+  "message": "Rozšíření načte jen PDF, které otevřete, a předá ho přímo v prohlížeči na pdfmy.de. Neodesílá žádná data společnosti Mentor Group ani třetím stranám, neukládá historii a neobsahuje statistiky. Přístup k webům můžete kdykoli znovu vypnout v ikoně „PDFMy“. Provozovatel: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Tiráž</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Ochrana osobních údajů</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Zapnuto. Toto okno můžete zavřít a kliknout na PDF."
+ },
+ "welcomeDenied": {
+  "message": "Nezapnuto. Pravé tlačítko → „Otevřít v PDFMy“ přesto funguje."
+ }
+}

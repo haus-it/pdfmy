@@ -7,7 +7,8 @@
 
 const TARGETS = { web: 'https://pdfmy.de/', mentor: 'https://pdfmy.de/mentor/' };
 const SITES = { origins: ['http://*/*', 'https://*/*'] };
-const FIREFOX = chrome.runtime.getURL('').startsWith('moz-extension:');   // derselbe Code läuft in Chrome, Edge und Firefox
+const FIREFOX = chrome.runtime.getURL('').startsWith('moz-extension:');
+const T = (key, ...subs) => chrome.i18n.getMessage(key, subs.map(String)) || key;   // Texte in der Sprache des Browsers (_locales)   // derselbe Code läuft in Chrome, Edge und Firefox
 const MAX_BYTES = 300 * 1024 * 1024;
 const RECENT_MS = 10 * 60 * 1000;      // dieselbe PDF im selben Tab nicht erneut abfangen (z. B. „Zurück“)
 const jobs = new Map();                  // token → { url, name, data: Promise<{bytes,name}> }
@@ -68,20 +69,20 @@ chrome.webRequest.onBeforeRedirect.addListener(d => {
 /* ---------- Übergabe an PDFMy ---------- */
 async function load(url) {
   const r = await fetch(url, { credentials: 'include', cache: 'force-cache' }).catch(() => {
-    throw new Error('Die Datei konnte nicht geladen werden. Bitte im Symbol „PDFMy“ den Zugriff auf Webseiten erlauben (Schalter „Automatisch öffnen“).');
+    throw new Error(T('errNoAccess'));
   });
-  if (!r.ok) throw new Error(`Der Server hat die Datei nicht geliefert (HTTP ${r.status}).`);
-  if (+r.headers.get('content-length') > MAX_BYTES) throw new Error('Die Datei ist größer als 300 MB.');
+  if (!r.ok) throw new Error(T('errHttp', r.status));
+  if (+r.headers.get('content-length') > MAX_BYTES) throw new Error(T('errTooBig'));
   const bytes = await r.arrayBuffer();
   const head = new TextDecoder('latin1').decode(new Uint8Array(bytes, 0, Math.min(1024, bytes.byteLength)));
-  if (!head.includes('%PDF-')) throw new Error('Der Link führt nicht zu einer PDF-Datei.');
+  if (!head.includes('%PDF-')) throw new Error(T('errNotPdf'));
   return { bytes, name: nameFrom(r.url || url, r.headers.get('content-disposition') || '') };
 }
 
 async function openInPdfMy({ url, name, tabId, newTab = false, index, openerTabId }) {
   url = sourceOf(url);
   const token = crypto.randomUUID(), { target } = await settings();
-  const job = { url, name, data: url ? load(url) : Promise.reject(new Error('Keine PDF-Adresse gefunden.')) };
+  const job = { url, name, data: url ? load(url) : Promise.reject(new Error(T('errNoUrl'))) };
   job.data.catch(() => {});
   jobs.set(token, job);
   await chrome.storage.session.set({ ['j:' + token]: { url, name } });   // falls der Service Worker neu startet
@@ -102,7 +103,7 @@ chrome.runtime.onConnect.addListener(port => {
       if (saved) job = { ...saved, data: load(saved.url) };
     }
     jobs.delete(token); chrome.storage.session.remove(key);       // Token gilt genau einmal
-    if (!job) return port.postMessage({ error: 'Die Übergabe ist abgelaufen. Bitte die PDF noch einmal anklicken.' });
+    if (!job) return port.postMessage({ error: T('errExpired') });
     try {
       const { bytes, name } = await job.data, u8 = new Uint8Array(bytes), STEP = 3 * 1024 * 1024;
       port.postMessage({ name: job.name || name, size: u8.length });
@@ -120,8 +121,8 @@ chrome.runtime.onConnect.addListener(port => {
 /* ---------- Kontextmenü ---------- */
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   chrome.contextMenus.removeAll(() => {
-    chrome.contextMenus.create({ id: 'pdfmy-link', title: 'In PDFMy öffnen', contexts: ['link'] });
-    chrome.contextMenus.create({ id: 'pdfmy-page', title: 'Diese PDF in PDFMy öffnen', contexts: ['page', 'frame'],
+    chrome.contextMenus.create({ id: 'pdfmy-link', title: T('menuOpenLink'), contexts: ['link'] });
+    chrome.contextMenus.create({ id: 'pdfmy-page', title: T('menuOpenPage'), contexts: ['page', 'frame'],
       documentUrlPatterns: ['*://*/*.pdf', '*://*/*.pdf?*', '*://*/*.PDF', '*://*/*.PDF?*', ...(FIREFOX ? [] : ['chrome-extension://*/*'])] });   // Firefox zeigt PDFs (pdf.js) unter der Original-Adresse
   });
   if (reason === 'install') chrome.tabs.create({ url: 'welcome.html' });

@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – Obre els PDF directament"
+ },
+ "extDesc": {
+  "message": "Obre els PDF del navegador a PDFMy amb un clic, en lloc del visor d'Adobe. En local, sense pujades. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Obre a PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Obre aquest PDF a PDFMy"
+ },
+ "errNoAccess": {
+  "message": "No s'ha pogut carregar el fitxer. Permeteu l'accés als llocs web a la icona «PDFMy» (interruptor «Obre automàticament»)."
+ },
+ "errHttp": {
+  "message": "El servidor no ha lliurat el fitxer (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "El fitxer supera els 300 MB."
+ },
+ "errNotPdf": {
+  "message": "L'enllaç no porta a un fitxer PDF."
+ },
+ "errNoUrl": {
+  "message": "No s'ha trobat cap adreça de PDF."
+ },
+ "errExpired": {
+  "message": "La transferència ha caducat. Torneu a fer clic al PDF."
+ },
+ "popupAuto": {
+  "message": "Obre els PDF automàticament a PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "en lloc del visor d'Adobe o del navegador"
+ },
+ "popupOpen": {
+  "message": "Obre aquest PDF a PDFMy"
+ },
+ "popupTarget": {
+  "message": "Obre a"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy intern (Mentor)"
+ },
+ "popupHint": {
+  "message": "Clic dret en un enllaç → «Obre a PDFMy». El fitxer es queda al vostre dispositiu – sense pujades."
+ },
+ "popupHelp": {
+  "message": "Ajuda"
+ },
+ "popupPrivacy": {
+  "message": "Privadesa"
+ },
+ "stateOn": {
+  "message": "Actiu: els PDF en què feu clic s'obren a PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Per activar-ho, permeteu una vegada l'accés als llocs web (toqueu l'interruptor)."
+ },
+ "stateOff": {
+  "message": "Desactivat: els PDF s'obren com sempre. Clic dret → «Obre a PDFMy» continua funcionant."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Benvinguda"
+ },
+ "welcomeH1": {
+  "message": "Gairebé a punt"
+ },
+ "welcomeP1": {
+  "message": "A partir d'ara, els PDF en què feu clic al navegador s'obren directament a <b>PDFMy</b> – per llegir, signar, censurar, arxivar. El fitxer es queda al vostre dispositiu, <b>sense pujades</b>."
+ },
+ "welcomeP2": {
+  "message": "Per això l'extensió necessita una sola vegada el vostre permís per carregar PDF dels llocs web. El navegador us ho preguntarà de seguida."
+ },
+ "welcomeHowTo": {
+  "message": "Com s'utilitza PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Feu clic en un PDF</b> – s'obre a PDFMy en lloc del visor d'Adobe o del navegador."
+ },
+ "welcomeStep2": {
+  "message": "<b>Clic dret en un enllaç</b> → «Obre a PDFMy» – també amb l'obertura automàtica desactivada."
+ },
+ "welcomeStep3": {
+  "message": "<b>Icona «PDFMy»</b> a dalt a la dreta (si cal, fixeu-la des de la icona Extensions): obertura automàtica activada/desactivada, agafar el PDF actual."
+ },
+ "welcomeStep4": {
+  "message": "Voleu veure igualment un PDF al visor antic? Feu clic a «Enrere» al navegador."
+ },
+ "welcomePrivacyH": {
+  "message": "Privadesa"
+ },
+ "welcomePrivacy": {
+  "message": "L'extensió només carrega el PDF que obriu i el passa directament al navegador a pdfmy.de. No envia dades a Mentor Group ni a tercers, no desa cap historial i no conté estadístiques. Podeu desactivar en qualsevol moment l'accés als llocs web a la icona «PDFMy». Proveïdor: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Avís legal</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Privadesa</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Activat. Podeu tancar aquesta finestra i fer clic en un PDF."
+ },
+ "welcomeDenied": {
+  "message": "No activat. Clic dret → «Obre a PDFMy» continua funcionant."
+ }
+}

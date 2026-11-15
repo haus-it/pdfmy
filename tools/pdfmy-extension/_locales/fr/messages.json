@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – Ouvrir les PDF directement"
+ },
+ "extDesc": {
+  "message": "Ouvre les PDF du navigateur dans PDFMy en un clic – au lieu du lecteur Adobe. En local, sans envoi. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Ouvrir dans PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Ouvrir ce PDF dans PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Impossible de charger le fichier. Veuillez autoriser l’accès aux sites web dans l’icône « PDFMy » (interrupteur « Ouvrir automatiquement »)."
+ },
+ "errHttp": {
+  "message": "Le serveur n’a pas fourni le fichier (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Le fichier dépasse 300 Mo."
+ },
+ "errNotPdf": {
+  "message": "Le lien ne mène pas à un fichier PDF."
+ },
+ "errNoUrl": {
+  "message": "Aucune adresse PDF trouvée."
+ },
+ "errExpired": {
+  "message": "Le transfert a expiré. Veuillez cliquer à nouveau sur le PDF."
+ },
+ "popupAuto": {
+  "message": "Ouvrir automatiquement les PDF dans PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "au lieu du lecteur Adobe ou du navigateur"
+ },
+ "popupOpen": {
+  "message": "Ouvrir ce PDF dans PDFMy"
+ },
+ "popupTarget": {
+  "message": "Ouvrir dans"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy interne (Mentor)"
+ },
+ "popupHint": {
+  "message": "Clic droit sur un lien → « Ouvrir dans PDFMy ». Le fichier reste sur votre appareil – aucun envoi en ligne."
+ },
+ "popupHelp": {
+  "message": "Aide"
+ },
+ "popupPrivacy": {
+  "message": "Confidentialité"
+ },
+ "stateOn": {
+  "message": "Activé : les PDF sur lesquels vous cliquez s’ouvrent dans PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Pour activer, autorisez une fois l’accès aux sites web (touchez l’interrupteur)."
+ },
+ "stateOff": {
+  "message": "Désactivé : les PDF s’ouvrent comme d’habitude. Clic droit → « Ouvrir dans PDFMy » fonctionne quand même."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Bienvenue"
+ },
+ "welcomeH1": {
+  "message": "Presque terminé"
+ },
+ "welcomeP1": {
+  "message": "Désormais, les PDF sur lesquels vous cliquez dans le navigateur s’ouvrent directement dans <b>PDFMy</b> – pour lire, signer, caviarder, classer. Le fichier reste sur votre appareil, il n’y a <b>aucun envoi en ligne</b>."
+ },
+ "welcomeP2": {
+  "message": "Pour cela, l’extension a besoin une seule fois de votre autorisation pour charger des PDF depuis les sites web. Le navigateur va vous le demander."
+ },
+ "welcomeHowTo": {
+  "message": "Comment utiliser PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Cliquez sur un PDF</b> – il s’ouvre dans PDFMy au lieu du lecteur Adobe ou du navigateur."
+ },
+ "welcomeStep2": {
+  "message": "<b>Clic droit sur un lien</b> → « Ouvrir dans PDFMy » – même si l’ouverture automatique est désactivée."
+ },
+ "welcomeStep3": {
+  "message": "<b>Icône « PDFMy »</b> en haut à droite (à épingler si besoin via l’icône Extensions) : activer/désactiver l’ouverture automatique, reprendre le PDF actuel."
+ },
+ "welcomeStep4": {
+  "message": "Pour voir un PDF dans l’ancien lecteur : cliquez sur « Retour » dans le navigateur."
+ },
+ "welcomePrivacyH": {
+  "message": "Confidentialité"
+ },
+ "welcomePrivacy": {
+  "message": "L’extension charge uniquement le PDF que vous ouvrez et le transmet directement dans le navigateur à pdfmy.de. Elle n’envoie aucune donnée à Mentor Group ni à des tiers, n’enregistre aucun historique et ne contient aucune statistique. Vous pouvez désactiver à tout moment l’accès aux sites web dans l’icône « PDFMy ». Éditeur : Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Mentions légales</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Confidentialité</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Activé. Vous pouvez fermer cette fenêtre et cliquer sur un PDF."
+ },
+ "welcomeDenied": {
+  "message": "Non activé. Clic droit → « Ouvrir dans PDFMy » fonctionne quand même."
+ }
+}

@@ -15,14 +15,15 @@ footer{display:flex;justify-content:space-between;padding:10px 16px;border-top:1
 <body>
 <header><img src="icons/icon-48.png" alt=""><span class="brand"><b>PDFMy</b><span>powered by <img src="icons/mentor-group.png" alt="Mentor Group"></span></span></header>
 <main>
-  <label class="row" for="auto"><span><b>PDFs automatisch in PDFMy öffnen</b><br><span class="muted">statt im Adobe- oder Browser-Viewer</span></span>
+  <label class="row" for="auto"><span><b data-i18n="popupAuto">PDFs automatisch in PDFMy öffnen</b><br><span class="muted" data-i18n="popupAutoSub">statt im Adobe- oder Browser-Viewer</span></span>
     <span class="switch"><input type="checkbox" id="auto" role="switch"><span></span></span></label>
   <p id="state" class="muted" role="status"></p>
-  <button id="open" type="button">Diese PDF in PDFMy öffnen</button>
-  <label class="row" for="target"><span>Öffnen in</span>
-    <select id="target"><option value="web">pdfmy.de</option><option value="mentor">PDFMy intern (Mentor)</option></select></label>
-  <p class="muted">Rechtsklick auf einen Link → „In PDFMy öffnen“. Die Datei bleibt auf Ihrem Gerät – kein Upload.</p>
+  <button id="open" type="button" data-i18n="popupOpen">Diese PDF in PDFMy öffnen</button>
+  <label class="row" for="target"><span data-i18n="popupTarget">Öffnen in</span>
+    <select id="target"><option value="web">pdfmy.de</option><option value="mentor" data-i18n="popupTargetMentor">PDFMy intern (Mentor)</option></select></label>
+  <p class="muted" data-i18n="popupHint">Rechtsklick auf einen Link → „In PDFMy öffnen“. Die Datei bleibt auf Ihrem Gerät – kein Upload.</p>
 </main>
-<footer><a href="welcome.html" target="_blank">Hilfe</a><a href="https://pdfmy.de/datenschutz.html" target="_blank" rel="noopener">Datenschutz</a></footer>
+<footer><a href="welcome.html" target="_blank" data-i18n="popupHelp">Hilfe</a><a href="https://pdfmy.de/datenschutz.html" target="_blank" rel="noopener" data-i18n="popupPrivacy">Datenschutz</a></footer>
+<script src="i18n.js"></script>
 <script src="popup.js"></script>
 </body></html>

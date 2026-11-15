@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – Open PDFs directly"
+ },
+ "extDesc": {
+  "message": "Opens PDFs from the browser in PDFMy with one click – instead of the Adobe viewer. Local, no upload. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Open in PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Open this PDF in PDFMy"
+ },
+ "errNoAccess": {
+  "message": "The file could not be loaded. Please allow access to websites in the ‘PDFMy’ icon (‘Open automatically’ switch)."
+ },
+ "errHttp": {
+  "message": "The server did not deliver the file (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "The file is larger than 300 MB."
+ },
+ "errNotPdf": {
+  "message": "The link does not lead to a PDF file."
+ },
+ "errNoUrl": {
+  "message": "No PDF address found."
+ },
+ "errExpired": {
+  "message": "The handover has expired. Please click the PDF again."
+ },
+ "popupAuto": {
+  "message": "Open PDFs automatically in PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "instead of the Adobe or browser viewer"
+ },
+ "popupOpen": {
+  "message": "Open this PDF in PDFMy"
+ },
+ "popupTarget": {
+  "message": "Open in"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy internal (Mentor)"
+ },
+ "popupHint": {
+  "message": "Right-click a link → ‘Open in PDFMy’. The file stays on your device – no upload."
+ },
+ "popupHelp": {
+  "message": "Help"
+ },
+ "popupPrivacy": {
+  "message": "Privacy"
+ },
+ "stateOn": {
+  "message": "On: PDFs you click open in PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "To switch it on, allow access to websites once (tap the switch)."
+ },
+ "stateOff": {
+  "message": "Off: PDFs open as usual. Right-click → ‘Open in PDFMy’ still works."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Welcome"
+ },
+ "welcomeH1": {
+  "message": "Almost done"
+ },
+ "welcomeP1": {
+  "message": "From now on, PDFs you click in the browser open directly in <b>PDFMy</b> – for reading, signing, redacting and filing. The file stays on your device; there is <b>no upload</b>."
+ },
+ "welcomeP2": {
+  "message": "For this, the extension needs your one-time permission to load PDFs from websites. The browser will ask you in a moment."
+ },
+ "welcomeHowTo": {
+  "message": "How to use PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Click a PDF</b> – it opens in PDFMy instead of the Adobe or browser viewer."
+ },
+ "welcomeStep2": {
+  "message": "<b>Right-click a link</b> → ‘Open in PDFMy’ – even when automatic opening is off."
+ },
+ "welcomeStep3": {
+  "message": "<b>‘PDFMy’ icon</b> at the top right (pin it via the Extensions icon if needed): turn automatic opening on/off, take over the current PDF."
+ },
+ "welcomeStep4": {
+  "message": "Want to see a PDF in the old viewer after all? Click ‘Back’ in the browser."
+ },
+ "welcomePrivacyH": {
+  "message": "Privacy"
+ },
+ "welcomePrivacy": {
+  "message": "The extension only loads the PDF you open and hands it to pdfmy.de directly in the browser. It sends no data to Mentor Group or third parties, stores no history and contains no analytics. You can switch off access to websites at any time in the ‘PDFMy’ icon. Provider: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Legal notice</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Privacy</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Switched on. You can close this window and click a PDF."
+ },
+ "welcomeDenied": {
+  "message": "Not switched on. Right-click → ‘Open in PDFMy’ still works."
+ }
+}

@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – avaa PDF-tiedostot suoraan"
+ },
+ "extDesc": {
+  "message": "Avaa selaimen PDF:t yhdellä napsautuksella PDFMy:ssä Adoben sijaan. Paikallisesti, ei lähetystä. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Avaa PDFMy:ssä"
+ },
+ "menuOpenPage": {
+  "message": "Avaa tämä PDF PDFMy:ssä"
+ },
+ "errNoAccess": {
+  "message": "Tiedostoa ei voitu ladata. Salli pääsy verkkosivustoille ”PDFMy”-kuvakkeessa (kytkin ”Avaa automaattisesti”)."
+ },
+ "errHttp": {
+  "message": "Palvelin ei toimittanut tiedostoa (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Tiedosto on suurempi kuin 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Linkki ei johda PDF-tiedostoon."
+ },
+ "errNoUrl": {
+  "message": "PDF-osoitetta ei löytynyt."
+ },
+ "errExpired": {
+  "message": "Siirto on vanhentunut. Napsauta PDF:ää uudelleen."
+ },
+ "popupAuto": {
+  "message": "Avaa PDF:t automaattisesti PDFMy:ssä"
+ },
+ "popupAutoSub": {
+  "message": "Adobe- tai selaimen katseluohjelman sijaan"
+ },
+ "popupOpen": {
+  "message": "Avaa tämä PDF PDFMy:ssä"
+ },
+ "popupTarget": {
+  "message": "Avaa kohteessa"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy sisäinen (Mentor)"
+ },
+ "popupHint": {
+  "message": "Napsauta linkkiä hiiren kakkospainikkeella → ”Avaa PDFMy:ssä”. Tiedosto pysyy laitteellasi – ei lähetystä."
+ },
+ "popupHelp": {
+  "message": "Ohje"
+ },
+ "popupPrivacy": {
+  "message": "Tietosuoja"
+ },
+ "stateOn": {
+  "message": "Päällä: napsauttamasi PDF:t avautuvat PDFMy:ssä."
+ },
+ "stateNeedAccess": {
+  "message": "Ota käyttöön sallimalla kerran pääsy verkkosivustoille (napauta kytkintä)."
+ },
+ "stateOff": {
+  "message": "Pois: PDF:t avautuvat tavalliseen tapaan. Kakkospainike → ”Avaa PDFMy:ssä” toimii silti."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Tervetuloa"
+ },
+ "welcomeH1": {
+  "message": "Melkein valmista"
+ },
+ "welcomeP1": {
+  "message": "Tästä lähtien selaimessa napsauttamasi PDF:t avautuvat suoraan <b>PDFMy</b>:ssä – lukemista, allekirjoittamista, peittämistä ja arkistointia varten. Tiedosto pysyy laitteellasi, <b>ei lähetystä</b>."
+ },
+ "welcomeP2": {
+  "message": "Tätä varten laajennus tarvitsee kerran luvan ladata PDF-tiedostoja verkkosivustoilta. Selain kysyy sitä hetken kuluttua."
+ },
+ "welcomeHowTo": {
+  "message": "Näin käytät PDFMy:tä"
+ },
+ "welcomeStep1": {
+  "message": "<b>Napsauta PDF:ää</b> – se avautuu PDFMy:ssä Adobe- tai selaimen katseluohjelman sijaan."
+ },
+ "welcomeStep2": {
+  "message": "<b>Napsauta linkkiä hiiren kakkospainikkeella</b> → ”Avaa PDFMy:ssä” – myös kun automaattinen avaaminen on pois päältä."
+ },
+ "welcomeStep3": {
+  "message": "<b>”PDFMy”-kuvake</b> oikeassa yläkulmassa (kiinnitä tarvittaessa Laajennukset-kuvakkeen kautta): automaattinen avaaminen päälle/pois, nykyisen PDF:n siirto."
+ },
+ "welcomeStep4": {
+  "message": "Haluatko kuitenkin nähdä PDF:n vanhassa katseluohjelmassa? Napsauta selaimen ”Takaisin”-painiketta."
+ },
+ "welcomePrivacyH": {
+  "message": "Tietosuoja"
+ },
+ "welcomePrivacy": {
+  "message": "Laajennus lataa vain avaamasi PDF:n ja välittää sen suoraan selaimessa osoitteeseen pdfmy.de. Se ei lähetä tietoja Mentor Groupille tai kolmansille osapuolille, ei tallenna historiaa eikä sisällä tilastointia. Voit milloin tahansa poistaa pääsyn verkkosivustoille käytöstä ”PDFMy”-kuvakkeessa. Palveluntarjoaja: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Julkaisutiedot</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Tietosuoja</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Otettu käyttöön. Voit sulkea tämän ikkunan ja napsauttaa PDF:ää."
+ },
+ "welcomeDenied": {
+  "message": "Ei käytössä. Kakkospainike → ”Avaa PDFMy:ssä” toimii silti."
+ }
+}

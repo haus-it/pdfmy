@@ -12,9 +12,7 @@ async function show() {
   $('#target').value = target;
   const st = $('#state');
   st.className = 'muted ' + (auto && granted ? 'ok' : auto ? 'warn' : '');
-  st.textContent = auto && granted ? 'Aktiv: Angeklickte PDFs öffnen sich in PDFMy.'
-    : auto ? 'Zum Einschalten einmal den Zugriff auf Webseiten erlauben (Schalter antippen).'
-      : 'Aus: PDFs öffnen sich wie gewohnt. Rechtsklick → „In PDFMy öffnen“ geht trotzdem.';
+  st.textContent = T(auto && granted ? 'stateOn' : auto ? 'stateNeedAccess' : 'stateOff');
 }
 
 $('#auto').onchange = async e => {

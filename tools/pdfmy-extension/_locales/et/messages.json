@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – ava PDF-id otse"
+ },
+ "extDesc": {
+  "message": "Avab brauseri PDF-id ühe klõpsuga PDFMy-s – Adobe vaaturi asemel. Kohapeal, ilma üleslaadimiseta. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Ava PDFMy-s"
+ },
+ "menuOpenPage": {
+  "message": "Ava see PDF PDFMy-s"
+ },
+ "errNoAccess": {
+  "message": "Faili ei saanud laadida. Lubage ikoonil „PDFMy“ juurdepääs veebisaitidele (lüliti „Ava automaatselt“)."
+ },
+ "errHttp": {
+  "message": "Server ei edastanud faili (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Fail on suurem kui 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Link ei vii PDF-failini."
+ },
+ "errNoUrl": {
+  "message": "PDF-i aadressi ei leitud."
+ },
+ "errExpired": {
+  "message": "Üleandmine on aegunud. Klõpsake PDF-il uuesti."
+ },
+ "popupAuto": {
+  "message": "Ava PDF-id automaatselt PDFMy-s"
+ },
+ "popupAutoSub": {
+  "message": "Adobe või brauseri vaaturi asemel"
+ },
+ "popupOpen": {
+  "message": "Ava see PDF PDFMy-s"
+ },
+ "popupTarget": {
+  "message": "Ava rakenduses"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy sisemine (Mentor)"
+ },
+ "popupHint": {
+  "message": "Paremklõps lingil → „Ava PDFMy-s“. Fail jääb teie seadmesse – üleslaadimist ei toimu."
+ },
+ "popupHelp": {
+  "message": "Abi"
+ },
+ "popupPrivacy": {
+  "message": "Andmekaitse"
+ },
+ "stateOn": {
+  "message": "Sees: klõpsatud PDF-id avanevad PDFMy-s."
+ },
+ "stateNeedAccess": {
+  "message": "Sisselülitamiseks lubage üks kord juurdepääs veebisaitidele (puudutage lülitit)."
+ },
+ "stateOff": {
+  "message": "Väljas: PDF-id avanevad nagu tavaliselt. Paremklõps → „Ava PDFMy-s“ töötab siiski."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Tere tulemast"
+ },
+ "welcomeH1": {
+  "message": "Peaaegu valmis"
+ },
+ "welcomeP1": {
+  "message": "Nüüdsest avanevad brauseris klõpsatud PDF-id otse rakenduses <b>PDFMy</b> – lugemiseks, allkirjastamiseks, varjamiseks, arhiveerimiseks. Fail jääb teie seadmesse, <b>üleslaadimist ei toimu</b>."
+ },
+ "welcomeP2": {
+  "message": "Selleks vajab laiendus üks kord teie luba PDF-ide laadimiseks veebisaitidelt. Brauser küsib seda kohe."
+ },
+ "welcomeHowTo": {
+  "message": "Nii kasutate PDFMy-d"
+ },
+ "welcomeStep1": {
+  "message": "<b>Klõpsake PDF-il</b> – see avaneb PDFMy-s Adobe või brauseri vaaturi asemel."
+ },
+ "welcomeStep2": {
+  "message": "<b>Paremklõps lingil</b> → „Ava PDFMy-s“ – ka siis, kui automaatne avamine on välja lülitatud."
+ },
+ "welcomeStep3": {
+  "message": "<b>Ikoon „PDFMy“</b> üleval paremal (vajaduse korral kinnitage laienduste ikooni kaudu): automaatne avamine sisse/välja, praeguse PDF-i ülevõtmine."
+ },
+ "welcomeStep4": {
+  "message": "Kas soovite PDF-i siiski vanas vaaturis näha? Klõpsake brauseris „Tagasi“."
+ },
+ "welcomePrivacyH": {
+  "message": "Andmekaitse"
+ },
+ "welcomePrivacy": {
+  "message": "Laiendus laadib ainult teie avatava PDF-i ja annab selle otse brauseris üle saidile pdfmy.de. See ei saada andmeid Mentor Groupile ega kolmandatele isikutele, ei salvesta ajalugu ega sisalda statistikat. Juurdepääsu veebisaitidele saate igal ajal ikoonil „PDFMy“ uuesti välja lülitada. Pakkuja: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Impressum</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Andmekaitse</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Sisse lülitatud. Võite selle akna sulgeda ja PDF-il klõpsata."
+ },
+ "welcomeDenied": {
+  "message": "Pole sisse lülitatud. Paremklõps → „Ava PDFMy-s“ töötab siiski."
+ }
+}

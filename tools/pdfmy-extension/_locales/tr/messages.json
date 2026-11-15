@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – PDF’leri doğrudan açın"
+ },
+ "extDesc": {
+  "message": "Tarayıcıdaki PDF’leri tek tıkla Adobe görüntüleyici yerine PDFMy’de açar. Yerel, yükleme yok. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "PDFMy’de aç"
+ },
+ "menuOpenPage": {
+  "message": "Bu PDF’yi PDFMy’de aç"
+ },
+ "errNoAccess": {
+  "message": "Dosya yüklenemedi. Lütfen “PDFMy” simgesinde web sitelerine erişime izin verin (“Otomatik aç” anahtarı)."
+ },
+ "errHttp": {
+  "message": "Sunucu dosyayı iletmedi (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Dosya 300 MB’tan büyük."
+ },
+ "errNotPdf": {
+  "message": "Bağlantı bir PDF dosyasına gitmiyor."
+ },
+ "errNoUrl": {
+  "message": "PDF adresi bulunamadı."
+ },
+ "errExpired": {
+  "message": "Aktarımın süresi doldu. Lütfen PDF’ye yeniden tıklayın."
+ },
+ "popupAuto": {
+  "message": "PDF’leri otomatik olarak PDFMy’de aç"
+ },
+ "popupAutoSub": {
+  "message": "Adobe veya tarayıcı görüntüleyicisi yerine"
+ },
+ "popupOpen": {
+  "message": "Bu PDF’yi PDFMy’de aç"
+ },
+ "popupTarget": {
+  "message": "Şurada aç"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy dahili (Mentor)"
+ },
+ "popupHint": {
+  "message": "Bir bağlantıya sağ tıklayın → “PDFMy’de aç”. Dosya cihazınızda kalır – yükleme yok."
+ },
+ "popupHelp": {
+  "message": "Yardım"
+ },
+ "popupPrivacy": {
+  "message": "Gizlilik"
+ },
+ "stateOn": {
+  "message": "Açık: Tıkladığınız PDF’ler PDFMy’de açılır."
+ },
+ "stateNeedAccess": {
+  "message": "Açmak için bir kez web sitelerine erişime izin verin (anahtara dokunun)."
+ },
+ "stateOff": {
+  "message": "Kapalı: PDF’ler her zamanki gibi açılır. Sağ tık → “PDFMy’de aç” yine de çalışır."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Hoş geldiniz"
+ },
+ "welcomeH1": {
+  "message": "Neredeyse hazır"
+ },
+ "welcomeP1": {
+  "message": "Bundan sonra tarayıcıda tıkladığınız PDF’ler doğrudan <b>PDFMy</b>’de açılır – okumak, imzalamak, karartmak, arşivlemek için. Dosya cihazınızda kalır, <b>yükleme yok</b>."
+ },
+ "welcomeP2": {
+  "message": "Bunun için uzantının web sitelerinden PDF yükleyebilmesi için bir kerelik izninize ihtiyacı var. Tarayıcı birazdan soracak."
+ },
+ "welcomeHowTo": {
+  "message": "PDFMy nasıl kullanılır"
+ },
+ "welcomeStep1": {
+  "message": "<b>Bir PDF’ye tıklayın</b> – Adobe veya tarayıcı görüntüleyicisi yerine PDFMy’de açılır."
+ },
+ "welcomeStep2": {
+  "message": "<b>Bir bağlantıya sağ tıklayın</b> → “PDFMy’de aç” – otomatik açma kapalıyken de."
+ },
+ "welcomeStep3": {
+  "message": "Sağ üstteki <b>“PDFMy” simgesi</b> (gerekirse Uzantılar simgesinden sabitleyin): otomatik açmayı aç/kapat, geçerli PDF’yi al."
+ },
+ "welcomeStep4": {
+  "message": "Bir PDF’yi yine de eski görüntüleyicide mi görmek istiyorsunuz? Tarayıcıda “Geri”ye tıklayın."
+ },
+ "welcomePrivacyH": {
+  "message": "Gizlilik"
+ },
+ "welcomePrivacy": {
+  "message": "Uzantı yalnızca açtığınız PDF’yi yükler ve doğrudan tarayıcıda pdfmy.de’ye aktarır. Mentor Group’a veya üçüncü taraflara veri göndermez, geçmiş kaydetmez ve istatistik içermez. Web sitelerine erişimi istediğiniz zaman “PDFMy” simgesinden yeniden kapatabilirsiniz. Sağlayıcı: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Künye</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Gizlilik</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Açıldı. Bu pencereyi kapatıp bir PDF’ye tıklayabilirsiniz."
+ },
+ "welcomeDenied": {
+  "message": "Açılmadı. Sağ tık → “PDFMy’de aç” yine de çalışır."
+ }
+}

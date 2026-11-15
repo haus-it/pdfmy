@@ -1,0 +1,109 @@
+{
+ "extName": {
+  "message": "PDFMy – neposredno odpiranje PDF-jev"
+ },
+ "extDesc": {
+  "message": "Odpre PDF-je iz brskalnika z enim klikom v PDFMy – namesto v Adobe. Lokalno, brez nalaganja. Powered by Mentor Group."
+ },
+ "menuOpenLink": {
+  "message": "Odpri v PDFMy"
+ },
+ "menuOpenPage": {
+  "message": "Odpri ta PDF v PDFMy"
+ },
+ "errNoAccess": {
+  "message": "Datoteke ni bilo mogoče naložiti. V ikoni „PDFMy“ dovolite dostop do spletnih mest (stikalo „Samodejno odpiranje“)."
+ },
+ "errHttp": {
+  "message": "Strežnik ni dostavil datoteke (HTTP $status$).",
+  "placeholders": {
+   "status": {
+    "content": "$1"
+   }
+  }
+ },
+ "errTooBig": {
+  "message": "Datoteka je večja od 300 MB."
+ },
+ "errNotPdf": {
+  "message": "Povezava ne vodi do datoteke PDF."
+ },
+ "errNoUrl": {
+  "message": "Naslova PDF ni bilo mogoče najti."
+ },
+ "errExpired": {
+  "message": "Predaja je potekla. Znova kliknite PDF."
+ },
+ "popupAuto": {
+  "message": "Samodejno odpiraj PDF-je v PDFMy"
+ },
+ "popupAutoSub": {
+  "message": "namesto v pregledovalniku Adobe ali brskalnika"
+ },
+ "popupOpen": {
+  "message": "Odpri ta PDF v PDFMy"
+ },
+ "popupTarget": {
+  "message": "Odpri v"
+ },
+ "popupTargetMentor": {
+  "message": "PDFMy interno (Mentor)"
+ },
+ "popupHint": {
+  "message": "Desni klik na povezavo → „Odpri v PDFMy“. Datoteka ostane v vaši napravi – brez nalaganja."
+ },
+ "popupHelp": {
+  "message": "Pomoč"
+ },
+ "popupPrivacy": {
+  "message": "Varstvo podatkov"
+ },
+ "stateOn": {
+  "message": "Vklopljeno: PDF-ji, ki jih kliknete, se odprejo v PDFMy."
+ },
+ "stateNeedAccess": {
+  "message": "Za vklop enkrat dovolite dostop do spletnih mest (tapnite stikalo)."
+ },
+ "stateOff": {
+  "message": "Izklopljeno: PDF-ji se odpirajo kot običajno. Desni klik → „Odpri v PDFMy“ kljub temu deluje."
+ },
+ "welcomeTitle": {
+  "message": "PDFMy – Dobrodošli"
+ },
+ "welcomeH1": {
+  "message": "Skoraj končano"
+ },
+ "welcomeP1": {
+  "message": "Odslej se PDF-ji, ki jih kliknete v brskalniku, odprejo neposredno v <b>PDFMy</b> – za branje, podpisovanje, zakrivanje, arhiviranje. Datoteka pri tem ostane v vaši napravi, <b>brez nalaganja</b>."
+ },
+ "welcomeP2": {
+  "message": "Za to razširitev enkrat potrebuje vaše dovoljenje za nalaganje PDF-jev s spletnih mest. Brskalnik vas bo takoj vprašal."
+ },
+ "welcomeHowTo": {
+  "message": "Kako uporabljati PDFMy"
+ },
+ "welcomeStep1": {
+  "message": "<b>Kliknite PDF</b> – odpre se v PDFMy namesto v pregledovalniku Adobe ali brskalnika."
+ },
+ "welcomeStep2": {
+  "message": "<b>Desni klik na povezavo</b> → „Odpri v PDFMy“ – tudi ko je samodejno odpiranje izklopljeno."
+ },
+ "welcomeStep3": {
+  "message": "<b>Ikona „PDFMy“</b> zgoraj desno (po potrebi jo pripnite prek ikone Razširitve): samodejno odpiranje vklop/izklop, prevzem trenutnega PDF-ja."
+ },
+ "welcomeStep4": {
+  "message": "Želite PDF vseeno videti v starem pregledovalniku? V brskalniku kliknite „Nazaj“."
+ },
+ "welcomePrivacyH": {
+  "message": "Varstvo podatkov"
+ },
+ "welcomePrivacy": {
+  "message": "Razširitev naloži samo PDF, ki ga odprete, in ga neposredno v brskalniku preda na pdfmy.de. Ne pošilja podatkov družbi Mentor Group ali tretjim osebam, ne shranjuje zgodovine in ne vsebuje statistike. Dostop do spletnih mest lahko kadar koli izklopite v ikoni „PDFMy“. Ponudnik: Mentor GmbH, Paderborn – <a href=\"https://pdfmy.de/impressum.html\" target=\"_blank\" rel=\"noopener\">Impresum</a>, <a href=\"https://pdfmy.de/datenschutz.html\" target=\"_blank\" rel=\"noopener\">Varstvo podatkov</a>."
+ },
+ "welcomeOn": {
+  "message": "✓ Vklopljeno. To okno lahko zaprete in kliknete PDF."
+ },
+ "welcomeDenied": {
+  "message": "Ni vklopljeno. Desni klik → „Odpri v PDFMy“ kljub temu deluje."
+ }
+}
