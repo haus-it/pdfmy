@@ -592,6 +592,11 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
 **Offen aus Rang 4–7:** ~~Abschlusszertifikat versiegeln (Rang 5)~~ (umgesetzt app-v244, siehe unten), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
 
+### Umgesetzt 15.11.2026: PDFMy in Firmen verteilen (pdfmy Scan 1.17.0, app-v251)
+**Anlass (GF 15.11.2026: „weitere Lücken schließen“):** Wettbewerbsvergleich 11/2026, Rang 5 (c) – Acrobat und PDF24 bieten Firmenpakete, pdfmy Scan ließ sich nur je Benutzer einrichten.
+**Umsetzung:** Schalter `--install-all-users`/`--uninstall-all-users` (still mit `--quiet`), Programme-Ordner und Start für jede Anmeldung, keine Selbstaktualisierung (Updates verteilt die IT), Richtlinien `DisableUpdates` und `DisablePrinter`, Seite firmen.html. Ein MSI-Paket folgt nur bei Nachfrage (Intune, SCCM und Startskripte arbeiten mit der .exe).
+**Leitplanken:** 1–3 gewahrt (gleiches Programm, nur 127.0.0.1, kein Konto, keine Telemetrie; die Richtlinien liest pdfmy Scan nur lokal). 4: Für Benutzer ändert sich nichts, für die IT entfällt die Einrichtung je Benutzer. 5: Ablauftest im Testmodus, echte Verteilung offen. 6 nicht betroffen.
+
 ### Umgesetzt 14.11.2026: Linux-Pakete für alle verbreiteten Distributionen (app-v250)
 **Anlass (GF 14.11.2026):** „bitte bei allen Linux-Systemen“ – ohne Terminal, im Erscheinungsbild von PDFMy.
 **Umsetzung:** .rpm (Fedora/openSUSE/RHEL) und Arch-Paket mit denselben Dateien wie die .deb; PDFMy wählt das passende (Meldung von pdfmy Scan, sonst Browser-Hinweis, sonst Wahl im Scan-Fenster); das Skript installiert selbst das Paket per Passwort-Fenster.

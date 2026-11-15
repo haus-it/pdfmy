@@ -2814,6 +2814,7 @@ $('#btnPrinter').onclick = async () => {
     return;
   }
   const st = state.scanPrinter, name = state.scanPrinterName;
+  if (st === 'policy') { alert(T('Den Drucker „PDFMy“ hat Ihre IT-Abteilung auf diesem Rechner abgeschaltet.')); return; }
   if (st === 'ts') { alert(T('Auf diesem Rechner melden sich mehrere Benutzer gleichzeitig an (Terminalserver). Ein Drucker „PDFMy“ gälte dort für alle – deshalb bietet PDFMy ihn hier nicht an. Alternative: im Druckdialog „Microsoft Print to PDF“ wählen und die Datei in PDFMy öffnen.')); return; }
   if (st === 'nodriver') {   // pdfmy Scan ab 1.10.1 öffnet das Windows-Fenster zum Einschalten selbst (unabhängig von der Sprache)
     if (verLess(state.scanVersion, '1.10.1')) { alert(T('Der in Windows eingebaute Drucker „Microsoft Print to PDF“ ist ausgeschaltet.\n\nEinschalten: Windows-Suche „Windows-Features aktivieren oder deaktivieren“ → Haken bei „Microsoft Print to PDF“ → OK. Danach hier noch einmal klicken.')); return; }

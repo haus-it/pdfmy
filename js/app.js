@@ -4557,7 +4557,7 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.16.1';
+const SCAN_LATEST = '1.17.0';
 const SCAN_MAC_LATEST = '1.7.2';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 /* Linux: passendes Paket (Doppelklick, ohne Terminal) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
@@ -4571,7 +4571,7 @@ function linuxPkg() {
 }
 const linuxPkgFile = k => LINUX_PKGS[k || linuxPkg()];
 const SCAN_FILE_UNIX = () => state.scanLinux ? linuxPkgFile() : 'pdfmy-Scan-Mac.zip';
-const scanOutdated = () => !!state.scanVersion && verLess(state.scanVersion, scanLatest());
+const scanOutdated = () => !!state.scanVersion && !state.scanManaged && verLess(state.scanVersion, scanLatest());   // von der IT verteilt: Updates kommen von dort
 const SCAN_FILE = `pdfmy-Scan-${SCAN_LATEST}.exe`;
 // Download-Zähler (KONZEPT.md, 25.10.2026): beim Herunterladen eine leere, statische Zählseite je Plattform abrufen (download/zaehlung/…) –
 // IONOS WebAnalytics zählt sie wie jeden Seitenabruf; ohne Cookie, ohne Kennung, ohne weitere Daten. Gleiche Regel in tools/site/sprache.js.
@@ -4607,7 +4607,7 @@ async function scanHelperRunning() {
   try {
     const d = await scanFind(); if (!d) return false;
     const changed = state.scanVersion !== d.version;
-    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
+    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanManaged = d.managed === true; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll
     if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store', headers: { 'X-Pdfmy': '1' } }).catch(() => {});   // ab pdfmy Scan 1.14.1 nur mit eigenem Kopf
     if (changed && typeof renderVerBar === 'function') setTimeout(renderVerBar, 0);   // Statuszeile sofort nachziehen (z. B. nach einem Update)

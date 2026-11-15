@@ -423,6 +423,41 @@ AddType application/x-rpm .rpm
   RewriteRule ^pdfmy-erweiterung-[0-9.]+\\.zip$ /download/${extZip} [R=302,L]
 </IfModule>
 `);
+// Für die IT: pdfmy Scan auf alle Rechner verteilen (Wettbewerbsvergleich 11/2026, Rang 5c) – Befehle, Erkennung, Richtlinien
+const PSDIR = 'C:\\Program Files\\pdfmy Scan';
+write('firmen.html', page('PDFMy in Firmen verteilen', `
+<p><b>PDFMy selbst ist eine Web-App – auf den Rechnern muss dafür nichts installiert werden.</b> Für Scanner, „PDF per Doppelklick“, den Drucker „PDFMy“ und die Office-Anbindung verteilt die IT das kleine Programm <b>pdfmy Scan</b>: still, für alle Benutzer, ohne Rückfragen.</p>
+<h2>Windows: pdfmy Scan für alle Benutzer</h2>
+<ul>
+<li>Datei: <a href="download/${scanFile}" download>${scanFile}</a> (signiert von der Mentor GmbH) · SHA-256 <code style="word-break:break-all">${scanSha || '–'}</code></li>
+<li><b>Installieren</b> (als SYSTEM oder Administrator): <code>${scanFile} --install-all-users --quiet</code> – legt pdfmy Scan im Ordner <code>${PSDIR}</code> an, startet es bei jeder Anmeldung, trägt es ins Startmenü und unter „Installierte Apps“ ein. Rückgabewert 0 = erfolgreich.</li>
+<li><b>Entfernen:</b> <code>"${PSDIR}\\pdfmy-Scan.exe" --uninstall-all-users --quiet</code> – die Einstellungen der Benutzer bleiben.</li>
+<li><b>Erkennung</b> (Intune, SCCM/MECM): Registrierungsschlüssel <code>HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\pdfmy-scan-machine</code>, Wert <code>DisplayVersion</code> = ${scanVer}.</li>
+<li><b>Updates:</b> Eine Installation für alle aktualisiert sich nicht selbst und zeigt keine Update-Hinweise – neue Versionen verteilt die IT mit demselben Befehl. Die aktuelle Version steht maschinenlesbar in <a href="download/version.json">download/version.json</a> (Felder <code>pdfmyScan</code> und <code>sha256</code>).</li>
+<li>Hatte ein Benutzer pdfmy Scan schon selbst installiert, tritt seine Kopie zurück: Es startet die Fassung für alle.</li>
+</ul>
+<p><b>Intune:</b> Win32-App aus der .exe anlegen, Installations- und Deinstallationsbefehl wie oben, Installationsverhalten „System“, Erkennungsregel wie oben. <b>Gruppenrichtlinie:</b> Computer-Startskript mit dem Installationsbefehl. <b>Terminalserver:</b> geeignet – jeder Benutzer bekommt seinen eigenen Anschluss, Dokumente anderer Benutzer sind nicht erreichbar; den Drucker „PDFMy“ bietet pdfmy Scan dort nicht an.</p>
+<h2>Richtlinien</h2>
+<p>Unter <code>HKLM\\SOFTWARE\\Policies\\Mentor GmbH\\PDFMy</code> (oder für einzelne Benutzer unter HKCU), Typ DWORD, 1 = ein:</p>
+<ul>
+<li><code>DisableUpdates</code> – pdfmy Scan aktualisiert sich nicht selbst und bietet keine Updates an (auch bei Installationen einzelner Benutzer).</li>
+<li><code>DisablePrinter</code> – den Drucker „PDFMy“ nicht anbieten.</li>
+</ul>
+<pre style="overflow-x:auto;background:var(--bg);padding:10px">Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Mentor GmbH\\PDFMy]
+"DisableUpdates"=dword:00000001</pre>
+<h2>PDFMy als App für alle Benutzer (Chrome und Edge)</h2>
+<p>Mit der Browser-Richtlinie <code>WebAppInstallForceList</code> erscheint PDFMy als App im Startmenü und auf dem Desktop:</p>
+<pre style="overflow-x:auto;background:var(--bg);padding:10px">[{"url": "https://${site.domain}/", "default_launch_container": "window", "create_desktop_shortcut": true}]</pre>
+<h2>Linux und Mac</h2>
+<ul>
+<li><b>Linux</b> (für alle Benutzer, z. B. per Ansible oder Puppet): <code>apt install ./${linuxDeb}</code> · <code>dnf install ./${linuxRpm}</code> · <code>zypper install ./${linuxRpm}</code> · <code>pacman -U ./${linuxArch}</code></li>
+<li><b>Mac</b> (je Benutzer, z. B. als Skript der Geräteverwaltung im Benutzerkontext): <code>curl -fsSL https://${site.domain}/download/pdfmy-scan-mac.sh | bash</code></li>
+</ul>
+<h2>Datenschutz und Sicherheit</h2>
+<p>Dokumente verlassen den Rechner nicht: PDFMy arbeitet im Browser, pdfmy Scan ist nur vom eigenen Rechner aus erreichbar (127.0.0.1) und beantwortet nur Anfragen des angemeldeten Benutzers. Es gibt keine Telemetrie und kein Benutzerkonto. Updates prüft pdfmy Scan per SHA-256 und Signatur der Mentor GmbH. Fragen zur Verteilung: <a href="mailto:${esc(APPSUPPORT)}?subject=PDFMy%20in%20Firmen%20verteilen">${esc(APPSUPPORT)}</a></p>
+`));
 write('erweiterung.html', page('PDFs direkt in PDFMy öffnen', `
 <p><b>Ein Klick auf eine PDF im Browser – und sie ist in PDFMy offen.</b> Für PDFs aus Webportalen, Webmail, Behörden- und Bankseiten: ausfüllen, unterschreiben, schwärzen, speichern – ohne Umweg über den Download-Ordner. Die Datei wird <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDFMy.</p>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px">
@@ -494,6 +529,7 @@ Das funktioniert mit jedem Hersteller (Brother, Canon, HP, Kyocera, Ricoh, Epson
 <p>pdfmy Scan findet Netzwerk-Multifunktionsgeräte automatisch und <b>ohne Treiber</b> (eSCL/AirScan – unterstützen fast alle Geräte ab ca. 2015 – und WSD, z. B. Epson, Dell, Brother) sowie Scanner, die in Windows eingerichtet sind (USB). Gesucht wird über jede Netzwerkkarte (auch bei VPN oder WLAN und LAN gleichzeitig).
 Wird Ihr Gerät nicht gefunden: im Scan-Fenster <i>„Gerät per IP-Adresse hinzufügen“</i> (die IP steht am Gerätedisplay unter Netzwerk/TCP-IP) und am Gerät ggf. „AirPrint“, „eSCL“ oder „Mopria“ einschalten.
 Fragt der Browser „pdfmy.de möchte auf Geräte in Ihrem lokalen Netzwerk zugreifen“, bitte <b>Zulassen</b> wählen – so erreicht pdfmy das Programm auf Ihrem PC.</p>
+<p><b>Für die IT:</b> pdfmy Scan still auf alle Rechner verteilen (Intune, Gruppenrichtlinie, SCCM), mit Richtlinien für Updates und Drucker – <a href="firmen.html">PDFMy in Firmen verteilen</a>.</p>
 <h2 id="mac">Am Mac: pdfmy Scan für Mac</h2>
 <ol>
 <li><a href="download/${macZip}" download>pdfmy Scan für Mac ${macVer} herunterladen</a> (ZIP) und öffnen.</li>
@@ -626,7 +662,7 @@ copy('tools/site/geraete.js', 'geraete.js');
 copy('tools/site/google3c0638e01aa028c9.html', 'google3c0638e01aa028c9.html');
 copy('tools/site/338cffd73ed849d192fa0f2825371a35.txt', '338cffd73ed849d192fa0f2825371a35.txt');   // IndexNow (Bing, Yandex, Seznam …): Schlüsseldatei – öffentlich gewollt, nicht entfernen; tools/deploy.py meldet geänderte Seiten   // Google Search Console: Inhaberschaft (nicht entfernen)
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: https://${site.domain}/sitemap.xml\n`);
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://${site.domain}/</loc></url>\n  <url><loc>https://${site.domain}/hilfe.html</loc></url>\n  <url><loc>https://${site.domain}/scanner.html</loc></url>\n  <url><loc>https://${site.domain}/scanner-geraete.html</loc></url>\n  <url><loc>https://${site.domain}/erweiterung.html</loc></url>\n  <url><loc>https://${site.domain}/werkzeuge.html</loc></url>\n  <url><loc>https://${site.domain}/presse.html</loc></url>\n${tools.map(t => `  <url><loc>https://${site.domain}/${t.slug}.html</loc></url>\n`).join('')}</urlset>\n`);
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://${site.domain}/</loc></url>\n  <url><loc>https://${site.domain}/hilfe.html</loc></url>\n  <url><loc>https://${site.domain}/scanner.html</loc></url>\n  <url><loc>https://${site.domain}/scanner-geraete.html</loc></url>\n  <url><loc>https://${site.domain}/erweiterung.html</loc></url>\n  <url><loc>https://${site.domain}/firmen.html</loc></url>\n  <url><loc>https://${site.domain}/werkzeuge.html</loc></url>\n  <url><loc>https://${site.domain}/presse.html</loc></url>\n${tools.map(t => `  <url><loc>https://${site.domain}/${t.slug}.html</loc></url>\n`).join('')}</urlset>\n`);
 
 // ---------------- Interne Edition: pdfmy.de/mentor im Mentor-Group-CI, mit Passwortschutz ----------------
 // Gleicher Programmstand wie pdfmy.de, aber js/config.js der internen Version (Mentor-Theme). Bibliotheken und OCR-Daten

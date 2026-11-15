@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.16.1";
+        public const string Version = "1.17.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -71,6 +71,9 @@ namespace PdfmyScan
                 Environment.Exit(why == null ? 0 : 1); return;
             }
             if (args.Contains("--uninstall")) { Installer.Uninstall(); return; }
+            // Firmen: Installation für alle Benutzer, still per Softwareverteilung (Machine.cs)
+            if (args.Contains("--install-all-users")) { Environment.Exit(Machine.Install(args.Contains("--quiet"))); return; }
+            if (args.Contains("--uninstall-all-users")) { Environment.Exit(Machine.Uninstall(args.Contains("--quiet"))); return; }
             if (args.Length > 1 && args[0] == "--printer") { Environment.Exit(PdfPrinter.Elevated(args)); return; }   // erhöhte Kopie: Drucker „PDFMy“ einrichten/entfernen
             if (args.Contains("--register")) { FileAssoc.Register(Application.ExecutablePath); return; }     // Support: PDF-Zuordnung erneuern
             if (args.Contains("--unregister")) { FileAssoc.Unregister(); return; }
@@ -86,6 +89,7 @@ namespace PdfmyScan
             int oi = Array.IndexOf(args, "--open");
             string openPath = oi >= 0 && oi + 1 < args.Length ? args[oi + 1] : null;
             if (openPath != null && FileOpen.HandOver(openPath)) return;   // läuft schon → Datei an die laufende Instanz geben
+            if (Machine.DeferToMachine(args)) return;   // für alle Benutzer installiert: eigene Kopie des Benutzers tritt zurück
 
             bool first;
             var mutex = new Mutex(true, "pdfmy-scan-single", out first);
@@ -94,7 +98,7 @@ namespace PdfmyScan
             if (!first) Log("Start: läuft bereits (gleiche oder neuere Version)");
             using (mutex)
             {
-                if (!first) { OpenPdfmy(); return; }   // gleiche/neuere Version läuft schon → nur pdfmy öffnen
+                if (!first) { if (!args.Contains("--deferred") || openPath != null) OpenPdfmy(); return; }   // --deferred: Autostart einer zurückgetretenen Benutzerkopie – nichts öffnen   // gleiche/neuere Version läuft schon → nur pdfmy öffnen
                 // --portable: ohne Installation/Autostart laufen (z. B. für Tests)
                 if (!args.Contains("--portable") && Installer.InstallIfNeeded()) return; // Erstinstallation: Kopie wurde gestartet
                 Application.EnableVisualStyles();
@@ -161,6 +165,9 @@ namespace PdfmyScan
         {
             string self = Application.ExecutablePath;
             string target = Path.Combine(Program.AppDir, "pdfmy-Scan.exe");
+            // Fassung für alle Benutzer (Programme-Ordner): nichts kopieren; Start und Eintrag in „Installierte Apps“ kommen aus HKLM,
+            // hier nur die PDF-Zuordnung des Benutzers und den alten eigenen Autostart abschalten
+            if (Machine.RunningFromHere) { if (Machine.TestRoot == null) { SetAutostart(false); FileAssoc.Register(self); } return false; }
             if (string.Equals(Path.GetFullPath(self), Path.GetFullPath(target), StringComparison.OrdinalIgnoreCase))
             {
                 try { File.Delete(target + ".alt"); } catch { }   // Rest eines Updates aufräumen
@@ -393,6 +400,8 @@ namespace PdfmyScan
 
         async Task CheckUpdate(bool manual)
         {
+            // Von der IT verteilt (für alle Benutzer oder Richtlinie DisableUpdates): keine Selbstaktualisierung, kein Angebot
+            if (Machine.UpdatesManaged) { updateItem.Visible = false; if (manual) icon.ShowBalloonTip(5000, "pdfmy Scan", $"Version {Program.Version} – Updates verteilt Ihre IT-Abteilung.", ToolTipIcon.Info); return; }
             string latest = await Updater.LatestAsync();
             if (latest == null) { if (manual) icon.ShowBalloonTip(5000, "pdfmy Scan", "Update-Prüfung nicht möglich (keine Verbindung zu pdfmy.de).", ToolTipIcon.Warning); return; }
             // Gestaffelte Verteilung: version.json „rollout“ (0–100 %) – automatisch sieht das Update nur der freigegebene Teil der Installationen
@@ -1841,7 +1850,7 @@ namespace PdfmyScan
                 SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return;
             }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem() }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), managed = Machine.UpdatesManaged, printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem() }, cors); return; }
             if (p == "/wake" && method == "POST")   // „Scanner aufwecken“: wecken, kurz warten, neu suchen
             {
                 hub.RefreshAsync().Wait(40000);   // die Suche weckt zuerst alle bekannten Geräte

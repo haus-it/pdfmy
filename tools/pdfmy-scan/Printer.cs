@@ -72,7 +72,7 @@ namespace PdfmyScan
         }
         public static bool Installed() => FindName() != null;
         // "ts" = Terminalserver, "on" = eingerichtet, "nodriver" = „Microsoft Print to PDF“ fehlt/abgeschaltet, "off" = nicht eingerichtet
-        public static string State() => TerminalServer ? "ts" : Installed() ? "on" : !DriverAvailable() ? "nodriver" : "off";
+        public static string State() => Machine.Policy("DisablePrinter") ? "policy" : TerminalServer ? "ts" : Installed() ? "on" : !DriverAvailable() ? "nodriver" : "off";
 
         // ---------- Selbsttest ----------
         // Warteschlange des Druckers lesen (Windows-Druck-API): Status-Bits und Zahl der Aufträge – null, wenn nicht lesbar
@@ -121,6 +121,7 @@ namespace PdfmyScan
         static string RunElevated(string mode)
         {
             bool on = mode != "remove";
+            if (on && Machine.Policy("DisablePrinter")) return "Den Drucker „PDFMy“ hat Ihre IT-Abteilung abgeschaltet.";
             if (on && TerminalServer) return "Auf Terminalservern bietet pdfmy Scan den Drucker nicht an: Er gälte für alle angemeldeten Benutzer.";
             string errFile = Path.Combine(Root, "fehler-" + Sid + ".txt");
             try

@@ -2,6 +2,15 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-15
+
+### PDFMy in Firmen verteilen: pdfmy Scan still für alle Benutzer (pdfmy Scan 1.17.0, app-v251)
+- **Installation für alle Benutzer:** `pdfmy-Scan-1.17.0.exe --install-all-users --quiet` (als SYSTEM oder Administrator, z. B. Intune, SCCM/MECM, Gruppenrichtlinie) legt pdfmy Scan unter C:\Program Files\pdfmy Scan an, startet es bei jeder Anmeldung, trägt es ins Startmenü und unter „Installierte Apps“ ein (Rückgabewert 0). Entfernen: `--uninstall-all-users --quiet`, die Einstellungen der Benutzer bleiben. Erkennung über HKLM\…\Uninstall\pdfmy-scan-machine (DisplayVersion).
+- **Updates kommen von der IT:** Eine Installation für alle aktualisiert sich nicht selbst und zeigt keine Update-Hinweise – auch PDFMy nicht (pdfmy Scan meldet „managed“). Eine eigene Kopie, die ein Benutzer früher installiert hatte, tritt zurück: Ihr Autostart wird abgeschaltet, gestartet wird die Fassung für alle, ohne dass sich der Browser öffnet.
+- **Richtlinien** unter HKLM\SOFTWARE\Policies\Mentor GmbH\PDFMy (DWORD): `DisableUpdates`, `DisablePrinter`.
+- **Neue Seite „PDFMy in Firmen verteilen“** (firmen.html): Befehle, Erkennungsregel, Richtlinien, PDFMy als App per Browser-Richtlinie, Linux-Pakete per apt/dnf/zypper/pacman, Mac per Skript; verlinkt von Hilfe und Scanner-Seite.
+- Geprüft im Testmodus (PDFMY_TEST_MACHINE: derselbe Ablauf in einem Testordner und unter HKCU, ohne das System zu ändern): Installieren, Ersetzen einer laufenden Fassung, Start mit „managed“, Zurücktreten einer Benutzerkopie, Richtlinie DisablePrinter, vollständiges Entfernen. **Noch nicht über Intune bzw. als SYSTEM auf einem echten Firmenrechner verteilt.**
+
 ## 2026-11-14
 
 ### Linux ohne Terminal auf jedem System: Pakete für Fedora, openSUSE, RHEL, Arch, Manjaro (app-v250, pdfmy Scan für Mac/Linux 1.7.2)
