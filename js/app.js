@@ -4593,7 +4593,7 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
 const SCAN_LATEST = '1.18.0';
 const SCAN_MAC_LATEST = '1.8.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
-/* Linux: passendes Paket (Doppelklick, ohne Terminal) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
+/* Linux: passendes Paket (Doppelklick, meist ohne Terminal; sonst linuxPkgCmd) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
    Läuft pdfmy Scan schon, sagt es selbst, welches System es ist; sonst Hinweise aus dem Browser (Firefox nennt Ubuntu/Fedora) oder die letzte Wahl. */
 const LINUX_PKGS = { deb: 'pdfmy-scan-linux.deb', rpm: 'pdfmy-scan-linux.rpm', arch: 'pdfmy-scan-linux.pkg.tar.gz' };
 function linuxPkg() {
@@ -4603,6 +4603,9 @@ function linuxPkg() {
   return /Fedora|Red Hat|CentOS|Rocky|Alma|SUSE|Mageia/i.test(ua) ? 'rpm' : /Arch|Manjaro|Endeavour/i.test(ua) ? 'arch' : 'deb';
 }
 const linuxPkgFile = k => LINUX_PKGS[k || linuxPkg()];
+// Ausweg, wenn der Doppelklick keine Installation öffnet (z. B. Ubuntu, Rückmeldung GF 15.11.2026): Befehl je Paket, Download-Ordner in jeder Systemsprache
+const LINUX_CMD = { deb: 'sudo apt install', rpm: 'sudo dnf install', arch: 'sudo pacman --upgrade' }, XDG_DL = ['xdg-user-dir', 'DOWNLOAD'].join(' ');   // Befehle, kein Oberflächentext
+const linuxPkgCmd = k => `${LINUX_CMD[k || linuxPkg()]} "$(${XDG_DL})/${linuxPkgFile(k)}"`;
 const SCAN_FILE_UNIX = () => state.scanLinux ? linuxPkgFile() : 'pdfmy-Scan-Mac.zip';
 const scanOutdated = () => !!state.scanVersion && !state.scanManaged && verLess(state.scanVersion, scanLatest());   // von der IT verteilt: Updates kommen von dort
 const SCAN_FILE = `pdfmy-Scan-${SCAN_LATEST}.exe`;
@@ -4721,9 +4724,10 @@ async function openScanDialog() {
   document.querySelectorAll('.scanAltLinux').forEach(a => a.href = dlBase + linuxPkgFile());
   $('#scanLinuxDownload').href = dlBase + linuxPkgFile();
   document.querySelectorAll('.linuxPkgName').forEach(e => e.textContent = linuxPkgFile());
+  document.querySelectorAll('.linuxPkgCmd').forEach(e => e.textContent = linuxPkgCmd());
   document.querySelectorAll('.linuxPkgLink').forEach(a => {
     a.href = dlBase + linuxPkgFile(a.dataset.pkg); a.hidden = a.dataset.pkg === linuxPkg();
-    a.onclick = () => { try { localStorage.setItem('pdfmy.linuxPkg', a.dataset.pkg); } catch {} document.querySelectorAll('.linuxPkgName').forEach(e => e.textContent = linuxPkgFile(a.dataset.pkg)); };
+    a.onclick = () => { try { localStorage.setItem('pdfmy.linuxPkg', a.dataset.pkg); } catch {} document.querySelectorAll('.linuxPkgName').forEach(e => e.textContent = linuxPkgFile(a.dataset.pkg)); document.querySelectorAll('.linuxPkgCmd').forEach(e => e.textContent = linuxPkgCmd(a.dataset.pkg)); };
   });
   document.querySelectorAll('.linuxGuide').forEach(a => a.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'scanner.html#linux');
   document.querySelectorAll('.devList').forEach(a => a.href = (APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'scanner-geraete.html');

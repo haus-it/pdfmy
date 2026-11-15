@@ -2723,7 +2723,7 @@ function offerScanUpdate() {
 $('#updBannerGo').addEventListener('click', () => {
   $('#updBanner').hidden = true;
   status(`pdfmy Scan ${scanLatest()} wird heruntergeladen – die Datei öffnen, das Update ersetzt die alte Version automatisch.`);
-  toast(state.scanLinux ? `Die heruntergeladene Datei „${SCAN_FILE_UNIX()}“ doppelklicken und „Installieren“ wählen – das Update ersetzt die alte Version.` : state.scanMac ? 'ZIP öffnen und „pdfmy-Scan-Mac.command“ doppelklicken – das Update ersetzt die alte Version.' : 'Heruntergeladene Datei öffnen – pdfmy Scan aktualisiert sich selbst.', 9000);
+  toast(state.scanLinux ? `Die heruntergeladene Datei „${SCAN_FILE_UNIX()}“ doppelklicken und „Installieren“ wählen – das Update ersetzt die alte Version. Öffnet sich keine Installation (z. B. unter Ubuntu), im Terminal eingeben: ${linuxPkgCmd()}` : state.scanMac ? 'ZIP öffnen und „pdfmy-Scan-Mac.command“ doppelklicken – das Update ersetzt die alte Version.' : 'Heruntergeladene Datei öffnen – pdfmy Scan aktualisiert sich selbst.', 9000);
 });
 $('#updBannerLater').onclick = () => { $('#updBanner').hidden = true; try { sessionStorage.setItem('mpdf.scanUpdLater', scanLatest()); } catch {} };
 
@@ -3026,7 +3026,7 @@ $('#btnSetup').onclick = openSetup;
 $('#setAuthor').oninput = e => { S.author = e.target.value.trim(); saveSettings(); $('#author').value = S.author; $('#stName').classList.toggle('ok', !!S.author); };
 $('#setOut').onclick = async () => { await chooseOutDir(); renderSetup(); };
 const scanDl = kind => {
-  if (kind === 'linux') { const f = linuxPkgFile(); location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f); $('#setScanInfo').textContent = `Download gestartet – die Datei „${f}“ doppelklicken und „Installieren“ wählen. Dieses Fenster erkennt es automatisch.`; return; }
+  if (kind === 'linux') { const f = linuxPkgFile(); location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/' + f); $('#setScanInfo').textContent = `Download gestartet – die Datei „${f}“ doppelklicken und „Installieren“ wählen. Öffnet sich keine Installation (z. B. unter Ubuntu), im Terminal eingeben: ${linuxPkgCmd()}. Dieses Fenster erkennt es automatisch.`; return; }
   if (kind === 'mac' || kind === true) { location.href = countDownload((APP.edition === 'web' ? '' : 'https://pdfmy.de/') + 'download/pdfmy-Scan-Mac.zip'); $('#setScanInfo').textContent = 'Download gestartet – die ZIP-Datei öffnen und „pdfmy-Scan-Mac.command“ doppelklicken. Dieses Fenster erkennt es automatisch.'; return; }
   location.href = countDownload('https://pdfmy.de/download/pdfmy-Scan.exe'); $('#setScanInfo').textContent = 'Download gestartet – die Datei „pdfmy-Scan.exe“ unten im Browser öffnen. Dieses Fenster erkennt es automatisch.';
 };

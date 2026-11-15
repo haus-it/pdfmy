@@ -408,7 +408,7 @@ const linuxSh = 'pdfmy-scan-linux.sh';
 write('download/' + linuxSh, lfl('install.sh').replace('__PDFMY_PERL__', () => macPl.trimEnd()).replace(/__PDFMY_VERSION__/g, macVer));
 write('download/pdfmy-scan-linux-entfernen.sh', lfl('uninstall.sh'));
 const linuxSha = require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(OUT, 'download', linuxSh))).digest('hex');
-// Paket für Debian, Ubuntu, Mint (.deb): Doppelklick → Paketinstallation, ohne Terminal (Wunsch GF 14.11.2026). Für alle Benutzer:
+// Paket für Debian, Ubuntu, Mint (.deb): Doppelklick → Paketinstallation, meist ohne Terminal (Wunsch GF 14.11.2026; Ubuntu öffnet je nach Version keine Installation → Befehl als Ausweg, 15.11.2026). Für alle Benutzer:
 // Programm in /opt/pdfmy-scan, Scan-Dienst als systemd-Benutzerdienst für jede Anmeldung, „PDFMy“ mit Logo im Anwendungsmenü.
 const linuxDeb = 'pdfmy-scan-linux.deb', LDEB = f => fs.readFileSync(path.join(LNX, 'deb', f));
 const linuxFiles = [
@@ -732,7 +732,8 @@ Lieber ohne Doppelklick? Im Terminal: <code>curl -fsSL https://${site.domain}/do
 <h2 id="linux">Unter Linux: pdfmy Scan für Linux</h2>
 <ol>
 <li>Das Paket für Ihr System herunterladen: <a href="download/${linuxDeb}" download><b>Mint, Ubuntu, Debian</b> (.deb)</a> · <a href="download/${linuxRpm}" download><b>Fedora, openSUSE, RHEL</b> (.rpm)</a> · <a href="download/${linuxArch}" download><b>Arch, Manjaro</b> (.pkg.tar.gz)</a> – pdfmy Scan für Linux ${macVer}.</li>
-<li>Die Datei doppelklicken, <i>„Installieren“</i> wählen (Softwareverwaltung, GNOME Software, Discover, YaST oder Pamac) und mit Ihrem Passwort bestätigen – <b>ohne Terminal</b>. Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit und gilt für alle Benutzer des Rechners.</li>
+<li>Die Datei doppelklicken, <i>„Installieren“</i> wählen (Softwareverwaltung, GNOME Software, Discover, YaST oder Pamac) und mit Ihrem Passwort bestätigen – meist ohne Terminal. Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit und gilt für alle Benutzer des Rechners.</li>
+<li><b>Öffnet der Doppelklick keine Installation</b> (z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:<br>Mint, Ubuntu, Debian: <code translate="no">sudo apt install "$(xdg-user-dir DOWNLOAD)/pdfmy-scan-linux.deb"</code><br>Fedora, RHEL: <code translate="no">sudo dnf install "$(xdg-user-dir DOWNLOAD)/pdfmy-scan-linux.rpm"</code><br>openSUSE: <code translate="no">sudo zypper install "$(xdg-user-dir DOWNLOAD)/pdfmy-scan-linux.rpm"</code><br>Arch, Manjaro: <code translate="no">sudo pacman -U "$(xdg-user-dir DOWNLOAD)/pdfmy-scan-linux.pkg.tar.gz"</code></li>
 <li><small>Anderes Linux oder kein Administrator-Passwort: <a href="download/${linuxSh}" download>Einrichtungsskript</a> mit <code>sh ~/Downloads/${linuxSh}</code> starten – es installiert das passende Paket per Passwort-Fenster oder richtet pdfmy Scan nur für Ihren Benutzer ein.</small></li>
 <li>pdfmy Scan startet mit jeder Anmeldung, legt <b>„PDFMy“</b> mit Logo im Anwendungsmenü und unter „Öffnen mit“ an. PDFs per Doppelklick in PDFMy: in PDFMy <i>Menü → „Als Standard für PDFs festlegen …“</i>.</li>
 <li>In <a href="./">pdfmy</a> heißt der Knopf oben jetzt <b>„Scannen“</b> – wie unter Windows und am Mac.</li>

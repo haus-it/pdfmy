@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### Linux: Ausweg, wenn der Doppelklick keine Installation öffnet (app-v265)
+- Rückmeldung GF 15.11.2026: Unter Ubuntu installiert ein Doppelklick auf `pdfmy-scan-linux.deb` je nach Version nicht von selbst. Scan-Fenster, Update- und Download-Meldungen, Scanner-Seite und Hilfe sagen jetzt „meist ohne Terminal“ und nennen den Befehl für das eigene System (`sudo apt install`/`dnf install`/`zypper install`/`pacman --upgrade`); der Download-Ordner wird über `xdg-user-dir DOWNLOAD` gefunden – in jeder Systemsprache. Übersetzt in alle Sprachen.
+- **Nicht auf einem echten Ubuntu geprüft**, welche Ubuntu-Versionen den Doppelklick unterstützen.
+
 ### „Welche Scanner funktionieren?“ ergänzt – nur belegte Angaben (app-v264)
 - **Neu:** Abschnitt „Weitere Bürogeräte“ mit Fujifilm Apeos (eSCL/Mopria Scan und WSD), Toshiba e-STUDIO (WS Scan), Triumph-Adler/UTAX (358ci/458ci eSCL mit AirPrint- und Mopria-Scan; 4063i Scan to SMB, WIA/TWAIN), Develop ineo (Scan-to-DPWS), Pantum (Mopria Scan) – je mit Quelle beim Hersteller geprüft (Produktseite, Datenblatt); Konzernzugehörigkeit (TA/UTAX → Kyocera, Develop → Konica Minolta) laut Hersteller.
 - **Neu:** Abschnitt „Ohne PC: Handy, Tablet, Chromebook“ (Kamera-Scan; Chromebook über die App „Scannen“ und Scan-Ordner); die Suche findet auch „Chromebook“, „iPhone“, „Handy“.

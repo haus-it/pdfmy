@@ -1858,9 +1858,11 @@ html.i18n-wait body{visibility:hidden}
     <p>Mit dem kleinen Programm <b>pdfmy Scan für Linux</b> (Version <span class="scanVerNew"></span>, kostenlos) scannen Sie direkt aus PDFMy. Es findet Netzwerkscanner und Multifunktionsgeräte <b>ohne Treiber</b> (AirScan/eSCL und WSD, z. B. Epson, Dell, Samsung, Brother, HP, Canon) und nutzt für USB-Scanner SANE, falls installiert.</p>
     <ol class="steps">
       <li><a id="scanLinuxDownload" class="btn primary" download>pdfmy Scan für Linux herunterladen</a> <a class="btn scanAltWin" download>Für Windows</a> <a class="btn scanAltMac" download>Für Mac</a></li>
-      <li>Die heruntergeladene Datei <b class="linuxPkgName">pdfmy-scan-linux.deb</b> doppelklicken, <i>„Installieren“</i> wählen und mit Ihrem Passwort bestätigen – <b>ohne Terminal</b>.<br><small class="hint">Für ein anderes System: <a class="linuxPkgLink" data-pkg="deb" download>Mint, Ubuntu, Debian</a> · <a class="linuxPkgLink" data-pkg="rpm" download>Fedora, openSUSE, RHEL</a> · <a class="linuxPkgLink" data-pkg="arch" download>Arch, Manjaro</a></small></li>
+      <li>Die heruntergeladene Datei <b class="linuxPkgName">pdfmy-scan-linux.deb</b> doppelklicken, <i>„Installieren“</i> wählen und mit Ihrem Passwort bestätigen – meist ohne Terminal.<br><small class="hint">Für ein anderes System: <a class="linuxPkgLink" data-pkg="deb" download>Mint, Ubuntu, Debian</a> · <a class="linuxPkgLink" data-pkg="rpm" download>Fedora, openSUSE, RHEL</a> · <a class="linuxPkgLink" data-pkg="arch" download>Arch, Manjaro</a></small></li>
       <li>Fertig – hier auf <button type="button" class="linkbtn" id="scanRecheckLinux">„Ist installiert“</button> klicken.</li>
     </ol>
+    <p class="hint">Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:</p>
+    <p><code class="linuxPkgCmd" translate="no">sudo apt install "$(xdg-user-dir DOWNLOAD)/pdfmy-scan-linux.deb"</code></p>
     <p class="hint">Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit. <a class="linuxGuide" target="_blank">Anleitung für alle Distributionen</a></p>
    </div>
    <div id="scanSetupCros" hidden>
