@@ -126,7 +126,7 @@ module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
   const teamsFiles = [
     { name: 'manifest.json', data: JSON.stringify({
       $schema: 'https://developer.microsoft.com/json-schemas/teams/v1.17/MicrosoftTeams.schema.json', manifestVersion: '1.17', version: ADDIN_VERSION, id: TEAMS_ID,
-      developer: { name: 'Mentor GmbH', websiteUrl: URL0, privacyUrl: `${URL0}/datenschutz.html`, termsOfUseUrl: `${URL0}/impressum.html` },
+      developer: { name: 'Mentor GmbH', websiteUrl: URL0, privacyUrl: `${URL0}/datenschutz.html`, termsOfUseUrl: `${URL0}/nutzungsbedingungen.html` },
       name: { short: 'PDFMy', full: 'PDFMy' }, description: { short: TEXTE.teamsShort, full: TEXTE.teamsFull },
       icons: { color: 'color.png', outline: 'outline.png' }, accentColor: '#4A5280',
       localizationInfo: { defaultLanguageTag: 'de-de', additionalLanguages: dicts.filter(l => tr(l, 'teamsShort') && tr(l, 'teamsFull')).map(l => ({ languageTag: l.bcp.toLowerCase(), file: `${l.code}.json` })) },

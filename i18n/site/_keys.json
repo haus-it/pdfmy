@@ -615,7 +615,7 @@
 "Der einfachste Weg: pdfmy Scan (Windows)",
 "Der L5290 hat ein Vorlagenglas und einen Einzug (einseitig) und scannt im Netzwerk über <b>AirScan/eSCL</b> bzw. <b>WSD</b> – ohne Treiber. Der Name im Netzwerk lautet „EPSON“ plus sechs Zeichen, z. B. <b>EPSON2CBBCB</b>.",
 "Der Text lässt sich danach nicht mehr markieren oder kopieren, die Seite sieht aber gleich aus.",
-"Details: <a href=\"datenschutz.html\">Datenschutzerklärung</a> · <a href=\"barrierefreiheit.html\">Barrierefreiheit</a>",
+"Details: <a href=\"datenschutz.html\">Datenschutzerklärung</a> · <a href=\"barrierefreiheit.html\">Barrierefreiheit</a> · <a href=\"nutzungsbedingungen.html\">Nutzungsbedingungen</a>",
 "Die <b>Kamera-Ansicht</b> zeigt den Erkennungsrahmen nur visuell; Hinweise werden zusätzlich als Text angezeigt, der Auslöser ist ein beschrifteter Knopf.",
 "Die Datei <i>„pdfmy-Scan-Mac.command“</i> öffnen (Rechtsklick → <i>Öffnen</i>) und die Einrichtung durchlaufen lassen. Wer pdfmy Scan schon hat, führt die Einrichtung einfach noch einmal aus – sie bringt das Programm auf den neuesten Stand.",
 "Die Datei doppelklicken, <i>„Installieren“</i> wählen (Softwareverwaltung, GNOME Software, Discover, YaST oder Pamac) und mit Ihrem Passwort bestätigen – <b>ohne Terminal</b>. Das Paket bringt die Scanner-Unterstützung (SANE, AirScan) gleich mit und gilt für alle Benutzer des Rechners.",

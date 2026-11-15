@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### Nutzungsbedingungen veröffentlicht (app-v261)
+- **pdfmy.de/nutzungsbedingungen.html** (Stand 15.11.2026, nur deutsch): Leistungen, zulässige und verbotene Nutzung (Fälschung, Täuschung), Schutz vor Fälschung, Datensicherung, Haftung, Rechte und Open-Source-Lizenzen, Kontakt. Grundlage ist der Entwurf vom 17.10.2026; die offenen Punkte sind entschieden (docs/Nutzungsbedingungen.md). **Anwaltliche Prüfung nicht erfolgt**, Entscheidung GF.
+- Link in der Fußzeile der App und in der Hilfe (Datenschutz und Sicherheit), in 40 Sprachen übersetzt; offline verfügbar (Service Worker). Teams-Manifest verweist jetzt auf die Nutzungsbedingungen statt aufs Impressum – Voraussetzung für Microsoft AppSource und Teams.
+
 ### Browser-Erweiterung in 29 Sprachen (app-v259, Erweiterung 1.2.0)
 - Popup, Willkommensseite, Kontextmenü, Fehlermeldungen sowie Name und Beschreibung im Store kommen jetzt aus den Sprachdateien des Browsers (_locales, Deutsch als Grundlage) – Englisch (USA/GB), Französisch, Italienisch, Spanisch, Portugiesisch, Niederländisch, Polnisch, Tschechisch, Slowakisch, Ungarisch, Rumänisch, Bulgarisch, Griechisch, Kroatisch, Slowenisch, Serbisch, Dänisch, Schwedisch, Norwegisch, Finnisch, Estnisch, Lettisch, Litauisch, Katalanisch, Türkisch, Russisch, Ukrainisch. Weitere Sprachen der Website (z. B. Isländisch, Irisch) kennt Chrome für Erweiterungen nicht; dort erscheint Deutsch bzw. die Sprache des Browsers.
 - app-v260: Texte mit Fettschrift und Links baut die Erweiterung ohne innerHTML auf (nur <b> und Links auf pdfmy.de als Elemente, sonst reiner Text) – Mozillas Prüfung meldet damit 0 Fehler, 0 Warnungen. Version 1.2.0 bei Firefox-Add-ons nachgereicht (15.11.2026).

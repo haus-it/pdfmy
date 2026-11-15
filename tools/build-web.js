@@ -60,7 +60,7 @@ rep('<title>PDFMy</title>', `<title>${esc(W.title)}</title>
 <meta property="og:image" content="https://${site.domain}/icons/mentor-512.png">`);
 rep('content="Briefe scannen, als durchsuchbares PDF ablegen und bearbeiten – lokal, ohne Upload."',
   `content="${esc(W.description)}"`);
-rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a class="lx" href="#weiterempfehlen">${N.weiterempfehlen}</a><a class="lx" href="hilfe.html">${N.hilfe}</a><a class="lx" href="werkzeuge.html">${N.werkzeuge}</a><a class="lx ext" href="erweiterung.html">${N.erweiterung}</a><a class="lx" href="presse.html">${N.presse}</a><a href="impressum.html">${N.impressum}</a><a href="datenschutz.html">${N.datenschutz}</a><a href="barrierefreiheit.html">${N.barrierefreiheit}</a><a class="lx" href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
+rep('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal"><a class="lx" href="#weiterempfehlen">${N.weiterempfehlen}</a><a class="lx" href="hilfe.html">${N.hilfe}</a><a class="lx" href="werkzeuge.html">${N.werkzeuge}</a><a class="lx ext" href="erweiterung.html">${N.erweiterung}</a><a class="lx" href="presse.html">${N.presse}</a><a href="impressum.html">${N.impressum}</a><a href="datenschutz.html">${N.datenschutz}</a><a class="lx" href="nutzungsbedingungen.html">${N.nutzungsbedingungen}</a><a href="barrierefreiheit.html">${N.barrierefreiheit}</a><a class="lx" href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
 // Fußzeile am Handy (Rückmeldung GF 08.11.2026 „der Fuß ist zu hoch – sei sparsamer“): eine Zeile – Impressum, Datenschutz,
 // Barrierefreiheit (Pflichtangaben); Hilfe, Weiterempfehlen usw. stehen im Menü „Mehr“. Zeigt die Statuszeile eine Meldung, hat sie Vorrang.
 rep('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} footer .legal a+a::before{content:"·";display:inline-block;margin:0 5px;color:var(--muted);text-decoration:none} @media (pointer:coarse){footer .legal .ext{display:none}} @media (max-width:760px){footer .legal .lx{display:none} footer .legal{display:flex;gap:10px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none} footer .legal a+a::before{content:none} footer .legal::-webkit-scrollbar{display:none} footer:not(.st-idle) .legal{display:none}}\n</style>');
@@ -96,7 +96,7 @@ write('manifest.webmanifest', JSON.stringify(man, null, 2) + '\n');
 const stamp = new Date().toISOString().replace(/\D/g, '').slice(0, 12);
 write('sw.js', fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8')
   .replace(/const VERSION = 'app-(v\d+)';/, (m, nr) => `const VERSION = 'pdfmy-${stamp}-${nr}';`)   // Zeitstempel + Versionsnummer (Statuszeile, Fehlerbericht)
-  .replace("'js/tools.js',", "'js/tools.js', 'impressum.html', 'datenschutz.html', 'barrierefreiheit.html', 'hilfe.html', 'hilfe.js', 'sprache.js',"));
+  .replace("'js/tools.js',", "'js/tools.js', 'impressum.html', 'datenschutz.html', 'nutzungsbedingungen.html', 'barrierefreiheit.html', 'hilfe.html', 'hilfe.js', 'sprache.js',"));
 
 // Rechtstexte und Infoseiten. multi: mehrsprachig (Hilfe, Scanner) – Sprachwahl oben rechts wie in der App, Wörterbuch i18n/site/<code>.json.
 // Rechtstexte (Impressum, Datenschutz, Barrierefreiheit) bleiben ausschließlich deutsch.
@@ -145,6 +145,63 @@ ${op.vatId ? `<h2>Umsatzsteuer-ID</h2><p>Umsatzsteuer-Identifikationsnummer gem�
 <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2><p>${esc(op.responsibleContent || op.name || op.company)}, Anschrift wie oben</p>
 <h2>Verbraucherstreitbeilegung</h2><p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
 <h2>Haftung</h2><p>pdfmy wird kostenlos und ohne Gewähr bereitgestellt. Bitte prüfen Sie erzeugte Dokumente vor der Weitergabe. Für Inhalte externer Links sind deren Betreiber verantwortlich.</p>`));
+
+// Nutzungsbedingungen (Freigabe GF 15.11.2026, Grundlage docs/Nutzungsbedingungen.md) – nur deutsch, ohne Sprachwahl.
+// Bei Änderungen: TERMS_DATE anpassen, docs/Nutzungsbedingungen.md gleichziehen, CHANGELOG-Eintrag.
+const TERMS_DATE = '15.11.2026';
+write('nutzungsbedingungen.html', page('Nutzungsbedingungen', `
+<p>Stand: ${TERMS_DATE}</p>
+<h2>§ 1 Anbieter und Geltungsbereich</h2>
+<p>(1) PDFMy (${esc(site.domain)}) mit allen Bestandteilen wird angeboten von der ${esc(op.company)}, ${esc(op.street)}, ${esc(op.zipCity)} (${esc(op.register)}), vertreten durch den Geschäftsführer ${esc(op.responsibleContent)} („wir“). Zu den Bestandteilen gehören die Web-Anwendung, die installierbare App (PWA), das Hilfsprogramm „pdfmy Scan“ für Windows, macOS und Linux, die Browser-Erweiterung sowie die Add-ins und Erweiterungen für Microsoft 365, Teams, Thunderbird, LibreOffice, Nextcloud und ONLYOFFICE.</p>
+<p>(2) Diese Bedingungen gelten für jede Nutzung von PDFMy. Abweichende Bedingungen der Nutzerinnen und Nutzer gelten nicht.</p>
+<p>(3) PDFMy richtet sich an Verbraucher und Unternehmer. Regelungen, die nur für eine dieser Gruppen gelten, sind als solche gekennzeichnet.</p>
+<h2>§ 2 Leistungen</h2>
+<p>(1) PDFMy ist ein Werkzeug zum Bearbeiten, Erstellen, Prüfen und Ablegen von PDF-Dokumenten und Scans, unter anderem mit Texterkennung, Formularen, Unterschriften, Schwärzen, E-Rechnung und barrierefreier PDF/A-Ausgabe.</p>
+<p>(2) <b>Die Verarbeitung findet ausschließlich auf dem Gerät der Nutzerin bzw. des Nutzers statt.</b> Dokumente werden nicht auf unsere Server hochgeladen. Wir sehen, speichern und prüfen keine Inhalte. Einzelheiten regelt die <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+<p>(3) Die Nutzung ist unentgeltlich. Ein Anspruch auf eine bestimmte Funktion, Verfügbarkeit oder Weiterentwicklung besteht nicht. Wir dürfen Funktionen ändern, erweitern oder einstellen. Sollten wir künftig kostenpflichtige Leistungen anbieten, gelten dafür gesonderte Bedingungen, die vor einer Buchung mitgeteilt werden.</p>
+<h2>§ 3 Zulässige Nutzung</h2>
+<p>(1) PDFMy darf für eigene Dokumente genutzt werden. Für fremde Dokumente gilt das nur, soweit die Nutzerin bzw. der Nutzer zur Bearbeitung berechtigt ist, etwa durch Auftrag oder Einwilligung.</p>
+<p>(2) Die Nutzerin bzw. der Nutzer ist für die bearbeiteten Inhalte und deren Weitergabe selbst verantwortlich. Erzeugte Dokumente sind vor der Verwendung zu prüfen. Das gilt besonders für automatisch erkannte Angaben wie Beträge, Fristen, IBAN und Absender.</p>
+<h2>§ 4 Verbotene Nutzung</h2>
+<p>(1) PDFMy darf nicht genutzt werden, um andere zu täuschen oder Rechte Dritter zu verletzen. Verboten ist insbesondere:</p>
+<ol>
+<li><b>Fälschen oder Verfälschen von Dokumenten</b>, um im Rechtsverkehr zu täuschen – vor allem von Urkunden, Zeugnissen, Ausweisen und Aufenthaltstiteln, amtlichen Bescheiden (etwa Steuer-, Renten- oder Bewilligungsbescheiden), Urteilen und Beschlüssen, notariellen Urkunden, Kontoauszügen, Gehalts- und Einkommensnachweisen, Auskünften von Auskunfteien, Bescheinigungen von Vermietern oder Arbeitgebern sowie Rechnungen, Quittungen und Belegen (siehe insbesondere §§ 267, 269, 271, 273, 275, 276 StGB);</li>
+<li><b>Täuschung zur Erlangung von Vermögensvorteilen</b>, etwa bei Kredit-, Miet-, Versicherungs-, Spesen- oder Sozialleistungsanträgen (§§ 263, 263a, 264, 265b StGB, § 370 AO);</li>
+<li><b>unbefugtes Verwenden fremder Unterschriften, Namen, Stempel oder Siegel;</b></li>
+<li><b>unbefugtes Veröffentlichen oder Verbreiten personenbezogener Daten Dritter</b> oder urheberrechtlich geschützter Werke ohne Berechtigung;</li>
+<li><b>Umgehen, Entfernen oder Unwirksammachen der Schutzfunktionen nach § 5</b>, insbesondere von Markierungen und Vermerken „nachträglich geändert“, sowie das Entfernen von Rechte-Einschränkungen fremder Dokumente ohne Berechtigung;</li>
+<li><b>Eingriffe in PDFMy oder unsere Systeme</b>, etwa das Verändern, Nachbauen oder Wiederveröffentlichen von PDFMy unter Umgehung der Schutzfunktionen, automatisierte Massenabrufe der Website und Angriffe auf unsere Systeme. Rechte aus den Lizenzen nach § 8 bleiben unberührt.</li>
+</ol>
+<p>(2) Bei Verstößen dürfen wir die Nutzung einschränken, etwa durch Sperren der Browser-Erweiterung oder von Downloads. Soweit wir von Verstößen Kenntnis erlangen, dürfen wir Hinweise im gesetzlich zulässigen Rahmen an die zuständigen Behörden weitergeben. Weitergehende Ansprüche bleiben vorbehalten.</p>
+<h2>§ 5 Schutz vor Fälschung</h2>
+<p>(1) Um Missbrauch zu erschweren, erkennt PDFMy bestimmte Dokumentarten anhand ihres Textes:</p>
+<ul>
+<li><b>Urkunden, Zeugnisse, Ausweise, amtliche Bescheide und Gerichtsentscheidungen:</b> Die Funktionen zum Ersetzen oder Abdecken von Text sind gesperrt.</li>
+<li><b>Kontoauszüge, Einkommensnachweise, Auskünfte, Rechnungen und ähnliche Belege:</b> Änderungen werden auf der Seite sichtbar markiert und mit dem Vermerk „nachträglich geändert“ versehen.</li>
+<li><b>Alle Dokumente:</b> Wurde vorhandener Text ersetzt oder abgedeckt, wird dies in den Dokumenteigenschaften vermerkt.</li>
+</ul>
+<p>(2) Die Erkennung erfolgt automatisch und kann unvollständig sein. Wird eine Schutzfunktion nicht ausgelöst, bedeutet das keine Erlaubnis für eine nach § 4 verbotene Nutzung.</p>
+<p>(3) Wer meint, dass ein Dokument zu Unrecht gesperrt wurde, kann uns dies melden (§ 10).</p>
+<h2>§ 6 Verfügbarkeit, Datensicherung</h2>
+<p>(1) Wir bemühen uns um eine störungsfreie Verfügbarkeit, schulden sie aber nicht.</p>
+<p>(2) Da Dokumente nur auf dem eigenen Gerät verarbeitet werden, ist die Nutzerin bzw. der Nutzer für die Sicherung der Dokumente selbst verantwortlich. Das gilt auch für Daten im Browser-Speicher, etwa gespeicherte Unterschriften, das Posteingangsbuch und Einstellungen. Diese Daten können durch das Löschen von Browserdaten verloren gehen.</p>
+<h2>§ 7 Haftung</h2>
+<p>(1) Wir haften unbeschränkt für Vorsatz und grobe Fahrlässigkeit, für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit, nach dem Produkthaftungsgesetz sowie im Umfang einer übernommenen Garantie.</p>
+<p>(2) Bei leichter Fahrlässigkeit haften wir nur bei Verletzung einer wesentlichen Pflicht, deren Erfüllung die ordnungsgemäße Nutzung von PDFMy überhaupt erst ermöglicht und auf deren Einhaltung die Nutzerin bzw. der Nutzer regelmäßig vertrauen darf; die Haftung ist dann auf den vorhersehbaren, typischerweise eintretenden Schaden begrenzt. Im Übrigen ist die Haftung für leichte Fahrlässigkeit ausgeschlossen. Gesetzliche Haftungserleichterungen für unentgeltliche Leistungen bleiben unberührt.</p>
+<p>(3) Automatisch erkannte Inhalte (etwa aus Texterkennung, Briefdaten oder Fristen) sind Hilfen, deren Richtigkeit wir nicht zusichern. Ob eine Unterschrift, Signatur oder E-Rechnung im Einzelfall rechtlich wirksam ist, hängt von den jeweiligen Vorschriften und Umständen ab; eine Prüfung im Einzelfall schulden wir nicht. Absatz 1 bleibt unberührt.</p>
+<p>(4) Für die Inhalte verlinkter Seiten sind deren Betreiber verantwortlich.</p>
+<h2>§ 8 Rechte an PDFMy, Open-Source-Bestandteile</h2>
+<p>(1) PDFMy, insbesondere Gestaltung, Texte, Logos und eigener Programmcode, ist urheber- und markenrechtlich geschützt. Die Nutzung ist im Rahmen dieser Bedingungen gestattet. Der Quellcode steht unter der Lizenz PolyForm Noncommercial 1.0.0 auf <a href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">GitHub</a> bereit; kommerzielle Nutzung des Quellcodes nur mit Lizenz der ${esc(op.company)}.</p>
+<p>(2) PDFMy enthält Open-Source-Bestandteile, zum Beispiel pdf.js, pdf-lib, Tesseract und DejaVu-Schriften. Für diese gelten die jeweiligen Lizenzen; sie gehen diesen Bedingungen vor. Übersicht: <a href="https://github.com/haus-it/pdfmy/tree/main/vendor/licenses" target="_blank" rel="noopener">Lizenzen der verwendeten Bestandteile</a>.</p>
+<h2>§ 9 Änderungen dieser Bedingungen</h2>
+<p>Wir können diese Bedingungen mit Wirkung für die Zukunft ändern, etwa bei neuen Funktionen oder geänderter Rechtslage. Die jeweils aktuelle Fassung ist unter <a href="nutzungsbedingungen.html">${esc(site.domain)}/nutzungsbedingungen.html</a> abrufbar; das Datum oben zeigt den Stand.</p>
+<h2>§ 10 Kontakt, Meldungen</h2>
+<p>Fragen, Hinweise auf Missbrauch und Meldungen zu Unrecht gesperrter Dokumente: <a href="mailto:${esc(op.email)}">${esc(op.email)}</a> oder in PDFMy unter „Mehr → Problem melden“.</p>
+<h2>§ 11 Schlussbestimmungen</h2>
+<p>(1) Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts. Für Verbraucher gilt dies nur, soweit ihnen dadurch nicht der Schutz zwingender Vorschriften des Staates ihres gewöhnlichen Aufenthalts entzogen wird.</p>
+<p>(2) Ist die Nutzerin bzw. der Nutzer Kaufmann, juristische Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen, ist Gerichtsstand Paderborn.</p>
+<p>(3) Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+<p>(4) Sollten einzelne Bestimmungen unwirksam sein, bleibt die Wirksamkeit der übrigen unberührt.</p>`, '', false));
 
 // Datum der letzten Barrierefreiheitsprüfung (axe-core, Tastatur) – bei neuer Prüfung anpassen
 const A11Y_DATE = '19.10.2026';

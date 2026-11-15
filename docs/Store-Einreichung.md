@@ -82,7 +82,7 @@ Stand 15.11.2026. **Was Sie tun müssen, ist nur noch: Konto anlegen, Dateien ho
 
 **Einmalig:** https://partner.microsoft.com/dashboard/account/v3/enrollment/introduction/partnership → Programm **„Microsoft 365 und Copilot“** (früher „Office Store“) → als Unternehmen Mentor GmbH registrieren. Microsoft prüft die Firma (E-Mail an die Firmenadresse, ggf. Handelsregister HRB 9975) – das dauert einige Tage, darum früh anstoßen.
 
-**Vorher entscheiden:** Microsoft verlangt eine Adresse für **Nutzungsbedingungen**. Die liegen nur als Entwurf zur anwaltlichen Prüfung vor (`docs/Nutzungsbedingungen-Entwurf.md`) – siehe `docs/Entscheidungen-Stores.md`.
+**Nutzungsbedingungen:** https://pdfmy.de/nutzungsbedingungen.html (veröffentlicht 15.11.2026, im Teams-Manifest eingetragen).
 
 **Outlook-Add-in:** Partner Center → Marketplace-Angebote → **Neues Angebot → Office-Add-in** →
 

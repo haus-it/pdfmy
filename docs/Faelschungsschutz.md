@@ -57,7 +57,7 @@ Geprüft: Browsertest (Kontoauszug markiert und mit Vermerk, Steuerbescheid gesp
 
 | Nr. | Maßnahme | Priorität |
 |---|---|---|
-| F1 | **Nutzungsbedingungen** mit Verbot missbräuchlicher Nutzung (Fälschung, Täuschung) auf pdfmy.de – Entwurf anwaltlich prüfen lassen – **Entwurf liegt vor (17.10.2026): docs/Nutzungsbedingungen-Entwurf.md**, noch nicht veröffentlicht | hoch |
+| F1 | **Nutzungsbedingungen** mit Verbot missbräuchlicher Nutzung (Fälschung, Täuschung) auf pdfmy.de – **veröffentlicht 15.11.2026: pdfmy.de/nutzungsbedingungen.html** (Nachweis docs/Nutzungsbedingungen.md; anwaltliche Prüfung nicht erfolgt, Entscheidung GF) | hoch |
 | F2 | Werbung, Hilfe, Pressetexte: nie mit dem Ändern fremder Dokumente werben („Kontoauszug/Zeugnis ändern“) – nur „eigene Dokumente korrigieren“ | hoch (laufend) |
 | F3 | ~~Digital signierte PDFs: vor „Text ändern“ deutlich warnen, dass die Signatur ungültig wird~~ – **erledigt 17.10.2026** (siehe Abschnitt 4) | erledigt |
 | F4 | Optional: Herkunftsnachweis (C2PA/Content Credentials) für geänderte PDFs | niedrig |
