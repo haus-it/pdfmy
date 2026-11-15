@@ -24,3 +24,6 @@ Scan-Eingang/*
 p.html
 werbung/presse/
 docs/presse/
+
+# Store-Mappe (erzeugt von tools/store-assets.js)
+store/
