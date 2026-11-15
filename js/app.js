@@ -953,7 +953,7 @@ async function rotateTargets(dir) {
 function refresh() {
   renderThumbs(); renderStage(); renderSide(); saveReadPos();
   const n = state.pages.length;
-  $('#btnSave').disabled = $('#btnSaveAs').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = $('#btnTranslate').disabled = $('#btnSummary').disabled = !n;
+  $('#btnSave').disabled = $('#btnSaveAs').disabled = $('#btnHost').disabled = !n; $('#btnSplit').disabled = n < 2; $('#btnSplitAdv').disabled = n < 2; $('#btnHalve').disabled = $('#btnTranslate').disabled = $('#btnSummary').disabled = !n;
   $('#btnFile').hidden = !n || !!window.leanTask?.();   // „Ablegen & nächster“ ist für Briefe – bei Zusammenfügen, Unterschreiben … nicht anbieten
   window.syncLean?.();
   // Statuszeile: „Seite 2 von 11“ (wie in Word); Klick oder Strg+G springt zu einer Seite
@@ -5076,19 +5076,47 @@ if ('launchQueue' in window) launchQueue.setConsumer(async params => {
 // Import-Schnittstelle für die Browser-Erweiterung „PDFMy öffnen“ (tools/pdfmy-extension): Deren Content-Script reicht
 // die im Browser geladene PDF per postMessage aus demselben Fenster herein – die Datei verlässt das Gerät nicht.
 // Nur Nachrichten aus diesem Fenster und dieser Herkunft; fremde Frames und Fenster werden ignoriert.
+/* Gastgeber-Schnittstelle (app-v254): Office-Add-in (Outlook, Word, Excel, PowerPoint; tools/pdfmy-office), Thunderbird
+   (tools/pdfmy-thunderbird) und Teams betten PDFMy auf pdfmy.de ein bzw. öffnen es und reichen die Datei auf dem Gerät herein.
+   Angenommen wird nur aus diesem Fenster (Content-Script) oder vom Elternfenster derselben Herkunft (Seite /office/ auf pdfmy.de).
+   Kann der Gastgeber das Ergebnis zurücknehmen ('pdfmy:host' mit Aktion 'attach'), erscheint „An E-Mail anhängen“. */
+const fromHost = e => e.origin === location.origin && (e.source === window || (window.parent !== window && e.source === window.parent));
+let hostTarget = null;
+const OPEN_EXT = /^(pdf|docx|xlsx|pptx|ppsx|potx|odt|ods|odp|rtf|txt|csv|md|epub|xps|oxps|png|jpe?g|gif|webp|bmp|tiff?|heic|heif|xml|eml|msg)$/;
 addEventListener('message', e => {
-  if (e.source !== window || e.origin !== location.origin) return;
-  const d = e.data;
-  if (d?.type === 'pdfmy:ping') return postMessage({ type: 'pdfmy:ready' }, location.origin);
+  if (!fromHost(e)) return;
+  const d = e.data, back = e.source;
+  if (d?.type === 'pdfmy:ping') return back.postMessage({ type: 'pdfmy:ready' }, location.origin);
+  if (d?.type === 'pdfmy:host') {
+    hostTarget = Array.isArray(d.actions) && d.actions.includes('attach') ? back : null;
+    $('#btnHost').hidden = !hostTarget; $('#btnHost').disabled = !state.pages.length;
+    return;
+  }
+  if (d?.type === 'pdfmy:host-result') return status(d.ok ? 'Das PDF hängt jetzt an der E-Mail.' : 'Anhängen hat nicht geklappt – bitte speichern und von Hand anhängen.');
   if (d?.type !== 'pdfmy:open-file') return;
   if (d.error) return status(`PDF konnte nicht übernommen werden: ${d.error}`);
   if (!(d.bytes instanceof ArrayBuffer) || !d.bytes.byteLength) return status('PDF konnte nicht übernommen werden: Datei ist leer.');
   const name = String(d.name || 'Dokument.pdf').replace(/[\\/:*?"<>|\u0000-\u001f]/g, '_').slice(0, 180);
   if (state.dirty && state.pages.length && !confirm(`„${name}“ öffnen? Der aktuelle Brief wurde noch nicht gespeichert und wird verworfen.`)) return;
   resetDoc(); state.intent = null;
+  // Office-Dateien (z. B. Excel aus dem Add-in) behalten ihre Endung und werden umgewandelt; alles andere gilt als PDF
+  const ext = (/\.([a-z0-9]{2,5})$/i.exec(name)?.[1] || '').toLowerCase(), keep = OPEN_EXT.test(ext);
   // Das Original liegt weiter auf der Webseite: erst eigene Änderungen gelten als „nicht gespeichert“ (kein Rückfrage-Dialog bei „Zurück“)
-  importFiles([new File([d.bytes], /\.pdf$/i.test(name) ? name : name + '.pdf', { type: 'application/pdf' })]).then(() => { state.dirty = false; });
+  importFiles([new File([d.bytes], keep ? name : name + '.pdf', { type: !keep || ext === 'pdf' ? 'application/pdf' : '' })]).then(() => { state.dirty = false; if (hostTarget) $('#btnHost').disabled = !state.pages.length; });
 });
+// Fertiges PDF an den Gastgeber zurückgeben (Outlook/Thunderbird hängen es an die E-Mail an)
+async function hostReturn() {
+  if (!state.pages.length || !hostTarget) return;
+  try {
+    status('PDF für die E-Mail wird erstellt …');
+    if (ocrRunning) await runOcrAll();
+    const out = await buildPdf(docPages(), state.meta, { noOcr: true, onPage: () => {} }), name = filename();
+    const buf = out.buffer.slice(out.byteOffset, out.byteOffset + out.byteLength);
+    hostTarget.postMessage({ type: 'pdfmy:host-action', id: 'attach', name, bytes: buf }, location.origin, [buf]);
+    state.dirty = false; status(`„${name}“ wird an die E-Mail angehängt …`);
+  } catch (err) { console.error(err); status(`Anhängen nicht möglich: ${err.message}`); }
+}
+$('#btnHost').onclick = hostReturn;
 document.documentElement.dataset.pdfmyImport = '1';
 postMessage({ type: 'pdfmy:ready' }, location.origin);
 

@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de · SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0 -->
+<!-- Outlook-Aufgabenbereich: Anhänge in PDFMy öffnen; beim Verfassen bearbeitete oder neu gescannte PDFs anhängen. -->
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>PDFMy</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<script src="../js/i18n.js" data-dict="site"></script>
+<script src="transfer.js"></script>
+<script src="launcher.js"></script>
+<link rel="stylesheet" href="office.css">
+</head><body class="pane">
+<header><img src="icons/icon-32.png" alt="" width="24" height="24"><b>PDFMy</b></header>
+<main>
+<p id="intro" class="muted">Anhänge öffnen sich in PDFMy auf diesem Gerät – nichts wird hochgeladen.</p>
+<ul id="list" class="list"></ul>
+<p id="none" class="muted" hidden>Diese E-Mail hat keinen Anhang, den PDFMy öffnen kann.</p>
+<section id="composeBox" hidden>
+<button id="btnNew" class="primary">Neues PDF anhängen …</button>
+<p class="muted small">Scannen, fotografieren oder Dateien zusammenfügen – PDFMy hängt das Ergebnis an diese E-Mail an.</p>
+</section>
+<p id="msg" class="msg" role="status"></p>
+</main>
+<footer class="muted small"><a href="https://pdfmy.de/hilfe.html" target="_blank" rel="noopener">Hilfe</a> · PDFMy von der Mentor GmbH</footer>
+<script src="taskpane.js"></script>
+</body></html>

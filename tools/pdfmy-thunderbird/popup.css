@@ -1,0 +1,12 @@
+/* Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de · SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0 */
+:root{--bg:#fff;--text:#1D1A33;--muted:#47485A;--accent:#4A5280;--line:#D9DCE6}
+@media (prefers-color-scheme: dark){:root{--bg:#1F1D2C;--text:#EEEDF5;--muted:#B5B3C6;--accent:#A99BFF;--line:#3D3A50}}
+body{margin:0;min-width:300px;max-width:380px;background:var(--bg);color:var(--text);font:13px/1.5 system-ui,"Segoe UI",sans-serif;padding:0 12px 10px}
+header{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+ul{list-style:none;margin:6px 0;padding:0}
+li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+button{font:inherit;padding:5px 10px;border-radius:6px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+button.primary{background:var(--accent);color:#fff;width:100%;margin-top:8px;padding:8px}
+.muted{color:var(--muted)}.small{font-size:11.5px}
+[hidden]{display:none!important}

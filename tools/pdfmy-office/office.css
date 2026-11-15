@@ -1,0 +1,20 @@
+/* Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de · SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0 */
+:root{--bg:#fff;--text:#1D1A33;--muted:#47485A;--accent:#4A5280;--line:#D9DCE6;--err:#B00020}
+@media (prefers-color-scheme: dark){:root{--bg:#1F1D2C;--text:#EEEDF5;--muted:#B5B3C6;--accent:#A99BFF;--line:#3D3A50;--err:#FF8A80}}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:14px/1.5 "Segoe UI",system-ui,sans-serif}
+.pane header{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);font-size:16px}
+.pane main{padding:12px 14px}
+.pane footer{padding:10px 14px;border-top:1px solid var(--line)}
+.muted{color:var(--muted)}.small{font-size:12px}
+a{color:var(--accent)}
+.list{list-style:none;margin:8px 0;padding:0}
+.list li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.list .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+button{font:inherit;padding:6px 12px;border-radius:6px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);color:#fff;width:100%;padding:9px 12px;margin-top:10px}
+.msg{min-height:1.5em}.msg.err{color:var(--err)}
+.dlg{overflow:hidden}
+.dlg iframe{border:0;width:100%;height:100%;display:block}
+.wait{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px;text-align:center;padding:0 24px}
+[hidden]{display:none!important}

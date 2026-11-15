@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de · SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0 -->
+<!-- PDFMy im Office-Fenster: nimmt die Datei vom Add-in entgegen und reicht sie an PDFMy (gleiche Herkunft, eingebettet) weiter. -->
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>PDFMy</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<script src="../js/i18n.js" data-dict="site"></script>
+<script src="transfer.js"></script>
+<link rel="stylesheet" href="office.css">
+</head><body class="dlg">
+<div id="wait" class="wait" role="status"><img src="icons/icon-64.png" alt="" width="48" height="48"><p id="waitText">Dokument wird an PDFMy übergeben …</p></div>
+<iframe id="app" title="PDFMy" hidden></iframe>
+<script src="open.js"></script>
+</body></html>

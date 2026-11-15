@@ -101,6 +101,9 @@ function extractSite() {
   const help = fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8');
   for (const m of help.matchAll(/data-q="([^"]+)"/g)) keys.add(norm(m[1]));
   for (const lit of scan(fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.js'), 'utf8'))) for (const k of keysOf(lit)) if (/^[A-ZÄÖÜ{\d]/.test(k) && !/^Frage zu PDFMy/.test(k)) keys.add(k);   // Meldungen, nicht Suchwörter (SYN) oder Selektoren
+  // Erweiterungen (tools/addins.js): Texte der Manifeste (Office, Teams, Thunderbird) und Meldungen der Office-Seiten
+  for (const k of Object.values(require(path.join(ROOT, 'tools', 'addins.js')).TEXTE)) if (k !== 'PDFMy') keys.add(norm(k));
+  for (const f of ['taskpane.js', 'open.js', 'launcher.js']) for (const lit of scan(fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-office', f), 'utf8'))) for (const k of keysOf(lit)) if (/^[A-ZÄÖÜ„]/.test(k) && /\s/.test(k) && /[a-zäöü]{3}/.test(k)) keys.add(k);
   const list = [...keys].sort((a, b) => a.localeCompare(b, 'de'));
   fs.writeFileSync(path.join(SDIR, '_keys.json'), JSON.stringify(list, null, 0).replace(/","/g, '",\n"') + '\n');
   console.log(`Webseiten: ${list.length} Schlüssel, ${list.reduce((n, k) => n + k.length, 0)} Zeichen → i18n/site/_keys.json`);

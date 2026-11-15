@@ -223,6 +223,8 @@ spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen.</p>
 öffnet sich die jeweilige Website (www.haus-it.de, www.hausit-portal.de, www.mysupermail.app oder www.mentor-consulting.de) in einem neuen Tab; dabei wird keine Herkunftsadresse (Referrer) übermittelt. Für diese Website gilt die Datenschutzerklärung ihres Betreibers.</p>
 <h2>6d. KI-Assistent</h2>
 <p>Zusammenfassen, Fragen zum Dokument und Übersetzen nutzen die KI, die Ihr Browser mitbringt. Sie arbeitet auf Ihrem Gerät; der Text wird nicht übertragen. Das KI-Modell lädt Ihr Browser einmalig vom Browser-Hersteller, nicht von uns. Unter „… Mehr → KI-Assistent“ lässt sich die Funktion ausschalten. Auf eigenen Wunsch kann dort stattdessen ein KI-Programm auf Ihrem eigenen Rechner gewählt werden (z. B. Ollama oder LM Studio); PDFMy verbindet sich dann nur mit diesem Programm auf demselben Rechner (localhost) – der Text verlässt Ihren Rechner nicht, Adressen im Netz oder im Internet werden abgelehnt.</p>
+<h2>6e. Erweiterungen für Microsoft 365 (Outlook, Word, Excel, PowerPoint, Teams) und Thunderbird</h2>
+<p>Das Add-in liest nur das geöffnete Dokument bzw. den Anhang, den Sie auswählen, und reicht ihn an PDFMy auf demselben Gerät weiter; beim Verfassen einer E-Mail hängt es auf Ihren Klick das fertige PDF an. Wir erhalten dabei keine Dokumente und keine E-Mail-Inhalte. Die Add-in-Seiten auf ${esc(site.domain)} laden die Office-Bibliothek <code>office.js</code> von Microsoft (appsforoffice.microsoft.com) – das schreibt Microsoft für Office-Add-ins vor; dabei verarbeitet Microsoft Ihre IP-Adresse wie bei der übrigen Nutzung von Microsoft 365 (Datenschutzerklärung von Microsoft). Die Teams-App zeigt PDFMy innerhalb von Teams. Die Thunderbird-Erweiterung öffnet PDFMy in einem Thunderbird-Tab und übergibt den Anhang dort direkt; sie überträgt nichts an uns.</p>
 <h2>7. Ihre Rechte</h2>
 <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen die
 Verarbeitung (Art. 15–21 DSGVO). Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), zum Beispiel bei der für uns zuständigen Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Kavalleriestraße 2–4, 40213 Düsseldorf.</p>
@@ -423,6 +425,9 @@ AddType application/x-rpm .rpm
   RewriteRule ^pdfmy-erweiterung-[0-9.]+\\.zip$ /download/${extZip} [R=302,L]
 </IfModule>
 `);
+// Erweiterungen für Microsoft 365 (Outlook, Word, Excel, PowerPoint, Teams) und Thunderbird (tools/addins.js, app-v254)
+const ADD = require(path.join(ROOT, 'tools', 'addins.js'))({ ROOT, OUT, write, zip: require(path.join(ROOT, 'js', 'tools.js')).zip, domain: site.domain });
+fs.appendFileSync(path.join(OUT, '.htaccess'), ADD.htaccess);
 // Für die IT: pdfmy Scan auf alle Rechner verteilen (Wettbewerbsvergleich 11/2026, Rang 5c) – Befehle, Erkennung, Richtlinien
 const PSDIR = 'C:\\Program Files\\pdfmy Scan';
 write('firmen.html', page('PDFMy in Firmen verteilen', `
@@ -450,6 +455,23 @@ write('firmen.html', page('PDFMy in Firmen verteilen', `
 <h2>PDFMy als App für alle Benutzer (Chrome und Edge)</h2>
 <p>Mit der Browser-Richtlinie <code>WebAppInstallForceList</code> erscheint PDFMy als App im Startmenü und auf dem Desktop:</p>
 <pre style="overflow-x:auto;background:var(--bg);padding:10px">[{"url": "https://${site.domain}/", "default_launch_container": "window", "create_desktop_shortcut": true}]</pre>
+<h2 id="m365">Microsoft 365: Outlook, Word, Excel, PowerPoint</h2>
+<p>Mit dem Add-in <b>PDFMy</b> öffnen Benutzer Dokumente und Anhänge direkt aus Office in PDFMy – auf ihrem Gerät, ohne Upload:</p>
+<ul>
+<li><b>Outlook:</b> Knopf „PDFMy“ beim Lesen und Verfassen. PDF-Anhänge öffnen, bearbeiten, unterschreiben; beim Verfassen das bearbeitete PDF wieder anhängen oder ein neues PDF scannen und anhängen.</li>
+<li><b>Word, Excel, PowerPoint:</b> Knopf „In PDFMy öffnen“ auf der Registerkarte „Start“. Word und PowerPoint übergeben das Dokument als PDF, Excel als Arbeitsmappe (PDFMy wandelt sie um).</li>
+</ul>
+<p><b>An alle verteilen:</b> Microsoft 365 Admin Center → <i>Einstellungen → Integrierte Apps → Benutzerdefinierte Apps hochladen</i> → „Office-Add-in“ → Manifestdatei hochladen, Benutzer oder Gruppen wählen. Die Knöpfe erscheinen nach einigen Stunden bei allen gewählten Benutzern.</p>
+<ul>
+<li>Manifest für Outlook: <a href="download/pdfmy-outlook.xml" download>pdfmy-outlook.xml</a></li>
+<li>Manifest für Word, Excel und PowerPoint: <a href="download/pdfmy-office.xml" download>pdfmy-office.xml</a></li>
+</ul>
+<p><b>Einzeln:</b> In Outlook <i>Add-Ins abrufen → Meine Add-Ins → Benutzerdefiniertes Add-In hinzufügen → Aus Datei hinzufügen</i>; in Word, Excel und PowerPoint im Web <i>Add-Ins → Meine Add-Ins → Eigenes Add-In hochladen</i>.</p>
+<p><b>Datenschutz:</b> Das Add-in liest nur das geöffnete Dokument bzw. den gewählten Anhang und reicht ihn an PDFMy auf demselben Gerät weiter. Die Add-in-Seiten laden die Office-Bibliothek von Microsoft (Vorgabe von Microsoft für Office-Add-ins), sonst nur Dateien von ${esc(site.domain)}. Es gibt kein Konto, keinen Server und keine Telemetrie.</p>
+<h2 id="teams">Microsoft Teams</h2>
+<p>PDFMy als persönliche App in Teams: <a href="download/pdfmy-teams.zip" download>pdfmy-teams.zip</a>. Teams Admin Center → <i>Teams-Apps → Apps verwalten → Hochladen</i>, danach per Einrichtungsrichtlinie anheften. Einzeln (wenn erlaubt): Teams → <i>Apps → Apps verwalten → App hochladen</i>.</p>
+<h2 id="thunderbird">Thunderbird</h2>
+<p>Erweiterung <a href="download/${ADD.tbXpi}" download>${ADD.tbXpi}</a> (Thunderbird 115 oder neuer): Anhänge per Knopf „PDFMy“ oder Rechtsklick in PDFMy öffnen, beim Verfassen bearbeitete oder neue PDFs anhängen. Einzeln: <i>Extras → Add-ons und Themes → Zahnrad → Add-on aus Datei installieren</i>. Für alle: Richtlinie <code>ExtensionSettings</code> mit <code>"pdfmy@mentor-group.de": {"installation_mode": "force_installed", "install_url": "https://${site.domain}/download/${ADD.tbXpi}"}</code>.</p>
 <h2>Linux und Mac</h2>
 <ul>
 <li><b>Linux</b> (für alle Benutzer, z. B. per Ansible oder Puppet): <code>apt install ./${linuxDeb}</code> · <code>dnf install ./${linuxRpm}</code> · <code>zypper install ./${linuxRpm}</code> · <code>pacman -U ./${linuxArch}</code></li>

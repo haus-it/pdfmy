@@ -597,6 +597,19 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Umsetzung:** Eigener Leser für PresentationML und ODF-Präsentationen mit fester Folienlage (nicht Fließtext wie bei Word): Master/Layout-Vererbung, Designfarben, Text mit Laufweiten-Schriften, Tabellen, Bilder, Formen, Gruppen, Diagramme aus gespeicherten Werten. Ausgeblendete Folien entfallen wie beim PDF-Export von PowerPoint.
 **Leitplanken:** 1–3 gewahrt (alles lokal, keine neue Verbindung, externe Bildverweise werden nicht geladen, keine Cloud-KI). 4: kein neuer Bedienschritt – Datei öffnen genügt; Hinweis nur bei Vereinfachungen. 5: tests/slides.test.js, Sichtvergleich mit LibreOffice. 6 nicht betroffen.
 
+### Umgesetzt 15.11.2026: PDFMy in Outlook, Word, Excel, PowerPoint, Teams und Thunderbird (app-v254)
+**Anlass (GF 15.11.2026):** „Baue Add-Ons für M365 und schaue, für welche wir dies noch benötigen.“ Frühere Zurückstellung (22.10.2026, „Office-Add-in braucht HTTPS-Seite, Office im Web liefert kein PDF, Senden an 127.0.0.1 ungeklärt“) gelöst: Die Datei geht nicht über pdfmy Scan, sondern per Office-Dialog direkt an PDFMy im Office-Fenster; Excel liefert die Arbeitsmappe, PDFMy wandelt um.
+**Bedarf geprüft:** Outlook (größter Nutzen: Anhänge bearbeiten, unterschreiben, zurück an die E-Mail), Word/Excel/PowerPoint (ersetzt den Umweg über den Drucker), Teams (persönliche App), Thunderbird (vollständig lokal). **Nicht gebaut:** Gmail- und Google-Docs-Add-ons (laufen auf Google-Servern – verletzt L1/L2; im Browser deckt die vorhandene Erweiterung Webmail ab), Apple Mail (keine Schnittstelle), OneNote (geringer Nutzen). LibreOffice (.oxt) bleibt vorgemerkt.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Dokument/Anhang geht nur vom Programm an PDFMy auf demselben Gerät (Dialog-Nachrichten bzw. Content-Script), zurück ebenso; kein Upload |
+| 2 Kein Server, keine Fremddienste | **Ausnahme (Entscheidung GF 15.11.2026):** Die Add-in-Seiten unter /office/ laden office.js von Microsoft – Pflicht für Outlook-Add-ins und für AppSource. Nur dort, mit eigener Sicherheitsrichtlinie; die App selbst und ihre CSP bleiben unverändert. Teams und Thunderbird ohne Fremdbibliothek |
+| 3 Ohne Konto und Tracking | passt: kein Konto, keine Telemetrie; Store-Konten wären Entwicklerkonten der Mentor GmbH |
+| 4 So einfach wie möglich | passt: ein Knopf im gewohnten Programm; „An E-Mail anhängen“ nur, wenn es passt; IT verteilt zentral |
+| 5 Prüfbar | tests/addins.test.js, Browser-Test mit nachgebildetem Office/Thunderbird; **offen:** Probe in echtem Microsoft 365 und Thunderbird, Microsoft-Manifestprüfung |
+| 6 Wenig aktive Inhalte | passt: keine Änderung an erzeugten PDFs |
+
 ### Umgesetzt 15.11.2026: Texterkennung gemessen, körnige Fotos lesbar (app-v252)
 **Anlass (GF 15.11.2026: „OCR Genau“):** Wettbewerbsvergleich 11/2026, Rang 1 – keine OCR-Messung vorhanden, Modus „Genau“ mit `tessdata_best` vorgeschlagen.
 **Umsetzung:** Messkorpus (6 Briefe, Grundwahrheit, Scanbedingungen von sauber bis körniges Handyfoto) mit Test-Gate; Messung im Tesseract-Kern der App mit derselben Aufbereitung. Befund: `tessdata_best` bringt 0,37 % statt 0,40 % Zeichenfehler bei doppelter Zeit → **kein Modus „Genau“** (L4: keine Auswahl ohne Nutzen). Stattdessen Sauvola-Schwellwert und Glättung körniger Bilder nur in der OCR-Kopie: Zeichenfehler gesamt 18,5 % → 0,40 %.
