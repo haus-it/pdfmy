@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Можно ли открывать файлы Word, Excel и изображения в PDFMy правой кнопкой мыши?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Правая кнопка: «Открыть в PDFMy» и «Отправить → PDFMy»",
  "Zurück zur E-Mail": "Назад к письму",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28–35): в «Файлах» у PDF, изображений и файлов Office есть пункт"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28–35): в «Файлах» у PDF, изображений и файлов Office есть пункт",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Проще всего:</b> установите PDFMy из каталога <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Дополнения Thunderbird</a> – в Thunderbird в разделе «Инструменты → Дополнения и темы» найдите «PDFMy» и нажмите «Добавить в Thunderbird».",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Расширение доступно в каталоге <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Дополнения Firefox</a> – нажмите «Добавить в Firefox», и готово. В значке «PDFMy» включите переключатель <b>Открывать автоматически</b> и разрешите доступ к веб-страницам.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Установить в Chrome<br><small style=\"font-weight:400\">Chrome Web Store · один щелчок, без режима разработчика</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Добавить в Edge<br><small style=\"font-weight:400\">Microsoft Edge Add-ons · один щелчок</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Добавить в Firefox<br><small style=\"font-weight:400\">Дополнения Firefox · Windows, Mac, Linux</small>"
 }

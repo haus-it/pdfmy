@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Get ég opnað Word-, Excel- og myndskrár í PDFMy með hægrismelli?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Hægrismellur „Opna í PDFMy“ og „Senda til → PDFMy“",
  "Zurück zur E-Mail": "Aftur í tölvupóstinn",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 til 35): Í „Skrár“ er við PDF-skjöl, myndir og Office-skrár valkosturinn"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 til 35): Í „Skrár“ er við PDF-skjöl, myndir og Office-skrár valkosturinn",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Einfaldast:</b> setjið PDFMy upp af <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-viðbótum</a> – leitið í Thunderbird undir „Verkfæri → Viðbætur og þemu“ að „PDFMy“ og smellið á „Bæta við Thunderbird“.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Viðbótin er fáanleg á <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-viðbótum</a> – smellið á „Bæta við Firefox“, búið. Kveikið á rofanum <b>Opna sjálfvirkt</b> í tákninu „PDFMy“ og leyfið aðgang að vefsíðum.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Bæta við Chrome<br><small style=\"font-weight:400\">Chrome Web Store · einn smellur, án forritarahams</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Bæta við Edge<br><small style=\"font-weight:400\">Viðbætur Microsoft Edge · einn smellur</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Bæta við Firefox<br><small style=\"font-weight:400\">Firefox-viðbætur · Windows, Mac, Linux</small>"
 }

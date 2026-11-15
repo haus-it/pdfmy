@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Alla i agor ffeiliau Word, Excel a delweddau yn PDFMy drwy dde-glicio?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "De-glicio “Agor yn PDFMy” ac “Anfon at → PDFMy”",
  "Zurück zur E-Mail": "Yn ôl i’r e-bost",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 i 35): yn ‘Ffeiliau’, mae PDFs, delweddau a ffeiliau Office yn cynnig"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 i 35): yn ‘Ffeiliau’, mae PDFs, delweddau a ffeiliau Office yn cynnig",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Y ffordd hawsaf:</b> gosodwch PDFMy o <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Ychwanegion Thunderbird</a> – yn Thunderbird, o dan “Offer → Ychwanegion a Themâu”, chwiliwch am “PDFMy” a chliciwch “Ychwanegu at Thunderbird”.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Mae’r estyniad ar gael ar <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Ychwanegion Firefox</a> – cliciwch “Ychwanegu at Firefox”, a dyna ni. Yn yr eicon “PDFMy”, trowch y switsh <b>Agor yn awtomatig</b> ymlaen a chaniatáu mynediad i wefannau.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Ychwanegu at Chrome<br><small style=\"font-weight:400\">Chrome Web Store · un clic, heb Developer mode</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Ychwanegu at Edge<br><small style=\"font-weight:400\">Microsoft Edge Add-ons · un clic</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Ychwanegu at Firefox<br><small style=\"font-weight:400\">Ychwanegion Firefox · Windows, Mac, Linux</small>"
 }

@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Kan jeg åbne Word-, Excel- og billedfiler i PDFMy med et højreklik?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Højreklik »Åbn i PDFMy« og »Send til → PDFMy«",
  "Zurück zur E-Mail": "Tilbage til e-mailen",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 til 35): I »Filer« har PDF’er, billeder og Office-filer"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 til 35): I »Filer« har PDF’er, billeder og Office-filer",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Nemmest:</b> Installer PDFMy fra <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-tilføjelser</a> – søg i Thunderbird under »Funktioner → Tilføjelser og temaer« efter »PDFMy«, og klik på »Føj til Thunderbird«.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Udvidelsen findes på <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-tilføjelser</a> – klik på »Føj til Firefox«, så er De færdig. Slå kontakten <b>Åbn automatisk</b> til i ikonet »PDFMy«, og tillad adgang til websteder.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Føj til Chrome<br><small style=\"font-weight:400\">Chrome Web Store · ét klik, uden udviklertilstand</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Føj til Edge<br><small style=\"font-weight:400\">Microsoft Edge-tilføjelsesprogrammer · ét klik</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Føj til Firefox<br><small style=\"font-weight:400\">Firefox-tilføjelser · Windows, Mac, Linux</small>"
 }

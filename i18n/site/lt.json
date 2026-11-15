@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Ar galiu atidaryti Word, Excel ir vaizdų failus PDFMy dešiniuoju pelės mygtuku?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Dešinysis spustelėjimas „Atidaryti PDFMy“ ir „Siųsti į → PDFMy“",
  "Zurück zur E-Mail": "Atgal į el. laišką",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28–35): skiltyje „Failai“ prie PDF, paveikslėlių ir „Office“ failų yra"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28–35): skiltyje „Failai“ prie PDF, paveikslėlių ir „Office“ failų yra",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Paprasčiausia:</b> įdiekite PDFMy iš <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird priedų</a> – Thunderbird meniu „Priemonės → Priedai ir temos“ ieškokite „PDFMy“ ir spustelėkite „Pridėti į Thunderbird“.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Plėtinys pasiekiamas <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox prieduose</a> – spustelėkite „Pridėti į Firefox“ ir viskas. Piktogramoje „PDFMy“ įjunkite jungiklį <b>Atidaryti automatiškai</b> ir leiskite prieigą prie svetainių.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Pridėti į Chrome<br><small style=\"font-weight:400\">Chrome Web Store · vienas spustelėjimas, be kūrėjo režimo</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Pridėti į Edge<br><small style=\"font-weight:400\">Microsoft Edge priedai · vienas spustelėjimas</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Pridėti į Firefox<br><small style=\"font-weight:400\">Firefox priedai · Windows, Mac, Linux</small>"
 }

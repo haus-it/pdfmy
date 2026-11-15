@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Pot deschide fișiere Word, Excel și imagini în PDFMy prin clic dreapta?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Clic dreapta „Deschidere în PDFMy” și „Trimitere către → PDFMy”",
  "Zurück zur E-Mail": "Înapoi la e-mail",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 până la 35): în „Fișiere”, la PDF-uri, imagini și fișiere Office apare"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 până la 35): în „Fișiere”, la PDF-uri, imagini și fișiere Office apare",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Cel mai simplu:</b> instalați PDFMy din <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Suplimente Thunderbird</a> – în Thunderbird, la „Instrumente → Suplimente și teme”, căutați „PDFMy” și faceți clic pe „Adaugă în Thunderbird”.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Extensia este disponibilă pe <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Suplimente Firefox</a> – faceți clic pe „Adaugă în Firefox”, gata. În pictograma „PDFMy”, activați comutatorul <b>Deschidere automată</b> și permiteți accesul la paginile web.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Adaugă în Chrome<br><small style=\"font-weight:400\">Chrome Web Store · un clic, fără mod dezvoltator</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Adaugă în Edge<br><small style=\"font-weight:400\">Microsoft Edge Add-ons · un clic</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Adaugă în Firefox<br><small style=\"font-weight:400\">Suplimente Firefox · Windows, Mac, Linux</small>"
 }

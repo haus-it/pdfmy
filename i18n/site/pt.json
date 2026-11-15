@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Posso abrir ficheiros Word, Excel e imagens no PDFMy com o botão direito?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Botão direito «Abrir no PDFMy» e «Enviar para → PDFMy»",
  "Zurück zur E-Mail": "Voltar ao e-mail",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 a 35): em «Ficheiros», os PDF, imagens e ficheiros do Office oferecem"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 a 35): em «Ficheiros», os PDF, imagens e ficheiros do Office oferecem",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>O mais simples:</b> instale o PDFMy a partir dos <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Extras do Thunderbird</a> – no Thunderbird, em «Ferramentas → Extras e temas», procure «PDFMy» e clique em «Adicionar ao Thunderbird».",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> a extensão está disponível nos <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Extras do Firefox</a> – clique em «Adicionar ao Firefox» e pronto. No ícone «PDFMy», ative o interruptor <b>Abrir automaticamente</b> e permita o acesso a sites.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Adicionar ao Chrome<br><small style=\"font-weight:400\">Chrome Web Store · um clique, sem modo de programador</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Adicionar ao Edge<br><small style=\"font-weight:400\">Suplementos do Microsoft Edge · um clique</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Adicionar ao Firefox<br><small style=\"font-weight:400\">Extras do Firefox · Windows, Mac, Linux</small>"
 }

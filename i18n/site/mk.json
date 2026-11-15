@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Може ли да отворам Word, Excel и датотеки со слики во PDFMy со десен клик?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Десен клик „Отвори во PDFMy“ и „Испрати до → PDFMy“",
  "Zurück zur E-Mail": "Назад кон е-пораката",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 до 35): Во „Датотеки“ кај PDF-датотеки, слики и Office-датотеки стои"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 до 35): Во „Датотеки“ кај PDF-датотеки, слики и Office-датотеки стои",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Најлесно:</b> инсталирајте го PDFMy од <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird додатоци</a> – во Thunderbird под „Алатки → Додатоци и теми“ побарајте „PDFMy“ и кликнете на „Додај во Thunderbird“.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Проширувањето е достапно на <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox додатоци</a> – кликнете на „Додај во Firefox“ и готово. Во иконата „PDFMy“ вклучете го прекинувачот <b>Автоматско отворање</b> и дозволете пристап до веб-страници.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Додај во Chrome<br><small style=\"font-weight:400\">Chrome Web Store · еден клик, без режим за програмери</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Додај во Edge<br><small style=\"font-weight:400\">Microsoft Edge Add-ons · еден клик</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Додај во Firefox<br><small style=\"font-weight:400\">Firefox додатоци · Windows, Mac, Linux</small>"
 }

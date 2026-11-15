@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Nista’ niftaħ fajls Word, Excel u stampi f’PDFMy b’right-click?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Right-click “Iftaħ f’PDFMy” u “Send to → PDFMy”",
  "Zurück zur E-Mail": "Lura għall-email",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 sa 35): f’“Fajls”, għall-PDFs, stampi u fajls tal-Office hemm"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 sa 35): f’“Fajls”, għall-PDFs, stampi u fajls tal-Office hemm",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>L-aktar sempliċi:</b> installa PDFMy minn <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird Add-ons</a> – f’Thunderbird, taħt “Tools → Add-ons and Themes”, fittex “PDFMy” u kklikkja “Żid ma’ Thunderbird”.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> L-estensjoni tinsab fuq <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox Add-ons</a> – ikklikkja “Żid ma’ Firefox”, lest. Fl-ikona “PDFMy”, ixgħel is-swiċċ <b>Iftaħ awtomatikament</b> u ppermetti l-aċċess għas-siti web.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Żid ma’ Chrome<br><small style=\"font-weight:400\">Chrome Web Store · klikk wieħed, mingħajr developer mode</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Żid ma’ Edge<br><small style=\"font-weight:400\">Microsoft Edge Add-ons · klikk wieħed</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Żid ma’ Firefox<br><small style=\"font-weight:400\">Firefox Add-ons · Windows, Mac, Linux</small>"
 }

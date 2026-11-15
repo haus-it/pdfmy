@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Kas saan Wordi, Exceli ja pildifaile paremklõpsuga PDFMy-s avada?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Paremklõps „Ava PDFMy-s“ ja „Saada → PDFMy“",
  "Zurück zur E-Mail": "Tagasi e-kirja juurde",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 kuni 35): „Failides“ on PDF-ide, piltide ja Office’i failide juures valik"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 kuni 35): „Failides“ on PDF-ide, piltide ja Office’i failide juures valik",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Kõige lihtsam:</b> paigaldage PDFMy <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbirdi lisadest</a> – otsige Thunderbirdis menüüst „Tööriistad → Lisad ja teemad“ „PDFMy“ ja klõpsake „Lisa Thunderbirdi“.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Laiendus on saadaval <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefoxi lisades</a> – klõpsake „Lisa Firefoxi“ ja valmis. Lülitage ikoonis „PDFMy“ sisse lüliti <b>Ava automaatselt</b> ja lubage juurdepääs veebilehtedele.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Lisa Chrome’i<br><small style=\"font-weight:400\">Chrome Web Store · üks klõps, ilma arendaja režiimita</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Lisa Edge’i<br><small style=\"font-weight:400\">Microsoft Edge’i lisandmoodulid · üks klõps</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Lisa Firefoxi<br><small style=\"font-weight:400\">Firefoxi lisad · Windows, Mac, Linux</small>"
 }

@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Can I open Word, Excel and image files in PDFMy by right-clicking?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Right-click ‘Open in PDFMy’ and ‘Send to → PDFMy’",
  "Zurück zur E-Mail": "Back to email",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 to 35): in ‘Files’, PDFs, images and Office files offer"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 to 35): in ‘Files’, PDFs, images and Office files offer",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Easiest:</b> install PDFMy from <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird Add-ons</a> – in Thunderbird, go to ‘Tools → Add-ons and Themes’, search for ‘PDFMy’ and click ‘Add to Thunderbird’.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> The extension is available on <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox Add-ons</a> – click ‘Add to Firefox’ and you’re done. In the ‘PDFMy’ icon, switch on <b>Open automatically</b> and allow access to websites.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Add to Chrome<br><small style=\"font-weight:400\">Chrome Web Store · one click, no developer mode</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Add to Edge<br><small style=\"font-weight:400\">Microsoft Edge Add-ons · one click</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Add to Firefox<br><small style=\"font-weight:400\">Firefox Add-ons · Windows, Mac, Linux</small>"
 }

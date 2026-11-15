@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### Store-Knöpfe und automatische Übernahme von Store-Freigaben (app-v258)
+- **Eingereicht 15.11.2026:** Firefox-Erweiterung bei addons.mozilla.org und Thunderbird-Erweiterung bei addons.thunderbird.net (Konto support@haus-it.de, Herausgeber „Mentor GmbH“), beide „Wartet auf Überprüfung“, 0 Fehler. Chrome Web Store: Unterlagen bereit, Einreichung durch die GF (Chrome lässt auf dem Web Store keine Erweiterungen und damit keine Fernsteuerung zu). Edge/AppSource/Teams: der Benutzer braucht im vorhandenen Partner-Center-Konto der Mentor GmbH die Rolle „Kontoadministrator“.
+- **pdfmy.de:** Knöpfe „Zu Chrome/Edge/Firefox hinzufügen“ auf erweiterung.html und der Thunderbird-Hinweis auf „PDFMy in Firmen verteilen“ erscheinen, sobald die Store-Adresse in tools/site.json („stores“) steht; die Seite verweist fest auf pdfmy.de/go/<store> (Umleitung in .htaccess), die Texte sind in 39 Sprachen vorübersetzt – eine Freigabe braucht keine neue Übersetzung.
+- **tools/store-status.js** fragt die öffentlichen Schnittstellen von Firefox- und Thunderbird-Add-ons ab (kein Konto); **tools/store-update.ps1** trägt eine neue Freigabe ein, rollt mit Tests und Probelauf aus und pusht. Protokoll docs/Store-Status.log.
+
 ### Nextcloud-App auch für Nextcloud 33–35 (app-v257)
 - Die aktuelle Nextcloud ist 35; die App erlaubte nur bis 32 und wäre dort abgelehnt worden. Jetzt `max-version="35"`, Hinweis auf „PDFMy in Firmen verteilen“ angepasst. Gefunden beim Versuch eines echten Tests mit Nextcloud 35.0.3 auf diesem Server – der Test selbst war unter Windows nicht möglich (Nextcloud läuft nur unter Linux: fehlende POSIX-Funktionen, Datenbank-Migrationen werden nicht gefunden). **Echter Test in Nextcloud bleibt offen.**
 

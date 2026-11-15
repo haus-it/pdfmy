@@ -260,3 +260,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-11-15 11:44 | pdfmy-202611151038-v255 | 1.17.0 | 5e266542eb956e71… | 300/300 Tests bestanden, Probelauf bestanden | 165 | Administrator | 99a4ce8e34a5267f |
 | 2026-11-15 13:28 | pdfmy-202611151203-v256 | 1.18.0 | eb69279b63722a3e… | 304/304 Tests bestanden, Probelauf bestanden | 264 | Administrator | fb3180eac3b2a320 |
 | 2026-11-15 13:37 | pdfmy-202611151230-v257 | 1.18.0 | eb69279b63722a3e… | 304/304 Tests bestanden, Probelauf bestanden | 83 | Administrator | 8be7c0513d49a2c7 |
+| 2026-11-15 15:44 | pdfmy-202611151436-v258 | 1.18.0 | eb69279b63722a3e… | 304/304 Tests bestanden, Probelauf bestanden | 123 | Administrator | e432498f2e2652f2 |

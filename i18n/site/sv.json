@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Kan jag öppna Word-, Excel- och bildfiler i PDFMy med högerklick?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Högerklick ”Öppna i PDFMy” och ”Skicka till → PDFMy”",
  "Zurück zur E-Mail": "Tillbaka till e-postmeddelandet",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 till 35): I ”Filer” finns för PDF:er, bilder och Office-filer"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 till 35): I ”Filer” finns för PDF:er, bilder och Office-filer",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Enklast:</b> installera PDFMy från <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-tillägg</a> – sök i Thunderbird under ”Verktyg → Tillägg och teman” efter ”PDFMy” och klicka på ”Lägg till i Thunderbird”.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Tillägget finns på <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-tillägg</a> – klicka på ”Lägg till i Firefox”, klart. Slå på reglaget <b>Öppna automatiskt</b> i ikonen ”PDFMy” och tillåt åtkomst till webbplatser.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Lägg till i Chrome<br><small style=\"font-weight:400\">Chrome Web Store · ett klick, utan utvecklarläge</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Lägg till i Edge<br><small style=\"font-weight:400\">Microsoft Edge-tillägg · ett klick</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Lägg till i Firefox<br><small style=\"font-weight:400\">Firefox-tillägg · Windows, Mac, Linux</small>"
 }

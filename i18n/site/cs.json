@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Mohu otevírat soubory Word, Excel a obrázky v PDFMy pravým tlačítkem myši?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Pravé tlačítko „Otevřít v PDFMy“ a „Odeslat → PDFMy“",
  "Zurück zur E-Mail": "Zpět na e-mail",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 až 35): V „Souborech“ je u PDF, obrázků a souborů Office položka"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 až 35): V „Souborech“ je u PDF, obrázků a souborů Office položka",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Nejjednodušší:</b> nainstalujte PDFMy z <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Doplňků pro Thunderbird</a> – v Thunderbirdu v nabídce „Nástroje → Doplňky a vzhledy“ vyhledejte „PDFMy“ a klikněte na „Přidat do Thunderbirdu“.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Rozšíření najdete v <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Doplňcích pro Firefox</a> – klikněte na „Přidat do Firefoxu“ a je hotovo. V ikoně „PDFMy“ zapněte přepínač <b>Otevírat automaticky</b> a povolte přístup k webovým stránkám.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Přidat do Chromu<br><small style=\"font-weight:400\">Chrome Web Store · jedno kliknutí, bez režimu pro vývojáře</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Přidat do Edge<br><small style=\"font-weight:400\">Doplňky Microsoft Edge · jedno kliknutí</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Přidat do Firefoxu<br><small style=\"font-weight:400\">Doplňky pro Firefox · Windows, Mac, Linux</small>"
 }

@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Mogu li Word, Excel i datoteke slika otvoriti desnim klikom u PDFMy-u?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Desni klik „Otvori u PDFMy“ i „Pošalji u → PDFMy“",
  "Zurück zur E-Mail": "Nazad na e-poruku",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 do 35): U „Datotekama“ uz PDF-ove, slike i Office datoteke stoji"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 do 35): U „Datotekama“ uz PDF-ove, slike i Office datoteke stoji",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Najjednostavnije:</b> instalirajte PDFMy sa stranice <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird dodaci</a> – u Thunderbirdu pod „Alati → Dodaci i teme“ potražite „PDFMy“ i kliknite „Dodaj u Thunderbird“.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> Proširenje je dostupno na stranici <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox dodaci</a> – kliknite „Dodaj u Firefox“ i gotovo. U ikoni „PDFMy“ uključite prekidač <b>Automatski otvori</b> i dozvolite pristup web-stranicama.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Dodaj u Chrome<br><small style=\"font-weight:400\">Chrome Web Store · jedan klik, bez načina rada za programere</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Dodaj u Edge<br><small style=\"font-weight:400\">Microsoft Edge dodaci · jedan klik</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Dodaj u Firefox<br><small style=\"font-weight:400\">Firefox dodaci · Windows, Mac, Linux</small>"
 }

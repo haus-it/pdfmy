@@ -1550,5 +1550,10 @@
  "Kann ich Word-, Excel- und Bilddateien per Rechtsklick in PDFMy öffnen?": "Kann ech Word-, Excel- a Bildfichieren per Rietsklick am PDFMy opmaachen?",
  "Rechtsklick „In PDFMy öffnen“ und „Senden an → PDFMy“": "Rietsklick „A PDFMy opmaachen“ an „Senden an → PDFMy“",
  "Zurück zur E-Mail": "Zréck op d’E-Mail",
- "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 bis 35): An „Dateien“ steet bei PDFen, Biller an Office-Fichieren"
+ "(Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien": "(Nextcloud 28 bis 35): An „Dateien“ steet bei PDFen, Biller an Office-Fichieren",
+ "<b>Am einfachsten:</b> PDFMy bei <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.": "<b>Am einfachsten:</b> PDFMy iwwer <a href=\"go/thunderbird\" target=\"_blank\" rel=\"noopener\">Thunderbird-Add-ons</a> installéieren – an Thunderbird ënner „Extras → Add-ons und Themes“ no „PDFMy“ sichen an op „Zu Thunderbird derbäisetzen“ klicken.",
+ "<b>Firefox:</b> Die Erweiterung steht bei <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.": "<b>Firefox:</b> D’Erweiderung steet bei de <a href=\"go/firefox\" target=\"_blank\" rel=\"noopener\">Firefox-Add-ons</a> – op „Zu Firefox derbäisetzen“ klicken, fäerdeg. Am Symbol „PDFMy“ de Schalter <b>Automatesch opmaachen</b> aschalten an den Zougrëff op Websäiten erlaben.",
+ "Zu Chrome hinzufügen<br><small style=\"font-weight:400\">Chrome Web Store · ein Klick, ohne Entwicklermodus</small>": "Zu Chrome derbäisetzen<br><small style=\"font-weight:400\">Chrome Web Store · ee Klick, ouni Entwécklermodus</small>",
+ "Zu Edge hinzufügen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ein Klick</small>": "Zu Edge derbäisetzen<br><small style=\"font-weight:400\">Microsoft Edge-Add-ons · ee Klick</small>",
+ "Zu Firefox hinzufügen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>": "Zu Firefox derbäisetzen<br><small style=\"font-weight:400\">Firefox-Add-ons · Windows, Mac, Linux</small>"
 }

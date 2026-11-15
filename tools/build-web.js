@@ -8,6 +8,12 @@ const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
 const site = JSON.parse(fs.readFileSync(path.join(__dirname, 'site.json'), 'utf8'));
+// Store-Adressen (15.11.2026): tools/site.json → "stores": { "firefox": "https://addons.mozilla.org/…", "thunderbird": …, "chrome": …, "edge": … }
+// Auf der Website stehen nur feste Verweise pdfmy.de/go/<store> (Umleitung in .htaccess) – die Texte bleiben gleich und sind vorübersetzt.
+// PDFMY_ALL_STORES=1 zeigt alle Knöpfe mit Platzhalter-Adressen (nur zum Sammeln der Übersetzungstexte, nie ausrollen).
+const STORE = Object.assign({}, site.firefoxAmo ? { firefox: site.firefoxAmo } : {}, site.stores || {},
+  process.env.PDFMY_ALL_STORES === '1' ? { firefox: 'https://example.invalid/', thunderbird: 'https://example.invalid/', chrome: 'https://example.invalid/', edge: 'https://example.invalid/' } : {});
+for (const [k, v] of Object.entries(STORE)) if (!/^https:\/\/[\w.-]+\/[^\s"'<>]*$/.test(v)) { console.error(`Store-Adresse ungültig (${k}): ${v}`); process.exit(1); }
 const OUT = path.join(ROOT, 'dist', site.domain);
 const op = site.operator;
 const APPSUPPORT = (fs.readFileSync(path.join(ROOT, 'js', 'config.js'), 'utf8').match(/supportMail:\s*'([^']+)'/) || [])[1] || 'wumertens@mentor-group.de';
@@ -439,6 +445,14 @@ AddType application/x-rpm .rpm
 // Erweiterungen für Microsoft 365 (Outlook, Word, Excel, PowerPoint, Teams) und Thunderbird (tools/addins.js, app-v254)
 const ADD = require(path.join(ROOT, 'tools', 'addins.js'))({ ROOT, OUT, write, zip: require(path.join(ROOT, 'js', 'tools.js')).zip, domain: site.domain });
 fs.appendFileSync(path.join(OUT, '.htaccess'), ADD.htaccess);
+// Store-Verweise pdfmy.de/go/<store> → Store-Seite (nur für eingetragene Stores; sonst zur Erweiterungsseite)
+fs.appendFileSync(path.join(OUT, '.htaccess'), `
+# Store-Verweise (tools/site.json „stores“)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+${['firefox', 'thunderbird', 'chrome', 'edge'].map(k => `  RewriteRule ^go/${k}/?$ ${STORE[k] || `https://${site.domain}/erweiterung.html`} [R=302,L]`).join(String.fromCharCode(10))}
+</IfModule>
+`);
 // Für die IT: pdfmy Scan auf alle Rechner verteilen (Wettbewerbsvergleich 11/2026, Rang 5c) – Befehle, Erkennung, Richtlinien
 const PSDIR = 'C:\\Program Files\\pdfmy Scan';
 write('firmen.html', page('PDFMy in Firmen verteilen', `
@@ -484,6 +498,7 @@ write('firmen.html', page('PDFMy in Firmen verteilen', `
 <h2 id="teams">Microsoft Teams</h2>
 <p>PDFMy als persönliche App in Teams: <a href="download/pdfmy-teams.zip" download>pdfmy-teams.zip</a>. Teams Admin Center → <i>Teams-Apps → Apps verwalten → Hochladen</i>, danach per Einrichtungsrichtlinie anheften. Einzeln (wenn erlaubt): Teams → <i>Apps → Apps verwalten → App hochladen</i>.</p>
 <h2 id="thunderbird">Thunderbird</h2>
+${STORE.thunderbird ? '<p><b>Am einfachsten:</b> PDFMy bei <a href="go/thunderbird" target="_blank" rel="noopener">Thunderbird-Add-ons</a> installieren – in Thunderbird unter „Extras → Add-ons und Themes“ nach „PDFMy“ suchen und „Zu Thunderbird hinzufügen“ klicken.</p>' : ''}
 <p>Erweiterung <a href="download/${ADD.tbXpi}" download>${ADD.tbXpi}</a> (Thunderbird 115 oder neuer): Anhänge per Knopf „PDFMy“ oder Rechtsklick in PDFMy öffnen, beim Verfassen bearbeitete oder neue PDFs anhängen. Einzeln: <i>Extras → Add-ons und Themes → Zahnrad → Add-on aus Datei installieren</i>. Für alle: Richtlinie <code>ExtensionSettings</code> mit <code>"pdfmy@mentor-group.de": {"installation_mode": "force_installed", "install_url": "https://${site.domain}/download/${ADD.tbXpi}"}</code>.</p>
 <h2 id="libreoffice">LibreOffice und Collabora Office</h2>
 <p>Erweiterung <a href="download/${ADD.loOxt}" download>${ADD.loOxt}</a> (ab LibreOffice 7.0, Windows, Mac, Linux): <i>Datei → In PDFMy öffnen</i> und ein Symbol in der Symbolleiste. Writer, Calc, Impress und Draw speichern das Dokument als PDF in einen Arbeitsordner auf dem Rechner, pdfmy Scan öffnet es in PDFMy – ohne Upload. Ohne pdfmy Scan zeigt die Erweiterung den Ordner und öffnet pdfmy.de. Einzeln: Doppelklick auf die Datei oder <i>Extras → Extension Manager → Hinzufügen</i>. Für alle: <code>unopkg add --shared ${ADD.loOxt}</code> (als Administrator).</p>
@@ -503,9 +518,11 @@ write('erweiterung.html', page('PDFs direkt in PDFMy öffnen', `
 <p><b>Ein Klick auf eine PDF im Browser – und sie ist in PDFMy offen.</b> Für PDFs aus Webportalen, Webmail, Behörden- und Bankseiten: ausfüllen, unterschreiben, schwärzen, speichern – ohne Umweg über den Download-Ordner. Die Datei wird <b>nicht hochgeladen</b>: Sie geht im Browser direkt an PDFMy.</p>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px">
 <a href="download/${extZip}" download style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Erweiterung herunterladen<br><small style="font-weight:400">Chrome und Edge · Windows und Mac</small></a>
-${site.firefoxAmo ? `<a href="${esc(site.firefoxAmo)}" target="_blank" rel="noopener" style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Zu Firefox hinzufügen<br><small style="font-weight:400">Firefox-Add-ons · Windows, Mac, Linux</small></a>` : ''}
+${STORE.chrome ? `<a href="go/chrome" target="_blank" rel="noopener" style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Zu Chrome hinzufügen<br><small style="font-weight:400">Chrome Web Store · ein Klick, ohne Entwicklermodus</small></a>` : ''}
+${STORE.edge ? `<a href="go/edge" target="_blank" rel="noopener" style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Zu Edge hinzufügen<br><small style="font-weight:400">Microsoft Edge-Add-ons · ein Klick</small></a>` : ''}
+${STORE.firefox ? `<a href="go/firefox" target="_blank" rel="noopener" style="flex:1 1 260px;text-align:center;font-weight:700;text-decoration:none;color:#fff;background:#4B2FBF;border-radius:6px;padding:12px 16px">Zu Firefox hinzufügen<br><small style="font-weight:400">Firefox-Add-ons · Windows, Mac, Linux</small></a>` : ''}
 </div>
-<p id="firefox"><b>Firefox:</b> ${site.firefoxAmo ? `Die Erweiterung steht bei <a href="${esc(site.firefoxAmo)}" target="_blank" rel="noopener">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.` : 'Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.'}</p>
+<p id="firefox"><b>Firefox:</b> ${STORE.firefox ? 'Die Erweiterung steht bei <a href="go/firefox" target="_blank" rel="noopener">Firefox-Add-ons</a> – „Zu Firefox hinzufügen“ klicken, fertig. Im Symbol „PDFMy“ den Schalter <b>Automatisch öffnen</b> einschalten und den Zugriff auf Webseiten erlauben.' : 'Die Firefox-Fassung ist fertig und wird bei Mozilla zur Prüfung eingereicht. Sobald sie bei Firefox-Add-ons freigegeben ist, steht hier der Knopf „Zu Firefox hinzufügen“.'}</p>
 <p><b>Brauche ich das?</b> Nur, wenn Sie PDFs oft im Browser öffnen. PDFMy selbst funktioniert ohne Erweiterung; PDFs auf Ihrem PC öffnen sich mit <a href="scanner.html">pdfmy Scan</a> per Doppelklick in PDFMy.</p>
 <h2>Installation (ca. 2 Minuten)</h2>
 <ol>
