@@ -592,6 +592,11 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 **Ehrliche Grenzen (so in der Hilfe):** Ablauf und Zurückziehen wirken ohne Server nur als Hinweis bzw. über die E-Mail. Mit Zugangscode entfällt der Nachweis „unverändert enthalten“ (Datei wird je Person neu verschlüsselt), die Prüfsummen je Person bleiben. Der Code steht beim Absender im Posteingangsbuch (auch in dessen Datei im Ablageordner). Zugangscode nicht beim Serienversand. Kartenzahlung verworfen (L2, L3).
 **Offen aus Rang 4–7:** ~~Abschlusszertifikat versiegeln (Rang 5)~~ (umgesetzt app-v244, siehe unten), parallele Stufen und Anhänge vom Unterzeichner (Rang 7).
 
+### Umgesetzt 15.11.2026: PowerPoint und Impress in PDF (app-v253)
+**Anlass (GF 15.11.2026: „weiter bitte Lücken schließen“):** Wettbewerbsvergleich 11/2026, Rang 2 (a) – PowerPoint als Eingabe fehlte ganz; iLovePDF, Smallpdf und PDF24 bieten es (mit Upload bzw. Desktop-Programm).
+**Umsetzung:** Eigener Leser für PresentationML und ODF-Präsentationen mit fester Folienlage (nicht Fließtext wie bei Word): Master/Layout-Vererbung, Designfarben, Text mit Laufweiten-Schriften, Tabellen, Bilder, Formen, Gruppen, Diagramme aus gespeicherten Werten. Ausgeblendete Folien entfallen wie beim PDF-Export von PowerPoint.
+**Leitplanken:** 1–3 gewahrt (alles lokal, keine neue Verbindung, externe Bildverweise werden nicht geladen, keine Cloud-KI). 4: kein neuer Bedienschritt – Datei öffnen genügt; Hinweis nur bei Vereinfachungen. 5: tests/slides.test.js, Sichtvergleich mit LibreOffice. 6 nicht betroffen.
+
 ### Umgesetzt 15.11.2026: Texterkennung gemessen, körnige Fotos lesbar (app-v252)
 **Anlass (GF 15.11.2026: „OCR Genau“):** Wettbewerbsvergleich 11/2026, Rang 1 – keine OCR-Messung vorhanden, Modus „Genau“ mit `tessdata_best` vorgeschlagen.
 **Umsetzung:** Messkorpus (6 Briefe, Grundwahrheit, Scanbedingungen von sauber bis körniges Handyfoto) mit Test-Gate; Messung im Tesseract-Kern der App mit derselben Aufbereitung. Befund: `tessdata_best` bringt 0,37 % statt 0,40 % Zeichenfehler bei doppelter Zeit → **kein Modus „Genau“** (L4: keine Auswahl ohne Nutzen). Stattdessen Sauvola-Schwellwert und Glättung körniger Bilder nur in der OCR-Kopie: Zeichenfehler gesamt 18,5 % → 0,40 %.

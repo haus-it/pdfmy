@@ -45,7 +45,7 @@
   // bei CBZ alles außer Bildern (z. B. ComicInfo.xml) bleiben liegen.
   const ARCHIVE_FILES = 2000, ARCHIVE_MB = 1500;
   const IMG_EXT = /\.(jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd)$/i;
-  const OPEN_EXT = /\.(pdf|jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd|psb|txt|md|markdown|csv|docx|xlsx|odt|ods|epub|rtf|o?xps|xml|eml|msg)$/i;
+  const OPEN_EXT = /\.(pdf|jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd|psb|txt|md|markdown|csv|docx|xlsx|odt|ods|odp|pptx|ppsx|potx|epub|rtf|o?xps|xml|eml|msg)$/i;
   const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', bmp: 'image/bmp', tif: 'image/tiff', tiff: 'image/tiff', pdf: 'application/pdf' };
   function archiveList(z, comic) {
     const coll = new Intl.Collator('de', { numeric: true, sensitivity: 'base' });
@@ -135,7 +135,7 @@
         const el = { name: m[3], attrs: {}, kids: [] };
         for (const a of m[4].matchAll(/([^\s=]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g)) el.attrs[a[1]] = unesc(a[2] ?? a[3]);
         top.kids.push(el); if (!m[5]) stack.push(el);
-      } else if (m[6] && !/^\s+$/.test(m[6]) || (m[6] && top.name === 'w:t')) top.kids.push(unesc(m[6]));
+      } else if (m[6] && !/^\s+$/.test(m[6]) || (m[6] && /^(w:t|a:t|text:p|text:span|text:h|text:a)$/.test(top.name))) top.kids.push(unesc(m[6]));   // Leerzeichen-Läufe (Word, PowerPoint, Impress) erhalten
     }
     return rootEl;
   }

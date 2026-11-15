@@ -215,10 +215,11 @@ async function importFilesRun(files, fromCamera) {
       else if (/\.(docx|xlsx|odt|ods|epub)$/.test(n)) await importOffice(f);
       else if (/\.rtf$/.test(n)) await importRtf(f);
       else if (/\.o?xps$/.test(n)) await importXps(f);
-      else if (/\.(doc|xls|ppt|pptx|odp)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word bzw. Excel als .docx/.xlsx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
+      else if (/\.(pptx|ppsx|potx|pptm|ppsm|odp)$/.test(n)) await importSlides(f);
+      else if (/\.(doc|xls|ppt)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word, Excel bzw. PowerPoint als .docx/.xlsx/.pptx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, PowerPoint, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
       state.inputBytes += f.size;
       // Name für den Vorschlag beim Speichern (ownName): Bilder und Seiten aus einem Archiv tragen den Namen ihrer Datei bzw. des Archivs
       // Nicht bei Scanner und Überwachtem Ordner: deren Namen („SKM_C258…“) sind nichtssagend, dort bleibt der Name aus den Briefdaten.
@@ -436,6 +437,36 @@ async function importXps(file) {
   }
   await importPdf(new File([await doc.save()], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
   status(`${file.name} umgewandelt. Aus XPS übernimmt PDFMy Text und Bilder vereinfacht, aber keine Linien und Flächen. Für ein exaktes Abbild über den Drucker „PDFMy“ drucken.`);
+}
+/* PowerPoint (.pptx, .ppsx, .potx) und Impress (.odp) → PDF mit fester Lage wie im Original (js/slides.js): Schriften mit gleicher
+   Laufweite wie Calibri/Arial/Times (TEXT_FONTS), Bilder in GIF/BMP/WebP/SVG über den Browser in PNG. Danach wie eine PDF. */
+async function importSlides(file) {
+  status(`${file.name} wird in PDF umgewandelt …`);
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const model = /\.odp$/i.test(file.name) ? await Slides.odp(bytes) : await Slides.pptx(bytes);
+  const font = async (fam, bold, italic) => { const fp = 'vendor/' + TEXT_FONTS[fam][(bold ? 1 : 0) + (italic && fam !== 'mono' ? 2 : 0)]; return new Uint8Array(await asset('font:' + fp, fp)); };
+  const MIME_IMG = { gif: 'image/gif', bmp: 'image/bmp', webp: 'image/webp', svg: 'image/svg+xml', tif: 'image/tiff', tiff: 'image/tiff' };
+  const image = async (data, ext) => {   // Bildformate, die pdf-lib nicht kennt: im Browser dekodieren, als PNG einbetten (EMF/WMF bleiben außen vor)
+    const type = MIME_IMG[ext]; if (!type) return null;
+    try {
+      const url = URL.createObjectURL(new Blob([data], { type })), im = new Image();
+      try { im.src = url; await im.decode(); } finally { URL.revokeObjectURL(url); }
+      const k = Math.min(1, 2400 / Math.max(im.naturalWidth || 1, im.naturalHeight || 1)), c = Imaging.canvas(Math.max(1, Math.round((im.naturalWidth || 800) * k)), Math.max(1, Math.round((im.naturalHeight || 600) * k)));
+      c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+      const png = new Uint8Array(await (await new Promise(res => c.toBlob(res, 'image/png'))).arrayBuffer()); freeCanvas(c);
+      return { png };
+    } catch { return null; }
+  };
+  const { bytes: pdf, missing } = await Slides.render(PDFLib, model, { fontkit: await loadFontkit(), font, image, title: file.name.replace(/\.[^.]+$/, ''), locale: I18N.info.bcp || 'de-DE' });
+  await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
+  const sk = model.skipped, notes = [];
+  if (sk.hidden) notes.push(`${sk.hidden} ausgeblendete Folie(n) weggelassen`);
+  if (sk.charts) notes.push(`${sk.charts} Diagramm(e) nur als Platzhalter`);
+  if (sk.smartart) notes.push(`${sk.smartart} SmartArt-Grafik(en) nur als Platzhalter`);
+  if (missing + sk.images) notes.push(`${missing + sk.images} Bild(er) in einem nicht lesbaren Format (z. B. EMF) fehlen`);
+  status(`${file.name}: ${model.slides.length} Folie(n) umgewandelt.`);
+  // als Einblendung: die Abschlussmeldung des Imports überschreibt die Statuszeile
+  if (notes.length) toast(`${file.name}: ${model.slides.length} Folie(n) umgewandelt.` + ` Hinweis: ${notes.join(', ')} – für ein exaktes Abbild in PowerPoint bzw. Impress „Als PDF speichern“.`, 10000);
 }
 // Photoshop (PSD/PSB): das gespeicherte Gesamtbild (js/office.js psd) – wie ein Bild, aber unverändert (Modus „Original“, kein Zuschneiden)
 async function importPsd(file) {
