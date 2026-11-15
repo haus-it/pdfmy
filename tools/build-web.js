@@ -573,7 +573,13 @@ ${STORE.thunderbird ? '<p><b>Am einfachsten:</b> PDFMy bei <a href="go/thunderbi
 `));
 // Unternehmen und Behörden (15.11.2026): security.txt, SBOM (CycloneDX), ADMX-Vorlagen – tools/enterprise.js
 const ENT = require(path.join(ROOT, 'tools', 'enterprise.js'))({ write, zip: require(path.join(ROOT, 'js', 'tools.js')).zip, domain: site.domain,
-  company: op.company, email: op.email, webVersion: (fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/const VERSION = 'app-(v\d+)'/) || [])[1], scanVersion: scanVer });
+  company: op.company, email: op.email, webVersion: (fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/const VERSION = 'app-(v\d+)'/) || [])[1], scanVersion: scanVer,
+  // weitere eigene Programme in der SBOM (15.11.2026): pdfmy Scan für Mac/Linux, Browser-Erweiterung, Nextcloud-App (AGPL)
+  extra: [
+    { ref: 'scan-unix', name: 'pdfmy Scan (Mac, Linux)', version: macVer, description: 'Lokaler Helfer (127.0.0.1) für Scanner und Dateiübergabe; nur Perl-Kernmodule und Bordmittel des Systems, keine Fremdbibliotheken' },
+    { ref: 'extension', name: 'PDFMy Browser-Erweiterung (Chrome, Edge, Firefox)', version: JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-extension', 'manifest.json'), 'utf8')).version, description: 'PDFs aus dem Browser in PDFMy öffnen; keine Fremdbibliotheken' },
+    { ref: 'nextcloud', name: 'PDFMy für Nextcloud', version: (fs.readFileSync(path.join(ROOT, 'tools', 'addins.js'), 'utf8').match(/NC_VERSION = '([\d.]+)'/) || [])[1], description: 'Dateiaktion „In PDFMy öffnen“; keine Fremdbibliotheken', license: 'AGPL-3.0-or-later' },
+  ] });
 fs.appendFileSync(path.join(OUT, '.htaccess'), ENT.htaccess);
 // Steckbrief für IT-Sicherheit, Datenschutz und Beschaffung – nur deutsch (Prüfunterlage wie die Rechtstexte), ohne Sprachwahl
 write('sicherheit.html', page('Sicherheit und Compliance', `

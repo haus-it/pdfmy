@@ -43,7 +43,7 @@ const TEXTE = {
   ncSummary: 'PDFs in PDFMy öffnen, bearbeiten, unterschreiben – und zurück in Nextcloud speichern',
 };
 const OFFICE_ID = '26905598-3380-42e3-bfff-a6ec17b49991', OUTLOOK_ID = 'b56e6053-19f9-4750-9fa4-189192b5f2ff', TEAMS_ID = '5dd50a72-def9-47fc-97c4-b8dbe10b1616';
-const ADDIN_VERSION = '1.0.0', LO_VERSION = '1.0.0', NC_VERSION = '1.0.0', OO_VERSION = '1.0.1';
+const ADDIN_VERSION = '1.0.0', LO_VERSION = '1.0.0', NC_VERSION = '1.0.1', OO_VERSION = '1.0.1';
 
 module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
   const { LANGS } = require(path.join(ROOT, 'js', 'i18n.js'));
@@ -53,6 +53,28 @@ module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
   });
   const tr = (l, k) => l.d[TEXTE[k]] || null;
   const bin = list => list.map(f => ({ ...f, data: typeof f.data === 'string' ? new Uint8Array(Buffer.from(f.data, 'utf8')) : new Uint8Array(f.data) }));   // tools.zip erwartet Bytes
+  // tar (POSIX ustar) + gzip ohne Fremdbibliothek – Ordner-Einträge werden aus den Dateipfaden ergänzt; feste Zeit für reproduzierbare Pakete
+  function tarGz(files, mtime) {
+    const blocks = [], oct = (n, len) => n.toString(8).padStart(len - 1, '0') + '\0';
+    const header = (name, size, type) => {
+      const h = Buffer.alloc(512);
+      h.write(name, 0, 100, 'utf8'); h.write(type === '5' ? '0000755\0' : '0000644\0', 100); h.write(oct(0, 8), 108); h.write(oct(0, 8), 116);
+      h.write(oct(size, 12), 124); h.write(oct(mtime, 12), 136); h.write('        ', 148); h.write(type, 156);
+      h.write('ustar\0', 257); h.write('00', 263); h.write('root', 265); h.write('root', 297);
+      let sum = 0; for (const b of h) sum += b; h.write(sum.toString(8).padStart(6, '0') + '\0 ', 148);
+      return h;
+    };
+    const dirs = new Set();
+    for (const f of files) { const parts = f.name.split('/'); for (let i = 1; i < parts.length; i++) dirs.add(parts.slice(0, i).join('/') + '/'); }
+    for (const d of [...dirs].sort()) blocks.push(header(d, 0, '5'));
+    for (const f of files) {
+      const data = Buffer.isBuffer(f.data) ? f.data : Buffer.from(f.data);
+      if (Buffer.byteLength(f.name) > 99) throw new Error('tar: Pfad zu lang: ' + f.name);
+      blocks.push(header(f.name, data.length, '0'), data, Buffer.alloc((512 - data.length % 512) % 512));
+    }
+    blocks.push(Buffer.alloc(1024));
+    return require('node:zlib').gzipSync(Buffer.concat(blocks), { level: 9 }).fill(0, 4, 8);   // gzip-Kopf ohne Zeitstempel (reproduzierbar)
+  }
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const URL0 = `https://${domain}`, OFF = `${URL0}/office`;
   const ovr = (k, max = 0, tag = 'Override') => dicts.map(l => { let v = tr(l, k); if (!v) return ''; if (max && v.length > max) v = v.slice(0, max - 1) + '…'; return `<${tag} Locale="${l.bcp}" Value="${esc(v)}"/>`; }).join('');   // in bt:String: bt:Override (Microsoft-Schema)
@@ -247,7 +269,7 @@ module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
     for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       const full = path.join(dir, e.name), rel = path.relative(NC, full).split(path.sep).join('/');
       if (e.isDirectory()) walk(full);
-      else if (!/\.md$/i.test(e.name)) {
+      else if (!/^README/i.test(e.name)) {   // CHANGELOG.md gehört ins Paket (Vorgabe Nextcloud-App-Store)
         let data = fs.readFileSync(full);
         if (rel === 'js/pdfmy-main.js') data = data.toString('utf8').replace(/const LABELS = \{[^\n]*__LABELS__[^\n]*/, `const LABELS = ${JSON.stringify(labels)};`);
         if (rel === 'appinfo/info.xml') data = data.toString('utf8').replace(/<version>[^<]*<\/version>/, `<version>${ncVer}</version>`);
@@ -256,6 +278,9 @@ module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
     }
   })(NC);
   write('download/' + ncZip, Buffer.from(zip(bin(ncFiles), new Date(2026, 0, 1))));
+  // Nextcloud-App-Store (15.11.2026): .tar.gz mit genau einem Ordner „pdfmy/“ (Vorgabe nextcloudappstore.readthedocs.io, „Registering an App“)
+  const ncTar = `pdfmy-nextcloud-${ncVer}.tar.gz`;
+  write('download/' + ncTar, tarGz(ncFiles, Date.UTC(2026, 0, 1) / 1000));
 
   // ---------- ONLYOFFICE Docs: Plugin „PDFMy“ (app-v256) – tools/pdfmy-onlyoffice, .plugin für den Plugin-Manager ----------
   const OO = path.join(ROOT, 'tools', 'pdfmy-onlyoffice'), ooVer = OO_VERSION, ooPlugin = `pdfmy-onlyoffice-${ooVer}.plugin`;
@@ -317,6 +342,6 @@ AddType application/x-xpinstall .xpi
 AddType application/vnd.openofficeorg.extension .oxt
 AddType application/zip .plugin
 `;
-  return { htaccess, tbXpi, loOxt, ncZip, ooPlugin, ids: { OFFICE_ID, OUTLOOK_ID, TEAMS_ID }, version: ADDIN_VERSION };
+  return { htaccess, tbXpi, loOxt, ncZip, ncTar, ooPlugin, ids: { OFFICE_ID, OUTLOOK_ID, TEAMS_ID }, version: ADDIN_VERSION };
 };
 module.exports.TEXTE = TEXTE;

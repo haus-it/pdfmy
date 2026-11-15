@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### Nextcloud-App 1.0.1 für den App-Store (AGPL-3.0-or-later), SBOM ergänzt (app-v266)
+- Entscheidung GF 15.11.2026: Die Nextcloud-App (nur die Dateiaktion) steht unter **AGPL-3.0-or-later**; PDFMy bleibt PolyForm Noncommercial. Lizenztext `tools/pdfmy-nextcloud/LICENSE` (gnu.org), Lizenzköpfe, `info.xml` mit `<licence>`, englischer Grundbeschreibung (Deutsch als Übersetzung), Quellcode- und Fehler-Adresse – gegen das offizielle Schema `apps.nextcloud.com/schema/apps/info.xsd` geprüft (gültig; Gegenprobe ohne Lizenz ungültig). `CHANGELOG.md` im Paket.
+- Neues Paket `download/pdfmy-nextcloud-1.0.1.tar.gz` mit genau einem Ordner `pdfmy/` (Vorgabe App-Store), reproduzierbar ohne Fremdbibliothek erzeugt, mit bsdtar und GNU tar geprüft; Test prüft Prüfsummen der tar-Köpfe und den Aufbau.
+- Schlüssel und Zertifikatsanfrage (`openssl req … -subj "/CN=pdfmy"` nach Nextcloud-Dokumentation) erzeugt, außerhalb von Git. Anleitung `docs/Store-Einreichung.md` Nr. 7.
+- Weitere Entscheidungen GF: Nutzungsbedingungen unverändert, Werbehinweis immer sichtbar, Supportzeitraum (CRA) später – festgehalten in `docs/Entscheidungen-Stores.md`.
+
 ### Linux: Ausweg, wenn der Doppelklick keine Installation öffnet (app-v265)
 - Rückmeldung GF 15.11.2026: Unter Ubuntu installiert ein Doppelklick auf `pdfmy-scan-linux.deb` je nach Version nicht von selbst. Scan-Fenster, Update- und Download-Meldungen, Scanner-Seite und Hilfe sagen jetzt „meist ohne Terminal“ und nennen den Befehl für das eigene System (`sudo apt install`/`dnf install`/`zypper install`/`pacman --upgrade`); der Download-Ordner wird über `xdg-user-dir DOWNLOAD` gefunden – in jeder Systemsprache. Übersetzt in alle Sprachen.
 - **Nicht auf einem echten Ubuntu geprüft**, welche Ubuntu-Versionen den Doppelklick unterstützen.

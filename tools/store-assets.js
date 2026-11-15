@@ -104,7 +104,7 @@ span{display:block;margin-top:${Math.round(h * .05)}px;font-size:${Math.round(h 
   // 5) Pakete zum Hochladen (aus dem Bau) in den Ordner des jeweiligen Stores
   const dl = path.join(DIST, 'download'), pick = re => fs.readdirSync(dl).filter(f => re.test(f)).sort().pop();
   const pkgs = { chrome: [pick(/^pdfmy-erweiterung-[\d.]+\.zip$/)], edge: [pick(/^pdfmy-erweiterung-[\d.]+\.zip$/)], firefox: [pick(/^pdfmy-firefox-[\d.]+\.xpi$/)], thunderbird: [pick(/^pdfmy-thunderbird-[\d.]+\.xpi$/)],
-    'microsoft-appsource': ['pdfmy-outlook.xml', 'pdfmy-office.xml'], 'microsoft-teams': ['pdfmy-teams.zip'], nextcloud: [pick(/^pdfmy-nextcloud-[\d.]+\.zip$/)], onlyoffice: [pick(/^pdfmy-onlyoffice-[\d.]+\.plugin$/)] };
+    'microsoft-appsource': ['pdfmy-outlook.xml', 'pdfmy-office.xml'], 'microsoft-teams': ['pdfmy-teams.zip'], nextcloud: [pick(/^pdfmy-nextcloud-[\d.]+\.zip$/), pick(/^pdfmy-nextcloud-[\d.]+\.tar\.gz$/)], onlyoffice: [pick(/^pdfmy-onlyoffice-[\d.]+\.plugin$/)] };
   for (const [st, files] of Object.entries(pkgs)) for (const f of files) { const d = path.join(OUT, st, 'paket', f); fs.mkdirSync(path.dirname(d), { recursive: true }); fs.copyFileSync(path.join(dl, f), d); made.push(`${st}/paket/${f}`); }
   // 6) ONLYOFFICE-Marktplatz: Ordner wie im GitHub-Projekt ONLYOFFICE/onlyoffice.github.io (sdkjs-plugins/content/pdfmy mit deploy/pdfmy.plugin)
   //    plus Eintrag für store/config.json und Text für den Pull Request – Anleitung docs/Store-Einreichung.md

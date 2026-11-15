@@ -94,6 +94,15 @@ Stand 15.11.2026. **Was Sie tun müssen, ist nur noch: Konto anlegen, Dateien ho
 
 **Teams:** Partner Center → Neues Angebot → **Teams-App** → `store/microsoft-teams/paket/pdfmy-teams.zip`, Texte wie Outlook, Bild `bildschirm-1-pdfmy-in-teams-1366x768.png`.
 
+## 7. Nextcloud-App-Store (Entscheidung 15.11.2026: AGPL-3.0-or-later)
+
+Vorbereitet: App 1.0.1 (`download/pdfmy-nextcloud-1.0.1.tar.gz` auf pdfmy.de, Kopie in `store/nextcloud/paket/`), `info.xml` gegen das offizielle Schema geprüft, Schlüssel und Zertifikatsanfrage in `store/nextcloud/zertifikat/` (**`pdfmy.key` ist geheim** – nicht weitergeben, sicher aufbewahren, z. B. in 1Password; der Ordner ist von Git ausgeschlossen). Ablauf nach https://nextcloudappstore.readthedocs.io/en/latest/developer.html:
+
+1. **Sie (GitHub-Konto haus-it):** In den GitHub-Einstellungen die E-Mail-Adresse im Profil sichtbar machen (verlangt Nextcloud).
+2. **Sie:** Pull Request im Projekt https://github.com/nextcloud/app-certificate-requests mit dem Inhalt von `store/nextcloud/zertifikat/pdfmy.csr` als Datei `pdfmy/pdfmy.csr` (Aufbau wie bei den anderen Apps, z. B. `news/news.csr`). Laut README des Projekts: die PR-Vorlage vollständig ausfüllen, und **jeder Commit braucht die Zeile `Signed-off-by: Vorname Name <E-Mail>`** (Developer Certificate of Origin) – im GitHub-Webformular am Ende der Commit-Beschreibung. Diese Zeile darf **nur ein Mensch** setzen, kein KI-Werkzeug; deshalb erledigen Sie diesen Schritt selbst. Nextcloud prüft und legt das signierte Zertifikat `pdfmy/pdfmy.crt` ab.
+3. **Ich:** Mit dem Zertifikat die Signatur über die App-ID erzeugen (`echo -n "pdfmy" | openssl dgst -sha512 -sign pdfmy.key | openssl base64`) und – nach Anmeldung bei https://apps.nextcloud.com (Konto support@haus-it.de) – die App registrieren.
+4. **Ich:** Release hochladen: Download-Adresse `https://pdfmy.de/download/pdfmy-nextcloud-1.0.1.tar.gz` und Signatur des Archivs (`openssl dgst -sha512 -sign pdfmy.key pdfmy-nextcloud-1.0.1.tar.gz | openssl base64`).
+
 ## 6. ONLYOFFICE-Marktplatz (erst nach Entscheidung Nr. 6)
 
 Fertig vorbereitet in `store/onlyoffice/marktplatz/`, nach den Vorgaben des Projekts ONLYOFFICE/onlyoffice.github.io (Stand 15.11.2026): Ordner `sdkjs-plugins/content/pdfmy` mit `config.json`, Symbolen für hell und dunkel in fünf Stufen, Karten-Symbolen, Bildschirmfoto, README, CHANGELOG und `deploy/pdfmy.plugin`.

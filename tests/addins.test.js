@@ -103,6 +103,19 @@ test('LibreOffice, Nextcloud, ONLYOFFICE: Pakete vollständig und in allen Sprac
   // Nextcloud: App-Ordner pdfmy/, Bezeichnung in allen Sprachen eingesetzt
   const nc = open(A.ncZip);
   for (const f of ['pdfmy/appinfo/info.xml', 'pdfmy/lib/AppInfo/Application.php', 'pdfmy/lib/Listener/LoadScripts.php', 'pdfmy/js/pdfmy-main.js', 'pdfmy/img/app.svg']) assert.ok(nc.files.has(f), 'Nextcloud: ' + f);
+  for (const f of ['pdfmy/LICENSE', 'pdfmy/CHANGELOG.md']) assert.ok(nc.files.has(f), 'Nextcloud: ' + f);
+  // App-Store (15.11.2026): AGPL-3.0-or-later, .tar.gz mit genau einem Ordner pdfmy/, CHANGELOG nennt die Version
+  const ncInfo = await nc.text('pdfmy/appinfo/info.xml'), ncVer = ncInfo.match(/<version>([^<]+)<\/version>/)[1];
+  assert.match(ncInfo, /<licence>AGPL-3\.0-or-later<\/licence>/); assert.ok((await nc.text('pdfmy/CHANGELOG.md')).includes('## ' + ncVer));
+  const tar = require('node:zlib').gunzipSync(fs.readFileSync(path.join(OUT, 'download', A.ncTar))), names = [];
+  for (let o = 0; o + 512 <= tar.length; ) {
+    const h = tar.subarray(o, o + 512); if (!h[0]) break;
+    const name = h.toString('utf8', 0, 100).replace(/\0.*$/s, ''), size = parseInt(h.toString('utf8', 124, 136).replace(/\0.*$/s, '').trim(), 8);
+    let sum = 0; for (let i = 0; i < 512; i++) sum += i >= 148 && i < 156 ? 32 : h[i];
+    assert.equal(parseInt(h.toString('utf8', 148, 156), 8), sum, 'tar-Prüfsumme ' + name);
+    names.push(name); o += 512 + Math.ceil(size / 512) * 512;
+  }
+  assert.ok(names.every(n => n.startsWith('pdfmy/')) && names.includes('pdfmy/appinfo/info.xml') && names.includes('pdfmy/CHANGELOG.md'), 'tar: ein Ordner pdfmy/');
   const ncjs = await nc.text('pdfmy/js/pdfmy-main.js');
   assert.ok(!ncjs.includes('__LABELS__')); assert.match(ncjs, /"fr":"[^"]+"/);
   assert.match(ncjs, /const PDFMY = 'https:\/\/pdfmy\.de'/);

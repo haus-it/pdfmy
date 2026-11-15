@@ -1,6 +1,6 @@
 <?php
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// SPDX-License-Identifier: AGPL-3.0-or-later
 declare(strict_types=1);
 
 namespace OCA\Pdfmy\AppInfo;

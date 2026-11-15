@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Mentor GmbH, Paderborn (https://mentor-group.de) – PDFMy, https://pdfmy.de
-// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /* PDFMy für Nextcloud (app-v256): Dateiaktion „In PDFMy öffnen“ in der App „Dateien“.
    Ablauf: PDFMy-Tab öffnen (https://pdfmy.de/?quelle=nextcloud) → Datei per WebDAV im Browser lesen → per postMessage an PDFMy
    (Protokoll „host-pdfmy“ Version 1, Gegenstück in js/pro.js). „In Nextcloud speichern“ in PDFMy schickt das PDF zurück:

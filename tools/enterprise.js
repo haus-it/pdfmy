@@ -105,7 +105,7 @@ ${POLICIES.map(p => `      <string id="${p.id}">${xmlEsc(p[L][0])}</string>
 `;
 }
 
-function sbom({ webVersion, scanVersion, domain, company }) {
+function sbom({ webVersion, scanVersion, domain, company, extra = [] }) {
   const comps = COMPONENTS.map(c => ({
     type: c.font ? 'file' : 'library', 'bom-ref': c.purl || `font:${c.name.split(' (')[0].replace(/\s+/g, '-').toLowerCase()}`,
     ...(c.group ? { group: c.group } : {}), name: c.name, ...(c.version ? { version: c.version } : {}),
@@ -122,7 +122,7 @@ function sbom({ webVersion, scanVersion, domain, company }) {
       component: { ...own('web'), name: 'PDFMy (Web-App)', version: webVersion, externalReferences: [{ type: 'website', url: `https://${domain}/` }, { type: 'vcs', url: 'https://github.com/haus-it/pdfmy' }] },
       supplier: { name: company, url: [`https://${domain}`] },
     },
-    components: [...comps, { ...own('scan'), name: 'pdfmy Scan (Windows)', version: scanVersion, description: 'Lokaler Helfer (127.0.0.1) für Scanner, Drucker „PDFMy“ und Dateiübergabe; nur .NET Framework 4.8, keine Fremdbibliotheken' }],
+    components: [...comps, ...extra.map(e => ({ ...own(e.ref), name: e.name, version: e.version, description: e.description, ...(e.license ? { licenses: [{ license: { id: e.license } }] } : {}) })), { ...own('scan'), name: 'pdfmy Scan (Windows)', version: scanVersion, description: 'Lokaler Helfer (127.0.0.1) für Scanner, Drucker „PDFMy“ und Dateiübergabe; nur .NET Framework 4.8, keine Fremdbibliotheken' }],
     dependencies: [{ ref: 'pdfmy:web', dependsOn: comps.map(c => c['bom-ref']) }],
   };
   // gleiche Inhalte → gleiche Seriennummer (reproduzierbarer Build)
@@ -143,9 +143,9 @@ function securityTxt({ domain, email, now = new Date() }) {
   ].join('\n');
 }
 
-module.exports = ({ write, zip, domain, company, email, webVersion, scanVersion }) => {
+module.exports = ({ write, zip, domain, company, email, webVersion, scanVersion, extra = [] }) => {
   write('.well-known/security.txt', securityTxt({ domain, email }));
-  write('download/pdfmy-sbom.cdx.json', JSON.stringify(sbom({ webVersion, scanVersion, domain, company }), null, 2) + '\n');
+  write('download/pdfmy-sbom.cdx.json', JSON.stringify(sbom({ webVersion, scanVersion, domain, company, extra }), null, 2) + '\n');
   const te = new TextEncoder(), rev = '1.0';
   write('download/pdfmy-richtlinien-admx.zip', Buffer.from(zip([
     { name: 'PolicyDefinitions/PDFMy.admx', data: te.encode(admx(rev)) },

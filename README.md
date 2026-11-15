@@ -61,6 +61,7 @@ Zusätzliche Bedingungen (Details in [NOTICE](NOTICE)):
 - Wer den Quellcode ganz oder teilweise nutzt, weist in Oberfläche und Dokumentation sichtbar auf das Original hin: **„Basiert auf PDFMy – [www.pdfmy.de](https://www.pdfmy.de)“**.
 - Der Banner unten auf der Startseite (Haus iT / Mentor GmbH) und der Hinweis „powered by Mentor Group“ bleiben sichtbar und unverändert.
 - Der Name „PDFMy“ und das Logo sind nicht Teil der Lizenz.
+- **Ausnahme:** Die Nextcloud-App in `tools/pdfmy-nextcloud/` steht unter der **AGPL-3.0-or-later** (eigene Datei `LICENSE` dort; Voraussetzung für den Nextcloud-App-Store, Entscheidung der Geschäftsführung vom 15.11.2026).
 
 Die Nutzung von [www.pdfmy.de](https://www.pdfmy.de) selbst bleibt für alle kostenlos – auch für Unternehmen.
 
