@@ -113,6 +113,14 @@ test('LibreOffice, Nextcloud, ONLYOFFICE: Pakete vollständig und in allen Sprac
   assert.ok(langs.length >= 39); for (const l of langs) assert.ok(oo.files.has(`translations/${l}.json`));
   assert.match(await oo.text('index.html'), /src="\.\.\/v1\/plugins\.js"/);
   assert.ok(!/https?:\/\/(?!pdfmy\.de|mentor-group\.de)/.test((await oo.text('pdfmy.js')).replace(/^\s*\/\/.*$/gm, '')), 'Plugin spricht nur mit pdfmy.de');
+  // Marktplatz (15.11.2026): alle in config.json genannten Bilder im Paket, Symbole hell/dunkel in 5 Stufen, Karten-Symbole, README/CHANGELOG, Englisch als Grundsprache
+  const v = cfg.variations[0], pngs = [...v.icons, ...v.icons2.flatMap(s => Object.values(s).filter(x => x.normal).map(x => x.normal)), ...v.store.screenshots,
+    ...['', '@1.25x', '@1.5x', '@1.75x', '@2x'].map(s => `${v.store.icons.light}/icon${s}.png`)];
+  for (const f of pngs) assert.ok(oo.files.has(f), 'ONLYOFFICE: ' + f);
+  assert.deepEqual(v.icons2.map(s => s.style), ['light', 'dark']);
+  for (const f of ['README.md', 'CHANGELOG.md']) assert.ok(oo.files.has(f), 'ONLYOFFICE: ' + f);
+  assert.match(v.description, /^Open /); assert.match(v.descriptionLocale.de, /^Das offene Dokument/);
+  assert.ok((await oo.text('CHANGELOG.md')).includes('## ' + cfg.version), 'CHANGELOG nennt die aktuelle Version');
 });
 
 test('Gastgeber Nextcloud/ONLYOFFICE: Seite kommt vom Server, damit das öffnende Fenster verbunden bleibt (app-v256)', () => {

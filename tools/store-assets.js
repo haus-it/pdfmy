@@ -106,6 +106,26 @@ span{display:block;margin-top:${Math.round(h * .05)}px;font-size:${Math.round(h 
   const pkgs = { chrome: [pick(/^pdfmy-erweiterung-[\d.]+\.zip$/)], edge: [pick(/^pdfmy-erweiterung-[\d.]+\.zip$/)], firefox: [pick(/^pdfmy-firefox-[\d.]+\.xpi$/)], thunderbird: [pick(/^pdfmy-thunderbird-[\d.]+\.xpi$/)],
     'microsoft-appsource': ['pdfmy-outlook.xml', 'pdfmy-office.xml'], 'microsoft-teams': ['pdfmy-teams.zip'], nextcloud: [pick(/^pdfmy-nextcloud-[\d.]+\.zip$/)], onlyoffice: [pick(/^pdfmy-onlyoffice-[\d.]+\.plugin$/)] };
   for (const [st, files] of Object.entries(pkgs)) for (const f of files) { const d = path.join(OUT, st, 'paket', f); fs.mkdirSync(path.dirname(d), { recursive: true }); fs.copyFileSync(path.join(dl, f), d); made.push(`${st}/paket/${f}`); }
+  // 6) ONLYOFFICE-Marktplatz: Ordner wie im GitHub-Projekt ONLYOFFICE/onlyoffice.github.io (sdkjs-plugins/content/pdfmy mit deploy/pdfmy.plugin)
+  //    plus Eintrag für store/config.json und Text für den Pull Request – Anleitung docs/Store-Einreichung.md
+  {
+    const oo = pkgs.onlyoffice[0], mk = path.join(OUT, 'onlyoffice', 'marktplatz'), dir = path.join(mk, 'sdkjs-plugins', 'content', 'pdfmy');
+    fs.rmSync(mk, { recursive: true, force: true }); fs.mkdirSync(path.join(dir, 'deploy'), { recursive: true });
+    const tar = process.platform === 'win32' ? path.join(process.env.SystemRoot || 'C:\Windows', 'System32', 'tar.exe') : 'tar';   // Windows-tar (bsdtar) entpackt ZIP
+    require('node:child_process').execFileSync(tar, ['-xf', path.join(dl, oo), '-C', dir]);
+    fs.copyFileSync(path.join(dl, oo), path.join(dir, 'deploy', 'pdfmy.plugin'));
+    const ver = JSON.parse(fs.readFileSync(path.join(dir, 'config.json'), 'utf8')).version, NL = String.fromCharCode(10);
+    fs.writeFileSync(path.join(mk, 'store-config-eintrag.txt'), `In store/config.json am Ende der Liste ergänzen (Komma beim vorigen Eintrag nicht vergessen):${NL}${NL}\t{ "name": "pdfmy", "discussion": "" }${NL}`);
+    fs.writeFileSync(path.join(mk, 'pull-request.md'), [`Title: Add PDFMy plugin (${ver})`, '',
+      'Adds the **PDFMy** plugin (`sdkjs-plugins/content/pdfmy`) and its entry in `store/config.json`.', '',
+      '- Opens the current document as a PDF in PDFMy (https://pdfmy.de), a free browser-based PDF editor (edit, sign, redact, PDF/A, e-invoice).',
+      '- Uses `GetFileToDownload` to let the ONLYOFFICE server create the PDF and hands it to PDFMy in the browser via `postMessage`; no third-party upload, no API key.',
+      '- Editors: word, cell, slide, pdf. Interface in 40 languages. Light/dark icons, store icons and screenshot included.',
+      '- Desktop editors: plugins cannot obtain a PDF there, so the plugin shows a hint to print to the “PDFMy” printer instead.',
+      '- Offered by Mentor GmbH, Paderborn, Germany. License: PolyForm Noncommercial 1.0.0 (free use of plugin and service).', '',
+      'Contact: support@haus-it.de', ''].join(NL));
+    made.push('onlyoffice/marktplatz/');
+  }
   fs.writeFileSync(path.join(OUT, 'LIESMICH.txt'), ['Store-Mappe von PDFMy – Anleitung und Texte zum Kopieren: docs/Store-Einreichung.md', 'Entscheidungen: docs/Entscheidungen-Stores.md', 'Je Store: Ordner paket (hochladen) und bilder (hochladen).', ''].join(String.fromCharCode(13, 10)));
   srv.close();
   console.log(`${made.length} Bilder in store/:`); for (const m of made) console.log('  ' + m);

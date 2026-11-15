@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-15
 
+### ONLYOFFICE-Plugin 1.0.1 für den Marktplatz vorbereitet (app-v262)
+- Symbole für helles und dunkles Design in allen fünf Größenstufen, Karten-Symbole 120×60 für den Plugin-Manager, Bildschirmfoto, README und CHANGELOG im Plugin (Vorgaben des Projekts ONLYOFFICE/onlyoffice.github.io); Beschreibung mit Englisch als Grundsprache, Deutsch und weitere Sprachen als Übersetzung. Symbole erzeugt tools/oo-icons.js.
+- tools/store-assets.js legt den fertigen Beitrag in store/onlyoffice/marktplatz/ ab (Ordner sdkjs-plugins/content/pdfmy mit deploy/pdfmy.plugin, Eintrag für store/config.json, Text für den Pull Request). Eingereicht wird nach Entscheidung Nr. 6 (docs/Entscheidungen-Stores.md).
+- Test: alle in config.json genannten Bilder im Paket, hell/dunkel, README/CHANGELOG mit aktueller Version. **Nicht geprüft:** Darstellung in einem echten ONLYOFFICE (keins auf diesem Server).
+
 ### Nutzungsbedingungen veröffentlicht (app-v261)
 - **pdfmy.de/nutzungsbedingungen.html** (Stand 15.11.2026, nur deutsch): Leistungen, zulässige und verbotene Nutzung (Fälschung, Täuschung), Schutz vor Fälschung, Datensicherung, Haftung, Rechte und Open-Source-Lizenzen, Kontakt. Grundlage ist der Entwurf vom 17.10.2026; die offenen Punkte sind entschieden (docs/Nutzungsbedingungen.md). **Anwaltliche Prüfung nicht erfolgt**, Entscheidung GF.
 - Link in der Fußzeile der App und in der Hilfe (Datenschutz und Sicherheit), in 40 Sprachen übersetzt; offline verfügbar (Service Worker). Teams-Manifest verweist jetzt auf die Nutzungsbedingungen statt aufs Impressum – Voraussetzung für Microsoft AppSource und Teams.

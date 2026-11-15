@@ -43,7 +43,7 @@ const TEXTE = {
   ncSummary: 'PDFs in PDFMy öffnen, bearbeiten, unterschreiben – und zurück in Nextcloud speichern',
 };
 const OFFICE_ID = '26905598-3380-42e3-bfff-a6ec17b49991', OUTLOOK_ID = 'b56e6053-19f9-4750-9fa4-189192b5f2ff', TEAMS_ID = '5dd50a72-def9-47fc-97c4-b8dbe10b1616';
-const ADDIN_VERSION = '1.0.0', LO_VERSION = '1.0.0', NC_VERSION = '1.0.0', OO_VERSION = '1.0.0';
+const ADDIN_VERSION = '1.0.0', LO_VERSION = '1.0.0', NC_VERSION = '1.0.0', OO_VERSION = '1.0.1';
 
 module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
   const { LANGS } = require(path.join(ROOT, 'js', 'i18n.js'));
@@ -259,23 +259,32 @@ module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
 
   // ---------- ONLYOFFICE Docs: Plugin „PDFMy“ (app-v256) – tools/pdfmy-onlyoffice, .plugin für den Plugin-Manager ----------
   const OO = path.join(ROOT, 'tools', 'pdfmy-onlyoffice'), ooVer = OO_VERSION, ooPlugin = `pdfmy-onlyoffice-${ooVer}.plugin`;
+  const OO_SCALES = [['', '100%'], ['@1.25x', '125%'], ['@1.5x', '150%'], ['@1.75x', '175%'], ['@2x', '200%']];
+  // alle Dateien unter resources/ (Symbole, Karten-Symbole, Bildschirmfoto), Pfade mit „/“
+  const ooResources = (dir = '') => fs.readdirSync(path.join(OO, 'resources', dir), { withFileTypes: true })
+    .flatMap(e => e.isDirectory() ? ooResources(dir + e.name + '/') : [dir + e.name]).sort();
   const ooKeys = ['open', 'ooNote', 'ooBlocked', 'ooCreating', 'ooDesktop', 'ooFailed', 'ooOpened'];
   const ooTrans = dicts.filter(l => tr(l, 'open')).map(l => ({ file: `${l.bcp}.json`, data: Object.fromEntries(ooKeys.map(k => [TEXTE[k], tr(l, k) || TEXTE[k]])) }));
   const ooConfig = {
     name: 'PDFMy', nameLocale: Object.fromEntries(dicts.map(l => [l.bcp.split('-')[0], 'PDFMy'])),
     guid: 'asc.{CE4224C6-2955-4D9F-9AB3-384A3EBED0B7}', version: ooVer, minVersion: '7.4.0', offered: 'Mentor GmbH',
     variations: [{
-      description: TEXTE.ooDesc, descriptionLocale: Object.fromEntries(dicts.filter(l => tr(l, 'ooDesc')).map(l => [l.bcp.split('-')[0], tr(l, 'ooDesc')])),
-      url: 'index.html', icons: ['resources/icon.png', 'resources/icon@2x.png'],
+      // Grundsprache des ONLYOFFICE-Marktplatzes ist Englisch; Deutsch und die übrigen Sprachen als Übersetzung
+      description: (en => en && tr(en, 'ooDesc'))(dicts.find(l => l.bcp === 'en-US')) || TEXTE.ooDesc,
+      descriptionLocale: { de: TEXTE.ooDesc, ...Object.fromEntries(dicts.filter(l => tr(l, 'ooDesc') && !l.bcp.startsWith('en')).map(l => [l.bcp.split('-')[0], tr(l, 'ooDesc')])) },
+      url: 'index.html', icons: ['resources/light/icon.png', 'resources/light/icon@2x.png'],
+      // Symbole hell/dunkel in fünf Stufen und Karten-Symbole 120×60 nach Vorgabe des ONLYOFFICE-Marktplatzes (tools/oo-icons.js)
+      icons2: ['light', 'dark'].map(style => ({ style, ...Object.fromEntries(OO_SCALES.map(([suf, pct]) => [pct, { normal: `resources/${style}/icon${suf}.png` }])) })),
       isViewer: true, EditorsSupport: ['word', 'cell', 'slide', 'pdf'],
       isVisual: true, isModal: false, isInsideMode: true, initDataType: 'none', initData: '', buttons: [], size: [300, 200],
-      store: { background: { light: '#4A5280', dark: '#4A5280' }, screenshots: [], icons: { light: 'resources', dark: 'resources' }, categories: ['work'] },
+      store: { background: { light: '#4A5280', dark: '#4A5280' }, screenshots: ['resources/store/screenshots/screen_1.png'], icons: { light: 'resources/store/icons', dark: 'resources/store/icons' }, categories: ['work'] },
     }],
   };
   const ooFiles = [
     { name: 'config.json', data: JSON.stringify(ooConfig, null, 2) },
     ...['index.html', 'pdfmy.js'].map(f => ({ name: f, data: fs.readFileSync(path.join(OO, f)) })),
-    ...['icon.png', 'icon@2x.png', 'logo.png'].map(f => ({ name: 'resources/' + f, data: fs.readFileSync(path.join(OO, 'resources', f)) })),
+    ...ooResources().map(f => ({ name: 'resources/' + f, data: fs.readFileSync(path.join(OO, 'resources', f)) })),
+    ...['README.md', 'CHANGELOG.md'].map(f => ({ name: f, data: fs.readFileSync(path.join(OO, f)) })),
     { name: 'translations/langs.json', data: JSON.stringify(ooTrans.map(t => t.file.replace(/\.json$/, ''))) },
     ...ooTrans.map(t => ({ name: 'translations/' + t.file, data: JSON.stringify(t.data, null, 1) })),
   ];

@@ -12,7 +12,7 @@ Stand 15.11.2026. **Was Sie tun müssen, ist nur noch: Konto anlegen, Dateien ho
 | **Thunderbird-Add-ons** (addons.thunderbird.net) | kostenlos | Anmeldung mit dem Firefox-Konto, hochladen, ca. 10 Min. | einige Tage | `store/thunderbird` |
 | **Microsoft AppSource** (Outlook, Word, Excel, PowerPoint) | kostenlos | Partner-Center-Konto der Firma (Firmenprüfung durch Microsoft), ca. 30 Min. + Wartezeit | 1–3 Wochen | `store/microsoft-appsource` |
 | **Microsoft Teams Store** | kostenlos | im selben Partner Center, ca. 15 Min. | 1–3 Wochen | `store/microsoft-teams` |
-| Nextcloud-App-Store, ONLYOFFICE-Marktplatz | kostenlos | erst nach Entscheidung (siehe `docs/Entscheidungen-Stores.md`) | – | `store/nextcloud`, `store/onlyoffice` |
+| Nextcloud-App-Store, ONLYOFFICE-Marktplatz | kostenlos | erst nach Entscheidung (siehe `docs/Entscheidungen-Stores.md`); ONLYOFFICE fertig vorbereitet (Nr. 6) | – | `store/nextcloud`, `store/onlyoffice/marktplatz` |
 
 **Empfohlene Reihenfolge:** Firefox (Konto vorhanden) → Edge → Chrome → Thunderbird → Microsoft AppSource und Teams (dauert am längsten, früh anstoßen).
 
@@ -93,6 +93,19 @@ Stand 15.11.2026. **Was Sie tun müssen, ist nur noch: Konto anlegen, Dateien ho
 **Word, Excel, PowerPoint:** genauso, zweites Angebot mit `pdfmy-office.xml` und „Beschreibung Office“.
 
 **Teams:** Partner Center → Neues Angebot → **Teams-App** → `store/microsoft-teams/paket/pdfmy-teams.zip`, Texte wie Outlook, Bild `bildschirm-1-pdfmy-in-teams-1366x768.png`.
+
+## 6. ONLYOFFICE-Marktplatz (erst nach Entscheidung Nr. 6)
+
+Fertig vorbereitet in `store/onlyoffice/marktplatz/`, nach den Vorgaben des Projekts ONLYOFFICE/onlyoffice.github.io (Stand 15.11.2026): Ordner `sdkjs-plugins/content/pdfmy` mit `config.json`, Symbolen für hell und dunkel in fünf Stufen, Karten-Symbolen, Bildschirmfoto, README, CHANGELOG und `deploy/pdfmy.plugin`.
+
+1. Auf github.com mit dem Konto **haus-it** anmelden → https://github.com/ONLYOFFICE/onlyoffice.github.io → **Fork**.
+2. Im eigenen Fork den Ordner `sdkjs-plugins/content/pdfmy` hochladen: *Add file → Upload files*, den Inhalt von `store/onlyoffice/marktplatz/sdkjs-plugins/content/pdfmy/` hineinziehen; dabei den Pfad `sdkjs-plugins/content/pdfmy/` vor den Dateinamen setzen.
+3. `store/config.json` im Fork bearbeiten (Stift-Symbol) und den Eintrag aus `store-config-eintrag.txt` am Ende der Liste ergänzen.
+4. **Contribute → Open pull request** zu ONLYOFFICE/onlyoffice.github.io (Zweig `master`), Titel und Text aus `pull-request.md`.
+
+ONLYOFFICE prüft das Plugin und nimmt es bei Erfolg in den Plugin-Manager auf. Alternativ erledige ich die Schritte 1–4 über die Kommandozeile, sobald für `gh` ein Zugang (Token) des Kontos haus-it eingerichtet ist.
+
+**Lizenz:** Das Projekt selbst steht unter Apache-2.0; einzelne Plugins tragen eigene Lizenzen. PDFMy bleibt unter PolyForm Noncommercial – ob ONLYOFFICE das annimmt, zeigt die Prüfung.
 
 ---
 
