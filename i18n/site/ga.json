@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Is branda de chuid Konica Minolta é Develop – na nótaí céanna agus do bizhub: is iontaofa “Scan to Folder”.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan de réir Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (gan tiománaí, ó pdfmy Scan 1.7.0 ar Windows freisin)",
  "Ohne PC: Handy, Tablet, Chromebook": "Gan ríomhaire: fón, táibléad, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Gléas líonra le AirPrint-Scan nó Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "oibríonn sé beagnach i gcónaí gan tiománaí. Aire: ní leor “AirPrint” nó “Mopria” don phriontáil amháin – caithfidh an gléas tacú le scanadh. San fhuinneog scanta",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(m.sh. ar Ubuntu, ag brath ar an leagan): oscail an teirminéal (Ctrl+Alt+T), clóscríobh an t-ordú do do chóras agus deimhnigh le do phasfhocal:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Nuashonruithe uathoibríocha a mhúchadh:</b> Suiteálann pdfmy Scan do Windows nuashonruithe slándála leis féin. Mura dteastaíonn sé sin uait: cliceáil ar dheis ar dheilbhín PDFMy ag bun ar dheis an tascbharra agus bain an tic de “Updates automatisch installieren” (nuashonruithe a shuiteáil go huathoibríoch; ó {0}). Fógraítear leaganacha nua i gcónaí agus ní shuiteáiltear iad ach nuair a chliceálann tú.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Gan bheartas, is féidir le gach úsáideoir an tsuiteáil uathoibríoch a mhúchadh i roghchlár pdfmy Scan (“Updates automatisch installieren”, ó {0}); ní fhógraítear ach leaganacha nua ansin."
 }

@@ -746,7 +746,7 @@
  "WorkCentre: WSD": "WorkCentre: WSD",
  "WorkForce / WorkForce Pro": "WorkForce / WorkForce Pro",
  "WSD (je nach Firmware), sonst Scan to Folder": "WSD (bellenime göre), aksi hâlde Scan to Folder",
- "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (sürücüsüz, pdfmy Scan {0} sürümünden itibaren Windows’ta da)",
+ "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (sürücüsüz, pdfmy Scan {0}’dan itibaren Windows’ta da)",
  "WSD (TASKalfa)": "WSD (TASKalfa)",
  "WSD ist ab Werk oft aus (Weboberfläche → Konnektivität → WSD). B205/B215: PDFMy berücksichtigt deren Eigenheiten automatisch.": "WSD fabrika ayarında çoğunlukla kapalıdır (Web arayüzü → Bağlantı → WSD). B205/B215: PDFMy bunların özelliklerini otomatik olarak dikkate alır.",
  "WSD, neuere auch eSCL": "WSD, yenileri eSCL de",
@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Develop, Konica Minolta’nın bir markasıdır – bizhub’daki bilgiler geçerlidir: en güvenilir yöntem “Scan to Folder”.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Pantum’a göre Mopria Scan)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (sürücüsüz, pdfmy Scan 1.7.0’dan itibaren Windows’ta da)",
  "Ohne PC: Handy, Tablet, Chromebook": "PC olmadan: telefon, tablet, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "AirPrint-Scan veya Mopria Scan destekli ağ cihazı:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "neredeyse her zaman sürücüsüz çalışır. Dikkat: Yalnızca yazdırma için “AirPrint” veya “Mopria” yeterli değildir – cihaz taramayı desteklemelidir. Tarama penceresinde",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(ör. Ubuntu’da, sürüme bağlı olarak): terminali açın (Ctrl+Alt+T), sisteminize uygun komutu girin ve parolanızla onaylayın:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Otomatik güncellemeleri kapatma:</b> Windows için pdfmy Scan güvenlik güncellemelerini kendisi yükler. Bunu istemiyorsanız: görev çubuğunun sağ altındaki PDFMy simgesine sağ tıklayın ve “Updates automatisch installieren” (güncellemeleri otomatik yükle; {0} sürümünden itibaren) işaretini kaldırın. Yeni sürümler yine bildirilir ve yalnızca tıklayınca yüklenir.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "İlke olmadan her kullanıcı otomatik yüklemeyi pdfmy Scan menüsünden kapatabilir (“Updates automatisch installieren”, {0} sürümünden itibaren); yeni sürümler o zaman yalnızca bildirilir."
 }

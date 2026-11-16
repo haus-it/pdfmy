@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-16
+
+### pdfmy Scan 1.18.1: automatische Updates abschaltbar (app-v267)
+- CRA Anhang I Teil I Nr. 2 Buchst. c verlangt automatische Sicherheitsupdates als Voreinstellung **mit einfacher Abschaltmöglichkeit** und Benachrichtigung über verfügbare Updates. Bisher konnte nur die IT abschalten (Richtlinie `DisableUpdates`).
+- Neu im Menü von pdfmy Scan: **„Updates automatisch installieren“** (an als Voreinstellung). Aus: nichts installiert sich selbst, neue Versionen werden weiter gemeldet und per Klick installiert (Aufschieben = Meldung nicht anklicken). Gespeichert als `%AppData%\pdfmy Scan\updates-automatisch-aus.txt`. Bei Verteilung durch die IT ist der Eintrag ausgeblendet.
+- Hilfe (Sichere Updates) und Firmenseite (Richtlinien) in allen 39 Sprachen ergänzt.
+
 ## 2026-11-15
 
 ### Nextcloud-App 1.0.1 für den App-Store (AGPL-3.0-or-later), SBOM ergänzt (app-v266)

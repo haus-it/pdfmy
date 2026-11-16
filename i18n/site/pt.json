@@ -746,7 +746,7 @@
  "WorkCentre: WSD": "WorkCentre: WSD",
  "WorkForce / WorkForce Pro": "WorkForce / WorkForce Pro",
  "WSD (je nach Firmware), sonst Scan to Folder": "WSD (consoante o firmware), caso contrário Scan to Folder",
- "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (sem controlador, a partir do pdfmy Scan {0} também no Windows)",
+ "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (sem controlador; a partir do pdfmy Scan {0} também no Windows)",
  "WSD (TASKalfa)": "WSD (TASKalfa)",
  "WSD ist ab Werk oft aus (Weboberfläche → Konnektivität → WSD). B205/B215: PDFMy berücksichtigt deren Eigenheiten automatisch.": "O WSD vem muitas vezes desativado de fábrica (interface web → Conectividade → WSD). B205/B215: o PDFMy tem em conta automaticamente as suas particularidades.",
  "WSD, neuere auch eSCL": "WSD, os mais recentes também eSCL",
@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "A Develop é uma marca da Konica Minolta – indicações iguais às da bizhub: o mais fiável é «Scan to Folder».",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan segundo a Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (sem controlador; a partir do pdfmy Scan 1.7.0 também no Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Sem PC: telemóvel, tablet, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Dispositivo de rede com AirPrint Scan ou Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "funciona quase sempre sem controlador. Atenção: «AirPrint» ou «Mopria» só para imprimir não basta – o dispositivo tem de suportar a digitalização. Na janela de digitalização",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(p. ex. no Ubuntu, consoante a versão): abra o terminal (Ctrl+Alt+T), escreva o comando para o seu sistema e confirme com a sua palavra-passe:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Desativar as atualizações automáticas:</b> o pdfmy Scan para Windows instala sozinho as atualizações de segurança. Se não quiser: clique com o botão direito no ícone do PDFMy no canto inferior direito da barra de tarefas e desmarque «Updates automatisch installieren» (instalar atualizações automaticamente; a partir de {0}). As novas versões continuam a ser anunciadas e só são instaladas com um clique.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Sem política, cada utilizador pode desativar a instalação automática no menu do pdfmy Scan («Updates automatisch installieren», a partir de {0}); as novas versões passam a ser apenas anunciadas."
 }

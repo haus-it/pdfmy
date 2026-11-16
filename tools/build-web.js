@@ -529,6 +529,7 @@ write('firmen.html', page('PDFMy in Firmen verteilen', `
 <p>Unter <code>HKLM\\SOFTWARE\\Policies\\Mentor GmbH\\PDFMy</code> (oder für einzelne Benutzer unter HKCU), Typ DWORD, 1 = ein:</p>
 <ul>
 <li><code>DisableUpdates</code> – pdfmy Scan aktualisiert sich nicht selbst und bietet keine Updates an (auch bei Installationen einzelner Benutzer).</li>
+<li>Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab 1.18.1); neue Versionen werden dann nur noch gemeldet.</li>
 <li><code>DisablePrinter</code> – den Drucker „PDFMy“ nicht anbieten.</li>
 </ul>
 <pre style="overflow-x:auto;background:var(--bg);padding:10px">Windows Registry Editor Version 5.00

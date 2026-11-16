@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Develop hija marka ta’ Konica Minolta – l-istess noti bħal għal bizhub: l-aktar affidabbli huwa “Scan to Folder”.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan skont Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (mingħajr driver, minn pdfmy Scan 1.7.0 anki fuq Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Mingħajr PC: mowbajl, tablet, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Apparat tan-netwerk b’AirPrint-Scan jew Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "jaħdem kważi dejjem mingħajr driver. Attenzjoni: “AirPrint” jew “Mopria” għall-ipprintjar biss mhux biżżejjed – l-apparat irid jappoġġja l-iskennjar. Fit-tieqa tal-iskennjar",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(eż. fuq Ubuntu, skont il-verżjoni): iftħu t-terminal (Ctrl+Alt+T), ittajpjaw il-kmand għas-sistema tagħkom u kkonfermaw bil-password tagħkom:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Itfi l-aġġornamenti awtomatiċi:</b> pdfmy Scan għal Windows jinstalla l-aġġornamenti tas-sigurtà waħdu. Jekk ma tridx dan: ikklikkja bil-lemin fuq l-ikona ta’ PDFMy isfel fuq il-lemin tat-taskbar u neħħi l-marka minn “Updates automatisch installieren” (installa l-aġġornamenti awtomatikament; minn {0}). Il-verżjonijiet ġodda jibqgħu jitħabbru u jiġu installati biss meta tikklikkja.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Mingħajr politika, kull utent jista’ jitfi l-installazzjoni awtomatika fil-menu ta’ pdfmy Scan (“Updates automatisch installieren”, minn {0}); il-verżjonijiet ġodda mbagħad jitħabbru biss."
 }

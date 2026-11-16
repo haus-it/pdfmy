@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.18.0";
+        public const string Version = "1.18.1";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -309,6 +309,16 @@ namespace PdfmyScan
             updateItem.Click += (s, e) => _ = Updater.InstallAsync((string)updateItem.Tag, msg => icon.ShowBalloonTip(6000, "pdfmy Scan", msg, ToolTipIcon.Warning));
             menu.Items.Add(updateItem);
             menu.Items.Add("Nach Updates suchen", null, async (s, e) => await CheckUpdate(true));
+            // CRA Anhang I Teil I Nr. 2 Buchst. c: automatische Sicherheitsupdates als Voreinstellung mit einfacher Abschaltmöglichkeit.
+            // Aus = nichts installiert sich selbst; verfügbare Updates werden weiter gemeldet und per Klick installiert (seit 1.18.1).
+            var autoItem = new ToolStripMenuItem("Updates automatisch installieren") { Checked = !Updater.AutoOff, CheckOnClick = true };
+            autoItem.CheckedChanged += (s, e) =>
+            {
+                Updater.AutoOff = !autoItem.Checked;
+                icon.ShowBalloonTip(6000, "pdfmy Scan", autoItem.Checked ? "Updates werden wieder automatisch installiert." : "Updates werden nicht mehr automatisch installiert. Neue Versionen werden gemeldet und per Klick installiert.", ToolTipIcon.Info);
+            };
+            menu.Items.Add(autoItem);
+            menu.Opening += (s, e) => autoItem.Visible = !Machine.UpdatesManaged;
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("PDFMy öffnen", null, (s, e) => Program.OpenPdfmy());
             menu.Items.Add("PDFMy als Standard für PDFs festlegen …", null, (s, e) =>
@@ -411,7 +421,7 @@ namespace PdfmyScan
             { Program.Log($"Update {latest} noch nicht für diese Installation freigegeben ({Updater.Rollout} % – hier {Updater.Bucket})"); return; }
             // Ohne Klick (seit 1.16.0): Ist gerade nichts in Arbeit (kein Scan, kein ankommender Druck), installiert sich das geprüfte
             // Update selbst (SHA-256 und Signatur „Mentor GmbH“ wie beim Klick). Klappt das nicht, wird es wie bisher angeboten.
-            if (!manual && new System.Version(latest) > new System.Version(Program.Version) && LocalServer.Idle && !PdfPrinter.Pending)
+            if (!manual && !Updater.AutoOff && new System.Version(latest) > new System.Version(Program.Version) && LocalServer.Idle && !PdfPrinter.Pending)
             {
                 Program.Log($"Update {latest} wird automatisch installiert");
                 if (await Updater.InstallAsync(latest, msg => Program.Log("Automatisches Update: " + msg), silent: true)) return;
@@ -442,7 +452,14 @@ namespace PdfmyScan
     {
         const string Base = "https://pdfmy.de/download/";
         static string ExpectedSha = "";
-        public static int Rollout = 100;   // Anteil der Installationen in %, die das Update automatisch angeboten bekommen (version.json „rollout“)
+        public static int Rollout = 100;
+        // Vom Benutzer abgeschaltet: Datei %AppData%\pdfmy Scan\updates-automatisch-aus.txt (Menü „Updates automatisch installieren“)
+        static string AutoOffFile => Path.Combine(Program.DataDir, "updates-automatisch-aus.txt");
+        public static bool AutoOff
+        {
+            get { try { return File.Exists(AutoOffFile); } catch { return false; } }
+            set { try { if (value) File.WriteAllText(AutoOffFile, DateTime.Now.ToString("yyyy-MM-dd HH:mm")); else File.Delete(AutoOffFile); Program.Log("Automatische Updates " + (value ? "aus" : "an")); } catch { } }
+        }   // Anteil der Installationen in %, die das Update automatisch angeboten bekommen (version.json „rollout“)
         // Stabile Zufallszahl 0–99 je Installation (einmal erzeugt, in %AppData%\pdfmy Scan\update-bucket.txt) – entscheidet über die Freigabestufe
         public static int Bucket
         {

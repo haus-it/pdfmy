@@ -746,7 +746,7 @@
  "WorkCentre: WSD": "WorkCentre: WSD",
  "WorkForce / WorkForce Pro": "WorkForce / WorkForce Pro",
  "WSD (je nach Firmware), sonst Scan to Folder": "WSD (priklausomai nuo programinės įrangos), kitaip Scan to Folder",
- "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (be tvarkyklių, nuo pdfmy Scan {0} ir Windows sistemoje)",
+ "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (be tvarkyklių, nuo pdfmy Scan {0} ir Windows)",
  "WSD (TASKalfa)": "WSD (TASKalfa)",
  "WSD ist ab Werk oft aus (Weboberfläche → Konnektivität → WSD). B205/B215: PDFMy berücksichtigt deren Eigenheiten automatisch.": "WSD gamykliškai dažnai išjungtas (žiniatinklio sąsaja → Ryšys → WSD). B205/B215: PDFMy automatiškai atsižvelgia į jų ypatybes.",
  "WSD, neuere auch eSCL": "WSD, naujesni ir eSCL",
@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Develop yra Konica Minolta prekės ženklas – patarimai kaip bizhub: patikimiausia „Scan to Folder“.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan, pasak Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (be tvarkyklių, nuo pdfmy Scan 1.7.0 ir Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Be kompiuterio: telefonas, planšetė, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Tinklo įrenginys su AirPrint-Scan arba Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "beveik visada veikia be tvarkyklių. Dėmesio: „AirPrint“ ar „Mopria“ tik spausdinimui nepakanka – įrenginys turi palaikyti skenavimą. Skenavimo lange",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(pvz., Ubuntu, priklausomai nuo versijos): atidarykite terminalą (Ctrl+Alt+T), įveskite savo sistemai skirtą komandą ir patvirtinkite savo slaptažodžiu:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Automatinių naujinimų išjungimas:</b> pdfmy Scan, skirta Windows, pati įdiegia saugos naujinimus. Jei to nenorite: dešiniuoju pelės mygtuku spustelėkite PDFMy piktogramą užduočių juostos apačioje dešinėje ir nuimkite žymę ties „Updates automatisch installieren“ (diegti naujinimus automatiškai; nuo {0}). Apie naujas versijas ir toliau pranešama, o įdiegiamos jos tik spustelėjus.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Be strategijos kiekvienas naudotojas gali išjungti automatinį diegimą pdfmy Scan meniu („Updates automatisch installieren“, nuo {0}); apie naujas versijas tada tik pranešama."
 }

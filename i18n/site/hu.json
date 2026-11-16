@@ -746,7 +746,7 @@
  "WorkCentre: WSD": "WorkCentre: WSD",
  "WorkForce / WorkForce Pro": "WorkForce / WorkForce Pro",
  "WSD (je nach Firmware), sonst Scan to Folder": "WSD (firmware-től függően), egyébként Scan to Folder",
- "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (illesztőprogram nélkül, a pdfmy Scan {0} verziótól Windows alatt is)",
+ "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (illesztőprogram nélkül, a pdfmy Scan {0}-tól Windows alatt is)",
  "WSD (TASKalfa)": "WSD (TASKalfa)",
  "WSD ist ab Werk oft aus (Weboberfläche → Konnektivität → WSD). B205/B215: PDFMy berücksichtigt deren Eigenheiten automatisch.": "A WSD gyárilag gyakran ki van kapcsolva (webes felület → Kapcsolódás → WSD). B205/B215: a PDFMy automatikusan figyelembe veszi ezek sajátosságait.",
  "WSD, neuere auch eSCL": "WSD, az újabbak eSCL-t is",
@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "A Develop a Konica Minolta márkája – a tudnivalók ugyanazok, mint a bizhubnál: a legmegbízhatóbb a „Scan to Folder”.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan a Pantum szerint)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (illesztőprogram nélkül, a pdfmy Scan 1.7.0-tól Windows alatt is)",
  "Ohne PC: Handy, Tablet, Chromebook": "PC nélkül: telefon, táblagép, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Hálózati eszköz AirPrint-Scannel vagy Mopria Scannel:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "szinte mindig működik illesztőprogram nélkül. Figyelem: ha az „AirPrint” vagy a „Mopria” csak a nyomtatásra vonatkozik, az nem elég – a készüléknek a szkennelést kell támogatnia. A szkennelési ablakban",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(pl. Ubuntun, verziótól függően): nyissa meg a terminált (Ctrl+Alt+T), írja be a rendszerének megfelelő parancsot, és erősítse meg jelszavával:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Automatikus frissítések kikapcsolása:</b> a Windowsos pdfmy Scan magától telepíti a biztonsági frissítéseket. Ha ezt nem szeretné: kattintson jobb gombbal a tálca jobb alsó sarkában lévő PDFMy ikonra, és vegye ki a pipát az „Updates automatisch installieren” (frissítések automatikus telepítése; {0} verziótól) elől. Az új verziókat ezután is jelzi, de csak kattintásra telepíti.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Házirend nélkül minden felhasználó kikapcsolhatja az automatikus telepítést a pdfmy Scan menüjében („Updates automatisch installieren”, {0} verziótól); az új verziókat ekkor csak jelzi."
 }

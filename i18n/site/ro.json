@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Develop este o marcă Konica Minolta – indicații ca la bizhub: cel mai fiabil este „Scan to Folder”.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan conform Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (fără driver, de la pdfmy Scan 1.7.0 și pe Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Fără PC: telefon, tabletă, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Dispozitiv de rețea cu AirPrint-Scan sau Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "funcționează aproape întotdeauna fără driver. Atenție: „AirPrint” sau „Mopria” doar la imprimare nu este suficient – dispozitivul trebuie să accepte scanarea. În fereastra de scanare",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(de ex. în Ubuntu, în funcție de versiune): deschideți terminalul (Ctrl+Alt+T), introduceți comanda pentru sistemul dvs. și confirmați cu parola dvs.:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Dezactivarea actualizărilor automate:</b> pdfmy Scan pentru Windows instalează singur actualizările de securitate. Dacă nu doriți acest lucru: clic dreapta pe pictograma PDFMy din dreapta jos a barei de activități și debifați „Updates automatisch installieren” (instalează actualizările automat; de la {0}). Versiunile noi sunt în continuare anunțate și se instalează doar la un clic.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Fără politică, fiecare utilizator poate dezactiva instalarea automată din meniul pdfmy Scan („Updates automatisch installieren”, de la {0}); versiunile noi sunt atunci doar anunțate."
 }

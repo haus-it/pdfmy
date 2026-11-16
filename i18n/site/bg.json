@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Develop е марка на Konica Minolta – указания както при bizhub: най-надеждно е „Scan to Folder“.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan според Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (без драйвер, от pdfmy Scan 1.7.0 и под Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Без компютър: телефон, таблет, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Мрежово устройство с AirPrint-Scan или Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "работи почти винаги без драйвер. Внимание: „AirPrint“ или „Mopria“ само за печат не е достатъчно – устройството трябва да поддържа сканиране. В прозореца за сканиране",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(напр. в Ubuntu, в зависимост от версията): отворете терминала (Ctrl+Alt+T), въведете командата за вашата система и потвърдете с паролата си:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Изключване на автоматичните актуализации:</b> pdfmy Scan за Windows сам инсталира актуализациите за сигурност. Ако не искате това: щракнете с десния бутон върху иконата на PDFMy долу вдясно в лентата на задачите и махнете отметката от „Updates automatisch installieren“ (автоматично инсталиране на актуализации; от {0}). Новите версии продължават да се обявяват и се инсталират само след щракване.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Без правило всеки потребител може да изключи автоматичното инсталиране в менюто на pdfmy Scan („Updates automatisch installieren“, от {0}); тогава новите версии само се обявяват."
 }

@@ -158,6 +158,16 @@ test('Outlook-Manifest: Handy-Knopf beim Lesen, Übersetzungen als bt:Override (
   }
 });
 
+test('pdfmy Scan: automatische Updates vom Benutzer abschaltbar, Meldung bleibt (CRA Anhang I Teil I Nr. 2 c, 1.18.1)', () => {
+  const cs = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Program.cs'), 'utf8');
+  assert.match(cs, /new ToolStripMenuItem\("Updates automatisch installieren"\) \{ Checked = !Updater\.AutoOff, CheckOnClick = true \}/, 'Schalter im Menü, an als Voreinstellung');
+  assert.match(cs, /if \(!manual && !Updater\.AutoOff && new System\.Version\(latest\)/, 'aus → keine Selbstinstallation');
+  assert.match(cs, /updateItem\.Visible = true;/, 'verfügbare Updates werden weiter angeboten');
+  assert.match(cs, /autoItem\.Visible = !Machine\.UpdatesManaged/, 'bei IT-Verteilung ausgeblendet');
+  for (const lang of fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f)))
+    assert.ok(Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', 'site', lang), 'utf8'))).some(k => k.startsWith('<b>Automatische Updates abschalten:</b>')), 'Hilfe übersetzt: ' + lang);
+});
+
 test('pdfmy Scan: Rechtsklick und „Senden an“ für die Formate, die PDFMy öffnet (1.18.0)', () => {
   const cs = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Program.cs'), 'utf8');
   const ext = JSON.parse('[' + cs.match(/static readonly string\[\] MenuExt = \{([^}]+)\}/)[1] + ']');

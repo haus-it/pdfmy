@@ -746,7 +746,7 @@
  "WorkCentre: WSD": "WorkCentre: WSD",
  "WorkForce / WorkForce Pro": "WorkForce / WorkForce Pro",
  "WSD (je nach Firmware), sonst Scan to Folder": "WSD (yn dibynnu ar y cadarnwedd), fel arall Scan to Folder",
- "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (heb yrrwr, o pdfmy Scan {0} ymlaen hefyd ar Windows)",
+ "WSD (ohne Treiber, ab pdfmy Scan {0} auch unter Windows)": "WSD (heb yrrwr, o pdfmy Scan {0} ar Windows hefyd)",
  "WSD (TASKalfa)": "WSD (TASKalfa)",
  "WSD ist ab Werk oft aus (Weboberfläche → Konnektivität → WSD). B205/B215: PDFMy berücksichtigt deren Eigenheiten automatisch.": "Mae WSD yn aml wedi’i ddiffodd o’r ffatri (rhyngwyneb gwe → Cysylltedd → WSD). B205/B215: mae PDFMy yn ystyried eu nodweddion arbennig yn awtomatig.",
  "WSD, neuere auch eSCL": "WSD, rhai mwy newydd hefyd eSCL",
@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Mae Develop yn frand Konica Minolta – yr un nodiadau ag ar gyfer bizhub: y mwyaf dibynadwy yw ‘Scan to Folder’.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan yn ôl Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (heb yrrwr, o pdfmy Scan 1.7.0 ar Windows hefyd)",
  "Ohne PC: Handy, Tablet, Chromebook": "Heb gyfrifiadur: ffôn, llechen, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Dyfais rhwydwaith gydag AirPrint Scan neu Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "yn gweithio bron bob amser heb yrrwr. Sylwch: nid yw ‘AirPrint’ neu ‘Mopria’ ar gyfer argraffu yn unig yn ddigon – rhaid i’r ddyfais gefnogi sganio. Yn y ffenestr sganio",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(e.e. ar Ubuntu, yn dibynnu ar y fersiwn): agorwch y derfynell (Ctrl+Alt+T), teipiwch y gorchymyn ar gyfer eich system a chadarnhewch gyda’ch cyfrinair:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Diffodd diweddariadau awtomatig:</b> Mae pdfmy Scan ar gyfer Windows yn gosod diweddariadau diogelwch ei hun. Os nad ydych eisiau hynny: de-gliciwch eicon PDFMy ar waelod ochr dde’r bar tasgau a dad-dicio “Updates automatisch installieren” (gosod diweddariadau’n awtomatig; o {0}). Bydd fersiynau newydd yn dal i gael eu cyhoeddi a dim ond pan fyddwch yn clicio y cânt eu gosod.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Heb bolisi, gall pob defnyddiwr ddiffodd y gosod awtomatig yn newislen pdfmy Scan (“Updates automatisch installieren”, o {0}); yna dim ond cyhoeddi fersiynau newydd a wneir."
 }

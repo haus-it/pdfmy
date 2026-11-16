@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Develop er et Konica Minolta-mærke – samme råd som for bizhub: mest pålideligt er »Scan to Folder«.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan ifølge Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (uden driver, fra pdfmy Scan 1.7.0 også under Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Uden pc: mobil, tablet, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Netværksenhed med AirPrint-scanning eller Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "fungerer næsten altid uden driver. Bemærk: »AirPrint« eller »Mopria« kun til udskrivning er ikke nok – enheden skal understøtte scanning. I scanvinduet",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(f.eks. i Ubuntu, afhængigt af version): Åbn terminalen (Ctrl+Alt+T), skriv kommandoen til Deres system, og bekræft med Deres adgangskode:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Slå automatiske opdateringer fra:</b> pdfmy Scan til Windows installerer selv sikkerhedsopdateringer. Ønsker du ikke det: Højreklik på PDFMy-ikonet nederst til højre på proceslinjen, og fjern fluebenet ved „Updates automatisch installieren“ (installer opdateringer automatisk; fra {0}). Nye versioner meldes stadig og installeres først, når du klikker.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Uden politik kan hver bruger slå den automatiske installation fra i pdfmy Scans menu („Updates automatisch installieren“, fra {0}); nye versioner meldes så kun."
 }

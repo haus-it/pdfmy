@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Develop ass eng Mark vu Konica Minolta – Hiweiser wéi bei bizhub: am zouverlässegsten „Scan to Folder“.",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan laut Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (ouni Driver, ab pdfmy Scan 1.7.0 och ënner Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Ouni PC: Handy, Tablet, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Netzwierkapparat mat AirPrint-Scan oder Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "fonctionéiert sou gutt wéi ëmmer ouni Driver. Opgepasst: „AirPrint“ oder „Mopria“ nëmme fir ze drécken geet net duer – den Apparat muss d'Scannen ënnerstëtzen. An der Scan-Fënster",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(z. B. ënner Ubuntu, jee no Versioun): Terminal opmaachen (Ctrl+Alt+T), de Befeel fir Äre System aginn a mat Ärem Passwuert bestätegen:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Automatesch Updates ausschalten:</b> pdfmy Scan fir Windows installéiert Sécherheetsupdates vum selwen. Wann Dir dat net wëllt: Rietsklick op d’PDFMy-Symbol ënnen riets an der Taskleescht an den Haken bei „Updates automatisch installieren“ ewechhuelen (ab {0}). Nei Versioune ginn dann weider gemellt an eréischt per Klick installéiert.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Ouni Richtlinn kann all Benotzer déi automatesch Installatioun am Menü vu pdfmy Scan ausschalten („Updates automatisch installieren“, ab {0}); nei Versioune ginn dann nëmme gemellt."
 }

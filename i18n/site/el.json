@@ -1591,7 +1591,6 @@
  "Develop ist eine Marke von Konica Minolta – Hinweise wie bei bizhub: am zuverlässigsten „Scan to Folder“.": "Η Develop είναι μάρκα της Konica Minolta – οδηγίες όπως για τα bizhub: το πιο αξιόπιστο είναι το «Scan to Folder».",
  "Pantum": "Pantum",
  "eSCL (Mopria Scan laut Pantum)": "eSCL (Mopria Scan σύμφωνα με την Pantum)",
- "WSD (ohne Treiber, ab pdfmy Scan 1.7.0 auch unter Windows)": "WSD (χωρίς πρόγραμμα οδήγησης, από το pdfmy Scan 1.7.0 και στα Windows)",
  "Ohne PC: Handy, Tablet, Chromebook": "Χωρίς υπολογιστή: κινητό, tablet, Chromebook",
  "Netzwerkgerät mit AirPrint-Scan oder Mopria Scan:": "Συσκευή δικτύου με Σάρωση AirPrint ή Mopria Scan:",
  "funktioniert so gut wie immer ohne Treiber. Achtung: „AirPrint“ oder „Mopria“ nur beim Drucken reicht nicht – es muss das Scannen unterstützen. Im Scan-Fenster": "λειτουργεί σχεδόν πάντα χωρίς πρόγραμμα οδήγησης. Προσοχή: «AirPrint» ή «Mopria» μόνο για εκτύπωση δεν αρκεί – η συσκευή πρέπει να υποστηρίζει σάρωση. Στο παράθυρο σάρωσης",
@@ -1601,5 +1600,7 @@
  "(z. B. unter Ubuntu, je nach Version): Terminal öffnen (Strg+Alt+T), den Befehl für Ihr System eingeben und mit Ihrem Passwort bestätigen:": "(π.χ. στο Ubuntu, ανάλογα με την έκδοση): ανοίξτε το τερματικό (Ctrl+Alt+T), πληκτρολογήστε την εντολή για το σύστημά σας και επιβεβαιώστε με τον κωδικό πρόσβασής σας:",
  "Mint, Ubuntu, Debian:": "Mint, Ubuntu, Debian:",
  "Fedora, RHEL:": "Fedora, RHEL:",
- "Arch, Manjaro:": "Arch, Manjaro:"
+ "Arch, Manjaro:": "Arch, Manjaro:",
+ "<b>Automatische Updates abschalten:</b> pdfmy Scan für Windows installiert Sicherheitsupdates von selbst. Wer das nicht möchte: Rechtsklick auf das PDFMy-Symbol unten rechts in der Taskleiste und den Haken bei „Updates automatisch installieren“ entfernen (ab {0}). Neue Versionen werden dann weiter gemeldet und erst per Klick installiert.": "<b>Απενεργοποίηση αυτόματων ενημερώσεων:</b> Το pdfmy Scan για Windows εγκαθιστά μόνο του τις ενημερώσεις ασφαλείας. Αν δεν το θέλετε: κάντε δεξί κλικ στο εικονίδιο του PDFMy κάτω δεξιά στη γραμμή εργασιών και καταργήστε την επιλογή «Updates automatisch installieren» (αυτόματη εγκατάσταση ενημερώσεων· από την {0}). Οι νέες εκδόσεις εξακολουθούν να ανακοινώνονται και εγκαθίστανται μόνο με κλικ.",
+ "Ohne Richtlinie kann jeder Benutzer die automatische Installation im Menü von pdfmy Scan abschalten („Updates automatisch installieren“, ab {0}); neue Versionen werden dann nur noch gemeldet.": "Χωρίς πολιτική, κάθε χρήστης μπορεί να απενεργοποιήσει την αυτόματη εγκατάσταση στο μενού του pdfmy Scan («Updates automatisch installieren», από την {0})· οι νέες εκδόσεις τότε μόνο ανακοινώνονται."
 }
