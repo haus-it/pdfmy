@@ -65,3 +65,13 @@ test('Paketskripte: sh-Syntax gültig, keine Windows-Zeilenenden', { skip: !fs.e
     assert.equal(r.status, 0, f + ': ' + r.stderr);
   }
 });
+
+// Ubuntu 24.04 (WSL, 16.11.2026): desktop-file-validate meldete „more than one main category“ → PDFMy erschien evtl. doppelt im Menü
+test('Starter: genau eine Hauptkategorie (Freedesktop-Menüspezifikation)', () => {
+  const MAIN = ['AudioVideo', 'Audio', 'Video', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility'];
+  const src = [fs.readFileSync(path.join(__dirname, '..', 'tools', 'build-web.js'), 'utf8'), fs.readFileSync(path.join(__dirname, '..', 'tools', 'pdfmy-scan-linux', 'install.sh'), 'utf8')];
+  for (const s of src) {
+    const m = s.match(/Categories=([A-Za-z;]+)/); assert.ok(m, 'Categories vorhanden');
+    assert.equal(m[1].split(';').filter(c => MAIN.includes(c)).length, 1, m[1]);
+  }
+});

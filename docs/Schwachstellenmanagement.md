@@ -16,7 +16,7 @@ Stand 15.11.2026. Gilt für die Web-App pdfmy.de, pdfmy Scan (Windows, Mac, Linu
 
 ## 3. Meldung nach Art. 14 CRA (aktiv ausgenutzte Schwachstelle oder schwerer Sicherheitsvorfall)
 
-Gemeldet wird über die zentrale Meldeplattform der ENISA (https://portal.cra-srp.enisa.europa.eu/) an das koordinierende CSIRT in Deutschland und gleichzeitig an die ENISA.
+Gemeldet wird über die zentrale Meldeplattform der ENISA (https://portal.cra-srp.enisa.europa.eu/) an das koordinierende CSIRT in Deutschland – laut ENISA-Liste „CSIRTs designated as coordinators“ (Stand 10.09.2026) **CERT-Bund im BSI** (https://www.bsi.bund.de/CERT-Bund/), geprüft 16.11.2026 – und gleichzeitig an die ENISA.
 
 | Frist ab Kenntnis | Inhalt |
 |---|---|
@@ -26,7 +26,7 @@ Gemeldet wird über die zentrale Meldeplattform der ENISA (https://portal.cra-sr
 
 Außerdem: betroffene Nutzer informieren (Art. 14 Abs. 8), z. B. Hinweis auf pdfmy.de, in pdfmy Scan und im Änderungsprotokoll.
 
-**Voraussetzung (offen):** Konto der Mentor GmbH auf der Meldeplattform (EU Login) – durch die Geschäftsführung anzulegen; koordinierendes CSIRT bestätigen.
+**Voraussetzung (offen):** Konto der Mentor GmbH auf der Meldeplattform (EU Login) – durch die Geschäftsführung anzulegen. (Koordinierendes CSIRT bestätigt: CERT-Bund/BSI.)
 
 ## 4. Behebung und Veröffentlichung
 

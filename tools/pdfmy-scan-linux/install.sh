@@ -159,7 +159,7 @@ Comment=PDFs öffnen, bearbeiten, unterschreiben und scannen – im Browser, ohn
 Exec="$DIR/pdfmy-open" %F
 Icon=$ICON
 MimeType=application/pdf;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.presentationml.presentation;application/vnd.oasis.opendocument.text;application/vnd.oasis.opendocument.spreadsheet;application/vnd.oasis.opendocument.presentation;application/rtf;text/csv;text/markdown;message/rfc822;application/vnd.ms-outlook;application/oxps;application/vnd.ms-xpsdocument;image/png;image/jpeg;image/gif;image/webp;image/bmp;image/tiff;image/heic;
-Categories=Office;Viewer;Graphics;
+Categories=Office;Viewer;
 Terminal=false
 StartupNotify=false
 DESK

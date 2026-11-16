@@ -23,7 +23,7 @@
 
 ## Offene Punkte (anwaltlich bzw. durch die Geschäftsführung zu klären)
 
-1. **CRA:** Konto auf der ENISA-Meldeplattform (https://portal.cra-srp.enisa.europa.eu/, EU Login) anlegen; koordinierendes CSIRT in Deutschland bestätigen (vermutlich BSI – nicht verifiziert).
+1. **CRA:** Konto auf der ENISA-Meldeplattform (https://portal.cra-srp.enisa.europa.eu/, EU Login) anlegen; koordinierendes CSIRT in Deutschland: **CERT-Bund im BSI** laut ENISA-Liste der „CSIRTs designated as coordinators“ (Stand 10.09.2026; geprüft 16.11.2026: enisa.europa.eu → Single Reporting Platform → List of CSIRTs designated as coordinators). Eine ausdrückliche Benennung im deutschen Recht wurde nicht gefunden (§ 40 BSIG betrifft NIS2).
 2. **CRA:** Supportzeitraum festlegen (mindestens 5 Jahre, Enddatum angeben) – bis 11.12.2027 (GF 15.11.2026: später entscheiden).
 3. **CRA:** Gelten Office-, Outlook- und Teams-Add-ins (vom Server geladen) als Produkt?
 4. **NIS2:** Zusammenrechnung mit verbundenen Unternehmen (§ 28 Abs. 4 BSIG); erbringt eine Gesellschaft der Gruppe Managed Services (Anlage 1 Nr. 6.1.10)?

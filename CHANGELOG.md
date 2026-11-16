@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-16
 
+### Linux real auf Ubuntu 24.04 geprüft, pdfmy Scan Mac/Linux 1.8.1 (app-v268)
+- Test in Ubuntu 24.04.5 LTS (WSL, Testbenutzer mit Download-Ordner wie am Desktop): Paket von pdfmy.de geladen und mit dem Befehl von der Website installiert (`sudo apt install "$(xdg-user-dir DOWNLOAD)/pdfmy-scan-linux.deb"`) – erfolgreich, Abhängigkeiten (sane-utils u. a.) automatisch; pdfmy Scan startet und antwortet auf 127.0.0.1 (`/status`, `pkg: deb`). `appstreamcli validate` (App-Center-Beschreibung): gültig.
+- Behoben: `desktop-file-validate` meldete zwei Hauptkategorien (Office und Graphics) – PDFMy konnte im Anwendungsmenü doppelt erscheinen. Jetzt `Office;Viewer;` (deb, rpm, Arch, install.sh); Test prüft genau eine Hauptkategorie.
+- Nicht prüfbar ohne Desktop: Ob der Doppelklick im Ubuntu App Center installiert; dafür bleibt der Befehl als Ausweg.
+- CRA: koordinierendes CSIRT bestätigt – CERT-Bund im BSI (ENISA-Liste, Stand 10.09.2026).
+
 ### pdfmy Scan 1.18.1: automatische Updates abschaltbar (app-v267)
 - CRA Anhang I Teil I Nr. 2 Buchst. c verlangt automatische Sicherheitsupdates als Voreinstellung **mit einfacher Abschaltmöglichkeit** und Benachrichtigung über verfügbare Updates. Bisher konnte nur die IT abschalten (Richtlinie `DisableUpdates`).
 - Neu im Menü von pdfmy Scan: **„Updates automatisch installieren“** (an als Voreinstellung). Aus: nichts installiert sich selbst, neue Versionen werden weiter gemeldet und per Klick installiert (Aufschieben = Meldung nicht anklicken). Gespeichert als `%AppData%\pdfmy Scan\updates-automatisch-aus.txt`. Bei Verteilung durch die IT ist der Eintrag ausgeblendet.
