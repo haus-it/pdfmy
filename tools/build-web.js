@@ -856,10 +856,55 @@ write('presse.html', page('Presse', fs.readFileSync(path.join(ROOT, 'tools', 'si
 fs.cpSync(path.join(ROOT, 'tools', 'site', 'presse'), path.join(OUT, 'presse'), { recursive: true });   // Pressetexte (Word) und Bilder
 write('scanner-geraete.html', page('Welche Scanner funktionieren?', fs.readFileSync(path.join(ROOT, 'tools', 'site', 'geraete.html'), 'utf8')));
 copy('tools/site/geraete.js', 'geraete.js');
+// Suchmaschinen (SEO-Prüfung 17.11.2026): Infoseiten hatten weder kanonische Adresse noch Beschreibung – in allen Sprachfassungen.
+// Beschreibung wird über i18n/site übersetzt (js/i18n.js übersetzt meta description), prerender.js setzt je Sprache die eigene kanonische Adresse.
+const SEO_PAGES = {
+  'hilfe.html': 'Hilfe zu PDFMy: Anleitungen und Antworten zu Scannen, Texterkennung, Unterschreiben, Formularen, E-Rechnung und Datenschutz – kostenlos, ohne Upload.',
+  'scanner.html': 'Scanner mit PDFMy einrichten: Netzwerk- und USB-Scanner unter Windows, Mac und Linux, meist ohne Treiber. Die Dokumente bleiben auf Ihrem Rechner.',
+  'scanner-geraete.html': 'Welche Scanner funktionieren mit PDFMy? Geräteliste mit Suche: Brother, Epson, HP, Canon, Kyocera, Ricoh und Dokumentenscanner, mit Duplex-Angabe.',
+  'firmen.html': 'PDFMy in Firmen und Behörden verteilen: stille Installation per Intune oder SCCM, Gruppenrichtlinien mit ADMX-Vorlagen, SBOM – kostenlos, ohne Cloud.',
+  'erweiterung.html': 'PDFs direkt in PDFMy öffnen: Browser-Erweiterung und Add-ins für Outlook, Word, Teams, Thunderbird, LibreOffice, ONLYOFFICE und Nextcloud.',
+  'presse.html': 'Pressebereich von PDFMy: Informationen, Bilder und Pressetexte zur kostenlosen PDF-Software aus Paderborn, die ohne Upload im Browser arbeitet.',
+  'sicherheit.html': 'Sicherheit und Compliance von PDFMy: lokale Verarbeitung, Netzwerk und Ports, SBOM, NIS2, Cyberresilienz-Verordnung, DSGVO – Angaben für IT und Beschaffung.',
+  'impressum.html': '', 'datenschutz.html': '', 'barrierefreiheit.html': '', 'nutzungsbedingungen.html': '',
+};
+for (const [file, desc] of Object.entries(SEO_PAGES)) {
+  const f = path.join(OUT, file); let h = fs.readFileSync(f, 'utf8');
+  if (/rel="canonical"/.test(h)) continue;
+  const url = `https://${site.domain}/${file}`;
+  h = h.replace('</title>', `</title>${desc ? `<meta name="description" content="${esc(desc)}"><meta property="og:description" content="${esc(desc)}">` : ''}<link rel="canonical" href="${url}"><meta property="og:url" content="${url}">`);
+  fs.writeFileSync(f, h);
+}
+// KI-Suchdienste (GEO): llms.txt nach llmstxt.org – Kurzbeschreibung und die wichtigsten Seiten als Klartext. Kein Standard von Google;
+// gelesen wird sie u. a. von KI-Assistenten, die eine Website zusammenfassen. Nur Fakten, die auf den verlinkten Seiten belegt sind.
+write('llms.txt', `# PDFMy
+
+> PDFMy (https://${site.domain}) is a free PDF application by Mentor GmbH, Paderborn, Germany. It runs entirely in the web browser: documents are processed on the user's device and are not uploaded. No account, no cookies, no tracking. Interface in 40 languages.
+
+Main functions: scan with OCR (text recognition), merge, split, compress, edit, redact, sign (handwritten and PAdES digital signatures), fill and create forms, convert PDF to Word, text and images, and Word, Excel and images to PDF, PDF/A and PDF/UA (accessibility), e-invoices (ZUGFeRD, XRechnung), compare PDFs. Works offline after the first visit (installable web app).
+
+Licence: PolyForm Noncommercial 1.0.0; use by government institutions and charitable, educational and other noncommercial organisations is permitted by the licence. Source code: https://github.com/haus-it/pdfmy
+
+## Deutsch
+- [PDFMy öffnen](https://${site.domain}/): kostenlose PDF-Werkzeuge ohne Upload
+- [Alle Werkzeuge](https://${site.domain}/werkzeuge.html)
+- [Hilfe und häufige Fragen](https://${site.domain}/hilfe.html)
+- [Scanner einrichten](https://${site.domain}/scanner.html) und [Geräteliste](https://${site.domain}/scanner-geraete.html)
+- [Für Firmen und Behörden](https://${site.domain}/firmen.html) und [Sicherheit und Compliance](https://${site.domain}/sicherheit.html)
+- [Erweiterungen und Add-ins](https://${site.domain}/erweiterung.html)
+- [Presse](https://${site.domain}/presse.html)
+
+## Tools
+${tools.map(t => `- [${t.label}](https://${site.domain}/${t.slug}.html)`).join('\n')}
+
+## English
+- [Help (English)](https://${site.domain}/en-GB/hilfe.html)
+- [All tools (English)](https://${site.domain}/en-GB/werkzeuge.html)
+`);
 copy('tools/site/google3c0638e01aa028c9.html', 'google3c0638e01aa028c9.html');
 copy('tools/site/338cffd73ed849d192fa0f2825371a35.txt', '338cffd73ed849d192fa0f2825371a35.txt');   // IndexNow (Bing, Yandex, Seznam …): Schlüsseldatei – öffentlich gewollt, nicht entfernen; tools/deploy.py meldet geänderte Seiten   // Google Search Console: Inhaberschaft (nicht entfernen)
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: https://${site.domain}/sitemap.xml\n`);
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://${site.domain}/</loc></url>\n  <url><loc>https://${site.domain}/hilfe.html</loc></url>\n  <url><loc>https://${site.domain}/scanner.html</loc></url>\n  <url><loc>https://${site.domain}/scanner-geraete.html</loc></url>\n  <url><loc>https://${site.domain}/erweiterung.html</loc></url>\n  <url><loc>https://${site.domain}/firmen.html</loc></url>\n  <url><loc>https://${site.domain}/werkzeuge.html</loc></url>\n  <url><loc>https://${site.domain}/presse.html</loc></url>\n${tools.map(t => `  <url><loc>https://${site.domain}/${t.slug}.html</loc></url>\n`).join('')}</urlset>\n`);
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://${site.domain}/</loc></url>\n  <url><loc>https://${site.domain}/hilfe.html</loc></url>\n  <url><loc>https://${site.domain}/scanner.html</loc></url>\n  <url><loc>https://${site.domain}/scanner-geraete.html</loc></url>\n  <url><loc>https://${site.domain}/erweiterung.html</loc></url>\n  <url><loc>https://${site.domain}/firmen.html</loc></url>\n  <url><loc>https://${site.domain}/werkzeuge.html</loc></url>\n  <url><loc>https://${site.domain}/presse.html</loc></url>\n  <url><loc>https://${site.domain}/sicherheit.html</loc></url>\n${tools.map(t => `  <url><loc>https://${site.domain}/${t.slug}.html</loc></url>\n`).join('')}</urlset>\n`);
 
 // ---------------- Interne Edition: pdfmy.de/mentor im Mentor-Group-CI, mit Passwortschutz ----------------
 // Gleicher Programmstand wie pdfmy.de, aber js/config.js der internen Version (Mentor-Theme). Bibliotheken und OCR-Daten

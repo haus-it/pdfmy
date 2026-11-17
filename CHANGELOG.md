@@ -2,6 +2,14 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-17
+
+### Auffindbarkeit: SEO/GEO-Prüfung mit echten Zahlen (app-v269)
+- Messung mit Google Search Console, IONOS WebAnalytics und einem Vergleich mit 6 Mitbewerbern (docs/SEO-GEO-2026-11.md, Skripte tools/seo/). Befund: 28 Klicks und Position 49 in 3 Monaten, nur 4 verweisende Domains, 1.041 Seiten „Gefunden – zurzeit nicht indexiert“, 34 Einblendungen in Googles KI-Antworten.
+- Behoben: Hilfe, Scanner, Geräteliste, Firmen, Erweiterung, Presse und Rechtstexte hatten weder kanonische Adresse noch Beschreibung – in allen Sprachfassungen (ca. 440 Seiten). Beschreibungen in 39 Sprachen übersetzt.
+- „Sicherheit und Compliance“ steht jetzt in der Sitemap. Neu: `llms.txt` für KI-Suchdienste (llmstxt.org).
+- Test `tests/seo.test.js`.
+
 ## 2026-11-16
 
 ### Linux real auf Ubuntu 24.04 geprüft, pdfmy Scan Mac/Linux 1.8.1 (app-v268)
