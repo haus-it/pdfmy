@@ -5061,7 +5061,8 @@ addEventListener('load', async () => {   // erst wenn alle Programmteile geladen
 // Android-App: aus anderen Apps geöffnete oder geteilte Dateien
 if (NATIVE) { const take = () => NATIVE.opened().then(fs => { if (fs.length) (window.openWithChoice || importFiles)(fs); }).catch(e => status(e.message)); addEventListener('pdfmyOpen', take); setTimeout(take, 0); }
 if ('launchQueue' in window) launchQueue.setConsumer(async params => {
-  if (!params.files?.length) return;
+  // Schnellstart aus der Taskleiste (Rechtsklick → „Scannen“, „Zusammenfügen“ …): läuft die App schon, kommt die Adresse hierher statt als Seitenaufruf
+  if (!params.files?.length) { if (/[?&]start=/.test(params.targetURL || '')) { window.pdfmyStartUrl = params.targetURL; window.pdfmyStart?.(); } return; }
   let files;
   try { files = await Promise.all(params.files.map(readLaunched)); }
   catch (e) {

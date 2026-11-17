@@ -172,3 +172,19 @@ test('Hilfe: häufige Fragen als FAQPage, je Sprache aus den übersetzten Fragen
   assert.ok(pre.includes("details.faqd, details.faq"), 'prerender übersetzt auch die Hilfe-Fragen');
   assert.match(src, /sameAs: \['https:\/\/github\.com\/haus-it\/pdfmy'\]/);
 });
+
+test('Taskleiste: Schnellstarts (Rechtsklick) führen zu vorhandenen Werkzeugen – beim Start und bei laufender App', () => {
+  const man = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  assert.ok(man.shortcuts.length >= 5 && man.shortcuts.length <= 10, 'Chrome zeigt höchstens 10');
+  for (const s of man.shortcuts) {
+    const m = s.url.match(/^\.\/\?start=([a-z0-9]+)$/); assert.ok(m, s.url);
+    const ok = { cam: 'id="btnCam"', einv: 'id="tileEinv"', open: 'id="fileIn"' }[m[1]] || `data-intent="${m[1]}"`;
+    assert.ok(html.includes(ok), `Ziel für ${s.name}: ${ok}`);
+    assert.ok(s.name && s.short_name.length <= 15, s.name);
+  }
+  const app = fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8'), pro = fs.readFileSync(path.join(ROOT, 'js', 'pro.js'), 'utf8');
+  assert.match(app, /params\.targetURL[\s\S]{0,120}window\.pdfmyStart\?\.\(\)/, 'laufende App: launchQueue');
+  assert.match(pro, /window\.pdfmyStart\(\);/, 'Start mit ?start=');
+  assert.match(fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8'), /Schnellstart per Rechtsklick/);
+});

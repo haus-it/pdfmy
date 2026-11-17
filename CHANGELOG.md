@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Schnellstart per Rechtsklick auf das Taskleisten-Symbol (app-v275)
+- Vergleich (Recherche 17.11.2026): Acrobat zeigt beim Rechtsklick auf das Taskleisten-Symbol nur zuletzt geöffnete Dateien; bei PDF24, Foxit, PDF-XChange, Nitro und PDFgear ist dort nichts dokumentiert. PDFMy zeigte bisher nur „PDFMy“.
+- Neu: Rechtsklick auf das Symbol der installierten App (Taskleiste, Startmenü; am Handy gedrückt halten) bietet „Mit Kamera scannen“, „PDFs zusammenfügen“, „PDF bearbeiten“, „PDF verkleinern“, „Unterschreiben“, „Text erkennen (OCR)“ und „E-Rechnung schreiben“ (`manifest.webmanifest` → `shortcuts`).
+- Die Kamera startet sofort. Bei den anderen Werkzeugen ist die passende Kachel markiert; ein Klick darauf öffnet die Dateiauswahl, weil Browser sie nur nach einem Klick erlauben. Läuft die App schon, kommt der Schnellstart im offenen Fenster an (`launchQueue`). Ein geöffnetes Dokument bleibt unangetastet.
+- Hilfe ergänzt (40 Sprachen).
+
 ### Strukturierte Daten für Hilfe und Startseite (app-v274)
 - Hilfe: die häufigen Fragen zusätzlich als strukturierte Daten (FAQPage) – in allen 40 Sprachen, erzeugt aus den übersetzten Fragen. Vorher hatte die Hilfe keine strukturierten Daten (Prüfung aller Sitemap-Seiten: 18 von 95 ohne).
 - Startseite: Verweis auf den Quellcode (GitHub), die Hilfe, die Funktionsliste und die Website des Herstellers in den strukturierten Daten, damit Suchmaschinen und KI-Dienste PDFMy eindeutig zuordnen.

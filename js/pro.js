@@ -4774,19 +4774,35 @@ $('#mbAdd').onclick = () => { closeMenu(); $('#btnAddDoc').click(); };
 $('#mbNewTab').onclick = () => { closeMenu(); $('#btnNewWin').click(); };
 
 /* ---------- Sprung von den Werkzeug-Seiten (pdfmy.de/pdf-zusammenfuegen.html …): #werkzeug=merge hebt das Werkzeug hervor ---------- */
-function showTool() {
-  const m = location.hash.match(/^#werkzeug=([a-z0-9]+)$/); if (!m) return;
-  history.replaceState(null, '', location.pathname + location.search);
+// Schnellstarts der Taskleiste (manifest.webmanifest → shortcuts): ./?start=merge – beim Start als Adresse, bei laufender App über launchQueue (app.js)
+function startTarget() {
+  const u = new URL(window.pdfmyStartUrl || location.href); window.pdfmyStartUrl = null;
+  const s = u.searchParams.get('start'); if (!s || !/^[a-z0-9]+$/.test(s)) return null;
+  if (u.href === location.href) { const q = new URLSearchParams(location.search); q.delete('start'); history.replaceState(null, '', location.pathname + (q.size ? '?' + q : '') + location.hash); }
+  return s;
+}
+window.pdfmyStart = () => {
+  const s = startTarget(); if (!s) return;
+  if (state.pages.length) return;   // geöffnetes Dokument bleibt unangetastet (wie beim Sprung von den Werkzeug-Seiten)
+  // Kamera braucht keine Dateiauswahl → sofort starten; alles andere öffnet eine Dateiauswahl, die der Browser nur nach einem Klick erlaubt
+  if (s === 'cam' && $('#btnCam')) { $('#btnCam').click(); return; }
+  showTool(s);
+};
+function showTool(name) {
+  if (typeof name !== 'string') {
+    const m = location.hash.match(/^#werkzeug=([a-z0-9]+)$/); if (!m) return;
+    history.replaceState(null, '', location.pathname + location.search); name = m[1];
+  }
   // open: Knopf „Öffnen“ (Office, beliebige PDF bearbeiten), printer: Menü „Mehr“ aufklappen → „Drucker „PDFMy“ einrichten …“
   const special = { open: () => $('#fileIn')?.closest('label'), printer: () => { const d = $('#btnPrinter')?.closest('details'); if (d) d.open = true; return $('#btnPrinter'); } };
-  const t = m[1] === 'einv' ? $('#tileEinv') : special[m[1]] ? special[m[1]]() : document.querySelector(`.tile[data-intent="${m[1]}"]`);
+  const t = name === 'einv' ? $('#tileEinv') : special[name] ? special[name]() : document.querySelector(`.tile[data-intent="${name}"]`);
   if (!t || state.pages.length) return;
   t.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   t.classList.add('tile-hi'); setTimeout(() => t.classList.remove('tile-hi'), 6000);
   t.focus({ preventScroll: true });
   status(`Hier geht's los: auf „${(t.querySelector('b') || t.querySelector('span'))?.textContent || ''}“ klicken.`);
 }
-showTool(); addEventListener('hashchange', showTool);
+showTool(); addEventListener('hashchange', () => showTool()); window.pdfmyStart();
 
 /* ---------- Zuletzt geöffnet: Verweise auf die letzten Dateien (nur im Browser, keine Inhalte), Klick öffnet erneut ---------- */
 const RECENT_MAX = 10, canRecent = !!window.showOpenFilePicker;

@@ -52,6 +52,15 @@
       "launch_type": "single-client"
     }
   ],
+  "shortcuts": [
+    { "name": "Mit Kamera scannen", "short_name": "Scannen", "description": "Kamera mit automatischer Blatterkennung – mehrere Seiten am Stück", "url": "./?start=cam" },
+    { "name": "PDFs zusammenfügen", "short_name": "Zusammenfügen", "description": "Mehrere Dateien zu einer PDF", "url": "./?start=merge" },
+    { "name": "PDF bearbeiten", "short_name": "Bearbeiten", "description": "PDF, Word, Excel oder Bild öffnen und bearbeiten", "url": "./?start=open" },
+    { "name": "PDF verkleinern", "short_name": "Verkleinern", "description": "Dateigröße reduzieren", "url": "./?start=compress" },
+    { "name": "Unterschreiben", "short_name": "Unterschreiben", "description": "Unterschrift zeichnen und platzieren", "url": "./?start=sign" },
+    { "name": "Text erkennen (OCR)", "short_name": "Text erkennen", "description": "Fotos und Scans in durchsuchbares PDF umwandeln", "url": "./?start=scan" },
+    { "name": "E-Rechnung schreiben", "short_name": "E-Rechnung", "description": "ZUGFeRD oder XRechnung erstellen", "url": "./?start=einv" }
+  ],
   "launch_handler": {
     "client_mode": [
       "focus-existing",
