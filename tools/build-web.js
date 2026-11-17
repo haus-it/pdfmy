@@ -412,6 +412,19 @@ const macPl = lf('pdfmy-scan.pl'), macVer = (macPl.match(/our \$VERSION = '([\d.
 const macWeb = (fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8').match(/const SCAN_MAC_LATEST = '([\d.]+)'/) || [])[1];
 if (!macVer || macVer !== macWeb) { console.error(`Versionskonflikt pdfmy Scan für Mac: Programm ${macVer}, Webseite ${macWeb}`); process.exit(1); }
 if (/^PDFMY_PERL_END$/m.test(macPl)) { console.error('pdfmy-scan.pl enthält die Endmarke PDFMY_PERL_END'); process.exit(1); }
+// Selbst-Update für Mac und Linux (ab 1.10.0): das Programm selbst plus Prüfsumme und Signatur (RSA-3072, SHA-256, PKCS#1 v1.5).
+// Der private Schlüssel liegt nur auf dem Build-Rechner (tools/signing/unix-update.pem, nicht im Git); den öffentlichen
+// Schlüssel trägt pdfmy-scan.pl selbst. pdfmy Scan installiert nur Fassungen mit gültiger Signatur und höherer Version.
+{
+  const keyFile = path.join(ROOT, 'tools', 'signing', 'unix-update.pem');
+  if (!fs.existsSync(keyFile)) { console.error('Signaturschlüssel für Mac/Linux-Updates fehlt: tools/signing/unix-update.pem'); process.exit(1); }
+  const cr = require('node:crypto'), body = Buffer.from(macPl, 'utf8'), key = cr.createPrivateKey(fs.readFileSync(keyFile));
+  const pubHex = Buffer.from(cr.createPublicKey(key).export({ format: 'jwk' }).n, 'base64url').toString('hex');
+  if (!macPl.includes(pubHex)) { console.error('pdfmy-scan.pl trägt nicht den öffentlichen Schlüssel zu tools/signing/unix-update.pem'); process.exit(1); }
+  const sig = cr.sign('sha256', body, { key, padding: cr.constants.RSA_PKCS1_PADDING });
+  write('download/pdfmy-scan-unix.pl', body);
+  write('download/pdfmy-scan-unix.json', JSON.stringify({ version: macVer, sha256: cr.createHash('sha256').update(body).digest('hex'), sig: sig.toString('base64'), rollout: scanRollout }) + '\n');
+}
 const macInstall = lf('install.command').replace('__PDFMY_PERL__', () => macPl.trimEnd()).replace(/__PDFMY_VERSION__/g, macVer);
 const macZip = 'pdfmy-Scan-Mac.zip', enc8 = s => new Uint8Array(Buffer.from(s, 'utf8'));
 write('download/pdfmy-scan-mac.sh', macInstall);
@@ -458,7 +471,7 @@ write('download/' + linuxRpm, require('./linuxpkg.js').buildRpm({
   license: 'LicenseRef-PolyForm-Noncommercial-1.0.0',
   description: 'pdfmy Scan von pdfmy.de (Mentor GmbH, Paderborn) verbindet Netzwerk- und USB-Scanner mit PDFMy und legt „PDFMy“ im Anwendungsmenü an: PDF-Dateien öffnen sich per Doppelklick in PDFMy. Alles bleibt auf diesem Rechner – pdfmy Scan ist nur über 127.0.0.1 erreichbar, Dokumente werden nicht hochgeladen.',
   // Dateipfade statt Paketnamen: gelten unter Fedora (curl-minimal, perl-interpreter) wie unter openSUSE; Perl-Module einzeln, weil Fedora sie aufteilt
-  requires: ['/usr/bin/perl', '/usr/bin/curl', '/usr/bin/xdg-open', ...['JSON::PP', 'IO::Socket::INET', 'IO::Select', 'MIME::Base64', 'File::Temp', 'Encode', 'Unicode::Normalize', 'Time::HiRes', 'Socket'].map(m => `perl(${m})`)],
+  requires: ['/usr/bin/perl', '/usr/bin/curl', '/usr/bin/xdg-open', ...['JSON::PP', 'IO::Socket::INET', 'IO::Select', 'MIME::Base64', 'File::Temp', 'Encode', 'Unicode::Normalize', 'Time::HiRes', 'Socket', 'Digest::SHA', 'Math::BigInt'].map(m => `perl(${m})`)],
   recommends: ['sane-backends', 'sane-airscan', 'ipp-usb', 'avahi-tools', 'avahi-utils', 'libnotify', 'libnotify-tools'],
   scripts: { post: 'sh /opt/pdfmy-scan/paket/postinst configure; ' + menuRefresh, preun: '[ "$1" = 0 ] && sh /opt/pdfmy-scan/paket/prerm remove; exit 0\n', postun: menuRefresh },
   files: pkgFiles, ownDirs: ['/opt/pdfmy-scan', '/opt/pdfmy-scan/paket', '/usr/share/doc/pdfmy-scan'],

@@ -2,6 +2,20 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-18
+
+### Updates für alle Systeme automatisch bzw. mit einem Klick (pdfmy Scan Windows 1.20.0, Mac/Linux 1.10.0, app-v279)
+- **Mac und Linux** aktualisieren sich jetzt selbst, wie Windows seit 1.16.0. Alle 6 Stunden (± 45 min) prüft pdfmy Scan auf eine neue Version. Es lädt sie nur über HTTPS und prüft SHA-256, die Signatur (RSA-3072, öffentlicher Schlüssel im Programm) und die Syntax. Dann tauscht es sich aus und startet neu, nie während eines Scans und mit gestaffelter Freigabe. Abschalten geht mit der Datei `updates-automatisch-aus` im Programmordner.
+- **Linux-Pakete** (.deb, .rpm, Arch) liegen in /opt und lassen sich ohne Admin-Rechte nicht ändern. Neuere Fassungen kommen deshalb in den Benutzerordner, und der Dienst startet automatisch die neuere: kein Passwort, kein Terminal.
+- **Ein Klick in PDFMy für alle Systeme:** Wo „pdfmy Scan … ist verfügbar“ steht, gibt es jetzt den Knopf „Jetzt aktualisieren“. pdfmy Scan lädt, prüft und installiert dann selbst, kein Download und kein Öffnen einer Datei mehr. Unter Windows gilt das auch, wenn das automatische Update abgeschaltet ist; von der IT verteilte Installationen bleiben ausgenommen.
+- **Getestet:**
+  - Linux-Dienst unter Perl 5.42 mit lokalem Update-Server: Klick → 1.10.1 geladen, Signatur gültig, ersetzt, nach 3 s als 1.10.1 neu gestartet.
+  - Manipulierte Datei abgelehnt (Prüfsumme), ebenso manipulierte Datei mit angepasster Prüfsumme (Signatur).
+  - Paket-Fassung startet eine neuere Kopie aus dem Benutzerordner, eine ältere nicht.
+  - Windows-Schnittstelle im Browser geprüft (aktuelle Version → „installed: false“).
+- **Einmalig:** Installationen mit Mac/Linux 1.9.0 oder älter brauchen 1.10.0 noch einmal von Hand, weil sie die Update-Funktion noch nicht haben. Windows aktualisiert sich ohnehin selbst.
+- ISO-Nachweis ergänzt (`docs/ISO-Konformitaet.md`, A.8.32).
+
 ## 2026-11-17
 
 ### Linux: Rechtsklick „In PDFMy zusammenfügen“ / „Mit PDFMy verkleinern“ (pdfmy Scan für Mac und Linux 1.9.0, app-v278)

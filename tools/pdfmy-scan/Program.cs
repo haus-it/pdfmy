@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.19.0";
+        public const string Version = "1.20.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -2013,7 +2013,19 @@ namespace PdfmyScan
                 SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return;
             }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), managed = Machine.UpdatesManaged, printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem() }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), managed = Machine.UpdatesManaged, printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem(), selfUpdate = !Machine.UpdatesManaged, autoUpdate = !Updater.AutoOff }, cors); return; }
+            // „Jetzt aktualisieren“ in PDFMy (1.20.0): ein Klick, Rest automatisch – wie „Update installieren“ im Symbol unten rechts
+            // (SHA-256 und Signatur „Mentor GmbH“ geprüft); von der IT verteilte Installationen aktualisiert die IT
+            if (p == "/self-update" && method == "POST")
+            {
+                if (Machine.UpdatesManaged) { SendJson(s, 403, new { error = "Updates verteilt Ihre IT-Abteilung." }, cors); return; }
+                string latest = Updater.LatestAsync().Result;
+                if (latest == null) { SendJson(s, 502, new { error = "Update-Prüfung nicht möglich (keine Verbindung zu pdfmy.de)." }, cors); return; }
+                if (new System.Version(latest) <= new System.Version(Program.Version)) { SendJson(s, 200, new { ok = true, version = Program.Version, installed = false }, cors); return; }
+                string err = null;
+                bool ok = Updater.InstallAsync(latest, m => err = m, silent: true).Result;
+                SendJson(s, ok ? 200 : 502, ok ? (object)new { ok = true, version = latest, installed = true } : new { error = err }, cors); return;
+            }
             if (p == "/wake" && method == "POST")   // „Scanner aufwecken“: wecken, kurz warten, neu suchen
             {
                 hub.RefreshAsync().Wait(40000);   // die Suche weckt zuerst alle bekannten Geräte

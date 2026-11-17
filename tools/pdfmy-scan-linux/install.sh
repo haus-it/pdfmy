@@ -58,9 +58,9 @@ if [ -z "$PERL" ]; then
   echo "      Arch:                sudo pacman -S perl"
   exit 1
 fi
-if ! "$PERL" -MJSON::PP -MIO::Socket::INET -MIO::Select -MMIME::Base64 -MFile::Temp -MEncode -e1 >/dev/null 2>&1; then
+if ! "$PERL" -MJSON::PP -MIO::Socket::INET -MIO::Select -MMIME::Base64 -MFile::Temp -MEncode -MDigest::SHA -MMath::BigInt -e1 >/dev/null 2>&1; then
   echo "  ✗ Perl ist unvollständig (Module wie JSON::PP fehlen). Bitte nachinstallieren, z. B.:"
-  echo "      Fedora:  sudo dnf install perl-JSON-PP perl-IO perl-MIME-Base64 perl-Encode"
+  echo "      Fedora:  sudo dnf install perl-JSON-PP perl-IO perl-MIME-Base64 perl-Encode perl-Digest-SHA perl-Math-BigInt"
   echo "      andere:  sudo apt install perl   bzw.  sudo zypper install perl"
   exit 1
 fi

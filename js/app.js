@@ -4590,8 +4590,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.19.0';
-const SCAN_MAC_LATEST = '1.9.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.20.0';
+const SCAN_MAC_LATEST = '1.10.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 /* Linux: passendes Paket (Doppelklick, meist ohne Terminal; sonst linuxPkgCmd) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
    Läuft pdfmy Scan schon, sagt es selbst, welches System es ist; sonst Hinweise aus dem Browser (Firefox nennt Ubuntu/Fedora) oder die letzte Wahl. */
@@ -4607,6 +4607,20 @@ const linuxPkgFile = k => LINUX_PKGS[k || linuxPkg()];
 const LINUX_CMD = { deb: 'sudo apt install', rpm: 'sudo dnf install', arch: 'sudo pacman --upgrade' }, XDG_DL = ['xdg-user-dir', 'DOWNLOAD'].join(' ');   // Befehle, kein Oberflächentext
 const linuxPkgCmd = k => `${LINUX_CMD[k || linuxPkg()]} "$(${XDG_DL})/${linuxPkgFile(k)}"`;
 const SCAN_FILE_UNIX = () => state.scanLinux ? linuxPkgFile() : 'pdfmy-Scan-Mac.zip';
+// „Jetzt aktualisieren“: pdfmy Scan lädt die neue Fassung, prüft Prüfsumme und Signatur, ersetzt sich und startet neu – kein Download, kein Terminal, kein Passwort
+async function scanSelfUpdate() {
+  const b = $('#scanUpdateNow'), label = b.textContent, name = 'pdfmy Scan'; b.disabled = true; b.textContent = '…';
+  try {
+    const r = await fetch(SCAN_API + '/self-update', { method: 'POST', headers: { 'X-Pdfmy': '1' }, cache: 'no-store' });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || 'Fehler ' + r.status);
+    // neu gestartet? bis 60 s auf die neue Version warten
+    for (let i = 0; i < 30 && j.installed; i++) { await new Promise(k => setTimeout(k, 2000)); if (await scanHelperRunning() && !verLess(state.scanVersion, j.version)) break; }
+    $('#scanUpdate').hidden = !scanOutdated(); $('#scanVerInfo').textContent = `pdfmy Scan ${state.scanVersion}`;
+    toast(`${name} wurde auf die neue Version aktualisiert${state.scanVersion ? ` (${state.scanVersion})` : ''}.`);
+  } catch (e) { status(e.message); $('#scanUpdateLink').focus(); }
+  finally { b.disabled = false; b.textContent = label; }
+}
 const scanOutdated = () => !!state.scanVersion && !state.scanManaged && verLess(state.scanVersion, scanLatest());   // von der IT verteilt: Updates kommen von dort
 const SCAN_FILE = `pdfmy-Scan-${SCAN_LATEST}.exe`;
 // Download-Zähler (KONZEPT.md, 25.10.2026): beim Herunterladen eine leere, statische Zählseite je Plattform abrufen (download/zaehlung/…) –
@@ -4643,7 +4657,7 @@ async function scanHelperRunning() {
   try {
     const d = await scanFind(); if (!d) return false;
     const changed = state.scanVersion !== d.version;
-    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanManaged = d.managed === true; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
+    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanManaged = d.managed === true; state.scanSelfUpdate = d.selfUpdate === true; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll
     if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store', headers: { 'X-Pdfmy': '1' } }).catch(() => {});   // ab pdfmy Scan 1.14.1 nur mit eigenem Kopf
     if (changed && typeof renderVerBar === 'function') setTimeout(renderVerBar, 0);   // Statuszeile sofort nachziehen (z. B. nach einem Update)
@@ -4740,6 +4754,7 @@ async function openScanDialog() {
   if (await scanHelperRunning()) {
     // Ältere Programmversion? Update anbieten (die neue ersetzt die alte beim Öffnen automatisch)
     $('#scanUpdate').hidden = !scanOutdated(); $('#scanUpdateLink').href = $('#scanDownload').href;
+    $('#scanUpdateNow').hidden = !state.scanSelfUpdate; $('#scanUpdateNow').onclick = scanSelfUpdate;   // ab pdfmy Scan 1.20.0 (Windows) bzw. 1.10.0 (Mac, Linux): ein Klick, Rest automatisch
     $('#scanVerOld').textContent = state.scanVersion; $('#scanVerInfo').textContent = `pdfmy Scan ${state.scanVersion}`;
     setScanReady(true); loadScanners(false); return;
   }

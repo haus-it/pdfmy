@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.10.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -23,6 +23,17 @@ my @ALLOWED = ('https://pdfmy.de', 'https://www.pdfmy.de', $ENV{PDFMY_DEV} ? ('h
 my $J = JSON::PP->new->utf8->canonical;
 make_path("$DIR/jobs");
 $SIG{CHLD} = 'IGNORE'; $SIG{PIPE} = 'IGNORE';
+# Selbst-Update (1.10.0): Paket-Installationen (/opt, ohne Schreibrecht) legen neuere Fassungen im Benutzerordner ab –
+# ist dort eine neuere Version als diese, läuft sie (gleicher Benutzer, gleiche Rechte, keine Admin-Abfrage).
+sub ver_cmp { my @a = split /\./, shift // '0'; my @b = split /\./, shift // '0'; for (0 .. 2) { my $d = ($a[$_] // 0) <=> ($b[$_] // 0); return $d if $d; } return 0; }
+{
+  require Cwd; my ($self) = (Cwd::abs_path($0) // '') =~ m{^(.*)/[^/]+$};
+  my $mine = "$DIR/pdfmy-scan.pl";
+  if (defined $self && Cwd::abs_path($self) ne (Cwd::abs_path($DIR) // '') && -f $mine && !$ENV{PDFMY_NO_HANDOFF}) {
+    my ($v) = (do { open my $h, '<', $mine; local $/; <$h> } // '') =~ /^our \$VERSION = '([\d.]+)'/m;
+    if ($v && ver_cmp($v, $VERSION) > 0) { $ENV{PDFMY_PKG_DIR} = $self; $ENV{PDFMY_NO_HANDOFF} = 1; exec($^X, $mine); }
+  }
+}
 
 # ---------------- Hilfen ----------------
 sub logl { my $m = shift; $m =~ s/\s+/ /g; if (open my $f, '>>:utf8', "$DIR/log.txt") { print $f strftime('%Y-%m-%d %H:%M:%S ', localtime) . "$m\n"; close $f; } }
@@ -709,7 +720,7 @@ sub fm_actions {
   return if $IS_MAC || $ENV{PDFMY_NO_FM};
   # Zeichen statt Bytes (use utf8): Pfade aus der Umgebung dekodieren, beim Schreiben wieder als UTF-8 kodieren
   my $u = sub { decode('UTF-8', shift // '') }; my $b = sub { Encode::encode('UTF-8', shift) };
-  require Cwd; my ($self) = $u->(Cwd::abs_path($0) // '') =~ m{^(.*)/[^/]+$}; return unless $self;
+  require Cwd; my ($self) = $u->($ENV{PDFMY_PKG_DIR} // Cwd::abs_path($0) // '') =~ m{^(.*?)/?(?:[^/]+\.pl)?$}; return unless $self;   # Paket: Startskript im Paketordner
   my $open = "$self/pdfmy-open"; return unless -x $b->($open);
   my $icon = -f $b->("$self/pdfmy.png") ? "$self/pdfmy.png" : 'pdfmy';
   my $H = $u->($ENV{HOME}); return unless length $H;
@@ -732,6 +743,81 @@ sub fm_actions {
       unlink $b->("$sd/" . ($de ? $en : $dn));                            # Sprache gewechselt: alten Namen entfernen
       $put->("$sd/" . ($de ? $dn : $en), $sh, 0755);
     }
+  }
+}
+# ---------------- Selbst-Update (1.10.0) – wie pdfmy Scan für Windows ----------------
+# Alle 6 Stunden (± 45 min) und auf Klick in PDFMy („Jetzt aktualisieren“): neue Fassung von pdfmy.de laden, Prüfsumme und Signatur
+# prüfen (RSA-3072/SHA-256, öffentlicher Schlüssel unten; der private liegt nur beim Hersteller), Syntax prüfen, ersetzen, neu starten.
+# Automatisch nur, wenn gerade nicht gescannt wird und die gestaffelte Freigabe (rollout) diese Installation einschließt.
+# Abschalten: Datei „updates-automatisch-aus“ im Programmordner anlegen – der Klick in PDFMy funktioniert weiter.
+my $UPD_TEST = $ENV{PDFMY_TEST_UPDATE_URL};   # nur für Tests: lokaler Server statt pdfmy.de
+my $UPD_URL = $UPD_TEST || 'https://pdfmy.de/download/pdfmy-scan-unix';
+my $UPD_N = 'db49ee2494bdf94924fffc409acf403a2ecbb4a69808cc48a411d6f8a5c93a60199131fb41af458349117c81b62dc48be840b7bf62020cf24b42976df6b4c7039670894a11cfa4b7143f8bd59dc20befaadd1fd9bbfe0edd8ce026fb8430461bf55fca77cafeeb68ee7459c1c480be7d6c8474604c940088cc00717d103146d74ab7d4645f3c5378871d31421062787100340e23524c2e7d2423ad7ad5dec0734cce61ca5f233dbf4ad6377f6765670b56799fe65925affea80ce292a196577a2686f2badf9d059dafbb9c504e44a4554340eb036fb5cc4c68cd9e278918cb3a9421017d4312c4731503fc23f84837c11d8f3a53a5be61e41e9961503de696c3f53d5d2f22ef502078b062cb8f49bccd48f56e8fb3bde490d7b796485b72990cd8a6e687ff496cb46437210e1c9f752f4523ab179aa80032c035977232bde2e06f8f163dc9789b51b117524db9a03211e978be6795e95dde019081ea74360235f74d7217434de45f0b6c39081fe5b48ca62af13622256013579941420c385959';
+sub fetch_bytes {
+  my ($url, $max) = @_;
+  if (my $c = ($IS_MAC && -x '/usr/bin/curl') ? '/usr/bin/curl' : which('curl')) { my $o = run_for(90, $c, '-fsSL', ($UPD_TEST ? () : ('--proto', '=https')), '-m', '80', $url); return length $o ? $o : undef; }
+  if (my $w = which('wget')) { my $o = run_for(90, $w, '-q', '-O', '-', ($UPD_TEST ? () : ('--https-only')), '-T', '80', $url); return length $o ? $o : undef; }
+  return undef;
+}
+sub rsa_verify {
+  my ($data, $sig) = @_; require Math::BigInt; require Digest::SHA;
+  return 0 unless length($sig // '') == 384;
+  my $m = Math::BigInt->new('0x' . unpack('H*', $sig))->bmodpow(65537, Math::BigInt->new("0x$UPD_N"))->as_hex; $m =~ s/^0x//;
+  $m = ('0' x (768 - length $m)) . lc $m;
+  my $want = '0001' . ('ff' x (384 - 3 - 19 - 32)) . '00' . '3031300d060960864801650304020105000420' . Digest::SHA::sha256_hex($data);   # PKCS#1 v1.5, SHA-256
+  return $m eq $want ? 1 : 0;
+}
+sub upd_auto_off { return -e "$DIR/updates-automatisch-aus"; }
+sub upd_bucket { my $f = "$DIR/update-bucket"; my $b = trim(slurp($f) // ''); return $b if $b =~ /^\d+$/ && $b < 100; $b = int rand 100; spit($f, $b); return $b; }
+sub scan_busy { my $p = trim(slurp("$DIR/busy") // ''); return $p =~ /^\d+$/ && alive($p) ? 1 : 0; }
+# Liefert (Version, Fehlertext); installiert, wenn eine neuere geprüfte Fassung vorliegt. $manual: Klick in PDFMy (ohne Freigabestufe)
+sub self_update {
+  my $manual = shift;
+  my $info = eval { $J->decode(fetch_bytes("$UPD_URL.json?t=" . int(time)) // '') };
+  return (undef, 'Update-Prüfung nicht möglich (keine Verbindung zu pdfmy.de).') unless ref $info eq 'HASH' && ($info->{version} // '') =~ /^\d+\.\d+\.\d+$/;
+  return ($VERSION, '') unless ver_cmp($info->{version}, $VERSION) > 0;
+  if (!$manual) {
+    return ($VERSION, 'automatisch aus') if upd_auto_off();
+    my $ro = ($info->{rollout} // 100) =~ /^\d+$/ ? $info->{rollout} : 100;
+    return ($VERSION, "noch nicht freigegeben ($ro %)") if upd_bucket() >= $ro;
+    return ($VERSION, 'Scan läuft') if scan_busy();
+  }
+  my $body = fetch_bytes("$UPD_URL.pl?v=$info->{version}");
+  return (undef, 'Download unvollständig') unless defined $body && length $body > 20000;
+  require Digest::SHA;
+  return (undef, 'Prüfsumme stimmt nicht – Update abgebrochen') unless lc($info->{sha256} // '') eq Digest::SHA::sha256_hex($body);
+  return (undef, 'Signatur ungültig – Update abgebrochen') unless rsa_verify($body, decode_base64($info->{sig} // ''));
+  my ($v) = $body =~ /^our \$VERSION = '([\d.]+)'/m;
+  return (undef, 'Versionsangabe passt nicht – Update abgebrochen') unless $v && $v eq $info->{version};
+  my $tmp = "$DIR/pdfmy-scan.pl.neu"; spit($tmp, $body);
+  my $rc = do { local $SIG{CHLD} = 'DEFAULT'; system($^X, '-c', $tmp) };   # mit IGNORE liefert system() keinen Rückgabewert
+  if ($rc != 0) { unlink $tmp; return (undef, 'Neue Fassung startet nicht – Update abgebrochen'); }
+  chmod 0755, $tmp; rename $tmp, "$DIR/pdfmy-scan.pl" or return (undef, "Ersetzen nicht möglich: $!");
+  logl("Update $v installiert (Signatur gültig" . ($manual ? ', per Klick in PDFMy' : ', automatisch') . ')');
+  return ($v, '');
+}
+# Neu starten: Dienstverwaltung (systemd, launchd) startet nach dem Beenden neu; ohne sie selbst nachstarten
+my $MAIN_PID = $$;
+sub restart_self {
+  my $supervised = $ENV{INVOCATION_ID} || $ENV{XPC_SERVICE_NAME} || $ENV{LAUNCH_JOB_LABEL} ? 1 : 0;
+  spit("$DIR/neustart", time);   # die neue Fassung wartet kurz auf den bisherigen Port
+  unless ($supervised) {
+    my $q = "$DIR/pdfmy-scan.pl"; $q =~ s/'/'\\''/g; my $pl = $^X; $pl =~ s/'/'\\''/g;
+    system('/bin/sh', '-c', "( sleep 2; nohup '$pl' '$q' >/dev/null 2>&1 & ) &");
+  }
+  kill 'TERM', $MAIN_PID;
+}
+sub updater_loop {
+  my $listen = shift;
+  my $pid = fork(); return unless defined $pid && $pid == 0;
+  close $listen if $listen;   # sonst hielte dieser Prozess den Port belegt und die neue Fassung könnte nicht starten
+  $0 = 'pdfmy-scan-update'; sleep 300 + int rand 600;   # nicht gleich beim Anmelden
+  while (1) {
+    my ($v, $why) = eval { self_update(0) };
+    if ($v && ver_cmp($v, $VERSION) > 0) { restart_self(); POSIX::_exit(0); }
+    logl("Update-Prüfung: $why") if $why && $why ne 'automatisch aus';
+    sleep 6 * 3600 + int(rand 5400) - 2700;
+    POSIX::_exit(0) unless alive($MAIN_PID);
   }
 }
 sub open_local {
@@ -1010,7 +1096,16 @@ sub handle {
     # /status muss sofort antworten: Standard-PDF-Programm nur aus dem Zwischenspeicher, Auffrischen im Hintergrund
     my $cf = "$DIR/pdfdefault.txt"; my $def = -f $cf && trim(slurp($cf)) eq '1';
     if (!-f $cf || -M $cf >= 0.0007) { my $k = fork(); if (defined $k && $k == 0) { pdf_default(); POSIX::_exit(0); } }
-    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, pkg => linux_pkg(), tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false }, \%cors);
+    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, pkg => linux_pkg(), tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false, selfUpdate => JSON::PP::true, autoUpdate => upd_auto_off() ? JSON::PP::false : JSON::PP::true }, \%cors);
+  }
+  # „Jetzt aktualisieren“ in PDFMy (1.10.0): ein Klick, Rest automatisch – laden, Signatur prüfen, ersetzen, neu starten
+  if ($p eq '/self-update' && $method eq 'POST') {
+    my ($v, $why) = self_update(1);
+    return send_json($c, 502, { error => $why }, \%cors) unless $v;
+    my $new = ver_cmp($v, $VERSION) > 0;
+    send_json($c, 200, { ok => JSON::PP::true, version => $v, installed => $new ? JSON::PP::true : JSON::PP::false }, \%cors);
+    if ($new) { close $c; restart_self(); }
+    return;
   }
   if ($p =~ m{^/file/(\w+)$} && $method eq 'GET') {
     my ($data, $name) = take_file($1);
@@ -1102,13 +1197,19 @@ sub handle {
 # Ersten freien Port ab 52880 nehmen: sind mehrere Benutzer angemeldet, hat jeder seinen eigenen pdfmy Scan.
 # Die Web-App sucht 52880–52889 ab; die Helfer der anderen Benutzer antworten ihr mit 403.
 my $srv;
-for my $p ($ENV{PDFMY_PORT} ? ($PORT) : (52880 .. 52889)) {
-  $srv = IO::Socket::INET->new(LocalAddr => '127.0.0.1', LocalPort => $p, Proto => 'tcp', Listen => 20, ReuseAddr => 1) and do { $PORT = $p; last };
+# Nach einem Update ist die alte Fassung evtl. noch ein paar Sekunden am Beenden: den bisherigen Port bis 15 s lang erneut versuchen
+my ($was) = -f "$DIR/neustart" && -M "$DIR/neustart" < 0.001 ? (slurp("$DIR/port") // '') =~ /(\d+)/ : (); unlink "$DIR/neustart";
+for my $try (1 .. ($was ? 15 : 1)) {
+  for my $p ($ENV{PDFMY_PORT} ? ($PORT) : $was && $try < 15 ? ($was) : (52880 .. 52889)) {
+    $srv = IO::Socket::INET->new(LocalAddr => '127.0.0.1', LocalPort => $p, Proto => 'tcp', Listen => 20, ReuseAddr => 1) and do { $PORT = $p; last };
+  }
+  last if $srv; sleep 1;
 }
 $srv or do { logl("Start nicht möglich (Ports 52880–52889 belegt?): $!"); die "pdfmy Scan: Ports belegt\n"; };
 spit("$DIR/port", "$PORT\n");   # Doppelklick-App, Druck-Dienst und Einrichtung lesen hier den eigenen Port
 logl("pdfmy Scan für $OS $VERSION gestartet (Port $PORT" . ($PORT != 52880 ? ' – 52880 ist belegt, anderer Benutzer oder anderes Programm' : '') . ')');
 eval { fm_actions(); 1 } or logl("Rechtsklick-Einträge: $@");
+updater_loop($srv);
 while (1) {
   my $c = $srv->accept or next;
   my $pid = fork();

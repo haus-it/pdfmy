@@ -231,3 +231,23 @@ test('Linux (pdfmy Scan 1.9.0): Rechtsklick zusammenfügen/verkleinern in Nemo, 
   assert.match(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8'), /SCAN_MAC_LATEST = '(\d+\.\d+\.\d+)'/);
   assert.equal(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8').match(/SCAN_MAC_LATEST = '([\d.]+)'/)[1], pl.match(/our \$VERSION = '([\d.]+)'/)[1]);
 });
+
+test('Updates ohne Umweg: Mac/Linux signiert und automatisch, Ein-Klick in PDFMy für alle Systeme', () => {
+  const pl = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan-mac', 'pdfmy-scan.pl'), 'utf8');
+  const n = pl.match(/my \$UPD_N = '([0-9a-f]+)'/);
+  assert.ok(n && n[1].length === 768, 'öffentlicher Schlüssel RSA-3072 im Programm');
+  for (const s of ['Prüfsumme stimmt nicht – Update abgebrochen', 'Signatur ungültig – Update abgebrochen', 'Versionsangabe passt nicht', "'-c', $tmp", 'upd_auto_off()', 'upd_bucket() >= $ro', 'scan_busy()'])
+    assert.ok(pl.includes(s), 'Selbst-Update prüft: ' + s);
+  assert.ok(pl.includes("($UPD_TEST ? () : ('--proto', '=https'))"), 'nur HTTPS');
+  assert.ok(pl.includes("if ($p eq '/self-update' && $method eq 'POST')"));
+  assert.ok(pl.indexOf("if ($p eq '/self-update'") > pl.indexOf("return send_resp($c, 403, 'text/plain', 'forbidden', \%cors) if !$ok"), 'nur PDFMy, eigener Benutzer');
+  assert.match(pl, /updater_loop\(\$srv\);/);
+  const cs = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Program.cs'), 'utf8');
+  assert.match(cs, /if \(p == "\/self-update" && method == "POST"\)\s*\{\s*if \(Machine\.UpdatesManaged\)/, 'Windows: IT-verteilte Installationen ausgenommen');
+  const app = fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8');
+  assert.match(app, /\$\('#scanUpdateNow'\)\.hidden = !state\.scanSelfUpdate; \$\('#scanUpdateNow'\)\.onclick = scanSelfUpdate;/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'), /<button id="scanUpdateNow" type="button" class="primary" hidden>Jetzt aktualisieren<\/button>/);
+  const b = fs.readFileSync(path.join(ROOT, 'tools', 'build-web.js'), 'utf8');
+  assert.ok(b.includes("write('download/pdfmy-scan-unix.json'") && b.includes("cr.sign('sha256', body"), 'Build veröffentlicht signierte Fassung');
+  assert.ok(fs.readFileSync(path.join(ROOT, '.gitignore'), 'utf8').includes('tools/signing/'), 'privater Schlüssel nicht im Git');
+});
