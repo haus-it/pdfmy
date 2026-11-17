@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Linux: Rechtsklick „In PDFMy zusammenfügen“ / „Mit PDFMy verkleinern“ (pdfmy Scan für Mac und Linux 1.9.0, app-v278)
+- Gleichstand mit Windows: Der Scan-Dienst legt beim Start je Benutzer Einträge für die gängigen Dateimanager an. In Nemo (Linux Mint, Cinnamon) und Dolphin (KDE 5 und 6) stehen sie direkt im Kontextmenü, in Nautilus (GNOME, Ubuntu) und Caja (MATE) unter „Skripte“. Die Menütexte sind deutsch oder englisch, je nach Systemsprache. Das gilt für die Paket-Installation (.deb, .rpm, Arch) und für die Einrichtung per Skript gleichermaßen; nach dem Update erscheinen die Einträge von selbst.
+- `pdfmy-open --task=merge|compress` schickt alle markierten Dateien in einer Anfrage. pdfmy Scan sortiert sie nach Namen (2 vor 10) und öffnet sie in einem PDFMy-Fenster, im Fenster der installierten App, wenn vorhanden. Erlaubt sind nur diese beiden Aufgaben.
+- Entfernen: `pdfmy-scan-linux-entfernen.sh` und das Entfernen des Pakets löschen die Einträge wieder.
+- Mac: gleiches Programm (1.9.0), nimmt mehrere Dateien an; Einträge im Finder-Rechtsklick folgen später.
+- Geprüft hier mit Perl 5.42: drei Dateien in einer Anfrage ergeben eine Adresse in der richtigen Reihenfolge, und eine unbekannte Aufgabe wird abgelehnt. Die Einträge für alle vier Dateimanager werden angelegt. Das Startskript schickt die Dateien richtig. In einem echten Linux-Dateimanager ist das noch nicht ausprobiert.
+
 ### Explorer „Mit PDFMy verkleinern“ bei mehreren PDFs (app-v277)
 - Bisher wurden mehrere markierte PDFs zu einer Datei zusammengefügt und dann verkleinert. Jetzt öffnet sich die Stapelverarbeitung mit „Verkleinern“ vorgewählt, und jede Datei wird einzeln verkleinert (als ZIP oder in einen Ordner). Ist das Original schon kleiner, bleibt es. Eine einzelne PDF öffnet sich wie bisher mit dem Speichern-Dialog „klein“.
 

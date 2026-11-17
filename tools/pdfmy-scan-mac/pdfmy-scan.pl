@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.8.1';
+our $VERSION = '1.9.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -675,6 +675,65 @@ sub find_recent {
   else { logl("Anhang nicht gefunden: $name – gesucht in " . join('; ', grep { -d } map { $_->[0] } @roots) . (%denied ? ' – kein Zugriff (macOS-Datenschutz) auf: ' . join('; ', sort keys %denied) : '')); }   # fürs Protokoll / „Problem melden“
   return $best;
 }
+sub new_tok {
+  my $path = shift;
+  make_path("$DIR/open");
+  for my $old (glob "\"$DIR/open\"/*") { unlink $old if -M $old > 0.0035; }   # älter als 5 Minuten
+  my $tok = join '', map { sprintf '%02x', int rand 256 } 1 .. 16;
+  spit("$DIR/open/$tok", $path);
+  return $tok;
+}
+# Rechtsklick im Dateimanager „In PDFMy zusammenfügen“ / „Mit PDFMy verkleinern“ (1.9.0): alle ausgewählten Dateien in EINEM
+# PDFMy-Fenster (#open=a,b,c&task=merge), nach Namen sortiert wie im Dateimanager (2 vor 10)
+my %OPEN_TASKS = (merge => 1, compress => 1);
+sub natkey { my $s = lc(shift // ''); $s =~ s{.*/}{}; $s =~ s/(\d+)/sprintf('%012d', $1)/ge; return $s; }
+sub open_many {
+  my ($task, @paths) = @_;
+  return 0 unless $OPEN_TASKS{$task};
+  my @ok = map { secure_copy($_) } grep { defined && -f && -r _ } @paths;
+  return 0 unless @ok;
+  @ok = (sort { natkey($a) cmp natkey($b) } @ok)[0 .. ($#ok < 49 ? $#ok : 49)];
+  my $url = app_url() . '#open=' . join(',', map { new_tok($_) } @ok) . "&task=$task";
+  system('/usr/bin/open', $url) if $IS_MAC && -x '/usr/bin/open';
+  logl("Öffnen ($task): " . scalar(@ok) . ' Datei(en)');
+  return $url;
+}
+# Linux: Einträge im Rechtsklick der Dateimanager – je Benutzer, beim Start des Dienstes angelegt bzw. aktualisiert (Paket und Skript-Einrichtung).
+# Nemo (Mint/Cinnamon) und Dolphin (KDE) direkt im Kontextmenü, Nautilus (GNOME) und Caja (MATE) unter „Skripte“.
+# Entfernt von pdfmy-scan-linux-entfernen.sh bzw. beim Entfernen des Pakets.
+my @FM_MIME = qw(application/pdf application/vnd.openxmlformats-officedocument.wordprocessingml.document application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+  application/vnd.openxmlformats-officedocument.presentationml.presentation application/vnd.oasis.opendocument.text application/vnd.oasis.opendocument.spreadsheet
+  application/vnd.oasis.opendocument.presentation application/rtf text/plain text/csv text/markdown application/oxps application/vnd.ms-xpsdocument
+  image/png image/jpeg image/gif image/webp image/bmp image/tiff image/heic);
+sub fm_actions {
+  return if $IS_MAC || $ENV{PDFMY_NO_FM};
+  # Zeichen statt Bytes (use utf8): Pfade aus der Umgebung dekodieren, beim Schreiben wieder als UTF-8 kodieren
+  my $u = sub { decode('UTF-8', shift // '') }; my $b = sub { Encode::encode('UTF-8', shift) };
+  require Cwd; my ($self) = $u->(Cwd::abs_path($0) // '') =~ m{^(.*)/[^/]+$}; return unless $self;
+  my $open = "$self/pdfmy-open"; return unless -x $b->($open);
+  my $icon = -f $b->("$self/pdfmy.png") ? "$self/pdfmy.png" : 'pdfmy';
+  my $H = $u->($ENV{HOME}); return unless length $H;
+  my $D = $u->($ENV{XDG_DATA_HOME}) || "$H/.local/share"; my $C = $u->($ENV{XDG_CONFIG_HOME}) || "$H/.config";
+  my $de = ($ENV{LANGUAGE} || $ENV{LC_ALL} || $ENV{LC_MESSAGES} || $ENV{LANG} || '') =~ /^de/;
+  my %A = (merge => ['Combine in PDFMy', 'In PDFMy zusammenfügen', \@FM_MIME], compress => ['Compress with PDFMy', 'Mit PDFMy verkleinern', ['application/pdf']]);
+  my $put = sub { my ($f, $data, $mode) = @_; my $fb = $b->($f); my ($d) = $fb =~ m{^(.*)/}; make_path($d);
+    my $db = $b->($data); my $old = slurp($fb); spit($fb, $db) unless defined $old && $old eq $db; chmod($mode // 0644, $fb); };
+  for my $t (sort keys %A) {
+    my ($en, $dn, $mime) = @{ $A{$t} }; my $q = $open; $q =~ s/(["\\`\$])/\\$1/g;
+    my $ex = qq{"$q" --task=$t %F}; my $mt = join(';', @$mime) . ';';
+    $put->("$D/nemo/actions/pdfmy-$t.nemo_action", join("\n", '[Nemo Action]', 'Active=true', "Name=$en", "Name[de]=$dn", 'Comment=PDFMy (pdfmy Scan)',
+      "Exec=$ex", "Icon-Name=$icon", 'Selection=notnone', "Mimetypes=$mt", 'Quote=double', ''));
+    my $sm = join("\n", '[Desktop Entry]', 'Type=Service', "MimeType=$mt", "Actions=pdfmy$t", 'X-KDE-Priority=TopLevel', 'X-KDE-ServiceTypes=KonqPopupMenu/Plugin', '',
+      "[Desktop Action pdfmy$t]", "Name=$en", "Name[de]=$dn", "Icon=$icon", "Exec=$ex", '');
+    $put->("$D/kio/servicemenus/pdfmy-$t.desktop", $sm, 0755);            # KDE 6 (muss ausführbar sein)
+    $put->("$D/kservices5/ServiceMenus/pdfmy-$t.desktop", $sm);           # KDE 5
+    my $sh = join("\n", '#!/bin/sh', "# PDFMy (pdfmy Scan): $dn", qq{exec "$q" --task=$t "\$\@"}, '');
+    for my $sd ("$D/nautilus/scripts", "$C/caja/scripts") {
+      unlink $b->("$sd/" . ($de ? $en : $dn));                            # Sprache gewechselt: alten Namen entfernen
+      $put->("$sd/" . ($de ? $dn : $en), $sh, 0755);
+    }
+  }
+}
 sub open_local {
   my $path = shift;
   return 0 unless defined $path && -f $path && -r _;
@@ -683,11 +742,7 @@ sub open_local {
   if ($IS_MAC && -x '/usr/bin/open' && !$ENV{PDFMY_TEST_NOBROWSER} && $path =~ /\.pdf$/i and my $app = pwa_app()) {
     if (system('/usr/bin/open', '-a', $app, $path) == 0) { logl("Öffnen in der PDFMy-App: $path"); return 'app'; }
   }
-  make_path("$DIR/open");
-  for my $old (glob "$DIR/open/*") { unlink $old if -M $old > 0.0035; }   # älter als 5 Minuten
-  my $tok = join '', map { sprintf '%02x', int rand 256 } 1 .. 16;
-  spit("$DIR/open/$tok", $path);
-  my $url = app_url() . "#open=$tok";
+  my $url = app_url() . '#open=' . new_tok($path);
   system('/usr/bin/open', $url) if $IS_MAC && -x '/usr/bin/open';
   logl("Öffnen: $path");
   return $url;
@@ -934,8 +989,14 @@ sub handle {
   my ($p) = split /\?/, $path;
   # Doppelklick im Finder: nur vom eigenen Mac (ohne Origin, also nicht aus einer Webseite)
   if ($p eq '/open-local' && $method eq 'POST' && !defined $origin) {
-    my $path = $body =~ /^\s*\{/ ? (eval { $J->decode($body)->{path} } // '') : $body; $path =~ s/[\r\n]+$//;
-    my $url = open_local($path);
+    my $url;
+    if ($body =~ /^task=([a-z]+)\n/) {   # mehrere Dateien mit Aufgabe: „task=merge\n/pfad/a.pdf\n/pfad/b.docx“
+      my $task = $1; my @p = grep { length } split /\n/, substr($body, length("task=$task\n"));
+      $url = open_many($task, @p);
+    } else {
+      my $path = $body =~ /^\s*\{/ ? (eval { $J->decode($body)->{path} } // '') : $body; $path =~ s/[\r\n]+$//;
+      $url = open_local($path);
+    }
     return send_json($c, $url ? 200 : 404, $url ? { ok => JSON::PP::true, url => $url } : { error => 'Datei nicht gefunden' });
   }
   # Schutz: nur PDFMy (Origin) und nur mit eigenem Kopf – fremde Seiten können nichts auslösen oder lesen
@@ -1047,6 +1108,7 @@ for my $p ($ENV{PDFMY_PORT} ? ($PORT) : (52880 .. 52889)) {
 $srv or do { logl("Start nicht möglich (Ports 52880–52889 belegt?): $!"); die "pdfmy Scan: Ports belegt\n"; };
 spit("$DIR/port", "$PORT\n");   # Doppelklick-App, Druck-Dienst und Einrichtung lesen hier den eigenen Port
 logl("pdfmy Scan für $OS $VERSION gestartet (Port $PORT" . ($PORT != 52880 ? ' – 52880 ist belegt, anderer Benutzer oder anderes Programm' : '') . ')');
+eval { fm_actions(); 1 } or logl("Rechtsklick-Einträge: $@");
 while (1) {
   my $c = $srv->accept or next;
   my $pid = fork();

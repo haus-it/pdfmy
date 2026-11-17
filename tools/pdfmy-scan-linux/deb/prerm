@@ -6,6 +6,16 @@
 set -e
 case "$1" in
   remove|purge|deconfigure)
+    # Rechtsklick-Einträge der Dateimanager, die der Dienst je Benutzer angelegt hat (ab 1.9.0) – nur die eigenen Dateien
+    for h in $(getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 { print $6 }'); do
+      [ -d "$h" ] || continue
+      for t in merge compress; do
+        rm -f "$h/.local/share/nemo/actions/pdfmy-$t.nemo_action" "$h/.local/share/kio/servicemenus/pdfmy-$t.desktop" "$h/.local/share/kservices5/ServiceMenus/pdfmy-$t.desktop"
+      done
+      for d in "$h/.local/share/nautilus/scripts" "$h/.config/caja/scripts"; do
+        rm -f "$d/In PDFMy zusammenfügen" "$d/Mit PDFMy verkleinern" "$d/Combine in PDFMy" "$d/Compress with PDFMy"
+      done
+    done
     if command -v systemctl >/dev/null 2>&1; then
       systemctl --global disable pdfmy-scan.service >/dev/null 2>&1 || true
       for r in /run/user/*; do

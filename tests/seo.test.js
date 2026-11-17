@@ -214,3 +214,20 @@ test('Explorer „Mit PDFMy verkleinern“ bei mehreren PDFs: einzeln (Stapel), 
   assert.ok(body.indexOf("batchFiles(files, 'small')") < body.indexOf('await importFiles(files)'), 'vor dem gemeinsamen Öffnen');
   assert.match(pro, /function batchAsk\(files, preset\)[\s\S]{0,1200}const last = preset \|\| LS\.get\('batchAct'/);
 });
+
+test('Linux (pdfmy Scan 1.9.0): Rechtsklick zusammenfügen/verkleinern in Nemo, Dolphin, Nautilus, Caja – gesammelt, entfernbar', () => {
+  const pl = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan-mac', 'pdfmy-scan.pl'), 'utf8');
+  assert.match(pl, /my %OPEN_TASKS = \(merge => 1, compress => 1\);/);
+  assert.ok(pl.includes('if ($body =~ /^task=([a-z]+)' + String.fromCharCode(92) + 'n/)'), 'mehrere Pfade in einer Anfrage');
+  assert.match(pl, /'#open=' \. join\(',', map \{ new_tok\(\$_\) \} @ok\) \. "&task=\$task"/);
+  assert.match(pl, /eval \{ fm_actions\(\); 1 \}/, 'Einträge beim Start des Dienstes');
+  for (const p of ['nemo/actions/pdfmy-$t.nemo_action', 'kio/servicemenus/pdfmy-$t.desktop', 'kservices5/ServiceMenus/pdfmy-$t.desktop', 'nautilus/scripts', 'caja/scripts']) assert.ok(pl.includes(p), p);
+  const sh = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan-linux', 'install.sh'), 'utf8'), deb = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan-linux', 'deb', 'pdfmy-open'), 'utf8');
+  assert.ok(sh.includes('case "' + String.fromCharCode(92) + '$1" in --task=*)') && deb.includes('case "$1" in --task=*)'), 'Startskripte nehmen --task an');
+  for (const f of ['uninstall.sh', path.join('deb', 'prerm')]) {
+    const u = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan-linux', f), 'utf8');
+    for (const n of ['pdfmy-$t.nemo_action', 'In PDFMy zusammenfügen', 'Compress with PDFMy']) assert.ok(u.includes(n), `${f} entfernt ${n}`);
+  }
+  assert.match(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8'), /SCAN_MAC_LATEST = '(\d+\.\d+\.\d+)'/);
+  assert.equal(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8').match(/SCAN_MAC_LATEST = '([\d.]+)'/)[1], pl.match(/our \$VERSION = '([\d.]+)'/)[1]);
+});

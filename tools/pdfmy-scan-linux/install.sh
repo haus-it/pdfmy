@@ -132,6 +132,25 @@ pwa() {
   return 1
 }
 app=\$(pwa)
+# Rechtsklick im Dateimanager „In PDFMy zusammenfügen“ / „Mit PDFMy verkleinern“ (1.9.0): alle Dateien zusammen in EIN PDFMy-Fenster
+case "\$1" in --task=*)
+  t=\${1#--task=}; shift; b="task=\$t"
+  for f in "\$@"; do b="\$b
+\$(readlink -f -- "\$f" 2>/dev/null || printf '%s' "\$f")"; done
+  r=\$(send "\$b") || { $STARTER; sleep 2; r=\$(send "\$b"); }
+  u=\$(printf '%s' "\$r" | sed -n 's/.*"url":"\\([^"]*\\)".*/\\1/p')
+  if [ -z "\$u" ]; then
+    m="PDFMy konnte die Dateien nicht öffnen, weil pdfmy Scan nicht läuft. Bitte die Einrichtung (pdfmy-scan-linux.sh) noch einmal starten."
+    command -v notify-send >/dev/null 2>&1 && notify-send "PDFMy" "\$m" || { command -v zenity >/dev/null 2>&1 && zenity --error --text="\$m"; } || echo "\$m" >&2
+    exit 1
+  fi
+  if [ -n "\$app" ]; then   # im Fenster der installierten App (wie ein Schnellstart der App)
+    e=\$(sed -n 's/^Exec=//p' "\$app" | head -n 1 | sed 's/ %[UuFf]//g')
+    if [ -n "\$e" ]; then sh -c "\$e --app-launch-url-for-shortcuts-menu-item=\"\\\$1\"" pdfmy "\$u" >/dev/null 2>&1 & exit 0; fi
+  fi
+  xdg-open "\$u" >/dev/null 2>&1 &
+  exit 0;;
+esac
 for f in "\$@"; do
   p=\$(readlink -f -- "\$f" 2>/dev/null || printf '%s' "\$f")
   if [ -n "\$app" ] && case "\$p" in *.[pP][dD][fF]) true;; *) false;; esac; then   # App-Fenster nur für PDFs (die App nimmt nur .pdf an)

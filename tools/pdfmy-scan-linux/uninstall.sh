@@ -13,6 +13,13 @@ if command -v systemctl >/dev/null 2>&1; then
 fi
 pkill -f "$DIR/pdfmy-scan.pl" >/dev/null 2>&1
 rm -f "$CONF/autostart/pdfmy-scan.desktop" "$DATA/applications/pdfmy.desktop"
+# Rechtsklick-Einträge der Dateimanager (ab 1.9.0): Nemo, Dolphin (KDE 5/6), Nautilus und Caja
+for t in merge compress; do
+  rm -f "$DATA/nemo/actions/pdfmy-$t.nemo_action" "$DATA/kio/servicemenus/pdfmy-$t.desktop" "$DATA/kservices5/ServiceMenus/pdfmy-$t.desktop"
+done
+for d in "$DATA/nautilus/scripts" "$CONF/caja/scripts"; do
+  rm -f "$d/In PDFMy zusammenfügen" "$d/Mit PDFMy verkleinern" "$d/Combine in PDFMy" "$d/Compress with PDFMy"
+done
 # PDFMy als Standard für PDFs austragen (das bisherige Programm der Arbeitsoberfläche gilt wieder)
 if [ -f "$CONF/mimeapps.list" ]; then
   sed -i -e 's/pdfmy\.desktop;\{0,1\}//g' -e '/^application\/pdf=$/d' "$CONF/mimeapps.list"
