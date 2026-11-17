@@ -162,3 +162,13 @@ test('laden.js: Programmteile nach dem ersten Bild, gleiche Reihenfolge, „load
   assert.match(src, /html = deferScripts\(html\);\nwrite\('index\.html', html\);/);
   assert.match(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8'), /'js\/laden\.js'/, 'offline verfügbar');
 });
+
+test('Hilfe: häufige Fragen als FAQPage, je Sprache aus den übersetzten Fragen; Startseite mit Entität (GEO)', () => {
+  const hilfe = fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8');
+  const n = (hilfe.match(/<details class="faq"><summary>/g) || []).length;
+  assert.ok(n >= 5, 'Fragen in der Hilfe: ' + n);
+  assert.match(src, /write\('hilfe\.html', page\('Hilfe', hilfeSrc, ld\(\{ '@context': 'https:\/\/schema\.org', '@type': 'FAQPage'/);
+  const pre = fs.readFileSync(path.join(ROOT, 'tools', 'prerender.js'), 'utf8');
+  assert.ok(pre.includes("details.faqd, details.faq"), 'prerender übersetzt auch die Hilfe-Fragen');
+  assert.match(src, /sameAs: \['https:\/\/github\.com\/haus-it\/pdfmy'\]/);
+});

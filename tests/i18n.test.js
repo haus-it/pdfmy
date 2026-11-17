@@ -121,5 +121,5 @@ test('Webseiten: wechselnde Werte als Platzhalter, keine Erwähnung von /mentor,
     const i = build.indexOf(`write('${p}', page(`), seg = build.slice(i, build.indexOf('\nwrite(', i + 10));
     assert.ok(i > 0 && !/,\s*true\)\);/.test(seg), p + ' ohne Sprachwahl (nur deutsch)');
   }
-  assert.match(build, /write\('hilfe\.html', page\('Hilfe', [^\n]*, '', true\)\)/, 'Hilfe mehrsprachig');
+  assert.match(build, /write\('hilfe\.html', page\('Hilfe', [^\n]*, true\)\)/, 'Hilfe mehrsprachig');
 });

@@ -70,7 +70,10 @@ rep('</head>', `<link rel="canonical" href="https://${site.domain}/">
   applicationCategory: 'BusinessApplication', operatingSystem: 'Windows, macOS, Linux, Android, iOS (Browser)', browserRequirements: 'Chrome, Edge, Firefox oder Safari',
   description: 'Kostenlose PDF-Werkzeuge ohne Upload: scannen mit Texterkennung, zusammenfügen, verkleinern, schwärzen, unterschreiben, E-Rechnung, PDF/A.',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' }, inLanguage: 'de',
-  publisher: { '@type': 'Organization', name: op.company, address: { '@type': 'PostalAddress', streetAddress: op.street, addressLocality: 'Paderborn', postalCode: '33104', addressCountry: 'DE' } } }).replace(/</g, '\\u003c')}</script>
+  // Zuordnung für Suchmaschinen und KI-Dienste (Entität): Quellcode, Hilfe, Hersteller-Website
+  sameAs: ['https://github.com/haus-it/pdfmy'], softwareHelp: { '@type': 'WebPage', url: `https://${site.domain}/hilfe.html` },
+  featureList: 'Scannen mit Texterkennung (OCR), PDF zusammenfügen, aufteilen, verkleinern, bearbeiten, schwärzen, unterschreiben (PAdES), Formulare, PDF/A, PDF/UA, E-Rechnung (ZUGFeRD, XRechnung), PDF vergleichen, offline nutzbar',
+  publisher: { '@type': 'Organization', name: op.company, url: 'https://mentor-group.de', address: { '@type': 'PostalAddress', streetAddress: op.street, addressLocality: 'Paderborn', postalCode: '33104', addressCountry: 'DE' } } }).replace(/</g, '\\u003c')}</script>
 </head>`);
 // Öffentliche Nutzungszahl (tools/site.json → stats): erst ab 1.000, abgerundet auf volle Tausend, nur belegte Zahlen
 const stats = site.stats || {};
@@ -862,7 +865,14 @@ write('werkzeuge.html', page('Alle PDF-Werkzeuge', `${toolStyle}
 <p><a class="cta" href="./">PDFMy öffnen →</a></p>`, `<meta name="description" content="Alle kostenlosen PDF-Werkzeuge von PDFMy: zusammenfügen, verkleinern, schwärzen, unterschreiben, OCR, E-Rechnung und mehr – ohne Upload."><link rel="canonical" href="https://${site.domain}/werkzeuge.html">`));
 
 // Öffentlicher Hilfebereich (tools/site): Anleitungen, häufige Fragen, Suche
-write('hilfe.html', page('Hilfe', fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8'), '', true));
+// Häufige Fragen der Hilfe zusätzlich als strukturierte Daten (FAQPage) – für Suchmaschinen und KI-Antworten (GEO);
+// prerender.js erzeugt sie je Sprache neu aus den übersetzten <details class="faq">.
+const hilfeSrc = fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8');
+const plain = s => s.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const hilfeFaq = [...hilfeSrc.matchAll(/<details class="faq"><summary>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g)]
+  .map(m => ({ '@type': 'Question', name: plain(m[1]), acceptedAnswer: { '@type': 'Answer', text: [...m[2].matchAll(/<p>([\s\S]*?)<\/p>/g)].map(p => plain(p[1])).join(' ') } }));
+if (hilfeFaq.length < 5) throw new Error('hilfe.html: häufige Fragen nicht gefunden');
+write('hilfe.html', page('Hilfe', hilfeSrc, ld({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: hilfeFaq }), true));
 copy('tools/site/hilfe.js', 'hilfe.js');
 copy('tools/site/sprache.js', 'sprache.js');
 // Wörterbücher der mehrsprachigen Webseiten (Hilfe, Scanner): i18n/site/<code>.json – erzeugt mit node tools/i18n-check.js --site merge <code>

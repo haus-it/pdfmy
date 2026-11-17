@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Strukturierte Daten für Hilfe und Startseite (app-v274)
+- Hilfe: die häufigen Fragen zusätzlich als strukturierte Daten (FAQPage) – in allen 40 Sprachen, erzeugt aus den übersetzten Fragen. Vorher hatte die Hilfe keine strukturierten Daten (Prüfung aller Sitemap-Seiten: 18 von 95 ohne).
+- Startseite: Verweis auf den Quellcode (GitHub), die Hilfe, die Funktionsliste und die Website des Herstellers in den strukturierten Daten, damit Suchmaschinen und KI-Dienste PDFMy eindeutig zuordnen.
+- Bing Webmaster Tools eingerichtet (Import aus der Google Search Console, Sitemap übernommen).
+
 ### Startseite: Programmteile nach dem ersten Bild, Wörterbücher komprimiert (app-v273)
 - Neu `js/laden.js` (nur pdfmy.de): Die rund 40 Programmteile der Startseite werden weiter sofort geladen, aber erst nach dem ersten Bild ausgeführt – in unveränderter Reihenfolge. Ist die Seite dann schon fertig geladen, bekommen Programmteile, die auf „load“ warten (z. B. „Fehler melden“, über „Teilen“ übergebene Dateien), das Ereignis nach dem letzten Teil. Geprüft: 320/320 Tests, Probelauf 9/9 (App, PDF öffnen und speichern, PDF/A, beA, offline, keine Skriptfehler, Handy), „?melden“ im Browser.
 - Einzelne Teile erst bei Bedarf zu laden wurde verworfen: app.js und pro.js teilen globale Funktionen; das hätte Funktionen gebrochen.

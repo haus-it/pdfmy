@@ -102,7 +102,7 @@ async function render(cr, port, page, code) {
     await ev(`I18N.ready().then(() => new Promise(r => setTimeout(r, 150)))`);
     // FAQ-Daten (JSON-LD) aus den übersetzten Fragen neu erzeugen
     await ev(`(() => { const ld = [...document.querySelectorAll('script[type="application/ld+json"]')].find(x => /FAQPage/.test(x.textContent)); if (!ld) return;
-      const qa = [...document.querySelectorAll('details.faqd')].map(d => ({ '@type': 'Question', name: d.querySelector('summary').textContent.trim(), acceptedAnswer: { '@type': 'Answer', text: d.querySelector('p').textContent.trim() } }));
+      const qa = [...document.querySelectorAll('details.faqd, details.faq')].map(d => ({ '@type': 'Question', name: d.querySelector('summary').textContent.replace(/\\s+/g, ' ').trim(), acceptedAnswer: { '@type': 'Answer', text: [...d.querySelectorAll('p')].map(p => p.textContent.replace(/\\s+/g, ' ').trim()).join(' ') } }));
       if (qa.length) ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: qa }).replace(/</g, '\\\\u003c'); })()`);
     const html = await ev(`document.documentElement.classList.remove('i18n-wait'); document.documentElement.outerHTML`);
     if (!html || !/<html/i.test(html)) throw new Error('leeres Ergebnis');
