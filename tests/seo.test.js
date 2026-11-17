@@ -188,3 +188,21 @@ test('Taskleiste: Schnellstarts (Rechtsklick) führen zu vorhandenen Werkzeugen 
   assert.match(pro, /window\.pdfmyStart\(\);/, 'Start mit ?start=');
   assert.match(fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8'), /Schnellstart per Rechtsklick/);
 });
+
+test('Explorer-Rechtsklick (pdfmy Scan 1.19.0): Zusammenfügen und Verkleinern – gesammelt in einem Fenster', () => {
+  const cs = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Program.cs'), 'utf8');
+  assert.match(cs, /\["Merge"\] = Tuple\.Create\("merge"/);
+  assert.match(cs, /\["Compress"\] = Tuple\.Create\("compress", new\[\] \{ "\.pdf" \}\)/);
+  assert.match(cs, /--open --task=\{v\.Value\.Item1\} \\"%1\\"/, 'Befehl je Verb');
+  assert.match(cs, /PDFMy\.\{v\.Key\}", false\)/, 'Deinstallation entfernt die Einträge');
+  assert.match(cs, /"#open=" \+ string\.Join\(",", files\.Select\(NewToken\)\) \+ "&task=" \+ task/, 'alle Dateien in einer Adresse');
+  assert.match(cs, /HandOverWhenReady/, 'Start je Datei: auf die erste Instanz warten');
+  const pro = fs.readFileSync(path.join(ROOT, 'js', 'pro.js'), 'utf8');
+  const re = new RegExp(pro.match(/location\.hash\.match\(\/(\^#open=[^\n]*?\$)\/\)/)[1]);
+  assert.ok(re.test('#open=' + 'a'.repeat(32)), 'einzelne Datei wie bisher');
+  const m = ('#open=' + ['a', 'b', 'c'].map(x => x.repeat(32)).join(',') + '&task=merge').match(re);
+  assert.ok(m && m[1].split(',').length === 3 && m[2] === 'merge');
+  assert.ok(!re.test('#open=' + 'a'.repeat(32) + '&task=Merge;x'), 'nur Kleinbuchstaben');
+  assert.match(pro, /HASH_TASKS = new Set\(\['merge', 'compress'\]\)/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8'), /#open=\[a-f0-9,\]\+\(&task=\[a-z\]\+\)\?\$\/\.test\(t\)\) location\.hash = new URL\(t\)\.hash/, 'laufende App');
+});

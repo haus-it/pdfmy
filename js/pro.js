@@ -2778,17 +2778,25 @@ $('#viewer').addEventListener('keydown', e => {
 
 
 /* ---------- PDFs per Doppelklick im Explorer öffnen (über pdfmy Scan, Datei bleibt lokal) ---------- */
+// Rechtsklick „In PDFMy zusammenfügen“ / „Mit PDFMy verkleinern“ (pdfmy Scan 1.19.0): mehrere Kennwörter und die Aufgabe – #open=a,b,c&task=merge
+const HASH_TASKS = new Set(['merge', 'compress']);
 async function openFromHash() {
-  const m = location.hash.match(/^#open=([a-f0-9]{16,64})$/); if (!m) return;
+  const m = location.hash.match(/^#open=([a-f0-9]{16,64}(?:,[a-f0-9]{16,64}){0,49})(?:&task=([a-z]+))?$/); if (!m) return;
   history.replaceState(null, '', location.pathname + location.search);   // Einmal-Kennwort aus der Adresszeile entfernen
   try {
     await scanHelperRunning();   // eigenen pdfmy Scan finden (auf Terminalservern ggf. nicht Port 52880)
-    const r = await fetch(`${SCAN_API}/file/${m[1]}`, { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' });
-    if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Fehler ' + r.status);
-    const name = decodeURIComponent(r.headers.get('X-Pdfmy-Name') || 'Dokument.pdf');
+    const files = [];
+    for (const tok of m[1].split(',')) {
+      const r = await fetch(`${SCAN_API}/file/${tok}`, { headers: { 'X-Pdfmy': '1' }, cache: 'no-store' });
+      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Fehler ' + r.status);
+      const name = decodeURIComponent(r.headers.get('X-Pdfmy-Name') || 'Dokument.pdf');
+      // Rechtsklick „In PDFMy öffnen“ (pdfmy Scan 1.18.0): auch Word, Excel, Bilder, E-Mails – Dateityp aus dem Namen
+      files.push(new File([await r.blob()], name, { type: /\.pdf$/i.test(name) ? 'application/pdf' : mimeOf(name) }));
+    }
+    const name = files.length > 1 ? files.map(f => f.name).join(', ') : files[0].name;
     if (state.pages.length) { if (state.dirty && !confirm(`„${name}“ öffnen? Das aktuelle Dokument wurde noch nicht gespeichert und wird geschlossen.`)) return; resetDoc(); }
-    // Rechtsklick „In PDFMy öffnen“ (pdfmy Scan 1.18.0): auch Word, Excel, Bilder, E-Mails – Dateityp aus dem Namen
-    await importFiles([new File([await r.blob()], name, { type: /\.pdf$/i.test(name) ? 'application/pdf' : mimeOf(name) })]);
+    if (m[2] && HASH_TASKS.has(m[2])) state.intent = m[2];
+    await importFiles(files);
     state.dirty = false;   // Original liegt unverändert auf dem Rechner
   } catch (e) { status(`Die Datei konnte nicht geöffnet werden: ${e.message}`); toast('Datei konnte nicht geöffnet werden – bitte noch einmal doppelt anklicken.', 6000); }
 }

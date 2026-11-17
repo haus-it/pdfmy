@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Explorer-Rechtsklick: „In PDFMy zusammenfügen“ und „Mit PDFMy verkleinern“ (pdfmy Scan 1.19.0, app-v276)
+- Vergleich: Acrobat („Dateien in Acrobat kombinieren“), Foxit und Nitro bieten im Explorer „Umwandeln“ und „Kombinieren“, PDF24 ein Untermenü. PDFMy hatte nur „In PDFMy öffnen“; mehrere markierte Dateien öffneten sich einzeln.
+- Neu (Windows): mehrere Dateien markieren → Rechtsklick → „In PDFMy zusammenfügen“. Das geht für PDF, Word, Excel, PowerPoint, OpenDocument, Bilder und Text, auch gemischt. Bei PDFs gibt es zusätzlich „Mit PDFMy verkleinern“. Die Menütexte erscheinen in der Sprache von Windows (zehn Sprachen, sonst Englisch).
+- pdfmy Scan sammelt die Dateien. Windows startet das Programm einmal je Datei, deshalb wartet pdfmy Scan kurz, bis alle da sind, und sortiert sie nach Namen wie der Explorer (2 vor 10). Danach öffnet es alle in **einem** PDFMy-Fenster, im Fenster der installierten App, wenn vorhanden. PDFMy übernimmt sie gemeinsam als ein Dokument (`#open=a,b,c&task=merge`); dort lässt sich die Reihenfolge per Ziehen ändern. Die Dateien bleiben auf dem Rechner, die Einmal-Kennwörter gelten 5 Minuten.
+- Geprüft auf diesem Rechner: drei Aufrufe nacheinander ergeben eine Adresse, und PDFMy öffnet daraus ein Dokument mit drei Seiten im Modus „Zusammenfügen“. Außerdem öffnet der Start der installierten App mit einer Adresse diese Adresse auch im schon offenen Fenster.
+
 ### Schnellstart per Rechtsklick auf das Taskleisten-Symbol (app-v275)
 - Vergleich (Recherche 17.11.2026): Acrobat zeigt beim Rechtsklick auf das Taskleisten-Symbol nur zuletzt geöffnete Dateien; bei PDF24, Foxit, PDF-XChange, Nitro und PDFgear ist dort nichts dokumentiert. PDFMy zeigte bisher nur „PDFMy“.
 - Neu: Rechtsklick auf das Symbol der installierten App (Taskleiste, Startmenü; am Handy gedrückt halten) bietet „Mit Kamera scannen“, „PDFs zusammenfügen“, „PDF bearbeiten“, „PDF verkleinern“, „Unterschreiben“, „Text erkennen (OCR)“ und „E-Rechnung schreiben“ (`manifest.webmanifest` → `shortcuts`).

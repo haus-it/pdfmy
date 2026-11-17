@@ -4590,7 +4590,7 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.18.1';
+const SCAN_LATEST = '1.19.0';
 const SCAN_MAC_LATEST = '1.8.1';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 /* Linux: passendes Paket (Doppelklick, meist ohne Terminal; sonst linuxPkgCmd) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
@@ -5062,7 +5062,13 @@ addEventListener('load', async () => {   // erst wenn alle Programmteile geladen
 if (NATIVE) { const take = () => NATIVE.opened().then(fs => { if (fs.length) (window.openWithChoice || importFiles)(fs); }).catch(e => status(e.message)); addEventListener('pdfmyOpen', take); setTimeout(take, 0); }
 if ('launchQueue' in window) launchQueue.setConsumer(async params => {
   // Schnellstart aus der Taskleiste (Rechtsklick → „Scannen“, „Zusammenfügen“ …): läuft die App schon, kommt die Adresse hierher statt als Seitenaufruf
-  if (!params.files?.length) { if (/[?&]start=/.test(params.targetURL || '')) { window.pdfmyStartUrl = params.targetURL; window.pdfmyStart?.(); } return; }
+  if (!params.files?.length) {
+    const t = params.targetURL || '';
+    if (/[?&]start=/.test(t)) { window.pdfmyStartUrl = t; window.pdfmyStart?.(); }
+    // Rechtsklick im Explorer „In PDFMy zusammenfügen“ (pdfmy Scan): Kennwörter im #-Teil → js/pro.js openFromHash
+    else if (/#open=[a-f0-9,]+(&task=[a-z]+)?$/.test(t)) location.hash = new URL(t).hash;
+    return;
+  }
   let files;
   try { files = await Promise.all(params.files.map(readLaunched)); }
   catch (e) {

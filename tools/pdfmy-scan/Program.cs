@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.18.1";
+        public const string Version = "1.19.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -89,7 +89,10 @@ namespace PdfmyScan
             int oi = Array.IndexOf(args, "--open");
             var openPaths = oi >= 0 ? args.Skip(oi + 1).Where(a => !a.StartsWith("--")).Take(10).ToList() : new List<string>();
             string openPath = openPaths.FirstOrDefault();
-            if (openPath != null && openPaths.All(FileOpen.HandOver)) return;   // läuft schon → Dateien an die laufende Instanz geben
+            // Rechtsklick „In PDFMy zusammenfügen“ / „Mit PDFMy verkleinern“ (1.19.0): --task=merge bzw. --task=compress
+            string task = args.Where(a => a.StartsWith("--task=")).Select(a => a.Substring(7)).FirstOrDefault();
+            if (task != null && !FileOpen.Tasks.Contains(task)) task = null;
+            if (openPath != null && openPaths.All(f => FileOpen.HandOver(f, task))) return;   // läuft schon → Dateien an die laufende Instanz geben
             if (Machine.DeferToMachine(args)) return;   // für alle Benutzer installiert: eigene Kopie des Benutzers tritt zurück
 
             bool first;
@@ -99,6 +102,8 @@ namespace PdfmyScan
             if (!first) Log("Start: läuft bereits (gleiche oder neuere Version)");
             using (mutex)
             {
+                // Mehrere Dateien per Rechtsklick: Windows startet je Datei ein Programm – die erste Instanz fährt evtl. gerade hoch → kurz warten und übergeben
+                if (!first && openPath != null && FileOpen.HandOverWhenReady(openPaths, task)) return;
                 if (!first) { if (!args.Contains("--deferred") || openPath != null) OpenPdfmy(); return; }   // --deferred: Autostart einer zurückgetretenen Benutzerkopie – nichts öffnen   // gleiche/neuere Version läuft schon → nur pdfmy öffnen
                 // --portable: ohne Installation/Autostart laufen (z. B. für Tests)
                 if (!args.Contains("--portable") && Installer.InstallIfNeeded()) return; // Erstinstallation: Kopie wurde gestartet
@@ -108,7 +113,7 @@ namespace PdfmyScan
                 var server = new LocalServer(hub);
                 server.Start();
                 PdfPrinter.Watch();
-                foreach (var f in openPaths) FileOpen.Open(f);
+                foreach (var f in openPaths) FileOpen.Open(f, task);
                 _ = hub.RefreshAsync();
                 Application.Run(new TrayContext(hub, args.Contains("--installed"), args.Contains("--updated")));
                 server.Stop();
@@ -1296,7 +1301,8 @@ namespace PdfmyScan
             try { File.WriteAllText(appFile, appUrl); } catch { }
         }
         // Läuft pdfmy Scan schon? Dann die Datei dorthin weitergeben
-        public static bool HandOver(string file)
+        public static bool HandOver(string file) => HandOver(file, null);
+        public static bool HandOver(string file, string task)
         {
             try
             {
@@ -1304,12 +1310,76 @@ namespace PdfmyScan
                 using (var h = new HttpClient { Timeout = TimeSpan.FromSeconds(4) })
                 {
                     var req = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{port}/open-local")
-                    { Content = new StringContent(new JavaScriptSerializer().Serialize(new { path = Path.GetFullPath(file) }), Encoding.UTF8, "application/json") };
+                    { Content = new StringContent(new JavaScriptSerializer().Serialize(new { path = Path.GetFullPath(file), task }), Encoding.UTF8, "application/json") };
                     req.Headers.Add("X-Pdfmy", "1");
                     return h.SendAsync(req).Result.IsSuccessStatusCode;
                 }
             }
             catch { return false; }
+        }
+        // Die erste Instanz startet gerade (mehrere Dateien per Rechtsklick → je Datei ein Programmstart): bis 10 s auf ihren Server warten
+        public static bool HandOverWhenReady(List<string> files, string task)
+        {
+            for (int i = 0; i < 40; i++) { if (files.All(f => HandOver(f, task))) return true; Thread.Sleep(250); }
+            return false;
+        }
+        // Aufgaben für den Rechtsklick im Explorer: alle ausgewählten Dateien kommen gesammelt in EIN PDFMy-Fenster
+        public static readonly string[] Tasks = { "merge", "compress" };
+        static readonly List<string> batch = new List<string>();
+        static string batchTask; static System.Threading.Timer batchTimer;
+        [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)] static extern int StrCmpLogicalW(string a, string b);
+        public static void Open(string file, string task)
+        {
+            if (task == null || !Tasks.Contains(task)) { Open(file); return; }
+            try
+            {
+                file = Path.GetFullPath(file);
+                if (!File.Exists(file)) { Program.Log("Öffnen: Datei nicht gefunden: " + file); return; }
+                file = Secure(file);
+                lock (batch)
+                {
+                    if (batchTask != null && batchTask != task) Flush();
+                    batchTask = task;
+                    if (batch.Count < 50 && !batch.Contains(file, StringComparer.OrdinalIgnoreCase)) batch.Add(file);
+                    // Windows ruft je ausgewählter Datei einzeln auf – kurz sammeln, dann alle zusammen öffnen
+                    batchTimer?.Dispose(); batchTimer = new System.Threading.Timer(_ => { lock (batch) Flush(); }, null, 1200, Timeout.Infinite);
+                }
+            }
+            catch (Exception e) { Program.Log("Öffnen: " + e.Message); }
+        }
+        static void Flush()
+        {
+            if (batch.Count == 0) return;
+            var files = batch.ToList(); string task = batchTask; batch.Clear(); batchTask = null;
+            files.Sort((a, b) => StrCmpLogicalW(Path.GetFileName(a), Path.GetFileName(b)));   // Reihenfolge wie im Explorer nach Name (2 vor 10)
+            string url = AppUrl + "#open=" + string.Join(",", files.Select(NewToken)) + "&task=" + task;
+            Program.Log($"Öffnen ({task}): {files.Count} Datei(en)");
+            if (Environment.GetEnvironmentVariable("PDFMY_TEST_NOBROWSER") == "1") { File.WriteAllText(Path.Combine(Program.DataDir, "test-open.txt"), url); return; }
+            try { if (!OpenUrlInApp(url)) Process.Start(url); } catch (Exception e) { Program.Log("Öffnen: " + e.Message); }
+        }
+        static string NewToken(string file)
+        {
+            var b = new byte[16]; using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create()) rng.GetBytes(b);
+            string tok = BitConverter.ToString(b).Replace("-", "").ToLowerInvariant();
+            foreach (var old in tokens.Where(t => t.Value.Value < DateTime.UtcNow.AddMinutes(-5)).ToList()) tokens.TryRemove(old.Key, out _);
+            tokens[tok] = new KeyValuePair<string, DateTime>(file, DateTime.UtcNow);
+            return tok;
+        }
+        // Adresse im Fenster der installierten App öffnen (wie ein Schnellstart der Taskleiste); läuft die App schon, kommt sie dort über launchQueue an
+        static bool OpenUrlInApp(string url)
+        {
+            string cmd = AppCommand(); if (cmd == null) return false;
+            try
+            {
+                int q = cmd.IndexOf('"', 1);
+                string exe = cmd.Substring(1, q - 1), args = cmd.Substring(q + 1).Trim();
+                int s = args.IndexOf("--single-argument", StringComparison.Ordinal); if (s >= 0) args = args.Substring(0, s).Trim();
+                args = args.Replace("%1", "").Trim() + " --app-launch-url-for-shortcuts-menu-item=" + url;
+                Process.Start(new ProcessStartInfo(exe, args) { UseShellExecute = false });
+                Program.Log("Öffnen in der PDFMy-App (Adresse)");
+                return true;
+            }
+            catch (Exception e) { Program.Log("App starten: " + e.Message); return false; }
         }
         public static void Open(string file)
         {
@@ -1320,10 +1390,7 @@ namespace PdfmyScan
                 file = Secure(file);
                 // installierte PDFMy-App (Chrome/Edge): eigenes Fenster – nur für PDFs (die App nimmt laut Manifest nur .pdf an)
                 if (Environment.GetEnvironmentVariable("PDFMY_TEST_NOBROWSER") != "1" && file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) && OpenInApp(file)) return;
-                var b = new byte[16]; using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create()) rng.GetBytes(b);
-                string tok = BitConverter.ToString(b).Replace("-", "").ToLowerInvariant();
-                foreach (var old in tokens.Where(t => t.Value.Value < DateTime.UtcNow.AddMinutes(-5)).ToList()) tokens.TryRemove(old.Key, out _);
-                tokens[tok] = new KeyValuePair<string, DateTime>(file, DateTime.UtcNow);
+                string tok = NewToken(file);
                 Program.Log("Öffnen: " + Path.GetFileName(file));
                 string url = AppUrl + "#open=" + tok;   // Kennwort im #-Teil: wird nie an den Server gesendet
                 if (Environment.GetEnvironmentVariable("PDFMY_TEST_NOBROWSER") == "1") { File.WriteAllText(Path.Combine(Program.DataDir, "test-open.txt"), url); return; }
@@ -1584,6 +1651,15 @@ namespace PdfmyScan
                         k.SetValue("", MenuText()); k.SetValue("Icon", appIco); k.SetValue("MultiSelectModel", "Player");
                         using (var c = k.CreateSubKey("command")) c.SetValue("", cmd);
                     }
+                // Wie Acrobat („Dateien in Acrobat kombinieren“), Foxit, Nitro und PDF24 (1.19.0): ausgewählte Dateien zu einer PDF zusammenfügen
+                // (PDF, Word, Excel, Bilder … gemischt) und PDFs verkleinern – alle ausgewählten Dateien landen in EINEM PDFMy-Fenster
+                foreach (var v in Verbs)
+                    foreach (var ext in v.Value.Item2)
+                        using (var k = Registry.CurrentUser.CreateSubKey($@"Software\Classes\SystemFileAssociations\{ext}\shell\PDFMy.{v.Key}"))
+                        {
+                            k.SetValue("", VerbText(v.Key)); k.SetValue("Icon", appIco); k.SetValue("MultiSelectModel", "Player");
+                            using (var c = k.CreateSubKey("command")) c.SetValue("", $"\"{exe}\" --open --task={v.Value.Item1} \"%1\"");
+                        }
                 SendTo(exe, appIco, true);
                 RemoveOld();   // Eintrag von 1.6.0 (Mertens GmbH) entfernen; die Standard-App hängt an der ProgId und bleibt erhalten
                 SHChangeNotify(0x08000000, 0, IntPtr.Zero, IntPtr.Zero);   // Explorer: Zuordnungen neu lesen
@@ -1596,6 +1672,7 @@ namespace PdfmyScan
             try { using (var k = Registry.CurrentUser.OpenSubKey(@"Software\Classes\.pdf\OpenWithProgids", true)) k?.DeleteValue(ProgId, false); } catch { }
             try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\Applications\pdfmy-Scan.exe", false); } catch { }
             foreach (var ext in MenuExt) try { Registry.CurrentUser.DeleteSubKeyTree($@"Software\Classes\SystemFileAssociations\{ext}\shell\PDFMy.Open", false); } catch { }
+            foreach (var v in Verbs) foreach (var ext in v.Value.Item2) try { Registry.CurrentUser.DeleteSubKeyTree($@"Software\Classes\SystemFileAssociations\{ext}\shell\PDFMy.{v.Key}", false); } catch { }
             SendTo(null, null, false);
             try { Registry.CurrentUser.DeleteSubKeyTree(Root, false); } catch { }
             RemoveOld();
@@ -1620,6 +1697,29 @@ namespace PdfmyScan
                 case "cs": return "Otevřít v PDFMy";
                 case "tr": return "PDFMy'de aç";
                 default: return "Open in PDFMy";
+            }
+        }
+        // Weitere Rechtsklick-Einträge: Name → (Aufgabe in PDFMy, Dateitypen)
+        static readonly Dictionary<string, Tuple<string, string[]>> Verbs = new Dictionary<string, Tuple<string, string[]>>
+        {
+            ["Merge"] = Tuple.Create("merge", MenuExt.Where(e => e != ".eml" && e != ".msg").ToArray()),
+            ["Compress"] = Tuple.Create("compress", new[] { ".pdf" }),
+        };
+        static string VerbText(string verb)
+        {
+            bool merge = verb == "Merge";
+            switch (System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
+            {
+                case "de": return merge ? "In PDFMy zusammenfügen" : "Mit PDFMy verkleinern";
+                case "fr": return merge ? "Combiner dans PDFMy" : "Compresser avec PDFMy";
+                case "it": return merge ? "Unisci in PDFMy" : "Comprimi con PDFMy";
+                case "es": return merge ? "Combinar en PDFMy" : "Comprimir con PDFMy";
+                case "nl": return merge ? "Samenvoegen in PDFMy" : "Verkleinen met PDFMy";
+                case "pl": return merge ? "Połącz w PDFMy" : "Zmniejsz w PDFMy";
+                case "pt": return merge ? "Juntar no PDFMy" : "Comprimir com o PDFMy";
+                case "cs": return merge ? "Sloučit v PDFMy" : "Zmenšit v PDFMy";
+                case "tr": return merge ? "PDFMy'de birleştir" : "PDFMy ile küçült";
+                default: return merge ? "Combine in PDFMy" : "Compress with PDFMy";
             }
         }
         // „Senden an → PDFMy“: Verknüpfung im SendTo-Ordner des Benutzers (mehrere Dateien auf einmal)
@@ -1847,7 +1947,7 @@ namespace PdfmyScan
             if (p == "/open-local" && method == "POST" && !cors.ContainsKey("Access-Control-Allow-Origin"))   // nur vom eigenen Programm (ohne Origin)
             {
                 var o = json.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(body));
-                FileOpen.Open(Convert.ToString(o["path"]));
+                FileOpen.Open(Convert.ToString(o["path"]), o.ContainsKey("task") && o["task"] != null ? Convert.ToString(o["task"]) : null);
                 SendJson(s, 200, new { ok = true }, cors); return;
             }
             if (p == "/certs" && method == "GET") { SendJson(s, 200, new { certs = WinSign.List() }, cors); return; }
