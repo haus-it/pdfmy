@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Suchergebnis: Titel und Beschreibungen passend gekürzt, Sitemap mit Änderungsdatum (app-v271)
+- Neu `tools/seo/snippet.js`: Nach der Übersetzung werden alle Webseiten für das Suchergebnis eingepasst (Google zeigt etwa 60 Zeichen Titel und 160 Zeichen Beschreibung). Titel über 60 Zeichen verlieren nur den Zusatz „– PDFMy“; die Stichwörter bleiben, denn sie zählen auch ungezeigt für die Rangfolge. Beschreibungen über 160 Zeichen enden nach dem letzten ganzen Satz, sonst am letzten Gedankenstrich – nicht mitten im Wort, wie es die Suchmaschine abschneidet. Wirkt in allen 40 Sprachen, ohne Übersetzungen zu ändern.
+- Startseite: Beschreibung 182 → 153 Zeichen, in allen 39 Sprachen höchstens 160.
+- Sitemap mit `lastmod`: Das Datum ändert sich nur, wenn sich der Inhalt einer Seite wirklich ändert (Fingerabdruck in `.deploy/lastmod.json`). Google nutzt `lastmod` nur bei verlässlichen Angaben und entscheidet damit, welche der gut 1.000 noch nicht abgerufenen Seiten es zuerst holt.
+- Tests in `tests/seo.test.js`.
+
 ### Startseiten-Titel für die Suche gekürzt (app-v270)
 - Entscheidung GF 17.11.2026: Der Tab-Titel der Startseite hatte 99 Zeichen und begann mit „PDFMy – powered by Mentor Group“. Google zeigt etwa 60 Zeichen, das Stichwort ging verloren. Neu: „PDF bearbeiten, scannen, zusammenfügen – ohne Upload | PDFMy“ (60 Zeichen), in allen 39 Sprachen höchstens 60 Zeichen.
 - „powered by Mentor Group“ bleibt sichtbar: im Logo, im Banner und beim Teilen in sozialen Netzwerken (og:title).

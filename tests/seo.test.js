@@ -53,3 +53,47 @@ test('Startseite: Tab-Titel ≤ 60 Zeichen mit Stichwort vorne, in allen Sprache
     assert.ok(len(t) <= 60 && t.endsWith('| PDFMy'), f + ': ' + len(t) + ' Zeichen');
   }
 });
+
+test('Suchergebnis-Ausschnitt: Titel und Beschreibung werden nach der Übersetzung passend gekürzt', () => {
+  const { fitTitle, fitDesc, fitHtml } = require('../tools/seo/snippet.js');
+  const len = s => [...s].length;
+  // Titel: nur die Marke entfällt, Stichwörter bleiben (sie zählen für die Rangfolge auch ungezeigt)
+  assert.equal(fitTitle('Bilder aus PDF extrahieren – in Originalgröße, ohne Upload – PDFMy'), 'Bilder aus PDF extrahieren – in Originalgröße, ohne Upload');
+  assert.equal(fitTitle('PDF zusammenfügen – kostenlos und ohne Upload – PDFMy'), 'PDF zusammenfügen – kostenlos und ohne Upload – PDFMy');
+  // Beschreibung: ganzer Satz, sonst Gedankenstrich; nie mitten im Wort, nie nach „z. B.“
+  const d1 = 'Mehrere PDF-Dateien kostenlos zu einer zusammenfügen – direkt im Browser, ohne Upload und ohne Anmeldung. Reihenfolge per Ziehen ändern, auch Scans und große Dateien.';
+  assert.equal(fitDesc(d1 + ' Mehr Text.'), d1.slice(0, d1.indexOf('Anmeldung.') + 10));
+  const d2 = 'PDF vor dem Versand prüfen: Gericht (beA, ERVB 2025), elektronische Patientenakte (ePA), barrierefrei (BITV 2.0, PDF/UA) und Archiv (GoBD, PDF/A) – mit Bericht und automatischer Korrektur. Direkt im Browser, ohne Upload.';
+  const f2 = fitDesc(d2);
+  assert.ok(len(f2) <= 160 && len(f2) >= 70 && f2.endsWith('PDF/A).'), f2);
+  assert.ok(!/z\. B\.$/.test(fitDesc('Formulare ausfüllen, z. B. Anträge der Behörden, Steuerformulare und Verträge mit Rechenfeldern und Unterschrift, alles direkt im Browser ohne Upload und ohne Anmeldung, auch offline.')));
+  const kurz = 'Kurz und gut genug für das Suchergebnis, mit mehr als siebzig Zeichen Länge insgesamt.';
+  assert.equal(fitDesc(kurz), kurz);
+  // HTML: nur geänderte Stellen, Sonderzeichen bleiben kodiert
+  const h = '<title>Recadrer un PDF&nbsp;: supprimer les marges blanches – gratuit, sans envoi en ligne – PDFMy</title><meta name="description" content="' + d2 + '">';
+  const o = fitHtml(h);
+  assert.match(o, /<title>Recadrer un PDF&nbsp;: supprimer les marges blanches – gratuit, sans envoi en ligne<\/title>/);
+  assert.ok(o.includes('content="' + f2 + '"'));
+  assert.equal(fitHtml('<title>Kurz – PDFMy</title>'), '<title>Kurz – PDFMy</title>');
+  // eingebunden: nach der Vorab-Übersetzung (deutsche Seiten) und in prerender.js (Sprachfassungen, auch aus dem Zwischenspeicher)
+  assert.match(src, /require\('\.\/seo\/snippet\.js'\)[\s\S]*fitHtml\(h\)/);
+  const pre = fs.readFileSync(path.join(ROOT, 'tools', 'prerender.js'), 'utf8');
+  assert.match(pre, /setHtmlAttrs\(fitHtml\(html\)/);
+  assert.match(pre, /fitHtml\(fs\.readFileSync\(cf/);
+  assert.ok(src.indexOf("tools', 'prerender.js'") < src.indexOf("require('./seo/snippet.js')"), 'Kürzen erst nach der Übersetzung');
+});
+
+test('Sitemap: Änderungsdatum nur bei geändertem Inhalt', () => {
+  assert.match(src, /<lastmod>\$\{seen\[loc\]\.d\}<\/lastmod>/);
+  assert.match(src, /seen\[loc\]\.h !== h\) seen\[loc\] = \{ h, d: today \}/);
+});
+
+test('Startseite: Beschreibung ≤ 160 Zeichen in allen Sprachen', () => {
+  const W = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', '_web.json'), 'utf8'));
+  const len = s => [...s].length;
+  assert.ok(len(W.description) <= 160, 'Deutsch ' + len(W.description));
+  for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) {
+    const t = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', f), 'utf8'))[W.description];
+    assert.ok(t && len(t) <= 160, f + ': ' + (t ? len(t) : 'fehlt'));
+  }
+});

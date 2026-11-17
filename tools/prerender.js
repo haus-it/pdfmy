@@ -12,6 +12,7 @@ const ROOT = path.join(__dirname, '..'), site = JSON.parse(fs.readFileSync(path.
 const OUT = path.join(ROOT, 'dist', site.domain), CACHE = path.join(ROOT, '.deploy', 'prerender'), BASE = 'https://' + site.domain + '/';
 const REV = '2';   // bei Änderungen an diesem Skript erhöhen → alles neu übersetzen
 const sha = s => crypto.createHash('sha256').update(s).digest('hex');
+const { fitHtml } = require('./seo/snippet.js');   // Titel ≤ 60, Beschreibung ≤ 160 Zeichen – nach der Übersetzung
 // Protokoll in .deploy/logs: zeigt auch nach einem Abbruch beim Ausrollen, wie weit die Vorab-Übersetzung kam und woran es lag
 const LOG = path.join(ROOT, '.deploy', 'logs', `prerender-${new Date().toISOString().slice(0, 10)}.log`);
 try { fs.mkdirSync(path.dirname(LOG), { recursive: true }); } catch {}
@@ -43,7 +44,7 @@ function finish(html, page, code) {
     .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${own}$2`)
     .replace(/<link rel="alternate" hreflang="[^"]*" href="[^"]*">/g, '')
     .replace('</head>', alternates(page) + '</head>');
-  html = setHtmlAttrs(html, { 'data-static-lang': code, 'data-static-page': page });
+  html = setHtmlAttrs(fitHtml(html), { 'data-static-lang': code, 'data-static-page': page });
   return '<!DOCTYPE html>\n' + html.replace(/^<!DOCTYPE html>\s*/i, '') + '\n';
 }
 
@@ -131,7 +132,8 @@ async function render(cr, port, page, code) {
       const used = keys.filter(k => onPage(text[page], k)).map(k => [k, dict[k]]);
       const key = code + '/' + page, h = sha(REV + '\0' + src[page] + '\0' + JSON.stringify(used) + '\0' + i18nJs + '\0' + LANGS.join(','));
       const cf = path.join(CACHE, code, page);
-      if (man[key] === h && fs.existsSync(cf)) { fs.mkdirSync(path.join(OUT, code), { recursive: true }); fs.copyFileSync(cf, path.join(OUT, code, page)); continue; }
+      // Zwischenspeicher: Titel/Beschreibung beim Kopieren erneut einpassen (Regeln in tools/seo/snippet.js dürfen sich ändern, ohne neu zu übersetzen)
+      if (man[key] === h && fs.existsSync(cf)) { fs.mkdirSync(path.join(OUT, code), { recursive: true }); fs.writeFileSync(path.join(OUT, code, page), fitHtml(fs.readFileSync(cf, 'utf8'))); continue; }
       jobs.push({ code, page, key, h, cf });
     }
   }

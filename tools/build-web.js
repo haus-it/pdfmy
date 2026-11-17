@@ -948,6 +948,32 @@ if (process.env.PDFMY_PRERENDER === '1') {
   try { require('child_process').execFileSync(process.execPath, [path.join(ROOT, 'tools', 'prerender.js')], { stdio: 'inherit' }); }
   catch (e) { console.error(`Vorab-Übersetzung abgebrochen (${e.signal ? 'Signal ' + e.signal : 'Code ' + e.status}) – Protokoll: .deploy/logs/prerender-*.log`); process.exit(1); }
 }
+// Suchergebnis: Titel ≤ 60 und Beschreibung ≤ 160 Zeichen (tools/seo/snippet.js) – erst nach der Vorab-Übersetzung,
+// denn js/i18n.js findet die Übersetzung über den vollständigen deutschen Text. Sprachfassungen kürzt prerender.js selbst.
+{
+  const { fitHtml } = require('./seo/snippet.js');
+  for (const f of fs.readdirSync(OUT).filter(f => f.endsWith('.html'))) {
+    const p = path.join(OUT, f), h = fs.readFileSync(p, 'utf8'), n = fitHtml(h);
+    if (n !== h) fs.writeFileSync(p, n);
+  }
+}
+// Sitemap mit Änderungsdatum (lastmod): Google wertet es, wenn es verlässlich ist – deshalb nur dann ein neues Datum, wenn sich der
+// Inhalt der Seite geändert hat (Fingerabdruck ohne Versionskennungen; gemerkt in .deploy/lastmod.json).
+{
+  const sm = path.join(OUT, 'sitemap.xml'), memo = path.join(ROOT, '.deploy', 'lastmod.json');
+  let seen = {}; try { seen = JSON.parse(fs.readFileSync(memo, 'utf8')); } catch {}
+  const today = new Date().toISOString().slice(0, 10);
+  const norm = h => h.replace(/app-v\d+|pdfmy-\d{12}-v\d+|[?&]v=[\w.-]+/g, '');
+  const x = fs.readFileSync(sm, 'utf8').replace(/<url><loc>(https:\/\/[^<]+)<\/loc>(?:<lastmod>[^<]*<\/lastmod>)?<\/url>/g, (m, loc) => {
+    const rel = loc.replace(`https://${site.domain}/`, '') || 'index.html', file = path.join(OUT, rel.endsWith('/') ? rel + 'index.html' : rel);
+    if (!fs.existsSync(file)) return m;
+    const h = require('crypto').createHash('sha256').update(norm(fs.readFileSync(file, 'utf8'))).digest('hex').slice(0, 16);
+    if (!seen[loc] || seen[loc].h !== h) seen[loc] = { h, d: today };
+    return `<url><loc>${loc}</loc><lastmod>${seen[loc].d}</lastmod></url>`;
+  });
+  fs.writeFileSync(sm, x);
+  fs.mkdirSync(path.dirname(memo), { recursive: true }); fs.writeFileSync(memo, JSON.stringify(seen));
+}
 
 // Prüfsummenliste (ISO-Maßnahme M10): jede ausgelieferte Datei mit SHA-256, im Format von „sha256sum -c“.
 // Ihr Fingerabdruck steht im Release-Protokoll auf GitHub – so lässt sich prüfen, dass pdfmy.de genau diesen Stand ausliefert.
