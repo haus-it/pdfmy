@@ -125,3 +125,40 @@ test('Ladezeit: sichtbare Schriften zuerst, Programm-Skripte der Startseite mit 
   for (const f of ['bricolage-grotesque-latin-standard-normal', 'instrument-sans-latin-wght-normal']) assert.ok(fs.existsSync(path.join(ROOT, 'vendor', 'fonts', f + '.woff2')), f);
   assert.match(src, /preloadScripts\(mh\)\.split\('href="vendor\/fonts\/'\)\.join\('href="fonts\/'\)/, 'interne Fassung: eigener Schriftordner');
 });
+
+test('laden.js: Programmteile nach dem ersten Bild, gleiche Reihenfolge, „load“ wird nachgereicht', async () => {
+  const vm = require('node:vm');
+  const code = fs.readFileSync(path.join(ROOT, 'js', 'laden.js'), 'utf8');
+  const run = (readyState) => new Promise(resolve => {
+    const inserted = [], log = [], frames = [];
+    const realAdd = function (t, f) { log.push('orig:' + t); };
+    const win = { addEventListener: realAdd, Event: class { constructor(t) { this.type = t; } } };
+    const doc = {
+      readyState, visibilityState: 'visible',
+      currentScript: { getAttribute: () => 'js/a.js js/b.js js/c.js' },
+      createElement: () => ({}),
+      body: { appendChild: s => inserted.push(s) },
+    };
+    Object.assign(win, { window: win, document: doc, requestAnimationFrame: f => frames.push(f), setTimeout: (f, ms) => { if (!ms) f(); else win._fallback = f; return 0; } });
+    vm.runInNewContext(code, win);
+    assert.equal(inserted.length, 0, 'vor dem ersten Bild nichts ausführen');
+    frames.shift()(); frames.shift()();   // zwei Animationsrahmen
+    assert.deepEqual(inserted.map(s => s.src), ['js/a.js', 'js/b.js', 'js/c.js']);
+    assert.ok(inserted.every(s => s.async === false), 'Reihenfolge bleibt (async = false)');
+    // Programmteil b meldet sich für „load“ an, dann laden alle
+    win.addEventListener('load', () => log.push('load-b'));
+    win.addEventListener('resize', () => {});
+    inserted.forEach(s => s.onload());
+    win._fallback && win._fallback();     // Rückfallebene darf nicht doppelt starten
+    resolve({ log, inserted, restored: win.addEventListener === realAdd });
+  });
+  const late = await run('complete');
+  assert.deepEqual(late.log, ['orig:resize', 'load-b'], '„load“ nach dem letzten Skript nachgereicht, andere Ereignisse normal');
+  assert.ok(late.restored, 'addEventListener wieder im Original');
+  assert.equal(late.inserted.length, 3, 'nicht doppelt gestartet');
+  const early = await run('interactive');
+  assert.deepEqual(early.log, ['orig:load', 'orig:resize'], 'vor „load“: Browser löst „load“ selbst aus');
+  // Build: Skript-Tags am Seitenende → eine Liste für laden.js, die interne Fassung bleibt unverändert
+  assert.match(src, /html = deferScripts\(html\);\nwrite\('index\.html', html\);/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8'), /'js\/laden\.js'/, 'offline verfügbar');
+});

@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Startseite: Programmteile nach dem ersten Bild, Wörterbücher komprimiert (app-v273)
+- Neu `js/laden.js` (nur pdfmy.de): Die rund 40 Programmteile der Startseite werden weiter sofort geladen, aber erst nach dem ersten Bild ausgeführt – in unveränderter Reihenfolge. Ist die Seite dann schon fertig geladen, bekommen Programmteile, die auf „load“ warten (z. B. „Fehler melden“, über „Teilen“ übergebene Dateien), das Ereignis nach dem letzten Teil. Geprüft: 320/320 Tests, Probelauf 9/9 (App, PDF öffnen und speichern, PDF/A, beA, offline, keine Skriptfehler, Handy), „?melden“ im Browser.
+- Einzelne Teile erst bei Bedarf zu laden wurde verworfen: app.js und pro.js teilen globale Funktionen; das hätte Funktionen gebrochen.
+- Wörterbücher wurden unkomprimiert ausgeliefert: Englisch 384 → 123 KB, Webseiten-Französisch 507 → 166 KB je Aufruf (gemessen). `.htaccess`: Komprimierung auch für JSON, XML, Text und SVG; JSON wird bei Änderungen neu geprüft.
+- Vorab übersetzte Sprachseiten (pdfmy.de/<sprache>/…) blenden sich nicht mehr aus, bis das Wörterbuch geladen ist – der Text steht schon übersetzt im HTML.
+- Ausrollen robuster: dritter Versuch, wenn Chrome beim Übersetzen einer Seite nicht antwortet (je Lauf blieb 1 von 1.872 Seiten zweimal hängen).
+- Ladezeit (Handy, gedrosselt; Rechner geteilt, Werte schwanken stark – dieselbe Seite 1,8–6,1 s): Startseite im ruhigsten Lauf FCP 2,3 s, LCP 3,1 s, blockiert 1,4 s (vorher bestenfalls 2,7 / 4,6 / 4,8 s); französische Werkzeugseite LCP 1,9 s. Belastbar erst mit Felddaten (Search Console, Core Web Vitals, 28 Tage).
+
 ### Suchmaschinen sehen die Startseite deutsch, schnellere Anzeige am Handy (app-v272)
 - Befund: Crawler wie Googlebot melden die Browsersprache Englisch. Auf der Startseite (eine Adresse, kanonisch deutsch) bekamen sie deshalb die englische Fassung, bis zu 2,5 s ausgeblendet, bis alle Skripte geladen waren. Jetzt erhalten Crawler dort immer Deutsch. Besucher bekommen weiter ihre Sprache.
 - Ladezeit gemessen mit `tools/seo/ladezeit.js` (Handy 412 px, CPU 4-fach gedrosselt, Netz 150 ms / 1,6 Mbit/s wie Googles mobile Messung): Startseite deutsch – erster Inhalt 3,8–4,1 s, größtes Element (Untertitel) 7,1–7,3 s, 1,58 MB in 87 Anfragen; Werkzeugseite – größtes Element (Überschrift) 2,6–3,9 s, wartet auf die Überschriften-Schrift (129 KB).

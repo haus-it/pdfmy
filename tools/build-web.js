@@ -34,7 +34,7 @@ const write = (rel, text) => { fs.mkdirSync(path.dirname(path.join(OUT, rel)), {
 
 // Dateien der App
 // pdfmy.de im Mentor-Group-Design: „PDFMy – powered by Mentor Group“ (Schriften, Logo und Symbole wie die interne Version)
-for (const f of ['js/app.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/fristen.js', 'js/formdaten.js', 'js/kommentare.js', 'js/qrstempel.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/slides.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js',
+for (const f of ['js/app.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/fristen.js', 'js/formdaten.js', 'js/kommentare.js', 'js/qrstempel.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/slides.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js', 'js/laden.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-maskable-512.png', 'icons/mentor-group.png', 'icons/file-pdf-256.png', 'icons/file-image-256.png', 'icons/app-192.png', 'icons/app-512.png', 'icons/app-maskable-512.png']) copy(f);
 // Wörterbücher der Oberfläche (nur fertige Sprachen, ohne Arbeitsdateien)
 for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) copy('i18n/' + f);
@@ -92,6 +92,16 @@ const preloadScripts = h => {
   return h.replace(at, at + '\n' + FONT_PRELOAD + '\n' + srcs.map(x => `<link rel="preload" as="script" href="${x}" fetchpriority="low">`).join('\n'));
 };
 html = preloadScripts(html);
+// Programmteile erst nach dem ersten Bild ausführen (js/laden.js): die <script>-Tags am Seitenende werden zu einer Liste für laden.js –
+// geladen wird weiter sofort (preload oben), nur die Ausführung wartet. Reihenfolge und „load“-Ereignis bleiben wie vorher.
+const deferScripts = h => {
+  const tags = [...h.matchAll(/<script src="([^"]+)"><\/script>\n?/g)].filter(m => !/js\/(config|i18n)\.js$/.test(m[1]));
+  if (tags.length < 10) throw new Error('index.html: Skripte für laden.js nicht gefunden');
+  const first = tags[0][0];
+  for (const m of tags.slice(1)) h = h.replace(m[0], '');
+  return h.replace(first, `<script src="js/laden.js" data-src="${tags.map(m => m[1]).join(' ')}"></script>\n`);
+};
+html = deferScripts(html);
 write('index.html', html);
 
 // Manifest und Service Worker
@@ -344,7 +354,8 @@ AddType application/octet-stream .exe
 AddDefaultCharset utf-8
 
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/manifest+json font/ttf
+  # Wörterbücher (application/json) waren unkomprimiert: Englisch 384 KB, Webseiten-Französisch 507 KB je Aufruf (Messung 17.11.2026)
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/manifest+json font/ttf application/json application/xml text/xml text/plain image/svg+xml
 </IfModule>
 
 <IfModule mod_headers.c>
@@ -361,7 +372,7 @@ AddDefaultCharset utf-8
     Header always set Cross-Origin-Opener-Policy "same-origin"
   </Else>
   Header always set Content-Security-Policy "${CSP}; frame-ancestors 'none'"
-  <FilesMatch "\\.(html|webmanifest|js)$">
+  <FilesMatch "\\.(html|webmanifest|js|json)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
   <If "%{REQUEST_URI} =~ m#^/(vendor|icons)/#">

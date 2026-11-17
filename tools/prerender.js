@@ -151,7 +151,8 @@ async function render(cr, port, page, code) {
             man[j.key] = j.h; done++;
             if (done % 100 === 0) { fs.writeFileSync(manFile, JSON.stringify(man)); console.log(`  … ${done} Seiten übersetzt`); }
           } catch (e) {
-            if (!j.retry) { j.retry = true; jobs.push(j); console.warn(`  ${j.key}: ${e.message} – zweiter Versuch`); }
+            // bis zu drei Versuche: bei ausgelastetem Rechner antwortet Chrome vereinzelt nicht (17.11.2026: je Lauf 1 von 1.872 Seiten zweimal)
+            if ((j.retry = (j.retry || 0) + 1) < 3) { jobs.push(j); console.warn(`  ${j.key}: ${e.message} – Versuch ${j.retry + 1}`); }
             else { failed++; console.warn(`  ${j.key}: ${e.message}`); }
           }
         }

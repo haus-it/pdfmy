@@ -223,7 +223,9 @@
   if (typeof document !== 'undefined') {
     document.documentElement.lang = info.bcp.split('-')[0] === 'sr' ? 'sr' : info.code;
     if (lang !== 'de') {
-      document.documentElement.classList.add('i18n-wait');
+      // Vorab übersetzte Seiten (pdfmy.de/<sprache>/…) stehen schon übersetzt im HTML – nicht ausblenden, bis das Wörterbuch (bis 500 KB)
+      // geladen ist; das kostete bis zu 2,5 s bis zur ersten Anzeige (Messung 17.11.2026). Das Wörterbuch braucht es nur für Nachgeladenes.
+      if (staticLang !== lang) document.documentElement.classList.add('i18n-wait');
       // Wörterbuch: i18n/<code>.json (App); Webseiten wählen mit data-dict="site" ihr eigenes (i18n/site/<code>.json)
       const cs = document.currentScript, sub = cs && cs.dataset && /^[a-z]+$/.test(cs.dataset.dict || '') ? cs.dataset.dict + '/' : '';
       const base = (cs && cs.src) ? new URL('../i18n/' + sub, cs.src).href : 'i18n/' + sub;
