@@ -4,6 +4,9 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Explorer „Mit PDFMy verkleinern“ bei mehreren PDFs (app-v277)
+- Bisher wurden mehrere markierte PDFs zu einer Datei zusammengefügt und dann verkleinert. Jetzt öffnet sich die Stapelverarbeitung mit „Verkleinern“ vorgewählt, und jede Datei wird einzeln verkleinert (als ZIP oder in einen Ordner). Ist das Original schon kleiner, bleibt es. Eine einzelne PDF öffnet sich wie bisher mit dem Speichern-Dialog „klein“.
+
 ### Explorer-Rechtsklick: „In PDFMy zusammenfügen“ und „Mit PDFMy verkleinern“ (pdfmy Scan 1.19.0, app-v276)
 - Vergleich: Acrobat („Dateien in Acrobat kombinieren“), Foxit und Nitro bieten im Explorer „Umwandeln“ und „Kombinieren“, PDF24 ein Untermenü. PDFMy hatte nur „In PDFMy öffnen“; mehrere markierte Dateien öffneten sich einzeln.
 - Neu (Windows): mehrere Dateien markieren → Rechtsklick → „In PDFMy zusammenfügen“. Das geht für PDF, Word, Excel, PowerPoint, OpenDocument, Bilder und Text, auch gemischt. Bei PDFs gibt es zusätzlich „Mit PDFMy verkleinern“. Die Menütexte erscheinen in der Sprache von Windows (zehn Sprachen, sonst Englisch).

@@ -1869,7 +1869,7 @@ $('#btnCompare').onclick = () => { state.intent = 'compare'; const i = $('#inten
 /* ---------- Stapelverarbeitung: viele Dateien auf einmal – verkleinern, PDF/A, durchsuchbar machen oder Briefe ablegen ----------
    Läuft in einem eigenen Reiter, das geöffnete Dokument bleibt erhalten. Ergebnis als ZIP oder in einen Ordner. */
 let batchStop = false;
-function batchAsk(files) {
+function batchAsk(files, preset) {
   return new Promise(res => {
     const d = $('#batchDlg'), n = files.length, mb = files.reduce((s, f) => s + f.size, 0);
     $('#batchWhat').textContent = `${n === 1 ? `${n} Datei` : `${n} Dateien`} ausgewählt (${Tools.formatBytes(mb)}).`;
@@ -1883,7 +1883,7 @@ function batchAsk(files) {
       l.innerHTML = `<input type="radio" name="batchAct" value="flow:${i}"> <span><b translate="no"></b> <small>– eigener Ablauf</small></span>`;
       l.querySelector('b').textContent = f.name; return l;
     }));
-    const last = LS.get('batchAct', 'small'); const r = d.querySelector(`[name=batchAct][value="${last}"]`) || d.querySelector('[name=batchAct][value=small]'); if (r) r.checked = true;
+    const last = preset || LS.get('batchAct', 'small'); const r = d.querySelector(`[name=batchAct][value="${last}"]`) || d.querySelector('[name=batchAct][value=small]'); if (r) r.checked = true;
     const sync = () => { $('#batchOutSet').hidden = d.querySelector('[name=batchAct]:checked').value === 'file'; };
     d.querySelectorAll('[name=batchAct]').forEach(x => x.onchange = sync); sync();
     $('#batchGo').onclick = () => { const act = d.querySelector('[name=batchAct]:checked').value; LS.set('batchAct', act); res({ act, out: d.querySelector('[name=batchOut]:checked').value }); };
@@ -1892,9 +1892,9 @@ function batchAsk(files) {
     if (!d.open) d.showModal(); $('#batchGo').focus();
   });
 }
-async function batchFiles(files) {
+async function batchFiles(files, preset) {
   if (!files.length) return;
-  const choice = await batchAsk(files); if (!choice) return;
+  const choice = await batchAsk(files, preset); if (!choice) return;
   if (choice.act !== 'file') return batchConvert(files, choice);
   $('#batchDlg').close();
   if (state.pages.length && state.dirty && !confirm('Aktuelles Dokument verwerfen? Es wurde noch nicht gespeichert.')) return;
@@ -2793,6 +2793,8 @@ async function openFromHash() {
       // Rechtsklick „In PDFMy öffnen“ (pdfmy Scan 1.18.0): auch Word, Excel, Bilder, E-Mails – Dateityp aus dem Namen
       files.push(new File([await r.blob()], name, { type: /\.pdf$/i.test(name) ? 'application/pdf' : mimeOf(name) }));
     }
+    // Mehrere PDFs „Mit PDFMy verkleinern“: jede Datei einzeln (Stapel, „Verkleinern“ vorgewählt) – nicht zu einer zusammenfügen
+    if (m[2] === 'compress' && files.length > 1) return batchFiles(files, 'small');
     const name = files.length > 1 ? files.map(f => f.name).join(', ') : files[0].name;
     if (state.pages.length) { if (state.dirty && !confirm(`„${name}“ öffnen? Das aktuelle Dokument wurde noch nicht gespeichert und wird geschlossen.`)) return; resetDoc(); }
     if (m[2] && HASH_TASKS.has(m[2])) state.intent = m[2];

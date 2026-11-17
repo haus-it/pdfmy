@@ -206,3 +206,11 @@ test('Explorer-Rechtsklick (pdfmy Scan 1.19.0): Zusammenfügen und Verkleinern �
   assert.match(pro, /HASH_TASKS = new Set\(\['merge', 'compress'\]\)/);
   assert.match(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8'), /#open=\[a-f0-9,\]\+\(&task=\[a-z\]\+\)\?\$\/\.test\(t\)\) location\.hash = new URL\(t\)\.hash/, 'laufende App');
 });
+
+test('Explorer „Mit PDFMy verkleinern“ bei mehreren PDFs: einzeln (Stapel), nicht zusammengefügt', () => {
+  const pro = fs.readFileSync(path.join(ROOT, 'js', 'pro.js'), 'utf8');
+  const i = pro.indexOf('async function openFromHash'), body = pro.slice(i, pro.indexOf('\n}\n', i));
+  assert.ok(body.indexOf("if (m[2] === 'compress' && files.length > 1) return batchFiles(files, 'small');") > 0);
+  assert.ok(body.indexOf("batchFiles(files, 'small')") < body.indexOf('await importFiles(files)'), 'vor dem gemeinsamen Öffnen');
+  assert.match(pro, /function batchAsk\(files, preset\)[\s\S]{0,1200}const last = preset \|\| LS\.get\('batchAct'/);
+});
