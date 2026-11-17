@@ -39,3 +39,17 @@ test('llms.txt: nur Seiten, die der Build erzeugt', () => {
   }
   assert.match(llms, /^# PDFMy\n\n> /, 'Aufbau nach llmstxt.org: Titel und Kurzbeschreibung');
 });
+
+test('Startseite: Tab-Titel ≤ 60 Zeichen mit Stichwort vorne, in allen Sprachen (Entscheidung GF 17.11.2026)', () => {
+  const W = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', '_web.json'), 'utf8'));
+  const len = s => [...s].length;
+  assert.ok(len(W.title) <= 60, 'Titel ' + len(W.title) + ' Zeichen');
+  assert.match(W.title, /^PDF /, 'Stichwort „PDF“ steht vorne');
+  assert.match(W.title, /\| PDFMy$/, 'Marke am Ende');
+  assert.match(W.ogTitle, /powered by Mentor Group/, 'Marke bleibt beim Teilen (og:title) sichtbar');
+  for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) {
+    const t = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', f), 'utf8'))[W.title];
+    assert.ok(t, f + ': übersetzt');
+    assert.ok(len(t) <= 60 && t.endsWith('| PDFMy'), f + ': ' + len(t) + ' Zeichen');
+  }
+});

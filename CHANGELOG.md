@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Startseiten-Titel für die Suche gekürzt (app-v270)
+- Entscheidung GF 17.11.2026: Der Tab-Titel der Startseite hatte 99 Zeichen und begann mit „PDFMy – powered by Mentor Group“. Google zeigt etwa 60 Zeichen, das Stichwort ging verloren. Neu: „PDF bearbeiten, scannen, zusammenfügen – ohne Upload | PDFMy“ (60 Zeichen), in allen 39 Sprachen höchstens 60 Zeichen.
+- „powered by Mentor Group“ bleibt sichtbar: im Logo, im Banner und beim Teilen in sozialen Netzwerken (og:title).
+- Test in `tests/seo.test.js`.
+
 ### Auffindbarkeit: SEO/GEO-Prüfung mit echten Zahlen (app-v269)
 - Messung mit Google Search Console, IONOS WebAnalytics und einem Vergleich mit 6 Mitbewerbern (docs/SEO-GEO-2026-11.md, Skripte tools/seo/). Befund: 28 Klicks und Position 49 in 3 Monaten, nur 4 verweisende Domains, 1.041 Seiten „Gefunden – zurzeit nicht indexiert“, 34 Einblendungen in Googles KI-Antworten.
 - Behoben: Hilfe, Scanner, Geräteliste, Firmen, Erweiterung, Presse und Rechtstexte hatten weder kanonische Adresse noch Beschreibung – in allen Sprachfassungen (ca. 440 Seiten). Beschreibungen in 39 Sprachen übersetzt.
