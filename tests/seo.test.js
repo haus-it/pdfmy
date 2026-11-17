@@ -97,3 +97,31 @@ test('Startseite: Beschreibung ≤ 160 Zeichen in allen Sprachen', () => {
     assert.ok(t && len(t) <= 160, f + ': ' + (t ? len(t) : 'fehlt'));
   }
 });
+
+test('Crawler sehen die Startseite deutsch (kanonische Fassung), nicht in ihrer Browsersprache', () => {
+  const vm = require('node:vm');
+  const code = fs.readFileSync(path.join(ROOT, 'js', 'i18n.js'), 'utf8');
+  const run = ua => {
+    const attrs = {}, cls = new Set();
+    const html = { lang: '', getAttribute: k => attrs[k] || null, classList: { add: c => cls.add(c), remove: c => cls.delete(c) } };
+    const ctx = { navigator: { userAgent: ua, languages: ['en-US', 'en'], language: 'en-US' }, location: { search: '', href: 'https://pdfmy.de/' },
+      localStorage: { getItem: () => null, setItem() {} }, document: { documentElement: html, currentScript: null, readyState: 'complete', addEventListener() {}, querySelectorAll: () => [], title: '' },
+      fetch: () => new Promise(() => {}), setTimeout: () => 0, console };
+    ctx.window = ctx; ctx.self = ctx; ctx.globalThis = ctx;
+    vm.runInNewContext(code, ctx);
+    return { lang: html.lang, hidden: cls.has('i18n-wait') };
+  };
+  const bot = run('Mozilla/5.0 (Linux; Android 6.0.1) Chrome/130 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+  assert.equal(bot.lang, 'de'); assert.equal(bot.hidden, false, 'nichts ausgeblendet');
+  const person = run('Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130 Safari/537.36');
+  assert.notEqual(person.lang, 'de', 'Besucher mit englischem Browser bekommen weiter ihre Sprache');
+});
+
+test('Ladezeit: sichtbare Schriften zuerst, Programm-Skripte der Startseite mit niedriger Priorität', () => {
+  assert.match(src, /const FONT_PRELOAD = \['bricolage-grotesque-latin-standard-normal', 'instrument-sans-latin-wght-normal'\]/);
+  assert.match(src, /rel="preload" as="font" type="font\/woff2" href="vendor\/fonts\/\$\{f\}\.woff2" crossorigin/);
+  assert.ok(src.includes(String.raw`at + '\n' + FONT_PRELOAD + '\n' + srcs.map(x => ` + '`<link rel="preload" as="script" href="${x}" fetchpriority="low">`)'), 'Schriften vor den Skripten, Skripte niedrig');
+  assert.match(src, /<title>\$\{title\} – PDFMy<\/title>\$\{FONT_PRELOAD\}/, 'Infoseiten laden die Schriften früh');
+  for (const f of ['bricolage-grotesque-latin-standard-normal', 'instrument-sans-latin-wght-normal']) assert.ok(fs.existsSync(path.join(ROOT, 'vendor', 'fonts', f + '.woff2')), f);
+  assert.match(src, /preloadScripts\(mh\)\.split\('href="vendor\/fonts\/'\)\.join\('href="fonts\/'\)/, 'interne Fassung: eigener Schriftordner');
+});

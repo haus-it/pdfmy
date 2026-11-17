@@ -81,11 +81,12 @@
   if (fromQs) { try { localStorage.setItem('mpdf.uiLang', fromQs); } catch (e) { /* egal */ } }
   const nav = typeof navigator !== 'undefined' ? (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language]) : [];
   // Vorab übersetzte Webseiten (pdfmy.de/<sprache>/…, tools/prerender.js) tragen ihre Sprache fest; Suchmaschinen-Crawler bekommen die
-  // deutschen Seiten unübersetzt – die Sprachfassungen finden sie über die hreflang-Verweise
+  // deutschen Seiten unübersetzt – die Sprachfassungen finden sie über die hreflang-Verweise. Auch die Startseite (eine Adresse, kanonisch
+  // deutsch) bekommen Crawler deutsch: Googlebot meldet Englisch und sah sonst die englische Fassung, bis zu 2,5 s ausgeblendet (17.11.2026)
   const htmlEl = typeof document !== 'undefined' ? document.documentElement : null;
   const staticLang = htmlEl && htmlEl.getAttribute('data-static-lang'), staticPage = htmlEl && htmlEl.getAttribute('data-static-page');
   const isBot = typeof navigator !== 'undefined' && /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|whatsapp|telegram|lighthouse/i.test(navigator.userAgent || '');
-  const lang = (staticLang && byCode(staticLang) ? staticLang : null) || (isBot && staticPage ? 'de' : null) || fromQs || (stored && byCode(stored) ? stored : null) || pick(nav) || (nav.length ? 'en-GB' : 'de');
+  const lang = (staticLang && byCode(staticLang) ? staticLang : null) || (isBot ? 'de' : null) || fromQs || (stored && byCode(stored) ? stored : null) || pick(nav) || (nav.length ? 'en-GB' : 'de');
   const info = byCode(lang) || LANGS[0];
 
   let dict = null, pats = [], ready = Promise.resolve();

@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-17
 
+### Suchmaschinen sehen die Startseite deutsch, schnellere Anzeige am Handy (app-v272)
+- Befund: Crawler wie Googlebot melden die Browsersprache Englisch. Auf der Startseite (eine Adresse, kanonisch deutsch) bekamen sie deshalb die englische Fassung, bis zu 2,5 s ausgeblendet, bis alle Skripte geladen waren. Jetzt erhalten Crawler dort immer Deutsch. Besucher bekommen weiter ihre Sprache.
+- Ladezeit gemessen mit `tools/seo/ladezeit.js` (Handy 412 px, CPU 4-fach gedrosselt, Netz 150 ms / 1,6 Mbit/s wie Googles mobile Messung): Startseite deutsch – erster Inhalt 3,8–4,1 s, größtes Element (Untertitel) 7,1–7,3 s, 1,58 MB in 87 Anfragen; Werkzeugseite – größtes Element (Überschrift) 2,6–3,9 s, wartet auf die Überschriften-Schrift (129 KB).
+- Maßnahme: Die beiden Schriften des sichtbaren Textes werden zuerst geladen (`preload`, hohe Priorität), die 40 Programm-Skripte der Startseite mit niedriger Priorität – Reihenfolge und Funktion bleiben gleich.
+- Tests in `tests/seo.test.js`.
+
 ### Suchergebnis: Titel und Beschreibungen passend gekürzt, Sitemap mit Änderungsdatum (app-v271)
 - Neu `tools/seo/snippet.js`: Nach der Übersetzung werden alle Webseiten für das Suchergebnis eingepasst (Google zeigt etwa 60 Zeichen Titel und 160 Zeichen Beschreibung). Titel über 60 Zeichen verlieren nur den Zusatz „– PDFMy“; die Stichwörter bleiben, denn sie zählen auch ungezeigt für die Rangfolge. Beschreibungen über 160 Zeichen enden nach dem letzten ganzen Satz, sonst am letzten Gedankenstrich – nicht mitten im Wort, wie es die Suchmaschine abschneidet. Wirkt in allen 40 Sprachen, ohne Übersetzungen zu ändern.
 - Startseite: Beschreibung 182 → 153 Zeichen, in allen 39 Sprachen höchstens 160.

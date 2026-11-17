@@ -78,13 +78,18 @@ if (stats.count >= 1000) {
   const k = Math.floor(stats.count / 1000) * 1000;
   rep('<ul class="trust">', `<ul class="trust"><li title="Stand ${esc(stats.asOf || '')}">Über ${k.toLocaleString('de-DE')} ${esc(stats.label || 'Nutzer')}</li>`);
 }
+// Schriften des sichtbaren Textes früh laden (Überschrift und Fließtext; ohne crossorigin würde der Browser sie doppelt holen)
+const FONT_PRELOAD = ['bricolage-grotesque-latin-standard-normal', 'instrument-sans-latin-wght-normal']
+  .map(f => `<link rel="preload" as="font" type="font/woff2" href="vendor/fonts/${f}.woff2" crossorigin fetchpriority="high">`).join('');
 // Ladezeit: Chrome holte die rund 40 Skripte am Ende der Seite streng nacheinander (gemessen 09.11.2026: pdfmy.de 3–7 s, lokal 10 s bis
 // „bereit“). Vorab-Hinweise im Kopf lassen den Browser alle parallel laden; die Reihenfolge der Ausführung bleibt die der <script>-Tags.
 const preloadScripts = h => {
   const srcs = [...h.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m => m[1]).filter(x => !/js\/(config|i18n)\.js$/.test(x));
   const at = '<script src="js/i18n.js"></script>';   // hinter die beiden Skripte im Kopf – die braucht die Seite zum Anzeigen zuerst
   if (srcs.length < 10 || !h.includes(at)) throw new Error('index.html: Skripte für Vorab-Laden nicht gefunden');
-  return h.replace(at, at + '\n' + srcs.map(x => `<link rel="preload" as="script" href="${x}">`).join('\n'));
+  // Messung 17.11.2026 (tools/seo/ladezeit.js, Handy, gedrosselt): 1,5 MB Skripte belegten die Leitung, die Schriften des sichtbaren Textes
+  // kamen zuletzt – größtes Element erst nach 7,3 s. Deshalb: Schriften zuerst, Skripte mit niedriger Priorität (Reihenfolge bleibt).
+  return h.replace(at, at + '\n' + FONT_PRELOAD + '\n' + srcs.map(x => `<link rel="preload" as="script" href="${x}" fetchpriority="low">`).join('\n'));
 };
 html = preloadScripts(html);
 write('index.html', html);
@@ -104,7 +109,7 @@ const page = (title, body, head = '', multi = true) =>   // multi: Sprachauswahl
  `<!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="${CSP}">
-<title>${title} – PDFMy</title>${head}${multi ? '<script src="js/i18n.js" data-dict="site"></script>' : ''}<link rel="icon" href="icons/mentor-192.png"><meta name="theme-color" content="#4B2FBF">
+<title>${title} – PDFMy</title>${FONT_PRELOAD}${head}${multi ? '<script src="js/i18n.js" data-dict="site"></script>' : ''}<link rel="icon" href="icons/mentor-192.png"><meta name="theme-color" content="#4B2FBF">
 <style>
 @font-face{font-family:"Bricolage Grotesque";src:url(vendor/fonts/bricolage-grotesque-latin-standard-normal.woff2) format("woff2");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
 @font-face{font-family:"Instrument Sans";src:url(vendor/fonts/instrument-sans-latin-wght-normal.woff2) format("woff2");font-weight:400 700;font-display:swap}
@@ -926,7 +931,7 @@ if (!BUILD_MENTOR || !fs.existsSync(htpasswd)) {
   if (!mh.includes('<title>PDFMy</title>')) throw new Error('mentor: Titel nicht gefunden');
   mh = mh.replace('<title>PDFMy</title>', `<title>PDFMy – powered by Mentor Group</title>\n<meta http-equiv="Content-Security-Policy" content="${CSP}">\n<meta name="robots" content="noindex, nofollow">`)
     .replace('<link rel="manifest" href="manifest.webmanifest">', '<link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">');
-  write(M('index.html'), preloadScripts(mh));
+  write(M('index.html'), preloadScripts(mh).split('href="vendor/fonts/').join('href="fonts/'));   // Schriften liegen hier unter fonts/
   const mm = JSON.parse(read('manifest.webmanifest')); Object.assign(mm, { id: '/mentor/', start_url: './', scope: './' });
   write(M('manifest.webmanifest'), JSON.stringify(mm, null, 2) + '\n');
   write(M('sw.js'), toVendor(read('sw.js').replace(/const VERSION = '[^']+';/, `const VERSION = 'mentor-${stamp}';`)));

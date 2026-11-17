@@ -117,7 +117,11 @@ if (-not $Test -and -not $NoBuild) {
   }
   if ($ScanRollout -ge 0) { $env:PDFMY_SCAN_ROLLOUT = "$ScanRollout" }   # Freigabe in Stufen für pdfmy Scan (download/version.json „rollout“)
   $env:PDFMY_PRERENDER = '1'   # Webseiten je Sprache vorab übersetzen (tools/prerender.js)
-  & node (Join-Path $PSScriptRoot 'build-web.js') | Out-Host   # über die Pipeline, damit die Ausgabe im Protokoll landet
+  # Warnungen des Builds (stderr, z. B. „zweiter Versuch“ der Vorab-Übersetzung) sind kein Abbruch – maßgeblich ist der Rückgabewert.
+  # Windows PowerShell 5.1 wertet sonst jede stderr-Zeile als Fehler und brach ab, obwohl der Build die Seite erneut versucht hätte.
+  $eap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { & node (Join-Path $PSScriptRoot 'build-web.js') 2>&1 | ForEach-Object { "$_" } | Out-Host }   # über die Pipeline, damit die Ausgabe im Protokoll landet
+  finally { $ErrorActionPreference = $eap }
   if ($LASTEXITCODE) { throw "Build fehlgeschlagen (Code $LASTEXITCODE) – Einzelheiten in .deploy\logs." }
 }
 if (-not $Test) { Invoke-Smoke @('--dir', $distDir) }
