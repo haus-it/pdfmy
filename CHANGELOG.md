@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-18
 
+### Firefox-Erweiterung bei Firefox-Add-ons freigegeben (app-v285)
+- Mozilla hat „PDFMy – PDFs direkt öffnen“ geprüft und veröffentlicht (Version 1.2.0, öffentlich laut AMO-Schnittstelle).
+- `tools/site.json` → `firefoxAmo`: Die Erweiterungsseite zeigt jetzt den Knopf „Zu Firefox hinzufügen“, `pdfmy.de/go/firefox` leitet zum Store.
+- **Hilfe** in 40 Sprachen: Firefox nicht mehr „folgt nach der Prüfung“. Test in tests/addins.test.js.
+- **Korrektur (app-v286):** Die Weiterleitung `pdfmy.de/go/<store>` kodierte das „%“ der Store-Adresse doppelt (`%25C3%25B6`) – Apache-Flag `NE` ergänzt, Test.
+
 ### Formulare: in Acrobat, Foxit und Firefox weiter bearbeitbar (app-v284)
 - **Rundlauf-Prüfung** mit einem nachgebauten Acrobat-Formular (Schrift /Helv mit automatischer Größe, NeedAppearances, Kontrollkästchen mit „Ja“, Auswahlliste mit Exportwert).
 - **Behoben:** Nach dem Ausfüllen verwies die Schriftangabe der Felder auf eine Schrift, die nicht im Schriftverzeichnis des Formulars stand. Acrobat und Foxit konnten das Feld deshalb nicht richtig weiter bearbeiten. Außerdem ging die automatische Schriftgröße verloren, und NeedAppearances blieb gesetzt (andere Programme bauten die Felder mit fremder Schrift neu auf).

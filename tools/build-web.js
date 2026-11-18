@@ -539,7 +539,7 @@ fs.appendFileSync(path.join(OUT, '.htaccess'), `
 # Store-Verweise (tools/site.json „stores“)
 <IfModule mod_rewrite.c>
   RewriteEngine On
-${['firefox', 'thunderbird', 'chrome', 'edge'].map(k => `  RewriteRule ^go/${k}/?$ ${STORE[k] || `https://${site.domain}/erweiterung.html`} [R=302,L]`).join(String.fromCharCode(10))}
+${['firefox', 'thunderbird', 'chrome', 'edge'].map(k => `  RewriteRule ^go/${k}/?$ ${STORE[k] || `https://${site.domain}/erweiterung.html`} [R=302,L,NE]`).join(String.fromCharCode(10))}
 </IfModule>
 `);
 // Für die IT: pdfmy Scan auf alle Rechner verteilen (Wettbewerbsvergleich 11/2026, Rang 5c) – Befehle, Erkennung, Richtlinien

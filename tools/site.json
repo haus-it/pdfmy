@@ -2,6 +2,7 @@
   "domain": "pdfmy.de",
   "sftpHost": "access-5020953828.webspace-host.com",
   "webRoot": "/home/www/public/pdfmy",
+  "firefoxAmo": "https://addons.mozilla.org/de/firefox/addon/pdfmy-pdfs-direkt-%C3%B6ffnen/",
   "operator": {
     "name": "",
     "company": "Mentor GmbH",

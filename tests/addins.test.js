@@ -178,3 +178,18 @@ test('pdfmy Scan: Rechtsklick und „Senden an“ für die Formate, die PDFMy ö
   assert.match(cs, /file\.EndsWith\("\.pdf", StringComparison\.OrdinalIgnoreCase\) && OpenInApp\(file\)/, 'App-Fenster nur für PDFs');
   assert.match(fs.readFileSync(path.join(ROOT, 'js', 'pro.js'), 'utf8'), /type: \/\\.pdf\$\/i\.test\(name\) \? 'application\/pdf' : mimeOf\(name\)/);
 });
+
+test('Firefox-Erweiterung freigegeben (18.11.2026): Store-Adresse eingetragen, Hilfe nennt Firefox nicht mehr als „folgt“ (app-v285)', () => {
+  const fs = require('node:fs'), path = require('node:path'), ROOT = path.join(__dirname, '..');
+  const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'site.json'), 'utf8'));
+  assert.match(site.firefoxAmo, /^https:\/\/addons\.mozilla\.org\/[a-z-]+\/firefox\/addon\/pdfmy-pdfs-direkt-%C3%B6ffnen\/$/);
+  const h = fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8');
+  assert.ok(!h.includes('folgt nach der Prüfung durch Mozilla'), 'Hilfe aktuell');
+  assert.ok(h.includes('in Firefox unter Windows, Mac und Linux'), 'Hilfe nennt Firefox');
+});
+
+test('Store-Weiterleitungen: Adressen mit %-Kodierung (ö im Firefox-Slug) werden nicht doppelt kodiert (NE)', () => {
+  const fs = require('node:fs'), path = require('node:path');
+  const bw = fs.readFileSync(path.join(__dirname, '..', 'tools', 'build-web.js'), 'utf8');
+  assert.match(bw, /RewriteRule \^go\/\$\{k\}\/\?\$ .* \[R=302,L,NE\]/);
+});
