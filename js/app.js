@@ -1083,11 +1083,12 @@ const HL_DARK = { '#ffd400': '#c99a00', '#7ee081': '#1f9d3a', '#7cc4ff': '#1d6fd
 const hlRgba = (hex, al) => { const n = parseInt((hex || '#ffd400').slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${al})`; };
 const hlLine = a => HL_DARK[a.color] || a.color || '#c99a00';
 // Wörter der Seite (Texterkennung oder Textebene der PDF); lädt die Textebene bei Bedarf nach
-function hlWords(p) {
+function hlWordsRaw(p) {
   if (p.ocr?.words?.length) return p.ocr.words;
-  if (p.kind === 'pdf' && p.native && p.nwords === undefined) { p.nwords = null; nativeWords(p).then(w => { p.nwords = w || []; }).catch(() => { p.nwords = []; }); }
+  if (p.kind === 'pdf' && p.native && p.nwords === undefined) { p.nwords = null; nativeWords(p).then(w => { p.nwords = w || []; if (coversOf(p).length && cur() === p) renderSide(); }).catch(() => { p.nwords = []; }); }
   return p.nwords || null;
 }
+const hlWords = p => unredacted(p, hlWordsRaw(p));
 // Zeilen in Lesereihenfolge mit fortlaufender Wortnummer
 function hlIndex(items) {
   // PDF-Textebene liefert ganze Textstücke: anteilig nach Zeichen in Wörter teilen
@@ -2222,7 +2223,28 @@ function runOcrAll() {
   run.finally(() => { if (ocrPromise === run) ocrPromise = null; });
   return run;
 }
-const pageText = p => p?.native || p?.ocr?.text || '';
+/* Schwärzen/Abdecken: verdeckte Wörter gibt es danach nirgends mehr – nicht in der Textansicht („Text kopieren“), Suche,
+   Exporten (Word, Excel, Text, Markdown/HTML, PowerPoint) und Dokumenteigenschaften. Nicht nur in der gespeicherten PDF. */
+const coversOf = p => p?.annots?.filter(a => a.type === 'rd' || a.type === 'wo') || [];
+const unredacted = (p, ws) => { const c = coversOf(p); return c.length && ws ? ws.filter(w => !c.some(a => overlaps(a, w))) : ws; };
+const pageText = p => {
+  if (!coversOf(p).length) return p?.native || p?.ocr?.text || '';
+  const ws = p.ocr?.words || hlWordsRaw(p);   // Textebene wird bei Bedarf nachgeladen – bis dahin lieber nichts als Verdecktes zeigen
+  return ws ? textLines(unredacted(p, ws)).map(l => l.map(w => w.t).join(' ')).join('\n') : '';
+};
+// Kennwörter eines Textes: ab 4 Zeichen oder mit Ziffer (Füllwörter wie „der“, „und“ zählen nicht)
+const redTok = v => String(v).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(t => t.length >= 4 || (t.length >= 2 && /\d/.test(t)));
+// Wörter unter Schwärzungen (für Dokumenteigenschaften und Dateiname): Briefdaten, die dort stehen, werden nicht mitgespeichert
+function redactedTokens(pages) {
+  const set = new Set();
+  for (const p of pages) {
+    const c = coversOf(p).filter(a => a.type === 'rd'); if (!c.length) continue;
+    for (const w of p.ocr?.allWords || p.ocr?.words || p.nwords || []) if (c.some(a => overlaps(a, w)))
+      for (const t of redTok(w.t)) set.add(t);
+  }
+  return set;
+}
+const leaks = (v, set) => !!v && set.size > 0 && redTok(v).some(t => set.has(t));
 /* Fälschungsschutz (Betrügern die Arbeit nicht erleichtern): 'urkunde' (Urkunde, Zeugnis, Ausweis, Steuer-/Rentenbescheid, Urteil …: Inhalt nicht änderbar) |
    'konto' / 'nachweis' (Kontoauszug, Einkommen, Bescheid, Auskunft, Rechnung: Änderungen sichtbar markiert + Vermerk) | ''
    Bei PDFs zählt das ganze Dokument (Folgeseiten eines Kontoauszugs nennen das Wort oft nicht mehr). */
@@ -2302,10 +2324,16 @@ function analyze() {
   }
   renderSide();
 }
+function scrubMeta(meta, red = redactedTokens(state.pages)) {
+  if (!red.size) return meta;
+  const m = { ...meta };
+  for (const k of ['sender', 'subject', 'invoiceNo', 'customerNo', 'reference', 'iban', 'amount', 'date', 'deadline']) if (leaks(m[k], red)) m[k] = '';
+  return m;
+}
 function filename() {
   if (state.touched.fname) { const v = $('#fname').value.trim() || 'Scan'; return /\.pdf$/i.test(v) ? v : v + '.pdf'; }
   const own = ownName(); if (own) return own;
-  return Letter.buildFilename(state.meta);
+  return Letter.buildFilename(scrubMeta(state.meta));
 }
 /* Originalname einer geöffneten Datei behalten („Angebot.pdf“ bleibt „Angebot.pdf“) – nur nichtssagende Namen von Scannern,
    Kameras und Programmen („Scan0001“, „IMG_1234“, „Dokument (2)“, „20261023_101500“) ersetzt PDFMy durch einen Namen aus den Briefdaten. */
@@ -2726,8 +2754,8 @@ async function pageBlocks(p) {
   return words?.length ? Reflow.blocks(textLines(words)) : Reflow.fromText(pageText(p));
 }
 async function pageWords(p) {
-  if (p.ocr?.words) return p.ocr.words;
-  if (p.kind === 'pdf' && p.native) return p.nwords || (p.nwords = await nativeWords(p) || []);
+  if (p.ocr?.words) return unredacted(p, p.ocr.words);
+  if (p.kind === 'pdf' && p.native) return unredacted(p, p.nwords || (p.nwords = await nativeWords(p) || []));
   return null;
 }
 /* Suchen & Ersetzen auf einer Seite: jede betroffene Zeile wird wie bei „Text ändern“ originalgetreu ersetzt.
@@ -3692,7 +3720,11 @@ async function sourceInfo(pages) {
   return d.meta?.info || {};
 }
 async function docProps(pages, meta) {
-  const pr = meta.docProps || {}, src = await sourceInfo(pages), s = v => typeof v === 'string' ? v.trim() : '';
+  for (const p of pages) if (coversOf(p).length) await pageWords(p).catch(() => null);
+  // Geschwärzte Angaben (z. B. Absender, Kundennummer) nicht über Titel, Autor oder Stichwörter verraten – auch nicht aus der Quell-PDF
+  const red = redactedTokens(pages), clip = v => leaks(v, red) ? '' : v;
+  const isCur = meta === state.meta; meta = scrubMeta(meta, red);
+  const pr = meta.docProps || {}, src0 = await sourceInfo(pages), src = Object.fromEntries(Object.entries(src0 || {}).map(([k, v]) => [k, clip(v)])), s = v => typeof v === 'string' ? v.trim() : '';
   const kwSplit = v => s(v).split(/\s*[,;]\s*/).filter(Boolean);
   const letterKw = [meta.type, meta.sender, meta.date, meta.deadline && 'Frist ' + meta.deadline, meta.invoiceNo, meta.customerNo, meta.reference].filter(Boolean);
   return {
@@ -3700,7 +3732,7 @@ async function docProps(pages, meta) {
     author: pr.author ?? (meta.sender || s(src.Author)),
     subject: pr.subject ?? (meta.type || s(src.Subject)),
     // Schlagwörter des aktuellen Dokuments kommen in die Stichwörter der PDF (Windows-Suche, andere Programme finden sie)
-    keywords: [...(pr.keywords != null ? kwSplit(pr.keywords) : letterKw.length ? letterKw : kwSplit(src.Keywords)), ...(meta === state.meta ? [...Journal.tagList(state.tags), ...Object.entries(state.cf || {}).filter(([, v]) => String(v).trim()).map(([k, v]) => `${k}: ${String(v).trim()}`)] : [])].filter((v, i, a) => a.indexOf(v) === i),
+    keywords: [...(pr.keywords != null ? kwSplit(pr.keywords) : letterKw.length ? letterKw : kwSplit(src.Keywords)), ...(isCur ? [...Journal.tagList(state.tags), ...Object.entries(state.cf || {}).filter(([, v]) => String(v).trim()).map(([k, v]) => `${k}: ${String(v).trim()}`)] : [])].filter((v, i, a) => a.indexOf(v) === i && (!red.size || !leaks(v, red) || pr.keywords != null)),
   };
 }
 
@@ -4077,7 +4109,7 @@ async function doExport(o) {
     await waitForOcr(pages);
     const sheets = [];
     for (const [i, p] of pages.entries()) {
-      const words = p.ocr?.words || (p.kind === 'pdf' && p.native ? await nativeWords(p) : null) || [];
+      const words = unredacted(p, p.ocr?.words || (p.kind === 'pdf' && p.native ? await nativeWords(p) : null) || []);
       sheets.push({ name: `Seite ${i + 1}`, rows: Tools.tableRows(words) });
     }
     data = Tools.xlsx(sheets); name = base + '.xlsx'; mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -4085,13 +4117,14 @@ async function doExport(o) {
     // Markdown/HTML mit Gliederung (Überschriften, Absätze, Aufzählungen, Tabellen) – z. B. für KI-Werkzeuge oder Webseiten
     await waitForOcr(pages);
     const words = [];
-    for (const p of pages) words.push(p.ocr?.words || (p.kind === 'pdf' && p.native ? await nativeWords(p) : null) || []);
+    for (const p of pages) words.push(unredacted(p, p.ocr?.words || (p.kind === 'pdf' && p.native ? await nativeWords(p) : null) || []));
     const blocks = Tools.docBlocks(words), title = meta.subject || '';
     const aiHead = o.ai ? `---\nsource: ${JSON.stringify(base)}\npages: ${pages.length}\nlanguage: ${docLang(pages)}\ncreated_with: PDFMy\n---\n\n` : '';   // „Für KI vorbereiten“: Angaben zum Dokument, Seitenmarken stehen schon im Text
     data = new TextEncoder().encode(o.format === 'md' ? aiHead + Tools.toMarkdown(blocks, { title }) : Tools.toHtml(blocks, { title: title || base, lang: docLang(pages) }));
     name = base + (o.ai ? '_KI' : '') + (o.format === 'md' ? '.md' : '.html'); mime = o.format === 'md' ? 'text/markdown' : 'text/html';
   } else if (o.format === 'txt') {
     await waitForOcr(pages);
+    for (const p of pages) if (coversOf(p).length) await pageWords(p);   // Textebene laden, damit Geschwärztes sicher fehlt
     data = new TextEncoder().encode(pages.map((p, i) => `--- Seite ${i + 1} ---\n${pageText(p).trim()}\n`).join('\n').replace(/\n/g, '\r\n'));
     name = base + '.txt'; mime = 'text/plain';
   } else if (o.format === 'pptx') {
@@ -4104,7 +4137,7 @@ async function doExport(o) {
       const k = Imaging.canvas(src.width, src.height), x = k.getContext('2d');
       x.drawImage(src, 0, 0); await drawAnnotsCanvas(x, p, k.width, k.height);
       stampCanvas(x, k.width, k.height, i, pages.length, st, p.kind === 'image' ? k.width / 595.28 : preset.dpi / 72);
-      const words = p.ocr?.words || (p.kind === 'pdf' && p.native !== false ? await nativeWords(p) : null) || [];
+      const words = unredacted(p, p.ocr?.words || (p.kind === 'pdf' && p.native !== false ? await nativeWords(p) : null) || []);
       const lines = textLines(words).map(l => { const x0 = Math.min(...l.map(w => w.x)), y0 = Math.min(...l.map(w => w.y)), x1 = Math.max(...l.map(w => w.x + w.w)), y1 = Math.max(...l.map(w => w.y + w.h)); return { t: l.map(w => w.t).join(' '), x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; });
       const wPt = p.kind === 'image' ? 595.28 : k.width * 72 / preset.dpi, hPt = p.kind === 'image' ? 595.28 * k.height / k.width : k.height * 72 / preset.dpi;
       slides.push({ jpeg: await canvasToJpeg(k, preset.q), w: wPt, h: hPt, lines, lang: docLang([p]) });

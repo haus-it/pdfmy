@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-18
 
+### Schwärzen: Geschwärztes fehlt überall, nicht nur in der PDF (app-v282)
+- **Anlass:** Hinweis eines Nutzers, der Text unter einer Schwärzung lasse sich markieren und kopieren. Die gespeicherte PDF war sauber (Seite wird Bild, Textebene ohne verdeckte Wörter – geprüft mit pdf.js), aber die **Textansicht/„Text kopieren“** zeigte den Text bis zum Speichern weiter.
+- **Weitere Lücken geschlossen:** Export als Word, Excel, Text, Markdown/HTML und PowerPoint enthielt den geschwärzten Text; Dateiname und Dokumenteigenschaften (Autor, Titel, Stichwörter, auch aus der Quell-PDF) konnten geschwärzte Briefdaten (z. B. Absender) enthalten; Suche und Ablage-Volltext fanden ihn.
+- **Umsetzung:** zentral `coversOf`/`unredacted` in js/app.js (pageText, pageWords, hlWords, Exporte), `scrubMeta` für Dateiname und docProps.
+- **Hilfe** in 40 Sprachen, Tests in tests/schwaerzen.test.js.
+
 ### Dokumenttyp: alle Typen zur Auswahl, mehr Typen, Überschrift zählt zuerst (app-v281)
 - **Auswahl:** Das Feld „Dokumenttyp“ zeigte nur Vorschläge, die zum Eingetragenen passen. Stand dort „Rechnung“, war nur „Rechnung“ wählbar. Ein Klick ins Feld zeigt jetzt alle 28 Typen; verlässt man es ohne Auswahl, bleibt der bisherige Typ.
 - **Neue Typen:** Quittung, Bestellung, Kostenvoranschlag, Abrechnung (Neben-, Heiz- und Hausgeldabrechnung), Lohnabrechnung, Versicherungsschein, Antrag, Bescheinigung, Vollmacht, Arztbrief, Zeugnis und Protokoll. Ladung, Urteil und Beschluss wurden schon erkannt, stehen jetzt auch in der Auswahl. Die Aufbewahrungsfristen sind ergänzt: Quittung 8 Jahre, Versicherungsschein und Vollmacht unbefristet prüfen, Kostenvoranschlag, Antrag und Protokoll 6 Jahre.
