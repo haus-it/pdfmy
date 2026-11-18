@@ -177,6 +177,23 @@ Parallele und gemischte Reihenfolge, Zugangscode je Unterzeichner, Anhänge vom 
 
 **Ausdrücklich nicht empfohlen (verletzt Leitplanke):** Cloud-KI und Spaces mit Teilen und Leseverfolgung, Videoident, SMS-Versand oder eID über Dienste, Kartenzahlung über Zahlungsdienstleister, Web Forms über einen Server, Abruf von Webseiten per URL, REST-API und Server-Betrieb durch Mentor.
 
+## 6. Rückmeldungen aus den Kommentaren in Borns IT-Blog (ausgewertet 18.11.2026)
+
+Quelle: Kommentare unter „Digital Independence Day: Adobe PDF-Reader-Alternativen“ (borncity.com, 01.11.2026). Genannte Mitbewerber: SumatraPDF, PDF-XChange Editor, Foxit, Okular, Firefox-Betrachter, LibreOffice Draw, PDF24, PDFCraft, PDF Arranger, KillerPDF, BentoPDF (on-prem per Docker, ca. 85 € Lebenszeit-Lizenz gewerblich).
+
+| Rückmeldung | Bewertung | Stand |
+|---|---|---|
+| „Schwärzen legt nur eine Box über den Text, ich kann ihn markieren und kopieren“ (gmtest) | Echte Lücke: PDF war sauber, aber Textansicht, Exporte, Dateiname und Eigenschaften enthielten Verdecktes | **Behoben app-v282** |
+| Firefox mit abgeschalteten Seitenschriften zeigt PDFs textfrei (Steter Tropfen) | Traf auch PDFMy (pdf.js lädt Schriften als Webschriften) | **Behoben app-v283**: Erkennung, Buchstaben als Formen |
+| „Dokumente verlassen nie den Rechner – vorsichtig sein“, „Laufen PWAs in Firefox?“ (asdf) | Berechtigte Skepsis; technisch durch CSP abgesichert, aber für Laien nicht nachprüfbar | **Umgesetzt app-v283**: Anleitung „Selbst nachprüfen“ auf der Sicherheitsseite. Firefox: volle Funktion im Browser und offline, nur keine Installation als App (Hilfe „Firefox am PC“) |
+| KI-generierter Code, wer prüft auf Hintertüren? (Martin S., Anton, HoldThePhone – zu PDFCraft, trifft PDFMy genauso) | Vertrauensfrage, kein Funktionsfehler | Offener Quellcode, Test-Gate, signierte Updates, CSP; auf der Sicherheitsseite benannt. **Offen:** unabhängige Prüfung (externer Sicherheitstest/Code-Review) als Vertrauensnachweis erwägen |
+| Zum Anzeigen PDF-Leser ohne JavaScript (Bernd Bachmann) | PDFMy führt PDF-JavaScript nicht aus (pdf.js ohne Skripting, `isEvalSupported: false`) | Bereits erfüllt, auf Sicherheitsseite genannt |
+| Formulare werden von manchen Programmen fehlerhaft gespeichert (Bernd Bachmann) | Prüfwert für PDFMy-Formulare | **Offen:** Formular-Rundreise (ausfüllen → speichern → in Acrobat/Firefox/Foxit öffnen) mit realen Behördenformularen testen |
+| Liste nach Zweck trennen: Dokumente, Formulare, Grafik/Druck (xx) | Positionierung | **Offen:** Startseite/Hilfe könnten die Stärken je Zweck zeigen; Druckvorstufe (Farbräume, Überdrucken) bleibt bewusst keine Stärke |
+| Sumatra „ewig langsames Drucken“ (pdf-leser) | Chance: PDFMy druckt über die Druckvorschau des Browsers | Kein Handlungsbedarf |
+| PDFCraft: tägliche Updates mit UAC-Abfrage nerven (artcrafttester) | Bestätigt unseren Weg: Web-App ohne Installation, pdfmy Scan aktualisiert sich still und gestaffelt | Kein Handlungsbedarf |
+| BentoPDF on-prem per Docker (Bernie, Clara) | Wettbewerber mit Selbstbetrieb | **Offen:** Selbstbetrieb (statische Dateien im eigenen Netz) für Firmen klar beschreiben; Lizenzfrage (PolyForm NC) vorher mit GF klären |
+
 ---
 
 ### Quellen (Wettbewerb)

@@ -51,7 +51,29 @@ async function pdfAttachments(js) {
   return Object.values(att);
 }
 // fontExtraProperties: Schriftnamen (z. B. „ABCDEF+Calibri-Bold“) für fett/kursiv und die Originalschrift beim Textändern
-async function openPdf(data, extra = {}) { await pdfjsReady(); return pdfjsLib.getDocument({ data, fontExtraProperties: true, ...window.PDFJS_OPTS, ...extra }).promise; }
+async function openPdf(data, extra = {}) {
+  await pdfjsReady();
+  const noFonts = await webFontsBlocked() ? { disableFontFace: true } : {};
+  return pdfjsLib.getDocument({ data, fontExtraProperties: true, ...window.PDFJS_OPTS, ...noFonts, ...extra }).promise;
+}
+/* Firefox mit abgeschalteten Seitenschriften („Seiten das Verwenden eigener Schriften erlauben“ aus): Die Schriften im PDF würden nicht
+   geladen, der Text bliebe unsichtbar (Hinweis eines Lesers, Borns IT-Blog 02.11.2026). Dann zeichnet pdf.js die Buchstaben als Formen.
+   Prüfung: Eine eigene Schrift (DejaVu Sans) muss anders breit sein als die Festbreitenschrift – sonst greift der Browser nicht auf sie zu. */
+let webFontsOk = null;
+async function webFontsBlocked() {
+  if (webFontsOk === null) {
+    try {
+      const fam = '"DejaVu Sans"', px = 40 + 'px ';
+      await Promise.race([document.fonts.load(px + fam), new Promise(r => setTimeout(r, 1500))]);
+      const x = document.createElement('canvas').getContext('2d'), s = 'iiiiiiiiii';
+      const mono = 'monospace'; x.font = px + fam + ',' + mono; const a = x.measureText(s).width;
+      x.font = px + mono; const b = x.measureText(s).width;
+      webFontsOk = Math.abs(a - b) > 4;
+      if (!webFontsOk) console.info('pdfmy', 'disableFontFace');
+    } catch { webFontsOk = true; }
+  }
+  return !webFontsOk;
+}
 
 const $ = s => document.querySelector(s);
 // Beschriftung eines Knopfs ändern, Symbol behalten

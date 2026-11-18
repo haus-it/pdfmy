@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-18
 
+### Rückmeldungen aus Borns IT-Blog: Firefox-Schriften, Selbstprüfung (app-v283)
+- **Firefox ohne Seitenschriften:** Wer in Firefox eigene Schriften der Seiten abschaltet, sah PDFs ohne Text. PDFMy erkennt das (Textbreite einer Webschrift gegenüber Festbreite) und lässt pdf.js die Buchstaben als Formen zeichnen (`disableFontFace`). Text bleibt durchsuchbar und kopierbar.
+- **Sicherheitsseite:** neuer Punkt „Selbst nachprüfen statt glauben“ (Netzwerk-Ansicht F12, Flugmodus, CSP, offener Quellcode, Test-Gate, signierte Updates).
+- **Lückenanalyse:** docs/Wettbewerb-2026-11.md Abschnitt 6 mit allen Rückmeldungen und offenen Punkten; ISO-Nachtrag.
+- **Hilfe** in 40 Sprachen, Tests in tests/rueckmeldungen.test.js.
+
 ### Schwärzen: Geschwärztes fehlt überall, nicht nur in der PDF (app-v282)
 - **Anlass:** Hinweis eines Nutzers, der Text unter einer Schwärzung lasse sich markieren und kopieren. Die gespeicherte PDF war sauber (Seite wird Bild, Textebene ohne verdeckte Wörter – geprüft mit pdf.js), aber die **Textansicht/„Text kopieren“** zeigte den Text bis zum Speichern weiter.
 - **Weitere Lücken geschlossen:** Export als Word, Excel, Text, Markdown/HTML und PowerPoint enthielt den geschwärzten Text; Dateiname und Dokumenteigenschaften (Autor, Titel, Stichwörter, auch aus der Quell-PDF) konnten geschwärzte Briefdaten (z. B. Absender) enthalten; Suche und Ablage-Volltext fanden ihn.
