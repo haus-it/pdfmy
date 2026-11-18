@@ -104,6 +104,7 @@ namespace PdfmyScan
 
         static string Esc(string s) => System.Security.SecurityElement.Escape(s ?? "");
         static string Tag(string x, string t) { var m = Regex.Match(x ?? "", @"<(?:[\w-]+:)?" + t + @"\b[^>]*>\s*([^<]*?)\s*<", RegexOptions.Singleline); return m.Success ? m.Groups[1].Value : null; }
+        static string HostOf(string u) { try { return new Uri(u).Host; } catch { return u; } }
         static string Uuid() => "urn:uuid:" + Guid.NewGuid();
         static bool IsFault(string x) => (x ?? "").Contains("addressing/fault") || Regex.IsMatch(x ?? "", @"<(?:[\w-]+:)?Fault\b");
         static string Soap(string to, string action, string body) =>
@@ -127,27 +128,32 @@ namespace PdfmyScan
         }
 
         // WS-Discovery: (Endpunkt, Geräteadresse) – Multicast über alle Netzwerkkarten oder direkt an die angegebenen Adressen
-        public static List<KeyValuePair<string, string>> Discover(IEnumerable<IPAddress> direct, int waitMs)
+        public static List<KeyValuePair<string, string>> Discover(IEnumerable<IPAddress> direct, int waitMs, Action<string> why = null)
         {
             string probe = $"<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope {NS}><soap:Header><wsa:To>urn:schemas-xmlsoap-org:ws:2005:04:discovery</wsa:To><wsa:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe</wsa:Action><wsa:MessageID>{Uuid()}</wsa:MessageID></soap:Header><soap:Body><wsd:Probe><wsd:Types>wscn:ScanDeviceType</wsd:Types></wsd:Probe></soap:Body></soap:Envelope>";
             var found = new Dictionary<string, string>();
+            if (why != null) { var said = new HashSet<string>(); var w = why; why = m => { lock (said) if (!said.Add(m)) return; w(m); }; }   // Geräte antworten oft mehrfach
             foreach (var r in Net.Ask(new[] { Encoding.UTF8.GetBytes(probe) }, IPAddress.Parse("239.255.255.250"), Port, direct, waitMs))
             {
                 string x = Encoding.UTF8.GetString(r.Value);
-                if (!x.Contains("ProbeMatch")) continue;
+                if (!x.Contains("ProbeMatch")) { why?.Invoke($"WSD {r.Key.Address}: Antwort ohne ProbeMatch"); continue; }
                 string epr = (Tag(x, "Address") ?? "").Trim();
-                var xs = (Tag(x, "XAddrs") ?? "").Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Where(a => a.StartsWith("http://")).ToList();
+                var all = (Tag(x, "XAddrs") ?? "").Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                var xs = all.Where(a => a.StartsWith("http://")).ToList();
+                if (xs.Count == 0) xs = all.Where(a => a.StartsWith("https://")).ToList();   // manche Geräte bieten WSD nur verschlüsselt an (Zertifikat im eigenen Netz erlaubt)
                 var u = xs.FirstOrDefault(a => !a.Contains("[")) ?? xs.FirstOrDefault();   // IPv4 bevorzugen
-                if (u != null && !found.ContainsKey(epr)) found[epr] = u;
+                if (u == null) why?.Invoke($"WSD {r.Key.Address}: keine http(s)-Adresse ({(all.Length == 0 ? "XAddrs fehlt" : string.Join(" ", all))})");
+                else if (!found.ContainsKey(epr)) found[epr] = u;
             }
             return found.ToList();
         }
 
         // Gerätebeschreibung holen, Scan-Dienst und Fähigkeiten bestimmen
-        public static WsdDevice Probe(string epr, string xaddr)
+        // why: Grund fürs Protokoll, wenn ein antwortendes Gerät nicht als Scanner zählt (Gerät, Fehler)
+        public static WsdDevice Probe(string epr, string xaddr, Action<string> why = null)
         {
             var r = Call(xaddr, string.IsNullOrEmpty(epr) ? xaddr : epr, "http://schemas.xmlsoap.org/ws/2004/09/transfer/Get", "", 6000);
-            if (r.Code != 200) return null;
+            if (r.Code != 200) { why?.Invoke($"WSD {HostOf(xaddr)}: Gerätebeschreibung {(r.Code == 0 ? "ohne Antwort (Zeitüberschreitung/abgelehnt)" : "HTTP " + r.Code)}"); return null; }
             string svc = null;
             foreach (Match h in Regex.Matches(r.Text, @"<(?:[\w-]+:)?Hosted>(.*?)</(?:[\w-]+:)?Hosted>", RegexOptions.Singleline))
             {
@@ -156,7 +162,13 @@ namespace PdfmyScan
                 svc = addrs.FirstOrDefault(a => !a.Contains("[")) ?? addrs.FirstOrDefault();
                 if (svc != null) break;
             }
-            if (svc == null) return null;
+            if (svc == null)
+            {
+                string dn = string.Join(" ", new[] { Tag(r.Text, "Manufacturer"), Tag(r.Text, "ModelName") }.Where(t => !string.IsNullOrWhiteSpace(t))).Trim();
+                var types = Regex.Matches(r.Text, @"<(?:[\w-]+:)?Types>\s*([^<]+?)\s*<").Cast<Match>().Select(m => m.Groups[1].Value.Trim()).Distinct();
+                why?.Invoke($"WSD {HostOf(xaddr)}{(dn.Length > 0 ? " (" + dn + ")" : "")}: kein Scan-Dienst gemeldet – Dienste: {(types.Any() ? string.Join(", ", types) : "keine")}; bei Brother/Multifunktionsgeräten am Gerät „Webdienste“ bzw. „WSD-Scan“ einschalten");
+                return null;
+            }
             string name = string.Join(" ", new[] { Tag(r.Text, "Manufacturer"), Tag(r.Text, "ModelName") }.Where(s => !string.IsNullOrWhiteSpace(s))).Trim();
             if (name.Length < 3) name = (Tag(r.Text, "FriendlyName") ?? "").Trim();
             var d = new WsdDevice { Kind = "wsd", Svc = svc, Id = "wsd:" + svc, Name = name.Length > 0 ? name : "Scanner " + new Uri(svc).Host };

@@ -251,3 +251,20 @@ test('Updates ohne Umweg: Mac/Linux signiert und automatisch, Ein-Klick in PDFMy
   assert.ok(b.includes("write('download/pdfmy-scan-unix.json'") && b.includes("cr.sign('sha256', body"), 'Build veröffentlicht signierte Fassung');
   assert.ok(fs.readFileSync(path.join(ROOT, '.gitignore'), 'utf8').includes('tools/signing/'), 'privater Schlüssel nicht im Git');
 });
+
+test('Scanner-Suche: ältere Geräte (Sonderports, WSD über HTTPS) und Grund im Protokoll, wenn ein Gerät nicht als Scanner zählt', () => {
+  const cs = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Program.cs'), 'utf8'), wsd = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Wsd.cs'), 'utf8');
+  assert.ok(cs.includes('new[] { 80, 443, 631, 5357, 5358, 9100, 9095, 8080 }'), 'Windows: Sonderports in der Netzsuche');
+  for (const u of ['$"http://{ip}:9095/eSCL"', '$"http://{ip}:8080/eSCL"', '$"http://{h}:9095/eSCL"']) assert.ok(cs.includes(u), u);
+  assert.ok(cs.includes('diag.Enqueue("ohne Scan-Dienst: "'), 'antwortende Geräte ohne Scan-Dienst im Protokoll');
+  assert.ok(wsd.includes('if (xs.Count == 0) xs = all.Where(a => a.StartsWith("https://"))'), 'WSD über HTTPS');
+  for (const s of ['kein Scan-Dienst gemeldet', 'Gerätebeschreibung', 'keine http(s)-Adresse']) assert.ok(wsd.includes(s), 'Grund: ' + s);
+  assert.equal((cs.match(/WsdDevice\.Probe\(m\.Key, m\.Value, diag\.Enqueue\)/g) || []).length, 2, 'beide Suchwege melden Gründe');
+  const pl = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan-mac', 'pdfmy-scan.pl'), 'utf8');
+  assert.ok(pl.includes('80, 443, 631, 5357, 5358, 9100, 9095, 8080'), 'Mac/Linux: Sonderports');
+  assert.ok(pl.includes('"http://$ip:9095/eSCL"') && pl.includes('"http://$h:9095/eSCL"'));
+  assert.ok(pl.includes('@x = grep { m{^https://} } @all unless @x;'), 'Mac/Linux: WSD über HTTPS');
+  assert.equal(pl.split('wsd_probe($m, ' + String.fromCharCode(92) + '@diag)').length - 1, 2, 'Mac/Linux: Gründe im Protokoll');
+  const h = fs.readFileSync(path.join(ROOT, 'tools', 'site', 'hilfe.html'), 'utf8');
+  assert.ok(h.includes('<b>Brother und andere Geräte, die nur per WSD scannen</b>'), 'Hilfe: Brother-Hinweis');
+});

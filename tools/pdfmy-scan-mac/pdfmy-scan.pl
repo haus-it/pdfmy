@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.10.0';
+our $VERSION = '1.10.1';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -104,7 +104,7 @@ sub subnet_hosts {
     next unless $b[0] == 10 || ($b[0] == 192 && $b[1] == 168) || ($b[0] == 172 && $b[1] >= 16 && $b[1] <= 31);
     $t{"$b[0].$b[1].$b[2].$_"} = 1 for grep { "$b[0].$b[1].$b[2].$_" ne $lip } 1 .. 254;
   } }
-  my @targets = map { my $ip = $_; map { [$ip, $_] } 80, 443, 631, 5357, 9100 } sort keys %t; my %open;   # Web und Druckerports (IPP, WSD, RAW)
+  my @targets = map { my $ip = $_; map { [$ip, $_] } 80, 443, 631, 5357, 5358, 9100, 9095, 8080 } sort keys %t; my %open;   # Web und Druckerports (IPP, WSD, RAW), eSCL-Sonderports älterer Geräte (Kyocera 9095, 8080)
   while (my @batch = splice @targets, 0, 150) {
     my %pending;
     for my $tp (@batch) { my $s = IO::Socket::INET->new(PeerAddr => $tp->[0], PeerPort => $tp->[1], Proto => 'tcp', Blocking => 0) or next; $pending{fileno $s} = [$s, @$tp]; }
@@ -282,7 +282,8 @@ sub wsd_collect {
       my $from = recv($sk, my $buf, 65535, 0); next unless defined $from;
       next unless $buf =~ /ProbeMatch/;
       my $epr = trim(tagv($buf, 'Address')) // '';
-      my @x = grep { m{^http://} } split /\s+/, (tagv($buf, 'XAddrs') // '');
+      my @all = split /\s+/, (tagv($buf, 'XAddrs') // '');
+      my @x = grep { m{^http://} } @all; @x = grep { m{^https://} } @all unless @x;   # manche Geräte bieten WSD nur verschlüsselt an
       # Link-lokale IPv6-Adresse (fe80::) braucht die Netzwerkschnittstelle – aus dem Absender übernehmen
       if (length $from > 16) { my (undef, undef, $scope) = eval { unpack_sockaddr_in6($from) }; s{^http://\[(fe80:[^\]%]+)\]}{http://[$1%25$scope]}i for grep { $scope } @x; }
       my $u = pick_url(@x);
@@ -294,10 +295,10 @@ sub wsd_collect {
 }
 # Gerätebeschreibung holen (WS-Transfer Get) und den Scan-Dienst finden
 sub wsd_probe {
-  my $m = shift;
+  my ($m, $why) = @_;   # $why: Liste fürs Protokoll – warum ein antwortendes Gerät nicht als Scanner zählt
   my ($c, $h, $x) = http(method => 'POST', url => $m->{xaddr}, ctype => 'application/soap+xml; charset=utf-8', timeout => 6, connect => 3,
     body => soap($m->{epr} || $m->{xaddr}, 'http://schemas.xmlsoap.org/ws/2004/09/transfer/Get', ''));
-  return undef unless $c == 200;
+  if ($c != 200) { push @$why, 'WSD ' . host_of($m->{xaddr}) . ': Gerätebeschreibung ' . ($c ? "HTTP $c" : 'ohne Antwort') if $why; return undef; }
   $x = decode('UTF-8', $x);
   my $svc;
   while ($x =~ /<(?:[\w-]+:)?Hosted>(.*?)<\/(?:[\w-]+:)?Hosted>/gs) {
@@ -305,7 +306,14 @@ sub wsd_probe {
     my $a = pick_url(map { trim($_) } ($hb =~ /<(?:[\w-]+:)?Address>([^<]+)</g));
     if ($a) { ($svc = $a) =~ s{^(http://\[fe80:[^\]%]+)\]}{my $z = ($m->{xaddr} =~ /%25([\w.]+)\]/)[0]; $z ? "$1%25$z]" : "$1]"}ie; last; }
   }
-  return undef unless $svc;
+  unless ($svc) {
+    if ($why) {
+      my $dn = trim(join ' ', grep { defined && length } (tagv($x, 'Manufacturer'), tagv($x, 'ModelName')));
+      my %t; $t{ trim($_) }++ for $x =~ /<(?:[\w-]+:)?Types>\s*([^<]+?)\s*</g;
+      push @$why, 'WSD ' . host_of($m->{xaddr}) . ($dn ? " ($dn)" : '') . ': kein Scan-Dienst gemeldet – Dienste: ' . (join(', ', sort keys %t) || 'keine') . '; am Gerät „Webdienste“ bzw. „WSD-Scan“ einschalten';
+    }
+    return undef;
+  }
   my $name = trim(join ' ', grep { defined && length } (tagv($x, 'Manufacturer'), tagv($x, 'ModelName')));
   $name = trim(tagv($x, 'FriendlyName')) if !$name || length $name < 3;
   my %d = (kind => 'wsd', id => "wsd:$svc", svc => $svc, name => ($name || 'Scanner ' . host_of($svc)));
@@ -558,7 +566,7 @@ sub discover {
   push @diag, 'avahi: ' . scalar(keys %dev) if !$IS_MAC && which('avahi-browse');
   # WSD (Multicast)
   my @wm = @{ safe(sub { [wsd_discover(undef, 3)] }) || [] }; push @diag, 'WSD-Rundruf: ' . scalar(@wm) . ' Antwort(en)';
-  for my $m (@wm) { my $d = safe(sub { wsd_probe($m) }); $dev{ $d->{id} } = $d if $d && !grep { lc $_->{name} eq lc $d->{name} && $_->{kind} eq 'escl' } values %dev; }
+  for my $m (@wm) { my $d = safe(sub { wsd_probe($m, \@diag) }); $dev{ $d->{id} } = $d if $d && !grep { lc $_->{name} eq lc $d->{name} && $_->{kind} eq 'escl' } values %dev; }
   # Netzsuche (wie pdfmy Scan für Windows): jede Adresse im eigenen Netz direkt fragen – findet Geräte, wenn Bonjour/avahi fehlen
   # oder eine Firewall die Antworten auf den Rundruf verwirft (unter Linux häufig: firewalld/ufw)
   my %known = map { host_of($_->{base} // $_->{svc} // $_->{xaddr} // '') => 1 } values %dev;
@@ -573,11 +581,11 @@ sub discover {
   }
   my @hosts = grep { !$known{$_} } sort keys %$open; my @wsdHosts;
   for my $ip (@hosts) {
-    my $d; for my $base (($open->{$ip}{80} ? "http://$ip/eSCL" : ()), ($open->{$ip}{443} ? "https://$ip/eSCL" : ())) { $d = safe(sub { escl_probe($base) }) and last; }
+    my $d; for my $base (($open->{$ip}{80} ? "http://$ip/eSCL" : ()), ($open->{$ip}{443} ? "https://$ip/eSCL" : ()), ($open->{$ip}{9095} ? "http://$ip:9095/eSCL" : ()), ($open->{$ip}{8080} ? "http://$ip:8080/eSCL" : ())) { $d = safe(sub { escl_probe($base) }) and last; }
     if ($d) { $dev{ $d->{id} } = $d; } else { push @wsdHosts, $ip; }
   }
   my @wu = @wsdHosts ? @{ safe(sub { [wsd_discover(\@wsdHosts, 2)] }) || [] } : ();
-  for my $m (@wu) { my $d = safe(sub { wsd_probe($m) }); $dev{ $d->{id} } = $d if $d && !grep { lc $_->{name} eq lc $d->{name} } values %dev; }
+  for my $m (@wu) { my $d = safe(sub { wsd_probe($m, \@diag) }); $dev{ $d->{id} } = $d if $d && !grep { lc $_->{name} eq lc $d->{name} } values %dev; }
   push @diag, 'Netzsuche: ' . scalar(keys %$open) . ' Gerät(e) mit Web-/Druckerport' . (@hosts ? ' (' . join(', ', @hosts[0 .. ($#hosts > 11 ? 11 : $#hosts)]) . ')' : '') . ', WSD direkt: ' . scalar(@wu);
   # Von Hand hinzugefügte Geräte (IP-Adresse)
   for my $ip (@{ added_ips() }) { my $d = safe(sub { probe_ip($ip) }); $dev{ $d->{id} } = $d if $d; }
@@ -595,7 +603,7 @@ sub probe_ip {
     if (!$r && (my $o = $IS_MAC ? run_for(2, '/usr/bin/dscacheutil', '-q', 'host', '-a', 'name', $l) : (which('avahi-resolve') ? run_for(3, which('avahi-resolve'), '-4', '-n', $l) : ''))) { ($r) = $o =~ /(\d{1,3}(?:\.\d{1,3}){3})/; }
     $ip = $r if $r; logl("Gerätename $l → " . ($r // 'nicht gefunden')); }
   my $h = hosturl($ip);
-  for my $base ($port ? ("http://$h:$port/eSCL", "https://$h:$port/eSCL") : ("http://$h/eSCL", "https://$h/eSCL", "http://$h:8080/eSCL")) { my $d = escl_probe($base); return $d if $d; }
+  for my $base ($port ? ("http://$h:$port/eSCL", "https://$h:$port/eSCL") : ("http://$h/eSCL", "https://$h/eSCL", "http://$h:8080/eSCL", "http://$h:9095/eSCL")) { my $d = escl_probe($base); return $d if $d; }
   for my $m (wsd_discover($ip, 2)) { my $d = wsd_probe($m); return $d if $d; }
   return undef;
 }

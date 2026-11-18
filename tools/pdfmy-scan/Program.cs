@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.20.0";
+        public const string Version = "1.20.1";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1005,11 +1005,11 @@ namespace PdfmyScan
                 // WSD (z. B. Epson, Dell, Brother): WS-Discovery über jede Netzwerkkarte, dazu von Hand hinzugefügte WSD-Geräte
                 probes.Add(Task.Run(() =>
                 {
-                    var ms = WsdDevice.Discover(null, 2500);
+                    var ms = WsdDevice.Discover(null, 2500, diag.Enqueue);
                     var manual = ManualWsdHosts().SelectMany(h => { try { return Dns.GetHostAddresses(h); } catch { return new IPAddress[0]; } }).ToList();
-                    if (manual.Count > 0) ms.AddRange(WsdDevice.Discover(manual, 2000));
+                    if (manual.Count > 0) ms.AddRange(WsdDevice.Discover(manual, 2000, diag.Enqueue));
                     int ok = 0;
-                    Parallel.ForEach(ms.GroupBy(m => m.Key).Select(g => g.First()), m => { var d = WsdDevice.Probe(m.Key, m.Value); if (d != null) { found[d.Id] = d; Interlocked.Increment(ref ok); } });
+                    Parallel.ForEach(ms.GroupBy(m => m.Key).Select(g => g.First()), m => { var d = WsdDevice.Probe(m.Key, m.Value, diag.Enqueue); if (d != null) { found[d.Id] = d; Interlocked.Increment(ref ok); } });
                     diag.Enqueue($"WSD: {ms.Count} Antwort(en), {ok} Scanner");
                 }));
                 probes.Add(SubnetScanAsync(found, diag));                        // Ergänzung: Netz absuchen (Port 80/443: eSCL, sonst WSD direkt)
@@ -1094,16 +1094,17 @@ namespace PdfmyScan
                     for (int i = 1; i < 255; i++) targets.Add($"{b[0]}.{b[1]}.{b[2]}.{i}");
                 }
             }
-            // Web (80/443) und Druckerports (IPP 631, WSD 5357, RAW 9100): so werden auch Geräte gefunden, die nur per WSD scannen
-            var open = new ConcurrentDictionary<string, int>();   // IP → 1 = Port 80, 2 = Port 443, 4 = Druckerport
-            await Task.WhenAll(targets.Distinct().SelectMany(ip => new[] { 80, 443, 631, 5357, 9100 }.Select(async port =>
+            // Web (80/443) und Druckerports (IPP 631, WSD 5357/5358, RAW 9100): so werden auch Geräte gefunden, die nur per WSD scannen.
+            // Dazu eSCL auf Sonderports älterer Geräte (ab Baujahr ~2015): Kyocera 9095, einige HP/Lexmark/Ricoh 8080
+            var open = new ConcurrentDictionary<string, int>();   // IP → 1 = Port 80, 2 = Port 443, 4 = Druckerport, 8 = 9095, 16 = 8080
+            await Task.WhenAll(targets.Distinct().SelectMany(ip => new[] { 80, 443, 631, 5357, 5358, 9100, 9095, 8080 }.Select(async port =>
             {
                 using (var c = new TcpClient())
                 {
                     try
                     {
                         var t = c.ConnectAsync(ip, port);
-                        if (await Task.WhenAny(t, Task.Delay(700)) == t && c.Connected) { int bit = port == 80 ? 1 : port == 443 ? 2 : 4; open.AddOrUpdate(ip, bit, (k, v) => v | bit); }
+                        if (await Task.WhenAny(t, Task.Delay(700)) == t && c.Connected) { int bit = port == 80 ? 1 : port == 443 ? 2 : port == 9095 ? 8 : port == 8080 ? 16 : 4; open.AddOrUpdate(ip, bit, (k, v) => v | bit); }
                         _ = t.ContinueWith(x => { var _e = x.Exception; }, TaskContinuationOptions.OnlyOnFaulted);   // Fehler (abgelehnt) bewusst ignorieren
                     }
                     catch { }
@@ -1115,7 +1116,9 @@ namespace PdfmyScan
             {
                 string ip = kv.Key;
                 if (found.Values.Any(d => (d is EsclDevice e && HostOf(e.BaseUrl) == ip) || (d is WsdDevice w && HostOf(w.Svc) == ip))) return;
-                var d = (kv.Value & 3) == 0 ? null : await EsclDevice.ProbeAsync($"http://{ip}/eSCL") ?? ((kv.Value & 2) != 0 ? await EsclDevice.ProbeAsync($"https://{ip}/eSCL") : null);
+                EsclDevice d = null;
+                foreach (var (bit, url) in new[] { (1, $"http://{ip}/eSCL"), (2, $"https://{ip}/eSCL"), (8, $"http://{ip}:9095/eSCL"), (16, $"http://{ip}:8080/eSCL") })
+                    if ((kv.Value & bit) != 0 && (d = await EsclDevice.ProbeAsync(url)) != null) break;
                 if (d != null) { found[d.BaseUrl] = d; Interlocked.Increment(ref escl); }
                 else if (IPAddress.TryParse(ip, out var a)) rest.Add(a);
             }));
@@ -1123,11 +1126,15 @@ namespace PdfmyScan
             int wsd = 0;
             if (rest.Count > 0)
             {
-                var ms = WsdDevice.Discover(rest, 2000);
-                foreach (var m in ms) { if (found.Values.OfType<WsdDevice>().Any(w => HostOf(w.Svc) == HostOf(m.Value))) continue; var d = WsdDevice.Probe(m.Key, m.Value); if (d != null) { found[d.Id] = d; wsd++; } }
+                var ms = WsdDevice.Discover(rest, 2000, diag.Enqueue);
+                foreach (var m in ms) { if (found.Values.OfType<WsdDevice>().Any(w => HostOf(w.Svc) == HostOf(m.Value))) continue; var d = WsdDevice.Probe(m.Key, m.Value, diag.Enqueue); if (d != null) { found[d.Id] = d; wsd++; } }
             }
             diag.Enqueue($"Netzsuche: {targets.Distinct().Count()} Adressen, {open.Count} Geräte (Web/Druckerports), {escl} eSCL, {wsd} WSD");
+            if (rest.Count > 0 && escl + wsd == 0)   // welche Geräte antworten, aber nicht als Scanner – hilft beim Fehlerbericht
+                diag.Enqueue("ohne Scan-Dienst: " + string.Join(", ", rest.OrderBy(a => BitConverter.ToUInt32(a.GetAddressBytes().Reverse().ToArray(), 0)).Select(a => $"{a} ({Ports(open.TryGetValue(a.ToString(), out var v) ? v : 0)})")));
         }
+
+        static string Ports(int bits) => string.Join("/", new[] { (bits & 1) != 0 ? "Web" : null, (bits & 2) != 0 ? "https" : null, (bits & 4) != 0 ? "Drucker" : null, (bits & 8) != 0 ? "9095" : null, (bits & 16) != 0 ? "8080" : null }.Where(x => x != null));
 
         IEnumerable<string> ManualUrls()
         {
@@ -1154,7 +1161,7 @@ namespace PdfmyScan
             else if (m4.Success) { h = m4.Groups[1].Value; port = m4.Groups[2].Value; }
             if (h.Contains(":")) h = "[" + h.Replace("%25", "%") + "]";
             var hp = port != null ? $"{h}:{port}" : h;
-            var tries = ip.StartsWith("http") ? new[] { ip.TrimEnd('/') } : (port != null ? new[] { $"http://{hp}/eSCL", $"https://{hp}/eSCL" } : new[] { $"http://{hp}/eSCL", $"https://{hp}/eSCL", $"http://{h}:8080/eSCL" });   // mit Port: nur diesen Port prüfen
+            var tries = ip.StartsWith("http") ? new[] { ip.TrimEnd('/') } : (port != null ? new[] { $"http://{hp}/eSCL", $"https://{hp}/eSCL" } : new[] { $"http://{hp}/eSCL", $"https://{hp}/eSCL", $"http://{h}:8080/eSCL", $"http://{h}:9095/eSCL" });   // mit Port: nur diesen Port prüfen
             foreach (var u in tries)
             {
                 var d = await EsclDevice.ProbeAsync(u, 4000);

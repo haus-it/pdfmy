@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-18
 
+### Scanner-Suche: ältere Geräte und klarer Grund im Protokoll (pdfmy Scan Windows 1.20.1, Mac/Linux 1.10.1, app-v280)
+- **Anlass:** Bei einem Nutzer fand pdfmy Scan den Brother ADS-2800W (Baujahr 2015, scannt nur per WSD) nicht. Im Protokoll stand nur „WSD: 1 Antwort(en), 0 Scanner“.
+- **Grund im Protokoll:** Antwortet ein Gerät, zählt aber nicht als Scanner, steht jetzt dort, warum: keine Gerätebeschreibung (Zeitüberschreitung oder HTTP-Fehler), kein Scan-Dienst gemeldet (mit Hersteller, Modell und gemeldeten Diensten) oder keine nutzbare Adresse. Findet die Netzsuche nichts, listet sie alle antwortenden Geräte mit ihren offenen Ports auf.
+- **Ältere Geräte (ab etwa 2015):** Die Netzsuche prüft jetzt auch die eSCL-Sonderports 9095 (Kyocera) und 8080 sowie den WSD-Port 5358. Dasselbe gilt beim Hinzufügen per IP-Adresse. Geräte, die WSD nur verschlüsselt anbieten (https), werden jetzt angesprochen; selbstsignierte Zertifikate sind wie bisher nur im eigenen Netz erlaubt.
+- **Hilfe und Geräteliste:** Neuer Hinweis für Brother und andere reine WSD-Geräte: in der Weboberfläche unter „Netzwerk → Protokoll“ die „Webdienste“ einschalten, Gerät nicht im Gastnetz. In 40 Sprachen.
+- **Getestet:** Nachgebildetes Brother-Gerät (nur Druckdienst, HTTP 500, nur https-Adresse): Jeder Fall erscheint mit Grund im Protokoll, ohne doppelte Zeilen. Test „Scanner-Suche: ältere Geräte …“ in tests/seo.test.js.
+
 ### Updates für alle Systeme automatisch bzw. mit einem Klick (pdfmy Scan Windows 1.20.0, Mac/Linux 1.10.0, app-v279)
 - **Mac und Linux** aktualisieren sich jetzt selbst, wie Windows seit 1.16.0. Alle 6 Stunden (± 45 min) prüft pdfmy Scan auf eine neue Version. Es lädt sie nur über HTTPS und prüft SHA-256, die Signatur (RSA-3072, öffentlicher Schlüssel im Programm) und die Syntax. Dann tauscht es sich aus und startet neu, nie während eines Scans und mit gestaffelter Freigabe. Abschalten geht mit der Datei `updates-automatisch-aus` im Programmordner.
 - **Linux-Pakete** (.deb, .rpm, Arch) liegen in /opt und lassen sich ohne Admin-Rechte nicht ändern. Neuere Fassungen kommen deshalb in den Benutzerordner, und der Dienst startet automatisch die neuere: kein Passwort, kein Terminal.
