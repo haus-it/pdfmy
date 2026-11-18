@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Warunki korzystania",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Podsumowanie AI – utworzone przez AI na tym urządzeniu, prosimy sprawdzić.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Przetłumaczono maszynowo przez AI na tym urządzeniu – sprawdź przed wysłaniem.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jeśli dwuklik nie otworzy instalacji (np. w Ubuntu), otwórz terminal (Ctrl+Alt+T), wpisz to polecenie i potwierdź hasłem:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jeśli dwuklik nie otworzy instalacji (np. w Ubuntu), otwórz terminal (Ctrl+Alt+T), wpisz to polecenie i potwierdź hasłem:",
+ "Abrechnung": "Rozliczenie",
+ "Antrag": "Wniosek",
+ "Arztbrief": "Zaświadczenie lekarskie",
+ "Bescheinigung": "Zaświadczenie",
+ "Bestellung": "Zamówienie",
+ "Kostenvoranschlag": "Kosztorys",
+ "Lohnabrechnung": "Pasek wynagrodzenia",
+ "Versicherungsschein": "Polisa ubezpieczeniowa",
+ "Vollmacht": "Pełnomocnictwo",
+ "Zeugnis": "Świadectwo"
 }

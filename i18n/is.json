@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Notkunarskilmálar",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Gervigreindarsamantekt – búin til með gervigreind þessa tækis, vinsamlegast yfirfarið.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Vélþýtt með gervigreind þessa tækis – vinsamlegast yfirfarið fyrir sendingu.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ef tvísmellur opnar ekki uppsetningu (t.d. í Ubuntu), opnið skipanalínu (Ctrl+Alt+T), sláið inn þessa skipun og staðfestið með lykilorðinu ykkar:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ef tvísmellur opnar ekki uppsetningu (t.d. í Ubuntu), opnið skipanalínu (Ctrl+Alt+T), sláið inn þessa skipun og staðfestið með lykilorðinu ykkar:",
+ "Abrechnung": "Uppgjör",
+ "Antrag": "Umsókn",
+ "Arztbrief": "Læknabréf",
+ "Bescheinigung": "Vottorð",
+ "Bestellung": "Pöntun",
+ "Kostenvoranschlag": "Kostnaðaráætlun",
+ "Lohnabrechnung": "Launaseðill",
+ "Versicherungsschein": "Vátryggingarskírteini",
+ "Vollmacht": "Umboð",
+ "Zeugnis": "Meðmælabréf"
 }

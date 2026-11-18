@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Умови використання",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Підсумок ШІ – створено ШІ на цьому пристрої, будь ласка, перевірте.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Машинний переклад за допомогою ШІ на цьому пристрої – перевірте перед надсиланням.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Якщо подвійне клацання не відкриває встановлення (напр., в Ubuntu), відкрийте термінал (Ctrl+Alt+T), введіть цю команду і підтвердьте своїм паролем:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Якщо подвійне клацання не відкриває встановлення (напр., в Ubuntu), відкрийте термінал (Ctrl+Alt+T), введіть цю команду і підтвердьте своїм паролем:",
+ "Abrechnung": "Розрахунок",
+ "Antrag": "Заява",
+ "Arztbrief": "Лікарський висновок",
+ "Bescheinigung": "Довідка",
+ "Bestellung": "Замовлення",
+ "Kostenvoranschlag": "Кошторис",
+ "Lohnabrechnung": "Розрахунковий листок",
+ "Versicherungsschein": "Страховий поліс",
+ "Vollmacht": "Довіреність",
+ "Zeugnis": "Характеристика"
 }

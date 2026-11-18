@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Kullanım koşulları",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Yapay zekâ özeti – bu cihazdaki yapay zekâ ile oluşturuldu, lütfen kontrol edin.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Bu cihazdaki yapay zekâ ile makine çevirisi – göndermeden önce lütfen kontrol edin.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Çift tıklama kurulumu açmazsa (ör. Ubuntu’da), terminali açın (Ctrl+Alt+T), bu komutu girin ve parolanızla onaylayın:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Çift tıklama kurulumu açmazsa (ör. Ubuntu’da), terminali açın (Ctrl+Alt+T), bu komutu girin ve parolanızla onaylayın:",
+ "Abrechnung": "Hesap dökümü",
+ "Antrag": "Başvuru",
+ "Arztbrief": "Doktor raporu",
+ "Bescheinigung": "Belge",
+ "Bestellung": "Sipariş",
+ "Kostenvoranschlag": "Maliyet teklifi",
+ "Lohnabrechnung": "Maaş bordrosu",
+ "Versicherungsschein": "Sigorta poliçesi",
+ "Vollmacht": "Vekâletname",
+ "Zeugnis": "Referans mektubu"
 }

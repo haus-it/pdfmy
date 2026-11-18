@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Käyttöehdot",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Tekoälyn tiivistelmä – luotu tämän laitteen tekoälyllä, tarkista se.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Konekäännetty tämän laitteen tekoälyllä – tarkista ennen lähettämistä.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jos kaksoisnapsautus ei avaa asennusta (esim. Ubuntussa), avaa pääte (Ctrl+Alt+T), kirjoita tämä komento ja vahvista salasanallasi:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jos kaksoisnapsautus ei avaa asennusta (esim. Ubuntussa), avaa pääte (Ctrl+Alt+T), kirjoita tämä komento ja vahvista salasanallasi:",
+ "Abrechnung": "Selvitys",
+ "Antrag": "Hakemus",
+ "Arztbrief": "Lääkärinlausunto",
+ "Bescheinigung": "Todistus",
+ "Bestellung": "Tilaus",
+ "Kostenvoranschlag": "Kustannusarvio",
+ "Lohnabrechnung": "Palkkalaskelma",
+ "Versicherungsschein": "Vakuutuskirja",
+ "Vollmacht": "Valtakirja",
+ "Zeugnis": "Työtodistus"
 }

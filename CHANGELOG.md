@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-18
 
+### Dokumenttyp: alle Typen zur Auswahl, mehr Typen, Überschrift zählt zuerst (app-v281)
+- **Auswahl:** Das Feld „Dokumenttyp“ zeigte nur Vorschläge, die zum Eingetragenen passen. Stand dort „Rechnung“, war nur „Rechnung“ wählbar. Ein Klick ins Feld zeigt jetzt alle 28 Typen; verlässt man es ohne Auswahl, bleibt der bisherige Typ.
+- **Neue Typen:** Quittung, Bestellung, Kostenvoranschlag, Abrechnung (Neben-, Heiz- und Hausgeldabrechnung), Lohnabrechnung, Versicherungsschein, Antrag, Bescheinigung, Vollmacht, Arztbrief, Zeugnis und Protokoll. Ladung, Urteil und Beschluss wurden schon erkannt, stehen jetzt auch in der Auswahl. Die Aufbewahrungsfristen sind ergänzt: Quittung 8 Jahre, Versicherungsschein und Vollmacht unbefristet prüfen, Kostenvoranschlag, Antrag und Protokoll 6 Jahre.
+- **Erkennung:** Die Überschrift zählt zuerst. Ein Lieferschein mit „Rechnung folgt“ wurde bisher zur Rechnung; jetzt bleibt er Lieferschein. „Rechnungsnummer:“ gilt nicht als Überschrift. Mahnung, Bescheid, Kündigung, Gutschrift, Ladung, Urteil und Beschluss behalten Vorrang, weil ihr Betreff oft das Bezugsdokument nennt („Rechnung 4711 – 2. Mahnung“, „Antrag auf Wohngeld“). „Lohnabrechnung“ wird nicht mehr zur Rechnung.
+- **Hilfe** in 40 Sprachen, Tests in tests/letter.test.js.
+
 ### Scanner-Suche: ältere Geräte und klarer Grund im Protokoll (pdfmy Scan Windows 1.20.1, Mac/Linux 1.10.1, app-v280)
 - **Anlass:** Bei einem Nutzer fand pdfmy Scan den Brother ADS-2800W (Baujahr 2015, scannt nur per WSD) nicht. Im Protokoll stand nur „WSD: 1 Antwort(en), 0 Scanner“.
 - **Grund im Protokoll:** Antwortet ein Gerät, zählt aber nicht als Scanner, steht jetzt dort, warum: keine Gerätebeschreibung (Zeitüberschreitung oder HTTP-Fehler), kein Scan-Dienst gemeldet (mit Hersteller, Modell und gemeldeten Diensten) oder keine nutzbare Adresse. Findet die Netzsuche nichts, listet sie alle antwortenden Geräte mit ihren offenen Ports auf.

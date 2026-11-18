@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Kasutustingimused",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Tehisintellekti kokkuvõte – loodud selle seadme tehisintellektiga, palun kontrollige.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Masintõlge selle seadme tehisintellektiga – palun kontrollige enne saatmist.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Kui topeltklõps paigaldust ei ava (nt Ubuntus), avage terminal (Ctrl+Alt+T), sisestage see käsk ja kinnitage oma parooliga:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Kui topeltklõps paigaldust ei ava (nt Ubuntus), avage terminal (Ctrl+Alt+T), sisestage see käsk ja kinnitage oma parooliga:",
+ "Abrechnung": "Arvestus",
+ "Antrag": "Taotlus",
+ "Arztbrief": "Arstikiri",
+ "Bescheinigung": "Tõend",
+ "Bestellung": "Tellimus",
+ "Kostenvoranschlag": "Hinnapakkumine",
+ "Lohnabrechnung": "Palgaleht",
+ "Versicherungsschein": "Kindlustuspoliis",
+ "Vollmacht": "Volikiri",
+ "Zeugnis": "Tunnistus"
 }

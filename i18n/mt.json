@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Termini tal-użu",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Sommarju tal-IA – maħluq bl-IA ta’ dan it-tagħmir, jekk jogħġbok iċċekkja.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Tradott awtomatikament bl-IA ta’ dan it-tagħmir – jekk jogħġbok iċċekkja qabel tibgħat.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jekk il-klikk doppju ma jiftaħ l-ebda installazzjoni (eż. fuq Ubuntu), iftħu t-terminal (Ctrl+Alt+T), ittajpjaw dan il-kmand u kkonfermaw bil-password tagħkom:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jekk il-klikk doppju ma jiftaħ l-ebda installazzjoni (eż. fuq Ubuntu), iftħu t-terminal (Ctrl+Alt+T), ittajpjaw dan il-kmand u kkonfermaw bil-password tagħkom:",
+ "Abrechnung": "Kont",
+ "Antrag": "Applikazzjoni",
+ "Arztbrief": "Ittra tat-tabib",
+ "Bescheinigung": "Ċertifikat",
+ "Bestellung": "Ordni",
+ "Kostenvoranschlag": "Stima tal-ispiża",
+ "Lohnabrechnung": "Karta tal-paga",
+ "Versicherungsschein": "Polza tal-assigurazzjoni",
+ "Vollmacht": "Prokura",
+ "Zeugnis": "Referenza"
 }

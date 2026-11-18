@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Condicions d'ús",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Resum d’IA – creat amb la IA d’aquest dispositiu; reviseu-lo.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Traducció automàtica amb la IA d’aquest dispositiu – reviseu-la abans d’enviar-la.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Si el doble clic no obre cap instal·lació (p. ex. a Ubuntu), obriu el terminal (Ctrl+Alt+T), escriviu aquesta ordre i confirmeu amb la vostra contrasenya:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Si el doble clic no obre cap instal·lació (p. ex. a Ubuntu), obriu el terminal (Ctrl+Alt+T), escriviu aquesta ordre i confirmeu amb la vostra contrasenya:",
+ "Abrechnung": "Liquidació",
+ "Antrag": "Sol·licitud",
+ "Arztbrief": "Informe mèdic",
+ "Bescheinigung": "Certificat",
+ "Bestellung": "Comanda",
+ "Kostenvoranschlag": "Pressupost",
+ "Lohnabrechnung": "Nòmina",
+ "Versicherungsschein": "Pòlissa d’assegurança",
+ "Vollmacht": "Poder notarial",
+ "Zeugnis": "Certificat acadèmic"
 }

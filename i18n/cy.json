@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Telerau defnyddio",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Crynodeb AI – wedi’i greu gyda’r AI ar y ddyfais hon, gwiriwch ef.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Wedi’i gyfieithu gan beiriant gyda’r AI ar y ddyfais hon – gwiriwch cyn ei anfon.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Os nad yw clicio ddwywaith yn agor y gosodiad (e.e. ar Ubuntu), agorwch y derfynell (Ctrl+Alt+T), teipiwch y gorchymyn hwn a chadarnhewch gyda’ch cyfrinair:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Os nad yw clicio ddwywaith yn agor y gosodiad (e.e. ar Ubuntu), agorwch y derfynell (Ctrl+Alt+T), teipiwch y gorchymyn hwn a chadarnhewch gyda’ch cyfrinair:",
+ "Abrechnung": "Datganiad",
+ "Antrag": "Cais",
+ "Arztbrief": "Llythyr meddyg",
+ "Bescheinigung": "Tystysgrif",
+ "Bestellung": "Archeb",
+ "Kostenvoranschlag": "Amcangyfrif cost",
+ "Lohnabrechnung": "Slip cyflog",
+ "Versicherungsschein": "Polisi yswiriant",
+ "Vollmacht": "Pŵer atwrnai",
+ "Zeugnis": "Tystlythyr"
 }

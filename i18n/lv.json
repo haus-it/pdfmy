@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Lietošanas noteikumi",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "MI kopsavilkums – izveidots ar šīs ierīces MI, lūdzu, pārbaudiet.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Mašīntulkots ar šīs ierīces MI – lūdzu, pārbaudiet pirms nosūtīšanas.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ja dubultklikšķis neatver instalēšanu (piem., Ubuntu), atveriet termināli (Ctrl+Alt+T), ievadiet šo komandu un apstipriniet ar savu paroli:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ja dubultklikšķis neatver instalēšanu (piem., Ubuntu), atveriet termināli (Ctrl+Alt+T), ievadiet šo komandu un apstipriniet ar savu paroli:",
+ "Abrechnung": "Norēķins",
+ "Antrag": "Pieteikums",
+ "Arztbrief": "Ārsta atzinums",
+ "Bescheinigung": "Apliecinājums",
+ "Bestellung": "Pasūtījums",
+ "Kostenvoranschlag": "Tāme",
+ "Lohnabrechnung": "Algas lapa",
+ "Versicherungsschein": "Apdrošināšanas polise",
+ "Vollmacht": "Pilnvara",
+ "Zeugnis": "Atsauksme"
 }

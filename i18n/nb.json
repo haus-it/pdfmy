@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Bruksvilkår",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "KI-sammendrag – laget med KI på denne enheten, kontroller det.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Maskinoversatt med KI på denne enheten – kontroller før sending.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Åpner ikke dobbeltklikket noen installasjon (f.eks. i Ubuntu), åpne terminalen (Ctrl+Alt+T), skriv inn denne kommandoen og bekreft med passordet ditt:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Åpner ikke dobbeltklikket noen installasjon (f.eks. i Ubuntu), åpne terminalen (Ctrl+Alt+T), skriv inn denne kommandoen og bekreft med passordet ditt:",
+ "Abrechnung": "Oppgjør",
+ "Antrag": "Søknad",
+ "Arztbrief": "Legebrev",
+ "Bescheinigung": "Bekreftelse",
+ "Bestellung": "Bestilling",
+ "Kostenvoranschlag": "Kostnadsoverslag",
+ "Lohnabrechnung": "Lønnsslipp",
+ "Versicherungsschein": "Forsikringsbevis",
+ "Vollmacht": "Fullmakt",
+ "Zeugnis": "Vitnemål"
 }

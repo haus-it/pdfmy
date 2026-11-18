@@ -2361,6 +2361,11 @@ for (const k of META_KEYS) {
     renderGiro(); window.renderTodo?.();
   });
 }
+// Dokumenttyp: Die Vorschlagsliste zeigt sonst nur, was zum Eingetragenen passt („Rechnung“ → nur Rechnung) – beim Antippen alle Typen zeigen
+{ const t = $('#m-type');
+  t.addEventListener('focus', () => { if (!t.value) return; t.placeholder = t.value; t.value = ''; });
+  t.addEventListener('blur', () => { if (!t.value) t.value = state.meta.type || ''; t.placeholder = ''; });
+}
 document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
   const v = $('#m-' + b.dataset.copy).value; if (!v) return;
   try { await navigator.clipboard.writeText(v); status(`Kopiert: ${v}`); } catch { status('Kopieren nicht möglich.'); }

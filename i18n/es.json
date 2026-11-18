@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Condiciones de uso",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Resumen de IA: creado con la IA de este dispositivo; revíselo.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Traducción automática con la IA de este dispositivo: revísela antes de enviarla.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Si el doble clic no abre ninguna instalación (p. ej., en Ubuntu), abra el terminal (Ctrl+Alt+T), escriba este comando y confirme con su contraseña:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Si el doble clic no abre ninguna instalación (p. ej., en Ubuntu), abra el terminal (Ctrl+Alt+T), escriba este comando y confirme con su contraseña:",
+ "Abrechnung": "Liquidación",
+ "Antrag": "Solicitud",
+ "Arztbrief": "Informe médico",
+ "Bescheinigung": "Certificado",
+ "Bestellung": "Pedido",
+ "Kostenvoranschlag": "Presupuesto",
+ "Lohnabrechnung": "Nómina",
+ "Versicherungsschein": "Póliza de seguro",
+ "Vollmacht": "Poder notarial",
+ "Zeugnis": "Certificado académico"
 }

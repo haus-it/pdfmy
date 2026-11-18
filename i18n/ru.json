@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Условия использования",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Сводка ИИ – создана ИИ на этом устройстве, пожалуйста, проверьте.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Машинный перевод с помощью ИИ на этом устройстве – проверьте перед отправкой.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Если двойной щелчок не открывает установку (напр., в Ubuntu), откройте терминал (Ctrl+Alt+T), введите эту команду и подтвердите паролем:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Если двойной щелчок не открывает установку (напр., в Ubuntu), откройте терминал (Ctrl+Alt+T), введите эту команду и подтвердите паролем:",
+ "Abrechnung": "Расчёт",
+ "Antrag": "Заявление",
+ "Arztbrief": "Заключение врача",
+ "Bescheinigung": "Справка",
+ "Bestellung": "Заказ",
+ "Kostenvoranschlag": "Смета",
+ "Lohnabrechnung": "Расчётный листок",
+ "Versicherungsschein": "Страховой полис",
+ "Vollmacht": "Доверенность",
+ "Zeugnis": "Характеристика"
 }

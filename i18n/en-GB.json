@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Terms of use",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AI summary – created with the AI on this device, please check.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Machine-translated with the AI on this device – please check before sending.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "If double-clicking doesn't open an installer (e.g. on Ubuntu), open the terminal (Ctrl+Alt+T), type this command and confirm with your password:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "If double-clicking doesn't open an installer (e.g. on Ubuntu), open the terminal (Ctrl+Alt+T), type this command and confirm with your password:",
+ "Abrechnung": "Statement",
+ "Antrag": "Application",
+ "Arztbrief": "Doctor’s letter",
+ "Bescheinigung": "Certificate",
+ "Bestellung": "Order",
+ "Kostenvoranschlag": "Cost estimate",
+ "Lohnabrechnung": "Payslip",
+ "Versicherungsschein": "Insurance policy",
+ "Vollmacht": "Power of attorney",
+ "Zeugnis": "Reference"
 }

@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Услови коришћења",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Резиме вештачке интелигенције – направљен помоћу ВИ на овом уређају, проверите га.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Машински преведено помоћу ВИ на овом уређају – проверите пре слања.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ако двоклик не отвори инсталацију (нпр. на Ubuntu-у), отворите терминал (Ctrl+Alt+T), унесите ову команду и потврдите својом лозинком:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ако двоклик не отвори инсталацију (нпр. на Ubuntu-у), отворите терминал (Ctrl+Alt+T), унесите ову команду и потврдите својом лозинком:",
+ "Abrechnung": "Обрачун",
+ "Antrag": "Захтев",
+ "Arztbrief": "Лекарски налаз",
+ "Bescheinigung": "Потврда",
+ "Bestellung": "Наруџбина",
+ "Kostenvoranschlag": "Предрачун",
+ "Lohnabrechnung": "Платна листа",
+ "Versicherungsschein": "Полиса осигурања",
+ "Vollmacht": "Пуномоћје",
+ "Zeugnis": "Сведочанство"
 }

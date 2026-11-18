@@ -369,3 +369,29 @@ test('Briefdaten: Fließtext wird nicht Absender', () => {
   const f = 'Im Übrigen gelten die Regelungen des TKG zur Beeinträchtigung von Grundstücken und Gebäuden im Rahmen der\nRegelung von Wegerechten und Mitnutzung in ihrer jeweiligen Fassung.\nOrt\nDatum';
   assert.equal(L.analyzeLetter(f, f).sender, '');
 });
+
+test('Dokumenttyp: Überschrift zählt zuerst, mehr Typen, Mahnung/Bescheid bleiben', () => {
+  const t = s => L.analyzeLetter(s).type;
+  assert.equal(t('MY LITTLE WINDOW GmbH\nMusterstr. 1\n12345 Ort\nLieferschein ; ; ;\nArtikel 3 Stück\nRechnung folgt separat'), 'Lieferschein');
+  assert.equal(t('Firma X\nRechnungsnummer: 4711\nLieferschein'), 'Lieferschein', '„Rechnungsnummer:“ ist keine Überschrift');
+  assert.equal(t('Firma X\nRechnung Nr. 4711\nBetrag 12,00 EUR'), 'Rechnung');
+  assert.equal(t('Firma X\nRechnung 4711 - 2. Mahnung\nBitte zahlen'), 'Mahnung');
+  assert.equal(t('Stadt Musterstadt\nAntrag auf Wohngeld\nBescheid über Wohngeld'), 'Bescheid');
+  assert.equal(t('Firma X\nGehaltsabrechnung Oktober 2026\nNetto 1.234,00 EUR'), 'Lohnabrechnung');
+  assert.equal(t('Hausverwaltung\nNebenkostenabrechnung 2025'), 'Abrechnung');
+  assert.equal(t('Firma X\nwir bestätigen Ihre Bestellung'), 'Bestellung');
+  assert.equal(t('Autohaus\nKostenvoranschlag Nr. 5'), 'Kostenvoranschlag');
+  assert.equal(t('Versicherung AG\nVersicherungsschein Nr. 123'), 'Versicherungsschein');
+  assert.equal(t('Hallo'), 'Brief');
+});
+
+test('Dokumenttyp: Auswahlliste nennt alle erkannten Typen, Feld zeigt beim Antippen alle', () => {
+  const fs = require('node:fs'), path = require('node:path'), ROOT = path.join(__dirname, '..');
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'), src = fs.readFileSync(path.join(ROOT, 'js', 'letter.js'), 'utf8');
+  const opts = [...html.match(/<datalist id="types">([\s\S]*?)<\/datalist>/)[1].matchAll(/<option>([^<]+)<\/option>/g)].map(m => m[1]);
+  const types = [...src.slice(src.indexOf('const TYPES = ['), src.indexOf('const TYPE_HEAD')).matchAll(/\['([^']+)', \//g)].map(m => m[1]);
+  for (const ty of types) assert.ok(opts.includes(ty), 'Auswahl enthält ' + ty);
+  assert.ok(opts.length >= 25);
+  const app = fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8');
+  assert.ok(app.includes("t.addEventListener('focus', () => { if (!t.value) return; t.placeholder = t.value; t.value = ''; });"));
+});

@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Condiții de utilizare",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Rezumat IA – creat cu IA de pe acest dispozitiv, vă rugăm să verificați.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Traducere automată cu IA de pe acest dispozitiv – verificați înainte de trimitere.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Dacă dublul clic nu deschide nicio instalare (de ex. în Ubuntu), deschideți terminalul (Ctrl+Alt+T), introduceți această comandă și confirmați cu parola dvs.:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Dacă dublul clic nu deschide nicio instalare (de ex. în Ubuntu), deschideți terminalul (Ctrl+Alt+T), introduceți această comandă și confirmați cu parola dvs.:",
+ "Abrechnung": "Decont",
+ "Antrag": "Cerere",
+ "Arztbrief": "Scrisoare medicală",
+ "Bescheinigung": "Adeverință",
+ "Bestellung": "Comandă",
+ "Kostenvoranschlag": "Deviz",
+ "Lohnabrechnung": "Fluturaș de salariu",
+ "Versicherungsschein": "Poliță de asigurare",
+ "Vollmacht": "Procură",
+ "Zeugnis": "Certificat"
 }

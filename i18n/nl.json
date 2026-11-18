@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Gebruiksvoorwaarden",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AI-samenvatting – gemaakt met de AI op dit apparaat, controleer deze.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Machinaal vertaald met de AI op dit apparaat – controleer vóór verzending.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Opent dubbelklikken geen installatie (bijv. onder Ubuntu), open dan de terminal (Ctrl+Alt+T), voer deze opdracht in en bevestig met uw wachtwoord:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Opent dubbelklikken geen installatie (bijv. onder Ubuntu), open dan de terminal (Ctrl+Alt+T), voer deze opdracht in en bevestig met uw wachtwoord:",
+ "Abrechnung": "Afrekening",
+ "Antrag": "Aanvraag",
+ "Arztbrief": "Artsenbrief",
+ "Bescheinigung": "Verklaring",
+ "Bestellung": "Bestelling",
+ "Kostenvoranschlag": "Kostenraming",
+ "Lohnabrechnung": "Loonstrook",
+ "Versicherungsschein": "Verzekeringspolis",
+ "Vollmacht": "Volmacht",
+ "Zeugnis": "Getuigschrift"
 }

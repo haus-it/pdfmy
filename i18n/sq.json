@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Kushtet e përdorimit",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Përmbledhje nga IA – krijuar me IA-në e kësaj pajisjeje, ju lutemi kontrollojeni.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Përkthyer automatikisht me IA-në e kësaj pajisjeje – kontrollojeni para dërgimit.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Nëse klikimi i dyfishtë nuk hap asnjë instalim (p.sh. në Ubuntu), hapni terminalin (Ctrl+Alt+T), shkruani këtë komandë dhe konfirmoni me fjalëkalimin tuaj:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Nëse klikimi i dyfishtë nuk hap asnjë instalim (p.sh. në Ubuntu), hapni terminalin (Ctrl+Alt+T), shkruani këtë komandë dhe konfirmoni me fjalëkalimin tuaj:",
+ "Abrechnung": "Llogaritje",
+ "Antrag": "Kërkesë",
+ "Arztbrief": "Letër mjekësore",
+ "Bescheinigung": "Vërtetim",
+ "Bestellung": "Porosi",
+ "Kostenvoranschlag": "Parallogari",
+ "Lohnabrechnung": "Fletëpagesë",
+ "Versicherungsschein": "Policë sigurimi",
+ "Vollmacht": "Prokurë",
+ "Zeugnis": "Dëshmi"
 }

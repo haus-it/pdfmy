@@ -22,16 +22,36 @@
     return out;
   }
 
-  // Reihenfolge = Priorität (eine Mahnung erwähnt auch die Rechnung)
+  // Reihenfolge = Priorität (eine Mahnung erwähnt auch die Rechnung; „Lohnabrechnung“ enthält „rechnung“)
   const TYPES = [
     ['Mahnung', /mahnung|zahlungserinnerung|letzte erinnerung/i], ['Gutschrift', /gutschrift/i],
     ['Kündigung', /\bkündigung\b|\bkuendigung\b|kündigungsbestätigung/i],
     ['Ladung', /\b(um|ab)?ladung\b|terminsladung|terminsverlegung/i], ['Urteil', /\burteil\b|im namen des volkes/i], ['Beschluss', /\bbeschluss\b/i],
     ['Bescheid', /bescheid\b/i],
-    ['Rechnung', /rechnung|invoice/i], ['Lieferschein', /lieferschein/i], ['Auftragsbestätigung', /auftragsbestätigung/i],
-    ['Angebot', /\bangebot\b/i], ['Vertrag', /\bvertrag\b/i], ['Kontoauszug', /kontoauszug/i],
-    ['Einladung', /einladung/i], ['Bewerbung', /bewerbung/i],
+    ['Lohnabrechnung', /lohnabrechnung|gehaltsabrechnung|entgeltabrechnung|verdienstabrechnung|bezügemitteilung/i],
+    ['Abrechnung', /nebenkostenabrechnung|betriebskostenabrechnung|heizkostenabrechnung|jahresabrechnung|verbrauchsabrechnung|hausgeldabrechnung/i],
+    ['Rechnung', /rechnung|invoice/i], ['Quittung', /\bquittung\b|kassenbon|kassenbeleg|zahlungsbeleg/i],
+    ['Lieferschein', /lieferschein/i], ['Auftragsbestätigung', /auftragsbestätigung/i], ['Bestellung', /\bbestellung\b/i],
+    ['Kostenvoranschlag', /kostenvoranschlag/i], ['Angebot', /\bangebot\b/i],
+    ['Versicherungsschein', /versicherungsschein|versicherungspolice|\bpolice\b/i], ['Vertrag', /\bvertrag\b/i], ['Kontoauszug', /kontoauszug/i],
+    ['Einladung', /einladung/i], ['Bewerbung', /bewerbung/i], ['Zeugnis', /\bzeugnis\b|arbeitszeugnis|schulzeugnis/i],
+    ['Arztbrief', /arztbrief|befundbericht|entlassungsbericht|\bbefund\b/i], ['Bescheinigung', /bescheinigung|\bnachweis\b/i],
+    ['Vollmacht', /vollmacht/i], ['Antrag', /\bantrag\b/i], ['Protokoll', /\bprotokoll\b|niederschrift/i],
   ];
+  // Überschrift zählt zuerst: Steht ein Typ am Anfang einer Zeile oben im Brief („Lieferschein Nr. 12“), gilt er –
+  // auch wenn weiter unten „Rechnung folgt“ steht. Ganze Wörter („Rechnungsnummer:“ ist keine Überschrift).
+  const TYPE_HEAD = TYPES.map(([n, re]) => [n, new RegExp('^\\W{0,2}(?:' + re.source + ')(?![a-z\\u00e4\\u00f6\\u00fc\\u00df])', 'i')]);   // kein Buchstabe danach (Umlaute als \u-Code, sonst hält die Übersetzung es für Text)
+  const STRONG = new Set(['Mahnung', 'Gutschrift', 'Kündigung', 'Ladung', 'Urteil', 'Beschluss', 'Bescheid']);
+  function docType(lines, all) {
+    const byText = (TYPES.find(([, re]) => re.test(all)) || ['Brief'])[0];
+    for (const l of lines.slice(0, 30)) {
+      if (l.length > 60) continue;
+      const h = TYPE_HEAD.find(([, re]) => re.test(l));
+      // Mahnung, Bescheid, Kündigung … nennen im Betreff oft das, worauf sie sich beziehen („Rechnung 4711 – 2. Mahnung“, „Antrag auf Wohngeld“)
+      if (h) return STRONG.has(byText) ? byText : h[0];
+    }
+    return byText;
+  }
   const ORG_RE = /\b(GmbH|AG|KG|OHG|e\.\s?V\.|mbH|SE|UG|Ltd\.?|Inc\.?|Bank|Sparkasse|Versicherung|Finanzamt|Stadtwerke|Krankenkasse|AOK|Agentur|Amt|Stadt|Gemeinde|Kanzlei|Rechtsanw\w+|Notar\w*|Verwaltung|Landratsamt|Bundes\w+|\w*[Gg]ericht|Amtsgericht|Landgericht|Staatsanwaltschaft|Polizei\w*|Jobcenter|Agentur für Arbeit|Familienkasse|Rentenversicherung|Berufsgenossenschaft|Kreis\w*|Bezirks\w*)\b/;
   const WEEKDAY = /^(montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag|mo|di|mi|do|fr|sa|so)\b/i;
   const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -117,7 +137,7 @@
       if (dates.length) r.deadline = dates.sort().pop();
     }
 
-    r.type = (TYPES.find(([, re]) => re.test(all)) || ['Brief'])[0];
+    r.type = docType(lines, all);
     // Bescheid mit Rechtsbehelfsbelehrung: Einspruchs-/Widerspruchsfrist aus dem Bescheiddatum berechnen
     r.appealRule = appealRule(all);
     if (r.appealRule && r.date) { r.appeal = appealDeadline(r.date); if (!r.deadline || r.deadline === r.date) r.deadline = r.appeal; }

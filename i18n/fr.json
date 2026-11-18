@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Conditions d’utilisation",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Résumé par IA – créé avec l’IA de cet appareil, veuillez vérifier.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Traduction automatique avec l’IA de cet appareil – veuillez vérifier avant l’envoi.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Si le double-clic n'ouvre aucune installation (p. ex. sous Ubuntu), ouvrez le terminal (Ctrl+Alt+T), saisissez cette commande et confirmez avec votre mot de passe :"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Si le double-clic n'ouvre aucune installation (p. ex. sous Ubuntu), ouvrez le terminal (Ctrl+Alt+T), saisissez cette commande et confirmez avec votre mot de passe :",
+ "Abrechnung": "Décompte",
+ "Antrag": "Demande",
+ "Arztbrief": "Courrier médical",
+ "Bescheinigung": "Attestation",
+ "Bestellung": "Commande",
+ "Kostenvoranschlag": "Devis estimatif",
+ "Lohnabrechnung": "Fiche de paie",
+ "Versicherungsschein": "Police d’assurance",
+ "Vollmacht": "Procuration",
+ "Zeugnis": "Certificat"
 }

@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Erabilera-baldintzak",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AA laburpena – gailu honetako AArekin sortua; egiaztatu, mesedez.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Itzulpen automatikoa gailu honetako AArekin – egiaztatu bidali aurretik, mesedez.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Klik bikoitzak instalazioa irekitzen ez badu (adib. Ubuntun), ireki terminala (Ctrl+Alt+T), idatzi komando hau eta berretsi zure pasahitzarekin:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Klik bikoitzak instalazioa irekitzen ez badu (adib. Ubuntun), ireki terminala (Ctrl+Alt+T), idatzi komando hau eta berretsi zure pasahitzarekin:",
+ "Abrechnung": "Kitapena",
+ "Antrag": "Eskaera",
+ "Arztbrief": "Mediku-txostena",
+ "Bescheinigung": "Ziurtagiria",
+ "Bestellung": "Eskaera-agiria",
+ "Kostenvoranschlag": "Aurrekontua",
+ "Lohnabrechnung": "Nomina",
+ "Versicherungsschein": "Aseguru-polizia",
+ "Vollmacht": "Ahalmena",
+ "Zeugnis": "Erreferentzia-gutuna"
 }

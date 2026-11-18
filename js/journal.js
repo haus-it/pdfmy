@@ -173,11 +173,11 @@ ${names.map(n => `    <document>\n      <extension xsi:type="File" name="${x(n)}
   /* Aufbewahrungsfristen (HGB § 257, AO § 147; Buchungsbelege seit 2025: 8 Jahre). Frist beginnt mit Ende des Kalenderjahres.
      Hinweis, keine Rechtsberatung: Verträge, Bescheide und Unbekanntes werden vorsichtig (10 Jahre bzw. gar nicht) behandelt. */
   const RETAIN = [
-    [/rechnung|gutschrift|quittung|beleg|kontoauszug|lohn|gehalt|abrechnung|zahlung|mahnung|lieferschein/i, 8, 'Buchungsbeleg'],
+    [/rechnung|gutschrift|quittung|beleg|kontoauszug|lohn|gehalt|abrechnung|zahlung|mahnung|lieferschein|quittung|kassenbon/i, 8, 'Buchungsbeleg'],
     [/jahresabschluss|bilanz|inventar|buchungsjournal|eröffnungsbilanz/i, 10, 'Jahresabschluss/Bücher'],
-    [/vertrag|kündigung|police|urkunde|zeugnis|grundbuch|testament/i, 0, 'Vertrag/Urkunde (unbefristet prüfen)'],
+    [/vertrag|kündigung|police|versicherungsschein|vollmacht|urkunde|zeugnis|grundbuch|testament/i, 0, 'Vertrag/Urkunde (unbefristet prüfen)'],
     [/bescheid|steuer|finanzamt/i, 10, 'Bescheid'],
-    [/angebot|auftrag|bestellung|brief|schreiben|anfrage|information|einladung|ladung|werbung/i, 6, 'Geschäftsbrief'],
+    [/angebot|kostenvoranschlag|auftrag|bestellung|brief|schreiben|anfrage|information|einladung|ladung|werbung|antrag|protokoll/i, 6, 'Geschäftsbrief'],
   ];
   function retention(e, today = new Date()) {
     const r = RETAIN.find(([re]) => re.test(e.type || '')) || [null, 10, 'unbekannt'];

@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Podmienky používania",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Zhrnutie od AI – vytvorené pomocou AI v tomto zariadení, skontrolujte ho.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Strojovo preložené pomocou AI v tomto zariadení – pred odoslaním skontrolujte.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ak dvojklik inštaláciu neotvorí (napr. v Ubuntu), otvorte terminál (Ctrl+Alt+T), zadajte tento príkaz a potvrďte svojím heslom:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ak dvojklik inštaláciu neotvorí (napr. v Ubuntu), otvorte terminál (Ctrl+Alt+T), zadajte tento príkaz a potvrďte svojím heslom:",
+ "Abrechnung": "Vyúčtovanie",
+ "Antrag": "Žiadosť",
+ "Arztbrief": "Lekárska správa",
+ "Bescheinigung": "Potvrdenie",
+ "Bestellung": "Objednávka",
+ "Kostenvoranschlag": "Rozpočet",
+ "Lohnabrechnung": "Výplatná páska",
+ "Versicherungsschein": "Poistka",
+ "Vollmacht": "Plná moc",
+ "Zeugnis": "Vysvedčenie"
 }

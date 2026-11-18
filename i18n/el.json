@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Όροι χρήσης",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Σύνοψη ΤΝ – δημιουργήθηκε με την ΤΝ αυτής της συσκευής, ελέγξτε την.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Μηχανική μετάφραση με την ΤΝ αυτής της συσκευής – ελέγξτε πριν από την αποστολή.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Αν το διπλό κλικ δεν ανοίξει την εγκατάσταση (π.χ. στο Ubuntu), ανοίξτε το τερματικό (Ctrl+Alt+T), πληκτρολογήστε αυτή την εντολή και επιβεβαιώστε με τον κωδικό πρόσβασής σας:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Αν το διπλό κλικ δεν ανοίξει την εγκατάσταση (π.χ. στο Ubuntu), ανοίξτε το τερματικό (Ctrl+Alt+T), πληκτρολογήστε αυτή την εντολή και επιβεβαιώστε με τον κωδικό πρόσβασής σας:",
+ "Abrechnung": "Εκκαθάριση",
+ "Antrag": "Αίτηση",
+ "Arztbrief": "Ιατρική έκθεση",
+ "Bescheinigung": "Βεβαίωση",
+ "Bestellung": "Παραγγελία",
+ "Kostenvoranschlag": "Προϋπολογισμός κόστους",
+ "Lohnabrechnung": "Μισθοδοτική κατάσταση",
+ "Versicherungsschein": "Ασφαλιστήριο συμβόλαιο",
+ "Vollmacht": "Πληρεξούσιο",
+ "Zeugnis": "Πιστοποιητικό"
 }

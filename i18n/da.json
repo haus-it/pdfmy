@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Brugsbetingelser",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AI-resumé – oprettet med AI på denne enhed, kontrollér venligst.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Maskinoversat med AI på denne enhed – kontrollér venligst før afsendelse.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Hvis dobbeltklik ikke åbner en installation (f.eks. i Ubuntu), åbn terminalen (Ctrl+Alt+T), skriv denne kommando, og bekræft med Deres adgangskode:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Hvis dobbeltklik ikke åbner en installation (f.eks. i Ubuntu), åbn terminalen (Ctrl+Alt+T), skriv denne kommando, og bekræft med Deres adgangskode:",
+ "Abrechnung": "Opgørelse",
+ "Antrag": "Ansøgning",
+ "Arztbrief": "Lægebrev",
+ "Bescheinigung": "Attest",
+ "Bestellung": "Bestilling",
+ "Kostenvoranschlag": "Tilbudsberegning",
+ "Lohnabrechnung": "Lønseddel",
+ "Versicherungsschein": "Forsikringspolice",
+ "Vollmacht": "Fuldmagt",
+ "Zeugnis": "Anbefaling"
 }

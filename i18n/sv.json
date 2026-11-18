@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Användarvillkor",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "AI-sammanfattning – skapad med AI på den här enheten, kontrollera den.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Maskinöversatt med AI på den här enheten – kontrollera före sändning.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Öppnar inte dubbelklicket någon installation (t.ex. i Ubuntu), öppna terminalen (Ctrl+Alt+T), skriv det här kommandot och bekräfta med ditt lösenord:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Öppnar inte dubbelklicket någon installation (t.ex. i Ubuntu), öppna terminalen (Ctrl+Alt+T), skriv det här kommandot och bekräfta med ditt lösenord:",
+ "Abrechnung": "Avräkning",
+ "Antrag": "Ansökan",
+ "Arztbrief": "Läkarbrev",
+ "Bescheinigung": "Intyg",
+ "Bestellung": "Beställning",
+ "Kostenvoranschlag": "Kostnadsförslag",
+ "Lohnabrechnung": "Lönespecifikation",
+ "Versicherungsschein": "Försäkringsbrev",
+ "Vollmacht": "Fullmakt",
+ "Zeugnis": "Betyg"
 }

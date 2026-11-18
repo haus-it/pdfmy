@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Condizioni d’uso",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Riepilogo IA – creato con l’IA di questo dispositivo, verificarlo.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Tradotto automaticamente con l’IA di questo dispositivo – verificare prima dell’invio.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Se il doppio clic non apre alcuna installazione (ad es. su Ubuntu), apra il terminale (Ctrl+Alt+T), digiti questo comando e confermi con la Sua password:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Se il doppio clic non apre alcuna installazione (ad es. su Ubuntu), apra il terminale (Ctrl+Alt+T), digiti questo comando e confermi con la Sua password:",
+ "Abrechnung": "Rendiconto",
+ "Antrag": "Domanda",
+ "Arztbrief": "Referto medico",
+ "Bescheinigung": "Attestazione",
+ "Bestellung": "Ordine",
+ "Kostenvoranschlag": "Preventivo di spesa",
+ "Lohnabrechnung": "Busta paga",
+ "Versicherungsschein": "Polizza assicurativa",
+ "Vollmacht": "Procura",
+ "Zeugnis": "Certificato"
 }

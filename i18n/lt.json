@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Naudojimo sąlygos",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "DI santrauka – sukurta šio įrenginio DI, patikrinkite.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Mašininis vertimas šio įrenginio DI – patikrinkite prieš siųsdami.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jei dukart spustelėjus diegimas neatsidaro (pvz., Ubuntu), atidarykite terminalą (Ctrl+Alt+T), įveskite šią komandą ir patvirtinkite savo slaptažodžiu:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Jei dukart spustelėjus diegimas neatsidaro (pvz., Ubuntu), atidarykite terminalą (Ctrl+Alt+T), įveskite šią komandą ir patvirtinkite savo slaptažodžiu:",
+ "Abrechnung": "Apskaita",
+ "Antrag": "Prašymas",
+ "Arztbrief": "Gydytojo raštas",
+ "Bescheinigung": "Pažyma",
+ "Bestellung": "Užsakymas",
+ "Kostenvoranschlag": "Sąmata",
+ "Lohnabrechnung": "Atlyginimo lapelis",
+ "Versicherungsschein": "Draudimo polisas",
+ "Vollmacht": "Įgaliojimas",
+ "Zeugnis": "Pažymėjimas"
 }

@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Téarmaí úsáide",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "Achoimre IS – cruthaithe leis an IS ar an ngléas seo, seiceáil í le do thoil.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Aistrithe go meaisínte leis an IS ar an ngléas seo – seiceáil roimh sheoladh le do thoil.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Mura n-osclaíonn an chliceáil dhúbailte suiteáil (m.sh. ar Ubuntu), oscail an teirminéal (Ctrl+Alt+T), clóscríobh an t-ordú seo agus deimhnigh le do phasfhocal:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Mura n-osclaíonn an chliceáil dhúbailte suiteáil (m.sh. ar Ubuntu), oscail an teirminéal (Ctrl+Alt+T), clóscríobh an t-ordú seo agus deimhnigh le do phasfhocal:",
+ "Abrechnung": "Ráiteas",
+ "Antrag": "Iarratas",
+ "Arztbrief": "Litir dhochtúra",
+ "Bescheinigung": "Teastas",
+ "Bestellung": "Ordú",
+ "Kostenvoranschlag": "Meastachán costais",
+ "Lohnabrechnung": "Duillín pá",
+ "Versicherungsschein": "Polasaí árachais",
+ "Vollmacht": "Cumhacht aturnae",
+ "Zeugnis": "Tagairt"
 }

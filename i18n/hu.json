@@ -3787,5 +3787,15 @@
  "Nutzungsbedingungen": "Felhasználási feltételek",
  "KI-Zusammenfassung – erstellt mit der KI auf diesem Gerät, bitte prüfen.": "MI-összefoglaló – az eszközön futó MI készítette, kérjük, ellenőrizze.",
  "Maschinell übersetzt mit der KI auf diesem Gerät – bitte vor dem Versand prüfen.": "Gépi fordítás az eszközön futó MI-vel – küldés előtt kérjük, ellenőrizze.",
- "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ha a dupla kattintás nem nyitja meg a telepítést (pl. Ubuntun), nyissa meg a terminált (Ctrl+Alt+T), írja be ezt a parancsot, és erősítse meg jelszavával:"
+ "Öffnet der Doppelklick keine Installation (z. B. unter Ubuntu), das Terminal öffnen (Strg+Alt+T), diesen Befehl eingeben und mit Ihrem Passwort bestätigen:": "Ha a dupla kattintás nem nyitja meg a telepítést (pl. Ubuntun), nyissa meg a terminált (Ctrl+Alt+T), írja be ezt a parancsot, és erősítse meg jelszavával:",
+ "Abrechnung": "Elszámolás",
+ "Antrag": "Kérelem",
+ "Arztbrief": "Orvosi levél",
+ "Bescheinigung": "Igazolás",
+ "Bestellung": "Megrendelés",
+ "Kostenvoranschlag": "Költségvetés",
+ "Lohnabrechnung": "Bérjegyzék",
+ "Versicherungsschein": "Biztosítási kötvény",
+ "Vollmacht": "Meghatalmazás",
+ "Zeugnis": "Bizonyítvány"
 }
