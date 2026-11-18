@@ -5526,8 +5526,25 @@ async function fillFormBytes(src, values, { flatten = true } = {}) {
       else if (f instanceof L.PDFRadioGroup) v ? f.select(v) : f.clear();
     } catch (e) { bad++; noteError(e, `Feld „${name}“`); }
   }
-  // Feld für Feld: ein Rich-Text-Feld o. Ä. darf die übrigen Eingaben nicht kosten
-  for (const f of form.getFields()) { try { if (f.needsAppearancesUpdate()) f.defaultUpdateAppearances(font); } catch (e) { console.warn('Feldansicht', e); } }
+  // Feld für Feld: ein Rich-Text-Feld o. Ä. darf die übrigen Eingaben nicht kosten.
+  // Die Ansicht (AP) zeichnet PDFMy mit eigener Schrift (alle Zeichen), die Schriftangabe des Felds (DA) bleibt aber die des Formulars
+  // (z. B. „/Helv 0 Tf“ mit automatischer Größe): Sie muss im Schriftverzeichnis des Formulars stehen, sonst finden Acrobat und Foxit
+  // die Schrift beim späteren Bearbeiten nicht (Formular-Rundlauf 18.11.2026; ISO 32000-1, 12.7.3.3).
+  const DA = L.PDFName.of('DA'), daOf = dict => ({ dict, had: dict.has(DA), v: dict.get(DA) });
+  // NeedAppearances im Original: Die vorhandenen Ansichten gelten als veraltet – Text- und Auswahlfelder alle neu zeichnen
+  const NA = L.PDFName.of('NeedAppearances'), naWas = form.acroForm.dict.get(NA)?.toString() === 'true';
+  for (const f of form.getFields()) {
+    try {
+      const stale = naWas && (f instanceof L.PDFTextField || f instanceof L.PDFDropdown || f instanceof L.PDFOptionList);
+      if (!f.needsAppearancesUpdate() && !stale) continue;
+      const keepDa = [f.acroField.dict, ...f.acroField.getWidgets().map(w => w.dict)].filter((x, i, a) => a.indexOf(x) === i).map(daOf);
+      f.defaultUpdateAppearances(font);
+      for (const k of keepDa) k.had ? k.dict.set(DA, k.v) : k.dict.delete(DA);
+    } catch (e) { console.warn('Feldansicht', e); }
+  }
+  // Alle Felder haben jetzt eine Ansicht → andere Programme sollen sie nicht neu aufbauen (sonst andere Schrift, bei PDF/A verboten)
+  if (naWas && form.getFields().every(f => f instanceof L.PDFSignature || f.acroField.getWidgets().every(w => w.dict.has(L.PDFName.of('AP')))))
+    form.acroForm.dict.set(NA, L.PDFBool.False);
   for (const [f, val] of exported) f.acroField.dict.set(L.PDFName.of('V'), L.PDFHexString.fromText(val));   // erst jetzt: Die Ansicht zeigt den Anzeigetext, gespeichert wird der Exportwert
   const keep = await lib.save({ updateFieldAppearances: false });
   if (!flatten) return { keep, filled: keep, bad };

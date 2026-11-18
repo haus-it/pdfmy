@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-18
 
+### Formulare: in Acrobat, Foxit und Firefox weiter bearbeitbar (app-v284)
+- **Rundlauf-Prüfung** mit einem nachgebauten Acrobat-Formular (Schrift /Helv mit automatischer Größe, NeedAppearances, Kontrollkästchen mit „Ja“, Auswahlliste mit Exportwert).
+- **Behoben:** Nach dem Ausfüllen verwies die Schriftangabe der Felder auf eine Schrift, die nicht im Schriftverzeichnis des Formulars stand. Acrobat und Foxit konnten das Feld deshalb nicht richtig weiter bearbeiten. Außerdem ging die automatische Schriftgröße verloren, und NeedAppearances blieb gesetzt (andere Programme bauten die Felder mit fremder Schrift neu auf).
+- **Jetzt:** Ansicht mit eigener Schrift (alle Zeichen), Schriftangabe des Formulars bleibt erhalten; NeedAppearances aus, sobald jedes Feld eine Ansicht hat; bei Formularen mit NeedAppearances werden auch unberührte Felder neu gezeichnet.
+- **Hilfe** in 40 Sprachen, Tests in tests/formular-rundlauf.test.js.
+
 ### Rückmeldungen aus Borns IT-Blog: Firefox-Schriften, Selbstprüfung (app-v283)
 - **Firefox ohne Seitenschriften:** Wer in Firefox eigene Schriften der Seiten abschaltet, sah PDFs ohne Text. PDFMy erkennt das (Textbreite einer Webschrift gegenüber Festbreite) und lässt pdf.js die Buchstaben als Formen zeichnen (`disableFontFace`). Text bleibt durchsuchbar und kopierbar.
 - **Sicherheitsseite:** neuer Punkt „Selbst nachprüfen statt glauben“ (Netzwerk-Ansicht F12, Flugmodus, CSP, offener Quellcode, Test-Gate, signierte Updates).
