@@ -273,3 +273,52 @@ test('Photoshop: klare Fehler bei ZIP-gepacktem Gesamtbild, Lab-Modus, Übergrö
   assert.throws(() => Office.psd(makePsd({ w: 20000, h: 20000, mode: 1, planes: [] })), /zu groß/);
   assert.throws(() => Office.psd(new Uint8Array(40)), /Keine gültige Photoshop-Datei/);
 });
+
+test('Webseite (HTML): nachsichtig wie ein Browser, ohne Skripte, ohne Nachladen', async () => {
+  const page = `<!DOCTYPE html><html><head><meta charset="windows-1252"><title>Satzung &amp; Beitr\xe4ge</title><script>alert("x")</script><style>p{color:red}</style></head>
+<body onload=evil()><h1 class=top>Satzung</h1><p>Erster Absatz mit &auml;, &szlig;, &euro; und&nbsp;Leerzeichen<p>Zweiter Absatz ohne End-Tag
+<ul><li>Eins<li>Zwei<ul><li>Unterpunkt</ul></ul>
+<table border=1><tr><th>Jahr<th>Beitrag<tr><td>2026<td>48 \x80</table>
+<table><tr><td><table><tr><td>Layout-Zelle mit Text</td></tr></table></td></tr></table>
+<div>Direkter Text<br>zweite Zeile<div>Block</div>Nachsatz</div>
+<img src="data:image/png;base64,${PNG.toString('base64')}"><img src="https://tracker.example/pixel.gif"><img src="bilder/lokal.png">
+<!-- <p>Kommentar</p> --><noscript><p>Bitte JavaScript einschalten</p></noscript></body></html>`;
+  const bytes = Buffer.from(page, 'latin1');
+  const r = await Office.html(new Uint8Array(bytes), { name: 'satzung' });
+  const kinds = r.blocks.map(b => b.type + (b.level || '') + (b.depth ? 'd' + b.depth : ''));
+  assert.equal(r.title, 'Satzung & Beiträge', 'Titel aus <title>, Zeichensatz windows-1252');
+  assert.deepEqual(kinds.slice(0, 9), ['h1', 'h1', 'p', 'p', 'li', 'li', 'lid1', 'table', 'p'], kinds.join(','));
+  assert.match(r.blocks[2].text, /^Erster Absatz mit ä, ß, € und\s+Leerzeichen$/, 'Entities aufgelöst');
+  assert.equal(r.blocks[3].text, 'Zweiter Absatz ohne End-Tag', 'fehlendes </p> ergänzt');
+  assert.deepEqual(r.blocks[7].rows, [['Jahr', 'Beitrag'], ['2026', '48 €']]);
+  assert.equal(r.blocks[8].text, 'Layout-Zelle mit Text', 'Layout-Tabelle als Inhalt');
+  const texts = r.blocks.map(b => b.text || '').join('|');
+  assert.ok(texts.includes('Direkter Text\nzweite Zeile') && texts.includes('Block') && texts.includes('Nachsatz'), texts);
+  for (const bad of ['alert', 'color:red', 'Kommentar', 'JavaScript einschalten', 'evil']) assert.ok(!texts.includes(bad), bad);
+  assert.equal(r.blocks.filter(b => b.type === 'img').length, 1, 'nur das eingebettete Bild');
+  assert.equal(r.remoteImages, 1, 'Bild aus dem Internet gezählt, nicht geladen');
+  const pdf = await TP.build(L, { blocks: r.blocks, title: r.title, fonts });
+  const t = pdfText(pdf); for (const w of ['Satzung', 'Beitrag', 'Unterpunkt', 'Layout-Zelle']) assert.ok(t.includes(w), w);
+  await assert.rejects(Office.html('<html><body><script>x</script></body></html>'), /keinen lesbaren Text/);
+});
+
+test('MHTML („Webseite als einzelne Datei“): HTML-Teil in quoted-printable, Bild über Content-Location und cid:', async () => {
+  const Email = require('../js/email.js');
+  const b = '----=_NextPart_01';
+  const mht = [
+    'From: <Saved by Blink>', 'Subject: Vereinsseite', 'MIME-Version: 1.0', `Content-Type: multipart/related; type="text/html"; boundary="${b}"`, '',
+    `--${b}`, 'Content-Type: text/html; charset="utf-8"', 'Content-Transfer-Encoding: quoted-printable', 'Content-Location: https://verein.example/seite.html', '',
+    '<html><head><title>Vereinsseite</title></head><body><h1>Willkommen</h1><p>Mitglieder=C3=BCbersicht f=C3=BCr 2026</p><img src=3D"https://verein.example/logo.png"><img src=3D"cid:foto@x"></body></html>', '',
+    `--${b}`, 'Content-Type: image/png', 'Content-Transfer-Encoding: base64', 'Content-Location: https://verein.example/logo.png', '', PNG.toString('base64'), '',
+    `--${b}`, 'Content-Type: image/png', 'Content-Transfer-Encoding: base64', 'Content-ID: <foto@x>', '', PNG.toString('base64'), '',
+    `--${b}--`, '',
+  ].join('\r\n');
+  const m = Email.parseMhtml(new Uint8Array(Buffer.from(mht, 'latin1')));
+  assert.equal(m.images.size, 2);
+  const r = await Office.html(m.html, { images: m.images });
+  assert.equal(r.title, 'Vereinsseite');
+  assert.ok(r.blocks.some(x => x.type === 'p' && x.text === 'Mitgliederübersicht für 2026'));
+  assert.equal(r.blocks.filter(x => x.type === 'img').length, 2, 'Bilder aus der Datei, obwohl die Adresse https:// lautet');
+  assert.equal(r.remoteImages, 0);
+  assert.throws(() => Email.parseMhtml(new Uint8Array(Buffer.from('From: a\r\n\r\nnur Text'))), /Keine MHTML-Datei/);
+});

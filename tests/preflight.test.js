@@ -55,3 +55,39 @@ test('Bericht: Überschrift, Tabelle mit allen Prüfpunkten, Fingerabdruck und G
   assert.equal(t.rows.length, r.items.length + 1);
   assert.ok(b.some(x => x.text?.includes(r.facts.sha256)) && b.some(x => /ERVB 2025/.test(x.text || '')));
 });
+
+test('Druckerei (PDF/X-4, Kurzprüfung): Schriften, Bildauflösung, Endformat, Beschnitt, Farbraum', async () => {
+  const fs = require('node:fs'), path = require('node:path');
+  const fontkit = require('../vendor/fontkit.umd.min.js');
+  // einfarbiges PNG in gewünschter Pixelgröße: die Pixelzahl steckt im Bild, die Platzierung bestimmt die dpi
+  const raw = (w, h) => { const zlib = require('node:zlib'); const row = Buffer.alloc(1 + w * 3, 200); row[0] = 0; const data = Buffer.concat(Array.from({ length: h }, () => row));
+    const chunk = (t, b) => { const len = Buffer.alloc(4); len.writeUInt32BE(b.length); const tb = Buffer.concat([Buffer.from(t), b]); const crc = Buffer.alloc(4); crc.writeUInt32BE(require('node:zlib').crc32 ? require('node:zlib').crc32(tb) : crc32(tb)); return Buffer.concat([len, tb, crc]); };
+    const ihdr = Buffer.alloc(13); ihdr.writeUInt32BE(w, 0); ihdr.writeUInt32BE(h, 4); ihdr[8] = 8; ihdr[9] = 2;
+    return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', zlib.deflateSync(data)), chunk('IEND', Buffer.alloc(0))]); };
+  function crc32(b) { let c, crc = 0xffffffff; for (const x of b) { c = (crc ^ x) & 0xff; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; crc = (crc >>> 8) ^ c; } return (crc ^ 0xffffffff) >>> 0; }
+  const MM = 72 / 25.4;
+  // gut: eingebettete Schrift, Endformat A5 mit 3 mm Beschnitt, Bild 300 dpi
+  const g = await L.PDFDocument.create(); g.registerFontkit(fontkit);
+  const font = await g.embedFont(fs.readFileSync(path.join(__dirname, '..', 'vendor', 'DejaVuSans.ttf')), { subset: true });
+  const W = 148 * MM, H = 210 * MM, b = 3 * MM, pg = g.addPage([W + 2 * b, H + 2 * b]);
+  pg.setTrimBox(b, b, W, H); pg.setBleedBox(0, 0, W + 2 * b, H + 2 * b);
+  pg.drawText('Flyer', { x: 40, y: 400, size: 30, font });
+  pg.drawImage(await g.embedPng(raw(300, 300)), { x: 40, y: 100, width: 72, height: 72 });   // 300 px auf 1 Zoll
+  const good = await P.run('druck', await g.save(), { pages: 1, textPages: 1 });
+  assert.equal(good.ok, true, titles(good).join('\n'));
+  const t = titles(good);
+  assert.ok(t.includes('✓ Alle Schriften eingebettet') && t.includes('✓ Endformat (TrimBox) angegeben') && t.includes('✓ Beschnitt (mind. 3 mm)') && t.includes('✓ Bildauflösung mind. 150 dpi'), t.join('\n'));
+  assert.ok(t.some(x => /^i Farbraum/.test(x)), 'RGB nur als Hinweis');
+  assert.ok(t.some(x => /^i Ausgabebedingung/.test(x)), 'fehlende PDF/X-Ausgabebedingung nur als Hinweis');
+  // schlecht: Standardschrift nicht eingebettet, Bild 36 dpi, Endformat ragt hinaus
+  const s = await L.PDFDocument.create(), sp = s.addPage([595, 842]);
+  sp.drawText('Plakat', { x: 40, y: 700, size: 30, font: await s.embedFont(L.StandardFonts.Helvetica) });
+  sp.drawImage(await s.embedPng(raw(100, 100)), { x: 40, y: 100, width: 200, height: 200 });
+  sp.setTrimBox(-10, 0, 620, 842);
+  const bad = await P.run('druck', await s.save(), { pages: 1, textPages: 1 });
+  assert.equal(bad.ok, false);
+  const tb = titles(bad);
+  assert.ok(tb.includes('✗ Alle Schriften eingebettet') && tb.includes('✗ Bildauflösung mind. 150 dpi') && tb.includes('✗ Endformat liegt innerhalb der Seite'), tb.join('\n'));
+  assert.match(bad.items.find(i => i.title === 'Bildauflösung mind. 150 dpi').detail, /36 dpi/);
+  assert.ok(P.PROFILES.druck.label.includes('Kurzprüfung'), 'ehrlich als Kurzprüfung gekennzeichnet');
+});

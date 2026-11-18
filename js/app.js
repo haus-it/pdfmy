@@ -236,12 +236,13 @@ async function importFilesRun(files, fromCamera) {
       else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
       else if (/\.(docx|xlsx|odt|ods|epub)$/.test(n)) await importOffice(f);
       else if (/\.rtf$/.test(n)) await importRtf(f);
+      else if (/\.(html?|xhtml|mht|mhtml)$/.test(n) || /^(text\/html|application\/xhtml\+xml|multipart\/related|message\/rfc822; ?.*mhtml)/.test(f.type)) await importHtml(f);
       else if (/\.o?xps$/.test(n)) await importXps(f);
       else if (/\.(pptx|ppsx|potx|pptm|ppsm|odp)$/.test(n)) await importSlides(f);
       else if (/\.(doc|xls|ppt)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word, Excel bzw. PowerPoint als .docx/.xlsx/.pptx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
-      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, PowerPoint, Text, RTF, XPS, Photoshop, Markdown, CSV, ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
+      else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, PowerPoint, Text, RTF, XPS, Photoshop, Markdown, CSV, Webseite (HTML, MHTML), ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
       state.inputBytes += f.size;
       // Name für den Vorschlag beim Speichern (ownName): Bilder und Seiten aus einem Archiv tragen den Namen ihrer Datei bzw. des Archivs
       // Nicht bei Scanner und Überwachtem Ordner: deren Namen („SKM_C258…“) sind nichtssagend, dort bleibt der Name aus den Briefdaten.
@@ -434,6 +435,21 @@ async function importText(file) {
   const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
   const bytes = await TextPdf.build(PDFLib, { text, kind, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono } });
   await importPdf(new File([bytes], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
+}
+/* Gespeicherte Webseite (.html/.htm/.xhtml) und MHTML (.mht/.mhtml, „Webseite als einzelne Datei“) → PDF über den Textsatz.
+   Nichts wird ausgeführt und nichts aus dem Netz geladen (CSP, Leitplanke 2): Bilder nur, wenn sie in der Datei stecken. */
+async function importHtml(file) {
+  status(`${file.name} wird in PDF umgewandelt …`);
+  const bytes = new Uint8Array(await file.arrayBuffer()), mhtml = /\.mht(ml)?$/i.test(file.name) || /^MIME-Version:|^From:|^Content-Type:\s*multipart\/related/im.test(new TextDecoder('latin1').decode(bytes.subarray(0, 600)));
+  const src = mhtml ? Email.parseMhtml(bytes) : null;
+  const r = await Office.html(src ? src.html : bytes, { images: src?.images, name: src?.title || file.name.replace(/\.[^.]+$/, '') });
+  const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
+  const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, title: r.title, fonts: { fontkit: fk, regular, bold, mono } });
+  await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
+  // Einschübe einzeln übersetzen (die Sprachdatei kennt sie als eigene Texte)
+  const withImg = src || r.blocks.some(b => b.type === 'img') ? ' ' + I18N.t('und Bilder') : '';
+  const remote = r.remoteImages ? ' ' + I18N.t(`${r.remoteImages} Bild(er) aus dem Internet wurden nicht geladen (PDFMy ruft keine fremden Adressen ab).`) : '';
+  status(`${file.name} umgewandelt: Text, Überschriften, Listen, Tabellen${withImg} – vereinfacht, ohne Seitengestaltung.${remote} Für ein genaues Abbild die Seite im Browser über „Drucken → Als PDF speichern“ sichern.`);
 }
 // RTF: nur der Text mit Absätzen, Formatierungen und Bilder übernimmt PDFMy nicht
 async function importRtf(file) {

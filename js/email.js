@@ -46,7 +46,7 @@
     return m ? decodeWords((m[2] ?? m[1]).trim()) : '';
   }
   function parseEml(bytes) {
-    const text = latin1(bytes), out = { subject: '', from: '', date: '', body: '', attachments: [] };
+    const text = latin1(bytes), out = { subject: '', from: '', date: '', body: '', attachments: [], parts: [] };   // parts: alle Einzelteile (MHTML: Seite und Bilder)
     (function part(raw, depth) {
       const sep = raw.search(/\r?\n\r?\n/); if (sep < 0) return;
       const h = headers(raw.slice(0, sep)), body = raw.slice(sep).replace(/^\r?\n\r?\n/, '');
@@ -60,6 +60,7 @@
       }
       const data = enc === 'base64' ? b64(body) : enc === 'quoted-printable' ? qp(body) : bytesOf(body);
       if (type === 'message/rfc822') { const inner = parseEml(data); out.attachments.push(...inner.attachments); return; }   // weitergeleitete E-Mail
+      out.parts.push({ type, charset: param(ct, 'charset'), location: (h['content-location'] || '').trim(), cid: (h['content-id'] || '').replace(/[<>\s]/g, ''), data });
       const name = param(h['content-disposition'], 'filename') || param(ct, 'name');
       const disp = (h['content-disposition'] || '').toLowerCase();
       if (name || disp.startsWith('attachment')) out.attachments.push({ name: name || 'Anhang', type, data });
@@ -133,6 +134,15 @@
     const m = isMsg ? parseMsg(bytes) : parseEml(bytes);
     return { ...m, kind: isMsg ? 'msg' : 'eml', files: usable(m.attachments) };
   }
-  const api = { parseEml, parseMsg, parseMail, readCfb, decodeWords };
+  /* MHTML (.mht/.mhtml, „Webseite als einzelne Datei“ aus Edge/Chrome/Word): HTML-Hauptteil und Bilder nach Adresse.
+     Nur Teile aus der Datei selbst – nichts wird nachgeladen. */
+  function parseMhtml(bytes) {
+    const m = parseEml(bytes), page = m.parts.find(p => p.type === 'text/html');
+    if (!page) throw new Error('Keine MHTML-Datei (kein HTML-Teil gefunden).');
+    const images = new Map();
+    for (const p of m.parts) if (p.type.startsWith('image/')) { if (p.location) images.set(p.location, p.data); if (p.cid) images.set('cid:' + p.cid, p.data); }
+    return { html: decodeText(page.data, page.charset), images, title: m.subject };
+  }
+  const api = { parseEml, parseMsg, parseMail, parseMhtml, readCfb, decodeWords };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Email = api;
 })(typeof self !== 'undefined' ? self : this);

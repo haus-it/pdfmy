@@ -5599,7 +5599,8 @@ function preflightShow(res, name, after = false) {
   const bad = res.items.filter(x => x.ok === false).length, hint = res.items.filter(x => x.ok === null).length, h = hint ? ' ' + I18N.t(`${hint} Hinweis(e).`) : '';
   $('#pfSum').textContent = (after ? I18N.t(`Gespeichert als „${name}“ und erneut geprüft: `) : '') + (bad ? I18N.t(`${bad} Fehler – vor dem Versand beheben.`) : I18N.t('Keine Fehler gefunden.')) + h;
   // beA: „beA-tauglich speichern“ immer anbieten (wie früher im Dialog „Für beA prüfen“), sonst nur bei Fehlern
-  $('#pfFix').hidden = after || (!bad && !(profile === 'bitv' && hint) && profile !== 'bea');
+  // Druckerei: beheben lassen sich nur fehlende Schriften (PDF/A bettet alle ein) – grobe Bilder oder fehlender Beschnitt nicht
+  $('#pfFix').hidden = after || (profile === 'druck' ? !res.items.some(x => x.ok === false && x.title === 'Alle Schriften eingebettet') : (!bad && !(profile === 'bitv' && hint) && profile !== 'bea'));
   $('#pfFix').textContent = I18N.t(!bad && profile === 'bea' ? 'beA-tauglich speichern' : 'Automatisch beheben');
   $('#pfBasis').textContent = I18N.t('Grundlage: ' + Preflight.PROFILES[profile].basis + '. Kurzprüfung der häufigsten Ablehnungsgründe – ersetzt keine vollständige Validierung.');
 }

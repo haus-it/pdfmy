@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-18
 
+### Druckerei-Prüfung und Webseiten (HTML, MHTML) öffnen (app-v287)
+- **Vorabprüfung „Druckerei (PDF/X-4, Kurzprüfung)“:** Schriften eingebettet, Bildauflösung (aus der Platzierung berechnet, Fehler unter 150 dpi, Hinweis unter 300 dpi), Endformat (TrimBox) und 3 mm Beschnitt, RGB-Bilder, PDF/X-Ausgabebedingung, Verschlüsselung, aktive Inhalte, gemischte Formate. „Automatisch beheben“ nur bei fehlenden Schriften.
+- **HTML und MHTML öffnen:** gespeicherte Webseiten (.html/.htm/.xhtml) und „Webseite als einzelne Datei“ (.mht/.mhtml) werden zu PDF: Titel, Überschriften, Absätze, Listen, Tabellen, Bilder aus der Datei. Nichts wird ausgeführt, Bilder aus dem Internet werden nicht geladen. Gemeinsamer HTML-Leser auch für EPUB (verschachtelte Layout-Tabellen und gemischter Text jetzt besser).
+- **Hilfe** in 40 Sprachen, Tests in tests/preflight.test.js und tests/office.test.js.
+
 ### Firefox-Erweiterung bei Firefox-Add-ons freigegeben (app-v285)
 - Mozilla hat „PDFMy – PDFs direkt öffnen“ geprüft und veröffentlicht (Version 1.2.0, öffentlich laut AMO-Schnittstelle).
 - `tools/site.json` → `firefoxAmo`: Die Erweiterungsseite zeigt jetzt den Knopf „Zu Firefox hinzufügen“, `pdfmy.de/go/firefox` leitet zum Store.
