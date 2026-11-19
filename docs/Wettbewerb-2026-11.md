@@ -236,3 +236,7 @@ Quelle: Kommentare unter „Digital Independence Day: Adobe PDF-Reader-Alternati
 | Andere unterschreiben lassen | Docusign: Zustellung per E-Mail/SMS, Erinnerungen, ohne Konto (belegt) | vorhanden ohne Server (Abschnitt 3) | unverändert |
 
 **Bewusst anders:** Der Stempel zeigt kein grünes Häkchen. Er ist nur ein Bild und bliebe auch nach einer Fälschung stehen; ob die Signatur gültig ist, zeigt allein die Prüfung (Leiste in PDFMy, Signaturbereich anderer Programme). **Umgesetzt 19.11.2026 (app-v290):** Klick auf einen Stempel öffnet die Details genau dieser Signatur, mit Prüfschild am Stempel. **Offen:** Platz für den Stempel selbst aufziehen; Handy als Zeichenfläche ohne Cloud (Machbarkeit prüfen). Test: tests/signatur-sichtbar.test.js, Durchlauf im Headless-Browser mit zwei Unterzeichnern.
+
+## 8. Selbstbetrieb (19.11.2026, app-v292)
+
+BentoPDF und Stirling-PDF werben mit Betrieb im eigenen Netz (Docker); KONZEPT nennt „Firmen wollen selbst betreiben“. **Umgesetzt:** Paket nur mit der App, Aktualisierer für Linux und Windows/IIS mit signierten Kanälen „aktuell“/„stabil“, Wechsel ohne Ausfallzeit, Rücknahme, eigener Spiegel, eigene Links. Vorteil gegenüber Stirling-PDF: kein Server-Code, keine Dokumente auf dem Server, signierte Updates mit Schutz vor Rückschritt. **Offen:** fertiges Docker-Abbild (braucht ein Registry-Konto – Entscheidung GF); Lizenzmodell für den Firmenbetrieb (GF). Hinweis auf die Lizenzbedingungen auf GitHub an allen Stellen.

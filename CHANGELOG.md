@@ -4,6 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Selbstbetrieb: Signaturen der Aktualisierer abrufbar (app-v293)
+- Signaturen heißen jetzt pdfmy-selfhost-sh.sig bzw. pdfmy-selfhost-ps1.sig: Der Webserver von pdfmy.de wertete „.sh.sig“ als Skript und antwortete mit Fehler 500. Live geprüft: Installation von pdfmy.de in 20 s, Probelauf 9/9 gegen die installierte Fassung, eigene Links in der Fußzeile (javascript:-Links abgewiesen).
+
+### PDFMy auf dem eigenen Server mit signierten Updates; Update-Strategie ab 01.12.2026 (app-v292)
+- **Paket für den Selbstbetrieb** bei jedem Ausrollen: nur die App (ohne Website, Impressum, Zählseiten), eigene Links des Betreibers über eigene-links.json, web.config für IIS.
+- **Aktualisierer** für Linux (pdfmy-selfhost.sh) und Windows/IIS (pdfmy-selfhost.ps1): ein Befehl installiert und richtet die tägliche Prüfung ein; nur signierte Fassungen (RSA-3072, eigenes Präfix) mit passender Prüfsumme und höherer Nummer; Wechsel ohne Ausfallzeit, eigene Dateien bleiben, „zurueck“ holt die vorige Fassung; eigener Spiegel möglich.
+- **Kanäle** „aktuell“ (sofort) und „stabil“ (nach 7 Tagen ohne Rücknahme); Sicherheitsfassungen sofort in beiden (deploy.ps1 -Sicherheit); zurückgenommene Fassungen nie „stabil“.
+- **Update-Strategie** (docs/Update-Strategie.md, gültig ab 01.12.2026): Fassungsarten, Freigabefenster und Ruhezeit (deploy.ps1 prüft sie ab 01.12.2026, Ausnahme nur mit -Ausnahme "Grund"), Kanäle, Qualitätstore, Schlüssel, Fristen für Sicherheitsupdates, Unterstützungszeitraum, Rücknahme, Kennzahlen, Rollen.
+- Hinweis auf die Lizenzbedingungen auf GitHub (Firmen-Seite, Paket, Aktualisierer, Hilfe). Hilfe in 40 Sprachen, Tests in tests/selfhost.test.js (beide Aktualisierer gegen einen Testspiegel, Fälschungen, Freigabefenster).
+
 ### Alte Word- und Excel-Dateien (.doc, .xls) öffnen (app-v291)
 - **Word 97–2003 (.doc):** Text über die Stückliste der Datei, Absätze, Zeilen- und Seitenumbrüche, Tabellen, Feldergebnisse; Kennwortschutz und Word 6/95 werden erkannt und erklärt.
 - **Excel 97–2003 (.xls, BIFF8/BIFF5):** sichtbare Blätter, Zahlen im Excel-Format, Datum (auch 1904), Prozent, Wahrheitswerte, gespeicherte Formelergebnisse, lange Textlisten über Blockgrenzen.

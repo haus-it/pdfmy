@@ -8,10 +8,24 @@
 #   tools\deploy.ps1 -TestUrl https://…/   → nur den Probelauf gegen eine Adresse ausführen
 #   tools\deploy.ps1 -Rollback [-Release <Stand>] [-DryRun] → vorige (oder genannte) Fassung wieder hochladen
 #   tools\deploy.ps1 -ScanRollout 10       → neue pdfmy-Scan-Version erst 10 % der Installationen automatisch anbieten (später 100)
+#   tools\deploy.ps1 -Sicherheit           → Sicherheitsupdate: eigene Server bekommen es sofort, auch im Kanal „stabil“
+# Regeln für Fassungen, Kanäle, Fristen und Sicherheitsupdates ab 01.12.2026: docs\Update-Strategie.md
 # Qualitätssicherung (ISO 9001, ISO 27001 A.8.32): Ohne bestandene Tests und bestandenen Probelauf wird nichts veröffentlicht;
 # jede Veröffentlichung und jeder Rückweg wird in docs\RELEASES.md protokolliert.
-param([switch]$Test, [switch]$DryRun, [switch]$NoBuild, [ValidateSet('prod', 'test')][string]$Target = 'prod', [string]$TestUrl = '', [switch]$Rollback, [string]$Release = '', [ValidateRange(0, 100)][int]$ScanRollout = -1)
+param([switch]$Test, [switch]$DryRun, [switch]$NoBuild, [ValidateSet('prod', 'test')][string]$Target = 'prod', [string]$TestUrl = '', [switch]$Rollback, [string]$Release = '', [ValidateRange(0, 100)][int]$ScanRollout = -1, [switch]$Sicherheit, [string]$Ausnahme = '')
 $ErrorActionPreference = 'Stop'
+
+# ---------- Freigabefenster (docs\Update-Strategie.md, Abschnitt 4; verbindlich ab 01.12.2026) ----------
+# Mo–Do 8–16 Uhr; nicht Freitag ab 12 Uhr, Wochenende, bundesweite Feiertage und Tag davor, Ruhezeit 20.12.–06.01.
+# Ausgenommen: Sicherheitsfassungen (-Sicherheit), Rücknahmen (-Rollback), Testadresse, Probe (-Test/-DryRun). Sonst nur mit -Ausnahme "Grund".
+. (Join-Path $PSScriptRoot 'freigabefenster.ps1')
+$fensterGrund = Test-Freigabefenster (Get-Date)
+if ($fensterGrund -and -not ($Sicherheit -or $Rollback -or $Test -or $DryRun -or $TestUrl -or $Target -eq 'test')) {
+  if ((Get-Date) -ge (Get-Date -Year 2026 -Month 12 -Day 1 -Hour 0 -Minute 0 -Second 0)) {
+    if (-not $Ausnahme) { throw "Außerhalb des Freigabefensters ($fensterGrund) – docs\Update-Strategie.md, Abschnitt 4. Sicherheitsfassung: -Sicherheit; sonst mit Zustimmung der Geschäftsführung: -Ausnahme ""Grund""." }
+    Write-Host "Ausnahme vom Freigabefenster ($fensterGrund): $Ausnahme" -ForegroundColor Yellow
+  } else { Write-Host "Hinweis: außerhalb des Freigabefensters ($fensterGrund) – ab 01.12.2026 nur mit -Sicherheit oder -Ausnahme ""Grund""." -ForegroundColor Yellow }
+}
 $root = Split-Path $PSScriptRoot -Parent
 # Protokoll jedes Laufs in .deploy/logs (nicht im Repository) – bei einem Abbruch steht dort, an welcher Stelle und warum
 $logDir = Join-Path $root '.deploy\logs'; New-Item -ItemType Directory -Force $logDir | Out-Null
@@ -75,6 +89,9 @@ if ($Rollback) {
     $log = Invoke-Upload $tmp
     if (-not $DryRun) {
       $files = [regex]::Match($log, '(\d+) ge.nderte Datei').Groups[1].Value
+      # Eigener Server: die zurückgenommene Fassung nie in den Kanal „stabil“ übernehmen (wirkt ab dem nächsten Build)
+      $offNr = [regex]::Match($zips[0].BaseName, '-v(\d+)$').Groups[1].Value
+      if ($offNr -and $zips[0].FullName -ne $zip.FullName) { & node (Join-Path $PSScriptRoot 'selfhost.js') --zurueckgezogen $offNr | Out-Host }
       Add-ReleaseLine "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | Rückweg auf $($zip.BaseName) | – | – | Probelauf bestanden | $files | $env:USERNAME | – |"
       (Get-Item $zip.FullName).LastWriteTime = Get-Date   # gilt jetzt als aktuelle Fassung
     }
@@ -115,7 +132,9 @@ if (-not $Test -and -not $NoBuild) {
     @{ unsigned = $now; signed = (Get-FileHash $exe -Algorithm SHA256).Hash } | ConvertTo-Json | Set-Content $stateFile -Encoding utf8
     Write-Host 'pdfmy Scan geändert und neu signiert (Mentor GmbH)' -ForegroundColor Green
   }
-  if ($ScanRollout -ge 0) { $env:PDFMY_SCAN_ROLLOUT = "$ScanRollout" }   # Freigabe in Stufen für pdfmy Scan (download/version.json „rollout“)
+  if ($ScanRollout -ge 0) { $env:PDFMY_SCAN_ROLLOUT = "$ScanRollout" }
+  # Sicherheitsupdate (docs/Update-Strategie.md, Abschnitt 8): eigene Server bekommen es sofort, auch im Kanal „stabil“
+  if ($Sicherheit) { $env:PDFMY_SICHERHEIT = '1'; Write-Host 'Sicherheitsupdate: sofort auch im Kanal „stabil“ für eigene Server' -ForegroundColor Yellow } else { Remove-Item Env:PDFMY_SICHERHEIT -ErrorAction SilentlyContinue }   # Freigabe in Stufen für pdfmy Scan (download/version.json „rollout“)
   $env:PDFMY_PRERENDER = '1'   # Webseiten je Sprache vorab übersetzen (tools/prerender.js)
   # Warnungen des Builds (stderr, z. B. „zweiter Versuch“ der Vorab-Übersetzung) sind kein Abbruch – maßgeblich ist der Rückgabewert.
   # Windows PowerShell 5.1 wertet sonst jede stderr-Zeile als Fehler und brach ab, obwohl der Build die Seite erneut versucht hätte.
@@ -139,7 +158,10 @@ $ver = Get-Content (Join-Path $distDir 'download\version.json') -Raw | ConvertFr
 $files = [regex]::Match($log, '(\d+) ge.nderte Datei').Groups[1].Value
 # Fingerabdruck der Prüfsummenliste (SHA-256 von pruefsummen.txt) – die App zeigt ihn unter „Datenschutz selbst prüfen“
 $finger = (Get-FileHash (Join-Path $distDir 'pruefsummen.txt') -Algorithm SHA256).Hash.ToLower()
-Add-ReleaseLine "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | $web | $($ver.pdfmyScan) | $($ver.sha256.Substring(0,16))… | $testSummary, Probelauf bestanden | $files | $env:USERNAME | $($finger.Substring(0,16)) |"
+# Eigener Server (tools/selfhost.js): Veröffentlichung vermerken – ab hier zählen die 7 Tage bis zum Kanal „stabil“
+$webNr = [regex]::Match($web, '-v(\d+)$').Groups[1].Value
+if ($webNr) { & node (Join-Path $PSScriptRoot 'selfhost.js') --veroeffentlicht $webNr | Out-Host }
+Add-ReleaseLine "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | $web | $($ver.pdfmyScan) | $($ver.sha256.Substring(0,16))… | $testSummary, Probelauf bestanden$(if ($Sicherheit) { ' · Sicherheitsfassung' })$(if ($Ausnahme -and $fensterGrund) { " · Ausnahme Freigabefenster ($fensterGrund): $Ausnahme" }) | $files | $env:USERNAME | $($finger.Substring(0,16)) |"
 # Fassung für den Rückweg aufbewahren (letzte 5)
 New-Item -ItemType Directory -Force $releases | Out-Null
 $zipPath = Join-Path $releases "$web.zip"

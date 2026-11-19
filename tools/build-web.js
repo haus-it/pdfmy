@@ -116,6 +116,36 @@ write('sw.js', fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8')
   .replace(/const VERSION = 'app-(v\d+)';/, (m, nr) => `const VERSION = 'pdfmy-${stamp}-${nr}';`)   // Zeitstempel + Versionsnummer (Statuszeile, Fehlerbericht)
   .replace("'js/tools.js',", "'js/tools.js', 'impressum.html', 'datenschutz.html', 'nutzungsbedingungen.html', 'barrierefreiheit.html', 'hilfe.html', 'hilfe.js', 'sprache.js',"));
 
+// PDFMy auf dem eigenen Server (tools/selfhost.js, docs/Update-Strategie.md): nur die App – ohne Website, Impressum, Zählseiten von pdfmy.de.
+// Fußzeile: Hilfe und Quellcode bei pdfmy.de, dazu eigene Links des Betreibers (eigene-links.json, js/app.js).
+const SELF = (() => {
+  let h = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const r = (a, b) => { if (!h.includes(a)) throw new Error('index.html (Selbstbetrieb): nicht gefunden: ' + a.slice(0, 60)); h = h.replace(a, b); };
+  r('<title>PDFMy</title>', `<title>PDFMy</title>\n<meta http-equiv="Content-Security-Policy" content="${CSP}">`);
+  r('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal" id="legalNav"><a class="lx" href="https://${site.domain}/hilfe.html" target="_blank" rel="noopener">${N.hilfe}</a><a class="lx" href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
+  r('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} footer .legal a+a::before{content:"·";display:inline-block;margin:0 5px;color:var(--muted);text-decoration:none} @media (max-width:760px){footer .legal{display:flex;gap:10px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none} footer .legal a+a::before{content:none} footer:not(.st-idle) .legal{display:none}}\n</style>');
+  h = deferScripts(preloadScripts(h));
+  const nr = +(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/const VERSION = 'app-v(\d+)'/) || [])[1];
+  const stand = `pdfmy-selfhost-${stamp}-v${nr}`;
+  const sw = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').replace(/const VERSION = 'app-v\d+';/, `const VERSION = '${stand}';`);
+  const conf = fs.readFileSync(path.join(ROOT, 'js', 'config.js'), 'utf8').replace("ownName: 'mentor', edition: 'local'", "ownName: '', edition: 'selfhost'")
+    .replace('/* Edition und Branding.', '/* Eigener Server (Selbstbetrieb).');
+  if (!conf.includes("edition: 'selfhost'")) throw new Error('config.js: Edition nicht gefunden');
+  // App-Dateien aus der Ausgabe (js, vendor, icons, Wörterbücher der Oberfläche) – config.js, index.html, sw.js, Manifest eigens
+  const files = [];
+  (function walk(rel) {
+    for (const e of fs.readdirSync(path.join(OUT, rel), { withFileTypes: true })) {
+      const r2 = rel ? rel + '/' + e.name : e.name;
+      if (e.isDirectory()) walk(r2); else if (r2 !== 'js/config.js' && !(rel === 'i18n' && !/^[a-z]{2}(-[A-Z]{2})?\.json$/.test(e.name))) files.push({ path: r2, data: fs.readFileSync(path.join(OUT, r2)) });
+    }
+  })('');
+  return { h, sw, conf, nr, stand, files: files.filter(f => /^(js|vendor|icons|i18n)\//.test(f.path)) };
+})();
+const SH = require('./selfhost.js').build({ root: ROOT, write, domain: site.domain, nr: SELF.nr, stand: SELF.stand, appVersion: SELF.stand, files: [
+  ...SELF.files, { path: 'js/config.js', data: Buffer.from(SELF.conf) }, { path: 'index.html', data: Buffer.from(SELF.h) }, { path: 'sw.js', data: Buffer.from(SELF.sw) },
+  { path: 'manifest.webmanifest', data: fs.readFileSync(path.join(ROOT, 'manifest.webmanifest')) }] });
+console.log(`Selbstbetrieb: ${SH.datei} (${(SH.groesse / 1048576).toFixed(1)} MB), Kanal stabil = v${SH.stabil}`);
+
 // Rechtstexte und Infoseiten. multi: mehrsprachig (Hilfe, Scanner) – Sprachwahl oben rechts wie in der App, Wörterbuch i18n/site/<code>.json.
 // Rechtstexte (Impressum, Datenschutz, Barrierefreiheit) bleiben ausschließlich deutsch.
 const page = (title, body, head = '', multi = true) =>   // multi: Sprachauswahl und Übersetzung (alle Seiten)
@@ -596,6 +626,17 @@ ${STORE.thunderbird ? '<p><b>Am einfachsten:</b> PDFMy bei <a href="go/thunderbi
 <p>App <a href="download/${ADD.ncZip}" download>${ADD.ncZip}</a> (Nextcloud 28 bis 35): In „Dateien“ steht bei PDFs, Bildern und Office-Dateien <i>In PDFMy öffnen</i>. PDFMy öffnet sich in einem neuen Tab und fragt einmal, ob die Datei von Ihrer Nextcloud kommen darf; <i>In Nextcloud speichern</i> legt eine PDF als neue Version derselben Datei ab (die alte bleibt in den Versionen), andere Formate als PDF daneben. Die Datei geht nur zwischen Browser und PDFMy. Einrichten: ZIP in den Ordner <code>custom_apps</code> (bzw. <code>apps</code>) der Nextcloud entpacken, dann <code>occ app:enable pdfmy</code> oder unter <i>Apps → Deaktivierte Apps</i> aktivieren.</p>
 <h2 id="onlyoffice">ONLYOFFICE Docs</h2>
 <p>Plugin <a href="download/${ADD.ooPlugin}" download>${ADD.ooPlugin}</a> (ONLYOFFICE Docs ab 7.4, z. B. in Nextcloud, ownCloud, Seafile oder DocSpace): Registerkarte <i>Plugins → PDFMy</i> → <i>In PDFMy öffnen</i>. ONLYOFFICE erzeugt das PDF auf Ihrem eigenen ONLYOFFICE-Server, PDFMy übernimmt es im Browser. Einrichten: <i>Plugins → Plugin-Manager → Plugin installieren</i> und die Datei wählen, oder für alle Benutzer entpackt in den Plugin-Ordner des Servers legen. In den ONLYOFFICE-Desktop-Programmen liefert ONLYOFFICE kein PDF an Plugins – dort <i>Datei → Drucken</i> mit dem Drucker „PDFMy“.</p>
+<h2 id="eigener-server">PDFMy auf dem eigenen Server</h2>
+<p>PDFMy besteht nur aus statischen Dateien. Sie können die App im eigenen Netz ausliefern, z. B. unter <code>https://pdf.intern.example/</code> – ohne Datenbank, ohne Server-Code, ohne Verbindung der Nutzer ins Internet. Dokumente bleiben wie bei pdfmy.de im Browser und gehen auch nicht an Ihren Server. Das Paket enthält nur die App (keine Website, kein Impressum und keine Zählseiten von pdfmy.de).</p>
+<ol>
+<li><b>Installieren und automatisch aktualisieren – Linux</b> (nginx, Apache, Docker-Host):<br><code>curl -fsSLO https://${site.domain}/selfhost/pdfmy-selfhost.sh &amp;&amp; sudo bash pdfmy-selfhost.sh installieren /var/www/pdfmy</code></li>
+<li><b>Windows Server mit IIS</b> (PowerShell als Administrator):<br><code>Invoke-WebRequest https://${site.domain}/selfhost/pdfmy-selfhost.ps1 -OutFile pdfmy-selfhost.ps1; .\\pdfmy-selfhost.ps1 installieren C:\\inetpub\\pdfmy</code></li>
+<li>Den Ordner per <b>HTTPS</b> als Website oder Unterordner ausliefern (für den Offline-Betrieb nötig). Für IIS liegt eine <code>web.config</code> mit den Dateitypen bei. nginx: <code>location /pdfmy/ { alias /var/www/pdfmy/; } location ~ /pdfmy/(sw\\.js|pruefsummen\\.json)$ { add_header Cache-Control "no-cache"; }</code></li>
+<li>Eigene Links in der Fußzeile (Impressum, Datenschutz, Hilfe des Hauses): <code>eigene-links.json</code> nach dem Muster <code>eigene-links.beispiel.json</code> in den Ordner legen. Eigene Dateien bleiben bei Updates erhalten.</li>
+</ol>
+<p><b>Updates:</b> Der Server prüft täglich zwischen 3 und 6 Uhr (zufällige Minute) selbst, ob es eine neue Fassung gibt. Installiert wird nur eine von der Mentor GmbH signierte Fassung (RSA-3072, SHA-256) mit passender Prüfsumme und höherer Nummer – nie eine ältere. Der Wechsel geschieht ohne Ausfallzeit; <code>zurueck</code> holt die vorige Fassung zurück, <code>pruefen</code> zeigt nur an, ob es etwas Neues gibt, <code>automatik-aus</code> schaltet die tägliche Prüfung ab. Zwei Kanäle: <b>stabil</b> (Standard, erst nach ${require('./selfhost.js').STABIL_TAGE} Tagen ohne Rücknahme auf ${site.domain}, derzeit v${SH.stabil}) und <b>aktuell</b> (<code>--kanal=aktuell</code> bzw. <code>-Kanal aktuell</code>, jede Fassung sofort, derzeit v${SELF.nr}). Eigener Spiegel im Intranet: <code>PDFMY_QUELLE</code> bzw. <code>-Quelle</code>. Die Abfrage überträgt nur die üblichen Verbindungsdaten Ihres Servers, keine Kennung und keine Nutzungsdaten. Regeln für Fassungen, Sicherheitsupdates und Fristen: <a href="https://github.com/haus-it/pdfmy/blob/main/docs/Update-Strategie.md" target="_blank" rel="noopener">Update-Strategie</a>.</p>
+<p><b>Prüfen:</b> <a href="selfhost/pdfmy-selfhost.sh">pdfmy-selfhost.sh</a> SHA-256 <code style="word-break:break-all">${SH.shSha}</code> · <a href="selfhost/pdfmy-selfhost.ps1">pdfmy-selfhost.ps1</a> SHA-256 <code style="word-break:break-all">${SH.ps1Sha}</code> · Signaturen: <a href="selfhost/pdfmy-selfhost-sh.sig">pdfmy-selfhost-sh.sig</a>, <a href="selfhost/pdfmy-selfhost-ps1.sig">pdfmy-selfhost-ps1.sig</a>, öffentlicher Schlüssel: <a href="selfhost/pdfmy-update-schluessel.pem">pdfmy-update-schluessel.pem</a> (<code>openssl dgst -sha256 -verify pdfmy-update-schluessel.pem -signature &lt;(base64 -d pdfmy-selfhost-sh.sig) pdfmy-selfhost.sh</code>). Paket von Hand: <a href="selfhost/aktuell/${SH.datei}">${SH.datei}</a> (${(SH.groesse / 1048576).toFixed(0)} MB, SHA-256 <code style="word-break:break-all">${SH.sha}</code>).</p>
+<p><b>Lizenzbedingungen beachten:</b> Für den Betrieb auf einem eigenen Server gelten die Lizenzbedingungen auf GitHub: <a href="https://github.com/haus-it/pdfmy/blob/main/LICENSE" target="_blank" rel="noopener">github.com/haus-it/pdfmy – LICENSE</a> (PolyForm Noncommercial License 1.0.0) mit den Hinweisen in <a href="https://github.com/haus-it/pdfmy/blob/main/NOTICE" target="_blank" rel="noopener">NOTICE</a>. Bitte prüfen Sie vor der Installation, ob Ihre Nutzung davon gedeckt ist. Für eine andere Nutzung, etwa im Unternehmen, sprechen Sie bitte die Mentor GmbH an: <a href="mailto:${esc(APPSUPPORT)}?subject=PDFMy%20auf%20eigenem%20Server">${esc(APPSUPPORT)}</a>.</p>
 <h2>Linux und Mac</h2>
 <ul>
 <li><b>Linux</b> (für alle Benutzer, z. B. per Ansible oder Puppet): <code>apt install ./${linuxDeb}</code> · <code>dnf install ./${linuxRpm}</code> · <code>zypper install ./${linuxRpm}</code> · <code>pacman -U ./${linuxArch}</code></li>

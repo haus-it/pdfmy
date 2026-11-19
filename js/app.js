@@ -89,6 +89,16 @@ const DEFAULTS = { mode: 'auto', quality: 0.75, ownName: APP.ownName, autoOcr: t
   autoCrop: true, ocrLang: 'auto', hlColor: '#ffd400', hlStyle: 'hl', pdfa: true, byYear: false, byType: true, saveIcs: true, compact: true, scanPdf: true, author: '', autopilot: false, inStamp: false };
 const S = Object.assign({}, DEFAULTS, LS.get('settings', {}));
 if (APP.edition === 'local') document.title = APP.name;
+/* Eigener Server (Selbstbetrieb, tools/selfhost.js): Links des Betreibers in der Fußzeile – Impressum, Datenschutz, Hilfe des Hauses.
+   eigene-links.json neben index.html: [{ "text": "Impressum", "url": "https://…" }]; bleibt bei Updates erhalten. Nur http(s) oder relativ. */
+if (APP.edition === 'selfhost') fetch('eigene-links.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : []).then(list => {
+  const nav = $('#legalNav'); if (!nav || !Array.isArray(list)) return;
+  for (const l of list.slice(0, 8).reverse()) {   // vorn einreihen, Reihenfolge wie in der Datei
+    const url = String(l?.url || ''), text = String(l?.text || '').slice(0, 60); if (!text || !/^(https?:\/\/|\/|\.\/|[\w-]+\.html?(#.*)?$)/i.test(url)) continue;
+    const a = document.createElement('a'); a.href = url; a.textContent = text; a.translate = false; if (/^https?:/i.test(url)) { a.target = '_blank'; a.rel = 'noopener'; }
+    nav.prepend(a);
+  }
+}).catch(() => {});
 if (APP.brandHtml) $('#brand').innerHTML = APP.brandHtml;
 if (APP.homeTitleHtml) $('.home-title').innerHTML = APP.homeTitleHtml;
 if (APP.homeSub) { const hs = $('.home-sub'); if (hs) hs.innerHTML = APP.homeSub; else $('.home-title').insertAdjacentHTML('afterend', `<span class="home-sub">${APP.homeSub}</span>`); }   // steht schon in index.html (kein Aufblitzen alter Texte)
