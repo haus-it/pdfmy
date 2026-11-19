@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Tá leagan nua de {0} réidh – cuirfear i bhfeidhm go huathoibríoch é a luaithe a shábháiltear an doiciméad agus nach bhfuil aon obair ar siúl air (nó anois le “athlódáil” thíos ar dheis).",
  "Nach Update wieder öffnen": "Oscail arís tar éis nuashonraithe",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Nuashonrú luchtaithe – cuirfear i bhfeidhm go huathoibríoch é a luaithe nach bhfuil aon rud ar siúl.",
- "Update: Dokument merken": "Nuashonrú: cuimhnigh ar an doiciméad"
+ "Update: Dokument merken": "Nuashonrú: cuimhnigh ar an doiciméad",
+ "Endnoten": "Críochnótaí",
+ "Fußnoten": "Fonótaí"
 }

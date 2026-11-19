@@ -322,3 +322,47 @@ test('MHTML („Webseite als einzelne Datei“): HTML-Teil in quoted-printable, 
   assert.equal(r.remoteImages, 0);
   assert.throws(() => Email.parseMhtml(new Uint8Array(Buffer.from('From: a\r\n\r\nnur Text'))), /Keine MHTML-Datei/);
 });
+
+test('Word: Fußnoten, Endnoten, Textfelder (auch mc:AlternateContent), mehrspaltiger Abschnitt mit Abschnittswechsel (app-v304)', async () => {
+  const MC = ' xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:v="urn:schemas-microsoft-com:vml"';
+  const box = inner => `<w:r><mc:AlternateContent><mc:Choice Requires="wps"><w:drawing><wp:anchor><wp:extent cx="100" cy="100"/><a:graphic><a:graphicData><wps:wsp><wps:txbx><w:txbxContent>${inner}</w:txbxContent></wps:txbx></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></mc:Choice><mc:Fallback><w:pict><v:shape><v:textbox><w:txbxContent>${inner}</w:txbxContent></v:textbox></v:shape></w:pict></mc:Fallback></mc:AlternateContent></w:r>`;
+  const long = 'Spaltentext '.repeat(400).trim();
+  const body = [
+    p(r('Einleitung mit Fußnote') + '<w:r><w:footnoteReference w:id="2"/></w:r>' + r(' und Endnote') + '<w:r><w:endnoteReference w:id="1"/></w:r>'),
+    p(r('Vor dem Kasten') + box(p(r('Text im Kasten'))), ''),
+    p(r('Links ' + long)), p(r('Weiter ' + long)), p(r('ENDE-SPALTEN'), '<w:sectPr><w:cols w:num="2" w:space="720"/></w:sectPr>'),
+    p(r('Nach dem Abschnitt einspaltig')),
+    '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:left="1134" w:right="1134" w:top="1134" w:bottom="1134"/></w:sectPr>',
+  ].join('');
+  const notes = (tag, extra) => `<w:${tag}s ${W}><w:${tag} w:type="separator" w:id="0"><w:p><w:r><w:separator/></w:r></w:p></w:${tag}>${extra}</w:${tag}s>`;
+  const z = await zipDeflate({
+    'word/document.xml': `<?xml version="1.0" encoding="UTF-8"?><w:document ${W}${MC}><w:body>${body}</w:body></w:document>`,
+    'word/footnotes.xml': notes('footnote', `<w:footnote w:id="2"><w:p><w:r><w:footnoteRef/></w:r><w:r><w:t xml:space="preserve"> Quelle: Handbuch, S. 12.</w:t></w:r></w:p></w:footnote>`),
+    'word/endnotes.xml': notes('endnote', `<w:endnote w:id="1"><w:p><w:r><w:t>Gilt ab 2027.</w:t></w:r></w:p></w:endnote>`),
+  });
+  const { blocks, page } = await Office.docx(z);
+  assert.equal(blocks[0].text, 'Einleitung mit Fußnote¹ und Endnote¹');
+  const txt = blocks.map(b => b.text || b.type);
+  assert.ok(txt.includes('Text im Kasten'), 'Textfeld nicht verloren'); assert.equal(txt.filter(t => t === 'Text im Kasten').length, 1, 'nur einmal (nicht Choice und Fallback)');
+  assert.ok(txt.indexOf('Text im Kasten') > txt.indexOf('Vor dem Kasten'));
+  const end = txt.indexOf('ENDE-SPALTEN');
+  assert.ok(blocks.slice(txt.indexOf('Einleitung mit Fußnote¹ und Endnote¹'), end + 1).every(b => b.cols === 2 && b.colGap === 36), 'Abschnitt zweispaltig');
+  assert.equal(blocks[end + 1].type, 'pagebreak', 'Abschnittswechsel „nächste Seite“');
+  assert.equal(blocks[end + 2].cols, undefined, 'danach einspaltig');
+  assert.deepEqual(txt.slice(-6), ['hr', 'Fußnoten', '¹ Quelle: Handbuch, S. 12.', 'hr', 'Endnoten', '¹ Gilt ab 2027.']);
+  assert.ok(blocks.slice(-6).every(b => b.type === 'hr' || b.small));
+  // Satz: zweite Spalte rechts von der Mitte, nach dem Abschnitt wieder ab dem linken Rand
+  const pdf = await TP.build(L, { blocks, page, title: 'spalten', fonts });
+  const f = path.join(os.tmpdir(), 'pdfmy-spalten.pdf'); fs.writeFileSync(f, pdf);
+  const xs = JSON.parse(execFileSync('python', ['-I', '-c', `import pypdf,sys,json
+r=pypdf.PdfReader(sys.argv[1]);out={}
+for i,pg in enumerate(r.pages):
+  def v(t,cm,tm,fd,fs,i=i):
+    for w in ('Weiter','ENDE-SPALTEN','Nach dem Abschnitt','Einleitung'):
+      if t.startswith(w) and w not in out: out[w]=[i,round(tm[4])]
+  pg.extract_text(visitor_text=v)
+print(json.dumps(out))`, f]).toString());
+  assert.ok(xs['Einleitung'][1] < 100, 'Spalte 1 links');
+  assert.ok(xs['Weiter'][1] > 595 / 2 || xs['Weiter'][0] > 0 || xs['ENDE-SPALTEN'][1] > 595 / 2, 'Text läuft in die zweite Spalte: ' + JSON.stringify(xs));
+  assert.ok(xs['Nach dem Abschnitt'][1] < 100 && xs['Nach dem Abschnitt'][0] > xs['ENDE-SPALTEN'][0], 'nach dem Abschnittswechsel: neue Seite, volle Breite');
+});

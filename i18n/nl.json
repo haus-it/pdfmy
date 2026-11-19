@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Er staat een nieuwe versie van {0} klaar – die wordt automatisch toegepast zodra het document is opgeslagen en niet in bewerking is (of nu meteen via „opnieuw laden” rechtsonder).",
  "Nach Update wieder öffnen": "Na update weer openen",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update geladen – wordt automatisch toegepast zodra er niets in bewerking is.",
- "Update: Dokument merken": "Update: document onthouden"
+ "Update: Dokument merken": "Update: document onthouden",
+ "Endnoten": "Eindnoten",
+ "Fußnoten": "Voetnoten"
 }

@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Word-Dateien: Textfelder, Fußnoten, Spalten, Abschnitte (app-v304)
+- **Textfelder** (Formen mit Text, auch in der doppelten Ablage neuerer Word-Fassungen `mc:AlternateContent`) gingen bisher verloren – jetzt erscheint ihr Inhalt nach dem Absatz, in dem sie verankert sind, genau einmal. Bilder in `mc:AlternateContent` werden ebenfalls übernommen.
+- **Fußnoten und Endnoten:** Verweis als hochgestellte Zahl im Text, Wortlaut am Ende des Dokuments unter „Fußnoten“ bzw. „Endnoten“ (kleinere Schrift, Trennlinie).
+- **Mehrspaltiger Satz** (Word „Spalten“, z. B. Vereinszeitung, Flyer): 2–4 Spalten mit dem Spaltenabstand aus Word; der Text läuft von Spalte zu Spalte und auf die nächste Seite. Auch Absätze, die mitten in einer Spalte umbrechen, wandern korrekt mit.
+- **Abschnittswechsel:** „Nächste Seite“ (Voreinstellung in Word) beginnt eine neue Seite, „fortlaufend“ nicht.
+- Teil (b) von Rang 2 der Wettbewerbsanalyse. Grenzen: Fußnoten nicht am Seitenende, Spalten nicht ausgeglichen (wie Word bei „nächste Seite“), Lage schwebender Objekte nicht übernommen.
+
 ### Updates ohne Bestätigung (app-v303, pdfmy Scan Windows 1.21.0, Mac/Linux 1.11.0)
 - **Web-App:** Eine neue Version wird im ersten ruhigen Moment übernommen – nicht mehr nur, wenn nichts geöffnet ist. Bei gespeicherten, unveränderten PDFs reicht eine Minute im Hintergrund oder zehn Minuten ohne Bedienung; die geöffneten PDFs werden über IndexedDB (nur lokal) mitgenommen und nach dem Neuladen wieder geöffnet, mit Seite, Akte, Herkunft aus der Ablage und Verweis auf die Originaldatei. Ungespeicherte Änderungen, Markierungen, Drehungen, Formulareingaben, laufende Scans, offene Dialoge und andere Reiter mit ungespeicherter Arbeit verhindern den Wechsel weiterhin. Auch „Neue Version: jetzt neu laden“ nimmt die PDFs mit.
 - **pdfmy Scan:** Läuft bei der Update-Prüfung gerade ein Scan oder Druck, versucht pdfmy Scan es nach 15 Minuten erneut (vorher erst nach 6 Stunden); nach einem fehlgeschlagenen Download nach einer Stunde. Bei eingeschalteten automatischen Updates erscheint keine Meldung „Update verfügbar“ mehr. Abschalten bleibt möglich (CRA Anhang I Teil I Nr. 2 c); von der IT verteilte Installationen aktualisieren sich weiterhin nicht selbst.

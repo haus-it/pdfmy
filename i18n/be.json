@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Новая версія {0} гатова – яна будзе ўжыта аўтаматычна, як толькі дакумент будзе захаваны і над ім не будуць працаваць (або цяпер з дапамогай «перазагрузіць» унізе справа).",
  "Nach Update wieder öffnen": "Зноў адкрыць пасля абнаўлення",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Абнаўленне загружана – яно будзе ўжыта аўтаматычна, як толькі ні над чым не будуць працаваць.",
- "Update: Dokument merken": "Абнаўленне: запомніць дакумент"
+ "Update: Dokument merken": "Абнаўленне: запомніць дакумент",
+ "Endnoten": "Канцавыя зноскі",
+ "Fußnoten": "Зноскі"
 }

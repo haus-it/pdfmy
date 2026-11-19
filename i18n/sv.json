@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "En ny version av {0} är klar – den tillämpas automatiskt så snart dokumentet är sparat och inte är under arbete (eller direkt via ”läs in på nytt” nere till höger).",
  "Nach Update wieder öffnen": "Öppna igen efter uppdatering",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uppdatering inläst – tillämpas automatiskt så snart inget är under arbete.",
- "Update: Dokument merken": "Uppdatering: kom ihåg dokument"
+ "Update: Dokument merken": "Uppdatering: kom ihåg dokument",
+ "Endnoten": "Slutnoter",
+ "Fußnoten": "Fotnoter"
 }

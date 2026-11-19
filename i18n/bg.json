@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Налична е нова версия на {0} – тя ще бъде приложена автоматично, щом документът бъде запазен и не се работи по него (или сега с „презаредете“ долу вдясно).",
  "Nach Update wieder öffnen": "Отваряне отново след актуализация",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Актуализацията е заредена – ще бъде приложена автоматично, щом не се работи по нищо.",
- "Update: Dokument merken": "Актуализация: запомняне на документа"
+ "Update: Dokument merken": "Актуализация: запомняне на документа",
+ "Endnoten": "Бележки в края",
+ "Fußnoten": "Бележки под линия"
 }

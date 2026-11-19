@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "A(z) {0} új verziója készen áll – automatikusan érvénybe lép, amint a dokumentum mentve van, és nem dolgoznak vele (vagy azonnal a jobbra lent található „újratöltés” gombbal).",
  "Nach Update wieder öffnen": "Újranyitás frissítés után",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "A frissítés betöltődött – automatikusan érvénybe lép, amint semmi sincs munka alatt.",
- "Update: Dokument merken": "Frissítés: dokumentum megjegyzése"
+ "Update: Dokument merken": "Frissítés: dokumentum megjegyzése",
+ "Endnoten": "Végjegyzetek",
+ "Fußnoten": "Lábjegyzetek"
 }

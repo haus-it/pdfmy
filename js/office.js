@@ -170,6 +170,22 @@
     const relsOf = async part => { const m = new Map(), x = await z.text(part.replace(/([^/]+)$/, '_rels/$1.rels')); if (x) for (const r of all(parseXml(x), 'Relationship')) m.set(r.attrs.Id, r.attrs.Target); return m; };
     let rels = await relsOf('word/document.xml');
     const counters = new Map(); let blocks = [];
+    /* Fußnoten und Endnoten (app-v304): Verweis im Text als hochgestellte Zahl, der Wortlaut am Ende des Dokuments
+       (Fußnoten unter „Fußnoten“, Endnoten unter „Endnoten“). Trennlinien-Einträge (separator) zählen nicht. */
+    const notesOf = async part => {
+      const m = new Map(), x = await z.text(part); if (!x) return m;
+      for (const n of [...all(parseXml(x), 'w:footnote'), ...all(parseXml(x), 'w:endnote')]) {
+        if (n.attrs['w:type'] && n.attrs['w:type'] !== 'normal') continue;
+        const t = all(n, 'w:p').map(p => all(p, 'w:t').map(txt).join('')).join(' ').replace(/\s+/g, ' ').trim();
+        if (t) m.set(n.attrs['w:id'], t);
+      }
+      return m;
+    };
+    const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹', sup = n => String(n).split('').map(d => SUP[+d]).join('');
+    const fnText = await notesOf('word/footnotes.xml'), enText = await notesOf('word/endnotes.xml');
+    const fnUsed = [], enUsed = [];   // [Nummer, Text] in der Reihenfolge der Verweise
+    const noteRef = (c, used, texts) => { const t = texts.get(c.attrs['w:id']); if (!t) return ''; used.push([used.length + 1, t]); return sup(used.length); };
+    const boxes = [];   // Textfelder (Formen mit Text) eines Absatzes – nach dem Absatz ausgegeben, damit kein Text verloren geht
     const image = async d => {
       const blip = all(d, 'a:blip')[0], ext = all(d, 'wp:extent')[0], id = blip?.attrs['r:embed'], target = id && rels.get(id);
       if (!target) return null;
@@ -198,7 +214,14 @@
               if (c.name === 'w:t') t += txt(c);
               else if (c.name === 'w:tab') t += '\t';
               else if (c.name === 'w:br' || c.name === 'w:cr') { if (c.attrs['w:type'] === 'page') pageBreak = true; else t += '\n'; }
-              else if (c.name === 'w:drawing' || c.name === 'w:pict') { const im = await image(c); if (im) extra.push(im); }
+              else if (c.name === 'w:drawing' || c.name === 'w:pict' || c.name === 'mc:AlternateContent') {
+                // Neuere Word-Fassungen legen Formen doppelt ab (mc:Choice für Word 2010+, mc:Fallback als VML) – nur eine Fassung nehmen
+                const d = c.name === 'mc:AlternateContent' ? (kid(c, 'mc:Choice') || kid(c, 'mc:Fallback')) : c; if (!d) continue;
+                const tb = all(d, 'w:txbxContent');
+                if (tb.length) boxes.push(...tb); else { const im = await image(d); if (im) extra.push(im); }
+              }
+              else if (c.name === 'w:footnoteReference') t += noteRef(c, fnUsed, fnText);
+              else if (c.name === 'w:endnoteReference') t += noteRef(c, enUsed, enText);
               else if (c.name === 'w:lastRenderedPageBreak') { /* nur Anzeige */ }
             }
             const bo = on(kid(rPr, 'w:b')) || !!st.bold, it = on(kid(rPr, 'w:i'));
@@ -228,6 +251,8 @@
         }
       } else if (!extra.length && !pageBreak) blocks.push({ type: 'gap' });   // leere Zeile im Dokument
       for (const x of extra) blocks.push({ ...x, align: align || 'left' });
+      // Textfelder: Inhalt als eigene Absätze (verschachtelte Textfelder werden dabei ebenfalls aufgelöst)
+      for (const box of boxes.splice(0)) for (const k of els(box)) { if (k.name === 'w:p') await para(k); else if (k.name === 'w:tbl') await table(k); }
       if (pageBreak) blocks.push({ type: 'pagebreak' });
     };
     const table = async t => {
@@ -254,10 +279,27 @@
       if (n) blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: n }, (_, i) => r[i] ?? '')), head: head || (rows.length > 1 && firstBold && rows[0].some(Boolean)),
         widths, aligns: aligns.map(a => Array.from({ length: n }, (_, i) => a[i] || 'left')) });
     };
+    /* Abschnitte (app-v304): Ein Abschnitt endet mit dem Absatz, der w:sectPr trägt; die Angaben gelten für alles davor.
+       Mehrspaltiger Satz (w:cols, z. B. Vereinszeitung, Flyer) → cols je Baustein; Abschnittswechsel „nächste Seite“ (Voreinstellung
+       in Word) → Seitenumbruch, „fortlaufend“ → keiner. */
+    let secStart = 0;
+    const endSection = (sp, last) => {
+      const c = kid(sp, 'w:cols'), n = Math.max(1, Math.min(4, +(c?.attrs['w:num'] || 1) || 1)), gap = c?.attrs['w:space'] ? Math.max(6, Math.min(72, +c.attrs['w:space'] / 20)) : 36;
+      if (n > 1) for (let i = secStart; i < blocks.length; i++) if (blocks[i].type !== 'pagebreak') { blocks[i].cols = n; blocks[i].colGap = gap; }
+      secStart = blocks.length;
+      const ty = kid(sp, 'w:type')?.attrs['w:val'] || 'nextPage';
+      if (!last && ty !== 'continuous') blocks.push({ type: 'pagebreak' });
+    };
     for (const k of els(body)) {
-      if (k.name === 'w:p') await para(k);
+      if (k.name === 'w:p') { await para(k); const sp = kid(kid(k, 'w:pPr'), 'w:sectPr'); if (sp) endSection(sp, false); }
       else if (k.name === 'w:tbl') await table(k);
       else if (k.name === 'w:sdt') for (const c of els(kid(k, 'w:sdtContent') || { kids: [] })) { if (c.name === 'w:p') await para(c); else if (c.name === 'w:tbl') await table(c); }
+    }
+    if (kid(body, 'w:sectPr')) endSection(kid(body, 'w:sectPr'), true);
+    for (const [head, used] of [['Fußnoten', fnUsed], ['Endnoten', enUsed]]) {
+      if (!used.length) continue;
+      blocks.push({ type: 'hr' }, { type: 'p', text: root.I18N?.t ? String(root.I18N.t(head)) : head, bold: true, small: true });   // Überschrift in der Oberflächensprache
+      for (const [n, t] of used) blocks.push({ type: 'p', text: `${sup(n)} ${t}`, small: true, tight: true });
     }
     // Seitenformat aus dem letzten Abschnitt (Twips → pt)
     const sect = kid(body, 'w:sectPr'), sz = kid(sect, 'w:pgSz'), mar = kid(sect, 'w:pgMar');

@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Μια νέα έκδοση του {0} είναι έτοιμη – θα εφαρμοστεί αυτόματα μόλις αποθηκευτεί το έγγραφο και δεν υπάρχει εργασία σε εξέλιξη (ή τώρα με «επαναφόρτωση» κάτω δεξιά).",
  "Nach Update wieder öffnen": "Επανάνοιγμα μετά την ενημέρωση",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Η ενημέρωση φορτώθηκε – θα εφαρμοστεί αυτόματα μόλις δεν υπάρχει εργασία σε εξέλιξη.",
- "Update: Dokument merken": "Ενημέρωση: απομνημόνευση εγγράφου"
+ "Update: Dokument merken": "Ενημέρωση: απομνημόνευση εγγράφου",
+ "Endnoten": "Σημειώσεις τέλους",
+ "Fußnoten": "Υποσημειώσεις"
 }

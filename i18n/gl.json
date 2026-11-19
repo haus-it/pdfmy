@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Hai unha versión nova de {0} lista – aplicarase automaticamente en canto o documento estea gardado e non se estea traballando nel (ou agora con «recargar» abaixo á dereita).",
  "Nach Update wieder öffnen": "Volver abrir tras a actualización",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Actualización cargada – aplicarase automaticamente en canto non haxa nada en curso.",
- "Update: Dokument merken": "Actualización: lembrar o documento"
+ "Update: Dokument merken": "Actualización: lembrar o documento",
+ "Endnoten": "Notas finais",
+ "Fußnoten": "Notas ao pé"
 }

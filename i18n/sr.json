@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Нова верзија програма {0} је спремна – примениће се аутоматски чим се документ сачува и на њему се не ради (или сада помоћу „поново учитај“ доле десно).",
  "Nach Update wieder öffnen": "Поново отвори након ажурирања",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Ажурирање је учитано – примениће се аутоматски чим се ни на чему не ради.",
- "Update: Dokument merken": "Ажурирање: запамти документ"
+ "Update: Dokument merken": "Ажурирање: запамти документ",
+ "Endnoten": "Крајње напомене",
+ "Fußnoten": "Фусноте"
 }

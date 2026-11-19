@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "{0} için yeni bir sürüm hazır – belge kaydedilip üzerinde çalışılmadığı anda otomatik olarak uygulanır (veya şimdi sağ alttaki “yeniden yükle” ile).",
  "Nach Update wieder öffnen": "Güncellemeden sonra yeniden aç",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Güncelleme yüklendi – üzerinde çalışılan bir şey kalmadığı anda otomatik olarak uygulanır.",
- "Update: Dokument merken": "Güncelleme: belgeyi hatırla"
+ "Update: Dokument merken": "Güncelleme: belgeyi hatırla",
+ "Endnoten": "Son notlar",
+ "Fußnoten": "Dipnotlar"
 }

@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "O versiune nouă a {0} este pregătită – va fi aplicată automat de îndată ce documentul este salvat și nu se lucrează la el (sau imediat prin „reîncărcați” în dreapta jos).",
  "Nach Update wieder öffnen": "Redeschidere după actualizare",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Actualizare încărcată – va fi aplicată automat de îndată ce nu se lucrează la nimic.",
- "Update: Dokument merken": "Actualizare: reține documentul"
+ "Update: Dokument merken": "Actualizare: reține documentul",
+ "Endnoten": "Note de final",
+ "Fußnoten": "Note de subsol"
 }

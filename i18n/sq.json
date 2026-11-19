@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Një version i ri i {0} është gati – do të zbatohet automatikisht sapo dokumenti të ruhet dhe të mos jetë në punë (ose tani me „ringarko“ poshtë djathtas).",
  "Nach Update wieder öffnen": "Hape sërish pas përditësimit",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Përditësimi u ngarkua – do të zbatohet automatikisht sapo të mos jetë asgjë në punë.",
- "Update: Dokument merken": "Përditësim: mbaj mend dokumentin"
+ "Update: Dokument merken": "Përditësim: mbaj mend dokumentin",
+ "Endnoten": "Shënime përfundimtare",
+ "Fußnoten": "Shënime në fund të faqes"
 }

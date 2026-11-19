@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Nova različica programa {0} je pripravljena – uporabljena bo samodejno, ko bo dokument shranjen in se ne bo delalo z njim (ali zdaj z „znova naloži“ spodaj desno).",
  "Nach Update wieder öffnen": "Po posodobitvi znova odpri",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Posodobitev je naložena – uporabljena bo samodejno, ko se ne bo delalo z ničimer.",
- "Update: Dokument merken": "Posodobitev: zapomni si dokument"
+ "Update: Dokument merken": "Posodobitev: zapomni si dokument",
+ "Endnoten": "Končne opombe",
+ "Fußnoten": "Sprotne opombe"
 }

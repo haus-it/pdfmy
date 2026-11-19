@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "En ny version af {0} er klar – den tages i brug automatisk, så snart dokumentet er gemt og ikke er under arbejde (eller med det samme via »genindlæs« nederst til højre).",
  "Nach Update wieder öffnen": "Åbn igen efter opdatering",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Opdatering indlæst – tages i brug automatisk, så snart intet er under arbejde.",
- "Update: Dokument merken": "Opdatering: husk dokument"
+ "Update: Dokument merken": "Opdatering: husk dokument",
+ "Endnoten": "Slutnoter",
+ "Fußnoten": "Fodnoter"
 }

@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "{0} uus versioon on valmis – see võetakse automaatselt kasutusele, kui dokument on salvestatud ja pole töös (või kohe nupuga „laadi uuesti“ paremal all).",
  "Nach Update wieder öffnen": "Ava pärast uuendust uuesti",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uuendus laaditud – see võetakse automaatselt kasutusele, kui midagi pole töös.",
- "Update: Dokument merken": "Uuendus: jäta dokument meelde"
+ "Update: Dokument merken": "Uuendus: jäta dokument meelde",
+ "Endnoten": "Loppmärkused",
+ "Fußnoten": "Allmärkused"
 }

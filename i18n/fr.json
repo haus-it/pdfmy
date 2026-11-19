@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Une nouvelle version de {0} est prête – elle sera appliquée automatiquement dès que le document sera enregistré et ne sera plus en cours de travail (ou, dès maintenant, « recharger » en bas à droite).",
  "Nach Update wieder öffnen": "Rouvrir après la mise à jour",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Mise à jour chargée – elle sera appliquée automatiquement dès que plus rien n’est en cours de travail.",
- "Update: Dokument merken": "Mise à jour : mémoriser le document"
+ "Update: Dokument merken": "Mise à jour : mémoriser le document",
+ "Endnoten": "Notes de fin",
+ "Fußnoten": "Notes de bas de page"
 }

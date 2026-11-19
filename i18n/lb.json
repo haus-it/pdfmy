@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Eng nei Versioun vu {0} ass prett – si gëtt automatesch iwwerholl, soubal den Dokument gespäichert ass an net dru geschafft gëtt (oder elo mat „nei lueden“ ënnen riets).",
  "Nach Update wieder öffnen": "No Update erëm opmaachen",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update gelueden – gëtt automatesch iwwerholl, soubal un näischt geschafft gëtt.",
- "Update: Dokument merken": "Update: Dokument verhalen"
+ "Update: Dokument merken": "Update: Dokument verhalen",
+ "Endnoten": "Endnoten",
+ "Fußnoten": "Foussnoten"
 }

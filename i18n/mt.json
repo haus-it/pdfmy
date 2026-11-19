@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Verżjoni ġdida ta’ {0} hija lesta – se tiġi applikata awtomatikament hekk kif id-dokument jiġi ssejvjat u ma jkunx qed isir xogħol fuqu (jew issa b’“erġa’ tella’” fil-qiegħ fuq il-lemin).",
  "Nach Update wieder öffnen": "Erġa’ iftaħ wara l-aġġornament",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aġġornament imtella’ – se jiġi applikat awtomatikament hekk kif ma jkun qed isir xejn.",
- "Update: Dokument merken": "Aġġornament: ftakar id-dokument"
+ "Update: Dokument merken": "Aġġornament: ftakar id-dokument",
+ "Endnoten": "Noti tat-tmiem",
+ "Fußnoten": "Noti ta’ qiegħ il-paġna"
 }

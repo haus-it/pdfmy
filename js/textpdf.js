@@ -110,11 +110,24 @@
     const SPLIT = /(\s+|[⺀-鿿豈-﫿＀-￯])/;
     const cols = Math.max(0, ...blocks.filter(b => b.type === 'table').map(b => b.rows[0]?.length || 0));
     const sz = pg?.size && pg.size[0] > 100 && pg.size[1] > 100 ? pg.size : null, land = !sz && cols > 6;
-    const PW = sz ? sz[0] : land ? 841.89 : 595.28, PH = sz ? sz[1] : land ? 595.28 : 841.89, M = pg?.margin || 56.7, W = PW - 2 * M, gray = L.rgb(0.45, 0.45, 0.45);
-    const Mt = pg?.top || M, Mb = pg?.bottom || M;   // Rand oben/unten (Word: getrennt einstellbar)
+    const PW = sz ? sz[0] : land ? 841.89 : 595.28, PH = sz ? sz[1] : land ? 595.28 : 841.89, M0 = pg?.margin || 56.7, W0 = PW - 2 * M0, gray = L.rgb(0.45, 0.45, 0.45);
+    let M = M0, W = W0;   // linker Rand und Breite des Satzes – bei mehrspaltigem Satz die der aktuellen Spalte
+    const Mt = pg?.top || M0, Mb = pg?.bottom || M0;   // Rand oben/unten (Word: getrennt einstellbar)
     let paginate = true;   // Kopf-/Fußzeilen: ohne Seitenumbruch
     let page, y;
-    const newPage = () => { page = doc.addPage([PW, PH]); y = PH - Mt; };
+    /* Mehrspaltiger Satz (app-v304, Word w:cols): Bausteine mit cols > 1 laufen von oben nach unten durch die Spalten;
+       ist die letzte Spalte voll, geht es auf der nächsten Seite in Spalte 1 weiter. Danach geht es unter der längsten Spalte weiter. */
+    let colN = 1, colI = 0, colTop = 0, colLow = Infinity, colGap = 18;
+    const newPage = () => {
+      if (colN > 1 && paginate && colI < colN - 1) { colLow = Math.min(colLow, y); colI++; M = M0 + colI * (W + colGap); y = colTop; return; }
+      page = doc.addPage([PW, PH]); y = PH - Mt;
+      if (colN > 1) { colI = 0; M = M0; colTop = y; colLow = Infinity; }
+    };
+    const setCols = (n, gap = 36) => {
+      if (n === colN) return;
+      if (colN > 1) { y = Math.min(colLow, y); M = M0; W = W0; colN = 1; }
+      if (n > 1) { colN = n; colI = 0; colTop = y; colLow = Infinity; colGap = gap; W = (W0 - gap * (n - 1)) / n; M = M0; }
+    };
     newPage();
     const need = h => { if (paginate && y - h < Mb) newPage(); };
     const wrap = (s, font, size, width) => {
@@ -148,9 +161,10 @@
         if (wl + tw > width && cur.length) { while (cur.length && /^\s+$/.test(cur[cur.length - 1].t)) wl -= cur.pop().w; lines.push([]); wl = 0; }
         lines[lines.length - 1].push({ ...t, w: tw }); wl += tw;
       }
+      const dx = x - M;   // Einzug relativ zum Rand – springt der Absatz in die nächste Spalte, wandert er mit
       for (const ln of lines) {
         while (ln.length && /^\s+$/.test(ln[ln.length - 1].t)) ln.pop();
-        need(size * lead); y -= size * lead;
+        need(size * lead); y -= size * lead; x = M + dx;
         const tw = ln.reduce((a, t) => a + t.w, 0); let lx = align === 'center' ? x + (width - tw) / 2 : align === 'right' ? x + width - tw : x;
         // aufeinanderfolgende Wörter gleichen Schnitts als ein Stück (beim Kopieren bleiben die Leerzeichen erhalten)
         const segs = []; for (const t of ln) { const g = segs[segs.length - 1]; if (g && g.k === t.k) { g.t += t.t; g.w += t.w; } else segs.push({ ...t }); }
@@ -158,9 +172,9 @@
       }
     };
     const text1 = (s, { k = 'r', size = 10.5, x = M, width = W, color, lead = 1.38, align } = {}) => {
-      const font = F[k];
+      const font = F[k], dx = x - M;   // Einzug relativ zum Rand (mehrspaltiger Satz)
       for (const ln of wrap(safe(s, k), font, size, width)) {
-        need(size * lead); y -= size * lead;
+        need(size * lead); y -= size * lead; x = M + dx;
         const tw = align ? wOf(font, ln, size) : 0, lx = align === 'center' ? x + (width - tw) / 2 : align === 'right' ? x + width - tw : x;
         drawT(page, ln, { x: lx, y: y + size * 0.25, size, font, color });
       }
@@ -199,8 +213,9 @@
     if (title && kind !== 'md' && !given) { text1(title, { k: 'b', size: 15 }); y -= 6; }
     async function render(list) {
     for (const b of list) {
+      if (paginate) setCols(Math.max(1, Math.min(4, +b.cols || 1)), b.colGap);
       if (b.type === 'h') { const size = [0, 20, 16, 13.5, 12, 11, 10.5][b.level]; y -= b.level <= 2 ? 10 : 6; need(size * 2.4); text1(b.text, { k: 'b', size, lead: 1.25 }); y -= 4; }
-      else if (b.type === 'p') { if (b.runs?.length) runs1(b.runs, { align: b.align }); else text1(b.text, { k: b.bold ? 'b' : 'r', align: b.align }); y -= b.tight ? 2 : 6; }
+      else if (b.type === 'p') { const size = b.small ? 8.5 : 10.5; if (b.runs?.length) runs1(b.runs, { align: b.align, size }); else text1(b.text, { k: b.bold ? 'b' : 'r', align: b.align, size }); y -= b.tight ? 2 : 6; }   // small: Fußnoten
       else if (b.type === 'gap') { y -= 10.5 * 1.1; if (paginate && y < Mb) newPage(); }
       else if (b.type === 'pagebreak') { if (paginate && y < PH - Mt - 1) newPage(); }
       else if (b.type === 'img') {
@@ -213,11 +228,12 @@
       else if (b.type === 'li') { const ind = 14 + b.depth * 16; need(16); drawT(page, safe(b.label, 'r'), { x: M + ind - (b.ordered ? 14 : 9), y: y - 10.5 * 1.38 + 10.5 * 0.25, size: 10.5, font: F.r }); if (b.runs?.length) runs1(b.runs, { x: M + ind, width: W - ind }); else text1(b.text, { x: M + ind, width: W - ind }); y -= 2; }   // Aufzählungszeichen zuerst (Lesereihenfolge)
       else if (b.type === 'quote') { const y0 = y, p0 = page; text1(b.text, { x: M + 14, width: W - 14, color: gray }); if (page === p0) page.drawLine({ start: { x: M + 4, y: y0 - 2 }, end: { x: M + 4, y: y + 2 }, thickness: 2, color: L.rgb(0.75, 0.75, 0.75) }); y -= 6; }
       else if (b.type === 'code' || b.type === 'pre') { text1(b.text, { k: 'm', size: b.type === 'pre' ? 9.5 : 9, lead: 1.3 }); y -= 6; }
-      else if (b.type === 'hr') { need(14); y -= 7; page.drawLine({ start: { x: M, y }, end: { x: PW - M, y }, thickness: 0.6, color: L.rgb(0.7, 0.7, 0.7) }); y -= 7; }
+      else if (b.type === 'hr') { need(14); y -= 7; page.drawLine({ start: { x: M, y }, end: { x: M + W, y }, thickness: 0.6, color: L.rgb(0.7, 0.7, 0.7) }); y -= 7; }
       else if (b.type === 'table') table(b.rows, b.head, b.widths, b.aligns);
     }
     }
     await render(blocks);
+    setCols(1);   // Kopf-/Fußzeilen und Seitenzahl immer über die volle Breite
     const pages = doc.getPages();
     // Kopf- und Fußzeilen (z. B. aus Word): auf jede Seite, {PAGE}/{NUMPAGES} ersetzt; Kopf oben im Rand, Fuß unter dem Satzspiegel
     const hf = (list, i) => JSON.parse(JSON.stringify(list, (k, v) => k === 'bytes' ? undefined : v), (k, v) => typeof v === 'string' ? v.replace(/\{PAGE\}/g, String(i + 1)).replace(/\{NUMPAGES\}/g, String(pages.length)) : v)
@@ -230,7 +246,7 @@
         if (pg.footer?.length) { y = Math.min(Mb - 4, (pg.footerY || Mb * 0.45) + 30); await render(hf(pg.footer, i).map(b => b.type === 'p' ? { ...b, tight: true } : b)); }
       }
       paginate = true;
-    } else if (pages.length > 1) pages.forEach((p, i) => { const s = `${i + 1} / ${pages.length}`; p.drawText(s, { x: PW / 2 - F.r.widthOfTextAtSize(s, 8) / 2, y: M / 2, size: 8, font: F.r, color: gray }); });
+    } else if (pages.length > 1) pages.forEach((p, i) => { const s = `${i + 1} / ${pages.length}`; p.drawText(s, { x: PW / 2 - F.r.widthOfTextAtSize(s, 8) / 2, y: M0 / 2, size: 8, font: F.r, color: gray }); });
     doc.setTitle(title || 'Dokument'); doc.setProducer('PDFMy (pdfmy.de)'); doc.setCreator('PDFMy');
     // Maschinenlesbare Kennzeichnung KI-erzeugter Inhalte (vorsorglich nach Art. 50 Abs. 2 VO (EU) 2024/1689): Betreff und Stichwörter
     if (aiNote) { doc.setSubject(aiNote); doc.setKeywords(['KI-generiert', 'AI-generated', 'machine-translated']); }

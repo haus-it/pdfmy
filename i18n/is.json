@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Ný útgáfa af {0} er tilbúin – hún verður tekin í notkun sjálfkrafa þegar skjalið hefur verið vistað og er ekki í vinnslu (eða strax með „endurhlaða“ neðst til hægri).",
  "Nach Update wieder öffnen": "Opna aftur eftir uppfærslu",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uppfærsla hlaðin – hún verður tekin í notkun sjálfkrafa þegar ekkert er í vinnslu.",
- "Update: Dokument merken": "Uppfærsla: muna skjal"
+ "Update: Dokument merken": "Uppfærsla: muna skjal",
+ "Endnoten": "Aftanmálsgreinar",
+ "Fußnoten": "Neðanmálsgreinar"
 }

@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Nová verzia {0} je pripravená – použije sa automaticky, len čo bude dokument uložený a nebude sa na ňom pracovať (alebo hneď cez „načítať znova“ vpravo dole).",
  "Nach Update wieder öffnen": "Po aktualizácii znova otvoriť",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aktualizácia načítaná – použije sa automaticky, len čo sa na ničom nepracuje.",
- "Update: Dokument merken": "Aktualizácia: zapamätať dokument"
+ "Update: Dokument merken": "Aktualizácia: zapamätať dokument",
+ "Endnoten": "Vysvetlivky",
+ "Fußnoten": "Poznámky pod čiarou"
 }

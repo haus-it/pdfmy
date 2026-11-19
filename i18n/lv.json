@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Ir gatava jauna {0} versija – tā tiks piemērota automātiski, tiklīdz dokuments būs saglabāts un ar to netiks strādāts (vai uzreiz ar „pārlādēt” apakšā pa labi).",
  "Nach Update wieder öffnen": "Pēc atjaunināšanas atvērt vēlreiz",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Atjauninājums ielādēts – tas tiks piemērots automātiski, tiklīdz nekas netiks apstrādāts.",
- "Update: Dokument merken": "Atjauninājums: atcerēties dokumentu"
+ "Update: Dokument merken": "Atjauninājums: atcerēties dokumentu",
+ "Endnoten": "Beigu vēres",
+ "Fußnoten": "Vēres"
 }

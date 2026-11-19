@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Nowa wersja {0} jest gotowa – zostanie zastosowana automatycznie, gdy dokument zostanie zapisany i nie będzie w edycji (lub od razu przez „wczytaj ponownie” na dole po prawej).",
  "Nach Update wieder öffnen": "Otwórz ponownie po aktualizacji",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aktualizacja pobrana – zostanie zastosowana automatycznie, gdy nic nie będzie w edycji.",
- "Update: Dokument merken": "Aktualizacja: zapamiętaj dokument"
+ "Update: Dokument merken": "Aktualizacja: zapamiętaj dokument",
+ "Endnoten": "Przypisy końcowe",
+ "Fußnoten": "Przypisy dolne"
 }

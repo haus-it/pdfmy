@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "A new version of {0} is ready – it will be applied automatically once the document is saved and not being worked on (or click “reload” at the bottom right now).",
  "Nach Update wieder öffnen": "Reopen after update",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update loaded – it will be applied automatically as soon as nothing is being worked on.",
- "Update: Dokument merken": "Update: remember document"
+ "Update: Dokument merken": "Update: remember document",
+ "Endnoten": "Endnotes",
+ "Fußnoten": "Footnotes"
 }

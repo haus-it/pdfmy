@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Paruošta nauja {0} versija – ji bus pritaikyta automatiškai, kai tik dokumentas bus išsaugotas ir nebus redaguojamas (arba iškart per „įkelti iš naujo“ apačioje dešinėje).",
  "Nach Update wieder öffnen": "Po atnaujinimo atidaryti iš naujo",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Atnaujinimas įkeltas – jis bus pritaikytas automatiškai, kai tik niekas nebus redaguojama.",
- "Update: Dokument merken": "Atnaujinimas: įsiminti dokumentą"
+ "Update: Dokument merken": "Atnaujinimas: įsiminti dokumentą",
+ "Endnoten": "Pabaigos išnašos",
+ "Fußnoten": "Puslapio išnašos"
 }

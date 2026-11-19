@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "{0} programaren bertsio berri bat prest dago – automatikoki aplikatuko da dokumentua gorde eta lanean ari ez zarenean (edo orain, behean eskuinean dagoen «berriro kargatu» botoiarekin).",
  "Nach Update wieder öffnen": "Ireki berriro eguneratu ondoren",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Eguneraketa kargatu da – automatikoki aplikatuko da ezer lanean ari ez zarenean.",
- "Update: Dokument merken": "Eguneraketa: gogoratu dokumentua"
+ "Update: Dokument merken": "Eguneraketa: gogoratu dokumentua",
+ "Endnoten": "Amaierako oharrak",
+ "Fußnoten": "Oin-oharrak"
 }

@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Hi ha una versió nova de {0} preparada – s’aplicarà automàticament tan bon punt el document estigui desat i no s’hi estigui treballant (o ara amb «torna a carregar» a baix a la dreta).",
  "Nach Update wieder öffnen": "Torna a obrir després de l’actualització",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Actualització carregada – s’aplicarà automàticament tan bon punt no s’estigui treballant en res.",
- "Update: Dokument merken": "Actualització: recorda el document"
+ "Update: Dokument merken": "Actualització: recorda el document",
+ "Endnoten": "Notes finals",
+ "Fußnoten": "Notes a peu de pàgina"
 }

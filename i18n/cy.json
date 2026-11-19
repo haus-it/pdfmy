@@ -3970,5 +3970,7 @@
  "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Mae fersiwn newydd o {0} yn barod – bydd yn cael ei chymhwyso’n awtomatig cyn gynted ag y bydd y ddogfen wedi’i chadw ac nad oes gwaith yn mynd rhagddo arni (neu nawr gyda “ail-lwytho” ar y gwaelod ar y dde).",
  "Nach Update wieder öffnen": "Ailagor ar ôl diweddaru",
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Diweddariad wedi’i lwytho – bydd yn cael ei gymhwyso’n awtomatig cyn gynted ag nad oes gwaith yn mynd rhagddo.",
- "Update: Dokument merken": "Diweddariad: cofio’r ddogfen"
+ "Update: Dokument merken": "Diweddariad: cofio’r ddogfen",
+ "Endnoten": "Nodiadau terfyn",
+ "Fußnoten": "Troednodiadau"
 }
