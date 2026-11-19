@@ -13,9 +13,9 @@ function load({ displayed = null, displayedList = [], selected = [], attachments
   const messenger = {
     i18n: { getMessage: k => k },
     runtime: { onMessage: { addListener: f => calls.listeners.push(f) }, lastError: null, getBackgroundPage: async () => ({}) },
-    tabs: { create: async o => { calls.tabs.push(o.url); return {}; }, query: async () => [{ id: 9, type: 'mail' }] },
+    tabs: { create: async o => { calls.tabs.push(o.url); return {}; }, query: async () => [{ id: 2, type: 'mail' }] },
     messages: { getAttachmentFile: async (id, part) => new Blob(['%PDF ' + id + ' ' + part]), listAttachments: async id => attachments[id] || [] },
-    messageDisplay: { getDisplayedMessage: async () => displayed, getDisplayedMessages: async () => displayedList },
+    messageDisplay: { getDisplayedMessage: async id => typeof displayed === 'function' ? displayed(id) : displayed, getDisplayedMessages: async () => displayedList },
     mailTabs: { getSelectedMessages: async () => ({ messages: selected }) },
     compose: { getAttachmentFile: async () => new Blob(['x']), addAttachment: async () => {}, removeAttachment: async () => {} },
     menus: { create: (o, cb) => { calls.menus.push(o); cb?.(); }, onClicked: { addListener: f => calls.click = f } },
@@ -50,6 +50,15 @@ test('Rechtsklick auf Anhang: öffnet auch, wenn getDisplayedMessage nichts lief
   assert.equal(b.calls.tabs.length, 1);
   assert.deepEqual(J(b.calls.menus[0].contexts), ['message_attachments', 'compose_attachments']);
   void ctx;
+});
+
+test('Thunderbird 160 (im echten Programm gefunden): Rechtsklick liefert einen inneren Tab ohne Typ – Nachricht kommt über den aktiven Mail-Tab', async () => {
+  const att = { name: 'Rechnung-2026-1142.pdf', partName: '1.2', contentType: 'application/pdf', size: 1350 };
+  const { calls } = load({ displayed: id => (id === 2 ? { id: 42 } : null) });
+  await calls.click({ menuItemId: 'pdfmy-open', attachments: [att] }, { id: 1, windowId: 29, type: null, mailTab: false });
+  assert.equal(calls.tabs.length, 1, 'PDFMy-Tab geöffnet');
+  const token = calls.tabs[0].split('=')[1], r = await calls.listeners[0]({ token, get: true }, { url: 'https://pdfmy.de/' });
+  assert.equal(new TextDecoder().decode(r.bytes), '%PDF 42 1.2', 'Anhang aus der angezeigten Nachricht');
 });
 
 test('Paket 1.0.1: ohne Berechtigung „tabs“, Ladeanzeige übersetzbar, Version erhöht', () => {

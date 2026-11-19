@@ -49,11 +49,22 @@ messenger.runtime.onMessage.addListener((msg, sender) => {
 /* Angezeigte E-Mail zu einem Rechtsklick auf einen Anhang finden (Prüfhinweis ATN: Rechtsklick öffnete nichts).
    Je nach Thunderbird-Fassung und Ansicht (Nachrichtenbereich, eigener Tab, eigenes Fenster) liefert getDisplayedMessage nichts –
    dann die angezeigten bzw. ausgewählten Nachrichten durchsuchen und die nehmen, die einen Anhang mit diesem Teil und Namen hat. */
+// Thunderbird 160 übergibt beim Rechtsklick auf einen Anhang einen inneren Tab ohne Typ (type: null) statt des Mail-Tabs –
+// für ihn liefern die Nachrichten-Funktionen nichts. Dann zusätzlich den aktiven Tab des zuletzt benutzten Fensters fragen (getestet 19.11.2026).
+async function tabsFor(tab) {
+  const out = tab ? [tab] : [];
+  for (const q of [{ active: true, lastFocusedWindow: true }, { active: true, currentWindow: true }])
+    try { for (const t of await messenger.tabs.query(q)) if (!out.some(x => x.id === t.id)) out.push(t); } catch {}
+  return out;
+}
 async function messageFor(tab, att) {
   const ids = [];
-  try { const m = await messenger.messageDisplay.getDisplayedMessage(tab.id); if (m) ids.push(m.id); } catch {}
-  try { const l = await messenger.messageDisplay.getDisplayedMessages(tab.id); for (const m of (Array.isArray(l) ? l : l?.messages || [])) ids.push(m.id); } catch {}
-  try { const l = await messenger.mailTabs.getSelectedMessages(tab.id); for (const m of l?.messages || []) ids.push(m.id); } catch {}
+  for (const t of await tabsFor(tab)) {
+    try { const m = await messenger.messageDisplay.getDisplayedMessage(t.id); if (m) ids.push(m.id); } catch {}
+    try { const l = await messenger.messageDisplay.getDisplayedMessages(t.id); for (const m of (Array.isArray(l) ? l : l?.messages || [])) ids.push(m.id); } catch {}
+    try { const l = await messenger.mailTabs.getSelectedMessages(t.id); for (const m of l?.messages || []) ids.push(m.id); } catch {}
+    if (ids.length) break;
+  }
   for (const id of [...new Set(ids)]) {
     if (ids.length === 1) return id;
     try { if ((await messenger.messages.listAttachments(id)).some(a => a.partName === att.partName && a.name === att.name)) return id; } catch {}
@@ -66,10 +77,11 @@ messenger.menus.create({ id: 'pdfmy-open', title: t('openInPdfmy'), contexts: ['
 messenger.menus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== 'pdfmy-open') return;
   try {
-    tab ||= (await messenger.tabs.query({ active: true, currentWindow: true }))[0];
     const list = (info.attachments || []).filter(x => OPENABLE.test(x.name || '')).slice(0, 3);
-    if (!list.length || !tab) return;
-    if (tab.type === 'messageCompose') { for (const a of list) await openComposeAttachment(tab.id, a); return; }
+    if (!list.length) return;
+    // Verfassen-Fenster: der übergebene oder der aktive Tab (siehe tabsFor)
+    const compose = (await tabsFor(tab)).find(t => t.type === 'messageCompose');
+    if (compose && info.attachments?.[0]?.id != null) { for (const a of list) await openComposeAttachment(compose.id, a); return; }
     const id = await messageFor(tab, list[0]);
     if (id != null) for (const a of list) await openReadAttachment(id, a);
     else console.warn('PDFMy: keine angezeigte Nachricht gefunden');

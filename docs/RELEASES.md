@@ -309,3 +309,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-11-19 09:54 | pdfmy-202611190847-v303 | 1.21.0 | 40d0dea97f362e08… | 399/399 Tests bestanden, Probelauf bestanden | 223 | Administrator | b04707d6a560aff0 |
 | 2026-11-19 18:16 | pdfmy-202611191651-v304 | 1.21.0 | 40d0dea97f362e08… | 400/400 Tests bestanden, Probelauf bestanden | 171 | Administrator | ac5691c407495346 |
 | 2026-11-19 19:02 | pdfmy-202611191752-v305 | 1.21.0 | 40d0dea97f362e08… | 404/404 Tests bestanden, Probelauf bestanden | 174 | Administrator | e8d82dae3fc6d098 |
+| 2026-11-19 20:53 | pdfmy-202611191945-v306 | 1.21.0 | 40d0dea97f362e08… | 407/407 Tests bestanden, Probelauf bestanden | 171 | Administrator | fea93307409efbc2 |

@@ -3055,10 +3055,20 @@ const iosSafari = IS_IOS && !/CriOS|FxiOS|EdgiOS/.test(navigator.userAgent);   /
 const macSafari = IS_MAC && /Safari/.test(navigator.userAgent) && !/Chrome|Chromium|Edg\/|Firefox/.test(navigator.userAgent);   // Mac-Safari 17+: „Zum Dock hinzufügen“
 // Firefox am PC kann Web-Apps nicht installieren (kein „beforeinstallprompt“) – der Knopf erklärt dort den passenden Weg (Fehlerbericht 14.11.2026, Linux Mint)
 const firefoxDesk = /Firefox\//.test(navigator.userAgent) && !IS_MOBILE && !IS_IOS;
-function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !!window.Capacitor?.isNativePlatform?.() || !(installEvt || iosSafari || macSafari || firefoxDesk); }
+/* Xiaomi, Redmi, POCO mit HyperOS bzw. MIUI (app-v306): Im Xiaomi-Browser (Mi Browser) lässt sich PDFMy nicht als App installieren –
+   der Knopf erklärt den Weg über Chrome. Nach der Installation mit Chrome legt HyperOS das Symbol je nach Einstellung nur in die
+   App-Übersicht, oder Chrome darf keine Startbildschirm-Verknüpfungen anlegen – dann sagt PDFMy, wo man nachsieht.
+   Erkennung: Gerätename aus dem Browser (Chrome meldet ihn nur über User-Agent Client Hints), Xiaomi-Browser an seiner Kennung. */
+const IS_ANDROID = /Android/i.test(navigator.userAgent);
+const miBrowser = IS_ANDROID && /MiuiBrowser|XiaoMi\//i.test(navigator.userAgent);
+const XIAOMI_MODEL = /^(Redmi|POCO|Xiaomi|Mi \w+|MIX|M2\d{3}[A-Z0-9]{3,6}|2\d{3}[A-Z0-9]{4,8})\b/i;
+let xiaomi = IS_ANDROID && (miBrowser || /\b(Redmi|POCO|Xiaomi|HyperOS|MIUI)\b/i.test(navigator.userAgent));
+if (IS_ANDROID && !xiaomi) navigator.userAgentData?.getHighEntropyValues?.(['model']).then(v => { if (XIAOMI_MODEL.test(String(v?.model || '').trim())) { xiaomi = true; renderInstall(); } }).catch(() => {});
+const XIAOMI_ICON_HINT = 'Kein Symbol auf dem Startbildschirm? Auf Xiaomi-, Redmi- und POCO-Handys (HyperOS) landen neue Apps je nach Einstellung nur in der App-Übersicht – dort nach „PDFMy“ suchen. Fehlt PDFMy ganz: in den Einstellungen unter Apps → Chrome → Berechtigungen erlauben, dass Chrome Verknüpfungen auf dem Startbildschirm anlegt, und noch einmal installieren.';
+function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !!window.Capacitor?.isNativePlatform?.() || !(installEvt || iosSafari || macSafari || firefoxDesk || miBrowser); }
 // Chrome/Edge/Android melden, dass die App installierbar ist – bei bereits installierter App kommt dieses Ereignis nicht
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
-addEventListener('appinstalled', () => { installEvt = null; justInstalled = true; renderInstall(); toast('PDFMy ist jetzt als App installiert – Sie finden es im Startmenü bzw. auf dem Startbildschirm.', 7000); });
+addEventListener('appinstalled', () => { installEvt = null; justInstalled = true; renderInstall(); toast(I18N.t('PDFMy ist jetzt als App installiert – Sie finden es im Startmenü bzw. auf dem Startbildschirm.') + (xiaomi ? ' ' + I18N.t(XIAOMI_ICON_HINT) : ''), xiaomi ? 16000 : 7000); });
 matchMedia('(display-mode: standalone)').addEventListener?.('change', renderInstall);
 $('#btnInstall').onclick = async () => {
   if (installEvt) {
@@ -3068,6 +3078,7 @@ $('#btnInstall').onclick = async () => {
     renderInstall(); return;
   }
   if (firefoxDesk) { await firefoxApp(); return; }
+  if (miBrowser) { alert(I18N.t('Im Xiaomi-Browser lässt sich PDFMy nicht als App installieren.\n\nSo geht es: pdfmy.de in Google Chrome öffnen (auf Xiaomi-Handys vorinstalliert oder im Play Store), oben rechts auf ⋮ tippen und „App installieren“ wählen.\n\nTipp: Chrome als Standardbrowser festlegen (Einstellungen → Apps → Standard-Apps → Browser), dann öffnen sich Links zu PDFMy gleich dort.')); return; }
   if (macSafari) { alert('So kommt PDFMy als App in Ihr Dock:\n\nIn Safari oben im Menü „Ablage“ → „Zum Dock hinzufügen …“ → „Hinzufügen“.\n\nTipp: Für den Scan-Ordner und „PDF per Doppelklick öffnen“ eignen sich Chrome oder Edge besser.'); return; }
   if (iosSafari) alert('So kommt PDFMy als App auf Ihr iPhone:\n\n1. Unten in Safari auf „Teilen“ tippen (Quadrat mit Pfeil nach oben).\n2. „Zum Home-Bildschirm“ wählen.\n3. Oben rechts auf „Hinzufügen“ tippen.\n\nDanach startet PDFMy wie eine App über das neue Symbol.');
 };

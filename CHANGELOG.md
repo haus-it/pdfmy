@@ -4,12 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Xiaomi, Redmi und POCO mit HyperOS (app-v306)
+- PDFMy erkennt Xiaomi-Handys (Gerätename über User-Agent Client Hints, Xiaomi-Browser an seiner Kennung). Im Xiaomi-Browser, der Web-Apps nicht installieren kann, erklärt „App herunterladen“ den Weg über Chrome; nach der Installation mit Chrome sagt PDFMy, wo das Symbol liegt (HyperOS legt neue Apps je nach Einstellung nur in die App-Übersicht) und welche Chrome-Berechtigung fehlen kann. Hilfe-Eintrag „Xiaomi, Redmi und POCO (HyperOS)“.
+- Auf einem echten Xiaomi-Gerät nicht erprobt; die Bezeichnungen der Einstellungen können je nach HyperOS-Version abweichen.
+
 ### PDFMy für Thunderbird 1.0.1 – Korrekturen nach der Prüfung durch addons.thunderbird.net (app-v305)
 - Nachrichten-Listener nicht mehr asynchron: Er antwortet nur auf Nachrichten der PDFMy-Seite mit gültiger Einmal-Kennung, andere bleiben unbeantwortet (andere Listener kommen zum Zug).
 - Berechtigung „tabs“ entfernt (wurde nicht gebraucht).
 - Rechtsklick auf einen Anhang → „In PDFMy öffnen“: Liefert Thunderbird die angezeigte Nachricht nicht über getDisplayedMessage, sucht das Add-on sie über getDisplayedMessages und die ausgewählten Nachrichten und nimmt die mit dem angeklickten Anhang.
 - Ladeanzeige: Beim ersten Start (PDFMy wird einmalig von pdfmy.de geladen, gemessen rund 13 s bei leerem Zwischenspeicher) zeigt der Tab sofort „Anhang aus Thunderbird wird in PDFMy geöffnet …“ in der Sprache von Thunderbird.
-- Store-Texte Deutsch und Englisch mit Anleitung zu allen Einstiegspunkten: store/thunderbird/eintrag-1.0.1.md. Nicht in echtem Thunderbird erprobt (hier nicht installiert); Bildschirmfotos der Einstiegspunkte stehen noch aus.
+- Store-Texte Deutsch und Englisch mit Anleitung zu allen Einstiegspunkten: store/thunderbird/eintrag-1.0.1.md. In Thunderbird 160.0 geprüft (app-v306): Der Rechtsklick lief ins Leere, weil Thunderbird 160 dem Menü einen inneren Tab ohne Typ übergibt – jetzt wird zusätzlich der aktive Mail-Tab gefragt; Rechtsklick und Knopf öffnen den Anhang. Store-Fotos aus dem echten Programm in store/thunderbird/bilder. Verfassen-Fenster nicht im Programm geprüft.
 
 ### Steuerberater-Export auch für Agenda (app-v305)
 - Im Dialog „Belege für den Steuerberater“ wählen Sie jetzt die **Software der Kanzlei**: DATEV (wie bisher mit document.xml), **Agenda** oder „andere“ (nur Belege und Belegliste). Für Agenda enthält das Paket die Belege im DATEV-Format, das Agenda über „Transfer → DATEV-Import-Assistent“ einliest, und eine Anleitung `Import_in_Agenda.txt` für die Kanzlei; die E-Mail an den Steuerberater nennt den Import-Weg. Die bisherige Einstellung (Haken „DATEV-Importdatei“) wird übernommen.
