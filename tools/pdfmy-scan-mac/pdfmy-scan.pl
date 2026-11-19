@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.11.0';
+our $VERSION = '1.12.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -888,6 +888,35 @@ sub office_apps {
   }
   return @l;
 }
+# Originalgetreue Umwandlung Word/Excel/PowerPoint → PDF mit LibreOffice/Collabora ohne Fenster (eigenes Profil, Arbeitsdateien danach gelöscht)
+sub office_converter {
+  return $ENV{PDFMY_TEST_OFFICE_CONVERT} if $ENV{PDFMY_TEST_OFFICE_CONVERT};
+  if ($IS_MAC) { for my $a ('LibreOffice', 'Collabora Office') { for my $d ('/Applications', "$ENV{HOME}/Applications") { my $so = "$d/$a.app/Contents/MacOS/soffice"; return $so if -x $so; } } return undef; }
+  return which('libreoffice') || which('soffice') || which('collaboraoffice');
+}
+sub office_convert {
+  my ($name, $data) = @_;
+  my $so = office_converter() or return (undef, 'LibreOffice ist auf diesem Rechner nicht installiert.');
+  my ($ext) = lc($name // '') =~ /(\.[a-z]+)$/;
+  return (undef, 'Dieses Dateiformat wandelt LibreOffice hier nicht um.') unless $ext && $ext =~ /^\.(docx|doc|docm|dotx|odt|rtf|xlsx|xls|xlsm|ods|pptx|ppt|pptm|ppsx|potx|odp)$/;
+  return (undef, 'Die Datei ist leer.') unless defined $data && length $data >= 8;
+  my $work = "$DIR/umwandlung-$$-" . int(rand 1e9); make_path($work, "$DIR/lo-profil");
+  my $src = "$work/dokument$ext";
+  open my $h, '>:raw', $src or return (undef, "Datei lässt sich nicht anlegen: $!"); print $h $data; close $h;
+  my $prof = "$DIR/lo-profil"; $prof =~ s/ /%20/g;
+  open my $lk, '>', "$DIR/lo-profil.lock"; flock($lk, 2) if $lk;   # eine Umwandlung nach der anderen (gemeinsames Profil)
+  my $k = fork();
+  if (defined $k && $k == 0) { open STDIN, '<', '/dev/null'; open STDOUT, '>', '/dev/null'; open STDERR, '>', '/dev/null';
+    exec($so, "-env:UserInstallation=file://$prof", '--headless', '--invisible', '--norestore', '--nologo', '--nodefault', '--nolockcheck', '--convert-to', 'pdf', '--outdir', $work, $src) or POSIX::_exit(1); }
+  return (undef, 'LibreOffice ließ sich nicht starten.') unless defined $k;
+  my $end = time + 180; my $done = 0;
+  while (time < $end) { if (waitpid($k, WNOHANG) > 0) { $done = 1; last; } select(undef, undef, undef, 0.2); }
+  unless ($done) { kill 'KILL', $k; waitpid($k, 0); remove_tree($work); return (undef, 'Die Umwandlung hat zu lange gedauert.'); }
+  my $pdf = slurp("$work/dokument.pdf"); remove_tree($work);
+  return (undef, 'LibreOffice konnte die Datei nicht umwandeln.') unless defined $pdf && substr($pdf, 0, 4) eq '%PDF';
+  logl("Umwandlung: $ext → PDF (" . int(length($pdf) / 1024) . ' KB)');
+  return ($pdf, undef);
+}
 sub office_open {
   my ($id, $name, $pdf) = @_;
   my ($c) = grep { $_->{id} eq ($id // '') } office_apps();
@@ -1074,7 +1103,7 @@ sub handle {
   my $hostok = defined $h{host} && grep { lc $h{host} eq $_ } ("127.0.0.1:$PORT", "localhost:$PORT");
   my $ok = $hostok && (!defined $origin || grep { lc $_ eq lc $origin } @ALLOWED);
   if (!$ok) { alarm 0; return send_resp($c, 403, 'text/plain', 'forbidden'); }
-  my $len = $h{'content-length'} || 0; return if $len > ($path =~ m{^/(office|cloud)$} ? 300_000_000 : 1_000_000);   # PDFs für „In Office-Programm öffnen“ dürfen groß sein
+  my $len = $h{'content-length'} || 0; return if $len > ($path =~ m{^/(office|office/convert|cloud)$} ? 300_000_000 : 1_000_000);   # PDFs für „In Office-Programm öffnen“ dürfen groß sein
   my $body = $rest; while (length $body < $len) { my $n = sysread($c, my $b, $len - length $body); last unless $n; $body .= $b; }
   alarm 0;
   my %cors; if (defined $origin && $ok) { %cors = ('Access-Control-Allow-Origin' => $origin, 'Vary' => 'Origin'); }
@@ -1107,7 +1136,7 @@ sub handle {
     # /status muss sofort antworten: Standard-PDF-Programm nur aus dem Zwischenspeicher, Auffrischen im Hintergrund
     my $cf = "$DIR/pdfdefault.txt"; my $def = -f $cf && trim(slurp($cf)) eq '1';
     if (!-f $cf || -M $cf >= 0.0007) { my $k = fork(); if (defined $k && $k == 0) { pdf_default(); POSIX::_exit(0); } }
-    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, pkg => linux_pkg(), tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false, selfUpdate => JSON::PP::true, autoUpdate => upd_auto_off() ? JSON::PP::false : JSON::PP::true }, \%cors);
+    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, pkg => linux_pkg(), tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false, selfUpdate => JSON::PP::true, autoUpdate => upd_auto_off() ? JSON::PP::false : JSON::PP::true, convert => office_converter() ? JSON::PP::true : JSON::PP::false }, \%cors);
   }
   # „Jetzt aktualisieren“ in PDFMy (1.10.0): ein Klick, Rest automatisch – laden, Signatur prüfen, ersetzen, neu starten
   if ($p eq '/self-update' && $method eq 'POST') {
@@ -1149,6 +1178,10 @@ sub handle {
     return send_json($c, 200, { data => encode_base64($d, '') }, \%cors);
   }
   if ($p eq '/office' && $method eq 'GET') { return send_json($c, 200, { apps => [ map { +{ id => $_->{id}, app => $_->{app}, what => $_->{what}, fmt => $_->{fmt} // 'pdf' } } office_apps() ] }, \%cors); }   # installierte Office-Programme
+  if ($p eq '/office/convert' && $method eq 'POST') {   # Word/Excel/PowerPoint originalgetreu mit LibreOffice in PDF umwandeln (seit 1.12.0)
+    my $o = $in->(); my ($pdf, $err) = office_convert($o->{name}, eval { decode_base64($o->{data} // '') });
+    return send_json($c, $err ? 409 : 200, { ok => $err ? JSON::PP::false : JSON::PP::true, error => $err, data => defined $pdf ? encode_base64($pdf, '') : undef }, \%cors);
+  }
   if ($p eq '/office' && $method eq 'POST') {   # PDF mit dem gewählten Office-Programm öffnen (Datei bleibt auf dem Rechner)
     my $o = $in->(); my ($f, $err) = office_open($o->{id}, $o->{name}, eval { decode_base64($o->{data} // '') });
     return send_json($c, $err ? 409 : 200, { ok => $err ? JSON::PP::false : JSON::PP::true, error => $err, path => $f }, \%cors);

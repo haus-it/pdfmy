@@ -3072,10 +3072,22 @@ const XIAOMI_MODEL = /^(Redmi|POCO|Xiaomi|Mi \w+|MIX|M2\d{3}[A-Z0-9]{3,6}|2\d{3}
 let xiaomi = IS_ANDROID && (miBrowser || /\b(Redmi|POCO|Xiaomi|HyperOS|MIUI)\b/i.test(navigator.userAgent));
 if (IS_ANDROID && !xiaomi) navigator.userAgentData?.getHighEntropyValues?.(['model']).then(v => { if (XIAOMI_MODEL.test(String(v?.model || '').trim())) { xiaomi = true; renderInstall(); } }).catch(() => {});
 const XIAOMI_ICON_HINT = 'Kein Symbol auf dem Startbildschirm? Auf Xiaomi-, Redmi- und POCO-Handys (HyperOS) landen neue Apps je nach Einstellung nur in der App-Übersicht – dort nach „PDFMy“ suchen. Fehlt PDFMy ganz: in den Einstellungen unter Apps → Chrome → Berechtigungen erlauben, dass Chrome Verknüpfungen auf dem Startbildschirm anlegt, und noch einmal installieren.';
-function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !!window.Capacitor?.isNativePlatform?.() || !(installEvt || iosSafari || macSafari || firefoxDesk || miBrowser); }
+/* Samsung Galaxy mit One UI (app-v308): Samsung Internet ist dort der vorinstallierte Browser. Er bietet „Installieren“ nicht immer über
+   das Ereignis an, das PDFMy hört – der Knopf erklärt dann den Weg über das Menü. One UI legt neue Apps nur auf den Startbildschirm,
+   wenn das eingestellt ist; nach der Installation sagt PDFMy, wo man nachsieht. Samsung DeX und Tablets im Desktop-Modus zählen als Android. */
+const samsungBrowser = IS_ANDROID && /SamsungBrowser\//.test(navigator.userAgent);
+const SAMSUNG_MODEL = /^(SM-[A-Z]\d{3,4}|Galaxy\b)/i;
+let samsung = IS_ANDROID && (samsungBrowser || /\bSAMSUNG\b|\bSM-[A-Z]\d{3}/.test(navigator.userAgent));
+if (IS_ANDROID && !samsung && !xiaomi) navigator.userAgentData?.getHighEntropyValues?.(['model']).then(v => { if (SAMSUNG_MODEL.test(String(v?.model || '').trim())) { samsung = true; renderInstall(); } }).catch(() => {});
+const SAMSUNG_ICON_HINT = 'Kein Symbol auf dem Startbildschirm? Auf Samsung Galaxy (One UI) landen neue Apps je nach Einstellung nur in der App-Übersicht – dort nach „PDFMy“ suchen. Damit sie künftig auch auf dem Startbildschirm erscheinen: Startbildschirm lange gedrückt halten → Einstellungen → „Neue Apps zum Startbildschirm hinzufügen“ einschalten.';
+// Opera am PC (in Deutschland rund 6 % der Desktop-Browser) und Amazon Silk auf Fire-Tablets (rund 5 % der Tablets): kein „App installieren“-Ereignis –
+// der Knopf erklärt den passenden Weg statt still zu fehlen (StatCounter, Oktober 2026)
+const operaDesk = /\bOPR\//.test(navigator.userAgent) && !IS_MOBILE && !IS_IOS && !ANDROID_DESKTOP_MODE;
+const silk = /\bSilk\//.test(navigator.userAgent);
+function renderInstall() { $('#btnInstall').hidden = justInstalled || runsAsApp() || !!window.Capacitor?.isNativePlatform?.() || !(installEvt || iosSafari || macSafari || firefoxDesk || miBrowser || samsungBrowser || operaDesk || silk); }
 // Chrome/Edge/Android melden, dass die App installierbar ist – bei bereits installierter App kommt dieses Ereignis nicht
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
-addEventListener('appinstalled', () => { installEvt = null; justInstalled = true; renderInstall(); toast(I18N.t('PDFMy ist jetzt als App installiert – Sie finden es im Startmenü bzw. auf dem Startbildschirm.') + (xiaomi ? ' ' + I18N.t(XIAOMI_ICON_HINT) : ''), xiaomi ? 16000 : 7000); });
+addEventListener('appinstalled', () => { installEvt = null; justInstalled = true; renderInstall(); toast(I18N.t('PDFMy ist jetzt als App installiert – Sie finden es im Startmenü bzw. auf dem Startbildschirm.') + (xiaomi ? ' ' + I18N.t(XIAOMI_ICON_HINT) : samsung ? ' ' + I18N.t(SAMSUNG_ICON_HINT) : ''), xiaomi || samsung ? 16000 : 7000); });
 matchMedia('(display-mode: standalone)').addEventListener?.('change', renderInstall);
 $('#btnInstall').onclick = async () => {
   if (installEvt) {
@@ -3086,6 +3098,9 @@ $('#btnInstall').onclick = async () => {
   }
   if (firefoxDesk) { await firefoxApp(); return; }
   if (miBrowser) { alert(I18N.t('Im Xiaomi-Browser lässt sich PDFMy nicht als App installieren.\n\nSo geht es: pdfmy.de in Google Chrome öffnen (auf Xiaomi-Handys vorinstalliert oder im Play Store), oben rechts auf ⋮ tippen und „App installieren“ wählen.\n\nTipp: Chrome als Standardbrowser festlegen (Einstellungen → Apps → Standard-Apps → Browser), dann öffnen sich Links zu PDFMy gleich dort.')); return; }
+  if (operaDesk) { alert(I18N.t('Opera kann PDFMy nicht als eigene App installieren.\n\nSo bekommt PDFMy ein eigenes Fenster und ein Symbol: pdfmy.de in Google Chrome oder Microsoft Edge öffnen und dort oben auf „App herunterladen“ klicken.\n\nIn Opera funktioniert PDFMy genauso – am besten als Lesezeichen oder in der Schnellwahl ablegen.')); return; }
+  if (silk) { alert(I18N.t('So kommt PDFMy auf Ihr Fire-Tablet:\n\nIm Silk-Browser das Menü öffnen und „Zum Startbildschirm hinzufügen“ wählen, falls der Eintrag angeboten wird. Sonst PDFMy als Lesezeichen speichern – im Browser funktioniert es genauso.\n\nDokumente scannen: mit „Kamera“ in PDFMy.')); return; }
+  if (samsungBrowser) { alert(I18N.t('So kommt PDFMy als App auf Ihr Samsung Galaxy:\n\n1. In Samsung Internet unten rechts auf das Menü ≡ tippen.\n2. „Seite hinzufügen zu“ → „Startbildschirm“ wählen (oder oben in der Adressleiste auf das Symbol „Installieren“ tippen, falls es erscheint).\n3. „Hinzufügen“ bestätigen.\n\nIn Google Chrome geht es auch: oben rechts ⋮ → „App installieren“.')); return; }
   if (macSafari) { alert('So kommt PDFMy als App in Ihr Dock:\n\nIn Safari oben im Menü „Ablage“ → „Zum Dock hinzufügen …“ → „Hinzufügen“.\n\nTipp: Für den Scan-Ordner und „PDF per Doppelklick öffnen“ eignen sich Chrome oder Edge besser.'); return; }
   if (iosSafari) alert('So kommt PDFMy als App auf Ihr iPhone:\n\n1. Unten in Safari auf „Teilen“ tippen (Quadrat mit Pfeil nach oben).\n2. „Zum Home-Bildschirm“ wählen.\n3. Oben rechts auf „Hinzufügen“ tippen.\n\nDanach startet PDFMy wie eine App über das neue Symbol.');
 };
@@ -4335,6 +4350,7 @@ window.checkSignatures = async (docIdx, file) => {
     // Nutzungsrechte-Signaturen (technische Freischaltung von Formularfunktionen) werden als Information gezeigt, nicht als Unterschrift;
     // vor dem Bearbeiten wird nur bei echten Unterschriften gewarnt
     const sigs = await PdfVerify.verify(bytes);
+    await eutlCheck(sigs);
     d.signed = sigs.some(r => !r.usageRights);
     if (sigs.length) {
       d.sigs = sigs; renderSigBar();
@@ -4346,6 +4362,25 @@ window.checkSignatures = async (docIdx, file) => {
     }
   } catch (e) { console.warn('Signaturprüfung', e); }
 };
+/* EU-Vertrauensliste (app-v310): statischer Schnappschuss von pdfmy.de (vendor/eutl/eutl.json, ~1,3 MB), nur geladen, wenn eine
+   gültige, nicht selbst ausgestellte Signatur vorliegt. Keine Verbindung zu Dritten – das Dokument bleibt auf dem Gerät. */
+let eutlList = null;
+async function eutlCheck(sigs) {
+  const todo = sigs.filter(r => !r.usageRights && !r.selfSigned && r.valid); if (!todo.length) return;
+  try { eutlList = eutlList || await fetch('vendor/eutl/eutl.json').then(x => { if (!x.ok) throw new Error(x.status); return x.json(); }); }
+  catch (e) { console.warn('EU-Vertrauensliste', e); for (const r of todo) r.trustMissing = true; return; }
+  for (const r of todo) { try { r.trust = await PdfVerify.trust(r, eutlList); r.trustChecked = true; } catch (e) { console.warn('EU-Vertrauensliste', e); } }
+}
+const trustOk = r => !!r.trust && r.trust.atTime !== false;
+function trustLine(r) {
+  if (r.usageRights || r.selfSigned) return '';
+  const stand = eutlList?.stand ? ` <small class="hint">(Stand der Liste ${esc(I18N.fmtDate(new Date(eutlList.stand), { dateStyle: 'medium' }))})</small>` : '';
+  if (trustOk(r)) return `<li><span class="y">✓</span> Aussteller laut EU-Vertrauensliste qualifiziert: ${esc(r.trust.p)} (${esc(r.trust.c)})${r.qualified ? ' – qualifiziertes Zertifikat, Voraussetzung für eine qualifizierte elektronische Signatur' : ''}${stand}</li>`;
+  if (r.trust) return `<li><span class="m">?</span> ${esc(r.trust.p)} (${esc(r.trust.c)}) steht in der EU-Vertrauensliste, war zum Signaturzeitpunkt aber nicht als qualifiziert geführt${stand}</li>`;
+  if (r.trustMissing) return '<li><span class="m">?</span> EU-Vertrauensliste nicht geladen (ohne Internet) – Aussteller nicht abgeglichen</li>';
+  if (r.trustChecked) return `<li><span class="m">?</span> Aussteller nicht in der EU-Vertrauensliste – das ist bei Firmen- und Behördenzertifikaten normal; die Signatur kann trotzdem gültig sein${stand}</li>`;
+  return '';
+}
 const sigOk = r => r.intact && r.valid && r.certValidAtTime !== false;
 const fmtWhen = d => d instanceof Date && !isNaN(d) ? I18N.fmtDateTime(d) : '';
 const sigWho = r => [r.signer?.cn || r.name, r.signer?.o].filter(Boolean).join(', ') || 'unbekannt';
@@ -4371,6 +4406,7 @@ function renderSigBar() {
   // alle Unterzeichner nennen (nicht nur den letzten) – wer mitunterschrieben hat, soll man auf einen Blick sehen
   else if (all.length > 1) t = `${all.length} Signaturen, alle gültig: ${sigNames(all)}. Dokument seit der letzten Signatur unverändert.`;
   else t = `Signiert von ${sigWho(last)}${fmtWhen(last.time || last.m) ? ' am ' + fmtWhen(last.time || last.m) : ''}. Dokument seit der Signatur unverändert.`;
+  if (!bad.length && trustOk(last)) t += ` Aussteller laut EU-Vertrauensliste qualifiziert (${last.trust.p}, ${last.trust.c}).`;
   // unverändert = dieselbe Prüfung wie beim Speichern (Original wird übernommen, Signatur angehängt)
   const unchanged = typeof signedOriginal === 'function' && !!signedOriginal(state.pages);
   if (!unchanged) t += ' Hinweis: Speichern mit Änderungen entfernt die Signatur – das Original bleibt gültig.';
@@ -4409,6 +4445,7 @@ function sigDetails(only, focusK = -1) {
       <li>${r.laterSigned ? '<span class="y">✓</span> Danach weiter signiert (normal bei mehreren Signaturen)' : yn(r.wholeFile, 'Umfasst das ganze Dokument', 'Nach dem Signieren wurden Änderungen angehängt', '')}</li>
       <li>Aussteller: ${esc([r.issuer?.cn, r.issuer?.o].filter(Boolean).join(', ') || '–')}${r.selfSigned ? ' <span class="m">(selbst ausgestellt – nur mit dem Unterzeichner abgleichen)</span>' : ''}</li>
       ${r.qualified ? '<li><span class="y">✓</span> Qualifiziertes Zertifikat (eIDAS-Kennzeichnung)</li>' : ''}
+      ${trustLine(r)}
       ${r.timestamp ? '<li><span class="y">✓</span> Mit Zeitstempel</li>' : ''}
       ${r.problems.length ? `<li class="hint">${esc(r.problems.join(' · '))}</li>` : ''}
     </ul></div>`)).join('');

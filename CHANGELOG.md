@@ -4,6 +4,31 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Signaturprüfung gegen die EU-Vertrauensliste (app-v310)
+- Bei einer gültigen Signatur prüft PDFMy, ob der Aussteller des Zertifikats ein qualifizierter Zertifizierungsdienst laut EU-Vertrauensliste ist (alle EU-Staaten sowie NO, IS, LI; Stand 19.11.2026: 1.869 Dienste aus 31 Ländern). Geprüft wird kryptografisch: Die Signatur des Unterzeichner-Zertifikats (oder einer Zwischenstelle aus der Signatur) muss mit dem gelisteten Schlüssel des Dienstes stimmen – ein nachgemachter Ausstellername genügt nicht. Auch der Status zum Signaturzeitpunkt zählt (erteilt bzw. entzogen seit).
+- Anzeige: Signaturleiste „Aussteller laut EU-Vertrauensliste qualifiziert (Anbieter, Land)“; in den Details mit Stand der Liste, bei qualifiziertem Zertifikat mit Hinweis „Voraussetzung für eine qualifizierte elektronische Signatur“. Nicht gelistete Aussteller werden neutral erklärt (Firmen- und Behördenzertifikate).
+- `tools/eutl.js` lädt beim Veröffentlichen die Liste der Listen der EU-Kommission und die nationalen Listen (nur HTTPS von den amtlichen Adressen) und schreibt `vendor/eutl/eutl.json` (~1,3 MB); deploy.ps1 frischt sie auf, wenn sie älter als 7 Tage ist. Die App lädt die Datei nur bei einer gültigen, nicht selbst ausgestellten Signatur – keine Verbindung zu Dritten.
+- Grenzen: Die XML-Signaturen der nationalen Listen werden beim Abruf nicht einzeln geprüft (Abruf über HTTPS). Ob der Schlüssel auf einer sicheren Signaturerstellungseinheit (QSCD) liegt, wird nicht ausgewertet – deshalb „Voraussetzung für“ statt „ist“ eine QES. Langzeitprüfdaten (PAdES B-LT) folgen getrennt.
+- Behoben: In app-v309 war versehentlich ein Zwischenstand von js/pdfverify.js enthalten (während des Bauens geändert) – PDFs mit ECDSA-Signatur wurden dort als „Kein Zertifikat in der Signatur“ gemeldet. Ab app-v310 wieder vollständig; Lehre: während eines laufenden Builds keine Dateien der App ändern.
+- tests/eutl.test.js (echter und gefälschter Ausstellerschlüssel, Statuszeiten, Listenleser, Anzeige).
+
+### Rechtschreibprüfung in der Sprache des Dokuments (app-v309)
+- Beim Ändern und Schreiben von Text prüft der Browser jetzt in der Sprache des Dokuments statt in der Oberflächensprache: erkannte Sprache der Seite (Texterkennung), sonst am Text und Seitentext erkannt (lateinische Sprachen über häufige Wörter, Kyrillisch über typische Buchstaben, Griechisch), sonst die eingestellte Erkennungssprache. Das Bearbeitungsfeld bekommt dafür das Attribut lang; die Prüfung selbst macht der Browser auf dem Gerät.
+- tests/rechtschreibung.test.js.
+
+### Originalgetreue Office-Umwandlung mit LibreOffice (app-v308, pdfmy Scan 1.22.0 / Mac und Linux 1.12.0)
+- Ist LibreOffice (oder Collabora Office) installiert und läuft pdfmy Scan, wandelt PDFMy Word-, Excel- und PowerPoint-Dateien (.docx, .doc, .odt, .rtf, .xlsx, .xls, .ods, .pptx, .ppt, .odp …) damit in PDF um – exakt wie LibreOffice druckt, mit Schriften, Diagrammen und Folienlayout. Neu dadurch auch alte PowerPoint-Dateien (.ppt).
+- pdfmy Scan ruft LibreOffice ohne Fenster auf (`--headless --convert-to pdf`), mit eigenem Profil (stört ein offenes LibreOffice nicht), eine Umwandlung nach der anderen, höchstens 180 s; Arbeitsdateien werden sofort gelöscht, die Datei verlässt den Rechner nicht. Das Profil wird beim Start einmal im Hintergrund angelegt (erste Umwandlung sonst ~30 s, danach ~10 s). Neuer Endpunkt `POST /office/convert`, `/status` meldet `convert`.
+- Ohne LibreOffice oder bei einem Fehler wandelt PDFMy wie bisher selbst im Browser um.
+- Geprüft: Aufruf mit echtem LibreOffice (Windows) für .doc und .xls; tests/libreoffice.test.js.
+
+### Samsung Galaxy, Amazon Fire und Opera (app-v308)
+- Marktanteile Deutschland (StatCounter, Oktober 2026): Samsung 39,7 % der Smartphones und 44 % der Tablets, Samsung Internet 6,5 % der mobilen Browser; Amazon Fire 5,3 % der Tablets; Opera 6,4 % der Desktop-Browser.
+- Samsung Internet: „App herunterladen“ erklärt den Weg über das Menü (≡ → Seite hinzufügen zu → Startbildschirm); nach der Installation Hinweis, wo One UI neue Apps ablegt. Samsung-Geräte werden auch an der Modellnummer (SM-…) erkannt.
+- Samsung DeX und Galaxy Tab im Desktop-Modus (auch mit Maus) sowie Amazon Silk gelten als Android – kein „pdfmy Scan für Linux“, sondern Kamera und Scanner-Apps.
+- Opera am PC und Silk auf Fire-Tablets: Der Knopf erklärt den passenden Weg, statt still zu fehlen. Echte Installation hat immer Vorrang.
+- tests/samsung.test.js.
+
 ### Scannen auf Tablet und Handy – kein „pdfmy Scan für Linux“ mehr auf dem Redmi Pad (app-v307)
 - Rückmeldung: Ein Redmi Pad bekam beim Scanner-Einrichten pdfmy Scan für Linux angeboten. Ursache: Chrome öffnet Webseiten auf vielen Android-Tablets im Desktop-Modus und meldet sich dann als „X11; Linux x86_64“. PDFMy erkennt solche Tablets jetzt an Touch ohne Maus bzw. am ARM-Prozessor; im normalen Modus fielen Android und iPad bisher auf die Windows-Anleitung zurück.
 - „Scanner verbinden“ zeigt auf Tablet und Handy stattdessen die zwei einfachen Wege: **Mit der Kamera scannen** (ein Knopf) oder vom Netzwerkscanner mit der kostenlosen App „Mopria Scan“ bzw. der App des Herstellers und **Teilen → PDFMy** – mit Knopf „PDFMy als App installieren“, damit PDFMy beim Teilen erscheint. iPad/iPhone: „In Dateien sichern“ und öffnen. Der Einrichtungs-Assistent blendet den Schritt „pdfmy Scan“ auf Tablets aus und bietet die App-Installation an. Die Xiaomi-Hinweise (HyperOS) greifen nun auch im Desktop-Modus.

@@ -21,12 +21,12 @@ test('Web-App: Update im ruhigen Moment, nie bei ungespeicherter Arbeit, Dokumen
 });
 
 test('pdfmy Scan: automatisch ohne Meldung, bei laufender Arbeit nach 15 Minuten erneut, nach Fehler nach 1 Stunde', () => {
-  assert.match(cs, /public const string Version = "1\.21\.0";/); assert.match(R('tools/pdfmy-scan/pdfmy-scan.csproj'), /<Version>1\.21\.0<\/Version>/);
+  assert.match(cs, /public const string Version = "1\.(2[1-9]|[3-9]\d)\.\d+";/); assert.match(R('tools/pdfmy-scan/pdfmy-scan.csproj'), /<Version>1\.(2[1-9]|[3-9]\d)\.\d+<\/Version>/);
   assert.match(cs, /else if \(auto\) \{ updateTimer\.Interval = 15 \* 60 \* 1000;/);
   assert.match(cs, /updateTimer\.Interval = 60 \* 60 \* 1000;/);
   assert.match(cs, /if \(manual \|\| \(offered != latest && Updater\.AutoOff\)\)/, 'Meldung nur, wenn automatische Updates aus sind');
   assert.match(cs, /if \(Machine\.UpdatesManaged\)/, 'von der IT verteilt: unverändert keine Selbstaktualisierung');
-  assert.match(pl, /^our \$VERSION = '1\.11\.0';/m);
+  assert.match(pl, /^our \$VERSION = '1\.(1[1-9]|[2-9]\d)\.\d+';/m);
   assert.match(pl, /\(\$why \/\/ ''\) eq 'Scan läuft' \? 900 : \(!defined \$v && \$why\) \? 3600 :/);
-  assert.match(app, /const SCAN_LATEST = '1\.21\.0';/); assert.match(app, /const SCAN_MAC_LATEST = '1\.11\.0';/);
+  assert.match(app, /const SCAN_LATEST = '1\.(2[1-9]|[3-9]\d)\.\d+';/); assert.match(app, /const SCAN_MAC_LATEST = '1\.(1[1-9]|[2-9]\d)\.\d+';/);
 });

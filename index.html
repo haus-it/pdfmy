@@ -2152,7 +2152,7 @@ html.i18n-wait body{visibility:hidden}
 <dialog id="sigDlg" class="sharedlg" aria-labelledby="sigT">
   <h3 class="dlgtitle" id="sigT">Digitale Signaturen</h3>
   <div id="sigList"></div>
-  <p class="hint">PDFMy prüft lokal, ob das Dokument seit der Signatur unverändert ist, ob die Signatur zum Zertifikat passt und ob das Zertifikat zum Signaturzeitpunkt gültig war. Ob der <b>Aussteller vertrauenswürdig</b> ist (anerkannte Zertifizierungsstelle, eIDAS-Vertrauensliste), wird nicht geprüft – dafür die kostenlosen amtlichen Prüfdienste nutzen, z. B. die eIDAS-Signaturprüfung der EU-Kommission (DSS) oder den Prüfdienst der Bundesnetzagentur.</p>
+  <p class="hint">PDFMy prüft lokal, ob das Dokument seit der Signatur unverändert ist, ob die Signatur zum Zertifikat passt, ob das Zertifikat zum Signaturzeitpunkt gültig war und ob der <b>Aussteller</b> laut EU-Vertrauensliste ein qualifizierter Vertrauensdiensteanbieter ist. Sperrlisten der Aussteller fragt PDFMy nicht ab – für eine vollständige amtliche Prüfung die kostenlosen Prüfdienste nutzen, z. B. die eIDAS-Signaturprüfung der EU-Kommission (DSS) oder den Prüfdienst der Bundesnetzagentur.</p>
   <div class="dlgrow"><button type="button" id="sigClose">Schließen</button></div>
 </dialog>
 <dialog id="sigWarnDlg" class="sharedlg" role="alertdialog" aria-labelledby="sigWarnT" aria-describedby="sigWarnD"><form method="dialog">

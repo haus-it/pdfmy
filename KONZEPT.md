@@ -94,6 +94,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 19.11.2026: Signaturprüfung gegen die EU-Vertrauensliste (app-v310)
+**Inhalt:** Schnappschuss der EU-Vertrauensliste als statische Datei von pdfmy.de; der Browser prüft den Aussteller einer gültigen Signatur kryptografisch gegen die gelisteten Schlüssel qualifizierter Zertifizierungsdienste. **Nicht enthalten:** Online-Abfragen (OCSP/CRL, PAdES B-LT) – eigene Prüfung wie beim Zeitstempel nötig.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Dokument und Zertifikat bleiben im Browser, abgeglichen wird lokal |
+| 2 Kein Server | passt: nur eine statische Datei von pdfmy.de, geladen beim Bauen von den amtlichen Listen; keine neue Verbindung im Browser, CSP unverändert |
+| 3 Ohne Tracking | passt: Datei wird nur bei signierten PDFs geladen, wie jede andere Datei von pdfmy.de |
+| 4 Einfach | passt: läuft von selbst, eine Zeile in Leiste und Details |
+| 5 Prüfbar | passt: tests/eutl.test.js; Grenzen (XML-Signatur der Listen, QSCD) in Hilfe und CHANGELOG genannt |
+| 6 Wenig aktive Inhalte | passt |
+
 ### Entschieden 01.11.2026: Kamera-Scan robuster
 **Inhalt:** Aufnahmen als JPEG statt unkomprimiert im Speicher, Bildschirm bleibt an, Kamera startet nach Unterbrechung neu, Hinweis auf unscharfe Seiten. **Noch offen:** Verarbeitung im Hintergrund. (Licht-Hinweise – Spiegelung und zu dunkel – umgesetzt in app-v235, 08.11.2026; Leitplanken 1–3 gewahrt, alles im Gerät; 4: nur Hinweise, keine neue Bedienung; 5: axe ohne Befund.) (Zwischenstand nach Absturz umgesetzt in app-v210, Ecken von Hand korrigieren in app-v212 – Stand 03.11.2026.)
 

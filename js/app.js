@@ -204,8 +204,10 @@ const NATIVE = window.Capacitor?.isNativePlatform?.() ? (() => {
 const IS_MAC = !IS_IOS && /Macintosh|Mac OS X/.test(navigator.userAgent);
 /* Android-Tablet im Desktop-Modus von Chrome (z. B. Redmi Pad, Galaxy Tab – dort oft Voreinstellung): meldet sich als „X11; Linux x86_64“
    und bekam pdfmy Scan für Linux angeboten (Rückmeldung 19.11.2026). Erkennbar an Touch ohne Maus bzw. am ARM-Prozessor. */
-const ANDROID_DESKTOP_MODE = !/Android|CrOS/.test(navigator.userAgent) && /X11; Linux/.test(navigator.userAgent) && navigator.maxTouchPoints > 1 &&
-  (!(window.matchMedia && matchMedia('(any-pointer: fine)').matches) || /arm|aarch64/i.test(navigator.platform || ''));
+// Samsung Internet (auch in Samsung DeX am Bildschirm mit Maus), Amazon Silk (Fire-Tablets) und Samsung-Tablets verraten sich an ihrer Kennung bzw. am ARM-Prozessor.
+const ANDROID_DESKTOP_MODE = !/Android|CrOS/.test(navigator.userAgent) && /X11; Linux/.test(navigator.userAgent) &&
+  (/SamsungBrowser\/|Silk\//.test(navigator.userAgent) || navigator.maxTouchPoints > 1 &&
+  (!(window.matchMedia && matchMedia('(any-pointer: fine)').matches) || /arm|aarch64/i.test(navigator.platform || '')));
 const IS_HANDHELD = IS_MOBILE || ANDROID_DESKTOP_MODE;   // Handy oder Tablet (Android, iPhone, iPad): kein pdfmy Scan – Kamera bzw. Scanner-App + Teilen
 const IS_LINUX = !IS_MAC && !IS_IOS && !ANDROID_DESKTOP_MODE && /Linux|X11/.test(navigator.userAgent) && !/Android|CrOS/.test(navigator.userAgent);
 const IS_CHROMEOS = /CrOS/.test(navigator.userAgent);   // Chromebook: kein pdfmy Scan (läuft dort nicht) – eingebaute Wege von Chrome OS   // Linux-PC: pdfmy Scan für Linux   // Mac: kein pdfmy Scan (Windows), Scannen über „Digitale Bilder“ + Scan-Ordner
@@ -246,6 +248,7 @@ async function importFilesRun(files, fromCamera) {
       if (!f.fromArchive && (/\.(zip|cbz)$/.test(n) || /^application\/(x-)?(zip|zip-compressed|cbz)$/.test(f.type))) { queue.splice(i + 1, 0, ...await unpackArchive(f)); continue; }
       asIsImport = !!f.asIs; const mark = state.pages.length;
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
+      else if (OFFICE_FAITHFUL.test(n) && await officeViaHelper(f)) { /* originalgetreu über LibreOffice in pdfmy Scan */ }
       else if (/\.ps[db]$/.test(n) || f.type === 'image/vnd.adobe.photoshop') await importPsd(f);
       else if (f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|gif|heic|heif|tiff?)$/.test(n)) await importImage(f, fromCamera);
       else if (/\.(txt|md|markdown|csv)$/.test(n) || /^text\/(plain|markdown|csv)/.test(f.type)) await importText(f);
@@ -255,7 +258,7 @@ async function importFilesRun(files, fromCamera) {
       else if (/\.o?xps$/.test(n)) await importXps(f);
       else if (/\.(pptx|ppsx|potx|pptm|ppsm|odp)$/.test(n)) await importSlides(f);
       else if (/\.(doc|dot|xls|xlt)$/.test(n)) await importOld(f);
-      else if (/\.ppt$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
+      else if (/\.ppt$/.test(n)) { status(`${f.name}: Alte PowerPoint-Dateien (.ppt) wandelt PDFMy mit LibreOffice um – LibreOffice und pdfmy Scan installieren, oder in PowerPoint als .pptx speichern.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
       else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, PowerPoint, Text, RTF, XPS, Photoshop, Markdown, CSV, Webseite (HTML, MHTML), ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
@@ -432,6 +435,25 @@ async function tiffCanvases(file) {
   return out;
 }
 // Word (.docx), Excel (.xlsx) und OpenDocument (.odt, .ods) → PDF (js/office.js liest, js/textpdf.js setzt) – auf dem Gerät, ohne Upload
+/* Originalgetreu: Ist pdfmy Scan (ab 1.22.0 / Mac und Linux 1.12.0) mit einem installierten LibreOffice da, wandelt es Word, Excel und
+   PowerPoint so um, wie LibreOffice sie druckt – mit Schriften, Tabellen, Diagrammen und Folienlayout. Die Datei bleibt auf dem Rechner.
+   Klappt das nicht, übernimmt die eigene Umwandlung im Browser. */
+const OFFICE_FAITHFUL = /\.(docx|docm|dotx|doc|odt|rtf|xlsx|xlsm|xls|ods|pptx|pptm|ppsx|potx|ppt|odp)$/;
+async function officeViaHelper(f) {
+  if (!state.scanConvert || f.size > 200e6) return false;
+  try {
+    status(`${f.name}: wird mit LibreOffice originalgetreu umgewandelt …`);
+    const b = new Uint8Array(await f.arrayBuffer()); let s = '';
+    for (let i = 0; i < b.length; i += 32768) s += String.fromCharCode.apply(null, b.subarray(i, i + 32768));
+    const r = await fetch(SCAN_API + '/office/convert', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ name: f.name, data: btoa(s) }), signal: AbortSignal.timeout(200000) }).then(x => x.json());
+    if (!r.ok || !r.data) { console.warn('LibreOffice-Umwandlung:', r.error); return false; }
+    const bin = atob(r.data), pdf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) pdf[i] = bin.charCodeAt(i);
+    await importPdf(new File([pdf], f.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
+    toast(`${f.name}: originalgetreu mit LibreOffice umgewandelt.`, 4000);
+    return true;
+  } catch (e) { console.warn('LibreOffice-Umwandlung:', e); return false; }
+}
 async function importOffice(file) {
   status(`${file.name} wird in PDF umgewandelt …`);
   const bytes = new Uint8Array(await file.arrayBuffer()), ext = file.name.toLowerCase().split('.').pop(), word = ext === 'docx' || ext === 'odt', loc = { locale: I18N.info.bcp || 'de-DE' };
@@ -1253,7 +1275,7 @@ function renderAnns() {
       el.textContent = a.text; el.style.fontSize = a.fs * W + 'px';
       if (a.type === 'text') { ofontCheck(a); el.style.color = a.color; el.style.fontFamily = origCss(a) + FONT_CSS[fontFam(a)]; if (a.lh) el.style.lineHeight = a.lh; if (a.bold && !origCss(a)) el.style.fontWeight = '700'; if (a.italic && fontFam(a) !== 'mono' && !origCss(a)) el.style.fontStyle = 'italic'; }
       else { el.dataset.head = noteHead(a); const rl = Kommentare.replyLines(a); if (rl.length) el.dataset.replies = rl.join('\n'); }
-      if (state.editing === a.id) { el.contentEditable = 'true'; editEl = el; el.addEventListener('focusout', () => finishEdit(p, a, el)); }
+      if (state.editing === a.id) { el.contentEditable = 'true'; el.spellcheck = true; const sl = spellLang(p, a.text); if (sl) el.lang = sl; editEl = el; el.addEventListener('focusout', () => finishEdit(p, a, el)); }
     } else if (a.id === state.annSel) { const h = document.createElement('div'); h.className = 'handle'; el.append(h); }
     ov.append(el);
   }
@@ -2221,6 +2243,15 @@ const CJK_RE = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uff
 const LATIN_OCR = { has: l => !NONLATIN_OCR.has(l) };
 const EXTRA_SCRIPTS = ['ara', 'chi_sim'];   // automatisch geprüft; weitere (Persisch, Hebräisch, Japanisch, Koreanisch …) über die Einstellung „Dokumentsprache“
 const ocrPrimary = () => S.ocrLang && S.ocrLang !== 'auto' && I18N.byOcr(S.ocrLang) ? S.ocrLang : 'deu';
+/* Rechtschreibprüfung beim Text-Ändern in der Sprache des Dokuments – nicht der Oberfläche: erkannte Sprache der Seite,
+   sonst am Text selbst und am Seitentext erkannt (lateinisch über häufige Wörter, kyrillisch über typische Buchstaben), sonst Erkennungssprache */
+function spellLang(p, text) {
+  try {
+    const own = ocrPrimary(), s = [text, p?.ocr?.text].filter(Boolean).join('\n');
+    const o = p?.lang || (Letter.scriptOf(s) === 'cyrl' ? Letter.cyrLang(s) : Letter.scriptOf(s) === 'grek' ? 'ell' : Letter.detectLang(s, own)) || own;
+    return I18N.byOcr(o)?.bcp || '';
+  } catch (e) { return ''; }
+}
 // Zuletzt gefundene nichtlateinische Sprache – die nächsten Seiten probieren sie zuerst (sonst die Sprache der Oberfläche)
 let ocrHint = NONLATIN_OCR.has(I18N.info.ocr) ? I18N.info.ocr : null;
 const scriptProbes = prim => NONLATIN_OCR.has(prim) ? ['deu'] : [...new Set([ocrHint === 'ell' ? 'ell' : ocrHint ? 'rus' : null, 'rus', 'ell'].filter(Boolean))];
@@ -4729,8 +4760,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.21.0';
-const SCAN_MAC_LATEST = '1.11.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.22.0';
+const SCAN_MAC_LATEST = '1.12.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 /* Linux: passendes Paket (Doppelklick, meist ohne Terminal; sonst linuxPkgCmd) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
    Läuft pdfmy Scan schon, sagt es selbst, welches System es ist; sonst Hinweise aus dem Browser (Firefox nennt Ubuntu/Fedora) oder die letzte Wahl. */
@@ -4796,7 +4827,7 @@ async function scanHelperRunning() {
   try {
     const d = await scanFind(); if (!d) return false;
     const changed = state.scanVersion !== d.version;
-    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanManaged = d.managed === true; state.scanSelfUpdate = d.selfUpdate === true; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
+    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanManaged = d.managed === true; state.scanSelfUpdate = d.selfUpdate === true; state.scanConvert = d.convert === true; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll
     if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store', headers: { 'X-Pdfmy': '1' } }).catch(() => {});   // ab pdfmy Scan 1.14.1 nur mit eigenem Kopf
     if (changed && typeof renderVerBar === 'function') setTimeout(renderVerBar, 0);   // Statuszeile sofort nachziehen (z. B. nach einem Update)

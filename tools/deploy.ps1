@@ -156,6 +156,9 @@ if (-not $Test -and -not $NoBuild) {
   # Sicherheitsupdate (docs/Update-Strategie.md, Abschnitt 8): eigene Server bekommen es sofort, auch im Kanal „stabil“
   if ($Sicherheit) { $env:PDFMY_SICHERHEIT = '1'; Write-Host 'Sicherheitsupdate: sofort auch im Kanal „stabil“ für eigene Server' -ForegroundColor Yellow } else { Remove-Item Env:PDFMY_SICHERHEIT -ErrorAction SilentlyContinue }   # Freigabe in Stufen für pdfmy Scan (download/version.json „rollout“)
   $env:PDFMY_PRERENDER = '1'   # Webseiten je Sprache vorab übersetzen (tools/prerender.js)
+  # EU-Vertrauensliste (Signaturprüfung „qualifiziert laut EU-Liste“): Schnappschuss auffrischen, wenn älter als 7 Tage – ohne Netz bleibt der alte
+  $eutl = Join-Path $PSScriptRoot '..\vendor\eutl\eutl.json'
+  if (-not (Test-Path $eutl) -or ((Get-Date) - (Get-Item $eutl).LastWriteTime).TotalDays -gt 7) { & node (Join-Path $PSScriptRoot 'eutl.js') 2>&1 | ForEach-Object { "$_" } | Out-Host }
   # Warnungen des Builds (stderr, z. B. „zweiter Versuch“ der Vorab-Übersetzung) sind kein Abbruch – maßgeblich ist der Rückgabewert.
   # Windows PowerShell 5.1 wertet sonst jede stderr-Zeile als Fehler und brach ab, obwohl der Build die Seite erneut versucht hätte.
   $eap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'

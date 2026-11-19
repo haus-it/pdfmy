@@ -3,8 +3,8 @@
 /* Digitale Signaturen in PDFs prüfen – lokal im Browser (wie die Signaturleiste in Acrobat).
    Unterstützt CMS/PKCS#7 (adbe.pkcs7.detached, ETSI.CAdES.detached, adbe.pkcs7.sha1) mit RSA (PKCS#1 v1.5) und ECDSA.
    Prüft: (1) signierte Bytes unverändert (Prüfsumme = messageDigest), (2) kryptografische Signatur mit dem Zertifikat (WebCrypto),
-   (3) Zertifikat zum Signaturzeitpunkt gültig, (4) wurde nach der Signatur etwas angehängt? Vertrauen in den Aussteller kann ohne
-   Vertrauensliste nicht geprüft werden – das wird ehrlich so angezeigt. Bausteine: node-forge (ASN.1), WebCrypto. Auch in Node nutzbar. */
+   (3) Zertifikat zum Signaturzeitpunkt gültig, (4) wurde nach der Signatur etwas angehängt? Vertrauen in den Aussteller: trust() gleicht
+   gegen den statischen Schnappschuss der EU-Vertrauensliste ab (app-v310); fehlt der Aussteller dort, wird das ehrlich so angezeigt. Bausteine: node-forge (ASN.1), WebCrypto. Auch in Node nutzbar. */
 (function (root) {
   'use strict';
   const OID = {
@@ -60,7 +60,52 @@
       serial: forge.util.bytesToHex(v[k].value), issuer: nameOf(forge, v[k + 2]), subject: nameOf(forge, v[k + 4]),
       from: timeOf(forge, v[k + 3].value[0]), to: timeOf(forge, v[k + 3].value[1]),
       spki: fromBin(forge.asn1.toDer(spki).getBytes()), keyAlg: forge.asn1.derToOid(algo[0].value), curve: algo[1] && algo[1].type === forge.asn1.Type.OID ? forge.asn1.derToOid(algo[1].value) : null, qc,
+      // für die Prüfung gegen die EU-Vertrauensliste: signierter Teil, Verfahren und Signatur des Ausstellers (BIT STRING ohne Füllbyte)
+      ...issuerSig(forge, c, tbs),
     };
+  }
+  // Signatur des Ausstellers aus dem Zertifikat – direkt aus dem DER des BIT STRING (forge zerlegt ihn bei ECDSA in ASN.1);
+  // darf nie scheitern, sonst fiele das ganze Zertifikat weg
+  function issuerSig(forge, c, tbs) {
+    try {
+      const d = fromBin(forge.asn1.toDer(c.value[2]).getBytes()), hdr = d[1] < 0x80 ? 2 : 2 + (d[1] & 0x7f);
+      return { tbs: fromBin(forge.asn1.toDer(tbs).getBytes()), certSigAlg: forge.asn1.derToOid(c.value[1].value[0].value), certSig: d.subarray(hdr + 1) };
+    } catch { return {}; }
+  }
+  /* Hat der Aussteller mit diesem Schlüssel (SPKI, DER) das Zertifikat child signiert? RSA (PKCS#1 v1.5) und ECDSA; RSA-PSS → null */
+  const CERT_HASH = { [OID.rsaSha1]: 'SHA-1', [OID.rsaSha256]: 'SHA-256', [OID.rsaSha384]: 'SHA-384', [OID.rsaSha512]: 'SHA-512', [OID.ecSha1]: 'SHA-1', [OID.ecSha256]: 'SHA-256', [OID.ecSha384]: 'SHA-384', [OID.ecSha512]: 'SHA-512' };
+  async function signedBy(forge, child, spki) {
+    const S = subtle(), hash = CERT_HASH[child.certSigAlg]; if (!S || !hash) return null;
+    try {
+      if (child.certSigAlg.startsWith('1.2.840.113549')) {
+        const key = await S.importKey('spki', ab(spki), { name: 'RSASSA-PKCS1-v1_5', hash }, false, ['verify']);
+        return await S.verify('RSASSA-PKCS1-v1_5', key, ab(child.certSig), ab(child.tbs));
+      }
+      for (const [curve, size] of [['P-256', 32], ['P-384', 48], ['P-521', 66]]) {
+        let key; try { key = await S.importKey('spki', ab(spki), { name: 'ECDSA', namedCurve: curve }, false, ['verify']); } catch { continue; }
+        return await S.verify({ name: 'ECDSA', hash }, key, ab(ecRaw(forge, latin1(child.certSig), size)), ab(child.tbs));
+      }
+    } catch { return false; }
+    return null;
+  }
+  const b64u8 = b => typeof atob === 'function' ? fromBin(atob(b)) : new Uint8Array(Buffer.from(b, 'base64'));
+  /* Prüfung gegen die EU-Vertrauensliste (vendor/eutl/eutl.json, statischer Schnappschuss von pdfmy.de): Ist das Zertifikat des
+     Unterzeichners – direkt oder über eine Zwischenstelle aus der Signatur – von einem qualifizierten Zertifizierungsdienst ausgestellt,
+     dessen Schlüssel in der Liste steht? Geprüft wird kryptografisch (Signatur des Zertifikats), nicht nur am Namen.
+     Ergebnis: { c: Land, p: Anbieter, n: Dienst, atTime: zum Signaturzeitpunkt erteilt, u: Verwendung } oder null. */
+  async function trust(r, list) {
+    const forge = root.forge, path = r && r._path; if (!forge || !path || !path.length || !list || !list.dienste) return null;
+    const when = r.time || r.m || new Date(), day = when instanceof Date && !isNaN(when) ? when.toISOString().slice(0, 10) : null;
+    const signer = path[0], steps = [signer, ...path.slice(1).filter(c => c !== signer && c.subject.cn === signer.issuer.cn && c.subject.cn !== c.issuer.cn)];
+    for (const x of steps) {
+      for (const s of list.dienste.filter(s => s.cn && s.cn === x.issuer.cn)) {
+        if (!(await signedBy(forge, x, b64u8(s.k)))) continue;
+        if (x !== signer && !(await signedBy(forge, signer, x.spki))) continue;   // Zwischenstelle muss den Unterzeichner wirklich ausgestellt haben
+        const atTime = !day ? null : s.st === 'g' ? !s.from || day >= s.from : !!s.from && day >= s.from && (!s.to || day < s.to);
+        return { c: s.c, p: s.p, n: s.n, u: s.u || [], atTime, stand: list.stand };
+      }
+    }
+    return null;
   }
   // ECDSA-Signatur (DER: SEQUENCE{r,s}) → r||s für WebCrypto
   function ecRaw(forge, der, size) {
@@ -90,6 +135,7 @@
     r.timestamp = !!unsigned && latin1(fromBin(forge.asn1.toDer(unsigned).getBytes())).includes(latin1(fromBin(forge.asn1.oidToDer(OID.tsa).getBytes())));
     r.algorithm = hash || '?';
     if (cert) Object.assign(r, { signer: cert.subject, issuer: cert.issuer, certFrom: cert.from, certTo: cert.to, selfSigned: cert.issuer.cn === cert.subject.cn && cert.issuer.o === cert.subject.o, qualified: cert.qc });
+    if (cert) Object.defineProperty(r, '_path', { value: [cert, ...certs.filter(c => c !== cert)], enumerable: false });   // für trust() – nicht mitspeichern
     if (!hash) { r.problems.push('Unbekanntes Prüfsummenverfahren'); return r; }
     const S = subtle(); if (!S) { r.problems.push('Prüfung im Browser nicht möglich'); return r; }
     // (1) Prüfsumme der signierten Bytes
@@ -210,6 +256,6 @@
   }
   const sameRange = (a, b) => !!a && !!b && a.length === 4 && a.every((n, k) => n === b[k]);
 
-  const api = { verify, find, hasSignature, scanNames, fields, sameRange, drehen };
+  const api = { verify, trust, find, hasSignature, scanNames, fields, sameRange, drehen };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfVerify = api;
 })(typeof self !== 'undefined' ? self : globalThis);

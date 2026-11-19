@@ -19,8 +19,8 @@ test('Xiaomi-Geräte am Modellnamen erkennen (Client Hints), andere Hersteller n
 test('Xiaomi-Browser erkennen; Hinweise vorhanden; Knopf erklärt den Weg über Chrome', () => {
   assert.ok(MIBROWSER.test('Mozilla/5.0 (Linux; U; Android 14; de-de; 23021RAAEG Build/UKQ1) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/112.0 Mobile Safari/537.36 XiaoMi/MiuiBrowser/14.10.1-gn'));
   assert.ok(!MIBROWSER.test('Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36'));
-  assert.match(pro, /\|\| firefoxDesk \|\| miBrowser\); \}/, 'Knopf erscheint im Xiaomi-Browser');
+  assert.match(pro, /\|\| firefoxDesk \|\| miBrowser \|\| samsungBrowser \|\| operaDesk \|\| silk\); \}/, 'Knopf erscheint im Xiaomi-Browser');
   assert.match(pro, /if \(miBrowser\) \{ alert\(I18N\.t\('Im Xiaomi-Browser lässt sich PDFMy nicht als App installieren/);
-  assert.match(pro, /\(xiaomi \? ' ' \+ I18N\.t\(XIAOMI_ICON_HINT\) : ''\)/, 'nach der Installation: Hinweis zum Symbol');
+  assert.match(pro, /\(xiaomi \? ' ' \+ I18N\.t\(XIAOMI_ICON_HINT\) : samsung/, 'nach der Installation: Hinweis zum Symbol');
   assert.match(pro, /getHighEntropyValues\?\.\(\['model'\]\)/, 'Chrome meldet das Modell nur über Client Hints');
 });

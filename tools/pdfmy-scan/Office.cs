@@ -112,5 +112,75 @@ namespace PdfmyScan
             Program.Log($"Office: {Path.GetFileName(path)} → {c.app}");
             return null;
         }
+
+        /* Originalgetreue Umwandlung Word/Excel/PowerPoint → PDF mit einem installierten LibreOffice (oder Collabora Office), ohne Fenster.
+           Eigenes LibreOffice-Profil, damit ein offenes LibreOffice des Nutzers nicht stört; immer nur eine Umwandlung zugleich;
+           Arbeitsdateien werden danach gelöscht – die Datei verlässt den Rechner nicht. */
+        static readonly string[] ConvExt = { ".docx", ".doc", ".docm", ".dotx", ".odt", ".rtf", ".xlsx", ".xls", ".xlsm", ".ods", ".pptx", ".ppt", ".pptm", ".ppsx", ".potx", ".odp" };
+        static readonly object convLock = new object();
+        static string convExe;   // nur Fundstellen merken: wird LibreOffice später installiert, ist es ohne Neustart nutzbar
+        public static string Converter()
+        {
+            if (convExe == null || !File.Exists(convExe)) convExe = Test("convert") ?? LibreOffice() ?? Collabora();
+            return convExe;
+        }
+        // Beim Start einmalig das eigene LibreOffice-Profil anlegen (dauert beim ersten Mal ~30 s) – die erste echte Umwandlung geht dann schneller
+        public static void Warm()
+        {
+            System.Threading.ThreadPool.QueueUserWorkItem(_ =>
+            {
+                try
+                {
+                    string exe = Converter(); if (exe == null || Test("convert") != null) return;
+                    string profile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PDFMy", "lo-profil");
+                    if (Directory.Exists(Path.Combine(profile, "user"))) return;
+                    System.Threading.Thread.Sleep(60000);   // nicht mitten in den Rechnerstart
+                    lock (convLock)
+                    {
+                        Directory.CreateDirectory(profile);
+                        string url = "file:///" + profile.Replace('\\', '/').Replace(" ", "%20");
+                        using (var p = Process.Start(new ProcessStartInfo(exe, $"\"-env:UserInstallation={url}\" --headless --invisible --norestore --nologo --nodefault --terminate_after_init") { UseShellExecute = false, CreateNoWindow = true }))
+                            if (!p.WaitForExit(180000)) try { p.Kill(); } catch { }
+                    }
+                }
+                catch { }
+            });
+        }
+        public static byte[] Convert(string name, byte[] data, out string err)
+        {
+            err = null;
+            string exe = Converter();
+            if (exe == null) { err = "LibreOffice ist auf diesem Rechner nicht installiert."; return null; }
+            string ext = (Path.GetExtension(name ?? "") ?? "").ToLowerInvariant();
+            if (Array.IndexOf(ConvExt, ext) < 0) { err = "Dieses Dateiformat wandelt LibreOffice hier nicht um."; return null; }
+            if (data == null || data.Length < 8) { err = "Die Datei ist leer."; return null; }
+            string la = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string work = Path.Combine(la, "PDFMy", "Umwandlung", Guid.NewGuid().ToString("N"));
+            string profile = Path.Combine(la, "PDFMy", "lo-profil");
+            lock (convLock)
+            {
+                try
+                {
+                    Directory.CreateDirectory(work); Directory.CreateDirectory(profile);
+                    string src = Path.Combine(work, "dokument" + ext);
+                    File.WriteAllBytes(src, data);
+                    string url = "file:///" + profile.Replace('\\', '/').Replace(" ", "%20");
+                    var psi = new ProcessStartInfo(exe, $"\"-env:UserInstallation={url}\" --headless --invisible --norestore --nologo --nodefault --nolockcheck --convert-to pdf --outdir \"{work}\" \"{src}\"")
+                    { UseShellExecute = false, CreateNoWindow = true, WorkingDirectory = work };
+                    using (var p = Process.Start(psi))
+                    {
+                        if (!p.WaitForExit(180000)) { try { p.Kill(); } catch { } err = "Die Umwandlung hat zu lange gedauert."; return null; }
+                    }
+                    string pdf = Path.Combine(work, "dokument.pdf");
+                    if (!File.Exists(pdf)) { err = "LibreOffice konnte die Datei nicht umwandeln."; return null; }
+                    var bytes = File.ReadAllBytes(pdf);
+                    if (bytes.Length < 8 || bytes[0] != '%' || bytes[1] != 'P') { err = "LibreOffice hat keine gültige PDF erzeugt."; return null; }
+                    Program.Log($"Umwandlung: {ext} → PDF ({bytes.Length / 1024} KB)");
+                    return bytes;
+                }
+                catch (Exception e) { err = "Umwandlung fehlgeschlagen: " + e.Message; return null; }
+                finally { try { Directory.Delete(work, true); } catch { } }
+            }
+        }
     }
 }

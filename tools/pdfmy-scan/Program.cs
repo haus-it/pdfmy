@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.21.0";
+        public const string Version = "1.22.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -113,6 +113,7 @@ namespace PdfmyScan
                 var server = new LocalServer(hub);
                 server.Start();
                 PdfPrinter.Watch();
+                OfficeApps.Warm();   // LibreOffice-Profil für die originalgetreue Umwandlung vorbereiten
                 foreach (var f in openPaths) FileOpen.Open(f, task);
                 _ = hub.RefreshAsync();
                 Application.Run(new TrayContext(hub, args.Contains("--installed"), args.Contains("--updated")));
@@ -1996,6 +1997,13 @@ namespace PdfmyScan
                 return;
             }
             if (p == "/office" && method == "GET") { SendJson(s, 200, new { apps = OfficeApps.Detect().Select(c => new { c.id, c.app, c.what, c.fmt }).ToList() }, cors); return; }   // installierte Office-Programme
+            if (p == "/office/convert" && method == "POST")   // Word/Excel/PowerPoint originalgetreu mit LibreOffice in PDF umwandeln (seit 1.22.0)
+            {
+                var o = json.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(body ?? new byte[0]));
+                byte[] doc = null; try { doc = Convert.FromBase64String(Convert.ToString(o["data"])); } catch { }
+                byte[] pdf = OfficeApps.Convert(o.ContainsKey("name") ? Convert.ToString(o["name"]) : "", doc, out string err);
+                SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, data = pdf == null ? null : Convert.ToBase64String(pdf) }, cors); return;
+            }
             if (p == "/office" && method == "POST")   // PDF mit dem gewählten Office-Programm öffnen (Datei bleibt auf dem Rechner)
             {
                 var o = json.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(body ?? new byte[0]));
@@ -2024,7 +2032,7 @@ namespace PdfmyScan
                 SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return;
             }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), managed = Machine.UpdatesManaged, printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem(), selfUpdate = !Machine.UpdatesManaged, autoUpdate = !Updater.AutoOff }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), managed = Machine.UpdatesManaged, printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem(), selfUpdate = !Machine.UpdatesManaged, autoUpdate = !Updater.AutoOff, convert = OfficeApps.Converter() != null }, cors); return; }
             // „Jetzt aktualisieren“ in PDFMy (1.20.0): ein Klick, Rest automatisch – wie „Update installieren“ im Symbol unten rechts
             // (SHA-256 und Signatur „Mentor GmbH“ geprüft); von der IT verteilte Installationen aktualisiert die IT
             if (p == "/self-update" && method == "POST")
