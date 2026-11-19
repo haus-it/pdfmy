@@ -36,6 +36,26 @@ test('Unbefristet mit Frist zum Monats- bzw. Quartalsende; Wochenfrist', () => {
   assert.equal(w.ende, '2027-01-30'); assert.equal(w.kuendigenBis, '2027-01-02');
 });
 
+test('Fehlersuche 19.11.2026: jederzeit kündbar ist keine Frist, Satzgrenzen, § 188 Abs. 3, „vor Ablauf“', () => {
+  // nur eine Kündigungsfrist, kein Ende: Hinweis, aber nie „heute fällig“
+  const nur = L.contractTerms('Kündigungsfrist: 3 Monate.', HEUTE);
+  assert.equal(nur.jederzeit, true); assert.equal(nur.naechstesEnde, '2027-02-19');
+  const v = 'Stadtwerke GmbH\nVertrag Strom\nKündigungsfrist: 3 Monate.', mv = L.analyzeLetter(v, v, '');
+  assert.equal(mv.deadline, '', 'keine Frist'); assert.match(L.todoFor(mv, HEUTE).text, /kündbar mit einer Frist von 3 Monate – eine Kündigung heute wirkt zum 19\.2\.2027/);
+  // Rechnung, die „Kündigungsfrist“ nur im Fuß erwähnt: keine Frist
+  const r = 'Stadtwerke GmbH\nRechnung Nr. 4711\nGesamtbetrag 120,00 EUR\nKündigungsfrist 1 Monat zum Monatsende.', mr = L.analyzeLetter(r, r, '');
+  assert.equal(mr.type, 'Rechnung'); assert.equal(mr.deadline, '');
+  // Datum nicht aus dem Nachbarsatz; „drei Monate vor Ablauf“ als Frist
+  const s = L.contractTerms('Die Kündigung muss drei Monate vor Ablauf erfolgen. Vertragsbeginn: 01.01.2026, Laufzeit 12 Monate, verlängert sich um jeweils 12 Monate', HEUTE);
+  assert.equal(s.ende, '2026-12-31'); assert.equal(s.kuendigenBis, '2027-09-30');
+  // Mindestlaufzeit vorbei, danach unbestimmte Zeit: jederzeit kündbar
+  const u = L.contractTerms('Mindestlaufzeit 24 Monate ab Vertragsbeginn 01.01.2024, danach läuft der Vertrag auf unbestimmte Zeit, Kündigungsfrist ein Monat.', HEUTE);
+  assert.equal(u.jederzeit, true); assert.equal(u.naechstesEnde, '2026-12-19');
+  // § 188 Abs. 3 BGB: Beginn 31.01., ein Monat → Ende 28.02.
+  assert.equal(L.contractTerms('Vertragsbeginn 31.01.2026, Laufzeit 1 Monat, Kündigungsfrist 1 Woche.', '2026-01-31').ende, '2026-02-28');
+  assert.equal(L.contractTerms('Vertragsbeginn 15.01.2026, Laufzeit 1 Monat, Kündigungsfrist 1 Woche.', '2026-01-15').ende, '2026-02-14');
+});
+
 test('Kein Vertrag: nichts erkannt; Rechnung bleibt Rechnung', () => {
   assert.equal(L.contractTerms('Rechnung Nr. 4711, zahlbar bis 30.11.2026.', HEUTE), null);
   const t = 'Stadtwerke GmbH\nRechnung Nr. 4711\nGesamtbetrag 120,00 EUR\nZahlbar bis 30.11.2026';

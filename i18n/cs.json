@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Bez výpovědi prodloužení o {0} měs.",
  "Quartal": "Čtvrtletí",
  "Block {0} mit dem vorigen verbinden": "Spojit blok {0} s předchozím",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Spojit s předchozím blokem (jeden odstavec nebo nadpis)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Spojit s předchozím blokem (jeden odstavec nebo nadpis)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: lze vypovědět s výpovědní lhůtou {2} – výpověď podaná dnes nabývá účinnosti dne {3}."
 }

@@ -141,7 +141,9 @@
     // Vertrag, Versicherungsschein: Laufzeit und Kündigungsfrist → „kündigen bis“ ist die Frist, die zählt
     if (/vertrag|versicherungsschein/i.test(r.type) || /kündigungsfrist|mindest(?:vertrags)?laufzeit|verlängert sich (?:automatisch|stillschweigend)/i.test(all)) {
       const c = contractTerms(all);
-      if (c) { r.contract = c; if (c.kuendigenBis && (/vertrag|versicherungsschein/i.test(r.type) || !r.deadline)) r.deadline = c.kuendigenBis; }
+      // zur Frist des Briefs nur bei Verträgen und Versicherungsscheinen mit festem Ende – nie bei „jederzeit kündbar“
+      // und nie bei anderen Briefen, die das Wort „Kündigungsfrist“ nur erwähnen (z. B. im Fuß einer Rechnung)
+      if (c) { r.contract = c; if (c.kuendigenBis && !c.jederzeit && /vertrag|versicherungsschein/i.test(r.type)) r.deadline = c.kuendigenBis; }
     }
     // Bescheid mit Rechtsbehelfsbelehrung: Einspruchs-/Widerspruchsfrist aus dem Bescheiddatum berechnen
     r.appealRule = appealRule(all);
@@ -291,35 +293,45 @@
     return isoD(y, m - 1 + n, ende && monatsLetzter(s) ? last : Math.min(d, last));
   }
   const plusTage = (s, n) => { const [y, m, d] = parts(s); return isoD(y, m - 1, d + n); };
-  function contractTerms(text, today = iso(new Date())) {
+  // heutiger Kalendertag in Ortszeit (nicht UTC – zwischen 0 und 2 Uhr wäre es sonst der Vortag)
+  const heute = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  // Ende einer Laufzeit von n Monaten ab Beginn (§ 188 Abs. 2/3 BGB): Tag vor dem gleichen Tag im Zielmonat; fehlt dieser Tag
+  // (Beginn 31.01., ein Monat), endet sie am Monatsletzten (28.02.)
+  const laufzeitEnde = (b, n) => { const c = plusMonate(b, n); return parts(c)[2] < parts(b)[2] ? c : plusTage(c, -1); };
+  function contractTerms(text, today = heute()) {
     const t = String(text || '').replace(/\s+/g, ' ');
     const datum = re => { const m = t.match(re); return m ? parseDates(m[m.length - 1] || m[0]).pop() || '' : ''; };
-    const D = '(\\d{1,2}\\.\\s?\\d{1,2}\\.\\s?\\d{2,4})';
-    const beginn = datum(new RegExp(`(?:vertragsbeginn|versicherungsbeginn|leistungsbeginn|beginn der (?:laufzeit|mitgliedschaft|versicherung)|beginnt am|gültig ab|vertrag (?:beginnt|läuft) ab)[^\\d]{0,25}${D}`, 'i'));
-    let ende = datum(new RegExp(`(?:vertragsende|laufzeitende|ablauf(?:datum)?|endet (?:am|zum)|läuft bis|gültig bis|befristet bis|bis einschließlich)[^\\d]{0,25}${D}`, 'i'));
+    const D = '(\\d{1,2}\\.\\s?\\d{1,2}\\.\\s?\\d{2,4})', LUECKE = '(?:(?!\\.\\s)[^\\d]){0,25}';   // nicht über ein Satzende hinweg
+    const beginn = datum(new RegExp(`(?:vertragsbeginn|versicherungsbeginn|leistungsbeginn|beginn der (?:laufzeit|mitgliedschaft|versicherung)|beginnt am|vertrag (?:beginnt|läuft) ab)${LUECKE}${D}`, 'i'));
+    let ende = datum(new RegExp(`(?:vertragsende|laufzeitende|ablauf(?:datum)?|endet (?:am|zum)|läuft bis|befristet bis|bis einschließlich)${LUECKE}${D}`, 'i'));
     const lz = t.match(new RegExp(`(?:mindest(?:vertrags)?laufzeit|vertragslaufzeit|laufzeit|vertragsdauer|für die dauer von|läuft (?:für |über )?)[^\\d.]{0,25}?${ZW}\\s*(monat|jahr)`, 'i'));
     const laufzeit = lz ? zahl(lz[1]) * (/jahr/i.test(lz[2]) ? 12 : 1) : 0;
-    const kf = t.match(new RegExp(`(?:kündigungsfrist(?: beträgt| von)?|(?:mit einer|unter einhaltung einer) frist von|spätestens|kündbar mit (?:einer frist von )?)[^\\d.]{0,20}?${ZW}\\s*(woche|monat)[^.]{0,80}`, 'i'));
+    const kf = t.match(new RegExp(`(?:kündigungsfrist(?: beträgt| von)?|(?:mit einer|unter einhaltung einer) frist von|spätestens|kündbar mit (?:einer frist von )?)[^\\d.]{0,20}?${ZW}\\s*(woche|monat)[^.]{0,80}`, 'i'))
+      // „Die Kündigung muss drei Monate vor Ablauf erfolgen“ – nur im Satz mit „kündig…“
+      || t.match(new RegExp(`kündig[^.]{0,60}?${ZW}\\s*(woche|monat)\\w*\\s+vor\\s+(?:dem\\s+)?(?:ablauf|ende|vertragsende|laufzeitende)[^.]{0,40}`, 'i'));
     const frist = kf ? { n: zahl(kf[1]), einheit: /woche/i.test(kf[2]) ? 'Woche' : 'Monat', zum: /quartal/i.test(kf[0]) ? 'Quartal' : /monatsende|ende (?:eines|des) (?:kalender)?monats/i.test(kf[0]) ? 'Monat' : '' } : null;
     const vl = t.match(new RegExp(`verlängert sich[^.]{0,60}?um (?:jeweils |weitere )?${ZW}\\s*(monat|jahr)`, 'i'));
     const verlaengerung = vl ? zahl(vl[1]) * (/jahr/i.test(vl[2]) ? 12 : 1) : 0;
-    const unbefristet = /auf unbestimmte zeit|unbefristet/i.test(t) && !laufzeit && !ende;
-    if (!ende && beginn && laufzeit) ende = plusTage(plusMonate(beginn, laufzeit), -1);
+    const unbestimmt = /auf unbestimmte zeit|unbefristet/i.test(t), unbefristet = unbestimmt && !laufzeit && !ende;
+    if (!ende && beginn && laufzeit) ende = laufzeitEnde(beginn, laufzeit);
     if (!ende && !frist) return null;
     // nächstes mögliches Ende: bei Verlängerung so lange weiterschieben, bis die Kündigung noch rechtzeitig möglich ist
     const zurueck = (e, f) => f.einheit === 'Woche' ? plusTage(e, -7 * f.n) : plusMonate(e, -f.n, true);
     const vor = (e, f) => f ? zurueck(e, f) : e;
     let naechstesEnde = ende, guard = 0;
     if (ende && verlaengerung) while (vor(naechstesEnde, frist) < today && guard++ < 200) naechstesEnde = plusTage(plusMonate(plusTage(naechstesEnde, 1), verlaengerung), -1);
-    // unbefristet oder Ende vorbei ohne Verlängerung: frühestes Ende = heute + Frist, ggf. zum Monats-/Quartalsende
-    if ((!naechstesEnde || (unbefristet && frist)) && frist) {
+    /* Jederzeit kündbar (nur mit Frist): kein festes Ende bekannt, oder die feste Laufzeit ist vorbei und der Vertrag läuft „auf
+       unbestimmte Zeit“ weiter. Dann gibt es keine Frist, die man versäumen kann – nur: „Kündigung heute wirkt zum …“. Das wird
+       nie zur Frist des Briefs (sonst stünde dort jeden Tag „heute fällig“). */
+    const jederzeit = !!frist && (!ende || (unbestimmt && !verlaengerung && vor(ende, frist) < today));
+    if (jederzeit) {
       let e = frist.einheit === 'Woche' ? plusTage(today, 7 * frist.n) : plusMonate(today, frist.n);
       if (frist.zum) { const [y, m] = parts(e), q = frist.zum === 'Quartal' ? Math.ceil(m / 3) * 3 : m; e = isoD(y, q, 0); }
       naechstesEnde = e;
     }
     const kuendigenBis = naechstesEnde && frist ? zurueck(naechstesEnde, frist) : '';
     return {
-      beginn, laufzeit, ende, frist, verlaengerung, unbefristet, naechstesEnde, kuendigenBis: kuendigenBis && kuendigenBis >= today ? kuendigenBis : '',
+      beginn, laufzeit, ende, frist, verlaengerung, unbefristet, jederzeit, naechstesEnde, kuendigenBis: kuendigenBis && kuendigenBis >= today ? kuendigenBis : '',
       verbraucherHinweis: !!verlaengerung,   // stillschweigende Verlängerung: bei Verbraucherverträgen (ab 01.03.2022) meist monatlich kündbar
     };
   }
@@ -337,6 +349,10 @@
     const appeal = m.appealRule && m.date ? appealDeadline(m.date) : '', appealTxt = appeal ? ` · ${m.appealRule === 'widerspruch' ? 'Widerspruch' : 'Einspruch'} bis ${de(appeal)}` : '';
     // Vertrag: wie lange er läuft und bis wann gekündigt sein muss (Eingang beim Vertragspartner)
     const c = m.contract;
+    if (c && c.jederzeit && c.frist && /vertrag|versicherungsschein/i.test(type)) {   // jederzeit kündbar: Hinweis, keine Frist
+      const fr = `${c.frist.n} ${c.frist.einheit === 'Woche' ? (c.frist.n === 1 ? 'Woche' : 'Wochen') : (c.frist.n === 1 ? 'Monat' : 'Monate')}${c.frist.zum ? ` zum ${c.frist.zum}sende` : ''}`;
+      return { tone: 'info', text: `${type}${from}: kündbar mit einer Frist von ${fr} – eine Kündigung heute wirkt zum ${de(c.naechstesEnde)}.`, actions: ['fwd', 'file'] };
+    }
     if (c && (c.kuendigenBis || c.naechstesEnde) && /vertrag|versicherungsschein/i.test(type)) {
       const f = c.frist ? ` (Kündigungsfrist ${c.frist.n} ${c.frist.einheit === 'Woche' ? (c.frist.n === 1 ? 'Woche' : 'Wochen') : (c.frist.n === 1 ? 'Monat' : 'Monate')}${c.frist.zum ? ` zum ${c.frist.zum}sende` : ''})` : '';
       const lauf = c.naechstesEnde ? ` läuft bis ${de(c.naechstesEnde)}` : '', vl = c.verlaengerung ? `, verlängert sich sonst um ${c.verlaengerung} Monate` : '';

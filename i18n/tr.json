@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Fesih olmazsa {0} ay uzar",
  "Quartal": "Çeyrek",
  "Block {0} mit dem vorigen verbinden": "{0}. bloğu öncekiyle birleştir",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Önceki blokla birleştir (tek bir paragraf veya başlık)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Önceki blokla birleştir (tek bir paragraf veya başlık)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: {2} fesih süresiyle feshedilebilir – bugün yapılan fesih {3} tarihinde geçerli olur."
 }

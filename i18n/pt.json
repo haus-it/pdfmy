@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Sem denúncia, renovação por {0} meses",
  "Quartal": "Trimestre",
  "Block {0} mit dem vorigen verbinden": "Unir o bloco {0} ao anterior",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unir ao bloco anterior (um parágrafo ou um título)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unir ao bloco anterior (um parágrafo ou um título)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: pode ser rescindido com um pré-aviso de {2} – um cancelamento hoje produz efeitos em {3}."
 }

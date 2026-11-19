@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Ilman irtisanomista jatko {0} kuukaudella",
  "Quartal": "Neljännesvuosi",
  "Block {0} mit dem vorigen verbinden": "Yhdistä lohko {0} edelliseen",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Yhdistä edelliseen lohkoon (yksi kappale tai otsikko)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Yhdistä edelliseen lohkoon (yksi kappale tai otsikko)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: irtisanottavissa {2} irtisanomisajalla – tänään tehty irtisanominen tulee voimaan {3}."
 }

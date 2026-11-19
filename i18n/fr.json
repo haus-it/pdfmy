@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Sans résiliation, reconduction de {0} mois",
  "Quartal": "Trimestre",
  "Block {0} mit dem vorigen verbinden": "Fusionner le bloc {0} avec le précédent",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Fusionner avec le bloc précédent (un paragraphe ou un titre)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Fusionner avec le bloc précédent (un paragraphe ou un titre)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1} : résiliable avec un préavis de {2} – une résiliation aujourd’hui prend effet le {3}."
 }

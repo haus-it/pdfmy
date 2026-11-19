@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Fără reziliere, prelungire cu {0} luni",
  "Quartal": "Trimestru",
  "Block {0} mit dem vorigen verbinden": "Îmbină blocul {0} cu cel anterior",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Îmbină cu blocul anterior (un paragraf sau un titlu)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Îmbină cu blocul anterior (un paragraf sau un titlu)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: poate fi reziliat cu un termen de preaviz de {2} – o reziliere astăzi produce efecte la {3}."
 }

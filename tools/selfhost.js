@@ -68,7 +68,8 @@ Aktualisieren (empfohlen: automatisch, signiert, ohne Ausfallzeit):
 Danach prüft der Server täglich zwischen 3 und 6 Uhr, ob es eine neue Fassung gibt (Kanal „stabil“: erst nach
 ${STABIL_TAGE} Tagen ohne Rücknahme auf ${domain}; „--kanal=aktuell“ bzw. „-Kanal aktuell“: sofort). Installiert wird nur
 eine von der Mentor GmbH signierte Fassung mit passender Prüfsumme; die vorige bleibt für „zurueck“ erhalten.
-Eigene Dateien im Ordner (z. B. impressum.html) bleiben bei Updates erhalten. Eigene Links in der Fußzeile der App
+Eigene Dateien und Ordner im Hauptordner (z. B. impressum.html) bleiben bei Updates erhalten – nicht aber
+eigene Dateien in den Ordnern des Pakets (js/, vendor/, i18n/, icons/). Eigene Links in der Fußzeile der App
 (Impressum, Datenschutz, Hilfe des Hauses): Datei eigene-links.json nach dem Muster eigene-links.beispiel.json anlegen.
 
 Anleitung, Webserver-Beispiele, Prüfsummen: https://${domain}/firmen.html#eigener-server

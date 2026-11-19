@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Ilma ülesütlemiseta pikeneb {0} kuud",
  "Quartal": "Kvartal",
  "Block {0} mit dem vorigen verbinden": "Ühenda plokk {0} eelmisega",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Ühenda eelmise plokiga (üks lõik või pealkiri)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Ühenda eelmise plokiga (üks lõik või pealkiri)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: lõpetatav {2} etteteatamistähtajaga – täna esitatud ülesütlemine jõustub {3}."
 }

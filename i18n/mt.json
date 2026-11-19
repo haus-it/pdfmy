@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Mingħajr terminazzjoni, tiġdid għal {0} xhur",
  "Quartal": "Kwart",
  "Block {0} mit dem vorigen verbinden": "Ingaħaq il-blokk {0} ma’ dak ta’ qabel",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Ingaħaq mal-blokk ta’ qabel (paragrafu wieħed jew titlu wieħed)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Ingaħaq mal-blokk ta’ qabel (paragrafu wieħed jew titlu wieħed)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: jista’ jiġi kkanċellat b’perjodu ta’ avviż ta’ {2} – kanċellazzjoni llum tidħol fis-seħħ fil-{3}."
 }

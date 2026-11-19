@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Sin rescisión, prórroga de {0} meses",
  "Quartal": "Trimestre",
  "Block {0} mit dem vorigen verbinden": "Unir el bloque {0} con el anterior",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unir con el bloque anterior (un párrafo o un título)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unir con el bloque anterior (un párrafo o un título)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: se puede rescindir con un plazo de preaviso de {2}; una baja hoy surte efecto el {3}."
 }

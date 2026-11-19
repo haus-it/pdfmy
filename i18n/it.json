@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Senza disdetta, rinnovo di {0} mesi",
  "Quartal": "Trimestre",
  "Block {0} mit dem vorigen verbinden": "Unisci il blocco {0} al precedente",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unisci al blocco precedente (un paragrafo o un titolo)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unisci al blocco precedente (un paragrafo o un titolo)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: disdicibile con un preavviso di {2} – una disdetta oggi ha effetto dal {3}."
 }

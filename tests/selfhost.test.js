@@ -128,6 +128,15 @@ const runBash = (cmd, ziel, url) => {
 runBash.ok = !!bash && cp.spawnSync(bash, ['-c', 'command -v curl && command -v openssl && command -v tar'], { encoding: 'utf8' }).status === 0;
 ablauf('Linux (bash)', runBash);
 
+test('Aktualisierer Linux: Tippfehler im Pfad (übergeordneter Ordner fehlt) bricht ab, statt woanders zu installieren', { skip: !runBash.ok && 'bash nicht verfügbar' }, async () => {
+  const base = fs.mkdtempSync(path.join(os.tmpdir(), 'pdfmy-tipp-')), ziel = path.join(base, 'gibtsnicht', 'pdfmy');
+  try {
+    const r = await runBash('aktualisieren', ziel, 'http://127.0.0.1:9');
+    assert.notEqual(r.status, 0); assert.match(r.out, /übergeordneter Ordner .* fehlt/);
+    assert.deepEqual(fs.readdirSync(base), [], 'nichts angelegt');
+  } finally { fs.rmSync(base, { recursive: true, force: true }); }
+});
+
 const runPs = (cmd, ziel, url) => {
   const f = path.join(os.tmpdir(), `pdfmy-selfhost-${process.pid}.ps1`); fs.writeFileSync(f, sk.ps1);
   return lauf('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', f, cmd, ziel, '-Quelle', url], {});

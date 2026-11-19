@@ -35,9 +35,9 @@ test('Text mit chinesischen, japanischen und koreanischen Zeichen: Ersatzschrift
   assert.ok(!(await fontNames(ohne)).some(n => /PDFMyCJK/.test(n)));
 });
 
-test('Rein lateinischer Text lädt die Ersatzschrift nie', async () => {
+test('Rein lateinischer Text und Emojis laden die Ersatzschrift nie', async () => {
   let geladen = 0;
-  await TextPdf.build(PDFLib, { text: 'Grüße aus Paderborn – € 12,50 „Zitat“', fonts: fonts({ cjk: () => { geladen++; return cjk(); } }) });
+  await TextPdf.build(PDFLib, { text: 'Grüße aus Paderborn – € 12,50 „Zitat“ 😀 ✅', fonts: fonts({ cjk: () => { geladen++; return cjk(); } }) });
   assert.equal(geladen, 0);
 });
 

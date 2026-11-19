@@ -3,8 +3,8 @@
 # Herausgeber: Mentor GmbH, Paderborn – https://__DOMAIN__
 # Lizenzbedingungen beachten: https://github.com/haus-it/pdfmy/blob/main/LICENSE (PolyForm Noncommercial 1.0.0)
 # Jede Fassung ist von der Mentor GmbH signiert (RSA-3072, SHA-256). Installiert wird nur eine Fassung mit gültiger Signatur,
-# passender Prüfsumme und höherer Nummer als die vorhandene. Eigene Dateien im Zielordner (z. B. impressum.html, eigene-links.json)
-# bleiben bei jedem Update erhalten. Benötigt: bash, curl, tar, gzip, openssl.
+# passender Prüfsumme und höherer Nummer als die vorhandene. Eigene Dateien im Hauptordner des Ziels (z. B. impressum.html,
+# eigene-links.json, eigene Unterordner) bleiben bei jedem Update erhalten – nicht aber eigene Dateien in Ordnern des Pakets (js/, vendor/ …). Benötigt: bash, curl, tar, gzip, openssl.
 set -euo pipefail
 umask 022
 SKRIPT_VERSION="__VERSION__"
@@ -66,11 +66,18 @@ neueste() {
   case "$NEU_NR" in ''|*[!0-9]*) fehler "Versionsdatei ohne gültige Nummer";; esac
   case "$NEU_DATEI" in ''|*/*|*..*) fehler "Versionsdatei mit ungültigem Dateinamen";; esac
 }
+# Absoluter Zielpfad; bricht ab, wenn der übergeordnete Ordner fehlt (Tippfehler wie /var/wwww/pdfmy: nie nach /pdfmy installieren).
+# Nur als einfache Zuweisung aufrufen (ZIEL=$(absolut …)) – dann beendet set -e das Skript bei einem Fehler.
+absolut() {
+  local d; d=$(cd "$(dirname "$1")" 2>/dev/null && pwd) || fehler "übergeordneter Ordner von $1 fehlt – bitte den Pfad prüfen"
+  printf '%s/%s
+' "${d%/}" "$(basename "$1")"
+}
 installiert_nr() { [ -f "$1/.pdfmy-version" ] && sed -n 's/^nr=//p' "$1/.pdfmy-version" | head -n 1 || true; }
 
 aktualisieren() {   # aktualisieren ZIEL [nur_pruefen]
   local ziel eltern name alt b   # tmp bleibt global: die Aufräum-Falle (EXIT) braucht ihn auch nach dem Ende der Funktion
-  ziel=$(cd "$(dirname "$1")" 2>/dev/null && pwd)/$(basename "$1") || fehler "übergeordneter Ordner von $1 fehlt"
+  ziel="$1"   # schon absolut (absolut)
   eltern=$(dirname "$ziel"); name=$(basename "$ziel")
   [ -w "$eltern" ] || fehler "keine Schreibrechte in $eltern (mit sudo aufrufen?)"
   tmp=$(mktemp -d "$eltern/.pdfmy-arbeit.XXXXXX"); trap 'rm -rf "$tmp"' EXIT
@@ -122,7 +129,7 @@ aktualisieren() {   # aktualisieren ZIEL [nur_pruefen]
 
 zurueck() {
   local ziel eltern name
-  ziel=$(cd "$(dirname "$1")" && pwd)/$(basename "$1"); eltern=$(dirname "$ziel"); name=$(basename "$ziel")
+  ziel="$1"; eltern=$(dirname "$ziel"); name=$(basename "$ziel")
   [ -d "$eltern/.$name.vorher" ] || fehler "keine vorige Fassung vorhanden"
   mv "$ziel" "$eltern/.$name.tausch" && mv "$eltern/.$name.vorher" "$ziel" && mv "$eltern/.$name.tausch" "$eltern/.$name.vorher"
   echo "Vorige Fassung wiederhergestellt: $(sed -n 's/^version=//p' "$ziel/.pdfmy-version" 2>/dev/null)"
@@ -155,13 +162,14 @@ automatik_aus() {
 args=(); for a in "$@"; do case "$a" in --still) STILL=1;; --kanal=stabil|--kanal=aktuell) KANAL="${a#--kanal=}";; --kanal=*) fehler "Kanal „${a#--kanal=}“ unbekannt (stabil oder aktuell)";; --version) echo "pdfmy-selfhost $SKRIPT_VERSION"; exit 0;; -h|--help) hilfe; exit 0;; *) args+=("$a");; esac; done
 [ "${#args[@]}" -eq 2 ] || { hilfe; exit 2; }
 [ -n "$QUELLE" ] || QUELLE="https://__DOMAIN__/selfhost/$KANAL"
+ZIEL=$(absolut "${args[1]}")
 case "${args[0]}" in
   installieren) echo "Lizenzbedingungen beachten: https://github.com/haus-it/pdfmy/blob/main/LICENSE – bitte prüfen, ob Ihre Nutzung davon gedeckt ist."
-    aktualisieren "${args[1]}"; automatik_an "$(cd "$(dirname "${args[1]}")" && pwd)/$(basename "${args[1]}")"
+    aktualisieren "$ZIEL"; automatik_an "$ZIEL"
     echo "Fertig. Den Ordner per HTTPS ausliefern (Webserver-Beispiele: https://__DOMAIN__/firmen.html#eigener-server).";;
-  aktualisieren) aktualisieren "${args[1]}";;
-  pruefen) aktualisieren "${args[1]}" nur_pruefen;;
-  zurueck) zurueck "${args[1]}";;
-  automatik-aus) automatik_aus "$(cd "$(dirname "${args[1]}")" && pwd)/$(basename "${args[1]}")";;
+  aktualisieren) aktualisieren "$ZIEL";;
+  pruefen) aktualisieren "$ZIEL" nur_pruefen;;
+  zurueck) zurueck "$ZIEL";;
+  automatik-aus) automatik_aus "$ZIEL";;
   *) hilfe; exit 2;;
 esac

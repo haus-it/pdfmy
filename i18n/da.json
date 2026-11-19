@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Uden opsigelse forlænges med {0} måneder",
  "Quartal": "Kvartal",
  "Block {0} mit dem vorigen verbinden": "Sammenkæd blok {0} med den forrige",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Sammenkæd med forrige blok (ét afsnit eller én overskrift)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Sammenkæd med forrige blok (ét afsnit eller én overskrift)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: kan opsiges med et varsel på {2} – en opsigelse i dag træder i kraft den {3}."
 }

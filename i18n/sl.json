@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Brez odpovedi podaljšanje za {0} mesecev",
  "Quartal": "Četrtletje",
  "Block {0} mit dem vorigen verbinden": "Združi blok {0} s prejšnjim",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Združi s prejšnjim blokom (en odstavek ali naslov)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Združi s prejšnjim blokom (en odstavek ali naslov)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: je mogoče odpovedati z odpovednim rokom {2} – odpoved danes začne veljati {3}."
 }

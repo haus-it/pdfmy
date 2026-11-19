@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Korrekturen aus der Fehlersuche (app-v297)
+- **Verträge:** Steht nur eine Kündigungsfrist im Text (oder läuft der Vertrag nach der Mindestlaufzeit auf unbestimmte Zeit), ist er „jederzeit kündbar“ – Hinweis „eine Kündigung heute wirkt zum …“, aber keine Frist mehr, die jeden Tag „heute fällig“ meldete. Rechnungen, die „Kündigungsfrist“ nur erwähnen, bekommen keine Frist. Datum nie aus dem Nachbarsatz; „drei Monate vor Ablauf“ wird erkannt; § 188 Abs. 3 BGB (Beginn 31.01., ein Monat → 28.02.); heutiger Tag in Ortszeit.
+- **Eigener Server (Linux):** Tippfehler im Zielpfad (übergeordneter Ordner fehlt) bricht ab, statt nach /pdfmy zu installieren. Hinweis präzisiert: eigene Dateien bleiben im Hauptordner erhalten.
+- **CJK-Schrift** lädt nur noch bei Zeichen, die sie abdeckt (ein Emoji lud vorher 7 MB).
+- Regressionstests in tests/vertrag.test.js, tests/cjk.test.js, tests/selfhost.test.js.
+
 ### Lesereihenfolge: Blöcke verbinden; Selbstbetrieb mit Sicherheits-Kopfzeilen (app-v296)
 - **Eigener Server:** Paket mit .htaccess (Apache), web.config (IIS, jetzt mit Kopfzeilen) und nginx-Vorlage – CSP, nosniff, Referrer-/Permissions-Policy, X-Frame-Options SAMEORIGIN; HSTS bewusst nicht (gälte im Unterordner für den ganzen Server). Aktualisierer behalten eigene oder angepasste Webserver-Einstellungen (Prüfsumme gegen die bisherige Fassung) und legen die neue Fassung als ….pdfmy-vorlage daneben – beide Aktualisierer im Test geprüft.
 - **Betriebsprüfung** prüft zusätzlich die Sicherheits-Kopfzeilen von pdfmy.de und dass die CSP keine fremden Adressen erlaubt.

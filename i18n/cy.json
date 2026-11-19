@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Heb derfynu, adnewyddu am {0} mis",
  "Quartal": "Chwarter",
  "Block {0} mit dem vorigen verbinden": "Cyfuno bloc {0} â’r un blaenorol",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Cyfuno â’r bloc blaenorol (un paragraff neu un pennawd)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Cyfuno â’r bloc blaenorol (un paragraff neu un pennawd)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: gellir ei ganslo gyda chyfnod rhybudd o {2} – mae canslo heddiw yn dod i rym ar {3}."
 }

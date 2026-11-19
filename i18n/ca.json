@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Sense rescissió, pròrroga de {0} mesos",
  "Quartal": "Trimestre",
  "Block {0} mit dem vorigen verbinden": "Uneix el bloc {0} amb l’anterior",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Uneix amb el bloc anterior (un paràgraf o un títol)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Uneix amb el bloc anterior (un paràgraf o un títol)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: es pot rescindir amb un termini de preavís de {2} – una baixa avui té efecte el {3}."
 }

@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Felmondás nélkül {0} hónappal meghosszabbodik",
  "Quartal": "Negyedév",
  "Block {0} mit dem vorigen verbinden": "A(z) {0}. blokk összevonása az előzővel",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Összevonás az előző blokkal (egy bekezdés vagy cím)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Összevonás az előző blokkal (egy bekezdés vagy cím)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: {2} felmondási idővel mondható fel – a ma leadott felmondás hatálya: {3}."
 }

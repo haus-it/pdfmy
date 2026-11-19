@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Bez wypowiedzenia przedłużenie o {0} mies.",
  "Quartal": "Kwartał",
  "Block {0} mit dem vorigen verbinden": "Połącz blok {0} z poprzednim",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Połącz z poprzednim blokiem (jeden akapit lub nagłówek)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Połącz z poprzednim blokiem (jeden akapit lub nagłówek)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: można wypowiedzieć z okresem wypowiedzenia {2} – wypowiedzenie złożone dziś zaczyna obowiązywać {3}."
 }

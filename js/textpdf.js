@@ -90,7 +90,9 @@
        wenn der Text Zeichen enthält, die DejaVu nicht hat – als Teilmenge, also nur die benutzten Zeichen. Fehlt sie (offline, nicht
        geladen), bleibt es beim „?“ wie bisher. */
     const all = JSON.stringify([title, blocks, pg?.header, pg?.footer], (k, v) => k === 'bytes' ? undefined : v);
-    const fehlt = [...new Set(all)].some(ch => ch.codePointAt(0) > 0x2E7F && !sets.r.has(ch.codePointAt(0)));
+    // nur Zeichen aus den Bereichen, die die Ersatzschrift abdeckt (tools/cjk-schrift.py) – ein Emoji lädt keine 7 MB
+    const CJK = /[ᄀ-ᇿ⺀-⿟　-㏿㐀-䶿一-鿿ꥠ-꥿가-퟿豈-﫿︰-﹏＀-￯]/;
+    const fehlt = [...new Set(all)].some(ch => CJK.test(ch) && !sets.r.has(ch.codePointAt(0)));
     const loadCjk = fonts.cjk || api.cjk || root.pdfmyCjkFont;
     if (fehlt && loadCjk) { try { F.x = await doc.embedFont(await loadCjk(), { subset: true }); sets.x = new Set(F.x.getCharacterSet()); } catch (e) { console.warn(e); } }
     const setOf = new Map(Object.keys(F).map(k => [F[k], sets[k]]));

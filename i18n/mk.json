@@ -3916,5 +3916,6 @@
  "Ohne Kündigung Verlängerung um {0} Monate": "Без раскинување продолжување за {0} месеци",
  "Quartal": "Квартал",
  "Block {0} mit dem vorigen verbinden": "Спој го блокот {0} со претходниот",
- "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Спој со претходниот блок (еден пасус или наслов)"
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Спој со претходниот блок (еден пасус или наслов)",
+ "{0}{1}: kündbar mit einer Frist von {2} – eine Kündigung heute wirkt zum {3}.": "{0}{1}: може да се откаже со отказен рок од {2} – откажување денес стапува на сила на {3}."
 }
