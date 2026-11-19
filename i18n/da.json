@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "synlig på siden",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Signeret af {0}{1}. Dokumentet er uændret siden signeringen.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Stempel »Digitalt signeret af …« med navn og tidspunkt på siden – så kan enhver modtager i ethvert PDF-program se, hvem der har signeret. Det placeres under Deres underskrift, ellers på et frit sted på sidste side.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Åbn først en PDF – så kan den signeres digitalt."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Åbn først en PDF – så kan den signeres digitalt.",
+ "Klicken für Signaturdetails": "Klik for signaturdetaljer",
+ "Signatur gültig": "Signatur gyldig",
+ "Signatur gültig, danach geändert": "Signatur gyldig, derefter ændret",
+ "Signatur ungültig": "Signatur ugyldig"
 }

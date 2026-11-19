@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "látható az oldalon",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Aláírta: {0}{1}. A dokumentum az aláírás óta változatlan.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "„Digitálisan aláírta …” bélyegző névvel és időponttal az oldalon – így minden címzett bármely PDF-programban látja, ki írta alá. Az Ön aláírása alá kerül, egyébként az utolsó oldal egy szabad helyére.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Először nyisson meg egy PDF-et – ezután digitálisan aláírható."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Először nyisson meg egy PDF-et – ezután digitálisan aláírható.",
+ "Klicken für Signaturdetails": "Kattintson az aláírás részleteiért",
+ "Signatur gültig": "Érvényes aláírás",
+ "Signatur gültig, danach geändert": "Érvényes aláírás, utólag módosítva",
+ "Signatur ungültig": "Érvénytelen aláírás"
 }

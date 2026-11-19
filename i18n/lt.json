@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "matoma puslapyje",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Pasirašė {0}{1}. Dokumentas nuo pasirašymo nepakeistas.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Antspaudas „Skaitmeniniu parašu pasirašė …“ su vardu ir laiku puslapyje – taip kiekvienas gavėjas bet kurioje PDF programoje mato, kas pasirašė. Jis dedamas po Jūsų parašu, kitaip – laisvoje paskutinio puslapio vietoje.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Pirmiausia atidarykite PDF – tada jį galima pasirašyti skaitmeniniu parašu."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Pirmiausia atidarykite PDF – tada jį galima pasirašyti skaitmeniniu parašu.",
+ "Klicken für Signaturdetails": "Spustelėkite, kad matytumėte parašo informaciją",
+ "Signatur gültig": "Parašas galioja",
+ "Signatur gültig, danach geändert": "Parašas galioja, vėliau pakeista",
+ "Signatur ungültig": "Parašas negalioja"
 }

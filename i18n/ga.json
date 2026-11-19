@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "infheicthe ar an leathanach",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Sínithe ag {0}{1}. Níor athraíodh an doiciméad ón síniú.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Stampa “Sínithe go digiteach ag …” leis an ainm agus an t-am ar an leathanach – mar sin feiceann gach faighteoir, in aon chlár PDF, cé a shínigh. Cuirtear faoi do shíniú é, nó in áit shaor ar an leathanach deireanach mura bhfuil.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Oscail PDF ar dtús – ansin is féidir é a shíniú go digiteach."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Oscail PDF ar dtús – ansin is féidir é a shíniú go digiteach.",
+ "Klicken für Signaturdetails": "Cliceáil le haghaidh sonraí an tsínithe",
+ "Signatur gültig": "Síniú bailí",
+ "Signatur gültig, danach geändert": "Síniú bailí, athraithe ina dhiaidh sin",
+ "Signatur ungültig": "Síniú neamhbhailí"
 }

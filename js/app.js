@@ -1228,6 +1228,7 @@ function renderAnns() {
   }
   window.renderSignSpots?.(ov, p);   // „Hier unterschreiben“-Schilder beim Werkzeug „Unterschrift“
   window.reqRender?.(ov, p);   // Felder einer Unterschriftsanfrage (js/pro.js)
+  window.renderSigFields?.(ov, p);   // sichtbare Signaturstempel anklickbar → Signaturdetails (js/pro.js)
   if (state.docs.some(d => d.sigs?.length)) window.renderSigBar?.();   // Signaturleiste: „unverändert“/„Mitunterzeichnen“ aktuell halten
   // Notizen wachsen mit dem Text – Höhe für Auswahl, Drehen und Export merken
   for (const a of p.annots) if (a.type === 'note') { const el = ov.querySelector(`[data-id="${a.id}"]`); if (el && ov.clientHeight) a.h = el.offsetHeight / ov.clientHeight; }

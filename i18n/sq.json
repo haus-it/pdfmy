@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "e dukshme në faqe",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Nënshkruar nga {0}{1}. Dokumenti i pandryshuar që nga nënshkrimi.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Vulë „Nënshkruar dixhitalisht nga …“ me emrin dhe kohën në faqe – kështu çdo marrës, në çdo program PDF, e sheh kush ka nënshkruar. Vendoset nën nënshkrimin tuaj, përndryshe në një vend të lirë të faqes së fundit.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Fillimisht hapni një PDF – pastaj mund të nënshkruhet dixhitalisht."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Fillimisht hapni një PDF – pastaj mund të nënshkruhet dixhitalisht.",
+ "Klicken für Signaturdetails": "Klikoni për detajet e nënshkrimit",
+ "Signatur gültig": "Nënshkrim i vlefshëm",
+ "Signatur gültig, danach geändert": "Nënshkrim i vlefshëm, ndryshuar më pas",
+ "Signatur ungültig": "Nënshkrim i pavlefshëm"
 }

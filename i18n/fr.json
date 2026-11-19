@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "visible sur la page",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Signé par {0}{1}. Document inchangé depuis la signature.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Tampon « Signé numériquement par … » avec nom et heure sur la page – ainsi chaque destinataire voit, dans n’importe quel programme PDF, qui a signé. Il est placé sous votre signature, sinon à un endroit libre de la dernière page.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ouvrez d’abord un PDF – il pourra ensuite être signé numériquement."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ouvrez d’abord un PDF – il pourra ensuite être signé numériquement.",
+ "Klicken für Signaturdetails": "Cliquez pour afficher les détails de la signature",
+ "Signatur gültig": "Signature valide",
+ "Signatur gültig, danach geändert": "Signature valide, modifiée depuis",
+ "Signatur ungültig": "Signature invalide"
 }

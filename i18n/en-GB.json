@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "visible on the page",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Signed by {0}{1}. Document unchanged since signing.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "‘Digitally signed by …’ stamp with name and time on the page – so every recipient in any PDF program can see who signed. It goes below your signature, otherwise in a free spot on the last page.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Open a PDF first – then it can be digitally signed."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Open a PDF first – then it can be digitally signed.",
+ "Klicken für Signaturdetails": "Click for signature details",
+ "Signatur gültig": "Signature valid",
+ "Signatur gültig, danach geändert": "Signature valid, changed afterwards",
+ "Signatur ungültig": "Signature invalid"
 }

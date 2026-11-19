@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "sichtbar op der Säit",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Ënnerschriwwen vun {0}{1}. Dokument zënter der Signatur onverännert.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Stempel „Digital ënnerschriwwen vun …“ mat Numm an Zäitpunkt op der Säit – esou gesäit all Empfänger a jidderengem PDF-Programm, wien ënnerschriwwen huet. Hie kënnt ënner Är Ënnerschrëft, soss op eng fräi Plaz vun der leschter Säit.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Fir d'éischt eng PDF opmaachen – dann léisst si sech digital signéieren."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Fir d'éischt eng PDF opmaachen – dann léisst si sech digital signéieren.",
+ "Klicken für Signaturdetails": "Klickt fir Signaturdetailer",
+ "Signatur gültig": "Signatur gëlteg",
+ "Signatur gültig, danach geändert": "Signatur gëlteg, duerno geännert",
+ "Signatur ungültig": "Signatur ongëlteg"
 }

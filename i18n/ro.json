@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "vizibil pe pagină",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Semnat de {0}{1}. Document nemodificat de la semnare.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Ștampila „Semnat digital de …” cu nume și moment pe pagină – astfel fiecare destinatar vede, în orice program PDF, cine a semnat. Se așază sub semnătura dvs., altfel într-un loc liber de pe ultima pagină.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Deschideți mai întâi un PDF – apoi poate fi semnat digital."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Deschideți mai întâi un PDF – apoi poate fi semnat digital.",
+ "Klicken für Signaturdetails": "Faceți clic pentru detaliile semnăturii",
+ "Signatur gültig": "Semnătură valabilă",
+ "Signatur gültig, danach geändert": "Semnătură valabilă, modificată ulterior",
+ "Signatur ungültig": "Semnătură nevalabilă"
 }

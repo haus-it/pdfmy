@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "nähtav lehel",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Allkirjastanud {0}{1}. Dokument on pärast allkirjastamist muutmata.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Tempel „Digitaalselt allkirjastanud …“ nime ja kellaajaga lehel – nii näeb iga vastuvõtja igas PDF-programmis, kes on allkirjastanud. See asetatakse teie allkirja alla, muidu viimase lehe vabasse kohta.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Avage kõigepealt PDF – siis saab selle digitaalselt allkirjastada."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Avage kõigepealt PDF – siis saab selle digitaalselt allkirjastada.",
+ "Klicken für Signaturdetails": "Klõpsake allkirja üksikasjade vaatamiseks",
+ "Signatur gültig": "Allkiri kehtiv",
+ "Signatur gültig, danach geändert": "Allkiri kehtiv, hiljem muudetud",
+ "Signatur ungültig": "Allkiri kehtetu"
 }

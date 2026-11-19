@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "orrialdean ikusgai",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Sinatzailea: {0}{1}. Dokumentua ez da aldatu sinatu zenetik.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "«Digitalki sinatu duena: …» zigilua izenarekin eta orduarekin orrialdean – horrela hartzaile bakoitzak, edozein PDF programatan, ikusten du nork sinatu duen. Zure sinaduraren azpian jartzen da, bestela azken orrialdeko toki libre batean.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ireki lehenengo PDF bat – gero digitalki sina daiteke."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ireki lehenengo PDF bat – gero digitalki sina daiteke.",
+ "Klicken für Signaturdetails": "Egin klik sinaduraren xehetasunak ikusteko",
+ "Signatur gültig": "Sinadura baliozkoa",
+ "Signatur gültig, danach geändert": "Sinadura baliozkoa, gero aldatua",
+ "Signatur ungültig": "Sinadura baliogabea"
 }

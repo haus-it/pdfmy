@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "widoczny na stronie",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Podpisano przez {0}{1}. Dokument niezmieniony od podpisania.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Pieczęć „Podpisano cyfrowo przez …” z nazwiskiem i czasem na stronie – dzięki temu każdy odbiorca w każdym programie do PDF widzi, kto podpisał. Trafia pod Państwa podpis, w przeciwnym razie w wolne miejsce na ostatniej stronie.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Najpierw otwórz plik PDF – wtedy można go podpisać cyfrowo."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Najpierw otwórz plik PDF – wtedy można go podpisać cyfrowo.",
+ "Klicken für Signaturdetails": "Kliknij, aby zobaczyć szczegóły podpisu",
+ "Signatur gültig": "Podpis ważny",
+ "Signatur gültig, danach geändert": "Podpis ważny, zmieniony później",
+ "Signatur ungültig": "Podpis nieważny"
 }

@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "redzams lapā",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Parakstījis {0}{1}. Dokuments kopš parakstīšanas nav mainīts.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Zīmogs “Digitāli parakstījis …” ar vārdu un laiku lapā – tā ikviens saņēmējs jebkurā PDF programmā redz, kas ir parakstījis. Tas tiek novietots zem Jūsu paraksta, citādi brīvā vietā pēdējā lapā.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Vispirms atveriet PDF – tad to var digitāli parakstīt."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Vispirms atveriet PDF – tad to var digitāli parakstīt.",
+ "Klicken für Signaturdetails": "Noklikšķiniet, lai skatītu paraksta informāciju",
+ "Signatur gültig": "Paraksts derīgs",
+ "Signatur gültig, danach geändert": "Paraksts derīgs, vēlāk mainīts",
+ "Signatur ungültig": "Paraksts nederīgs"
 }

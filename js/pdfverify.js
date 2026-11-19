@@ -173,6 +173,36 @@
     return hit;
   }
   const hasSignature = bytes => scanNames(bytes, ['ByteRange']).has('ByteRange');
-  const api = { verify, find, hasSignature, scanNames };
+  /* Sichtbare Signaturfelder: Seite und Lage (Anteile der Seite, oben links, nach Drehung rot° im Uhrzeigersinn wie in pdf.js) –
+     zugeordnet zur Signatur über ihren Bytebereich (range wie in find/verify). Damit führt ein Klick auf den Stempel auf der Seite
+     zu genau dieser Signatur. Unsichtbare Felder (0×0) fehlen. rotOf(i) = Drehung der Seite i in der Anzeige. */
+  async function fields(PL, bytes, rotOf = () => 0) {
+    const doc = await PL.PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false }), ctx = doc.context, N = PL.PDFName.of, out = [];
+    const num = o => o?.asNumber?.() ?? NaN;
+    doc.getPages().forEach((pg, i) => {
+      const ann = pg.node.lookup(N('Annots')); if (!(ann instanceof PL.PDFArray)) return;
+      const box = pg.getCropBox(), rot = ((rotOf(i) % 360) + 360) % 360;
+      for (const ref of ann.asArray()) {
+        const a = ref instanceof PL.PDFRef ? ctx.lookup(ref) : ref; if (!(a instanceof PL.PDFDict)) continue;
+        let ft = a.get(N('FT')), par = a.lookup(PL.PDFName.of('Parent')), v = a.lookup(N('V'));
+        if (!ft && par instanceof PL.PDFDict) { ft = par.get(N('FT')); v = v || par.lookup(N('V')); }
+        if (String(ft) !== '/Sig' || !(v instanceof PL.PDFDict)) continue;
+        const br = v.lookup(N('ByteRange')), R = a.lookup(N('Rect'));
+        if (!(br instanceof PL.PDFArray) || !(R instanceof PL.PDFArray)) continue;
+        const r = R.asArray().map(num), x0 = Math.min(r[0], r[2]), x1 = Math.max(r[0], r[2]), y0 = Math.min(r[1], r[3]), y1 = Math.max(r[1], r[3]);
+        if (x1 - x0 < 1 || y1 - y0 < 1) continue;
+        // ungedreht: u nach rechts, v von oben
+        let u = (x0 - box.x) / box.width, v0 = (box.y + box.height - y1) / box.height, w = (x1 - x0) / box.width, h = (y1 - y0) / box.height;
+        if (rot === 90) [u, v0, w, h] = [1 - v0 - h, u, h, w];
+        else if (rot === 180) [u, v0] = [1 - u - w, 1 - v0 - h];
+        else if (rot === 270) [u, v0, w, h] = [v0, 1 - u - w, h, w];
+        out.push({ page: i, x: u, y: v0, w, h, range: br.asArray().map(num) });
+      }
+    });
+    return out;
+  }
+  const sameRange = (a, b) => !!a && !!b && a.length === 4 && a.every((n, k) => n === b[k]);
+
+  const api = { verify, find, hasSignature, scanNames, fields, sameRange };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfVerify = api;
 })(typeof self !== 'undefined' ? self : globalThis);

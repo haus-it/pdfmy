@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "visible a la pàgina",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Signat per {0}{1}. El document no ha canviat des de la signatura.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Segell «Signat digitalment per …» amb el nom i l'hora a la pàgina – així cada destinatari veu, en qualsevol programa de PDF, qui ha signat. Es col·loca sota la vostra signatura o, si no, en un lloc lliure de l'última pàgina.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Primer obriu un PDF – després es podrà signar digitalment."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Primer obriu un PDF – després es podrà signar digitalment.",
+ "Klicken für Signaturdetails": "Feu clic per veure els detalls de la signatura",
+ "Signatur gültig": "Signatura vàlida",
+ "Signatur gültig, danach geändert": "Signatura vàlida, modificada després",
+ "Signatur ungültig": "Signatura no vàlida"
 }

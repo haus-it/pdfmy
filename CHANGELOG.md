@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Signaturstempel anklickbar (app-v290)
+- **Klick auf einen sichtbaren Signaturstempel** (auch aus Acrobat, Foxit & Co.) öffnet die Signaturdetails genau dieser Person, hervorgehoben; per Tab und Enter erreichbar. Oben rechts am Stempel ein Schild mit dem Prüfergebnis (Haken, Ausrufezeichen, Kreuz) – das Ergebnis der Prüfung, nicht das Bild im Stempel.
+- Zuordnung Stempel → Signatur über den Bytebereich (js/pdfverify.js fields, auch bei gedrehten Seiten). Hilfe in 40 Sprachen, Test in tests/signatur-sichtbar.test.js.
+
 ### Signaturen: für jeden sichtbar, wer signiert hat (app-v289)
 - **Sichtbarer Stempel „Digital signiert von …“** mit Name, Zeitpunkt und Grund (Haken „sichtbar auf der Seite“, Standard an): unter der gezeichneten Unterschrift, sonst an einer freien Stelle der letzten Seite; Mitunterzeichner daneben, frühere Signaturen bleiben gültig. Erscheinungsbild aus Pfaden (PDF/A-tauglich), in getaggten PDFs als Strukturelement „Form“ (PDF/UA). Neutrales Siegel statt Haken – die Gültigkeit zeigt allein die Prüfung.
 - **Menüpunkt „Digital signieren …“** (… Mehr → Büro); ohne Zertifikat führt er gleich zur Auswahl.

@@ -4199,7 +4199,14 @@ window.checkSignatures = async (docIdx, file) => {
     // vor dem Bearbeiten wird nur bei echten Unterschriften gewarnt
     const sigs = await PdfVerify.verify(bytes);
     d.signed = sigs.some(r => !r.usageRights);
-    if (sigs.length) { d.sigs = sigs; renderSigBar(); }
+    if (sigs.length) {
+      d.sigs = sigs; renderSigBar();
+      // sichtbare Stempel auf den Seiten: anklickbar → Details genau dieser Signatur (renderSigFields)
+      const rot = new Map(state.pages.filter(p => p.docIdx === docIdx).map(p => [p.pageIdx, p.rotation || 0]));
+      d.sigFields = (await PdfVerify.fields(PDFLib, bytes, i => rot.get(i) || 0).catch(e => { console.warn(e); return []; }))
+        .map(f => ({ ...f, k: sigs.findIndex(r => PdfVerify.sameRange(r.range, f.range)) })).filter(f => f.k >= 0);
+      if (d.sigFields.length) renderAnns();
+    }
   } catch (e) { console.warn('Signaturprüfung', e); }
 };
 const sigOk = r => r.intact && r.valid && r.certValidAtTime !== false;
@@ -4236,9 +4243,26 @@ function renderSigBar() {
   $('#sigCosign').hidden = !!bad.length || !unchanged;
 }
 window.renderSigBar = renderSigBar;
-$('#sigMore').onclick = () => {
+$('#sigMore').onclick = () => sigDetails();
+/* Klick auf einen sichtbaren Signaturstempel auf der Seite → Details genau dieser Signatur (wie in Acrobat). Die Fläche liegt
+   über dem Stempel, ist per Tastatur erreichbar und nennt Unterzeichner und Zustand. */
+window.renderSigFields = (ov, p) => {
+  const d = p.kind === 'pdf' && state.docs[p.docIdx]; if (!d?.sigFields?.length || !d.sigs) return;
+  for (const f of d.sigFields.filter(f => f.page === p.pageIdx)) {
+    const r = d.sigs[f.k], st = !sigOk(r) ? 'bad' : r.wholeFile || r.laterSigned ? 'ok' : 'warn';
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'sigspot ' + st; placeEl(b, f);
+    const what = I18N.t(st === 'bad' ? 'Signatur ungültig' : st === 'warn' ? 'Signatur gültig, danach geändert' : 'Signatur gültig');
+    b.title = `${what}: ${sigWho(r)}${fmtWhen(r.time || r.m) ? ', ' + fmtWhen(r.time || r.m) : ''} – ${I18N.t('Klicken für Signaturdetails')}`;
+    b.setAttribute('aria-label', b.title);
+    b.innerHTML = `<svg class="ic" aria-hidden="true"><use href="#${st === 'bad' ? 'i-shield-x' : st === 'warn' ? 'i-shield-alert' : 'i-shield-check'}"/></svg>`;
+    b.addEventListener('pointerdown', e => e.stopPropagation());
+    b.onclick = e => { e.stopPropagation(); sigDetails(d, f.k); };
+    ov.append(b);
+  }
+};
+function sigDetails(only, focusK = -1) {
   const yn = (ok, yes, no, mid) => ok === true ? `<span class="y">✓</span> ${yes}` : ok === false ? `<span class="n">✗</span> ${no}` : `<span class="m">?</span> ${mid || no}`;
-  $('#sigList').innerHTML = sigDocs().flatMap(d => d.sigs.map((r, k) => `<div class="sigcard"><h4>${esc(sigWho(r))}${d.sigs.length > 1 ? ` <small class="hint">(Signatur ${k + 1} von ${d.sigs.length})</small>` : ''}</h4>
+  $('#sigList').innerHTML = sigDocs().flatMap(d => d.sigs.map((r, k) => `<div class="sigcard${d === only && k === focusK ? ' focus' : ''}" tabindex="-1"><h4>${esc(sigWho(r))}${d.sigs.length > 1 ? ` <small class="hint">(Signatur ${k + 1} von ${d.sigs.length})</small>` : ''}</h4>
     ${r.usageRights ? '<p class="hint"><b>Art:</b> Nutzungsrechte-Signatur – technische Freischaltung von Formularfunktionen durch den Hersteller der Erstellungssoftware, <b>keine Unterschrift einer Person</b>.</p>' : ''}
     <div class="hint">${[fmtWhen(r.time || r.m) && 'Zeitpunkt: ' + fmtWhen(r.time || r.m), r.reason && 'Grund: ' + esc(r.reason), r.location && 'Ort: ' + esc(r.location), r.signer?.email && 'E-Mail: ' + esc(r.signer.email)].filter(Boolean).join(' · ')}</div>
     <ul class="ck">
@@ -4251,8 +4275,10 @@ $('#sigMore').onclick = () => {
       ${r.timestamp ? '<li><span class="y">✓</span> Mit Zeitstempel</li>' : ''}
       ${r.problems.length ? `<li class="hint">${esc(r.problems.join(' · '))}</li>` : ''}
     </ul></div>`)).join('');
-  $('#sigDlg').showModal(); $('#sigClose').focus();
-};
+  $('#sigDlg').showModal();
+  const fc = $('#sigList .sigcard.focus');   // vom Stempel aus geöffnet: diese Signatur zeigen und hervorheben
+  if (fc) { fc.scrollIntoView({ block: 'nearest' }); fc.focus(); } else $('#sigClose').focus();
+}
 $('#sigClose').onclick = () => $('#sigDlg').close();
 // Mitunterzeichnen bzw. „Digital signieren …“ (Menü): Speichern-Dialog mit „Digital signieren“ und sichtbarem Stempel – bei schon
 // signierten Dokumenten wird das Original übernommen und die Signatur angehängt. Ohne Zertifikat gleich die Auswahl öffnen.

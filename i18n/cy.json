@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "gweladwy ar y dudalen",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Llofnodwyd gan {0}{1}. Nid yw’r ddogfen wedi newid ers y llofnod.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Stamp “Llofnodwyd yn ddigidol gan …” gyda’r enw a’r amser ar y dudalen – felly mae pob derbynnydd yn gweld, mewn unrhyw raglen PDF, pwy a lofnododd. Caiff ei osod o dan eich llofnod, neu fel arall mewn lle rhydd ar y dudalen olaf.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Agorwch PDF yn gyntaf – yna gellir ei llofnodi’n ddigidol."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Agorwch PDF yn gyntaf – yna gellir ei llofnodi’n ddigidol.",
+ "Klicken für Signaturdetails": "Cliciwch am fanylion y llofnod",
+ "Signatur gültig": "Llofnod dilys",
+ "Signatur gültig, danach geändert": "Llofnod dilys, wedi’i newid wedyn",
+ "Signatur ungültig": "Llofnod annilys"
 }

@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "sayfada görünür",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "İmzalayan: {0}{1}. Belge imzadan bu yana değişmedi.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Sayfada ad ve zamanla “Dijital olarak imzalayan …” damgası – böylece her alıcı, her PDF programında kimin imzaladığını görür. Çizdiğiniz imzanın altına, değilse son sayfada boş bir yere konur.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Önce bir PDF açın – ardından dijital olarak imzalanabilir."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Önce bir PDF açın – ardından dijital olarak imzalanabilir.",
+ "Klicken für Signaturdetails": "İmza ayrıntıları için tıklayın",
+ "Signatur gültig": "İmza geçerli",
+ "Signatur gültig, danach geändert": "İmza geçerli, sonradan değiştirilmiş",
+ "Signatur ungültig": "İmza geçersiz"
 }

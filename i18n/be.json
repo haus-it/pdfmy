@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "бачна на старонцы",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Падпісана: {0}{1}. Дакумент не змяняўся з моманту подпісу.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Штамп «Падпісана лічбавым подпісам …» з імем і часам на старонцы – так кожны атрымальнік у любой праграме для PDF бачыць, хто падпісаў. Ён ставіцца пад вашым подпісам, інакш – на вольнае месца апошняй старонкі.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Спачатку адкрыйце PDF – тады яе можна будзе падпісаць лічбавым подпісам."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Спачатку адкрыйце PDF – тады яе можна будзе падпісаць лічбавым подпісам.",
+ "Klicken für Signaturdetails": "Націсніце, каб убачыць падрабязнасці подпісу",
+ "Signatur gültig": "Подпіс сапраўдны",
+ "Signatur gültig, danach geändert": "Подпіс сапраўдны, пазней зменены",
+ "Signatur ungültig": "Подпіс несапраўдны"
 }

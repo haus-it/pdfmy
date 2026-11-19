@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "sýnilegt á síðunni",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Undirritað af {0}{1}. Skjalið er óbreytt frá undirritun.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Stimpill „Stafrænt undirritað af …“ með nafni og tímasetningu á síðunni – þannig sér hver viðtakandi í hvaða PDF-forriti sem er hver undirritaði. Hann er settur undir undirskrift yðar, annars á lausan stað á síðustu síðu.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Opnið fyrst PDF-skjal – þá er hægt að undirrita það stafrænt."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Opnið fyrst PDF-skjal – þá er hægt að undirrita það stafrænt.",
+ "Klicken für Signaturdetails": "Smelltu til að sjá upplýsingar um undirskrift",
+ "Signatur gültig": "Undirskrift gild",
+ "Signatur gültig, danach geändert": "Undirskrift gild, breytt eftir á",
+ "Signatur ungültig": "Undirskrift ógild"
 }

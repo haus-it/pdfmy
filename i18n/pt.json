@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "visível na página",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Assinado por {0}{1}. Documento inalterado desde a assinatura.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Carimbo «Assinado digitalmente por …» com nome e hora na página – assim cada destinatário vê, em qualquer programa de PDF, quem assinou. Fica por baixo da sua assinatura, caso contrário num local livre da última página.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Abra primeiro um PDF – só então poderá ser assinado digitalmente."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Abra primeiro um PDF – só então poderá ser assinado digitalmente.",
+ "Klicken für Signaturdetails": "Clique para ver os detalhes da assinatura",
+ "Signatur gültig": "Assinatura válida",
+ "Signatur gültig, danach geändert": "Assinatura válida, alterada depois",
+ "Signatur ungültig": "Assinatura inválida"
 }

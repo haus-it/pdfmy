@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "viżibbli fuq il-paġna",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Iffirmat minn {0}{1}. Id-dokument ma nbidilx mill-firma.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Timbru “Iffirmat diġitalment minn …” bl-isem u l-ħin fuq il-paġna – hekk kull riċevitur jara, fi kwalunkwe programm tal-PDF, min iffirma. Jitqiegħed taħt il-firma tiegħek, inkella f’post liberu fuq l-aħħar paġna.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ibda fetaħ PDF – imbagħad tista’ tiġi ffirmata diġitalment."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ibda fetaħ PDF – imbagħad tista’ tiġi ffirmata diġitalment.",
+ "Klicken für Signaturdetails": "Ikklikkja għad-dettalji tal-firma",
+ "Signatur gültig": "Firma valida",
+ "Signatur gültig, danach geändert": "Firma valida, mibdula wara",
+ "Signatur ungültig": "Firma invalida"
 }

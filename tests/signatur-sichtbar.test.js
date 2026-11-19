@@ -92,6 +92,26 @@ test('Signaturstempel in getaggter PDF (PDF/UA): Feld bekommt Strukturelement �
   assert.deepEqual(kids, ['/P', '/Form', '/Form'], 'im Element Document eingehängt');
 });
 
+test('Stempel anklickbar: Lage auf der Seite und Zuordnung zur Signatur über den Bytebereich, auch gedreht', async () => {
+  const src = await PL.PDFDocument.create(); src.addPage([595, 842]);
+  const first = await Sign.signPdf(await src.save(), signer('Erika Muster'), { look: look('Erika Muster') });
+  const second = await Sign.signPdf(first, signer('Max Beispiel'), { look: look('Max Beispiel') });
+  const rs = await Verify.verify(second), fs0 = await Verify.fields(PL, second);
+  assert.equal(fs0.length, 2);
+  const who = fs0.map(f => rs.find(r => Verify.sameRange(r.range, f.range))?.signer.cn);
+  assert.deepEqual(who, ['Erika Muster', 'Max Beispiel'], 'jeder Stempel gehört zu seiner Signatur');
+  const e = fs0[0];   // erster Wunschplatz: x 0.6, y 0.8 (oben links des Stempels)
+  assert.ok(Math.abs(e.x - 0.6) < 0.01 && Math.abs(e.y - 0.8) < 0.01, JSON.stringify(e));
+  assert.ok(Math.abs(e.w - 196 / 595) < 0.01 && Math.abs(e.h - 54 / 842) < 0.01);
+  // Ansicht um 90° im Uhrzeigersinn gedreht: links oben wandert nach rechts oben
+  const [r90] = await Verify.fields(PL, second, () => 90);
+  assert.ok(Math.abs(r90.x - (1 - e.y - e.h)) < 1e-9 && Math.abs(r90.y - e.x) < 1e-9 && Math.abs(r90.w - e.h) < 1e-9);
+  const [r180] = await Verify.fields(PL, second, () => 180);
+  assert.ok(Math.abs(r180.x - (1 - e.x - e.w)) < 1e-9 && Math.abs(r180.y - (1 - e.y - e.h)) < 1e-9);
+  // unsichtbare Signatur: kein Stempel
+  assert.deepEqual(await Verify.fields(PL, await Sign.signPdf(await src.save(), signer('Y'), {})), []);
+});
+
 test('PDFMy: Stempel im Speichern-Dialog an, Leiste nennt alle Unterzeichner', () => {
   const pro = fs.readFileSync(path.join(__dirname, '..', 'js', 'pro.js'), 'utf8'), html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.match(html, /<input id="x-sign-vis" type="checkbox" checked>/);

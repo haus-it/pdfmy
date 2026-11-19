@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "zichtbaar op de pagina",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Ondertekend door {0}{1}. Document ongewijzigd sinds de ondertekening.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Stempel „Digitaal ondertekend door …” met naam en tijdstip op de pagina – zo ziet elke ontvanger in elk pdf-programma wie heeft ondertekend. Hij komt onder uw handtekening, anders op een vrije plek op de laatste pagina.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Open eerst een pdf – dan kan deze digitaal worden ondertekend."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Open eerst een pdf – dan kan deze digitaal worden ondertekend.",
+ "Klicken für Signaturdetails": "Klik voor handtekeningdetails",
+ "Signatur gültig": "Handtekening geldig",
+ "Signatur gültig, danach geändert": "Handtekening geldig, daarna gewijzigd",
+ "Signatur ungültig": "Handtekening ongeldig"
 }

@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "näkyvissä sivulla",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Allekirjoittanut {0}{1}. Asiakirja on muuttumaton allekirjoituksen jälkeen.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Leima ”Digitaalisesti allekirjoittanut …” nimineen ja ajankohtineen sivulla – näin jokainen vastaanottaja näkee missä tahansa PDF-ohjelmassa, kuka on allekirjoittanut. Se sijoitetaan allekirjoituksesi alle, muuten viimeisen sivun vapaaseen kohtaan.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Avaa ensin PDF – sitten sen voi allekirjoittaa digitaalisesti."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Avaa ensin PDF – sitten sen voi allekirjoittaa digitaalisesti.",
+ "Klicken für Signaturdetails": "Napsauta nähdäksesi allekirjoituksen tiedot",
+ "Signatur gültig": "Allekirjoitus kelvollinen",
+ "Signatur gültig, danach geändert": "Allekirjoitus kelvollinen, muutettu sen jälkeen",
+ "Signatur ungültig": "Allekirjoitus virheellinen"
 }

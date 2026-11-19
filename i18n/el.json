@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "ορατό στη σελίδα",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Υπογράφηκε από {0}{1}. Το έγγραφο δεν έχει αλλάξει από την υπογραφή.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Σφραγίδα «Ψηφιακά υπογεγραμμένο από …» με όνομα και χρόνο στη σελίδα – έτσι κάθε παραλήπτης, σε οποιοδήποτε πρόγραμμα PDF, βλέπει ποιος υπέγραψε. Τοποθετείται κάτω από την υπογραφή σας, αλλιώς σε ελεύθερο σημείο της τελευταίας σελίδας.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ανοίξτε πρώτα ένα PDF – τότε μπορείτε να το υπογράψετε ψηφιακά."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Ανοίξτε πρώτα ένα PDF – τότε μπορείτε να το υπογράψετε ψηφιακά.",
+ "Klicken für Signaturdetails": "Κάντε κλικ για λεπτομέρειες υπογραφής",
+ "Signatur gültig": "Έγκυρη υπογραφή",
+ "Signatur gültig, danach geändert": "Έγκυρη υπογραφή, τροποποιημένη στη συνέχεια",
+ "Signatur ungültig": "Μη έγκυρη υπογραφή"
 }

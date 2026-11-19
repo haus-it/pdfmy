@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "viditelné na stránce",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Podepsal(a) {0}{1}. Dokument od podpisu beze změny.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Razítko „Digitálně podepsal(a) …“ se jménem a časem na stránce – každý příjemce tak v libovolném programu pro PDF vidí, kdo podepsal. Umístí se pod váš podpis, jinak na volné místo poslední stránky.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Nejprve otevřete PDF – pak jej lze digitálně podepsat."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Nejprve otevřete PDF – pak jej lze digitálně podepsat.",
+ "Klicken für Signaturdetails": "Kliknutím zobrazíte podrobnosti podpisu",
+ "Signatur gültig": "Podpis platný",
+ "Signatur gültig, danach geändert": "Podpis platný, později změněno",
+ "Signatur ungültig": "Podpis neplatný"
 }

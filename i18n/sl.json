@@ -3866,5 +3866,9 @@
  "sichtbar auf der Seite": "vidno na strani",
  "Signiert von {0}{1}. Dokument seit der Signatur unverändert.": "Podpisal(a) {0}{1}. Dokument od podpisa ni spremenjen.",
  "Stempel „Digital signiert von …“ mit Name und Zeitpunkt auf der Seite – so sieht jeder Empfänger in jedem PDF-Programm, wer signiert hat. Er kommt unter Ihre Unterschrift, sonst an eine freie Stelle der letzten Seite.": "Žig „Digitalno podpisal(a) …“ z imenom in časom na strani – tako vsak prejemnik v vsakem programu za PDF vidi, kdo je podpisal. Postavljen je pod vaš podpis, sicer na prosto mesto zadnje strani.",
- "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Najprej odprite PDF – nato ga je mogoče digitalno podpisati."
+ "Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.": "Najprej odprite PDF – nato ga je mogoče digitalno podpisati.",
+ "Klicken für Signaturdetails": "Kliknite za podrobnosti podpisa",
+ "Signatur gültig": "Podpis veljaven",
+ "Signatur gültig, danach geändert": "Podpis veljaven, pozneje spremenjen",
+ "Signatur ungültig": "Podpis neveljaven"
 }
