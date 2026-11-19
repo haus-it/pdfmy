@@ -4724,8 +4724,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.20.1';
-const SCAN_MAC_LATEST = '1.10.1';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.21.0';
+const SCAN_MAC_LATEST = '1.11.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 /* Linux: passendes Paket (Doppelklick, meist ohne Terminal; sonst linuxPkgCmd) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
    Läuft pdfmy Scan schon, sagt es selbst, welches System es ist; sonst Hinweise aus dem Browser (Firefox nennt Ubuntu/Fedora) oder die letzte Wahl. */
@@ -5842,13 +5842,64 @@ const upd = { reg: null, ready: false, manual: false };
 // Auch ein laufender Scan zählt: bis die erste Seite ankommt, ist das Dokument leer und das Scan-Fenster schon zu – früher lud
 // PDFMy dann für ein Update neu und der Scan ging verloren (Fehlerbericht 25.10.2026)
 const busyNow = () => (state.dirty && state.pages.length > 0) || !!document.querySelector('dialog[open]') || ocrRunning || state.scanning > 0 || state.importing > 0 || !!state.working || !!window.otherTabsDirty?.() || !!window.hotfolderActive;
+/* Updates ohne Bestätigung (19.11.2026): Die neue Version wird im ersten ruhigen Moment übernommen – sofort, wenn nichts offen ist;
+   sonst sobald das Dokument geschlossen ist oder (bei gespeicherten, unveränderten PDFs) wenn das Fenster seit einer Minute im
+   Hintergrund liegt bzw. 10 Minuten nicht bedient wurde. Die geöffneten PDFs werden dabei mitgenommen (IndexedDB, nur lokal) und
+   nach dem Neuladen wieder geöffnet – samt Seite und Verweis auf die Originaldatei. Ungespeicherte Arbeit wird nie angetastet. */
+let lastInput = Date.now(), hiddenSince = document.hidden ? Date.now() : 0;
+for (const ev of ['pointerdown', 'keydown', 'wheel', 'touchstart']) addEventListener(ev, () => { lastInput = Date.now(); }, { capture: true, passive: true });
+document.addEventListener('visibilitychange', () => { hiddenSince = document.hidden ? Date.now() : 0; });
+// Lassen sich die geöffneten Seiten nach dem Neuladen genau so wiederherstellen? Nur unveränderte PDFs (ganz, in Reihenfolge)
+function resumable() {
+  if (state.dirty) return null;
+  const docs = [];
+  for (const [i, p] of state.pages.entries()) {
+    const d = p.kind === 'pdf' ? state.docs[p.docIdx] : null;
+    if (!d?.bytes || d.unlocked || d.filled || d.repaired || p.rotation || p.annots.length) return null;
+    const last = docs[docs.length - 1];
+    if (last?.d === d) { if (p.pageIdx !== last.n) return null; last.n++; }
+    else { if (p.pageIdx !== 0 || docs.some(x => x.d === d)) return null; docs.push({ d, n: 1 }); }
+    if (i === state.pages.length - 1 && docs.some(x => x.n !== x.d.js?.numPages)) return null;
+  }
+  return docs.map(x => x.d);
+}
+async function applyUpdateNow(docs) {
+  if (docs?.length) {
+    try {
+      await idb.put('updResume', { files: docs.map(d => ({ name: d.name, bytes: d.bytes instanceof Uint8Array ? d.bytes : new Uint8Array(d.bytes), handle: d.handle || null })),
+        sel: state.sel, fromArchive: state.fromArchive || null, akte: state.akte || '', at: Date.now() });
+      sessionStorage.setItem('mpdf.resume', '1');
+    } catch (e) { console.warn('Update: Dokument merken', e); return; }   // nicht merken können → lieber warten
+  }
+  try { sessionStorage.setItem('mpdf.updated', '1'); } catch {}
+  state.dirty = false; location.reload();
+}
+function quietUpdate() {
+  if (!upd.ready || busyNow()) return;
+  if (!state.pages.length) return applyUpdateNow(null);
+  const idle = (hiddenSince && Date.now() - hiddenSince > 60 * 1000) || Date.now() - lastInput > 10 * 60 * 1000;
+  const docs = idle && resumable(); if (docs) applyUpdateNow(docs);
+}
 function newVersionActive() {
   upd.ready = true;
-  // Nichts in Arbeit? Dann gleich auf die neue Version wechseln – sonst nur anbieten (ungespeicherte Arbeit bleibt erhalten)
-  if (!state.pages.length && !busyNow()) { try { sessionStorage.setItem('mpdf.updated', '1'); } catch {} location.reload(); return; }
+  // Nichts in Arbeit? Dann gleich auf die neue Version wechseln – sonst im ersten ruhigen Moment (ungespeicherte Arbeit bleibt erhalten)
+  if (!state.pages.length && !busyNow()) { applyUpdateNow(null); return; }
   $('#updBtn').hidden = false;
-  status(`Eine neue Version von ${APP.name} ist bereit – unten rechts „jetzt neu laden“ (nach dem Speichern).`);
-  if (upd.manual) toast('Update geladen – unten rechts „Neue Version: jetzt neu laden“.');
+  if (!upd.quiet) { upd.quiet = setInterval(quietUpdate, 20 * 1000); document.addEventListener('visibilitychange', () => setTimeout(quietUpdate, 61 * 1000)); }
+  status(`Eine neue Version von ${APP.name} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).`);
+  if (upd.manual) toast('Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.');
+}
+// Nach dem Wechsel: mitgenommene PDFs wieder öffnen (nur einmal, nur kurz nach dem Neuladen)
+async function resumeAfterUpdate() {
+  let s = null;
+  try { if (!sessionStorage.getItem('mpdf.resume')) return; sessionStorage.removeItem('mpdf.resume'); s = await idb.get('updResume'); await idb.del('updResume'); } catch {}
+  if (!s?.files?.length || Date.now() - s.at > 10 * 60 * 1000) return;
+  const files = s.files.map(f => { const file = new File([f.bytes], f.name, { type: 'application/pdf' }); if (f.handle) window.pdfmyHandles.set(file, f.handle); return file; });
+  await importFiles(files);
+  if (s.fromArchive) state.fromArchive = s.fromArchive;
+  if (s.akte) { state.akte = s.akte; const a = $('#akte'); if (a) a.value = s.akte; }
+  if (s.sel > 0 && s.sel < state.pages.length) { state.sel = s.sel; renderThumbs(); renderStage(); }
+  state.dirty = false;
 }
 async function checkUpdates(manual) {
   upd.manual = manual;
@@ -5881,13 +5932,16 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !NAT
   }).catch(e => console.warn('Service Worker:', e));
   $('#updBtn').onclick = () => {
     if (state.dirty && state.pages.length && !confirm('Es gibt ungespeicherte Änderungen. Trotzdem neu laden?')) return;
+    if (upd.ready && !state.dirty && state.pages.length) { const docs = resumable(); if (docs) return applyUpdateNow(docs); }   // geöffnete PDFs mitnehmen
     state.dirty = false; location.reload();
   };
   // Nach einem automatischen Wechsel kurz Bescheid geben
   try {
     if (sessionStorage.getItem('mpdf.updated')) {
       sessionStorage.removeItem('mpdf.updated');
-      versionLabel().then(v => { status(`${APP.name} wurde aktualisiert${v ? ` (${v})` : ''}.`); toast(`${APP.name} wurde auf die neue Version aktualisiert${v ? ` (${v})` : ''}.`); });
+      const back = !!sessionStorage.getItem('mpdf.resume');
+      setTimeout(() => resumeAfterUpdate().catch(e => console.warn('Nach Update wieder öffnen', e)), 300);
+      versionLabel().then(v => { status(`${APP.name} wurde aktualisiert${v ? ` (${v})` : ''}.`); toast(back ? `${APP.name} wurde automatisch aktualisiert${v ? ` (${v})` : ''} – Ihr Dokument ist wieder geöffnet.` : `${APP.name} wurde auf die neue Version aktualisiert${v ? ` (${v})` : ''}.`, 7000); });
     }
   } catch {}
 }

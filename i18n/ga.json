@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Leis an IS áitiúil ar an ríomhaire seo ({0}) – ní fhágann na doiciméid an ríomhaire.",
  "Quellen": "Foinsí",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "m.sh. Cé na conarthaí a athnuaitear go huathoibríoch, agus go dtí cathain is féidir liom iad a chealú?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Roghnaigh ar dtús faoi “… Tuilleadh → Roghnaigh fillteán comhdaithe …” an fillteán le do litreacha agus conarthaí – déanfaidh PDFMy insuimh é."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Roghnaigh ar dtús faoi “… Tuilleadh → Roghnaigh fillteán comhdaithe …” an fillteán le do litreacha agus conarthaí – déanfaidh PDFMy insuimh é.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "Nuashonraíodh {0} go huathoibríoch{1} – tá do dhoiciméad oscailte arís.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Tá leagan nua de {0} réidh – cuirfear i bhfeidhm go huathoibríoch é a luaithe a shábháiltear an doiciméad agus nach bhfuil aon obair ar siúl air (nó anois le “athlódáil” thíos ar dheis).",
+ "Nach Update wieder öffnen": "Oscail arís tar éis nuashonraithe",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Nuashonrú luchtaithe – cuirfear i bhfeidhm go huathoibríoch é a luaithe nach bhfuil aon rud ar siúl.",
+ "Update: Dokument merken": "Nuashonrú: cuimhnigh ar an doiciméad"
 }

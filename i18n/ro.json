@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Cu IA locală de pe acest PC ({0}) – documentele nu părăsesc computerul.",
  "Quellen": "Surse",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "de ex. Ce contracte se prelungesc automat și până când pot fi reziliate?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Alegeți mai întâi, la „… Mai multe → Alegere dosar de arhivare …”, dosarul cu scrisorile și contractele – PDFMy îl face apoi căutabil."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Alegeți mai întâi, la „… Mai multe → Alegere dosar de arhivare …”, dosarul cu scrisorile și contractele – PDFMy îl face apoi căutabil.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} a fost actualizat automat{1} – documentul dvs. a fost redeschis.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "O versiune nouă a {0} este pregătită – va fi aplicată automat de îndată ce documentul este salvat și nu se lucrează la el (sau imediat prin „reîncărcați” în dreapta jos).",
+ "Nach Update wieder öffnen": "Redeschidere după actualizare",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Actualizare încărcată – va fi aplicată automat de îndată ce nu se lucrează la nimic.",
+ "Update: Dokument merken": "Actualizare: reține documentul"
 }

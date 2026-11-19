@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Met de lokale AI op deze pc ({0}) – de documenten verlaten de computer niet.",
  "Quellen": "Bronnen",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "bijv. Welke contracten worden automatisch verlengd, en tot wanneer kan ik opzeggen?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Kies eerst onder „… Meer → Archiefmap kiezen …” de map met uw brieven en contracten – PDFMy maakt die dan doorzoekbaar."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Kies eerst onder „… Meer → Archiefmap kiezen …” de map met uw brieven en contracten – PDFMy maakt die dan doorzoekbaar.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} is automatisch bijgewerkt{1} – uw document is weer geopend.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Er staat een nieuwe versie van {0} klaar – die wordt automatisch toegepast zodra het document is opgeslagen en niet in bewerking is (of nu meteen via „opnieuw laden” rechtsonder).",
+ "Nach Update wieder öffnen": "Na update weer openen",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update geladen – wordt automatisch toegepast zodra er niets in bewerking is.",
+ "Update: Dokument merken": "Update: document onthouden"
 }

@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Naudojant vietinį DI šiame kompiuteryje ({0}) – dokumentai nepalieka kompiuterio.",
  "Quellen": "Šaltiniai",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "pvz., Kurios sutartys pratęsiamos automatiškai ir iki kada galiu jas nutraukti?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Pirmiausia skiltyje „… Daugiau → Pasirinkti archyvo aplanką …“ pasirinkite aplanką su laiškais ir sutartimis – PDFMy jį paruoš paieškai."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Pirmiausia skiltyje „… Daugiau → Pasirinkti archyvo aplanką …“ pasirinkite aplanką su laiškais ir sutartimis – PDFMy jį paruoš paieškai.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} buvo automatiškai atnaujinta{1} – jūsų dokumentas vėl atidarytas.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Paruošta nauja {0} versija – ji bus pritaikyta automatiškai, kai tik dokumentas bus išsaugotas ir nebus redaguojamas (arba iškart per „įkelti iš naujo“ apačioje dešinėje).",
+ "Nach Update wieder öffnen": "Po atnaujinimo atidaryti iš naujo",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Atnaujinimas įkeltas – jis bus pritaikytas automatiškai, kai tik niekas nebus redaguojama.",
+ "Update: Dokument merken": "Atnaujinimas: įsiminti dokumentą"
 }

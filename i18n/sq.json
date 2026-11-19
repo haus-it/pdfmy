@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Me IA-në lokale në këtë kompjuter ({0}) – dokumentet nuk largohen nga kompjuteri.",
  "Quellen": "Burimet",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "p.sh. Cilat kontrata rinovohen automatikisht dhe deri kur mund t’i anuloj?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Së pari te „… Më shumë → Zgjidh dosjen e arkivit …“ zgjidhni dosjen me letrat dhe kontratat tuaja – PDFMy e bën pastaj të kërkueshme."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Së pari te „… Më shumë → Zgjidh dosjen e arkivit …“ zgjidhni dosjen me letrat dhe kontratat tuaja – PDFMy e bën pastaj të kërkueshme.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} u përditësua automatikisht{1} – dokumenti juaj u hap sërish.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Një version i ri i {0} është gati – do të zbatohet automatikisht sapo dokumenti të ruhet dhe të mos jetë në punë (ose tani me „ringarko“ poshtë djathtas).",
+ "Nach Update wieder öffnen": "Hape sërish pas përditësimit",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Përditësimi u ngarkua – do të zbatohet automatikisht sapo të mos jetë asgjë në punë.",
+ "Update: Dokument merken": "Përditësim: mbaj mend dokumentin"
 }

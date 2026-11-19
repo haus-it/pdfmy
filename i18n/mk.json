@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Со локалната ВИ на овој компјутер ({0}) – документите не го напуштаат компјутерот.",
  "Quellen": "Извори",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "на пр. Кои договори автоматски се продолжуваат и до кога можам да ги откажам?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Најпрво под „… Повеќе → Избери папка за архива …“ изберете ја папката со вашите писма и договори – PDFMy потоа ќе ја направи пребарлива."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Најпрво под „… Повеќе → Избери папка за архива …“ изберете ја папката со вашите писма и договори – PDFMy потоа ќе ја направи пребарлива.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} е автоматски ажуриран{1} – вашиот документ е повторно отворен.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Нова верзија на {0} е подготвена – ќе се примени автоматски штом документот ќе се зачува и не се работи на него (или сега со „вчитај повторно“ долу десно).",
+ "Nach Update wieder öffnen": "Повторно отвори по ажурирањето",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Ажурирањето е вчитано – ќе се примени автоматски штом не се работи на ништо.",
+ "Update: Dokument merken": "Ажурирање: запомни го документот"
 }

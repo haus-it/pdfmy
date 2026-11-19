@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "S lokálnou AI v tomto PC ({0}) – dokumenty počítač neopúšťajú.",
  "Quellen": "Zdroje",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "napr. Ktoré zmluvy sa automaticky predlžujú a dokedy ich môžem vypovedať?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Najprv v ponuke „… Viac → Vybrať priečinok archívu …“ vyberte priečinok s vašimi listami a zmluvami – PDFMy ho potom sprístupní na vyhľadávanie."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Najprv v ponuke „… Viac → Vybrať priečinok archívu …“ vyberte priečinok s vašimi listami a zmluvami – PDFMy ho potom sprístupní na vyhľadávanie.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} bol automaticky aktualizovaný{1} – váš dokument je znova otvorený.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Nová verzia {0} je pripravená – použije sa automaticky, len čo bude dokument uložený a nebude sa na ňom pracovať (alebo hneď cez „načítať znova“ vpravo dole).",
+ "Nach Update wieder öffnen": "Po aktualizácii znova otvoriť",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aktualizácia načítaná – použije sa automaticky, len čo sa na ničom nepracuje.",
+ "Update: Dokument merken": "Aktualizácia: zapamätať dokument"
 }

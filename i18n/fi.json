@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Tämän tietokoneen paikallisella tekoälyllä ({0}) – asiakirjat eivät poistu koneelta.",
  "Quellen": "Lähteet",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "esim. Mitkä sopimukset uusiutuvat automaattisesti, ja mihin mennessä voin irtisanoa ne?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Valitse ensin kohdassa ”… Lisää → Valitse arkistokansio …” kirjeet ja sopimukset sisältävä kansio – PDFMy tekee siitä sitten haettavan."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Valitse ensin kohdassa ”… Lisää → Valitse arkistokansio …” kirjeet ja sopimukset sisältävä kansio – PDFMy tekee siitä sitten haettavan.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} päivitettiin automaattisesti{1} – asiakirjasi on avattu uudelleen.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "{0}:n uusi versio on valmis – se otetaan käyttöön automaattisesti, kun asiakirja on tallennettu eikä sitä muokata (tai heti oikealla alhaalla olevalla ”lataa uudelleen” -toiminnolla).",
+ "Nach Update wieder öffnen": "Avaa uudelleen päivityksen jälkeen",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Päivitys ladattu – se otetaan käyttöön automaattisesti, kun mitään ei ole työn alla.",
+ "Update: Dokument merken": "Päivitys: muista asiakirja"
 }

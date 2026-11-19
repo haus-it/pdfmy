@@ -54,7 +54,7 @@ Eine Sicherheitsfassung enthält nur die Behebung und das dafür Nötige, keine 
 
 ### 5.1 Web-App (pdfmy.de)
 
-- Der Service Worker lädt bei einer neuen Fassung nur geänderte Dateien (Prüfsumme je Datei, `pruefsummen.json`). Die neue Fassung gilt beim nächsten Öffnen. Eine laufende Bearbeitung wird nie unterbrochen.
+- Der Service Worker lädt bei einer neuen Fassung nur geänderte Dateien (Prüfsumme je Datei, `pruefsummen.json`). Die neue Fassung wird **ohne Bestätigung** im ersten ruhigen Moment übernommen: sofort, wenn nichts geöffnet ist; sonst nach dem Schließen des Dokuments oder – bei gespeicherten, unveränderten PDFs – nach einer Minute im Hintergrund bzw. zehn Minuten ohne Bedienung. Die geöffneten PDFs werden dabei lokal mitgenommen und wieder geöffnet. Eine laufende oder ungespeicherte Bearbeitung wird nie unterbrochen (seit app-v303).
 - Die App funktioniert offline weiter. Ein Update ist nie Voraussetzung für die Arbeit.
 
 ### 5.2 PDFMy auf dem eigenen Server
@@ -71,6 +71,7 @@ Eine Sicherheitsfassung enthält nur die Behebung und das dafür Nötige, keine 
 
 - **Gestufte Freigabe:** zuerst 10 % der Installationen (`deploy.ps1 -ScanRollout 10`), nach 48 Stunden ohne auffällige Fehlerberichte 50 %, nach weiteren 48 Stunden 100 %. Sicherheitsfassungen gehen sofort an 100 %.
 - Windows-Fassungen sind per Authenticode signiert (Mentor GmbH). Mac- und Linux-Fassungen sind mit RSA-3072 signiert. pdfmy Scan installiert nur signierte Fassungen mit höherer Version.
+- **Ohne Bestätigung (Voreinstellung):** pdfmy Scan installiert freigegebene Updates selbst und ohne Meldung, nie während eines Scans oder Drucks. Ist es gerade beschäftigt, folgt ein neuer Versuch nach 15 Minuten, nach einem Fehler nach einer Stunde, sonst alle 6 Stunden (Windows 1.21.0, Mac/Linux 1.11.0). Abschaltbar im Menü (CRA Anhang I Teil I Nr. 2 c); dann wird das Update gemeldet und per Klick installiert.
 - Installationen für alle Benutzer (Firmen) aktualisieren sich nicht selbst; die IT verteilt sie. Die aktuelle Version steht maschinenlesbar in `/download/version.json`.
 
 ### 5.4 Browser-Erweiterung und Store-Fassungen

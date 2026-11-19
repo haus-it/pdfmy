@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Με την τοπική ΤΝ σε αυτόν τον υπολογιστή ({0}) – τα έγγραφα δεν φεύγουν από τον υπολογιστή.",
  "Quellen": "Πηγές",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "π.χ. Ποιες συμβάσεις ανανεώνονται αυτόματα και μέχρι πότε μπορώ να καταγγείλω;",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Επιλέξτε πρώτα στο «… Περισσότερα → Επιλογή φακέλου αρχειοθέτησης …» το φάκελο με τις επιστολές και τις συμβάσεις σας – το PDFMy τον κάνει στη συνέχεια αναζητήσιμο."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Επιλέξτε πρώτα στο «… Περισσότερα → Επιλογή φακέλου αρχειοθέτησης …» το φάκελο με τις επιστολές και τις συμβάσεις σας – το PDFMy τον κάνει στη συνέχεια αναζητήσιμο.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "Το {0} ενημερώθηκε αυτόματα{1} – το έγγραφό σας άνοιξε ξανά.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Μια νέα έκδοση του {0} είναι έτοιμη – θα εφαρμοστεί αυτόματα μόλις αποθηκευτεί το έγγραφο και δεν υπάρχει εργασία σε εξέλιξη (ή τώρα με «επαναφόρτωση» κάτω δεξιά).",
+ "Nach Update wieder öffnen": "Επανάνοιγμα μετά την ενημέρωση",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Η ενημέρωση φορτώθηκε – θα εφαρμοστεί αυτόματα μόλις δεν υπάρχει εργασία σε εξέλιξη.",
+ "Update: Dokument merken": "Ενημέρωση: απομνημόνευση εγγράφου"
 }

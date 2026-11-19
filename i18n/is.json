@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Með staðbundinni gervigreind í þessari tölvu ({0}) – skjölin fara ekki úr tölvunni.",
  "Quellen": "Heimildir",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "t.d. Hvaða samningar framlengjast sjálfkrafa og hvenær get ég sagt þeim upp?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Veljið fyrst undir „… Meira → Velja skjalamöppu …“ möppuna með bréfum og samningum – PDFMy gerir hana þá leitarhæfa."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Veljið fyrst undir „… Meira → Velja skjalamöppu …“ möppuna með bréfum og samningum – PDFMy gerir hana þá leitarhæfa.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} var uppfært sjálfkrafa{1} – skjalið þitt er opnað aftur.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Ný útgáfa af {0} er tilbúin – hún verður tekin í notkun sjálfkrafa þegar skjalið hefur verið vistað og er ekki í vinnslu (eða strax með „endurhlaða“ neðst til hægri).",
+ "Nach Update wieder öffnen": "Opna aftur eftir uppfærslu",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uppfærsla hlaðin – hún verður tekin í notkun sjálfkrafa þegar ekkert er í vinnslu.",
+ "Update: Dokument merken": "Uppfærsla: muna skjal"
 }

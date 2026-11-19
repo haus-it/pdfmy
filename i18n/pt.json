@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Com a IA local neste PC ({0}) – os documentos não saem do computador.",
  "Quellen": "Fontes",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "p. ex. Que contratos se renovam automaticamente e até quando posso rescindir?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Escolha primeiro, em «… Mais → Escolher pasta de arquivo …», a pasta com as suas cartas e contratos – o PDFMy torna-a depois pesquisável."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Escolha primeiro, em «… Mais → Escolher pasta de arquivo …», a pasta com as suas cartas e contratos – o PDFMy torna-a depois pesquisável.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} foi atualizado automaticamente{1} – o seu documento foi reaberto.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Está pronta uma nova versão de {0} – será aplicada automaticamente assim que o documento estiver guardado e sem trabalho em curso (ou agora, com «recarregar» em baixo à direita).",
+ "Nach Update wieder öffnen": "Reabrir após a atualização",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Atualização carregada – será aplicada automaticamente assim que não houver nada em curso.",
+ "Update: Dokument merken": "Atualização: memorizar documento"
 }

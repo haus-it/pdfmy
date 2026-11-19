@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "With the local AI on this PC ({0}) – the documents do not leave the computer.",
  "Quellen": "Sources",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "e.g. Which contracts renew automatically, and until when can I cancel?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "First choose the folder with your letters and contracts under ‘… More → Choose filing folder …’ – PDFMy will then make it searchable."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "First choose the folder with your letters and contracts under ‘… More → Choose filing folder …’ – PDFMy will then make it searchable.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} was updated automatically{1} – your document has been reopened.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "A new version of {0} is ready – it will be applied automatically once the document is saved and not being worked on (or click ‘reload’ at the bottom right now).",
+ "Nach Update wieder öffnen": "Reopen after update",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update loaded – it will be applied automatically as soon as nothing is being worked on.",
+ "Update: Dokument merken": "Update: remember document"
 }

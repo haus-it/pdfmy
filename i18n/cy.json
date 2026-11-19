@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Gyda’r DA lleol ar y PC hwn ({0}) – nid yw’r dogfennau’n gadael y cyfrifiadur.",
  "Quellen": "Ffynonellau",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "e.e. Pa gontractau sy’n adnewyddu’n awtomatig, a than pryd y gallaf eu canslo?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Dewiswch yn gyntaf o dan “… Mwy → Dewis ffolder ffeilio …” y ffolder gyda’ch llythyrau a’ch contractau – bydd PDFMy yn ei wneud yn chwiliadwy."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Dewiswch yn gyntaf o dan “… Mwy → Dewis ffolder ffeilio …” y ffolder gyda’ch llythyrau a’ch contractau – bydd PDFMy yn ei wneud yn chwiliadwy.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "Diweddarwyd {0} yn awtomatig{1} – mae eich dogfen wedi’i hagor eto.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Mae fersiwn newydd o {0} yn barod – bydd yn cael ei chymhwyso’n awtomatig cyn gynted ag y bydd y ddogfen wedi’i chadw ac nad oes gwaith yn mynd rhagddo arni (neu nawr gyda “ail-lwytho” ar y gwaelod ar y dde).",
+ "Nach Update wieder öffnen": "Ailagor ar ôl diweddaru",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Diweddariad wedi’i lwytho – bydd yn cael ei gymhwyso’n awtomatig cyn gynted ag nad oes gwaith yn mynd rhagddo.",
+ "Update: Dokument merken": "Diweddariad: cofio’r ddogfen"
 }

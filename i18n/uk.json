@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "За допомогою локального ШІ на цьому комп’ютері ({0}) – документи не залишають комп’ютер.",
  "Quellen": "Джерела",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "напр. Які договори продовжуються автоматично і до коли я можу їх розірвати?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Спочатку в «… Більше → Вибрати папку архіву…» виберіть папку зі своїми листами та договорами – PDFMy зробить її придатною для пошуку."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Спочатку в «… Більше → Вибрати папку архіву…» виберіть папку зі своїми листами та договорами – PDFMy зробить її придатною для пошуку.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} автоматично оновлено{1} – ваш документ знову відкрито.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Нова версія {0} готова – її буде застосовано автоматично, щойно документ буде збережено і над ним не працюватимуть (або зараз за допомогою «перезавантажити» внизу праворуч).",
+ "Nach Update wieder öffnen": "Знову відкрити після оновлення",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Оновлення завантажено – його буде застосовано автоматично, щойно ні над чим не працюватимуть.",
+ "Update: Dokument merken": "Оновлення: запам’ятати документ"
 }

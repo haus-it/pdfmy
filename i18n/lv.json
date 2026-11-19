@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Ar vietējo MI šajā datorā ({0}) – dokumenti neatstāj datoru.",
  "Quellen": "Avoti",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "piem., Kuri līgumi pagarinās automātiski, un līdz kuram laikam varu tos uzteikt?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Vispirms sadaļā „… Vairāk → Izvēlēties arhīva mapi …” izvēlieties mapi ar vēstulēm un līgumiem – PDFMy to pēc tam padarīs meklējamu."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Vispirms sadaļā „… Vairāk → Izvēlēties arhīva mapi …” izvēlieties mapi ar vēstulēm un līgumiem – PDFMy to pēc tam padarīs meklējamu.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} tika automātiski atjaunināts{1} – jūsu dokuments ir atkal atvērts.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Ir gatava jauna {0} versija – tā tiks piemērota automātiski, tiklīdz dokuments būs saglabāts un ar to netiks strādāts (vai uzreiz ar „pārlādēt” apakšā pa labi).",
+ "Nach Update wieder öffnen": "Pēc atjaunināšanas atvērt vēlreiz",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Atjauninājums ielādēts – tas tiks piemērots automātiski, tiklīdz nekas netiks apstrādāts.",
+ "Update: Dokument merken": "Atjauninājums: atcerēties dokumentu"
 }

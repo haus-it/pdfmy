@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Z lokalną SI na tym komputerze ({0}) – dokumenty nie opuszczają komputera.",
  "Quellen": "Źródła",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "np. Które umowy przedłużają się automatycznie i do kiedy mogę je wypowiedzieć?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Najpierw wybierz w „… Więcej → Wybierz folder archiwum …” folder z pismami i umowami – PDFMy uczyni go wtedy przeszukiwalnym."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Najpierw wybierz w „… Więcej → Wybierz folder archiwum …” folder z pismami i umowami – PDFMy uczyni go wtedy przeszukiwalnym.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} został automatycznie zaktualizowany{1} – dokument został ponownie otwarty.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Nowa wersja {0} jest gotowa – zostanie zastosowana automatycznie, gdy dokument zostanie zapisany i nie będzie w edycji (lub od razu przez „wczytaj ponownie” na dole po prawej).",
+ "Nach Update wieder öffnen": "Otwórz ponownie po aktualizacji",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aktualizacja pobrana – zostanie zastosowana automatycznie, gdy nic nie będzie w edycji.",
+ "Update: Dokument merken": "Aktualizacja: zapamiętaj dokument"
 }

@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.20.1";
+        public const string Version = "1.21.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -426,16 +426,20 @@ namespace PdfmyScan
             { Program.Log($"Update {latest} noch nicht für diese Installation freigegeben ({Updater.Rollout} % – hier {Updater.Bucket})"); return; }
             // Ohne Klick (seit 1.16.0): Ist gerade nichts in Arbeit (kein Scan, kein ankommender Druck), installiert sich das geprüfte
             // Update selbst (SHA-256 und Signatur „Mentor GmbH“ wie beim Klick). Klappt das nicht, wird es wie bisher angeboten.
-            if (!manual && !Updater.AutoOff && new System.Version(latest) > new System.Version(Program.Version) && LocalServer.Idle && !PdfPrinter.Pending)
+            bool auto = !manual && !Updater.AutoOff && new System.Version(latest) > new System.Version(Program.Version);
+            if (auto && LocalServer.Idle && !PdfPrinter.Pending)
             {
                 Program.Log($"Update {latest} wird automatisch installiert");
                 if (await Updater.InstallAsync(latest, msg => Program.Log("Automatisches Update: " + msg), silent: true)) return;
+                updateTimer.Interval = 60 * 60 * 1000;   // fehlgeschlagen (z. B. Verbindung): in einer Stunde wieder, nicht erst in 6 Stunden (seit 1.21.0)
             }
+            else if (auto) { updateTimer.Interval = 15 * 60 * 1000; Program.Log($"Update {latest}: gerade in Arbeit (Scan oder Druck) – neuer Versuch in 15 Minuten"); }   // seit 1.21.0
             if (new System.Version(latest) > new System.Version(Program.Version))
             {
                 updateItem.Text = $"Update auf {latest} installieren"; updateItem.Tag = latest; updateItem.Visible = true;
                 icon.Text = $"pdfmy Scan {Program.Version} – Update {latest} verfügbar".Substring(0, Math.Min(63, $"pdfmy Scan {Program.Version} – Update {latest} verfügbar".Length));
-                if (manual || offered != latest)
+                // Automatische Updates an: keine Meldung – es installiert sich im nächsten ruhigen Moment selbst (seit 1.21.0)
+                if (manual || (offered != latest && Updater.AutoOff))
                     icon.ShowBalloonTip(10000, $"pdfmy Scan {latest} ist verfügbar", $"Installiert ist {Program.Version}. Hier klicken, um jetzt zu aktualisieren.", ToolTipIcon.Info);
                 offered = latest;
                 Program.Log($"Update verfügbar: {latest}");

@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Bl-IA lokali fuq dan il-PC ({0}) – id-dokumenti ma jħallux il-kompjuter.",
  "Quellen": "Sorsi",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "eż. Liema kuntratti jiġġeddu awtomatikament, u sa meta nista’ nikkanċellahom?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "L-ewwel agħżel taħt “… Aktar → Agħżel folder tal-arkivju …” il-folder bl-ittri u l-kuntratti tiegħek – PDFMy se jagħmlu jitfittex."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "L-ewwel agħżel taħt “… Aktar → Agħżel folder tal-arkivju …” il-folder bl-ittri u l-kuntratti tiegħek – PDFMy se jagħmlu jitfittex.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} ġie aġġornat awtomatikament{1} – id-dokument tiegħek reġa’ nfetaħ.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Verżjoni ġdida ta’ {0} hija lesta – se tiġi applikata awtomatikament hekk kif id-dokument jiġi ssejvjat u ma jkunx qed isir xogħol fuqu (jew issa b’“erġa’ tella’” fil-qiegħ fuq il-lemin).",
+ "Nach Update wieder öffnen": "Erġa’ iftaħ wara l-aġġornament",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aġġornament imtella’ – se jiġi applikat awtomatikament hekk kif ma jkun qed isir xejn.",
+ "Update: Dokument merken": "Aġġornament: ftakar id-dokument"
 }

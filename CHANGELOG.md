@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Updates ohne Bestätigung (app-v303, pdfmy Scan Windows 1.21.0, Mac/Linux 1.11.0)
+- **Web-App:** Eine neue Version wird im ersten ruhigen Moment übernommen – nicht mehr nur, wenn nichts geöffnet ist. Bei gespeicherten, unveränderten PDFs reicht eine Minute im Hintergrund oder zehn Minuten ohne Bedienung; die geöffneten PDFs werden über IndexedDB (nur lokal) mitgenommen und nach dem Neuladen wieder geöffnet, mit Seite, Akte, Herkunft aus der Ablage und Verweis auf die Originaldatei. Ungespeicherte Änderungen, Markierungen, Drehungen, Formulareingaben, laufende Scans, offene Dialoge und andere Reiter mit ungespeicherter Arbeit verhindern den Wechsel weiterhin. Auch „Neue Version: jetzt neu laden“ nimmt die PDFs mit.
+- **pdfmy Scan:** Läuft bei der Update-Prüfung gerade ein Scan oder Druck, versucht pdfmy Scan es nach 15 Minuten erneut (vorher erst nach 6 Stunden); nach einem fehlgeschlagenen Download nach einer Stunde. Bei eingeschalteten automatischen Updates erscheint keine Meldung „Update verfügbar“ mehr. Abschalten bleibt möglich (CRA Anhang I Teil I Nr. 2 c); von der IT verteilte Installationen aktualisieren sich weiterhin nicht selbst.
+
 ### Fragen an die Ablage (app-v302)
 - **Eine Frage an viele Dokumente** (Menü → „Fragen an die Ablage …“, im Posteingangsbuch „KI fragen …“): Die Volltextsuche der Ablage wählt die passenden Briefe und Verträge (BM25 über Wortstämme, Absender/Betreff/Art/Akte doppelt gewichtet; neues Modul `js/fragen.js`), daraus Ausschnitte um die Fundstellen; die KI auf diesem Gerät (Browser-KI oder lokale KI auf demselben PC) antwortet nur daraus und nennt die Quellen [1], [2] … Zitierte Quellen sind hervorgehoben und lassen sich öffnen; Kopieren mit Quellenliste. Im Posteingangsbuch gelten die aktiven Filter (Akte, Jahr, Schlagwort, Suche). Nichts wird hochgeladen. Schließt den offenen Teil von Rang 9 der Wettbewerbsanalyse (Vertragsakte: „Fragen an mehrere Dokumente“; vergleichbar mit Acrobat AI Assistant über mehrere Dateien und PDFgear, dort mit Upload bzw. Cloud).
 

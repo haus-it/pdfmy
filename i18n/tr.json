@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Bu bilgisayardaki yerel YZ ile ({0}) – belgeler bilgisayardan çıkmaz.",
  "Quellen": "Kaynaklar",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "örn. Hangi sözleşmeler otomatik uzuyor ve en geç ne zamana kadar feshedebilirim?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Önce “… Daha fazla → Arşiv klasörü seç …” altından mektup ve sözleşmelerinizin bulunduğu klasörü seçin – PDFMy onu daha sonra aranabilir hale getirir."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Önce “… Daha fazla → Arşiv klasörü seç …” altından mektup ve sözleşmelerinizin bulunduğu klasörü seçin – PDFMy onu daha sonra aranabilir hale getirir.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} otomatik olarak güncellendi{1} – belgeniz yeniden açıldı.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "{0} için yeni bir sürüm hazır – belge kaydedilip üzerinde çalışılmadığı anda otomatik olarak uygulanır (veya şimdi sağ alttaki “yeniden yükle” ile).",
+ "Nach Update wieder öffnen": "Güncellemeden sonra yeniden aç",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Güncelleme yüklendi – üzerinde çalışılan bir şey kalmadığı anda otomatik olarak uygulanır.",
+ "Update: Dokument merken": "Güncelleme: belgeyi hatırla"
 }

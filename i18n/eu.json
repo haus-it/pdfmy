@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "PC honetako AA lokalarekin ({0}) – dokumentuek ez dute ordenagailua uzten.",
  "Quellen": "Iturriak",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "adib. Zein kontratu berritzen dira automatikoki, eta noiz arte baja eman dezaket?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Lehenik, «… Gehiago → Aukeratu artxibo-karpeta …» atalean, aukeratu zure gutun eta kontratuen karpeta – PDFMyk bilagarri bihurtuko du."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Lehenik, «… Gehiago → Aukeratu artxibo-karpeta …» atalean, aukeratu zure gutun eta kontratuen karpeta – PDFMyk bilagarri bihurtuko du.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} automatikoki eguneratu da{1} – zure dokumentua berriro ireki da.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "{0} programaren bertsio berri bat prest dago – automatikoki aplikatuko da dokumentua gorde eta lanean ari ez zarenean (edo orain, behean eskuinean dagoen «berriro kargatu» botoiarekin).",
+ "Nach Update wieder öffnen": "Ireki berriro eguneratu ondoren",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Eguneraketa kargatu da – automatikoki aplikatuko da ezer lanean ari ez zarenean.",
+ "Update: Dokument merken": "Eguneraketa: gogoratu dokumentua"
 }

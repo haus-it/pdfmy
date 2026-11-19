@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Z lokalno UI v tem računalniku ({0}) – dokumenti ne zapustijo računalnika.",
  "Quellen": "Viri",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "npr. Katere pogodbe se samodejno podaljšajo in do kdaj jih lahko odpovem?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Najprej pod „… Več → Izberi mapo za arhiv …“ izberite mapo s svojimi pismi in pogodbami – PDFMy jo bo nato naredil iskalno."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Najprej pod „… Več → Izberi mapo za arhiv …“ izberite mapo s svojimi pismi in pogodbami – PDFMy jo bo nato naredil iskalno.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} je bil samodejno posodobljen{1} – vaš dokument je spet odprt.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Nova različica programa {0} je pripravljena – uporabljena bo samodejno, ko bo dokument shranjen in se ne bo delalo z njim (ali zdaj z „znova naloži“ spodaj desno).",
+ "Nach Update wieder öffnen": "Po posodobitvi znova odpri",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Posodobitev je naložena – uporabljena bo samodejno, ko se ne bo delalo z ničimer.",
+ "Update: Dokument merken": "Posodobitev: zapomni si dokument"
 }

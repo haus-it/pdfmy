@@ -161,7 +161,8 @@ test('Outlook-Manifest: Handy-Knopf beim Lesen, Übersetzungen als bt:Override (
 test('pdfmy Scan: automatische Updates vom Benutzer abschaltbar, Meldung bleibt (CRA Anhang I Teil I Nr. 2 c, 1.18.1)', () => {
   const cs = fs.readFileSync(path.join(ROOT, 'tools', 'pdfmy-scan', 'Program.cs'), 'utf8');
   assert.match(cs, /new ToolStripMenuItem\("Updates automatisch installieren"\) \{ Checked = !Updater\.AutoOff, CheckOnClick = true \}/, 'Schalter im Menü, an als Voreinstellung');
-  assert.match(cs, /if \(!manual && !Updater\.AutoOff && new System\.Version\(latest\)/, 'aus → keine Selbstinstallation');
+  assert.match(cs, /bool auto = !manual && !Updater\.AutoOff && new System\.Version\(latest\)/, 'aus → keine Selbstinstallation');
+  assert.match(cs, /if \(auto && LocalServer\.Idle && !PdfPrinter\.Pending\)/, 'nur ohne laufende Arbeit');
   assert.match(cs, /updateItem\.Visible = true;/, 'verfügbare Updates werden weiter angeboten');
   assert.match(cs, /autoItem\.Visible = !Machine\.UpdatesManaged/, 'bei IT-Verteilung ausgeblendet');
   for (const lang of fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f)))

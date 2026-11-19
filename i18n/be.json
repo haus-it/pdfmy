@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "З дапамогай лакальнага ШІ на гэтым ПК ({0}) – дакументы не пакідаюць камп’ютар.",
  "Quellen": "Крыніцы",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "напр. Якія дамовы працягваюцца аўтаматычна, і да якога часу я магу іх скасаваць?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Спачатку выберыце ў раздзеле «… Яшчэ → Выбраць папку архіва …» папку з вашымі лістамі і дамовамі – PDFMy зробіць яе даступнай для пошуку."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Спачатку выберыце ў раздзеле «… Яшчэ → Выбраць папку архіва …» папку з вашымі лістамі і дамовамі – PDFMy зробіць яе даступнай для пошуку.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} аўтаматычна абноўлены{1} – ваш дакумент зноў адкрыты.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Новая версія {0} гатова – яна будзе ўжыта аўтаматычна, як толькі дакумент будзе захаваны і над ім не будуць працаваць (або цяпер з дапамогай «перазагрузіць» унізе справа).",
+ "Nach Update wieder öffnen": "Зноў адкрыць пасля абнаўлення",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Абнаўленне загружана – яно будзе ўжыта аўтаматычна, як толькі ні над чым не будуць працаваць.",
+ "Update: Dokument merken": "Абнаўленне: запомніць дакумент"
 }

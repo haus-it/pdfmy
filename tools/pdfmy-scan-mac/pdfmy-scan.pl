@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.10.1';
+our $VERSION = '1.11.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -824,7 +824,10 @@ sub updater_loop {
     my ($v, $why) = eval { self_update(0) };
     if ($v && ver_cmp($v, $VERSION) > 0) { restart_self(); POSIX::_exit(0); }
     logl("Update-Prüfung: $why") if $why && $why ne 'automatisch aus';
-    sleep 6 * 3600 + int(rand 5400) - 2700;
+    # Seit 1.11.0: läuft gerade ein Scan, in 15 Minuten wieder versuchen; ist das Update fehlgeschlagen (Verbindung, Download), in einer
+    # Stunde – sonst wie bisher alle 6 Stunden. So installiert sich ein Update im nächsten ruhigen Moment, ohne Bestätigung.
+    my $wait = ($why // '') eq 'Scan läuft' ? 900 : (!defined $v && $why) ? 3600 : 6 * 3600 + int(rand 5400) - 2700;
+    sleep $wait;
     POSIX::_exit(0) unless alive($MAIN_PID);
   }
 }

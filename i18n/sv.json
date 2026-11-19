@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Med den lokala AI:n på den här datorn ({0}) – dokumenten lämnar inte datorn.",
  "Quellen": "Källor",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "t.ex. Vilka avtal förlängs automatiskt, och till när kan jag säga upp dem?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Välj först under ”… Mer → Välj arkivmapp …” mappen med brev och avtal – PDFMy gör den sedan sökbar."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Välj först under ”… Mer → Välj arkivmapp …” mappen med brev och avtal – PDFMy gör den sedan sökbar.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} uppdaterades automatiskt{1} – ditt dokument har öppnats igen.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "En ny version av {0} är klar – den tillämpas automatiskt så snart dokumentet är sparat och inte är under arbete (eller direkt via ”läs in på nytt” nere till höger).",
+ "Nach Update wieder öffnen": "Öppna igen efter uppdatering",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uppdatering inläst – tillämpas automatiskt så snart inget är under arbete.",
+ "Update: Dokument merken": "Uppdatering: kom ihåg dokument"
 }

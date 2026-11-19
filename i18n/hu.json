@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "A számítógép helyi MI-jével ({0}) – a dokumentumok nem hagyják el a gépet.",
  "Quellen": "Források",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "pl. Mely szerződések hosszabbodnak meg automatikusan, és meddig mondhatom fel őket?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Először válassza ki a „… Továbbiak → Iktatási mappa kiválasztása …” alatt a leveleket és szerződéseket tartalmazó mappát – a PDFMy ezután kereshetővé teszi."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Először válassza ki a „… Továbbiak → Iktatási mappa kiválasztása …” alatt a leveleket és szerződéseket tartalmazó mappát – a PDFMy ezután kereshetővé teszi.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "A(z) {0} automatikusan frissült{1} – a dokumentum ismét meg van nyitva.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "A(z) {0} új verziója készen áll – automatikusan érvénybe lép, amint a dokumentum mentve van, és nem dolgoznak vele (vagy azonnal a jobbra lent található „újratöltés” gombbal).",
+ "Nach Update wieder öffnen": "Újranyitás frissítés után",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "A frissítés betöltődött – automatikusan érvénybe lép, amint semmi sincs munka alatt.",
+ "Update: Dokument merken": "Frissítés: dokumentum megjegyzése"
 }

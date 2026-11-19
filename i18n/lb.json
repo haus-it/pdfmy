@@ -3965,5 +3965,10 @@
  "Mit der lokalen KI auf diesem PC ({0}) – die Dokumente verlassen den Rechner nicht.": "Mat der lokaler KI op dësem PC ({0}) – d’Dokumenter verloossen de Computer net.",
  "Quellen": "Quellen",
  "z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?": "z. B. Wéi eng Verträg verlängeren sech automatesch, a bis wéini kann ech kënnegen?",
- "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Als Éischt ënner „… Méi → Oflagedossier wielen …“ den Dossier mat Ären Bréiwer a Verträg wielen – PDFMy mécht en duerno duerchsichbar."
+ "Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.": "Als Éischt ënner „… Méi → Oflagedossier wielen …“ den Dossier mat Ären Bréiwer a Verträg wielen – PDFMy mécht en duerno duerchsichbar.",
+ "{0} wurde automatisch aktualisiert{1} – Ihr Dokument ist wieder geöffnet.": "{0} gouf automatesch aktualiséiert{1} – Äre Dokument ass erëm op.",
+ "Eine neue Version von {0} ist bereit – sie wird automatisch übernommen, sobald das Dokument gespeichert und gerade nicht in Arbeit ist (oder jetzt unten rechts „neu laden“).": "Eng nei Versioun vu {0} ass prett – si gëtt automatesch iwwerholl, soubal den Dokument gespäichert ass an net dru geschafft gëtt (oder elo mat „nei lueden“ ënnen riets).",
+ "Nach Update wieder öffnen": "No Update erëm opmaachen",
+ "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update gelueden – gëtt automatesch iwwerholl, soubal un näischt geschafft gëtt.",
+ "Update: Dokument merken": "Update: Dokument verhalen"
 }
