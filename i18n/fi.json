@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Päivitys ladattu – se otetaan käyttöön automaattisesti, kun mitään ei ole työn alla.",
  "Update: Dokument merken": "Päivitys: muista asiakirja",
  "Endnoten": "Loppuviitteet",
- "Fußnoten": "Alaviitteet"
+ "Fußnoten": "Alaviitteet",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-tuontiavustaja, ohjeineen)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Kaikki kuukauden arkistoidut tositteet yhdessä ZIP-tiedostossa: PDF:t (e-laskuissa alkuperäisen XML:n kanssa), tositeluettelo Exceliin ja – toimiston ohjelmiston mukaan – tuontitiedosto DATEViin tai Agendaan.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Muu tai tuntematon (vain tositteet ja tositeluettelo)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (tuontitiedosto document.xml)",
+ "Kanzlei-Software": "Toimiston ohjelmisto"
 }

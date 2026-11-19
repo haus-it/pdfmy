@@ -134,6 +134,31 @@ ${names.map(n => `    <document>\n      <extension xsi:type="File" name="${x(n)}
 </archive>
 `;
   }
+  /* Agenda (Kanzleisoftware von Agenda Informationssysteme): Agenda liest das DATEV-Format über „Transfer → DATEV-Import-Assistent“
+     aus einem Ordner. Das Paket ist dasselbe wie für DATEV (Belege + document.xml), dazu diese Anleitung für die Kanzlei (app-v305).
+     Buchungsdaten mit Konten enthält es bewusst nicht – die kennt PDFMy nicht, geratene Konten machten der Kanzlei mehr Arbeit. */
+  function agendaReadme({ month = '', count = 0, system = 'PDFMy', zipName = '' } = {}) {
+    // i18n-aus – Anleitung für die (deutsche) Kanzlei, bleibt Deutsch
+    return [
+      `Belege ${month} – Import in Agenda`,
+      '',
+      `Dieses Paket enthält ${count} Beleg(e) aus ${system}:`,
+      '- die Belege als PDF (E-Rechnungen zusätzlich mit der Original-XML, XRechnung bzw. ZUGFeRD),',
+      '- document.xml: Belegbilder im DATEV-Format (XML-Schnittstelle online),',
+      '- Belegliste_….csv: alle Belege mit Datum, Absender, Rechnungsnummer und Betrag (für Excel).',
+      '',
+      'So importieren Sie die Belege in Agenda:',
+      `1. Die ZIP-Datei${zipName ? ` „${zipName}“` : ''} in einen neuen, leeren Ordner entpacken.`,
+      '2. In Agenda „Transfer“ und dann „DATEV-Import-Assistent“ öffnen.',
+      '3. Diesen Ordner als Quellverzeichnis wählen und mit „Weiter“ fortfahren.',
+      '',
+      'Buchungssätze (Konten, Steuerschlüssel) sind nicht enthalten – die Belege werden in Agenda wie gewohnt gebucht.',
+      'Eingehende E-Rechnungen (XRechnung, ZUGFeRD) können in Agenda auch direkt als E-Rechnung eingelesen werden.',
+      'Klappt der Import nicht oder fehlt etwas? Bitte kurz Bescheid geben – über www.pdfmy.de.',
+      '',
+    ].join('\r\n');
+    // i18n-an
+  }
   // Eindeutige, ZIP-taugliche Dateinamen (gleichnamige Belege bekommen eine laufende Nummer)
   function zipNames(files) {
     const used = new Set();
@@ -274,6 +299,6 @@ ${names.map(n => `    <document>\n      <extension xsi:type="File" name="${x(n)}
     return [...m.values()].sort((a, b) => b.n - a.n || a.tag.localeCompare(b.tag, 'de'));
   }
 
-  const api = { fieldNames, fieldsText, fieldsParse, suggestFields, fieldValues, tagList, allTags, sealText, inNoGaps, cases, suggestCase, b64, emlDraft, nextInNo, retention, resubmit, COLS, STATUS, isClosed, toCsv, parseCsv, merge, deadlines, mine, forwardMail, TAX_TYPES, belegDate, taxSelect, taxCsv, datevXml, zipNames, splitAmount };
+  const api = { fieldNames, fieldsText, fieldsParse, suggestFields, fieldValues, tagList, allTags, sealText, inNoGaps, cases, suggestCase, b64, emlDraft, nextInNo, retention, resubmit, COLS, STATUS, isClosed, toCsv, parseCsv, merge, deadlines, mine, forwardMail, TAX_TYPES, belegDate, taxSelect, taxCsv, datevXml, agendaReadme, zipNames, splitAmount };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Journal = api;
 })(typeof self !== 'undefined' ? self : this);

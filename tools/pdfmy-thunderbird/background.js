@@ -26,10 +26,10 @@ async function openComposeAttachment(tabId, att) {
 }
 async function newForCompose(tabId) { await openJob({ file: null, composeTab: tabId }); }
 
-// bridge.js holt die Datei und gibt das Ergebnis zurück
-messenger.runtime.onMessage.addListener(async (msg, sender) => {
-  if (!sender.url?.startsWith(ORIGIN + '/')) return;
-  const job = jobs.get(msg?.token); if (!job) return { error: t('expired') };
+// bridge.js holt die Datei und gibt das Ergebnis zurück.
+// Kein async-Listener (Prüfhinweis ATN, 19.11.2026): Nur Nachrichten von PDFMy mit gültiger Kennung bekommen ein Promise als Antwort,
+// alle anderen gehen ohne Antwort an mögliche weitere Listener (siehe webextension-api.thunderbird.net, runtimeMessaging).
+async function answer(msg, job) {
   if (msg.get) return { name: job.file?.name || '', bytes: job.file ? await job.file.arrayBuffer() : null, attach: !!job.composeTab };
   if (msg.attach && job.composeTab) {
     try {
@@ -38,17 +38,42 @@ messenger.runtime.onMessage.addListener(async (msg, sender) => {
       return { ok: true };
     } catch (e) { console.warn('PDFMy: Anhängen', e); return { ok: false }; }
   }
-  return null;
+  return { ok: false };
+}
+messenger.runtime.onMessage.addListener((msg, sender) => {
+  if (!sender?.url?.startsWith(ORIGIN + '/') || typeof msg?.token !== 'string' || !(msg.get || msg.attach)) return undefined;   // nicht für uns
+  const job = jobs.get(msg.token);
+  return job ? answer(msg, job) : Promise.resolve({ error: t('expired') });
 });
 
+/* Angezeigte E-Mail zu einem Rechtsklick auf einen Anhang finden (Prüfhinweis ATN: Rechtsklick öffnete nichts).
+   Je nach Thunderbird-Fassung und Ansicht (Nachrichtenbereich, eigener Tab, eigenes Fenster) liefert getDisplayedMessage nichts –
+   dann die angezeigten bzw. ausgewählten Nachrichten durchsuchen und die nehmen, die einen Anhang mit diesem Teil und Namen hat. */
+async function messageFor(tab, att) {
+  const ids = [];
+  try { const m = await messenger.messageDisplay.getDisplayedMessage(tab.id); if (m) ids.push(m.id); } catch {}
+  try { const l = await messenger.messageDisplay.getDisplayedMessages(tab.id); for (const m of (Array.isArray(l) ? l : l?.messages || [])) ids.push(m.id); } catch {}
+  try { const l = await messenger.mailTabs.getSelectedMessages(tab.id); for (const m of l?.messages || []) ids.push(m.id); } catch {}
+  for (const id of [...new Set(ids)]) {
+    if (ids.length === 1) return id;
+    try { if ((await messenger.messages.listAttachments(id)).some(a => a.partName === att.partName && a.name === att.name)) return id; } catch {}
+  }
+  return ids[0] ?? null;
+}
+
 // Kontextmenü an Anhängen (Lesen und Verfassen)
-messenger.menus.create({ id: 'pdfmy-open', title: t('openInPdfmy'), contexts: ['message_attachments', 'compose_attachments'] });
+messenger.menus.create({ id: 'pdfmy-open', title: t('openInPdfmy'), contexts: ['message_attachments', 'compose_attachments'] }, () => void messenger.runtime.lastError);
 messenger.menus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== 'pdfmy-open') return;
-  const list = (info.attachments || []).filter(x => OPENABLE.test(x.name || '')).slice(0, 3);
-  if (tab.type === 'messageCompose') { for (const a of list) await openComposeAttachment(tab.id, a); return; }
-  const msg = await messenger.messageDisplay.getDisplayedMessage(tab.id);
-  if (msg) for (const a of list) await openReadAttachment(msg.id, a);
+  try {
+    tab ||= (await messenger.tabs.query({ active: true, currentWindow: true }))[0];
+    const list = (info.attachments || []).filter(x => OPENABLE.test(x.name || '')).slice(0, 3);
+    if (!list.length || !tab) return;
+    if (tab.type === 'messageCompose') { for (const a of list) await openComposeAttachment(tab.id, a); return; }
+    const id = await messageFor(tab, list[0]);
+    if (id != null) for (const a of list) await openReadAttachment(id, a);
+    else console.warn('PDFMy: keine angezeigte Nachricht gefunden');
+  } catch (e) { console.warn('PDFMy: Rechtsklick', e); }
 });
 // Für das Fenster der Symbolleisten-Knöpfe (popup.js)
 self.pdfmy = { openReadAttachment, openComposeAttachment, newForCompose, OPENABLE };

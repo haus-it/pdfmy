@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Абнаўленне загружана – яно будзе ўжыта аўтаматычна, як толькі ні над чым не будуць працаваць.",
  "Update: Dokument merken": "Абнаўленне: запомніць дакумент",
  "Endnoten": "Канцавыя зноскі",
- "Fußnoten": "Зноскі"
+ "Fußnoten": "Зноскі",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (памочнік імпарту DATEV, з інструкцыяй)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Усе дакументы месяца з архіва ў адным ZIP-файле: PDF (для электронных рахункаў з арыгінальным XML), спіс дакументаў для Excel і – у залежнасці ад праграмы бюро – файл імпарту для DATEV або Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Іншае або невядома (толькі дакументы і спіс дакументаў)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (з файлам імпарту document.xml)",
+ "Kanzlei-Software": "Праграма бюро"
 }

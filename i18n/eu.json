@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Eguneraketa kargatu da – automatikoki aplikatuko da ezer lanean ari ez zarenean.",
  "Update: Dokument merken": "Eguneraketa: gogoratu dokumentua",
  "Endnoten": "Amaierako oharrak",
- "Fußnoten": "Oin-oharrak"
+ "Fußnoten": "Oin-oharrak",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV inportazio-laguntzailea, jarraibideekin)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Hilabete bateko artxibatutako egiaztagiri guztiak ZIP fitxategi batean: PDFak (e-fakturetan jatorrizko XMLarekin), Excelerako egiaztagiri-zerrenda bat eta – bulegoaren softwarearen arabera – DATEVerako edo Agendarako inportazio-fitxategi bat.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Beste bat edo ezezaguna (egiaztagiriak eta egiaztagiri-zerrenda soilik)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (document.xml inportazio-fitxategiarekin)",
+ "Kanzlei-Software": "Bulegoaren softwarea"
 }

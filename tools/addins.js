@@ -26,6 +26,7 @@ const TEXTE = {
   privacy: 'Anhänge öffnen sich in PDFMy auf diesem Gerät – nichts wird hochgeladen.',
   expired: 'Die Übergabe ist abgelaufen.',
   tbDesc: 'PDF-Anhänge in PDFMy öffnen, bearbeiten und unterschreiben – und wieder anhängen. Alles bleibt auf Ihrem Gerät.',
+  tbLoading: 'Anhang aus Thunderbird wird in PDFMy geöffnet …',
   // LibreOffice (app-v256)
   loDesc: 'Das offene Dokument mit einem Klick als PDF in PDFMy öffnen – bearbeiten, unterschreiben, schwärzen. Die Datei bleibt auf Ihrem Rechner.',
   loTip: 'Dieses Dokument als PDF in PDFMy öffnen (über pdfmy Scan, ohne Upload)',
@@ -44,6 +45,7 @@ const TEXTE = {
 };
 const OFFICE_ID = '26905598-3380-42e3-bfff-a6ec17b49991', OUTLOOK_ID = 'b56e6053-19f9-4750-9fa4-189192b5f2ff', TEAMS_ID = '5dd50a72-def9-47fc-97c4-b8dbe10b1616';
 const ADDIN_VERSION = '1.0.0', LO_VERSION = '1.0.0', NC_VERSION = '1.0.1', OO_VERSION = '1.0.1';
+const TB_VERSION = '1.0.1';   // Thunderbird: 1.0.1 nach Prüfung durch ATN (19.11.2026) – Listener, Berechtigung „tabs“, Rechtsklick, Ladeanzeige
 
 module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
   const { LANGS } = require(path.join(ROOT, 'js', 'i18n.js'));
@@ -161,14 +163,14 @@ module.exports = function addins({ ROOT, OUT, write, zip, domain }) {
   write('download/pdfmy-teams.zip', Buffer.from(zip(bin(teamsFiles), new Date(2026, 0, 1))));
 
   // ---------- Thunderbird ----------
-  const TB = path.join(ROOT, 'tools', 'pdfmy-thunderbird'), tbVer = ADDIN_VERSION;
-  const msgs = l => ({ extName: { message: 'PDFMy' }, extDesc: { message: (l ? tr(l, 'tbDesc') : null) || TEXTE.tbDesc }, openInPdfmy: { message: (l ? tr(l, 'open') : null) || TEXTE.open }, open: { message: (l ? tr(l, 'open') : null) || TEXTE.open }, edit: { message: (l ? tr(l, 'edit') : null) || TEXTE.edit }, newPdf: { message: (l ? tr(l, 'newPdf') : null) || TEXTE.newPdf }, noAttachments: { message: (l ? tr(l, 'noAttachments') : null) || TEXTE.noAttachments }, privacy: { message: (l ? tr(l, 'privacy') : null) || TEXTE.privacy }, expired: { message: (l ? tr(l, 'expired') : null) || TEXTE.expired } });
+  const TB = path.join(ROOT, 'tools', 'pdfmy-thunderbird'), tbVer = TB_VERSION;
+  const msgs = l => ({ extName: { message: 'PDFMy' }, extDesc: { message: (l ? tr(l, 'tbDesc') : null) || TEXTE.tbDesc }, openInPdfmy: { message: (l ? tr(l, 'open') : null) || TEXTE.open }, open: { message: (l ? tr(l, 'open') : null) || TEXTE.open }, edit: { message: (l ? tr(l, 'edit') : null) || TEXTE.edit }, newPdf: { message: (l ? tr(l, 'newPdf') : null) || TEXTE.newPdf }, noAttachments: { message: (l ? tr(l, 'noAttachments') : null) || TEXTE.noAttachments }, privacy: { message: (l ? tr(l, 'privacy') : null) || TEXTE.privacy }, expired: { message: (l ? tr(l, 'expired') : null) || TEXTE.expired }, loading: { message: (l ? tr(l, 'tbLoading') : null) || TEXTE.tbLoading } });
   const tbFiles = [
     { name: 'manifest.json', data: JSON.stringify({
       manifest_version: 2, name: '__MSG_extName__', description: '__MSG_extDesc__', version: tbVer, author: 'Mentor GmbH', homepage_url: URL0, default_locale: 'de',
       browser_specific_settings: { gecko: { id: 'pdfmy@mentor-group.de', strict_min_version: '115.0' } },
       icons: { 32: 'icons/icon-32.png', 64: 'icons/icon-64.png', 128: 'icons/icon-128.png' },
-      permissions: ['messagesRead', 'compose', 'menus', 'tabs', `${URL0}/*`],
+      permissions: ['messagesRead', 'compose', 'menus', `${URL0}/*`],   // ohne „tabs“: tabs.create/query brauchen sie nicht (ATN-Prüfung)
       background: { scripts: ['background.js'] },
       content_scripts: [{ matches: [`${URL0}/*`], js: ['bridge.js'], run_at: 'document_start' }],
       message_display_action: { default_title: 'PDFMy', default_icon: { 32: 'icons/icon-32.png', 64: 'icons/icon-64.png' }, default_popup: 'popup.html' },

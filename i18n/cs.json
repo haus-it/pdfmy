@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aktualizace načtena – použije se automaticky, jakmile se na ničem nepracuje.",
  "Update: Dokument merken": "Aktualizace: zapamatovat dokument",
  "Endnoten": "Vysvětlivky",
- "Fußnoten": "Poznámky pod čarou"
+ "Fußnoten": "Poznámky pod čarou",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (importní průvodce DATEV, s návodem)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Všechny uložené doklady za měsíc v jednom souboru ZIP: PDF (u e-faktur s původním XML), seznam dokladů pro Excel a – podle softwaru kanceláře – importní soubor pro DATEV nebo Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Jiný nebo neznámý (jen doklady a seznam dokladů)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (s importním souborem document.xml)",
+ "Kanzlei-Software": "Software kanceláře"
 }

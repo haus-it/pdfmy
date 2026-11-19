@@ -74,7 +74,9 @@ Stand 15.11.2026. **Was Sie tun müssen, ist nur noch: Konto anlegen, Dateien ho
 
 **Link:** https://addons.thunderbird.net/de/developers/addon/submit/ → „Anmelden“ mit dem Firefox-Konto support@haus-it.de.
 
-1. **Auf dieser Website veröffentlichen** → `store/thunderbird/paket/pdfmy-thunderbird-1.0.0.xpi` hochladen.
+> **Stand 19.11.2026:** 1.0.0 wurde abgelehnt (async-Listener, Berechtigung „tabs“, Store-Seite ohne Englisch/Anleitung/Bilder, Rechtsklick, Ladezeit). **1.0.1 behebt das** – Texte, Antwort an den Prüfer und fehlende Bildschirmfotos: `store/thunderbird/eintrag-1.0.1.md`. Hochladen unter https://addons.thunderbird.net/en-US/developers/addon/pdfmy/versions → „Neue Version hochladen“.
+
+1. **Auf dieser Website veröffentlichen** → `store/thunderbird/paket/pdfmy-thunderbird-1.0.1.xpi` hochladen.
 2. Quellcode: **Nein**. Name „PDFMy“, Zusammenfassung „PDF-Anhänge in PDFMy öffnen, bearbeiten und unterschreiben – und wieder anhängen. Alles bleibt auf Ihrem Gerät.“, Beschreibung „Beschreibung Thunderbird“ unten, Kategorie „Nachrichtenlesen“ bzw. „Anhänge“, Lizenz wie bei Firefox, Datenschutz-Link wie oben.
 3. Bilder: `store/thunderbird/bilder/`. **Absenden.**
 

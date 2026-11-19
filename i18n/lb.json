@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update gelueden – gëtt automatesch iwwerholl, soubal un näischt geschafft gëtt.",
  "Update: Dokument merken": "Update: Dokument verhalen",
  "Endnoten": "Endnoten",
- "Fußnoten": "Foussnoten"
+ "Fußnoten": "Foussnoten",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-Importassistent, mat Aleedung)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "All ofgeluechte Beleger vun engem Mount an engem ZIP-Fichier: d'PDFs (bei E-Rechnunge mam Original-XML), eng Beleglëscht fir Excel an – jee no Software vum Büro – en Importfichier fir DATEV oder Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Anert oder onbekannt (nëmme Beleger a Beleglëscht)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (mam Importfichier document.xml)",
+ "Kanzlei-Software": "Büro-Software"
 }

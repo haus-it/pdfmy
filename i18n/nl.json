@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update geladen – wordt automatisch toegepast zodra er niets in bewerking is.",
  "Update: Dokument merken": "Update: document onthouden",
  "Endnoten": "Eindnoten",
- "Fußnoten": "Voetnoten"
+ "Fußnoten": "Voetnoten",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-importassistent, met handleiding)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Alle gearchiveerde bewijsstukken van een maand in één ZIP-bestand: de PDF's (bij e-facturen met originele XML), een lijst van bewijsstukken voor Excel en – afhankelijk van de software van het kantoor – een importbestand voor DATEV of Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Andere of onbekend (alleen bewijsstukken en lijst van bewijsstukken)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (met importbestand document.xml)",
+ "Kanzlei-Software": "Software van het kantoor"
 }

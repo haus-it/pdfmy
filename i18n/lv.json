@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Atjauninājums ielādēts – tas tiks piemērots automātiski, tiklīdz nekas netiks apstrādāts.",
  "Update: Dokument merken": "Atjauninājums: atcerēties dokumentu",
  "Endnoten": "Beigu vēres",
- "Fußnoten": "Vēres"
+ "Fußnoten": "Vēres",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV importa vednis, ar instrukciju)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Visi viena mēneša arhivētie dokumenti vienā ZIP failā: PDF faili (e-rēķiniem ar oriģinālo XML), dokumentu saraksts Excel programmai un – atkarībā no biroja programmatūras – importa fails DATEV vai Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Cita vai nezināma (tikai dokumenti un dokumentu saraksts)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (ar importa failu document.xml)",
+ "Kanzlei-Software": "Biroja programmatūra"
 }

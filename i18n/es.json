@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Actualización cargada: se aplicará automáticamente en cuanto no haya nada en curso.",
  "Update: Dokument merken": "Actualización: recordar documento",
  "Endnoten": "Notas finales",
- "Fußnoten": "Notas al pie"
+ "Fußnoten": "Notas al pie",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (asistente de importación DATEV, con instrucciones)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Todos los comprobantes archivados de un mes en un archivo ZIP: los PDF (en facturas electrónicas, con el XML original), una lista de comprobantes para Excel y, según el software del despacho, un archivo de importación para DATEV o Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Otro o desconocido (solo comprobantes y lista de comprobantes)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (con archivo de importación document.xml)",
+ "Kanzlei-Software": "Software del despacho"
 }

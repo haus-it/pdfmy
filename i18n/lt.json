@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Atnaujinimas įkeltas – jis bus pritaikytas automatiškai, kai tik niekas nebus redaguojama.",
  "Update: Dokument merken": "Atnaujinimas: įsiminti dokumentą",
  "Endnoten": "Pabaigos išnašos",
- "Fußnoten": "Puslapio išnašos"
+ "Fußnoten": "Puslapio išnašos",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV importo vedlys, su instrukcija)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Visi mėnesio archyvuoti dokumentai viename ZIP faile: PDF (e. sąskaitoms – su originaliu XML), dokumentų sąrašas Excel ir – pagal biuro programinę įrangą – importo failas, skirtas DATEV arba Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Kita arba nežinoma (tik dokumentai ir dokumentų sąrašas)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (su importo failu document.xml)",
+ "Kanzlei-Software": "Biuro programinė įranga"
 }

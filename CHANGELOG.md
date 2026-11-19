@@ -4,6 +4,17 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### PDFMy für Thunderbird 1.0.1 – Korrekturen nach der Prüfung durch addons.thunderbird.net (app-v305)
+- Nachrichten-Listener nicht mehr asynchron: Er antwortet nur auf Nachrichten der PDFMy-Seite mit gültiger Einmal-Kennung, andere bleiben unbeantwortet (andere Listener kommen zum Zug).
+- Berechtigung „tabs“ entfernt (wurde nicht gebraucht).
+- Rechtsklick auf einen Anhang → „In PDFMy öffnen“: Liefert Thunderbird die angezeigte Nachricht nicht über getDisplayedMessage, sucht das Add-on sie über getDisplayedMessages und die ausgewählten Nachrichten und nimmt die mit dem angeklickten Anhang.
+- Ladeanzeige: Beim ersten Start (PDFMy wird einmalig von pdfmy.de geladen, gemessen rund 13 s bei leerem Zwischenspeicher) zeigt der Tab sofort „Anhang aus Thunderbird wird in PDFMy geöffnet …“ in der Sprache von Thunderbird.
+- Store-Texte Deutsch und Englisch mit Anleitung zu allen Einstiegspunkten: store/thunderbird/eintrag-1.0.1.md. Nicht in echtem Thunderbird erprobt (hier nicht installiert); Bildschirmfotos der Einstiegspunkte stehen noch aus.
+
+### Steuerberater-Export auch für Agenda (app-v305)
+- Im Dialog „Belege für den Steuerberater“ wählen Sie jetzt die **Software der Kanzlei**: DATEV (wie bisher mit document.xml), **Agenda** oder „andere“ (nur Belege und Belegliste). Für Agenda enthält das Paket die Belege im DATEV-Format, das Agenda über „Transfer → DATEV-Import-Assistent“ einliest, und eine Anleitung `Import_in_Agenda.txt` für die Kanzlei; die E-Mail an den Steuerberater nennt den Import-Weg. Die bisherige Einstellung (Haken „DATEV-Importdatei“) wird übernommen.
+- Bewusst nicht: Buchungsstapel mit geratenen Konten und die Online-Schnittstelle „Agenda Connect“ (Server-Verbindung mit Zugangsdaten, widerspricht den Leitplanken). Der Import in einer echten Agenda-Kanzlei ist noch nicht erprobt.
+
 ### Word-Dateien: Textfelder, Fußnoten, Spalten, Abschnitte (app-v304)
 - **Textfelder** (Formen mit Text, auch in der doppelten Ablage neuerer Word-Fassungen `mc:AlternateContent`) gingen bisher verloren – jetzt erscheint ihr Inhalt nach dem Absatz, in dem sie verankert sind, genau einmal. Bilder in `mc:AlternateContent` werden ebenfalls übernommen.
 - **Fußnoten und Endnoten:** Verweis als hochgestellte Zahl im Text, Wortlaut am Ende des Dokuments unter „Fußnoten“ bzw. „Endnoten“ (kleinere Schrift, Trennlinie).

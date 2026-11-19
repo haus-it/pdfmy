@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aġġornament imtella’ – se jiġi applikat awtomatikament hekk kif ma jkun qed isir xejn.",
  "Update: Dokument merken": "Aġġornament: ftakar id-dokument",
  "Endnoten": "Noti tat-tmiem",
- "Fußnoten": "Noti ta’ qiegħ il-paġna"
+ "Fußnoten": "Noti ta’ qiegħ il-paġna",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (assistent tal-importazzjoni DATEV, b’istruzzjonijiet)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "L-irċevuti arkivjati kollha ta’ xahar f’fajl ZIP wieħed: il-PDFs (għall-fatturi elettroniċi bl-XML oriġinali), lista tal-irċevuti għal Excel u – skont is-softwer tal-uffiċċju – fajl tal-importazzjoni għal DATEV jew Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Ieħor jew mhux magħruf (irċevuti u lista tal-irċevuti biss)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (bil-fajl tal-importazzjoni document.xml)",
+ "Kanzlei-Software": "Softwer tal-uffiċċju"
 }

@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Diweddariad wedi’i lwytho – bydd yn cael ei gymhwyso’n awtomatig cyn gynted ag nad oes gwaith yn mynd rhagddo.",
  "Update: Dokument merken": "Diweddariad: cofio’r ddogfen",
  "Endnoten": "Nodiadau terfyn",
- "Fußnoten": "Troednodiadau"
+ "Fußnoten": "Troednodiadau",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (cynorthwyydd mewnforio DATEV, gyda chyfarwyddiadau)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Holl dderbynebau un mis wedi’u ffeilio mewn un ffeil ZIP: y ffeiliau PDF (gyda’r XML gwreiddiol ar gyfer e-anfonebau), rhestr derbynebau ar gyfer Excel a – yn dibynnu ar feddalwedd y swyddfa – ffeil fewnforio ar gyfer DATEV neu Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Arall neu anhysbys (derbynebau a rhestr derbynebau yn unig)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (gyda ffeil fewnforio document.xml)",
+ "Kanzlei-Software": "Meddalwedd y swyddfa"
 }

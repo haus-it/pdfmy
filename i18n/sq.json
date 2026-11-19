@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Përditësimi u ngarkua – do të zbatohet automatikisht sapo të mos jetë asgjë në punë.",
  "Update: Dokument merken": "Përditësim: mbaj mend dokumentin",
  "Endnoten": "Shënime përfundimtare",
- "Fußnoten": "Shënime në fund të faqes"
+ "Fußnoten": "Shënime në fund të faqes",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (asistenti i importit DATEV, me udhëzues)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Të gjitha dokumentet e arkivuara të një muaji në një skedar ZIP: PDF-të (te e-faturat me XML origjinale), një listë dokumentesh për Excel dhe – sipas softuerit të zyrës – një skedar importi për DATEV ose Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Tjetër ose i panjohur (vetëm dokumentet dhe lista e dokumenteve)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (me skedarin e importit document.xml)",
+ "Kanzlei-Software": "Softueri i zyrës"
 }

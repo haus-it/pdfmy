@@ -101,6 +101,21 @@ test('Steuerberater-Export: Belegliste mit Excel-Betrag, DATEV-XML, eindeutige N
   assert.deepEqual(J.zipNames(['Rechnung\\a.pdf', 'Gutschrift\\a.pdf', 'x\\A.pdf', 'b:c.pdf']), ['a.pdf', 'a (2).pdf', 'A (3).pdf', 'b_c.pdf']);
 });
 
+test('Steuerberater-Export für Agenda: Anleitung für den DATEV-Import-Assistenten, keine geratenen Konten (app-v305)', () => {
+  const t = J.agendaReadme({ month: 'Oktober 2026', count: 12, system: 'PDFMy', zipName: 'Belege_2026_10_Steuerberater.zip' });
+  assert.ok(t.startsWith('Belege Oktober 2026 – Import in Agenda\r\n'));
+  assert.match(t, /12 Beleg\(e\) aus PDFMy/);
+  assert.match(t, /„Transfer“ und dann „DATEV-Import-Assistent“/);
+  assert.match(t, /„Belege_2026_10_Steuerberater\.zip“ in einen neuen, leeren Ordner entpacken/);
+  assert.match(t, /Buchungssätze \(Konten, Steuerschlüssel\) sind nicht enthalten/);
+  assert.equal(t.split('\r\n').join('').includes('\n'), false, 'Windows-Zeilenenden (für Editor der Kanzlei)');
+  const fs = require('node:fs'), path = require('node:path'), pro = fs.readFileSync(path.join(__dirname, '..', 'js', 'pro.js'), 'utf8'), html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.match(html, /<select id="taxSoft"><option value="datev">[^<]+<\/option><option value="agenda">[^<]+<\/option><option value="none">/);
+  assert.match(pro, /const withDatev = soft === 'datev' \|\| soft === 'agenda'/, 'Agenda bekommt dieselbe document.xml');
+  assert.match(pro, /name: 'Import_in_Agenda\.txt'/);
+  assert.match(pro, /LS\.get\('taxSoft', ''\) \|\| \(LS\.get\('taxDatev', true\) \? 'datev' : 'none'\)/, 'frühere Einstellung bleibt');
+});
+
 test('E-Mail-Entwurf (.eml) mit PDF-Anhang für Outlook', () => {
   assert.equal(J.b64(new TextEncoder().encode('Man')), 'TWFu');
   assert.equal(J.b64(new Uint8Array([0xff, 0xd8])), '/9g=');

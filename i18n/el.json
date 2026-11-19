@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Η ενημέρωση φορτώθηκε – θα εφαρμοστεί αυτόματα μόλις δεν υπάρχει εργασία σε εξέλιξη.",
  "Update: Dokument merken": "Ενημέρωση: απομνημόνευση εγγράφου",
  "Endnoten": "Σημειώσεις τέλους",
- "Fußnoten": "Υποσημειώσεις"
+ "Fußnoten": "Υποσημειώσεις",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (βοηθός εισαγωγής DATEV, με οδηγίες)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Όλα τα αρχειοθετημένα παραστατικά ενός μήνα σε ένα αρχείο ZIP: τα PDF (στα ηλεκτρονικά τιμολόγια με το αρχικό XML), μια λίστα παραστατικών για Excel και – ανάλογα με το λογισμικό του γραφείου – ένα αρχείο εισαγωγής για DATEV ή Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Άλλο ή άγνωστο (μόνο παραστατικά και λίστα παραστατικών)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (με αρχείο εισαγωγής document.xml)",
+ "Kanzlei-Software": "Λογισμικό του γραφείου"
 }

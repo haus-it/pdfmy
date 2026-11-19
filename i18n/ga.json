@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Nuashonrú luchtaithe – cuirfear i bhfeidhm go huathoibríoch é a luaithe nach bhfuil aon rud ar siúl.",
  "Update: Dokument merken": "Nuashonrú: cuimhnigh ar an doiciméad",
  "Endnoten": "Críochnótaí",
- "Fußnoten": "Fonótaí"
+ "Fußnoten": "Fonótaí",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (cúntóir iompórtála DATEV, le treoracha)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Gach admháil chomhdaithe de chuid míosa i gcomhad ZIP amháin: na PDFanna (le bun-XML i gcás r-shonrasc), liosta admhálacha do Excel agus – de réir bhogearraí na hoifige – comhad iompórtála do DATEV nó Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Eile nó anaithnid (admhálacha agus liosta admhálacha amháin)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (le comhad iompórtála document.xml)",
+ "Kanzlei-Software": "Bogearraí na hoifige"
 }

@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "A frissítés betöltődött – automatikusan érvénybe lép, amint semmi sincs munka alatt.",
  "Update: Dokument merken": "Frissítés: dokumentum megjegyzése",
  "Endnoten": "Végjegyzetek",
- "Fußnoten": "Lábjegyzetek"
+ "Fußnoten": "Lábjegyzetek",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-importvarázsló, útmutatóval)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Egy hónap összes iktatott bizonylata egyetlen ZIP-fájlban: a PDF-ek (e-számláknál az eredeti XML-lel), egy bizonylatlista Excelhez és – az iroda szoftverétől függően – egy importfájl DATEV-hez vagy Agendához.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Egyéb vagy ismeretlen (csak bizonylatok és bizonylatlista)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (document.xml importfájllal)",
+ "Kanzlei-Software": "Az iroda szoftvere"
 }

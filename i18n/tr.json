@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Güncelleme yüklendi – üzerinde çalışılan bir şey kalmadığı anda otomatik olarak uygulanır.",
  "Update: Dokument merken": "Güncelleme: belgeyi hatırla",
  "Endnoten": "Son notlar",
- "Fußnoten": "Dipnotlar"
+ "Fußnoten": "Dipnotlar",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV içe aktarma sihirbazı, kılavuzlu)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Bir ayın arşivlenmiş tüm belgeleri tek ZIP dosyasında: PDF’ler (e-faturalarda orijinal XML ile), Excel için belge listesi ve – büronun yazılımına bağlı olarak – DATEV veya Agenda için içe aktarma dosyası.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Diğer veya bilinmiyor (yalnızca belgeler ve belge listesi)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (document.xml içe aktarma dosyasıyla)",
+ "Kanzlei-Software": "Büro yazılımı"
 }

@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Update loaded – it will be applied automatically as soon as nothing is being worked on.",
  "Update: Dokument merken": "Update: remember document",
  "Endnoten": "Endnotes",
- "Fußnoten": "Footnotes"
+ "Fußnoten": "Footnotes",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV import wizard, with instructions)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "All filed receipts for a month in one ZIP file: the PDFs (with the original XML for e-invoices), a receipt list for Excel and – depending on the firm’s software – an import file for DATEV or Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Other or unknown (receipts and receipt list only)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (with import file document.xml)",
+ "Kanzlei-Software": "Tax firm software"
 }

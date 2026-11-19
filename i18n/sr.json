@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Ажурирање је учитано – примениће се аутоматски чим се ни на чему не ради.",
  "Update: Dokument merken": "Ажурирање: запамти документ",
  "Endnoten": "Крајње напомене",
- "Fußnoten": "Фусноте"
+ "Fußnoten": "Фусноте",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV помоћник за увоз, с упутством)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Сва архивирана документа једног месеца у ZIP датотеци: PDF датотеке (код е-рачуна са оригиналним XML-ом), листа докумената за Excel и – зависно од софтвера канцеларије – датотека за увоз за DATEV или Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Друго или непознато (само документа и листа докумената)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (са датотеком за увоз document.xml)",
+ "Kanzlei-Software": "Софтвер канцеларије"
 }

@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uppfærsla hlaðin – hún verður tekin í notkun sjálfkrafa þegar ekkert er í vinnslu.",
  "Update: Dokument merken": "Uppfærsla: muna skjal",
  "Endnoten": "Aftanmálsgreinar",
- "Fußnoten": "Neðanmálsgreinar"
+ "Fußnoten": "Neðanmálsgreinar",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-innflutningsleiðbeining, með leiðbeiningum)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Öll vistuð fylgiskjöl mánaðar í einni ZIP-skrá: PDF-skrárnar (fyrir rafræna reikninga með upprunalegu XML), fylgiskjalalisti fyrir Excel og – eftir hugbúnaði skrifstofunnar – innflutningsskrá fyrir DATEV eða Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Annað eða óþekkt (aðeins fylgiskjöl og fylgiskjalalisti)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (með innflutningsskránni document.xml)",
+ "Kanzlei-Software": "Hugbúnaður skrifstofunnar"
 }

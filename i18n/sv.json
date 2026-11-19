@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uppdatering inläst – tillämpas automatiskt så snart inget är under arbete.",
  "Update: Dokument merken": "Uppdatering: kom ihåg dokument",
  "Endnoten": "Slutnoter",
- "Fußnoten": "Fotnoter"
+ "Fußnoten": "Fotnoter",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-importguide, med anvisning)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Alla arkiverade verifikat för en månad i en ZIP-fil: PDF-filerna (för e-fakturor med original-XML), en verifikatlista för Excel och – beroende på byråns programvara – en importfil för DATEV eller Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Annat eller okänt (endast verifikat och verifikatlista)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (med importfil document.xml)",
+ "Kanzlei-Software": "Byråns programvara"
 }

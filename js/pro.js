@@ -2520,7 +2520,7 @@ async function openTax() {
   closeMenu(); if ($('#jDlg').open) $('#jDlg').close();
   $('#taxMonth').value = $('#taxMonth').value || ymPrev();
   $('#taxMail').value = LS.get('taxMail', '');
-  $('#taxDatev').checked = LS.get('taxDatev', true);
+  $('#taxSoft').value = LS.get('taxSoft', '') || (LS.get('taxDatev', true) ? 'datev' : 'none');   // früher: Haken „DATEV-Importdatei“
   renderTax(true);
   $('#taxDlg').showModal();
 }
@@ -2548,7 +2548,9 @@ async function readAblage(rel) {
   return new Uint8Array(await (await (await dir.getFileHandle(name)).getFile()).arrayBuffer());
 }
 // ZIP zusammenstellen (ohne Speichern) – getrennt, damit es sich testen lässt
-async function buildTaxZip(month, types, withDatev) {
+// soft: 'datev' (document.xml), 'agenda' (document.xml + Anleitung für den DATEV-Import-Assistenten von Agenda), 'none' (nur Belege)
+async function buildTaxZip(month, types, soft = 'datev') {
+  const withDatev = soft === 'datev' || soft === 'agenda' || soft === true;
   const sel = Journal.taxSelect(taxAll, month, types);
   const names = Journal.zipNames(sel.map(e => e.file)), files = [], rows = [], missing = [], docNames = [];
   for (const [i, e] of sel.entries()) {
@@ -2569,22 +2571,27 @@ async function buildTaxZip(month, types, withDatev) {
   const tag = month.replace('-', '_');
   files.push({ name: `Belegliste_${tag}.csv`, data: new TextEncoder().encode(Journal.taxCsv(rows)) });
   if (withDatev && docNames.length) files.push({ name: 'document.xml', data: new TextEncoder().encode(Journal.datevXml(docNames, { description: `Belege ${monthName(month)} – ${APP.name}`, system: APP.name })) });
+  if (soft === 'agenda' && docNames.length) files.push({ name: 'Import_in_Agenda.txt', data: new TextEncoder().encode('﻿' + Journal.agendaReadme({ month: monthName(month), count: rows.length - missing.length, system: APP.name, zipName: `Belege_${tag}_Steuerberater.zip` })) });
   return { zip: Tools.zip(files), files, count: rows.length - missing.length, missing, tag };
 }
 $('#taxGo').onclick = async () => {
-  const month = $('#taxMonth').value, mail = $('#taxMail').value.trim(), withDatev = $('#taxDatev').checked;
+  const month = $('#taxMonth').value, mail = $('#taxMail').value.trim(), soft = $('#taxSoft').value || 'datev';
   if (mail && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)) { $('#taxErr').textContent = 'Die E-Mail-Adresse sieht nicht gültig aus.'; return; }
-  LS.set('taxMail', mail); LS.set('taxDatev', withDatev);
+  LS.set('taxMail', mail); LS.set('taxSoft', soft);
   $('#taxGo').disabled = true;
   try {
-    const r = await buildTaxZip(month, taxTypes(), withDatev);
+    const r = await buildTaxZip(month, taxTypes(), soft);
+    // E-Mail an die Kanzlei: was beiliegt und wie es eingelesen wird (Text für den Steuerberater, deshalb Deutsch)
+    // i18n-aus
+    const inside = soft === 'datev' ? ', DATEV-Importdatei document.xml' : soft === 'agenda' ? ', Importdatei im DATEV-Format für Agenda (Transfer → DATEV-Import-Assistent, Anleitung liegt bei)' : '';
+    // i18n-an
     const where = await deliver(r.zip, `Belege_${r.tag}_Steuerberater.zip`, 'application/zip', null, true);
     if (!where) { status('Export abgebrochen.'); return; }
     $('#taxDlg').close();
     status(`Steuerberater-Export gespeichert: ${where} (${r.count} Beleg(e)` + (r.missing.length ? `, ${r.missing.length} Datei(en) nicht gefunden: ${r.missing.map(f => f.split('\\').pop()).join(', ')}` : '') + ').');
     if (mail) {
       const a = document.createElement('a');
-      a.href = `mailto:${mail}?subject=${encodeURIComponent(`Belege ${monthName(month)}`)}&body=${encodeURIComponent(`Guten Tag,\n\nanbei die Belege für ${monthName(month)} (${r.count} Belege, Belegliste als CSV${withDatev ? ', DATEV-Importdatei document.xml' : ''}).\nBitte die Datei „Belege_${r.tag}_Steuerberater.zip“ anhängen.\n\nViele Grüße${S.author ? '\n' + S.author : ''}`)}`;
+      a.href = `mailto:${mail}?subject=${encodeURIComponent(`Belege ${monthName(month)}`)}&body=${encodeURIComponent(`Guten Tag,\n\nanbei die Belege für ${monthName(month)} (${r.count} Belege, Belegliste als CSV${inside}).\nBitte die Datei „Belege_${r.tag}_Steuerberater.zip“ anhängen.\n\nViele Grüße${S.author ? '\n' + S.author : ''}`)}`;
       a.click();
     }
   } catch (e) { console.error(e); status(`Export fehlgeschlagen: ${e.message}`); }

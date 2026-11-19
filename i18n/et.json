@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Uuendus laaditud – see võetakse automaatselt kasutusele, kui midagi pole töös.",
  "Update: Dokument merken": "Uuendus: jäta dokument meelde",
  "Endnoten": "Loppmärkused",
- "Fußnoten": "Allmärkused"
+ "Fußnoten": "Allmärkused",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-i impordiviisard, koos juhendiga)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Kõik ühe kuu arhiveeritud dokumendid ühes ZIP-failis: PDF-id (e-arvete puhul koos algse XML-iga), dokumentide loend Excelile ja – olenevalt büroo tarkvarast – impordifail DATEV-ile või Agendale.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Muu või teadmata (ainult dokumendid ja dokumentide loend)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (impordifail document.xml)",
+ "Kanzlei-Software": "Büroo tarkvara"
 }

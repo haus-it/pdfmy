@@ -121,7 +121,8 @@ const webFile = path.join(DIR, '_web.json');
 if (fs.existsSync(webFile)) (function add(o) { for (const [k, v] of Object.entries(o)) if (k[0] !== '_') { if (typeof v === 'string') keys.add(norm(v)); else if (v && typeof v === 'object') add(v); } })(JSON.parse(fs.readFileSync(webFile, 'utf8')));
 let fromJs = 0;
 for (const f of FILES) {
-  const src = fs.readFileSync(path.join(ROOT, 'js', f), 'utf8');
+  // Bereiche zwischen // i18n-aus und // i18n-an: Texte, die bewusst deutsch bleiben (z. B. Anleitung und E-Mail an die Kanzlei)
+  const src = fs.readFileSync(path.join(ROOT, 'js', f), 'utf8').replace(/\/\/ i18n-aus[\s\S]*?\/\/ i18n-an/g, '');
   for (const lit of scan(src)) for (const k of keysOf(lit)) if (!keys.has(k)) { keys.add(k); fromJs++; }
 }
 if (process.argv.includes('--site')) { extractSite(); module.exports = { scan, german, keysOf, volatile }; return; }

@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Actualització carregada – s’aplicarà automàticament tan bon punt no s’estigui treballant en res.",
  "Update: Dokument merken": "Actualització: recorda el document",
  "Endnoten": "Notes finals",
- "Fußnoten": "Notes a peu de pàgina"
+ "Fußnoten": "Notes a peu de pàgina",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (assistent d'importació DATEV, amb instruccions)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Tots els comprovants arxivats d'un mes en un fitxer ZIP: els PDF (en factures electròniques, amb l'XML original), una llista de comprovants per a Excel i – segons el programari de l'assessoria – un fitxer d'importació per a DATEV o Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Un altre o desconegut (només comprovants i llista de comprovants)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (amb fitxer d'importació document.xml)",
+ "Kanzlei-Software": "Programari de l'assessoria"
 }

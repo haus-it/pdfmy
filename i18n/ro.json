@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Actualizare încărcată – va fi aplicată automat de îndată ce nu se lucrează la nimic.",
  "Update: Dokument merken": "Actualizare: reține documentul",
  "Endnoten": "Note de final",
- "Fußnoten": "Note de subsol"
+ "Fußnoten": "Note de subsol",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (asistent de import DATEV, cu instrucțiuni)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Toate documentele justificative arhivate dintr-o lună într-un fișier ZIP: PDF-urile (la facturile electronice cu XML-ul original), o listă de documente pentru Excel și – în funcție de software-ul biroului – un fișier de import pentru DATEV sau Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Altul sau necunoscut (doar documente și lista documentelor)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (cu fișierul de import document.xml)",
+ "Kanzlei-Software": "Software-ul biroului"
 }

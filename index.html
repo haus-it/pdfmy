@@ -2417,11 +2417,11 @@ html.i18n-wait body{visibility:hidden}
 
 <dialog id="taxDlg" aria-labelledby="taxDlgT">
   <h3 class="dlgtitle" id="taxDlgT">Belege für den Steuerberater</h3>
-  <p class="hint" style="margin:-8px 0 14px">Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und eine Importdatei für DATEV Unternehmen online.</p>
+  <p class="hint" style="margin:-8px 0 14px">Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.</p>
   <div class="xrow"><label class="xl" for="taxMonth">Monat</label><div class="chips"><input id="taxMonth" type="month"></div></div>
   <div class="xrow"><span class="xl" id="taxTypesL">Belegarten</span><div class="chips" id="taxTypes" role="group" aria-labelledby="taxTypesL"></div></div>
   <div class="xrow"><label class="xl" for="taxMail">E-Mail</label><div class="chips" style="flex:1"><input id="taxMail" type="email" placeholder="Steuerberater (optional) – öffnet eine fertige E-Mail" style="flex:1;min-width:260px"></div></div>
-  <label class="cb"><input id="taxDatev" type="checkbox" checked> DATEV-Importdatei (document.xml) beilegen</label>
+  <div class="xrow"><label class="xl" for="taxSoft">Kanzlei-Software</label><div class="chips"><select id="taxSoft"><option value="datev">DATEV (mit Importdatei document.xml)</option><option value="agenda">Agenda (DATEV-Import-Assistent, mit Anleitung)</option><option value="none">Andere oder unbekannt (nur Belege und Belegliste)</option></select></div></div>
   <p class="taxsum" id="taxSum"></p>
   <div class="xerr" id="taxErr" role="alert"></div>
   <div class="dlgrow"><button type="button" id="taxCancel">Abbrechen</button><button type="button" class="primary" id="taxGo">ZIP erstellen …</button></div>

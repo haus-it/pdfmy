@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Oppdatering lastet inn – tas i bruk automatisk så snart ingenting er under arbeid.",
  "Update: Dokument merken": "Oppdatering: husk dokument",
  "Endnoten": "Sluttnoter",
- "Fußnoten": "Fotnoter"
+ "Fußnoten": "Fotnoter",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (DATEV-importveiviser, med veiledning)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Alle arkiverte bilag for en måned i én ZIP-fil: PDF-ene (for e-fakturaer med original-XML), en bilagsliste for Excel og – avhengig av regnskapsførerens programvare – en importfil for DATEV eller Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Annet eller ukjent (kun bilag og bilagsliste)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (med importfil document.xml)",
+ "Kanzlei-Software": "Byråets programvare"
 }

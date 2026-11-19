@@ -3972,5 +3972,10 @@
  "Update geladen – wird automatisch übernommen, sobald gerade nichts in Arbeit ist.": "Aktualizacja pobrana – zostanie zastosowana automatycznie, gdy nic nie będzie w edycji.",
  "Update: Dokument merken": "Aktualizacja: zapamiętaj dokument",
  "Endnoten": "Przypisy końcowe",
- "Fußnoten": "Przypisy dolne"
+ "Fußnoten": "Przypisy dolne",
+ "Agenda (DATEV-Import-Assistent, mit Anleitung)": "Agenda (kreator importu DATEV, z instrukcją)",
+ "Alle abgelegten Belege eines Monats in einer ZIP-Datei: die PDFs (bei E-Rechnungen mit Original-XML), eine Belegliste für Excel und – je nach Software der Kanzlei – eine Importdatei für DATEV oder Agenda.": "Wszystkie zarchiwizowane dokumenty z danego miesiąca w jednym pliku ZIP: pliki PDF (w przypadku e-faktur z oryginalnym plikiem XML), lista dokumentów dla programu Excel oraz – zależnie od oprogramowania kancelarii – plik importu dla DATEV lub Agenda.",
+ "Andere oder unbekannt (nur Belege und Belegliste)": "Inne lub nieznane (tylko dokumenty i lista dokumentów)",
+ "DATEV (mit Importdatei document.xml)": "DATEV (z plikiem importu document.xml)",
+ "Kanzlei-Software": "Oprogramowanie kancelarii"
 }
