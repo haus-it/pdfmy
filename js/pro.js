@@ -3170,6 +3170,56 @@ function renderSignInfo() {
   $('#x-sign-ts').checked = !!state.scanTsa && LS.get('signTs', true);
 }
 $('#x-sign-ts').addEventListener('change', e => LS.set('signTs', e.target.checked));
+$('#x-sign-vis').checked = LS.get('signVis', true);
+$('#x-sign-vis').addEventListener('change', e => LS.set('signVis', e.target.checked));
+/* Sichtbarer Signaturstempel (js/pdfsign.js o.look): „Digital signiert“, Name, Zeitpunkt, Grund – als Pfade aus DejaVu (keine Schrift
+   im Dokument nötig, PDF/A-tauglich). Platz: unter der eigenen gezeichneten Unterschrift, sonst frei auf der letzten Seite (ohne Text darunter). */
+const SIGLOOK_W = 196, SIGLOOK_H = 54;
+function glyphPath(font, text, size, x, y) {
+  const run = font.layout(text), s = size / font.unitsPerEm, f = v => +v.toFixed(2);
+  let ops = '', px = x;
+  run.glyphs.forEach((g, i) => {
+    const pos = run.positions[i], ox = px + pos.xOffset * s, oy = y + pos.yOffset * s, X = v => f(ox + v * s), Y = v => f(oy + v * s);
+    let cx = 0, cy = 0;
+    for (const { command: c, args: a } of g.path.commands) {
+      if (c === 'moveTo' || c === 'lineTo') { ops += `${X(a[0])} ${Y(a[1])} ${c === 'moveTo' ? 'm' : 'l'}\n`; cx = a[0]; cy = a[1]; }
+      else if (c === 'quadraticCurveTo') {   // quadratisch → kubisch
+        const [qx, qy, ex, ey] = a;
+        ops += `${X(cx + 2 / 3 * (qx - cx))} ${Y(cy + 2 / 3 * (qy - cy))} ${X(ex + 2 / 3 * (qx - ex))} ${Y(ey + 2 / 3 * (qy - ey))} ${X(ex)} ${Y(ey)} c\n`; cx = ex; cy = ey;
+      } else if (c === 'bezierCurveTo') { ops += `${X(a[0])} ${Y(a[1])} ${X(a[2])} ${Y(a[3])} ${X(a[4])} ${Y(a[5])} c\n`; cx = a[4]; cy = a[5]; }
+      else if (c === 'closePath') ops += 'h\n';
+    }
+    px += pos.xAdvance * s;
+  });
+  return { ops, width: px - x };
+}
+async function sigLook({ name, reason, when = new Date() }) {
+  const fk = await loadFontkit(), [r, b] = await Promise.all([asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf')]);
+  const R = fk.create(new Uint8Array(r)), B = fk.create(new Uint8Array(b));
+  const head = I18N.t('Digital signiert von'), date = I18N.t('am') + ' ' + I18N.fmtDateTime(when), why = reason ? I18N.t('Grund:') + ' ' + reason : '';
+  const alt = [head, name, date, why].filter(Boolean).join(' ');
+  // Platz: unter der gezeichneten Unterschrift (Seite mit „sign“), sonst letzte Seite von unten nach oben, rechts vor links
+  const pages = state.pages, si = pages.findIndex(p => p.annots.some(a => a.type === 'sign' && a.kind === 'sign')), pi = si >= 0 ? si : pages.length - 1, p = pages[pi];
+  const asp = (p?.w || 595) / (p?.h || 842), fw = SIGLOOK_W / 595.28, fh = SIGLOOK_H / 595.28 * asp;
+  const words = (p ? await pageWords(p).catch(() => null) : null) || [], marks = (p?.annots || []).filter(a => a.w > 0 && a.h > 0);
+  const free = (x, y) => ![...words, ...marks].some(o => x < o.x + o.w && x + fw > o.x && y < o.y + o.h && y + fh > o.y);
+  const at = [];
+  if (si >= 0) { const a = pages[si].annots.find(o => o.type === 'sign' && o.kind === 'sign'); at.push(...[{ x: a.x, y: a.y + a.h + 0.004 }, { x: a.x + a.w + 0.01, y: a.y }, { x: a.x, y: a.y - fh - 0.004 }].filter(c => free(c.x, c.y))); }
+  for (let y = 0.94 - fh; y > 0.08; y -= 0.02) for (const x of [0.92 - fw, 0.08, 0.5 - fw / 2]) if (free(x, y)) at.push({ x, y });
+  const draw = (w, h) => {
+    const pad = 6, ic = 15, tx = pad + ic + 6, avail = w - tx - pad;
+    const line = (font, t, size, y) => { let sz = size, g = glyphPath(font, t, sz, tx, y); if (g.width > avail) { sz = size * avail / g.width; g = glyphPath(font, t, sz, tx, y); } return g.ops; };
+    // neutrales Siegel (Kreis mit Ring), kein Haken: der Stempel ist nur ein Bild – ob die Signatur gültig ist, zeigt allein die Prüfung
+    const ring = (r, op) => `${pad + ic / 2 - r} ${h / 2} m ${pad + ic / 2 - r} ${h / 2 + r * 0.552} ${pad + ic / 2 - r * 0.552} ${h / 2 + r} ${pad + ic / 2} ${h / 2 + r} c ${pad + ic / 2 + r * 0.552} ${h / 2 + r} ${pad + ic / 2 + r} ${h / 2 + r * 0.552} ${pad + ic / 2 + r} ${h / 2} c ${pad + ic / 2 + r} ${h / 2 - r * 0.552} ${pad + ic / 2 + r * 0.552} ${h / 2 - r} ${pad + ic / 2} ${h / 2 - r} c ${pad + ic / 2 - r * 0.552} ${h / 2 - r} ${pad + ic / 2 - r} ${h / 2 - r * 0.552} ${pad + ic / 2 - r} ${h / 2} c ${op}\n`;
+    const icon = `q 0.13 0.45 0.25 rg ${ring(ic / 2, 'f')} 1 1 1 RG 1.1 w ${ring(ic * 0.3, 'S')} Q\n`;
+    const rows = [[B, head, 7.5, '0.13 0.45 0.25'], [B, name, 10, '0.1 0.12 0.15'], [R, date, 7.5, '0.25 0.28 0.32'], ...(why ? [[R, why, 7, '0.25 0.28 0.32']] : [])];
+    const lh = (h - 2 * pad) / rows.length;
+    let body = '';
+    rows.forEach(([font, t, size, col], k) => { body += `${col} rg\n` + line(font, t, Math.min(size, lh * 0.9), h - pad - lh * (k + 1) + lh * 0.25) + 'f\n'; });
+    return `q 0.94 0.98 0.95 rg 0.13 0.55 0.29 RG 0.8 w 0.4 0.4 ${w - 0.8} ${h - 0.8} re B Q\n` + icon + `q\n${body}Q\n`;
+  };
+  return { pageIndex: pi, at, w: SIGLOOK_W, h: SIGLOOK_H, draw, alt };
+}
 // Zeitstempel (RFC 3161) über pdfmy Scan – Zeitstempeldienste erlauben keine direkten Anfragen aus dem Browser (kein CORS).
 // Übertragen wird nur der Hashwert der Signatur (32 Byte in der Anfrage), nicht das Dokument. Bei Ausfall nächster Dienst.
 const tsaFetch = () => !$('#x-sign-ts').checked || !state.scanTsa ? undefined : tsaCall;
@@ -3227,6 +3277,7 @@ async function signFlow(bytes, extra = {}) {
     } };
     state.signer = signer;
     const so = { contact: S.author || '', tsa: tsaFetch(), ...extra };
+    if ($('#x-sign-vis').checked) so.look = await sigLook({ name: signCert.name, reason: so.reason }).catch(e => { console.warn(e); return undefined; });
     if (so.tsa) await loadForge();   // Zeitstempel einbauen braucht den Signatur-Baustein
     try { const out = await PdfSign.signPdf(bytes, signer, so); tsNote(so); return out; }
     catch (e) { if (/abgelehnt/.test(e.message)) return null; throw e; }
@@ -3250,6 +3301,7 @@ async function signFlow(bytes, extra = {}) {
   status(`Signiere als ${state.signer.name} …`);
   if (tsaFetch()) await loadForge();
   const so = { reason: $('#pwSignReason').value.trim(), contact: S.author || '', tsa: tsaFetch(), ...extra };
+  if ($('#x-sign-vis').checked) so.look = await sigLook({ name: state.signer.name, reason: so.reason }).catch(e => { console.warn(e); return undefined; });
   const out = await PdfSign.signPdf(bytes, state.signer, so); tsNote(so); return out;
 }
 
@@ -4153,6 +4205,8 @@ window.checkSignatures = async (docIdx, file) => {
 const sigOk = r => r.intact && r.valid && r.certValidAtTime !== false;
 const fmtWhen = d => d instanceof Date && !isNaN(d) ? I18N.fmtDateTime(d) : '';
 const sigWho = r => [r.signer?.cn || r.name, r.signer?.o].filter(Boolean).join(', ') || 'unbekannt';
+// „Anna Muster (12.11.2026, 10:05), Ben Beispiel (13.11.2026, 09:12) und …“ – Reihenfolge wie im Dokument (zuerst die erste Signatur)
+const sigNames = rs => { const n = rs.map(r => sigWho(r) + (fmtWhen(r.time || r.m) ? ` (${fmtWhen(r.time || r.m)})` : '')); return n.length > 1 ? n.slice(0, -1).join(', ') + ' ' + I18N.t('und') + ' ' + n[n.length - 1] : n[0] || ''; };
 function sigDocs() { const ids = new Set(state.pages.filter(p => p.kind === 'pdf').map(p => p.docIdx)); return [...ids].map(i => state.docs[i]).filter(d => d?.sigs?.length); }
 function renderSigBar() {
   const bar = $('#sigBar'); if (!bar) return;
@@ -4160,16 +4214,19 @@ function renderSigBar() {
   const every = docs.flatMap(d => d.sigs), all = every.filter(r => !r.usageRights);
   if (!all.length) {   // nur Nutzungsrechte-Signatur: neutrale Information, keine Unterschrift
     const u = every[every.length - 1];
-    bar.className = 'sigbar ok'; $('#sigCosign').hidden = true;
+    bar.className = 'sigbar ok'; $('#sigCosign').hidden = true; $('#sigIcon')?.setAttribute('href', '#i-shield-check');
     $('#sigText').textContent = `Hinweis: Dieses Formular enthält eine technische Freischaltung für Formularfunktionen (Nutzungsrechte-Signatur von ${sigWho(u)}${fmtWhen(u.time || u.m) ? ', ' + fmtWhen(u.time || u.m) : ''}). Das ist keine Unterschrift einer Person – Sie können das Formular normal ausfüllen und unterschreiben.`;
     bar.hidden = false; return;
   }
   const last = all[all.length - 1], bad = all.filter(r => !sigOk(r)), appended = all.some(r => sigOk(r) && !r.wholeFile && !r.laterSigned);
   bar.className = 'sigbar ' + (bad.length ? 'bad' : appended ? 'warn' : 'ok');
+  $('#sigIcon')?.setAttribute('href', bad.length ? '#i-shield-x' : appended ? '#i-shield-alert' : '#i-shield-check');   // Zustand auch ohne Farbe erkennbar
   let t;
   if (bad.length) t = `Signatur ungültig: ${bad[0].problems[0] || 'nicht prüfbar'}${bad[0].signer ? ` (${sigWho(bad[0])})` : ''}.`;
   else if (appended) t = `Signiert von ${sigWho(last)}${fmtWhen(last.time || last.m) ? ' am ' + fmtWhen(last.time || last.m) : ''} – gültig, aber nach dem Signieren wurden Änderungen angehängt.`;
-  else t = `${all.length > 1 ? `${all.length} Signaturen, alle gültig – zuletzt` : 'Signiert'} von ${sigWho(last)}${fmtWhen(last.time || last.m) ? ' am ' + fmtWhen(last.time || last.m) : ''}. Dokument seit der Signatur unverändert.`;
+  // alle Unterzeichner nennen (nicht nur den letzten) – wer mitunterschrieben hat, soll man auf einen Blick sehen
+  else if (all.length > 1) t = `${all.length} Signaturen, alle gültig: ${sigNames(all)}. Dokument seit der letzten Signatur unverändert.`;
+  else t = `Signiert von ${sigWho(last)}${fmtWhen(last.time || last.m) ? ' am ' + fmtWhen(last.time || last.m) : ''}. Dokument seit der Signatur unverändert.`;
   // unverändert = dieselbe Prüfung wie beim Speichern (Original wird übernommen, Signatur angehängt)
   const unchanged = typeof signedOriginal === 'function' && !!signedOriginal(state.pages);
   if (!unchanged) t += ' Hinweis: Speichern mit Änderungen entfernt die Signatur – das Original bleibt gültig.';
@@ -4197,12 +4254,19 @@ $('#sigMore').onclick = () => {
   $('#sigDlg').showModal(); $('#sigClose').focus();
 };
 $('#sigClose').onclick = () => $('#sigDlg').close();
-// Mitunterzeichnen: Speichern-Dialog mit „Digital signieren“ – das Original wird übernommen und die Signatur angehängt
-$('#sigCosign').onclick = () => {
+// Mitunterzeichnen bzw. „Digital signieren …“ (Menü): Speichern-Dialog mit „Digital signieren“ und sichtbarem Stempel – bei schon
+// signierten Dokumenten wird das Original übernommen und die Signatur angehängt. Ohne Zertifikat gleich die Auswahl öffnen.
+function digSignOpen() {
+  closeMenu?.();
+  if (!state.pages.length) { status('Zuerst eine PDF öffnen – dann lässt sie sich digital signieren.'); return; }
   openExport({ format: 'pdf', pages: 'all' });
   const x = $('#x-sign'); if (x && !x.checked) { x.checked = true; x.dispatchEvent(new Event('change', { bubbles: true })); }
-  status('Mitunterzeichnen: Zertifikat wählen und speichern – die vorhandenen Signaturen bleiben gültig.');
-};
+  const signed = sigDocs().length > 0;
+  if (!signCert) status(signed ? 'Mitunterzeichnen: zuerst „Zertifikat wählen …“ – die vorhandenen Signaturen bleiben gültig.' : 'Digital signieren: zuerst „Zertifikat wählen …“ (.p12/.pfx, Windows-Zertifikat oder Signaturkarte), dann „Speichern“.');
+  else status(signed ? 'Mitunterzeichnen: auf „Speichern“ klicken – die vorhandenen Signaturen bleiben gültig.' : `Digital signieren als ${signCert.name}: auf „Speichern“ klicken.`);
+}
+$('#sigCosign').onclick = digSignOpen;
+$('#btnDigSign').onclick = digSignOpen;
 
 /* ---------- Kommentare und Markierungen (wie die Kommentarleiste in Acrobat): alle Anmerkungen auf einen Blick ---------- */
 const CMT_KIND = { link: 'Link', note: 'Notiz', hl: 'Markierung', text: 'Text', stamp: 'Stempel', sign: 'Unterschrift', ink: 'Freihand', shape: 'Form', img: 'Bild', field: 'Formularfeld', rd: 'Schwärzung', wo: 'Abdeckung' };
@@ -5585,6 +5649,95 @@ async function a11yFigures() {
   status(`${n} Bild(er) beschrieben – sie werden beim Speichern mit Alternativtext gekennzeichnet.`);
 }
 
+/* ---------- Barrierefrei: Lesereihenfolge und Art der Blöcke von Hand korrigieren (wie „Lesereihenfolge“ in Acrobat Pro) ----------
+   Je Seite die erkannten Blöcke nummeriert auf dem Seitenbild und als Liste; Reihenfolge per Knopf, Alt + Pfeiltaste oder Ziehen,
+   Art per Auswahl. Ergebnis in p.ro (readingBlocks in js/app.js) – wirkt beim Speichern als PDF/UA auf Tags und Lesezeichen.
+   flow: Schritt in „PDF barrierefrei machen“ (Knöpfe „Weiter“ / „Automatisch lassen“). */
+const RO_LABEL = { h1: 'Überschrift 1', h2: 'Überschrift 2', p: 'Absatz', li: 'Listenpunkt', table: 'Tabelle', art: 'Nicht vorlesen' };
+const RO_COLOR = { h1: '#b91c1c', h2: '#c2410c', p: '#2563eb', li: '#15803d', table: '#7c3aed', art: '#6b7280' };
+async function readingOrder({ flow = false } = {}) {
+  closeMenu?.();
+  if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sich die Lesereihenfolge prüfen.'); return; }
+  const todo = state.pages.filter(p => p.kind === 'image' && !p.ocr && !p.blank && !p.photo);
+  if (todo.length) { status('Texterkennung läuft …'); await waitForOcr(todo); }
+  status('Gliederung wird erkannt …');
+  const isRunning = await runningCheck(state.pages), edits = new Map(), pages = state.pages.filter(p => !p.blank);
+  let at = 0, cur = null, sel = -1, view = null;
+  const dlg = $('#roDlg'), list = $('#roList'), cv = $('#roCanvas');
+  $('#roOk').textContent = I18N.t(flow ? 'Weiter' : 'Übernehmen'); $('#roCancel').textContent = I18N.t(flow ? 'Automatisch lassen' : 'Abbrechen');
+  const load = async p => {
+    if (edits.has(p)) return edits.get(p);
+    const { bs, items } = readingBlocks(p, await taggedWords(p), isRunning), e = { bs, items: items.map(x => ({ ...x })) };
+    edits.set(p, e); return e;
+  };
+  const draw = () => {
+    if (!view) return;
+    const x = cv.getContext('2d'); x.drawImage(view, 0, 0, cv.width, cv.height);
+    cur.items.forEach((it, n) => {
+      const r = Reflow.box(it.b); if (!r) return;
+      const c = RO_COLOR[it.kind] || '#2563eb', bx = r.x * cv.width, by = r.y * cv.height, bw = r.w * cv.width, bh = r.h * cv.height;
+      x.lineWidth = n === sel ? 3 : 1.5; x.strokeStyle = c; x.setLineDash(it.kind === 'art' ? [5, 4] : []); x.strokeRect(bx - 2, by - 2, bw + 4, bh + 4);
+      x.globalAlpha = n === sel ? 0.16 : 0.07; x.fillStyle = c; x.fillRect(bx - 2, by - 2, bw + 4, bh + 4); x.globalAlpha = 1; x.setLineDash([]);
+      const rad = 11, cx = Math.max(rad, bx - 2), cy = Math.max(rad, by - 2);
+      x.beginPath(); x.arc(cx, cy, rad, 0, Math.PI * 2); x.fillStyle = c; x.fill();
+      x.fillStyle = '#fff'; x.font = 'bold 12px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(n + 1), cx, cy + 0.5);
+    });
+  };
+  const move = (n, d) => {
+    const m = n + d; if (m < 0 || m >= cur.items.length) return;
+    const [it] = cur.items.splice(n, 1); cur.items.splice(m, 0, it); sel = m; fill(); list.children[m]?.querySelector(`[data-d="${d}"]`)?.focus();
+  };
+  const fill = () => {
+    list.textContent = '';
+    cur.items.forEach((it, n) => {
+      const li = document.createElement('li'), txt = it.b.type === 'table' ? I18N.t('Tabelle') + ': ' + Reflow.wordsOf(it.b).map(w => w.t).join(' ') : it.b.text;
+      li.className = (n === sel ? 'sel ' : '') + (it.kind === 'art' ? 'art' : ''); li.draggable = true; li.dataset.n = n;
+      const opts = (it.b.type === 'table' ? ['table', 'art'] : ['h1', 'h2', 'p', 'li', 'art']).map(k => `<option value="${k}"${k === it.kind ? ' selected' : ''}>${esc(I18N.t(RO_LABEL[k]))}</option>`).join('');
+      li.innerHTML = `<span class="ronum" style="color:${RO_COLOR[it.kind]}">${n + 1}</span><span class="rotx" title="${esc(txt.slice(0, 300))}">${esc(txt.replace(/\s+/g, ' ').slice(0, 90))}</span>
+        <select aria-label="${esc(I18N.t(`Art von Block ${n + 1}`))}">${opts}</select>
+        <button type="button" data-d="-1" aria-label="${esc(I18N.t(`Block ${n + 1} nach vorn`))}" title="${esc(I18N.t('Früher vorlesen'))}"${n ? '' : ' disabled'}>↑</button>
+        <button type="button" data-d="1" aria-label="${esc(I18N.t(`Block ${n + 1} nach hinten`))}" title="${esc(I18N.t('Später vorlesen'))}"${n < cur.items.length - 1 ? '' : ' disabled'}>↓</button>`;
+      li.querySelector('select').onchange = e => { it.kind = e.target.value; sel = n; fill(); list.children[n]?.querySelector('select')?.focus(); };
+      li.querySelectorAll('button').forEach(b => b.onclick = () => move(n, +b.dataset.d));
+      li.addEventListener('keydown', e => { if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) { e.preventDefault(); move(n, e.key === 'ArrowUp' ? -1 : 1); } });
+      li.addEventListener('focusin', () => { if (sel !== n) { sel = n; list.querySelectorAll('li').forEach((o, k) => o.classList.toggle('sel', k === n)); draw(); } });
+      li.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', String(n)); li.classList.add('dragging'); });
+      li.addEventListener('dragend', () => li.classList.remove('dragging'));
+      li.addEventListener('dragover', e => e.preventDefault());
+      li.addEventListener('drop', e => { e.preventDefault(); const d = e.dataTransfer.getData('text/plain'), from = /^\d+$/.test(d) ? +d : NaN; if (cur.items[from] && from !== n) { const [it2] = cur.items.splice(from, 1); cur.items.splice(n, 0, it2); sel = n; fill(); } });
+      list.append(li);
+    });
+    if (!cur.items.length) { const li = document.createElement('li'); li.textContent = I18N.t('Auf dieser Seite wurde kein Text gefunden.'); list.append(li); }
+    draw();
+  };
+  const show = async () => {
+    const p = pages[at]; cur = await load(p); sel = -1;
+    $('#roPage').textContent = I18N.t(`Seite ${state.pages.indexOf(p) + 1} von ${state.pages.length}`);
+    $('#roPrev').disabled = at === 0; $('#roNext').disabled = at >= pages.length - 1;
+    view = p.kind === 'image' ? p.processed : await renderPdf(p, 90).catch(() => null);
+    if (view) { const s = Math.min(1, 900 / view.width); cv.width = Math.round(view.width * s); cv.height = Math.round(view.height * s); }
+    fill();
+  };
+  $('#roPrev').onclick = () => { if (at > 0) { at--; show(); } };
+  $('#roNext').onclick = () => { if (at < pages.length - 1) { at++; show(); } };
+  $('#roReset').onclick = () => { cur.items.sort((a, b) => a.i - b.i).forEach(it => { it.kind = it.auto; }); sel = -1; fill(); };
+  cv.onclick = e => {
+    const r = cv.getBoundingClientRect(), u = (e.clientX - r.left) / r.width, v = (e.clientY - r.top) / r.height;
+    const n = cur.items.findIndex(it => { const b = Reflow.box(it.b); return b && u >= b.x - 0.01 && u <= b.x + b.w + 0.01 && v >= b.y - 0.01 && v <= b.y + b.h + 0.01; });
+    if (n >= 0) list.children[n]?.querySelector('select')?.focus();
+  };
+  if (!pages.length) { status('Keine Seiten mit Inhalt.'); return; }
+  await show(); status('');
+  dlg.returnValue = ''; dlg.showModal();
+  await new Promise(r => dlg.addEventListener('close', r, { once: true }));
+  if (dlg.returnValue !== 'ok') { status(flow ? 'Lesereihenfolge automatisch.' : 'Lesereihenfolge nicht geändert.'); return; }
+  let n = 0;
+  for (const [p, e] of edits) { const ro = Reflow.toRo(e.bs, e.items); if (ro) { p.ro = ro; n++; } else delete p.ro; }
+  if (n) state.dirty = true;
+  status(n ? I18N.t(`Lesereihenfolge auf ${n} Seite(n) angepasst – wirkt beim Speichern als barrierefreie PDF (PDF/UA).`) : 'Lesereihenfolge automatisch.');
+}
+$('#btnReadOrder').onclick = () => readingOrder();
+
 /* ---------- Vorabprüfung (js/preflight.js): beA/Gericht, ePA, barrierefrei (BITV), Archiv (GoBD) ----------
    Geprüft wird die Datei, wie sie gespeichert würde: das unveränderte Original oder – nach Änderungen – die neu erzeugte PDF. */
 let pfLast = null;
@@ -5649,7 +5802,7 @@ $('#pfClose').onclick = () => $('#pfDlg').close();
 $('#pfFix').onclick = async () => {
   const p = $('#pfProfile').value, btn = $('#pfFix'); btn.disabled = true;
   try {
-    if (p === 'bitv') await a11yFigures().catch(e => console.warn(e));   // Bilder beschreiben (optional)
+    if (p === 'bitv') { await a11yFigures().catch(e => console.warn(e)); await readingOrder({ flow: true }).catch(e => console.warn(e)); }   // Bilder beschreiben, Lesereihenfolge (optional)
     $('#pfSum').textContent = I18N.t('Erzeuge die korrigierte Datei …'); $('#pfList').innerHTML = '';
     const name = p === 'bea' ? (n => n.ok ? pfName('bea') : n.suggestion)(BeaCheck.checkName(pfName('bea'))) : baseName() + '.pdf';
     if (p === 'bea') $('#pfName').value = name;

@@ -163,17 +163,72 @@
       ...(o.contact ? { ContactInfo: PL.PDFHexString.fromText(o.contact) } : {}),
     });
   }
+  /* Sichtbarer Signaturstempel („Digital signiert von …“ – wie in Acrobat): jeder Empfänger sieht in jedem PDF-Programm auf der Seite,
+     wer signiert hat. o.look = { pageIndex (−1 = letzte Seite), at: [{ x, y }] (Anteile der Seite, linke obere Ecke, in Wunschreihenfolge),
+     w, h (pt), draw: (w, h) → Inhaltsstrom (nur Pfade, keine Schrift – unproblematisch für PDF/A), alt: Text für Screenreader }.
+     Der Stempel kommt an den ersten Platz ohne vorhandene Anmerkung (zweite Person: daneben); sonst bleibt die Signatur unsichtbar. */
+  function lookRect(ctx, page, look) {
+    if (!look || page.getRotation().angle % 360) return null;
+    const box = page.getCropBox(), N = PL.PDFName.of, taken = [];
+    const ann = page.node.lookup(N('Annots'));
+    if (ann instanceof PL.PDFArray) for (const r of ann.asArray()) {
+      const a = r instanceof PL.PDFRef ? ctx.lookup(r) : r, R = a?.lookup?.(N('Rect'));
+      if (R instanceof PL.PDFArray) { const v = R.asArray().map(n => n.asNumber?.() ?? 0); if (Math.abs(v[2] - v[0]) > 1 && Math.abs(v[3] - v[1]) > 1) taken.push([Math.min(v[0], v[2]), Math.min(v[1], v[3]), Math.max(v[0], v[2]), Math.max(v[1], v[3])]); }
+    }
+    for (const c of look.at || []) {
+      const x0 = box.x + c.x * box.width, y1 = box.y + box.height - c.y * box.height, r = [x0, y1 - look.h, x0 + look.w, y1];
+      if (r[0] < box.x || r[1] < box.y || r[2] > box.x + box.width || r[3] > box.y + box.height) continue;
+      if (taken.some(t => r[0] < t[2] + 4 && r[2] > t[0] - 4 && r[1] < t[3] + 4 && r[3] > t[1] - 4)) continue;
+      return r.map(v => +v.toFixed(2));
+    }
+    return null;
+  }
+  // Erscheinungsbild an das Signaturfeld; in getaggten PDFs (PDF/UA) zusätzlich ein Strukturelement „Form“ mit Verweis auf das Feld.
+  // touch(ref): bei inkrementellem Update geänderte Objekte merken. false = Struktur nicht sicher erweiterbar → unsichtbar lassen.
+  function applyLook(ctx, cat, page, widget, wRef, look, rect, touch) {
+    const N = PL.PDFName.of, rootRaw = cat.get(N('StructTreeRoot'));
+    if (rootRaw) {
+      const root = rootRaw instanceof PL.PDFRef ? ctx.lookup(rootRaw) : rootRaw; if (!(root instanceof PL.PDFDict) || !(rootRaw instanceof PL.PDFRef)) return false;
+      const ptRaw = root.get(N('ParentTree')), pt = ptRaw instanceof PL.PDFRef ? ctx.lookup(ptRaw) : ptRaw;
+      const numsRaw = pt instanceof PL.PDFDict ? pt.get(PL.PDFName.of('Nums')) : null, nums = numsRaw instanceof PL.PDFRef ? ctx.lookup(numsRaw) : numsRaw;
+      if (!(nums instanceof PL.PDFArray)) return false;   // verzweigter Elternbaum (Kids) – nicht anfassen
+      const keys = nums.asArray().filter((_, k) => k % 2 === 0).map(n => n.asNumber?.() ?? 0), next = root.lookup(N('ParentTreeNextKey'));
+      const key = Math.max(next instanceof PL.PDFNumber ? next.asNumber() : 0, keys.length ? Math.max(...keys) + 1 : 0);
+      // Elternelement: das Element „Document“ (falls die Wurzel genau eines hat), sonst die Wurzel selbst
+      const rk = root.get(N('K')); let parentRef = rootRaw, parent = root;
+      if (rk instanceof PL.PDFRef) { const d = ctx.lookup(rk); if (d instanceof PL.PDFDict) { parentRef = rk; parent = d; } }
+      const elRef = ctx.register(ctx.obj({ Type: 'StructElem', S: 'Form', P: parentRef, Pg: page.ref, Alt: PL.PDFHexString.fromText(look.alt || ''), K: ctx.obj({ Type: 'OBJR', Obj: wRef, Pg: page.ref }) }));
+      touch(elRef);
+      const kRaw = parent.get(N('K')), kArr = kRaw instanceof PL.PDFRef ? ctx.lookup(kRaw) : kRaw;
+      if (kArr instanceof PL.PDFArray) { kArr.push(elRef); touch(kRaw instanceof PL.PDFRef ? kRaw : parentRef); }
+      else { parent.set(N('K'), kRaw ? ctx.obj([kRaw, elRef]) : ctx.obj([elRef])); touch(parentRef); }
+      nums.push(PL.PDFNumber.of(key)); nums.push(elRef);
+      touch(numsRaw instanceof PL.PDFRef ? numsRaw : ptRaw instanceof PL.PDFRef ? ptRaw : rootRaw);
+      root.set(N('ParentTreeNextKey'), PL.PDFNumber.of(key + 1)); touch(rootRaw);
+      widget.set(N('StructParent'), PL.PDFNumber.of(key));
+    }
+    const w = +(rect[2] - rect[0]).toFixed(2), h = +(rect[3] - rect[1]).toFixed(2);
+    const ap = ctx.register(ctx.stream(look.draw(w, h), { Type: 'XObject', Subtype: 'Form', BBox: [0, 0, w, h], Resources: ctx.obj({}) }));
+    touch(ap);
+    widget.set(N('Rect'), ctx.obj(rect)); widget.set(N('AP'), ctx.obj({ N: ap }));
+    if (look.alt) { widget.set(N('TU'), PL.PDFHexString.fromText(look.alt)); widget.set(N('Contents'), PL.PDFHexString.fromText(look.alt)); }
+    return true;
+  }
+  const lookPage = (doc, look) => { const ps = doc.getPages(), i = look?.pageIndex ?? -1; return ps[i >= 0 && i < ps.length ? i : ps.length - 1]; };
+
   /* Inkrementelles Update (ISO 32000, 7.5.6): neue Objekte (Signatur, Feld) und geänderte (Seite/Annots, AcroForm/Fields) hinten anhängen,
      mit eigenem Querverweis und /Prev auf den bisherigen. */
   async function appendSigField(orig, signer, o, now) {
     const doc = await PL.PDFDocument.load(orig, { updateMetadata: false, ignoreEncryption: false });
-    const ctx = doc.context, page = doc.getPages()[0], N = PL.PDFName.of;
+    const ctx = doc.context, N = PL.PDFName.of;
+    const lp = o.look && !o.docTs ? lookPage(doc, o.look) : null, rect = lp && lookRect(ctx, lp, o.look), page = rect ? lp : doc.getPages()[0];
     const changed = new Map();   // Ref → Objekt (wird neu geschrieben)
     const sigRef = ctx.register(sigDict(ctx, signer, o, now));
     const count = (s => (s.match(/\/FT\s*\/Sig\b/g) || []).length)(bin(orig)) + 1;
     const widget = ctx.obj({ Type: 'Annot', Subtype: 'Widget', FT: 'Sig', Rect: [0, 0, 0, 0], V: sigRef, T: PL.PDFHexString.fromText(`Signatur ${count} ${now.toISOString().slice(0, 19)}`), F: 132, P: page.ref });
     const wRef = ctx.register(widget);
     changed.set(sigRef, ctx.lookup(sigRef)); changed.set(wRef, widget);
+    if (rect) o.lookShown = applyLook(ctx, doc.catalog, page, widget, wRef, o.look, rect, r => changed.set(r, ctx.lookup(r)));
     // Seite: Annots ergänzen (Array direkt in der Seite oder als eigenes Objekt)
     const annRaw = page.node.get(N('Annots'));
     if (annRaw instanceof PL.PDFRef) { const arr = ctx.lookup(annRaw); arr.push(wRef); changed.set(annRaw, arr); }
@@ -214,11 +269,13 @@
   }
   async function newSigField(pdfBytes, signer, o, now) {
     const doc = await PL.PDFDocument.load(pdfBytes, { updateMetadata: false });
-    const ctx = doc.context, page = doc.getPages()[0];
+    const ctx = doc.context;
+    const lp = o.look && !o.docTs ? lookPage(doc, o.look) : null, rect = lp && lookRect(ctx, lp, o.look), page = rect ? lp : doc.getPages()[0];
     const sigRef = ctx.register(sigDict(ctx, signer, o, now));
-    // Unsichtbares Signaturfeld (Rechteck 0×0, druckbar + gesperrt) – erlaubt in PDF/A
+    // Signaturfeld: mit Stempel sichtbar (o.look), sonst unsichtbar (Rechteck 0×0); druckbar + gesperrt – erlaubt in PDF/A
     const widget = ctx.obj({ Type: 'Annot', Subtype: 'Widget', FT: 'Sig', Rect: [0, 0, 0, 0], V: sigRef, T: PL.PDFHexString.fromText('Signatur ' + now.toISOString().slice(0, 19)), F: 132, P: page.ref });
     const wRef = ctx.register(widget);
+    if (rect) o.lookShown = applyLook(ctx, doc.catalog, page, widget, wRef, o.look, rect, () => {});
     const annots = page.node.lookup(PL.PDFName.of('Annots'));
     if (annots instanceof PL.PDFArray) annots.push(wRef); else page.node.set(PL.PDFName.of('Annots'), ctx.obj([wRef]));
     page.node.set(PL.PDFName.of('Tabs'), PL.PDFName.of('S'));   // PDF/UA: Tab-Reihenfolge nach Struktur auf Seiten mit Feldern

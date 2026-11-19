@@ -104,6 +104,38 @@
       .filter(Boolean).map(t => ({ type: BULLET.test(t) ? 'li' : 'p', text: t }));
   }
 
-  const api = { blocks, fromText };
+  /* Lesereihenfolge und Art von Hand korrigiert (Dialog „Lesereihenfolge prüfen“, für PDF/UA):
+     bs = Blöcke aus blocks(…, { words: true }), kinds = automatisch erkannte Art je Block ('h1','h2','p','li','table','art'),
+     ro = { sig, seq: [{ i, k }] } – i = Nummer des Blocks, k = von Hand gewählte Art (leer = automatisch).
+     Passt sig nicht mehr zu den Blöcken (Text neu erkannt), gilt wieder die automatische Gliederung. Blöcke, die in seq fehlen, folgen am Ende. */
+  const KINDS = ['h1', 'h2', 'p', 'li', 'table', 'art'];
+  const wordsOf = b => b.ws || (b.cws ? b.cws.flat(2) : []);
+  const sig = bs => bs.length + ':' + bs.map(b => wordsOf(b).slice(0, 3).map(w => w.t).join(' ')).join('|');
+  function ordered(bs, kinds, ro) {
+    const auto = bs.map((b, i) => ({ b, i, auto: kinds[i], kind: kinds[i] }));
+    if (!ro || !Array.isArray(ro.seq) || ro.sig !== sig(bs)) return auto;
+    // Tabellen bleiben Tabellen (oder „nicht vorlesen“), Text wird nie zur Tabelle
+    const fits = (a, k) => KINDS.includes(k) && (k === 'art' || (a.b.type === 'table') === (k === 'table'));
+    const seen = new Set(), out = [];
+    for (const { i, k } of ro.seq) {
+      const a = auto[i]; if (!a || seen.has(i)) continue;
+      seen.add(i); out.push(k && fits(a, k) ? { ...a, kind: k } : a);
+    }
+    for (const a of auto) if (!seen.has(a.i)) out.push(a);
+    return out;
+  }
+  // Umgekehrt: aus der bearbeiteten Liste ro bilden – null, wenn sie der automatischen Gliederung entspricht
+  function toRo(bs, items) {
+    const same = items.every((x, n) => x.i === n && x.kind === x.auto);
+    return same ? null : { sig: sig(bs), seq: items.map(x => ({ i: x.i, k: x.kind === x.auto ? '' : x.kind })) };
+  }
+  // Umriss eines Blocks auf der Seite (0…1) – für die nummerierten Kästen
+  function box(b) {
+    const ws = wordsOf(b); if (!ws.length) return null;
+    const x0 = Math.min(...ws.map(w => w.x)), y0 = Math.min(...ws.map(w => w.y));
+    return { x: x0, y: y0, w: Math.max(...ws.map(w => w.x + w.w)) - x0, h: Math.max(...ws.map(w => w.y + w.h)) - y0 };
+  }
+
+  const api = { blocks, fromText, KINDS, sig, ordered, toRo, box, wordsOf };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Reflow = api;
 })(typeof self !== 'undefined' ? self : globalThis);

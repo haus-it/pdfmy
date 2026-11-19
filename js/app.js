@@ -3427,22 +3427,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
   const fieldQ = [], linkQ = [], hlQ = [], noteQ = [];   // Formularfelder und Links: nach den Seiten als echte PDF-Objekte anlegen
   const heads = [];   // erkannte Überschriften (barrierefrei): werden Lesezeichen, wenn das Dokument keine eigenen hat
   lastTagStats = { h: 0, table: 0, list: 0, fig: 0 };
-  /* Barrierefrei: Kopf- und Fußzeilen und Seitenzahlen sind Artefakte (Screenreader lesen sie sonst auf jeder Seite vor).
-     Kopf-/Fußzeile = gleiche erste bzw. letzte Zeile (Ziffern egal) auf mindestens der Hälfte der Seiten, ab 2 Seiten. */
-  const runKey = t => t.replace(/\d+/g, '#').replace(/\s+/g, ' ').trim().toLowerCase();
-  const running = new Set();
-  if (T && pages.length > 1) {
-    const cnt = new Map();
-    for (const p of pages) {
-      const ws = p.ocr?.words || (p.kind === 'pdf' && p.native ? await pageWords(p).catch(() => null) : null); if (!ws?.length) continue;
-      const ls = textLines(ws), keys = new Set([ls[0], ls[ls.length - 1]].map(l => runKey(l.map(w => w.t).join(' '))));
-      for (const k of keys) if (k) cnt.set(k, (cnt.get(k) || 0) + 1);
-    }
-    for (const [k, n] of cnt) if (n >= 2 && n >= pages.length / 2) running.add(k);
-  }
-  const PAGE_NO = /^(?:seite|page|blatt|s\.)?\s*[-–]?\s*\d{1,4}\s*[-–]?\s*(?:(?:von|of|\/)\s*\d{1,4})?$/i;
-  const isRunning = b => b.ws?.length && (running.has(runKey(b.text)) ||
-    (PAGE_NO.test(b.text.trim()) && b.ws.every(w => w.y < 0.1 || w.y > 0.9)));   // Seitenzahl im oberen/unteren Rand
+  const isRunning = T ? await runningCheck(pages) : () => false;
   const tagged = async (kind, fn, extra) => { if (T) kind === 'Artifact' ? T.artifact() : T.open(kind, extra); await fn(); if (T) T.close(); };
   // weitere Schriftschnitte (Serif, fett, kursiv …) nur bei Bedarf einbetten
   const fontsUsed = {};
@@ -3611,9 +3596,9 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
         /* Barrierefrei (PDF/UA-1): Text nach seiner Gliederung (js/reflow.js) taggen – Überschriften H1/H2, Absätze P, Listen L/LI/LBody,
            Tabellen Table/TR/TH/TD (Kopfzeile mit Scope); die Reihenfolge ist die Lesereihenfolge. Überschriften werden Lesezeichen. */
         let list = null;
-        for (const b of Reflow.blocks(textLines(words), { words: true })) {
-          if (figs.length) await emitFigs(Math.min(...(b.ws || b.cws.flat(2)).map(w => w.y)));
-          if (b.type === 'table') {
+        for (const { b, kind } of readingBlocks(p, words, isRunning).items) {
+          if (figs.length) await emitFigs(Math.min(...Reflow.wordsOf(b).map(w => w.y)));
+          if (kind === 'table') {
             list = null;
             const tb = T.group('Table'); lastTagStats.table++;
             b.cws.forEach((r, ri) => {
@@ -3624,17 +3609,17 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
                 T.open(tag, extra, tr); drawWords(ws); T.close();
               }
             });
-          } else if (b.type === 'li') {
+          } else if (kind === 'li') {
             if (!list) { list = T.group('L'); lastTagStats.list++; }
             // Aufzählungszeichen bzw. Nummer als eigenes Lbl, der Text als LBody (Screenreader sagen „Listenpunkt“ statt „Punkt“)
             const li = T.group('LI', list), lbl = /^([•·▪◦‣–\-*]|\d{1,2}[.)]|[a-z][.)])$/.test(b.ws[0]?.t || '') && b.ws.length > 1;
             if (lbl) { T.open('Lbl', {}, li); drawWords(b.ws.slice(0, 1)); T.close(); }
             T.open('LBody', {}, li); drawWords(lbl ? b.ws.slice(1) : b.ws); T.close();
-          } else if (isRunning(b)) {   // Kopf-/Fußzeile, Seitenzahl: Artefakt, aber weiter durchsuchbar
-            T.artifact(); drawWords(b.ws); T.close();
+          } else if (kind === 'art') {   // Kopf-/Fußzeile, Seitenzahl, von Hand „nicht vorlesen“: Artefakt, aber weiter durchsuchbar
+            T.artifact(); drawWords(Reflow.wordsOf(b)); T.close();
           } else {
             list = null;
-            const level = b.type === 'h' ? (heads.some(h => h.level === 1) ? b.level : 1) : 0;   // keine Ebene überspringen: die erste Überschrift ist H1
+            const n = kind === 'h1' ? 1 : kind === 'h2' ? 2 : 0, level = n ? (heads.some(h => h.level === 1) ? n : 1) : 0;   // keine Ebene überspringen: die erste Überschrift ist H1
             T.open(level ? 'H' + level : 'P'); drawWords(b.ws); T.close();
             if (level) { heads.push({ title: b.text.replace(/\s+/g, ' ').slice(0, 120), level, pageIndex: i }); lastTagStats.h++; }
           }
@@ -3816,11 +3801,41 @@ function outlineFor(pages) {
   if (items.length === 1) return items[0].children;   // eine Datei: deren eigene Gliederung (oder keine)
   return items;
 }
+/* Barrierefrei: Kopf- und Fußzeilen und Seitenzahlen sind Artefakte (Screenreader lesen sie sonst auf jeder Seite vor).
+   Kopf-/Fußzeile = gleiche erste bzw. letzte Zeile (Ziffern egal) auf mindestens der Hälfte der Seiten, ab 2 Seiten. */
+async function runningCheck(pages) {
+  const runKey = t => t.replace(/\d+/g, '#').replace(/\s+/g, ' ').trim().toLowerCase();
+  const running = new Set();
+  if (pages.length > 1) {
+    const cnt = new Map();
+    for (const p of pages) {
+      const ws = p.ocr?.words || (p.kind === 'pdf' && p.native ? await pageWords(p).catch(() => null) : null); if (!ws?.length) continue;
+      const ls = textLines(ws), keys = new Set([ls[0], ls[ls.length - 1]].map(l => runKey(l.map(w => w.t).join(' '))));
+      for (const k of keys) if (k) cnt.set(k, (cnt.get(k) || 0) + 1);
+    }
+    for (const [k, n] of cnt) if (n >= 2 && n >= pages.length / 2) running.add(k);
+  }
+  const PAGE_NO = /^(?:seite|page|blatt|s\.)?\s*[-–]?\s*\d{1,4}\s*[-–]?\s*(?:(?:von|of|\/)\s*\d{1,4})?$/i;
+  return b => !!b.ws?.length && (running.has(runKey(b.text)) ||
+    (PAGE_NO.test(b.text.trim()) && b.ws.every(w => w.y < 0.1 || w.y > 0.9)));   // Seitenzahl im oberen/unteren Rand
+}
+// Gliederung einer Seite in Lesereihenfolge: automatisch (js/reflow.js) oder von Hand korrigiert (p.ro, Dialog „Lesereihenfolge prüfen“ in js/pro.js)
+const autoKind = (b, isRunning) => b.type === 'table' ? 'table' : isRunning(b) ? 'art' : b.type === 'h' ? 'h' + b.level : b.type === 'li' ? 'li' : 'p';
+function readingBlocks(p, words, isRunning = () => false) {
+  const bs = Reflow.blocks(textLines(words), { words: true });
+  return { bs, items: Reflow.ordered(bs, bs.map(b => autoKind(b, isRunning)), p.ro) };
+}
+// Wörter, aus denen beim Speichern die getaggte Textebene entsteht (wie in buildPdf: ohne Geschwärztes)
+async function taggedWords(p) {
+  const ws = p.ocr?.words || (p.kind === 'pdf' && p.native !== false ? await nativeWords(p).catch(() => null) : null);
+  return ws?.length ? (coversOf(p).length ? ws.filter(w => !coversOf(p).some(a => overlaps(a, w))) : ws) : [];
+}
 // „PDF barrierefrei machen“ (Kachel, Menü, Prüfdialog): Speichern als PDF/A + PDF/UA mit Gliederung; danach prüft a11yAfterSave die Datei
 async function a11yMake() {
   if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich barrierefrei machen.'); return; }
   window.a11yWanted = true;
   try { await a11yFigures(); } catch (e) { console.warn('Bilder suchen', e); }   // Bilder finden und beschreiben lassen (js/pro.js)
+  try { await readingOrder({ flow: true }); } catch (e) { console.warn(e); }   // Reihenfolge und Art der Blöcke prüfen (js/pro.js)
   openExport({ format: 'pdfa', task: { title: 'Barrierefrei speichern', hint: 'Gespeichert wird als PDF/UA (zugleich PDF/A) mit Überschriften, Listen, Tabellen und Bildbeschreibungen für Screenreader. Die Datei wird dadurch meist größer, weil Schriften und Seitenbilder eingebettet werden. Nach dem Speichern prüft PDFMy die Datei.' } });
   status('PDF barrierefrei machen: auf „Speichern“ klicken. PDFMy erkennt Überschriften, Absätze, Listen und Tabellen, speichert als PDF/UA (zugleich PDF/A) und prüft danach die Datei.');
 }

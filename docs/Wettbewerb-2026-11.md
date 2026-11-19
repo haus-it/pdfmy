@@ -83,6 +83,7 @@ Parallele und gemischte Reihenfolge, Zugangscode je Unterzeichner, Anhänge vom 
 - **Leitplanken:** gewahrt (nur lokale KI). Laut KONZEPT „beobachten“. **Vorschlag: auf „prüfen“ hochstufen**, weil Foxit damit wirbt.
 
 ### Rang 8: Barrierefreiheit – Lesereihenfolge und Tags von Hand korrigieren
+> **Umgesetzt 19.11.2026 (app-v288): Dialog „Lesereihenfolge prüfen“.** Nummerierte Kästen je Block auf dem Seitenbild, Liste daneben; umsortieren per Pfeilknopf, Alt + Pfeiltaste oder Ziehen (ohne Maus bedienbar), Art per Auswahl (H1, H2, P, Listenpunkt, Tabelle, Artefakt „nicht vorlesen“). Der Strukturbaum entsteht beim Speichern als PDF/UA in dieser Reihenfolge (im Browser nachgeprüft: Tags und markierte Inhalte folgen der Korrektur, „nicht vorlesen“ wird Artefakt). Schritt in „PDF barrierefrei machen“. Offen: Blöcke zusammenfassen oder teilen, Tabellenstruktur von Hand, Bearbeiten des Tag-Baums vorhandener getaggter PDFs (die werden weiter übernommen, nicht neu gegliedert). Tests in tests/lesereihenfolge.test.js.
 - **Wer hat es:** Acrobat Pro (Werkzeug „Lesereihenfolge“, Tag-Baum). Den Preflight für PDF/UA bietet nur Acrobat Pro ([mapsoft](https://mapsoft.com/posts/acrobat-standard-vs-pro.html), Sekundärquelle).
 - **Repo-Check:** Auto-Tagging und Prüfung sind vorhanden (a11ycheck.js, preflight.js). Eine Oberfläche, mit der man Reihenfolge oder Tag-Art von Hand ändert, war nicht zu finden („Lesereihenfolge“ kommt nur in der Logik vor, nicht in einem Werkzeug). KONZEPT 23.10.2026 nennt die Grenze „komplexe Layouts werden vereinfacht“.
 - **Lokal umsetzbar:** Overlay „Gliederung prüfen“: nummerierte Kästen je Block in Lesereihenfolge, per Ziehen umsortieren, per Rechtsklick die Art ändern (H1, H2, P, Liste, Tabelle, Artefakt). Danach entsteht der Strukturbaum neu.
@@ -173,7 +174,7 @@ Parallele und gemischte Reihenfolge, Zugangscode je Unterzeichner, Anhänge vom 
 7. **Umgesetzt 12.11.2026: Anhänge vom Unterzeichner (app-v246) und gleichzeitige Stufen (app-v247) – mehrere Personen einer Stufe unterschreiben gleichzeitig, der Absender führt die Fassungen ohne Server zusammen, „Echtheit geprüft“ bleibt für alle erhalten.** **Parallele bzw. stufenweise Reihenfolge und Anhänge vom Unterzeichner.** *M. Gewahrt (Hinweis zu PDF/A-3 und beA).* Grund: Das sind die häufigsten Workflow-Fälle in Firmen (zwei Geschäftsführer gleichzeitig, Nachweis beifügen).
 8. **Vorhandene Bilder und Objekte bearbeiten** (verschieben, skalieren, ersetzen, löschen). *L. Gewahrt, Fälschungsschutz muss greifen.* Grund: Das ist die letzte große Lücke beim Bearbeiten gegenüber Acrobat, Foxit, Nitro und PDF-XChange.
 9. **Vertragsakte (CLM light):** Laufzeit, Kündigungsfrist und Verlängerung erkennen, berechnen und als .ics exportieren, dazu **Fragen an mehrere Dokumente über die vorhandene Volltextsuche und die lokale KI**. *M. Gewahrt.* Grund: Das baut auf vorhandenen Bausteinen auf und hält mit Foxit Workspace bzw. Acrobat Spaces mit, ohne Cloud.
-10. **Lesereihenfolge und Tags von Hand korrigieren** für PDF/UA. *M–L. Gewahrt.* Grund: BFSG- und BITV-Kunden. Es schließt die zugegebene Grenze „komplexe Layouts werden vereinfacht“.
+10. **Umgesetzt 19.11.2026 (app-v288): Dialog „Lesereihenfolge prüfen“; offen: Blöcke zusammenfassen/teilen.** **Lesereihenfolge und Tags von Hand korrigieren** für PDF/UA. *M–L. Gewahrt.* Grund: BFSG- und BITV-Kunden. Es schließt die zugegebene Grenze „komplexe Layouts werden vereinfacht“.
 
 **Begleitend (ohne Rang, Messung statt Funktion):** Messung von Erstbesuch und Handy-Laufzeiten nach app-v241, Screenreader-Durchgang der App-Oberfläche, Signatur-Interoperabilität mit Acrobat, Foxit und dem EU-DSS-Validator, Formulartest auf echten Geräten.
 
@@ -221,3 +222,17 @@ Quelle: Kommentare unter „Digital Independence Day: Adobe PDF-Reader-Alternati
 - Yousign QES: https://developers.youtrust.com/changelog/qualified-electronic-signature-is-out
 
 **Hinweis zur Belastbarkeit:** Keine der Wettbewerbsangaben wurde im jeweiligen Produkt nachgetestet. Tarif- und Funktionszuordnungen ändern sich häufig. Vor einer öffentlichen Vergleichsaussage (z. B. auf pdfmy.de) jede Zeile an der Herstellerseite gegenprüfen (UWG § 6, vergleichende Werbung).
+
+## 7. Signieren und Erkennen, wer signiert hat: Abläufe im Vergleich (ausgewertet 19.11.2026)
+
+**Quellenlage:** Abgerufen und belegt sind nur Apple Vorschau ([support.apple.com](https://support.apple.com/guide/preview/fill-out-and-sign-pdf-forms-prvw35725/mac)) und die Produktseite von Docusign ([docusign.com](https://www.docusign.com/products/electronic-signature)). Die Hilfeseiten von Adobe lieferten beim Abruf HTTP 403. Die Angaben zu Acrobat, Foxit, PDF-XChange, Nitro, Smallpdf, iLovePDF, PDF24 und Edge stammen aus Vorwissen und sind **nicht nachgeprüft**.
+
+| Punkt | Wettbewerb (Beleg) | PDFMy vorher | PDFMy jetzt (app-v289) |
+|---|---|---|---|
+| Sichtbares Erscheinungsbild der Zertifikatssignatur | Acrobat/Foxit: Feld aufziehen, Stempel mit Name, Datum, Grund (nicht nachgeprüft) | unsichtbar (Feld 0×0), nur im Signaturbereich anderer Programme erkennbar | **Stempel „Digital signiert von …“** mit Name, Zeitpunkt, Grund; unter der gezeichneten Unterschrift, sonst freie Stelle der letzten Seite; zweite Person daneben; abschaltbar; PDF/A-tauglich (Pfade statt Schrift), in PDF/UA-Dateien als Strukturelement „Form“ |
+| Einstieg „Digital signieren“ | Acrobat: Werkzeug „Zertifikate → Digital signieren“ (nicht nachgeprüft) | nur Haken im Speichern-Dialog | **Menüpunkt „Digital signieren …“**, öffnet ohne Zertifikat gleich die Auswahl; „Mitunterzeichnen“ in der Leiste |
+| Leiste beim Empfänger | Acrobat: „Signiert, alle Signaturen gültig“, Signaturbereich mit allen Unterzeichnern (nicht nachgeprüft) | Farbe je Zustand, aber immer dasselbe Schild mit Haken; nur der letzte Unterzeichner genannt | **alle Unterzeichner mit Zeitpunkt**; Symbol je Zustand (Haken, Ausrufezeichen, Kreuz) – erkennbar ohne Farbe |
+| Gespeicherte Unterschrift, Kürzel, Datum | Vorschau: gespeicherte Unterschrift, Handy als Zeichenfläche (belegt); Acrobat ähnlich (nicht nachgeprüft) | vorhanden (zeichnen, Bild, Kürzel, Firmenstempel, Ort/Datum, „Nächste Stelle“) | unverändert |
+| Andere unterschreiben lassen | Docusign: Zustellung per E-Mail/SMS, Erinnerungen, ohne Konto (belegt) | vorhanden ohne Server (Abschnitt 3) | unverändert |
+
+**Bewusst anders:** Der Stempel zeigt kein grünes Häkchen. Er ist nur ein Bild und bliebe auch nach einer Fälschung stehen; ob die Signatur gültig ist, zeigt allein die Prüfung (Leiste in PDFMy, Signaturbereich anderer Programme). **Offen:** Klick auf einen Stempel auf der Seite öffnet die Signaturdetails (heute über „Signaturdetails“ in der Leiste); Platz für den Stempel selbst aufziehen; Handy als Zeichenfläche ohne Cloud (Machbarkeit prüfen). Test: tests/signatur-sichtbar.test.js, Durchlauf im Headless-Browser mit zwei Unterzeichnern.

@@ -2,6 +2,19 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-19
+
+### Signaturen: für jeden sichtbar, wer signiert hat (app-v289)
+- **Sichtbarer Stempel „Digital signiert von …“** mit Name, Zeitpunkt und Grund (Haken „sichtbar auf der Seite“, Standard an): unter der gezeichneten Unterschrift, sonst an einer freien Stelle der letzten Seite; Mitunterzeichner daneben, frühere Signaturen bleiben gültig. Erscheinungsbild aus Pfaden (PDF/A-tauglich), in getaggten PDFs als Strukturelement „Form“ (PDF/UA). Neutrales Siegel statt Haken – die Gültigkeit zeigt allein die Prüfung.
+- **Menüpunkt „Digital signieren …“** (… Mehr → Büro); ohne Zertifikat führt er gleich zur Auswahl.
+- **Signaturleiste** nennt alle Unterzeichner mit Zeitpunkt; Symbol je Zustand (Schild mit Haken, Ausrufezeichen, Kreuz) statt immer Haken.
+- Vergleich der Signatur-Abläufe mit dem Wettbewerb: docs/Wettbewerb-2026-11.md Abschnitt 7. Hilfe in 40 Sprachen, Tests in tests/signatur-sichtbar.test.js.
+
+### Lesereihenfolge prüfen – barrierefreie PDF von Hand korrigieren (app-v288)
+- **Neuer Dialog „Lesereihenfolge prüfen“** (… Mehr, und als Schritt in „PDF barrierefrei machen“ bzw. „Automatisch beheben“ der BITV-Prüfung): je Seite nummerierte Kästen auf dem Seitenbild und die Liste der Blöcke. Reihenfolge per Pfeilknopf, Alt + Pfeiltaste oder Ziehen; Art per Auswahl (Überschrift 1/2, Absatz, Listenpunkt, Tabelle, Nicht vorlesen). Wirkt beim Speichern als PDF/UA auf Strukturbaum, Artefakte und Lesezeichen; nach neuer Texterkennung gilt wieder die automatische Gliederung.
+- Kopf-/Fußzeilen-Erkennung als eigene Funktion (runningCheck), Logik testbar in js/reflow.js (ordered, toRo, box).
+- **Hilfe** in 40 Sprachen, Tests in tests/lesereihenfolge.test.js.
+
 ## 2026-11-18
 
 ### Druckerei-Prüfung und Webseiten (HTML, MHTML) öffnen (app-v287)
