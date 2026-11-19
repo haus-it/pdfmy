@@ -85,3 +85,32 @@ test('Lesereihenfolge: Speichern als PDF/UA nutzt die korrigierte Gliederung, Di
   assert.match(pro, /e\.altKey && \(e\.key === 'ArrowUp' \|\| e\.key === 'ArrowDown'\)/);
   assert.match(pro, /aria-label="\$\{esc\(I18N\.t\(`Art von Block \$\{n \+ 1\}`\)\)\}"/);
 });
+
+test('Lesereihenfolge: Block teilen (zwei Spalten als ein Block erkannt) – Teile ordnen, Rundlauf über toRo, Unsinniges ignoriert', () => {
+  // Ein Block, dessen Zeilen abwechselnd aus linker und rechter Spalte stammen (typischer Erkennungsfehler)
+  const ws = [...line('Links eins', 0.1, 0.3), ...line('Rechts eins', 0.6, 0.3), ...line('Links zwei', 0.1, 0.32), ...line('Verbin-', 0.6, 0.32), ...line('dung', 0.1, 0.34)];
+  const blk = [{ type: 'p', text: ws.map(x => x.t).join(' '), ws }], k = ['p'];
+  assert.deepEqual(R.cuts(blk[0]), [0, 2, 4, 6, 7, 8], 'Spaltenlücke und Zeilenwechsel sind Teilstellen');
+  assert.deepEqual(R.cuts({ type: 'table', cws: [] }), [0], 'Tabellen werden nicht geteilt');
+  const [a] = R.ordered(blk, k, null), parts = R.splitItem(blk, a);
+  assert.equal(parts.length, 5); assert.deepEqual(parts.map(x => x.p), [[0, 2], [2, 4], [4, 6], [6, 7], [7, 8]]);
+  assert.equal(parts[1].b.text, 'Rechts eins');
+  // rechte Spalte nach hinten, getrenntes Wort wieder verbunden
+  const items = [parts[0], parts[2], { ...parts[1] }, { ...parts[3] }, { ...parts[4], merge: true }];
+  const ro = R.toRo(blk, items);
+  assert.deepEqual(ro.seq.map(x => x.p), [[0, 2], [4, 6], [2, 4], [6, 7], [7, 8]]);
+  const back = R.ordered(blk, k, ro);
+  assert.deepEqual(back.map(x => x.b.text), ['Links eins', 'Links zwei', 'Rechts eins', 'Verbin-', 'dung']);
+  assert.equal(R.joined(back).length, 4); assert.equal(R.joined(back)[3].b.text, 'Verbindung', 'wieder verbunden ohne Trennstrich');
+  // Teil eines Teils: Versatz bleibt auf den ursprünglichen Block bezogen
+  const sub = R.splitItem(blk, R.ordered(blk, k, { sig: ro.sig, seq: [{ i: 0, p: [0, 4] }, { i: 0, p: [4, 8] }] })[1]);
+  assert.deepEqual(sub.map(x => x.p), [[4, 6], [6, 7], [7, 8]]);
+  assert.equal(R.part(blk[0], 4, 8).text, 'Links zwei Verbindung', 'Trennstrich am Zeilenende entfällt');
+  // Lücke oder Überlappung → ganzer Block
+  for (const seq of [[{ i: 0, p: [0, 2] }, { i: 0, p: [3, 8] }], [{ i: 0, p: [0, 5] }, { i: 0, p: [4, 8] }], [{ i: 0, p: [0, 8] }], [{ i: 0, p: ['x', 8] }, { i: 0, p: [8, 9] }]]) {
+    const r = R.ordered(blk, k, { sig: ro.sig, seq });
+    assert.equal(r.length, 1); assert.equal(r[0].b, blk[0]); assert.equal(r[0].p, undefined);
+  }
+  const pro = fs.readFileSync(path.join(__dirname, '..', 'js', 'pro.js'), 'utf8');
+  assert.match(pro, /class="rosplit" aria-label=/); assert.match(pro, /Reflow\.splitItem\(cur\.bs, it\)/);
+});

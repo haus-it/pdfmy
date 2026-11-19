@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Vorhandene Bilder bearbeiten; Lesereihenfolge: Blöcke teilen (app-v301)
+- **Bilder bearbeiten (… Mehr → Bilder bearbeiten …):** eingebettete Fotos, Logos und Grafiken einer PDF verschieben, vergrößern/verkleinern (Seitenverhältnis bleibt), durch ein anderes Bild ersetzen (eingepasst; JPG, PNG, WebP, GIF, BMP) oder löschen – direkt im Seiteninhalt (neues Modul `js/pdfbild.js`: Zerlegen des Inhaltsstroms mit Zeichenketten, Hex, Wörterbüchern und Inline-Bildern, Verfolgen von q/cm/Q, Änderung als „q T cm /Bild Do Q“). Text, Linien und Schriften bleiben, die Seite wird nicht gerastert. Vorschau als Einzelseiten-PDF, bedienbar mit Maus und Tastatur (Pfeiltasten, + / −, Entf), Rückgängig im Dialog, „Ursprüngliche Bilder wiederherstellen“ danach. Formulare behalten ihre Felder. Schließt Rang 8 der Wettbewerbsanalyse (Acrobat, Foxit, Nitro, PDF-XChange).
+- **Fälschungsschutz:** Bilder in Urkunden, Zeugnissen, Ausweisen, Bescheiden, Kontoauszügen und Belegen lassen sich nicht ändern; bei digital signierten PDFs warnt PDFMy vorher (Signatur wird ungültig).
+- **Lesereihenfolge prüfen – Blöcke teilen (✂):** Hat die Erkennung zwei Spalten oder Absätze zu einem Block zusammengezogen, teilt ✂ ihn an Zeilenwechseln und Spaltenlücken; die Teile lassen sich einzeln ordnen, einstufen und mit ⤒ wieder verbinden (Trennstriche am Zeilenende werden dabei aufgehoben). Gespeichert als Wortbereich je Teil; unvollständige oder überlappende Teilungen fallen auf den ganzen Block zurück. Damit ist Rang 10 der Wettbewerbsanalyse vollständig.
+- Grenzen: Bilder innerhalb von Formular-XObjects (manche Satzprogramme) und Inline-Bilder werden nicht angeboten; Prüfung in Acrobat/Foxit steht aus.
+
 ### Betriebswerkzeuge: Rückweg und Kanal „stabil“ abgesichert (app-v300)
 - **Rückweg (deploy.ps1 -Rollback):** Ziel ist die nächste ältere, nicht zurückgezogene Fassung unterhalb des Live-Stands laut Release-Protokoll; zurückgezogen wird genau die Live-Fassung; bei -Test/-DryRun wird nichts protokolliert; der Fingerabdruck der zurückgeholten Fassung steht in der Protokollzeile, die Betriebsprüfung prüft danach weiter die Integrität.
 - **Archiv des Selbstbetriebs:** die Fassung von „stabil“ und Fassungen unter 7 Tagen werden nie aufgeräumt (vorher konnte „stabil“ bei vielen Veröffentlichungen verfrüht vorrücken); eine schon veröffentlichte Nummer wird nicht neu gebaut; -Sicherheit wirkt auch mit -NoBuild; fehlende Archiveinträge werden gemeldet.

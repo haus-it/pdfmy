@@ -111,17 +111,46 @@
   const KINDS = ['h1', 'h2', 'p', 'li', 'table', 'art'];
   const wordsOf = b => b.ws || (b.cws ? b.cws.flat(2) : []);
   const sig = bs => bs.length + ':' + bs.map(b => wordsOf(b).slice(0, 3).map(w => w.t).join(' ')).join('|');
+  /* Geteilte Blöcke (p: [von, bis] = Wortbereich in wordsOf(b)): z. B. zwei Spalten oder Absätze, die die Erkennung zu einem
+     Block zusammengezogen hat. Teil-Text aus den Wörtern; am Zeilenende getrennte Wörter („Verbin- dung“) werden zusammengefügt. */
+  function part(b, from, to) {
+    const ws = (b.ws || []).slice(from, to);
+    return { ...b, ws, text: ws.map(w => w.t).join(' ').replace(/([a-zäöüß])- ([a-zäöüß])/g, '$1$2') };
+  }
+  // Mögliche Teilstellen eines Blocks: Zeilenwechsel (zurück nach links bzw. tiefer) und große Lücken in der Zeile (Spalten)
+  function cuts(b) {
+    const ws = b.type === 'table' ? [] : b.ws || [], out = [0];
+    for (let n = 1; n < ws.length; n++) {
+      const a = ws[n - 1], c = ws[n], h = Math.max(a.h || 0, c.h || 0) || 0.01;
+      if (c.x < a.x || Math.abs(c.y - a.y) > h * 0.6 || c.x - (a.x + a.w) > h * 2.5) out.push(n);
+    }
+    if (ws.length) out.push(ws.length);
+    return out;
+  }
   function ordered(bs, kinds, ro) {
     const auto = bs.map((b, i) => ({ b, i, auto: kinds[i], kind: kinds[i] }));
     if (!ro || !Array.isArray(ro.seq) || ro.sig !== sig(bs)) return auto;
     // Tabellen bleiben Tabellen (oder „nicht vorlesen“), Text wird nie zur Tabelle
     const fits = (a, k) => KINDS.includes(k) && (k === 'art' || (a.b.type === 'table') === (k === 'table'));
-    const seen = new Set(), out = [];
-    for (const { i, k, m } of ro.seq) {
-      const a = auto[i]; if (!a || seen.has(i)) continue;
-      seen.add(i); out.push({ ...(k && fits(a, k) ? { ...a, kind: k } : a), merge: !!m });
+    // Teile gelten nur, wenn sie den Block lückenlos und ohne Überlappung abdecken – sonst wird der Block wieder ganz verwendet
+    const parts = new Map();
+    for (const e of ro.seq) if (e && Array.isArray(e.p)) { if (!parts.has(e.i)) parts.set(e.i, []); parts.get(e.i).push(e.p); }
+    const split = new Set([...parts].filter(([i, ps]) => {
+      const b = auto[i]?.b; if (!b || b.type === 'table' || ps.length < 2) return false;
+      let at = 0;
+      for (const [f, t] of [...ps].sort((x, y) => x[0] - y[0])) { if (!Number.isInteger(f) || !Number.isInteger(t) || f !== at || t <= f) return false; at = t; }
+      return at === wordsOf(b).length;
+    }).map(([i]) => i));
+    const seen = new Set(), used = new Set(), out = [];
+    for (const e of ro.seq) {
+      const { i, k, m } = e || {}, a = auto[i]; if (!a) continue;
+      const isPart = split.has(i) && Array.isArray(e.p), key = isPart ? `${i}:${e.p[0]}` : String(i);
+      if (seen.has(key) || (!isPart && used.has(i))) continue;
+      seen.add(key); used.add(i);
+      const b = isPart ? part(a.b, e.p[0], e.p[1]) : a.b;
+      out.push({ ...a, b, ...(isPart ? { p: [e.p[0], e.p[1]] } : {}), kind: k && fits(a, k) ? k : a.kind, merge: !!m });
     }
-    for (const a of auto) if (!seen.has(a.i)) out.push(a);
+    for (const a of auto) if (!used.has(a.i)) out.push(a);
     return out;
   }
   /* Verbundene Blöcke (m: „mit vorigem verbinden“ – z. B. eine Spalte, die die Erkennung in mehrere Absätze zerlegt hat) zu einem
@@ -130,15 +159,15 @@
     const out = [];
     for (const x of items) {
       const prev = out[out.length - 1];
-      if (x.merge && prev && x.b.type !== 'table' && prev.b.type !== 'table') prev.b = { ...prev.b, ws: [...(prev.b.ws || []), ...(x.b.ws || [])], text: `${prev.b.text} ${x.b.text}` };
+      if (x.merge && prev && x.b.type !== 'table' && prev.b.type !== 'table') prev.b = { ...prev.b, ws: [...(prev.b.ws || []), ...(x.b.ws || [])], text: `${prev.b.text} ${x.b.text}`.replace(/([a-zäöüß])- ([a-zäöüß])/g, '$1$2') };
       else out.push({ ...x, b: { ...x.b } });
     }
     return out;
   }
   // Umgekehrt: aus der bearbeiteten Liste ro bilden – null, wenn sie der automatischen Gliederung entspricht
   function toRo(bs, items) {
-    const same = items.every((x, n) => x.i === n && x.kind === x.auto && !x.merge);
-    return same ? null : { sig: sig(bs), seq: items.map(x => ({ i: x.i, k: x.kind === x.auto ? '' : x.kind, ...(x.merge ? { m: 1 } : {}) })) };
+    const same = items.length === bs.length && items.every((x, n) => x.i === n && x.kind === x.auto && !x.merge && !x.p);
+    return same ? null : { sig: sig(bs), seq: items.map(x => ({ i: x.i, k: x.kind === x.auto ? '' : x.kind, ...(x.merge ? { m: 1 } : {}), ...(x.p ? { p: [x.p[0], x.p[1]] } : {}) })) };
   }
   // Umriss eines Blocks auf der Seite (0…1) – für die nummerierten Kästen
   function box(b) {
@@ -147,6 +176,14 @@
     return { x: x0, y: y0, w: Math.max(...ws.map(w => w.x + w.w)) - x0, h: Math.max(...ws.map(w => w.y + w.h)) - y0 };
   }
 
-  const api = { blocks, fromText, KINDS, sig, ordered, joined, toRo, box, wordsOf };
+  // Block (oder Teil eines geteilten Blocks) an allen Teilstellen teilen – für den Knopf „Teilen“ im Dialog. Ergebnis: neue Einträge
+  // mit p relativ zum ursprünglichen Block bs[i]; null, wenn es nichts zu teilen gibt.
+  function splitItem(bs, it) {
+    const off = it.p ? it.p[0] : 0, cs = cuts(it.b); if (cs.length < 3) return null;
+    const orig = bs[it.i];
+    return cs.slice(0, -1).map((f, n) => ({ ...it, b: part(orig, off + f, off + cs[n + 1]), p: [off + f, off + cs[n + 1]], merge: n ? false : !!it.merge }));
+  }
+
+  const api = { blocks, fromText, KINDS, sig, ordered, joined, toRo, box, wordsOf, part, cuts, splitItem };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Reflow = api;
 })(typeof self !== 'undefined' ? self : globalThis);

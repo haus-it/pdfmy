@@ -5746,11 +5746,17 @@ async function readingOrder({ flow = false } = {}) {
       li.innerHTML = `<span class="ronum" style="color:${RO_COLOR[gs[n].kind]}">${verbunden ? '↳' : gs[n].nr}</span><span class="rotx" title="${esc(txt.slice(0, 300))}">${esc(txt.replace(/\s+/g, ' ').slice(0, 90))}</span>
         <select aria-label="${esc(I18N.t(`Art von Block ${n + 1}`))}"${verbunden ? ' disabled' : ''}>${opts}</select>
         <button type="button" class="rojoin" aria-pressed="${verbunden}" aria-label="${esc(I18N.t(`Block ${n + 1} mit dem vorigen verbinden`))}" title="${esc(I18N.t('Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)'))}"${joinable(n) ? '' : ' disabled'}>⤒</button>
+        <button type="button" class="rosplit" aria-label="${esc(I18N.t(`Block ${n + 1} teilen`))}" title="${esc(I18N.t('In Zeilen bzw. Spalten teilen – danach Teile ordnen oder wieder verbinden'))}"${Reflow.cuts(it.b).length > 2 ? '' : ' disabled'}>✂</button>
         <button type="button" data-d="-1" aria-label="${esc(I18N.t(`Block ${n + 1} nach vorn`))}" title="${esc(I18N.t('Früher vorlesen'))}"${n ? '' : ' disabled'}>↑</button>
         <button type="button" data-d="1" aria-label="${esc(I18N.t(`Block ${n + 1} nach hinten`))}" title="${esc(I18N.t('Später vorlesen'))}"${n < cur.items.length - 1 ? '' : ' disabled'}>↓</button>`;
       li.querySelector('select').onchange = e => { it.kind = e.target.value; sel = n; fill(); list.children[n]?.querySelector('select')?.focus(); };
       li.querySelectorAll('button[data-d]').forEach(b => b.onclick = () => move(n, +b.dataset.d));
       li.querySelector('.rojoin').onclick = () => { it.merge = !verbunden; sel = n; fill(); list.children[n]?.querySelector('.rojoin')?.focus(); };
+      li.querySelector('.rosplit').onclick = () => {
+        const parts = Reflow.splitItem(cur.bs, it); if (!parts) return;
+        cur.items.splice(n, 1, ...parts); sel = n; fill(); list.children[n]?.querySelector('select')?.focus();
+        status(I18N.t(`Block in ${parts.length} Teile geteilt – Teile mit ↑ ↓ ordnen oder mit ⤒ wieder verbinden.`));
+      };
       li.addEventListener('keydown', e => { if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) { e.preventDefault(); move(n, e.key === 'ArrowUp' ? -1 : 1); } });
       li.addEventListener('focusin', () => { if (sel !== n) { sel = n; list.querySelectorAll('li').forEach((o, k) => o.classList.toggle('sel', k === n)); draw(); } });
       li.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', String(n)); li.classList.add('dragging'); });
@@ -5772,7 +5778,7 @@ async function readingOrder({ flow = false } = {}) {
   };
   $('#roPrev').onclick = () => { if (at > 0) { at--; show(); } };
   $('#roNext').onclick = () => { if (at < pages.length - 1) { at++; show(); } };
-  $('#roReset').onclick = () => { cur.items.sort((a, b) => a.i - b.i).forEach(it => { it.kind = it.auto; it.merge = false; }); sel = -1; fill(); };
+  $('#roReset').onclick = () => { const auto = new Map(cur.items.map(it => [it.i, it.auto])); cur.items = cur.bs.map((b, i) => ({ b, i, auto: auto.get(i), kind: auto.get(i) })); sel = -1; fill(); };   // auch Teilungen aufheben
   cv.onclick = e => {
     const r = cv.getBoundingClientRect(), u = (e.clientX - r.left) / r.width, v = (e.clientY - r.top) / r.height;
     const n = cur.items.findIndex(it => { const b = Reflow.box(it.b); return b && u >= b.x - 0.01 && u <= b.x + b.w + 0.01 && v >= b.y - 0.01 && v <= b.y + b.h + 0.01; });
@@ -5789,6 +5795,172 @@ async function readingOrder({ flow = false } = {}) {
   status(n ? I18N.t(`Lesereihenfolge auf ${n} Seite(n) angepasst – wirkt beim Speichern als barrierefreie PDF (PDF/UA).`) : 'Lesereihenfolge automatisch.');
 }
 $('#btnReadOrder').onclick = () => readingOrder();
+
+/* ---------- Vorhandene Bilder bearbeiten (Wettbewerbsanalyse Rang 8, js/pdfbild.js): verschieben, skalieren, ersetzen, löschen ----------
+   Direkt im Seiteninhalt der PDF – Text, Linien und Schriften bleiben, die Seite wird nicht gerastert. Vorschau: die Seite wird mit den
+   Änderungen als Einzelseiten-PDF neu gezeichnet. Fälschungsschutz: Urkunden und Belege nie, digital signierte PDFs erst nach Warnung. */
+async function imageEdit() {
+  closeMenu?.();
+  const pdfPages = state.pages.filter(q => q.kind === 'pdf');
+  if (!pdfPages.length) return toast(I18N.t('Bilder bearbeiten geht in PDF-Dateien. Gescannte Seiten und Fotos sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.'), 8000);
+  const start = cur()?.kind === 'pdf' ? cur() : pdfPages[0];
+  const prot = pdfPages.map(pageProt).find(Boolean);
+  if (prot) return toast(I18N.t(prot === 'urkunde' ? 'Bilder in Urkunden, Zeugnissen, Ausweisen und Bescheiden lassen sich in PDFMy nicht ändern (Schutz vor Fälschung).' : 'Bilder in Kontoauszügen und Belegen lassen sich in PDFMy nicht ändern (Schutz vor Fälschung).'), 9000);
+  for (const p of pdfPages) if (sigWarn(p, () => imageEdit())) return;   // je signiertem Dokument einmal warnen
+  const dlg = $('#biDlg'), cv = $('#biCanvas'), list = $('#biList');
+  const edits = new Map(), undo = [];   // Seite → Map(n → { del, to, img }); undo: frühere Stände als JSON-fähige Kopie
+  let at = pdfPages.indexOf(start), page = null, sel = -1, view = null, rs = 1, tok = 0, drag = null, timer = 0;
+  const mm = v => Math.round(v * 25.4 / 72);
+  // Bildschirm-Pixel → Leinwand-Pixel: Griff und Trefferbereich bleiben auf dem Handy groß genug zum Antippen
+  const cssPx = n => { const w = cv.getBoundingClientRect().width; return w ? n * cv.width / w : n; };
+  const E = () => { if (!edits.has(page.p)) edits.set(page.p, new Map()); return edits.get(page.p); };
+  const snap = () => { undo.push([page.p, new Map([...E()].map(([n, e]) => [n, { ...e }]))]); $('#biUndo').disabled = false; };
+  // Lage eines Bilds: in Seitenkoordinaten (PDF) und in der Ansicht (Pixel bei Maßstab 1, oben links)
+  const rectNow = n => E().get(n)?.to || page.imgs[n].rect;
+  const toView = r => PdfBild.mapRect(r, page.vt), toPage = r => PdfBild.mapRect(r, page.vti);
+  const loadPage = async p => {
+    const d = state.docs[p.docIdx], lib = await libFor(d), one = await PDFDocument.create({ updateMetadata: false });
+    const [cp] = await one.copyPages(lib, [p.pageIdx]); one.addPage(cp);
+    const bytes = await one.save(), again = await PDFDocument.load(bytes, { updateMetadata: false });
+    let imgs = []; try { imgs = PdfBild.pageImages(PDFLib, again.getPage(0)).imgs; } catch (e) { console.warn('Bilder lesen', e); }
+    return { p, bytes, imgs };
+  };
+  const draw = () => {
+    if (!view) return;
+    const x = cv.getContext('2d'); x.drawImage(view, 0, 0);
+    page.imgs.forEach((im, n) => {
+      const e = E().get(n), r = toView(drag?.n === n ? drag.r : rectNow(n)), on = n === sel;
+      x.save(); x.lineWidth = on ? 3 : 1.5; x.strokeStyle = e?.del ? '#b42318' : '#2563eb'; x.setLineDash(e?.del ? [6, 4] : on ? [] : [4, 3]);
+      x.strokeRect(r.x * rs, r.y * rs, r.w * rs, r.h * rs);
+      if (drag?.n === n) { x.globalAlpha = 0.15; x.fillStyle = '#2563eb'; x.fillRect(r.x * rs, r.y * rs, r.w * rs, r.h * rs); x.globalAlpha = 1; }
+      if (e?.del) { x.beginPath(); x.moveTo(r.x * rs, r.y * rs); x.lineTo((r.x + r.w) * rs, (r.y + r.h) * rs); x.moveTo((r.x + r.w) * rs, r.y * rs); x.lineTo(r.x * rs, (r.y + r.h) * rs); x.stroke(); }
+      if (on && !e?.del) { const hs = Math.max(14, cssPx(16)); x.fillStyle = '#2563eb'; x.fillRect((r.x + r.w) * rs - hs / 2, (r.y + r.h) * rs - hs / 2, hs, hs); }   // Griff zum Skalieren
+      x.restore();
+    });
+  };
+  const render = async () => {
+    const my = ++tok, lib1 = await PDFDocument.load(page.bytes, { updateMetadata: false });
+    const changes = [...E()].map(([n, e]) => ({ n, ...e }));
+    if (changes.length) await PdfBild.editPage(PDFLib, lib1, lib1.getPage(0), changes);
+    const js = await openPdf(await lib1.save());
+    try {
+      const pg = await js.getPage(1), vp1 = pg.getViewport({ scale: 1, rotation: page.p.rotation });
+      rs = Math.min(2, 860 / vp1.width);
+      const vp = pg.getViewport({ scale: rs, rotation: page.p.rotation }), c = Imaging.canvas(Math.round(vp.width), Math.round(vp.height)), x = c.getContext('2d');
+      x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+      await pg.render({ canvasContext: x, viewport: vp, intent: 'print' }).promise;   // ohne requestAnimationFrame (wie renderPdf)
+      if (my !== tok) return;
+      page.vt = vp1.transform; page.vti = PdfBild.inv(vp1.transform);
+      cv.width = c.width; cv.height = c.height; view = c; draw();
+    } finally { js.destroy?.(); }
+  };
+  const later = () => { clearTimeout(timer); timer = setTimeout(() => render().catch(e => console.warn(e)), 150); };
+  const info = () => {
+    const e = sel >= 0 ? E().get(sel) : null, r = sel >= 0 ? rectNow(sel) : null;
+    $('#biSel').textContent = sel < 0 ? I18N.t('Kein Bild gewählt.') : e?.del ? I18N.t(`Bild ${sel + 1} wird gelöscht.`) : I18N.t(`Bild ${sel + 1}: ${mm(r.w)} × ${mm(r.h)} mm`) + (e?.img ? ' – ' + I18N.t('ersetzt') : '');
+    $('#biRep').disabled = $('#biDel').disabled = sel < 0;
+    $('#biDel').textContent = I18N.t(e?.del ? 'Nicht löschen' : 'Löschen');
+    list.querySelectorAll('button').forEach((b, n) => { b.setAttribute('aria-pressed', String(n === sel)); b.classList.toggle('del', !!E().get(n)?.del); });
+  };
+  const pick = n => { sel = n; info(); draw(); };
+  const show = async () => {
+    status(I18N.t('Bilder werden gesucht …'));
+    page = await loadPage(pdfPages[at]); sel = page.imgs.length === 1 ? 0 : -1; view = null;
+    $('#biPage').textContent = I18N.t(`Seite ${state.pages.indexOf(page.p) + 1} von ${state.pages.length}`);
+    $('#biPrev').disabled = at === 0; $('#biNext').disabled = at >= pdfPages.length - 1;
+    $('#biNone').hidden = page.imgs.length > 0;
+    list.textContent = '';
+    page.imgs.forEach((im, n) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = I18N.t(`Bild ${n + 1}`); b.onclick = () => { pick(n); b.focus(); }; list.append(b); });
+    await render(); info(); status('');
+  };
+  // Ziehen: verschieben, an der Ecke skalieren (Seitenverhältnis bleibt)
+  const posOf = ev => { const b = cv.getBoundingClientRect(); return { x: (ev.clientX - b.left) * (cv.width / b.width) / rs, y: (ev.clientY - b.top) * (cv.height / b.height) / rs }; };
+  const hit = (q, r, pad = 0) => q.x >= r.x - pad && q.x <= r.x + r.w + pad && q.y >= r.y - pad && q.y <= r.y + r.h + pad;
+  cv.onpointerdown = ev => {
+    if (!page?.imgs.length) return;
+    const q = posOf(ev);
+    if (sel >= 0 && !E().get(sel)?.del) { const r = toView(rectNow(sel)), g = cssPx(18) / rs; if (Math.abs(q.x - (r.x + r.w)) <= g && Math.abs(q.y - (r.y + r.h)) <= g) { drag = { n: sel, mode: 'size', q, r0: r, r }; cv.setPointerCapture(ev.pointerId); return; } }
+    for (let n = page.imgs.length - 1; n >= 0; n--) {   // oben liegendes Bild zuerst
+      const r = toView(rectNow(n)); if (!hit(q, r, 2 / rs)) continue;
+      pick(n); if (!E().get(n)?.del) { drag = { n, mode: 'move', q, r0: r, r }; cv.setPointerCapture(ev.pointerId); }
+      return;
+    }
+    pick(-1);
+  };
+  cv.onpointermove = ev => {
+    if (!drag) { if (page && sel >= 0) { const q = posOf(ev), r = toView(rectNow(sel)), g = cssPx(18) / rs; cv.style.cursor = Math.abs(q.x - (r.x + r.w)) <= g && Math.abs(q.y - (r.y + r.h)) <= g ? 'nwse-resize' : hit(q, r) ? 'move' : 'default'; } return; }
+    const q = posOf(ev), dx = q.x - drag.q.x, dy = q.y - drag.q.y, r0 = drag.r0;
+    if (drag.mode === 'move') drag.r = { ...r0, x: r0.x + dx, y: r0.y + dy };
+    else { const w = Math.max(6, r0.w + Math.max(dx, dy * r0.w / r0.h)); drag.r = { ...r0, w, h: w * r0.h / r0.w }; }
+    draw();
+  };
+  const setRect = (n, vr) => { snap(); const e = E().get(n) || {}; E().set(n, { ...e, to: toPage(vr) }); info(); later(); };
+  cv.onpointerup = () => { if (!drag) return; const d = drag; drag = null; if (Math.abs(d.r.x - d.r0.x) + Math.abs(d.r.y - d.r0.y) + Math.abs(d.r.w - d.r0.w) > 0.5) setRect(d.n, d.r); else draw(); };
+  cv.onpointercancel = () => { drag = null; draw(); };
+  dlg.onkeydown = ev => {
+    if (sel < 0 || !page || ev.target.closest?.('.dlgrow') || E().get(sel)?.del) return;
+    const r = toView(rectNow(sel)), st = ev.shiftKey ? 10 : 2;
+    const k = { ArrowLeft: [-st, 0], ArrowRight: [st, 0], ArrowUp: [0, -st], ArrowDown: [0, st] }[ev.key];
+    if (k) { ev.preventDefault(); setRect(sel, { ...r, x: r.x + k[0], y: r.y + k[1] }); draw(); return; }
+    if (ev.key === '+' || ev.key === '-') { ev.preventDefault(); const f = ev.key === '+' ? 1.05 : 1 / 1.05; setRect(sel, { x: r.x, y: r.y, w: r.w * f, h: r.h * f }); draw(); return; }
+    if (ev.key === 'Delete') { ev.preventDefault(); $('#biDel').click(); }
+  };
+  $('#biDel').onclick = () => { if (sel < 0) return; snap(); const e = E().get(sel) || {}; if (e.del) { delete e.del; E().set(sel, e); } else E().set(sel, { ...e, del: true }); info(); draw(); later(); };
+  $('#biRep').onclick = () => { if (sel >= 0) { $('#biFile').value = ''; $('#biFile').click(); } };
+  $('#biFile').onchange = async () => {
+    const f = $('#biFile').files?.[0]; if (!f || sel < 0) return;
+    try {
+      let bytes = new Uint8Array(await f.arrayBuffer()), png = f.type === 'image/png';
+      if (!png && f.type !== 'image/jpeg') {   // WebP, GIF, BMP: als PNG einbetten
+        const bm = await createImageBitmap(f), c = Imaging.canvas(bm.width, bm.height); c.getContext('2d').drawImage(bm, 0, 0); bm.close?.();
+        bytes = await canvasToPng(c); png = true;
+      }
+      snap(); const e = E().get(sel) || {}; delete e.del; E().set(sel, { ...e, img: { bytes, png } }); info(); await render();
+    } catch (err) { console.warn(err); toast(I18N.t('Dieses Bild lässt sich nicht einsetzen. Bitte ein JPG- oder PNG-Bild wählen.'), 7000); }
+  };
+  $('#biUndo').onclick = () => { const u = undo.pop(); if (!u) return; edits.set(u[0], u[1]); $('#biUndo').disabled = !undo.length; if (u[0] === page.p) { info(); render(); } };
+  const docOf = q => state.docs[q.docIdx];
+  $('#biOrig').hidden = !pdfPages.some(q => docOf(q)?.imgOrig);
+  $('#biOrig').onclick = async () => {
+    for (const d of new Set(pdfPages.map(docOf))) if (d?.imgOrig) {
+      const o = d.imgOrig; delete d.imgOrig;
+      d.base = o.base; if (o.base === undefined) delete d.base;
+      if (d.fields?.length) await applyForm(d);
+      else { d.filled = o.filled; if (o.filled === undefined) delete d.filled; d.lib = null; d.js = o.js; for (const q of state.pages) if (q.kind === 'pdf' && docOf(q) === d) await renderPdfPreview(q); }
+    }
+    edits.clear(); undo.length = 0; $('#biUndo').disabled = true; $('#biOrig').hidden = true;
+    renderThumbs(); renderStage(); await show(); status(I18N.t('Ursprüngliche Bilder wiederhergestellt.'));
+  };
+  $('#biPrev').onclick = () => { if (at > 0) { at--; show(); } };
+  $('#biNext').onclick = () => { if (at < pdfPages.length - 1) { at++; show(); } };
+  $('#biUndo').disabled = true;
+  await show();
+  dlg.returnValue = ''; dlg.showModal();
+  await new Promise(r => dlg.addEventListener('close', r, { once: true }));
+  clearTimeout(timer); tok++;
+  const todo = [...edits].filter(([, m]) => m.size);
+  if (dlg.returnValue !== 'ok' || !todo.length) { status(I18N.t('Bilder nicht geändert.')); return; }
+  status(I18N.t('Bilder werden geändert …'));
+  let n = 0;
+  try {
+    const byDoc = new Map();
+    for (const [p, m] of todo) { const d = docOf(p); if (!byDoc.has(d)) byDoc.set(d, []); byDoc.get(d).push([p.pageIdx, [...m].map(([k, e]) => ({ n: k, ...e }))]); }
+    for (const [d, pagesOf] of byDoc) {
+      const lib2 = await plainLib(d.base || d.bytes); let k = 0;
+      for (const [pi, ch] of pagesOf) k += await PdfBild.editPage(PDFLib, lib2, lib2.getPage(pi), ch);
+      if (!k) continue;
+      const bytes = await lib2.save();
+      if (!d.imgOrig) d.imgOrig = { base: d.base, filled: d.filled, js: d.js };   // „Ursprüngliche Bilder wiederherstellen“
+      d.base = bytes; n += k;
+      if (d.fields?.length) await applyForm(d);
+      else { d.filled = bytes; d.lib = null; d.js = await openPdf(bytes.slice()); for (const q of state.pages) if (q.kind === 'pdf' && docOf(q) === d) { await renderPdfPreview(q); q.thumbL = null; } }
+    }
+  } catch (e) { noteError?.(e, 'Bilder bearbeiten'); return status(I18N.t(`Bilder konnten nicht geändert werden: ${e.message}`)); }
+  state.dirty = true; renderThumbs(); renderStage(); if (state.view === 'grid') renderGrid();
+  status(I18N.t(`${n} Bild(er) geändert – Text und Grafiken der Seite sind unverändert. Zurück: „Bilder bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.`));
+}
+window.imageEdit = imageEdit;
+$('#btnImgEdit').onclick = () => imageEdit();
 
 /* ---------- Vorabprüfung (js/preflight.js): beA/Gericht, ePA, barrierefrei (BITV), Archiv (GoBD) ----------
    Geprüft wird die Datei, wie sie gespeichert würde: das unveränderte Original oder – nach Änderungen – die neu erzeugte PDF. */

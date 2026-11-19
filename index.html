@@ -956,7 +956,7 @@ body:has(.updbanner:not([hidden])) .toast{top:auto;bottom:96px}
 .roview{max-height:62vh;overflow:auto;border:1px solid var(--line,#ccc);background:#fff}
 .roview canvas{display:block;width:100%;height:auto;cursor:pointer}
 .rolist{list-style:none;margin:0;padding:0;max-height:62vh;overflow:auto;display:grid;gap:6px}
-.rolist li{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto auto auto;gap:6px;align-items:center;padding:4px 6px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--panel,#fff)}
+.rolist li{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto auto auto auto;gap:6px;align-items:center;padding:4px 6px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--panel,#fff)}
 .rolist li.sel{outline:2px solid #2563eb}
 .rolist li.dragging{opacity:.5}
 .rolist .ronum{font-weight:700;text-align:center}
@@ -964,6 +964,9 @@ body:has(.updbanner:not([hidden])) .toast{top:auto;bottom:96px}
 .rolist li.art .rotx{opacity:.6;text-decoration:line-through}
 .rolist li.merged{margin-left:18px;border-style:dashed}.rolist .rojoin[aria-pressed="true"]{background:#2563eb;color:#fff}
 .rolist select{font-size:13px}
+.bibody{text-align:center;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:6px}
+#biCanvas{display:inline-block;max-width:100%;max-height:62vh;width:auto;height:auto;vertical-align:top;touch-action:none;cursor:default;background:#fff}
+.bilist{display:inline-flex;gap:4px;flex-wrap:wrap;margin-left:8px}.bilist button{padding:2px 8px}.bilist button[aria-pressed="true"]{background:#2563eb;color:#fff;border-color:#2563eb}.bilist button.del{text-decoration:line-through;opacity:.7}
 @media (max-width:720px){.robody{grid-template-columns:1fr}.roview{max-height:34vh}}
 @media (max-width:520px){.figlist li{grid-template-columns:80px minmax(0,1fr)}.figlist canvas{max-width:80px;max-height:80px}}
 .fpgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 10px;max-height:52vh;overflow:auto;padding:2px}
@@ -1204,6 +1207,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnQrIns" title="GiroCode (Überweisung per Banking-App) oder QR-Code mit Link oder Text auf die Seite setzen – z. B. auf die eigene Rechnung"><svg class="ic" aria-hidden="true"><use href="#i-qr-code"/></svg><span>QR-Code einfügen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
+          <button class="mi doc" id="btnImgEdit" title="Fotos, Logos und Grafiken in der PDF verschieben, vergrößern, verkleinern, ersetzen oder löschen – Text bleibt unverändert"><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg><span>Bilder bearbeiten …</span></button>
           <button class="mi doc" id="btnImgOut" title="Fotos, Logos und Grafiken aus der PDF in Originalauflösung als Bilddateien speichern"><svg class="ic" aria-hidden="true"><use href="#i-images"/></svg><span>Bilder aus der PDF speichern …</span></button>
           <button class="mi doc" id="btnCompare"><svg class="ic" aria-hidden="true"><use href="#i-git-compare"/></svg><span>Mit anderer Fassung vergleichen …</span></button>
         </div>
@@ -2010,10 +2014,18 @@ html.i18n-wait body{visibility:hidden}
 </form></dialog>
 <dialog id="roDlg" class="sharedlg rodlg" aria-labelledby="roT"><form method="dialog">
   <h3 class="dlgtitle" id="roT">Lesereihenfolge prüfen</h3>
-  <p class="hint" style="margin:-6px 0 10px">So lesen Screenreader die Seite vor: in der Reihenfolge der Nummern. Mit den Pfeilen (oder Alt + Pfeiltaste, oder durch Ziehen) ändern Sie die Reihenfolge, mit der Auswahl die Art. „Nicht vorlesen“ für Kopfzeilen, Seitenzahlen und Schmuck.</p>
+  <p class="hint" style="margin:-6px 0 10px">So lesen Screenreader die Seite vor: in der Reihenfolge der Nummern. Mit den Pfeilen (oder Alt + Pfeiltaste, oder durch Ziehen) ändern Sie die Reihenfolge, mit der Auswahl die Art. ⤒ verbindet einen Block mit dem vorigen, ✂ teilt ihn in Zeilen bzw. Spalten. „Nicht vorlesen“ für Kopfzeilen, Seitenzahlen und Schmuck.</p>
   <div class="ronav"><button type="button" id="roPrev" aria-label="Vorige Seite">‹</button><span id="roPage" aria-live="polite"></span><button type="button" id="roNext" aria-label="Nächste Seite">›</button><button type="button" id="roReset">Automatisch</button></div>
   <div class="robody"><div class="roview"><canvas id="roCanvas" aria-hidden="true"></canvas></div><ol id="roList" class="rolist" aria-label="Blöcke in Lesereihenfolge"></ol></div>
   <div class="dlgrow"><button type="submit" value="cancel" id="roCancel">Abbrechen</button><button type="submit" value="ok" class="primary" id="roOk">Übernehmen</button></div>
+</form></dialog>
+<dialog id="biDlg" class="sharedlg rodlg" aria-labelledby="biT"><form method="dialog">
+  <h3 class="dlgtitle" id="biT">Bilder bearbeiten</h3>
+  <p class="hint" style="margin:-6px 0 10px">Bild anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: Bild unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Text und Linien der Seite bleiben unverändert.</p>
+  <div class="ronav"><button type="button" id="biPrev" aria-label="Vorige Seite">‹</button><span id="biPage" aria-live="polite"></span><button type="button" id="biNext" aria-label="Nächste Seite">›</button><span id="biList" class="bilist" role="group" aria-label="Bilder auf dieser Seite"></span></div>
+  <div class="bibody"><canvas id="biCanvas" aria-hidden="true"></canvas><p id="biNone" class="hint" hidden>Auf dieser Seite gibt es keine bearbeitbaren Bilder. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.</p></div>
+  <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap"><span id="biSel" class="hint" aria-live="polite"></span><button type="button" id="biRep" disabled>Ersetzen …</button><button type="button" id="biDel" disabled>Löschen</button><button type="button" id="biUndo" disabled>Rückgängig</button><button type="button" id="biOrig" hidden>Ursprüngliche Bilder wiederherstellen</button><input type="file" id="biFile" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp" hidden></div>
+  <div class="dlgrow"><button type="submit" value="cancel">Abbrechen</button><button type="submit" value="ok" class="primary" id="biOk">Übernehmen</button></div>
 </form></dialog>
 <dialog id="cloudDlg" class="sharedlg" aria-labelledby="cloudT"><form id="cloudForm" method="dialog" novalidate>
   <h3 class="dlgtitle" id="cloudT">In Cloud-Ordner speichern</h3>
@@ -2623,6 +2635,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/formcalc.js"></script>
 <script src="js/formprofile.js"></script>
 <script src="js/reflow.js"></script>
+<script src="js/pdfbild.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
