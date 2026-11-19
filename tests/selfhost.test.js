@@ -196,7 +196,7 @@ test('Build und Auslieferung: Paket ohne Website-Seiten, deploy vermerkt Veröff
   const b = fs.readFileSync(path.join(ROOT, 'tools', 'build-web.js'), 'utf8'), d = fs.readFileSync(path.join(ROOT, 'tools', 'deploy.ps1'), 'utf8'), app = fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8');
   assert.match(b, /files: files\.filter\(f => \/\^\(js\|vendor\|icons\|i18n\)\\\/\/\.test\(f\.path\)\)/, 'nur App-Ordner');
   assert.match(b, /edition: 'selfhost'/);
-  assert.match(d, /selfhost\.js'\) --veroeffentlicht \$webNr/); assert.match(d, /selfhost\.js'\) --zurueckgezogen \$offNr/);
+  assert.match(d, /selfhost\.js'\) --veroeffentlicht \$webNr/); assert.match(d, /selfhost\.js'\) --zurueckgezogen \$liveNr/);
   assert.match(app, /if \(APP\.edition === 'selfhost'\) fetch\('eigene-links\.json'/);
   // Lizenzbedingungen auf GitHub: Firmen-Seite, LIESMICH im Paket, beide Skripte (Kopf und beim Installieren)
   const LIC = 'https://github.com/haus-it/pdfmy/blob/main/LICENSE';

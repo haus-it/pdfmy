@@ -35,4 +35,18 @@ test('Betriebsprüfung: letzte Veröffentlichung aus dem Release-Protokoll, auch
   const b = R('tools/betrieb.js');
   for (const k of ['pruefsummen.txt', 'selfhost/${k}/latest.json', 'download/pdfmy-scan-unix.json', 'download/version.json', '.well-known/security.txt', "'smoke.js'"]) assert.ok(b.includes(k), k);
   assert.match(b, /process\.exit\(fehler \? 1 : 0\)/, 'Rückgabewert für die Aufgabenplanung');
+  // nach einem Rückweg: Stand und Fingerabdruck der zurückgeholten Fassung (auch aus ihrer früheren Zeile)
+  const P = '| 2026-11-19 05:00 | pdfmy-202611190400-v298 | 1.20.1 | x… | ok | 1 | A | aaaaaaaaaaaaaaaa |\n| 2026-11-19 06:00 | pdfmy-202611190500-v299 | 1.20.1 | x… | ok | 1 | A | bbbbbbbbbbbbbbbb |\n';
+  assert.deepEqual(letzteFreigabe(P + '| 2026-11-19 07:00 | Rückweg auf pdfmy-202611190400-v298 | – | – | Probelauf bestanden | 3 | A | – |\n'),
+    { stand: 'pdfmy-202611190400-v298', finger: 'aaaaaaaaaaaaaaaa', datum: '2026-11-19 07:00', rueckweg: true });
+  assert.equal(letzteFreigabe(P).stand, 'pdfmy-202611190500-v299');
+});
+
+test('Rückweg (deploy.ps1): Ziel nach Live-Stand, zurückgezogene Fassungen nie wieder, bei -Test nichts protokolliert; Archiv schützt „stabil“', () => {
+  const d = R('tools/deploy.ps1'), s = R('tools/selfhost.js');
+  assert.match(d, /\$n -lt \$liveNr -and -not \$zurueck\[\$n\]/, 'nächste ältere, nicht zurückgezogene Fassung');
+  assert.match(d, /--zurueckgezogen \$liveNr/, 'die Live-Fassung wird zurückgezogen, nicht „neuestes ZIP“');
+  assert.match(d, /if \(-not \$DryRun -and -not \$Test\) \{   # -Test lädt nichts hoch/);
+  assert.match(s, /if \(x\.nr !== st\.nr && x\.nr !== nr && !jung\(x\)\) fs\.rmSync/, 'stabil und junge Fassungen bleiben im Archiv');
+  assert.match(s, /ist schon veröffentlicht .* bitte VERSION in sw\.js erhöhen/, 'veröffentlichte Nummer nie neu bauen');
 });

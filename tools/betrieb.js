@@ -25,12 +25,18 @@ const PRAEFIX = 'pdfmy-selfhost-v1\n';
 const verify = (data, sigB64, pub) => crypto.verify('sha256', Buffer.isBuffer(data) ? data : Buffer.from(data), { key: pub, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(String(sigB64).trim(), 'base64'));
 
 // letzte Veröffentlichung im Release-Protokoll: { stand, finger }
-function letzteFreigabe() {
-  const rows = fs.readFileSync(path.join(ROOT, 'docs', 'RELEASES.md'), 'utf8').split(/\r?\n/).filter(l => /^\| \d{4}-\d\d-\d\d /.test(l));
+function letzteFreigabe(text = fs.readFileSync(path.join(ROOT, 'docs', 'RELEASES.md'), 'utf8')) {
+  const rows = text.split(/\r?\n/).filter(l => /^\| \d{4}-\d\d-\d\d /.test(l));
   for (const l of rows.reverse()) {
     const c = l.split('|').map(s => s.trim());
     if (/^pdfmy-\d+-v\d+$/.test(c[2])) return { stand: c[2], finger: c[8], datum: c[1] };
-    const m = c[2].match(/^Rückweg auf (pdfmy-\d+-v\d+)$/); if (m) return { stand: m[1], finger: null, datum: c[1], rueckweg: true };
+    // Rückweg: Fingerabdruck der zurückgeholten Fassung (deploy.ps1 trägt ihn seit 19.11.2026 mit ein, sonst aus ihrer Veröffentlichungszeile)
+    const m = c[2].match(/^Rückweg auf (pdfmy-\d+-v\d+)$/);
+    if (m) {
+      const eigen = /^[0-9a-f]{16}$/.test(c[8]) ? c[8] : null;
+      const frueher = eigen || (rows.find(r => r.split('|').map(s => s.trim())[2] === m[1]) || '').split('|').map(s => s.trim())[8];
+      return { stand: m[1], finger: /^[0-9a-f]{16}$/.test(frueher || '') ? frueher : null, datum: c[1], rueckweg: true };
+    }
   }
   return null;
 }

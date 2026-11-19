@@ -163,7 +163,7 @@ function stabilWahl(list, jetzt = Date.now()) {
 
 /* Aufruf aus tools/build-web.js. files: App-Dateien; write(rel, data) schreibt in die Ausgabe. */
 function build({ root, write, domain, nr, stand, files, appVersion, csp = "default-src 'self'" }) {
-  const cspSelf = csp.replace(/;?s*$/, '') + "; frame-ancestors 'self'";
+  const cspSelf = csp.replace(/;?\s*$/, '') + "; frame-ancestors 'self'";
   const keyFile = path.join(root, 'tools', 'signing', 'unix-update.pem');
   if (!fs.existsSync(keyFile)) throw new Error('Signaturschlüssel fehlt: tools/signing/unix-update.pem');
   const key = crypto.createPrivateKey(fs.readFileSync(keyFile));
@@ -171,13 +171,15 @@ function build({ root, write, domain, nr, stand, files, appVersion, csp = "defau
   const lic = ['LICENSE', 'NOTICE'].filter(f => fs.existsSync(path.join(root, f))).map(f => ({ path: f, data: fs.readFileSync(path.join(root, f)) }));
   const tgz = paket([...files, ...lic, { path: 'web.config', data: Buffer.from(WEB_CONFIG.replace('__CSP__', cspSelf.replace(/"/g, '&quot;'))) }, { path: '.htaccess', data: Buffer.from(HTACCESS(cspSelf)) }, { path: 'nginx-pdfmy.conf', data: Buffer.from(NGINX(cspSelf)) }], { nr, stand, domain, sh: sk.sh, ps1: sk.ps1 });
   const datei = `pdfmy-selfhost-v${nr}.tar.gz`;
-  // ins Archiv (gleiche Nummer erneut gebaut: Paket ersetzen, Veröffentlichungsdatum bleibt)
+  // ins Archiv. Eine schon veröffentlichte Nummer wird nie neu gebaut (Update-Strategie 2: jede Veröffentlichung bekommt eine höhere
+  // Nummer) – sonst erbte neuer Inhalt das alte Veröffentlichungsdatum (sofort „stabil“) oder eine alte Rücknahme.
+  // Nicht veröffentlicht (Abbruch im Test-Gate oder beim Hochladen): Paket ersetzen.
   const ad = path.join(ARCHIV(root), String(nr)); fs.mkdirSync(ad, { recursive: true });
   const altInfo = fs.existsSync(path.join(ad, 'info.json')) ? JSON.parse(fs.readFileSync(path.join(ad, 'info.json'), 'utf8')) : {};
+  if (altInfo.veroeffentlicht && process.env.PDFMY_NEU_BAUEN !== '1') throw new Error(`app-v${nr} ist schon veröffentlicht (${altInfo.veroeffentlicht}) – bitte VERSION in sw.js erhöhen.`);
   fs.writeFileSync(path.join(ad, datei), tgz);
   const sicherheit = process.env.PDFMY_SICHERHEIT === '1' || !!altInfo.sicherheit;   // deploy.ps1 -Sicherheit
   fs.writeFileSync(path.join(ad, 'info.json'), JSON.stringify({ ...altInfo, nr, version: stand, datei, sha256: sha256(tgz), groesse: tgz.length, gebaut: new Date().toISOString(), ...(sicherheit ? { sicherheit: true } : {}) }, null, 1) + '\n');
-  for (const x of archiv(root).slice(BEHALTEN)) fs.rmSync(x.dir, { recursive: true, force: true });   // ältere Fassungen aufräumen
   const kanal = (name, x) => {
     const data = x.nr === nr ? tgz : fs.readFileSync(path.join(x.dir, x.info.datei));
     const m = manifest({ nr: x.nr, version: x.info.version, datei: x.info.datei, sha: sha256(data), groesse: data.length, datum: x.info.veroeffentlicht || new Date().toISOString(), kanal: name, sicherheit: !!x.info.sicherheit });
@@ -191,6 +193,9 @@ function build({ root, write, domain, nr, stand, files, appVersion, csp = "defau
   // Sicherheitsupdate: die gerade gebaute Fassung gleich auch in „stabil“
   const st = (sicherheit && list.find(x => x.nr === nr)) || stabilWahl(list) || list.find(x => x.nr === nr);
   kanal('stabil', st);
+  // ältere Fassungen aufräumen – nie die, auf die „stabil“ zeigt, und keine, die noch keine STABIL_TAGE alt ist (könnte „stabil“ werden)
+  const jung = x => x.info.veroeffentlicht && Date.now() - Date.parse(x.info.veroeffentlicht) < STABIL_TAGE * 864e5;
+  for (const x of archiv(root).slice(BEHALTEN)) if (x.nr !== st.nr && x.nr !== nr && !jung(x)) fs.rmSync(x.dir, { recursive: true, force: true });
   write('selfhost/pdfmy-selfhost.sh', sk.sh); write('selfhost/pdfmy-selfhost-sh.sig', crypto.sign('sha256', Buffer.from(sk.sh), { key, padding: crypto.constants.RSA_PKCS1_PADDING }).toString('base64') + '\n');
   write('selfhost/pdfmy-selfhost.ps1', sk.ps1); write('selfhost/pdfmy-selfhost-ps1.sig', crypto.sign('sha256', Buffer.from(sk.ps1), { key, padding: crypto.constants.RSA_PKCS1_PADDING }).toString('base64') + '\n');
   write('selfhost/pdfmy-update-schluessel.pem', sk.pem);
@@ -204,10 +209,11 @@ module.exports = { build, manifest, signiere, pruefe, paket, skripte, stabilWahl
 // Kommandozeile (tools/deploy.ps1): Veröffentlichung bzw. Rücknahme im Archiv vermerken
 if (require.main === module) {
   const root = path.join(__dirname, '..'), [, , cmd, nrArg] = process.argv, d = path.join(ARCHIV(root), String(+nrArg || ''), 'info.json');
-  if (!['--veroeffentlicht', '--zurueckgezogen'].includes(cmd) || !fs.existsSync(d)) { console.error('Aufruf: node tools/selfhost.js --veroeffentlicht|--zurueckgezogen <nr>'); process.exit(2); }
+  if (!['--veroeffentlicht', '--zurueckgezogen', '--sicherheit'].includes(cmd) || !fs.existsSync(d)) { console.error('Aufruf: node tools/selfhost.js --veroeffentlicht|--zurueckgezogen|--sicherheit <nr> (Archiveintrag fehlt?)'); process.exit(2); }
   const info = JSON.parse(fs.readFileSync(d, 'utf8'));
   if (cmd === '--veroeffentlicht' && !info.veroeffentlicht) info.veroeffentlicht = new Date().toISOString();
   if (cmd === '--zurueckgezogen') info.zurueckgezogen = new Date().toISOString();
+  if (cmd === '--sicherheit') info.sicherheit = true;   // deploy.ps1 -Sicherheit -NoBuild
   fs.writeFileSync(d, JSON.stringify(info, null, 1) + '\n');
-  console.log(`Selbstbetrieb: v${+nrArg} ${cmd === '--veroeffentlicht' ? 'veröffentlicht' : 'zurückgezogen'} (${d})`);
+  console.log(`Selbstbetrieb: v${+nrArg} ${{ '--veroeffentlicht': 'veröffentlicht', '--zurueckgezogen': 'zurückgezogen', '--sicherheit': 'als Sicherheitsfassung markiert' }[cmd]} (${d})`);
 }

@@ -79,21 +79,39 @@ function Invoke-Upload([string]$localDir, [string]$subdir = '') {
 if ($Rollback) {
   $zips = @(Get-ChildItem $releases -Filter '*.zip' -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending)
   if (-not $zips.Count) { throw 'Keine aufbewahrte Fassung in .deploy\releases.' }
-  $zip = if ($Release) { $zips | Where-Object { $_.BaseName -eq $Release } | Select-Object -First 1 } elseif ($zips.Count -ge 2) { $zips[1] } else { $null }
-  if (-not $zip) { throw "Fassung nicht gefunden. Vorhanden: $(($zips | ForEach-Object BaseName) -join ', ')" }
+  $nrOf = { param($n) $m = [regex]::Match([string]$n, '-v(\d+)$'); if ($m.Success) { [int]$m.Groups[1].Value } else { 0 } }
+  # Live-Stand laut Release-Protokoll (letzte Veröffentlichung bzw. letzter Rückweg) – nicht „neuestes ZIP“: ein fehlgeschlagenes Packen
+  # oder ein früherer Rückweg würden sonst die falsche Fassung treffen (Fehlersuche 19.11.2026)
+  $live = $null
+  foreach ($l in [Linq.Enumerable]::Reverse([string[]](Get-Content (Join-Path $root 'docs\RELEASES.md') -Encoding UTF8))) {
+    $m = [regex]::Match($l, '^\| \d{4}-\d\d-\d\d [\d:]+ \| (?:Rückweg auf )?(pdfmy-\d+-v\d+) \|'); if ($m.Success) { $live = $m.Groups[1].Value; break }
+  }
+  $liveNr = & $nrOf $live
+  # zurückgezogene Fassungen (Archiv des Selbstbetriebs) nie wieder hochladen
+  $zurueck = @{}; Get-ChildItem (Join-Path $root 'dist\selfhost-archiv') -Directory -ErrorAction SilentlyContinue | ForEach-Object {
+    try { $i = Get-Content (Join-Path $_.FullName 'info.json') -Raw -Encoding UTF8 | ConvertFrom-Json; if ($i.zurueckgezogen) { $zurueck[[int]$i.nr] = $true } } catch {} }
+  $zip = if ($Release) { $zips | Where-Object { $_.BaseName -eq $Release } | Select-Object -First 1 }
+    else { $zips | Where-Object { $n = & $nrOf $_.BaseName; $n -and $n -lt $liveNr -and -not $zurueck[$n] } | Sort-Object { & $nrOf $_.BaseName } -Descending | Select-Object -First 1 }
+  if (-not $zip) { throw "Keine ältere, nicht zurückgezogene Fassung als $live gefunden. Vorhanden: $(($zips | ForEach-Object BaseName) -join ', ')" }
+  if ($zip.BaseName -eq $live) { throw "$live ist schon live." }
   $tmp = Join-Path ([IO.Path]::GetTempPath()) ('pdfmy-rollback-' + [guid]::NewGuid().ToString('N').Substring(0, 8))
   Expand-Archive $zip.FullName -DestinationPath $tmp
   try {
     Write-Host "Rückweg auf $($zip.BaseName)" -ForegroundColor Yellow
     Invoke-Smoke @('--dir', $tmp)
     $log = Invoke-Upload $tmp
-    if (-not $DryRun) {
+    if (-not $DryRun -and -not $Test) {   # -Test lädt nichts hoch: nichts protokollieren
       $files = [regex]::Match($log, '(\d+) ge.nderte Datei').Groups[1].Value
-      # Eigener Server: die zurückgenommene Fassung nie in den Kanal „stabil“ übernehmen (wirkt ab dem nächsten Build)
-      $offNr = [regex]::Match($zips[0].BaseName, '-v(\d+)$').Groups[1].Value
-      if ($offNr -and $zips[0].FullName -ne $zip.FullName) { & node (Join-Path $PSScriptRoot 'selfhost.js') --zurueckgezogen $offNr | Out-Host }
-      Add-ReleaseLine "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | Rückweg auf $($zip.BaseName) | – | – | Probelauf bestanden | $files | $env:USERNAME | – |"
-      (Get-Item $zip.FullName).LastWriteTime = Get-Date   # gilt jetzt als aktuelle Fassung
+      # Eigener Server: die zurückgenommene Live-Fassung nie in den Kanal „stabil“ übernehmen (wirkt ab dem nächsten Build)
+      $zielNr = & $nrOf $zip.BaseName
+      if ($liveNr -and $liveNr -ne $zielNr) {
+        & node (Join-Path $PSScriptRoot 'selfhost.js') --zurueckgezogen $liveNr | Out-Host
+        if ($LASTEXITCODE) { Write-Warning "v$liveNr ließ sich im Archiv des Selbstbetriebs nicht als zurückgezogen vermerken." }
+      }
+      # Fingerabdruck der zurückgeholten Fassung (aus ihrer Veröffentlichungszeile) – die Betriebsprüfung vergleicht damit weiter
+      $fp = (Select-String -Path (Join-Path $root 'docs\RELEASES.md') -Pattern ("\| " + [regex]::Escape($zip.BaseName) + " \|.*\| ([0-9a-f]{16}) \|$") | Select-Object -Last 1)
+      $finger = if ($fp) { $fp.Matches[0].Groups[1].Value } else { '–' }
+      Add-ReleaseLine "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | Rückweg auf $($zip.BaseName) | – | – | Probelauf bestanden | $files | $env:USERNAME | $finger |"
     }
   } finally { Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue }
   return
@@ -102,7 +120,9 @@ if ($Rollback) {
 $testSummary = ''
 if (-not $Test) {
   Push-Location $root
-  $out = & npm test 2>&1 | Out-String
+  # stderr der Tests ist kein Abbruch (Windows PowerShell 5.1 machte daraus sonst einen Fehler) – maßgeblich sind Rückgabewert und „fail“
+  $eap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { $out = & npm test 2>&1 | ForEach-Object { "$_" } | Out-String } finally { $ErrorActionPreference = $eap }
   Pop-Location
   $pass = [regex]::Match($out, 'pass (\d+)').Groups[1].Value; $fail = [regex]::Match($out, 'fail (\d+)').Groups[1].Value
   if ($LASTEXITCODE -or $fail -ne '0') { Write-Host $out; throw "Tests fehlgeschlagen ($fail) – Veröffentlichung abgebrochen." }
@@ -160,7 +180,12 @@ $files = [regex]::Match($log, '(\d+) ge.nderte Datei').Groups[1].Value
 $finger = (Get-FileHash (Join-Path $distDir 'pruefsummen.txt') -Algorithm SHA256).Hash.ToLower()
 # Eigener Server (tools/selfhost.js): Veröffentlichung vermerken – ab hier zählen die 7 Tage bis zum Kanal „stabil“
 $webNr = [regex]::Match($web, '-v(\d+)$').Groups[1].Value
-if ($webNr) { & node (Join-Path $PSScriptRoot 'selfhost.js') --veroeffentlicht $webNr | Out-Host }
+if ($webNr) {
+  & node (Join-Path $PSScriptRoot 'selfhost.js') --veroeffentlicht $webNr | Out-Host
+  if ($LASTEXITCODE) { Write-Warning "v$webNr fehlt im Archiv des Selbstbetriebs – Veröffentlichung dort nicht vermerkt (Kanal „stabil“ rückt nicht nach)." }
+  # -Sicherheit ohne Bau (-NoBuild): Kennzeichen nachträglich ins Archiv
+  if ($Sicherheit -and $NoBuild) { & node (Join-Path $PSScriptRoot 'selfhost.js') --sicherheit $webNr | Out-Host }
+}
 Add-ReleaseLine "| $(Get-Date -Format 'yyyy-MM-dd HH:mm') | $web | $($ver.pdfmyScan) | $($ver.sha256.Substring(0,16))… | $testSummary, Probelauf bestanden$(if ($Sicherheit) { ' · Sicherheitsfassung' })$(if ($Ausnahme -and $fensterGrund) { " · Ausnahme Freigabefenster ($fensterGrund): $Ausnahme" }) | $files | $env:USERNAME | $($finger.Substring(0,16)) |"
 # Fassung für den Rückweg aufbewahren (letzte 5)
 New-Item -ItemType Directory -Force $releases | Out-Null

@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Betriebswerkzeuge: Rückweg und Kanal „stabil“ abgesichert (app-v300)
+- **Rückweg (deploy.ps1 -Rollback):** Ziel ist die nächste ältere, nicht zurückgezogene Fassung unterhalb des Live-Stands laut Release-Protokoll; zurückgezogen wird genau die Live-Fassung; bei -Test/-DryRun wird nichts protokolliert; der Fingerabdruck der zurückgeholten Fassung steht in der Protokollzeile, die Betriebsprüfung prüft danach weiter die Integrität.
+- **Archiv des Selbstbetriebs:** die Fassung von „stabil“ und Fassungen unter 7 Tagen werden nie aufgeräumt (vorher konnte „stabil“ bei vielen Veröffentlichungen verfrüht vorrücken); eine schon veröffentlichte Nummer wird nicht neu gebaut; -Sicherheit wirkt auch mit -NoBuild; fehlende Archiveinträge werden gemeldet.
+- Test-Gate unter Windows PowerShell 5.1 ohne Abbruch durch stderr; Service Worker robuster gegen fehlerhafte Nachrichten.
+
 ### Eigener Server: Kanal „stabil“ rückt pünktlich nach (app-v299)
 - Die Aktualisierer (Linux, Windows) lesen im Kanal „stabil“ zusätzlich die signierte Versionsdatei von „aktuell“ und übernehmen deren Fassung, sobald sie 7 Tage veröffentlicht ist – Sicherheitsfassungen (neues Kennzeichen in der Versionsdatei) sofort. Vorher rückte „stabil“ erst beim nächsten Ausrollen nach. Gefälschte oder fehlende „aktuell“-Dateien werden ignoriert. Test für beide Aktualisierer.
 
