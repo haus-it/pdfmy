@@ -221,6 +221,9 @@
   async function appendSigField(orig, signer, o, now) {
     const doc = await PL.PDFDocument.load(orig, { updateMetadata: false, ignoreEncryption: false });
     const ctx = doc.context, N = PL.PDFName.of;
+    // neue Objekte nie unter einer Nummer, die die Vorfassung als frei führt (/Size der letzten Querverweistabelle)
+    const prevSize = Math.max(0, ...[...bin(orig.subarray(Math.max(0, orig.length - 4096))).matchAll(/\/Size\s+(\d+)/g)].map(m => +m[1]));
+    if (prevSize - 1 > ctx.largestObjectNumber) ctx.largestObjectNumber = prevSize - 1;
     const lp = o.look && !o.docTs ? lookPage(doc, o.look) : null, rect = lp && lookRect(ctx, lp, o.look), page = rect ? lp : doc.getPages()[0];
     const changed = new Map();   // Ref → Objekt (wird neu geschrieben)
     const sigRef = ctx.register(sigDict(ctx, signer, o, now));

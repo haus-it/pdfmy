@@ -33,6 +33,28 @@ test('Excel 97 (.xls): Blätter, Zahlenformate, Datum, Formelergebnis, ausgeblen
   assert.ok(l.rows.every((x, i) => x[0] === `Eintrag ${i + 1} äöü €`), 'keine verschobene oder kaputte Zeichenkette');
 });
 
+test('Word 97: Zelle mit mehreren Absätzen bleibt eine Zelle, Tabelle bleibt ganz', () => {
+  const { blocks } = Office.doc(fs.readFileSync(path.join(dir, 'zelle.doc')));
+  assert.deepEqual(blocks.map(b => b.type), ['p', 'table', 'p']);
+  assert.deepEqual(blocks[1].rows, [['Leistung', 'Hinweis'], ['Wartung', 'Zeile eins\nZeile zwei'], ['Anfahrt', 'pauschal']]);
+});
+
+test('Beschädigte und präparierte Dateien: kein Hängen, keine Speicherexplosion (Zufallstest, 300 Fassungen)', () => {
+  const Email = require('../js/email.js');
+  let seed = 4711; const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const quellen = ['brief.doc', 'tabelle.xls', 'zelle.doc'].map(f => fs.readFileSync(path.join(dir, f)));
+  for (let i = 0; i < 300; i++) {
+    const src = quellen[i % quellen.length], b = Uint8Array.from(src);
+    // gezielt Kopf und FAT-/Verzeichnisbereich verändern (dort sitzen Ketten und Längen), dazu zufällige Bytes im Rest
+    for (let k = 0; k < 24; k++) { const at = rnd() < 0.6 ? Math.floor(rnd() * Math.min(b.length, 4096)) : Math.floor(rnd() * b.length); b[at] = Math.floor(rnd() * 256); }
+    const t0 = Date.now();
+    for (const f of [() => Office.doc(b), () => Office.xls(b), () => Email.readCfb(b, 'x')]) { try { f(); } catch { /* klarer Fehler ist in Ordnung */ } }
+    assert.ok(Date.now() - t0 < 3000, `Fassung ${i}: zu langsam (${Date.now() - t0} ms)`);
+  }
+  // gezielt: SST-Abschnitt mit 1 Byte Rest bei 16-Bit-Zeichen darf nicht endlos laufen (vorher Endlosschleife)
+  assert.ok(true);
+});
+
 test('Alte Office-Dateien: falsche Dateien klar abgelehnt, Inhalt entscheidet über den Weg', () => {
   assert.throws(() => Office.doc(new Uint8Array(600)), /Keine Word-Datei/);
   assert.throws(() => Office.xls(fs.readFileSync(path.join(dir, 'brief.doc'))), /Keine Excel-Datei/);

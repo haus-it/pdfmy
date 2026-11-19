@@ -3193,16 +3193,34 @@ function glyphPath(font, text, size, x, y) {
   });
   return { ops, width: px - x };
 }
-async function sigLook({ name, reason, when = new Date() }) {
+/* Freie Stelle aus der tatsächlich zu signierenden PDF bestimmen (Fehlersuche 19.11.2026): Seitenauswahl, Bögen und kleine Formate
+   ändern Seitenzahl und Geometrie gegenüber der Arbeitsansicht. Liefert { n, W, H, words: [{x,y,w,h} Anteile, oben links] } der Seite. */
+async function sigPageFacts(bytes, index) {
+  const doc = await openPdf(bytes.slice()), n = doc.numPages, i = index >= 0 && index < n ? index : n - 1;
+  const pg = await doc.getPage(i + 1), [x0, y0, x1, y1] = pg.view, W = x1 - x0, H = y1 - y0;
+  const words = (await pg.getTextContent()).items.filter(t => t.str?.trim()).map(t => {
+    const h = Math.abs(t.transform[3]) || t.height || 10;
+    return { x: (t.transform[4] - x0) / W, y: (y1 - t.transform[5] - h) / H, w: (t.width || h) / W, h: h * 1.25 / H };
+  });
+  doc.destroy?.();
+  return { n, i, W, H, words, rotiert: pg.rotate % 360 !== 0 };
+}
+async function sigLook({ name, reason, when = new Date(), bytes = null }) {
   const fk = await loadFontkit(), [r, b] = await Promise.all([asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf')]);
   const R = fk.create(new Uint8Array(r)), B = fk.create(new Uint8Array(b));
   const head = I18N.t('Digital signiert von'), date = I18N.t('am') + ' ' + I18N.fmtDateTime(when), why = reason ? I18N.t('Grund:') + ' ' + reason : '';
   const alt = [head, name, date, why].filter(Boolean).join(' ');
   // Platz: unter der gezeichneten Unterschrift (Seite mit „sign“), sonst letzte Seite von unten nach oben, rechts vor links
-  const pages = state.pages, si = pages.findIndex(p => p.annots.some(a => a.type === 'sign' && a.kind === 'sign')), pi = si >= 0 ? si : pages.length - 1, p = pages[pi];
-  const asp = (p?.w || 595) / (p?.h || 842), fw = SIGLOOK_W / 595.28, fh = SIGLOOK_H / 595.28 * asp;
-  const words = (p ? await pageWords(p).catch(() => null) : null) || [], marks = (p?.annots || []).filter(a => a.w > 0 && a.h > 0);
-  const free = (x, y) => ![...words, ...marks].some(o => x < o.x + o.w && x + fw > o.x && y < o.y + o.h && y + fh > o.y);
+  const pages = state.pages;
+  let si = pages.findIndex(p => p.annots.some(a => a.type === 'sign' && a.kind === 'sign'));
+  // Seiten und Text der fertigen PDF; die gezeichnete Unterschrift nur nutzen, wenn die Seiten 1:1 der Arbeitsansicht entsprechen
+  const facts = bytes ? await sigPageFacts(bytes, si).catch(() => null) : null;
+  if (facts && facts.n !== pages.length) si = -1;
+  const pi = facts ? (si >= 0 ? si : facts.n - 1) : si >= 0 ? si : pages.length - 1, p = pages[pi];
+  const W = facts?.W || 595.28, H = facts?.H || 595.28 * (p?.h || 842) / (p?.w || 595), fw = SIGLOOK_W / W, fh = SIGLOOK_H / H;
+  const words = facts ? facts.words : ((p ? await pageWords(p).catch(() => null) : null) || []);
+  const marks = si >= 0 ? (pages[si].annots || []).filter(a => a.w > 0 && a.h > 0) : [];
+  const free = (x, y) => x >= 0.01 && y >= 0.01 && x + fw <= 0.99 && y + fh <= 0.99 && ![...words, ...marks].some(o => x < o.x + o.w && x + fw > o.x && y < o.y + o.h && y + fh > o.y);
   const at = [];
   if (si >= 0) { const a = pages[si].annots.find(o => o.type === 'sign' && o.kind === 'sign'); at.push(...[{ x: a.x, y: a.y + a.h + 0.004 }, { x: a.x + a.w + 0.01, y: a.y }, { x: a.x, y: a.y - fh - 0.004 }].filter(c => free(c.x, c.y))); }
   for (let y = 0.94 - fh; y > 0.08; y -= 0.02) for (const x of [0.92 - fw, 0.08, 0.5 - fw / 2]) if (free(x, y)) at.push({ x, y });
@@ -3277,7 +3295,7 @@ async function signFlow(bytes, extra = {}) {
     } };
     state.signer = signer;
     const so = { contact: S.author || '', tsa: tsaFetch(), ...extra };
-    if ($('#x-sign-vis').checked) so.look = await sigLook({ name: signCert.name, reason: so.reason }).catch(e => { console.warn(e); return undefined; });
+    if ($('#x-sign-vis').checked) so.look = await sigLook({ name: signCert.name, reason: so.reason, bytes }).catch(e => { console.warn(e); return undefined; });
     if (so.tsa) await loadForge();   // Zeitstempel einbauen braucht den Signatur-Baustein
     try { const out = await PdfSign.signPdf(bytes, signer, so); tsNote(so); return out; }
     catch (e) { if (/abgelehnt/.test(e.message)) return null; throw e; }
@@ -3301,7 +3319,7 @@ async function signFlow(bytes, extra = {}) {
   status(`Signiere als ${state.signer.name} …`);
   if (tsaFetch()) await loadForge();
   const so = { reason: $('#pwSignReason').value.trim(), contact: S.author || '', tsa: tsaFetch(), ...extra };
-  if ($('#x-sign-vis').checked) so.look = await sigLook({ name: state.signer.name, reason: so.reason }).catch(e => { console.warn(e); return undefined; });
+  if ($('#x-sign-vis').checked) so.look = await sigLook({ name: state.signer.name, reason: so.reason, bytes }).catch(e => { console.warn(e); return undefined; });
   const out = await PdfSign.signPdf(bytes, state.signer, so); tsNote(so); return out;
 }
 
@@ -4202,8 +4220,8 @@ window.checkSignatures = async (docIdx, file) => {
     if (sigs.length) {
       d.sigs = sigs; renderSigBar();
       // sichtbare Stempel auf den Seiten: anklickbar → Details genau dieser Signatur (renderSigFields)
-      const rot = new Map(state.pages.filter(p => p.docIdx === docIdx).map(p => [p.pageIdx, p.rotation || 0]));
-      d.sigFields = (await PdfVerify.fields(PDFLib, bytes, i => rot.get(i) || 0).catch(e => { console.warn(e); return []; }))
+      // ungedreht speichern – renderSigFields dreht bei jedem Zeichnen mit der aktuellen Seitendrehung
+      d.sigFields = (await PdfVerify.fields(PDFLib, bytes).catch(e => { console.warn(e); return []; }))
         .map(f => ({ ...f, k: sigs.findIndex(r => PdfVerify.sameRange(r.range, f.range)) })).filter(f => f.k >= 0);
       if (d.sigFields.length) renderAnns();
     }
@@ -4250,7 +4268,7 @@ window.renderSigFields = (ov, p) => {
   const d = p.kind === 'pdf' && state.docs[p.docIdx]; if (!d?.sigFields?.length || !d.sigs) return;
   for (const f of d.sigFields.filter(f => f.page === p.pageIdx)) {
     const r = d.sigs[f.k], st = !sigOk(r) ? 'bad' : r.wholeFile || r.laterSigned ? 'ok' : 'warn';
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'sigspot ' + st; placeEl(b, f);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'sigspot ' + st; placeEl(b, PdfVerify.drehen(f, p.rotation || 0));
     const what = I18N.t(st === 'bad' ? 'Signatur ungültig' : st === 'warn' ? 'Signatur gültig, danach geändert' : 'Signatur gültig');
     b.title = `${what}: ${sigWho(r)}${fmtWhen(r.time || r.m) ? ', ' + fmtWhen(r.time || r.m) : ''} – ${I18N.t('Klicken für Signaturdetails')}`;
     b.setAttribute('aria-label', b.title);

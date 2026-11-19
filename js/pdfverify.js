@@ -189,20 +189,27 @@
         if (String(ft) !== '/Sig' || !(v instanceof PL.PDFDict)) continue;
         const br = v.lookup(N('ByteRange')), R = a.lookup(N('Rect'));
         if (!(br instanceof PL.PDFArray) || !(R instanceof PL.PDFArray)) continue;
-        const r = R.asArray().map(num), x0 = Math.min(r[0], r[2]), x1 = Math.max(r[0], r[2]), y0 = Math.min(r[1], r[3]), y1 = Math.max(r[1], r[3]);
+        const r = R.asArray().map(num); if (r.length < 4 || r.some(n => !Number.isFinite(n))) continue;
+        const x0 = Math.min(r[0], r[2]), x1 = Math.max(r[0], r[2]), y0 = Math.min(r[1], r[3]), y1 = Math.max(r[1], r[3]);
         if (x1 - x0 < 1 || y1 - y0 < 1) continue;
         // ungedreht: u nach rechts, v von oben
-        let u = (x0 - box.x) / box.width, v0 = (box.y + box.height - y1) / box.height, w = (x1 - x0) / box.width, h = (y1 - y0) / box.height;
-        if (rot === 90) [u, v0, w, h] = [1 - v0 - h, u, h, w];
-        else if (rot === 180) [u, v0] = [1 - u - w, 1 - v0 - h];
-        else if (rot === 270) [u, v0, w, h] = [v0, 1 - u - w, h, w];
-        out.push({ page: i, x: u, y: v0, w, h, range: br.asArray().map(num) });
+        const f = { x: (x0 - box.x) / box.width, y: (box.y + box.height - y1) / box.height, w: (x1 - x0) / box.width, h: (y1 - y0) / box.height };
+        out.push({ page: i, ...drehen(f, rot), range: br.asArray().map(num) });
       }
     });
     return out;
   }
+  // Lage {x,y,w,h} (Anteile, oben links) einer ungedrehten Seite in die Anzeige mit Drehung rot° im Uhrzeigersinn (wie pdf.js) umrechnen –
+  // die Anzeige ruft das bei jedem Zeichnen mit der aktuellen Drehung auf (Seite nach der Prüfung gedreht: Flächen sitzen trotzdem richtig)
+  function drehen({ x, y, w, h }, rot = 0) {
+    rot = ((rot % 360) + 360) % 360;
+    if (rot === 90) return { x: 1 - y - h, y: x, w: h, h: w };
+    if (rot === 180) return { x: 1 - x - w, y: 1 - y - h, w, h };
+    if (rot === 270) return { x: y, y: 1 - x - w, w: h, h: w };
+    return { x, y, w, h };
+  }
   const sameRange = (a, b) => !!a && !!b && a.length === 4 && a.every((n, k) => n === b[k]);
 
-  const api = { verify, find, hasSignature, scanNames, fields, sameRange };
+  const api = { verify, find, hasSignature, scanNames, fields, sameRange, drehen };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfVerify = api;
 })(typeof self !== 'undefined' ? self : globalThis);

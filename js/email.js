@@ -75,19 +75,29 @@
   function readCfb(bytes, notMsg = 'keine Outlook-Nachricht (.msg)') {
     const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
     if (bytes.length < 512 || dv.getUint32(0, true) !== 0xE011CFD0 || dv.getUint32(4, true) !== 0xE11AB1A1) throw new Error(notMsg);
-    const ss = 1 << dv.getUint16(30, true), mss = 1 << dv.getUint16(32, true);
+    const shift = dv.getUint16(30, true), mshift = dv.getUint16(32, true);
+    if (![9, 12].includes(shift) || mshift > shift) throw new Error(notMsg);   // Sektorgröße 512 oder 4096 Byte (MS-CFB 2.2)
+    const ss = 1 << shift, mss = 1 << mshift;
     const nFat = dv.getUint32(44, true), dirStart = dv.getUint32(48, true), cutoff = dv.getUint32(56, true);
     const miniFatStart = dv.getUint32(60, true), difStart = dv.getUint32(68, true);
+    // Schutz vor beschädigten oder präparierten Dateien (Fehlersuche 19.11.2026): keine Kette ist länger als die Datei Sektoren hat,
+    // jeder Sektor zählt je Kette nur einmal (Zyklen), Lesen nur innerhalb der Datei
+    const SEKTOREN = Math.floor(bytes.length / ss) - 1;
     const off = s => (s + 1) * ss;
-    const fatSecs = [];
-    for (let i = 0; i < 109 && fatSecs.length < nFat; i++) fatSecs.push(dv.getUint32(76 + i * 4, true));
-    for (let d = difStart, guard = 0; d < 0xFFFFFFFA && fatSecs.length < nFat && guard++ < 1e5; ) {
-      for (let i = 0; i < ss / 4 - 1 && fatSecs.length < nFat; i++) fatSecs.push(dv.getUint32(off(d) + i * 4, true));
-      d = dv.getUint32(off(d) + ss - 4, true);
+    const u32 = o => o + 4 <= bytes.length ? dv.getUint32(o, true) : 0xFFFFFFFE;
+    const fatSecs = [], fatMax = Math.min(nFat, SEKTOREN);
+    for (let i = 0; i < 109 && fatSecs.length < fatMax; i++) fatSecs.push(u32(76 + i * 4));
+    for (let d = difStart, seen = new Set(); d < 0xFFFFFFFA && fatSecs.length < fatMax && !seen.has(d) && d < SEKTOREN; ) {
+      seen.add(d);
+      for (let i = 0; i < ss / 4 - 1 && fatSecs.length < fatMax; i++) fatSecs.push(u32(off(d) + i * 4));
+      d = u32(off(d) + ss - 4);
     }
-    const fat = []; for (const s of fatSecs) for (let i = 0; i < ss / 4; i++) fat.push(dv.getUint32(off(s) + i * 4, true));
-    const chain = (start, table) => { const c = []; for (let s = start, g = 0; s < 0xFFFFFFFA && g++ < 1e6; s = table[s]) c.push(s); return c; };
-    const readChain = (start, size) => { const c = chain(start, fat), b = new Uint8Array(c.length * ss); c.forEach((s, i) => b.set(bytes.subarray(off(s), off(s) + ss), i * ss)); return size == null ? b : b.subarray(0, size); };
+    const fat = []; for (const s of fatSecs) if (s < SEKTOREN) for (let i = 0; i < ss / 4; i++) fat.push(u32(off(s) + i * 4));
+    const chain = (start, table, max = SEKTOREN) => { const c = [], seen = new Set(); for (let s = start; s < 0xFFFFFFFA && s < table.length + 1 && !seen.has(s) && c.length < max; s = table[s]) { seen.add(s); c.push(s); } return c; };
+    const readChain = (start, size) => {
+      const c = chain(start, fat, size == null ? SEKTOREN : Math.ceil(size / ss)).filter(s => s < SEKTOREN), b = new Uint8Array(c.length * ss);
+      c.forEach((s, i) => b.set(bytes.subarray(off(s), off(s) + ss), i * ss)); return size == null ? b : b.subarray(0, size);
+    };
     const dirBytes = readChain(dirStart), dirs = [];
     for (let i = 0; i + 128 <= dirBytes.length; i += 128) {
       const e = new DataView(dirBytes.buffer, dirBytes.byteOffset + i, 128), nl = e.getUint16(64, true);
@@ -97,10 +107,11 @@
     const rootE = dirs[0], miniStream = rootE && rootE.start < 0xFFFFFFFA ? readChain(rootE.start, rootE.size) : new Uint8Array(0);
     const miniFat = miniFatStart < 0xFFFFFFFA ? (b => { const t = []; for (let i = 0; i + 4 <= b.length; i += 4) t.push(new DataView(b.buffer, b.byteOffset + i, 4).getUint32(0, true)); return t; })(readChain(miniFatStart)) : [];
     const stream = e => {
-      if (e.size < cutoff) { const c = chain(e.start, miniFat), b = new Uint8Array(c.length * mss); c.forEach((s, i) => b.set(miniStream.subarray(s * mss, s * mss + mss), i * mss)); return b.subarray(0, e.size); }
+      if (e.size < cutoff) { const c = chain(e.start, miniFat, Math.ceil(e.size / mss)), b = new Uint8Array(c.length * mss); c.forEach((s, i) => b.set(miniStream.subarray(s * mss, s * mss + mss), i * mss)); return b.subarray(0, e.size); }
       return readChain(e.start, e.size);
     };
-    const children = id => { const out = []; (function walk(i, g) { if (i >= dirs.length || i === 0xFFFFFFFF || g > 1e5) return; const d = dirs[i]; walk(d.left, g + 1); out.push(d); walk(d.right, g + 1); })(dirs[id]?.child ?? 0xFFFFFFFF, 0); return out; };
+    // jeden Eintrag nur einmal besuchen (sonst exponentiell bei Einträgen, die mehrfach als Kind genannt werden)
+    const children = id => { const out = [], seen = new Set(); (function walk(i, g) { if (i >= dirs.length || i === 0xFFFFFFFF || g > 1e4 || seen.has(i)) return; seen.add(i); const d = dirs[i]; walk(d.left, g + 1); out.push(d); walk(d.right, g + 1); })(dirs[id]?.child ?? 0xFFFFFFFF, 0); return out; };
     return { dirs, stream, children };
   }
   function parseMsg(bytes) {

@@ -484,7 +484,7 @@
       const mime = data[0] === 0x89 && data[1] === 0x50 ? 'image/png' : data[0] === 0xff && data[1] === 0xd8 ? 'image/jpeg' : null; if (!mime) return;
       // Größe aus dem Bild selbst (PNG: IHDR, JPEG: SOF), 96 dpi
       let w = 300, h = 200;
-      if (mime === 'image/png') { const dv = new DataView(data.buffer, data.byteOffset); w = dv.getUint32(16); h = dv.getUint32(20); }
+      if (mime === 'image/png' && data.length >= 24) { const dv = new DataView(data.buffer, data.byteOffset, data.length); w = Math.min(dv.getUint32(16), 20000); h = Math.min(dv.getUint32(20), 20000); }   // zu kurze Daten: Maße aus dem Bild selbst
       else for (let i = 2; i < data.length - 9;) { if (data[i] !== 0xff) break; const mk = data[i + 1], l = (data[i + 2] << 8) | data[i + 3]; if (mk >= 0xc0 && mk <= 0xc3) { h = (data[i + 5] << 8) | data[i + 6]; w = (data[i + 7] << 8) | data[i + 8]; break; } i += 2 + l; }
       blocks.push({ type: 'img', bytes: data, mime, w: w * 0.75, h: h * 0.75, align: 'center' });
     }
@@ -501,7 +501,7 @@
           const trs = []; (function w(e) { for (const c of els(e)) { const ct = tag(c); if (ct === 'tr') trs.push(c); else if (['thead', 'tbody', 'tfoot'].includes(ct)) w(c); } })(k);
           const cells = tr => els(tr).filter(c => ['td', 'th'].includes(tag(c)));
           // Layout-Tabelle (verschachtelt oder einspaltig, typisch für Newsletter und alte Webseiten): Zellen als normalen Inhalt lesen
-          if (find(k, 'table').length || !trs.length || Math.max(...trs.map(r => cells(r).length)) === 1) { for (const tr of trs) for (const c of cells(tr)) await walk({ kids: [c] }, depth, base); continue; }
+          if (find(k, 'table').length || !trs.length || trs.reduce((a, r) => Math.max(a, cells(r).length), 0) === 1) { for (const tr of trs) for (const c of cells(tr)) await walk({ kids: [c] }, depth, base); continue; }
           for (const im of find(k, 'img')) await img(im, base);
           const rows = trs.map(tr => cells(tr).map(textOf)).filter(r => r.some(Boolean)), n = Math.max(0, ...rows.map(r => r.length));
           if (n) blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: n }, (_, i) => r[i] ?? '')), head: !!find(k, 'th').length });
@@ -541,7 +541,7 @@
     const rootEl = { name: '#root', attrs: {}, kids: [] }, stack = [rootEl], top = () => stack[stack.length - 1];
     const closeTo = n => { for (let i = stack.length - 1; i > 0; i--) if (stack[i].name === n) { stack.length = i; return true; } return false; };
     const inScope = (n, stop) => { for (let i = stack.length - 1; i > 0; i--) { if (stack[i].name === n) return i; if (stop.includes(stack[i].name)) return -1; } return -1; };
-    const re = /<\/([a-zA-Z][\w:-]*)\s*>|<([a-zA-Z][\w:-]*)((?:\s+[^\s=\/>]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*\/?>|<![^>]*>|<\?[^>]*>|([^<]+)|</g;
+    const re = /<\/([a-zA-Z][\w:-]*)\s*>|<([a-zA-Z][\w:-]*)((?:\s+[^\s=\/><]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*\/?>|<![^>]*>|<\?[^>]*>|([^<]+)|</g;
     let m;
     while ((m = re.exec(s))) {
       if (m[1]) { closeTo(m[1].toLowerCase()); continue; }
@@ -733,10 +733,11 @@
     // Absätze (\r), Zellen (\x07; leere Zellmarke am Zeilenende = Zeilenende), Seitenumbruch (\x0c), Zeilenumbruch (\x0b)
     const clean = s => s.replace(/\x0b/g, '\n').replace(/\x1e/g, '-').replace(/[\x1f\x01\x02\x05\x08]/g, '').replace(/\t/g, '    ').replace(/[ \u00a0]+\n/g, '\n').trim();
     const blocks = []; let row = [], rows = [], cols = 0, buf = '';
-    const endTable = () => { if (row.length) rows.push(row); if (rows.length) { const w = Math.max(...rows.map(r => r.length)); blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: w }, (_, i) => r[i] ?? '')), head: false }); } rows = []; row = []; cols = 0; };
+    const endTable = () => { if (row.length) rows.push(row); if (rows.length) { const w = rows.reduce((a, r) => Math.max(a, r.length), 0); blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: w }, (_, i) => r[i] ?? '')), head: false }); } rows = []; row = []; cols = 0; };
     const para = s => { if (rows.length || row.length) endTable(); const t = clean(s); if (t) blocks.push({ type: 'p', text: t }); };
     for (const ch of out) {
-      if (ch === '\r') { para(buf); buf = ''; }
+      // Absatzende mitten in einer Tabellenzeile: mehrere Absätze in einer Zelle (nur der letzte endet mit der Zellmarke)
+      if (ch === '\r') { if (row.length) buf += '\n'; else { para(buf); buf = ''; } }
       else if (ch === '\x0c') { para(buf); buf = ''; if (blocks.length && blocks[blocks.length - 1].type !== 'pagebreak') blocks.push({ type: 'pagebreak' }); }
       else if (ch === '\x07') {
         const t = clean(buf); buf = '';
@@ -787,6 +788,7 @@
           while (left > 0) {
             if (p >= segs[si][1]) { si++; if (si >= segs.length) break; p = segs[si][0]; hi = wb[p] & 1; p++; }
             const room = Math.floor((segs[si][1] - p) / (hi ? 2 : 1)), m = Math.min(left, room);
+            if (m <= 0) { p = segs[si][1]; continue; }   // beschädigt: Rest dieses Abschnitts überspringen (sonst Endlosschleife)
             str += hi ? new TextDecoder('utf-16le').decode(wb.subarray(p, p + m * 2)) : cp1252(wb.subarray(p, p + m));
             p += m * (hi ? 2 : 1); left -= m;
           }
@@ -808,14 +810,14 @@
     const blocks = [];
     for (const s of sheets) {
       if (s.hidden || s.kind !== 0 || s.at >= wb.length) continue;
-      const grid = [], put = (r, col, v) => { (grid[r] ||= [])[col] = v; };
+      const grid = [], put = (r, col, v) => { if (r < 65536 && col < 256) (grid[r] ||= [])[col] = v; };
       let pendingStr = null;
       for (const r of recs(s.at)) {
         const row = () => dv.getUint16(r.p, true), col = () => dv.getUint16(r.p + 2, true), xf = () => dv.getUint16(r.p + 4, true);
         if (r.t === 0x00FD) put(row(), col(), sst[dv.getUint32(r.p + 6, true)] ?? '');
         else if (r.t === 0x0203) put(row(), col(), fmtNum(dv.getFloat64(r.p + 6, true), xf()));
         else if (r.t === 0x027E) put(row(), col(), fmtNum(rk(dv.getInt32(r.p + 6, true)), xf()));
-        else if (r.t === 0x00BD) { const rr = row(), c0 = col(), c1 = dv.getUint16(r.p + r.l - 2, true); for (let k = 0; k <= c1 - c0; k++) put(rr, c0 + k, fmtNum(rk(dv.getInt32(r.p + 4 + k * 6 + 2, true)), dv.getUint16(r.p + 4 + k * 6, true))); }
+        else if (r.t === 0x00BD) { const rr = row(), c0 = col(), c1 = dv.getUint16(r.p + r.l - 2, true); for (let k = 0; k <= c1 - c0 && k < (r.l - 6) / 6; k++) put(rr, c0 + k, fmtNum(rk(dv.getInt32(r.p + 4 + k * 6 + 2, true)), dv.getUint16(r.p + 4 + k * 6, true))); }
         else if (r.t === 0x0204) put(row(), col(), ustr(r.p + 6).s);
         else if (r.t === 0x00D6 && !biff8) put(row(), col(), ustr(r.p + 6).s);   // RSTRING (BIFF5)
         else if (r.t === 0x0205) { const v = wb[r.p + 6], err = wb[r.p + 7]; put(row(), col(), err ? '#FEHLER' : v ? 'WAHR' : 'FALSCH'); }

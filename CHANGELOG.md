@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Robustheit gegen beschädigte Dateien, Korrekturen zweite Fehlersuche (app-v298)
+- **Alte Office- und Outlook-Dateien (.doc, .xls, .msg):** beschädigte oder präparierte Dateien führen nicht mehr zu Endlosschleifen oder riesigen Speicheranforderungen – Ketten im Verbundformat mit Zyklenschutz und Längengrenze, Verzeichnisbaum jeden Eintrag nur einmal, Excel-Zellen nur innerhalb von 65.536 × 256, MULRK innerhalb des Datensatzes, Zeichenkettenliste ohne Stillstand. Zufallstest mit 300 beschädigten Dateien (alte Fassung: hing; neue: 2 s).
+- **Word 97:** Zellen mit mehreren Absätzen bleiben eine Zelle (vorher zerriss die Tabelle).
+- **HTML/MHTML:** zu kurze PNG-Daten brechen den Import nicht mehr ab, sehr große Tabellen und feindliches HTML ohne Absturz bzw. quadratische Laufzeit.
+- **Signaturstempel:** Platz aus der tatsächlich signierten PDF (Seitenauswahl, Bögen, kleine Formate); Klickflächen sitzen auch nach Drehen der Seite; beim Mitunterzeichnen keine Objektnummern, die die Vorfassung als frei führt.
+
 ### Korrekturen aus der Fehlersuche (app-v297)
 - **Verträge:** Steht nur eine Kündigungsfrist im Text (oder läuft der Vertrag nach der Mindestlaufzeit auf unbestimmte Zeit), ist er „jederzeit kündbar“ – Hinweis „eine Kündigung heute wirkt zum …“, aber keine Frist mehr, die jeden Tag „heute fällig“ meldete. Rechnungen, die „Kündigungsfrist“ nur erwähnen, bekommen keine Frist. Datum nie aus dem Nachbarsatz; „drei Monate vor Ablauf“ wird erkannt; § 188 Abs. 3 BGB (Beginn 31.01., ein Monat → 28.02.); heutiger Tag in Ortszeit.
 - **Eigener Server (Linux):** Tippfehler im Zielpfad (übergeordneter Ordner fehlt) bricht ab, statt nach /pdfmy zu installieren. Hinweis präzisiert: eigene Dateien bleiben im Hauptordner erhalten.
