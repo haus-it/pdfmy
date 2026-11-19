@@ -2619,6 +2619,13 @@ function addCameraPages(list) {
 }
 function openCamera() { closeMenu(); if ($('#scanDlg').open) $('#scanDlg').close(); Camera.open(addCameraPages, () => $('#camIn').click()); }
 $('#btnCam').onclick = openCamera;
+// Scannen auf Handy und Tablet (Scan-Dialog, app-v307): Kamera oder Scanner-App mit „Teilen → PDFMy“ – dafür PDFMy als App installieren
+$('#scanMobCam').onclick = openCamera;
+$('#scanMobInstallBtn').onclick = () => {
+  $('#scanDlg').close();
+  if (installEvt || miBrowser) $('#btnInstall').click();
+  else toast(I18N.t('So geht es: im Browser-Menü (⋮) „App installieren“ bzw. „Zum Startbildschirm hinzufügen“ wählen.'), 9000);
+};
 $('#tileCam').onclick = openCamera;
 $('#homeCam').onclick = openCamera;
 $('#scanPhone').onclick = openCamera;
@@ -3059,7 +3066,7 @@ const firefoxDesk = /Firefox\//.test(navigator.userAgent) && !IS_MOBILE && !IS_I
    der Knopf erklärt den Weg über Chrome. Nach der Installation mit Chrome legt HyperOS das Symbol je nach Einstellung nur in die
    App-Übersicht, oder Chrome darf keine Startbildschirm-Verknüpfungen anlegen – dann sagt PDFMy, wo man nachsieht.
    Erkennung: Gerätename aus dem Browser (Chrome meldet ihn nur über User-Agent Client Hints), Xiaomi-Browser an seiner Kennung. */
-const IS_ANDROID = /Android/i.test(navigator.userAgent);
+const IS_ANDROID = /Android/i.test(navigator.userAgent) || ANDROID_DESKTOP_MODE;   // auch Tablets im Desktop-Modus (Redmi Pad meldet „X11; Linux“)
 const miBrowser = IS_ANDROID && /MiuiBrowser|XiaoMi\//i.test(navigator.userAgent);
 const XIAOMI_MODEL = /^(Redmi|POCO|Xiaomi|Mi \w+|MIX|M2\d{3}[A-Z0-9]{3,6}|2\d{3}[A-Z0-9]{4,8})\b/i;
 let xiaomi = IS_ANDROID && (miBrowser || /\b(Redmi|POCO|Xiaomi|HyperOS|MIUI)\b/i.test(navigator.userAgent));
@@ -3118,8 +3125,8 @@ async function renderSetup() {
   $('#setOutInfo').textContent = saved ? `Ablage: ${saved.name} – jeder Brief wird dort mit erkanntem Namen abgelegt.` : 'Dorthin legt „Ablegen“ jeden Brief mit erkanntem Namen – z. B. ein mit SharePoint/OneDrive synchronisierter Ordner.';
   $('#setOut').textContent = saved ? 'Anderen Ordner wählen …' : 'Ordner wählen …';
   $('#setAutoRow').hidden = !saved; $('#setAuto').checked = !!S.autopilot;
-  const helper = !IS_MOBILE && await scanHelperRunning();
-  $('#stScan').hidden = IS_MOBILE;
+  const helper = !IS_HANDHELD && await scanHelperRunning();
+  $('#stScan').hidden = IS_HANDHELD;   // auch Tablets im Desktop-Modus (z. B. Redmi Pad): kein pdfmy Scan
   $('#stScan').classList.toggle('ok', helper || (IS_MAC && !!state.inDir));
   $('#setScanInfo').textContent = helper ? `pdfmy Scan ${state.scanVersion} läuft – Scanner im Netzwerk und am PC werden gefunden.` : 'Für Scanner und Multifunktionsgeräte am PC braucht PDFMy das kleine Programm „pdfmy Scan“ (einmal öffnen, es richtet sich selbst ein).';
   // Beide Systeme anbieten: das erkannte als Hauptknopf, das andere daneben
@@ -3134,7 +3141,7 @@ async function renderSetup() {
   }
   if (IS_LINUX && !helper) $('#setScanInfo').textContent = 'Für Scanner unter Linux: das kleine Programm „pdfmy Scan für Linux“ – Netzwerkscanner ohne Treiber (z. B. Epson, Dell, Samsung), USB-Scanner über SANE. Einrichtung im Terminal, ohne sudo.';
   // Schritt 4: am PC PDF-Standard (über pdfmy Scan), am Handy die App installieren
-  if (IS_MOBILE) {
+  if (IS_HANDHELD) {
     $('#setPdfT').textContent = 'PDFMy als App'; $('#setPdfInfo').textContent = 'Eigenes Symbol auf dem Startbildschirm, startet ohne Browserleiste.';
     $('#stPdf').classList.toggle('ok', runsAsApp()); $('#setPdf').textContent = 'App installieren'; $('#setPdf').hidden = runsAsApp() || (!installEvt && !iosSafari);
   } else {
@@ -3157,7 +3164,7 @@ $('#setScan').onclick = async () => {
   scanDl(IS_MAC ? 'mac' : IS_LINUX ? 'linux' : 'win');
 };
 $('#setScanAlt').onclick = () => scanDl(IS_MAC || IS_LINUX ? 'win' : 'mac');
-$('#setPdf').onclick = () => { if (IS_MOBILE) $('#btnInstall').click(); else $('#btnDefaultPdf').click(); setTimeout(renderSetup, 1500); };
+$('#setPdf').onclick = () => { if (IS_HANDHELD) $('#btnInstall').click(); else $('#btnDefaultPdf').click(); setTimeout(renderSetup, 1500); };
 $('#setDone').onclick = $('#setLater').onclick = () => { LS.set('setupSeen', 1); $('#setupDlg').close(); };
 $('#setupDlg').addEventListener('close', () => { LS.set('setupSeen', 1); renderSetupHint(); });
 // Während der Dialog offen ist: pdfmy Scan nach dem Download automatisch erkennen

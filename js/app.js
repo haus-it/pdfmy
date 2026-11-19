@@ -202,7 +202,12 @@ const NATIVE = window.Capacitor?.isNativePlatform?.() ? (() => {
   return n;
 })() : null;
 const IS_MAC = !IS_IOS && /Macintosh|Mac OS X/.test(navigator.userAgent);
-const IS_LINUX = !IS_MAC && !IS_IOS && /Linux|X11/.test(navigator.userAgent) && !/Android|CrOS/.test(navigator.userAgent);
+/* Android-Tablet im Desktop-Modus von Chrome (z. B. Redmi Pad, Galaxy Tab – dort oft Voreinstellung): meldet sich als „X11; Linux x86_64“
+   und bekam pdfmy Scan für Linux angeboten (Rückmeldung 19.11.2026). Erkennbar an Touch ohne Maus bzw. am ARM-Prozessor. */
+const ANDROID_DESKTOP_MODE = !/Android|CrOS/.test(navigator.userAgent) && /X11; Linux/.test(navigator.userAgent) && navigator.maxTouchPoints > 1 &&
+  (!(window.matchMedia && matchMedia('(any-pointer: fine)').matches) || /arm|aarch64/i.test(navigator.platform || ''));
+const IS_HANDHELD = IS_MOBILE || ANDROID_DESKTOP_MODE;   // Handy oder Tablet (Android, iPhone, iPad): kein pdfmy Scan – Kamera bzw. Scanner-App + Teilen
+const IS_LINUX = !IS_MAC && !IS_IOS && !ANDROID_DESKTOP_MODE && /Linux|X11/.test(navigator.userAgent) && !/Android|CrOS/.test(navigator.userAgent);
 const IS_CHROMEOS = /CrOS/.test(navigator.userAgent);   // Chromebook: kein pdfmy Scan (läuft dort nicht) – eingebaute Wege von Chrome OS   // Linux-PC: pdfmy Scan für Linux   // Mac: kein pdfmy Scan (Windows), Scannen über „Digitale Bilder“ + Scan-Ordner
 const MAX_SIDE = IS_MOBILE ? 2600 : 3300;
 document.documentElement.classList.toggle('mobile', IS_MOBILE);
@@ -4882,7 +4887,15 @@ async function openScanDialog() {
   document.querySelectorAll('.scanVerNew').forEach(e => e.textContent = IS_MAC || IS_LINUX ? SCAN_MAC_LATEST : SCAN_LATEST);
   $('#guideLink').href = APP.edition === 'web' ? 'scanner.html' : 'https://pdfmy.de/scanner.html';
   document.querySelectorAll('#scanDlg [data-connect]').forEach(b => b.disabled = !window.showDirectoryPicker);
-  $('#scanSetupMac').hidden = !IS_MAC; $('#scanSetupLinux').hidden = !IS_LINUX; $('#scanSetupCros').hidden = !IS_CHROMEOS; $('#scanSetupWin').hidden = IS_MAC || IS_LINUX || IS_CHROMEOS; $('#scanMacSafari').hidden = !!window.showDirectoryPicker;
+  $('#scanSetupMac').hidden = !IS_MAC; $('#scanSetupLinux').hidden = !IS_LINUX; $('#scanSetupCros').hidden = !IS_CHROMEOS; $('#scanSetupWin').hidden = IS_MAC || IS_LINUX || IS_CHROMEOS || IS_HANDHELD; $('#scanMacSafari').hidden = !!window.showDirectoryPicker;
+  // Handy und Tablet: kein Programm nötig – Kamera oder Scanner-App mit „Teilen → PDFMy“ (Android) bzw. „In Dateien sichern“ (iPhone, iPad)
+  $('#scanSetupMobile').hidden = !IS_HANDHELD;
+  if (IS_HANDHELD) {
+    $('#scanMobAndroid').hidden = IS_IOS; $('#scanMobIos').hidden = !IS_IOS;
+    $('#scanMobInstall').hidden = IS_IOS || (typeof runsAsApp === 'function' && runsAsApp());   // Teilen-Ziel gibt es nur für die installierte App
+    showScan('setup'); if (!$('#scanDlg').open) $('#scanDlg').showModal();
+    return;
+  }
   showScan('wait'); $('#scanWait').textContent = 'Verbinde …';
   if (!$('#scanDlg').open) $('#scanDlg').showModal();
   if (await scanHelperRunning()) {

@@ -81,6 +81,33 @@ if (stats.count >= 1000) {
   const k = Math.floor(stats.count / 1000) * 1000;
   rep('<ul class="trust">', `<ul class="trust"><li title="Stand ${esc(stats.asOf || '')}">Über ${k.toLocaleString('de-DE')} ${esc(stats.label || 'Nutzer')}</li>`);
 }
+/* Skripte bündeln (app-v307): pdfmy.de liefert nur HTTP/1.1 aus (IONOS, kein HTTP/2 – geprüft per ALPN 19.11.2026). Der Browser öffnet je
+   Server etwa 6 Verbindungen, die rund 40 Skripte standen Schlange (Messung: eine 6-KB-Datei brauchte 3,4 s). Deshalb werden zusammenhängende
+   Folgen der eigenen kleinen Module zu einer Datei zusammengefügt – in derselben Reihenfolge, Inhalt unverändert.
+   Nicht gebündelt: app.js und pro.js (strikter Modus auf oberster Ebene – der gälte im Bündel nicht), config.js, i18n.js (document.currentScript),
+   laden.js und fremde Bibliotheken (vendor/). Die Einzeldateien bleiben im Offline-Speicher (die Hintergrund-Worker laden einzelne Module nach). */
+const NO_BUNDLE = /^js\/(app|pro|config|i18n|laden)\.js$/;
+const bundles = new Map();   // Name → Liste der Dateien
+const bundleScripts = h => {
+  const tags = [...h.matchAll(/<script src="([^"]+)"><\/script>\n?/g)];
+  const runs = []; let run = [];
+  for (const m of tags) {
+    const ok = /^js\/[\w-]+\.js$/.test(m[1]) && !NO_BUNDLE.test(m[1]);
+    if (ok) run.push(m); else { if (run.length > 1) runs.push(run); run = []; }
+  }
+  if (run.length > 1) runs.push(run);
+  runs.forEach((r, i) => {
+    const name = `js/module-${i + 1}.js`, files = r.map(m => m[1]);
+    if (!bundles.has(name)) {
+      bundles.set(name, files);
+      // jede Datei in eigener Zeile, getrennt durch „;“ (eine Datei ohne Semikolon am Ende darf die nächste nicht verschlucken)
+      write(name, files.map(f => `/* ---- ${f} ---- */\n` + fs.readFileSync(path.join(OUT, f), 'utf8').replace(/^﻿/, '') + '\n;\n').join(''));
+    } else if (bundles.get(name).join() !== files.join()) throw new Error('Bündel ' + name + ': andere Dateien in der zweiten Seite');
+    h = h.replace(r[0][0], `<script src="${name}"></script>\n`);
+    for (const m of r.slice(1)) h = h.replace(m[0], '');
+  });
+  return h;
+};
 // Schriften des sichtbaren Textes früh laden (Überschrift und Fließtext; ohne crossorigin würde der Browser sie doppelt holen)
 const FONT_PRELOAD = ['bricolage-grotesque-latin-standard-normal', 'instrument-sans-latin-wght-normal']
   .map(f => `<link rel="preload" as="font" type="font/woff2" href="vendor/fonts/${f}.woff2" crossorigin fetchpriority="high">`).join('');
@@ -89,17 +116,18 @@ const FONT_PRELOAD = ['bricolage-grotesque-latin-standard-normal', 'instrument-s
 const preloadScripts = h => {
   const srcs = [...h.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m => m[1]).filter(x => !/js\/(config|i18n)\.js$/.test(x));
   const at = '<script src="js/i18n.js"></script>';   // hinter die beiden Skripte im Kopf – die braucht die Seite zum Anzeigen zuerst
-  if (srcs.length < 10 || !h.includes(at)) throw new Error('index.html: Skripte für Vorab-Laden nicht gefunden');
+  if (srcs.length < 4 || !h.includes(at)) throw new Error('index.html: Skripte für Vorab-Laden nicht gefunden');   // nach dem Bündeln rund 6 Skripte
   // Messung 17.11.2026 (tools/seo/ladezeit.js, Handy, gedrosselt): 1,5 MB Skripte belegten die Leitung, die Schriften des sichtbaren Textes
   // kamen zuletzt – größtes Element erst nach 7,3 s. Deshalb: Schriften zuerst, Skripte mit niedriger Priorität (Reihenfolge bleibt).
   return h.replace(at, at + '\n' + FONT_PRELOAD + '\n' + srcs.map(x => `<link rel="preload" as="script" href="${x}" fetchpriority="low">`).join('\n'));
 };
+html = bundleScripts(html);
 html = preloadScripts(html);
 // Programmteile erst nach dem ersten Bild ausführen (js/laden.js): die <script>-Tags am Seitenende werden zu einer Liste für laden.js –
 // geladen wird weiter sofort (preload oben), nur die Ausführung wartet. Reihenfolge und „load“-Ereignis bleiben wie vorher.
 const deferScripts = h => {
   const tags = [...h.matchAll(/<script src="([^"]+)"><\/script>\n?/g)].filter(m => !/js\/(config|i18n)\.js$/.test(m[1]));
-  if (tags.length < 10) throw new Error('index.html: Skripte für laden.js nicht gefunden');
+  if (tags.length < 4) throw new Error('index.html: Skripte für laden.js nicht gefunden');   // nach dem Bündeln rund 6 Skripte
   const first = tags[0][0];
   for (const m of tags.slice(1)) h = h.replace(m[0], '');
   return h.replace(first, `<script src="js/laden.js" data-src="${tags.map(m => m[1]).join(' ')}"></script>\n`);
@@ -114,7 +142,7 @@ write('manifest.webmanifest', JSON.stringify(man, null, 2) + '\n');
 const stamp = new Date().toISOString().replace(/\D/g, '').slice(0, 12);
 write('sw.js', fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8')
   .replace(/const VERSION = 'app-(v\d+)';/, (m, nr) => `const VERSION = 'pdfmy-${stamp}-${nr}';`)   // Zeitstempel + Versionsnummer (Statuszeile, Fehlerbericht)
-  .replace("'js/tools.js',", "'js/tools.js', 'impressum.html', 'datenschutz.html', 'nutzungsbedingungen.html', 'barrierefreiheit.html', 'hilfe.html', 'hilfe.js', 'sprache.js',"));
+  .replace("'js/tools.js',", "'js/tools.js', " + [...bundles.keys()].map(b => `'${b}', `).join('') + "'impressum.html', 'datenschutz.html', 'nutzungsbedingungen.html', 'barrierefreiheit.html', 'hilfe.html', 'hilfe.js', 'sprache.js',"));
 
 // PDFMy auf dem eigenen Server (tools/selfhost.js, docs/Update-Strategie.md): nur die App – ohne Website, Impressum, Zählseiten von pdfmy.de.
 // Fußzeile: Hilfe und Quellcode bei pdfmy.de, dazu eigene Links des Betreibers (eigene-links.json, js/app.js).
@@ -124,10 +152,11 @@ const SELF = (() => {
   r('<title>PDFMy</title>', `<title>PDFMy</title>\n<meta http-equiv="Content-Security-Policy" content="${CSP}">`);
   r('<span id="msg" role="status">Bereit.</span>', `<span id="msg" role="status">Bereit.</span><nav class="legal" id="legalNav"><a class="lx" href="https://${site.domain}/hilfe.html" target="_blank" rel="noopener">${N.hilfe}</a><a class="lx" href="https://github.com/haus-it/pdfmy" target="_blank" rel="noopener">${N.quellcode}</a></nav>`);
   r('</style>', 'footer .legal a{color:var(--muted)} footer .legal{white-space:nowrap} footer .legal a+a::before{content:"·";display:inline-block;margin:0 5px;color:var(--muted);text-decoration:none} @media (max-width:760px){footer .legal{display:flex;gap:10px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none} footer .legal a+a::before{content:none} footer:not(.st-idle) .legal{display:none}}\n</style>');
-  h = deferScripts(preloadScripts(h));
+  h = deferScripts(preloadScripts(bundleScripts(h)));
   const nr = +(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/const VERSION = 'app-v(\d+)'/) || [])[1];
   const stand = `pdfmy-selfhost-${stamp}-v${nr}`;
-  const sw = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').replace(/const VERSION = 'app-v\d+';/, `const VERSION = '${stand}';`);
+  const sw = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').replace(/const VERSION = 'app-v\d+';/, `const VERSION = '${stand}';`)
+    .replace("'js/tools.js',", "'js/tools.js', " + [...bundles.keys()].map(b => `'${b}', `).join(''));   // Bündel wie auf pdfmy.de (bundleScripts)
   const conf = fs.readFileSync(path.join(ROOT, 'js', 'config.js'), 'utf8').replace("ownName: 'mentor', edition: 'local'", "ownName: '', edition: 'selfhost'")
     .replace('/* Edition und Branding.', '/* Eigener Server (Selbstbetrieb).');
   if (!conf.includes("edition: 'selfhost'")) throw new Error('config.js: Edition nicht gefunden');

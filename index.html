@@ -1866,6 +1866,15 @@ html.i18n-wait body{visibility:hidden}
     </div>
   </div>
   <div id="scanSetup" hidden>
+   <div id="scanSetupMobile" hidden>
+    <p>Auf <b>Tablet und Handy</b> brauchen Sie <b>kein Zusatzprogramm</b>. Zwei einfache Wege:</p>
+    <ol class="steps">
+      <li><span><b>Mit der Kamera:</b> Blatt hinlegen und fotografieren – PDFMy erkennt die Kanten, richtet gerade und macht ein sauberes PDF.</span> <button type="button" class="btn primary" id="scanMobCam">Mit der Kamera scannen</button></li>
+      <li id="scanMobAndroid"><span><b>Vom Scanner bzw. Multifunktionsgerät im WLAN:</b> die kostenlose App <a href="https://play.google.com/store/apps/details?id=org.mopria.scan.application" target="_blank" rel="noopener">„Mopria Scan“</a> (Play Store, für die meisten Geräte ohne Treiber) oder die App Ihres Geräteherstellers. Dort scannen, auf <i>Teilen</i> tippen und <i>PDFMy</i> wählen – der Scan öffnet sich hier.</span>
+        <span id="scanMobInstall"><br><span>Damit PDFMy beim Teilen erscheint, einmal als App installieren:</span> <button type="button" class="btn" id="scanMobInstallBtn">PDFMy als App installieren</button></span></li>
+      <li id="scanMobIos" hidden><b>Vom Scanner bzw. Multifunktionsgerät im WLAN:</b> mit der App Ihres Geräteherstellers scannen, über <i>Teilen → In Dateien sichern</i> speichern und hier mit <i>Öffnen</i> laden.</li>
+    </ol>
+   </div>
    <div id="scanSetupMac" hidden>
     <p>Mit dem kleinen Programm <b>pdfmy Scan für Mac</b> (Version <span class="scanVerNew"></span>, kostenlos) scannen Sie direkt aus PDFMy – wie unter Windows. Es findet Netzwerkscanner und Multifunktionsgeräte <b>ohne Treiber</b> (AirScan/eSCL und WSD, z. B. Dell, Samsung, Brother, HP, Canon, Epson) und öffnet PDFs auf Wunsch per Doppelklick in PDFMy.</p>
     <ol class="steps">

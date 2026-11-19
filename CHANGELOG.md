@@ -4,6 +4,16 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Scannen auf Tablet und Handy – kein „pdfmy Scan für Linux“ mehr auf dem Redmi Pad (app-v307)
+- Rückmeldung: Ein Redmi Pad bekam beim Scanner-Einrichten pdfmy Scan für Linux angeboten. Ursache: Chrome öffnet Webseiten auf vielen Android-Tablets im Desktop-Modus und meldet sich dann als „X11; Linux x86_64“. PDFMy erkennt solche Tablets jetzt an Touch ohne Maus bzw. am ARM-Prozessor; im normalen Modus fielen Android und iPad bisher auf die Windows-Anleitung zurück.
+- „Scanner verbinden“ zeigt auf Tablet und Handy stattdessen die zwei einfachen Wege: **Mit der Kamera scannen** (ein Knopf) oder vom Netzwerkscanner mit der kostenlosen App „Mopria Scan“ bzw. der App des Herstellers und **Teilen → PDFMy** – mit Knopf „PDFMy als App installieren“, damit PDFMy beim Teilen erscheint. iPad/iPhone: „In Dateien sichern“ und öffnen. Der Einrichtungs-Assistent blendet den Schritt „pdfmy Scan“ auf Tablets aus und bietet die App-Installation an. Die Xiaomi-Hinweise (HyperOS) greifen nun auch im Desktop-Modus.
+- Geprüft mit nachgestelltem Redmi Pad (Desktop- und normaler Modus) und Linux-PC im Browser.
+
+### Schnellerer erster Start: Module gebündelt (app-v307)
+- pdfmy.de wird von IONOS nur über HTTP/1.1 ausgeliefert (kein HTTP/2, per ALPN geprüft). Der Browser öffnet dabei nur etwa 6 Verbindungen gleichzeitig; die rund 40 Skripte standen Schlange (gemessen: eine 6-KB-Datei brauchte 3,4 s). Beim Bauen werden die 37 aufeinanderfolgenden eigenen Module jetzt zu einer Datei (`js/module-1.js`) zusammengefügt – Inhalt und Reihenfolge unverändert. app.js, pro.js (strikter Modus), config.js, i18n.js und die Bibliotheken bleiben einzeln; die Einzeldateien bleiben im Offline-Speicher, weil die Hintergrund-Worker sie nachladen. Gilt auch für den Selbstbetrieb.
+- Test: Das Bündel wird wie im Build zusammengesetzt und vom JavaScript-Parser geprüft (tests/buendel.test.js).
+- Gemessen live mit leerem Zwischenspeicher (gleicher Rechner und Anschluss): bereit nach **1,7 s statt 4,8 s**, bis dahin 17–25 statt 52 Anfragen.
+
 ### Xiaomi, Redmi und POCO mit HyperOS (app-v306)
 - PDFMy erkennt Xiaomi-Handys (Gerätename über User-Agent Client Hints, Xiaomi-Browser an seiner Kennung). Im Xiaomi-Browser, der Web-Apps nicht installieren kann, erklärt „App herunterladen“ den Weg über Chrome; nach der Installation mit Chrome sagt PDFMy, wo das Symbol liegt (HyperOS legt neue Apps je nach Einstellung nur in die App-Übersicht) und welche Chrome-Berechtigung fehlen kann. Hilfe-Eintrag „Xiaomi, Redmi und POCO (HyperOS)“.
 - Auf einem echten Xiaomi-Gerät nicht erprobt; die Bezeichnungen der Einstellungen können je nach HyperOS-Version abweichen.
