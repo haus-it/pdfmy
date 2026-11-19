@@ -239,7 +239,8 @@ async function importFilesRun(files, fromCamera) {
       else if (/\.(html?|xhtml|mht|mhtml)$/.test(n) || /^(text\/html|application\/xhtml\+xml|multipart\/related|message\/rfc822; ?.*mhtml)/.test(f.type)) await importHtml(f);
       else if (/\.o?xps$/.test(n)) await importXps(f);
       else if (/\.(pptx|ppsx|potx|pptm|ppsm|odp)$/.test(n)) await importSlides(f);
-      else if (/\.(doc|xls|ppt)$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in Word, Excel bzw. PowerPoint als .docx/.xlsx/.pptx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
+      else if (/\.(doc|dot|xls|xlt)$/.test(n)) await importOld(f);
+      else if (/\.ppt$/.test(n)) { status(`${f.name}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.`); failed.push(f.name); continue; }
       else if (/\.xml$/.test(n) || /xml/.test(f.type)) await importXml(f);
       else if (/\.(eml|msg)$/.test(n) || f.type === 'message/rfc822' || f.type === 'application/vnd.ms-outlook') await importMail(f);
       else { status(`Format nicht unterstützt: ${f.name} (bitte PDF, Bild, Word, Excel, PowerPoint, Text, RTF, XPS, Photoshop, Markdown, CSV, Webseite (HTML, MHTML), ZIP, Comic-Archiv CBZ oder E-Rechnung als XML)`); failed.push(f.name); continue; }
@@ -419,12 +420,27 @@ async function tiffCanvases(file) {
 async function importOffice(file) {
   status(`${file.name} wird in PDF umgewandelt …`);
   const bytes = new Uint8Array(await file.arrayBuffer()), ext = file.name.toLowerCase().split('.').pop(), word = ext === 'docx' || ext === 'odt', loc = { locale: I18N.info.bcp || 'de-DE' };
-  const r = ext === 'docx' ? await Office.docx(bytes) : ext === 'odt' ? await Office.odt(bytes) : ext === 'ods' ? await Office.ods(bytes, loc) : ext === 'epub' ? await Office.epub(bytes) : await Office.xlsx(bytes, loc);
+  const r = ext === 'docx' ? await Office.docx(bytes) : ext === 'odt' ? await Office.odt(bytes) : ext === 'ods' ? await Office.ods(bytes, loc) : ext === 'epub' ? await Office.epub(bytes)
+    : ext === 'doc' ? Office.doc(bytes) : ext === 'xls' ? Office.xls(bytes, loc) : await Office.xlsx(bytes, loc);
   const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
   const [italic, boldItalic] = await Promise.all([asset('font:vendor/dejavu/DejaVuSans-Oblique.ttf', 'vendor/dejavu/DejaVuSans-Oblique.ttf'), asset('font:vendor/dejavu/DejaVuSans-BoldOblique.ttf', 'vendor/dejavu/DejaVuSans-BoldOblique.ttf')]);
   const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono, italic, boldItalic } });
   await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
-  if (word) status(`${file.name} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.`);
+  if (ext === 'doc') status(`${file.name} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.`);
+  else if (word) status(`${file.name} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.`);
+}
+/* Alte Office-Dateien (.doc/.dot, .xls/.xlt, Word/Excel 97–2003): nach dem Inhalt entscheiden, nicht nach der Endung – viele
+   „.xls“ aus Bank- und Behördenportalen sind HTML- oder XML-Tabellen, manche „.doc“ sind RTF oder eigentlich .docx/.xlsx. */
+async function importOld(file) {
+  const head = new Uint8Array(await file.slice(0, 8).arrayBuffer()), s = String.fromCharCode(...head).replace(/^﻿|^\xEF\xBB\xBF/, '').trimStart();
+  const word = /\.(doc|dot)$/i.test(file.name), base = file.name.replace(/\.[^.]+$/, '');
+  const as = ext => new File([file], base + '.' + ext, { type: file.type });
+  if (head[0] === 0xD0 && head[1] === 0xCF && head[2] === 0x11 && head[3] === 0xE0) return importOffice(as(word ? 'doc' : 'xls'));
+  if (head[0] === 0x50 && head[1] === 0x4B) return importOffice(as(word ? 'docx' : 'xlsx'));
+  if (/^\{\\rtf/.test(s)) return importRtf(as('rtf'));
+  if (/^</.test(s)) return importHtml(as('html'));   // HTML-Tabelle (auch „XML-Tabelle 2003“ wird als Text gezeigt)
+  if (!word) return importText(as('csv'));   // Text-Export mit .xls-Endung (Tabulator/Semikolon)
+  throw new Error('Unbekanntes Word-Format – bitte in Word als .docx speichern.');
 }
 // Text, Markdown und CSV → PDF (js/textpdf.js), dann wie eine PDF weiterverarbeiten. Kodierung: UTF-8, sonst Windows-1252 (ältere Excel-CSV)
 async function importText(file) {
@@ -5200,7 +5216,7 @@ if ('launchQueue' in window) launchQueue.setConsumer(async params => {
    Kann der Gastgeber das Ergebnis zurücknehmen ('pdfmy:host' mit Aktion 'attach'), erscheint „An E-Mail anhängen“. */
 const fromHost = e => e.origin === location.origin && (e.source === window || (window.parent !== window && e.source === window.parent));
 let hostTarget = null;
-const OPEN_EXT = /^(pdf|docx|xlsx|pptx|ppsx|potx|odt|ods|odp|rtf|txt|csv|md|epub|xps|oxps|png|jpe?g|gif|webp|bmp|tiff?|heic|heif|xml|eml|msg)$/;
+const OPEN_EXT = /^(pdf|docx|xlsx|doc|xls|pptx|ppsx|potx|odt|ods|odp|rtf|txt|csv|md|epub|xps|oxps|png|jpe?g|gif|webp|bmp|tiff?|heic|heif|xml|eml|msg)$/;
 addEventListener('message', e => {
   if (!fromHost(e)) return;
   const d = e.data, back = e.source;

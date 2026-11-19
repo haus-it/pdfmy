@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "İmza ayrıntıları için tıklayın",
  "Signatur gültig": "İmza geçerli",
  "Signatur gültig, danach geändert": "İmza geçerli, sonradan değiştirilmiş",
- "Signatur ungültig": "İmza geçersiz"
+ "Signatur ungültig": "İmza geçersiz",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "{0} dönüştürüldü: metin ve tablolar aktarıldı, yazı tipleri, görseller ile üst ve alt bilgiler aktarılmadı – birebir görünüm için Word’de “PDF olarak kaydet” seçeneğini kullanın veya “PDFMy” yazıcısıyla yazdırın.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy bu biçimi henüz dönüştüremiyor – dosyayı PowerPoint’te .pptx olarak kaydedin veya orada “PDF olarak kaydet” seçeneğini seçin.",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Excel dosyası parolayla korunuyor – dosyayı Excel’de parolasız kaydedin ve yeniden açın.",
+ "Die Word-Datei enthält keinen Text.": "Word dosyasında metin yok.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Word dosyası parolayla korunuyor – dosyayı Word’de parolasız kaydedin ve yeniden açın.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Excel dosyası (.xls) değil – dosya hasarlı veya farklı bir biçimde.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Excel dosyası (.xls) değil: çalışma kitabı eksik.",
+ "Keine Excel-Datei (.xls).": "Excel dosyası (.xls) değil.",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Word dosyası (.doc) değil – dosya hasarlı veya farklı bir biçimde.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Word dosyası (.doc) değil: ana bölüm “WordDocument” eksik.",
+ "Keine Word-Datei (.doc).": "Word dosyası (.doc) değil.",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Bilinmeyen Word biçimi – dosyayı Word’de .docx olarak kaydedin.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy, Word 6/95 dosyalarını okuyamaz – bunları Word’de .docx olarak kaydedin.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Word dosyası eksik (dahili metin dizini eksik).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Word dosyası eksik (tablo bölümü eksik)."
 }

@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Kliknij, aby zobaczyć szczegóły podpisu",
  "Signatur gültig": "Podpis ważny",
  "Signatur gültig, danach geändert": "Podpis ważny, zmieniony później",
- "Signatur ungültig": "Podpis nieważny"
+ "Signatur ungültig": "Podpis nieważny",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "Przekonwertowano {0}: tekst i tabele zostały zachowane, czcionki, obrazy oraz nagłówki i stopki – nie. Aby uzyskać wierną kopię, użyj w programie Word polecenia „Zapisz jako PDF” lub wydrukuj na drukarce „PDFMy”.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy nie potrafi jeszcze przekonwertować tego formatu – zapisz plik w programie PowerPoint jako .pptx lub wybierz tam „Zapisz jako PDF”.",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Plik programu Excel jest chroniony hasłem – zapisz go w programie Excel bez hasła i otwórz ponownie.",
+ "Die Word-Datei enthält keinen Text.": "Plik programu Word nie zawiera tekstu.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Plik programu Word jest chroniony hasłem – zapisz go w programie Word bez hasła i otwórz ponownie.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "To nie jest plik programu Excel (.xls) – plik jest uszkodzony lub ma inny format.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "To nie jest plik programu Excel (.xls): brak skoroszytu.",
+ "Keine Excel-Datei (.xls).": "To nie jest plik programu Excel (.xls).",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "To nie jest plik programu Word (.doc) – plik jest uszkodzony lub ma inny format.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "To nie jest plik programu Word (.doc): brak części głównej „WordDocument”.",
+ "Keine Word-Datei (.doc).": "To nie jest plik programu Word (.doc).",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Nieznany format programu Word – zapisz plik w programie Word jako .docx.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy nie potrafi odczytać plików programu Word 6/95 – zapisz je w programie Word jako .docx.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Plik programu Word jest niekompletny (brak wewnętrznego indeksu tekstu).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Plik programu Word jest niekompletny (brak części z tabelami)."
 }

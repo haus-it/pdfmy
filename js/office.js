@@ -45,7 +45,7 @@
   // bei CBZ alles außer Bildern (z. B. ComicInfo.xml) bleiben liegen.
   const ARCHIVE_FILES = 2000, ARCHIVE_MB = 1500;
   const IMG_EXT = /\.(jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd)$/i;
-  const OPEN_EXT = /\.(pdf|jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd|psb|txt|md|markdown|csv|docx|xlsx|odt|ods|odp|pptx|ppsx|potx|epub|rtf|o?xps|xml|eml|msg|html?|xhtml|mht|mhtml)$/i;
+  const OPEN_EXT = /\.(pdf|jpe?g|png|webp|bmp|gif|tiff?|heic|heif|psd|psb|txt|md|markdown|csv|docx|xlsx|doc|xls|odt|ods|odp|pptx|ppsx|potx|epub|rtf|o?xps|xml|eml|msg|html?|xhtml|mht|mhtml)$/i;
   const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', bmp: 'image/bmp', tif: 'image/tiff', tiff: 'image/tiff', pdf: 'application/pdf' };
   function archiveList(z, comic) {
     const coll = new Intl.Collator('de', { numeric: true, sensitivity: 'base' });
@@ -686,6 +686,156 @@
     }
     return pages;
   }
-  const api = { readZip, archive, archiveList, psd, parseXml, parseHtml, html, docx, xlsx, odt, ods, epub, rtf, xps };
+  /* ---------- Alte Office-Formate (97–2003) aus der OLE-Verbunddatei (js/email.js readCfb) ----------
+     Word .doc: Text über die Stückliste (Clx/PlcPcd, MS-DOC 2.4.1) – Absätze, Zeilen- und Seitenumbrüche, Tabellen (Zellmarken),
+     Feldergebnisse statt Feldcode. Nicht nachgebildet: Formatvorlagen, Schriften, Bilder, Kopf-/Fußzeilen, Fußnoten.
+     Excel .xls: BIFF8 (MS-XLS) – sichtbare Tabellenblätter mit Text, Zahlen, Datum (Zahlenformat), Wahrheitswerten und gespeicherten
+     Formelergebnissen; ältere BIFF5-Dateien (Excel 95) mit Text in Windows-1252. Kennwortgeschützte Dateien werden erkannt. */
+  const cfbOf = (bytes, what) => (root.Email || (typeof require === 'function' ? require('./email.js') : null)).readCfb(bytes, what);
+  const cfbStream = (c, name) => { const e = c.dirs.find(d => d.type === 2 && d.name.toLowerCase() === name.toLowerCase()); return e ? c.stream(e) : null; };
+  const cp1252 = b => new TextDecoder('windows-1252').decode(b);
+
+  function doc(bytes) {
+    const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+    const c = cfbOf(u8, 'Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.');
+    const wd = cfbStream(c, 'WordDocument'); if (!wd || wd.length < 0x1AA) throw new Error('Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.');
+    const dv = new DataView(wd.buffer, wd.byteOffset, wd.byteLength);
+    if (dv.getUint16(0, true) !== 0xA5EC) throw new Error('Keine Word-Datei (.doc).');
+    if (dv.getUint16(2, true) < 0xC1) throw new Error('Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.');
+    const flags = dv.getUint16(0x0A, true);
+    if (flags & 0x0100) throw new Error('Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.');
+    const tbl = cfbStream(c, flags & 0x0200 ? '1Table' : '0Table'); if (!tbl) throw new Error('Word-Datei unvollständig (Tabellenteil fehlt).');
+    const ccpText = dv.getInt32(0x4C, true), fcClx = dv.getUint32(0x1A2, true), lcbClx = dv.getUint32(0x1A6, true);
+    if (!lcbClx || fcClx + lcbClx > tbl.length) throw new Error('Word-Datei unvollständig (Stückliste fehlt).');
+    const tv = new DataView(tbl.buffer, tbl.byteOffset, tbl.byteLength);
+    let p = fcClx, plc = null;
+    while (p < fcClx + lcbClx) {
+      if (tbl[p] === 0x01) { p += 3 + tv.getUint16(p + 1, true); continue; }   // Prc (Formatänderungen) überspringen
+      if (tbl[p] === 0x02) { plc = { at: p + 5, len: tv.getUint32(p + 1, true) }; break; }
+      break;
+    }
+    if (!plc) throw new Error('Word-Datei unvollständig (Stückliste fehlt).');
+    const n = (plc.len - 4) / 12; let text = '';
+    for (let i = 0; i < n && text.length < ccpText; i++) {
+      const cp0 = tv.getUint32(plc.at + i * 4, true), cp1 = tv.getUint32(plc.at + (i + 1) * 4, true), fc = tv.getUint32(plc.at + (n + 1) * 4 + i * 8 + 2, true);
+      const len = Math.min(cp1 - cp0, ccpText - text.length); if (len <= 0) continue;
+      if (fc & 0x40000000) { const o = (fc & 0x3FFFFFFF) / 2; text += cp1252(wd.subarray(o, o + len)); }
+      else text += new TextDecoder('utf-16le').decode(wd.subarray(fc, fc + len * 2));
+    }
+    // Felder: Code (zwischen 0x13 und 0x14) weg, Ergebnis (bis 0x15) behalten – auch verschachtelt
+    let out = '', st = [];
+    for (const ch of text) {
+      const k = ch.charCodeAt(0);
+      if (k === 0x13) { st.push(0); continue; } if (k === 0x14) { if (st.length) st[st.length - 1] = 1; continue; } if (k === 0x15) { st.pop(); continue; }
+      if (st.some(s => !s)) continue;
+      out += ch;
+    }
+    // Absätze (\r), Zellen (\x07; leere Zellmarke am Zeilenende = Zeilenende), Seitenumbruch (\x0c), Zeilenumbruch (\x0b)
+    const clean = s => s.replace(/\x0b/g, '\n').replace(/\x1e/g, '-').replace(/[\x1f\x01\x02\x05\x08]/g, '').replace(/\t/g, '    ').replace(/[ \u00a0]+\n/g, '\n').trim();
+    const blocks = []; let row = [], rows = [], cols = 0, buf = '';
+    const endTable = () => { if (row.length) rows.push(row); if (rows.length) { const w = Math.max(...rows.map(r => r.length)); blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: w }, (_, i) => r[i] ?? '')), head: false }); } rows = []; row = []; cols = 0; };
+    const para = s => { if (rows.length || row.length) endTable(); const t = clean(s); if (t) blocks.push({ type: 'p', text: t }); };
+    for (const ch of out) {
+      if (ch === '\r') { para(buf); buf = ''; }
+      else if (ch === '\x0c') { para(buf); buf = ''; if (blocks.length && blocks[blocks.length - 1].type !== 'pagebreak') blocks.push({ type: 'pagebreak' }); }
+      else if (ch === '\x07') {
+        const t = clean(buf); buf = '';
+        // leere Zellmarke: Zeilenende – außer die Zeile hat noch nicht so viele Zellen wie die erste (dann leere Zelle)
+        if (!t && row.length && (!cols || row.length >= cols)) { if (!cols) cols = row.length; rows.push(row); row = []; }
+        else row.push(t);
+      } else buf += ch;
+    }
+    para(buf); endTable();
+    while (blocks.length && blocks[blocks.length - 1].type === 'pagebreak') blocks.pop();
+    if (!blocks.length) throw new Error('Die Word-Datei enthält keinen Text.');
+    return { blocks };
+  }
+
+  function xls(bytes, { locale = 'de-DE' } = {}) {
+    const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+    const c = cfbOf(u8, 'Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.');
+    const wb = cfbStream(c, 'workbook') || cfbStream(c, 'book'); if (!wb) throw new Error('Keine Excel-Datei (.xls): Arbeitsmappe fehlt.');   // BIFF8 bzw. BIFF5 (Namen ohne Groß-/Kleinschreibung)
+    const dv = new DataView(wb.buffer, wb.byteOffset, wb.byteLength);
+    const recs = at => { const out = []; for (let p = at; p + 4 <= wb.length; ) { const t = dv.getUint16(p, true), l = dv.getUint16(p + 2, true); out.push({ t, p: p + 4, l }); p += 4 + l; if (t === 0x000A) break; } return out; };
+    const glob = recs(0); if (!glob.length || glob[0].t !== 0x0809) throw new Error('Keine Excel-Datei (.xls).');
+    const biff8 = dv.getUint16(glob[0].p, true) === 0x0600;
+    if (glob.some(r => r.t === 0x002F)) throw new Error('Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.');
+    // Zeichenketten: XLUnicodeString (cch 2 Byte bzw. 1 Byte, Flag fHighByte) – über CONTINUE-Grenzen nur im SST nötig
+    const ustr = (p, cch16 = true) => {
+      if (!biff8) { const n = cch16 ? dv.getUint16(p, true) : wb[p], o = p + (cch16 ? 2 : 1); return { s: cp1252(wb.subarray(o, o + n)), end: o + n }; }
+      const n = cch16 ? dv.getUint16(p, true) : wb[p], f = wb[p + (cch16 ? 2 : 1)], o = p + (cch16 ? 3 : 2);
+      return f & 1 ? { s: new TextDecoder('utf-16le').decode(wb.subarray(o, o + n * 2)), end: o + n * 2 } : { s: cp1252(wb.subarray(o, o + n)), end: o + n };
+    };
+    let date1904 = false; const fmts = new Map(), xfFmt = [], sheets = [], sst = [];
+    for (let i = 0; i < glob.length; i++) {
+      const r = glob[i];
+      if (r.t === 0x0022) date1904 = dv.getUint16(r.p, true) === 1;
+      else if (r.t === 0x041E && biff8) fmts.set(dv.getUint16(r.p, true), ustr(r.p + 2).s);
+      else if (r.t === 0x00E0) xfFmt.push(dv.getUint16(r.p + 2, true));
+      else if (r.t === 0x0085) sheets.push({ at: dv.getUint32(r.p, true), hidden: wb[r.p + 4] & 3, kind: wb[r.p + 5], name: ustr(r.p + 6, false).s });
+      else if (r.t === 0x00FC && biff8) {
+        // SST mit CONTINUE: Abschnitte; reißt eine Zeichenkette an einer Grenze, beginnt der nächste Abschnitt mit einem neuen Flag-Byte
+        const segs = [[r.p + 8, r.p + r.l]]; for (let k = i + 1; k < glob.length && glob[k].t === 0x003C; k++) segs.push([glob[k].p, glob[k].p + glob[k].l]);
+        const total = dv.getUint32(r.p + 4, true); let si = 0, p = segs[0][0];
+        const need = n => { if (p + n > segs[si][1] && p >= segs[si][1] && si + 1 < segs.length) { si++; p = segs[si][0]; } };
+        const skip = n => { while (n > 0 && si < segs.length) { const m = Math.min(n, segs[si][1] - p); p += m; n -= m; if (n > 0) { si++; if (si >= segs.length) break; p = segs[si][0]; } } };
+        for (let s = 0; s < total && si < segs.length; s++) {
+          need(3); if (p + 3 > segs[si][1]) break;
+          const cch = dv.getUint16(p, true), f = wb[p + 2]; p += 3;
+          const runs = f & 8 ? (need(2), p += 2, dv.getUint16(p - 2, true)) : 0, ext = f & 4 ? (need(4), p += 4, dv.getUint32(p - 4, true)) : 0;
+          let str = '', left = cch, hi = f & 1;
+          while (left > 0) {
+            if (p >= segs[si][1]) { si++; if (si >= segs.length) break; p = segs[si][0]; hi = wb[p] & 1; p++; }
+            const room = Math.floor((segs[si][1] - p) / (hi ? 2 : 1)), m = Math.min(left, room);
+            str += hi ? new TextDecoder('utf-16le').decode(wb.subarray(p, p + m * 2)) : cp1252(wb.subarray(p, p + m));
+            p += m * (hi ? 2 : 1); left -= m;
+          }
+          skip(runs * 4 + ext); sst.push(str);
+        }
+      }
+    }
+    const DATE_IDS = new Set([14, 15, 16, 17, 22, 27, 30, 36, 45, 46, 47, 50, 57]), BUILTIN = { 1: '0', 2: '0.00', 3: '#,##0', 4: '#,##0.00', 9: '0%', 10: '0.00%', 7: '#,##0.00 €', 8: '#,##0.00 €' };
+    const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 10 }), df = new Intl.DateTimeFormat(locale);
+    const fmtNum = (num, xf) => {
+      const id = xfFmt[xf] ?? 0, code = fmts.get(id) || BUILTIN[id] || '';
+      const isDate = DATE_IDS.has(id) || (fmts.has(id) && /(^|[^"\\])[dmyj]{1,4}/i.test(code.replace(/\[[^\]]*\]|"[^"]*"/g, '')) && !/^[#0.,%\s€]+$/.test(code));
+      if (isDate && num > 0 && num < 2958466) return df.format(new Date(Math.round((num + (date1904 ? 1462 : 0) - 25569) * 864e5)));
+      if (!code || code.toLowerCase() === 'general') return nf.format(num);
+      const dec = (/0[.,](0+)/.exec(code.split(';')[0]) || [, ''])[1].length;
+      return new Intl.NumberFormat(locale, { minimumFractionDigits: dec, maximumFractionDigits: dec, style: /%/.test(code) ? 'percent' : 'decimal' }).format(num) + (/€|EUR/.test(code) ? ' €' : '');
+    };
+    const rk = v => { const b = new DataView(new ArrayBuffer(8)); let n; if (v & 2) n = v >> 2; else { b.setUint32(4, v & 0xFFFFFFFC, true); b.setUint32(0, 0, true); n = b.getFloat64(0, true); } return v & 1 ? n / 100 : n; };
+    const blocks = [];
+    for (const s of sheets) {
+      if (s.hidden || s.kind !== 0 || s.at >= wb.length) continue;
+      const grid = [], put = (r, col, v) => { (grid[r] ||= [])[col] = v; };
+      let pendingStr = null;
+      for (const r of recs(s.at)) {
+        const row = () => dv.getUint16(r.p, true), col = () => dv.getUint16(r.p + 2, true), xf = () => dv.getUint16(r.p + 4, true);
+        if (r.t === 0x00FD) put(row(), col(), sst[dv.getUint32(r.p + 6, true)] ?? '');
+        else if (r.t === 0x0203) put(row(), col(), fmtNum(dv.getFloat64(r.p + 6, true), xf()));
+        else if (r.t === 0x027E) put(row(), col(), fmtNum(rk(dv.getInt32(r.p + 6, true)), xf()));
+        else if (r.t === 0x00BD) { const rr = row(), c0 = col(), c1 = dv.getUint16(r.p + r.l - 2, true); for (let k = 0; k <= c1 - c0; k++) put(rr, c0 + k, fmtNum(rk(dv.getInt32(r.p + 4 + k * 6 + 2, true)), dv.getUint16(r.p + 4 + k * 6, true))); }
+        else if (r.t === 0x0204) put(row(), col(), ustr(r.p + 6).s);
+        else if (r.t === 0x00D6 && !biff8) put(row(), col(), ustr(r.p + 6).s);   // RSTRING (BIFF5)
+        else if (r.t === 0x0205) { const v = wb[r.p + 6], err = wb[r.p + 7]; put(row(), col(), err ? '#FEHLER' : v ? 'WAHR' : 'FALSCH'); }
+        else if (r.t === 0x0006) {   // Formel: gespeichertes Ergebnis
+          const rr = row(), cc = col(), x = xf();
+          if (dv.getUint16(r.p + 12, true) === 0xFFFF) { const k = wb[r.p + 6]; if (k === 0) pendingStr = [rr, cc]; else if (k === 1) put(rr, cc, wb[r.p + 8] ? 'WAHR' : 'FALSCH'); else if (k === 2) put(rr, cc, '#FEHLER'); }
+          else put(rr, cc, fmtNum(dv.getFloat64(r.p + 6, true), x));
+        } else if (r.t === 0x0207 && pendingStr) { put(pendingStr[0], pendingStr[1], ustr(r.p).s); pendingStr = null; }
+      }
+      const dense = grid.filter(Boolean).map(r => Array.from(r, x => x ?? ''));
+      let n = Math.max(0, ...dense.map(r => r.length)); while (n > 0 && dense.every(r => !r[n - 1])) n--;
+      let first = 0; while (first < n && dense.every(r => !r[first])) first++;
+      const tbl = dense.map(r => Array.from({ length: n - first }, (_, i) => r[first + i] ?? '')).filter(r => r.some(Boolean));
+      if (tbl.length) blocks.push({ type: 'h', level: 2, text: s.name }, { type: 'table', rows: tbl, head: true });
+    }
+    if (blocks.length === 2) blocks.shift();   // nur ein Blatt mit Werten: ohne Blattüberschrift
+    if (!blocks.length) throw new Error('Die Excel-Datei enthält keine Werte.');
+    return { blocks };
+  }
+
+  const api = { doc, xls, readZip, archive, archiveList, psd, parseXml, parseHtml, html, docx, xlsx, odt, ods, epub, rtf, xps };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Office = api;
 })(typeof self !== 'undefined' ? self : this);

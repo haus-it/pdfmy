@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Click for signature details",
  "Signatur gültig": "Signature valid",
  "Signatur gültig, danach geändert": "Signature valid, changed afterwards",
- "Signatur ungültig": "Signature invalid"
+ "Signatur ungültig": "Signature invalid",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "{0} converted: text and tables were kept, fonts, images and headers and footers were not – for an exact copy, use “Save as PDF” in Word or print via the “PDFMy” printer.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy cannot convert this format yet – please save it as .pptx in PowerPoint or choose “Save as PDF” there.",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "The Excel file is password-protected – please save it in Excel without a password and open it again.",
+ "Die Word-Datei enthält keinen Text.": "The Word file contains no text.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "The Word file is password-protected – please save it in Word without a password and open it again.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Not an Excel file (.xls) – the file is damaged or has a different format.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Not an Excel file (.xls): workbook is missing.",
+ "Keine Excel-Datei (.xls).": "Not an Excel file (.xls).",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Not a Word file (.doc) – the file is damaged or has a different format.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Not a Word file (.doc): main part “WordDocument” is missing.",
+ "Keine Word-Datei (.doc).": "Not a Word file (.doc).",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Unknown Word format – please save it as .docx in Word.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy cannot read Word 6/95 files – please save them as .docx in Word.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Word file incomplete (internal text index missing).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Word file incomplete (table part missing)."
 }

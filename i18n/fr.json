@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Cliquez pour afficher les détails de la signature",
  "Signatur gültig": "Signature valide",
  "Signatur gültig, danach geändert": "Signature valide, modifiée depuis",
- "Signatur ungültig": "Signature invalide"
+ "Signatur ungültig": "Signature invalide",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "{0} converti : le texte et les tableaux sont conservés, mais pas les polices, les images ni les en-têtes et pieds de page – pour une copie exacte, utilisez « Enregistrer en PDF » dans Word ou imprimez avec l’imprimante « PDFMy ».",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0} : PDFMy ne peut pas encore convertir ce format – veuillez l’enregistrer au format .pptx dans PowerPoint ou y choisir « Enregistrer en PDF ».",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Le fichier Excel est protégé par un mot de passe – veuillez l’enregistrer dans Excel sans mot de passe, puis le rouvrir.",
+ "Die Word-Datei enthält keinen Text.": "Le fichier Word ne contient aucun texte.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Le fichier Word est protégé par un mot de passe – veuillez l’enregistrer dans Word sans mot de passe, puis le rouvrir.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Ce n’est pas un fichier Excel (.xls) – le fichier est endommagé ou possède un autre format.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Ce n’est pas un fichier Excel (.xls) : le classeur est introuvable.",
+ "Keine Excel-Datei (.xls).": "Ce n’est pas un fichier Excel (.xls).",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Ce n’est pas un fichier Word (.doc) – le fichier est endommagé ou possède un autre format.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Ce n’est pas un fichier Word (.doc) : la partie principale « WordDocument » est introuvable.",
+ "Keine Word-Datei (.doc).": "Ce n’est pas un fichier Word (.doc).",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Format Word inconnu – veuillez l’enregistrer au format .docx dans Word.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy ne peut pas lire les fichiers Word 6/95 – veuillez les enregistrer au format .docx dans Word.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Fichier Word incomplet (index de texte interne manquant).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Fichier Word incomplet (partie des tableaux manquante)."
 }

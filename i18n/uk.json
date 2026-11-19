@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Натисніть, щоб побачити подробиці підпису",
  "Signatur gültig": "Підпис дійсний",
  "Signatur gültig, danach geändert": "Підпис дійсний, пізніше змінено",
- "Signatur ungültig": "Підпис недійсний"
+ "Signatur ungültig": "Підпис недійсний",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "{0} перетворено: текст і таблиці збережено, шрифти, зображення та колонтитули – ні; для точної копії використайте у Word «Зберегти як PDF» або друкуйте через принтер «PDFMy».",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy ще не може перетворити цей формат – збережіть файл у PowerPoint як .pptx або виберіть там «Зберегти як PDF».",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Файл Excel захищено паролем – збережіть його в Excel без пароля й відкрийте знову.",
+ "Die Word-Datei enthält keinen Text.": "Файл Word не містить тексту.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Файл Word захищено паролем – збережіть його у Word без пароля й відкрийте знову.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Це не файл Excel (.xls) – файл пошкоджено або він має інший формат.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Це не файл Excel (.xls): відсутня книга.",
+ "Keine Excel-Datei (.xls).": "Це не файл Excel (.xls).",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Це не файл Word (.doc) – файл пошкоджено або він має інший формат.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Це не файл Word (.doc): відсутня основна частина «WordDocument».",
+ "Keine Word-Datei (.doc).": "Це не файл Word (.doc).",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Невідомий формат Word – збережіть файл у Word як .docx.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy не може читати файли Word 6/95 – збережіть їх у Word як .docx.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Файл Word неповний (відсутній внутрішній індекс тексту).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Файл Word неповний (відсутня частина з таблицями)."
 }

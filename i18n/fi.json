@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Napsauta nähdäksesi allekirjoituksen tiedot",
  "Signatur gültig": "Allekirjoitus kelvollinen",
  "Signatur gültig, danach geändert": "Allekirjoitus kelvollinen, muutettu sen jälkeen",
- "Signatur ungültig": "Allekirjoitus virheellinen"
+ "Signatur ungültig": "Allekirjoitus virheellinen",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "{0} muunnettu: teksti ja taulukot siirtyivät mukaan, fontit, kuvat sekä ylä- ja alatunnisteet eivät – tarkan vastineen saat valitsemalla Wordissa ”Tallenna PDF:nä” tai tulostamalla ”PDFMy”-tulostimella.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy ei vielä osaa muuntaa tätä muotoa – tallenna tiedosto PowerPointissa .pptx-muodossa tai valitse siellä ”Tallenna PDF:nä”.",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Excel-tiedosto on suojattu salasanalla – tallenna se Excelissä ilman salasanaa ja avaa uudelleen.",
+ "Die Word-Datei enthält keinen Text.": "Word-tiedostossa ei ole tekstiä.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Word-tiedosto on suojattu salasanalla – tallenna se Wordissa ilman salasanaa ja avaa uudelleen.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Ei ole Excel-tiedosto (.xls) – tiedosto on vioittunut tai sen muoto on toinen.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Ei ole Excel-tiedosto (.xls): työkirja puuttuu.",
+ "Keine Excel-Datei (.xls).": "Ei ole Excel-tiedosto (.xls).",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Ei ole Word-tiedosto (.doc) – tiedosto on vioittunut tai sen muoto on toinen.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Ei ole Word-tiedosto (.doc): pääosa ”WordDocument” puuttuu.",
+ "Keine Word-Datei (.doc).": "Ei ole Word-tiedosto (.doc).",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Tuntematon Word-muoto – tallenna tiedosto Wordissa .docx-muodossa.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy ei voi lukea Word 6/95 -tiedostoja – tallenna ne Wordissa .docx-muodossa.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Word-tiedosto on puutteellinen (sisäinen tekstihakemisto puuttuu).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Word-tiedosto on puutteellinen (taulukko-osa puuttuu)."
 }

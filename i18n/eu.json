@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Egin klik sinaduraren xehetasunak ikusteko",
  "Signatur gültig": "Sinadura baliozkoa",
  "Signatur gültig, danach geändert": "Sinadura baliozkoa, gero aldatua",
- "Signatur ungültig": "Sinadura baliogabea"
+ "Signatur ungültig": "Sinadura baliogabea",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "{0} bihurtu da: testua eta taulak mantendu dira, baina letra-tipoak, irudiak eta goiburuak nahiz oinak ez; kopia zehatza lortzeko, erabili Wordeko «Gorde PDF gisa» edo inprimatu «PDFMy» inprimagailuarekin.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMyk ezin du oraindik formatu hau bihurtu; gorde fitxategia PowerPointen .pptx gisa edo hautatu bertan «Gorde PDF gisa».",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Excel fitxategia pasahitzez babestuta dago; gorde Excelen pasahitzik gabe eta ireki berriro.",
+ "Die Word-Datei enthält keinen Text.": "Word fitxategiak ez du testurik.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Word fitxategia pasahitzez babestuta dago; gorde Wordean pasahitzik gabe eta ireki berriro.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Ez da Excel fitxategia (.xls): fitxategia hondatuta dago edo beste formatu bat du.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Ez da Excel fitxategia (.xls): lan-liburua falta da.",
+ "Keine Excel-Datei (.xls).": "Ez da Excel fitxategia (.xls).",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Ez da Word fitxategia (.doc): fitxategia hondatuta dago edo beste formatu bat du.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Ez da Word fitxategia (.doc): «WordDocument» atal nagusia falta da.",
+ "Keine Word-Datei (.doc).": "Ez da Word fitxategia (.doc).",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Word formatu ezezaguna; gorde fitxategia Wordean .docx gisa.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMyk ezin ditu Word 6/95 fitxategiak irakurri; gorde itzazu Wordean .docx gisa.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Word fitxategia osatu gabe dago (barneko testu-indizea falta da).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Word fitxategia osatu gabe dago (taulen atala falta da)."
 }

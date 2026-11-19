@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Klicka för signaturdetaljer",
  "Signatur gültig": "Signaturen giltig",
  "Signatur gültig, danach geändert": "Signaturen giltig, därefter ändrad",
- "Signatur ungültig": "Signaturen ogiltig"
+ "Signatur ungültig": "Signaturen ogiltig",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "{0} konverterad: text och tabeller har tagits med, men inte teckensnitt, bilder samt sidhuvuden och sidfötter – för en exakt avbildning använder du ”Spara som PDF” i Word eller skriver ut via skrivaren ”PDFMy”.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: PDFMy kan ännu inte konvertera det här formatet – spara filen som .pptx i PowerPoint eller välj ”Spara som PDF” där.",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Excel-filen är lösenordsskyddad – spara den i Excel utan lösenord och öppna den igen.",
+ "Die Word-Datei enthält keinen Text.": "Word-filen innehåller ingen text.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Word-filen är lösenordsskyddad – spara den i Word utan lösenord och öppna den igen.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Ingen Excel-fil (.xls) – filen är skadad eller har ett annat format.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Ingen Excel-fil (.xls): arbetsboken saknas.",
+ "Keine Excel-Datei (.xls).": "Ingen Excel-fil (.xls).",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Ingen Word-fil (.doc) – filen är skadad eller har ett annat format.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Ingen Word-fil (.doc): huvuddelen ”WordDocument” saknas.",
+ "Keine Word-Datei (.doc).": "Ingen Word-fil (.doc).",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Okänt Word-format – spara filen som .docx i Word.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy kan inte läsa Word 6/95-filer – spara dem som .docx i Word.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Word-filen är ofullständig (internt textindex saknas).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Word-filen är ofullständig (tabelldelen saknas)."
 }

@@ -71,9 +71,10 @@
   }
 
   /* ---------------- .msg (OLE/CFB, MS-OXMSG) ---------------- */
-  function readCfb(bytes) {
+  // OLE-Verbunddatei (CFB) – auch für alte Word- und Excel-Dateien (js/office.js doc/xls); notMsg: Fehlertext, wenn es keine ist
+  function readCfb(bytes, notMsg = 'keine Outlook-Nachricht (.msg)') {
     const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-    if (dv.getUint32(0, true) !== 0xE011CFD0 || dv.getUint32(4, true) !== 0xE11AB1A1) throw new Error('keine Outlook-Nachricht (.msg)');
+    if (bytes.length < 512 || dv.getUint32(0, true) !== 0xE011CFD0 || dv.getUint32(4, true) !== 0xE11AB1A1) throw new Error(notMsg);
     const ss = 1 << dv.getUint16(30, true), mss = 1 << dv.getUint16(32, true);
     const nFat = dv.getUint32(44, true), dirStart = dv.getUint32(48, true), cutoff = dv.getUint32(56, true);
     const miniFatStart = dv.getUint32(60, true), difStart = dv.getUint32(68, true);

@@ -3870,5 +3870,20 @@
  "Klicken für Signaturdetails": "Cliceáil le haghaidh sonraí an tsínithe",
  "Signatur gültig": "Síniú bailí",
  "Signatur gültig, danach geändert": "Síniú bailí, athraithe ina dhiaidh sin",
- "Signatur ungültig": "Síniú neamhbhailí"
+ "Signatur ungültig": "Síniú neamhbhailí",
+ "{0} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.": "Tiontaíodh {0}: coinníodh an téacs agus na táblaí, ach níor coinníodh clófhoirne, íomhánna ná ceannteidil agus buntásc – chun cóip chruinn a fháil, úsáid “Sábháil mar PDF” i Word nó priontáil tríd an bpriontálaí “PDFMy”.",
+ "{0}: Dieses Format kann PDFMy noch nicht umwandeln – bitte in PowerPoint als .pptx speichern oder dort „Als PDF speichern“ wählen.": "{0}: Ní féidir le PDFMy an formáid seo a thiontú go fóill – sábháil an comhad mar .pptx i PowerPoint nó roghnaigh “Sábháil mar PDF” ansin.",
+ "Die Excel-Datei ist mit Kennwort geschützt – bitte in Excel ohne Kennwort speichern und erneut öffnen.": "Tá an comhad Excel cosanta le pasfhocal – sábháil in Excel é gan pasfhocal agus oscail arís é.",
+ "Die Word-Datei enthält keinen Text.": "Níl aon téacs sa chomhad Word.",
+ "Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.": "Tá an comhad Word cosanta le pasfhocal – sábháil i Word é gan pasfhocal agus oscail arís é.",
+ "Keine Excel-Datei (.xls) – die Datei ist beschädigt oder hat ein anderes Format.": "Ní comhad Excel (.xls) é – tá an comhad truaillithe nó tá formáid eile air.",
+ "Keine Excel-Datei (.xls): Arbeitsmappe fehlt.": "Ní comhad Excel (.xls) é: tá an leabhar oibre ar iarraidh.",
+ "Keine Excel-Datei (.xls).": "Ní comhad Excel (.xls) é.",
+ "Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.": "Ní comhad Word (.doc) é – tá an comhad truaillithe nó tá formáid eile air.",
+ "Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.": "Ní comhad Word (.doc) é: tá an príomhchuid “WordDocument” ar iarraidh.",
+ "Keine Word-Datei (.doc).": "Ní comhad Word (.doc) é.",
+ "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Formáid Word anaithnid – sábháil an comhad i Word mar .docx.",
+ "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "Ní féidir le PDFMy comhaid Word 6/95 a léamh – sábháil i Word iad mar .docx.",
+ "Word-Datei unvollständig (Stückliste fehlt).": "Comhad Word neamhiomlán (tá an t-innéacs inmheánach téacs ar iarraidh).",
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Comhad Word neamhiomlán (tá an chuid táblaí ar iarraidh)."
 }

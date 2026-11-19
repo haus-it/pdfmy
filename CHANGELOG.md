@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Alte Word- und Excel-Dateien (.doc, .xls) öffnen (app-v291)
+- **Word 97–2003 (.doc):** Text über die Stückliste der Datei, Absätze, Zeilen- und Seitenumbrüche, Tabellen, Feldergebnisse; Kennwortschutz und Word 6/95 werden erkannt und erklärt.
+- **Excel 97–2003 (.xls, BIFF8/BIFF5):** sichtbare Blätter, Zahlen im Excel-Format, Datum (auch 1904), Prozent, Wahrheitswerte, gespeicherte Formelergebnisse, lange Textlisten über Blockgrenzen.
+- **Inhalt statt Endung:** „.xls“ als HTML-, Text- oder XML-Tabelle und „.doc“ als RTF oder eigentlich .docx/.xlsx werden richtig geöffnet. Ohne Server, ohne Office, ohne neue Bibliothek (OLE-Leser aus dem .msg-Import).
+- Hilfe in 40 Sprachen, Tests in tests/alt-office.test.js mit LibreOffice-erzeugten Vorlagen.
+
 ### Signaturstempel anklickbar (app-v290)
 - **Klick auf einen sichtbaren Signaturstempel** (auch aus Acrobat, Foxit & Co.) öffnet die Signaturdetails genau dieser Person, hervorgehoben; per Tab und Enter erreichbar. Oben rechts am Stempel ein Schild mit dem Prüfergebnis (Haken, Ausrufezeichen, Kreuz) – das Ergebnis der Prüfung, nicht das Bild im Stempel.
 - Zuordnung Stempel → Signatur über den Bytebereich (js/pdfverify.js fields, auch bei gedrehten Seiten). Hilfe in 40 Sprachen, Test in tests/signatur-sichtbar.test.js.
