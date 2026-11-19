@@ -247,7 +247,10 @@
     else if (fRaw instanceof PL.PDFArray) fRaw.push(wRef); else form.set(N('Fields'), ctx.obj([wRef]));
     form.set(N('SigFlags'), PL.PDFNumber.of(3));
     if (formRef) changed.set(formRef, form); else changed.set(catRef, cat);
-    // Objekte serialisieren und anhängen
+    return appendObjects(orig, ctx, changed);
+  }
+  // Inkrementelles Update: geänderte bzw. neue Objekte (Map Ref → Objekt) samt Querverweistabelle an die unveränderte Datei anhängen
+  function appendObjects(orig, ctx, changed) {
     const enc = new TextEncoder(), parts = [], offsets = [];
     let pos = orig.length;
     const sep = orig[orig.length - 1] === 0x0a ? '' : '\n';
@@ -329,6 +332,89 @@
     const out = await appendSigField(pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes), { name: 'Dokumentzeitstempel' }, o, new Date());
     return { bytes: await finishSig(out, {}, o), time: o.tsTime };
   }
-  const api = { readP12, signPdf, addTimestamp, docTimestamp, TSA };
+  /* ---------- Langzeitprüfdaten (PAdES B-LT / B-LTA, app-v311) ----------
+     Nach der Signatur mit Zeitstempel: Zertifikate aus der letzten Signatur und ihrem Zeitstempel lesen, je Zertifikat die
+     Sperrauskunft (OCSP, ersatzweise die Sperrliste) der ausstellenden Stelle holen und alles als /DSS (Document Security Store,
+     ISO 32000-2 12.8.4.3) anhängen; darüber ein Dokumentzeitstempel (B-LTA). So bleibt die Signatur prüfbar, auch wenn das
+     Zertifikat abgelaufen ist oder die Stelle ihren Dienst einstellt. fetchRev({ kind: 'ocsp'|'crl', url, data? }) → Antwort (Bytes),
+     läuft über pdfmy Scan. Übertragen werden nur OCSP-Anfragen (Prüfwerte des Ausstellers, Seriennummer), nie das Dokument. */
+  const O = { aia: '1.3.6.1.5.5.7.1.1', ocsp: '1.3.6.1.5.5.7.48.1', caIss: '1.3.6.1.5.5.7.48.2', crlDp: '2.5.29.31', sha1: '1.3.14.3.2.26', sd: '1.2.840.113549.1.7.2', tst: '1.2.840.113549.1.9.16.2.14' };
+  const derOf = n => forge.asn1.toDer(n).getBytes();
+  // Zertifikate (DER) aus einem CMS SignedData – auch aus dem eingebetteten Zeitstempel (unsignierte Attribute)
+  function cmsCerts(der) {
+    const out = [], walk = (ci) => {
+      const sd = ci.value[1].value[0], certs = sd.value.find(x => x.tagClass === forge.asn1.Class.CONTEXT_SPECIFIC && x.type === 0);
+      if (certs) for (const c of certs.value) out.push(derOf(c));
+      const si = sd.value[sd.value.length - 1].value[0], ua = si && si.value.find(x => x.tagClass === forge.asn1.Class.CONTEXT_SPECIFIC && x.type === 1);
+      if (ua) for (const at of ua.value) { try { if (forge.asn1.derToOid(at.value[0].value) === O.tst) walk(at.value[1].value[0]); } catch {} }
+    };
+    walk(forge.asn1.fromDer(der, { strict: false, parseAllBytes: false }));   // dahinter folgen die Füllnullen des Platzhalters
+    return [...new Set(out)];
+  }
+  // Teile eines Zertifikats: Aussteller- und Inhabername (DER), Seriennummer, Schlüssel (BIT-STRING-Inhalt), Adressen für OCSP/CRL/Aussteller
+  function certParts(der) {
+    const c = forge.asn1.fromDer(der, { strict: false }), tbs = c.value[0].value, k = tbs[0].tagClass === forge.asn1.Class.CONTEXT_SPECIFIC ? 1 : 0;
+    const spki = tbs[k + 5], keyBits = derOf(spki.value[1]), hdr = keyBits.charCodeAt(1) < 0x80 ? 2 : 2 + (keyBits.charCodeAt(1) & 0x7f);
+    const r = { der, serial: tbs[k].value, issuer: derOf(tbs[k + 2]), subject: derOf(tbs[k + 4]), key: keyBits.slice(hdr + 1), ocsp: [], crl: [], caIssuers: [] };
+    const ext = tbs.find(x => x.tagClass === forge.asn1.Class.CONTEXT_SPECIFIC && x.type === 3);
+    const uris = (n, acc) => { if (n.tagClass === forge.asn1.Class.CONTEXT_SPECIFIC && n.type === 6 && typeof n.value === 'string') acc.push(n.value); else if (Array.isArray(n.value)) n.value.forEach(x => uris(x, acc)); return acc; };
+    if (ext) for (const e of ext.value[0].value) {
+      const oid = forge.asn1.derToOid(e.value[0].value), val = forge.asn1.fromDer(e.value[e.value.length - 1].value, { strict: false });
+      if (oid === O.aia) for (const ad of val.value) { const m = forge.asn1.derToOid(ad.value[0].value), u = uris(ad.value[1], [])[0]; if (u && /^https?:/i.test(u)) (m === O.ocsp ? r.ocsp : m === O.caIss ? r.caIssuers : []).push(u); }
+      if (oid === O.crlDp) r.crl.push(...uris(val, []).filter(u => /^https?:/i.test(u)));
+    }
+    return r;
+  }
+  // OCSP-Anfrage (RFC 6960) für ein Zertifikat und seinen Aussteller: CertID mit SHA-1 (von allen Diensten unterstützt)
+  function ocspRequest(cert, issuer) {
+    const A = forge.asn1, T = A.Type, C = A.Class.UNIVERSAL, h = s => { const m = forge.md.sha1.create(); m.update(s); return m.digest().getBytes(); };
+    const certId = A.create(C, T.SEQUENCE, true, [
+      A.create(C, T.SEQUENCE, true, [A.create(C, T.OID, false, A.oidToDer(O.sha1).getBytes()), A.create(C, T.NULL, false, '')]),
+      A.create(C, T.OCTETSTRING, false, h(cert.issuer)), A.create(C, T.OCTETSTRING, false, h(issuer.key)), A.create(C, T.INTEGER, false, cert.serial)]);
+    return derOf(A.create(C, T.SEQUENCE, true, [A.create(C, T.SEQUENCE, true, [A.create(C, T.SEQUENCE, true, [A.create(C, T.SEQUENCE, true, [certId])])])]));
+  }
+  // OCSP-Antwort erfolgreich? (responseStatus 0) – und Zertifikate des Antwortdienstes für die Kette
+  function ocspOk(der) {
+    try {
+      const r = forge.asn1.fromDer(der, { strict: false });
+      if (r.value[0].value.charCodeAt(0) !== 0 || !r.value[1]) return null;
+      const basic = forge.asn1.fromDer(r.value[1].value[0].value[1].value, { strict: false }), certs = basic.value.find(x => x.tagClass === forge.asn1.Class.CONTEXT_SPECIFIC && x.type === 0);
+      return { certs: certs ? certs.value[0].value.map(derOf) : [] };
+    } catch { return null; }
+  }
+  async function addLtv(pdfBytes, fetchRev) {
+    libs();
+    const orig = pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes), s = bin(orig);
+    const brs = [...s.matchAll(/\/ByteRange\s*\[\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*\]/g)]; if (!brs.length) throw new Error('Keine Signatur gefunden.');
+    const [, l1, o2] = brs[brs.length - 1].slice(1).map(Number), hex = s.slice(l1 + 1, o2 - 1);
+    const certs = cmsCerts(forge.util.hexToBytes(hex)).map(d => { try { return certParts(d); } catch { return null; } }).filter(Boolean);
+    const all = new Map(certs.map(c => [c.der, c])), ocsps = [], crls = [], missing = [];
+    const ask = async (kind, url, data) => { const r = await fetchRev({ kind, url, data: data && u8(data) }); return bin(r instanceof Uint8Array ? r : new Uint8Array(r)); };
+    for (const c of certs) {
+      if (c.issuer === c.subject) continue;   // Wurzel: keine Sperrauskunft
+      let iss = [...all.values()].find(x => x.subject === c.issuer);
+      if (!iss) for (const u of c.caIssuers) { try { const d = await ask('crl', u); iss = certParts(d); all.set(d, iss); break; } catch {} }
+      let done = false;
+      if (iss) for (const u of c.ocsp) {
+        try { const d = await ask('ocsp', u, ocspRequest(c, iss)), ok = ocspOk(d); if (!ok) continue; ocsps.push(d); for (const x of ok.certs) if (!all.has(x)) { try { all.set(x, certParts(x)); } catch {} } done = true; break; } catch {}
+      }
+      if (!done) for (const u of c.crl) { try { crls.push(await ask('crl', u)); done = true; break; } catch {} }
+      if (!done) missing.push(c);
+    }
+    if (!ocsps.length && !crls.length) throw new Error('Keine Sperrauskunft erreichbar.');
+    // /DSS anhängen (vorhandenen Speicher ergänzen)
+    const doc = await PL.PDFDocument.load(orig, { updateMetadata: false }), ctx = doc.context, N = PL.PDFName.of, changed = new Map();
+    const prevSize = Math.max(0, ...[...bin(orig.subarray(Math.max(0, orig.length - 4096))).matchAll(/\/Size\s+(\d+)/g)].map(m => +m[1]));
+    if (prevSize - 1 > ctx.largestObjectNumber) ctx.largestObjectNumber = prevSize - 1;
+    const streams = list => list.map(d => { const ref = ctx.register(ctx.flateStream(u8(d))); changed.set(ref, ctx.lookup(ref)); return ref; });
+    const cat = doc.catalog, catRef = ctx.trailerInfo.Root;
+    let dss = cat.lookup(N('DSS')); const dssRef = cat.get(N('DSS')) instanceof PL.PDFRef ? cat.get(N('DSS')) : null;
+    if (!(dss instanceof PL.PDFDict)) dss = ctx.obj({});
+    const add = (key, refs) => { if (!refs.length) return; const a = dss.lookup(N(key)); if (a instanceof PL.PDFArray) { refs.forEach(r => a.push(r)); if (dss.get(N(key)) instanceof PL.PDFRef) changed.set(dss.get(N(key)), a); } else dss.set(N(key), ctx.obj(refs)); };
+    add('Certs', streams([...all.keys()])); add('OCSPs', streams(ocsps)); add('CRLs', streams(crls));
+    if (dssRef) changed.set(dssRef, dss); else { const r = ctx.register(dss); changed.set(r, dss); cat.set(N('DSS'), r); changed.set(catRef, cat); }
+    return { bytes: appendObjects(orig, ctx, changed), ocsp: ocsps.length, crl: crls.length, certs: all.size, missing: missing.length };
+  }
+  const api = { readP12, signPdf, addTimestamp, docTimestamp, addLtv, ocspRequest: (c, i) => (libs(), ocspRequest(c, i)), certParts: d => (libs(), certParts(d)), TSA };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfSign = api;
 })(typeof self !== 'undefined' ? self : globalThis);

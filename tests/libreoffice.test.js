@@ -18,7 +18,7 @@ test('App: Office-Dateien zuerst über LibreOffice, sonst eigene Umwandlung', ()
   assert.match(app, /if \(!state\.scanConvert \|\| f\.size > 200e6\) return false;/, 'nur wenn pdfmy Scan LibreOffice meldet');
   assert.match(app, /state\.scanConvert = d\.convert === true;/);
   assert.match(app, /if \(!r\.ok \|\| !r\.data\) \{ console\.warn\('LibreOffice-Umwandlung:', r\.error\); return false; \}/, 'Fehler → Rückfall');
-  assert.match(app, /const SCAN_LATEST = '1\.22\.0'/); assert.match(app, /const SCAN_MAC_LATEST = '1\.12\.0'/);
+  assert.match(app, /const SCAN_LATEST = '1\.(2[2-9]|[3-9]\d)\.\d+'/); assert.match(app, /const SCAN_MAC_LATEST = '1\.(1[2-9]|[2-9]\d)\.\d+'/);   // mindestens 1.22.0 / 1.12.0
 });
 
 test('pdfmy Scan (Windows): Umwandlung ohne Fenster, eigenes Profil, einzeln, Arbeitsdateien gelöscht', () => {
@@ -30,12 +30,12 @@ test('pdfmy Scan (Windows): Umwandlung ohne Fenster, eigenes Profil, einzeln, Ar
   assert.match(cs, /bytes\[0\] != '%' \|\| bytes\[1\] != 'P'/, 'nur echte PDFs zurückgeben');
   assert.match(prog, /p == "\/office\/convert" && method == "POST"/);
   assert.match(prog, /convert = OfficeApps\.Converter\(\) != null/);
-  assert.match(prog, /Version = "1\.22\.0"/);
+  assert.match(prog, /Version = "1\.(2[2-9]|[3-9]\d)\.\d+"/);
   assert.match(prog, /path\.StartsWith\("\/office"\)/, 'große Dateien erlaubt');
 });
 
 test('pdfmy Scan (Mac/Linux): gleiche Umwandlung, Sperrdatei, Status-Meldung', () => {
-  assert.match(pl, /our \$VERSION = '1\.12\.0'/);
+  assert.match(pl, /our \$VERSION = '1\.(1[2-9]|[2-9]\d)\.\d+'/);
   assert.match(pl, /'--headless', '--invisible', '--norestore', '--nologo', '--nodefault', '--nolockcheck', '--convert-to', 'pdf'/);
   assert.match(pl, /flock\(\$lk, 2\)/);
   assert.match(pl, /\$p eq '\/office\/convert' && \$method eq 'POST'/);

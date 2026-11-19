@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.22.0";
+        public const string Version = "1.23.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -1996,6 +1996,16 @@ namespace PdfmyScan
                 catch (Exception e) { var m = (e is AggregateException a ? a.InnerException ?? e : e).Message; Program.Log("Zeitstempel: " + m); SendJson(s, 502, new { error = m }, cors); }
                 return;
             }
+            if (p == "/revocation" && method == "POST")   // Langzeitprüfdaten (PAdES B-LT, seit 1.23.0): OCSP-Antwort bzw. Sperrliste der Zertifizierungsstelle
+            {
+                var o = json.Deserialize<Dictionary<string, object>>(Encoding.UTF8.GetString(body));
+                string kind = Convert.ToString(o.ContainsKey("kind") ? o["kind"] : ""), url = Convert.ToString(o.ContainsKey("url") ? o["url"] : "");
+                if (kind != "ocsp" && kind != "crl") { SendJson(s, 400, new { error = "Unbekannte Art" }, cors); return; }
+                byte[] req = null; if (kind == "ocsp") { try { req = Convert.FromBase64String(Convert.ToString(o["data"])); } catch { SendJson(s, 400, new { error = "Ungültige Daten" }, cors); return; } }
+                try { SendJson(s, 200, new { data = Convert.ToBase64String(Revocation.Fetch(kind, url, req)) }, cors); }
+                catch (Exception e) { var m = (e is AggregateException a ? a.InnerException ?? e : e).Message; Program.Log("Sperrauskunft: " + m); SendJson(s, 502, new { error = m }, cors); }
+                return;
+            }
             if (p == "/office" && method == "GET") { SendJson(s, 200, new { apps = OfficeApps.Detect().Select(c => new { c.id, c.app, c.what, c.fmt }).ToList() }, cors); return; }   // installierte Office-Programme
             if (p == "/office/convert" && method == "POST")   // Word/Excel/PowerPoint originalgetreu mit LibreOffice in PDF umwandeln (seit 1.22.0)
             {
@@ -2032,7 +2042,7 @@ namespace PdfmyScan
                 SendJson(s, err == null ? 200 : 409, new { ok = err == null, error = err, printer = PdfPrinter.State(), printerName = PdfPrinter.Name }, cors); return;
             }
             if (p == "/defaultapps" && method == "POST") { FileAssoc.OpenDefaultAppsSettings(); SendJson(s, 200, new { ok = true, registered = FileAssoc.IsRegistered() }, cors); return; }
-            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), managed = Machine.UpdatesManaged, printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem(), selfUpdate = !Machine.UpdatesManaged, autoUpdate = !Updater.AutoOff, convert = OfficeApps.Converter() != null }, cors); return; }
+            if (p == "/status") { SendJson(s, 200, new { app = "pdfmy-scan", version = Program.Version, ownUser = true, pades = true, tsa = true, searching = hub.Searching, devices = hub.Devices.Count, pdfDefault = FileAssoc.IsDefault(), pdfBrowserApp = FileAssoc.BrowserAppIsDefault(), managed = Machine.UpdatesManaged, printer = PdfPrinter.State(), printerName = PdfPrinter.Name, printerProblem = PdfPrinter.Problem(), selfUpdate = !Machine.UpdatesManaged, autoUpdate = !Updater.AutoOff, convert = OfficeApps.Converter() != null, revocation = true }, cors); return; }
             // „Jetzt aktualisieren“ in PDFMy (1.20.0): ein Klick, Rest automatisch – wie „Update installieren“ im Symbol unten rechts
             // (SHA-256 und Signatur „Mentor GmbH“ geprüft); von der IT verteilte Installationen aktualisiert die IT
             if (p == "/self-update" && method == "POST")

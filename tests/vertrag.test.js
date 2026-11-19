@@ -41,7 +41,7 @@ test('Fehlersuche 19.11.2026: jederzeit kündbar ist keine Frist, Satzgrenzen, �
   const nur = L.contractTerms('Kündigungsfrist: 3 Monate.', HEUTE);
   assert.equal(nur.jederzeit, true); assert.equal(nur.naechstesEnde, '2027-02-19');
   const v = 'Stadtwerke GmbH\nVertrag Strom\nKündigungsfrist: 3 Monate.', mv = L.analyzeLetter(v, v, '');
-  assert.equal(mv.deadline, '', 'keine Frist'); assert.match(L.todoFor(mv, HEUTE).text, /kündbar mit einer Frist von 3 Monate – eine Kündigung heute wirkt zum 19\.2\.2027/);
+  assert.equal(mv.deadline, '', 'keine Frist'); assert.match(L.todoFor(mv, HEUTE).text, /kündbar mit einer Frist von 3 Monate – eine Kündigung heute wirkt zum \d{1,2}\.\d{1,2}\.\d{4}/);   // analyzeLetter rechnet mit dem echten Tag – das genaue Datum prüft contractTerms oben
   // Rechnung, die „Kündigungsfrist“ nur im Fuß erwähnt: keine Frist
   const r = 'Stadtwerke GmbH\nRechnung Nr. 4711\nGesamtbetrag 120,00 EUR\nKündigungsfrist 1 Monat zum Monatsende.', mr = L.analyzeLetter(r, r, '');
   assert.equal(mr.type, 'Rechnung'); assert.equal(mr.deadline, '');

@@ -2,6 +2,14 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-20
+
+### Langzeitprüfbare Signaturen: PAdES B-LTA (app-v311, pdfmy Scan 1.23.0 / Mac und Linux 1.13.0)
+- Beim Signieren mit Zeitstempel bettet PDFMy jetzt Langzeitprüfdaten ein: Zertifikate aus Signatur und Zeitstempel, je Zertifikat die OCSP-Sperrauskunft (ersatzweise die Sperrliste aus dem Verteilpunkt, fehlende Ausstellerzertifikate über „caIssuers“), alles als /DSS (ISO 32000-2 12.8.4.3) im inkrementellen Update; darüber ein Dokumentzeitstempel. Entspricht „LTV aktiviert“ in Acrobat. Klappt der Abruf nicht, bleibt die gültige Fassung mit Zeitstempel (Hinweis).
+- pdfmy Scan: neuer Endpunkt `POST /revocation` (OCSP per POST, Sperrliste per GET). Kein offener Proxy: nur http/https auf Port 80/443, nur öffentliche IP-Adressen, Weiterleitungen höchstens 3 und jede neu geprüft, Größen begrenzt; Mac/Linux legt curl per --resolve auf die geprüfte Adresse fest. `/status` meldet `revocation`.
+- Prüfung: Signaturdetails zeigen „Langzeitprüfdaten (LTV) eingebettet“.
+- Geprüft: OCSP-Anfragen von PDFMy werden von DigiCert und Sectigo mit „erfolgreich“ beantwortet; echter Durchlauf mit DigiCert-Zeitstempel (3 OCSP-Antworten, 5 Zertifikate, Signatur gültig, Dokumentzeitstempel deckt die ganze Datei ab). tests/ltv.test.js. Nicht geprüft: Anzeige in Acrobat Reader.
+
 ## 2026-11-19
 
 ### Signaturprüfung gegen die EU-Vertrauensliste (app-v310)

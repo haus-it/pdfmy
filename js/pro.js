@@ -3387,7 +3387,25 @@ const tsaCall = async req => {
   }
   throw new Error('Kein Zeitstempeldienst erreichbar' + (last ? ' (' + last.message + ')' : '') + ' – ohne Zeitstempel erneut speichern oder später versuchen.');
 };
-const tsNote = o => { if (o.tsTime) toast(`Signiert mit Zeitstempel vom ${I18N.fmtDate(o.tsTime)}, ${o.tsTime.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} Uhr.`, 5000); };
+const tsNote = o => { if (o.tsTime) toast(`Signiert mit Zeitstempel vom ${I18N.fmtDate(o.tsTime)}, ${o.tsTime.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} Uhr${o.ltv ? ' – mit Langzeitprüfdaten (LTV): bleibt auch nach Ablauf des Zertifikats prüfbar' : ''}.`, o.ltv ? 7000 : 5000); };
+/* Langzeitprüfdaten (PAdES B-LTA, app-v311): gekoppelt an „mit Zeitstempel“, ab pdfmy Scan 1.23.0 / 1.13.0. pdfmy Scan holt die
+   Sperrauskunft bei der Stelle, die das Zertifikat ausgestellt hat (Browser dürfen das nicht direkt); dann /DSS und ein
+   Dokumentzeitstempel darüber. Klappt etwas nicht, bleibt die gültige Fassung mit Zeitstempel – nichts geht verloren. */
+const revCall = async q => {
+  const body = { kind: q.kind, url: q.url };
+  if (q.data) { let s = ''; for (const b of q.data) s += String.fromCharCode(b); body.data = btoa(s); }
+  const r = await scanApi('/revocation', { method: 'POST', body: JSON.stringify(body) }, 30000), d = await r.json();
+  if (!r.ok) throw new Error(d.error || 'Sperrauskunft nicht möglich');
+  return Uint8Array.from(atob(d.data), c => c.charCodeAt(0));
+};
+async function withLtv(out, so) {
+  if (!so.tsa || !state.scanRev || so.docTs) return out;
+  try {
+    status('Langzeitprüfdaten werden eingebettet …');
+    const l = await PdfSign.addLtv(out, revCall), t = await PdfSign.docTimestamp(l.bytes, so.tsa);
+    so.ltv = true; return t.bytes;
+  } catch (e) { console.warn('Langzeitprüfdaten', e); toast('Langzeitprüfdaten konnten nicht eingebettet werden – die Signatur ist mit Zeitstempel gültig.', 6000); return out; }
+}
 $('#x-sign-win').onclick = async () => {
   let certs = [];
   try { certs = (await (await scanApi('/certs', {}, 15000)).json()).certs || []; } catch (e) { return toast('pdfmy Scan antwortet nicht – bitte starten.', 5000); }
@@ -3431,7 +3449,7 @@ async function signFlow(bytes, extra = {}) {
     const so = { contact: S.author || '', tsa: tsaFetch(), ...extra };
     if ($('#x-sign-vis').checked) so.look = await sigLook({ name: signCert.name, reason: so.reason, bytes }).catch(e => { console.warn(e); return undefined; });
     if (so.tsa) await loadForge();   // Zeitstempel einbauen braucht den Signatur-Baustein
-    try { const out = await PdfSign.signPdf(bytes, signer, so); tsNote(so); return out; }
+    try { const out = await withLtv(await PdfSign.signPdf(bytes, signer, so), so); tsNote(so); return out; }
     catch (e) { if (/abgelehnt/.test(e.message)) return null; throw e; }
   }
   await loadForge();
@@ -3454,7 +3472,7 @@ async function signFlow(bytes, extra = {}) {
   if (tsaFetch()) await loadForge();
   const so = { reason: $('#pwSignReason').value.trim(), contact: S.author || '', tsa: tsaFetch(), ...extra };
   if ($('#x-sign-vis').checked) so.look = await sigLook({ name: state.signer.name, reason: so.reason, bytes }).catch(e => { console.warn(e); return undefined; });
-  const out = await PdfSign.signPdf(bytes, state.signer, so); tsNote(so); return out;
+  const out = await withLtv(await PdfSign.signPdf(bytes, state.signer, so), so); tsNote(so); return out;
 }
 
 
@@ -4447,6 +4465,7 @@ function sigDetails(only, focusK = -1) {
       ${r.qualified ? '<li><span class="y">✓</span> Qualifiziertes Zertifikat (eIDAS-Kennzeichnung)</li>' : ''}
       ${trustLine(r)}
       ${r.timestamp ? '<li><span class="y">✓</span> Mit Zeitstempel</li>' : ''}
+      ${r.ltv ? '<li><span class="y">✓</span> Langzeitprüfdaten (LTV) eingebettet – bleibt auch nach Ablauf des Zertifikats prüfbar</li>' : ''}
       ${r.problems.length ? `<li class="hint">${esc(r.problems.join(' · '))}</li>` : ''}
     </ul></div>`)).join('');
   $('#sigDlg').showModal();

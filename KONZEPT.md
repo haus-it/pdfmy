@@ -94,6 +94,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 20.11.2026: Langzeitprüfbare Signaturen, PAdES B-LTA (app-v311)
+**Inhalt:** Beim Signieren mit Zeitstempel holt pdfmy Scan die Sperrauskunft (OCSP/CRL) der Stelle, die das eigene Zertifikat ausgestellt hat; PDFMy bettet sie mit der Kette als /DSS ein und setzt einen Dokumentzeitstempel darüber.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: das Dokument nie; hinaus geht nur die OCSP-Anfrage (Prüfwerte, Seriennummer des eigenen Zertifikats) – dieselbe Abwägung wie beim entschiedenen Zeitstempel |
+| 2 Kein Server | passt mit Auflage: kein eigener Dienst; Abruf nur über pdfmy Scan, nur auf Wunsch (an „mit Zeitstempel“ gekoppelt), nur an die im Zertifikat genannte Stelle; pdfmy Scan ist kein offener Proxy (nur öffentliche Adressen, Port 80/443) |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: keine neue Einstellung, läuft mit dem Zeitstempel mit; bei Ausfall bleibt die Signatur mit Zeitstempel |
+| 5 Prüfbar | tests/ltv.test.js, echte OCSP-Dienste (DigiCert, Sectigo), Durchlauf mit echtem Zeitstempel |
+| 6 Wenig aktive Inhalte | passt |
+
 ### Geprüft und umgesetzt 19.11.2026: Signaturprüfung gegen die EU-Vertrauensliste (app-v310)
 **Inhalt:** Schnappschuss der EU-Vertrauensliste als statische Datei von pdfmy.de; der Browser prüft den Aussteller einer gültigen Signatur kryptografisch gegen die gelisteten Schlüssel qualifizierter Zertifizierungsdienste. **Nicht enthalten:** Online-Abfragen (OCSP/CRL, PAdES B-LT) – eigene Prüfung wie beim Zeitstempel nötig.
 

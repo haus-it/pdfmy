@@ -199,6 +199,8 @@
     for (const s of sigs) { try { out.push(await verifyOne(forge, u8, s)); } catch (e) { out.push({ ...s, intact: false, valid: false, problems: ['Signatur nicht prüfbar: ' + e.message] }); } }
     // Nur die letzte Signatur darf das ganze Dokument abdecken; frühere decken ihre Fassung ab – „angehängt“ ist dort normal
     out.forEach((r, k) => { if (k < out.length - 1 && !r.wholeFile) { r.laterSigned = true; r.problems = r.problems.filter(p => !/angehängt/.test(p)); } });
+    // Langzeitprüfdaten (PAdES B-LT): Document Security Store mit Sperrauskünften bzw. Sperrlisten eingebettet
+    if (out.length && scanNames(u8, ['DSS']).has('DSS')) { const t = latin1(u8.subarray(Math.max(0, u8.length - 4000000))); const rev = /\/(OCSPs|CRLs)\s*\[/.test(t); out.forEach(r => { if (!r.docTimestamp && !r.usageRights) r.ltv = rev; }); }
     return out;
   }
   /* PDF-Namen (/ByteRange, /Highlight …) direkt in den Bytes suchen – ohne die ganze Datei in eine Zeichenkette zu wandeln

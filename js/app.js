@@ -4760,8 +4760,8 @@ const scanApi = async (path, opts = {}, ms = 30000) => {
   } finally { clearTimeout(t); }
 };
 // Aktuelle Version von pdfmy Scan – muss zu tools/pdfmy-scan/Program.cs passen (der Web-Build prüft das)
-const SCAN_LATEST = '1.22.0';
-const SCAN_MAC_LATEST = '1.12.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
+const SCAN_LATEST = '1.23.0';
+const SCAN_MAC_LATEST = '1.13.0';   // pdfmy Scan für Mac und Linux (tools/pdfmy-scan-mac, gemeinsames Programm)
 const scanLatest = () => state.scanMac ? SCAN_MAC_LATEST : SCAN_LATEST;   // scanMac: Mac oder Linux (gemeinsames Programm)
 /* Linux: passendes Paket (Doppelklick, meist ohne Terminal; sonst linuxPkgCmd) – .deb für Mint/Ubuntu/Debian, .rpm für Fedora/openSUSE/RHEL, Arch-Paket für Arch/Manjaro.
    Läuft pdfmy Scan schon, sagt es selbst, welches System es ist; sonst Hinweise aus dem Browser (Firefox nennt Ubuntu/Fedora) oder die letzte Wahl. */
@@ -4827,7 +4827,7 @@ async function scanHelperRunning() {
   try {
     const d = await scanFind(); if (!d) return false;
     const changed = state.scanVersion !== d.version;
-    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanManaged = d.managed === true; state.scanSelfUpdate = d.selfUpdate === true; state.scanConvert = d.convert === true; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
+    state.scanVersion = d.version; state.scanPades = d.pades === true; state.scanTsa = d.tsa === true; state.pdfDefault = d.pdfDefault; state.pdfBrowserApp = d.pdfBrowserApp === true; state.scanMac = d.platform === 'mac' || d.platform === 'linux'; state.scanLinux = d.platform === 'linux'; state.scanPkg = d.pkg || ''; state.scanManaged = d.managed === true; state.scanSelfUpdate = d.selfUpdate === true; state.scanConvert = d.convert === true; state.scanRev = d.revocation === true; state.scanPrinter = d.printer || ''; state.scanPrinterName = d.printerName || 'PDFMy';
     // Ab 1.5.0: pdfmy Scan merkt sich, welche PDFMy-Version (pdfmy.de oder /mentor) PDFs per Doppelklick öffnen soll
     if (changed && !verLess(d.version, '1.5.0')) fetch(SCAN_API + '/status?app=' + encodeURIComponent(location.origin + location.pathname), { cache: 'no-store', headers: { 'X-Pdfmy': '1' } }).catch(() => {});   // ab pdfmy Scan 1.14.1 nur mit eigenem Kopf
     if (changed && typeof renderVerBar === 'function') setTimeout(renderVerBar, 0);   // Statuszeile sofort nachziehen (z. B. nach einem Update)

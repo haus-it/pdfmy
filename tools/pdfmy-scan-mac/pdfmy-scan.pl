@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.12.0';
+our $VERSION = '1.13.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -888,6 +888,56 @@ sub office_apps {
   }
   return @l;
 }
+# Langzeitprüfdaten (PAdES B-LT, seit 1.13.0): OCSP-Antwort bzw. Sperrliste der Zertifizierungsstelle aus dem eigenen Signaturzertifikat.
+# Kein offener Proxy: nur http/https auf 80/443, nur öffentliche IP-Adressen (curl wird per --resolve auf die geprüfte Adresse festgelegt),
+# Weiterleitungen höchstens 3 und jede neu geprüft, Größen begrenzt. Übertragen wird nur die OCSP-Anfrage, nie das Dokument.
+sub rev_public_ip {
+  my $ip = shift;
+  if ($ip =~ /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/) {
+    my ($a, $b, $c2) = ($1, $2, $3);
+    return !($a == 0 || $a == 10 || $a == 127 || ($a == 100 && $b >= 64 && $b < 128) || ($a == 169 && $b == 254) || ($a == 172 && $b >= 16 && $b < 32)
+      || ($a == 192 && $b == 168) || ($a == 192 && $b == 0 && $c2 == 0) || $a >= 224 || ($a == 198 && ($b == 18 || $b == 19)));
+  }
+  my $l = lc $ip; return 0 if $l eq '::1' || $l eq '::' || $l =~ /^(fe[89ab]|fc|fd|ff)/;
+  if ($l =~ /^::ffff:(\d+\.\d+\.\d+\.\d+)$/) { return rev_public_ip($1); }
+  return 1;
+}
+sub rev_fetch {
+  my ($kind, $url, $req) = @_;
+  my $ocsp = $kind eq 'ocsp';
+  return (undef, 'Ungültige OCSP-Anfrage') if $ocsp && (!defined $req || !length $req || length $req > 4096);
+  my ($qf, $rf);
+  if ($ocsp) { (my $fh, $qf) = tempfile(DIR => $DIR, SUFFIX => '.ocq', UNLINK => 1); binmode $fh; print $fh $req; close $fh; }
+  for my $hop (0 .. 3) {
+    my ($scheme, $host, $port) = $url =~ m{^(https?)://([^/:?#@\s]+)(?::(\d+))?(?:[/?#]\S*)?$}i;
+    return (undef, 'Nur http- und https-Adressen ohne Zugangsdaten') unless $scheme;
+    $port ||= lc $scheme eq 'https' ? 443 : 80;
+    return (undef, 'Nur die Standard-Ports 80 und 443') unless $port == 80 || $port == 443;
+    my @ips;
+    if ($host =~ /^[\d.]+$/) { @ips = ($host) }
+    else {
+      my ($err, @res) = getaddrinfo($host, $port, { socktype => Socket::SOCK_STREAM() });
+      return (undef, "Name nicht auflösbar: $host") if $err;
+      for my $r (@res) { my ($e2, $ip) = Socket::getnameinfo($r->{addr}, Socket::NI_NUMERICHOST()); push @ips, $ip unless $e2; }
+    }
+    return (undef, "Name nicht auflösbar: $host") unless @ips;
+    return (undef, 'Adresse im eigenen Netz – aus Sicherheitsgründen nicht abgefragt') if grep { !rev_public_ip($_) } @ips;
+    (my $rh, $rf) = tempfile(DIR => $DIR, SUFFIX => '.rev', UNLINK => 1); close $rh;
+    my $pin = $ips[0] =~ /:/ ? "[$ips[0]]" : $ips[0];
+    my @cmd = ('curl', '-s', '-m', '20', '--proto', '=http,https', '--max-filesize', $ocsp ? '1000000' : '30000000', '--resolve', "$host:$port:$pin", '-o', $rf, '-w', '%{http_code} %{redirect_url}');
+    push @cmd, '-H', 'Content-Type: application/ocsp-request', '--data-binary', "\@$qf" if $ocsp;
+    my $out = ''; if (open my $p, '-|', @cmd, $url) { local $/; $out = <$p> // ''; close $p; }
+    my ($code, $loc) = $out =~ /^(\d+)\s*(\S*)/; $code ||= 0;
+    if ($code >= 300 && $code < 400 && $loc) { unlink $rf; $url = $loc; next; }
+    my $d = slurp($rf) // ''; unlink $rf; unlink $qf if $qf;
+    return (undef, ($ocsp ? 'OCSP-Dienst' : 'Sperrliste') . " antwortet mit $code") unless $code == 200;
+    return (undef, 'Antwort ist keine ' . ($ocsp ? 'OCSP-Antwort' : 'Sperrliste')) unless length $d >= 8 && substr($d, 0, 1) eq "\x30";
+    logl(($ocsp ? 'OCSP' : 'Sperrliste') . " von $host (" . int(length($d) / 1024) . ' KB)');
+    return ($d, undef);
+  }
+  unlink $qf if $qf;
+  return (undef, 'Zu viele Weiterleitungen');
+}
 # Originalgetreue Umwandlung Word/Excel/PowerPoint → PDF mit LibreOffice/Collabora ohne Fenster (eigenes Profil, Arbeitsdateien danach gelöscht)
 sub office_converter {
   return $ENV{PDFMY_TEST_OFFICE_CONVERT} if $ENV{PDFMY_TEST_OFFICE_CONVERT};
@@ -1136,7 +1186,7 @@ sub handle {
     # /status muss sofort antworten: Standard-PDF-Programm nur aus dem Zwischenspeicher, Auffrischen im Hintergrund
     my $cf = "$DIR/pdfdefault.txt"; my $def = -f $cf && trim(slurp($cf)) eq '1';
     if (!-f $cf || -M $cf >= 0.0007) { my $k = fork(); if (defined $k && $k == 0) { pdf_default(); POSIX::_exit(0); } }
-    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, pkg => linux_pkg(), tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false, selfUpdate => JSON::PP::true, autoUpdate => upd_auto_off() ? JSON::PP::false : JSON::PP::true, convert => office_converter() ? JSON::PP::true : JSON::PP::false }, \%cors);
+    return send_json($c, 200, { app => 'pdfmy-scan', version => $VERSION, ownUser => JSON::PP::true, platform => lc $OS, pkg => linux_pkg(), tsa => JSON::PP::true, searching => JSON::PP::false, devices => scalar(@$l), printer => print_service(), pdfDefault => $def ? JSON::PP::true : JSON::PP::false, selfUpdate => JSON::PP::true, autoUpdate => upd_auto_off() ? JSON::PP::false : JSON::PP::true, convert => office_converter() ? JSON::PP::true : JSON::PP::false, revocation => JSON::PP::true }, \%cors);
   }
   # „Jetzt aktualisieren“ in PDFMy (1.10.0): ein Klick, Rest automatisch – laden, Signatur prüfen, ersetzen, neu starten
   if ($p eq '/self-update' && $method eq 'POST') {
@@ -1178,6 +1228,13 @@ sub handle {
     return send_json($c, 200, { data => encode_base64($d, '') }, \%cors);
   }
   if ($p eq '/office' && $method eq 'GET') { return send_json($c, 200, { apps => [ map { +{ id => $_->{id}, app => $_->{app}, what => $_->{what}, fmt => $_->{fmt} // 'pdf' } } office_apps() ] }, \%cors); }   # installierte Office-Programme
+  if ($p eq '/revocation' && $method eq 'POST') {   # Langzeitprüfdaten (PAdES B-LT, seit 1.13.0)
+    my $o = $in->(); my $kind = $o->{kind} // '';
+    return send_json($c, 400, { error => 'Unbekannte Art' }, \%cors) unless $kind eq 'ocsp' || $kind eq 'crl';
+    my ($d, $err) = rev_fetch($kind, $o->{url} // '', $kind eq 'ocsp' ? eval { decode_base64($o->{data} // '') } : undef);
+    if ($err) { logl("Sperrauskunft: $err"); return send_json($c, 502, { error => $err }, \%cors); }
+    return send_json($c, 200, { data => encode_base64($d, '') }, \%cors);
+  }
   if ($p eq '/office/convert' && $method eq 'POST') {   # Word/Excel/PowerPoint originalgetreu mit LibreOffice in PDF umwandeln (seit 1.12.0)
     my $o = $in->(); my ($pdf, $err) = office_convert($o->{name}, eval { decode_base64($o->{data} // '') });
     return send_json($c, $err ? 409 : 200, { ok => $err ? JSON::PP::false : JSON::PP::true, error => $err, data => defined $pdf ? encode_base64($pdf, '') : undef }, \%cors);
