@@ -187,7 +187,7 @@ async function enableReminders() {
 setInterval(() => { try { renderDeadlines(); } catch {} }, 3600 * 1000);
 
 /* Posteingangsbuch-Fenster: suchen, filtern, erledigt abhaken, Brief öffnen, als Excel speichern */
-let jList = [];
+let jList = [], jShown = null;   // jShown: zuletzt angezeigte Zeilen (Umfang für „KI fragen …“)
 async function openJournal(q = '', focusId, filter) {
   jList = await journalAll(); await teamLoad(); fillTeam(jList); jFillFilters();
   $('#jq').value = q; $('#jf').value = filter || (focusId ? 'open' : 'all');
@@ -279,6 +279,7 @@ function renderJournal(focusId) {
   $('#jRetainMove').hidden = f !== 'expired' || !rows.length || !state.outDir;
   if (f === 'done') rows = rows.filter(e => e.status === 'erledigt');
   $('#jCount').textContent = q ? `${rows.length} Treffer` : `${rows.length} von ${jList.length} Einträgen`;
+  jShown = rows;
   $('#jBody').innerHTML = rows.map(e => {
     const d = dueIds.get(e.id);
     const closed = !e.extra && Journal.isClosed(e);
@@ -2364,6 +2365,99 @@ $('#sumForm').addEventListener('submit', async e => {
   finally { lm?.destroy?.(); aiBusy = false; $('#sumAsk').disabled = false; }
 });
 $('#btnSummary').onclick = () => { closeMenu(); openSummary(); };
+
+/* ---------- Fragen an die Ablage (Wettbewerbsanalyse Rang 9, js/fragen.js): eine Frage über viele abgelegte Dokumente ----------
+   Die Volltextsuche der Ablage (Index im Browser) wählt die passenden Dokumente, die KI auf diesem Gerät antwortet nur aus Ausschnitten
+   und nennt die Quellen [1], [2] … – jede lässt sich öffnen. Aus dem Posteingangsbuch: nur die gerade angezeigten Dokumente (Akte, Jahr,
+   Schlagwort, Suche). Nichts wird hochgeladen: Browser-KI oder lokale KI auf demselben PC (CSP erlaubt nur den eigenen Rechner). */
+let askScope = null, askItems = [], askBusy = false;
+async function openAsk(fromJournal = false) {
+  closeMenu?.();
+  if (aiMode() === 'off') return openAi();
+  // Nur wenn im Posteingangsbuch gefiltert oder gesucht wird, gilt die Auswahl – sonst die ganze Ablage (auch PDFs ohne Eintrag im Buch)
+  const filtered = fromJournal && ($('#jq').value.trim() || $('#jAkte').value || $('#jYear').value || $('#jTag').value || $('#jf').value !== 'all');
+  askScope = filtered && jShown ? jShown.filter(e => e.file).map(e => e.file) : null;
+  $('#askHint').textContent = aiMode() === 'local' ? I18N.t(`Mit der lokalen KI auf diesem PC (${localCfg().model}) – die Dokumente verlassen den Rechner nicht.`)
+    : I18N.t('Mit der eingebauten KI des Browsers – sie läuft auf diesem Gerät, die Dokumente werden nicht hochgeladen.');
+  $('#askScope').textContent = !state.outDir ? I18N.t('Zuerst unter „… Mehr → Ablageordner wählen …“ den Ordner mit Ihren Briefen und Verträgen wählen – PDFMy macht ihn dann durchsuchbar.')
+    : askScope ? I18N.t(`Gefragt werden die ${askScope.length} Dokument(e), die im Posteingangsbuch gerade angezeigt sind.`) : I18N.t('Gefragt werden alle PDFs der Ablage.');
+  $('#askGo').disabled = !state.outDir;
+  $('#askOut').textContent = ''; $('#askSrcBox').hidden = true; $('#askCopy').hidden = true;
+  if (!$('#askDlg').open) $('#askDlg').showModal();
+  $('#askQ').focus();
+  if (state.outDir) ftScan();   // Index nachziehen (neue oder geänderte Dateien)
+}
+async function askDocs() {
+  await ftLoad(); if (ftScanning) { $('#askOut').textContent = I18N.t('Ablage wird durchsuchbar gemacht …'); await ftScanning; }
+  const meta = new Map((await journalAll()).filter(e => e.file).map(e => [e.file, e]));
+  const keys = askScope ? askScope.filter(k => FT.has(k)) : [...FT.keys()];
+  return keys.map(key => {
+    const e = meta.get(key) || {}, name = key.split('\\').pop();
+    const label = [e.type, e.sender, e.subject, e.date && fmtDate(e.date), e.akte && I18N.t('Akte') + ' ' + e.akte].filter(Boolean).join(' · ');
+    return { key, text: FT.get(key).t, meta: [e.type, e.sender, e.subject, e.akte, e.tags, name].filter(Boolean).join(' '), label: (label ? label + ' – ' : '') + name };
+  });
+}
+function askSources(answer) {
+  const used = Fragen.cited(answer, askItems.length), ol = $('#askSrc'); ol.textContent = '';
+  for (const it of askItems) {
+    const li = document.createElement('li'); li.className = used.includes(it.n) ? 'cited' : '';
+    const t = document.createElement('span'); t.translate = false; t.textContent = it.label;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'linkbtn'; b.textContent = I18N.t('Öffnen'); b.onclick = () => askOpen(it.key);
+    li.append(t, ' ', b); if (!used.includes(it.n) && used.length) li.append(' ', Object.assign(document.createElement('span'), { className: 'hint', textContent: I18N.t('(nicht zitiert)') }));
+    ol.append(li);
+  }
+  $('#askSrcBox').hidden = !askItems.length;
+}
+async function askOpen(rel) {
+  try {
+    let dir = state.outDir; const parts = rel.split('\\'), name = parts.pop();
+    for (const p of parts) dir = await dir.getDirectoryHandle(p);
+    const file = await (await dir.getFileHandle(name)).getFile();
+    if (state.dirty && state.pages.length && !confirm('Aktuelles Dokument verwerfen? Es wurde noch nicht gespeichert.')) return;
+    $('#askDlg').close(); if ($('#jDlg').open) $('#jDlg').close();
+    resetDoc(); await importFiles([file]);
+    const e = (await journalAll()).find(x => x.file === rel);
+    state.fromArchive = { id: e?.id || null, file: rel };
+  } catch { status(I18N.t(`Datei nicht gefunden: ${rel} (verschoben oder umbenannt?)`)); }
+}
+$('#askForm').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const q = $('#askQ').value.trim(); if (!q || askBusy || !state.outDir) return;
+  askBusy = true; $('#askGo').disabled = true; $('#askCopy').hidden = true; $('#askSrcBox').hidden = true;
+  const out = t => { $('#askOut').textContent = t; };
+  let lm;
+  try {
+    const docs = await askDocs();
+    if (!docs.length) throw new Error(I18N.t('In der Ablage wurden noch keine durchsuchbaren PDFs gefunden.'));
+    let room = 20000;
+    if (aiMode() !== 'local') {
+      if (!('LanguageModel' in self)) throw new Error(I18N.t('Fragen an die Ablage nutzt die eingebaute KI des Browsers (Google Chrome ab Version 138 am Computer) oder eine lokale KI auf diesem PC – einzurichten unter „… Mehr → KI-Assistent“.'));
+      const lang = aiBLang();
+      if (await LanguageModel.availability({ expectedOutputs: [{ type: 'text', languages: [lang] }] }) === 'unavailable') throw new Error(I18N.t('Die eingebaute KI ist auf diesem Gerät nicht verfügbar.'));
+      lm = await LanguageModel.create({ expectedOutputs: [{ type: 'text', languages: [lang] }], monitor(m) { m.addEventListener('downloadprogress', e => out(I18N.t(`KI-Modell wird geladen … ${Math.round(e.loaded * 100)} % (einmalig, vom Browser)`))); },
+        initialPrompts: [{ role: 'system', content: 'Du beantwortest Fragen ausschließlich anhand der Dokumente, die du bekommst, und nennst die Quellen als [1], [2]. Erfinde nichts.' }] });
+      room = Math.max(2000, ((lm.inputQuota || 6000) - 900) * 2.5);
+    }
+    const b = Fragen.build(docs, q, { maxChars: room, maxDocs: aiMode() === 'local' ? 8 : 5 });
+    askItems = b.items;
+    if (!b.items.length) throw new Error(I18N.t(`Kein Dokument der Ablage passt zu dieser Frage (${docs.length} durchsucht). Tipp: Begriffe verwenden, die im Brief stehen, z. B. „Kündigungsfrist“ oder den Namen des Absenders.`));
+    askSources('');
+    out(I18N.t(`${b.items.length} passende(s) Dokument(e) gefunden – die KI liest …`));
+    const p = Fragen.prompt(q, b.items, aiMode() === 'local' ? aiLang() : aiBLang());
+    const a = aiMode() === 'local' ? await localChat({ system: localSys(), prompt: Fragen.prompt(q, b.items, aiLang()), onText: t => out(t) }) : (await lm.prompt(p)).trim();
+    out(a + '\n\n— ' + I18N.t('Maschinell erstellt mit der KI auf diesem Gerät aus den genannten Quellen: bitte dort nachprüfen.'));
+    askSources(a); $('#askCopy').hidden = false;
+  } catch (e) { console.warn(e); out(I18N.t('Antwort nicht möglich: ') + (e.message || e)); }
+  finally { lm?.destroy?.(); askBusy = false; $('#askGo').disabled = !state.outDir; }
+});
+$('#askCopy').onclick = async () => {
+  const src = askItems.map(it => `[${it.n}] ${it.label} (${it.key})`).join('\n');
+  try { await navigator.clipboard.writeText($('#askOut').textContent + '\n\n' + I18N.t('Quellen') + ':\n' + src); toast(I18N.t('In die Zwischenablage kopiert.')); } catch { toast(I18N.t('Kopieren nicht möglich.')); }
+};
+$('#askClose').onclick = () => $('#askDlg').close();
+$('#btnAsk').onclick = () => openAsk(false);
+$('#jAsk').onclick = () => openAsk(true);
+window.openAsk = openAsk;
 
 
 /* ---------- Befehlssuche (Strg+K): jede Funktion per Tastatur finden – Kacheln, Werkzeuge, Menü, Kopfzeile ---------- */

@@ -147,6 +147,7 @@ select{border:1px solid var(--line);background:var(--panel);border-radius:7px;pa
 body.hotmode #hotPanel{position:fixed;inset:0;z-index:9000;overflow:auto;padding:24px;background:var(--bg);color:var(--text)}body.hotmode #hotPanel h2{margin-top:0}#hotState{font-weight:600}
 #formFields .ferr{display:block;color:#a11d1d;font-size:.85em;margin-top:2px}#formFields input[aria-invalid=true]{border-color:#a11d1d}#formFields input.calc{font-weight:600}.ferrsum{color:#8a5a00;font-weight:600;margin:.4em 0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #formFields .ferr{color:#ff8a8a}:root:not([data-theme="light"]) .ferrsum{color:#f0c060}}[data-theme="dark"] #formFields .ferr{color:#ff8a8a}[data-theme="dark"] .ferrsum{color:#f0c060}
+.asksrc{margin:4px 0 8px;padding-left:22px}.asksrc li{margin:3px 0}.asksrc li.cited{font-weight:600}.asksrc .hint{font-weight:400}
 .sumout{white-space:pre-wrap;margin:12px 0;padding:10px 12px;border:1px solid var(--line);border-radius:6px;min-height:3em;max-height:min(45vh,360px);overflow:auto;font-size:14.5px;line-height:1.5}.sumout:empty{display:none}
 .ann.shape .mlabel{position:absolute;left:50%;top:50%;transform:translate(-50%,-110%);font:600 12px/1.2 system-ui,sans-serif;white-space:nowrap;background:rgba(255,255,255,.85);padding:0 3px;border-radius:3px;pointer-events:none}
 .ann.field.radio{border-radius:50%;overflow:visible}.ann.field.radio .fl{left:calc(100% + 4px);max-width:none;transform:translateY(-50%)}
@@ -1221,6 +1222,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnAutoForm" title="Schreiblinien, Kästen und Ankreuzfelder finden und daraus ein ausfüllbares Formular machen"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>Formularfelder erkennen …</span></button>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgOffice"><div class="mgh" id="mgOffice">Büro</div>
+          <button class="mi" id="btnAsk" title="Eine Frage an viele abgelegte Briefe und Verträge – die KI auf diesem Gerät antwortet mit Quellen, nichts wird hochgeladen"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg><span>Fragen an die Ablage …</span></button>
           <button class="mi" id="btnJournal"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg><span>Posteingangsbuch, Akten &amp; Fristen</span></button>
           <button class="mi" id="btnTax" title="Belege eines Monats als ZIP mit Belegliste (Excel) und DATEV-Importdatei"><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg><span>Belege für Steuerberater (DATEV) …</span></button>
           <button class="mi doc" id="btnSigReq" title="Unterzeichner festlegen, Unterschriftsfelder setzen und per E-Mail nacheinander unterschreiben lassen – ohne Server, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-signature"/></svg><span>Zur Unterschrift senden …</span></button>
@@ -1966,6 +1968,19 @@ html.i18n-wait body{visibility:hidden}
   <div id="sumOut" class="sumout" role="status" aria-live="polite" tabindex="0"></div>
   <div class="dlgrow"><button type="button" id="sumCopy" hidden>Kopieren</button><button type="button" id="sumClose">Schließen</button></div>
 </dialog>
+<dialog id="askDlg" class="sharedlg" aria-labelledby="askT">
+  <h3 class="dlgtitle" id="askT">Fragen an die Ablage</h3>
+  <p class="hint" id="askHint"></p>
+  <p class="hint" id="askScope" aria-live="polite"></p>
+  <form id="askForm" class="dlgrow" style="justify-content:flex-start;gap:8px">
+    <label for="askQ" class="sr-only">Frage an die Ablage</label>
+    <input id="askQ" placeholder="z. B. Welche Verträge verlängern sich automatisch, und bis wann kann ich kündigen?" style="flex:1;min-width:200px">
+    <button type="submit" class="primary" id="askGo">Fragen</button>
+  </form>
+  <div id="askOut" class="sumout" role="status" aria-live="polite" tabindex="0"></div>
+  <div id="askSrcBox" hidden><b>Quellen</b><ol id="askSrc" class="asksrc"></ol></div>
+  <div class="dlgrow"><button type="button" id="askCopy" hidden>Kopieren</button><button type="button" id="askClose">Schließen</button></div>
+</dialog>
 <dialog id="aiDlg" class="sharedlg" aria-labelledby="aiT"><form id="aiForm" method="dialog" novalidate>
   <h3 class="dlgtitle" id="aiT">KI-Assistent</h3>
   <p class="hint" style="margin:-6px 0 12px">Für Zusammenfassen, Fragen zum Dokument und Übersetzen – mit der KI, die Ihr Browser mitbringt. Sie läuft auf diesem Gerät, das Dokument wird nicht hochgeladen.</p>
@@ -2417,6 +2432,7 @@ html.i18n-wait body{visibility:hidden}
   <div class="seg jview" role="group" aria-label="Ansicht"><button type="button" id="jvList" aria-pressed="true">Dokumente</button><button type="button" id="jvCases" aria-pressed="false">Akten</button></div>
   <div class="jbar"><input id="jq" type="search" placeholder="Suchen – Absender, Betreff, Betrag, Zeichen, auch im Text aller Briefe der Ablage">
     <select id="jAkte" aria-label="Akte"><option value="">Alle Akten</option></select><select id="jTag" aria-label="Schlagwort"><option value="">Alle Schlagwörter</option></select><select id="jYear" aria-label="Jahr"><option value="">Alle Jahre</option></select><select id="jf" aria-label="Filter"><option value="all">Alle</option><option value="mine">Meine Post</option><option value="open">Offen</option><option value="due">Mit Frist (offen)</option><option value="paid">Bezahlt</option><option value="done">Erledigt</option><option value="expired">Aufbewahrung abgelaufen</option></select>
+    <button type="button" id="jAsk" class="linkbtn" title="Eine Frage an die angezeigten Dokumente – die KI auf diesem Gerät antwortet mit Quellen">KI fragen …</button>
     <button type="button" id="jBank" class="linkbtn" title="Umsätze aus dem Online-Banking (CAMT-XML oder CSV) einlesen – bezahlte Rechnungen werden erkannt und auf „bezahlt“ gesetzt">Kontoauszug abgleichen …</button><input id="jBankFile" type="file" accept=".xml,.csv,.txt,text/csv,application/xml" hidden>
     <button type="button" id="jRetainMove" class="linkbtn" hidden title="Abgelaufene Belege in den Unterordner „_Aufbewahrung abgelaufen“ verschieben – nichts wird gelöscht">In Ordner „_Aufbewahrung abgelaufen“ verschieben …</button>
     <span class="hint" id="jCount"></span></div>
@@ -2636,6 +2652,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/formprofile.js"></script>
 <script src="js/reflow.js"></script>
 <script src="js/pdfbild.js"></script>
+<script src="js/fragen.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
