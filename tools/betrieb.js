@@ -41,7 +41,8 @@ function zertifikat(host) {
   });
 }
 
-(async () => {
+module.exports = { letzteFreigabe };
+if (require.main === module) (async () => {
   const start = new Date(), host = new URL(BASE).hostname;
   // 1. Integrität und Stand
   try {

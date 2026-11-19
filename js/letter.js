@@ -138,6 +138,11 @@
     }
 
     r.type = docType(lines, all);
+    // Vertrag, Versicherungsschein: Laufzeit und Kündigungsfrist → „kündigen bis“ ist die Frist, die zählt
+    if (/vertrag|versicherungsschein/i.test(r.type) || /kündigungsfrist|mindest(?:vertrags)?laufzeit|verlängert sich (?:automatisch|stillschweigend)/i.test(all)) {
+      const c = contractTerms(all);
+      if (c) { r.contract = c; if (c.kuendigenBis && (/vertrag|versicherungsschein/i.test(r.type) || !r.deadline)) r.deadline = c.kuendigenBis; }
+    }
     // Bescheid mit Rechtsbehelfsbelehrung: Einspruchs-/Widerspruchsfrist aus dem Bescheiddatum berechnen
     r.appealRule = appealRule(all);
     if (r.appealRule && r.date) { r.appeal = appealDeadline(r.date); if (!r.deadline || r.deadline === r.date) r.deadline = r.appeal; }
@@ -209,15 +214,17 @@
     const d2 = next.toISOString().slice(0, 10).replace(/-/g, '');
     const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
     const esc = s => String(s || '').replace(/\\/g, '\\\\').replace(/[;,]/g, c => '\\' + c).replace(/\n/g, '\\n');
-    const summary = `Frist: ${[m.type, m.sender].filter(Boolean).join(' ')}${m.subject ? ' – ' + m.subject : ''}`;
-    const desc = [m.amount && 'Betrag: ' + m.amount, m.iban && 'IBAN: ' + m.iban, m.invoiceNo && 'Rechnungs-Nr.: ' + m.invoiceNo,
+    const kd = m.contract && m.contract.kuendigenBis === m.deadline;   // Kündigungsfrist eines Vertrags: früher erinnern (Brief schreiben, versenden)
+    const summary = `${kd ? 'Kündigungsfrist' : 'Frist'}: ${[m.type, m.sender].filter(Boolean).join(' ')}${m.subject ? ' – ' + m.subject : ''}`;
+    const desc = [kd && m.contract.naechstesEnde && 'Vertragsende: ' + m.contract.naechstesEnde.split('-').reverse().join('.'), kd && m.contract.verlaengerung && `Ohne Kündigung Verlängerung um ${m.contract.verlaengerung} Monate`,
+      kd && 'Die Kündigung muss bis zu diesem Tag beim Vertragspartner eingegangen sein.', m.amount && 'Betrag: ' + m.amount, m.iban && 'IBAN: ' + m.iban, m.invoiceNo && 'Rechnungs-Nr.: ' + m.invoiceNo,
       m.customerNo && 'Kunden-/Vertrags-Nr.: ' + m.customerNo, m.reference && 'Zeichen: ' + m.reference, fileName && 'Dokument: ' + fileName]
       .filter(Boolean).join('\n');
     const fold = l => { const out = []; while (l.length > 74) { out.push(l.slice(0, 74)); l = ' ' + l.slice(74); } out.push(l); return out.join('\r\n'); };
     return ['BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${appName}//DE`, 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
       `UID:${stamp}-${d}-${Math.random().toString(36).slice(2, 10)}@${appId}`, `DTSTAMP:${stamp}`,
       `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${d2}`, `SUMMARY:${esc(summary)}`, `DESCRIPTION:${esc(desc)}`,
-      'TRANSP:TRANSPARENT', 'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${esc(summary)}`, 'TRIGGER:-P3D', 'END:VALARM',
+      'TRANSP:TRANSPARENT', 'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${esc(summary)}`, kd ? 'TRIGGER:-P14D' : 'TRIGGER:-P3D', 'END:VALARM',
       'END:VEVENT', 'END:VCALENDAR'].map(fold).join('\r\n') + '\r\n';
   }
 
@@ -266,6 +273,57 @@
     return /widerspruch/i.test(m[0]) && !/einspruch/i.test(m[0]) ? 'widerspruch' : 'einspruch';
   }
 
+  /* Vertragsakte (Wettbewerbsanalyse Empfehlung 9): Laufzeit, Kündigungsfrist und Verlängerung aus Vertrag, Versicherungsschein,
+     Vertragsbestätigung erkennen und berechnen, bis wann die Kündigung beim Vertragspartner eingegangen sein muss.
+     Monatsrechnung nach § 188 BGB (gleicher Tag im Zielmonat, sonst Monatsletzter; endet der Vertrag am Monatsletzten, zählt der
+     Monatsletzte). Ergebnis null, wenn weder Laufzeit/Ende noch Kündigungsfrist erkannt sind. Rechtlicher Rat ist das nicht:
+     Verbraucherverträge mit stillschweigender Verlängerung (ab 01.03.2022) sind danach meist monatlich kündbar – Hinweis im Ergebnis. */
+  const ZAHL = { ein: 1, eine: 1, einen: 1, einem: 1, einer: 1, zwei: 2, drei: 3, vier: 4, fünf: 5, sechs: 6, sieben: 7, acht: 8, neun: 9, zehn: 10, elf: 11, zwölf: 12, achtzehn: 18, vierundzwanzig: 24, sechsunddreißig: 36 };
+  const zahl = s => /^\d+$/.test(s) ? +s : ZAHL[String(s).toLowerCase()] || 0;
+  const ZW = '(\\d{1,3}|ein(?:e[nmr]?)?|zwei|drei|vier|fünf|sechs|sieben|acht|neun|zehn|elf|zwölf|achtzehn|vierundzwanzig|sechsunddreißig)';
+  const isoD = (y, m, d) => iso(new Date(Date.UTC(y, m, d)));
+  const parts = s => s.split('-').map(Number);
+  const monatsLetzter = s => { const [y, m, d] = parts(s); return d === new Date(Date.UTC(y, m, 0)).getUTCDate(); };
+  // § 188 BGB: gleicher Tag im Zielmonat, sonst Monatsletzter. ende = true beim Zurückrechnen von einem Vertragsende am Monatsletzten
+  // (Ende 31.12., drei Monate → 30.09.); vorwärts ab Beginn 28.02. bleibt es der 28.
+  function plusMonate(s, n, ende = false) {
+    const [y, m, d] = parts(s), last = new Date(Date.UTC(y, m - 1 + n + 1, 0)).getUTCDate();
+    return isoD(y, m - 1 + n, ende && monatsLetzter(s) ? last : Math.min(d, last));
+  }
+  const plusTage = (s, n) => { const [y, m, d] = parts(s); return isoD(y, m - 1, d + n); };
+  function contractTerms(text, today = iso(new Date())) {
+    const t = String(text || '').replace(/\s+/g, ' ');
+    const datum = re => { const m = t.match(re); return m ? parseDates(m[m.length - 1] || m[0]).pop() || '' : ''; };
+    const D = '(\\d{1,2}\\.\\s?\\d{1,2}\\.\\s?\\d{2,4})';
+    const beginn = datum(new RegExp(`(?:vertragsbeginn|versicherungsbeginn|leistungsbeginn|beginn der (?:laufzeit|mitgliedschaft|versicherung)|beginnt am|gültig ab|vertrag (?:beginnt|läuft) ab)[^\\d]{0,25}${D}`, 'i'));
+    let ende = datum(new RegExp(`(?:vertragsende|laufzeitende|ablauf(?:datum)?|endet (?:am|zum)|läuft bis|gültig bis|befristet bis|bis einschließlich)[^\\d]{0,25}${D}`, 'i'));
+    const lz = t.match(new RegExp(`(?:mindest(?:vertrags)?laufzeit|vertragslaufzeit|laufzeit|vertragsdauer|für die dauer von|läuft (?:für |über )?)[^\\d.]{0,25}?${ZW}\\s*(monat|jahr)`, 'i'));
+    const laufzeit = lz ? zahl(lz[1]) * (/jahr/i.test(lz[2]) ? 12 : 1) : 0;
+    const kf = t.match(new RegExp(`(?:kündigungsfrist(?: beträgt| von)?|(?:mit einer|unter einhaltung einer) frist von|spätestens|kündbar mit (?:einer frist von )?)[^\\d.]{0,20}?${ZW}\\s*(woche|monat)[^.]{0,80}`, 'i'));
+    const frist = kf ? { n: zahl(kf[1]), einheit: /woche/i.test(kf[2]) ? 'Woche' : 'Monat', zum: /quartal/i.test(kf[0]) ? 'Quartal' : /monatsende|ende (?:eines|des) (?:kalender)?monats/i.test(kf[0]) ? 'Monat' : '' } : null;
+    const vl = t.match(new RegExp(`verlängert sich[^.]{0,60}?um (?:jeweils |weitere )?${ZW}\\s*(monat|jahr)`, 'i'));
+    const verlaengerung = vl ? zahl(vl[1]) * (/jahr/i.test(vl[2]) ? 12 : 1) : 0;
+    const unbefristet = /auf unbestimmte zeit|unbefristet/i.test(t) && !laufzeit && !ende;
+    if (!ende && beginn && laufzeit) ende = plusTage(plusMonate(beginn, laufzeit), -1);
+    if (!ende && !frist) return null;
+    // nächstes mögliches Ende: bei Verlängerung so lange weiterschieben, bis die Kündigung noch rechtzeitig möglich ist
+    const zurueck = (e, f) => f.einheit === 'Woche' ? plusTage(e, -7 * f.n) : plusMonate(e, -f.n, true);
+    const vor = (e, f) => f ? zurueck(e, f) : e;
+    let naechstesEnde = ende, guard = 0;
+    if (ende && verlaengerung) while (vor(naechstesEnde, frist) < today && guard++ < 200) naechstesEnde = plusTage(plusMonate(plusTage(naechstesEnde, 1), verlaengerung), -1);
+    // unbefristet oder Ende vorbei ohne Verlängerung: frühestes Ende = heute + Frist, ggf. zum Monats-/Quartalsende
+    if ((!naechstesEnde || (unbefristet && frist)) && frist) {
+      let e = frist.einheit === 'Woche' ? plusTage(today, 7 * frist.n) : plusMonate(today, frist.n);
+      if (frist.zum) { const [y, m] = parts(e), q = frist.zum === 'Quartal' ? Math.ceil(m / 3) * 3 : m; e = isoD(y, q, 0); }
+      naechstesEnde = e;
+    }
+    const kuendigenBis = naechstesEnde && frist ? zurueck(naechstesEnde, frist) : '';
+    return {
+      beginn, laufzeit, ende, frist, verlaengerung, unbefristet, naechstesEnde, kuendigenBis: kuendigenBis && kuendigenBis >= today ? kuendigenBis : '',
+      verbraucherHinweis: !!verlaengerung,   // stillschweigende Verlängerung: bei Verbraucherverträgen (ab 01.03.2022) meist monatlich kündbar
+    };
+  }
+
   /* „Was will dieser Brief von mir?“ – eine Zeile mit der wichtigsten Aufgabe und passenden Aktionen.
      today: 'YYYY-MM-DD' (lokaler Kalendertag). Ergebnis: { tone: 'info'|'soon'|'late'|'ok', text, actions: ['pay','cal','fwd','file'] } oder null */
   function todoFor(m, today) {
@@ -277,6 +335,14 @@
     const amount = String(m.amount || '').trim(), from = m.sender ? ` von ${m.sender}` : '';
     const actions = [];
     const appeal = m.appealRule && m.date ? appealDeadline(m.date) : '', appealTxt = appeal ? ` · ${m.appealRule === 'widerspruch' ? 'Widerspruch' : 'Einspruch'} bis ${de(appeal)}` : '';
+    // Vertrag: wie lange er läuft und bis wann gekündigt sein muss (Eingang beim Vertragspartner)
+    const c = m.contract;
+    if (c && (c.kuendigenBis || c.naechstesEnde) && /vertrag|versicherungsschein/i.test(type)) {
+      const f = c.frist ? ` (Kündigungsfrist ${c.frist.n} ${c.frist.einheit === 'Woche' ? (c.frist.n === 1 ? 'Woche' : 'Wochen') : (c.frist.n === 1 ? 'Monat' : 'Monate')}${c.frist.zum ? ` zum ${c.frist.zum}sende` : ''})` : '';
+      const lauf = c.naechstesEnde ? ` läuft bis ${de(c.naechstesEnde)}` : '', vl = c.verlaengerung ? `, verlängert sich sonst um ${c.verlaengerung} Monate` : '';
+      const kb = c.kuendigenBis ? ` – kündigen bis ${de(c.kuendigenBis)}${m.deadline === c.kuendigenBis ? rel : ''}` : '';
+      return { tone: c.kuendigenBis && m.deadline === c.kuendigenBis ? tone : 'info', text: `${type}${from}:${lauf}${vl}${kb}${f}`, actions: c.kuendigenBis ? ['cal', 'fwd', 'file'] : ['fwd', 'file'] };
+    }
     if (/gutschrift|erstattung/i.test(type)) return { tone: 'ok', text: `${type}${amount ? ' über ' + amount : ''}${from} – nichts zu bezahlen.`, actions: ['file'] };
     if (amount && /rechnung|mahnung|zahlungserinnerung|beitrag|bescheid|forderung/i.test(type) || (amount && m.deadline)) {
       if (epcPayload(m)) actions.push('pay');
@@ -612,6 +678,6 @@
     return '';
   }
 
-  const api = { paragraphAround, protectedKind, parseDates, analyzeLetter, keyData, ibanValid, buildFilename, buildIcs, folderName, epcPayload, parsePaymentQr, pickRoute, senderAddress, replyDraft, TEMPLATES, fillTemplate, todoFor, appealDeadline, appealRule, holidays, autopilotCheck, detectLang, scriptOf, cyrLang, lineAround, findSensitive, splitPoints };
+  const api = { contractTerms, plusMonate, paragraphAround, protectedKind, parseDates, analyzeLetter, keyData, ibanValid, buildFilename, buildIcs, folderName, epcPayload, parsePaymentQr, pickRoute, senderAddress, replyDraft, TEMPLATES, fillTemplate, todoFor, appealDeadline, appealRule, holidays, autopilotCheck, detectLang, scriptOf, cyrLang, lineAround, findSensitive, splitPoints };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Letter = api;
 })(typeof self !== 'undefined' ? self : this);

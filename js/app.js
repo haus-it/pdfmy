@@ -2567,7 +2567,13 @@ const cjkFont = () => assets.cjk ||= (status('Lade die Schrift für chinesische,
     if (!r.ok) throw new Error('vendor/cjk fehlt');
     const b = new Uint8Array(await r.arrayBuffer());
     return b[0] === 0x1f && b[1] === 0x8b ? new Uint8Array(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()) : b;
-  }).catch(e => { delete assets.cjk; throw e; }));
+  }).catch(e => {
+    delete assets.cjk;
+    // nicht still „?“ setzen: sagen, warum, und wie es offline künftig klappt
+    status(navigator.onLine ? 'Die Schrift für chinesische, japanische und koreanische Zeichen ließ sich nicht laden – diese Zeichen erscheinen als „?“.'
+      : 'Ohne Internet fehlt die Schrift für chinesische, japanische und koreanische Zeichen – sie erscheinen als „?“. Mit Internet einmal laden oder unten über „Offline bereit“ vorab bereithalten.');
+    throw e;
+  }));
 self.pdfmyCjkFont = cjkFont;   // js/textpdf.js holt sie sich (unabhängig von der Ladereihenfolge der Skripte)
 const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -5891,12 +5897,15 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !NAT
 function offlineReady() {
   const el = $('#offState'); if (!el || !navigator.serviceWorker) return;
   const c = navigator.connection, heavy = !!c && !c.saveData && c.type !== 'cellular' && !/^(slow-)?2g$/.test(c.effectiveType || '');
-  const ask = () => navigator.serviceWorker.ready.then(reg => {
-    const langs = typeof ocrPrimary === 'function' ? String(ocrPrimary() || '').split('+').filter(l => l && l !== 'deu') : [];
-    reg.active?.postMessage({ type: 'pdfmy:offline', langs, ui: I18N.lang, heavy, load: navigator.onLine });   // ui: Wörterbuch der Oberflächensprache offline vorhalten
+  // Offline-Vorrat (Dialog unten): gewählte Sprachen, Office-Schriften und CJK-Schrift bei jedem Start vollständig halten
+  const ask = id => navigator.serviceWorker.ready.then(reg => {
+    const v = offVorrat(), langs = [...new Set([...(typeof ocrPrimary === 'function' ? String(ocrPrimary() || '').split('+') : []), ...v.langs])].filter(l => l && l !== 'deu');
+    reg.active?.postMessage({ type: 'pdfmy:offline', id, langs, ui: I18N.lang, heavy: heavy || v.heavy, cjk: v.cjk, load: navigator.onLine });   // ui: Wörterbuch der Oberflächensprache offline vorhalten
   });
+  offAsk = ask;
   navigator.serviceWorker.addEventListener('message', e => {
     if (e.data?.type !== 'pdfmy:offline') return;
+    offLast = e.data; if ($('#offDlg')?.open) offShow();
     el.hidden = false;
     el.textContent = e.data.ready ? I18N.t('Offline bereit') : I18N.t('Offline-Speicher unvollständig');   // getrennte Aufrufe: das Sammelwerkzeug der Übersetzungen erkennt nur Texte direkt in I18N.t(…)
     el.title = I18N.t(e.data.ready ? (e.data.extraMissing ? 'PDFMy funktioniert ohne Internet. Einige Zusatzdateien (z. B. Schriften für Word-Dateien) lädt PDFMy, sobald WLAN da ist.' : 'PDFMy funktioniert ohne Internet – alle Dateien sind auf diesem Gerät gespeichert.')
@@ -5907,6 +5916,48 @@ function offlineReady() {
   setTimeout(ask, 4000); addEventListener('online', () => setTimeout(ask, 2000));
   navigator.storage?.persist?.().catch(() => {});
 }
+/* Dialog „Offline-Vorrat“ (Klick auf „Offline bereit“ unten): Speicher, dauerhafte Speicherung, Auswahl zusätzlicher Dateien.
+   Die Auswahl merkt sich der Browser (nur Einstellungen, keine Dokumente) und offlineReady hält sie bei jedem Start vollständig. */
+let offAsk = null, offLast = null, offWarten = false;
+const offVorrat = () => { const v = LS.get('offVorrat', {}) || {}; return { langs: Array.isArray(v.langs) ? v.langs.filter(l => /^[a-z_]{3,8}$/.test(l)) : [], heavy: !!v.heavy, cjk: !!v.cjk }; };
+async function offShow() {
+  const T = (k, ...v) => String(I18N.t(k)).replace(/\{(\d+)\}/g, (a, n) => v[n] ?? a);
+  const d = offLast;
+  $('#offStatus').textContent = !navigator.onLine ? T('Gerade ohne Internet – PDFMy arbeitet mit dem, was gespeichert ist.')
+    : offWarten ? T('Lädt …') : !d ? T('Prüfe den Offline-Speicher …')
+    : !d.ready ? T('Noch nicht alle Programmteile gespeichert – sie werden nachgeladen.')
+    : d.extraMissing ? T('Offline bereit. {0} gewählte Zusatzdatei(en) fehlen noch – „Jetzt laden“ holt sie.', d.extraMissing) : T('Offline bereit – alles Gewählte ist auf diesem Gerät gespeichert.');
+  try {
+    const e = await navigator.storage?.estimate?.(), dauer = await navigator.storage?.persisted?.();
+    const mb = n => (n / 1048576).toLocaleString(I18N.info?.bcp || 'de-DE', { maximumFractionDigits: 0 });
+    $('#offSpeicher').textContent = (e ? T('Belegt: {0} MB von {1} MB, die der Browser für PDFMy erlaubt.', mb(e.usage || 0), mb(e.quota || 0)) + ' ' : '')
+      + (dauer ? T('Der Browser behält den Speicher dauerhaft.') : T('Der Browser darf den Speicher bei Platzmangel löschen – als App installieren hilft.'));
+  } catch { $('#offSpeicher').textContent = ''; }
+}
+function offOpen() {
+  const v = offVorrat(), box = $('#offLangs'); box.textContent = '';
+  const ocrL = [...I18N.LANGS.filter(l => !l.code.startsWith('en-')), { ocr: 'eng', name: 'English' }, ...I18N.OCR_EXTRA].filter(l => l.ocr && l.ocr !== 'deu')
+    .filter((l, i, a) => a.findIndex(x => x.ocr === l.ocr) === i).sort((x, y) => x.name.localeCompare(y.name, 'de'));
+  for (const l of ocrL) {
+    const lab = document.createElement('label'), c = document.createElement('input'); lab.className = 'cb'; lab.translate = false;
+    c.type = 'checkbox'; c.value = l.ocr; c.checked = v.langs.includes(l.ocr); lab.append(c, ' ' + l.name); box.append(lab);
+  }
+  $('#offHeavy').checked = v.heavy; $('#offCjk').checked = v.cjk;
+  $('#offDlg').showModal(); offShow(); offAsk?.();
+}
+$('#offState').onclick = offOpen;
+$('#offGo').onclick = async () => {
+  const langs = [...$('#offLangs').querySelectorAll('input:checked')].map(c => c.value);
+  LS.set('offVorrat', { langs, heavy: $('#offHeavy').checked, cjk: $('#offCjk').checked });
+  if (!navigator.onLine) { offShow(); return; }
+  navigator.storage?.persist?.().catch(() => {});
+  offWarten = true; offShow();
+  // auf die Antwort genau dieser Anfrage warten (nicht auf eine frühere vom Start)
+  const id = 'vorrat-' + Date.now();
+  const fertig = new Promise(res => { const h = e => { if (e.data?.type === 'pdfmy:offline' && e.data.id === id) { navigator.serviceWorker.removeEventListener('message', h); res(); } }; navigator.serviceWorker.addEventListener('message', h); });
+  offAsk?.(id); await Promise.race([fertig, new Promise(r => setTimeout(r, 10 * 60 * 1000))]);
+  offWarten = false; offShow();
+};
 // iPhone/iPad (Safari): ohne Installation löscht Safari den Offline-Speicher nach etwa 7 Tagen ohne Nutzung – einmal darauf hinweisen
 function iosOfflineHint() {
   const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);

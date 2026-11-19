@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Offline-Vorrat, Betriebsprüfung und Vertragsfristen (app-v295)
+- **Verträge – bis wann kündigen?** Bei Verträgen und Versicherungsscheinen erkennt PDFMy Beginn, Laufzeit, Ende, Kündigungsfrist (Wochen/Monate, zum Monats-/Quartalsende) und automatische Verlängerung, berechnet nach § 188 BGB das nächste Vertragsende und „kündigen bis“ (Eingang beim Vertragspartner); Kalendereintrag „Kündigungsfrist“ mit 14 Tagen Vorwarnung. Tests in tests/vertrag.test.js.
+- **Offline-Vorrat** (Klick auf „Offline bereit“): belegter Speicher und ob der Browser ihn dauerhaft behält; zusätzlich offline bereithalten – Office-Schriften, CJK-Schrift, Texterkennung weiterer Sprachen; „Jetzt laden“ wartet auf genau diese Anfrage; die Auswahl wird bei jedem Start und Update vollständig gehalten.
+- **Kein stiller Ausfall:** fehlt ohne Internet die CJK-Schrift, sagt PDFMy, warum und wie es künftig klappt.
+- **Betriebsprüfung** tools/betrieb.js: Live-Website gegen das Release-Protokoll (Integrität, Stand), Signaturen aller Update-Wege, Zertifikat, security.txt, Live-Probelauf; Protokoll in .deploy/logs.
+- Hilfe in 40 Sprachen, Tests in tests/offline.test.js.
+
 ### Chinesisch, Japanisch, Koreanisch beim Umwandeln (app-v294)
 - **Ersatzschrift „PDFMy CJK“** (aus Noto Sans CJK SC 2.004, SIL OFL 1.1, umbenannt, tools/cjk-schrift.py): Word, Excel, Text, Webseiten, E-Books und Übersetzungen mit chinesischen, japanischen oder koreanischen Zeichen werden nicht mehr zu „?“. Lädt nur bei Bedarf (einmalig ca. 7 MB, danach offline), eingebettet als Teilmenge.
 - Warum umgewandelt: Die CID-CFF-Schrift verlor beim Bilden der Teilmenge (fontkit) einzelne Zeichen (z. B. „漢“ leer); TrueType-Umrisse mit 4-Byte-Auffüllung sind zuverlässig. Gefunden und geprüft im Browser (Darstellung pdf.js, Text kopierbar).

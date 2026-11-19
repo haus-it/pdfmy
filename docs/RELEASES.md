@@ -298,3 +298,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-11-19 02:55 | pdfmy-202611190142-v292 | 1.20.1 | bd5619d1bc646b3f… | 362/362 Tests bestanden, Probelauf bestanden | 137 | Administrator | 032a8aa51000e0ac |
 | 2026-11-19 03:07 | pdfmy-202611190200-v293 | 1.20.1 | bd5619d1bc646b3f… | 362/362 Tests bestanden, Probelauf bestanden | 53 | Administrator | 6dd590e5582aab0a |
 | 2026-11-19 04:15 | pdfmy-202611190259-v294 | 1.20.1 | bd5619d1bc646b3f… | 366/366 Tests bestanden, Probelauf bestanden | 173 | Administrator | da971a88468d2b7e |
+| 2026-11-19 05:07 | pdfmy-202611190352-v295 | 1.20.1 | bd5619d1bc646b3f… | 376/376 Tests bestanden, Probelauf bestanden | 173 | Administrator | a1dd1aefd22cff45 |

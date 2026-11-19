@@ -182,3 +182,4 @@ Abweichungen von dieser Strategie sind nur mit Zustimmung der Geschäftsführung
 | Monatliche Prüfung der SBOM auf Schwachstellen | **offen – Entwicklung, Termin einplanen** |
 | GitHub Security Advisories aktivieren | **offen – Geschäftsführung (Konto haus-it)** |
 | Benennung der zweiten Person für das Vier-Augen-Prinzip | **offen – Geschäftsführung** |
+| Tägliche Betriebsprüfung der Live-Website (`tools/betrieb.js`: Integrität gegen das Release-Protokoll, Signaturen, Zertifikat, security.txt, Probelauf) | Prüfung umgesetzt (app-v295); **tägliche Ausführung als geplante Aufgabe – Freigabe Geschäftsführung** |

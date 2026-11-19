@@ -67,6 +67,7 @@ function german(s) {
   if (/^[\w-]+(\s+[\w-]+)*$/.test(p) && !/[A-ZÄÖÜäöüß]/.test(p) && !/\b(und|oder|der|die|das|mit|für|von|bei|nicht|ist|zu|im|auf)\b/.test(p)) return false;   // CSS-Klassenlisten, Ereignisnamen
   if (/^[a-z-]+:|^[a-z]+\/[a-z0-9.+-]+$/i.test(p) && !/\s/.test(p)) return false;   // MIME-Typen, Präfixe
   if (/^q [\d.{]/.test(p)) return false;   // PDF-Inhaltsströme („q 0.1 0.2 0.3 rg … Q“)
+  if (/\(\?[:=!<]|\[\^\\d|\\[dsw][*+?{]/.test(s)) return false;   // Quelltext regulärer Ausdrücke (new RegExp(`(?:…)`))
   if (/^\[|\[[\w-]+[\^$*]?=|:checked|:not\(|\?=|^[\w-]+\[|^[\w.#-]+(,[\w.#-]+)+$/.test(s)) return false;   // Selektoren, MIME-Kodierung
   if (!/\s/.test(p) && (/^[A-Z][a-z]+[A-Z]/.test(p) || /[_.\\]/.test(p))) return false;   // XML-/PDF-Namen (CreditNoteLine), Dateinamen
   if (/^(Enter|Escape|Esc|Tab|Home|End|PageUp|PageDown|Arrow\w+|Delete|Backspace|Shift|Control|Alt|Meta|Space|Sig \w+)$/.test(p)) return false;   // Tasten
