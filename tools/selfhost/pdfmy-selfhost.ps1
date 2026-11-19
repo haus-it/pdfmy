@@ -17,7 +17,7 @@ param(
   [switch]$Still
 )
 $ErrorActionPreference = 'Stop'
-$SkriptVersion = '__VERSION__'
+$SkriptVersion = '__VERSION__'; $StabilTage = 7
 $Modulus = '__MODULUS__'; $Exponent = '__EXPONENT__'   # öffentlicher Schlüssel der Mentor GmbH (Base64)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $ProgressPreference = 'SilentlyContinue'
@@ -37,19 +37,37 @@ function Holen($url, $datei) {
 }
 function Sha256($datei) { (Get-FileHash $datei -Algorithm SHA256).Hash.ToLower() }
 
-function Neueste($tmp) {
-  Holen "$Quelle/latest.json" "$tmp\latest.json"; Holen "$Quelle/latest.json.sig" "$tmp\latest.json.sig"
-  $json = [IO.File]::ReadAllBytes("$tmp\latest.json")
+function SigOk($jsonDatei, $sigDatei) {   # Signatur der Versionsdatei: „pdfmy-selfhost-v1“ + Zeilenumbruch + latest.json
+  $json = [IO.File]::ReadAllBytes($jsonDatei)
   $nachricht = [Text.Encoding]::UTF8.GetBytes("pdfmy-selfhost-v1`n") + $json
   $rsa = New-Object Security.Cryptography.RSACryptoServiceProvider
   $p = New-Object Security.Cryptography.RSAParameters; $p.Modulus = [Convert]::FromBase64String($Modulus); $p.Exponent = [Convert]::FromBase64String($Exponent)
   $rsa.ImportParameters($p)
-  try { $sig = [Convert]::FromBase64String(([IO.File]::ReadAllText("$tmp\latest.json.sig")).Trim()) } catch { Fehler 'Signatur nicht lesbar – Update abgebrochen' }
-  if (-not $rsa.VerifyData($nachricht, 'SHA256', $sig)) { Fehler 'Signatur ungültig – Update abgebrochen (nichts verändert)' }
-  $v = [Text.Encoding]::UTF8.GetString($json) | ConvertFrom-Json
+  try { $sig = [Convert]::FromBase64String(([IO.File]::ReadAllText($sigDatei)).Trim()) } catch { return $false }
+  return $rsa.VerifyData($nachricht, 'SHA256', $sig)
+}
+function Gueltig($v) { $v -and $v.format -eq '1' -and $v.nr -match '^\d+$' -and $v.datei -match '^[A-Za-z0-9._-]+$' -and $v.datei -notmatch '\.\.' }
+function Neueste($tmp) {
+  Holen "$Quelle/latest.json" "$tmp\latest.json"; Holen "$Quelle/latest.json.sig" "$tmp\latest.json.sig"
+  if (-not (SigOk "$tmp\latest.json" "$tmp\latest.json.sig")) { Fehler 'Signatur ungültig – Update abgebrochen (nichts verändert)' }
+  $v = [IO.File]::ReadAllText("$tmp\latest.json") | ConvertFrom-Json
   if ($v.format -ne '1') { Fehler 'unbekanntes Format der Versionsdatei – bitte das Skript aktualisieren' }
-  if ($v.nr -notmatch '^\d+$') { Fehler 'Versionsdatei ohne gültige Nummer' }
-  if ($v.datei -notmatch '^[A-Za-z0-9._-]+$' -or $v.datei -match '\.\.') { Fehler 'Versionsdatei mit ungültigem Dateinamen' }
+  if (-not (Gueltig $v)) { Fehler 'Versionsdatei mit ungültiger Nummer oder ungültigem Dateinamen' }
+  $v | Add-Member -NotePropertyName quelle -NotePropertyValue $Quelle -Force
+  # Kanal „stabil“ rechnet selbst nach (Update-Strategie 5.2): eine Fassung aus „aktuell“, die seit $StabilTage Tagen veröffentlicht ist
+  # – oder eine Sicherheitsfassung –, gilt als stabil, auch wenn pdfmy.de seitdem nichts Neues ausgerollt hat.
+  if ($Kanal -eq 'stabil' -and $Quelle -match '/stabil$') {
+    $akt = $Quelle -replace '/stabil$', '/aktuell'
+    try {
+      Invoke-WebRequest -Uri "$akt/latest.json" -OutFile "$tmp\akt.json" -UseBasicParsing -TimeoutSec 60
+      Invoke-WebRequest -Uri "$akt/latest.json.sig" -OutFile "$tmp\akt.json.sig" -UseBasicParsing -TimeoutSec 60
+      if (SigOk "$tmp\akt.json" "$tmp\akt.json.sig") {
+        $a = [IO.File]::ReadAllText("$tmp\akt.json") | ConvertFrom-Json
+        $alter = ((Get-Date).ToUniversalTime() - [datetime]::Parse($a.datum, $null, [Globalization.DateTimeStyles]::AdjustToUniversal)).TotalDays
+        if ((Gueltig $a) -and [int]$a.nr -gt [int]$v.nr -and ($a.sicherheit -eq '1' -or $alter -ge $StabilTage)) { $a | Add-Member -NotePropertyName quelle -NotePropertyValue $akt -Force; $v = $a }
+      }
+    } catch {}
+  }
   return $v
 }
 function InstalliertNr {
@@ -66,7 +84,7 @@ function Aktualisieren([switch]$NurPruefen) {
     if ($null -ne $alt -and [int]$v.nr -le $alt) { Sag "PDFMy ist aktuell ($($v.version))."; return }
     if ($NurPruefen) { Write-Output "Neue Fassung verfügbar: $($v.version) (installiert: $(if ($null -ne $alt) { "v$alt" } else { 'keine' }))"; exit 10 }
     Sag "Lade $($v.version) …"
-    Holen "$Quelle/$($v.datei)" "$tmp\paket.tar.gz"
+    Holen "$($v.quelle)/$($v.datei)" "$tmp\paket.tar.gz"
     if ((Sha256 "$tmp\paket.tar.gz") -ne $v.sha256) { Fehler 'Prüfsumme des Pakets stimmt nicht – Update abgebrochen (nichts verändert)' }
     $neu = Join-Path $tmp 'neu'; New-Item -ItemType Directory $neu | Out-Null
     $tar = Join-Path $env:SystemRoot 'System32\tar.exe'; if (-not (Test-Path $tar)) { Fehler 'tar.exe fehlt (ab Windows Server 2019 / Windows 10 1803 enthalten)' }

@@ -61,7 +61,7 @@ Eine Sicherheitsfassung enthält nur die Behebung und das dafür Nötige, keine 
 
 - Jede Fassung erscheint als Paket nur mit der App (ohne Website, Impressum oder Zählseiten von pdfmy.de) unter `https://pdfmy.de/selfhost/`.
 - **Kanal „aktuell“:** jede veröffentlichte Fassung sofort.
-- **Kanal „stabil“ (Standard):** die neueste Fassung, die seit **7 Tagen** auf pdfmy.de läuft und nicht zurückgenommen wurde. Sicherheitsfassungen sind sofort „stabil“.
+- **Kanal „stabil“ (Standard):** die neueste Fassung, die seit **7 Tagen** auf pdfmy.de läuft und nicht zurückgenommen wurde. Sicherheitsfassungen sind sofort „stabil“. Die Aktualisierer rechnen das selbst nach: Sie lesen zusätzlich die signierte Versionsdatei von „aktuell“ und übernehmen deren Fassung, sobald sie 7 Tage alt ist. So rückt „stabil“ pünktlich nach, auch wenn pdfmy.de in der Zeit nichts Neues ausrollt.
 - Der Aktualisierer (`pdfmy-selfhost.sh` für Linux, `pdfmy-selfhost.ps1` für Windows/IIS) prüft täglich zwischen 3 und 6 Uhr, mit einer zufälligen Minute, damit nicht alle Server gleichzeitig anfragen. Installiert wird nur eine Fassung, die alle drei Bedingungen erfüllt: gültige Signatur, passende Prüfsumme, höhere Nummer als die vorhandene. Ein Rückschritt durch Wiedereinspielen einer alten Versionsdatei ist damit ausgeschlossen.
 - Der Wechsel erfolgt ohne Ausfallzeit, durch zwei Umbenennungen. Die vorige Fassung bleibt für `zurueck` erhalten. Eigene Dateien des Betreibers bleiben erhalten.
 - Betreiber können einen eigenen Spiegel im Intranet nutzen (`PDFMY_QUELLE` bzw. `-Quelle`). Auch dort prüft der Aktualisierer die Signatur der Mentor GmbH.

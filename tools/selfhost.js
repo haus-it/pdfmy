@@ -20,8 +20,10 @@ const sha256 = b => crypto.createHash('sha256').update(b).digest('hex');
 const ARCHIV = root => path.join(root, 'dist', 'selfhost-archiv');
 
 // Versionsdatei (kompakt, nur Zeichenketten – die Skripte lesen sie ohne JSON-Werkzeug) und ihre Signatur
-function manifest({ nr, version, datei, sha, groesse, datum, kanal }) {
-  return JSON.stringify({ format: '1', kanal, nr: String(nr), version, datei, sha256: sha, groesse: String(groesse), datum }) + '\n';
+// datum = Veröffentlichung auf pdfmy.de: die Aktualisierer im Kanal „stabil“ rechnen damit die 7 Tage selbst nach (auch ohne neues
+// Ausrollen); sicherheit '1' = Sicherheitsfassung, sofort auch für „stabil“
+function manifest({ nr, version, datei, sha, groesse, datum, kanal, sicherheit = false }) {
+  return JSON.stringify({ format: '1', kanal, nr: String(nr), version, datei, sha256: sha, groesse: String(groesse), datum, ...(sicherheit ? { sicherheit: '1' } : {}) }) + '\n';
 }
 const signiere = (text, key) => crypto.sign('sha256', Buffer.concat([Buffer.from(PRAEFIX), Buffer.from(text)]), { key, padding: crypto.constants.RSA_PKCS1_PADDING }).toString('base64') + '\n';
 const pruefe = (text, sigB64, pub) => crypto.verify('sha256', Buffer.concat([Buffer.from(PRAEFIX), Buffer.from(text)]), { key: pub, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(String(sigB64).trim(), 'base64'));
@@ -178,7 +180,7 @@ function build({ root, write, domain, nr, stand, files, appVersion, csp = "defau
   for (const x of archiv(root).slice(BEHALTEN)) fs.rmSync(x.dir, { recursive: true, force: true });   // ältere Fassungen aufräumen
   const kanal = (name, x) => {
     const data = x.nr === nr ? tgz : fs.readFileSync(path.join(x.dir, x.info.datei));
-    const m = manifest({ nr: x.nr, version: x.info.version, datei: x.info.datei, sha: sha256(data), groesse: data.length, datum: x.info.veroeffentlicht || new Date().toISOString(), kanal: name });
+    const m = manifest({ nr: x.nr, version: x.info.version, datei: x.info.datei, sha: sha256(data), groesse: data.length, datum: x.info.veroeffentlicht || new Date().toISOString(), kanal: name, sicherheit: !!x.info.sicherheit });
     write(`selfhost/${name}/${x.info.datei}`, data);
     write(`selfhost/${name}/latest.json`, m);
     write(`selfhost/${name}/latest.json.sig`, signiere(m, key));

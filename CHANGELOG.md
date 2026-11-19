@@ -4,6 +4,9 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Eigener Server: Kanal „stabil“ rückt pünktlich nach (app-v299)
+- Die Aktualisierer (Linux, Windows) lesen im Kanal „stabil“ zusätzlich die signierte Versionsdatei von „aktuell“ und übernehmen deren Fassung, sobald sie 7 Tage veröffentlicht ist – Sicherheitsfassungen (neues Kennzeichen in der Versionsdatei) sofort. Vorher rückte „stabil“ erst beim nächsten Ausrollen nach. Gefälschte oder fehlende „aktuell“-Dateien werden ignoriert. Test für beide Aktualisierer.
+
 ### Robustheit gegen beschädigte Dateien, Korrekturen zweite Fehlersuche (app-v298)
 - **Alte Office- und Outlook-Dateien (.doc, .xls, .msg):** beschädigte oder präparierte Dateien führen nicht mehr zu Endlosschleifen oder riesigen Speicheranforderungen – Ketten im Verbundformat mit Zyklenschutz und Längengrenze, Verzeichnisbaum jeden Eintrag nur einmal, Excel-Zellen nur innerhalb von 65.536 × 256, MULRK innerhalb des Datensatzes, Zeichenkettenliste ohne Stillstand. Zufallstest mit 300 beschädigten Dateien (alte Fassung: hing; neue: 2 s).
 - **Word 97:** Zellen mit mehreren Absätzen bleiben eine Zelle (vorher zerriss die Tabelle).

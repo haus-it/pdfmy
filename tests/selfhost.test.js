@@ -67,6 +67,15 @@ function lege(sp, nr, { mod, sigKey = key, kaputt = false } = {}) {
   const sig = SH.signiere(m, sigKey); if (mod) m = mod(m);
   fs.writeFileSync(path.join(sp.dir, 'latest.json'), m); fs.writeFileSync(path.join(sp.dir, 'latest.json.sig'), sig);
 }
+// Fassung in einen Unterordner („stabil“/„aktuell“) legen, mit Veröffentlichungsdatum und ggf. Sicherheitskennzeichen
+function legeKanal(sp, kanal, nr, { datum = new Date().toISOString(), sicherheit = false } = {}) {
+  const d = path.join(sp.dir, kanal); fs.mkdirSync(d, { recursive: true });
+  const tgz = SH.paket([{ path: 'index.html', data: `<!doctype html><title>v${nr}</title>` }, { path: 'sw.js', data: `const VERSION='v${nr}';` }],
+    { nr, stand: `pdfmy-selfhost-test-v${nr}`, domain: 'pdfmy.test', sh: sk.sh, ps1: sk.ps1 });
+  const datei = `pdfmy-selfhost-v${nr}.tar.gz`; fs.writeFileSync(path.join(d, datei), tgz);
+  const m = SH.manifest({ nr, version: `pdfmy-selfhost-test-v${nr}`, datei, sha: crypto.createHash('sha256').update(tgz).digest('hex'), groesse: tgz.length, datum, kanal, sicherheit });
+  fs.writeFileSync(path.join(d, 'latest.json'), m); fs.writeFileSync(path.join(d, 'latest.json.sig'), SH.signiere(m, key));
+}
 const titel = ziel => (fs.readFileSync(path.join(ziel, 'index.html'), 'utf8').match(/<title>(v\d+)/) || [])[1];
 
 function ablauf(name, run) {
@@ -143,6 +152,24 @@ const runPs = (cmd, ziel, url) => {
 };
 runPs.ok = process.platform === 'win32' && fs.existsSync(path.join(process.env.SystemRoot || 'C:/Windows', 'System32', 'tar.exe'));
 ablauf('Windows (PowerShell)', runPs);
+
+for (const [name, run] of [['Linux (bash)', runBash], ['Windows (PowerShell)', runPs]]) {
+  test(`Kanal „stabil“ rechnet selbst nach – ${name}: 7 Tage alt oder Sicherheitsfassung aus „aktuell“, sonst „stabil“`, { skip: !run.ok && 'nicht verfügbar' }, async () => {
+    const sp = await spiegel(), base = fs.mkdtempSync(path.join(os.tmpdir(), 'pdfmy-kanal-')), ziel = path.join(base, 'pdfmy');
+    try {
+      legeKanal(sp, 'stabil', 300, { datum: '2026-11-01T08:00:00Z' });
+      legeKanal(sp, 'aktuell', 301, { datum: new Date(Date.now() - 2 * 864e5).toISOString() });   // erst 2 Tage alt
+      let r = await run('aktualisieren', ziel, sp.url + '/stabil'); assert.equal(r.status, 0, r.out); assert.equal(titel(ziel), 'v300', 'zu jung: stabil bleibt');
+      legeKanal(sp, 'aktuell', 301, { datum: new Date(Date.now() - 8 * 864e5).toISOString() });   // 8 Tage alt
+      r = await run('aktualisieren', ziel, sp.url + '/stabil'); assert.equal(r.status, 0, r.out); assert.equal(titel(ziel), 'v301', '7 Tage um: aus „aktuell“');
+      legeKanal(sp, 'aktuell', 302, { datum: new Date().toISOString(), sicherheit: true });
+      r = await run('aktualisieren', ziel, sp.url + '/stabil'); assert.equal(r.status, 0, r.out); assert.equal(titel(ziel), 'v302', 'Sicherheitsfassung sofort');
+      // „aktuell“ gefälscht: wird ignoriert, nichts passiert
+      legeKanal(sp, 'aktuell', 303, { datum: '2026-01-01T00:00:00Z' }); fs.writeFileSync(path.join(sp.dir, 'aktuell', 'latest.json.sig'), SH.signiere('x', other));
+      r = await run('aktualisieren', ziel, sp.url + '/stabil'); assert.equal(r.status, 0, r.out); assert.equal(titel(ziel), 'v302');
+    } finally { sp.close(); fs.rmSync(sp.dir, { recursive: true, force: true }); fs.rmSync(base, { recursive: true, force: true }); }
+  });
+}
 
 test('Freigabefenster (Update-Strategie Abschnitt 4): Werktage 8–16 Uhr, Freitagnachmittag, Feiertage und Vortag, Ruhezeit', { skip: process.platform !== 'win32' && 'nur Windows' }, () => {
   const faelle = { '2026-12-01 10:00': '', '2026-12-04 11:00': '', '2026-12-04 13:00': 'Freitag', '2026-12-05 10:00': 'Wochenende', '2026-12-02 17:00': 'außerhalb',

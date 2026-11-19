@@ -9,6 +9,8 @@ set -euo pipefail
 umask 022
 SKRIPT_VERSION="__VERSION__"
 KANAL=stabil
+STABIL_TAGE=7
+PAKET_QUELLE=
 QUELLE="${PDFMY_QUELLE:-}"
 SCHLUESSEL='__PUBKEY__'
 STILL=0
@@ -45,33 +47,47 @@ wert() { sed -n "s/.*\"$1\":\"\([^\"]*\)\".*/\1/p" "$2" | head -n 1; }   # flach
 sha256() { openssl dgst -sha256 -r "$1" | cut -d' ' -f1; }
 
 # Signatur der Versionsdatei prüfen: signiert ist „pdfmy-selfhost-v1“ + Zeilenumbruch + latest.json (Byte für Byte)
-pruefe_signatur() {
-  local t; t=$(mktemp -d)
+sig_ok() {   # sig_ok JSON SIG → 0 = Signatur gültig
+  local t rc=1; t=$(mktemp -d)
   printf 'pdfmy-selfhost-v1\n' > "$t/nachricht"; cat "$1" >> "$t/nachricht"
   printf '%s\n' "$SCHLUESSEL" > "$t/schluessel.pem"
-  openssl base64 -d -A -in "$2" -out "$t/signatur" 2>/dev/null || { rm -rf "$t"; fehler "Signatur nicht lesbar – Update abgebrochen"; }
-  if ! openssl dgst -sha256 -verify "$t/schluessel.pem" -signature "$t/signatur" "$t/nachricht" >/dev/null 2>&1; then
-    rm -rf "$t"; fehler "Signatur ungültig – Update abgebrochen (nichts verändert)"
-  fi
-  rm -rf "$t"
+  if openssl base64 -d -A -in "$2" -out "$t/signatur" 2>/dev/null && openssl dgst -sha256 -verify "$t/schluessel.pem" -signature "$t/signatur" "$t/nachricht" >/dev/null 2>&1; then rc=0; fi
+  rm -rf "$t"; return $rc
+}
+pruefe_signatur() { sig_ok "$1" "$2" || fehler "Signatur ungültig – Update abgebrochen (nichts verändert)"; }
+gueltig() {   # gueltig JSON → Format, Nummer und Dateiname plausibel
+  [ "$(wert format "$1")" = "1" ] && case "$(wert nr "$1")" in ''|*[!0-9]*) false;; *) true;; esac && case "$(wert datei "$1")" in ''|*/*|*..*) false;; *) true;; esac
 }
 
-# Neueste Fassung beschreiben: setzt NEU_NR, NEU_VERSION, NEU_DATEI, NEU_SHA; Arbeitsordner $1
+# Neueste Fassung beschreiben: setzt NEU_NR, NEU_VERSION, NEU_DATEI, NEU_SHA, PAKET_QUELLE; Arbeitsordner $1
 neueste() {
   holen "$QUELLE/latest.json" "$1/latest.json"
   holen "$QUELLE/latest.json.sig" "$1/latest.json.sig"
   pruefe_signatur "$1/latest.json" "$1/latest.json.sig"
   [ "$(wert format "$1/latest.json")" = "1" ] || fehler "unbekanntes Format der Versionsdatei – bitte das Skript aktualisieren"
+  gueltig "$1/latest.json" || fehler "Versionsdatei mit ungültiger Nummer oder ungültigem Dateinamen"
   NEU_NR=$(wert nr "$1/latest.json"); NEU_VERSION=$(wert version "$1/latest.json"); NEU_DATEI=$(wert datei "$1/latest.json"); NEU_SHA=$(wert sha256 "$1/latest.json")
-  case "$NEU_NR" in ''|*[!0-9]*) fehler "Versionsdatei ohne gültige Nummer";; esac
-  case "$NEU_DATEI" in ''|*/*|*..*) fehler "Versionsdatei mit ungültigem Dateinamen";; esac
+  PAKET_QUELLE="$QUELLE"
+  # Kanal „stabil“ rechnet selbst nach (Update-Strategie 5.2): eine Fassung aus „aktuell“, die seit STABIL_TAGE Tagen veröffentlicht
+  # ist – oder eine Sicherheitsfassung –, gilt als stabil, auch wenn pdfmy.de seitdem nichts Neues ausgerollt hat. Eine zurückgenommene
+  # Fassung steht nicht mehr in „aktuell“. Fehlt „aktuell“ oder ist es nicht gültig signiert, bleibt es bei „stabil“.
+  if [ "$KANAL" = stabil ] && [ "${QUELLE%/stabil}" != "$QUELLE" ]; then
+    local akt="${QUELLE%/stabil}/aktuell" nr2 datum2 alter
+    if curl -fsSL --max-time 60 -o "$1/akt.json" "$akt/latest.json" 2>/dev/null && curl -fsSL --max-time 60 -o "$1/akt.json.sig" "$akt/latest.json.sig" 2>/dev/null \
+       && sig_ok "$1/akt.json" "$1/akt.json.sig" && gueltig "$1/akt.json"; then
+      nr2=$(wert nr "$1/akt.json"); datum2=$(wert datum "$1/akt.json")
+      alter=$(( ( $(date -u +%s) - $(date -u -d "$datum2" +%s 2>/dev/null || echo 9999999999) ) / 86400 ))
+      if [ "$nr2" -gt "$NEU_NR" ] && { [ "$(wert sicherheit "$1/akt.json")" = 1 ] || [ "$alter" -ge "$STABIL_TAGE" ]; }; then
+        NEU_NR=$nr2; NEU_VERSION=$(wert version "$1/akt.json"); NEU_DATEI=$(wert datei "$1/akt.json"); NEU_SHA=$(wert sha256 "$1/akt.json"); PAKET_QUELLE="$akt"
+      fi
+    fi
+  fi
 }
 # Absoluter Zielpfad; bricht ab, wenn der übergeordnete Ordner fehlt (Tippfehler wie /var/wwww/pdfmy: nie nach /pdfmy installieren).
 # Nur als einfache Zuweisung aufrufen (ZIEL=$(absolut …)) – dann beendet set -e das Skript bei einem Fehler.
 absolut() {
   local d; d=$(cd "$(dirname "$1")" 2>/dev/null && pwd) || fehler "übergeordneter Ordner von $1 fehlt – bitte den Pfad prüfen"
-  printf '%s/%s
-' "${d%/}" "$(basename "$1")"
+  printf '%s/%s\n' "${d%/}" "$(basename "$1")"
 }
 installiert_nr() { [ -f "$1/.pdfmy-version" ] && sed -n 's/^nr=//p' "$1/.pdfmy-version" | head -n 1 || true; }
 
@@ -86,7 +102,7 @@ aktualisieren() {   # aktualisieren ZIEL [nur_pruefen]
   if [ -n "$alt" ] && [ "$NEU_NR" -le "$alt" ]; then sag "PDFMy ist aktuell ($NEU_VERSION)."; return 0; fi
   if [ "${2:-}" = nur_pruefen ]; then echo "Neue Fassung verfügbar: $NEU_VERSION (installiert: ${alt:-keine})"; exit 10; fi
   sag "Lade $NEU_VERSION …"
-  holen "$QUELLE/$NEU_DATEI" "$tmp/paket.tar.gz"
+  holen "$PAKET_QUELLE/$NEU_DATEI" "$tmp/paket.tar.gz"
   [ "$(sha256 "$tmp/paket.tar.gz")" = "$NEU_SHA" ] || fehler "Prüfsumme des Pakets stimmt nicht – Update abgebrochen (nichts verändert)"
   mkdir "$tmp/neu"
   gzip -dc "$tmp/paket.tar.gz" | tar -xf - -C "$tmp/neu" || fehler "Paket lässt sich nicht entpacken"   # über stdin: GNU tar deutet „C:/…“ sonst als Rechnername
