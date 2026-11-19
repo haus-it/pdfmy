@@ -81,12 +81,31 @@
     if (fonts.boldItalic) F.bi = await doc.embedFont(fonts.boldItalic, { subset: true });
     F.i ||= F.r; F.bi ||= F.b;   // ohne Kursivschnitt: aufrecht
     const sets = {}; for (const k in F) sets[k] = new Set(F[k].getCharacterSet());
-    const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => ch === '\n' || sets[k].has(ch.codePointAt(0)) ? ch : '?').join('');
     let blocks;
     if (given) blocks = given;
     else if (kind === 'csv') blocks = [{ type: 'table', rows: parseCsv(text), head: true }];
     else if (kind === 'md') blocks = parseMarkdown(text);
     else blocks = [{ type: 'pre', text: String(text).replace(/^﻿/, '').replace(/\r\n?/g, '\n') }];
+    /* Ersatzschrift für Chinesisch, Japanisch, Koreanisch (vendor/cjk, aus Noto Sans CJK, tools/cjk-schrift.py): nur laden und einbetten,
+       wenn der Text Zeichen enthält, die DejaVu nicht hat – als Teilmenge, also nur die benutzten Zeichen. Fehlt sie (offline, nicht
+       geladen), bleibt es beim „?“ wie bisher. */
+    const all = JSON.stringify([title, blocks, pg?.header, pg?.footer], (k, v) => k === 'bytes' ? undefined : v);
+    const fehlt = [...new Set(all)].some(ch => ch.codePointAt(0) > 0x2E7F && !sets.r.has(ch.codePointAt(0)));
+    const loadCjk = fonts.cjk || api.cjk || root.pdfmyCjkFont;
+    if (fehlt && loadCjk) { try { F.x = await doc.embedFont(await loadCjk(), { subset: true }); sets.x = new Set(F.x.getCharacterSet()); } catch (e) { console.warn(e); } }
+    const setOf = new Map(Object.keys(F).map(k => [F[k], sets[k]]));
+    const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => ch === '\n' || sets[k].has(ch.codePointAt(0)) || sets.x?.has(ch.codePointAt(0)) ? ch : '?').join('');
+    // Text in Stücke je Schrift: was die Hauptschrift nicht hat, kommt aus der Ersatzschrift
+    const parts = (t, font) => {
+      if (!F.x) return [{ t, f: font }];
+      const s = setOf.get(font) || sets.r, out = [];
+      for (const ch of t) { const cp = ch.codePointAt(0), f = s.has(cp) || !sets.x.has(cp) ? font : F.x, last = out[out.length - 1]; if (last && last.f === f) last.t += ch; else out.push({ t: ch, f }); }
+      return out;
+    };
+    const wOf = (font, t, size) => parts(t, font).reduce((n, p) => n + p.f.widthOfTextAtSize(p.t, size), 0);
+    const drawT = (pg2, t, o) => { let x = o.x; for (const p of parts(t, o.font)) { pg2.drawText(p.t, { ...o, x, font: p.f }); x += p.f.widthOfTextAtSize(p.t, o.size); } };
+    // Chinesisch und Japanisch kennen keine Leerzeichen: zwischen allen Zeichen darf umbrochen werden
+    const SPLIT = /(\s+|[⺀-鿿豈-﫿＀-￯])/;
     const cols = Math.max(0, ...blocks.filter(b => b.type === 'table').map(b => b.rows[0]?.length || 0));
     const sz = pg?.size && pg.size[0] > 100 && pg.size[1] > 100 ? pg.size : null, land = !sz && cols > 6;
     const PW = sz ? sz[0] : land ? 841.89 : 595.28, PH = sz ? sz[1] : land ? 595.28 : 841.89, M = pg?.margin || 56.7, W = PW - 2 * M, gray = L.rgb(0.45, 0.45, 0.45);
@@ -100,13 +119,13 @@
       const out = [];
       for (const para of String(s).split('\n')) {
         let line = '';
-        for (const word of para.split(/(\s+)/)) {
+        for (const word of para.split(SPLIT)) {
           if (!word) continue;
           const t = line + word;
-          if (font.widthOfTextAtSize(t.trimEnd(), size) <= width || !line.trim()) {
-            if (!line.trim() && font.widthOfTextAtSize(word, size) > width) {   // überlanges Wort hart trennen
+          if (wOf(font, t.trimEnd(), size) <= width || !line.trim()) {
+            if (!line.trim() && wOf(font, word, size) > width) {   // überlanges Wort hart trennen
               let w = '';
-              for (const ch of word) { if (font.widthOfTextAtSize(w + ch, size) > width) { out.push(w); w = ''; } w += ch; }
+              for (const ch of word) { if (wOf(font, w + ch, size) > width) { out.push(w); w = ''; } w += ch; }
               line = w;
             } else line = t;
           } else { out.push(line.trimEnd()); line = word.trimStart(); }
@@ -118,11 +137,11 @@
     // Text mit wechselnden Schnitten: Wörter je Schnitt messen und zeilenweise setzen
     const runs1 = (runs, { size = 10.5, x = M, width = W, color, lead = 1.38, align } = {}) => {
       const kOf = r => r.b && r.i ? 'bi' : r.b ? 'b' : r.i ? 'i' : 'r', toks = [];
-      for (const rn of runs) for (const part of String(rn.t).split(/(\n|\s+)/)) if (part) toks.push({ t: part === '\n' ? '\n' : safe(part, 'r'), k: kOf(rn) });
+      for (const rn of runs) for (const part of String(rn.t).split(/(\n|\s+|[\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF])/)) if (part) toks.push({ t: part === '\n' ? '\n' : safe(part, 'r'), k: kOf(rn) });
       const lines = [[]]; let wl = 0;
       for (const t of toks) {
         if (t.t === '\n') { lines.push([]); wl = 0; continue; }
-        const tw = F[t.k].widthOfTextAtSize(t.t, size), cur = lines[lines.length - 1];
+        const tw = wOf(F[t.k], t.t, size), cur = lines[lines.length - 1];
         if (/^\s+$/.test(t.t)) { if (cur.length) { cur.push({ ...t, w: tw }); wl += tw; } continue; }
         if (wl + tw > width && cur.length) { while (cur.length && /^\s+$/.test(cur[cur.length - 1].t)) wl -= cur.pop().w; lines.push([]); wl = 0; }
         lines[lines.length - 1].push({ ...t, w: tw }); wl += tw;
@@ -133,22 +152,22 @@
         const tw = ln.reduce((a, t) => a + t.w, 0); let lx = align === 'center' ? x + (width - tw) / 2 : align === 'right' ? x + width - tw : x;
         // aufeinanderfolgende Wörter gleichen Schnitts als ein Stück (beim Kopieren bleiben die Leerzeichen erhalten)
         const segs = []; for (const t of ln) { const g = segs[segs.length - 1]; if (g && g.k === t.k) { g.t += t.t; g.w += t.w; } else segs.push({ ...t }); }
-        for (const g of segs) { if (g.t.trim()) page.drawText(g.t, { x: lx, y: y + size * 0.25, size, font: F[g.k], color }); lx += g.w; }
+        for (const g of segs) { if (g.t.trim()) drawT(page, g.t, { x: lx, y: y + size * 0.25, size, font: F[g.k], color }); lx += g.w; }
       }
     };
     const text1 = (s, { k = 'r', size = 10.5, x = M, width = W, color, lead = 1.38, align } = {}) => {
       const font = F[k];
       for (const ln of wrap(safe(s, k), font, size, width)) {
         need(size * lead); y -= size * lead;
-        const tw = align ? font.widthOfTextAtSize(ln, size) : 0, lx = align === 'center' ? x + (width - tw) / 2 : align === 'right' ? x + width - tw : x;
-        page.drawText(ln, { x: lx, y: y + size * 0.25, size, font, color });
+        const tw = align ? wOf(font, ln, size) : 0, lx = align === 'center' ? x + (width - tw) / 2 : align === 'right' ? x + width - tw : x;
+        drawT(page, ln, { x: lx, y: y + size * 0.25, size, font, color });
       }
     };
     const table = (rows, head, widths, aligns) => {
       if (!rows.length) return;
       const n = rows[0].length, size = n > 10 ? 7.5 : n > 6 ? 8.5 : 9.5, pad = 3;
       // Spaltenbreite wie im Original (z. B. Word-Tabellenraster), sonst nach Inhalt (gekappt), mindestens 6 %
-      const want = widths?.length === n ? widths.map(f => f * W) : Array.from({ length: n }, (_, c) => Math.min(220, Math.max(24, ...rows.slice(0, 200).map(r => F[head && r === rows[0] ? 'b' : 'r'].widthOfTextAtSize(safe(r[c], 'r'), size) + 2 * pad))));
+      const want = widths?.length === n ? widths.map(f => f * W) : Array.from({ length: n }, (_, c) => Math.min(220, Math.max(24, ...rows.slice(0, 200).map(r => wOf(F[head && r === rows[0] ? 'b' : 'r'], safe(r[c], 'r'), size) + 2 * pad))));
       const sum = want.reduce((a, b) => a + b, 0), cw = want.map(w => Math.max(W * 0.06, w * W / sum));
       const scale = W / cw.reduce((a, b) => a + b, 0); for (let c = 0; c < n; c++) cw[c] *= scale;
       const layout = (r, bold) => { const k = bold ? 'b' : 'r', lines = r.map((v, c) => wrap(safe(v, k), F[k], size, cw[c] - 2 * pad)); return { k, lines, h: Math.max(...lines.map(l => l.length)) * size * 1.3 + 2 * pad }; };
@@ -159,8 +178,8 @@
           // Ausrichtung wie im Original (Word), sonst Zahlen rechtsbündig
           const al = aligns?.[ri]?.[c] || (!bold && /^-?[\d.,\s]+(?:€|EUR|%)?$/.test(r[c]) && /\d/.test(r[c]) ? 'right' : 'left');
           lines[c].forEach((ln, j) => {
-            const tw = F[k].widthOfTextAtSize(ln, size);
-            page.drawText(ln, { x: al === 'right' ? x + cw[c] - pad - tw : al === 'center' ? x + (cw[c] - tw) / 2 : x + pad, y: y - pad - (j + 1) * size * 1.3 + size * 0.3, size, font: F[k] });
+            const tw = wOf(F[k], ln, size);
+            drawT(page, ln, { x: al === 'right' ? x + cw[c] - pad - tw : al === 'center' ? x + (cw[c] - tw) / 2 : x + pad, y: y - pad - (j + 1) * size * 1.3 + size * 0.3, size, font: F[k] });
           });
           x += cw[c];
         }
@@ -189,7 +208,7 @@
         need(h + 4); y -= h + 2;
         page.drawImage(im, { x: b.align === 'center' ? M + (W - w) / 2 : b.align === 'right' ? M + W - w : M, y, width: w, height: h }); y -= 4;
       }
-      else if (b.type === 'li') { const ind = 14 + b.depth * 16; need(16); page.drawText(safe(b.label, 'r'), { x: M + ind - (b.ordered ? 14 : 9), y: y - 10.5 * 1.38 + 10.5 * 0.25, size: 10.5, font: F.r }); if (b.runs?.length) runs1(b.runs, { x: M + ind, width: W - ind }); else text1(b.text, { x: M + ind, width: W - ind }); y -= 2; }   // Aufzählungszeichen zuerst (Lesereihenfolge)
+      else if (b.type === 'li') { const ind = 14 + b.depth * 16; need(16); drawT(page, safe(b.label, 'r'), { x: M + ind - (b.ordered ? 14 : 9), y: y - 10.5 * 1.38 + 10.5 * 0.25, size: 10.5, font: F.r }); if (b.runs?.length) runs1(b.runs, { x: M + ind, width: W - ind }); else text1(b.text, { x: M + ind, width: W - ind }); y -= 2; }   // Aufzählungszeichen zuerst (Lesereihenfolge)
       else if (b.type === 'quote') { const y0 = y, p0 = page; text1(b.text, { x: M + 14, width: W - 14, color: gray }); if (page === p0) page.drawLine({ start: { x: M + 4, y: y0 - 2 }, end: { x: M + 4, y: y + 2 }, thickness: 2, color: L.rgb(0.75, 0.75, 0.75) }); y -= 6; }
       else if (b.type === 'code' || b.type === 'pre') { text1(b.text, { k: 'm', size: b.type === 'pre' ? 9.5 : 9, lead: 1.3 }); y -= 6; }
       else if (b.type === 'hr') { need(14); y -= 7; page.drawLine({ start: { x: M, y }, end: { x: PW - M, y }, thickness: 0.6, color: L.rgb(0.7, 0.7, 0.7) }); y -= 7; }
@@ -216,6 +235,6 @@
     return doc.save();
   }
 
-  const api = { parseCsv, parseMarkdown, build };
+  const api = { parseCsv, parseMarkdown, build, cjk: null };   // cjk: () => Promise<Bytes> der Ersatzschrift (js/app.js)
   if (typeof module === 'object' && module.exports) module.exports = api; else root.TextPdf = api;
 })(typeof self !== 'undefined' ? self : this);

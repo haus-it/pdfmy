@@ -91,7 +91,7 @@ Parallele und gemischte Reihenfolge, Zugangscode je Unterzeichner, Anhänge vom 
 - **Leitplanken:** gewahrt. Für L5 ist das ein Pluspunkt für BFSG- und BITV-Kunden (Behörden).
 
 ### Rang 9: Weitere Eingabeformate – HTML/MHTML, alte Office-Formate (.doc, .xls), DjVu
-> **Teil umgesetzt 18.11.2026 (app-v287): HTML und MHTML öffnen.** Eigener, nachsichtiger HTML-Leser statt iframe (kein DOM, nichts wird ausgeführt): Titel, Überschriften, Absätze, Listen, Tabellen, Layout-Tabellen als Inhalt, Zeichensatz aus BOM/meta, Entities. Bilder nur aus der Datei (data:, MHTML-Teile per Content-Location/cid), Bilder aus dem Internet werden gezählt und nicht geladen (im Browser geprüft: keine Anfrage). Gemeinsamer Leser auch für EPUB. Tests in tests/office.test.js. **Umgesetzt 19.11.2026 (app-v291): .doc und .xls** direkt im Browser (OLE/BIFF, ohne LibreOffice), Text und Tabellen bzw. alle sichtbaren Blätter; „.xls“-Exporte als HTML/Text werden am Inhalt erkannt (tests/alt-office.test.js). Offen: DjVu, .ppt; chinesische, japanische und koreanische Zeichen beim Umwandeln von Office-Dateien (die Schrift enthält sie nicht – erscheinen als „?“).
+> **Teil umgesetzt 18.11.2026 (app-v287): HTML und MHTML öffnen.** Eigener, nachsichtiger HTML-Leser statt iframe (kein DOM, nichts wird ausgeführt): Titel, Überschriften, Absätze, Listen, Tabellen, Layout-Tabellen als Inhalt, Zeichensatz aus BOM/meta, Entities. Bilder nur aus der Datei (data:, MHTML-Teile per Content-Location/cid), Bilder aus dem Internet werden gezählt und nicht geladen (im Browser geprüft: keine Anfrage). Gemeinsamer Leser auch für EPUB. Tests in tests/office.test.js. **Umgesetzt 19.11.2026 (app-v291): .doc und .xls** direkt im Browser (OLE/BIFF, ohne LibreOffice), Text und Tabellen bzw. alle sichtbaren Blätter; „.xls“-Exporte als HTML/Text werden am Inhalt erkannt (tests/alt-office.test.js). Offen: DjVu, .ppt; ~~chinesische, japanische und koreanische Zeichen beim Umwandeln~~ – **umgesetzt 19.11.2026 (app-v294)**: Ersatzschrift aus Noto Sans CJK, lädt bei Bedarf.
 - **Wer hat es:** HTML-zu-PDF bieten Sejda und iLovePDF („Web to PDF“, mit Upload, Sekundärquellen), Acrobat (Webseite → PDF) und PDF24.
 - **Repo-Check:** `accept=` ohne `.html`, `.mhtml`, `.doc`, `.xls`, `.djvu`. DjVu ist laut KONZEPT 02.11.2026 offen.
 - **Lokal umsetzbar:** Eine gespeicherte .html- oder .mhtml-Datei wird in einem abgeschotteten iframe (sandbox, CSP ohne Netz) gerendert und über den vorhandenen Textsatz ausgegeben. **Eine URL abrufen geht nicht**, das verletzt die CSP und L2. Für .doc und .xls führt der Weg über die vorhandene Office-Anbindung (LibreOffice). DjVu: nur bei Nachfrage.
@@ -240,3 +240,25 @@ Quelle: Kommentare unter „Digital Independence Day: Adobe PDF-Reader-Alternati
 ## 8. Selbstbetrieb (19.11.2026, app-v292)
 
 BentoPDF und Stirling-PDF werben mit Betrieb im eigenen Netz (Docker); KONZEPT nennt „Firmen wollen selbst betreiben“. **Umgesetzt:** Paket nur mit der App, Aktualisierer für Linux und Windows/IIS mit signierten Kanälen „aktuell“/„stabil“, Wechsel ohne Ausfallzeit, Rücknahme, eigener Spiegel, eigene Links. Vorteil gegenüber Stirling-PDF: kein Server-Code, keine Dokumente auf dem Server, signierte Updates mit Schutz vor Rückschritt. **Offen:** fertiges Docker-Abbild (braucht ein Registry-Konto – Entscheidung GF); Lizenzmodell für den Firmenbetrieb (GF). Hinweis auf die Lizenzbedingungen auf GitHub an allen Stellen.
+
+## 9. Weitere Add-on-Plattformen (geprüft 19.11.2026)
+
+**Quellenlage:** Die Übersicht stammt überwiegend aus Vorwissen (Stand Mitte 2026) und ist **nicht live nachgeprüft**. Für ownCloud Infinite Scale wurden die Dokumentation (doc.owncloud.com, Fassung 9.0) und das Repository owncloud/web-extensions gelesen. Bedingung für jede Einbindung: kein eigener Server, kein Upload zu uns. Die Datei gelangt im Browser per postMessage mit fester Zielherkunft an PDFMy, die CSP bleibt unverändert.
+
+| Plattform | Stand bei PDFMy | Nächster Schritt | Hürde |
+|---|---|---|---|
+| Chrome, Edge, Firefox | vorhanden | – | – |
+| Vivaldi, Brave | nutzen den Chrome Web Store | nichts zu tun, sobald dort veröffentlicht | Store-Freigabe Chrome (GF) |
+| Opera | fehlt | Chrome-Paket bei addons.opera.com einreichen | Entwicklerkonto (kostenlos), **Entscheidung GF** |
+| Safari (macOS/iOS) | fehlt | Web-Extension mit Apples Konverter verpacken | Apple Developer Program, ca. 99 USD/Jahr, Mac zum Bauen – **Entscheidung GF** |
+| „Öffnen mit“ und „Teilen“ (Windows, ChromeOS, Android) | vorhanden: installierte App mit file_handlers und share_target (/teilen) | – | – |
+| Microsoft 365, Teams, Thunderbird, LibreOffice, Nextcloud, ONLYOFFICE | vorhanden | – | – |
+| SharePoint/OneDrive (Dokumentbibliothek „In PDFMy öffnen“) | fehlt | SPFx-Befehlssatz, Datei mit Nutzerkontext laden, per postMessage übergeben | SPFx-Werkzeugkette, Test-Tenant, App-Katalog bzw. AppSource (Partnerkonto) – **Testumgebung nötig** |
+| ownCloud Infinite Scale | fehlt | Web-Extension (Typ „action“, Punkt global.files.context-actions) nach dem Muster der Nextcloud-App; Bereitstellung über WEB_ASSET_APPS_PATH (ab oCIS 6.0) | Bau mit dem oCIS-SDK (Vite, @ownclouders/web-pkg); Dateiabruf (WebDAV) nicht dokumentiert belegt; **oCIS-Testinstanz nötig** (hier kein Docker); kein öffentlicher Marktplatz, Aufnahme per Pull Request in owncloud/web-extensions |
+| Paperless-ngx | durch die Browser-Erweiterung abgedeckt (öffnet PDFs aus dem Browser) | im Selbstbetrieb dokumentieren | – |
+| Synology DSM | fehlt | Paket, das das Selbstbetrieb-Paket (Abschnitt 8) auf dem NAS ausliefert | Synology-Toolkit, Test-NAS |
+| Zotero, Obsidian, Joplin | fehlt | Plugin „In PDFMy öffnen“ | Nische; Test mit installierter Anwendung nötig |
+| Google Workspace (Drive, Gmail), Slack, Zapier, Confluence/Jira, Dropbox, Box | **nicht empfohlen** | – | brauchen OAuth-Server, Sicherheitsaudits oder leiten Dateien über fremde Server (Leitplanken 1 und 2) |
+| DATEV-Marktplatz | Langfristziel | – | Partnerstatus und Zertifizierung (nicht nachgeprüft) |
+
+**Empfohlene Reihenfolge:** 1. Opera (Konto, sonst kein Aufwand) · 2. Safari (Konto und Mac) · 3. ownCloud Infinite Scale und 4. SharePoint (je mit Testumgebung) · 5. Synology-Paket für den Selbstbetrieb. Die Punkte 1 und 2 brauchen eine Entscheidung der Geschäftsführung (Konten, Kosten), die Punkte 3 bis 5 eine Testumgebung. Ohne Test wird nichts ausgeliefert (Update-Strategie Abschnitt 6).

@@ -3885,5 +3885,7 @@
  "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Óþekkt Word-snið – vistaðu skrána sem .docx í Word.",
  "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy getur ekki lesið Word 6/95 skrár – vistaðu þær sem .docx í Word.",
  "Word-Datei unvollständig (Stückliste fehlt).": "Word-skráin er ófullgerð (innri textaskrá vantar).",
- "Word-Datei unvollständig (Tabellenteil fehlt).": "Word-skráin er ófullgerð (töfluhlutann vantar)."
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Word-skráin er ófullgerð (töfluhlutann vantar).",
+ "Lade die Schrift für chinesische, japanische und koreanische Zeichen (einmalig, ca. 7 MB) …": "Hleð leturgerð fyrir kínversk, japönsk og kóresk tákn (aðeins einu sinni, um 7 MB) …",
+ "vendor/cjk fehlt": "vendor/cjk vantar"
 }

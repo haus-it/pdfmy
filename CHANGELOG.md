@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Chinesisch, Japanisch, Koreanisch beim Umwandeln (app-v294)
+- **Ersatzschrift „PDFMy CJK“** (aus Noto Sans CJK SC 2.004, SIL OFL 1.1, umbenannt, tools/cjk-schrift.py): Word, Excel, Text, Webseiten, E-Books und Übersetzungen mit chinesischen, japanischen oder koreanischen Zeichen werden nicht mehr zu „?“. Lädt nur bei Bedarf (einmalig ca. 7 MB, danach offline), eingebettet als Teilmenge.
+- Warum umgewandelt: Die CID-CFF-Schrift verlor beim Bilden der Teilmenge (fontkit) einzelne Zeichen (z. B. „漢“ leer); TrueType-Umrisse mit 4-Byte-Auffüllung sind zuverlässig. Gefunden und geprüft im Browser (Darstellung pdf.js, Text kopierbar).
+- Umbruch zwischen Zeichen für Chinesisch/Japanisch; Lizenz in vendor/licenses, Software-Stückliste ergänzt. Hilfe in 40 Sprachen, Tests in tests/cjk.test.js.
+
 ### Selbstbetrieb: Signaturen der Aktualisierer abrufbar (app-v293)
 - Signaturen heißen jetzt pdfmy-selfhost-sh.sig bzw. pdfmy-selfhost-ps1.sig: Der Webserver von pdfmy.de wertete „.sh.sig“ als Skript und antwortete mit Fehler 500. Live geprüft: Installation von pdfmy.de in 20 s, Probelauf 9/9 gegen die installierte Fassung, eigene Links in der Fußzeile (javascript:-Links abgewiesen).
 

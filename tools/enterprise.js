@@ -33,6 +33,7 @@ const COMPONENTS = [
   { name: 'Liberation Fonts', version: '2.1.5', ...OFL, font: true },
   { name: 'Caladea', version: '1.001', ...OFL, font: true },
   { name: 'Carlito (als „PDFMy Sans C“)', ...OFL, font: true, patched: 'Gemäß OFL umbenannt und angepasst (vendor/fonts/metric/PDFMySansC-*.ttf)' },
+  { name: 'Noto Sans CJK SC (als „PDFMy CJK“)', version: '2.004', ...OFL, font: true, patched: 'Gemäß OFL umbenannt; auf CJK-Bereiche gekürzt, in TrueType-Umrisse gewandelt (tools/cjk-schrift.py, vendor/cjk/PDFMyCJK-Regular.ttf.gz)' },
   { name: 'Bricolage Grotesque', ...OFL, font: true },
   { name: 'Instrument Sans', ...OFL, font: true },
   { name: 'IBM Plex Mono', ...OFL, font: true },

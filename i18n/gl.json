@@ -3885,5 +3885,7 @@
  "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Formato de Word descoñecido; gárdeo como .docx en Word.",
  "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy non pode ler ficheiros de Word 6/95; gárdeos como .docx en Word.",
  "Word-Datei unvollständig (Stückliste fehlt).": "Ficheiro de Word incompleto (falta o índice de texto interno).",
- "Word-Datei unvollständig (Tabellenteil fehlt).": "Ficheiro de Word incompleto (falta a parte das táboas)."
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Ficheiro de Word incompleto (falta a parte das táboas).",
+ "Lade die Schrift für chinesische, japanische und koreanische Zeichen (einmalig, ca. 7 MB) …": "Cargando a tipografía para caracteres chineses, xaponeses e coreanos (só unha vez, uns 7 MB) …",
+ "vendor/cjk fehlt": "falta vendor/cjk"
 }

@@ -3885,5 +3885,7 @@
  "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Word formatu ezezaguna; gorde fitxategia Wordean .docx gisa.",
  "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMyk ezin ditu Word 6/95 fitxategiak irakurri; gorde itzazu Wordean .docx gisa.",
  "Word-Datei unvollständig (Stückliste fehlt).": "Word fitxategia osatu gabe dago (barneko testu-indizea falta da).",
- "Word-Datei unvollständig (Tabellenteil fehlt).": "Word fitxategia osatu gabe dago (taulen atala falta da)."
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Word fitxategia osatu gabe dago (taulen atala falta da).",
+ "Lade die Schrift für chinesische, japanische und koreanische Zeichen (einmalig, ca. 7 MB) …": "Txinatar, japoniar eta koreatar karaktereen letra-tipoa kargatzen (behin bakarrik, 7 MB inguru) …",
+ "vendor/cjk fehlt": "vendor/cjk falta da"
 }

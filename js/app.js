@@ -2559,6 +2559,16 @@ const hexRgb = c => rgb(...[1, 3, 5].map(k => parseInt(c.slice(k, k + 2), 16) / 
 const overlaps = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 const assets = {};
 const asset = (k, path) => assets[k] ||= fetch(abs(path)).then(r => { if (!r.ok) throw new Error(path + ' fehlt'); return r.arrayBuffer(); });
+/* Ersatzschrift für Chinesisch, Japanisch, Koreanisch (vendor/cjk, tools/cjk-schrift.py): lädt erst, wenn ein umgewandeltes Dokument
+   solche Zeichen enthält (js/textpdf.js), einmalig ca. 7 MB, danach offline aus dem Speicher des Service Workers. Die Datei ist gzip-gepackt;
+   hat der Server sie schon entpackt (Content-Encoding), wird sie so genommen. Fehler: nicht merken, nächstes Mal neu versuchen. */
+const cjkFont = () => assets.cjk ||= (status('Lade die Schrift für chinesische, japanische und koreanische Zeichen (einmalig, ca. 7 MB) …'),
+  fetch(abs('vendor/cjk/PDFMyCJK-Regular.ttf.gz')).then(async r => {
+    if (!r.ok) throw new Error('vendor/cjk fehlt');
+    const b = new Uint8Array(await r.arrayBuffer());
+    return b[0] === 0x1f && b[1] === 0x8b ? new Uint8Array(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()) : b;
+  }).catch(e => { delete assets.cjk; throw e; }));
+self.pdfmyCjkFont = cjkFont;   // js/textpdf.js holt sie sich (unabhängig von der Ladereihenfolge der Skripte)
 const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 // Größenstufen: Qualität, Auflösung, ob auch Vektor-Seiten als Bild neu aufgebaut werden

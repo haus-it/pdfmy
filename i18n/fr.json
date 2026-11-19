@@ -3885,5 +3885,7 @@
  "Unbekanntes Word-Format – bitte in Word als .docx speichern.": "Format Word inconnu – veuillez l’enregistrer au format .docx dans Word.",
  "Word-6/95-Dateien kann PDFMy nicht lesen – bitte in Word als .docx speichern.": "PDFMy ne peut pas lire les fichiers Word 6/95 – veuillez les enregistrer au format .docx dans Word.",
  "Word-Datei unvollständig (Stückliste fehlt).": "Fichier Word incomplet (index de texte interne manquant).",
- "Word-Datei unvollständig (Tabellenteil fehlt).": "Fichier Word incomplet (partie des tableaux manquante)."
+ "Word-Datei unvollständig (Tabellenteil fehlt).": "Fichier Word incomplet (partie des tableaux manquante).",
+ "Lade die Schrift für chinesische, japanische und koreanische Zeichen (einmalig, ca. 7 MB) …": "Chargement de la police pour les caractères chinois, japonais et coréens (une seule fois, environ 7 Mo) …",
+ "vendor/cjk fehlt": "vendor/cjk est manquant"
 }
