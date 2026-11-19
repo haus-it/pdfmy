@@ -60,7 +60,7 @@ function spiegel() {
 }
 // Fassung nr auf den Spiegel legen; mod(manifest) erlaubt Fälschungen
 function lege(sp, nr, { mod, sigKey = key, kaputt = false } = {}) {
-  const tgz = SH.paket([{ path: 'index.html', data: `<!doctype html><title>v${nr}</title>` }, { path: 'sw.js', data: `const VERSION='v${nr}';` }, { path: 'js/app.js', data: `// v${nr}` }],
+  const tgz = SH.paket([{ path: 'index.html', data: `<!doctype html><title>v${nr}</title>` }, { path: 'sw.js', data: `const VERSION='v${nr}';` }, { path: 'js/app.js', data: `// v${nr}` }, { path: '.htaccess', data: `# v${nr}\n` }],
     { nr, stand: `pdfmy-selfhost-test-v${nr}`, domain: 'pdfmy.test', sh: sk.sh, ps1: sk.ps1 });
   const datei = `pdfmy-selfhost-v${nr}.tar.gz`; fs.writeFileSync(path.join(sp.dir, datei), kaputt ? Buffer.concat([tgz, Buffer.from('x')]) : tgz);
   let m = SH.manifest({ nr, version: `pdfmy-selfhost-test-v${nr}`, datei, sha: crypto.createHash('sha256').update(tgz).digest('hex'), groesse: tgz.length, datum: '2026-11-19T00:00:00Z', kanal: 'aktuell' });
@@ -97,8 +97,18 @@ function ablauf(name, run) {
       lege(sp, 289);
       r = await run('aktualisieren', ziel, sp.url); assert.equal(r.status, 0); assert.equal(titel(ziel), 'v291');
       // zurück: vorige Fassung, eigene Datei ist auch dort (wurde beim Update mitgenommen? – nein, sie entstand danach), Tausch umkehrbar
-      r = await run('zurueck', ziel, sp.url); assert.equal(r.status, 0, r.out); assert.equal(titel(ziel), 'v290');
-      r = await run('zurueck', ziel, sp.url); assert.equal(r.status, 0); assert.equal(titel(ziel), 'v291');
+      // Webserver-Einstellungen: unverändert übernommene .htaccess wurde ersetzt; vom Betreiber angepasste bleibt, neue Fassung als Vorlage
+      assert.equal(fs.readFileSync(path.join(ziel, '.htaccess'), 'utf8'), '# v291\n', 'unveränderte .htaccess aktualisiert');
+      fs.writeFileSync(path.join(ziel, '.htaccess'), '# eigene Regeln\n');
+      lege(sp, 293);
+      r = await run('aktualisieren', ziel, sp.url); assert.equal(r.status, 0, r.out); assert.equal(titel(ziel), 'v293');
+      assert.equal(fs.readFileSync(path.join(ziel, '.htaccess'), 'utf8'), '# eigene Regeln\n', 'angepasste .htaccess bleibt');
+      assert.equal(fs.readFileSync(path.join(ziel, '.htaccess.pdfmy-vorlage'), 'utf8'), '# v293\n', 'neue Fassung als Vorlage');
+      assert.ok(!fs.readFileSync(path.join(ziel, '.pdfmy-dateien'), 'utf8').split(/\r?\n/).includes('.htaccess'), 'eigene .htaccess zählt nicht zum Paket');
+      assert.equal(fs.readFileSync(path.join(ziel, 'impressum.html'), 'utf8'), 'eigen', 'eigene Datei bleibt auch beim zweiten Update');
+      // zurück: vorige Fassung, und wieder vor
+      r = await run('zurueck', ziel, sp.url); assert.equal(r.status, 0, r.out); assert.equal(titel(ziel), 'v291');
+      r = await run('zurueck', ziel, sp.url); assert.equal(r.status, 0); assert.equal(titel(ziel), 'v293');
     } finally { sp.close(); fs.rmSync(sp.dir, { recursive: true, force: true }); fs.rmSync(base, { recursive: true, force: true }); }
   });
 }
@@ -134,6 +144,16 @@ test('Freigabefenster (Update-Strategie Abschnitt 4): Werktage 8–16 Uhr, Freit
   const got = Object.fromEntries(r.stdout.trim().split(/\r?\n/).map(l => l.split('=')));
   for (const [d, want] of Object.entries(faelle)) assert.ok(want ? (got[d] || '').includes(want) : got[d] === '', `${d}: erwartet „${want || 'im Fenster'}“, bekommen „${got[d]}“`);
   // 2027: Ostern 28.03. → Karfreitag 26.03., Ostermontag 29.03., Himmelfahrt 06.05.
+});
+
+test('Paket: Sicherheits-Kopfzeilen für Apache, IIS und nginx – ohne HSTS (gälte für den ganzen Server des Betreibers)', () => {
+  const csp = "default-src 'self'; object-src 'none'; frame-ancestors 'self'";
+  for (const t of [SH.HTACCESS(csp), SH.NGINX(csp), SH.WEB_CONFIG]) {
+    for (const h of ['X-Content-Type-Options', 'Referrer-Policy', 'X-Frame-Options', 'Permissions-Policy', 'Content-Security-Policy']) assert.ok(t.includes(h), h);
+    assert.ok(!/Strict-Transport-Security/i.test(t.replace(/#.*$/gm, '')), 'kein HSTS im Paket');
+  }
+  assert.match(SH.HTACCESS(csp), /<FilesMatch "\^\(sw\\\.js\|pruefsummen\\\.json\|index\\\.html\)\$">/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'tools', 'build-web.js'), 'utf8'), /appVersion: SELF\.stand, csp: CSP,/);
 });
 
 test('Build und Auslieferung: Paket ohne Website-Seiten, deploy vermerkt Veröffentlichung und Rücknahme, App liest eigene Links', () => {

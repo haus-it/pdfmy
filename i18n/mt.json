@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Perjodu ta’ avviż",
  "läuft bis {0}": "validu sa {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Mingħajr terminazzjoni, tiġdid għal {0} xhur",
- "Quartal": "Kwart"
+ "Quartal": "Kwart",
+ "Block {0} mit dem vorigen verbinden": "Ingaħaq il-blokk {0} ma’ dak ta’ qabel",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Ingaħaq mal-blokk ta’ qabel (paragrafu wieħed jew titlu wieħed)"
 }

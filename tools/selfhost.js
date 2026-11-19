@@ -56,9 +56,11 @@ function liesmich({ nr, stand, domain }) {
 Dieser Ordner ist die komplette App PDFMy als statische Dateien. Er braucht keinen Server-Code, keine Datenbank und
 keinen Zugriff ins Internet. Dokumente werden im Browser der Nutzer verarbeitet und nie an den Server geschickt.
 
-Ausliefern: per HTTPS (für den Offline-Betrieb über den Service Worker nötig), z. B. nginx, Apache oder IIS. Für IIS liegt
-eine web.config mit den nötigen Dateitypen bei. Empfohlene Kopfzeilen: Content-Security-Policy wie im <meta>-Tag von
-index.html, dazu frame-ancestors 'self'; sw.js und pruefsummen.json ohne lange Zwischenspeicherung ausliefern.
+Ausliefern: per HTTPS (für den Offline-Betrieb über den Service Worker nötig), z. B. nginx, Apache oder IIS. Die
+Sicherheits-Kopfzeilen (Content-Security-Policy, nosniff, Referrer-, Permissions-Policy, Schutz vor Einbetten in fremde
+Seiten) und die Zwischenspeicher-Regeln liegen bei: .htaccess (Apache, mit mod_headers), web.config (IIS) und
+nginx-pdfmy.conf (Vorlage für nginx). HSTS (Strict-Transport-Security) bitte auf Serverebene setzen – im Unterordner
+gälte es sonst für den ganzen Server.
 
 Aktualisieren (empfohlen: automatisch, signiert, ohne Ausfallzeit):
   Linux:   sudo ./pdfmy-selfhost.sh installieren /var/www/pdfmy
@@ -96,11 +98,50 @@ const WEB_CONFIG = `<?xml version="1.0" encoding="utf-8"?>
       <remove fileExtension=".woff2" /><mimeMap fileExtension=".woff2" mimeType="font/woff2" />
       <remove fileExtension=".icc" /><mimeMap fileExtension=".icc" mimeType="application/octet-stream" />
     </staticContent>
-    <httpProtocol><customHeaders><remove name="X-Content-Type-Options" /><add name="X-Content-Type-Options" value="nosniff" /></customHeaders></httpProtocol>
+    <httpProtocol><customHeaders>
+      <remove name="X-Content-Type-Options" /><add name="X-Content-Type-Options" value="nosniff" />
+      <remove name="Referrer-Policy" /><add name="Referrer-Policy" value="no-referrer" />
+      <remove name="X-Frame-Options" /><add name="X-Frame-Options" value="SAMEORIGIN" />
+      <remove name="Permissions-Policy" /><add name="Permissions-Policy" value="camera=(self), microphone=(), geolocation=(), payment=()" />
+      <remove name="Content-Security-Policy" /><add name="Content-Security-Policy" value="__CSP__" />
+    </customHeaders></httpProtocol>
   </system.webServer>
   <location path="sw.js"><system.webServer><staticContent><clientCache cacheControlMode="DisableCache" /></staticContent></system.webServer></location>
   <location path="pruefsummen.json"><system.webServer><staticContent><clientCache cacheControlMode="DisableCache" /></staticContent></system.webServer></location>
 </configuration>
+`;
+
+/* Apache (.htaccess) und nginx (Vorlage): dieselben Sicherheits-Kopfzeilen wie pdfmy.de – CSP wie im <meta>-Tag plus frame-ancestors 'self'
+   (Einbetten nur im eigenen Intranet-Portal derselben Adresse). HSTS bewusst NICHT: im Unterordner gälte es für den ganzen Server des
+   Betreibers – das entscheidet er auf Serverebene (LIESMICH). Ohne mod_headers wirken die Zeilen nicht, schaden aber nicht. */
+const HTACCESS = csp => `# PDFMy (eigener Server): Sicherheits-Kopfzeilen und Zwischenspeicher – wird bei Updates ersetzt; eigene Regeln bitte im Server/VirtualHost
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "no-referrer"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=()"
+  Header always set Content-Security-Policy "${csp}"
+  <FilesMatch "^(sw\\.js|pruefsummen\\.json|index\\.html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_mime.c>
+  AddType application/wasm .wasm
+  AddType application/manifest+json .webmanifest
+</IfModule>
+`;
+const NGINX = csp => `# PDFMy (eigener Server) – Vorlage für nginx: in den server { … }-Block übernehmen, Pfad anpassen.
+# HSTS (Strict-Transport-Security) bitte auf Serverebene setzen, wenn der ganze Host nur HTTPS spricht.
+location /pdfmy/ {
+  alias /var/www/pdfmy/;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "no-referrer" always;
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=()" always;
+  add_header Content-Security-Policy "${csp}" always;
+  location ~ /pdfmy/(sw\\.js|pruefsummen\\.json|index\\.html)$ { add_header Cache-Control "no-cache"; add_header X-Content-Type-Options "nosniff" always; }
+}
+types { application/wasm wasm; application/manifest+json webmanifest; }
 `;
 
 // Archiv lesen: [{ nr, dir, info }] absteigend nach Nummer
@@ -118,13 +159,14 @@ function stabilWahl(list, jetzt = Date.now()) {
 }
 
 /* Aufruf aus tools/build-web.js. files: App-Dateien; write(rel, data) schreibt in die Ausgabe. */
-function build({ root, write, domain, nr, stand, files, appVersion }) {
+function build({ root, write, domain, nr, stand, files, appVersion, csp = "default-src 'self'" }) {
+  const cspSelf = csp.replace(/;?s*$/, '') + "; frame-ancestors 'self'";
   const keyFile = path.join(root, 'tools', 'signing', 'unix-update.pem');
   if (!fs.existsSync(keyFile)) throw new Error('Signaturschlüssel fehlt: tools/signing/unix-update.pem');
   const key = crypto.createPrivateKey(fs.readFileSync(keyFile));
   const sk = skripte(root, { domain, version: appVersion, key });
   const lic = ['LICENSE', 'NOTICE'].filter(f => fs.existsSync(path.join(root, f))).map(f => ({ path: f, data: fs.readFileSync(path.join(root, f)) }));
-  const tgz = paket([...files, ...lic, { path: 'web.config', data: Buffer.from(WEB_CONFIG) }], { nr, stand, domain, sh: sk.sh, ps1: sk.ps1 });
+  const tgz = paket([...files, ...lic, { path: 'web.config', data: Buffer.from(WEB_CONFIG.replace('__CSP__', cspSelf.replace(/"/g, '&quot;'))) }, { path: '.htaccess', data: Buffer.from(HTACCESS(cspSelf)) }, { path: 'nginx-pdfmy.conf', data: Buffer.from(NGINX(cspSelf)) }], { nr, stand, domain, sh: sk.sh, ps1: sk.ps1 });
   const datei = `pdfmy-selfhost-v${nr}.tar.gz`;
   // ins Archiv (gleiche Nummer erneut gebaut: Paket ersetzen, Veröffentlichungsdatum bleibt)
   const ad = path.join(ARCHIV(root), String(nr)); fs.mkdirSync(ad, { recursive: true });
@@ -154,7 +196,7 @@ function build({ root, write, domain, nr, stand, files, appVersion }) {
   return { datei, groesse: tgz.length, sha: sha256(tgz), stabil: st.nr, stabilVersion: st.info.version, shSha: sha256(sk.sh), ps1Sha: sha256(Buffer.from(sk.ps1)), pem: sk.pem };
 }
 
-module.exports = { build, manifest, signiere, pruefe, paket, skripte, stabilWahl, archiv, STABIL_TAGE, PRAEFIX, WEB_CONFIG };
+module.exports = { build, manifest, signiere, pruefe, paket, skripte, stabilWahl, archiv, STABIL_TAGE, PRAEFIX, WEB_CONFIG, HTACCESS, NGINX };
 
 // Kommandozeile (tools/deploy.ps1): Veröffentlichung bzw. Rücknahme im Archiv vermerken
 if (require.main === module) {

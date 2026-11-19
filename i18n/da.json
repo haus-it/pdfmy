@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Opsigelsesfrist",
  "läuft bis {0}": "løber til {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Uden opsigelse forlænges med {0} måneder",
- "Quartal": "Kvartal"
+ "Quartal": "Kvartal",
+ "Block {0} mit dem vorigen verbinden": "Sammenkæd blok {0} med den forrige",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Sammenkæd med forrige blok (ét afsnit eller én overskrift)"
 }

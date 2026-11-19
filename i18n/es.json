@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Plazo de preaviso",
  "läuft bis {0}": "vigente hasta el {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Sin rescisión, prórroga de {0} meses",
- "Quartal": "Trimestre"
+ "Quartal": "Trimestre",
+ "Block {0} mit dem vorigen verbinden": "Unir el bloque {0} con el anterior",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unir con el bloque anterior (un párrafo o un título)"
 }

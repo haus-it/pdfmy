@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Fesih süresi",
  "läuft bis {0}": "{0} tarihine kadar geçerli",
  "Ohne Kündigung Verlängerung um {0} Monate": "Fesih olmazsa {0} ay uzar",
- "Quartal": "Çeyrek"
+ "Quartal": "Çeyrek",
+ "Block {0} mit dem vorigen verbinden": "{0}. bloğu öncekiyle birleştir",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Önceki blokla birleştir (tek bir paragraf veya başlık)"
 }

@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Срок на предизвестие",
  "läuft bis {0}": "важи до {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Без прекратяване подновяване с {0} месеца",
- "Quartal": "Тримесечие"
+ "Quartal": "Тримесечие",
+ "Block {0} mit dem vorigen verbinden": "Обединяване на блок {0} с предишния",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Обединяване с предишния блок (един абзац или заглавие)"
 }

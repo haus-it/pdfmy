@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Įspėjimo terminas",
  "läuft bis {0}": "galioja iki {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Be nutraukimo pratęsiama {0} mėn.",
- "Quartal": "Ketvirtis"
+ "Quartal": "Ketvirtis",
+ "Block {0} mit dem vorigen verbinden": "Sujungti bloką {0} su ankstesniu",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Sujungti su ankstesniu bloku (viena pastraipa arba antraštė)"
 }

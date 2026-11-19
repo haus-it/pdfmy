@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Tréimhse fógra",
  "läuft bis {0}": "i bhfeidhm go dtí {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Gan foirceannadh, athnuachan ar feadh {0} mhí",
- "Quartal": "Ráithe"
+ "Quartal": "Ráithe",
+ "Block {0} mit dem vorigen verbinden": "Cumasc bloc {0} leis an gceann roimhe",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Cumasc leis an mbloc roimhe (alt amháin nó ceannteideal amháin)"
 }

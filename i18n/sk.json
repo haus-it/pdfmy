@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Výpovedná lehota",
  "läuft bis {0}": "platí do {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Bez výpovede predĺženie o {0} mes.",
- "Quartal": "Štvrťrok"
+ "Quartal": "Štvrťrok",
+ "Block {0} mit dem vorigen verbinden": "Spojiť blok {0} s predchádzajúcim",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Spojiť s predchádzajúcim blokom (jeden odsek alebo nadpis)"
 }

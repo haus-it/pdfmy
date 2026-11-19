@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Termini de preavís",
  "läuft bis {0}": "vigent fins al {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Sense rescissió, pròrroga de {0} mesos",
- "Quartal": "Trimestre"
+ "Quartal": "Trimestre",
+ "Block {0} mit dem vorigen verbinden": "Uneix el bloc {0} amb l’anterior",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Uneix amb el bloc anterior (un paràgraf o un títol)"
 }

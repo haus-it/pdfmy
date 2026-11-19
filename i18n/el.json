@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Προθεσμία καταγγελίας",
  "läuft bis {0}": "ισχύει έως {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Χωρίς καταγγελία ανανέωση κατά {0} μήνες",
- "Quartal": "Τρίμηνο"
+ "Quartal": "Τρίμηνο",
+ "Block {0} mit dem vorigen verbinden": "Συγχώνευση του μπλοκ {0} με το προηγούμενο",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Συγχώνευση με το προηγούμενο μπλοκ (μία παράγραφος ή ένας τίτλος)"
 }

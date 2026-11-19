@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Строк попередження",
  "läuft bis {0}": "діє до {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Без розірвання продовження на {0} міс.",
- "Quartal": "Квартал"
+ "Quartal": "Квартал",
+ "Block {0} mit dem vorigen verbinden": "Об’єднати блок {0} із попереднім",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Об’єднати з попереднім блоком (один абзац або заголовок)"
 }

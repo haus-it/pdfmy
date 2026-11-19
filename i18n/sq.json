@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Afati i njoftimit",
  "läuft bis {0}": "vlen deri më {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Pa zgjidhje, zgjatje me {0} muaj",
- "Quartal": "Tremujori"
+ "Quartal": "Tremujori",
+ "Block {0} mit dem vorigen verbinden": "Bashko bllokun {0} me të mëparshmin",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Bashko me bllokun e mëparshëm (një paragraf ose një titull)"
 }

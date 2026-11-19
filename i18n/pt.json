@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Prazo de pré-aviso",
  "läuft bis {0}": "válido até {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Sem denúncia, renovação por {0} meses",
- "Quartal": "Trimestre"
+ "Quartal": "Trimestre",
+ "Block {0} mit dem vorigen verbinden": "Unir o bloco {0} ao anterior",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unir ao bloco anterior (um parágrafo ou um título)"
 }

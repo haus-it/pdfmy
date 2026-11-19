@@ -956,12 +956,13 @@ body:has(.updbanner:not([hidden])) .toast{top:auto;bottom:96px}
 .roview{max-height:62vh;overflow:auto;border:1px solid var(--line,#ccc);background:#fff}
 .roview canvas{display:block;width:100%;height:auto;cursor:pointer}
 .rolist{list-style:none;margin:0;padding:0;max-height:62vh;overflow:auto;display:grid;gap:6px}
-.rolist li{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto auto;gap:6px;align-items:center;padding:4px 6px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--panel,#fff)}
+.rolist li{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto auto auto;gap:6px;align-items:center;padding:4px 6px;border:1px solid var(--line,#ccc);border-radius:6px;background:var(--panel,#fff)}
 .rolist li.sel{outline:2px solid #2563eb}
 .rolist li.dragging{opacity:.5}
 .rolist .ronum{font-weight:700;text-align:center}
 .rolist .rotx{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rolist li.art .rotx{opacity:.6;text-decoration:line-through}
+.rolist li.merged{margin-left:18px;border-style:dashed}.rolist .rojoin[aria-pressed="true"]{background:#2563eb;color:#fff}
 .rolist select{font-size:13px}
 @media (max-width:720px){.robody{grid-template-columns:1fr}.roview{max-height:34vh}}
 @media (max-width:520px){.figlist li{grid-template-columns:80px minmax(0,1fr)}.figlist canvas{max-width:80px;max-height:80px}}

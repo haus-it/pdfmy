@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Срок уведомления",
  "läuft bis {0}": "действует до {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Без расторжения продление на {0} мес.",
- "Quartal": "Квартал"
+ "Quartal": "Квартал",
+ "Block {0} mit dem vorigen verbinden": "Объединить блок {0} с предыдущим",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Объединить с предыдущим блоком (один абзац или заголовок)"
 }

@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Délai de préavis",
  "läuft bis {0}": "court jusqu’au {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Sans résiliation, reconduction de {0} mois",
- "Quartal": "Trimestre"
+ "Quartal": "Trimestre",
+ "Block {0} mit dem vorigen verbinden": "Fusionner le bloc {0} avec le précédent",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Fusionner avec le bloc précédent (un paragraphe ou un titre)"
 }

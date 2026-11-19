@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Otkazni rok",
  "läuft bis {0}": "vrijedi do {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Bez otkaza produženje za {0} mjeseci",
- "Quartal": "Kvartal"
+ "Quartal": "Kvartal",
+ "Block {0} mit dem vorigen verbinden": "Spoji blok {0} s prethodnim",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Spoji s prethodnim blokom (jedan odlomak ili naslov)"
 }

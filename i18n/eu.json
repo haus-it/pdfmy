@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Ohartarazpen-epea",
  "läuft bis {0}": "{0} arte indarrean",
  "Ohne Kündigung Verlängerung um {0} Monate": "Deuseztatu ezean, {0} hilabetez luzatzen da",
- "Quartal": "Hiruhilekoa"
+ "Quartal": "Hiruhilekoa",
+ "Block {0} mit dem vorigen verbinden": "Elkartu {0}. blokea aurrekoarekin",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Elkartu aurreko blokearekin (paragrafo bat edo izenburu bat)"
 }

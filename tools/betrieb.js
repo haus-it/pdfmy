@@ -76,6 +76,21 @@ if (require.main === module) (async () => {
     sha(exe) === ver.sha256 ? ok(`pdfmy Scan Windows ${ver.pdfmyScan}: Prüfsumme stimmt`) : bad(`pdfmy Scan Windows ${ver.pdfmyScan}: Prüfsumme stimmt nicht`);
   } catch (e) { bad('Signaturen nicht prüfbar: ' + e.message); }
 
+  // 2b. Sicherheits-Kopfzeilen der Startseite (gehen sie verloren – geänderte .htaccess, Hosterwechsel –, fällt es hier auf)
+  try {
+    const h = (await fetch(BASE, { method: 'GET', cache: 'no-store' })).headers, fehlt = [];
+    const csp = h.get('content-security-policy') || '';
+    if (!/max-age=\d{7,}/.test(h.get('strict-transport-security') || '')) fehlt.push('Strict-Transport-Security');
+    if (!/default-src 'self'/.test(csp) || !/frame-ancestors 'none'/.test(csp) || !/object-src 'none'/.test(csp)) fehlt.push('Content-Security-Policy');
+    if (!/nosniff/i.test(h.get('x-content-type-options') || '')) fehlt.push('X-Content-Type-Options');
+    if (!/no-referrer/i.test(h.get('referrer-policy') || '')) fehlt.push('Referrer-Policy');
+    if (!h.get('permissions-policy')) fehlt.push('Permissions-Policy');
+    fehlt.length ? bad('Sicherheits-Kopfzeilen fehlen oder sind schwächer: ' + fehlt.join(', ')) : ok('Sicherheits-Kopfzeilen vollständig (HSTS, CSP, nosniff, Referrer-, Permissions-Policy)');
+    // die CSP erlaubt nur pdfmy.de selbst und den eigenen Rechner (Leitplanke 2)
+    const fremd = (csp.match(/https?:\/\/[^\s;]+/g) || []).filter(u => !/^http:\/\/(127\.0\.0\.1|localhost):\*$/.test(u));
+    fremd.length ? bad('CSP erlaubt fremde Adressen: ' + fremd.join(', ')) : ok('CSP ohne fremde Adressen (nur pdfmy.de und der eigene Rechner)');
+  } catch (e) { bad('Kopfzeilen nicht prüfbar: ' + e.message); }
+
   // 3. Fristen
   try {
     const c = await zertifikat(host), tage = Math.floor((Date.parse(c.valid_to) - Date.now()) / 864e5);

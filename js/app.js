@@ -3639,7 +3639,7 @@ async function buildPdfInner(pages, meta, { pdfa = false, bea = false, onPage, s
         /* Barrierefrei (PDF/UA-1): Text nach seiner Gliederung (js/reflow.js) taggen – Überschriften H1/H2, Absätze P, Listen L/LI/LBody,
            Tabellen Table/TR/TH/TD (Kopfzeile mit Scope); die Reihenfolge ist die Lesereihenfolge. Überschriften werden Lesezeichen. */
         let list = null;
-        for (const { b, kind } of readingBlocks(p, words, isRunning).items) {
+        for (const { b, kind } of Reflow.joined(readingBlocks(p, words, isRunning).items)) {   // verbundene Blöcke als ein Tag
           if (figs.length) await emitFigs(Math.min(...Reflow.wordsOf(b).map(w => w.y)));
           if (kind === 'table') {
             list = null;

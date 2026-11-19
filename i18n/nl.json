@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Opzegtermijn",
  "läuft bis {0}": "loopt tot {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Zonder opzegging verlenging met {0} maanden",
- "Quartal": "Kwartaal"
+ "Quartal": "Kwartaal",
+ "Block {0} mit dem vorigen verbinden": "Blok {0} samenvoegen met het vorige",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Samenvoegen met het vorige blok (één alinea of kop)"
 }

@@ -72,12 +72,25 @@ function Aktualisieren([switch]$NurPruefen) {
     $tar = Join-Path $env:SystemRoot 'System32\tar.exe'; if (-not (Test-Path $tar)) { Fehler 'tar.exe fehlt (ab Windows Server 2019 / Windows 10 1803 enthalten)' }
     & $tar -xzf "$tmp\paket.tar.gz" -C $neu; if ($LASTEXITCODE) { Fehler 'Paket lässt sich nicht entpacken' }
     foreach ($f in 'index.html', 'sw.js', 'pruefsummen.json') { if (-not (Test-Path (Join-Path $neu $f))) { Fehler 'Paket unvollständig – Update abgebrochen' } }
-    $inhalt = Get-ChildItem -Force $neu | ForEach-Object Name
+    $inhalt = @(Get-ChildItem -Force $neu | ForEach-Object Name)
     # Eigene Dateien übernehmen: alles im bisherigen Ordner, was nicht zum bisherigen Paket gehört
     if (Test-Path $Ziel) {
       $altListe = @(); $al = Join-Path $Ziel '.pdfmy-dateien'; if (Test-Path $al) { $altListe = Get-Content $al }
+      $altSummen = $null; $ap = Join-Path $Ziel 'pruefsummen.json'; if (Test-Path $ap) { try { $altSummen = ([IO.File]::ReadAllText($ap) | ConvertFrom-Json).dateien } catch {} }
+      $konf = '.htaccess', 'web.config', 'nginx-pdfmy.conf'
+      # Webserver-Einstellungen: eigene oder vom Betreiber geänderte Fassung hat Vorrang (Prüfsumme gegen die bisherige Fassung);
+      # die neue Fassung von PDFMy liegt dann als Vorlage daneben. Unverändert übernommene Dateien werden einfach ersetzt.
+      foreach ($b in $konf) {
+        $alt = Join-Path $Ziel $b; $nb = Join-Path $neu $b
+        if (-not (Test-Path $alt) -or -not (Test-Path $nb)) { continue }
+        if ($altSummen -and $altSummen.$b -eq (Sha256 $alt)) { continue }
+        Move-Item $nb ($nb + '.pdfmy-vorlage') -Force; Copy-Item $alt -Destination $neu -Force
+        $inhalt = @($inhalt | Where-Object { $_ -ne $b }) + ($b + '.pdfmy-vorlage')
+        Sag "Eigene bzw. angepasste $b behalten – die Fassung von PDFMy liegt als $b.pdfmy-vorlage daneben."
+      }
+      # Eigene Dateien übernehmen: alles im bisherigen Ordner, was nicht zum bisherigen Paket gehört
       foreach ($e in Get-ChildItem -Force $Ziel) {
-        if ($e.Name -in '.pdfmy-version', '.pdfmy-dateien' -or $altListe -contains $e.Name -or (Test-Path (Join-Path $neu $e.Name))) { continue }
+        if ($e.Name -in '.pdfmy-version', '.pdfmy-dateien' -or $e.Name -in $konf -or $altListe -contains $e.Name -or (Test-Path (Join-Path $neu $e.Name))) { continue }
         Copy-Item $e.FullName -Destination $neu -Recurse -Force
       }
     }

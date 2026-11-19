@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Отказен рок",
  "läuft bis {0}": "важи до {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Без раскинување продолжување за {0} месеци",
- "Quartal": "Квартал"
+ "Quartal": "Квартал",
+ "Block {0} mit dem vorigen verbinden": "Спој го блокот {0} со претходниот",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Спој со претходниот блок (еден пасус или наслов)"
 }

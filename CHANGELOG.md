@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-19
 
+### Lesereihenfolge: Blöcke verbinden; Selbstbetrieb mit Sicherheits-Kopfzeilen (app-v296)
+- **Eigener Server:** Paket mit .htaccess (Apache), web.config (IIS, jetzt mit Kopfzeilen) und nginx-Vorlage – CSP, nosniff, Referrer-/Permissions-Policy, X-Frame-Options SAMEORIGIN; HSTS bewusst nicht (gälte im Unterordner für den ganzen Server). Aktualisierer behalten eigene oder angepasste Webserver-Einstellungen (Prüfsumme gegen die bisherige Fassung) und legen die neue Fassung als ….pdfmy-vorlage daneben – beide Aktualisierer im Test geprüft.
+- **Betriebsprüfung** prüft zusätzlich die Sicherheits-Kopfzeilen von pdfmy.de und dass die CSP keine fremden Adressen erlaubt.
+- Im Dialog „Lesereihenfolge prüfen“ verbindet der Knopf ⤒ einen Block mit dem vorigen (z. B. eine in mehrere Absätze zerlegte Spalte): gleiche Nummer, Art des vorigen, beim Speichern als PDF/UA ein Tag. Umschalter mit aria-pressed, Tabellen ausgenommen; „Automatisch“ hebt es auf. Im Browser bis in den Strukturbaum geprüft. Hilfe in 40 Sprachen, Tests in tests/lesereihenfolge.test.js.
+
 ### Offline-Vorrat, Betriebsprüfung und Vertragsfristen (app-v295)
 - **Verträge – bis wann kündigen?** Bei Verträgen und Versicherungsscheinen erkennt PDFMy Beginn, Laufzeit, Ende, Kündigungsfrist (Wochen/Monate, zum Monats-/Quartalsende) und automatische Verlängerung, berechnet nach § 188 BGB das nächste Vertragsende und „kündigen bis“ (Eingang beim Vertragspartner); Kalendereintrag „Kündigungsfrist“ mit 14 Tagen Vorwarnung. Tests in tests/vertrag.test.js.
 - **Offline-Vorrat** (Klick auf „Offline bereit“): belegter Speicher und ob der Browser ihn dauerhaft behält; zusätzlich offline bereithalten – Office-Schriften, CJK-Schrift, Texterkennung weiterer Sprachen; „Jetzt laden“ wartet auf genau diese Anfrage; die Auswahl wird bei jedem Start und Update vollständig gehalten.

@@ -117,17 +117,28 @@
     // Tabellen bleiben Tabellen (oder „nicht vorlesen“), Text wird nie zur Tabelle
     const fits = (a, k) => KINDS.includes(k) && (k === 'art' || (a.b.type === 'table') === (k === 'table'));
     const seen = new Set(), out = [];
-    for (const { i, k } of ro.seq) {
+    for (const { i, k, m } of ro.seq) {
       const a = auto[i]; if (!a || seen.has(i)) continue;
-      seen.add(i); out.push(k && fits(a, k) ? { ...a, kind: k } : a);
+      seen.add(i); out.push({ ...(k && fits(a, k) ? { ...a, kind: k } : a), merge: !!m });
     }
     for (const a of auto) if (!seen.has(a.i)) out.push(a);
     return out;
   }
+  /* Verbundene Blöcke (m: „mit vorigem verbinden“ – z. B. eine Spalte, die die Erkennung in mehrere Absätze zerlegt hat) zu einem
+     Block zusammenführen: Wörter und Text hängen am vorigen, dessen Art gilt. Tabellen werden nie verbunden. Für das Taggen (app.js). */
+  function joined(items) {
+    const out = [];
+    for (const x of items) {
+      const prev = out[out.length - 1];
+      if (x.merge && prev && x.b.type !== 'table' && prev.b.type !== 'table') prev.b = { ...prev.b, ws: [...(prev.b.ws || []), ...(x.b.ws || [])], text: `${prev.b.text} ${x.b.text}` };
+      else out.push({ ...x, b: { ...x.b } });
+    }
+    return out;
+  }
   // Umgekehrt: aus der bearbeiteten Liste ro bilden – null, wenn sie der automatischen Gliederung entspricht
   function toRo(bs, items) {
-    const same = items.every((x, n) => x.i === n && x.kind === x.auto);
-    return same ? null : { sig: sig(bs), seq: items.map(x => ({ i: x.i, k: x.kind === x.auto ? '' : x.kind })) };
+    const same = items.every((x, n) => x.i === n && x.kind === x.auto && !x.merge);
+    return same ? null : { sig: sig(bs), seq: items.map(x => ({ i: x.i, k: x.kind === x.auto ? '' : x.kind, ...(x.merge ? { m: 1 } : {}) })) };
   }
   // Umriss eines Blocks auf der Seite (0…1) – für die nummerierten Kästen
   function box(b) {
@@ -136,6 +147,6 @@
     return { x: x0, y: y0, w: Math.max(...ws.map(w => w.x + w.w)) - x0, h: Math.max(...ws.map(w => w.y + w.h)) - y0 };
   }
 
-  const api = { blocks, fromText, KINDS, sig, ordered, toRo, box, wordsOf };
+  const api = { blocks, fromText, KINDS, sig, ordered, joined, toRo, box, wordsOf };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Reflow = api;
 })(typeof self !== 'undefined' ? self : globalThis);

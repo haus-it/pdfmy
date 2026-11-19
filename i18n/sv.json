@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Uppsägningstid",
  "läuft bis {0}": "löper till {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Utan uppsägning förlängs avtalet med {0} månader",
- "Quartal": "Kvartal"
+ "Quartal": "Kvartal",
+ "Block {0} mit dem vorigen verbinden": "Koppla ihop block {0} med föregående",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Koppla ihop med föregående block (ett stycke eller en rubrik)"
 }

@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Uppsagnarfrestur",
  "läuft bis {0}": "gildir til {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Án uppsagnar framlengist um {0} mánuði",
- "Quartal": "Ársfjórðungur"
+ "Quartal": "Ársfjórðungur",
+ "Block {0} mit dem vorigen verbinden": "Sameina blokk {0} fyrra blokkinni",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Sameina fyrra blokkinni (ein málsgrein eða ein fyrirsögn)"
 }

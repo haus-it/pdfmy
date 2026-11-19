@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Cyfnod rhybudd",
  "läuft bis {0}": "yn para tan {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Heb derfynu, adnewyddu am {0} mis",
- "Quartal": "Chwarter"
+ "Quartal": "Chwarter",
+ "Block {0} mit dem vorigen verbinden": "Cyfuno bloc {0} â’r un blaenorol",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Cyfuno â’r bloc blaenorol (un paragraff neu un pennawd)"
 }

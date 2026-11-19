@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Uzteikuma termiņš",
  "läuft bis {0}": "spēkā līdz {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Bez uzteikuma pagarinājums par {0} mēn.",
- "Quartal": "Ceturksnis"
+ "Quartal": "Ceturksnis",
+ "Block {0} mit dem vorigen verbinden": "Savienot bloku {0} ar iepriekšējo",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Savienot ar iepriekšējo bloku (viena rindkopa vai virsraksts)"
 }

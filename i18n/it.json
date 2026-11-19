@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Preavviso",
  "läuft bis {0}": "valido fino al {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Senza disdetta, rinnovo di {0} mesi",
- "Quartal": "Trimestre"
+ "Quartal": "Trimestre",
+ "Block {0} mit dem vorigen verbinden": "Unisci il blocco {0} al precedente",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Unisci al blocco precedente (un paragrafo o un titolo)"
 }

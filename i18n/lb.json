@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Kënnegungsfrëst",
  "läuft bis {0}": "gëlt bis den {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Ouni Kënnegung Verlängerung em {0} Méint",
- "Quartal": "Quartal"
+ "Quartal": "Quartal",
+ "Block {0} mit dem vorigen verbinden": "Block {0} mam viregte verbannen",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Mam viregte Block verbannen (ee Paragraph bzw. eng Iwwerschrëft)"
 }

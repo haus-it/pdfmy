@@ -85,17 +85,26 @@ aktualisieren() {   # aktualisieren ZIEL [nur_pruefen]
   gzip -dc "$tmp/paket.tar.gz" | tar -xf - -C "$tmp/neu" || fehler "Paket lässt sich nicht entpacken"   # über stdin: GNU tar deutet „C:/…“ sonst als Rechnername
   [ -f "$tmp/neu/index.html" ] && [ -f "$tmp/neu/sw.js" ] && [ -f "$tmp/neu/pruefsummen.json" ] || fehler "Paket unvollständig – Update abgebrochen"
   (cd "$tmp/neu" && ls -A) > "$tmp/paketinhalt"
-  # Eigene Dateien übernehmen: alles im bisherigen Ordner, was nicht zum bisherigen Paket gehört
+  : > "$tmp/eigen"
   if [ -d "$ziel" ]; then
+    # Webserver-Einstellungen: eigene oder vom Betreiber geänderte Fassung hat Vorrang (Prüfsumme gegen die bisherige Fassung);
+    # die neue Fassung von PDFMy liegt dann als Vorlage daneben. Unverändert übernommene Dateien werden einfach ersetzt.
+    for b in .htaccess web.config nginx-pdfmy.conf; do
+      [ -f "$ziel/$b" ] && [ -f "$tmp/neu/$b" ] || continue
+      if [ -f "$ziel/pruefsummen.json" ] && grep -qF "\"$b\":\"$(sha256 "$ziel/$b")\"" "$ziel/pruefsummen.json"; then continue; fi
+      mv "$tmp/neu/$b" "$tmp/neu/$b.pdfmy-vorlage"; cp -a "$ziel/$b" "$tmp/neu/"; echo "$b" >> "$tmp/eigen"
+      sag "Eigene bzw. angepasste $b behalten – die Fassung von PDFMy liegt als $b.pdfmy-vorlage daneben."
+    done
+    # Eigene Dateien übernehmen: alles im bisherigen Ordner, was nicht zum bisherigen Paket gehört
     for e in "$ziel"/* "$ziel"/.[!.]*; do
       [ -e "$e" ] || continue; b=$(basename "$e")
-      case "$b" in .pdfmy-version|.pdfmy-dateien) continue;; esac
+      case "$b" in .pdfmy-version|.pdfmy-dateien|.htaccess|web.config|nginx-pdfmy.conf) continue;; esac
       if [ -f "$ziel/.pdfmy-dateien" ] && grep -qxF "$b" "$ziel/.pdfmy-dateien"; then continue; fi
       [ -e "$tmp/neu/$b" ] && continue
       cp -a "$e" "$tmp/neu/"
     done
   fi
-  cp "$tmp/paketinhalt" "$tmp/neu/.pdfmy-dateien"
+  { grep -vxF -f "$tmp/eigen" "$tmp/paketinhalt" || true; sed 's/$/.pdfmy-vorlage/' "$tmp/eigen"; } > "$tmp/neu/.pdfmy-dateien"
   printf 'nr=%s\nversion=%s\ndatum=%s\nkanal=%s\n' "$NEU_NR" "$NEU_VERSION" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$KANAL" > "$tmp/neu/.pdfmy-version"
   chmod -R a+rX "$tmp/neu"
   if [ -d "$ziel" ]; then chown -R --reference="$ziel" "$tmp/neu" 2>/dev/null || true; fi

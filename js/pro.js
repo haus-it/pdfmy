@@ -5696,17 +5696,21 @@ async function readingOrder({ flow = false } = {}) {
     const { bs, items } = readingBlocks(p, await taggedWords(p), isRunning), e = { bs, items: items.map(x => ({ ...x })) };
     edits.set(p, e); return e;
   };
+  // Verbundene Blöcke („mit vorigem verbinden“): gleiche Nummer und Art wie der Block davor – wird beim Speichern ein Tag
+  const joinable = (n) => n > 0 && cur.items[n].b.type !== 'table' && cur.items[n - 1].b.type !== 'table';
+  const groups = () => { let g = 0, head = null; return cur.items.map((it, n) => { if (!(it.merge && joinable(n))) { g++; head = it; } return { nr: g, kind: head.kind }; }); };
   const draw = () => {
     if (!view) return;
+    const gs = groups();
     const x = cv.getContext('2d'); x.drawImage(view, 0, 0, cv.width, cv.height);
     cur.items.forEach((it, n) => {
       const r = Reflow.box(it.b); if (!r) return;
-      const c = RO_COLOR[it.kind] || '#2563eb', bx = r.x * cv.width, by = r.y * cv.height, bw = r.w * cv.width, bh = r.h * cv.height;
-      x.lineWidth = n === sel ? 3 : 1.5; x.strokeStyle = c; x.setLineDash(it.kind === 'art' ? [5, 4] : []); x.strokeRect(bx - 2, by - 2, bw + 4, bh + 4);
+      const c = RO_COLOR[gs[n].kind] || '#2563eb', bx = r.x * cv.width, by = r.y * cv.height, bw = r.w * cv.width, bh = r.h * cv.height;
+      x.lineWidth = n === sel ? 3 : 1.5; x.strokeStyle = c; x.setLineDash(gs[n].kind === 'art' ? [5, 4] : []); x.strokeRect(bx - 2, by - 2, bw + 4, bh + 4);
       x.globalAlpha = n === sel ? 0.16 : 0.07; x.fillStyle = c; x.fillRect(bx - 2, by - 2, bw + 4, bh + 4); x.globalAlpha = 1; x.setLineDash([]);
       const rad = 11, cx = Math.max(rad, bx - 2), cy = Math.max(rad, by - 2);
       x.beginPath(); x.arc(cx, cy, rad, 0, Math.PI * 2); x.fillStyle = c; x.fill();
-      x.fillStyle = '#fff'; x.font = 'bold 12px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(n + 1), cx, cy + 0.5);
+      x.fillStyle = '#fff'; x.font = 'bold 12px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(gs[n].nr), cx, cy + 0.5);
     });
   };
   const move = (n, d) => {
@@ -5715,16 +5719,20 @@ async function readingOrder({ flow = false } = {}) {
   };
   const fill = () => {
     list.textContent = '';
+    const gs = groups();
     cur.items.forEach((it, n) => {
+      const verbunden = !!it.merge && joinable(n);
       const li = document.createElement('li'), txt = it.b.type === 'table' ? I18N.t('Tabelle') + ': ' + Reflow.wordsOf(it.b).map(w => w.t).join(' ') : it.b.text;
-      li.className = (n === sel ? 'sel ' : '') + (it.kind === 'art' ? 'art' : ''); li.draggable = true; li.dataset.n = n;
+      li.className = (n === sel ? 'sel ' : '') + (gs[n].kind === 'art' ? 'art ' : '') + (verbunden ? 'merged' : ''); li.draggable = true; li.dataset.n = n;
       const opts = (it.b.type === 'table' ? ['table', 'art'] : ['h1', 'h2', 'p', 'li', 'art']).map(k => `<option value="${k}"${k === it.kind ? ' selected' : ''}>${esc(I18N.t(RO_LABEL[k]))}</option>`).join('');
-      li.innerHTML = `<span class="ronum" style="color:${RO_COLOR[it.kind]}">${n + 1}</span><span class="rotx" title="${esc(txt.slice(0, 300))}">${esc(txt.replace(/\s+/g, ' ').slice(0, 90))}</span>
-        <select aria-label="${esc(I18N.t(`Art von Block ${n + 1}`))}">${opts}</select>
+      li.innerHTML = `<span class="ronum" style="color:${RO_COLOR[gs[n].kind]}">${verbunden ? '↳' : gs[n].nr}</span><span class="rotx" title="${esc(txt.slice(0, 300))}">${esc(txt.replace(/\s+/g, ' ').slice(0, 90))}</span>
+        <select aria-label="${esc(I18N.t(`Art von Block ${n + 1}`))}"${verbunden ? ' disabled' : ''}>${opts}</select>
+        <button type="button" class="rojoin" aria-pressed="${verbunden}" aria-label="${esc(I18N.t(`Block ${n + 1} mit dem vorigen verbinden`))}" title="${esc(I18N.t('Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)'))}"${joinable(n) ? '' : ' disabled'}>⤒</button>
         <button type="button" data-d="-1" aria-label="${esc(I18N.t(`Block ${n + 1} nach vorn`))}" title="${esc(I18N.t('Früher vorlesen'))}"${n ? '' : ' disabled'}>↑</button>
         <button type="button" data-d="1" aria-label="${esc(I18N.t(`Block ${n + 1} nach hinten`))}" title="${esc(I18N.t('Später vorlesen'))}"${n < cur.items.length - 1 ? '' : ' disabled'}>↓</button>`;
       li.querySelector('select').onchange = e => { it.kind = e.target.value; sel = n; fill(); list.children[n]?.querySelector('select')?.focus(); };
-      li.querySelectorAll('button').forEach(b => b.onclick = () => move(n, +b.dataset.d));
+      li.querySelectorAll('button[data-d]').forEach(b => b.onclick = () => move(n, +b.dataset.d));
+      li.querySelector('.rojoin').onclick = () => { it.merge = !verbunden; sel = n; fill(); list.children[n]?.querySelector('.rojoin')?.focus(); };
       li.addEventListener('keydown', e => { if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) { e.preventDefault(); move(n, e.key === 'ArrowUp' ? -1 : 1); } });
       li.addEventListener('focusin', () => { if (sel !== n) { sel = n; list.querySelectorAll('li').forEach((o, k) => o.classList.toggle('sel', k === n)); draw(); } });
       li.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', String(n)); li.classList.add('dragging'); });
@@ -5746,7 +5754,7 @@ async function readingOrder({ flow = false } = {}) {
   };
   $('#roPrev').onclick = () => { if (at > 0) { at--; show(); } };
   $('#roNext').onclick = () => { if (at < pages.length - 1) { at++; show(); } };
-  $('#roReset').onclick = () => { cur.items.sort((a, b) => a.i - b.i).forEach(it => { it.kind = it.auto; }); sel = -1; fill(); };
+  $('#roReset').onclick = () => { cur.items.sort((a, b) => a.i - b.i).forEach(it => { it.kind = it.auto; it.merge = false; }); sel = -1; fill(); };
   cv.onclick = e => {
     const r = cv.getBoundingClientRect(), u = (e.clientX - r.left) / r.width, v = (e.clientY - r.top) / r.height;
     const n = cur.items.findIndex(it => { const b = Reflow.box(it.b); return b && u >= b.x - 0.01 && u <= b.x + b.w + 0.01 && v >= b.y - 0.01 && v <= b.y + b.h + 0.01; });

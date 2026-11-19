@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Тэрмін папярэджання",
  "läuft bis {0}": "дзейнічае да {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Без скасавання працяг на {0} мес.",
- "Quartal": "Квартал"
+ "Quartal": "Квартал",
+ "Block {0} mit dem vorigen verbinden": "Аб’яднаць блок {0} з папярэднім",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Аб’яднаць з папярэднім блокам (адзін абзац або загаловак)"
 }

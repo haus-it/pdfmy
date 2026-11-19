@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Notice period",
  "läuft bis {0}": "runs until {0}",
  "Ohne Kündigung Verlängerung um {0} Monate": "Without termination, renewal by {0} months",
- "Quartal": "Quarter"
+ "Quartal": "Quarter",
+ "Block {0} mit dem vorigen verbinden": "Join block {0} with the previous one",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Join with previous block (one paragraph or heading)"
 }

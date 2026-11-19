@@ -3914,5 +3914,7 @@
  "Kündigungsfrist": "Irtisanomisaika",
  "läuft bis {0}": "voimassa {0} asti",
  "Ohne Kündigung Verlängerung um {0} Monate": "Ilman irtisanomista jatko {0} kuukaudella",
- "Quartal": "Neljännesvuosi"
+ "Quartal": "Neljännesvuosi",
+ "Block {0} mit dem vorigen verbinden": "Yhdistä lohko {0} edelliseen",
+ "Mit dem vorigen Block verbinden (ein Absatz bzw. eine Überschrift)": "Yhdistä edelliseen lohkoon (yksi kappale tai otsikko)"
 }
