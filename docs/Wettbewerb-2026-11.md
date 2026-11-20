@@ -264,3 +264,14 @@ BentoPDF und Stirling-PDF werben mit Betrieb im eigenen Netz (Docker); KONZEPT n
 | DATEV-Marktplatz | Langfristziel | – | Partnerstatus und Zertifizierung (nicht nachgeprüft) |
 
 **Empfohlene Reihenfolge:** 1. Opera (Konto, sonst kein Aufwand) · 2. Safari (Konto und Mac) · 3. ownCloud Infinite Scale und 4. SharePoint (je mit Testumgebung) · 5. Synology-Paket für den Selbstbetrieb. Die Punkte 1 und 2 brauchen eine Entscheidung der Geschäftsführung (Konten, Kosten), die Punkte 3 bis 5 eine Testumgebung. Ohne Test wird nichts ausgeliefert (Update-Strategie Abschnitt 6).
+
+## 10. Vereine und Ehrenamt (geprüft 20.11.2026, app-v313–v316)
+Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acrobat, PDF24, Smallpdf, iLovePDF und Foxit bieten für Vereine keine eigenen Abläufe; Vereinssoftware (z. B. Mitgliederverwaltungen im Abo) verlangt Konto und Gebühr.
+
+| Bedarf im Verein | PDFMy | Wettbewerb |
+|---|---|---|
+| Ausgefüllte Formulare zu einer Liste zusammenführen | vorhanden (v313): viele PDFs → eine Excel-Liste | Acrobat Pro: „Formulardaten zusammenführen“ (kostenpflichtig); PDF24/Smallpdf: fehlt |
+| Zuwendungsbestätigung nach amtlichem Muster, auch als Serie und Sammelbestätigung | vorhanden (v314) | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |
+| Mitgliedsantrag mit SEPA-Mandat, Foto-Einwilligung, Fahrt-Einverständnis | vorhanden (v315) | fehlt; Vorlagen meist als Word-Datei verstreut im Netz |
+| Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug, mit steuerlichen Bereichen und Prüfvermerk | vorhanden (v316) | fehlt bei PDF-Werkzeugen; Vereinsbuchhaltung im Abo |
+| Online-Mitgliederverwaltung, Beitragseinzug als SEPA-XML | **bewusst nicht**: Mitgliederdatenbank auf einem Server (Leitplanken 1–2); SEPA-XML-Datei für den Beitragseinzug wäre lokal machbar – nächster Kandidat |

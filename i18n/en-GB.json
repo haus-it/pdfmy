@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "What will photos be published for?",
  "z. B. DE98ZZZ09999999999": "e.g. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "e.g. reports on training, tournaments and events",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Return to (email or address, optional)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Return to (email or address, optional)",
+ "{0} Zeilen übersprungen.": "{0} rows skipped.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Opening balance in euros (empty: from the balance of the export)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "From the transaction export of your club's account (CSV, Excel or CAMT-XML from online banking, e.g. Sparkasse, Volksbank, ING, DKB) or from your cash book (columns Date, Text, Amount or Income and Expenditure; optionally Category and Sphere). Your account data never leaves the device.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Transactions-{0}-with-categories.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "No transactions were found in the file.",
+ "Kassenbericht": "Treasurer's report",
+ "Kassenbericht (Jahreshauptversammlung) …": "Treasurer's report (annual general meeting) …",
+ "Kassenbericht {0} {1}.pdf": "Treasurer's report {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Treasurer's report {0} created: {1} transactions, closing balance {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Treasurer's report for the members' meeting",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Treasurer's report for the members' meeting from the bank statement (CSV/Excel) or cash book – with tax spheres, reconciliation and auditors' note",
+ "Kassenwart/in": "Treasurer",
+ "Kontoauszug oder Kassenbuch wählen …": "Choose bank statement or cash book …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Closing balance according to the statement (for reconciliation)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Also save the transaction list with categories as an Excel file – to correct it and select it again"
 }

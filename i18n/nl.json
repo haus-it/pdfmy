@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Waarvoor worden foto’s gepubliceerd?",
  "z. B. DE98ZZZ09999999999": "bijv. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "bijv. de verslaggeving over trainingen, toernooien en feesten",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Terugsturen naar (e-mail of adres, optioneel)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Terugsturen naar (e-mail of adres, optioneel)",
+ "{0} Zeilen übersprungen.": "{0} regels overgeslagen.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Beginsaldo in euro (leeg: uit het saldo van de export)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Uit de transactie-export van de rekening van uw vereniging (CSV, Excel of CAMT-XML uit internetbankieren, bijv. Sparkasse, Volksbank, ING, DKB) of uit uw kasboek (kolommen Datum, Tekst, Bedrag of Ontvangst en Uitgave; optioneel Categorie en Domein). De rekeninggegevens verlaten het apparaat niet.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Boekingen-{0}-met-categorieen.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "In het bestand zijn geen boekingen gevonden.",
+ "Kassenbericht": "Kasverslag",
+ "Kassenbericht (Jahreshauptversammlung) …": "Kasverslag (jaarvergadering) …",
+ "Kassenbericht {0} {1}.pdf": "Kasverslag {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Kasverslag {0} gemaakt: {1} boekingen, eindsaldo {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Kasverslag voor de ledenvergadering",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Kasverslag voor de ledenvergadering uit het rekeningafschrift (CSV/Excel) of kasboek – met fiscale domeinen, afstemming en verklaring van de kascommissie",
+ "Kassenwart/in": "Penningmeester",
+ "Kontoauszug oder Kassenbuch wählen …": "Rekeningafschrift of kasboek kiezen …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Eindsaldo volgens het afschrift (voor de afstemming)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Sla daarnaast de boekingslijst met categorieën op als Excel-bestand – om te corrigeren en opnieuw te kiezen"
 }

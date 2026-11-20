@@ -3856,6 +3856,35 @@ $('#zuwIn').onchange = async e => {
     status(`${personen.length} Zuwendungsbestätigungen erstellt.`);
   } catch (err) { noteError(err, 'Zuwendungsbestätigung'); fdMsg($('#zuwSerMsg'), [`Abgebrochen: ${err.message}`]); }
 };
+/* ---------- Kassenbericht für die Mitgliederversammlung (js/kassenbericht.js, app-v316) ---------- */
+$('#btnKb').onclick = () => {
+  closeMenu?.();
+  const v = LS.get('kbVerein', null), z = LS.get('zuwVerein', null), vv = LS.get('vvVerein', null), prof = LS.get('profile', {}) || {};
+  $('#kbVerein').value = v?.verein || z?.aussteller?.name || vv?.verein || ''; $('#kbWart').value = v?.kassenwart || [prof.vorname, prof.nachname].filter(Boolean).join(' ');
+  $('#kbOrt').value = v?.ort || z?.ort || prof.ort || ''; $('#kbAnfang').value = ''; $('#kbEnde').value = ''; $('#kbCsv').checked = !!v?.csv;
+  $('#kbMsg').textContent = ''; $('#kbDlg').showModal(); ($('#kbVerein').value ? $('#kbAnfang') : $('#kbVerein')).focus();
+};
+$('#kbCancel').onclick = () => $('#kbDlg').close();
+$('#kbForm').onsubmit = e => { e.preventDefault(); if (!$('#kbVerein').value.trim()) { $('#kbVerein').focus(); return; } $('#kbIn').click(); };
+$('#kbIn').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  try {
+    // CAMT.053 (XML) über den Kontoabgleich lesen, sonst CSV/Excel
+    const rows = /\.xml$/i.test(f.name) ? [['Datum', 'Name', 'Verwendungszweck', 'Betrag'], ...Bank.parseCamt(await f.text()).map(t => [t.date, t.name, t.purpose, t.amount])] : null;
+    const t = Kassenbericht.ausTabelle(rows || await fdReadTable(f));
+    if (!t.buchungen.length) { fdMsg($('#kbMsg'), t.fehler.length ? t.fehler.slice(0, 3) : ['In der Datei wurden keine Buchungen gefunden.']); return; }
+    const num = s => { const n = Kassenbericht.zahl(s); return isFinite(n) ? n : null; };   // auch negativ (Konto im Minus)
+    const anfang = num($('#kbAnfang').value) ?? t.anfang ?? 0, kontostand = num($('#kbEnde').value) ?? t.ende ?? null;
+    const d = { verein: $('#kbVerein').value.trim(), kassenwart: $('#kbWart').value.trim(), ort: $('#kbOrt').value.trim(), buchungen: t.buchungen, anfang, kontostand };
+    LS.set('kbVerein', { verein: d.verein, kassenwart: d.kassenwart, ort: d.ort, csv: $('#kbCsv').checked });
+    const a = Kassenbericht.auswerten(d.buchungen, { anfang, kontostand });
+    const bytes = await Kassenbericht.erzeugen(PDFLib, d, await zuwOpts());
+    if ($('#kbCsv').checked) download(new TextEncoder().encode(Kassenbericht.toCsv(d.buchungen)), `Buchungen-${a.jahr}-mit-Kategorien.csv`, 'text/csv');
+    $('#kbDlg').close();
+    await importFiles([new File([bytes], `Kassenbericht ${a.jahr} ${d.verein.replace(/[\\/:*?"<>|]+/g, ' ').replace(/\.+$/, '')}.pdf`, { type: 'application/pdf' })]);
+    status(`Kassenbericht ${a.jahr} erstellt: ${a.anzahl} Buchungen, Endbestand ${a.ende.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €.${t.fehler.length ? ` ${t.fehler.length} Zeilen übersprungen.` : ''} ${a.hinweise.find(h => /weicht|Freigrenze/.test(h)) || ''}`.trim());
+  } catch (err) { noteError(err, 'Kassenbericht'); fdMsg($('#kbMsg'), [`Abgebrochen: ${err.message}`]); }
+};
 $('#btnBewirt').onclick = () => {
   closeMenu?.();
   if (!state.pages.length) return status('Zuerst den Gaststättenbeleg öffnen oder fotografieren.');

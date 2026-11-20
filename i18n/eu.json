@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Zertarako argitaratzen dira argazkiak?",
  "z. B. DE98ZZZ09999999999": "adib. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "adib. entrenamenduei, txapelketei eta jaiei buruzko kronikak",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Itzuli hona (posta elektronikoa edo helbidea, aukerakoa)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Itzuli hona (posta elektronikoa edo helbidea, aukerakoa)",
+ "{0} Zeilen übersprungen.": "{0} errenkada saltatu da.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Hasierako saldoa eurotan (hutsik: esportazioaren saldotik)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Zure elkartearen kontuaren mugimenduen esportaziotik (CSV, Excel edo CAMT-XML online bankutik, adib. Sparkasse, Volksbank, ING, DKB) edo zure kutxa-liburutik (zutabeak data, testua, zenbatekoa edo sarrera eta gastua; aukeran kategoria eta eremua). Kontuaren datuak ez dira gailutik ateratzen.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Apunteak-{0}-kategoriekin.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Ez da apunterik aurkitu fitxategian.",
+ "Kassenbericht": "Diruzain txostena",
+ "Kassenbericht (Jahreshauptversammlung) …": "Diruzain txostena (batzar nagusia) …",
+ "Kassenbericht {0} {1}.pdf": "Diruzain txostena {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "{0}ko diruzain txostena sortu da: {1} apunte, amaierako saldoa {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Bazkideen batzarrerako diruzain txostena",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Bazkideen batzarrerako diruzain txostena kontu-laburpenetik (CSV/Excel) edo kutxa-liburutik – zerga-eremuekin, adostasun-egiaztapenarekin eta ikuskatzaileen oharrarekin",
+ "Kassenwart/in": "Diruzaina",
+ "Kontoauszug oder Kassenbuch wählen …": "Aukeratu kontu-laburpena edo kutxa-liburua …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Amaierako saldoa laburpenaren arabera (egiaztapenerako)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Gorde, gainera, apunteen zerrenda kategoriekin Excel fitxategi gisa – zuzentzeko eta berriz aukeratzeko"
 }

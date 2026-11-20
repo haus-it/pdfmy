@@ -94,6 +94,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 20.11.2026: Kassenbericht für die Mitgliederversammlung (app-v316)
+**Inhalt:** Aus dem Umsatz-Export des Vereinskontos (CSV, Excel oder CAMT-XML) oder einem Kassenbuch entsteht ein Kassenbericht als PDF. Er enthält Anfangs- und Endbestand, Einnahmen und Ausgaben nach Kategorien, den Abgleich mit dem Kontostand und die Aufteilung auf die vier steuerlichen Bereiche mit Hinweis auf die Freigrenze nach § 64 Abs. 3 AO (50.000 € ab 2026). Dazu kommen die Unterschrift des Kassenwarts, der Prüfvermerk der Kassenprüfer mit Entlastungsempfehlung und die Buchungsliste als Anlage. Kategorien sind gekennzeichnete Vorschläge; eine Korrektur-Liste für Excel lässt sich erneut einlesen. **Grund:** Lücke für die angeschriebenen Vereine – die Jahreshauptversammlung braucht jedes Jahr einen Kassenbericht, Wettbewerber (Acrobat, PDF24, Smallpdf) bieten nichts dergleichen, Vereinssoftware kostet und verlangt ein Konto.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Kontodaten werden nur im Browser gelesen, nichts wird übertragen |
+| 2 Kein Server | passt: keine Verbindung, kein Bank-Zugang (kein FinTS/PSD2) – der Nutzer lädt den Export selbst aus dem Online-Banking |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: ein Menüeintrag, eine Datei wählen; Anfangs- und Endbestand werden aus dem Saldo des Exports übernommen |
+| 5 Prüfbar | tests/kassenbericht.test.js (Sparkasse, ING mit Vorspann und Saldo, Kassenbuch, Freigrenze, Rundlauf der Korrektur-Liste, PDF); Durchlauf in der App |
+| 6 Wenig aktive Inhalte | passt: keine Skripte im PDF |
+
 ### Geprüft und umgesetzt 20.11.2026: Langzeitprüfbare Signaturen, PAdES B-LTA (app-v311)
 **Inhalt:** Beim Signieren mit Zeitstempel holt pdfmy Scan die Sperrauskunft (OCSP/CRL) der Stelle, die das eigene Zertifikat ausgestellt hat; PDFMy bettet sie mit der Kette als /DSS ein und setzt einen Dokumentzeitstempel darüber.
 

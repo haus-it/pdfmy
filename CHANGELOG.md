@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Kassenbericht für die Mitgliederversammlung (app-v316)
+- „Mehr → Kassenbericht (Jahreshauptversammlung) …“: Umsatz-Export des Vereinskontos (CSV/Excel aus dem Online-Banking von Sparkasse, Volksbank, ING, DKB u. a., auch mit Vorspann, oder CAMT-XML) bzw. ein eigenes Kassenbuch (Datum, Text, Betrag oder Einnahme/Ausgabe, optional Kategorie und Bereich) wählen – PDFMy erstellt den Kassenbericht als PDF.
+- Inhalt: Anfangsbestand, Einnahmen und Ausgaben nach Kategorien, Überschuss bzw. Fehlbetrag, Endbestand, Abgleich mit dem Kontostand (Abweichung wird benannt), Aufteilung auf ideellen Bereich, Vermögensverwaltung, Zweckbetrieb und wirtschaftlichen Geschäftsbetrieb mit Hinweis auf die Freigrenze nach § 64 Abs. 3 AO (50.000 € ab 2026, Steueränderungsgesetz 2025; 45.000 € 2020–2025), Unterschrift Kassenwart, Prüfvermerk der Kassenprüfer mit Entlastungsempfehlung, Buchungsliste als Anlage.
+- Anfangs- und Endbestand werden aus der Saldo-Spalte übernommen, wenn die Bank sie liefert (Reihenfolge neueste oben oder unten, mit Gegenprüfung). Kategorien ohne eigene Angabe sind als Vorschlag gekennzeichnet; die Buchungsliste mit Kategorien lässt sich als Excel-Datei speichern, korrigieren und erneut wählen (Formel-Eingaben entschärft).
+- js/kassenbericht.js, tests/kassenbericht.test.js; Durchlauf in der App geprüft.
+
 ### Vereinsvorlagen: Mitgliedsantrag mit SEPA-Mandat, Einwilligung Fotos, Einverständnis Fahrten (app-v315)
 - „Mehr → Vereinsvorlagen …“: ausfüllbare PDF-Formulare mit Namen und Anschrift des Vereins bzw. der Einrichtung. Mitgliedsantrag mit Beiträgen zum Ankreuzen, Datenschutz-Kenntnisnahme und SEPA-Lastschriftmandat (Standardwortlaut der Deutschen Kreditwirtschaft, Gläubiger-ID mit Prüfziffer geprüft). Einwilligung zu Fotos (Website, soziale Medien, Presse, Namensnennung; Widerruf nach Art. 7 Abs. 3 DSGVO) und Einverständnis für Fahrten (Schwimmen, Freizeit ohne Aufsicht, Fahrgemeinschaft, Gesundheit, Notfallkontakt) als gekennzeichnete Muster.
 - Sprechende Feldnamen (Vorname, IBAN …) – PDFMy prüft die IBAN beim Ausfüllen, und „Ausgefüllte PDFs zusammenführen“ (v313) liefert eine lesbare Excel-Liste. Unicode-Schrift für alle Namen, keine Skripte im PDF. Vereinsangaben aus der Zuwendungsbestätigung werden übernommen.

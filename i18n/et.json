@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Mis eesmärgil fotosid avaldatakse?",
  "z. B. DE98ZZZ09999999999": "nt DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "nt ülevaated treeningutest, turniiridest ja pidustustest",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Tagasta aadressile (e-post või postiaadress, vabatahtlik)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Tagasta aadressile (e-post või postiaadress, vabatahtlik)",
+ "{0} Zeilen übersprungen.": "{0} rida vahele jäetud.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Algsaldo eurodes (tühi: ekspordi saldost)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Teie ühingu konto väljavõttest (CSV, Excel või CAMT-XML internetipangast, nt Sparkasse, Volksbank, ING, DKB) või Teie kassaraamatust (veerud kuupäev, tekst, summa või tulu ja kulu; soovi korral kategooria ja valdkond). Kontoandmed ei lahku seadmest.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Kanded-{0}-kategooriatega.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Failist ei leitud ühtegi kannet.",
+ "Kassenbericht": "Laekahoidja aruanne",
+ "Kassenbericht (Jahreshauptversammlung) …": "Laekahoidja aruanne (üldkoosolek) …",
+ "Kassenbericht {0} {1}.pdf": "Laekahoidja aruanne {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Laekahoidja aruanne {0} koostatud: {1} kannet, lõppsaldo {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Laekahoidja aruanne liikmete koosolekule",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Laekahoidja aruanne liikmete koosolekule kontoväljavõtte (CSV/Excel) või kassaraamatu põhjal – maksuvaldkondade, võrdluse ja audiitorite märkega",
+ "Kassenwart/in": "Laekahoidja",
+ "Kontoauszug oder Kassenbuch wählen …": "Vali kontoväljavõte või kassaraamat …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Lõppsaldo väljavõtte järgi (võrdluseks)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Salvesta kannete loend kategooriatega lisaks Exceli failina – parandamiseks ja uuesti valimiseks"
 }

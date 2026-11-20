@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Për çfarë qëllimi publikohen fotografitë?",
  "z. B. DE98ZZZ09999999999": "p.sh. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "p.sh. raportimi mbi stërvitjet, turneret dhe festat",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Kthejeni te (e-mail ose adresë, opsionale)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Kthejeni te (e-mail ose adresë, opsionale)",
+ "{0} Zeilen übersprungen.": "{0} rreshta u anashkaluan.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Gjendja fillestare në euro (bosh: nga saldo e eksportit)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Nga eksporti i lëvizjeve të llogarisë së shoqatës suaj (CSV, Excel ose CAMT-XML nga online banking, p.sh. Sparkasse, Volksbank, ING, DKB) ose nga libri juaj i arkës (kolonat Data, Teksti, Shuma ose Hyrje dhe Dalje; opsionalisht Kategoria dhe Fusha). Të dhënat e llogarisë nuk e lënë pajisjen.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Veprime-{0}-me-kategori.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Në skedar nuk u gjet asnjë veprim.",
+ "Kassenbericht": "Raporti i arkës",
+ "Kassenbericht (Jahreshauptversammlung) …": "Raporti i arkës (asambleja vjetore) …",
+ "Kassenbericht {0} {1}.pdf": "Raporti i arkes {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Raporti i arkës {0} u krijua: {1} veprime, gjendja përfundimtare {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Raporti i arkës për mbledhjen e anëtarëve",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Raporti i arkës për mbledhjen e anëtarëve nga ekstrakti i llogarisë (CSV/Excel) ose libri i arkës – me fusha tatimore, përputhje saldosh dhe vërejtje kontrolli",
+ "Kassenwart/in": "Arkëtari/ja",
+ "Kontoauszug oder Kassenbuch wählen …": "Zgjidhni ekstraktin e llogarisë ose librin e arkës …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Gjendja e llogarisë në fund sipas ekstraktit (për përputhjen)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Ruaj edhe listën e veprimeve me kategori si skedar Excel – për korrigjim dhe zgjedhje të re"
 }

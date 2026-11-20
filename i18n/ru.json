@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "С какой целью публикуются фотографии?",
  "z. B. DE98ZZZ09999999999": "напр. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "напр. освещение тренировок, турниров и праздников",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вернуть по адресу (электронная почта или адрес, необязательно)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вернуть по адресу (электронная почта или адрес, необязательно)",
+ "{0} Zeilen übersprungen.": "Пропущено строк: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Начальный остаток в евро (пусто: из сальдо выписки)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Из выгрузки операций по счёту вашего объединения (CSV, Excel или CAMT-XML из онлайн-банкинга, например Sparkasse, Volksbank, ING, DKB) или из вашей кассовой книги (столбцы «Дата», «Текст», «Сумма» либо «Приход» и «Расход»; необязательно «Категория» и «Сфера»). Данные счёта не покидают устройство.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Операции-{0}-с-категориями.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "В файле не найдено ни одной операции.",
+ "Kassenbericht": "Кассовый отчёт",
+ "Kassenbericht (Jahreshauptversammlung) …": "Кассовый отчёт (годовое собрание) …",
+ "Kassenbericht {0} {1}.pdf": "Кассовый отчёт {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Кассовый отчёт {0} создан: операций {1}, конечный остаток {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Кассовый отчёт для общего собрания членов",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Кассовый отчёт для общего собрания членов по выписке со счёта (CSV/Excel) или кассовой книге – с налоговыми сферами, сверкой и отметкой ревизоров",
+ "Kassenwart/in": "Казначей",
+ "Kontoauszug oder Kassenbuch wählen …": "Выберите выписку или кассовую книгу …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Остаток на счёте на конец периода по выписке (для сверки)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Дополнительно сохранить список операций с категориями как файл Excel – для исправления и повторного выбора"
 }

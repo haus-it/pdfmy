@@ -1207,6 +1207,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnComments" title="Alle Notizen, Markierungen, Stempel, Unterschriften und Formularfelder auf einen Blick"><svg class="ic" aria-hidden="true"><use href="#i-sticky-note"/></svg><span>Kommentare und Markierungen …</span></button>
           <button class="mi" id="btnVV" title="Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Vereinsvorlagen …</span></button>
           <button class="mi" id="btnZuw" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
+          <button class="mi" id="btnKb" title="Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Kassenbericht (Jahreshauptversammlung) …</span></button>
           <button class="mi doc" id="btnQrIns" title="GiroCode (Überweisung per Banking-App) oder QR-Code mit Link oder Text auf die Seite setzen – z. B. auf die eigene Rechnung"><svg class="ic" aria-hidden="true"><use href="#i-qr-code"/></svg><span>QR-Code einfügen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -2340,7 +2341,19 @@ html.i18n-wait body{visibility:hidden}
   <input type="file" id="zuwIn" hidden accept=".csv,.txt,.xlsx">
   <div class="dlgrow"><button type="button" id="zuwCancel">Schließen</button></div>
 </form></dialog>
-<dialog id="bewDlg" class="sharedlg propdlg" aria-labelledby="bewT"><form id="bewForm">
+<dialog id="kbDlg" class="sharedlg propdlg" aria-labelledby="kbT"><form id="kbForm">
+  <h3 class="dlgtitle" id="kbT">Kassenbericht für die Mitgliederversammlung</h3>
+  <p class="hint" style="margin-top:0">Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.</p>
+  <div class="field"><label for="kbVerein">Name des Vereins</label><input id="kbVerein" required autocomplete="organization"></div>
+  <div class="anlrow"><div class="field"><label for="kbWart">Kassenwart/in</label><input id="kbWart" autocomplete="name"></div><div class="field"><label for="kbOrt">Ort</label><input id="kbOrt"></div></div>
+  <div class="anlrow"><div class="field"><label for="kbAnfang">Anfangsbestand in Euro (leer: aus dem Saldo des Exports)</label><input id="kbAnfang" inputmode="decimal" placeholder="z. B. 2.450,00"></div>
+    <div class="field"><label for="kbEnde">Kontostand am Ende laut Auszug (für den Abgleich)</label><input id="kbEnde" inputmode="decimal" placeholder="z. B. 3.120,35"></div></div>
+  <label><input type="checkbox" id="kbCsv"> Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen</label>
+  <p id="kbMsg" class="hint" role="status"></p>
+  <input type="file" id="kbIn" hidden accept=".csv,.txt,.xlsx,.xml">
+  <div class="dlgrow"><button type="button" id="kbCancel">Schließen</button><button type="submit" class="primary">Kontoauszug oder Kassenbuch wählen …</button></div>
+</form></dialog>
+<dialog id="bewDlg"class="sharedlg propdlg" aria-labelledby="bewT"><form id="bewForm">
   <h3 class="dlgtitle" id="bewT">Bewirtungsbeleg ausfüllen</h3>
   <p class="hint" style="margin-top:0">Angaben nach § 4 Abs. 5 Satz 1 Nr. 2 EStG. PDFMy fügt sie als eigene Seite hinter dem Gaststättenbeleg ein; danach unterschreiben (Werkzeug „Unterschrift“ oder ausgedruckt).</p>
   <div class="anlrow"><div class="field"><label for="bewTag">Tag der Bewirtung</label><input id="bewTag" type="date" required></div>
@@ -2714,6 +2727,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/fragen.js"></script>
 <script src="js/zuwendung.js"></script>
 <script src="js/vereinsvorlagen.js"></script>
+<script src="js/kassenbericht.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>

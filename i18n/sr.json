@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "У коју сврху се фотографије објављују?",
  "z. B. DE98ZZZ09999999999": "нпр. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "нпр. извештавање о тренинзима, турнирима и свечаностима",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вратите на (е-пошта или адреса, необавезно)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вратите на (е-пошта или адреса, необавезно)",
+ "{0} Zeilen übersprungen.": "Прескочено редова: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Почетно стање у еврима (празно: из салда извоза)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Из извоза промета на рачуну вашег удружења (CSV, Excel или CAMT-XML из онлајн банкарства, нпр. Sparkasse, Volksbank, ING, DKB) или из ваше благајничке књиге (колоне Датум, Текст, Износ односно Приход и Расход; опционо Категорија и Област). Подаци о рачуну не напуштају уређај.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Књижења-{0}-са-категоријама.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "У датотеци нису пронађена књижења.",
+ "Kassenbericht": "Благајнички извештај",
+ "Kassenbericht (Jahreshauptversammlung) …": "Благајнички извештај (годишња скупштина) …",
+ "Kassenbericht {0} {1}.pdf": "Благајнички извештај {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Благајнички извештај {0} направљен: {1} књижења, крајње стање {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Благајнички извештај за скупштину чланова",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Благајнички извештај за скупштину чланова из извода са рачуна (CSV/Excel) или благајничке књиге – са пореским областима, усклађивањем и напоменом о ревизији",
+ "Kassenwart/in": "Благајник/ца",
+ "Kontoauszug oder Kassenbuch wählen …": "Изаберите извод са рачуна или благајничку књигу …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Стање рачуна на крају према изводу (за усклађивање)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Додатно сачувај списак књижења са категоријама као Excel датотеку – за исправљање и поновни избор"
 }

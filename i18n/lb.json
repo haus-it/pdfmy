@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Wofir ginn d’Fotoe verëffentlecht?",
  "z. B. DE98ZZZ09999999999": "z. B. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "z. B. d’Berichterstattung iwwer Training, Tournoien a Fester",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Zréck un (E-Mail oder Adress, fakultativ)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Zréck un (E-Mail oder Adress, fakultativ)",
+ "{0} Zeilen übersprungen.": "{0} Zeilen iwwersprong.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Ufanksbestand an Euro (eidel: aus dem Saldo vum Export)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Aus dem Émsaz-Export vun Ärem Veräinskonto (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ärem Kassebuch (Spalte Datum, Text, Betrag bzw. Aachnamen an Ausgab; optional Kategorie a Beräich). D'Kontodaten verloossen den Apparat net.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Buchungen-{0}-mat-Kategorien.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "An der Datei goufe keng Buchunge fonnt.",
+ "Kassenbericht": "Kasseberiicht",
+ "Kassenbericht (Jahreshauptversammlung) …": "Kasseberiicht (Generalversammlung) …",
+ "Kassenbericht {0} {1}.pdf": "Kasseberiicht {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Kasseberiicht {0} erstallt: {1} Buchungen, Endbestand {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Kasseberiicht fir d'Memberversammlung",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Kasseberiicht fir d'Memberversammlung aus dem Kontoauszug (CSV/Excel) oder Kassebuch – mat steierleche Beräicher, Ofgläich a Pröfvermierk",
+ "Kassenwart/in": "Caissier/Caissière",
+ "Kontoauszug oder Kassenbuch wählen …": "Kontoauszug oder Kassebuch wielen …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Kontostand um Enn laut Auszug (fir den Ofgläich)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Zousätzlech d'Buchungslëscht mat Kategorien als Excel-Datei späicheren – fir ze korrigéieren an nach eng Kéier ze wielen"
 }

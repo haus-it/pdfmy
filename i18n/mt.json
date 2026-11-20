@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Għal liema skop jiġu ppubblikati r-ritratti?",
  "z. B. DE98ZZZ09999999999": "eż. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "eż. rapporti dwar taħriġ, tornej u festi",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Irritorna lil (email jew indirizz, mhux obbligatorju)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Irritorna lil (email jew indirizz, mhux obbligatorju)",
+ "{0} Zeilen übersprungen.": "{0} linji maqbuża.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Bilanċ tal-ftuħ f'euro (vojt: mill-bilanċ tal-esportazzjoni)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Mill-esportazzjoni tat-transazzjonijiet tal-kont tal-assoċjazzjoni tagħkom (CSV, Excel jew CAMT-XML mill-online banking, eż. Sparkasse, Volksbank, ING, DKB) jew mill-ktieb tal-kontanti tagħkom (kolonni Data, Test, Ammont jew Dħul u Nefqa; b'għażla Kategorija u Qasam). Id-data tal-kont ma tħalli qatt l-apparat.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Reġistrazzjonijiet-{0}-bil-kategoriji.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Ma nstabu l-ebda reġistrazzjonijiet fil-fajl.",
+ "Kassenbericht": "Rapport tat-teżor",
+ "Kassenbericht (Jahreshauptversammlung) …": "Rapport tat-teżor (Laqgħa Ġenerali Annwali) …",
+ "Kassenbericht {0} {1}.pdf": "Rapport tat-teżor {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Rapport tat-teżor {0} maħluq: {1} reġistrazzjonijiet, bilanċ aħħari {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Rapport tat-teżor għall-laqgħa tas-membri",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Rapport tat-teżor għall-laqgħa tas-membri mid-dikjarazzjoni tal-kont (CSV/Excel) jew mill-ktieb tal-kontanti – b'oqsma fiskali, rikonċiljazzjoni u nota tal-awdituri",
+ "Kassenwart/in": "Teżorier/a",
+ "Kontoauszug oder Kassenbuch wählen …": "Agħżel dikjarazzjoni tal-kont jew ktieb tal-kontanti …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Bilanċ tal-kont fl-aħħar skont id-dikjarazzjoni (għar-rikonċiljazzjoni)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Salva wkoll il-lista tar-reġistrazzjonijiet bil-kategoriji bħala fajl Excel – biex tikkoreġi u terġa' tagħżel"
 }

@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Kādam nolūkam fotoattēli tiek publicēti?",
  "z. B. DE98ZZZ09999999999": "piem., DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "piem., ziņojumi par treniņiem, turnīriem un svētkiem",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Atgriezt uz (e-pasts vai adrese, neobligāti)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Atgriezt uz (e-pasts vai adrese, neobligāti)",
+ "{0} Zeilen übersprungen.": "Izlaistas rindas: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Sākuma atlikums eiro (tukšs: no eksporta atlikuma)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "No Jūsu biedrības konta apgrozījuma eksporta (CSV, Excel vai CAMT-XML no internetbankas, piem., Sparkasse, Volksbank, ING, DKB) vai no Jūsu kases grāmatas (kolonnas Datums, Teksts, Summa vai Ieņēmumi un Izdevumi; pēc izvēles Kategorija un Joma). Konta dati neatstāj ierīci.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Ieraksti-{0}-ar-kategorijam.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Failā netika atrasts neviens ieraksts.",
+ "Kassenbericht": "Kases pārskats",
+ "Kassenbericht (Jahreshauptversammlung) …": "Kases pārskats (kopsapulce) …",
+ "Kassenbericht {0} {1}.pdf": "Kases parskats {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Kases pārskats {0} izveidots: ierakstu skaits {1}, beigu atlikums {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Kases pārskats biedru sapulcei",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Kases pārskats biedru sapulcei no konta izraksta (CSV/Excel) vai kases grāmatas – ar nodokļu jomām, saskaņošanu un revidentu atzīmi",
+ "Kassenwart/in": "Kasieris/-e",
+ "Kontoauszug oder Kassenbuch wählen …": "Izvēlēties konta izrakstu vai kases grāmatu …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Konta atlikums beigās pēc izraksta (saskaņošanai)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Papildus saglabāt ierakstu sarakstu ar kategorijām kā Excel failu – labošanai un atkārtotai izvēlei"
 }

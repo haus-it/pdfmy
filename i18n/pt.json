@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Para que fins são publicadas as fotografias?",
  "z. B. DE98ZZZ09999999999": "p. ex. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "p. ex. a reportagem sobre treinos, torneios e festas",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Devolver a (e-mail ou morada, facultativo)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Devolver a (e-mail ou morada, facultativo)",
+ "{0} Zeilen übersprungen.": "{0} linhas ignoradas.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Saldo inicial em euros (vazio: do saldo da exportação)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Da exportação dos movimentos da conta da sua associação (CSV, Excel ou CAMT-XML do homebanking, p. ex. Sparkasse, Volksbank, ING, DKB) ou do seu livro de caixa (colunas Data, Texto, Montante ou Receita e Despesa; opcionalmente Categoria e Área). Os dados da conta não saem do dispositivo.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Lancamentos-{0}-com-categorias.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Não foram encontrados lançamentos no ficheiro.",
+ "Kassenbericht": "Relatório de tesouraria",
+ "Kassenbericht (Jahreshauptversammlung) …": "Relatório de tesouraria (assembleia geral) …",
+ "Kassenbericht {0} {1}.pdf": "Relatório de tesouraria {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Relatório de tesouraria {0} criado: {1} lançamentos, saldo final {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Relatório de tesouraria para a assembleia de sócios",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Relatório de tesouraria para a assembleia de sócios a partir do extrato bancário (CSV/Excel) ou do livro de caixa – com áreas fiscais, reconciliação e parecer dos fiscais de contas",
+ "Kassenwart/in": "Tesoureiro/a",
+ "Kontoauszug oder Kassenbuch wählen …": "Escolher extrato bancário ou livro de caixa …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Saldo final da conta segundo o extrato (para a reconciliação)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Guardar também a lista de lançamentos com categorias como ficheiro Excel – para corrigir e escolher novamente"
 }

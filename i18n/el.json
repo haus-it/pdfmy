@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Για ποιον σκοπό δημοσιεύονται οι φωτογραφίες;",
  "z. B. DE98ZZZ09999999999": "π.χ. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "π.χ. η κάλυψη προπονήσεων, τουρνουά και εκδηλώσεων",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Επιστροφή σε (email ή διεύθυνση, προαιρετικά)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Επιστροφή σε (email ή διεύθυνση, προαιρετικά)",
+ "{0} Zeilen übersprungen.": "Παραλείφθηκαν {0} γραμμές.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Αρχικό υπόλοιπο σε ευρώ (κενό: από το υπόλοιπο της εξαγωγής)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Από την εξαγωγή κινήσεων του λογαριασμού του συλλόγου σας (CSV, Excel ή CAMT-XML από το ηλεκτρονικό banking, π.χ. Sparkasse, Volksbank, ING, DKB) ή από το ταμειακό σας βιβλίο (στήλες Ημερομηνία, Κείμενο, Ποσό ή Έσοδα και Έξοδα· προαιρετικά Κατηγορία και Τομέας). Τα στοιχεία του λογαριασμού δεν φεύγουν από τη συσκευή.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Κινήσεις-{0}-με-κατηγορίες.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Δεν βρέθηκαν κινήσεις στο αρχείο.",
+ "Kassenbericht": "Ταμειακή έκθεση",
+ "Kassenbericht (Jahreshauptversammlung) …": "Ταμειακή έκθεση (γενική συνέλευση) …",
+ "Kassenbericht {0} {1}.pdf": "Ταμειακή έκθεση {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Η ταμειακή έκθεση {0} δημιουργήθηκε: {1} κινήσεις, τελικό υπόλοιπο {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Ταμειακή έκθεση για τη συνέλευση των μελών",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Ταμειακή έκθεση για τη συνέλευση των μελών από το αντίγραφο κίνησης λογαριασμού (CSV/Excel) ή το ταμειακό βιβλίο – με φορολογικούς τομείς, συμφωνία και σημείωση των ελεγκτών",
+ "Kassenwart/in": "Ταμίας",
+ "Kontoauszug oder Kassenbuch wählen …": "Επιλέξτε αντίγραφο κίνησης ή ταμειακό βιβλίο …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Τελικό υπόλοιπο σύμφωνα με το αντίγραφο (για τη συμφωνία)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Επιπλέον αποθήκευση της λίστας κινήσεων με κατηγορίες ως αρχείο Excel – για διόρθωση και νέα επιλογή"
 }

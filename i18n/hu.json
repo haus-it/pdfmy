@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Mire használják a közzétett fényképeket?",
  "z. B. DE98ZZZ09999999999": "pl. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "pl. beszámolók edzésekről, versenyekről és ünnepségekről",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Visszaküldés ide (e-mail vagy cím, nem kötelező)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Visszaküldés ide (e-mail vagy cím, nem kötelező)",
+ "{0} Zeilen übersprungen.": "{0} sor kihagyva.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Nyitó egyenleg euróban (üres: az export egyenlegéből)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Egyesülete számlaforgalmi exportjából (CSV, Excel vagy CAMT-XML az internetbankból, pl. Sparkasse, Volksbank, ING, DKB) vagy pénztárkönyvéből (oszlopok: dátum, szöveg, összeg vagy bevétel és kiadás; opcionálisan kategória és terület). A számlaadatok nem hagyják el az eszközt.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Konyvelesek-{0}-kategoriakkal.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "A fájlban nem található könyvelési tétel.",
+ "Kassenbericht": "Pénztárosi beszámoló",
+ "Kassenbericht (Jahreshauptversammlung) …": "Pénztárosi beszámoló (közgyűlés) …",
+ "Kassenbericht {0} {1}.pdf": "Pénztárosi beszámoló {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Pénztárosi beszámoló {0} elkészült: {1} tétel, záró egyenleg {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Pénztárosi beszámoló a taggyűlésre",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Pénztárosi beszámoló a taggyűlésre a számlakivonatból (CSV/Excel) vagy a pénztárkönyvből – adózási területekkel, egyeztetéssel és ellenőri záradékkal",
+ "Kassenwart/in": "Pénztáros",
+ "Kontoauszug oder Kassenbuch wählen …": "Számlakivonat vagy pénztárkönyv kiválasztása …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Záró egyenleg a kivonat szerint (az egyeztetéshez)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Emellett a tételek listájának mentése kategóriákkal Excel-fájlként – javításhoz és újbóli kiválasztáshoz"
 }

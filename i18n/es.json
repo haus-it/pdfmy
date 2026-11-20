@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "¿Con qué fin se publican las fotos?",
  "z. B. DE98ZZZ09999999999": "p. ej. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "p. ej. la información sobre entrenamientos, torneos y fiestas",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Devolver a (correo electrónico o dirección, opcional)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Devolver a (correo electrónico o dirección, opcional)",
+ "{0} Zeilen übersprungen.": "{0} filas omitidas.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Saldo inicial en euros (vacío: del saldo de la exportación)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "De la exportación de movimientos de la cuenta de su asociación (CSV, Excel o CAMT-XML de la banca online, p. ej. Sparkasse, Volksbank, ING, DKB) o de su libro de caja (columnas fecha, texto, importe o ingreso y gasto; opcionalmente categoría y área). Los datos de la cuenta no salen del dispositivo.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Apuntes-{0}-con-categorias.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "No se encontraron apuntes en el archivo.",
+ "Kassenbericht": "Informe de tesorería",
+ "Kassenbericht (Jahreshauptversammlung) …": "Informe de tesorería (asamblea general) …",
+ "Kassenbericht {0} {1}.pdf": "Informe de tesorería {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Informe de tesorería {0} creado: {1} apuntes, saldo final {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Informe de tesorería para la asamblea de socios",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Informe de tesorería para la asamblea de socios a partir del extracto bancario (CSV/Excel) o del libro de caja, con ámbitos fiscales, conciliación y visto bueno de revisión",
+ "Kassenwart/in": "Tesorero/a",
+ "Kontoauszug oder Kassenbuch wählen …": "Elegir extracto bancario o libro de caja …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Saldo final según el extracto (para la conciliación)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Guardar además la lista de apuntes con categorías como archivo Excel, para corregirla y volver a elegirla"
 }

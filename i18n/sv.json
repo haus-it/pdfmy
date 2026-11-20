@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Vad ska fotona publiceras för?",
  "z. B. DE98ZZZ09999999999": "t.ex. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "t.ex. rapportering om träningar, turneringar och fester",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnera till (e-post eller adress, frivilligt)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnera till (e-post eller adress, frivilligt)",
+ "{0} Zeilen übersprungen.": "{0} rader hoppades över.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Ingående saldo i euro (tomt: från exportens saldo)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Från transaktionsexporten för er förenings konto (CSV, Excel eller CAMT-XML från internetbanken, t.ex. Sparkasse, Volksbank, ING, DKB) eller från er kassabok (kolumnerna Datum, Text, Belopp eller Intäkt och Utgift; valfritt Kategori och Område). Kontouppgifterna lämnar inte enheten.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Transaktioner-{0}-med-kategorier.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Inga transaktioner hittades i filen.",
+ "Kassenbericht": "Kassarapport",
+ "Kassenbericht (Jahreshauptversammlung) …": "Kassarapport (årsmöte) …",
+ "Kassenbericht {0} {1}.pdf": "Kassarapport {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Kassarapport {0} skapad: {1} transaktioner, utgående saldo {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Kassarapport för medlemsmötet",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Kassarapport för medlemsmötet utifrån kontoutdrag (CSV/Excel) eller kassabok – med skatteområden, avstämning och revisorsanteckning",
+ "Kassenwart/in": "Kassör",
+ "Kontoauszug oder Kassenbuch wählen …": "Välj kontoutdrag eller kassabok …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Kontosaldo vid slutet enligt utdraget (för avstämning)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Spara dessutom transaktionslistan med kategorier som Excel-fil – för att rätta och välja igen"
 }

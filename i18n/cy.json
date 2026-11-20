@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "At ba ddiben y cyhoeddir lluniau?",
  "z. B. DE98ZZZ09999999999": "e.e. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "e.e. adroddiadau am hyfforddiant, twrnameintiau a digwyddiadau",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Dychwelyd i (e-bost neu gyfeiriad, dewisol)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Dychwelyd i (e-bost neu gyfeiriad, dewisol)",
+ "{0} Zeilen übersprungen.": "Hepgorwyd {0} rhes.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Balans agoriadol mewn ewro (gwag: o falans yr allforio)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "O allforiad trafodion cyfrif eich clwb (CSV, Excel neu CAMT-XML o fancio ar-lein, e.e. Sparkasse, Volksbank, ING, DKB) neu o'ch llyfr arian parod (colofnau Dyddiad, Testun, Swm neu Incwm a Gwariant; Categori a Maes yn ddewisol). Nid yw data'r cyfrif yn gadael y ddyfais.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Trafodion-{0}-gyda-chategorïau.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Ni chanfuwyd unrhyw drafodion yn y ffeil.",
+ "Kassenbericht": "Adroddiad y trysorydd",
+ "Kassenbericht (Jahreshauptversammlung) …": "Adroddiad y trysorydd (cyfarfod cyffredinol blynyddol) …",
+ "Kassenbericht {0} {1}.pdf": "Adroddiad y trysorydd {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Crëwyd adroddiad y trysorydd {0}: {1} trafodyn, balans terfynol {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Adroddiad y trysorydd ar gyfer cyfarfod yr aelodau",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Adroddiad y trysorydd ar gyfer cyfarfod yr aelodau o'r cyfriflen (CSV/Excel) neu'r llyfr arian parod – gyda meysydd treth, cysoni a nodyn yr archwilwyr",
+ "Kassenwart/in": "Trysorydd",
+ "Kontoauszug oder Kassenbuch wählen …": "Dewiswch gyfriflen neu lyfr arian parod …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Balans terfynol yn ôl y cyfriflen (ar gyfer cysoni)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Cadwch hefyd y rhestr trafodion gyda chategorïau fel ffeil Excel – i'w chywiro a'i dewis eto"
 }

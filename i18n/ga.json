@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Cén fáth a bhfoilseofar grianghraif?",
  "z. B. DE98ZZZ09999999999": "m.sh. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "m.sh. tuairisciú ar thraenáil, comórtais agus féilte",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Seol ar ais chuig (ríomhphost nó seoladh, roghnach)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Seol ar ais chuig (ríomhphost nó seoladh, roghnach)",
+ "{0} Zeilen übersprungen.": "{0} sraith scipeáilte.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Tosaigh-iarmhéid in euro (folamh: ó iarmhéid an easpórtála)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "As easpórtáil idirbheart chuntas an chumainn (CSV, Excel nó CAMT-XML ón mbanc ar líne, m.sh. Sparkasse, Volksbank, ING, DKB) nó as do leabhar airgid (colúin dáta, téacs, suim nó ioncam agus caiteachas; catagóir agus réimse roghnach). Ní fhágann sonraí an chuntais an gléas.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Iontrálacha-{0}-le-catagóirí.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Níor aimsíodh aon iontráil sa chomhad.",
+ "Kassenbericht": "Tuarascáil an Chisteora",
+ "Kassenbericht (Jahreshauptversammlung) …": "Tuarascáil an Chisteora (cruinniú ginearálta bliantúil) …",
+ "Kassenbericht {0} {1}.pdf": "Tuarascáil an Chisteora {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Tuarascáil an Chisteora {0} cruthaithe: {1} iontráil, iarmhéid deiridh {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Tuarascáil an Chisteora do chruinniú na gcomhaltaí",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Tuarascáil an Chisteora do chruinniú na gcomhaltaí ón ráiteas cuntais (CSV/Excel) nó ón leabhar airgid – le réimsí cánach, réiteach agus nóta an iniúchóra",
+ "Kassenwart/in": "Cisteoir",
+ "Kontoauszug oder Kassenbuch wählen …": "Roghnaigh ráiteas cuntais nó leabhar airgid …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Iarmhéid deiridh de réir an ráitis (don réiteach)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Sábháil liosta na n-iontrálacha le catagóirí mar chomhad Excel freisin – le ceartú agus le roghnú arís"
 }

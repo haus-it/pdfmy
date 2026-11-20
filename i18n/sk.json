@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Na aký účel sa fotografie zverejňujú?",
  "z. B. DE98ZZZ09999999999": "napr. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "napr. spravodajstvo o tréningoch, turnajoch a oslavách",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Vrátiť na (e-mail alebo adresa, nepovinné)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Vrátiť na (e-mail alebo adresa, nepovinné)",
+ "{0} Zeilen übersprungen.": "Preskočených riadkov: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Počiatočný stav v eurách (prázdne: zo zostatku exportu)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Z exportu pohybov na účte vášho spolku (CSV, Excel alebo CAMT-XML z internetbankingu, napr. Sparkasse, Volksbank, ING, DKB) alebo z vašej pokladničnej knihy (stĺpce Dátum, Text, Suma, resp. Príjem a Výdavok; voliteľne Kategória a Oblasť). Údaje o účte neopúšťajú zariadenie.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Pohyby-{0}-s-kategoriami.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "V súbore sa nenašli žiadne pohyby.",
+ "Kassenbericht": "Pokladničná správa",
+ "Kassenbericht (Jahreshauptversammlung) …": "Pokladničná správa (výročné valné zhromaždenie) …",
+ "Kassenbericht {0} {1}.pdf": "Pokladnicna sprava {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Pokladničná správa {0} vytvorená: {1} pohybov, konečný stav {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Pokladničná správa pre členskú schôdzu",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Pokladničná správa pre členskú schôdzu z výpisu z účtu (CSV/Excel) alebo pokladničnej knihy – s daňovými oblasťami, zhodou stavov a doložkou o kontrole",
+ "Kassenwart/in": "Pokladník/čka",
+ "Kontoauszug oder Kassenbuch wählen …": "Vyberte výpis z účtu alebo pokladničnú knihu …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Zostatok na účte na konci podľa výpisu (na zosúladenie)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Zároveň uložiť zoznam pohybov s kategóriami ako súbor Excel – na opravu a opätovný výber"
 }

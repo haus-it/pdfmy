@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "С каква цел се публикуват снимките?",
  "z. B. DE98ZZZ09999999999": "напр. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "напр. отразяване на тренировки, турнири и празненства",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Връщане на (имейл или адрес, по избор)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Връщане на (имейл или адрес, по избор)",
+ "{0} Zeilen übersprungen.": "Пропуснати редове: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Начално салдо в евро (празно: от салдото на експорта)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "От експорта на движенията по сметката на вашето сдружение (CSV, Excel или CAMT-XML от онлайн банкирането, напр. Sparkasse, Volksbank, ING, DKB) или от вашата касова книга (колони Дата, Текст, Сума или Приход и Разход; по избор Категория и Сфера). Данните за сметката не напускат устройството.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Движения-{0}-с-категории.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "В файла не бяха намерени движения.",
+ "Kassenbericht": "Касов отчет",
+ "Kassenbericht (Jahreshauptversammlung) …": "Касов отчет (общо събрание) …",
+ "Kassenbericht {0} {1}.pdf": "Касов отчет {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Касов отчет {0} е създаден: {1} движения, крайно салдо {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Касов отчет за общото събрание на членовете",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Касов отчет за общото събрание на членовете от банково извлечение (CSV/Excel) или касова книга – с данъчни сфери, съпоставка и забележка на проверителите",
+ "Kassenwart/in": "Касиер",
+ "Kontoauszug oder Kassenbuch wählen …": "Избор на извлечение или касова книга …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Крайно салдо по извлечението (за съпоставка)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Допълнително запазване на списъка с движения и категории като Excel файл – за корекция и повторен избор"
 }

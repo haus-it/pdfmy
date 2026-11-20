@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Mihin tarkoitukseen valokuvia julkaistaan?",
  "z. B. DE98ZZZ09999999999": "esim. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "esim. raportointi harjoituksista, turnauksista ja juhlista",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Palauta osoitteeseen (sähköposti tai osoite, valinnainen)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Palauta osoitteeseen (sähköposti tai osoite, valinnainen)",
+ "{0} Zeilen übersprungen.": "{0} riviä ohitettu.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Alkusaldo euroina (tyhjä: viennin saldosta)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Yhdistyksenne tilitapahtumaviennistä (CSV, Excel tai CAMT-XML verkkopankista, esim. Sparkasse, Volksbank, ING, DKB) tai kassakirjastanne (sarakkeet päivämäärä, teksti, summa tai tulo ja meno; valinnaisesti luokka ja alue). Tilitiedot eivät poistu laitteelta.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Kirjaukset-{0}-luokkineen.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Tiedostosta ei löytynyt kirjauksia.",
+ "Kassenbericht": "Rahastonhoitajan kertomus",
+ "Kassenbericht (Jahreshauptversammlung) …": "Rahastonhoitajan kertomus (vuosikokous) …",
+ "Kassenbericht {0} {1}.pdf": "Rahastonhoitajan kertomus {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Rahastonhoitajan kertomus {0} luotu: {1} kirjausta, loppusaldo {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Rahastonhoitajan kertomus jäsenkokoukselle",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Rahastonhoitajan kertomus jäsenkokoukselle tiliotteesta (CSV/Excel) tai kassakirjasta – verotuksellisine alueineen, täsmäytyksineen ja tarkastusmerkintöineen",
+ "Kassenwart/in": "Rahastonhoitaja",
+ "Kontoauszug oder Kassenbuch wählen …": "Valitse tiliote tai kassakirja …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Loppusaldo tiliotteen mukaan (täsmäytystä varten)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Tallenna lisäksi kirjausluettelo luokkineen Excel-tiedostona – korjausta ja uutta valintaa varten"
 }

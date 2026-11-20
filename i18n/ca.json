@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Amb quina finalitat es publiquen les fotos?",
  "z. B. DE98ZZZ09999999999": "p. ex. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "p. ex. la informació sobre entrenaments, torneigs i festes",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Retorna a (correu electrònic o adreça, opcional)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Retorna a (correu electrònic o adreça, opcional)",
+ "{0} Zeilen übersprungen.": "Files omeses: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Saldo inicial en euros (buit: del saldo de l’exportació)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Des de l’exportació de moviments del compte de la vostra entitat (CSV, Excel o CAMT-XML de la banca en línia, p. ex. Sparkasse, Volksbank, ING, DKB) o des del vostre llibre de caixa (columnes Data, Text, Import o bé Ingrés i Despesa; opcionalment Categoria i Àmbit). Les dades del compte no surten del dispositiu.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Apunts-{0}-amb-categories.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "No s’ha trobat cap apunt al fitxer.",
+ "Kassenbericht": "Informe de tresoreria",
+ "Kassenbericht (Jahreshauptversammlung) …": "Informe de tresoreria (assemblea general) …",
+ "Kassenbericht {0} {1}.pdf": "Informe de tresoreria {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Informe de tresoreria {0} creat: {1} apunts, saldo final {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Informe de tresoreria per a l’assemblea de socis",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Informe de tresoreria per a l’assemblea de socis a partir de l’extracte del compte (CSV/Excel) o del llibre de caixa – amb àmbits fiscals, conciliació i nota dels censors de comptes",
+ "Kassenwart/in": "Tresorer/a",
+ "Kontoauszug oder Kassenbuch wählen …": "Trieu l’extracte o el llibre de caixa …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Saldo final segons l’extracte (per a la conciliació)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Desa també la llista d’apunts amb categories com a fitxer Excel – per corregir-la i tornar-la a triar"
 }

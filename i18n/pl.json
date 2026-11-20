@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "W jakim celu zdjęcia są publikowane?",
  "z. B. DE98ZZZ09999999999": "np. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "np. relacje z treningów, turniejów i uroczystości",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Odeślij na (e-mail lub adres, opcjonalnie)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Odeślij na (e-mail lub adres, opcjonalnie)",
+ "{0} Zeilen übersprungen.": "Pominięto wierszy: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Saldo początkowe w euro (puste: z salda eksportu)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Z eksportu obrotów konta Państwa stowarzyszenia (CSV, Excel lub CAMT-XML z bankowości internetowej, np. Sparkasse, Volksbank, ING, DKB) albo z Państwa księgi kasowej (kolumny Data, Tekst, Kwota lub Wpływ i Wydatek; opcjonalnie Kategoria i Obszar). Dane konta nie opuszczają urządzenia.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Ksiegowania-{0}-z-kategoriami.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "W pliku nie znaleziono żadnych księgowań.",
+ "Kassenbericht": "Sprawozdanie skarbnika",
+ "Kassenbericht (Jahreshauptversammlung) …": "Sprawozdanie skarbnika (walne zgromadzenie) …",
+ "Kassenbericht {0} {1}.pdf": "Sprawozdanie skarbnika {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Utworzono sprawozdanie skarbnika {0}: księgowań {1}, saldo końcowe {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Sprawozdanie skarbnika na zebranie członków",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Sprawozdanie skarbnika na zebranie członków z wyciągu bankowego (CSV/Excel) lub księgi kasowej – z obszarami podatkowymi, uzgodnieniem i adnotacją komisji rewizyjnej",
+ "Kassenwart/in": "Skarbnik",
+ "Kontoauszug oder Kassenbuch wählen …": "Wybierz wyciąg bankowy lub księgę kasową …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Saldo końcowe konta według wyciągu (do uzgodnienia)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Dodatkowo zapisz listę księgowań z kategoriami jako plik Excel – do poprawienia i ponownego wyboru"
 }

@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Hvad bliver fotos offentliggjort til?",
  "z. B. DE98ZZZ09999999999": "f.eks. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "f.eks. omtale af træning, turneringer og fester",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnér til (e-mail eller adresse, valgfrit)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnér til (e-mail eller adresse, valgfrit)",
+ "{0} Zeilen übersprungen.": "{0} rækker sprunget over.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Primo i euro (tom: fra saldoen i eksporten)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Fra kontoudskriften eller eksporten fra din forenings konto (CSV, Excel eller CAMT-XML fra netbanken, f.eks. Sparkasse, Volksbank, ING, DKB) eller fra din kassebog (kolonnerne Dato, Tekst, Beløb eller Indtægt og Udgift; valgfrit Kategori og Område). Kontodata forlader ikke enheden.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Posteringer-{0}-med-kategorier.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Der blev ikke fundet nogen posteringer i filen.",
+ "Kassenbericht": "Kassererrapport",
+ "Kassenbericht (Jahreshauptversammlung) …": "Kassererrapport (generalforsamling) …",
+ "Kassenbericht {0} {1}.pdf": "Kassererrapport {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Kassererrapport {0} oprettet: {1} posteringer, ultimo {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Kassererrapport til medlemsmødet",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Kassererrapport til medlemsmødet ud fra kontoudskrift (CSV/Excel) eller kassebog – med skatteområder, afstemning og revisorpåtegning",
+ "Kassenwart/in": "Kasserer",
+ "Kontoauszug oder Kassenbuch wählen …": "Vælg kontoudskrift eller kassebog …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Slutsaldo ifølge kontoudskriften (til afstemning)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Gem desuden posteringslisten med kategorier som Excel-fil – til rettelser og nyt valg"
 }

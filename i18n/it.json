@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Per quale scopo vengono pubblicate le foto?",
  "z. B. DE98ZZZ09999999999": "ad es. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "ad es. la cronaca di allenamenti, tornei e feste",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Restituire a (e-mail o indirizzo, facoltativo)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Restituire a (e-mail o indirizzo, facoltativo)",
+ "{0} Zeilen übersprungen.": "{0} righe ignorate.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Saldo iniziale in euro (vuoto: dal saldo dell'esportazione)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Dall'esportazione dei movimenti del conto della vostra associazione (CSV, Excel o CAMT-XML dall'home banking, ad es. Sparkasse, Volksbank, ING, DKB) oppure dal vostro libro cassa (colonne Data, Testo, Importo oppure Entrata e Uscita; facoltativamente Categoria e Area). I dati del conto non lasciano il dispositivo.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Registrazioni-{0}-con-categorie.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Nel file non sono state trovate registrazioni.",
+ "Kassenbericht": "Rendiconto di cassa",
+ "Kassenbericht (Jahreshauptversammlung) …": "Rendiconto di cassa (assemblea generale) …",
+ "Kassenbericht {0} {1}.pdf": "Rendiconto di cassa {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Rendiconto di cassa {0} creato: {1} registrazioni, saldo finale {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Rendiconto di cassa per l'assemblea dei soci",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Rendiconto di cassa per l'assemblea dei soci dall'estratto conto (CSV/Excel) o dal libro cassa – con aree fiscali, riconciliazione e visto dei revisori",
+ "Kassenwart/in": "Tesoriere",
+ "Kontoauszug oder Kassenbuch wählen …": "Scegli estratto conto o libro cassa …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Saldo finale secondo l'estratto (per la riconciliazione)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Salva inoltre l'elenco delle registrazioni con categorie come file Excel – per correggerlo e sceglierlo di nuovo"
 }

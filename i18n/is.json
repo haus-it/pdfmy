@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Í hvaða tilgangi eru myndir birtar?",
  "z. B. DE98ZZZ09999999999": "t.d. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "t.d. umfjöllun um æfingar, mót og hátíðir",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Skila til (netfang eða heimilisfang, valfrjálst)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Skila til (netfang eða heimilisfang, valfrjálst)",
+ "{0} Zeilen übersprungen.": "{0} línum sleppt.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Upphafsstaða í evrum (autt: úr stöðu útflutningsins)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Úr færsluútflutningi félagsreiknings ykkar (CSV, Excel eða CAMT-XML úr netbanka, t.d. Sparkasse, Volksbank, ING, DKB) eða úr sjóðbók ykkar (dálkar dagsetning, texti, upphæð eða tekjur og gjöld; flokkur og svið valfrjálst). Reikningsgögn fara ekki úr tækinu.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Faerslur-{0}-med-flokkum.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Engar færslur fundust í skránni.",
+ "Kassenbericht": "Skýrsla gjaldkera",
+ "Kassenbericht (Jahreshauptversammlung) …": "Skýrsla gjaldkera (aðalfundur) …",
+ "Kassenbericht {0} {1}.pdf": "Skýrsla gjaldkera {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Skýrsla gjaldkera {0} útbúin: {1} færslur, lokastaða {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Skýrsla gjaldkera fyrir félagsfund",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Skýrsla gjaldkera fyrir félagsfund úr reikningsyfirliti (CSV/Excel) eða sjóðbók – með skattasviðum, afstemmingu og áritun skoðunarmanna",
+ "Kassenwart/in": "Gjaldkeri",
+ "Kontoauszug oder Kassenbuch wählen …": "Veldu reikningsyfirlit eða sjóðbók …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Lokastaða samkvæmt yfirliti (fyrir afstemmingu)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Vista að auki færslulistann með flokkum sem Excel-skrá – til að leiðrétta og velja aftur"
 }

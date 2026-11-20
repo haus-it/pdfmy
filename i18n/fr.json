@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Dans quel but les photos sont-elles publiées ?",
  "z. B. DE98ZZZ09999999999": "p. ex. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "p. ex. les comptes rendus des entraînements, tournois et fêtes",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Retour à (e-mail ou adresse, facultatif)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Retour à (e-mail ou adresse, facultatif)",
+ "{0} Zeilen übersprungen.": "{0} lignes ignorées.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Solde initial en euros (vide : issu du solde de l’export)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "À partir de l’export des opérations du compte de votre association (CSV, Excel ou CAMT-XML depuis la banque en ligne, p. ex. Sparkasse, Volksbank, ING, DKB) ou de votre livre de caisse (colonnes date, libellé, montant ou recette et dépense ; catégorie et domaine facultatifs). Les données du compte ne quittent pas l’appareil.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Ecritures-{0}-avec-categories.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Aucune écriture trouvée dans le fichier.",
+ "Kassenbericht": "Rapport du trésorier",
+ "Kassenbericht (Jahreshauptversammlung) …": "Rapport du trésorier (assemblée générale) …",
+ "Kassenbericht {0} {1}.pdf": "Rapport du trésorier {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Rapport du trésorier {0} créé : {1} écritures, solde final {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Rapport du trésorier pour l’assemblée des membres",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Rapport du trésorier pour l’assemblée des membres à partir du relevé de compte (CSV/Excel) ou du livre de caisse – avec domaines fiscaux, rapprochement et visa des vérificateurs",
+ "Kassenwart/in": "Trésorier/ère",
+ "Kontoauszug oder Kassenbuch wählen …": "Choisir un relevé de compte ou un livre de caisse …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Solde final selon le relevé (pour le rapprochement)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Enregistrer en plus la liste des écritures avec catégories au format Excel – pour corriger et sélectionner à nouveau"
 }

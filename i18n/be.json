@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "З якой мэтай публікуюцца фатаграфіі?",
  "z. B. DE98ZZZ09999999999": "напр. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "напр. асвятленне трэніровак, турніраў і свят",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вярнуць на (электронная пошта або адрас, неабавязкова)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вярнуць на (электронная пошта або адрас, неабавязкова)",
+ "{0} Zeilen übersprungen.": "Прапушчана радкоў: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Пачатковы астатак у еўра (пуста: з сальда экспарту)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "З экспарту абаротаў па рахунку вашага аб’яднання (CSV, Excel або CAMT-XML з анлайн-банкінгу, напр. Sparkasse, Volksbank, ING, DKB) або з вашай касавай кнігі (слупкі «Дата», «Тэкст», «Сума» або «Прыход» і «Расход»; па жаданні «Катэгорыя» і «Сфера»). Даныя рахунку не пакідаюць прыладу.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Праводкі-{0}-з-катэгорыямі.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "У файле не знойдзена ніводнай праводкі.",
+ "Kassenbericht": "Касавая справаздача",
+ "Kassenbericht (Jahreshauptversammlung) …": "Касавая справаздача (агульны сход) …",
+ "Kassenbericht {0} {1}.pdf": "Касавая справаздача {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Касавая справаздача {0} створана: {1} праводак, канчатковы астатак {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Касавая справаздача для агульнага сходу членаў",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Касавая справаздача для агульнага сходу членаў з выпіскі па рахунку (CSV/Excel) або касавай кнігі – з падатковымі сферамі, зверкай і адзнакай рэвізараў",
+ "Kassenwart/in": "Скарбнік",
+ "Kontoauszug oder Kassenbuch wählen …": "Абраць выпіску або касавую кнігу …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Астатак на рахунку на канец паводле выпіскі (для зверкі)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Дадаткова захаваць спіс праводак з катэгорыямі як файл Excel – для праўкі і паўторнага выбару"
 }

@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "În ce scop sunt publicate fotografiile?",
  "z. B. DE98ZZZ09999999999": "de ex. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "de ex. relatarea despre antrenamente, turnee și sărbători",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnați la (e-mail sau adresă, opțional)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnați la (e-mail sau adresă, opțional)",
+ "{0} Zeilen übersprungen.": "{0} rânduri omise.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Sold inițial în euro (gol: din soldul exportului)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Din exportul de tranzacții al contului asociației dvs. (CSV, Excel sau CAMT-XML din online banking, de ex. Sparkasse, Volksbank, ING, DKB) sau din registrul dvs. de casă (coloanele Data, Text, Sumă sau Încasare și Plată; opțional Categorie și Domeniu). Datele contului nu părăsesc dispozitivul.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Tranzactii-{0}-cu-categorii.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Nu s-a găsit nicio tranzacție în fișier.",
+ "Kassenbericht": "Raport de casă",
+ "Kassenbericht (Jahreshauptversammlung) …": "Raport de casă (adunarea generală anuală) …",
+ "Kassenbericht {0} {1}.pdf": "Raport de casa {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Raport de casă {0} creat: {1} tranzacții, sold final {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Raport de casă pentru adunarea membrilor",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Raport de casă pentru adunarea membrilor din extrasul de cont (CSV/Excel) sau registrul de casă – cu domenii fiscale, reconciliere și mențiune de verificare",
+ "Kassenwart/in": "Casier/ă",
+ "Kontoauszug oder Kassenbuch wählen …": "Alegeți extrasul de cont sau registrul de casă …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Soldul contului la final conform extrasului (pentru reconciliere)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Salvează suplimentar lista tranzacțiilor cu categorii ca fișier Excel – pentru corectare și reselectare"
 }

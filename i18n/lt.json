@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "Kokiu tikslu skelbiamos nuotraukos?",
  "z. B. DE98ZZZ09999999999": "pvz., DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "pvz., pranešimai apie treniruotes, turnyrus ir šventes",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Grąžinti (el. paštas arba adresas, neprivaloma)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Grąžinti (el. paštas arba adresas, neprivaloma)",
+ "{0} Zeilen übersprungen.": "Praleista eilučių: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Pradinis likutis eurais (tuščia: iš eksporto salda)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Iš Jūsų asociacijos sąskaitos judėjimo eksporto (CSV, Excel arba CAMT-XML iš internetinės bankininkystės, pvz., Sparkasse, Volksbank, ING, DKB) arba iš Jūsų kasos knygos (stulpeliai Data, Tekstas, Suma arba Pajamos ir Išlaidos; pasirinktinai Kategorija ir Sritis). Sąskaitos duomenys nepalieka įrenginio.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Irasai-{0}-su-kategorijomis.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "Faile nerasta jokių įrašų.",
+ "Kassenbericht": "Kasos ataskaita",
+ "Kassenbericht (Jahreshauptversammlung) …": "Kasos ataskaita (visuotinis narių susirinkimas) …",
+ "Kassenbericht {0} {1}.pdf": "Kasos ataskaita {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Kasos ataskaita {0} sukurta: įrašų {1}, galutinis likutis {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Kasos ataskaita narių susirinkimui",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Kasos ataskaita narių susirinkimui iš sąskaitos išrašo (CSV/Excel) arba kasos knygos – su mokestinėmis sritimis, suderinimu ir revizorių žyma",
+ "Kassenwart/in": "Kasininkas / kasininkė",
+ "Kontoauszug oder Kassenbuch wählen …": "Pasirinkti sąskaitos išrašą arba kasos knygą …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Galutinis sąskaitos likutis pagal išrašą (suderinimui)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Papildomai išsaugoti įrašų sąrašą su kategorijomis kaip Excel failą – pataisyti ir pasirinkti iš naujo"
 }

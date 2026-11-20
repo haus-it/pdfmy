@@ -4085,5 +4085,20 @@
  "Wofür werden Fotos veröffentlicht?": "V kakšen namen se fotografije objavljajo?",
  "z. B. DE98ZZZ09999999999": "npr. DE98ZZZ09999999999",
  "z. B. die Berichterstattung über Training, Turniere und Feste": "npr. poročanje o treningih, turnirjih in prireditvah",
- "Zurück an (E-Mail oder Anschrift, freiwillig)": "Vrni na (e-pošta ali naslov, neobvezno)"
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Vrni na (e-pošta ali naslov, neobvezno)",
+ "{0} Zeilen übersprungen.": "Preskočenih vrstic: {0}.",
+ "Anfangsbestand in Euro (leer: aus dem Saldo des Exports)": "Začetno stanje v evrih (prazno: iz salda izvoza)",
+ "Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.": "Iz izvoza prometa na računu vašega društva (CSV, Excel ali CAMT-XML iz spletne banke, npr. Sparkasse, Volksbank, ING, DKB) ali iz vaše blagajniške knjige (stolpci Datum, Besedilo, Znesek oz. Prihodek in Odhodek; neobvezno Kategorija in Področje). Podatki o računu ne zapustijo naprave.",
+ "Buchungen-{0}-mit-Kategorien.csv": "Knjizbe-{0}-s-kategorijami.csv",
+ "In der Datei wurden keine Buchungen gefunden.": "V datoteki ni bilo najdenih knjižb.",
+ "Kassenbericht": "Blagajniško poročilo",
+ "Kassenbericht (Jahreshauptversammlung) …": "Blagajniško poročilo (letni občni zbor) …",
+ "Kassenbericht {0} {1}.pdf": "Blagajniško poročilo {0} {1}.pdf",
+ "Kassenbericht {0} erstellt: {1} Buchungen, Endbestand {2} €.{3} {4}": "Blagajniško poročilo {0} ustvarjeno: {1} knjižb, končno stanje {2} €.{3} {4}",
+ "Kassenbericht für die Mitgliederversammlung": "Blagajniško poročilo za občni zbor članov",
+ "Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk": "Blagajniško poročilo za občni zbor članov iz bančnega izpiska (CSV/Excel) ali blagajniške knjige – z davčnimi področji, usklajevanjem in potrdilom o pregledu",
+ "Kassenwart/in": "Blagajnik/ca",
+ "Kontoauszug oder Kassenbuch wählen …": "Izberite bančni izpisek ali blagajniško knjigo …",
+ "Kontostand am Ende laut Auszug (für den Abgleich)": "Stanje računa ob koncu po izpisku (za usklajevanje)",
+ "Zusätzlich die Buchungsliste mit Kategorien als Excel-Datei speichern – zum Korrigieren und erneut Wählen": "Dodatno shrani seznam knjižb s kategorijami kot datoteko Excel – za popravljanje in ponovno izbiro"
 }
