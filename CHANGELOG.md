@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Bilder in Formular-XObjects bearbeiten (app-v312)
+- „Bilder bearbeiten“ findet jetzt auch Bilder in Formular-XObjects (bis 4 Ebenen tief) – typisch für PDFs aus Word, Druckertreibern, Scannern und Briefvorlagen, die den Seiteninhalt oder den Briefkopf in ein Formular packen. Die Lage auf der Seite wird mit Formularmatrix und Aufruf verrechnet.
+- Verschieben, Skalieren, Ersetzen und Löschen ändern eine Kopie des Formulars nur für diesen Aufruf; andere Seiten und Aufrufe, die dasselbe Formular nutzen, bleiben unverändert. Ressourcen der Kopie sind eigene (neues Bild beim Ersetzen landet nur dort). Der Begrenzungsrahmen (BBox) wächst mit, auch über verschachtelte Ebenen, damit ein verschobenes Bild nicht abgeschnitten wird. Schutz gegen Formulare, die sich selbst aufrufen.
+- Geprüft: tests/pdfbild-formular.test.js (gemeinsames Formular auf zwei Seiten, verkleinert, zwei Ebenen tief, Bild daneben); gerendert mit pdf.js: Bild an neuer Stelle außerhalb des alten Rahmens vollständig sichtbar, alte Stelle leer.
+
 ### Langzeitprüfbare Signaturen: PAdES B-LTA (app-v311, pdfmy Scan 1.23.0 / Mac und Linux 1.13.0)
 - Beim Signieren mit Zeitstempel bettet PDFMy jetzt Langzeitprüfdaten ein: Zertifikate aus Signatur und Zeitstempel, je Zertifikat die OCSP-Sperrauskunft (ersatzweise die Sperrliste aus dem Verteilpunkt, fehlende Ausstellerzertifikate über „caIssuers“), alles als /DSS (ISO 32000-2 12.8.4.3) im inkrementellen Update; darüber ein Dokumentzeitstempel. Entspricht „LTV aktiviert“ in Acrobat. Klappt der Abruf nicht, bleibt die gültige Fassung mit Zeitstempel (Hinweis).
 - pdfmy Scan: neuer Endpunkt `POST /revocation` (OCSP per POST, Sperrliste per GET). Kein offener Proxy: nur http/https auf Port 80/443, nur öffentliche IP-Adressen, Weiterleitungen höchstens 3 und jede neu geprüft, Größen begrenzt; Mac/Linux legt curl per --resolve auf die geprüfte Adresse fest. `/status` meldet `revocation`.

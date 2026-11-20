@@ -5,7 +5,7 @@
 
    Seiteninhalt = Folge von Operatoren (ISO 32000-1, 8.2). tokenize() zerlegt ihn (Zeichenketten, Hex, Wörterbücher, Felder,
    Kommentare, eingebettete Inline-Bilder BI…ID…EI werden übersprungen). images() verfolgt q/Q/cm (Transformationsmatrix) und findet
-   jeden Aufruf „/Name Do“ eines Bild-XObjects auf oberster Ebene (nicht in Formular-XObjects – die teilen sich oft mehrere Seiten).
+   jeden Aufruf „/Name Do“ eines Bild-XObjects – seit app-v312 auch in Formular-XObjects (geändert wird dann eine Kopie für diesen Aufruf).
    apply() ersetzt genau diese Aufrufe: löschen = weglassen; verschieben/skalieren/ersetzen = „q T cm /Name Do Q“.
 
    Matrizen wie in PDF als [a b c d e f] (Zeilenvektor: Punkt × M). Bild = Einheitsquadrat × CTM. */
@@ -84,19 +84,31 @@
     return { x: Math.min(...xs), y: Math.min(...ys), w: Math.max(...xs) - Math.min(...xs), h: Math.max(...ys) - Math.min(...ys) };
   }
 
-  /* Bilder auf oberster Ebene: [{ n, name, m, rect, start, end }] – n zählt die Bild-Aufrufe in Inhaltsreihenfolge (Schlüssel für Änderungen).
-     isImage(name) entscheidet anhand der Ressourcen, ob /Name ein Bild ist. Inline-Bilder und Bilder in Formularen werden nicht angeboten. */
-  function images(ops, isImage, base = ID) {
-    const out = []; let ctm = base; const stack = [];
-    for (const o of ops) {
-      if (o.op === 'q') stack.push(ctm);
-      else if (o.op === 'Q') ctm = stack.pop() || base;
-      else if (o.op === 'cm' && o.args.length === 6 && o.args.every(a => a.t === 'num')) ctm = mul(o.args.map(a => a.v), ctm);
-      else if (o.op === 'Do' && o.args.length === 1 && o.args[0].t === 'name' && isImage(o.args[0].v)) {
-        const r = rectOf(ctm); if (!(r.w > 0.5 && r.h > 0.5)) continue;   // unsichtbar klein
-        out.push({ n: out.length, name: o.args[0].v, m: ctm, rect: r, start: o.start, end: o.end });
+  /* Bilder: [{ n, name, m, local, rect, start, end, path }] – n zählt die Bild-Aufrufe in Inhaltsreihenfolge (Schlüssel für Änderungen).
+     isImage(name) entscheidet anhand der Ressourcen, ob /Name ein Bild ist. Seit app-v312 auch Bilder in Formular-XObjects (viele PDFs
+     aus Word, Druckertreibern und Scannern packen den ganzen Seiteninhalt in ein Formular): formOf(name) liefert dann
+     { ops, matrix, isImage, formOf, … } und es geht bis zu 4 Ebenen hinein. m = Lage auf der Seite, local = Lage im eigenen Formular,
+     path = Formular-Aufrufe von außen nach innen ({ name, start, end, local, form }). Inline-Bilder werden nicht angeboten. */
+  function images(ops, isImage, base = ID, formOf = null) {
+    const out = [];
+    (function walk(ops, isImage, base, formOf, path) {
+      let ctm = ID; const stack = [];
+      for (const o of ops) {
+        if (o.op === 'q') stack.push(ctm);
+        else if (o.op === 'Q') ctm = stack.pop() || ID;
+        else if (o.op === 'cm' && o.args.length === 6 && o.args.every(a => a.t === 'num')) ctm = mul(o.args.map(a => a.v), ctm);
+        else if (o.op === 'Do' && o.args.length === 1 && o.args[0].t === 'name') {
+          const name = o.args[0].v, full = mul(ctm, base);
+          if (isImage(name)) {
+            const r = rectOf(full); if (!(r.w > 0.5 && r.h > 0.5)) continue;   // unsichtbar klein
+            out.push({ n: out.length, name, m: full, local: ctm, rect: r, start: o.start, end: o.end, path });
+          } else if (formOf && path.length < 4) {
+            const f = formOf(name); if (!f) continue;
+            walk(f.ops, f.isImage, mul(mul(f.matrix, ctm), base), f.formOf, [...path, { name, start: o.start, end: o.end, local: ctm, form: f }]);
+          }
+        }
       }
-    }
+    })(ops, isImage, base, formOf, []);
     return out;
   }
 
@@ -150,34 +162,104 @@
       return '';
     }).join('\n');
   }
-  function imageTest(L, page) {
-    const N = L.PDFName.of, res = page.node.Resources(), xo = res && res.lookupMaybe(N('XObject'), L.PDFDict);
-    return name => { try { const o = xo && xo.lookup(N(name)); return !!(o && o.dict && o.dict.get(N('Subtype')) === N('Image')); } catch (e) { return false; } };
+  const subtypeOf = (L, res, name) => { try { const xo = res && res.lookupMaybe(L.PDFName.of('XObject'), L.PDFDict), o = xo && xo.lookup(L.PDFName.of(name)); return o && o.dict ? { o, ref: xo.get(L.PDFName.of(name)), sub: o.dict.get(L.PDFName.of('Subtype')) } : null; } catch (e) { return null; } };
+  const imageTestRes = (L, res) => name => { const x = subtypeOf(L, res, name); return !!x && x.sub === L.PDFName.of('Image'); };
+  function imageTest(L, page) { return imageTestRes(L, page.node.Resources()); }
+  const streamText = (L, st) => st instanceof L.PDFRawStream ? toStr(L.decodePDFRawStream(st).decode()) : st && typeof st.getUnencodedContents === 'function' ? toStr(st.getUnencodedContents()) : '';
+  // Formular-XObjects unter den Ressourcen res (fehlen eigene Ressourcen, gelten die des Aufrufers – ältere PDFs)
+  function formFactory(L, res, cache = new Map()) {
+    return name => {
+      const x = subtypeOf(L, res, name); if (!x || x.sub !== L.PDFName.of('Form')) return null;
+      const key = x.ref || x.o; if (cache.has(key)) return cache.get(key);
+      cache.set(key, null);   // Schutz vor Formularen, die sich selbst aufrufen
+      try {
+        const d = x.o.dict, mArr = d.lookupMaybe(L.PDFName.of('Matrix'), L.PDFArray), bArr = d.lookupMaybe(L.PDFName.of('BBox'), L.PDFArray);
+        const nums = a => a ? a.asArray().map(v => { try { return v.asNumber(); } catch (e) { return NaN; } }) : null;
+        const matrix = nums(mArr), bbox = nums(bArr), own = d.lookupMaybe(L.PDFName.of('Resources'), L.PDFDict), fres = own || res, src = streamText(L, x.o);
+        const f = { ops: tokenize(src), src, matrix: matrix && matrix.length === 6 && matrix.every(isFinite) ? matrix : ID, bbox: bbox && bbox.length === 4 && bbox.every(isFinite) ? bbox : null,
+          stream: x.o, res: fres, ownRes: !!own, isImage: imageTestRes(L, fres) };
+        f.formOf = formFactory(L, fres, cache);
+        cache.set(key, f); return f;
+      } catch (e) { return null; }
+    };
   }
-  // Bilder einer Seite mit Umriss in Seitenkoordinaten
+  // Bilder einer Seite (auch in Formularen) mit Umriss in Seitenkoordinaten
   function pageImages(L, page) {
-    const src = contentOf(L, page);
-    return { src, imgs: images(tokenize(src), imageTest(L, page)) };
+    const src = contentOf(L, page), res = page.node.Resources();
+    return { src, imgs: images(tokenize(src), imageTestRes(L, res), ID, formFactory(L, res)) };
   }
+  // freier Ressourcenname im XObject-Wörterbuch
+  function addXObject(L, ctx, res, prefix, ref) {
+    const N = L.PDFName.of; let xo = res.lookupMaybe(N('XObject'), L.PDFDict);
+    if (!xo) { xo = ctx.obj({}); res.set(N('XObject'), xo); }
+    const used = new Set(xo.keys().map(k => k.asString().slice(1)));
+    let k = 1; while (used.has(prefix + k)) k++;
+    xo.set(N(prefix + k), ref); return prefix + k;
+  }
+  // flache Kopie eines Wörterbuchs (Unterwörterbuch XObject ebenfalls kopiert – das Original anderer Seiten bleibt unberührt)
+  function cloneRes(L, ctx, res) {
+    const N = L.PDFName.of, c = ctx.obj({}); if (!res) return c;
+    for (const [k, v] of res.entries()) c.set(k, v);
+    const xo = res.lookupMaybe(N('XObject'), L.PDFDict); if (xo) { const x2 = ctx.obj({}); for (const [k, v] of xo.entries()) x2.set(k, v); c.set(N('XObject'), x2); }
+    return c;
+  }
+  const union = (a, r) => !a ? r : !r ? a : { x: Math.min(a.x, r.x), y: Math.min(a.y, r.y), w: Math.max(a.x + a.w, r.x + r.w) - Math.min(a.x, r.x), h: Math.max(a.y + a.h, r.y + r.h) - Math.min(a.y, r.y) };
   /* edits: [{ n, del: true } | { n, to: {x,y,w,h} } | { n, img: { bytes, png }, to? }] – to in Seitenkoordinaten.
-     Ersetzte Bilder werden eingepasst (Seitenverhältnis bleibt). Ergebnis: Zahl der geänderten Bilder. */
+     Ersetzte Bilder werden eingepasst (Seitenverhältnis bleibt). Bilder in Formularen: Das Formular wird für genau diesen Aufruf
+     kopiert und geändert (andere Seiten und Aufrufe, die es mitbenutzen, bleiben gleich); sein Begrenzungsrahmen (BBox) wächst mit,
+     damit ein verschobenes Bild nicht abgeschnitten wird. Ergebnis: Zahl der geänderten Bilder. */
   async function editPage(L, lib, page, edits) {
-    const { src, imgs } = pageImages(L, page), map = new Map();
+    const { src, imgs } = pageImages(L, page), ctx = lib.context, N = L.PDFName.of;
+    // Baum der betroffenen Aufrufe: Wurzel = Seite, Kinder = Formular-Aufrufe (je Stelle im Inhalt), Blätter = Bild-Änderungen
+    const root = { src, kids: new Map(), items: [] };
     for (const e of edits) {
       const im = imgs[e.n]; if (!im) continue;
-      if (e.del) { map.set(e.n, { del: true }); continue; }
-      let name = null, fit = 0;
-      if (e.img) {
-        const emb = e.img.png ? await lib.embedPng(e.img.bytes) : await lib.embedJpg(e.img.bytes);
-        if (typeof page.node.normalize === 'function') page.node.normalize();
-        name = String(page.node.newXObject('PdfmyBild', emb.ref)).slice(1); fit = emb.width / emb.height;
+      let ed;
+      if (e.del) ed = { del: true };
+      else {
+        let emb = null, fit = 0;
+        if (e.img) { emb = e.img.png ? await lib.embedPng(e.img.bytes) : await lib.embedJpg(e.img.bytes); fit = emb.width / emb.height; }
+        const T = placement(im.m, im.rect, e.to || im.rect, fit); if (!T || !T.every(isFinite)) continue;
+        ed = { T, emb };
       }
-      const T = placement(im.m, im.rect, e.to || im.rect, fit); if (!T || !T.every(isFinite)) continue;
-      map.set(e.n, { T, name });
+      let node = root;
+      for (const c of im.path) { let k = node.kids.get(c.start); if (!k) node.kids.set(c.start, k = { src: c.form.src, call: c, kids: new Map(), items: [] }); node = k; }
+      node.items.push({ im, ed });
     }
-    if (!map.size) return 0;
-    page.node.set(L.PDFName.of('Contents'), lib.context.register(lib.context.flateStream(toBytes(apply(src, imgs, map)))));
-    return map.size;
+    let count = 0;
+    // Inhalt eines Knotens neu schreiben; addX(ref, prefix) trägt ein XObject in die Ressourcen dieses Knotens ein → Name.
+    // Ergebnis: neuer Inhalt und die Fläche der geänderten Bilder in den Koordinaten dieses Knotens (für den Begrenzungsrahmen)
+    const rewrite = (node, addX) => {
+      const parts = []; let extent = null;
+      for (const { im, ed } of node.items) {
+        count++;
+        if (ed.del) { parts.push({ start: im.start, end: im.end, text: '' }); continue; }
+        const name = ed.emb ? addX(ed.emb.ref, 'PdfmyBild') : im.name;
+        parts.push({ start: im.start, end: im.end, text: `q ${ed.T.map(num).join(' ')} cm /${name} Do Q` });
+        extent = union(extent, rectOf(mul(ed.T, im.local)));
+      }
+      for (const kid of node.kids.values()) {
+        const f = kid.call.form, res2 = cloneRes(L, ctx, f.res);
+        const r = rewrite(kid, (ref, p) => addXObject(L, ctx, res2, p, ref));
+        const st = ctx.flateStream(toBytes(r.src));
+        for (const [k, v] of f.stream.dict.entries()) if (!['Length', 'Filter', 'DecodeParms', 'Resources', 'BBox'].includes(k.asString().slice(1))) st.dict.set(k, v);
+        st.dict.set(N('Resources'), res2);
+        let bb = f.bbox ? { x: Math.min(f.bbox[0], f.bbox[2]), y: Math.min(f.bbox[1], f.bbox[3]), w: Math.abs(f.bbox[2] - f.bbox[0]), h: Math.abs(f.bbox[3] - f.bbox[1]) } : null;
+        if (bb && r.extent) bb = union(bb, r.extent);
+        if (bb) st.dict.set(N('BBox'), ctx.obj([bb.x, bb.y, bb.x + bb.w, bb.y + bb.h].map(v => Math.round(v * 1000) / 1000)));
+        const name = addX(ctx.register(st), 'PdfmyForm');
+        parts.push({ start: kid.call.start, end: kid.call.end, text: `/${name} Do` });
+        if (r.extent) extent = union(extent, rectOf(mul(mul([r.extent.w, 0, 0, r.extent.h, r.extent.x, r.extent.y], f.matrix), kid.call.local)));
+      }
+      let out = '', at = 0;
+      for (const p of parts.sort((a, b) => a.start - b.start)) { out += node.src.slice(at, p.start) + p.text; at = p.end; }
+      return { src: out + node.src.slice(at), extent };
+    };
+    if (!root.items.length && !root.kids.size) return 0;
+    if (typeof page.node.normalize === 'function') page.node.normalize();
+    const r = rewrite(root, (ref, p) => String(page.node.newXObject(p, ref)).slice(1));
+    page.node.set(N('Contents'), ctx.register(ctx.flateStream(toBytes(r.src))));
+    return count;
   }
 
   const api = { tokenize, images, placement, apply, rectOf, mapRect, mul, inv, toStr, toBytes, contentOf, pageImages, editPage };
