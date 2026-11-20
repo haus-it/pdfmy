@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Mitgliederversammlung vorbereiten, Hinweis zur Office-Umwandlung (app-v321)
+- „Mehr → Mitgliederversammlung …“: ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste zum Unterschreiben und ausfüllbarem Protokoll (Beginn, Ende, Versammlungsleitung, Protokollführung, Feststellungen zu Einberufung und Beschlussfähigkeit, je Tagesordnungspunkt Verlauf/Beschluss und Ja/Nein/Enthaltung, Unterschriften). Ordentliche oder außerordentliche Versammlung, Online-Teilnahme (§ 32 Abs. 2 BGB) mit Zugangsweg, Tagesordnung frei oder die üblichen zehn Punkte.
+- Fristen: Aus der Einladungsfrist der Satzung rechnet PDFMy aus, bis wann die Einladung zugehen muss und wann sie spätestens per E-Mail bzw. per Brief raus muss (vier Tage Postlaufzeit, kein Sonntag), dazu den Antragsschluss; zu späte Termine werden gemeldet.
+- Mit Mitgliederliste (Excel/CSV, Name bzw. Vorname/Nachname, Anschrift bzw. Straße/PLZ/Ort): je Mitglied ein Brief mit Anschrift im Fensterbereich (DIN 5008 Form B), Anwesenheitsliste mit allen Namen. Vereinsangaben aus den anderen Vereinsdialogen übernommen.
+- Office-Umwandlung (Fehlerbericht vom 20.11.2026: dieselbe PowerPoint-Datei zweimal vereinfacht umgewandelt): Läuft pdfmy Scan ohne LibreOffice oder in zu alter Fassung, sagt PDFMy das einmal je Sitzung mit dem Tipp, LibreOffice (kostenlos) zu installieren. Scheitert die LibreOffice-Umwandlung, steht der Grund im Protokoll; der Fehlerbericht zeigt, ob LibreOffice bereit ist.
+- js/versammlung.js, tests/versammlung.test.js; Durchlauf in der App geprüft, Seiten als Bild kontrolliert.
+
 ### Fehlerbericht: Dateinamen zuverlässig unkenntlich (app-v320)
 - Behoben (Datenschutz, Fehlerbericht vom 20.11.2026): Nach einem Update-Neuladen stand der Name einer zuvor geöffneten PowerPoint-Datei dreimal im Klartext im Bericht („Importiere <Name>.pptx …“). Ursachen: Die Liste der bekannten Dateinamen ging beim Neuladen verloren, während das Protokoll erhalten bleibt; Präsentationen (.pptx, .odp) und weitere Formate fehlten in der Liste der Dateiendungen; Namen mit Komma, „&“ oder Klammern direkt nach der Uhrzeit wurden nicht erkannt.
 - Jetzt: Geöffnete Dateinamen werden wie das Protokoll im Tab gemerkt (sessionStorage, nur auf dem Gerät) und überstehen ein Neuladen; Endungen für Präsentationen, Office-Vorlagen, RTF, Apple-Formate, HTML, EPUB, XPS, OFD, JSON, SVG, Kalender- und Kontaktdateien ergänzt; Protokollzeilen „Importiere …“, „… wird in PDF umgewandelt“ und „…: 24 Folie(n)“ werden auch ohne bekannten Namen erfasst.

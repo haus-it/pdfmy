@@ -2679,7 +2679,7 @@ async function buildReport(context) {
     context ? `Anlass: ${context}` : '',
     '',
     `${APP.name}: ${v || 'unbekannt'} (${location.host || 'lokal'})`,
-    `pdfmy Scan: ${running ? state.scanVersion + (scanOutdated() ? ` (veraltet, aktuell ${scanLatest()})` : ' (aktuell)') : IS_MOBILE ? 'Handy – nicht verwendet' : 'nicht gestartet'}`,
+    `pdfmy Scan: ${running ? state.scanVersion + (scanOutdated() ? ` (veraltet, aktuell ${scanLatest()})` : ' (aktuell)') + (state.scanConvert ? ' · Office-Umwandlung: LibreOffice bereit' : ' · Office-Umwandlung: ohne LibreOffice (im Browser)') : IS_MOBILE ? 'Handy – nicht verwendet' : 'nicht gestartet'}`,
     `Browser: ${navigator.userAgent}`,
     `Bildschirm: ${screen.width}×${screen.height}, Kürzel: ${S.author || '–'}`,
     net || `Netzwerk (intern): ${running ? 'erst ab pdfmy Scan 1.14.0 (Mac/Linux 1.6.0)' : 'unbekannt – pdfmy Scan läuft nicht'}`,
@@ -3899,6 +3899,52 @@ $('#sepaIn').onchange = async e => {
       !nv ? '' : nv === 1 ? `1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).` : `${nv} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).`]);
     status(n === 1 ? `SEPA-Lastschrift erstellt: 1 Lastschrift, ${summe} €.` : `SEPA-Lastschrift erstellt: ${n} Lastschriften, ${summe} €.`);
   } catch (err) { noteError(err, 'SEPA-Lastschrift'); fdMsg($('#sepaMsg'), [`Abgebrochen: ${err.message}`]); }
+};
+/* ---------- Mitgliederversammlung: Einladung, Anwesenheitsliste, Protokoll (js/versammlung.js, app-v321) ---------- */
+const mvDatum = () => { const s = $('#mvDatum').value; if (!s) return null; const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const mvAngaben = () => ({ verein: $('#mvName').value.trim(), anschrift: $('#mvAdr').value.trim(), ort: $('#mvOrt').value.trim(), online: $('#mvOnline').value.trim(),
+  datum: mvDatum(), uhrzeit: $('#mvZeit').value, art: document.querySelector('input[name="mvArt"]:checked')?.value || 'ordentliche', tops: $('#mvTops').value,
+  wochen: +$('#mvFrist').value, antragsTage: +$('#mvAntrag').value, unterzeichner: $('#mvUnt').value.trim(), funktion: $('#mvFunk').value.trim(),
+  teile: { einladung: $('#mvEinl').checked, anwesenheit: $('#mvAnw').checked, protokoll: $('#mvProt').checked } });
+function mvFristZeigen() {
+  const d = mvDatum(), out = $('#mvFristOut'); if (!d) { out.textContent = ''; return; }
+  const f = Versammlung.fristen(d, { wochen: +$('#mvFrist').value, antragsTage: +$('#mvAntrag').value });
+  out.textContent = f.hinweise.length ? f.hinweise.map(h => I18N.t(h)).join(' ') : I18N.t(`Die Einladung muss bis ${Versammlung.datum(f.zugang)} zugehen: per E-Mail spätestens am ${Versammlung.datum(f.email)} senden, per Brief spätestens am ${Versammlung.datum(f.brief)} einwerfen.`);
+  out.classList.toggle('warn', f.hinweise.length > 0);
+}
+['#mvDatum', '#mvFrist', '#mvAntrag'].forEach(s => $(s).addEventListener('input', mvFristZeigen));
+$('#btnMv').onclick = () => {
+  closeMenu?.();
+  const v = LS.get('mvVerein', null), alt = LS.get('vvVerein', null) || LS.get('kbVerein', null), z = LS.get('zuwVerein', null);   // Vereinsangaben aus anderen Vereinsdialogen übernehmen
+  $('#mvName').value = v?.verein || alt?.verein || z?.aussteller?.name || ''; $('#mvAdr').value = v?.anschrift || alt?.anschrift || z?.aussteller?.anschrift || '';
+  if (v) { $('#mvOrt').value = v.ort || ''; $('#mvOnline').value = v.online || ''; $('#mvTops').value = v.tops || ''; $('#mvUnt').value = v.unterzeichner || ''; $('#mvFunk').value = v.funktion || ''; $('#mvFrist').value = String(v.wochen || 2); $('#mvAntrag').value = String(v.antragsTage ?? 7); }
+  $('#mvMsg').textContent = ''; mvFristZeigen(); $('#mvDlg').showModal(); $('#mvName').focus();
+};
+$('#mvCancel').onclick = () => $('#mvDlg').close();
+async function mvErstellen(mitglieder) {
+  const v = mvAngaben();
+  if (!v.verein) { $('#mvName').focus(); return; }
+  if (!v.datum) { $('#mvMsg').textContent = I18N.t('Bitte das Datum der Versammlung angeben.'); $('#mvDatum').focus(); return; }
+  const { datum, teile, ...merken } = v; LS.set('mvVerein', merken);
+  try {
+    const r = await Versammlung.erzeugen(PDFLib, { ...v, mitglieder }, await zuwOpts());
+    $('#mvDlg').close();
+    const name = `Mitgliederversammlung ${Versammlung.datum(v.datum)} ${v.verein.replace(/[\\/:*?"<>|]+/g, ' ')}`.replace(/\.+$/, '');
+    await importFiles([new File([r.bytes], name + '.pdf', { type: 'application/pdf' })]);
+    const f = r.fristen;
+    status(f.hinweise.length ? I18N.t(f.hinweise[0]) : r.briefe ? I18N.t(`${r.briefe} Einladungen erstellt – per Brief spätestens am ${Versammlung.datum(f.brief)} einwerfen, per E-Mail spätestens am ${Versammlung.datum(f.email)} senden.`)
+      : I18N.t(`Unterlagen erstellt – Einladung per E-Mail spätestens am ${Versammlung.datum(f.email)} senden, per Brief spätestens am ${Versammlung.datum(f.brief)} einwerfen.`));
+  } catch (err) { noteError(err, 'Mitgliederversammlung'); $('#mvMsg').textContent = I18N.t('Abgebrochen:') + ' ' + err.message; }
+}
+$('#mvForm').onsubmit = e => { e.preventDefault(); mvErstellen(null); };
+$('#mvListe').onclick = () => { if (!$('#mvName').value.trim()) { $('#mvName').focus(); return; } if (!mvDatum()) { $('#mvDatum').focus(); $('#mvMsg').textContent = I18N.t('Bitte das Datum der Versammlung angeben.'); return; } $('#mvIn').click(); };
+$('#mvIn').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  try {
+    const t = Versammlung.ausTabelle(await fdReadTable(f));
+    if (!t.mitglieder.length) { $('#mvMsg').textContent = I18N.t(t.fehler[0]); return; }
+    await mvErstellen(t.mitglieder);
+  } catch (err) { noteError(err, 'Mitgliederversammlung'); $('#mvMsg').textContent = I18N.t('Abgebrochen:') + ' ' + err.message; }
 };
 /* ---------- Kassenbericht für die Mitgliederversammlung (js/kassenbericht.js, app-v316) ---------- */
 $('#btnKb').onclick = () => {

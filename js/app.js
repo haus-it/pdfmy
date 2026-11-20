@@ -454,13 +454,24 @@ async function officeViaHelper(f) {
     const b = new Uint8Array(await f.arrayBuffer()); let s = '';
     for (let i = 0; i < b.length; i += 32768) s += String.fromCharCode.apply(null, b.subarray(i, i + 32768));
     const r = await fetch(SCAN_API + '/office/convert', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ name: f.name, data: btoa(s) }), signal: AbortSignal.timeout(200000) }).then(x => x.json());
-    if (!r.ok || !r.data) { console.warn('LibreOffice-Umwandlung:', r.error); return false; }
+    if (!r.ok || !r.data) { console.warn('LibreOffice-Umwandlung:', r.error); logLine(`LibreOffice-Umwandlung nicht möglich (${String(r.error || 'ohne Angabe').slice(0, 120)}) – eigene Umwandlung im Browser`); return false; }
     const bin = atob(r.data), pdf = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; i++) pdf[i] = bin.charCodeAt(i);
     await importPdf(new File([pdf], f.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
     toast(`${f.name}: originalgetreu mit LibreOffice umgewandelt.`, 4000);
     return true;
-  } catch (e) { console.warn('LibreOffice-Umwandlung:', e); return false; }
+  } catch (e) { console.warn('LibreOffice-Umwandlung:', e); logLine(`LibreOffice-Umwandlung nicht möglich (${String(e?.name === 'TimeoutError' ? 'Zeitüberschreitung' : e?.message || e).slice(0, 120)}) – eigene Umwandlung im Browser`); return false; }
+}
+/* Eigene Umwandlung lief, obwohl es originalgetreu ginge (Fehlerbericht 20.11.2026: dieselbe .pptx zweimal umgewandelt, ohne Hinweis, warum
+   nicht über LibreOffice): einmal je Sitzung sagen, was fehlt – pdfmy Scan läuft, aber ohne LibreOffice, oder pdfmy Scan ist zu alt. */
+let officeHintShown = false;
+function officeHint() {
+  if (officeHintShown || IS_MOBILE || state.scanConvert || !state.scanVersion) return;
+  officeHintShown = true;
+  const v = /^(\d+)\.(\d+)/.exec(state.scanVersion), alt = !v || (+v[1] === 1 && +v[2] < (state.scanMac ? 12 : 22));   // LibreOffice-Umwandlung ab 1.22.0, Mac/Linux ab 1.12.0
+  logLine(alt ? 'Office-Umwandlung im Browser: pdfmy Scan zu alt für LibreOffice' : 'Office-Umwandlung im Browser: pdfmy Scan hat kein LibreOffice gefunden');
+  setTimeout(() => toast(alt ? 'Tipp: Mit einem aktuellen pdfmy Scan und LibreOffice (kostenlos, libreoffice.org) wandelt PDFMy PowerPoint-, Word- und Excel-Dateien originalgetreu um.'
+    : 'Tipp: Installieren Sie LibreOffice (kostenlos, libreoffice.org) auf diesem Rechner – dann wandelt PDFMy PowerPoint-, Word- und Excel-Dateien über pdfmy Scan originalgetreu um, mit allen Schriften und Diagrammen.', 12000), 10500);
 }
 async function importOffice(file) {
   status(`${file.name} wird in PDF umgewandelt …`);
@@ -473,6 +484,7 @@ async function importOffice(file) {
   await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
   if (ext === 'doc') status(`${file.name} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.`);
   else if (word) status(`${file.name} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.`);
+  if (OFFICE_FAITHFUL.test(file.name.toLowerCase())) officeHint();
 }
 /* Alte Office-Dateien (.doc/.dot, .xls/.xlt, Word/Excel 97–2003): nach dem Inhalt entscheiden, nicht nach der Endung – viele
    „.xls“ aus Bank- und Behördenportalen sind HTML- oder XML-Tabellen, manche „.doc“ sind RTF oder eigentlich .docx/.xlsx. */
@@ -566,6 +578,7 @@ async function importSlides(file) {
   status(`${file.name}: ${model.slides.length} Folie(n) umgewandelt.`);
   // als Einblendung: die Abschlussmeldung des Imports überschreibt die Statuszeile
   if (notes.length) toast(`${file.name}: ${model.slides.length} Folie(n) umgewandelt.` + ` Hinweis: ${notes.join(', ')} – für ein exaktes Abbild in PowerPoint bzw. Impress „Als PDF speichern“.`, 10000);
+  officeHint();
 }
 // Photoshop (PSD/PSB): das gespeicherte Gesamtbild (js/office.js psd) – wie ein Bild, aber unverändert (Modus „Original“, kein Zuschneiden)
 async function importPsd(file) {

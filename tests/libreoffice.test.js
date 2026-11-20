@@ -17,7 +17,10 @@ test('App: Office-Dateien zuerst über LibreOffice, sonst eigene Umwandlung', ()
   assert.ok(i > 0 && i < j, 'Rückfall auf importOffice danach');
   assert.match(app, /if \(!state\.scanConvert \|\| f\.size > 200e6\) return false;/, 'nur wenn pdfmy Scan LibreOffice meldet');
   assert.match(app, /state\.scanConvert = d\.convert === true;/);
-  assert.match(app, /if \(!r\.ok \|\| !r\.data\) \{ console\.warn\('LibreOffice-Umwandlung:', r\.error\); return false; \}/, 'Fehler → Rückfall');
+  assert.match(app, /if \(!r\.ok \|\| !r\.data\) \{ console\.warn\('LibreOffice-Umwandlung:', r\.error\); logLine\(`LibreOffice-Umwandlung nicht möglich[^`]*`\); return false; \}/, 'Fehler → Grund ins Protokoll, Rückfall');
+  // Fehlerbericht 20.11.2026: Hinweis, wenn pdfmy Scan ohne LibreOffice läuft (einmal je Sitzung), Stand im Fehlerbericht
+  assert.match(app, /function officeHint\(\) \{\n  if \(officeHintShown \|\| IS_MOBILE \|\| state\.scanConvert \|\| !state\.scanVersion\) return;/);
+  assert.match(app, /officeHint\(\);\n\}\n\/\/ Photoshop/, 'nach der eigenen Folien-Umwandlung');
   assert.match(app, /const SCAN_LATEST = '1\.(2[2-9]|[3-9]\d)\.\d+'/); assert.match(app, /const SCAN_MAC_LATEST = '1\.(1[2-9]|[2-9]\d)\.\d+'/);   // mindestens 1.22.0 / 1.12.0
 });
 

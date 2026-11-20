@@ -94,6 +94,20 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 20.11.2026: Mitgliederversammlung vorbereiten (app-v321)
+**Inhalt:** Einladung mit Tagesordnung und Fristrechnung, Anwesenheitsliste, ausfüllbares Protokoll in einem PDF; mit Mitgliederliste je Mitglied ein Brief. **Grund:** Die Jahreshauptversammlung ist die wichtigste Pflichtaufgabe des Vorstands; Kassenbericht (v316) und Beitragseinzug (v317) gibt es schon, Einladung und Protokoll fehlten. Acrobat, PDF24 und Smallpdf bieten das nicht.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Mitgliederliste wird nur im Browser gelesen |
+| 2 Kein Server | passt |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: ein Dialog, Fristen erscheinen sofort beim Eintragen des Datums, Tagesordnung vorbelegt |
+| 5 Prüfbar | tests/versammlung.test.js (Tagesordnung, Fristen inkl. Sonntag und Verspätung, Mitgliederliste, PDF mit Formularfeldern, keine Skripte); Seiten als Bild geprüft |
+| 6 Wenig aktive Inhalte | passt: nur Formularfelder, keine Skripte |
+
+**Rechtlicher Rahmen:** Muster, maßgeblich ist die Satzung (Hinweis im Dialog und im PDF). Frist vorsichtig gerechnet (Zugang einen Tag vor Fristbeginn, Post vier Tage).
+
 ### Geprüft und umgesetzt 20.11.2026: SEPA-Lastschrift für Beiträge (app-v317)
 **Inhalt:** Mitgliederliste → SEPA-Sammellastschrift (pain.008.001.08) zum Hochladen im Online-Banking. **Grund:** Beitragseinzug ist die häufigste Kassenarbeit im Verein; bisher nur mit Vereinssoftware im Abo oder Bank-Software. Ergänzt Mitgliedsantrag mit SEPA-Mandat (v315) und Kassenbericht (v316).
 

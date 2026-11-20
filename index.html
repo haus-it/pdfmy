@@ -1209,6 +1209,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi" id="btnZuw" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
           <button class="mi" id="btnKb" title="Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Kassenbericht (Jahreshauptversammlung) …</span></button>
           <button class="mi" id="btnSepa" title="Mitgliedsbeiträge per Lastschrift einziehen: aus der Mitgliederliste (Excel/CSV) die SEPA-Datei für das Online-Banking erstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>SEPA-Lastschrift für Beiträge …</span></button>
+          <button class="mi" id="btnMv" title="Mitgliederversammlung vorbereiten: Einladung mit Tagesordnung und Fristen, Anwesenheitsliste und ausfüllbares Protokoll – auf Wunsch je Mitglied ein Brief aus der Mitgliederliste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Mitgliederversammlung …</span></button>
           <button class="mi doc" id="btnQrIns" title="GiroCode (Überweisung per Banking-App) oder QR-Code mit Link oder Text auf die Seite setzen – z. B. auf die eigene Rechnung"><svg class="ic" aria-hidden="true"><use href="#i-qr-code"/></svg><span>QR-Code einfügen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -2357,6 +2358,32 @@ html.i18n-wait body{visibility:hidden}
   <input type="file" id="sepaIn" hidden accept=".csv,.txt,.xlsx">
   <div class="dlgrow"><button type="button" id="sepaCancel">Schließen</button><button type="submit" class="primary">Mitgliederliste wählen …</button></div>
 </form></dialog>
+<dialog id="mvDlg" class="sharedlg propdlg" aria-labelledby="mvT"><form id="mvForm">
+  <h3 class="dlgtitle" id="mvT">Mitgliederversammlung vorbereiten</h3>
+  <p class="hint" style="margin-top:0">Ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste und ausfüllbarem Protokoll. PDFMy rechnet aus, bis wann die Einladung per E-Mail bzw. per Brief raus muss. Maßgeblich ist Ihre Satzung.</p>
+  <div class="field"><label for="mvName">Name des Vereins</label><input id="mvName" required autocomplete="organization"></div>
+  <div class="field"><label for="mvAdr">Anschrift des Vereins</label><textarea id="mvAdr" rows="2"></textarea></div>
+  <fieldset><legend>Art</legend>
+    <label><input type="radio" name="mvArt" value="ordentliche" checked> Ordentliche Mitgliederversammlung (Jahreshauptversammlung)</label>
+    <label><input type="radio" name="mvArt" value="außerordentliche"> Außerordentliche Mitgliederversammlung</label></fieldset>
+  <div class="anlrow"><div class="field"><label for="mvDatum">Datum</label><input type="date" id="mvDatum" required></div>
+    <div class="field"><label for="mvZeit">Beginn</label><input type="time" id="mvZeit" value="19:00"></div></div>
+  <div class="field"><label for="mvOrt">Ort der Versammlung</label><input id="mvOrt" placeholder="z. B. Vereinsheim, Sportplatzweg 1"></div>
+  <div class="field"><label for="mvOnline">Online-Teilnahme (freiwillig, § 32 Abs. 2 BGB)</label><input id="mvOnline" placeholder="z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand"></div>
+  <div class="anlrow"><div class="field"><label for="mvFrist">Einladungsfrist laut Satzung</label><select id="mvFrist"><option value="1">1 Woche</option><option value="2" selected>2 Wochen</option><option value="3">3 Wochen</option><option value="4">4 Wochen</option><option value="6">6 Wochen</option></select></div>
+    <div class="field"><label for="mvAntrag">Anträge bis</label><select id="mvAntrag"><option value="0">ohne Antragsfrist</option><option value="7" selected>1 Woche vorher</option><option value="14">2 Wochen vorher</option></select></div></div>
+  <div class="field"><label for="mvTops">Tagesordnung (je Zeile ein Punkt; leer = übliche Punkte)</label><textarea id="mvTops" rows="5" placeholder="Begrüßung, Feststellung der ordnungsgemäßen Einberufung und der Beschlussfähigkeit&#10;Bericht des Vorstands&#10;Kassenbericht&#10;Entlastung des Vorstands&#10;Wahlen&#10;Verschiedenes"></textarea></div>
+  <div class="anlrow"><div class="field"><label for="mvUnt">Unterschrift (Name)</label><input id="mvUnt" autocomplete="name"></div>
+    <div class="field"><label for="mvFunk">Funktion</label><input id="mvFunk" placeholder="z. B. 1. Vorsitzende(r)"></div></div>
+  <fieldset><legend>Teile</legend>
+    <label><input type="checkbox" id="mvEinl" checked> Einladung mit Tagesordnung</label>
+    <label><input type="checkbox" id="mvAnw" checked> Anwesenheitsliste</label>
+    <label><input type="checkbox" id="mvProt" checked> Protokoll zum Ausfüllen</label></fieldset>
+  <p id="mvFristOut" class="hint" aria-live="polite"></p>
+  <p id="mvMsg" class="hint" role="status"></p>
+  <input type="file" id="mvIn" hidden accept=".csv,.txt,.xlsx">
+  <div class="dlgrow"><button type="button" id="mvCancel">Abbrechen</button><button type="button" id="mvListe">Mit Mitgliederliste (je Mitglied ein Brief) …</button><button type="submit" class="primary">PDF erstellen</button></div>
+</form></dialog>
 <dialog id="kbDlg"class="sharedlg propdlg" aria-labelledby="kbT"><form id="kbForm">
   <h3 class="dlgtitle" id="kbT">Kassenbericht für die Mitgliederversammlung</h3>
   <p class="hint" style="margin-top:0">Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.</p>
@@ -2745,6 +2772,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/vereinsvorlagen.js"></script>
 <script src="js/kassenbericht.js"></script>
 <script src="js/sepalastschrift.js"></script>
+<script src="js/versammlung.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
