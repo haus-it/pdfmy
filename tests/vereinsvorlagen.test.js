@@ -26,6 +26,19 @@ test('Foto- und Fahrt-Vorlage: als Muster gekennzeichnet, Felder vorhanden', asy
   await assert.rejects(V.erzeugen(L, 'unbekannt', v), /Unbekannte Vorlage/);
 });
 
+test('Aufwandsentschädigung (v322): Freibeträge 2026, Erklärung, zwei Unterschriften, eine Seite', async () => {
+  assert.deepEqual(V.PAUSCHALE, { jahr: 2026, uebungsleiter: 3300, ehrenamt: 960 });
+  const doc = await L.PDFDocument.load(await V.erzeugen(L, 'pauschale', v)), names = doc.getForm().getFields().map(f => f.getName());
+  for (const n of ['Vorname', 'Nachname', 'Steuer-ID', 'IBAN', 'Taetigkeit', 'Betrag', 'Uebungsleiterfreibetrag', 'Ehrenamtspauschale', 'Anderweitig genutzt', 'Engagierte Ort Datum', 'Verein Ort Datum']) assert.ok(names.includes(n), n);
+  assert.equal(doc.getPageCount(), 1);
+  assert.equal(doc.getForm().getTextField('Steuer-ID').getMaxLength(), 11);
+  for (const f of doc.getForm().getFields()) assert.ok(f.acroField.getWidgets()[0].getRectangle().y > 30, f.getName());
+  const raw = Buffer.from(await V.erzeugen(L, 'pauschale', v)).toString('latin1');
+  assert.doesNotMatch(raw, /\/JavaScript|\/JS\s/, 'keine Skripte');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.match(html, /name="vvArt" value="pauschale"/);
+});
+
 test('Rundlauf: zwei Anträge ausgefüllt → eine Liste mit sprechenden Spalten', async () => {
   const fill = async (vor, nach, iban, jugend) => {
     const doc = await L.PDFDocument.load(await V.erzeugen(L, 'mitglied', v)), f = doc.getForm();

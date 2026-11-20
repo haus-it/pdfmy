@@ -7,6 +7,8 @@
      SEPA-Basislastschriften: Ermächtigung, Weisung an das Kreditinstitut, Hinweis auf Erstattung binnen acht Wochen)
    - foto: Einwilligung zu Fotos und Veröffentlichungen (Art. 6 Abs. 1 lit. a, Art. 7 DSGVO; Widerruf jederzeit) – Muster
    - fahrt: Einverständniserklärung für Fahrten und Ausflüge mit Notfallkontakt – Muster
+   - pauschale (app-v322): Vereinbarung über eine Aufwandsentschädigung mit Erklärung zum Übungsleiterfreibetrag bzw. zur
+     Ehrenamtspauschale (§ 3 Nr. 26/26a EStG; Erklärung, dass der Freibetrag nicht anderweitig genutzt wird) – Muster
    Keine Skripte im PDF (Leitplanke 6). */
 (function (root) {
   'use strict';
@@ -16,7 +18,10 @@
     mitglied: { titel: 'Mitgliedsantrag', datei: 'Mitgliedsantrag' },
     foto: { titel: 'Einwilligung zu Fotos und Veröffentlichungen', datei: 'Einwilligung-Fotos' },
     fahrt: { titel: 'Einverständniserklärung für Fahrten und Ausflüge', datei: 'Einverstaendnis-Fahrt' },
+    pauschale: { titel: 'Vereinbarung über eine Aufwandsentschädigung', datei: 'Vereinbarung-Aufwandsentschaedigung' },
   };
+  // Freibeträge seit 01.01.2026 (Steueränderungsgesetz 2025, BGBl. I 2025 Nr. 363): § 3 Nr. 26 EStG 3.300 €, § 3 Nr. 26a EStG 960 €
+  const PAUSCHALE = { jahr: 2026, uebungsleiter: 3300, ehrenamt: 960 };
   const SEPA = (glaeubiger) => [
     `Ich ermächtige ${glaeubiger}, Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von ${glaeubiger} auf mein Konto gezogenen Lastschriften einzulösen.`,
     'Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.',
@@ -125,11 +130,30 @@
       c.felder([{ name: 'Gesundheit', label: 'Allergien, Medikamente, Unverträglichkeiten, Besonderheiten', multi: true, h: 46 }]);
       c.felder([{ name: 'Notfallkontakt', label: 'Notfallkontakt (Name)', w: 1.4 }, { name: 'Notfalltelefon', label: 'Telefon (während der Fahrt erreichbar)' }]);
       c.unterschrift('Einverstaendnis', 'Unterschrift der Erziehungsberechtigten');
+    } else if (art === 'pauschale') {
+      const P = PAUSCHALE, eur = n => n.toLocaleString('de-DE') + ' €';
+      c.text('Muster – bitte an Ihren Verein anpassen. Keine Steuerberatung.', { size: 8.5, color: L.rgb(0.64, 0.15, 0.16) }); c.gap(4);
+      c.text(`zwischen dem ${verein} und`, { size: 10 }); c.gap(4);
+      c.felder([{ name: 'Vorname', label: 'Vorname', req: true }, { name: 'Nachname', label: 'Nachname', req: true }, { name: 'Geburtsdatum', label: 'Geburtsdatum', w: 0.6 }]);
+      c.felder([{ name: 'Strasse', label: 'Straße und Hausnummer', w: 2 }, { name: 'PLZ', label: 'PLZ', w: 0.5, max: 5 }, { name: 'Ort', label: 'Ort', w: 1.2 }]);
+      c.felder([{ name: 'Steuer-ID', label: 'Steuerliche Identifikationsnummer', max: 11 }, { name: 'IBAN', label: 'IBAN für die Auszahlung', req: true, w: 1.6, max: 34 }]);
+      c.felder([{ name: 'Taetigkeit', label: 'Tätigkeit (z. B. Trainerin Jugend, Kassenwart)', req: true, w: 2 }, { name: 'Beginn', label: 'ab (Datum)', w: 0.7 }]);
+      c.felder([{ name: 'Betrag', label: 'Aufwandsentschädigung in Euro', req: true }, { name: 'Zeitraum', label: 'je (Monat, Quartal, Jahr, Stunde)' }, { name: 'Auszahlung', label: 'Auszahlung (z. B. monatlich, halbjährlich)' }]);
+      c.text(`Steuer- und sozialversicherungsfrei bis zur Höhe des jeweiligen Freibetrags im Kalenderjahr (Stand ${P.jahr}, bitte ankreuzen):`, { size: 9.5, bold: true }); c.gap(2);
+      c.ankreuz('Uebungsleiterfreibetrag', `Übungsleiterfreibetrag nach § 3 Nr. 26 EStG, bis ${eur(P.uebungsleiter)} im Jahr – für Übungsleiter, Trainer, Ausbilder, Erzieher, Betreuer, künstlerische Tätigkeit oder Pflege`);
+      c.ankreuz('Ehrenamtspauschale', `Ehrenamtspauschale nach § 3 Nr. 26a EStG, bis ${eur(P.ehrenamt)} im Jahr – für andere Tätigkeiten im ideellen Bereich oder Zweckbetrieb, z. B. Vorstand, Kasse, Platzwart`);
+      c.gap(2);
+      c.text('Erklärung: Ich übe die Tätigkeit nebenberuflich aus (zeitlich nicht mehr als ein Drittel einer vergleichbaren Vollzeitstelle). Ich versichere, dass ich den angekreuzten Freibetrag in diesem Kalenderjahr bei keiner anderen Stelle in Anspruch nehme – oder nur in der unten angegebenen Höhe. Änderungen teile ich dem Verein unverzüglich mit. Für dieselbe Tätigkeit werden nicht beide Freibeträge zugleich genutzt.', { size: 9 }); c.gap(4);
+      c.felder([{ name: 'Anderweitig genutzt', label: 'Anderswo schon genutzt (Euro, sonst leer)' }, { name: 'Andere Stelle', label: 'bei (Verein, Einrichtung)', w: 1.4 }]);
+      c.text('Hinweise: Vorstandsmitglieder dürfen nur bezahlt werden, wenn die Satzung es erlaubt (§ 27 Abs. 3 Satz 2 BGB). Was über den Freibetrag hinausgeht, ist Arbeitslohn bzw. Einkommen (z. B. Minijob) und muss versteuert werden. Die Erklärung gehört zu den Lohn- bzw. Buchhaltungsunterlagen des Vereins.', { size: 8.5, color: L.rgb(0.42, 0.45, 0.5) });
+      c.gap(10);
+      c.unterschrift('Engagierte', 'Unterschrift der engagierten Person');
+      c.unterschrift('Verein', `Unterschrift für den ${verein} (vertretungsberechtigter Vorstand)`);
     }
     if (v.kontakt) { c.gap(4); c.text(`Bitte zurück an: ${v.kontakt}`, { size: 8.5, color: L.rgb(0.42, 0.45, 0.5) }); }
     return doc.save();
   }
 
-  const api = { VORLAGEN, SEPA, erzeugen };
+  const api = { VORLAGEN, SEPA, PAUSCHALE, erzeugen };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Vereinsvorlagen = api;
 })(typeof self !== 'undefined' ? self : globalThis);

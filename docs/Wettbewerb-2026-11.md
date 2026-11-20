@@ -237,7 +237,7 @@ Quelle: Kommentare unter „Digital Independence Day: Adobe PDF-Reader-Alternati
 | Gespeicherte Unterschrift, Kürzel, Datum | Vorschau: gespeicherte Unterschrift, Handy als Zeichenfläche (belegt); Acrobat ähnlich (nicht nachgeprüft) | vorhanden (zeichnen, Bild, Kürzel, Firmenstempel, Ort/Datum, „Nächste Stelle“) | unverändert |
 | Andere unterschreiben lassen | Docusign: Zustellung per E-Mail/SMS, Erinnerungen, ohne Konto (belegt) | vorhanden ohne Server (Abschnitt 3) | unverändert |
 
-**Bewusst anders:** Der Stempel zeigt kein grünes Häkchen. Er ist nur ein Bild und bliebe auch nach einer Fälschung stehen; ob die Signatur gültig ist, zeigt allein die Prüfung (Leiste in PDFMy, Signaturbereich anderer Programme). **Umgesetzt 19.11.2026 (app-v290):** Klick auf einen Stempel öffnet die Details genau dieser Signatur, mit Prüfschild am Stempel. **Offen:** Platz für den Stempel selbst aufziehen; Handy als Zeichenfläche ohne Cloud (Machbarkeit prüfen). Test: tests/signatur-sichtbar.test.js, Durchlauf im Headless-Browser mit zwei Unterzeichnern.
+**Bewusst anders:** Der Stempel zeigt kein grünes Häkchen. Er ist nur ein Bild und bliebe auch nach einer Fälschung stehen; ob die Signatur gültig ist, zeigt allein die Prüfung (Leiste in PDFMy, Signaturbereich anderer Programme). **Umgesetzt 19.11.2026 (app-v290):** Klick auf einen Stempel öffnet die Details genau dieser Signatur, mit Prüfschild am Stempel. **Umgesetzt 20.11.2026 (app-v322):** Hat die PDF ein leeres Signaturfeld, signiert PDFMy wie Acrobat dort hinein, Stempel im Feld. **Offen:** Platz für den Stempel selbst aufziehen (ohne vorhandenes Feld); Handy als Zeichenfläche ohne Cloud (Machbarkeit prüfen). Test: tests/signatur-sichtbar.test.js, Durchlauf im Headless-Browser mit zwei Unterzeichnern.
 
 ## 8. Selbstbetrieb (19.11.2026, app-v292)
 
@@ -276,4 +276,5 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 | Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug, mit steuerlichen Bereichen und Prüfvermerk | vorhanden (v316) | fehlt bei PDF-Werkzeugen; Vereinsbuchhaltung im Abo |
 | SEPA-Lastschrift-Datei für den Beitragseinzug (pain.008.001.08) | vorhanden (v317; seit v318 gegen das amtliche ISO-20022-Schema geprüft) | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |
 | Mitgliederversammlung: Einladung mit Fristrechnung (je Mitglied ein Brief), Anwesenheitsliste, ausfüllbares Protokoll | vorhanden (v321) | fehlt bei PDF-Werkzeugen; Word-Vorlagen im Netz, Vereinssoftware im Abo |
+| Übungsleiter- und Ehrenamtspauschale: Vereinbarung mit Erklärung zum Freibetrag (Stand 2026) | vorhanden (v322) | fehlt bei PDF-Werkzeugen; Word-Muster der Landessportbünde, Vereinssoftware im Abo |
 | Online-Mitgliederverwaltung | **bewusst nicht**: Mitgliederdatenbank auf einem Server (Leitplanken 1–2) | Vereinssoftware im Abo |

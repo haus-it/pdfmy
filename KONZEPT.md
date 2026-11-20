@@ -94,6 +94,20 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 20.11.2026: Aufwandsentschädigung für Trainer und Ehrenamtliche; Signieren in vorhandene Signaturfelder (app-v322)
+**Inhalt:** (1) Vereinsvorlage „Vereinbarung über eine Aufwandsentschädigung“ mit Erklärung zum Übungsleiterfreibetrag (§ 3 Nr. 26 EStG, 3.300 €) bzw. zur Ehrenamtspauschale (§ 3 Nr. 26a EStG, 960 €; beide seit 01.01.2026 laut Steueränderungsgesetz 2025), Steuer-ID, IBAN, anderweitig genutzter Freibetrag, zwei Unterschriften. (2) Digital signieren in ein vorhandenes leeres Signaturfeld der PDF (Vertrag, Behördenformular) statt ein eigenes Feld anzulegen; zweite Person ins nächste freie Feld. **Grund:** (1) Jeder Verein mit Trainern oder bezahltem Vorstand braucht diese Erklärung für die Lohn- bzw. Buchhaltungsunterlagen; der Kassenbericht kennt die Kategorie schon. (2) Bisher blieb das vorgesehene Feld leer und die Datei wurde beim Signieren neu aufgebaut (Formularfelder flach); Acrobat signiert in das Feld.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt |
+| 2 Kein Server | passt |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: (1) eine weitere Auswahl im vorhandenen Dialog, (2) kein Bedienschritt – PDFMy erkennt das Feld selbst und meldet „In das vorgesehene Signaturfeld … signiert“ |
+| 5 Prüfbar | tests/vereinsvorlagen.test.js (Freibeträge, Felder, eine Seite, keine Skripte), tests/signaturfeld.test.js (zwei Felder nacheinander, angehängt, beide gültig; drittes Feld neu; zu kleines Feld ohne Stempel); Durchlauf in der App mit Zertifikat geprüft |
+| 6 Wenig aktive Inhalte | passt: keine Skripte |
+
+**Grenzen:** (1) Muster, keine Steuerberatung; Beträge stehen als Konstante im Code und müssen bei Gesetzesänderung angepasst werden. (2) Nur wenn die Seiten unverändert sind; mit gezeichneter Unterschrift oder Stempel entsteht wie bisher eine neue Fassung mit eigenem Feld. Auf gedrehten Seiten oder in Feldern unter 60 × 18 pt wird ohne Stempel ins Feld signiert.
+
 ### Geprüft und umgesetzt 20.11.2026: Mitgliederversammlung vorbereiten (app-v321)
 **Inhalt:** Einladung mit Tagesordnung und Fristrechnung, Anwesenheitsliste, ausfüllbares Protokoll in einem PDF; mit Mitgliederliste je Mitglied ein Brief. **Grund:** Die Jahreshauptversammlung ist die wichtigste Pflichtaufgabe des Vorstands; Kassenbericht (v316) und Beitragseinzug (v317) gibt es schon, Einladung und Protokoll fehlten. Acrobat, PDF24 und Smallpdf bieten das nicht.
 

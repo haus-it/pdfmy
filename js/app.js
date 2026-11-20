@@ -395,6 +395,18 @@ function keptForm(pages, o = {}) {
   const same = pages.length === d.js?.numPages && pages.every((p, i) => p.kind === 'pdf' && state.docs[p.docIdx] === d && p.pageIdx === i && !p.rotation && !p.annots.length);
   return same ? (d.filled ? d.filledForm : d.unlocked ? null : d.bytes) || null : null;
 }
+// Digital signieren in ein vorgesehenes leeres Signaturfeld (app-v322): die Datei selbst signieren (auch ausgefüllt), sonst ginge das
+// Feld beim Neuaufbau verloren. Nur wenn die Seiten unverändert sind; mit Zeichnungen oder Stempeln entsteht weiter eine neue Datei.
+const EMPTY_SIG = /\/FT\s*\/Sig\b/;
+function sigFieldOriginal(pages, o = {}) {
+  const d = pages[0]?.kind === 'pdf' ? state.docs[pages[0].docIdx] : null;
+  if (!d?.bytes || d.repaired || d.unlocked || o.password || hasStamp(o) || state.meta.docProps) return null;
+  const same = pages.length === d.js?.numPages && pages.every((p, i) => p.kind === 'pdf' && state.docs[p.docIdx] === d && p.pageIdx === i && !p.rotation && !p.annots.length);
+  if (!same) return null;
+  const src = d.filled && d.filledForm ? d.filledForm : d.bytes;
+  let s = ''; for (let i = 0; i < src.length; i += 32768) s += String.fromCharCode.apply(null, src.subarray(i, i + 32768));
+  return EMPTY_SIG.test(s) ? src : null;
+}
 function signedOriginal(pages, o = {}) {
   const d = pages[0]?.kind === 'pdf' ? state.docs[pages[0].docIdx] : null;
   if (!d?.sigs?.some(r => !r.usageRights) || d.filled || o.password || hasStamp(o)) return null;
@@ -4319,7 +4331,7 @@ async function doExport(o) {
     const opts = { pdfa: o.format === 'pdfa', size: o.size, ...st };
     const orig = einvOriginal(pages, { ...st, password: o.password });
     const sOrig = !orig && signedOriginal(pages, { ...st, password: o.password });
-    const fKeep = !orig && !sOrig && o.format === 'pdf' && !o.sign ? keptForm(pages, { ...st, password: o.password }) : null;
+    const fKeep = !orig && !sOrig && o.format === 'pdf' ? (o.sign ? sigFieldOriginal(pages, { ...st, password: o.password }) : keptForm(pages, { ...st, password: o.password })) : null;
     if (orig) { data = orig; status('E-Rechnung: Original unverändert gespeichert (mit eingebettetem XML).'); }
     else if (sOrig) { data = sOrig.slice(); status(o.sign ? 'Signiertes Original unverändert übernommen – Ihre Signatur wird angehängt.' : 'Signiertes Original unverändert gespeichert – die Signaturen bleiben gültig.'); }
     else if (fKeep) { data = fKeep.slice(); keptOrig = false; }

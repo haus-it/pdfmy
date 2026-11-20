@@ -187,7 +187,7 @@
   // touch(ref): bei inkrementellem Update geänderte Objekte merken. false = Struktur nicht sicher erweiterbar → unsichtbar lassen.
   function applyLook(ctx, cat, page, widget, wRef, look, rect, touch) {
     const N = PL.PDFName.of, rootRaw = cat.get(N('StructTreeRoot'));
-    if (rootRaw) {
+    if (rootRaw && !widget.get(N('StructParent'))) {   // vorhandenes Feld ist schon in der Struktur verankert
       const root = rootRaw instanceof PL.PDFRef ? ctx.lookup(rootRaw) : rootRaw; if (!(root instanceof PL.PDFDict) || !(rootRaw instanceof PL.PDFRef)) return false;
       const ptRaw = root.get(N('ParentTree')), pt = ptRaw instanceof PL.PDFRef ? ctx.lookup(ptRaw) : ptRaw;
       const numsRaw = pt instanceof PL.PDFDict ? pt.get(PL.PDFName.of('Nums')) : null, nums = numsRaw instanceof PL.PDFRef ? ctx.lookup(numsRaw) : numsRaw;
@@ -224,6 +224,15 @@
     // neue Objekte nie unter einer Nummer, die die Vorfassung als frei führt (/Size der letzten Querverweistabelle)
     const prevSize = Math.max(0, ...[...bin(orig.subarray(Math.max(0, orig.length - 4096))).matchAll(/\/Size\s+(\d+)/g)].map(m => +m[1]));
     if (prevSize - 1 > ctx.largestObjectNumber) ctx.largestObjectNumber = prevSize - 1;
+    const ef = !o.docTs && o.useField !== false ? emptySigField(doc) : null;
+    if (ef) {   // in das vorgesehene leere Signaturfeld (mitunterzeichnen in Verträgen mit zwei Feldern)
+      const changed = new Map(), touch = r => changed.set(r, ctx.lookup(r)), sigRef = ctx.register(sigDict(ctx, signer, o, now));
+      changed.set(sigRef, ctx.lookup(sigRef));
+      fillSigField(ctx, doc.catalog, ef, sigRef, o, touch);
+      const formRaw = doc.catalog.get(N('AcroForm')), form = formRaw instanceof PL.PDFRef ? ctx.lookup(formRaw) : formRaw;
+      form.set(N('SigFlags'), PL.PDFNumber.of(3)); changed.set(formRaw instanceof PL.PDFRef ? formRaw : ctx.trailerInfo.Root, formRaw instanceof PL.PDFRef ? form : doc.catalog);
+      return appendObjects(orig, ctx, changed);
+    }
     const lp = o.look && !o.docTs ? lookPage(doc, o.look) : null, rect = lp && lookRect(ctx, lp, o.look), page = rect ? lp : doc.getPages()[0];
     const changed = new Map();   // Ref → Objekt (wird neu geschrieben)
     const sigRef = ctx.register(sigDict(ctx, signer, o, now));
@@ -273,9 +282,56 @@
     outB.set(orig, 0); let at = orig.length; for (const x of parts) { outB.set(x, at); at += x.length; }
     return outB;
   }
+  /* Leeres Signaturfeld der Vorlage (app-v322; Vertrag, Behördenformular, „Hier signieren“): wie Acrobat dort hinein signieren statt
+     ein eigenes Feld anzulegen – sonst bliebe das vorgesehene Feld leer. Erstes Feld /FT /Sig ohne /V in Formularreihenfolge.
+     Liefert { field, fRef, widget, wRef, page, rect, name } oder null. */
+  function emptySigField(doc) {
+    const ctx = doc.context, N = PL.PDFName.of, form = doc.catalog.lookup(N('AcroForm'));
+    if (!(form instanceof PL.PDFDict)) return null;
+    const fields = form.lookup(N('Fields')); if (!(fields instanceof PL.PDFArray)) return null;
+    const seen = new Set(), at = (ref) => ref instanceof PL.PDFRef ? ctx.lookup(ref) : ref;
+    const pageOf = (widget, wRef) => {
+      const p = widget.get(N('P')), pages = doc.getPages();
+      if (p instanceof PL.PDFRef) { const hit = pages.find(pg => pg.ref === p || (pg.ref.objectNumber === p.objectNumber)); if (hit) return hit; }
+      return pages.find(pg => { const a = pg.node.lookup(N('Annots')); return a instanceof PL.PDFArray && a.asArray().some(r => r instanceof PL.PDFRef && r.objectNumber === wRef.objectNumber); }) || null;
+    };
+    const walk = (ref, ft, depth) => {
+      const d = at(ref); if (!(d instanceof PL.PDFDict) || seen.has(d) || depth > 20) return null; seen.add(d);
+      const t = d.get(N('FT')) || ft, kids = d.lookup(N('Kids')), kidArr = kids instanceof PL.PDFArray ? kids.asArray() : [];
+      const sub = kidArr.filter(k => at(k)?.get?.(N('T'))), widgets = kidArr.filter(k => !at(k)?.get?.(N('T')));
+      for (const k of sub) { const r = walk(k, t, depth + 1); if (r) return r; }
+      if (t !== N('Sig') && String(t) !== '/Sig') return null;
+      if (d.get(N('V'))) return null;   // schon signiert
+      const wRef = d.get(N('Subtype')) ? ref : widgets[0], widget = wRef ? at(wRef) : null;
+      if (!(widget instanceof PL.PDFDict) || !(ref instanceof PL.PDFRef) || !(wRef instanceof PL.PDFRef)) return null;
+      const page = pageOf(widget, wRef); if (!page) return null;
+      const R = widget.lookup(N('Rect')), v = R instanceof PL.PDFArray ? R.asArray().map(n => n.asNumber?.() ?? 0) : [0, 0, 0, 0];
+      const rect = [Math.min(v[0], v[2]), Math.min(v[1], v[3]), Math.max(v[0], v[2]), Math.max(v[1], v[3])];
+      const T = d.lookup(N('T')), name = T ? (T.decodeText?.() ?? String(T)) : '';
+      return { field: d, fRef: ref, widget, wRef, page, rect, name };
+    };
+    for (const f of fields.asArray()) { const r = walk(f, undefined, 0); if (r) return r; }
+    return null;
+  }
+  // Signatur in das leere Feld eintragen; Stempel im Feldrechteck, wenn es groß genug ist und die Seite nicht gedreht ist
+  function fillSigField(ctx, cat, ef, sigRef, o, touch) {
+    const N = PL.PDFName.of;
+    ef.field.set(N('V'), sigRef); touch(ef.fRef);
+    const f = ef.widget.lookup(N('F')), flags = f instanceof PL.PDFNumber ? f.asNumber() : 0;
+    ef.widget.set(N('F'), PL.PDFNumber.of((flags | 4 | 128) & ~(1 | 2 | 32))); touch(ef.wRef);   // druckbar, gesperrt, nicht versteckt
+    const w = ef.rect[2] - ef.rect[0], h = ef.rect[3] - ef.rect[1];
+    if (o.look && w >= 60 && h >= 18 && !(ef.page.getRotation().angle % 360)) o.lookShown = applyLook(ctx, cat, ef.page, ef.widget, ef.wRef, o.look, ef.rect.map(n => +n.toFixed(2)), touch);
+    o.inField = ef.name || true;
+  }
   async function newSigField(pdfBytes, signer, o, now) {
     const doc = await PL.PDFDocument.load(pdfBytes, { updateMetadata: false });
     const ctx = doc.context;
+    const ef = !o.docTs && o.useField !== false ? emptySigField(doc) : null;
+    if (ef) {
+      fillSigField(ctx, doc.catalog, ef, ctx.register(sigDict(ctx, signer, o, now)), o, () => {});
+      const form = doc.catalog.lookup(PL.PDFName.of('AcroForm')); form.set(PL.PDFName.of('SigFlags'), PL.PDFNumber.of(3));
+      return doc.save({ useObjectStreams: false });
+    }
     const lp = o.look && !o.docTs ? lookPage(doc, o.look) : null, rect = lp && lookRect(ctx, lp, o.look), page = rect ? lp : doc.getPages()[0];
     const sigRef = ctx.register(sigDict(ctx, signer, o, now));
     // Signaturfeld: mit Stempel sichtbar (o.look), sonst unsichtbar (Rechteck 0×0); druckbar + gesperrt – erlaubt in PDF/A

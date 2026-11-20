@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Aufwandsentschädigung für Trainer und Ehrenamtliche, Signieren in vorhandene Signaturfelder (app-v322)
+- „Mehr → Vereinsvorlagen …“: neue Vorlage „Übungsleiter- bzw. Ehrenamtspauschale“ – Vereinbarung über eine Aufwandsentschädigung mit Erklärung zum Übungsleiterfreibetrag (§ 3 Nr. 26 EStG, bis 3.300 € im Jahr) bzw. zur Ehrenamtspauschale (§ 3 Nr. 26a EStG, bis 960 € im Jahr, Stand 2026), Steuer-ID, IBAN, Tätigkeit, Betrag, anderweitig genutzter Freibetrag, Hinweis auf § 27 Abs. 3 BGB, Unterschrift der engagierten Person und des Vorstands. Muster, eine Seite, ausfüllbar.
+- Digital signieren: Enthält die PDF ein leeres Signaturfeld (Vertrag, Behördenformular), signiert PDFMy wie Acrobat dort hinein und setzt den Stempel „Digital signiert von …“ in das Feld; die zweite Person kommt ins nächste freie Feld, frühere Signaturen bleiben gültig. Ausgefüllte Formularfelder bleiben dabei ausfüllbar (bisher wurde die Datei beim Signieren neu aufgebaut und das Feld ging verloren).
+- tests/signaturfeld.test.js, tests/vereinsvorlagen.test.js; Signieren in der App mit Zertifikat durchgespielt, Vorlage als Bild geprüft.
+
 ### Mitgliederversammlung vorbereiten, Hinweis zur Office-Umwandlung (app-v321)
 - „Mehr → Mitgliederversammlung …“: ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste zum Unterschreiben und ausfüllbarem Protokoll (Beginn, Ende, Versammlungsleitung, Protokollführung, Feststellungen zu Einberufung und Beschlussfähigkeit, je Tagesordnungspunkt Verlauf/Beschluss und Ja/Nein/Enthaltung, Unterschriften). Ordentliche oder außerordentliche Versammlung, Online-Teilnahme (§ 32 Abs. 2 BGB) mit Zugangsweg, Tagesordnung frei oder die üblichen zehn Punkte.
 - Fristen: Aus der Einladungsfrist der Satzung rechnet PDFMy aus, bis wann die Einladung zugehen muss und wann sie spätestens per E-Mail bzw. per Brief raus muss (vier Tage Postlaufzeit, kein Sonntag), dazu den Antragsschluss; zu späte Termine werden gemeldet.

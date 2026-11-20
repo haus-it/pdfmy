@@ -3391,7 +3391,10 @@ const tsaCall = async req => {
   }
   throw new Error('Kein Zeitstempeldienst erreichbar' + (last ? ' (' + last.message + ')' : '') + ' – ohne Zeitstempel erneut speichern oder später versuchen.');
 };
-const tsNote = o => { if (o.tsTime) toast(`Signiert mit Zeitstempel vom ${I18N.fmtDate(o.tsTime)}, ${o.tsTime.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} Uhr${o.ltv ? ' – mit Langzeitprüfdaten (LTV): bleibt auch nach Ablauf des Zertifikats prüfbar' : ''}.`, o.ltv ? 7000 : 5000); };
+const tsNote = o => {
+  // in ein vorhandenes leeres Signaturfeld signiert (app-v322) – eigene Meldung, danach die zum Zeitstempel
+  if (o.inField) toast(typeof o.inField === 'string' ? `In das vorgesehene Signaturfeld „${o.inField}“ signiert.` : 'In das vorgesehene Signaturfeld signiert.', 5000);
+  if (o.tsTime) setTimeout(() => toast(`Signiert mit Zeitstempel vom ${I18N.fmtDate(o.tsTime)}, ${o.tsTime.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} Uhr${o.ltv ? ' – mit Langzeitprüfdaten (LTV): bleibt auch nach Ablauf des Zertifikats prüfbar' : ''}.`, o.ltv ? 7000 : 5000), o.inField ? 5200 : 0); };
 /* Langzeitprüfdaten (PAdES B-LTA, app-v311): gekoppelt an „mit Zeitstempel“, ab pdfmy Scan 1.23.0 / 1.13.0. pdfmy Scan holt die
    Sperrauskunft bei der Stelle, die das Zertifikat ausgestellt hat (Browser dürfen das nicht direkt); dann /DSS und ein
    Dokumentzeitstempel darüber. Klappt etwas nicht, bleibt die gültige Fassung mit Zeitstempel – nichts geht verloren. */
