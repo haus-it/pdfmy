@@ -15,6 +15,14 @@
     return c;
   }
 
+  /* Bildpunkte lesen, höchstens maxSide groß. Passt das Bild schon, ohne Kopie; sonst die verkleinerte Zwischenfläche sofort freigeben –
+     Safari (iPhone) gibt Canvas-Speicher sonst erst spät frei und meldet bei vollem Speicher „InvalidStateError“ (Live-Erkennung alle 150 ms). */
+  function pixels(src, maxSide) {
+    if (src.getContext && Math.max(src.width, src.height) <= maxSide) return { d: src.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, src.width, src.height).data, W: src.width, H: src.height };
+    const s = scaled(src, maxSide), W = s.width, H = s.height, d = s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, W, H).data;
+    s.width = 0; s.height = 0;
+    return { d, W, H };
+  }
   function grayData(c) {
     const d = c.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, c.width, c.height).data;
     const g = new Uint8Array(c.width * c.height);
@@ -35,13 +43,21 @@
 
   /* Farbige Inhalte (Logo, Stempel, Unterschrift in Blau)? → dann Farbe erhalten */
   function isColorful(src) {
-    const s = scaled(src, 400), d = s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data;
-    let n = 0, colored = 0;
-    for (let j = 0; j < d.length; j += 4) {
-      const r = d[j], g = d[j + 1], b = d[j + 2], mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (r * 0.299 + g * 0.587 + b * 0.114);
-      n++; if (mx - mn > 50 && l > 30 && l < 235) colored++;
+    const { d, W, H } = pixels(src, 400);
+    return colorfulData(d, W, H);
+  }
+  /* Farbseite? Viele farbige Punkte – oder eine kleine, dichte Farbfläche wie ein Firmenlogo im Briefkopf (vorher ging ein kleines Logo
+     unter 0,3 % der Fläche als Graustufen-Seite durch und wurde blass). Verstreute Farbsäume vom Kamerarauschen zählen nicht. */
+  function colorfulData(d, W, H) {
+    const cs = 6, cw = Math.ceil(W / cs), cells = new Uint16Array(cw * Math.ceil(H / cs));
+    let colored = 0;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const j = (y * W + x) * 4, r = d[j], g = d[j + 1], b = d[j + 2], l = r * 0.299 + g * 0.587 + b * 0.114;
+      if (Math.max(r, g, b) - Math.min(r, g, b) > 50 && l > 30 && l < 235) { colored++; cells[((y / cs) | 0) * cw + ((x / cs) | 0)]++; }
     }
-    return colored / n > 0.003;
+    if (colored / (W * H) > 0.003) return true;
+    let dense = 0; for (const c of cells) if (c >= cs * cs * 0.5) dense++;
+    return dense >= 4;
   }
   /* Reiner Text (Schwarzweiß-Dokument)? Fast nur Papierweiß und dunkle Schrift – Grautöne nur an den Buchstabenkanten.
      Graue Flächen, Schattierungen oder Schwarzweiß-Bilder bringen viele Mitteltöne → Graustufen-Dokument. */
@@ -201,6 +217,18 @@
     return out;
   }
 
+  /* Tonwertkurve für Farbseiten: Graues (Papier, Schrift, Durchscheinen) je Kanal wie bisher; farbige Punkte (Logo, Stempel, Briefkopf)
+     nur in der Helligkeit verschieben und höchstens 40 % zum Weiß hin aufhellen – sonst bleicht ein hellblaues oder gelbes Logo aus. */
+  function colorLut(d, lut) {
+    for (let j = 0; j < d.length; j += 4) {
+      const r = d[j], g = d[j + 1], b = d[j + 2], ch = Math.max(r, g, b) - Math.min(r, g, b), w = clamp((ch - 25) / 50);
+      if (!w) { d[j] = lut[r]; d[j + 1] = lut[g]; d[j + 2] = lut[b]; continue; }
+      const l = r * 0.299 + g * 0.587 + b * 0.114, s = Math.min(lut[l | 0], l + 0.4 * (255 - l)) - l;
+      d[j] = lut[r] * (1 - w) + (r + s) * w; d[j + 1] = lut[g] * (1 - w) + (g + s) * w; d[j + 2] = lut[b] * (1 - w) + (b + s) * w;
+    }
+    return d;
+  }
+
   /* Aufbereitung: document = Papier weiß, Schrift kräftig; colordoc = dasselbe, aber Farben bleiben;
      bw = Otsu-Schwarzweiß; gray; original */
   function enhance(src, mode) {
@@ -216,7 +244,7 @@
       const hi = Math.max(lo + 20, Math.min(paper - 10, t + Math.round((paper - t) * 0.45)));   // Durchscheinen entfernen
       const lut = new Uint8ClampedArray(256);
       for (let v = 0; v < 256; v++) lut[v] = Math.round(Math.pow(clamp((v - lo) / (hi - lo)), 1.3) * 255);
-      for (let j = 0; j < d.length; j += 4) { d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]]; }
+      colorLut(d, lut);
       cleanEdges(d, c.width, c.height);
       ctx.putImageData(img, 0, 0);
       return c;
@@ -299,13 +327,13 @@
   /* Papierblatt auf einem Foto finden → 4 Ecken (normiert 0..1, Reihenfolge tl,tr,br,bl). Rechenkern: js/docdetect.js.
      hint: bereits bekannte Ecken (z. B. aus der Live-Erkennung) → nur an den echten Kanten nachführen */
   function detectDocument(src, maxSide = 600, hint) {
-    const s = scaled(src, maxSide), d = s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data;
-    return DocDetect.findDocument(d, s.width, s.height, hint);
+    const { d, W, H } = pixels(src, maxSide);
+    return DocDetect.findDocument(d, W, H, hint);
   }
 
   /* Liegt das Blatt vor einem andersartigen Untergrund? (Helligkeit/Farbe außerhalb deutlich anders als das Papier) */
   function hasBackground(src, corners) {
-    const s = scaled(src, 240), W = s.width, H = s.height, d = s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, W, H).data;
+    const { d, W, H } = pixels(src, 240);
     const Q = corners.map(([x, y]) => [x * W, y * H]);
     const inside = (x, y) => { let c = false; for (let i = 0, j = 3; i < 4; j = i++) { const [xi, yi] = Q[i], [xj, yj] = Q[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
     // Papierweiß = 75-%-Wert innen (Schrift zählt nicht), Untergrund = Median außen
@@ -411,7 +439,7 @@
     return { dark: n ? dark / n : 0, solid: n ? solid / n : 0, color: n ? color / n : 0 };
   }
   const blankData = (d, W, H) => { const s = blankOf(d, W, H); return s.dark < 0.0004 && s.solid < 0.003 && s.color < 0.002; };
-  const isBlank = src => { const s = scaled(src, 600); return blankData(s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data, s.width, s.height); };
+  const isBlank = src => { const { d, W, H } = pixels(src, 600); return blankData(d, W, H); };
 
   /* Kompakt-Speicherung nach dem MRC-Prinzip (wie ABBYY/Acrobat):
      Ebene 1 = Schrift als 1-Bit-Maske in hoher Auflösung (scharf, sehr klein mit Flate),
@@ -465,7 +493,7 @@
     let cropped = false, angle = 0;
     // Foto (gewählt oder bei „Automatisch“ erkannt): ausschneiden, Seitenverhältnis und Farben unverändert, kein Geraderichten nach Text
     if (photo || detectPhoto) {
-      const s = scaled(c, 900), f = DocDetect.findPhoto(s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data, s.width, s.height);
+      const px = pixels(c, 900), f = DocDetect.findPhoto(px.d, px.W, px.H);
       if (photo || f.photoLike) {
         if (f.found) { c = warp(c, f.corners, false); cropped = true; }
         return { orig: c, processed: enhance(c, 'original'), cropped, angle: 0, autoMode: null, photo: true };
@@ -534,5 +562,5 @@
     return c;
   }
 
-  root.Imaging = { grain, smooth, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
+  root.Imaging = { pixels, grain, smooth, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
 })(self);

@@ -87,3 +87,25 @@ test('Leerseite: weißes Blatt und durchscheinende Rückseite sind leer, helle o
   const text = sheet(); for (let x = 150; x < 650; x += 30) disc(text, x, 600, 6);   // eine kurze Zeile
   assert.equal(I.blankData(text, W, H), false);
 });
+
+// Rückmeldung 20.11.2026: Rechnung gescannt, Briefkopf mit Firmenlogo fehlte bzw. war blass
+test('Kleines Firmenlogo im Briefkopf macht die Seite zur Farbseite, Farbrauschen nicht', () => {
+  const w = 400, h = 566, mk = fn => { const d = new Uint8ClampedArray(w * h * 4); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const j = (y * w + x) * 4, c = fn(x, y); d[j] = c[0]; d[j + 1] = c[1]; d[j + 2] = c[2]; d[j + 3] = 255; } return d; };
+  const text = (x, y) => y > 150 && y < 500 && x > 40 && x < 360 && y % 12 < 2 ? [40, 40, 40] : [245, 245, 242];
+  // Logo 22×8 mm (etwa 0,2 % der Seite) – lag unter der bisherigen 0,3-%-Schwelle
+  assert.equal(I.colorfulData(mk((x, y) => x > 300 && x < 342 && y > 30 && y < 46 ? [40, 110, 200] : text(x, y)), w, h), true);
+  let s = 3; const rnd = () => (s = s * 16807 % 2147483647) / 2147483647;
+  assert.equal(I.colorfulData(mk((x, y) => rnd() < 0.002 ? [200, 60, 60] : text(x, y)), w, h), false, 'verstreute Farbpunkte (Rauschen) sind keine Farbseite');
+  assert.equal(I.colorfulData(mk(text), w, h), false);
+});
+
+test('Farbseite: helles Logo bleibt farbig, graues Durchscheinen wird weiß', () => {
+  const lut = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) lut[v] = Math.round(Math.min(1, Math.max(0, (v - 30) / (190 - 30))) ** 1.3 * 255);
+  const d = new Uint8ClampedArray([150, 190, 230, 255, 245, 200, 60, 255, 205, 205, 203, 255, 40, 40, 40, 255]);
+  I.colorLut(d, lut);
+  const ch = j => Math.max(d[j], d[j + 1], d[j + 2]) - Math.min(d[j], d[j + 1], d[j + 2]);
+  assert.ok(ch(0) >= 60 && d[0] < 200, 'hellblaues Logo bleibt blau: ' + [...d.slice(0, 3)]);
+  assert.ok(ch(4) >= 120, 'gelbes Logo bleibt gelb: ' + [...d.slice(4, 7)]);
+  assert.deepEqual([...d.slice(8, 11)], [255, 255, 255], 'Durchscheinen wird weiß');
+  assert.ok(d[12] < 30, 'Schrift bleibt dunkel');
+});

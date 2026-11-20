@@ -38,7 +38,7 @@ test('Tabellenlinien entfernen: dünne Rahmen weg, Schrift und dicke Balken blei
 });
 
 // Synthetisches Handyfoto: Blatt (Viereck) mit Schriftzeilen auf einem Untergrund, mit Licht, Schatten und Rauschen
-function scene({ W = 480, H = 640, quad, bg = 'dark', light = 0, shadow = 0, seed = 7, text = true, hand = false }) {
+function scene({ W = 480, H = 640, quad, bg = 'dark', light = 0, shadow = 0, seed = 7, text = true, hand = false, kopf = null, kante = 0 }) {
   let s = seed; const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
   const Q = quad.map(([x, y]) => [x * W, y * H]);
   const inside = (x, y) => { let c = false; for (let i = 0, j = 3; i < 4; j = i++) { const [xi, yi] = Q[i], [xj, yj] = Q[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
@@ -59,6 +59,11 @@ function scene({ W = 480, H = 640, quad, bg = 'dark', light = 0, shadow = 0, see
     if (text && cov > 0) { const rel = (y - top) / (bot - top); if (rel > 0.15 && rel < 0.8 && (y % 14) < 3 && distOut(x, y) > W * 0.08 && ((x * 7 + y) % 23) > 4) p = 40; }
     let C = [p, p, p * 0.99];
     if (hand && cov > 0 && x < W * 0.33 && y > H * 0.82) C = [205, 160, 135];   // Daumen auf dem Blatt
+    if (kopf && cov > 0) {   // Briefkopf: randloser Farbbalken bzw. durchgehende Linie, parallel zur oberen Blattkante
+      const [a, b] = Q, L = Math.hypot(b[0] - a[0], b[1] - a[1]), dist = Math.abs((b[0] - a[0]) * (a[1] - y) - (a[0] - x) * (b[1] - a[1])) / L, hgt = bot - top;
+      if (kopf.linie ? Math.abs(dist - kopf.linie * hgt) < 1.5 : dist < kopf.h * hgt) C = kopf.c;
+    }
+    if (kante && y < kante * H) B = [150 + n, 150 + n, 150 + n];   // Tischkante oberhalb des Blatts (zweiter Untergrund)
     for (let k = 0; k < 3; k++) d[(y * W + x) * 4 + k] = B[k] * (1 - cov) + C[k] * cov;
     d[(y * W + x) * 4 + 3] = 255;
   }
@@ -78,6 +83,12 @@ const cases = [
   ['ungleichmäßiges Licht', { quad: persp, bg: 'gray', light: 0.35 }],
   ['Daumen am Rand', { quad: straight, bg: 'wood', hand: true }],
   ['heller Untergrund ohne Schrift', { quad: persp, bg: 'white', shadow: 10, text: false }],
+  // Briefkopf darf nicht abgeschnitten werden (Rückmeldung 20.11.2026: Rechnung ohne Briefkopf und Logo gescannt)
+  ['Briefkopf: blauer Balken randlos, dunkler Tisch', { quad: straight, bg: 'dark', kopf: { h: 0.12, c: [20, 60, 140] } }],
+  ['Briefkopf: roter Balken randlos, Holztisch, Perspektive', { quad: persp, bg: 'wood', kopf: { h: 0.1, c: [190, 30, 30] } }],
+  ['Briefkopf: grüner Balken 25 %, gedreht', { quad: rot, bg: 'gray', kopf: { h: 0.25, c: [0, 90, 60] } }],
+  ['Briefkopf: durchgehende Linie darunter, weißer Tisch', { quad: persp, bg: 'white', shadow: 14, kopf: { linie: 0.15, c: [30, 30, 30] } }],
+  ['Tischkante über dem Blatt wird nicht mitgenommen', { quad: straight, bg: 'dark', kante: 0.06 }],
 ];
 for (const [name, o] of cases) {
   test('Blatterkennung: ' + name, () => {

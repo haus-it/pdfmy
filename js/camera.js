@@ -104,7 +104,9 @@
   function looksBlurry(cv) {
     const s = Imaging.scaled(cv, 800), d = s.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, s.width, s.height).data;
     let dark = 0; for (let i = 1; i < d.length; i += 16) if (d[i] < 120) dark++;
-    return dark / (d.length / 16) > 0.004 && sharpness(s) < BLUR_LIMIT;
+    const blurry = dark / (d.length / 16) > 0.004 && sharpness(s) < BLUR_LIMIT;
+    s.width = 0; s.height = 0;   // iPhone: Canvas-Speicher sofort freigeben
+    return blurry;
   }
   // Grauwerte eines Ausschnitts (Anteile 0–1, ohne Rand) – jeder 3. Bildpunkt reicht
   function grayOf(cv, x0 = 0, y0 = 0, x1 = 1, y1 = 1) {
@@ -212,7 +214,8 @@
     const k = Math.min(1, 320 / Math.max(v.videoWidth, v.videoHeight));
     small.width = Math.round(v.videoWidth * k); small.height = Math.round(v.videoHeight * k);
     small.getContext('2d', { willReadFrequently: true }).drawImage(v, 0, 0, small.width, small.height);
-    const det = Imaging.detectDocument(small, 320);
+    // iPhone: ist der Grafikspeicher kurz voll (InvalidStateError), dieses Bild auslassen statt einen Programmfehler zu melden
+    let det; try { det = Imaging.detectDocument(small, 320); } catch (e) { if (e?.name !== 'InvalidStateError') console.warn('Live-Erkennung:', e); return; }
     if (plausible(det)) { smooth = smoothCorners(smooth, det.corners); det.corners = smooth; } else smooth = null;
     lastDet = det;
     const ok = plausible(det), fp = ok ? fingerprint(small, det) : null;

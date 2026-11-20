@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Briefkopf und Logo beim Kamera-Scan (app-v319)
+- Behoben (Rückmeldung: „Rechnung gescannt – der Briefkopf mit dem Firmenlogo soll mitgescannt werden“): Die Blatterkennung hielt einen randlosen farbigen Kopfbalken oder eine durchgehende Linie unter dem Briefkopf für die obere Blattkante und schnitt den Briefkopf ab. Jetzt prüft sie, ob die Seitenkanten des Blatts über eine gefundene Kante hinaus gerade weiterlaufen, und nimmt den Streifen dann mit. Eine Tischkante oberhalb des Blatts wird weiterhin nicht mitgenommen.
+- Kleine Firmenlogos (unter 0,3 % der Seite) machen die Seite jetzt zur Farbseite – vorher wurde die Seite als Graustufen-Dokument aufbereitet und ein helles Logo verschwand fast. Auf Farbseiten werden farbige Flächen (Logo, Stempel, Kopfbalken) beim Entfernen der durchscheinenden Rückseite nur noch leicht aufgehellt und bleiben farbig.
+- Behoben: Auf dem iPhone konnte die Live-Blatterkennung „InvalidStateError“ melden, wenn der Grafikspeicher voll war – sie legte alle 150 ms eine neue Zeichenfläche an. Jetzt werden kleine Bilder ohne Kopie gelesen und Zwischenflächen sofort freigegeben; scheitert ein einzelnes Vorschaubild doch, wird es ausgelassen.
+- Hilfe: Hinweis „Briefkopf und Logo“ beim Scannen mit der Kamera, in 40 Sprachen.
+- js/docdetect.js, js/imaging.js, js/camera.js; Tests in tests/docdetect.test.js und tests/imaging.test.js; Durchlauf im Browser geprüft.
+
 ### SEPA-Datei gegen das amtliche Schema geprüft (app-v318)
 - Die erzeugte pain.008.001.08-Datei ist jetzt im Test gegen das amtliche ISO-20022-Schema geprüft (iso20022.org, Datei in tests/sepa-xsd/ mit SHA-256): mit und ohne BIC, Erst- und Folgelastschriften, Einzelposten, 33 Posten, überlange Namen und Verwendungszwecke, Cent-Beträge. Zusätzlich einmalig gegen das EPC-Schema für SEPA-Basislastschriften (EPC130-08) geprüft – gültig.
 - Behoben: „1 Lastschriften“, „1 Zeilen“, „1 Mandatsreferenzen“ – jetzt Einzahl, in 40 Sprachen.

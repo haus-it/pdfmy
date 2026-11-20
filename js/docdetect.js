@@ -199,6 +199,45 @@
     return 0.6 * per.reduce((s, v) => s + v, 0) / 4 + 0.4 * Math.min(...per);
   }
 
+  // Anteil der Punkte von a nach b, an denen eine Kante parallel zu ab liegt (gleiche Hell/Dunkel-Richtung)
+  function segEdge(E, a, b) {
+    const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, nx = (b[1] - a[1]) / L, ny = -(b[0] - a[0]) / L, N = Math.max(6, Math.min(40, Math.round(L / 2)));
+    let pos = 0, neg = 0;
+    for (let s = 0; s < N; s++) {
+      const t = (s + 0.5) / N, px = a[0] + (b[0] - a[0]) * t, py = a[1] + (b[1] - a[1]) * t;
+      let best = 0, bv = 0; for (let d = -2; d <= 2; d++) { const v = edgeAt(E, px + nx * d, py + ny * d, nx, ny); if (Math.abs(v) > best) { best = Math.abs(v); bv = v; } }
+      if (best >= E.edgeT) bv > 0 ? pos++ : neg++;
+    }
+    return Math.max(pos, neg) / N;
+  }
+  /* Briefkopf nicht abschneiden: Ein randloser farbiger Kopfbalken oder eine durchgehende Linie unter dem Briefkopf sieht für die Papiersuche
+     wie die Blattkante aus. Laufen die beiden Seitenkanten des Blatts über eine Kante hinaus gerade weiter und endet dort eine äußere Kante
+     (oder der Bildrand), gehört der Streifen zum Blatt → Kante bis dorthin verschieben (je Kante höchstens drei Viertel der gefundenen Seitenlänge). */
+  function extend(E, q) {
+    q = q.map(p => p.slice());
+    for (let k = 0; k < 4; k++) {
+      const a = q[k], b = q[(k + 1) % 4], pa = q[(k + 3) % 4], pb = q[(k + 2) % 4];
+      const la = Math.hypot(a[0] - pa[0], a[1] - pa[1]) || 1, lb = Math.hypot(b[0] - pb[0], b[1] - pb[1]) || 1;
+      const ua = [(a[0] - pa[0]) / la, (a[1] - pa[1]) / la], ub = [(b[0] - pb[0]) / lb, (b[1] - pb[1]) / lb], side = Math.min(la, lb);
+      const inImg = p => p[0] >= 0 && p[1] >= 0 && p[0] <= E.W - 1 && p[1] <= E.H - 1, onBorder = p => p[0] < 3 || p[1] < 3 || p[0] > E.W - 4 || p[1] > E.H - 4;
+      let best = 0;
+      for (let d = 4; d <= side * 0.75; d++) {
+        const A = [a[0] + ua[0] * d, a[1] + ua[1] * d], B = [b[0] + ub[0] * d, b[1] + ub[1] * d];
+        if (!inImg(A) || !inImg(B)) break;
+        // Seitenkanten müssen bis hierher durchgehend weiterlaufen – sonst endet das Blatt (die ersten Punkte an der Ecke sind verwischt)
+        if (d <= 12) continue;
+        const a2 = [a[0] + ua[0] * 6, a[1] + ua[1] * 6], b2 = [b[0] + ub[0] * 6, b[1] + ub[1] * 6];
+        if (segEdge(E, a2, A) < 0.7 || segEdge(E, B, b2) < 0.7) break;
+        if (segEdge(E, A, B) >= 0.6 || (onBorder(A) && onBorder(B))) best = d;
+      }
+      if (best > 12) {
+        q[k] = [a[0] + ua[0] * best, a[1] + ua[1] * best];
+        q[(k + 1) % 4] = [b[0] + ub[0] * best, b[1] + ub[1] * best];
+      }
+    }
+    return q;
+  }
+
   /* rgba: Bilddaten W×H. hint: bekannte Ecken (normiert) → nur nachführen (z. B. bei voller Auflösung nach der Live-Erkennung) */
   function findDocument(rgba, W, H, hint) {
     const E = prepare(rgba, W, H), full = [[0, 0], [1, 0], [1, 1], [0, 1]];
@@ -235,6 +274,11 @@
       }
     }
     if (!best || best.score < 0.4) return { corners: full, found: false, score: best ? best.score : 0 };
+    const ext = order(extend(E, best.q));
+    if (ext.some((p, i) => Math.hypot(p[0] - best.q[i][0], p[1] - best.q[i][1]) > 2)) {
+      const r = order(refine(E, ext, Math.max(2, R >> 1))), A = area(r) / n;
+      if (A <= 0.985 && anglesOk(r)) best = { ...best, q: r, area: A, fill: Math.min(1, best.fill * best.area / A) };
+    }
     return { corners: norm(inset(best.q, W, H)), found: true, score: best.score, fill: Math.max(best.fill, Math.min(1, best.score + 0.25)), area: best.area };
   }
   /* Foto auf dem Scannerglas: Untergrund = Farbe am Bildrand (Deckel, meist weiß); das Foto ist die größte zusammenhängende Fläche,
@@ -369,6 +413,6 @@
     return out.sort((a, b) => b.w * b.h - a.w * a.h).slice(0, max);
   }
 
-  const api = { findDocument, findPhoto, order, area, anglesOk, removeLines, findFigures };
+  const api = { findDocument, findPhoto, order, area, anglesOk, removeLines, findFigures, _intern: { prepare, segEdge, extend } };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.DocDetect = api;
 })(typeof self !== 'undefined' ? self : this);
