@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Gavebekreftelse (gavekvittering)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Gavebekreftelse (gavekvittering) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Gavebekreftelse opprettet – signer (verktøyet «Signatur») og lagre. Oppbevar en kopi (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Gavebekreftelser: {0} av {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Gavebekreftelser: {0} av {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Utfyllbare skjemaer for foreninger, barnehager og foreldreutvalg: medlemssøknad med SEPA-mandat, samtykke til bilder, samtykke til turer",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Utfyllbare skjemaer med navnet på foreningen eller virksomheten deres – send dem på e-post, fyll ut og signer på mobilen. Kommer mange utfylt tilbake: «Skjemadata …» → «Velg utfylte PDF-er …» gjør dem om til en Excel-liste.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Kontingenter til avkrysning (én per linje)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Denne kreditoridentifikasjonen er ugyldig – kontroller skrivemåten (f.eks. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Samtykkeerklæring for turer og utflukter (mal)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Samtykke til bilder og publisering (mal)",
+ "Formular erstellen": "Lag skjema",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Skjema opprettet – lagre det og send det på e-post. Kommer det utfylt tilbake: «Skjemadata …» → «Velg utfylte PDF-er …» for en Excel-liste.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Kreditoridentifikasjon (for SEPA-mandatet)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Medlemssøknad med SEPA-avtale om direkte debitering",
+ "Name des Vereins bzw. der Einrichtung": "Navn på foreningen eller virksomheten",
+ "Vereinsvorlagen": "Foreningsmaler",
+ "Vereinsvorlagen …": "Foreningsmaler …",
+ "Wofür werden Fotos veröffentlicht?": "Hva skal bildene publiseres til?",
+ "z. B. DE98ZZZ09999999999": "f.eks. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "f.eks. omtale av trening, turneringer og fester",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returner til (e-post eller adresse, valgfritt)"
 }

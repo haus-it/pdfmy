@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Framlagsstaðfesting (framlagskvittun)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Framlagsstaðfesting (framlagskvittun) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Framlagsstaðfesting búin til – undirritaðu (tólið „Undirskrift“) og vistaðu. Geymdu afrit (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Framlagsstaðfestingar: {0} af {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Framlagsstaðfestingar: {0} af {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Útfyllanleg eyðublöð fyrir félög, leikskóla og foreldraráð: félagsumsókn með SEPA-heimild, samþykki fyrir myndum, samþykki fyrir ferðum",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Útfyllanleg eyðublöð með nafni félagsins eða stofnunarinnar ykkar – send í tölvupósti, fyllt út og undirrituð í símanum. Ef mörg koma útfyllt til baka: „Gögn eyðublaðs …“ → „Velja útfyllt PDF …“ býr til Excel-lista úr þeim.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Félagsgjöld til að haka við (eitt í hverri línu)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Þetta auðkenni kröfuhafa er ógilt – athugið stafsetninguna (t.d. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Samþykkisyfirlýsing vegna ferða og skoðunarferða (sniðmát)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Samþykki fyrir myndum og birtingu (sniðmát)",
+ "Formular erstellen": "Búa til eyðublað",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Eyðublað búið til – vistið það og sendið í tölvupósti. Komi það útfyllt til baka: „Gögn eyðublaðs …“ → „Velja útfyllt PDF …“ fyrir Excel-lista.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Auðkenni kröfuhafa (fyrir SEPA-heimildina)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Félagsumsókn með SEPA-beingreiðsluheimild",
+ "Name des Vereins bzw. der Einrichtung": "Heiti félagsins eða stofnunarinnar",
+ "Vereinsvorlagen": "Sniðmát fyrir félög",
+ "Vereinsvorlagen …": "Sniðmát fyrir félög …",
+ "Wofür werden Fotos veröffentlicht?": "Í hvaða tilgangi eru myndir birtar?",
+ "z. B. DE98ZZZ09999999999": "t.d. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "t.d. umfjöllun um æfingar, mót og hátíðir",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Skila til (netfang eða heimilisfang, valfrjálst)"
 }

@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Vereinsvorlagen: Mitgliedsantrag mit SEPA-Mandat, Einwilligung Fotos, Einverständnis Fahrten (app-v315)
+- „Mehr → Vereinsvorlagen …“: ausfüllbare PDF-Formulare mit Namen und Anschrift des Vereins bzw. der Einrichtung. Mitgliedsantrag mit Beiträgen zum Ankreuzen, Datenschutz-Kenntnisnahme und SEPA-Lastschriftmandat (Standardwortlaut der Deutschen Kreditwirtschaft, Gläubiger-ID mit Prüfziffer geprüft). Einwilligung zu Fotos (Website, soziale Medien, Presse, Namensnennung; Widerruf nach Art. 7 Abs. 3 DSGVO) und Einverständnis für Fahrten (Schwimmen, Freizeit ohne Aufsicht, Fahrgemeinschaft, Gesundheit, Notfallkontakt) als gekennzeichnete Muster.
+- Sprechende Feldnamen (Vorname, IBAN …) – PDFMy prüft die IBAN beim Ausfüllen, und „Ausgefüllte PDFs zusammenführen“ (v313) liefert eine lesbare Excel-Liste. Unicode-Schrift für alle Namen, keine Skripte im PDF. Vereinsangaben aus der Zuwendungsbestätigung werden übernommen.
+- js/vereinsvorlagen.js, tests/vereinsvorlagen.test.js (Rundlauf Vorlage → ausgefüllt → Liste); Durchlauf in der App geprüft.
+
 ### Zuwendungsbestätigung (Spendenquittung) für gemeinnützige Vereine (app-v314)
 - „Mehr → Zuwendungsbestätigung (Spendenquittung) …“: Bestätigung über Geldzuwendungen/Mitgliedsbeitrag (Anlage 3) bzw. Sammelbestätigung mit Anlage (Anlage 14) nach dem BMF-Schreiben vom 07.11.2013 (BStBl I S. 1333), weiterhin gültig laut EStH 2025, Anhang 37 I. Wortlaut am amtlichen Abdruck geprüft und im Test festgeschrieben; Reihenfolge unverändert, eine A4-Seite, keine Werbung.
 - Betrag in Ziffern und Buchstaben („einhunderteins Euro“, „ein Euro fünfzig Cent“), fortlaufende Nummer je Jahr, Vereinsangaben gemerkt. Freistellungsbescheid oder Feststellung nach § 60a AO; Fristprüfung nach § 63 Abs. 5 AO (5 bzw. 3 Jahre) mit sofortiger Warnung.

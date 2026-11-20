@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Giftbevestiging (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Giftbevestiging (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Bevestiging aangemaakt – onderteken (hulpmiddel „Handtekening”) en sla op. Bewaar een duplicaat (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Giftbevestigingen: {0} van {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Giftbevestigingen: {0} van {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Invulbare formulieren voor verenigingen, kinderdagverblijven en ouderraden: lidmaatschapsaanvraag met SEPA-machtiging, toestemming voor foto’s, toestemming voor uitstapjes",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Invulbare formulieren met de naam van uw vereniging of instelling – per e-mail versturen, op de telefoon invullen en laten ondertekenen. Komen er veel ingevuld terug: “Formuliergegevens …” → “Ingevulde pdf’s kiezen …” maakt er een Excel-lijst van.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Contributies om aan te vinken (één per regel)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Deze incassant-ID is ongeldig – controleer de schrijfwijze (bijv. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Toestemmingsverklaring voor uitstapjes en reizen (voorbeeld)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Toestemming voor foto’s en publicaties (voorbeeld)",
+ "Formular erstellen": "Formulier maken",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formulier gemaakt – sla het op en verstuur het per e-mail. Ingevuld terug: “Formuliergegevens …” → “Ingevulde pdf’s kiezen …” voor een Excel-lijst.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Incassant-ID (voor de SEPA-machtiging)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Lidmaatschapsaanvraag met SEPA-incassomachtiging",
+ "Name des Vereins bzw. der Einrichtung": "Naam van de vereniging of instelling",
+ "Vereinsvorlagen": "Verenigingssjablonen",
+ "Vereinsvorlagen …": "Verenigingssjablonen …",
+ "Wofür werden Fotos veröffentlicht?": "Waarvoor worden foto’s gepubliceerd?",
+ "z. B. DE98ZZZ09999999999": "bijv. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "bijv. de verslaggeving over trainingen, toernooien en feesten",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Terugsturen naar (e-mail of adres, optioneel)"
 }

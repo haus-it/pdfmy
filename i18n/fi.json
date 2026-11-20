@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Lahjoitusvahvistus (lahjoituskuitti)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Lahjoitusvahvistus (lahjoituskuitti) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Lahjoitusvahvistus luotu – allekirjoita (työkalu ”Allekirjoitus”) ja tallenna. Säilytä jäljennös (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Lahjoitusvahvistukset: {0} / {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Lahjoitusvahvistukset: {0} / {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Täytettävät lomakkeet yhdistyksille, päiväkodeille ja vanhempainyhdistyksille: jäsenhakemus SEPA-valtuutuksella, valokuvasuostumus, suostumus retkille",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Täytettävät lomakkeet yhdistyksenne tai laitoksenne nimellä – lähetä sähköpostilla, täytä ja allekirjoita puhelimella. Jos paljon täytettyjä palaa takaisin: ”Lomaketiedot …” → ”Valitse täytetyt PDF-tiedostot …” tekee niistä Excel-luettelon.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Jäsenmaksut rastitettaviksi (yksi per rivi)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Tämä velkojan tunniste on virheellinen – tarkista kirjoitusasu (esim. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Suostumus retkille ja matkoille (malli)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Suostumus valokuviin ja julkaisemiseen (malli)",
+ "Formular erstellen": "Luo lomake",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Lomake luotu – tallenna se ja lähetä sähköpostilla. Täytettynä takaisin: ”Lomaketiedot …” → ”Valitse täytetyt PDF-tiedostot …” Excel-luetteloa varten.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Velkojan tunniste (SEPA-valtuutusta varten)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Jäsenhakemus SEPA-suoraveloitusvaltuutuksella",
+ "Name des Vereins bzw. der Einrichtung": "Yhdistyksen tai laitoksen nimi",
+ "Vereinsvorlagen": "Yhdistyspohjat",
+ "Vereinsvorlagen …": "Yhdistyspohjat …",
+ "Wofür werden Fotos veröffentlicht?": "Mihin tarkoitukseen valokuvia julkaistaan?",
+ "z. B. DE98ZZZ09999999999": "esim. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "esim. raportointi harjoituksista, turnauksista ja juhlista",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Palauta osoitteeseen (sähköposti tai osoite, valinnainen)"
 }

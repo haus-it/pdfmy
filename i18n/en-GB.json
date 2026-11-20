@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Donation receipt (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Donation receipt (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Receipt created – sign it (“Signature” tool) and save it. Keep a copy (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Donation receipts: {0} of {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Donation receipts: {0} of {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Fillable forms for clubs, nurseries and parent councils: membership application with SEPA mandate, photo consent, consent for trips",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Fillable forms bearing the name of your club or organisation – send them by email, fill them in and sign them on a phone. If many come back completed: “Form data …” → “Choose completed PDFs …” turns them into an Excel list.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Membership fees to tick (one per line)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "This Creditor Identifier is invalid – please check the spelling (e.g. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Consent form for trips and outings (template)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Consent to photos and publication (template)",
+ "Formular erstellen": "Create form",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Form created – save it and send it by email. Once completed and returned: “Form data …” → “Choose completed PDFs …” for an Excel list.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Creditor Identifier (for the SEPA mandate)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Membership application with SEPA direct debit mandate",
+ "Name des Vereins bzw. der Einrichtung": "Name of the club or organisation",
+ "Vereinsvorlagen": "Club templates",
+ "Vereinsvorlagen …": "Club templates …",
+ "Wofür werden Fotos veröffentlicht?": "What will photos be published for?",
+ "z. B. DE98ZZZ09999999999": "e.g. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "e.g. reports on training, tournaments and events",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Return to (email or address, optional)"
 }

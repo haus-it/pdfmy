@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Cadarnhad rhodd (derbynneb rhodd)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Cadarnhad rhodd (derbynneb rhodd) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Crëwyd y cadarnhad rhodd – llofnodwch (yr offeryn “Llofnod”) a chadwch. Cadwch ddyblyg (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Cadarnhadau rhodd: {0} o {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Cadarnhadau rhodd: {0} o {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Ffurflenni llenwadwy ar gyfer clybiau, meithrinfeydd a chynghorau rhieni: cais aelodaeth gyda mandad SEPA, caniatâd ar gyfer lluniau, caniatâd ar gyfer teithiau",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Ffurflenni llenwadwy gydag enw eich clwb neu sefydliad – anfonwch nhw drwy e-bost, llenwch nhw a’u llofnodi ar y ffôn. Os daw llawer yn ôl wedi’u llenwi: mae “Data’r ffurflen …” → “Dewis PDFau wedi’u llenwi …” yn eu troi’n rhestr Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Ffioedd aelodaeth i’w ticio (un y llinell)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Mae’r Dynodydd Credydwr hwn yn annilys – gwiriwch y sillafu (e.e. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Ffurflen ganiatâd ar gyfer teithiau a gwibdeithiau (templed)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Caniatâd ar gyfer lluniau a chyhoeddi (templed)",
+ "Formular erstellen": "Creu ffurflen",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Ffurflen wedi’i chreu – cadwch hi a’i hanfon drwy e-bost. Wedi dod yn ôl wedi’i llenwi: “Data’r ffurflen …” → “Dewis PDFau wedi’u llenwi …” ar gyfer rhestr Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Dynodydd Credydwr (ar gyfer y mandad SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Cais aelodaeth gyda mandad debyd uniongyrchol SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Enw’r clwb neu’r sefydliad",
+ "Vereinsvorlagen": "Templedi clybiau",
+ "Vereinsvorlagen …": "Templedi clybiau …",
+ "Wofür werden Fotos veröffentlicht?": "At ba ddiben y cyhoeddir lluniau?",
+ "z. B. DE98ZZZ09999999999": "e.e. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "e.e. adroddiadau am hyfforddiant, twrnameintiau a digwyddiadau",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Dychwelyd i (e-bost neu gyfeiriad, dewisol)"
 }

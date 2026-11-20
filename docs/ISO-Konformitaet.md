@@ -403,3 +403,5 @@ Nachtrag 20.11.2026 (app-v312): Bildbearbeitung in Formular-XObjects (ISO 32000-
 Nachtrag 20.11.2026 (app-v313): Ausgefüllte Formulare zusammenführen – Verarbeitung ausschließlich lokal im Browser, keine Übertragung personenbezogener Daten (ISO 27001 A.8.12, DSGVO Art. 25); CSV mit korrekter Maskierung von Semikolon und Anführungszeichen (keine Verschiebung von Spalten). Test: tests/formular-ruecklauf.test.js.
 
 Nachtrag 20.11.2026 (app-v314): Zuwendungsbestätigungen nach amtlichem Muster (BMF 07.11.2013, Anlagen 3 und 14). Normtreue (ISO 9001 8.5.1): Wortlaut im Test gegen den amtlichen Abdruck festgeschrieben, Fristprüfung § 63 Abs. 5 AO. Datenschutz (ISO 27001 A.8.12, DSGVO Art. 25): Spenderdaten nur lokal; Vereinsangaben im Browser gespeichert. Test: tests/zuwendung.test.js.
+
+Nachtrag 20.11.2026 (app-v315): Vereinsvorlagen. SEPA-Mandatstext nach dem Standard der Deutschen Kreditwirtschaft, im Test festgeschrieben; Gläubiger-ID mit Prüfziffer (ISO 7064 MOD 97-10) geprüft. Rechtstexte für Fotos und Fahrten ausdrücklich als Muster gekennzeichnet (keine Rechtsberatung). Keine Skripte im PDF (KONZEPT Leitplanke 6). Test: tests/vereinsvorlagen.test.js.

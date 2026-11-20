@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Підтвердження пожертви (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Підтвердження пожертви (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Підтвердження створено – підпишіть (інструмент «Підпис») і збережіть. Збережіть дублікат (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Підтвердження пожертв: {0} з {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Підтвердження пожертв: {0} з {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Форми для заповнення для об’єднань, дитячих садків і батьківських рад: заява про вступ із мандатом SEPA, згода на фотографії, згода на поїздки",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Форми для заповнення з назвою вашого об’єднання чи закладу – надсилайте електронною поштою, заповнюйте й підписуйте на телефоні. Якщо повертається багато заповнених: «Дані форми …» → «Вибрати заповнені PDF …» перетворює їх на список Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Внески для позначення (по одному в рядку)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Цей ідентифікатор кредитора недійсний – перевірте написання (напр. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Згода на поїздки та екскурсії (зразок)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Згода на фотографії та публікації (зразок)",
+ "Formular erstellen": "Створити форму",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Форму створено – збережіть її та надішліть електронною поштою. Повернулася заповненою: «Дані форми …» → «Вибрати заповнені PDF …» для списку Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Ідентифікатор кредитора (для мандата SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Заява про вступ із мандатом SEPA на пряме дебетування",
+ "Name des Vereins bzw. der Einrichtung": "Назва об’єднання або закладу",
+ "Vereinsvorlagen": "Шаблони для об’єднань",
+ "Vereinsvorlagen …": "Шаблони для об’єднань …",
+ "Wofür werden Fotos veröffentlicht?": "З якою метою публікуються фотографії?",
+ "z. B. DE98ZZZ09999999999": "напр. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "напр. висвітлення тренувань, турнірів і свят",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Повернути на (електронна пошта або адреса, необов’язково)"
 }

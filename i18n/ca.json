@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Confirmació de donació (rebut de donatiu)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Confirmació de donació (rebut de donatiu) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "S'ha creat la confirmació de donació – signeu (eina «Signatura») i deseu. Conserveu un duplicat (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Confirmacions de donació: {0} de {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Confirmacions de donació: {0} de {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Formularis emplenables per a associacions, llars d’infants i consells de pares: sol·licitud de soci amb mandat SEPA, consentiment per a fotos, autorització per a sortides",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Formularis emplenables amb el nom de la vostra associació o entitat: s’envien per correu electrònic, s’omplen i se signen al mòbil. Si en tornen molts d’emplenats: «Dades del formulari …» → «Tria els PDF emplenats …» els converteix en una llista d’Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Quotes per marcar (una per línia)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Aquest identificador del creditor no és vàlid; comproveu l’escriptura (p. ex. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Autorització per a sortides i excursions (model)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Consentiment per a fotos i publicacions (model)",
+ "Formular erstellen": "Crea el formulari",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formulari creat: deseu-lo i envieu-lo per correu electrònic. Retornat emplenat: «Dades del formulari …» → «Tria els PDF emplenats …» per obtenir una llista d’Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identificador del creditor (per al mandat SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Sol·licitud de soci amb mandat de domiciliació SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Nom de l’associació o de l’entitat",
+ "Vereinsvorlagen": "Plantilles per a associacions",
+ "Vereinsvorlagen …": "Plantilles per a associacions …",
+ "Wofür werden Fotos veröffentlicht?": "Amb quina finalitat es publiquen les fotos?",
+ "z. B. DE98ZZZ09999999999": "p. ex. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "p. ex. la informació sobre entrenaments, torneigs i festes",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Retorna a (correu electrònic o adreça, opcional)"
 }

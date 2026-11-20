@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Attestazione di donazione (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Attestazione di donazione (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Attestazione creata – la firmi (strumento «Firma») e la salvi. Conservi un duplicato (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Attestazioni di donazione: {0} di {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Attestazioni di donazione: {0} di {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Moduli compilabili per associazioni, asili nido e comitati dei genitori: domanda di iscrizione con mandato SEPA, consenso per le foto, autorizzazione per le gite",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Moduli compilabili con il nome della vostra associazione o struttura: da inviare per e-mail, compilare e far firmare sul cellulare. Se ne tornano molti compilati: «Dati del modulo …» → «Scegli PDF compilati …» li trasforma in un elenco Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Quote da spuntare (una per riga)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Questo identificativo del creditore non è valido: controllate la grafia (ad es. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Autorizzazione per gite ed escursioni (modello)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Consenso per foto e pubblicazioni (modello)",
+ "Formular erstellen": "Crea modulo",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Modulo creato: salvatelo e inviatelo per e-mail. Restituito compilato: «Dati del modulo …» → «Scegli PDF compilati …» per un elenco Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identificativo del creditore (per il mandato SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Domanda di iscrizione con mandato di addebito diretto SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Nome dell’associazione o della struttura",
+ "Vereinsvorlagen": "Modelli per associazioni",
+ "Vereinsvorlagen …": "Modelli per associazioni …",
+ "Wofür werden Fotos veröffentlicht?": "Per quale scopo vengono pubblicate le foto?",
+ "z. B. DE98ZZZ09999999999": "ad es. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "ad es. la cronaca di allenamenti, tornei e feste",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Restituire a (e-mail o indirizzo, facoltativo)"
 }

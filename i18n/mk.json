@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Потврда за донација (признаница за донација)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Потврда за донација (признаница за донација) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Потврдата за донација е создадена – потпишете (алатка „Потпис“) и зачувајте. Чувајте дупликат (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Потврди за донација: {0} од {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Потврди за донација: {0} од {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Пополнливи обрасци за здруженија, градинки и родителски совети: пристапница со SEPA овластување, согласност за фотографии, согласност за излети",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Пополнливи обрасци со името на вашето здружение или установа – испратете ги по е-пошта, пополнете ги и потпишете ги на телефон. Ако се вратат многу пополнети: „Податоци од образецот …“ → „Избери пополнети PDF-датотеки …“ прави список во Excel од нив.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Членарини за означување (една по ред)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Овој идентификатор на доверител е неважечки – проверете го правописот (на пр. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Изјава за согласност за излети и патувања (образец)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Согласност за фотографии и објавување (образец)",
+ "Formular erstellen": "Создај образец",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Образецот е создаден – зачувајте го и испратете го по е-пошта. Вратен пополнет: „Податоци од образецот …“ → „Избери пополнети PDF-датотеки …“ за список во Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Идентификатор на доверител (за SEPA овластувањето)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Пристапница со SEPA овластување за директно задолжување",
+ "Name des Vereins bzw. der Einrichtung": "Име на здружението или установата",
+ "Vereinsvorlagen": "Шаблони за здруженија",
+ "Vereinsvorlagen …": "Шаблони за здруженија …",
+ "Wofür werden Fotos veröffentlicht?": "Во која цел се објавуваат фотографиите?",
+ "z. B. DE98ZZZ09999999999": "на пр. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "на пр. известување за тренинзи, турнири и прослави",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вратете на (е-пошта или адреса, незадолжително)"
 }

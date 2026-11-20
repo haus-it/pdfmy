@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Donationsbekræftelse (donationskvittering)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Donationsbekræftelse (donationskvittering) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Donationsbekræftelse oprettet – skriv under (værktøjet “Underskrift”) og gem. Opbevar en kopi (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Donationsbekræftelser: {0} af {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Donationsbekræftelser: {0} af {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Udfyldelige formularer til foreninger, børnehaver og forældreråd: medlemsansøgning med SEPA-mandat, samtykke til fotos, samtykke til ture",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Udfyldelige formularer med navnet på Deres forening eller institution – send dem på e-mail, udfyld og underskriv dem på mobilen. Kommer mange udfyldt tilbage: “Formulardata …” → “Vælg udfyldte PDF’er …” laver en Excel-liste af dem.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Kontingenter til afkrydsning (ét pr. linje)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Dette kreditoridentifikationsnummer er ugyldigt – kontrollér stavemåden (f.eks. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Samtykkeerklæring til ture og udflugter (skabelon)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Samtykke til fotos og offentliggørelse (skabelon)",
+ "Formular erstellen": "Opret formular",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formular oprettet – gem den og send den på e-mail. Udfyldt tilbage: “Formulardata …” → “Vælg udfyldte PDF’er …” til en Excel-liste.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Kreditoridentifikationsnummer (til SEPA-mandatet)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Medlemsansøgning med SEPA-betalingsaftale (direkte debitering)",
+ "Name des Vereins bzw. der Einrichtung": "Navn på foreningen eller institutionen",
+ "Vereinsvorlagen": "Foreningsskabeloner",
+ "Vereinsvorlagen …": "Foreningsskabeloner …",
+ "Wofür werden Fotos veröffentlicht?": "Hvad bliver fotos offentliggjort til?",
+ "z. B. DE98ZZZ09999999999": "f.eks. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "f.eks. omtale af træning, turneringer og fester",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnér til (e-mail eller adresse, valgfrit)"
 }

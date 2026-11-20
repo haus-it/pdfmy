@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Vërtetim donacioni (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Vërtetim donacioni (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Vërtetimi u krijua – nënshkruajeni (mjeti «Nënshkrimi») dhe ruajeni. Ruani një kopje (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Vërtetime donacioni: {0} nga {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Vërtetime donacioni: {0} nga {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Formularë të plotësueshëm për shoqata, çerdhe dhe këshilla prindërish: kërkesë anëtarësimi me mandat SEPA, pëlqim për fotografi, pëlqim për udhëtime",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Formularë të plotësueshëm me emrin e shoqatës ose institucionit tuaj – dërgojini me e-mail, plotësojini dhe nënshkruajini në telefon. Nëse kthehen shumë të plotësuar: “Të dhënat e formularit …” → “Zgjidh PDF-të e plotësuara …” i kthen në një listë Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Kuota anëtarësimi për t’u shënuar (një për rresht)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Ky identifikues i kreditorit është i pavlefshëm – kontrolloni shkrimin (p.sh. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Deklaratë pëlqimi për udhëtime dhe ekskursione (model)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Pëlqim për fotografi dhe publikime (model)",
+ "Formular erstellen": "Krijo formularin",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formulari u krijua – ruajeni dhe dërgojeni me e-mail. Të kthyer të plotësuar: “Të dhënat e formularit …” → “Zgjidh PDF-të e plotësuara …” për një listë Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identifikuesi i kreditorit (për mandatin SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Kërkesë anëtarësimi me mandat debitimi direkt SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Emri i shoqatës ose i institucionit",
+ "Vereinsvorlagen": "Modele shoqatash",
+ "Vereinsvorlagen …": "Modele shoqatash …",
+ "Wofür werden Fotos veröffentlicht?": "Për çfarë qëllimi publikohen fotografitë?",
+ "z. B. DE98ZZZ09999999999": "p.sh. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "p.sh. raportimi mbi stërvitjet, turneret dhe festat",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Kthejeni te (e-mail ose adresë, opsionale)"
 }

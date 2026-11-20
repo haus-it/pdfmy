@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Potvrzení o daru (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Potvrzení o daru (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Potvrzení vytvořeno – podepište (nástroj „Podpis“) a uložte. Uschovejte si duplikát (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Potvrzení o daru: {0} z {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Potvrzení o daru: {0} z {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Vyplnitelné formuláře pro spolky, školky a rodičovské rady: přihláška za člena se SEPA mandátem, souhlas s fotografiemi, souhlas s výlety",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Vyplnitelné formuláře s názvem vašeho spolku nebo zařízení – pošlete je e-mailem, nechte je vyplnit a podepsat v telefonu. Vrátí-li se jich mnoho vyplněných: „Data formuláře …“ → „Vybrat vyplněná PDF …“ z nich vytvoří seznam v Excelu.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Členské příspěvky k zaškrtnutí (jeden na řádek)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Tento identifikátor věřitele je neplatný – zkontrolujte zápis (např. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Souhlas s výlety a cestami (vzor)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Souhlas s fotografiemi a zveřejněním (vzor)",
+ "Formular erstellen": "Vytvořit formulář",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formulář vytvořen – uložte jej a pošlete e-mailem. Vyplněný zpět: „Data formuláře …“ → „Vybrat vyplněná PDF …“ pro seznam v Excelu.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identifikátor věřitele (pro SEPA mandát)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Přihláška za člena se SEPA mandátem k inkasu",
+ "Name des Vereins bzw. der Einrichtung": "Název spolku nebo zařízení",
+ "Vereinsvorlagen": "Šablony pro spolky",
+ "Vereinsvorlagen …": "Šablony pro spolky …",
+ "Wofür werden Fotos veröffentlicht?": "K jakému účelu se fotografie zveřejňují?",
+ "z. B. DE98ZZZ09999999999": "např. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "např. zpravodajství o trénincích, turnajích a slavnostech",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Vrátit na (e-mail nebo adresa, nepovinné)"
 }

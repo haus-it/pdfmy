@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Potrdilo o darilu (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Potrdilo o darilu (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Potrdilo ustvarjeno – podpišite (orodje „Podpis“) in shranite. Obdržite dvojnik (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Potrdila o darilu: {0} od {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Potrdila o darilu: {0} od {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Izpolnjljivi obrazci za društva, vrtce in svete staršev: pristopna izjava s pooblastilom SEPA, privolitev za fotografije, privolitev za izlete",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Izpolnjljivi obrazci z imenom vašega društva ali ustanove – pošljite jih po e-pošti, izpolnite in podpišite na telefonu. Če se jih vrne veliko izpolnjenih: »Podatki obrazca …« → »Izberi izpolnjene PDF-je …« iz njih naredi seznam v Excelu.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Članarine za označitev (ena na vrstico)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Ta identifikator upnika ni veljaven – preverite zapis (npr. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Izjava o privolitvi za izlete in potovanja (vzorec)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Privolitev za fotografije in objavo (vzorec)",
+ "Formular erstellen": "Ustvari obrazec",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Obrazec je ustvarjen – shranite ga in pošljite po e-pošti. Vrnjen izpolnjen: »Podatki obrazca …« → »Izberi izpolnjene PDF-je …« za seznam v Excelu.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identifikator upnika (za pooblastilo SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Pristopna izjava s pooblastilom SEPA za direktno obremenitev",
+ "Name des Vereins bzw. der Einrichtung": "Ime društva ali ustanove",
+ "Vereinsvorlagen": "Predloge za društva",
+ "Vereinsvorlagen …": "Predloge za društva …",
+ "Wofür werden Fotos veröffentlicht?": "V kakšen namen se fotografije objavljajo?",
+ "z. B. DE98ZZZ09999999999": "npr. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "npr. poročanje o treningih, turnirjih in prireditvah",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Vrni na (e-pošta ali naslov, neobvezno)"
 }

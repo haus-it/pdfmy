@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Подтверждение пожертвования (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Подтверждение пожертвования (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Подтверждение создано – подпишите (инструмент «Подпись») и сохраните. Сохраните дубликат (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Подтверждения пожертвований: {0} из {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Подтверждения пожертвований: {0} из {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Заполняемые формы для объединений, детских садов и родительских советов: заявление о вступлении с мандатом SEPA, согласие на фотографии, согласие на поездки",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Заполняемые формы с названием вашего объединения или учреждения – отправляйте по электронной почте, заполняйте и подписывайте на телефоне. Если возвращается много заполненных: «Данные формы …» → «Выбрать заполненные PDF …» превращает их в список Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Взносы для отметки (по одному в строке)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Этот идентификатор кредитора недействителен – проверьте написание (напр. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Согласие на поездки и экскурсии (образец)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Согласие на фотографии и публикации (образец)",
+ "Formular erstellen": "Создать форму",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Форма создана – сохраните её и отправьте по электронной почте. Вернулась заполненной: «Данные формы …» → «Выбрать заполненные PDF …» для списка Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Идентификатор кредитора (для мандата SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Заявление о вступлении с мандатом SEPA на прямое дебетование",
+ "Name des Vereins bzw. der Einrichtung": "Название объединения или учреждения",
+ "Vereinsvorlagen": "Шаблоны для объединений",
+ "Vereinsvorlagen …": "Шаблоны для объединений …",
+ "Wofür werden Fotos veröffentlicht?": "С какой целью публикуются фотографии?",
+ "z. B. DE98ZZZ09999999999": "напр. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "напр. освещение тренировок, турниров и праздников",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вернуть по адресу (электронная почта или адрес, необязательно)"
 }

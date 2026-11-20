@@ -3774,6 +3774,31 @@ $('#belegAll').onclick = async () => {
 };
 
 /* ---------- Bewirtungsbeleg: Angaben nach § 4 Abs. 5 Satz 1 Nr. 2 EStG als Seite hinter dem Beleg ---------- */
+/* ---------- Vereinsvorlagen: Mitgliedsantrag/SEPA, Fotos, Fahrten (js/vereinsvorlagen.js, app-v315) ---------- */
+const vvArt = () => document.querySelector('input[name="vvArt"]:checked')?.value || 'mitglied';
+const vvShow = () => { $('#vvMitglied').hidden = vvArt() !== 'mitglied'; $('#vvFotoF').hidden = vvArt() !== 'foto'; };
+document.querySelectorAll('input[name="vvArt"]').forEach(r => r.addEventListener('change', vvShow));
+$('#btnVV').onclick = () => {
+  closeMenu?.();
+  const v = LS.get('vvVerein', null), z = LS.get('zuwVerein', null);   // Vereinsangaben aus der Zuwendungsbestätigung übernehmen
+  $('#vvName').value = v?.verein || z?.aussteller?.name || ''; $('#vvAdr').value = v?.anschrift || z?.aussteller?.anschrift || '';
+  $('#vvGlId').value = v?.glaeubigerId || ''; $('#vvBeitr').value = v?.beitraege || ''; $('#vvZweck').value = v?.zweck || ''; $('#vvKontakt').value = v?.kontakt || '';
+  $('#vvMsg').textContent = ''; vvShow(); $('#vvDlg').showModal(); $('#vvName').focus();
+};
+$('#vvCancel').onclick = () => $('#vvDlg').close();
+$('#vvForm').onsubmit = async e => {
+  e.preventDefault();
+  const v = { verein: $('#vvName').value.trim(), anschrift: $('#vvAdr').value.trim(), glaeubigerId: $('#vvGlId').value.replace(/\s+/g, '').toUpperCase(), beitraege: $('#vvBeitr').value.trim(), zweck: $('#vvZweck').value.trim(), kontakt: $('#vvKontakt').value.trim() };
+  if (!v.verein) { $('#vvName').focus(); return; }
+  // Gläubiger-ID: Länderkennzeichen, Prüfziffern, Geschäftsbereich, nationale Kennung – Prüfziffer wie bei der IBAN (ohne Geschäftsbereich)
+  if (vvArt() === 'mitglied' && v.glaeubigerId && !(/^[A-Z]{2}\d{2}[A-Z0-9]{3}[A-Z0-9]{1,28}$/.test(v.glaeubigerId) && QrStempel.ibanValid(v.glaeubigerId.slice(0, 4) + v.glaeubigerId.slice(7)))) {
+    $('#vvMsg').textContent = I18N.t('Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).'); $('#vvGlId').focus(); return;
+  }
+  LS.set('vvVerein', v); $('#vvDlg').close();
+  const bytes = await Vereinsvorlagen.erzeugen(PDFLib, vvArt(), v, await zuwOpts());
+  await importFiles([new File([bytes], `${Vereinsvorlagen.VORLAGEN[vvArt()].datei} ${v.verein.replace(/[\\/:*?"<>|]+/g, ' ')}.pdf`, { type: 'application/pdf' })]);
+  status('Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.');
+};
 /* ---------- Zuwendungsbestätigung (Spendenquittung) nach amtlichem Muster (js/zuwendung.js, app-v314) ---------- */
 const zuwArt = () => document.querySelector('input[name="zuwArt"]:checked')?.value || 'frei';
 const zuwVerein = () => ({ aussteller: { name: $('#zuwVName').value.trim(), anschrift: $('#zuwVAdr').value.trim() }, ort: $('#zuwVOrt').value.trim(), zwecke: $('#zuwZweck').value.trim(),

@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Paramos patvirtinimas (paramos kvitas)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Paramos patvirtinimas (paramos kvitas) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Paramos patvirtinimas sukurtas – pasirašykite (įrankis „Parašas“) ir išsaugokite. Saugokite kopiją (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Paramos patvirtinimai: {0} iš {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Paramos patvirtinimai: {0} iš {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Pildomos formos draugijoms, darželiams ir tėvų tarybos: prašymas tapti nariu su SEPA įgaliojimu, sutikimas dėl nuotraukų, sutikimas dėl kelionių",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Pildomos formos su jūsų draugijos ar įstaigos pavadinimu – siųskite el. paštu, užpildykite ir pasirašykite telefone. Jei atgal grįžta daug užpildytų: „Formos duomenys …“ → „Pasirinkti užpildytus PDF …“ sukuria iš jų Excel sąrašą.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Nario mokesčiai pažymėti (po vieną eilutėje)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Šis kreditoriaus identifikatorius neteisingas – patikrinkite rašybą (pvz., DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Sutikimo forma kelionėms ir išvykoms (pavyzdys)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Sutikimas dėl nuotraukų ir skelbimo (pavyzdys)",
+ "Formular erstellen": "Sukurti formą",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Forma sukurta – išsaugokite ją ir išsiųskite el. paštu. Grįžus užpildytai: „Formos duomenys …“ → „Pasirinkti užpildytus PDF …“ Excel sąrašui gauti.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Kreditoriaus identifikatorius (SEPA įgaliojimui)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Prašymas tapti nariu su SEPA tiesioginio debeto įgaliojimu",
+ "Name des Vereins bzw. der Einrichtung": "Draugijos ar įstaigos pavadinimas",
+ "Vereinsvorlagen": "Draugijų šablonai",
+ "Vereinsvorlagen …": "Draugijų šablonai …",
+ "Wofür werden Fotos veröffentlicht?": "Kokiu tikslu skelbiamos nuotraukos?",
+ "z. B. DE98ZZZ09999999999": "pvz., DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "pvz., pranešimai apie treniruotes, turnyrus ir šventes",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Grąžinti (el. paštas arba adresas, neprivaloma)"
 }

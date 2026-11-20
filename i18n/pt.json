@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Comprovativo de doação (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Comprovativo de doação (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Comprovativo criado – assine (ferramenta «Assinatura») e guarde. Guarde uma cópia (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Comprovativos de doação: {0} de {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Comprovativos de doação: {0} de {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Formulários preenchíveis para associações, creches e conselhos de pais: pedido de adesão com mandato SEPA, consentimento para fotografias, autorização para passeios",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Formulários preenchíveis com o nome da sua associação ou instituição – enviados por e-mail, preenchidos e assinados no telemóvel. Se voltarem muitos preenchidos: «Dados do formulário …» → «Escolher PDF preenchidos …» transforma-os numa lista Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Quotas para assinalar (uma por linha)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Este identificador do credor é inválido – verifique a grafia (p. ex. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Autorização para passeios e excursões (modelo)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Consentimento para fotografias e publicações (modelo)",
+ "Formular erstellen": "Criar formulário",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formulário criado – guarde-o e envie-o por e-mail. Devolvido preenchido: «Dados do formulário …» → «Escolher PDF preenchidos …» para uma lista Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identificador do credor (para o mandato SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Pedido de adesão com mandato de débito direto SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Nome da associação ou da instituição",
+ "Vereinsvorlagen": "Modelos para associações",
+ "Vereinsvorlagen …": "Modelos para associações …",
+ "Wofür werden Fotos veröffentlicht?": "Para que fins são publicadas as fotografias?",
+ "z. B. DE98ZZZ09999999999": "p. ex. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "p. ex. a reportagem sobre treinos, torneios e festas",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Devolver a (e-mail ou morada, facultativo)"
 }

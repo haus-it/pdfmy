@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Potwierdzenie darowizny (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Potwierdzenie darowizny (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Potwierdzenie utworzone – podpisz (narzędzie „Podpis”) i zapisz. Zachowaj duplikat (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Potwierdzenia darowizn: {0} z {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Potwierdzenia darowizn: {0} z {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Wypełnialne formularze dla stowarzyszeń, przedszkoli i rad rodziców: deklaracja członkowska z mandatem SEPA, zgoda na zdjęcia, zgoda na wyjazdy",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Wypełnialne formularze z nazwą Państwa stowarzyszenia lub placówki – wysyłane e-mailem, wypełniane i podpisywane na telefonie. Gdy wróci ich wiele wypełnionych: „Dane formularza …” → „Wybierz wypełnione pliki PDF …” tworzy z nich listę w Excelu.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Składki do zaznaczenia (jedna w wierszu)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Ten identyfikator wierzyciela jest nieprawidłowy – proszę sprawdzić zapis (np. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Oświadczenie o zgodzie na wyjazdy i wycieczki (wzór)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Zgoda na zdjęcia i publikację (wzór)",
+ "Formular erstellen": "Utwórz formularz",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formularz utworzony – proszę go zapisać i wysłać e-mailem. Wrócił wypełniony: „Dane formularza …” → „Wybierz wypełnione pliki PDF …” dla listy w Excelu.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identyfikator wierzyciela (dla mandatu SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Deklaracja członkowska z mandatem polecenia zapłaty SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Nazwa stowarzyszenia lub placówki",
+ "Vereinsvorlagen": "Wzory dla stowarzyszeń",
+ "Vereinsvorlagen …": "Wzory dla stowarzyszeń …",
+ "Wofür werden Fotos veröffentlicht?": "W jakim celu zdjęcia są publikowane?",
+ "z. B. DE98ZZZ09999999999": "np. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "np. relacje z treningów, turniejów i uroczystości",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Odeślij na (e-mail lub adres, opcjonalnie)"
 }

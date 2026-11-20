@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Adományigazolás (adománynyugta)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Adományigazolás (adománynyugta) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Az adományigazolás elkészült – írja alá (az „Aláírás“ eszközzel) és mentse el. Őrizzen meg egy másodpéldányt (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Adományigazolások: {0} / {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Adományigazolások: {0} / {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Kitölthető űrlapok egyesületeknek, óvodáknak és szülői munkaközösségeknek: belépési nyilatkozat SEPA-meghatalmazással, hozzájárulás fényképekhez, hozzájárulás kirándulásokhoz",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Kitölthető űrlapok az Ön egyesületének vagy intézményének nevével – küldje el e-mailben, töltesse ki és írassa alá telefonon. Ha sok kitöltött érkezik vissza: „Űrlapadatok …” → „Kitöltött PDF-ek kiválasztása …” Excel-listát készít belőlük.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Tagdíjak bejelöléshez (soronként egy)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Ez a hitelezőazonosító érvénytelen – kérjük, ellenőrizze a leírást (pl. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Hozzájáruló nyilatkozat kirándulásokhoz és utazásokhoz (minta)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Hozzájárulás fényképekhez és közzétételhez (minta)",
+ "Formular erstellen": "Űrlap létrehozása",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Az űrlap elkészült – mentse el, és küldje el e-mailben. Kitöltve visszaérkezve: „Űrlapadatok …” → „Kitöltött PDF-ek kiválasztása …” Excel-listához.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Hitelezőazonosító (a SEPA-meghatalmazáshoz)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Belépési nyilatkozat SEPA csoportos beszedési megbízással",
+ "Name des Vereins bzw. der Einrichtung": "Az egyesület vagy intézmény neve",
+ "Vereinsvorlagen": "Egyesületi sablonok",
+ "Vereinsvorlagen …": "Egyesületi sablonok …",
+ "Wofür werden Fotos veröffentlicht?": "Mire használják a közzétett fényképeket?",
+ "z. B. DE98ZZZ09999999999": "pl. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "pl. beszámolók edzésekről, versenyekről és ünnepségekről",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Visszaküldés ide (e-mail vagy cím, nem kötelező)"
 }

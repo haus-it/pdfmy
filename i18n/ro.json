@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Confirmare de donație (chitanță de donație)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Confirmare de donație (chitanță de donație) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Confirmarea de donație a fost creată – semnați (instrumentul „Semnătură”) și salvați. Păstrați un duplicat (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Confirmări de donație: {0} din {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Confirmări de donație: {0} din {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Formulare completabile pentru asociații, creșe și comitete de părinți: cerere de înscriere cu mandat SEPA, acord pentru fotografii, acord pentru excursii",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Formulare completabile cu numele asociației sau instituției dumneavoastră – se trimit prin e-mail, se completează și se semnează pe telefon. Dacă se întorc multe completate: „Datele formularului …” → „Alege PDF-urile completate …” le transformă într-o listă Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Cotizații de bifat (câte una pe rând)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Acest identificator de creditor este invalid – verificați scrierea (de ex. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Acord pentru excursii și deplasări (model)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Acord pentru fotografii și publicări (model)",
+ "Formular erstellen": "Creează formularul",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formular creat – salvați-l și trimiteți-l prin e-mail. Returnat completat: „Datele formularului …” → „Alege PDF-urile completate …” pentru o listă Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identificator de creditor (pentru mandatul SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Cerere de înscriere cu mandat de debitare directă SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Numele asociației sau al instituției",
+ "Vereinsvorlagen": "Șabloane pentru asociații",
+ "Vereinsvorlagen …": "Șabloane pentru asociații …",
+ "Wofür werden Fotos veröffentlicht?": "În ce scop sunt publicate fotografiile?",
+ "z. B. DE98ZZZ09999999999": "de ex. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "de ex. relatarea despre antrenamente, turnee și sărbători",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnați la (e-mail sau adresă, opțional)"
 }

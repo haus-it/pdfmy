@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Пацвярджэнне ахвяравання (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Пацвярджэнне ахвяравання (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Пацвярджэнне створана – падпішыце (інструмент «Подпіс») і захайце. Захайце дублікат (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Пацвярджэнні ахвяраванняў: {0} з {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Пацвярджэнні ахвяраванняў: {0} з {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Запаўняльныя формы для аб’яднанняў, дзіцячых садкоў і бацькоўскіх саветаў: заява аб уступленні з мандатам SEPA, згода на фатаграфіі, згода на паездкі",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Запаўняльныя формы з назвай вашага аб’яднання або ўстановы – адпраўляйце па электроннай пошце, запаўняйце і падпісвайце на тэлефоне. Калі вяртаецца шмат запоўненых: «Даныя формы …» → «Выбраць запоўненыя PDF …» ператварае іх у спіс Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Узносы для адзнакі (па адным у радку)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Гэты ідэнтыфікатар крэдытора недапушчальны – праверце напісанне (напр. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Згода на паездкі і экскурсіі (ўзор)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Згода на фатаграфіі і публікацыі (ўзор)",
+ "Formular erstellen": "Стварыць форму",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Форма створана – захавайце яе і адпраўце па электроннай пошце. Вярнулася запоўненай: «Даныя формы …» → «Выбраць запоўненыя PDF …» для спісу Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Ідэнтыфікатар крэдытора (для мандата SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Заява аб уступленні з мандатам SEPA на прамое дэбетаванне",
+ "Name des Vereins bzw. der Einrichtung": "Назва аб’яднання або ўстановы",
+ "Vereinsvorlagen": "Шаблоны для аб’яднанняў",
+ "Vereinsvorlagen …": "Шаблоны для аб’яднанняў …",
+ "Wofür werden Fotos veröffentlicht?": "З якой мэтай публікуюцца фатаграфіі?",
+ "z. B. DE98ZZZ09999999999": "напр. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "напр. асвятленне трэніровак, турніраў і свят",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Вярнуць на (электронная пошта або адрас, неабавязкова)"
 }

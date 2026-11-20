@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Konferma ta’ donazzjoni (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Konferma ta’ donazzjoni (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Il-konferma nħolqot – iffirma (għodda “Firma”) u salva. Żomm kopja (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Konfermi ta’ donazzjoni: {0} minn {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Konfermi ta’ donazzjoni: {0} minn {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Formoli li jistgħu jimtlew għal assoċjazzjonijiet, nurseries u kunsilli tal-ġenituri: applikazzjoni għal sħubija b’mandat SEPA, kunsens għar-ritratti, kunsens għall-ivvjaġġar",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Formoli li jistgħu jimtlew bl-isem tal-assoċjazzjoni jew tal-istituzzjoni tagħkom – ibagħtuhom bl-email, imlewhom u ffirmawhom fuq it-telefon. Jekk jerġgħu lura ħafna mimlijin: “Data tal-formola …” → “Agħżel PDFs mimlijin …” jagħmilhom lista Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Miżati tas-sħubija biex jiġu mmarkati (waħda f’kull linja)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Dan l-Identifikatur tal-Kreditur mhuwiex validu – iċċekkjaw l-ortografija (eż. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Dikjarazzjoni ta’ kunsens għall-ivvjaġġar u l-ħarġiet (mudell)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Kunsens għar-ritratti u l-pubblikazzjoni (mudell)",
+ "Formular erstellen": "Oħloq formola",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formola maħluqa – issejvjawha u ibagħtuha bl-email. Mimlija lura: “Data tal-formola …” → “Agħżel PDFs mimlijin …” għal lista Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identifikatur tal-Kreditur (għall-mandat SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Applikazzjoni għal sħubija b’mandat ta’ debitu dirett SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Isem l-assoċjazzjoni jew tal-istituzzjoni",
+ "Vereinsvorlagen": "Mudelli għal assoċjazzjonijiet",
+ "Vereinsvorlagen …": "Mudelli għal assoċjazzjonijiet …",
+ "Wofür werden Fotos veröffentlicht?": "Għal liema skop jiġu ppubblikati r-ritratti?",
+ "z. B. DE98ZZZ09999999999": "eż. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "eż. rapporti dwar taħriġ, tornej u festi",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Irritorna lil (email jew indirizz, mhux obbligatorju)"
 }

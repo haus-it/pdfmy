@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Gåvobekräftelse (gåvokvitto)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Gåvobekräftelse (gåvokvitto) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Gåvobekräftelse skapad – skriv under (verktyget ”Underskrift”) och spara. Spara en kopia (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Gåvobekräftelser: {0} av {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Gåvobekräftelser: {0} av {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Ifyllbara formulär för föreningar, förskolor och föräldraråd: medlemsansökan med SEPA-medgivande, samtycke till foton, samtycke till resor",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Ifyllbara formulär med namnet på er förening eller verksamhet – skicka dem med e-post, fyll i och underteckna dem på mobilen. Kommer många ifyllda tillbaka: ”Formulärdata …” → ”Välj ifyllda PDF-filer …” gör en Excel-lista av dem.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Avgifter att bocka för (en per rad)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Detta borgenärsidentifikationsnummer är ogiltigt – kontrollera stavningen (t.ex. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Samtyckesblankett för resor och utflykter (mall)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Samtycke till foton och publicering (mall)",
+ "Formular erstellen": "Skapa formulär",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formulär skapat – spara det och skicka det med e-post. Kommer det ifyllt tillbaka: ”Formulärdata …” → ”Välj ifyllda PDF-filer …” för en Excel-lista.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Borgenärsidentifikationsnummer (för SEPA-medgivandet)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Medlemsansökan med SEPA-medgivande för autogiro",
+ "Name des Vereins bzw. der Einrichtung": "Namn på föreningen eller verksamheten",
+ "Vereinsvorlagen": "Föreningsmallar",
+ "Vereinsvorlagen …": "Föreningsmallar …",
+ "Wofür werden Fotos veröffentlicht?": "Vad ska fotona publiceras för?",
+ "z. B. DE98ZZZ09999999999": "t.ex. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "t.ex. rapportering om träningar, turneringar och fester",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Returnera till (e-post eller adress, frivilligt)"
 }

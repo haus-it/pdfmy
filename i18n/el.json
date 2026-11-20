@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Βεβαίωση δωρεάς (απόδειξη δωρεάς)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Βεβαίωση δωρεάς (απόδειξη δωρεάς) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Η βεβαίωση δωρεάς δημιουργήθηκε – υπογράψτε (εργαλείο «Υπογραφή») και αποθηκεύστε. Φυλάξτε ένα αντίγραφο (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Βεβαιώσεις δωρεάς: {0} από {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Βεβαιώσεις δωρεάς: {0} από {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Συμπληρώσιμες φόρμες για συλλόγους, παιδικούς σταθμούς και συλλόγους γονέων: αίτηση συμμετοχής με εντολή SEPA, συγκατάθεση για φωτογραφίες, συγκατάθεση για εκδρομές",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Συμπληρώσιμες φόρμες με το όνομα του συλλόγου ή του φορέα σας – στείλτε τις με email, συμπληρώστε και υπογράψτε τις στο κινητό. Αν επιστρέψουν πολλές συμπληρωμένες: «Δεδομένα φόρμας …» → «Επιλογή συμπληρωμένων PDF …» τις μετατρέπει σε λίστα Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Συνδρομές προς επισήμανση (μία ανά γραμμή)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Αυτό το αναγνωριστικό πιστωτή δεν είναι έγκυρο – ελέγξτε την ορθογραφία (π.χ. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Δήλωση συγκατάθεσης για εκδρομές και ταξίδια (υπόδειγμα)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Συγκατάθεση για φωτογραφίες και δημοσιεύσεις (υπόδειγμα)",
+ "Formular erstellen": "Δημιουργία φόρμας",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Η φόρμα δημιουργήθηκε – αποθηκεύστε την και στείλτε την με email. Επιστράφηκε συμπληρωμένη: «Δεδομένα φόρμας …» → «Επιλογή συμπληρωμένων PDF …» για λίστα Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Αναγνωριστικό πιστωτή (για την εντολή SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Αίτηση συμμετοχής με εντολή άμεσης χρέωσης SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Όνομα του συλλόγου ή του φορέα",
+ "Vereinsvorlagen": "Πρότυπα συλλόγων",
+ "Vereinsvorlagen …": "Πρότυπα συλλόγων …",
+ "Wofür werden Fotos veröffentlicht?": "Για ποιον σκοπό δημοσιεύονται οι φωτογραφίες;",
+ "z. B. DE98ZZZ09999999999": "π.χ. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "π.χ. η κάλυψη προπονήσεων, τουρνουά και εκδηλώσεων",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Επιστροφή σε (email ή διεύθυνση, προαιρετικά)"
 }

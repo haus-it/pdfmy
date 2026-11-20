@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Dohaintza-berrespena (dohaintza-agiria)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Dohaintza-berrespena (dohaintza-agiria) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Dohaintza-berrespena sortu da – sinatu (“Sinadura” tresna) eta gorde. Gorde bikoiztu bat (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Dohaintza-berrespenak: {0} / {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Dohaintza-berrespenak: {0} / {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Bete daitezkeen inprimakiak elkarteentzat, haur-eskoletarako eta guraso-kontseiluentzat: bazkide-eskaera SEPA aginduarekin, argazkietarako baimena, irteeretarako baimena",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Zuen elkartearen edo erakundearen izena duten inprimaki beteak – bidali posta elektronikoz, bete eta sinatu telefonoan. Askotan beteta itzultzen badira: «Inprimakiaren datuak …» → «Aukeratu betetako PDFak …» aukerak Excel zerrenda bihurtzen ditu.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Markatzeko kuotak (bat lerroko)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Hartzekodunaren identifikatzaile hau baliogabea da – egiaztatu idazkera (adib. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Irteeretarako eta bidaietarako baimen-adierazpena (eredua)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Argazkietarako eta argitaratzeko baimena (eredua)",
+ "Formular erstellen": "Sortu inprimakia",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Inprimakia sortu da – gorde eta bidali posta elektronikoz. Beteta itzulita: «Inprimakiaren datuak …» → «Aukeratu betetako PDFak …» Excel zerrenda lortzeko.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Hartzekodunaren identifikatzailea (SEPA aginduarako)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Bazkide-eskaera SEPA zuzeneko zorroztapen aginduarekin",
+ "Name des Vereins bzw. der Einrichtung": "Elkartearen edo erakundearen izena",
+ "Vereinsvorlagen": "Elkarte-ereduak",
+ "Vereinsvorlagen …": "Elkarte-ereduak …",
+ "Wofür werden Fotos veröffentlicht?": "Zertarako argitaratzen dira argazkiak?",
+ "z. B. DE98ZZZ09999999999": "adib. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "adib. entrenamenduei, txapelketei eta jaiei buruzko kronikak",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Itzuli hona (posta elektronikoa edo helbidea, aukerakoa)"
 }

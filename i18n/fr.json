@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Attestation de don (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Attestation de don (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Attestation créée – signez-la (outil « Signature ») et enregistrez-la. Conservez un double (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Attestations de don : {0} sur {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Attestations de don : {0} sur {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Formulaires remplissables pour associations, crèches et conseils de parents : demande d’adhésion avec mandat SEPA, consentement pour les photos, autorisation pour les sorties",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Formulaires remplissables au nom de votre association ou de votre structure – à envoyer par e-mail, à remplir et à faire signer sur le téléphone. Si beaucoup reviennent remplis : « Données de formulaire … » → « Choisir les PDF remplis … » en fait une liste Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Cotisations à cocher (une par ligne)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Cet identifiant créancier est invalide – veuillez vérifier l’écriture (p. ex. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Autorisation pour les sorties et excursions (modèle)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Consentement pour les photos et publications (modèle)",
+ "Formular erstellen": "Créer le formulaire",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Formulaire créé – enregistrez-le et envoyez-le par e-mail. Retourné rempli : « Données de formulaire … » → « Choisir les PDF remplis … » pour une liste Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Identifiant créancier (pour le mandat SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Demande d’adhésion avec mandat de prélèvement SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Nom de l’association ou de la structure",
+ "Vereinsvorlagen": "Modèles d’association",
+ "Vereinsvorlagen …": "Modèles d’association …",
+ "Wofür werden Fotos veröffentlicht?": "Dans quel but les photos sont-elles publiées ?",
+ "z. B. DE98ZZZ09999999999": "p. ex. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "p. ex. les comptes rendus des entraînements, tournois et fêtes",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Retour à (e-mail ou adresse, facultatif)"
 }

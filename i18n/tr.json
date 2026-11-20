@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Bağış belgesi (Zuwendungsbestätigung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Bağış belgesi (Zuwendungsbestätigung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Belge oluşturuldu – imzalayın (“İmza” aracı) ve kaydedin. Bir nüsha saklayın (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Bağış belgeleri: {0} / {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Bağış belgeleri: {0} / {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Dernekler, kreşler ve veli kurulları için doldurulabilir formlar: SEPA yetkili üyelik başvurusu, fotoğraf izni, gezi izni",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Derneğinizin veya kurumunuzun adını taşıyan doldurulabilir formlar – e-postayla gönderin, telefonda doldurup imzalayın. Çok sayıda doldurulmuş form geri gelirse: “Form verileri …” → “Doldurulmuş PDF’leri seç …” bunları bir Excel listesine dönüştürür.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "İşaretlenecek aidatlar (satır başına bir tane)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Bu alacaklı kimlik numarası geçersiz – lütfen yazımı kontrol edin (örn. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Gezi ve geziler için izin beyanı (örnek)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Fotoğraf ve yayın izni (örnek)",
+ "Formular erstellen": "Form oluştur",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Form oluşturuldu – kaydedin ve e-postayla gönderin. Doldurulmuş olarak geri gelince: “Form verileri …” → “Doldurulmuş PDF’leri seç …” ile Excel listesi oluşturun.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Alacaklı kimlik numarası (SEPA yetkisi için)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "SEPA otomatik ödeme yetkili üyelik başvurusu",
+ "Name des Vereins bzw. der Einrichtung": "Derneğin veya kurumun adı",
+ "Vereinsvorlagen": "Dernek şablonları",
+ "Vereinsvorlagen …": "Dernek şablonları …",
+ "Wofür werden Fotos veröffentlicht?": "Fotoğraflar ne amaçla yayımlanacak?",
+ "z. B. DE98ZZZ09999999999": "örn. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "örn. antrenman, turnuva ve şenliklerle ilgili haberler",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Geri gönderilecek yer (e-posta veya adres, isteğe bağlı)"
 }

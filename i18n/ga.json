@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Deimhniú bronntanais (admháil bhronntanais)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Deimhniú bronntanais (admháil bhronntanais) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Cruthaíodh an deimhniú bronntanais – sínigh (an uirlis “Síniú”) agus sábháil. Coinnigh dúblach (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Deimhnithe bronntanais: {0} as {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Deimhnithe bronntanais: {0} as {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Foirmeacha inlíonta do chlubanna, do chreisceanna agus do chomhairlí tuismitheoirí: iarratas ar bhallraíocht le sainordú SEPA, toiliú le haghaidh grianghraf, toiliú le haghaidh turas",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Foirmeacha inlíonta le hainm do chlub nó d’eagraíochta – seol trí ríomhphost iad, líon isteach agus sínigh ar an bhfón iad. Má thagann go leor ar ais líonta: “Sonraí foirme …” → “Roghnaigh PDFanna líonta …” déanann sé liosta Excel díobh.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Táillí ballraíochta le tic a chur leo (ceann amháin in aghaidh na líne)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Tá an Aitheantóir Creidiúnaí seo neamhbhailí – seiceáil an litriú le do thoil (m.sh. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Foirm thoilithe le haghaidh turas agus eachtraí (teimpléad)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Toiliú le haghaidh grianghraf agus foilsithe (teimpléad)",
+ "Formular erstellen": "Cruthaigh foirm",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Foirm cruthaithe – sábháil í agus seol trí ríomhphost í. Ar ais líonta: “Sonraí foirme …” → “Roghnaigh PDFanna líonta …” le haghaidh liosta Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Aitheantóir Creidiúnaí (don sainordú SEPA)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Iarratas ar bhallraíocht le sainordú dochair dhírigh SEPA",
+ "Name des Vereins bzw. der Einrichtung": "Ainm an chlub nó na heagraíochta",
+ "Vereinsvorlagen": "Teimpléid chlub",
+ "Vereinsvorlagen …": "Teimpléid chlub …",
+ "Wofür werden Fotos veröffentlicht?": "Cén fáth a bhfoilseofar grianghraif?",
+ "z. B. DE98ZZZ09999999999": "m.sh. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "m.sh. tuairisciú ar thraenáil, comórtais agus féilte",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Seol ar ais chuig (ríomhphost nó seoladh, roghnach)"
 }

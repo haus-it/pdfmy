@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Потвърждение за дарение (разписка за дарение)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Потвърждение за дарение (разписка за дарение) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Потвърждението за дарение е създадено – подпишете (инструмент „Подпис“) и запазете. Запазете дубликат (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Потвърждения за дарение: {0} от {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Потвърждения за дарение: {0} от {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Попълваеми формуляри за сдружения, детски градини и родителски съвети: заявление за членство със SEPA мандат, съгласие за снимки, съгласие за екскурзии",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Попълваеми формуляри с името на вашето сдружение или институция – изпращайте ги по имейл, попълвайте и подписвайте на телефона. Ако се върнат много попълнени: „Данни от формуляра …“ → „Избор на попълнени PDF …“ ги превръща в списък в Excel.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Членски внос за отбелязване (по един на ред)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "Този идентификатор на кредитор е невалиден – проверете изписването (напр. DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Декларация за съгласие за екскурзии и пътувания (образец)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Съгласие за снимки и публикуване (образец)",
+ "Formular erstellen": "Създаване на формуляр",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Формулярът е създаден – запазете го и го изпратете по имейл. Върнат попълнен: „Данни от формуляра …“ → „Избор на попълнени PDF …“ за списък в Excel.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Идентификатор на кредитор (за SEPA мандата)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Заявление за членство със SEPA мандат за директен дебит",
+ "Name des Vereins bzw. der Einrichtung": "Име на сдружението или институцията",
+ "Vereinsvorlagen": "Шаблони за сдружения",
+ "Vereinsvorlagen …": "Шаблони за сдружения …",
+ "Wofür werden Fotos veröffentlicht?": "С каква цел се публикуват снимките?",
+ "z. B. DE98ZZZ09999999999": "напр. DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "напр. отразяване на тренировки, турнири и празненства",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Връщане на (имейл или адрес, по избор)"
 }

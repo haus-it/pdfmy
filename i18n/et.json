@@ -4068,5 +4068,22 @@
  "Zuwendungsbestätigung (Spendenquittung)": "Annetuskinnitus (annetuskviitung)",
  "Zuwendungsbestätigung (Spendenquittung) …": "Annetuskinnitus (annetuskviitung) …",
  "Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).": "Annetuskinnitus loodud – allkirjastage (tööriist „Allkiri“) ja salvestage. Säilitage koopia (§ 50 Abs. 4 EStDV).",
- "Zuwendungsbestätigungen: {0} von {1} …": "Annetuskinnitused: {0} / {1} …"
+ "Zuwendungsbestätigungen: {0} von {1} …": "Annetuskinnitused: {0} / {1} …",
+ "Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten": "Täidetavad vormid ühingutele, lasteaedadele ja lastevanemate nõukogudele: liikmeavaldus SEPA-volitusega, nõusolek fotode kasutamiseks, nõusolek reisideks",
+ "Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.": "Täidetavad vormid teie ühingu või asutuse nimega – saatke e-kirjaga, täitke ja allkirjastage telefonis. Kui palju täidetuid tuleb tagasi: „Vormi andmed …“ → „Vali täidetud PDF-id …“ teeb neist Exceli loendi.",
+ "Beiträge zum Ankreuzen (je Zeile einer)": "Liikmemaksud märkimiseks (üks rea kohta)",
+ "Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).": "See võlausaldaja identifikaator on kehtetu – kontrollige kirjapilti (nt DE98ZZZ09999999999).",
+ "Einverständniserklärung für Fahrten und Ausflüge (Muster)": "Nõusolek reisideks ja väljasõitudeks (näidis)",
+ "Einwilligung zu Fotos und Veröffentlichungen (Muster)": "Nõusolek fotode ja avaldamise kohta (näidis)",
+ "Formular erstellen": "Loo vorm",
+ "Formular erstellt – speichern und per E-Mail verschicken. Ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ für eine Excel-Liste.": "Vorm loodud – salvestage see ja saatke e-kirjaga. Täidetuna tagasi: „Vormi andmed …“ → „Vali täidetud PDF-id …“ Exceli loendi jaoks.",
+ "Gläubiger-Identifikationsnummer (für das SEPA-Mandat)": "Võlausaldaja identifikaator (SEPA-volituse jaoks)",
+ "Mitgliedsantrag mit SEPA-Lastschriftmandat": "Liikmeavaldus SEPA otsekorralduse volitusega",
+ "Name des Vereins bzw. der Einrichtung": "Ühingu või asutuse nimi",
+ "Vereinsvorlagen": "Ühingumallid",
+ "Vereinsvorlagen …": "Ühingumallid …",
+ "Wofür werden Fotos veröffentlicht?": "Mis eesmärgil fotosid avaldatakse?",
+ "z. B. DE98ZZZ09999999999": "nt DE98ZZZ09999999999",
+ "z. B. die Berichterstattung über Training, Turniere und Feste": "nt ülevaated treeningutest, turniiridest ja pidustustest",
+ "Zurück an (E-Mail oder Anschrift, freiwillig)": "Tagasta aadressile (e-post või postiaadress, vabatahtlik)"
 }
