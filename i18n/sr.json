@@ -4023,5 +4023,15 @@
  "Langzeitprüfdaten werden eingebettet …": "Уграђују се подаци за дугорочну проверу …",
  "Signiert mit Zeitstempel vom {0}, {1} Uhr{2}.": "Потписано са временским жигом од {0}, у {1}{2}.",
  "Sperrauskunft nicht möglich": "Провера опозива није могућа",
- "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Временски жиг независне услуге временског жигосања (RFC 3161, PAdES B-T): доказује да је потпис у том тренутку постојао – и након истека сертификата. Преноси се само контролна вредност потписа, не документ. Са pdfmy Scan од верзије 1.23.0 (Windows), односно 1.13.0 (Mac, Linux) додају се подаци за дугорочну проверу (PAdES B-LTA): подаци о опозиву издаваоца, тј. сертификационог тела, и временски жиг документа – серијски број вашег сертификата тако сазнаје само то тело."
+ "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Временски жиг независне услуге временског жигосања (RFC 3161, PAdES B-T): доказује да је потпис у том тренутку постојао – и након истека сертификата. Преноси се само контролна вредност потписа, не документ. Са pdfmy Scan од верзије 1.23.0 (Windows), односно 1.13.0 (Mac, Linux) додају се подаци за дугорочну проверу (PAdES B-LTA): подаци о опозиву издаваоца, тј. сертификационог тела, и временски жиг документа – серијски број вашег сертификата тако сазнаје само то тело.",
+ "{0} ausgefüllte Formulare zu „{1}“ zusammengeführt – in Excel öffnen.": "Спојено је {0} попуњених образаца у „{1}“ – отворите у програму Excel.",
+ "{0} Formulare zusammengeführt.": "Спојено образаца: {0}.",
+ "Ausgefüllte Formulare zusammenführen": "Споји попуњене обрасце",
+ "Ausgefüllte PDFs wählen …": "Изабери попуњене PDF-ове …",
+ "Formular-Ruecklauf-{0}.csv": "Odgovori-Obrazaca-{0}.csv",
+ "Formulare zusammenführen: {0} von {1} …": "Спајање образаца: {0} од {1} …",
+ "In den gewählten PDFs wurden keine Formularfelder gefunden.": "У изабраним PDF-овима нису пронађена поља образаца.",
+ "Nicht lesbar: {0}.": "Нечитљиво: {0}.",
+ "Ohne Formularfelder (z. B. ausgedruckt und gescannt): {0}.": "Без поља образаца (нпр. одштампано и скенирано): {0}.",
+ "Viele ausgefüllte Exemplare (z. B. Mitgliedsanträge, die per E-Mail zurückkamen) auf einmal wählen – PDFMy macht daraus eine Liste für Excel: eine Zeile je PDF, eine Spalte je Feld.": "Изаберите одједном много попуњених примерака (нпр. приступница за чланство враћених е-поштом) – PDFMy од њих прави списак за Excel: један ред по PDF-у, једна колона по пољу."
 }

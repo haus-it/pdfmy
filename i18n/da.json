@@ -4023,5 +4023,15 @@
  "Langzeitprüfdaten werden eingebettet …": "Langtidsvalideringsdata indlejres …",
  "Signiert mit Zeitstempel vom {0}, {1} Uhr{2}.": "Signeret med tidsstempel fra {0}, kl. {1}{2}.",
  "Sperrauskunft nicht möglich": "Spærringsoplysning ikke mulig",
- "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Tidsstempel fra en uafhængig tidsstempeltjeneste (RFC 3161, PAdES B-T): beviser, at signaturen eksisterede på dette tidspunkt – også efter certifikatets udløb. Der overføres kun en kontrolværdi af signaturen, ikke dokumentet. Med pdfmy Scan fra 1.23.0 (Windows) hhv. 1.13.0 (Mac, Linux) tilføjes langtidsvalideringsdata (PAdES B-LTA): spærringsoplysningen fra den udstedende certificeringsmyndighed og et dokumenttidsstempel – hertil får kun denne myndighed kendskab til dit certifikats serienummer."
+ "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Tidsstempel fra en uafhængig tidsstempeltjeneste (RFC 3161, PAdES B-T): beviser, at signaturen eksisterede på dette tidspunkt – også efter certifikatets udløb. Der overføres kun en kontrolværdi af signaturen, ikke dokumentet. Med pdfmy Scan fra 1.23.0 (Windows) hhv. 1.13.0 (Mac, Linux) tilføjes langtidsvalideringsdata (PAdES B-LTA): spærringsoplysningen fra den udstedende certificeringsmyndighed og et dokumenttidsstempel – hertil får kun denne myndighed kendskab til dit certifikats serienummer.",
+ "{0} ausgefüllte Formulare zu „{1}“ zusammengeführt – in Excel öffnen.": "{0} udfyldte formularer samlet i »{1}« – åbn i Excel.",
+ "{0} Formulare zusammengeführt.": "{0} formularer samlet.",
+ "Ausgefüllte Formulare zusammenführen": "Saml udfyldte formularer",
+ "Ausgefüllte PDFs wählen …": "Vælg udfyldte PDF’er …",
+ "Formular-Ruecklauf-{0}.csv": "Formular-Svar-{0}.csv",
+ "Formulare zusammenführen: {0} von {1} …": "Samler formularer: {0} af {1} …",
+ "In den gewählten PDFs wurden keine Formularfelder gefunden.": "I de valgte PDF’er blev der ikke fundet formularfelter.",
+ "Nicht lesbar: {0}.": "Ikke læsbar: {0}.",
+ "Ohne Formularfelder (z. B. ausgedruckt und gescannt): {0}.": "Uden formularfelter (fx udskrevet og scannet): {0}.",
+ "Viele ausgefüllte Exemplare (z. B. Mitgliedsanträge, die per E-Mail zurückkamen) auf einmal wählen – PDFMy macht daraus eine Liste für Excel: eine Zeile je PDF, eine Spalte je Feld.": "Vælg mange udfyldte eksemplarer på én gang (fx medlemsansøgninger, der kom retur pr. e-mail) – PDFMy laver en liste til Excel af dem: én række pr. PDF, én kolonne pr. felt."
 }

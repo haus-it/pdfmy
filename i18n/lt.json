@@ -4023,5 +4023,15 @@
  "Langzeitprüfdaten werden eingebettet …": "Įterpiami ilgalaikio patikros duomenys …",
  "Signiert mit Zeitstempel vom {0}, {1} Uhr{2}.": "Pasirašyta su laiko žyma {0}, {1} val.{2}.",
  "Sperrauskunft nicht möglich": "Atšaukimo patikra neįmanoma",
- "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Nepriklausomos laiko žymų tarnybos laiko žyma (RFC 3161, PAdES B-T): įrodo, kad parašas tuo metu egzistavo – ir pasibaigus sertifikato galiojimui. Perduodama tik parašo patikros reikšmė, o ne dokumentas. Su pdfmy Scan nuo 1.23.0 (Windows) arba 1.13.0 (Mac, Linux) pridedami ilgalaikio patikros duomenys (PAdES B-LTA): sertifikatą išdavusios sertifikavimo institucijos atšaukimo informacija ir dokumento laiko žyma – tuomet tik ši institucija sužino jūsų sertifikato serijos numerį."
+ "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Nepriklausomos laiko žymų tarnybos laiko žyma (RFC 3161, PAdES B-T): įrodo, kad parašas tuo metu egzistavo – ir pasibaigus sertifikato galiojimui. Perduodama tik parašo patikros reikšmė, o ne dokumentas. Su pdfmy Scan nuo 1.23.0 (Windows) arba 1.13.0 (Mac, Linux) pridedami ilgalaikio patikros duomenys (PAdES B-LTA): sertifikatą išdavusios sertifikavimo institucijos atšaukimo informacija ir dokumento laiko žyma – tuomet tik ši institucija sužino jūsų sertifikato serijos numerį.",
+ "{0} ausgefüllte Formulare zu „{1}“ zusammengeführt – in Excel öffnen.": "Sujungta {0} užpildytų formų į „{1}“ – atidarykite „Excel“.",
+ "{0} Formulare zusammengeführt.": "Sujungta formų: {0}.",
+ "Ausgefüllte Formulare zusammenführen": "Sujungti užpildytas formas",
+ "Ausgefüllte PDFs wählen …": "Pasirinkti užpildytus PDF …",
+ "Formular-Ruecklauf-{0}.csv": "Formu-Atsakymai-{0}.csv",
+ "Formulare zusammenführen: {0} von {1} …": "Jungiamos formos: {0} iš {1} …",
+ "In den gewählten PDFs wurden keine Formularfelder gefunden.": "Pasirinktuose PDF formos laukų nerasta.",
+ "Nicht lesbar: {0}.": "Neįskaitoma: {0}.",
+ "Ohne Formularfelder (z. B. ausgedruckt und gescannt): {0}.": "Be formos laukų (pvz., atspausdinta ir nuskaityta): {0}.",
+ "Viele ausgefüllte Exemplare (z. B. Mitgliedsanträge, die per E-Mail zurückkamen) auf einmal wählen – PDFMy macht daraus eine Liste für Excel: eine Zeile je PDF, eine Spalte je Feld.": "Pasirinkite iš karto daug užpildytų egzempliorių (pvz., el. paštu grįžusių prašymų tapti nariu) – PDFMy sudaro iš jų „Excel“ sąrašą: viena eilutė kiekvienam PDF, vienas stulpelis kiekvienam laukui."
 }

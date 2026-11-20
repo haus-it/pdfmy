@@ -4023,5 +4023,15 @@
  "Langzeitprüfdaten werden eingebettet …": "Pikaajalisi kontrolliandmeid lisatakse …",
  "Signiert mit Zeitstempel vom {0}, {1} Uhr{2}.": "Allkirjastatud ajatempliga {0}, kell {1}{2}.",
  "Sperrauskunft nicht möglich": "Tühistusteabe päring ei ole võimalik",
- "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Sõltumatu ajatempliteenuse ajatempel (RFC 3161, PAdES B-T): tõendab, et allkiri oli sel ajal olemas – ka pärast sertifikaadi aegumist. Edastatakse ainult allkirja kontrollväärtus, mitte dokument. Alates pdfmy Scan 1.23.0 (Windows) ning 1.13.0 (Mac, Linux) lisanduvad pikaajalised kontrolliandmed (PAdES B-LTA): väljastava sertifitseerimiskeskuse tühistusteave ja dokumendi ajatempel – selle puhul saab sinu sertifikaadi seerianumbri teada ainult see keskus."
+ "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Sõltumatu ajatempliteenuse ajatempel (RFC 3161, PAdES B-T): tõendab, et allkiri oli sel ajal olemas – ka pärast sertifikaadi aegumist. Edastatakse ainult allkirja kontrollväärtus, mitte dokument. Alates pdfmy Scan 1.23.0 (Windows) ning 1.13.0 (Mac, Linux) lisanduvad pikaajalised kontrolliandmed (PAdES B-LTA): väljastava sertifitseerimiskeskuse tühistusteave ja dokumendi ajatempel – selle puhul saab sinu sertifikaadi seerianumbri teada ainult see keskus.",
+ "{0} ausgefüllte Formulare zu „{1}“ zusammengeführt – in Excel öffnen.": "{0} täidetud vormi ühendati faili „{1}“ – ava Excelis.",
+ "{0} Formulare zusammengeführt.": "{0} vormi ühendatud.",
+ "Ausgefüllte Formulare zusammenführen": "Ühenda täidetud vormid",
+ "Ausgefüllte PDFs wählen …": "Vali täidetud PDF-id …",
+ "Formular-Ruecklauf-{0}.csv": "Vormi-Vastused-{0}.csv",
+ "Formulare zusammenführen: {0} von {1} …": "Vormide ühendamine: {0} / {1} …",
+ "In den gewählten PDFs wurden keine Formularfelder gefunden.": "Valitud PDF-idest ei leitud vormivälju.",
+ "Nicht lesbar: {0}.": "Pole loetav: {0}.",
+ "Ohne Formularfelder (z. B. ausgedruckt und gescannt): {0}.": "Ilma vormiväljadeta (nt välja prinditud ja skaneeritud): {0}.",
+ "Viele ausgefüllte Exemplare (z. B. Mitgliedsanträge, die per E-Mail zurückkamen) auf einmal wählen – PDFMy macht daraus eine Liste für Excel: eine Zeile je PDF, eine Spalte je Feld.": "Vali korraga palju täidetud eksemplare (nt e-posti teel tagasi tulnud liikmeavaldused) – PDFMy teeb neist Exceli jaoks loendi: üks rida PDF-i kohta, üks veerg välja kohta."
 }

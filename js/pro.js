@@ -5666,6 +5666,23 @@ $('#fdBtn').onclick = fdOpen;
 $('#fdXfdf').onclick = () => { const d = fdDoc(); if (!d) return; download(new TextEncoder().encode(FormDaten.toXfdf(fdCurrent(d), d.name)), fdBase(d) + '.xfdf', 'application/vnd.adobe.xfdf'); status(`Formulardaten als „${fdBase(d)}.xfdf“ gespeichert – lassen sich in PDFMy oder Acrobat wieder laden.`); };
 $('#fdCsv').onclick = () => { const d = fdDoc(); if (!d) return; download(new TextEncoder().encode(FormDaten.toCsv(d.fields, d.values)), fdBase(d) + '.csv', 'text/csv'); status(`Formulardaten als „${fdBase(d)}.csv“ gespeichert – in Excel öffnen, weitere Zeilen ergänzen und für die Serienausfüllung verwenden.`); };
 $('#fdLoad').onclick = () => { $('#fdIn').dataset.mode = 'load'; $('#fdIn').click(); };
+// Rücklauf zusammenführen: viele ausgefüllte PDFs → eine CSV für Excel (FormDaten.readValues/collectCsv); nichts verlässt das Gerät
+$('#fdCollect').onclick = () => $('#fdCollectIn').click();
+$('#fdCollectIn').onchange = async e => {
+  const files = [...e.target.files].sort((a, b) => a.name.localeCompare(b.name, 'de', { numeric: true })); e.target.value = ''; if (!files.length) return;
+  const recs = [], empty = [], bad = [];
+  for (const [i, f] of files.entries()) {
+    status(`Formulare zusammenführen: ${i + 1} von ${files.length} …`, (i + 1) / files.length);
+    try { const v = await FormDaten.readValues(PDFLib, new Uint8Array(await f.arrayBuffer())); if (v.length) recs.push({ file: f.name, fields: v }); else empty.push(f.name); }
+    catch (err) { console.warn('Formular lesen', f.name, err); bad.push(f.name); }
+  }
+  if (!recs.length) { fdMsg($('#fdCollectMsg'), ['In den gewählten PDFs wurden keine Formularfelder gefunden.']); status('Bereit.'); return; }
+  const name = `Formular-Ruecklauf-${new Date().toISOString().slice(0, 10)}.csv`;
+  download(new TextEncoder().encode(FormDaten.collectCsv(recs)), name, 'text/csv');
+  fdMsg($('#fdCollectMsg'), [`${recs.length} ausgefüllte Formulare zu „${name}“ zusammengeführt – in Excel öffnen.`,
+    empty.length ? `Ohne Formularfelder (z. B. ausgedruckt und gescannt): ${empty.join(', ')}.` : '', bad.length ? `Nicht lesbar: ${bad.join(', ')}.` : '']);
+  status(`${recs.length} Formulare zusammengeführt.`);
+};
 $('#fdSerTable').onclick = () => { $('#fdIn').dataset.mode = 'serie'; $('#fdIn').accept = '.csv,.txt,.xlsx'; $('#fdIn').click(); };
 $('#fdIn').onchange = async e => {
   const file = e.target.files[0], mode = e.target.dataset.mode; e.target.value = ''; e.target.accept = '.xfdf,.fdf,.xml,.json,.csv,.txt,.xlsx';

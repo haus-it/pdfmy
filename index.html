@@ -2341,6 +2341,11 @@ html.i18n-wait body{visibility:hidden}
       <label><input type="checkbox" id="fdSerFlat" checked> Eingaben fest in die Seiten übernehmen (nicht mehr änderbar)</label>
       <div class="dlgrow" style="justify-content:flex-start"><button type="button" id="fdSerGo" class="primary">PDFs erstellen (ZIP)</button><progress id="fdSerProg" max="1" value="0" hidden></progress></div>
     </div></fieldset>
+  <fieldset><legend>Ausgefüllte Formulare zusammenführen</legend>
+    <p class="hint">Viele ausgefüllte Exemplare (z. B. Mitgliedsanträge, die per E-Mail zurückkamen) auf einmal wählen – PDFMy macht daraus eine Liste für Excel: eine Zeile je PDF, eine Spalte je Feld.</p>
+    <div class="dlgrow" style="justify-content:flex-start"><button type="button" id="fdCollect">Ausgefüllte PDFs wählen …</button></div>
+    <p id="fdCollectMsg" class="hint" role="status"></p></fieldset>
+  <input type="file" id="fdCollectIn" hidden multiple accept=".pdf,application/pdf">
   <input type="file" id="fdIn" hidden accept=".xfdf,.fdf,.xml,.json,.csv,.txt,.xlsx">
   <div class="dlgrow"><button type="submit">Schließen</button></div>
 </form></dialog>

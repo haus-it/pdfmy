@@ -128,6 +128,35 @@
     return `${safe(base) || 'Formular'}_${nr}${l ? '_' + l : ''}.pdf`;
   }
 
-  const api = { toXfdf, parseXfdf, parseFdf, toCsv, matchColumns, fieldValue, rowValues, applyRecord, parse, fileName, norm };
+  /* Rücklauf einsammeln (app-v313): ausgefüllte Exemplare eines Formulars (z. B. 30 Mitgliedsanträge per E-Mail zurück) → eine Tabelle.
+     readValues liest die Felder einer PDF (Text, Kontrollkästchen, Auswahl, Optionsfelder; Signaturfelder und Felder einer
+     Unterschriftsanfrage ausgelassen). collectCsv: Spalte „Datei“ und die Feldnamen in der Reihenfolge des ersten Auftretens,
+     eine Zeile je Datei, CSV mit Semikolon und BOM für deutsches Excel. Leere Felder bleiben leer. */
+  async function readValues(PL, bytes) {
+    const doc = await PL.PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false }), out = [];
+    for (const f of doc.getForm().getFields()) {
+      try {
+        const name = f.getName(); if (/^pdfmy_[a-z0-9]+_\d+$/.test(name) || f instanceof PL.PDFSignature || f instanceof PL.PDFButton) continue;
+        let value = '';
+        if (f instanceof PL.PDFTextField) value = f.getText() || '';
+        else if (f instanceof PL.PDFCheckBox) value = f.isChecked();
+        else if (f instanceof PL.PDFDropdown || f instanceof PL.PDFOptionList) value = f.getSelected().join(', ');
+        else if (f instanceof PL.PDFRadioGroup) value = f.getSelected() || '';
+        out.push({ name, value });
+      } catch (e) { /* einzelnes kaputtes Feld überspringen */ }
+    }
+    return out;
+  }
+  function collectCsv(records) {
+    const names = [];
+    for (const r of records) for (const f of r.fields) if (!names.includes(f.name)) names.push(f.name);
+    const lines = [['Datei', ...names].map(csvCell).join(';')];
+    // Eingaben Dritter: Zellen, die Excel als Formel ausführen würde (=, +, -, @ …), mit ' entschärfen (CSV-Injection, OWASP);
+    // reine Zahlen und Telefonnummern („+49 5251 …“, „-12,50“) bleiben wie sie sind
+    const safe = v => typeof v === 'string' && /^[=+\-@\t\r]/.test(v) && !/^[+-]?[\d\s.,/()-]+$/.test(v) ? "'" + v : v;
+    for (const r of records) { const m = new Map(r.fields.map(f => [f.name, f.value])); lines.push([r.file, ...names.map(n => m.has(n) ? safe(m.get(n)) : '')].map(csvCell).join(';')); }
+    return '﻿' + lines.join('\r\n') + '\r\n';
+  }
+  const api = { toXfdf, parseXfdf, parseFdf, toCsv, matchColumns, fieldValue, rowValues, applyRecord, parse, fileName, norm, readValues, collectCsv };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.FormDaten = api;
 })(typeof self !== 'undefined' ? self : this);

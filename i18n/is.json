@@ -4023,5 +4023,15 @@
  "Langzeitprüfdaten werden eingebettet …": "Langtímastaðfestingargögn eru felld inn …",
  "Signiert mit Zeitstempel vom {0}, {1} Uhr{2}.": "Undirritað með tímastimpli frá {0}, kl. {1}{2}.",
  "Sperrauskunft nicht möglich": "Afturköllunarathugun ekki möguleg",
- "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Tímastimpill frá óháðri tímastimplunarþjónustu (RFC 3161, PAdES B-T): sannar að undirskriftin var til á þessum tíma – einnig eftir að vottorðið rennur út. Aðeins sannprófunargildi undirskriftarinnar er sent, ekki skjalið. Með pdfmy Scan frá 1.23.0 (Windows) og 1.13.0 (Mac, Linux) bætast við langtímastaðfestingargögn (PAdES B-LTA): upplýsingar um afturköllun frá útgáfuaðila vottorðsins og skjalatímastimpill – þá fær aðeins þessi aðili að vita raðnúmer vottorðsins þíns."
+ "Zeitstempel eines unabhängigen Zeitstempeldienstes (RFC 3161, PAdES B-T): weist nach, dass die Signatur zu diesem Zeitpunkt bestand – auch nach Ablauf des Zertifikats. Übertragen wird nur ein Prüfwert der Signatur, nicht das Dokument. Mit pdfmy Scan ab 1.23.0 (Windows) bzw. 1.13.0 (Mac, Linux) kommen Langzeitprüfdaten dazu (PAdES B-LTA): die Sperrauskunft der ausstellenden Zertifizierungsstelle und ein Dokumentzeitstempel – dafür erfährt nur diese Stelle die Seriennummer Ihres Zertifikats.": "Tímastimpill frá óháðri tímastimplunarþjónustu (RFC 3161, PAdES B-T): sannar að undirskriftin var til á þessum tíma – einnig eftir að vottorðið rennur út. Aðeins sannprófunargildi undirskriftarinnar er sent, ekki skjalið. Með pdfmy Scan frá 1.23.0 (Windows) og 1.13.0 (Mac, Linux) bætast við langtímastaðfestingargögn (PAdES B-LTA): upplýsingar um afturköllun frá útgáfuaðila vottorðsins og skjalatímastimpill – þá fær aðeins þessi aðili að vita raðnúmer vottorðsins þíns.",
+ "{0} ausgefüllte Formulare zu „{1}“ zusammengeführt – in Excel öffnen.": "{0} útfylld eyðublöð sameinuð í „{1}“ – opnaðu í Excel.",
+ "{0} Formulare zusammengeführt.": "{0} eyðublöð sameinuð.",
+ "Ausgefüllte Formulare zusammenführen": "Sameina útfyllt eyðublöð",
+ "Ausgefüllte PDFs wählen …": "Veldu útfyllt PDF-skjöl …",
+ "Formular-Ruecklauf-{0}.csv": "Svor-Eydublada-{0}.csv",
+ "Formulare zusammenführen: {0} von {1} …": "Sameina eyðublöð: {0} af {1} …",
+ "In den gewählten PDFs wurden keine Formularfelder gefunden.": "Engir eyðublaðsreitir fundust í völdum PDF-skjölum.",
+ "Nicht lesbar: {0}.": "Ólæsilegt: {0}.",
+ "Ohne Formularfelder (z. B. ausgedruckt und gescannt): {0}.": "Án eyðublaðsreita (t.d. prentað og skannað): {0}.",
+ "Viele ausgefüllte Exemplare (z. B. Mitgliedsanträge, die per E-Mail zurückkamen) auf einmal wählen – PDFMy macht daraus eine Liste für Excel: eine Zeile je PDF, eine Spalte je Feld.": "Veldu mörg útfyllt eintök í einu (t.d. félagsumsóknir sem komu til baka í tölvupósti) – PDFMy býr til lista fyrir Excel úr þeim: ein lína fyrir hvert PDF, einn dálkur fyrir hvern reit."
 }

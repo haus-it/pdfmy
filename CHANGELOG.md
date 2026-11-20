@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Ausgefüllte Formulare zu einer Excel-Liste zusammenführen (app-v313)
+- Anlass: Vereine, Kitas und Verbände (Weihnachtsaktion „PDFMy für das Ehrenamt“) verschicken Mitgliedsanträge, Anmeldungen und Einverständniserklärungen als PDF-Formular und bekommen viele ausgefüllte Exemplare zurück. Bisher ließ sich nur ein Exemplar als CSV speichern.
+- „Formulardaten …“ → „Ausgefüllte PDFs wählen …“: beliebig viele ausgefüllte PDFs auf einmal; heraus kommt eine CSV für Excel (Semikolon, BOM): Spalte „Datei“, eine Spalte je Feld (Reihenfolge des ersten Auftretens, auch bei leicht unterschiedlichen Formularen), Kontrollkästchen als Ja/Nein, Auswahl als Text. Signaturfelder und Felder von Unterschriftsanfragen bleiben außen vor. PDFs ohne Felder (ausgedruckt und gescannt) und nicht lesbare werden genannt. Alles lokal.
+- Sicherheit: Eingaben Dritter, die Excel als Formel ausführen würde (=, +, -, @ …), werden mit einem Apostroph entschärft (CSV-Injection); Telefonnummern und Zahlen bleiben unverändert.
+- js/formdaten.js: readValues, collectCsv; tests/formular-ruecklauf.test.js.
+
 ### Bilder in Formular-XObjects bearbeiten (app-v312)
 - „Bilder bearbeiten“ findet jetzt auch Bilder in Formular-XObjects (bis 4 Ebenen tief) – typisch für PDFs aus Word, Druckertreibern, Scannern und Briefvorlagen, die den Seiteninhalt oder den Briefkopf in ein Formular packen. Die Lage auf der Seite wird mit Formularmatrix und Aufruf verrechnet.
 - Verschieben, Skalieren, Ersetzen und Löschen ändern eine Kopie des Formulars nur für diesen Aufruf; andere Seiten und Aufrufe, die dasselbe Formular nutzen, bleiben unverändert. Ressourcen der Kopie sind eigene (neues Bild beim Ersetzen landet nur dort). Der Begrenzungsrahmen (BBox) wächst mit, auch über verschachtelte Ebenen, damit ein verschobenes Bild nicht abgeschnitten wird. Schutz gegen Formulare, die sich selbst aufrufen.
