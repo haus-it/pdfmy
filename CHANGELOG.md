@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Zuwendungsbestätigung (Spendenquittung) für gemeinnützige Vereine (app-v314)
+- „Mehr → Zuwendungsbestätigung (Spendenquittung) …“: Bestätigung über Geldzuwendungen/Mitgliedsbeitrag (Anlage 3) bzw. Sammelbestätigung mit Anlage (Anlage 14) nach dem BMF-Schreiben vom 07.11.2013 (BStBl I S. 1333), weiterhin gültig laut EStH 2025, Anhang 37 I. Wortlaut am amtlichen Abdruck geprüft und im Test festgeschrieben; Reihenfolge unverändert, eine A4-Seite, keine Werbung.
+- Betrag in Ziffern und Buchstaben („einhunderteins Euro“, „ein Euro fünfzig Cent“), fortlaufende Nummer je Jahr, Vereinsangaben gemerkt. Freistellungsbescheid oder Feststellung nach § 60a AO; Fristprüfung nach § 63 Abs. 5 AO (5 bzw. 3 Jahre) mit sofortiger Warnung.
+- Serie aus Spenderliste (Excel/CSV, Spalten werden am Namen erkannt, auch Straße/PLZ/Ort getrennt): je Person eine Einzel- oder – bei mehreren Zuwendungen – Sammelbestätigung, alles als ZIP. Unicode-Schrift (DejaVu Sans) für Namen wie Ayşe, Yılmaz, Łukasz.
+- Anlass: Weihnachtsaktion für das Ehrenamt; Spendenquittungen sind eine der häufigsten Vereinsaufgaben. js/zuwendung.js, tests/zuwendung.test.js; Durchlauf in der App geprüft.
+
 ### Ausgefüllte Formulare zu einer Excel-Liste zusammenführen (app-v313)
 - Anlass: Vereine, Kitas und Verbände (Weihnachtsaktion „PDFMy für das Ehrenamt“) verschicken Mitgliedsanträge, Anmeldungen und Einverständniserklärungen als PDF-Formular und bekommen viele ausgefüllte Exemplare zurück. Bisher ließ sich nur ein Exemplar als CSV speichern.
 - „Formulardaten …“ → „Ausgefüllte PDFs wählen …“: beliebig viele ausgefüllte PDFs auf einmal; heraus kommt eine CSV für Excel (Semikolon, BOM): Spalte „Datei“, eine Spalte je Feld (Reihenfolge des ersten Auftretens, auch bei leicht unterschiedlichen Formularen), Kontrollkästchen als Ja/Nein, Auswahl als Text. Signaturfelder und Felder von Unterschriftsanfragen bleiben außen vor. PDFs ohne Felder (ausgedruckt und gescannt) und nicht lesbare werden genannt. Alles lokal.

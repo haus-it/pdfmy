@@ -3774,6 +3774,63 @@ $('#belegAll').onclick = async () => {
 };
 
 /* ---------- Bewirtungsbeleg: Angaben nach § 4 Abs. 5 Satz 1 Nr. 2 EStG als Seite hinter dem Beleg ---------- */
+/* ---------- Zuwendungsbestätigung (Spendenquittung) nach amtlichem Muster (js/zuwendung.js, app-v314) ---------- */
+const zuwArt = () => document.querySelector('input[name="zuwArt"]:checked')?.value || 'frei';
+const zuwVerein = () => ({ aussteller: { name: $('#zuwVName').value.trim(), anschrift: $('#zuwVAdr').value.trim() }, ort: $('#zuwVOrt').value.trim(), zwecke: $('#zuwZweck').value.trim(),
+  art: zuwArt(), finanzamt: $('#zuwFA').value.trim(), stnr: $('#zuwStNr').value.trim(), bescheidVom: $('#zuwVom').value, vz: $('#zuwVz').value.trim(), keinMitgliedsbeitragAusschluss: $('#zuwMitgl').checked });
+function zuwPruef() {   // Fristen nach § 63 Abs. 5 AO sofort zeigen
+  $('#zuwVzF').hidden = zuwArt() === '60a';
+  const f = $('#zuwVom').value ? Zuwendung.fristOk(zuwArt(), $('#zuwVom').value) : { ok: true };
+  $('#zuwFrist').textContent = f.ok ? '' : f.grund; return f.ok;
+}
+['#zuwVom'].forEach(s => $(s).addEventListener('input', zuwPruef)); document.querySelectorAll('input[name="zuwArt"]').forEach(r => r.addEventListener('change', zuwPruef));
+$('#btnZuw').onclick = () => {
+  closeMenu?.();
+  const v = LS.get('zuwVerein', null), prof = LS.get('profile', {}) || {};
+  $('#zuwVName').value = v?.aussteller?.name || prof.firma || ''; $('#zuwVAdr').value = v?.aussteller?.anschrift || ''; $('#zuwVOrt').value = v?.ort || prof.ort || '';
+  $('#zuwZweck').value = v?.zwecke || ''; $('#zuwFA').value = v?.finanzamt || ''; $('#zuwStNr').value = v?.stnr || ''; $('#zuwVom').value = v?.bescheidVom || ''; $('#zuwVz').value = v?.vz || '';
+  $('#zuwMitgl').checked = !!v?.keinMitgliedsbeitragAusschluss; document.querySelector(`input[name="zuwArt"][value="${v?.art === '60a' ? '60a' : 'frei'}"]`).checked = true;
+  $('#zuwSerMsg').textContent = ''; zuwPruef(); $('#zuwDlg').showModal(); ($('#zuwVName').value ? $('#zuwPers') : $('#zuwVName')).focus();
+};
+$('#zuwCancel').onclick = () => $('#zuwDlg').close();
+let zuwFonts = null;   // DejaVu Sans für Namen wie „Şahin“, „Yılmaz“, „Łukasz“
+const zuwOpts = async () => zuwFonts ||= { fontkit: await loadFontkit(), regular: await asset('font', 'vendor/DejaVuSans.ttf'), bold: await asset('font', 'vendor/dejavu/DejaVuSans-Bold.ttf') };
+const zuwNr = () => { const y = new Date().getFullYear(), n = LS.get('zuwNr', {}); n[y] = (n[y] || 0) + 1; LS.set('zuwNr', n); return `Nr. ${y}-${String(n[y]).padStart(4, '0')}`; };   // fortlaufende Nummer je Jahr (zulässig)
+function zuwVereinOk() {
+  const f = $('#zuwForm'), need = ['#zuwVName', '#zuwVAdr', '#zuwVOrt', '#zuwZweck', '#zuwFA', '#zuwStNr', '#zuwVom'];
+  const leer = need.find(s => !$(s).value.trim()); if (leer) { $(leer).focus(); f.reportValidity?.(); return false; }
+  if (!zuwPruef()) { $('#zuwVom').focus(); return false; }
+  LS.set('zuwVerein', zuwVerein()); return true;
+}
+$('#zuwForm').onsubmit = async e => {
+  e.preventDefault(); if (!zuwVereinOk()) return;
+  const betrag = QrStempel.parseAmount($('#zuwBetrag').value), pers = $('#zuwPers').value.trim().split(/\r?\n/);
+  if (!pers[0] || !(betrag > 0)) { status('Bitte Name und Anschrift des Spenders und den Betrag eintragen.'); (pers[0] ? $('#zuwBetrag') : $('#zuwPers')).focus(); return; }
+  const d = { ...zuwVerein(), zuwendender: { name: pers[0], anschrift: pers.slice(1).join('\n') }, betrag, datum: $('#zuwTag').value || new Date(), verzicht: $('#zuwVerz').checked, nummer: zuwNr() };
+  const bytes = await Zuwendung.erzeugen(PDFLib, d, await zuwOpts());
+  $('#zuwDlg').close();
+  await importFiles([new File([bytes], `Zuwendungsbestaetigung ${pers[0].replace(/[\\/:*?"<>|]+/g, ' ')}.pdf`, { type: 'application/pdf' })]);
+  status('Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).');
+};
+$('#zuwSerie').onclick = () => { if (zuwVereinOk()) $('#zuwIn').click(); };
+$('#zuwIn').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  try {
+    const { personen, fehler } = Zuwendung.ausTabelle(await fdReadTable(f));
+    if (!personen.length) { fdMsg($('#zuwSerMsg'), fehler.length ? fehler.slice(0, 3) : ['Keine Spender in der Liste gefunden.']); return; }
+    const verein = zuwVerein(), opts = await zuwOpts(), files = [];
+    for (const [i, p] of personen.entries()) {
+      status(`Zuwendungsbestätigungen: ${i + 1} von ${personen.length} …`, (i + 1) / personen.length);
+      const bytes = await Zuwendung.erzeugen(PDFLib, { ...Zuwendung.fuerPerson(verein, p), nummer: zuwNr() }, opts);
+      files.push({ name: FormDaten.fileName('Zuwendungsbestaetigung', i, personen.length, p.name), data: new Uint8Array(bytes) });
+    }
+    const zipName = `Zuwendungsbestaetigungen-${new Date().toISOString().slice(0, 10)}.zip`;
+    download(Tools.zip(files), zipName, 'application/zip');
+    const sammel = personen.filter(p => p.zuwendungen.length > 1).length;
+    fdMsg($('#zuwSerMsg'), [`${personen.length} Bestätigungen erstellt („${zipName}“), davon ${sammel} Sammelbestätigungen.`, fehler.length ? `${fehler.length} Zeilen übersprungen: ${fehler.slice(0, 3).join(' ')}` : '', 'Bitte unterschreiben und ein Doppel aufbewahren.']);
+    status(`${personen.length} Zuwendungsbestätigungen erstellt.`);
+  } catch (err) { noteError(err, 'Zuwendungsbestätigung'); fdMsg($('#zuwSerMsg'), [`Abgebrochen: ${err.message}`]); }
+};
 $('#btnBewirt').onclick = () => {
   closeMenu?.();
   if (!state.pages.length) return status('Zuerst den Gaststättenbeleg öffnen oder fotografieren.');

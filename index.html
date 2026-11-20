@@ -1205,6 +1205,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnTranslate" disabled title="Text des Dokuments in eine andere Sprache übersetzen – auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Übersetzen …</span></button>
           <button class="mi doc" id="btnSummary" disabled title="Kernpunkte des Dokuments zusammenfassen oder Fragen dazu stellen – mit der KI auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>Zusammenfassen und fragen …</span></button>
           <button class="mi doc" id="btnComments" title="Alle Notizen, Markierungen, Stempel, Unterschriften und Formularfelder auf einen Blick"><svg class="ic" aria-hidden="true"><use href="#i-sticky-note"/></svg><span>Kommentare und Markierungen …</span></button>
+          <button class="mi" id="btnZuw" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
           <button class="mi doc" id="btnQrIns" title="GiroCode (Überweisung per Banking-App) oder QR-Code mit Link oder Text auf die Seite setzen – z. B. auf die eigene Rechnung"><svg class="ic" aria-hidden="true"><use href="#i-qr-code"/></svg><span>QR-Code einfügen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -2295,6 +2296,32 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint">Rechenhilfe nach §§ 187 ff. BGB, § 222 ZPO und § 108 AO – die Fristenkontrolle bleibt bei Ihnen. Bitte Fristen immer zusätzlich im Fristenkalender eintragen und gegenprüfen.</p>
   <div class="dlgrow"><button type="button" id="frClose">Schließen</button><button type="button" id="frIcs">In Kalender (.ics)</button><button type="submit" class="primary" id="frTake">Als Frist übernehmen</button></div>
 </form></dialog>
+<dialog id="zuwDlg" class="sharedlg propdlg" aria-labelledby="zuwT"><form id="zuwForm">
+  <h3 class="dlgtitle" id="zuwT">Zuwendungsbestätigung (Spendenquittung)</h3>
+  <p class="hint" style="margin-top:0">Nach dem amtlichen Muster des Bundesfinanzministeriums für gemeinnützige Vereine – Wortlaut unverändert, Betrag in Ziffern und Buchstaben. Die Angaben zum Verein merkt sich PDFMy auf diesem Gerät.</p>
+  <fieldset><legend>Ihr Verein</legend>
+    <div class="anlrow"><div class="field"><label for="zuwVName">Name des Vereins</label><input id="zuwVName" required autocomplete="organization"></div>
+      <div class="field"><label for="zuwVOrt">Ort (für Ort und Datum)</label><input id="zuwVOrt" required></div></div>
+    <div class="field"><label for="zuwVAdr">Anschrift</label><textarea id="zuwVAdr" rows="2" required></textarea></div>
+    <div class="field"><label for="zuwZweck">Begünstigter Zweck (wie im Bescheid, z. B. „des Sports“)</label><input id="zuwZweck" required></div>
+    <label><input type="radio" name="zuwArt" value="frei" checked> Freistellungsbescheid bzw. Anlage zum Körperschaftsteuerbescheid</label>
+    <label><input type="radio" name="zuwArt" value="60a"> Feststellung nach § 60a AO (neu gegründete Vereine)</label>
+    <div class="anlrow"><div class="field"><label for="zuwFA">Finanzamt</label><input id="zuwFA" required></div><div class="field"><label for="zuwStNr">Steuernummer</label><input id="zuwStNr" required></div></div>
+    <div class="anlrow"><div class="field"><label for="zuwVom">Bescheid vom</label><input id="zuwVom" type="date" required></div><div class="field" id="zuwVzF"><label for="zuwVz">Letzter Veranlagungszeitraum</label><input id="zuwVz" inputmode="numeric" placeholder="z. B. 2023"></div></div>
+    <label><input type="checkbox" id="zuwMitgl"> Mitgliedsbeiträge sind bei uns nicht abziehbar (z. B. Sport-, Kultur-, Heimatvereine) – Bestätigung „kein solcher Mitgliedsbeitrag“ ankreuzen</label>
+    <p id="zuwFrist" class="hint" role="status"></p></fieldset>
+  <fieldset><legend>Eine Bestätigung</legend>
+    <div class="field"><label for="zuwPers">Name und Anschrift des Spenders</label><textarea id="zuwPers" rows="3"></textarea></div>
+    <div class="anlrow"><div class="field"><label for="zuwBetrag">Betrag in Euro</label><input id="zuwBetrag" inputmode="decimal" placeholder="z. B. 150,00"></div><div class="field"><label for="zuwTag">Tag der Zuwendung</label><input id="zuwTag" type="date"></div></div>
+    <label><input type="checkbox" id="zuwVerz"> Verzicht auf Erstattung von Aufwendungen (Aufwandsspende)</label>
+    <div class="dlgrow" style="justify-content:flex-start"><button type="submit" class="primary" id="zuwEinzel">Bestätigung erstellen</button></div></fieldset>
+  <fieldset><legend>Für alle Spender auf einmal</legend>
+    <p class="hint">Eine Excel- oder CSV-Liste mit den Spalten Name, Anschrift (oder Straße, PLZ, Ort), Betrag und Datum; optional Verzicht (ja/nein) und Art („Mitgliedsbeitrag“). Wer mehrmals gespendet hat, bekommt eine Sammelbestätigung mit Anlage.</p>
+    <div class="dlgrow" style="justify-content:flex-start"><button type="button" id="zuwSerie">Spenderliste wählen …</button></div>
+    <p id="zuwSerMsg" class="hint" role="status"></p></fieldset>
+  <input type="file" id="zuwIn" hidden accept=".csv,.txt,.xlsx">
+  <div class="dlgrow"><button type="button" id="zuwCancel">Schließen</button></div>
+</form></dialog>
 <dialog id="bewDlg" class="sharedlg propdlg" aria-labelledby="bewT"><form id="bewForm">
   <h3 class="dlgtitle" id="bewT">Bewirtungsbeleg ausfüllen</h3>
   <p class="hint" style="margin-top:0">Angaben nach § 4 Abs. 5 Satz 1 Nr. 2 EStG. PDFMy fügt sie als eigene Seite hinter dem Gaststättenbeleg ein; danach unterschreiben (Werkzeug „Unterschrift“ oder ausgedruckt).</p>
@@ -2667,6 +2694,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/reflow.js"></script>
 <script src="js/pdfbild.js"></script>
 <script src="js/fragen.js"></script>
+<script src="js/zuwendung.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
