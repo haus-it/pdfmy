@@ -320,3 +320,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-11-20 02:48 | pdfmy-202611200142-v314 | 1.23.0 | 1b4d33cf883e540d… | 447/447 Tests bestanden, Probelauf bestanden | 174 | Administrator | 230b18482925f21b |
 | 2026-11-20 03:10 | pdfmy-202611200204-v315 | 1.23.0 | 1b4d33cf883e540d… | 451/451 Tests bestanden, Probelauf bestanden | 174 | Administrator | bd99336ed1aa22c7 |
 | 2026-11-20 05:05 | pdfmy-202611200354-v316 | 1.23.0 | 1b4d33cf883e540d… | 457/457 Tests bestanden, Probelauf bestanden | 174 | Administrator | d1d613316beac50a |
+| 2026-11-20 05:46 | pdfmy-202611200439-v317 | 1.23.0 | 1b4d33cf883e540d… | 463/463 Tests bestanden, Probelauf bestanden | 192 | Administrator | 8049a148e47c58d0 |

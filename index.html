@@ -1208,6 +1208,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi" id="btnVV" title="Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Vereinsvorlagen …</span></button>
           <button class="mi" id="btnZuw" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
           <button class="mi" id="btnKb" title="Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Kassenbericht (Jahreshauptversammlung) …</span></button>
+          <button class="mi" id="btnSepa" title="Mitgliedsbeiträge per Lastschrift einziehen: aus der Mitgliederliste (Excel/CSV) die SEPA-Datei für das Online-Banking erstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>SEPA-Lastschrift für Beiträge …</span></button>
           <button class="mi doc" id="btnQrIns" title="GiroCode (Überweisung per Banking-App) oder QR-Code mit Link oder Text auf die Seite setzen – z. B. auf die eigene Rechnung"><svg class="ic" aria-hidden="true"><use href="#i-qr-code"/></svg><span>QR-Code einfügen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -2341,7 +2342,22 @@ html.i18n-wait body{visibility:hidden}
   <input type="file" id="zuwIn" hidden accept=".csv,.txt,.xlsx">
   <div class="dlgrow"><button type="button" id="zuwCancel">Schließen</button></div>
 </form></dialog>
-<dialog id="kbDlg" class="sharedlg propdlg" aria-labelledby="kbT"><form id="kbForm">
+<dialog id="sepaDlg" class="sharedlg propdlg" aria-labelledby="sepaT"><form id="sepaForm">
+  <h3 class="dlgtitle" id="sepaT">SEPA-Lastschrift für Beiträge</h3>
+  <p class="hint" style="margin-top:0">Aus Ihrer Mitgliederliste (Excel oder CSV mit Name, IBAN, Betrag, Mandatsreferenz und Datum des Mandats; optional BIC, Verwendungszweck, Erstlastschrift) entsteht die Lastschrift-Datei im aktuellen Bankformat. Sie laden sie selbst im Online-Banking hoch („SEPA-Datei hochladen“). Die Kontodaten verlassen das Gerät nicht.</p>
+  <fieldset><legend>Ihr Verein (Zahlungsempfänger)</legend>
+    <div class="field"><label for="sepaName">Name des Vereins</label><input id="sepaName" required autocomplete="organization"></div>
+    <div class="anlrow"><div class="field"><label for="sepaIban">IBAN des Vereinskontos</label><input id="sepaIban" required autocomplete="off" spellcheck="false"></div><div class="field"><label for="sepaBic">BIC (freiwillig)</label><input id="sepaBic" maxlength="11" autocomplete="off" spellcheck="false"></div></div>
+    <div class="field"><label for="sepaGlId">Gläubiger-Identifikationsnummer</label><input id="sepaGlId" required placeholder="z. B. DE98ZZZ09999999999" autocomplete="off" spellcheck="false"></div></fieldset>
+  <div class="anlrow"><div class="field"><label for="sepaFaellig">Fälligkeitsdatum (Einzug am)</label><input id="sepaFaellig" type="date" required></div>
+    <div class="field"><label for="sepaZweck">Verwendungszweck (wenn die Liste keinen hat)</label><input id="sepaZweck" maxlength="140" placeholder="z. B. Mitgliedsbeitrag 2027"></div></div>
+  <label><input type="checkbox" id="sepaVergeben"> Fehlende Mandatsreferenzen vergeben (Liste zum Mitteilen an die Mitglieder wird gespeichert)</label>
+  <p id="sepaHinweis" class="hint" role="status"></p>
+  <p id="sepaMsg" class="hint" role="status"></p>
+  <input type="file" id="sepaIn" hidden accept=".csv,.txt,.xlsx">
+  <div class="dlgrow"><button type="button" id="sepaCancel">Schließen</button><button type="submit" class="primary">Mitgliederliste wählen …</button></div>
+</form></dialog>
+<dialog id="kbDlg"class="sharedlg propdlg" aria-labelledby="kbT"><form id="kbForm">
   <h3 class="dlgtitle" id="kbT">Kassenbericht für die Mitgliederversammlung</h3>
   <p class="hint" style="margin-top:0">Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.</p>
   <div class="field"><label for="kbVerein">Name des Vereins</label><input id="kbVerein" required autocomplete="organization"></div>
@@ -2728,6 +2744,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/zuwendung.js"></script>
 <script src="js/vereinsvorlagen.js"></script>
 <script src="js/kassenbericht.js"></script>
+<script src="js/sepalastschrift.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>

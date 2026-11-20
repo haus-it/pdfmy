@@ -159,3 +159,23 @@ const T = s => (window.I18N ? I18N.t(s) : s);
   const fromHash = () => { const m = location.hash.match(/^#suche=(.*)$/); if (m) { q.value = decodeURIComponent(m[1]); run(); } };
   fromHash(); addEventListener('hashchange', fromHash);
 });
+
+// Bilder der Schritt-für-Schritt-Anleitungen: deutsche Oberfläche für Deutsch, sonst die englische; Klick vergrößert (ohne Skript öffnet der Link das Bild)
+(window.I18N ? I18N.ready() : Promise.resolve()).then(() => {
+  const de = /^de\b/i.test(document.documentElement.lang || 'de');
+  if (!de) for (const el of document.querySelectorAll('.hshot, .hshot img')) for (const a of ['href', 'src']) { const v = el.getAttribute(a); if (v && v.includes('hilfe-bilder/de/')) el.setAttribute(a, v.replace('hilfe-bilder/de/', 'hilfe-bilder/en/')); }
+  let dlg = null;
+  document.addEventListener('click', e => {
+    const a = e.target.closest('.hshot'); if (!a || e.ctrlKey || e.metaKey || e.shiftKey || typeof HTMLDialogElement === 'undefined') return;
+    e.preventDefault();
+    if (!dlg) {
+      dlg = document.createElement('dialog'); dlg.id = 'hzoom'; dlg.setAttribute('aria-label', T('Bild vergrößert'));
+      dlg.innerHTML = '<img alt=""><button type="button"></button>';
+      dlg.querySelector('button').textContent = T('Schließen');
+      dlg.addEventListener('click', ev => { if (ev.target === dlg || ev.target.tagName === 'BUTTON' || ev.target.tagName === 'IMG') dlg.close(); });
+      document.body.append(dlg);
+    }
+    const img = a.querySelector('img'); dlg.querySelector('img').src = a.getAttribute('href'); dlg.querySelector('img').alt = img ? img.alt : '';
+    dlg.showModal(); dlg.querySelector('button').focus();
+  });
+});

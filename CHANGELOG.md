@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### SEPA-Lastschrift für Beiträge, Hilfe mit Bildern (app-v317)
+- „Mehr → SEPA-Lastschrift für Beiträge …“: Aus der Mitgliederliste (Excel/CSV: Name bzw. Kontoinhaber, IBAN, Betrag, Mandatsreferenz, Datum des Mandats; optional BIC, Verwendungszweck, Erstlastschrift) entsteht eine SEPA-Sammellastschrift im aktuellen Format pain.008.001.08 (DFÜ-Abkommen Anlage 3; pain.008.001.02 nehmen die Banken ab November 2026 nicht mehr an) zum Hochladen im Online-Banking. Basislastschrift (CORE), Erst- und Folgelastschriften getrennt, ohne BIC „NOTPROVIDED“.
+- Prüfungen: IBAN und Gläubiger-ID mit Prüfziffer, BIC, Betrag, Mandatsdatum nicht in der Zukunft, doppelte Mandatsreferenzen; Fälligkeit frühestens zwei Bankarbeitstage nach heute (TARGET-Feiertage), Hinweis auf die Vorabankündigung. Namen und Texte im SEPA-Zeichensatz (ä → ae, ş → s). Fehlende Mandatsreferenzen auf Wunsch vergeben, Liste als CSV (Formeln entschärft). Vereinsangaben aus Vereinsvorlagen/Zuwendungsbestätigung übernommen.
+- Hilfe: neuer Abschnitt „Schritt für Schritt – mit Bildern“ mit Kacheln und sieben bebilderten Anleitungen (Öffnen, Scannen, Bearbeiten, Unterschreiben, Zusammenfügen, alle Funktionen, Vereine). Echte Bildschirmfotos mit roten Nummern an den Knöpfen, passend zu den nummerierten Schritten; deutsche Oberfläche für Deutsch, englische für alle anderen Sprachen; Klick vergrößert.
+- Behoben: Die Meldung „… Unterschriftsstellen und …× Ort/Datum gefunden“ im Unterschrift-Menü blieb in anderen Sprachen halb deutsch (verschachtelte Teilsätze) – jetzt ganze Sätze je Fall, in 40 Sprachen.
+- js/sepalastschrift.js, tests/sepalastschrift.test.js, tools/site/hilfe-bilder/; Durchlauf in der App geprüft.
+
 ### Kassenbericht für die Mitgliederversammlung (app-v316)
 - „Mehr → Kassenbericht (Jahreshauptversammlung) …“: Umsatz-Export des Vereinskontos (CSV/Excel aus dem Online-Banking von Sparkasse, Volksbank, ING, DKB u. a., auch mit Vorspann, oder CAMT-XML) bzw. ein eigenes Kassenbuch (Datum, Text, Betrag oder Einnahme/Ausgabe, optional Kategorie und Bereich) wählen – PDFMy erstellt den Kassenbericht als PDF.
 - Inhalt: Anfangsbestand, Einnahmen und Ausgaben nach Kategorien, Überschuss bzw. Fehlbetrag, Endbestand, Abgleich mit dem Kontostand (Abweichung wird benannt), Aufteilung auf ideellen Bereich, Vermögensverwaltung, Zweckbetrieb und wirtschaftlichen Geschäftsbetrieb mit Hinweis auf die Freigrenze nach § 64 Abs. 3 AO (50.000 € ab 2026, Steueränderungsgesetz 2025; 45.000 € 2020–2025), Unterschrift Kassenwart, Prüfvermerk der Kassenprüfer mit Entlastungsempfehlung, Buchungsliste als Anlage.

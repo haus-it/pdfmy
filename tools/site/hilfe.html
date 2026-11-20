@@ -37,6 +37,21 @@ details.faq[open] summary{margin-bottom:6px}
 kbd{font:13px/1 ui-monospace,Consolas,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:2px 5px;background:var(--panel)}
 .tip{border-left:4px solid var(--accent);padding:6px 12px;margin:12px 0;background:var(--bg)}
 .hidden-by-search{display:none!important}
+.hguides{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin:12px 0 6px}
+.hcard{display:block;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);text-decoration:none;color:var(--text)}
+.hcard b{display:block;font-size:16px;color:var(--accent)}.hcard span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.hcard:hover,.hcard:focus-visible{border-color:var(--accent);box-shadow:0 1px 6px rgba(16,24,40,.12)}
+.hguide{border:1px solid var(--line);border-radius:12px;padding:4px 16px 12px;margin:16px 0;background:var(--bg);scroll-margin-top:90px}
+.hguide h3{font-size:18px;margin:12px 0 8px}
+.hguide figure{margin:0 0 10px}.hshot{display:block;border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:zoom-in}
+.hshot img{display:block;width:100%;height:auto}
+.hsteps{list-style:none;counter-reset:st;padding-left:0!important;margin:8px 0}
+.hsteps li{counter-increment:st;position:relative;padding-left:38px;margin:8px 0;min-height:28px}
+.hsteps li::before{content:counter(st);position:absolute;left:0;top:-2px;width:28px;height:28px;border-radius:50%;background:#d92d20;color:#fff;font-weight:700;text-align:center;line-height:28px}
+.hmore{color:var(--muted);font-size:14.5px}
+#hzoom{border:0;padding:0;background:transparent;max-width:96vw;max-height:94vh}#hzoom::backdrop{background:rgba(10,12,20,.82)}
+#hzoom img{display:block;max-width:96vw;max-height:88vh;border-radius:8px}#hzoom button{display:block;margin:8px auto 0;font:inherit;padding:6px 16px;border-radius:8px;border:0;cursor:pointer}
+@media (min-width:900px){.hguide{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:0 20px;align-items:start}.hguide h3{grid-column:1/-1}.hguide figure{grid-row:2/span 3}}
 mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 </style>
 <div class="hsearch" role="search"><label for="hq" style="position:absolute;left:-9999px">Hilfe durchsuchen</label><div class="hwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="hq" type="search" placeholder="Wobei brauchen Sie Hilfe? z. B. Scanner, unterschreiben, Mac" autocomplete="off" enterkeyhint="search" aria-describedby="hcount"><button type="button" id="hclear" hidden aria-label="Suche leeren" title="Suche leeren">✕</button><kbd class="hkey" aria-hidden="true">/</kbd></div>
@@ -46,6 +61,7 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <div id="hbody">
 <p>Hier finden Sie Anleitungen und Antworten zu PDFMy. Nichts gefunden? Schreiben Sie uns – Herausforderungen lösen wir schnell: <a href="mailto:wumertens@mentor-group.de">wumertens@mentor-group.de</a>.</p>
 <nav aria-label="Themen"><ul class="toc">
+<li><a href="#anleitungen"><b>Schritt für Schritt – mit Bildern</b></a></li>
 <li><a href="#start">Schnellstart</a></li>
 <li><a href="#scannen">Scannen</a></li>
 <li><a href="#ablegen">Briefe ablegen und Fristen</a></li>
@@ -60,6 +76,90 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><a href="#tasten">Tastenkürzel</a></li>
 <li><a href="#kontakt">Hilfe bekommen</a></li>
 </ul></nav>
+
+<section class="hsec" id="anleitungen"><h2>Schritt für Schritt – mit Bildern</h2>
+<p>Die roten Zahlen im Bild zeigen, wo Sie klicken. Ein Klick aufs Bild vergrößert es.</p>
+<div class="hguides">
+<a class="hcard" href="#a-oeffnen"><b>PDF öffnen</b><span>Datei wählen oder ins Fenster ziehen</span></a>
+<a class="hcard" href="#a-scannen"><b>Scannen</b><span>Mit Scanner oder Handy</span></a>
+<a class="hcard" href="#a-bearbeiten"><b>Bearbeiten und ausfüllen</b><span>Text, Formulare, Seiten</span></a>
+<a class="hcard" href="#a-unterschreiben"><b>Unterschreiben</b><span>Zeichnen, tippen oder Bild</span></a>
+<a class="hcard" href="#a-zusammen"><b>Zusammenfügen</b><span>Mehrere Dateien zu einer</span></a>
+<a class="hcard" href="#a-mehr"><b>Alle Funktionen finden</b><span>Menü „Mehr“ und Suche</span></a>
+<a class="hcard" href="#a-verein"><b>Für Vereine</b><span>Kassenbericht, Spendenquittung, Vorlagen</span></a>
+</div>
+
+<article class="hguide" id="a-oeffnen"><h3>PDF öffnen</h3>
+<figure><a href="hilfe-bilder/de/oeffnen.webp" class="hshot"><img src="hilfe-bilder/de/oeffnen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Startseite von PDFMy mit den Feldern „Dateien wählen“, „Öffnen“ und „Funktion suchen“"></a></figure>
+<ol class="hsteps">
+<li><b>Dateien wählen</b> anklicken – oder die Datei einfach ins Fenster ziehen. PDF, Fotos, Word, Excel und E-Mails gehen, auch mehrere auf einmal.</li>
+<li>Oben rechts steht <b>Öffnen</b> immer bereit, auch wenn schon ein Dokument offen ist.</li>
+<li>Sie wissen nicht, wo eine Funktion steckt? <b>Funktion suchen</b> (<kbd>Strg</kbd>+<kbd>K</kbd>) und ein Wort tippen, z. B. „schwärzen“.</li>
+</ol>
+<p class="hmore">Nichts wird hochgeladen – die Datei bleibt auf Ihrem Gerät. <a href="#start">Mehr zum Schnellstart</a></p>
+</article>
+
+<article class="hguide" id="a-scannen"><h3>Scannen</h3>
+<figure><a href="hilfe-bilder/de/scannen.webp" class="hshot"><img src="hilfe-bilder/de/scannen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Kacheln „Scannen &amp; Text erkennen“ und „Mit dem Handy scannen“ sowie der Knopf „Scanner verbinden“"></a></figure>
+<ol class="hsteps">
+<li><b>Scannen &amp; Text erkennen:</b> Fotos oder Scans wählen – PDFMy macht daraus eine durchsuchbare PDF und liest Absender, Datum und Betrag.</li>
+<li><b>Mit dem Handy scannen:</b> Die Kamera erkennt das Blatt, löst selbst aus und entzerrt die Seite. Auf dem Handy steht dafür ganz oben der große Knopf „Mit der Kamera scannen“.</li>
+<li><b>Scanner verbinden:</b> für Scanner und Multifunktionsgeräte im Netzwerk – neue Scans erscheinen dann von selbst.</li>
+</ol>
+<p class="hmore"><a href="#scannen">Mehr zum Scannen</a></p>
+</article>
+
+<article class="hguide" id="a-bearbeiten"><h3>Bearbeiten und Formulare ausfüllen</h3>
+<figure><a href="hilfe-bilder/de/bearbeiten.webp" class="hshot"><img src="hilfe-bilder/de/bearbeiten.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Geöffnetes Formular mit Seitenübersicht links, Werkzeugleiste oben, Formularfeldern rechts und dem Knopf „Speichern“"></a></figure>
+<ol class="hsteps">
+<li><b>Seiten</b> links: anklicken, ziehen zum Sortieren, ✕ zum Löschen, Schere zum Teilen.</li>
+<li><b>Werkzeuge</b> oben: Text schreiben oder ändern, markieren, zeichnen, Bild, Stempel, schwärzen, zuschneiden.</li>
+<li><b>Formular</b> rechts: Felder der Reihe nach ausfüllen – oder direkt auf der Seite hineinklicken.</li>
+<li><b>Speichern</b> – als PDF, PDF/A, Bild oder Text.</li>
+</ol>
+<p class="hmore"><a href="#bearbeiten">Alle Bearbeitungsfunktionen</a></p>
+</article>
+
+<article class="hguide" id="a-unterschreiben"><h3>Unterschreiben</h3>
+<figure><a href="hilfe-bilder/de/unterschreiben.webp" class="hshot"><img src="hilfe-bilder/de/unterschreiben.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Werkzeug „Unterschrift“ mit dem Menü „Unterschrift anlegen“ und dem gelben Knopf „Nächste Stelle“"></a></figure>
+<ol class="hsteps">
+<li>Werkzeug <b>Unterschrift</b> wählen.</li>
+<li>Beim ersten Mal <b>Unterschrift anlegen</b>: mit Maus oder Finger zeichnen, Namen tippen oder ein Foto Ihrer Unterschrift nehmen. PDFMy merkt sie sich auf diesem Gerät.</li>
+<li><b>Nächste Stelle</b> springt zu jeder Stelle, an der unterschrieben werden soll – ein Klick auf „Hier unterschreiben“ setzt die Unterschrift genau dort.</li>
+</ol>
+<p class="hmore"><a href="#unterschreiben">Mehr zu Unterschrift, Kürzel und digitaler Signatur</a></p>
+</article>
+
+<article class="hguide" id="a-zusammen"><h3>PDFs zusammenfügen</h3>
+<figure><a href="hilfe-bilder/de/zusammenfuegen.webp" class="hshot"><img src="hilfe-bilder/de/zusammenfuegen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Zwei zusammengefügte Dokumente in der Seitenübersicht, der Knopf „Hinzufügen“ und „Speichern“"></a></figure>
+<ol class="hsteps">
+<li>Erste Datei öffnen, dann <b>Hinzufügen</b> und die weiteren Dateien wählen.</li>
+<li>In der <b>Seitenübersicht</b> die Reihenfolge per Ziehen ändern.</li>
+<li><b>Speichern</b> – fertig ist eine einzige PDF.</li>
+</ol>
+<p class="hmore"><a href="#bearbeiten">Mehr zu Seiten und Dateien</a></p>
+</article>
+
+<article class="hguide" id="a-mehr"><h3>Alle Funktionen finden</h3>
+<figure><a href="hilfe-bilder/de/mehr.webp" class="hshot"><img src="hilfe-bilder/de/mehr.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Geöffnetes Menü „Mehr“ mit allen Funktionen, nach Gruppen geordnet"></a></figure>
+<ol class="hsteps">
+<li><b>Mehr</b> (die drei Punkte oben) öffnet alle Funktionen, nach Gruppen geordnet: Dokument, Prüfen &amp; Formulare, Büro, PDFMy.</li>
+<li>Darin z. B. die Funktionen für Vereine wie den <b>Kassenbericht</b>.</li>
+</ol>
+<p class="hmore">Schneller: <kbd>Strg</kbd>+<kbd>K</kbd> und ein Suchwort tippen.</p>
+</article>
+
+<article class="hguide" id="a-verein"><h3>Für Vereine: Kassenbericht</h3>
+<figure><a href="hilfe-bilder/de/verein.webp" class="hshot"><img src="hilfe-bilder/de/verein.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Kassenbericht für die Mitgliederversammlung“ mit Vereinsname, Kontostand und dem Knopf zum Wählen des Kontoauszugs"></a></figure>
+<ol class="hsteps">
+<li><b>Mehr → Kassenbericht</b> und den Namen des Vereins eintragen.</li>
+<li>Den <b>Kontostand am Ende</b> laut Auszug eintragen – PDFMy gleicht ab und nennt jede Abweichung.</li>
+<li><b>Kontoauszug oder Kassenbuch wählen</b> – den Umsatz-Export aus dem Online-Banking (CSV, Excel oder CAMT). Der Bericht mit Prüfvermerk für die Kassenprüfer öffnet sich sofort.</li>
+</ol>
+<p class="hmore">Ebenfalls unter <i>Mehr</i>: <b>SEPA-Lastschrift für Beiträge</b>, <b>Zuwendungsbestätigung</b> nach amtlichem Muster und <b>Vereinsvorlagen</b> (Mitgliedsantrag mit SEPA-Mandat, Foto-Einwilligung, Fahrten). <a href="#bearbeiten">Mehr dazu</a></p>
+</article>
+</section>
+
 
 <section class="hsec" id="start"><h2>Schnellstart</h2>
 <p><b>PDFMy</b> ist ein kostenloses PDF-Programm. Es läuft im Browser oder als App – am PC, am Mac und auf dem Handy. Ihre Dokumente werden <b>nicht hochgeladen</b>: Alles passiert auf Ihrem Gerät.</p>
@@ -180,6 +280,7 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Vereinsvorlagen:</b> <i>… Mehr → Vereinsvorlagen …</i> erstellt ausfüllbare Formulare mit dem Namen Ihres Vereins, Ihrer Kita oder Ihres Elternbeirats: <i>Mitgliedsantrag mit SEPA-Lastschriftmandat</i> (Standardwortlaut der Banken, Gläubiger-ID wird geprüft, Beiträge zum Ankreuzen), <i>Einwilligung zu Fotos und Veröffentlichungen</i> und <i>Einverständniserklärung für Fahrten und Ausflüge</i> mit Notfallkontakt – die beiden letzten als Muster, bitte an Ihre Einrichtung anpassen. Formular speichern, per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele zurück, macht <i>„Formulardaten …“ → „Ausgefüllte PDFs wählen …“</i> daraus eine Excel-Liste.</li>
 <li><b>Zuwendungsbestätigung (Spendenquittung):</b> <i>… Mehr → Zuwendungsbestätigung …</i> erstellt die Bestätigung über Geldzuwendungen und Mitgliedsbeiträge für gemeinnützige Vereine – nach dem amtlichen Muster des Bundesfinanzministeriums, Wortlaut und Reihenfolge unverändert, Betrag in Ziffern und Buchstaben, mit fortlaufender Nummer. Die Angaben zu Ihrem Verein (Freistellungsbescheid oder Feststellung nach § 60a AO, Finanzamt, Steuernummer, Zweck) merkt sich PDFMy. Ist der Bescheid zu alt (über 5 bzw. 3 Jahre), warnt PDFMy sofort – sonst würde das Finanzamt die Bestätigung nicht anerkennen. <b>Für alle Spender auf einmal:</b> eine Excel- oder CSV-Liste mit Name, Anschrift, Betrag und Datum wählen; wer mehrmals gegeben hat, bekommt eine Sammelbestätigung mit Anlage. Namen in allen Schriften (z. B. Ayşe, Łukasz) werden richtig gedruckt. Danach unterschreiben und ein Doppel aufbewahren.</li>
 <li><b>Kassenbericht für die Mitgliederversammlung:</b> <i>… Mehr → Kassenbericht (Jahreshauptversammlung) …</i> – laden Sie im Online-Banking die Umsätze des Vereinskontos als CSV, Excel oder CAMT-XML herunter (Sparkasse, Volksbank, ING, DKB und andere) oder nehmen Sie Ihr Kassenbuch (Spalten Datum, Text, Betrag oder Einnahme und Ausgabe, wahlweise Kategorie und Bereich). PDFMy erstellt daraus den Kassenbericht: Anfangs- und Endbestand, Einnahmen und Ausgaben nach Kategorien, Abgleich mit dem Kontostand, Aufteilung auf ideellen Bereich, Vermögensverwaltung, Zweckbetrieb und wirtschaftlichen Geschäftsbetrieb mit Hinweis auf die Freigrenze (50.000 € ab 2026), Unterschrift des Kassenwarts, Prüfvermerk der Kassenprüfer und die Buchungsliste als Anlage. Die Kategorien schlägt PDFMy nach dem Buchungstext vor (mit * gekennzeichnet) – stimmt etwas nicht, speichern Sie die Buchungsliste als Excel-Datei, korrigieren Sie die Spalte „Kategorie“ und wählen Sie die Datei erneut. Ihre Kontodaten verlassen das Gerät nicht.</li>
+<li><b>SEPA-Lastschrift für Beiträge:</b> <i>… Mehr → SEPA-Lastschrift für Beiträge …</i> – Name, IBAN und Gläubiger-ID des Vereins eintragen, Fälligkeitsdatum wählen und die Mitgliederliste (Excel oder CSV mit den Spalten Name, IBAN, Betrag, Mandatsreferenz und Datum des Mandats; wahlweise BIC, Verwendungszweck und „Erstlastschrift“) wählen. PDFMy prüft jede IBAN, meldet fehlerhafte Zeilen mit Namen und speichert die Lastschrift-Datei im aktuellen Bankformat (pain.008.001.08). Diese Datei laden Sie im Online-Banking Ihres Vereinskontos hoch („SEPA-Datei hochladen“ bzw. „Sammellastschrift“). Fehlen Mandatsreferenzen, kann PDFMy sie vergeben und als Liste speichern – bitte den Mitgliedern mitteilen. Denken Sie an die Vorabankündigung (üblich 14 Tage vorher, z. B. mit der Beitragsrechnung). Den Mitgliedsantrag mit SEPA-Mandat gibt es unter <i>Vereinsvorlagen</i>.</li>
 <li><b>Meine Angaben – Formulare mit einem Klick ausfüllen:</b> Im Formular-Bereich rechts <i>„Mit meinen Angaben ausfüllen“</i>. Beim ersten Mal tragen Sie Ihre Angaben einmal ein (Name, Anschrift, Geburtsdatum, Telefon, E-Mail, IBAN, Steuer-ID …); ändern lassen sie sich jederzeit unter <i>… Mehr → Meine Angaben …</i>. PDFMy erkennt die passenden Felder an ihrer Beschriftung – auch „Name, Vorname“, „PLZ, Ort“ oder „Ort, Datum“ (mit dem heutigen Datum) – und füllt nur leere Felder; Felder für andere Personen (z. B. „Name des Kindes“, „Geburtsname“) bleiben frei. Bitte das Ergebnis kurz prüfen. <i>„Aus diesem Formular übernehmen“</i> holt Angaben aus einem Formular, das Sie schon ausgefüllt haben. Ihre Angaben bleiben nur in diesem Browser auf diesem Gerät und werden nie übertragen; auf gemeinsam genutzten Geräten mit <i>„Alle löschen“</i> entfernen.</li>
 <li><b>Formular erstellen:</b> Werkzeug <i>„Formularfeld“</i> wählen, daneben die Art – <i>Textfeld, Mehrzeilig, Datum, Kontrollkästchen, Auswahlliste</i> oder <i>Optionsfeld</i> – und auf der Seite ein Rechteck aufziehen (oder einfach klicken). Bei einer <i>Auswahlliste</i> fragt PDFMy nach den Einträgen (z. B. „Herr, Frau, Divers“). <i>Optionsfelder</i> mit demselben Namen bilden eine Gruppe, von der nur eine Option gewählt werden kann („Ja“ / „Nein“) – setzen Sie einfach mehrere nebeneinander; der Wert kommt aus der Beschriftung rechts daneben. Der Haken <i>„Pflichtfeld“</i> markiert Felder, die ausgefüllt werden müssen (gilt auch für das gerade markierte Feld). Den Namen übernimmt PDFMy aus der Beschriftung daneben, z. B. „Vorname“; Doppelklick benennt um, <kbd>Entf</kbd> löscht. Beim Speichern entstehen echte Formularfelder, die jeder in einem PDF-Programm, im Browser oder in PDFMy ausfüllen kann – auch als PDF/A, barrierefrei (Screenreader lesen den Feldnamen vor).</li>
 <li><b>Rechnen und prüfen im Formular:</b> Als Feldart gibt es auch <i>Zahl</i>, <i>Betrag (€)</i>, <i>E-Mail</i>, <i>IBAN</i> und <i>Postleitzahl</i>. Bei Zahl und Betrag rechnet das Feld auf Wunsch selbst: unter <i>„Berechnung“</i> eine Formel eintragen, z. B. <i>Menge * Einzelpreis</i>, <i>Netto * 0,19</i> oder <i>SUMME([Pos 1]; [Pos 2]; [Pos 3])</i> – Feldnamen mit Leerzeichen in eckigen Klammern; erlaubt sind + − * /, Klammern, SUMME, MIN, MAX und MITTELWERT. Im gespeicherten PDF rechnen und prüfen die Felder selbst (z. B. in Adobe Acrobat Reader, Foxit oder Firefox); eine falsche IBAN oder E-Mail-Adresse wird gemeldet. Beim Ausfüllen in PDFMy rechnet PDFMy mit und zeigt fehlende Pflichtfelder und ungültige Angaben direkt am Feld – auch bei fremden Formularen mit Summenfeldern. Rechnende und prüfende Felder bekommen dafür im PDF ein kleines Formularskript – nur diese Felder, nicht Datum oder Text. Manche Firmen-Mailfilter halten PDFs mit Skripten zurück. PDF/A erlaubt keine Formularskripte; dort entstehen die Felder ohne Berechnung.</li>

@@ -94,6 +94,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 20.11.2026: SEPA-Lastschrift für Beiträge (app-v317)
+**Inhalt:** Mitgliederliste → SEPA-Sammellastschrift (pain.008.001.08) zum Hochladen im Online-Banking. **Grund:** Beitragseinzug ist die häufigste Kassenarbeit im Verein; bisher nur mit Vereinssoftware im Abo oder Bank-Software. Ergänzt Mitgliedsantrag mit SEPA-Mandat (v315) und Kassenbericht (v316).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Kontodaten nur im Browser; die Datei lädt der Nutzer selbst bei seiner Bank hoch |
+| 2 Kein Server | passt: kein Bankzugang (kein FinTS/EBICS), keine Verbindung |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: ein Dialog, eine Datei wählen; Fehler je Zeile mit Namen, Fälligkeit mit Vorschlag |
+| 5 Prüfbar | tests/sepalastschrift.test.js (Prüfziffern, Zeichensatz, Bankarbeitstage, Aufbau und Reihenfolge nach Schema); **offen:** Prüfung gegen das amtliche XSD und Test-Einreichung bei einer Bank |
+| 6 Wenig aktive Inhalte | passt |
+
 ### Geprüft und umgesetzt 20.11.2026: Kassenbericht für die Mitgliederversammlung (app-v316)
 **Inhalt:** Aus dem Umsatz-Export des Vereinskontos (CSV, Excel oder CAMT-XML) oder einem Kassenbuch entsteht ein Kassenbericht als PDF. Er enthält Anfangs- und Endbestand, Einnahmen und Ausgaben nach Kategorien, den Abgleich mit dem Kontostand und die Aufteilung auf die vier steuerlichen Bereiche mit Hinweis auf die Freigrenze nach § 64 Abs. 3 AO (50.000 € ab 2026). Dazu kommen die Unterschrift des Kassenwarts, der Prüfvermerk der Kassenprüfer mit Entlastungsempfehlung und die Buchungsliste als Anlage. Kategorien sind gekennzeichnete Vorschläge; eine Korrektur-Liste für Excel lässt sich erneut einlesen. **Grund:** Lücke für die angeschriebenen Vereine – die Jahreshauptversammlung braucht jedes Jahr einen Kassenbericht, Wettbewerber (Acrobat, PDF24, Smallpdf) bieten nichts dergleichen, Vereinssoftware kostet und verlangt ein Konto.
 

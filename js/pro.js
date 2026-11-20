@@ -3856,6 +3856,45 @@ $('#zuwIn').onchange = async e => {
     status(`${personen.length} Zuwendungsbestätigungen erstellt.`);
   } catch (err) { noteError(err, 'Zuwendungsbestätigung'); fdMsg($('#zuwSerMsg'), [`Abgebrochen: ${err.message}`]); }
 };
+/* ---------- SEPA-Lastschrift für Beiträge: Mitgliederliste → pain.008.001.08 (js/sepalastschrift.js, app-v317) ---------- */
+const sepaPruef = () => { const f = SepaLastschrift.faelligkeitPruefen($('#sepaFaellig').value); $('#sepaHinweis').textContent = I18N.t(f.ok ? f.hinweis || '' : f.grund); return f.ok; };
+$('#sepaFaellig').addEventListener('input', sepaPruef);
+$('#btnSepa').onclick = () => {
+  closeMenu?.();
+  const v = LS.get('sepaVerein', null), vv = LS.get('vvVerein', null), z = LS.get('zuwVerein', null), kb = LS.get('kbVerein', null);
+  $('#sepaName').value = v?.name || vv?.verein || z?.aussteller?.name || kb?.verein || ''; $('#sepaIban').value = v?.iban || ''; $('#sepaBic').value = v?.bic || '';
+  $('#sepaGlId').value = v?.glaeubigerId || vv?.glaeubigerId || ''; $('#sepaZweck').value = v?.zweck || `Mitgliedsbeitrag ${new Date().getFullYear() + (new Date().getMonth() >= 10 ? 1 : 0)}`;
+  const f = new Date(); f.setDate(f.getDate() + 14); let d = f; while (!SepaLastschrift.bankarbeitstag(d)) d.setDate(d.getDate() + 1);   // Vorschlag: in 14 Tagen (Vorabankündigung)
+  $('#sepaFaellig').value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  $('#sepaVergeben').checked = false; $('#sepaMsg').textContent = ''; sepaPruef(); $('#sepaDlg').showModal(); ($('#sepaName').value ? $('#sepaIban') : $('#sepaName')).focus();
+};
+$('#sepaCancel').onclick = () => $('#sepaDlg').close();
+const sepaVerein = () => ({ name: $('#sepaName').value.trim(), iban: $('#sepaIban').value.replace(/\s+/g, '').toUpperCase(), bic: $('#sepaBic').value.replace(/\s+/g, '').toUpperCase(), glaeubigerId: $('#sepaGlId').value.replace(/\s+/g, '').toUpperCase(), zweck: $('#sepaZweck').value.trim() });
+$('#sepaForm').onsubmit = e => {
+  e.preventDefault();
+  const g = sepaVerein(), bad = (sel, msg) => { $('#sepaMsg').textContent = I18N.t(msg); $(sel).focus(); };
+  if (!g.name) return bad('#sepaName', 'Bitte den Namen des Vereins eintragen.');
+  if (!SepaLastschrift.ibanOk(g.iban)) return bad('#sepaIban', 'Die IBAN des Vereinskontos ist ungültig – bitte die Schreibweise prüfen.');
+  if (g.bic && !SepaLastschrift.bicOk(g.bic)) return bad('#sepaBic', 'Die BIC ist ungültig – bitte prüfen oder leer lassen.');
+  if (!SepaLastschrift.glaeubigerOk(g.glaeubigerId)) return bad('#sepaGlId', 'Diese Gläubiger-Identifikationsnummer ist ungültig – bitte die Schreibweise prüfen (z. B. DE98ZZZ09999999999).');
+  if (!sepaPruef()) return $('#sepaFaellig').focus();
+  LS.set('sepaVerein', g); $('#sepaMsg').textContent = ''; $('#sepaIn').click();
+};
+$('#sepaIn').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  try {
+    const g = sepaVerein(), t = SepaLastschrift.ausTabelle(await fdReadTable(f), { zweck: g.zweck, vergeben: $('#sepaVergeben').checked });
+    if (!t.posten.length) { fdMsg($('#sepaMsg'), t.fehler.length ? t.fehler.slice(0, 4) : ['In der Liste wurden keine Lastschriften gefunden.']); return; }
+    const faellig = $('#sepaFaellig').value, xml = SepaLastschrift.xml({ ...g, faellig }, t.posten), tag = new Date().toISOString().slice(0, 10);
+    download(new TextEncoder().encode(xml), `SEPA-Lastschrift-${faellig}.xml`, 'application/xml');
+    if (t.vergeben.length) download(new TextEncoder().encode(SepaLastschrift.vergebenCsv(t.vergeben)), `Mandatsreferenzen-${tag}.csv`, 'text/csv');
+    const summe = t.posten.reduce((s, p) => s + p.betrag, 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    fdMsg($('#sepaMsg'), [`${t.posten.length} Lastschriften über ${summe} € in „SEPA-Lastschrift-${faellig}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.`,
+      t.fehler.length ? `${t.fehler.length} Zeilen nicht übernommen: ${t.fehler.slice(0, 3).join(' ')}` : '',
+      t.vergeben.length ? `${t.vergeben.length} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).` : '']);
+    status(`SEPA-Lastschrift erstellt: ${t.posten.length} Lastschriften, ${summe} €.`);
+  } catch (err) { noteError(err, 'SEPA-Lastschrift'); fdMsg($('#sepaMsg'), [`Abgebrochen: ${err.message}`]); }
+};
 /* ---------- Kassenbericht für die Mitgliederversammlung (js/kassenbericht.js, app-v316) ---------- */
 $('#btnKb').onclick = () => {
   closeMenu?.();
@@ -4398,7 +4437,11 @@ function spotsSummary() {
   const open = openSpots(), signs = open.filter(o => o.s.kind === 'sign');
   $('#signNextSpot').hidden = !open.length;
   $('#signNextSpot').textContent = open.length ? `Nächste Stelle (${open.length})` : 'Nächste Stelle';
-  const sm = $('#smSpots'); if (sm) { sm.hidden = !open.length; const pages = [...new Set(open.map(o => o.i + 1))]; sm.textContent = open.length ? `${signs.length ? `${signs.length === 1 ? `${signs.length} Unterschriftsstelle` : `${signs.length} Unterschriftsstellen`}` : ''}${signs.length && open.length > signs.length ? ' und ' : ''}${open.length > signs.length ? `${open.length - signs.length}× Ort/Datum` : ''} gefunden (Seite ${pages.join(', ')}) – gelb markiert. Ein Klick auf „Hier unterschreiben“ setzt die Unterschrift genau dort.` : ''; }
+  const sm = $('#smSpots'); if (sm) { sm.hidden = !open.length; const pages = [...new Set(open.map(o => o.i + 1))]; // ganze Sätze je Fall, damit die Übersetzung greift (verschachtelte Teilsätze blieben in anderen Sprachen halb deutsch)
+    const s = signs.length, d = open.length - s, pg = pages.join(', ');
+    const was = !open.length ? '' : s && d ? (s === 1 ? I18N.t(`1 Unterschriftsstelle und ${d}× Ort/Datum gefunden (Seite ${pg})`) : I18N.t(`${s} Unterschriftsstellen und ${d}× Ort/Datum gefunden (Seite ${pg})`))
+      : s ? (s === 1 ? I18N.t(`1 Unterschriftsstelle gefunden (Seite ${pg})`) : I18N.t(`${s} Unterschriftsstellen gefunden (Seite ${pg})`)) : I18N.t(`${d}× Ort/Datum gefunden (Seite ${pg})`);
+    sm.textContent = was ? was + ' – ' + I18N.t('gelb markiert. Ein Klick auf „Hier unterschreiben“ setzt die Unterschrift genau dort.') : ''; }
 }
 window.renderSignSpots = (ov, p) => {
   if (state.tool !== 'sign' || !p.signSpots) return;
