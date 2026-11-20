@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN nevalid.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Referința mandatului {2} apare de două ori.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Lipsește referința mandatului.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} debitări directe în valoare de {1} € au fost salvate în „SEPA-debitare-directa-{2}.xml” – transmiteți-le în internet banking la „Încărcare fișier SEPA”.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} debitări directe în valoare de {1} € au fost salvate în „SEPA-Lastschrift-{2}.xml” – transmiteți-le în internet banking la „Încărcare fișier SEPA”.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} referințe de mandat au fost atribuite din nou – vă rugăm să le comunicați membrilor (lista a fost salvată).",
  "{0} Zeilen nicht übernommen: {1}": "{0} rânduri nepreluate: {1}",
  "{0}: Name fehlt.": "{0}: Lipsește numele.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Debitare directă SEPA pentru cotizații …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-debitare-directa-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Scopul plății (dacă lista nu are unul)",
- "z. B. Mitgliedsbeitrag 2027": "de ex. Cotizație de membru 2027"
+ "z. B. Mitgliedsbeitrag 2027": "de ex. Cotizație de membru 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 debitare directă în valoare de {0} € a fost salvată în „SEPA-Lastschrift-{1}.xml” – transmiteți-o în internet banking la „Încărcare fișier SEPA”.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 referință de mandat a fost atribuită din nou – vă rugăm să o comunicați membrului (lista a fost salvată).",
+ "1 Zeile nicht übernommen: {0}": "1 rând nepreluat: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Debitare directă SEPA creată: 1 debitare, {0} €."
 }

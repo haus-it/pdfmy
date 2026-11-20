@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): Ogiltig IBAN.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Medgivandereferensen {2} förekommer två gånger.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Medgivandereferens saknas.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} autogiron på {1} € sparades i ”SEPA-autogiro-{2}.xml” – lämna in dem i internetbanken under ”Ladda upp SEPA-fil”.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} autogiron på {1} € sparades i ”SEPA-Lastschrift-{2}.xml” – lämna in dem i internetbanken under ”Ladda upp SEPA-fil”.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} medgivandereferenser har tilldelats på nytt – meddela medlemmarna (listan har sparats).",
  "{0} Zeilen nicht übernommen: {1}": "{0} rader togs inte med: {1}",
  "{0}: Name fehlt.": "{0}: Namn saknas.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA-autogiro för avgifter …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-autogiro-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Meddelande (om listan saknar det)",
- "z. B. Mitgliedsbeitrag 2027": "t.ex. Medlemsavgift 2027"
+ "z. B. Mitgliedsbeitrag 2027": "t.ex. Medlemsavgift 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 autogiro på {0} € sparades i ”SEPA-Lastschrift-{1}.xml” – lämna in det i internetbanken under ”Ladda upp SEPA-fil”.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 medgivandereferens har tilldelats på nytt – meddela medlemmet (listan har sparats).",
+ "1 Zeile nicht übernommen: {0}": "1 rad togs inte med: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA-autogiro skapat: 1 autogiro, {0} €."
 }

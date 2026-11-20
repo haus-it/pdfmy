@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN недапушчальны.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Нумар мандата {2} паўтараецца.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Нумар мандата адсутнічае.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} дэбетаванняў на суму {1} € захавана ў «SEPA-дэбет-{2}.xml» – падайце іх у анлайн-банкінгу праз «Загрузіць SEPA-файл».",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} дэбетаванняў на суму {1} € захавана ў «SEPA-Lastschrift-{2}.xml» – падайце іх у анлайн-банкінгу праз «Загрузіць SEPA-файл».",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "Нанова прысвоена нумароў мандатаў: {0} – паведаміце іх членам (спіс захаваны).",
  "{0} Zeilen nicht übernommen: {1}": "Не прынята радкоў {0}: {1}",
  "{0}: Name fehlt.": "{0}: імя адсутнічае.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA-дэбетаванне для ўзносаў …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-дэбет-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Прызначэнне плацяжу (калі ў спісе яго няма)",
- "z. B. Mitgliedsbeitrag 2027": "напр. Членскі ўзнос 2027"
+ "z. B. Mitgliedsbeitrag 2027": "напр. Членскі ўзнос 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 дэбетаванне на суму {0} € захавана ў «SEPA-Lastschrift-{1}.xml» – падайце яго ў анлайн-банкінгу праз «Загрузіць SEPA-файл».",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "Нанова прысвоены 1 нумар мандата – паведаміце яго члену (спіс захаваны).",
+ "1 Zeile nicht übernommen: {0}": "Не прынята 1 радок: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA-дэбетаванне створана: 1 дэбетаванне, {0} €."
 }

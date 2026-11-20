@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN i pavlefshëm.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Referenca e mandatit {2} shfaqet dy herë.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Mungon referenca e mandatit.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} debitime direkte me vlerë {1} € u ruajtën te „SEPA-debitim-direkt-{2}.xml“ – paraqitini në bankën online te „Ngarkimi i skedarit SEPA“.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} debitime direkte me vlerë {1} € u ruajtën te „SEPA-Lastschrift-{2}.xml“ – paraqitini në bankën online te „Ngarkimi i skedarit SEPA“.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} referenca mandati u caktuan përsëri – ju lutemi t’ua njoftoni anëtarëve (lista u ruajt).",
  "{0} Zeilen nicht übernommen: {1}": "{0} rreshta nuk u pranuan: {1}",
  "{0}: Name fehlt.": "{0}: Mungon emri.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Debitim direkt SEPA për kuotat …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-debitim-direkt-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Qëllimi i pagesës (nëse lista nuk e ka)",
- "z. B. Mitgliedsbeitrag 2027": "p.sh. Kuota e anëtarësimit 2027"
+ "z. B. Mitgliedsbeitrag 2027": "p.sh. Kuota e anëtarësimit 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 debitim direkt me vlerë {0} € u ruajt te „SEPA-Lastschrift-{1}.xml“ – paraqiteni në bankën online te „Ngarkimi i skedarit SEPA“.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 referencë mandati u caktua përsëri – ju lutemi t’ia njoftoni anëtarit (lista u ruajt).",
+ "1 Zeile nicht übernommen: {0}": "1 rresht nuk u pranua: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Debitimi direkt SEPA u krijua: 1 debitim, {0} €."
 }

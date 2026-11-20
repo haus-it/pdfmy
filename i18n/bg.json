@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN е невалиден.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Референцията на мандата {2} се повтаря.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Референцията на мандата липсва.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} директни дебита на стойност {1} € са записани в „SEPA-директен-дебит-{2}.xml“ – подайте ги в онлайн банкирането чрез „Качване на SEPA файл“.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} директни дебита на стойност {1} € са записани в „SEPA-Lastschrift-{2}.xml“ – подайте ги в онлайн банкирането чрез „Качване на SEPA файл“.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "Присвоени са наново {0} референции на мандати – съобщете ги на членовете (списъкът е записан).",
  "{0} Zeilen nicht übernommen: {1}": "{0} реда не са приети: {1}",
  "{0}: Name fehlt.": "{0}: името липсва.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA директен дебит за вноски …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-директен-дебит-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Основание за плащане (ако списъкът няма такова)",
- "z. B. Mitgliedsbeitrag 2027": "напр. Членски внос 2027"
+ "z. B. Mitgliedsbeitrag 2027": "напр. Членски внос 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 директен дебит на стойност {0} € е записан в „SEPA-Lastschrift-{1}.xml“ – подайте го в онлайн банкирането чрез „Качване на SEPA файл“.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "Присвоена е наново 1 референция на мандат – съобщете я на члена (списъкът е записан).",
+ "1 Zeile nicht übernommen: {0}": "1 ред не е приет: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA директният дебит е създаден: 1 директен дебит, {0} €."
 }

@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Polecenie zapłaty SEPA dla składek …",
  "SEPA-Lastschrift-{0}.xml": "Polecenie-zaplaty-SEPA-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Tytuł płatności (jeśli lista go nie zawiera)",
- "z. B. Mitgliedsbeitrag 2027": "np. Składka członkowska 2027"
+ "z. B. Mitgliedsbeitrag 2027": "np. Składka członkowska 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 polecenie zapłaty na kwotę {0} € zapisano w pliku „SEPA-Lastschrift-{1}.xml” – złóż je w bankowości internetowej w menu „SEPA-Datei hochladen” (wczytaj plik SEPA).",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "Nadano ponownie 1 numer referencyjny mandatu – prosimy przekazać go członkowi (lista zapisana).",
+ "1 Zeile nicht übernommen: {0}": "Nie przejęto 1 wiersza: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Utworzono polecenie zapłaty SEPA: 1 polecenie, {0} €."
 }

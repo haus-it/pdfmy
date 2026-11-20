@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN er ugyldig.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Mandatreferencen {2} forekommer flere gange.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Mandatreferencen mangler.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} direkte debiteringer på {1} € er gemt i »SEPA-direkte-debitering-{2}.xml« – indsend dem i netbanken under »Upload SEPA-fil«.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} direkte debiteringer på {1} € er gemt i »SEPA-Lastschrift-{2}.xml« – indsend dem i netbanken under »Upload SEPA-fil«.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} mandatreferencer er tildelt på ny – meddel dem til medlemmerne (liste gemt).",
  "{0} Zeilen nicht übernommen: {1}": "{0} rækker blev ikke overtaget: {1}",
  "{0}: Name fehlt.": "{0}: Navn mangler.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA-direkte debitering af kontingent …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-direkte-debitering-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Betalingsformål (hvis listen ikke har et)",
- "z. B. Mitgliedsbeitrag 2027": "f.eks. Kontingent 2027"
+ "z. B. Mitgliedsbeitrag 2027": "f.eks. Kontingent 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 direkte debitering på {0} € er gemt i »SEPA-Lastschrift-{1}.xml« – indsend den i netbanken under »Upload SEPA-fil«.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 mandatreference er tildelt på ny – meddel den til medlemmet (liste gemt).",
+ "1 Zeile nicht übernommen: {0}": "1 række blev ikke overtaget: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA-direkte debitering oprettet: 1 direkte debitering, {0} €."
 }

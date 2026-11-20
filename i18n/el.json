@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): Το IBAN δεν είναι έγκυρο.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Η αναφορά εντολής {2} εμφανίζεται περισσότερες από μία φορές.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Λείπει η αναφορά εντολής.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} άμεσες χρεώσεις συνολικού ύψους {1} € αποθηκεύτηκαν στο «SEPA-άμεση-χρέωση-{2}.xml» – υποβάλετέ τις στο ηλεκτρονικό τραπεζικό σύστημα στην επιλογή «Μεταφόρτωση αρχείου SEPA».",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} άμεσες χρεώσεις συνολικού ύψους {1} € αποθηκεύτηκαν στο «SEPA-Lastschrift-{2}.xml» – υποβάλετέ τις στο ηλεκτρονικό τραπεζικό σύστημα στην επιλογή «Μεταφόρτωση αρχείου SEPA».",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "Αποδόθηκαν εκ νέου {0} αναφορές εντολών – ενημερώστε τα μέλη (η λίστα αποθηκεύτηκε).",
  "{0} Zeilen nicht übernommen: {1}": "{0} γραμμές δεν μεταφέρθηκαν: {1}",
  "{0}: Name fehlt.": "{0}: λείπει το όνομα.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Άμεση χρέωση SEPA για συνδρομές …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-άμεση-χρέωση-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Αιτιολογία πληρωμής (αν η λίστα δεν έχει)",
- "z. B. Mitgliedsbeitrag 2027": "π.χ. Συνδρομή μέλους 2027"
+ "z. B. Mitgliedsbeitrag 2027": "π.χ. Συνδρομή μέλους 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 άμεση χρέωση ύψους {0} € αποθηκεύτηκε στο «SEPA-Lastschrift-{1}.xml» – υποβάλετέ την στο ηλεκτρονικό τραπεζικό σύστημα στην επιλογή «Μεταφόρτωση αρχείου SEPA».",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "Αποδόθηκε εκ νέου 1 αναφορά εντολής – ενημερώστε το μέλος (η λίστα αποθηκεύτηκε).",
+ "1 Zeile nicht übernommen: {0}": "1 γραμμή δεν μεταφέρθηκε: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Η άμεση χρέωση SEPA δημιουργήθηκε: 1 άμεση χρέωση, {0} €."
 }

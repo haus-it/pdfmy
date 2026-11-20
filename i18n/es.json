@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN no válido.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): La referencia del mandato {2} está duplicada.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Falta la referencia del mandato.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} adeudos por {1} € guardados en «SEPA-Adeudo-{2}.xml»: preséntelos en la banca en línea en «Subir archivo SEPA».",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} adeudos por {1} € guardados en «SEPA-Lastschrift-{2}.xml»: preséntelos en la banca en línea en «Subir archivo SEPA».",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} referencias de mandato asignadas de nuevo: comuníquelas a los socios (lista guardada).",
  "{0} Zeilen nicht übernommen: {1}": "{0} filas no incluidas: {1}",
  "{0}: Name fehlt.": "{0}: Falta el nombre.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Adeudo SEPA para cuotas …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-Adeudo-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Concepto (si la lista no lo tiene)",
- "z. B. Mitgliedsbeitrag 2027": "p. ej. Cuota de socio 2027"
+ "z. B. Mitgliedsbeitrag 2027": "p. ej. Cuota de socio 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 adeudo por {0} € guardado en «SEPA-Lastschrift-{1}.xml»: preséntelo en la banca en línea en «Subir archivo SEPA».",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 referencia de mandato asignada de nuevo: comuníquela al socio (lista guardada).",
+ "1 Zeile nicht übernommen: {0}": "1 fila no incluida: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Adeudo SEPA creado: 1 adeudo, {0} €."
 }

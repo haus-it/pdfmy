@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Addebito SEPA per le quote …",
  "SEPA-Lastschrift-{0}.xml": "Addebito-SEPA-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Causale (se l’elenco non ne ha una)",
- "z. B. Mitgliedsbeitrag 2027": "ad es. Quota associativa 2027"
+ "z. B. Mitgliedsbeitrag 2027": "ad es. Quota associativa 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 addebito per {0} € salvato in «SEPA-Lastschrift-{1}.xml» – da presentare nell’home banking in «Carica file SEPA».",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 riferimento del mandato assegnato di nuovo – comunicarlo al socio (elenco salvato).",
+ "1 Zeile nicht übernommen: {0}": "1 riga non acquisita: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Addebito SEPA creato: 1 addebito, {0} €."
 }

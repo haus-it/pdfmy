@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}) : IBAN invalide.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}) : la référence de mandat {2} apparaît en double.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}) : référence de mandat manquante.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} prélèvements pour {1} € enregistrés dans « SEPA-Prelevement-{2}.xml » – à soumettre dans la banque en ligne sous « Envoyer un fichier SEPA ».",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} prélèvements pour {1} € enregistrés dans « SEPA-Lastschrift-{2}.xml » – à soumettre dans la banque en ligne sous « Envoyer un fichier SEPA ».",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} références de mandat attribuées de nouveau – veuillez les communiquer aux membres (liste enregistrée).",
  "{0} Zeilen nicht übernommen: {1}": "{0} lignes non reprises : {1}",
  "{0}: Name fehlt.": "{0} : nom manquant.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Prélèvement SEPA pour cotisations …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-Prelevement-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Motif du paiement (si la liste n’en comporte pas)",
- "z. B. Mitgliedsbeitrag 2027": "p. ex. Cotisation 2027"
+ "z. B. Mitgliedsbeitrag 2027": "p. ex. Cotisation 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 prélèvement de {0} € enregistré dans « SEPA-Lastschrift-{1}.xml » – à soumettre dans la banque en ligne sous « Envoyer un fichier SEPA ».",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 référence de mandat attribuée de nouveau – veuillez la communiquer au membre (liste enregistrée).",
+ "1 Zeile nicht übernommen: {0}": "1 ligne non reprise : {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Prélèvement SEPA créé : 1 prélèvement, {0} €."
 }

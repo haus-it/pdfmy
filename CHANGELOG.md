@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### SEPA-Datei gegen das amtliche Schema geprüft (app-v318)
+- Die erzeugte pain.008.001.08-Datei ist jetzt im Test gegen das amtliche ISO-20022-Schema geprüft (iso20022.org, Datei in tests/sepa-xsd/ mit SHA-256): mit und ohne BIC, Erst- und Folgelastschriften, Einzelposten, 33 Posten, überlange Namen und Verwendungszwecke, Cent-Beträge. Zusätzlich einmalig gegen das EPC-Schema für SEPA-Basislastschriften (EPC130-08) geprüft – gültig.
+- Behoben: „1 Lastschriften“, „1 Zeilen“, „1 Mandatsreferenzen“ – jetzt Einzahl, in 40 Sprachen.
+- Behoben: In 30 Sprachen nannte die Erfolgsmeldung einen übersetzten Dateinamen (z. B. „SEPA-Direct-Debit-….xml“), gespeichert wird aber „SEPA-Lastschrift-….xml“ – jetzt überall der echte Dateiname.
+
 ### SEPA-Lastschrift für Beiträge, Hilfe mit Bildern (app-v317)
 - „Mehr → SEPA-Lastschrift für Beiträge …“: Aus der Mitgliederliste (Excel/CSV: Name bzw. Kontoinhaber, IBAN, Betrag, Mandatsreferenz, Datum des Mandats; optional BIC, Verwendungszweck, Erstlastschrift) entsteht eine SEPA-Sammellastschrift im aktuellen Format pain.008.001.08 (DFÜ-Abkommen Anlage 3; pain.008.001.02 nehmen die Banken ab November 2026 nicht mehr an) zum Hochladen im Online-Banking. Basislastschrift (CORE), Erst- und Folgelastschriften getrennt, ohne BIC „NOTPROVIDED“.
 - Prüfungen: IBAN und Gläubiger-ID mit Prüfziffer, BIC, Betrag, Mandatsdatum nicht in der Zukunft, doppelte Mandatsreferenzen; Fälligkeit frühestens zwei Bankarbeitstage nach heute (TARGET-Feiertage), Hinweis auf die Vorabankündigung. Namen und Texte im SEPA-Zeichensatz (ä → ae, ş → s). Fehlende Mandatsreferenzen auf Wunsch vergeben, Liste als CSV (Formeln entschärft). Vereinsangaben aus Vereinsvorlagen/Zuwendungsbestätigung übernommen.

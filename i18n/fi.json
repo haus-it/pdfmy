@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN on virheellinen.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): valtuutuksen viite {2} esiintyy kahdesti.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): valtuutuksen viite puuttuu.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} suoraveloitusta, yhteensä {1} €, tallennettu tiedostoon ”SEPA-suoraveloitus-{2}.xml” – lähetä ne verkkopankissa kohdassa ”Lähetä SEPA-tiedosto”.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} suoraveloitusta, yhteensä {1} €, tallennettu tiedostoon ”SEPA-Lastschrift-{2}.xml” – lähetä ne verkkopankissa kohdassa ”Lähetä SEPA-tiedosto”.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} valtuutusviitettä annettu uudelleen – ilmoita ne jäsenille (luettelo tallennettu).",
  "{0} Zeilen nicht übernommen: {1}": "{0} riviä jätettiin pois: {1}",
  "{0}: Name fehlt.": "{0}: nimi puuttuu.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA-suoraveloitus jäsenmaksuille …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-suoraveloitus-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Maksun tiedot (jos luettelossa ei ole)",
- "z. B. Mitgliedsbeitrag 2027": "esim. Jäsenmaksu 2027"
+ "z. B. Mitgliedsbeitrag 2027": "esim. Jäsenmaksu 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 suoraveloitus, {0} €, tallennettu tiedostoon ”SEPA-Lastschrift-{1}.xml” – lähetä se verkkopankissa kohdassa ”Lähetä SEPA-tiedosto”.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 valtuutusviite annettu uudelleen – ilmoita se jäsenelle (luettelo tallennettu).",
+ "1 Zeile nicht übernommen: {0}": "1 rivi jätettiin pois: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA-suoraveloitus luotu: 1 suoraveloitus, {0} €."
 }

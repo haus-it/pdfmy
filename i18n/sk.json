@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): Neplatný IBAN.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Referencia mandátu {2} sa vyskytuje dvakrát.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Chýba referencia mandátu.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} inkás v hodnote {1} € uložených do súboru „SEPA-inkaso-{2}.xml“ – predložte ich v internetbankingu cez „Nahranie súboru SEPA“.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} inkás v hodnote {1} € uložených do súboru „SEPA-Lastschrift-{2}.xml“ – predložte ich v internetbankingu cez „Nahranie súboru SEPA“.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} referencií mandátu bolo pridelených nanovo – oznámte ich členom (zoznam bol uložený).",
  "{0} Zeilen nicht übernommen: {1}": "{0} riadkov nebolo prevzatých: {1}",
  "{0}: Name fehlt.": "{0}: Chýba meno.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Inkaso SEPA pre príspevky …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-inkaso-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Účel platby (ak ho zoznam nemá)",
- "z. B. Mitgliedsbeitrag 2027": "napr. Členský príspevok 2027"
+ "z. B. Mitgliedsbeitrag 2027": "napr. Členský príspevok 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 inkaso v hodnote {0} € uložené do súboru „SEPA-Lastschrift-{1}.xml“ – predložte ho v internetbankingu cez „Nahranie súboru SEPA“.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 referencia mandátu bola pridelená nanovo – oznámte ju členovi (zoznam bol uložený).",
+ "1 Zeile nicht übernommen: {0}": "1 riadok nebol prevzatý: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Inkaso SEPA vytvorené: 1 inkaso, {0} €."
 }

@@ -74,3 +74,20 @@ test('Oberfläche angebunden', () => {
   assert.match(src, /SepaLastschrift\.ausTabelle\(await fdReadTable\(f\)/); assert.match(src, /SepaLastschrift\.xml\(/);
   assert.match(fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8'), /js\/sepalastschrift\.js/);
 });
+
+test('pain.008.001.08 gültig nach amtlichem ISO-20022-Schema (Python/lxml, sonst übersprungen)', (t) => {
+  const { spawnSync } = require('node:child_process'), os = require('node:os');
+  const py = ['python', 'py', 'python3'].find(c => spawnSync(c, ['-I', '-c', 'import lxml'], { stdio: 'ignore' }).status === 0);
+  if (!py) { t.skip('Python mit lxml nicht installiert'); return; }
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pain008-')), lang = 'Ä'.repeat(90), datei = [];
+  const liste = [rows[0], ...rows.slice(1, 3), ['Łukasz', 'Żółć ' + lang, 'AT611904300234573201', '', '0,01', 'M/2026/3', '01.01.2025', '', 'x'.repeat(200)]];
+  for (let i = 0; i < 30; i++) liste.push(['Mitglied', String(i), 'DE02120300000000202051', i % 2 ? 'BYLADEM1001' : '', String(10 + i), 'M-1' + i, '01.01.2025', i % 3 ? '' : 'FRST', '']);
+  const { posten, fehler } = S.ausTabelle(liste, { heute, zweck: 'Mitgliedsbeitrag 2027' });
+  assert.equal(fehler.length, 0); assert.equal(posten.length, 33);
+  for (const [n, v, p] of [['mit-bic', verein, posten], ['ohne-bic', { ...verein, bic: '' }, posten.filter(x => x.seq === 'RCUR')], ['einzeln', verein, posten.slice(0, 1)]]) {
+    const f = path.join(dir, n + '.xml'); fs.writeFileSync(f, S.xml(v, p, { jetzt: new Date(Date.UTC(2026, 10, 20, 10)) })); datei.push(f);
+  }
+  const r = spawnSync(py, ['-I', path.join(__dirname, 'sepa-xsd', 'pruefe.py'), path.join(__dirname, 'sepa-xsd', 'pain.008.001.08.xsd'), ...datei], { encoding: 'utf8' });
+  fs.rmSync(dir, { recursive: true, force: true });
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+});

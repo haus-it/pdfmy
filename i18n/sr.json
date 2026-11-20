@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN је неважећи.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Референца мандата {2} јавља се двапут.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Недостаје референца мандата.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} директних задужења у износу од {1} € сачувано је у „SEPA-директно-задужење-{2}.xml“ – поднесите их у онлајн банкарству под „Отпремање SEPA датотеке“.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} директних задужења у износу од {1} € сачувано је у „SEPA-Lastschrift-{2}.xml“ – поднесите их у онлајн банкарству под „Отпремање SEPA датотеке“.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} референци мандата поново је додељено – обавестите чланове (листа је сачувана).",
  "{0} Zeilen nicht übernommen: {1}": "{0} редова није преузето: {1}",
  "{0}: Name fehlt.": "{0}: Недостаје име.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA директно задужење за чланарине …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-директно-задужење-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Сврха плаћања (ако листа нема)",
- "z. B. Mitgliedsbeitrag 2027": "нпр. Чланарина 2027"
+ "z. B. Mitgliedsbeitrag 2027": "нпр. Чланарина 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 директно задужење у износу од {0} € сачувано је у „SEPA-Lastschrift-{1}.xml“ – поднесите га у онлајн банкарству под „Отпремање SEPA датотеке“.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 референца мандата поново је додељена – обавестите члана (листа је сачувана).",
+ "1 Zeile nicht übernommen: {0}": "1 ред није преузет: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA директно задужење креирано: 1 задужење, {0} €."
 }

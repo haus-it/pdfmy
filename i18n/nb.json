@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA-belastning for kontingent …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-belastning-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Betalingsformål (hvis listen ikke har noe)",
- "z. B. Mitgliedsbeitrag 2027": "f.eks. Medlemskontingent 2027"
+ "z. B. Mitgliedsbeitrag 2027": "f.eks. Medlemskontingent 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 direkte belastning på {0} € er lagret i «SEPA-Lastschrift-{1}.xml» – send den inn i nettbanken under «SEPA-Datei hochladen» (last opp SEPA-fil).",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 mandatreferanse er tildelt på nytt – gi beskjed til medlemmet (listen er lagret).",
+ "1 Zeile nicht übernommen: {0}": "1 rad ble ikke overtatt: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA-belastning opprettet: 1 belastning, {0} €."
 }

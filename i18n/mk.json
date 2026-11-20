@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA директно задолжување за членарини …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-direktno-zadolzhuvanje-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Цел на плаќањето (ако списокот нема)",
- "z. B. Mitgliedsbeitrag 2027": "на пр. Членарина 2027"
+ "z. B. Mitgliedsbeitrag 2027": "на пр. Членарина 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 директно задолжување во износ од {0} € е зачувано во „SEPA-Lastschrift-{1}.xml“ – поднесете го во е-банкарството под „SEPA-Datei hochladen“ (прикачување SEPA-датотека).",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 референца на овластување е доделена одново – соопштете ја на членот (списокот е зачуван).",
+ "1 Zeile nicht übernommen: {0}": "1 ред не е преземен: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA директно задолжување е создадено: 1 задолжување, {0} €."
 }

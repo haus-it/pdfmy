@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN neamhbhailí.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): tá tagairt an tsainordaithe {2} dúbailte.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): tagairt an tsainordaithe in easnamh.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "Sábháladh {0} dochar díreach ar fiú {1} € iad i “SEPA-dochar-direach-{2}.xml” – cuir isteach iad sa bhanc ar líne faoi “Uaslódáil comhad SEPA”.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "Sábháladh {0} dochar díreach ar fiú {1} € iad i “SEPA-Lastschrift-{2}.xml” – cuir isteach iad sa bhanc ar líne faoi “Uaslódáil comhad SEPA”.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "Sannadh {0} tagairt sainordaithe as an nua – cuir in iúl do na baill iad (liosta sábháilte).",
  "{0} Zeilen nicht übernommen: {1}": "{0} sraith nár glacadh leo: {1}",
  "{0}: Name fehlt.": "{0}: ainm in easnamh.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Dochar díreach SEPA le haghaidh táillí …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-dochar-direach-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Tagairt íocaíochta (mura bhfuil ceann sa liosta)",
- "z. B. Mitgliedsbeitrag 2027": "m.sh. Táille ballraíochta 2027"
+ "z. B. Mitgliedsbeitrag 2027": "m.sh. Táille ballraíochta 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "Sábháladh 1 dochar díreach ar fiú {0} € i “SEPA-Lastschrift-{1}.xml” – cuir isteach é sa bhanc ar líne faoi “Uaslódáil comhad SEPA”.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "Sannadh 1 tagairt sainordaithe as an nua – cuir in iúl don bhall í (liosta sábháilte).",
+ "1 Zeile nicht übernommen: {0}": "1 sraith nár glacadh léi: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Dochar díreach SEPA cruthaithe: 1 dochar, {0} €."
 }

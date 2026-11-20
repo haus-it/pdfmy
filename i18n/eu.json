@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN baliogabea.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): {2} aginduaren erreferentzia bikoiztuta dago.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): aginduaren erreferentzia falta da.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{1} €-ko {0} zorroztapen “SEPA-zorroztapena-{2}.xml” fitxategian gorde dira – aurkeztu itzazu online bankuan “Igo SEPA fitxategia” atalean.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{1} €-ko {0} zorroztapen “SEPA-Lastschrift-{2}.xml” fitxategian gorde dira – aurkeztu itzazu online bankuan “Igo SEPA fitxategia” atalean.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} aginduaren erreferentzia berriro eman dira – jakinarazi bazkideei (zerrenda gordeta).",
  "{0} Zeilen nicht übernommen: {1}": "{0} lerro ez dira hartu: {1}",
  "{0}: Name fehlt.": "{0}: izena falta da.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA zorroztapena kuotetarako …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-zorroztapena-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Kontzeptua (zerrendak ez badu)",
- "z. B. Mitgliedsbeitrag 2027": "adib. Bazkide-kuota 2027"
+ "z. B. Mitgliedsbeitrag 2027": "adib. Bazkide-kuota 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} €-ko zorroztapen 1 “SEPA-Lastschrift-{1}.xml” fitxategian gorde da – aurkeztu ezazu online bankuan “Igo SEPA fitxategia” atalean.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "Aginduaren erreferentzia 1 berriro eman da – jakinarazi bazkideari (zerrenda gordeta).",
+ "1 Zeile nicht übernommen: {0}": "Lerro 1 ez da hartu: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA zorroztapena sortu da: zorroztapen 1, {0} €."
 }

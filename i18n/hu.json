@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): érvénytelen IBAN.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): a(z) {2} megbízási hivatkozás kétszer szerepel.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): hiányzik a megbízási hivatkozás.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} csoportos beszedési megbízás {1} € értékben elmentve a „SEPA-csoportos-beszedes-{2}.xml” fájlba – nyújtsa be őket az internetbankban a „SEPA-fájl feltöltése” menüpontban.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} csoportos beszedési megbízás {1} € értékben elmentve a „SEPA-Lastschrift-{2}.xml” fájlba – nyújtsa be őket az internetbankban a „SEPA-fájl feltöltése” menüpontban.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} megbízási hivatkozás újra kiosztva – közölje a tagokkal (a lista elmentve).",
  "{0} Zeilen nicht übernommen: {1}": "{0} sor nem lett átvéve: {1}",
  "{0}: Name fehlt.": "{0}: hiányzik a név.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA csoportos beszedés tagdíjakhoz …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-csoportos-beszedes-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Közlemény (ha a listában nincs)",
- "z. B. Mitgliedsbeitrag 2027": "pl. Tagdíj 2027"
+ "z. B. Mitgliedsbeitrag 2027": "pl. Tagdíj 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 csoportos beszedési megbízás {0} € értékben elmentve a „SEPA-Lastschrift-{1}.xml” fájlba – nyújtsa be az internetbankban a „SEPA-fájl feltöltése” menüpontban.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 megbízási hivatkozás újra kiosztva – közölje a taggal (a lista elmentve).",
+ "1 Zeile nicht übernommen: {0}": "1 sor nem lett átvéve: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA csoportos beszedés elkészült: 1 megbízás, {0} €."
 }

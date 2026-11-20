@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN ongülteg.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): Mandatsreferenz {2} kënnt méi wéi eng Kéier vir.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): Mandatsreferenz feelt.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} Lastschrëfte vun {1} € an „SEPA-Lastschrëft-{2}.xml“ gespäichert – am Online-Banking ënner „SEPA-Datei eropluede“ areechen.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} Lastschrëfte vun {1} € an „SEPA-Lastschrift-{2}.xml“ gespäichert – am Online-Banking ënner „SEPA-Datei eropluede“ areechen.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} Mandatsreferenze nei vergeben – w.e.g. de Memberen matdeelen (Lëscht gespäichert).",
  "{0} Zeilen nicht übernommen: {1}": "{0} Zeilen net iwwerholl: {1}",
  "{0}: Name fehlt.": "{0}: Numm feelt.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA-Lastschrëft fir Bäiträg …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-Lastschrëft-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Verwendungszweck (wann d’Lëscht keen huet)",
- "z. B. Mitgliedsbeitrag 2027": "z. B. Memberbäitrag 2027"
+ "z. B. Mitgliedsbeitrag 2027": "z. B. Memberbäitrag 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 Lastschrëft vun {0} € an „SEPA-Lastschrift-{1}.xml“ gespäichert – am Online-Banking ënner „SEPA-Datei eropluede“ areechen.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 Mandatsreferenz nei vergeben – w.e.g. dem Member matdeelen (Lëscht gespäichert).",
+ "1 Zeile nicht übernommen: {0}": "1 Zeil net iwwerholl: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA-Lastschrëft erstallt: 1 Lastschrëft, {0} €."
 }

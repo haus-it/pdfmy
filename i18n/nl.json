@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA-incasso voor contributie …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-incasso-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Omschrijving (als de lijst er geen heeft)",
- "z. B. Mitgliedsbeitrag 2027": "bijv. Contributie 2027"
+ "z. B. Mitgliedsbeitrag 2027": "bijv. Contributie 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 incasso ter waarde van {0} € opgeslagen in ‘SEPA-Lastschrift-{1}.xml’ – dien deze in via internetbankieren onder ‘SEPA-Datei hochladen’ (SEPA-bestand uploaden).",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 machtigingskenmerk opnieuw toegekend – geef het door aan het lid (lijst opgeslagen).",
+ "1 Zeile nicht übernommen: {0}": "1 regel niet overgenomen: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA-incasso aangemaakt: 1 incasso, {0} €."
 }

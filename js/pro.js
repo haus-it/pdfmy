@@ -3889,10 +3889,11 @@ $('#sepaIn').onchange = async e => {
     download(new TextEncoder().encode(xml), `SEPA-Lastschrift-${faellig}.xml`, 'application/xml');
     if (t.vergeben.length) download(new TextEncoder().encode(SepaLastschrift.vergebenCsv(t.vergeben)), `Mandatsreferenzen-${tag}.csv`, 'text/csv');
     const summe = t.posten.reduce((s, p) => s + p.betrag, 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    fdMsg($('#sepaMsg'), [`${t.posten.length} Lastschriften über ${summe} € in „SEPA-Lastschrift-${faellig}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.`,
-      t.fehler.length ? `${t.fehler.length} Zeilen nicht übernommen: ${t.fehler.slice(0, 3).join(' ')}` : '',
-      t.vergeben.length ? `${t.vergeben.length} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).` : '']);
-    status(`SEPA-Lastschrift erstellt: ${t.posten.length} Lastschriften, ${summe} €.`);
+    const n = t.posten.length, nf = t.fehler.length, nv = t.vergeben.length, fz = t.fehler.slice(0, 3).join(' ');
+    fdMsg($('#sepaMsg'), [n === 1 ? `1 Lastschrift über ${summe} € in „SEPA-Lastschrift-${faellig}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.` : `${n} Lastschriften über ${summe} € in „SEPA-Lastschrift-${faellig}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.`,
+      !nf ? '' : nf === 1 ? `1 Zeile nicht übernommen: ${fz}` : `${nf} Zeilen nicht übernommen: ${fz}`,
+      !nv ? '' : nv === 1 ? `1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).` : `${nv} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).`]);
+    status(n === 1 ? `SEPA-Lastschrift erstellt: 1 Lastschrift, ${summe} €.` : `SEPA-Lastschrift erstellt: ${n} Lastschriften, ${summe} €.`);
   } catch (err) { noteError(err, 'SEPA-Lastschrift'); fdMsg($('#sepaMsg'), [`Abgebrochen: ${err.message}`]); }
 };
 /* ---------- Kassenbericht für die Mitgliederversammlung (js/kassenbericht.js, app-v316) ---------- */

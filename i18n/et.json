@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN on kehtetu.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): volituse viide {2} esineb topelt.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): volituse viide puudub.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} otsekorraldust summas {1} € salvestati faili „SEPA-otsekorraldus-{2}.xml“ – esitage need internetipangas menüüs „Laadi SEPA-fail üles“.",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} otsekorraldust summas {1} € salvestati faili „SEPA-Lastschrift-{2}.xml“ – esitage need internetipangas menüüs „Laadi SEPA-fail üles“.",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} volituse viidet anti uuesti – teatage need liikmetele (nimekiri salvestatud).",
  "{0} Zeilen nicht übernommen: {1}": "{0} rida jäeti vahele: {1}",
  "{0}: Name fehlt.": "{0}: nimi puudub.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA otsekorraldus liikmemaksudele …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-otsekorraldus-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Selgitus (kui nimekirjas seda pole)",
- "z. B. Mitgliedsbeitrag 2027": "nt Liikmemaks 2027"
+ "z. B. Mitgliedsbeitrag 2027": "nt Liikmemaks 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 otsekorraldus summas {0} € salvestati faili „SEPA-Lastschrift-{1}.xml“ – esitage see internetipangas menüüs „Laadi SEPA-fail üles“.",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 volituse viide anti uuesti – teatage see liikmele (nimekiri salvestatud).",
+ "1 Zeile nicht übernommen: {0}": "1 rida jäeti vahele: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA otsekorraldus loodud: 1 otsekorraldus, {0} €."
 }

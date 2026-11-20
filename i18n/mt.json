@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Debitu dirett SEPA għall-miżati …",
  "SEPA-Lastschrift-{0}.xml": "Debitu-dirett-SEPA-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Raġuni tal-ħlas (jekk il-lista m’għandhiex waħda)",
- "z. B. Mitgliedsbeitrag 2027": "eż. Miżata tas-sħubija 2027"
+ "z. B. Mitgliedsbeitrag 2027": "eż. Miżata tas-sħubija 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 debitu dirett ta’ {0} € inħażen f’“SEPA-Lastschrift-{1}.xml” – ippreżentah fl-online banking taħt “SEPA-Datei hochladen” (tella’ fajl SEPA).",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 referenza tal-mandat ġiet assenjata mill-ġdid – jekk jogħġbok għarraf lill-membru (il-lista nħażnet).",
+ "1 Zeile nicht übernommen: {0}": "1 linja ma ttieħditx: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Debitu dirett SEPA maħluq: 1 debitu dirett, {0} €."
 }

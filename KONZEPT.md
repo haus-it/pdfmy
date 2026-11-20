@@ -103,7 +103,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 | 2 Kein Server | passt: kein Bankzugang (kein FinTS/EBICS), keine Verbindung |
 | 3 Ohne Tracking | passt |
 | 4 Einfach | passt: ein Dialog, eine Datei wählen; Fehler je Zeile mit Namen, Fälligkeit mit Vorschlag |
-| 5 Prüfbar | tests/sepalastschrift.test.js (Prüfziffern, Zeichensatz, Bankarbeitstage, Aufbau und Reihenfolge nach Schema); **offen:** Prüfung gegen das amtliche XSD und Test-Einreichung bei einer Bank |
+| 5 Prüfbar | tests/sepalastschrift.test.js (Prüfziffern, Zeichensatz, Bankarbeitstage, Aufbau und Reihenfolge nach Schema; seit app-v318 gültig nach amtlichem ISO-20022-XSD, einmalig auch nach EPC130-08); **offen:** Test-Einreichung bei einer Bank |
 | 6 Wenig aktive Inhalte | passt |
 
 ### Geprüft und umgesetzt 20.11.2026: Kassenbericht für die Mitgliederversammlung (app-v316)

@@ -4115,7 +4115,7 @@
  "{0} ({1}): IBAN ungültig.": "{0} ({1}): IBAN non válido.",
  "{0} ({1}): Mandatsreferenz {2} kommt doppelt vor.": "{0} ({1}): a referencia do mandato {2} está duplicada.",
  "{0} ({1}): Mandatsreferenz fehlt.": "{0} ({1}): falta a referencia do mandato.",
- "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} débitos directos por {1} € gardados en «SEPA-Debito-directo-{2}.xml»: preséntaos na banca en liña en «Subir ficheiro SEPA».",
+ "{0} Lastschriften über {1} € in „SEPA-Lastschrift-{2}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "{0} débitos directos por {1} € gardados en «SEPA-Lastschrift-{2}.xml»: preséntaos na banca en liña en «Subir ficheiro SEPA».",
  "{0} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).": "{0} referencias de mandato asignadas de novo: comuníqueas aos socios (lista gardada).",
  "{0} Zeilen nicht übernommen: {1}": "{0} filas non incluídas: {1}",
  "{0}: Name fehlt.": "{0}: falta o nome.",
@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "Débito directo SEPA para cotas …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-Debito-directo-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Concepto (se a lista non o ten)",
- "z. B. Mitgliedsbeitrag 2027": "p. ex. Cota de socio 2027"
+ "z. B. Mitgliedsbeitrag 2027": "p. ex. Cota de socio 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 débito directo por {0} € gardado en «SEPA-Lastschrift-{1}.xml»: preséntao na banca en liña en «Subir ficheiro SEPA».",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 referencia de mandato asignada de novo: comuníquea ao socio (lista gardada).",
+ "1 Zeile nicht übernommen: {0}": "1 fila non incluída: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "Débito directo SEPA creado: 1 débito, {0} €."
 }

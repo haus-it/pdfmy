@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA tiesioginis debetas mokesčiams …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-tiesioginis-debetas-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Mokėjimo paskirtis (jei sąraše jos nėra)",
- "z. B. Mitgliedsbeitrag 2027": "pvz., Nario mokestis 2027"
+ "z. B. Mitgliedsbeitrag 2027": "pvz., Nario mokestis 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 tiesioginio debeto nurodymas ({0} €) išsaugotas faile „SEPA-Lastschrift-{1}.xml“ – pateikite jį internetinėje bankininkystėje per „SEPA-Datei hochladen“ (įkelti SEPA failą).",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 įgaliojimo nuoroda suteikta iš naujo – praneškite ją nariui (sąrašas išsaugotas).",
+ "1 Zeile nicht übernommen: {0}": "1 eilutė neperimta: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA tiesioginis debetas sukurtas: 1 nurodymas, {0} €."
 }

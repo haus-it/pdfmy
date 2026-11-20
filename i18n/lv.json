@@ -4153,5 +4153,9 @@
  "SEPA-Lastschrift für Beiträge …": "SEPA tiešais debets biedru naudai …",
  "SEPA-Lastschrift-{0}.xml": "SEPA-tiesais-debets-{0}.xml",
  "Verwendungszweck (wenn die Liste keinen hat)": "Maksājuma mērķis (ja sarakstā tā nav)",
- "z. B. Mitgliedsbeitrag 2027": "piem., Biedra nauda 2027"
+ "z. B. Mitgliedsbeitrag 2027": "piem., Biedra nauda 2027",
+ "1 Lastschrift über {0} € in „SEPA-Lastschrift-{1}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.": "1 tiešā debeta uzdevums par {0} € saglabāts failā „SEPA-Lastschrift-{1}.xml“ – iesniedziet to internetbankā sadaļā „SEPA-Datei hochladen“ (augšupielādēt SEPA failu).",
+ "1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).": "1 pilnvarojuma references numurs piešķirts no jauna – lūdzu, paziņojiet to biedram (saraksts saglabāts).",
+ "1 Zeile nicht übernommen: {0}": "1 rinda nav pārņemta: {0}",
+ "SEPA-Lastschrift erstellt: 1 Lastschrift, {0} €.": "SEPA tiešais debets izveidots: 1 uzdevums, {0} €."
 }
