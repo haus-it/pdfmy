@@ -2713,13 +2713,17 @@ const maskReport = t => {
   for (const n of names) t = t.split(n).join('[Absender]');
   // Dateinamen mit Leerzeichen („26-09-25 Finanzamt … Bescheid.pdf“) wurden nur ab dem letzten Leerzeichen ersetzt (Fehlerbericht
   // 26.10.2026): bekannte Namen ganz ersetzen, außerdem alles nach einem Pfadtrenner bzw. nach „: “ bis zur Endung
-  const EXT = 'pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|eml|msg|xml|csv|xlsx?|docx?|odt|ods|txt|md|zip';
+  // auch Präsentationen, Office-Vorlagen, Web- und Austauschformate (Fehlerbericht 20.11.2026: „….pptx“ stand im Klartext)
+  const EXT = 'pdf|jpe?g|png|tiff?|heic|heif|webp|bmp|gif|svg|eml|msg|xml|json|csv|xlsx?|xlsm|docx?|docm|dotx|odt|ods|odp|odg|pptx?|ppsx?|potx|rtf|pages|key|numbers|html?|epub|xps|oxps|ofd|txt|md|zip|p7m|ics|vcf';
   const known = [...new Set([...state.docs.map(d => d?.name), ...(window.seenFileNames || [])].filter(n => n && n.length > 4))].sort((a, b) => b.length - a.length);
   for (const n of known) t = t.split(n).join('[Datei]' + (/\.[^.]+$/.exec(n)?.[0].toLowerCase() || ''));
   // Benutzernamen dürfen Leerzeichen enthalten („Haus iT“): bis zum nächsten Pfadtrenner unkenntlich machen
   return t.replace(/\b([A-Za-z]:\\(?:Users|Benutzer)\\)[^\\\r\n]+/gi, '$1[Benutzer]').replace(/(\/(?:Users|Benutzer|home)\/)[^/\r\n]+/gi, '$1[Benutzer]')
     .replace(/[\w.+-]+@[\w-]+\.[\w.-]+/g, m => m === SUPPORT ? m : '[E-Mail]')
     .replace(new RegExp(`([\\\\/]|:\\s)([^\\\\/\\r\\n„“"]+?)\\.(${EXT})\\b`, 'gi'), (m, pre, name, ext) => name === '[Datei]' ? m : pre + '[Datei].' + ext.toLowerCase())
+    // Namen mit Leerzeichen, Komma, „&“ oder Klammern am Zeilenanfang des Protokolls („10:22:36 Importiere <Name>.pptx …“,
+    // „10:22:39 <Name>.pptx wird in PDF umgewandelt …“, „<Name>.pptx: 24 Folie(n) umgewandelt.“) – auch nach einem Neuladen ohne bekannte Namen
+    .replace(new RegExp(`((?:^|\\n)\\d{1,2}:\\d{2}:\\d{2} (?:Importiere |Öffne |Lade )?)([^\\r\\n„“":]+?)\\.(${EXT})(?=[:\\s]|$)`, 'gi'), (m, pre, name, ext) => name.includes('[Datei]') ? m : pre + '[Datei].' + ext.toLowerCase())
     .replace(new RegExp(`[^\\s\\\\/„“"'()\\[\\]]+\\.(${EXT})\\b`, 'gi'), (m, ext) => '[Datei].' + ext.toLowerCase())
     .replace(/„[^“\n]{2,80}“/g, '„…“');
 };

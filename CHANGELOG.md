@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Fehlerbericht: Dateinamen zuverlässig unkenntlich (app-v320)
+- Behoben (Datenschutz, Fehlerbericht vom 20.11.2026): Nach einem Update-Neuladen stand der Name einer zuvor geöffneten PowerPoint-Datei dreimal im Klartext im Bericht („Importiere <Name>.pptx …“). Ursachen: Die Liste der bekannten Dateinamen ging beim Neuladen verloren, während das Protokoll erhalten bleibt; Präsentationen (.pptx, .odp) und weitere Formate fehlten in der Liste der Dateiendungen; Namen mit Komma, „&“ oder Klammern direkt nach der Uhrzeit wurden nicht erkannt.
+- Jetzt: Geöffnete Dateinamen werden wie das Protokoll im Tab gemerkt (sessionStorage, nur auf dem Gerät) und überstehen ein Neuladen; Endungen für Präsentationen, Office-Vorlagen, RTF, Apple-Formate, HTML, EPUB, XPS, OFD, JSON, SVG, Kalender- und Kontaktdateien ergänzt; Protokollzeilen „Importiere …“, „… wird in PDF umgewandelt“ und „…: 24 Folie(n)“ werden auch ohne bekannten Namen erfasst.
+- tests/fehlerbericht.test.js (neu) prüft das mit den Zeilen aus dem Bericht.
+
 ### Briefkopf und Logo beim Kamera-Scan (app-v319)
 - Behoben (Rückmeldung: „Rechnung gescannt – der Briefkopf mit dem Firmenlogo soll mitgescannt werden“): Die Blatterkennung hielt einen randlosen farbigen Kopfbalken oder eine durchgehende Linie unter dem Briefkopf für die obere Blattkante und schnitt den Briefkopf ab. Jetzt prüft sie, ob die Seitenkanten des Blatts über eine gefundene Kante hinaus gerade weiterlaufen, und nimmt den Streifen dann mit. Eine Tischkante oberhalb des Blatts wird weiterhin nicht mitgenommen.
 - Kleine Firmenlogos (unter 0,3 % der Seite) machen die Seite jetzt zur Farbseite – vorher wurde die Seite als Graustufen-Dokument aufbereitet und ein helles Logo verschwand fast. Auf Farbseiten werden farbige Flächen (Logo, Stempel, Kopfbalken) beim Entfernen der durchscheinenden Rückseite nur noch leicht aufgehellt und bleiben farbig.

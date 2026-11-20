@@ -124,6 +124,14 @@ const cur = () => state.pages[state.sel];
 // damit ein Bericht auch zeigt, was davor geschah; sessionStorage bleibt auf dem Gerät und endet mit dem Tab.
 const appLog = (() => { try { return JSON.parse(sessionStorage.getItem('mpdf.log') || '[]').slice(-60); } catch { return []; } })();
 if (appLog.length) appLog.push('— neu geladen —');
+// Geöffnete Dateinamen merken, damit „Problem melden“ sie unkenntlich macht – auch nach einem Neuladen (Update), denn die Meldungen davor
+// bleiben im Protokoll (Fehlerbericht 20.11.2026: „Importiere <Name>.pptx …“ stand nach dem Update-Neuladen im Klartext). Nur im Tab, nur auf dem Gerät.
+window.seenFileNames = (() => { try { return new Set(JSON.parse(sessionStorage.getItem('mpdf.names') || '[]')); } catch { return new Set(); } })();
+const rememberFileName = n => {
+  if (!n || window.seenFileNames.has(n)) return;
+  window.seenFileNames.add(n);
+  try { sessionStorage.setItem('mpdf.names', JSON.stringify([...window.seenFileNames].slice(-200))); } catch {}
+};
 const logLine = t => {
   appLog.push(new Date().toLocaleTimeString('de-DE') + ' ' + t); if (appLog.length > 60) appLog.shift();
   try { sessionStorage.setItem('mpdf.log', JSON.stringify(appLog)); } catch {}
@@ -242,7 +250,7 @@ async function unpackArchive(f) {
 async function importFilesRun(files, fromCamera) {
   const before = state.pages.length, failed = [], queue = [...files];
   for (let i = 0; i < queue.length; i++) {
-    const f = queue[i], n = f.name.toLowerCase(); (window.seenFileNames ||= new Set()).add(f.name);   // für das Unkenntlichmachen im Fehlerbericht
+    const f = queue[i], n = f.name.toLowerCase(); rememberFileName(f.name);   // für das Unkenntlichmachen im Fehlerbericht
     try {
       status(`Importiere ${f.name} …`);
       if (!f.fromArchive && (/\.(zip|cbz)$/.test(n) || /^application\/(x-)?(zip|zip-compressed|cbz)$/.test(f.type))) { queue.splice(i + 1, 0, ...await unpackArchive(f)); continue; }
