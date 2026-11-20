@@ -94,6 +94,20 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 20.11.2026: Signaturfeld passend zur Person, Pauschalen-Warnung im Kassenbericht (app-v323)
+**Inhalt:** (1) Mehrere freie Signaturfelder: PDFMy wählt das Feld, an dem der Name aus dem Zertifikat steht (Feldname oder Text darüber, darunter, daneben; Umlaute, Titel und „Nachname, Vorname“ berücksichtigt); unklar → erstes freies Feld. (2) Kassenbericht: Zahlungen der Kategorie Übungsleiter/Aufwandsentschädigung je Person und Jahr gegen § 3 Nr. 26/26a EStG (Werte für 2013–2020, 2021–2025 und ab 2026), Warnung bei Überschreiten, unklarer Art über 960 € und ab 90 % des Freibetrags. **Grund (Leitsatz der GF: besser als die Mitbewerber):** In Acrobat muss man das richtige Feld selbst anklicken – wer es verwechselt, unterschreibt für die andere Partei. Vereinssoftware zeigt Summen, warnt aber nicht vor dem Überschreiten der Freibeträge (nicht nachgeprüft für alle Anbieter).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt |
+| 2 Kein Server | passt |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: kein Bedienschritt; Meldung nennt das gewählte Feld bzw. die Personen |
+| 5 Prüfbar | tests/signaturfeld.test.js (Namensabgleich, Umlaute, Titel, Gleichstand, o.field), tests/kassenbericht.test.js (über, prüfen, nah, ok; keine Namen im PDF); Durchlauf in der App |
+| 6 Wenig aktive Inhalte | passt |
+
+**Datenschutz:** Im Kassenbericht (geht an alle Mitglieder) stehen nur Anzahlen; Namen und Beträge zeigt PDFMy nur dem Kassenwart in der App (DSGVO Art. 5 Abs. 1 lit. c, Datenminimierung).
+
 ### Geprüft und umgesetzt 20.11.2026: Aufwandsentschädigung für Trainer und Ehrenamtliche; Signieren in vorhandene Signaturfelder (app-v322)
 **Inhalt:** (1) Vereinsvorlage „Vereinbarung über eine Aufwandsentschädigung“ mit Erklärung zum Übungsleiterfreibetrag (§ 3 Nr. 26 EStG, 3.300 €) bzw. zur Ehrenamtspauschale (§ 3 Nr. 26a EStG, 960 €; beide seit 01.01.2026 laut Steueränderungsgesetz 2025), Steuer-ID, IBAN, anderweitig genutzter Freibetrag, zwei Unterschriften. (2) Digital signieren in ein vorhandenes leeres Signaturfeld der PDF (Vertrag, Behördenformular) statt ein eigenes Feld anzulegen; zweite Person ins nächste freie Feld. **Grund:** (1) Jeder Verein mit Trainern oder bezahltem Vorstand braucht diese Erklärung für die Lohn- bzw. Buchhaltungsunterlagen; der Kassenbericht kennt die Kategorie schon. (2) Bisher blieb das vorgesehene Feld leer und die Datei wurde beim Signieren neu aufgebaut (Formularfelder flach); Acrobat signiert in das Feld.
 

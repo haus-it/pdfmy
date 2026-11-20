@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-20
 
+### Signaturfeld passend zur Person, Warnung bei Übungsleiter- und Ehrenamtspauschalen (app-v323)
+- Digital signieren mit mehreren freien Signaturfeldern (z. B. Auftraggeber und Auftragnehmer): PDFMy nimmt das Feld, an dem der Name aus Ihrem Zertifikat steht – im Feldnamen oder im Text direkt daneben. So landet die Unterschrift nicht im Feld der anderen Partei; in Acrobat muss man das Feld selbst wählen. Ist es nicht eindeutig, bleibt es beim ersten freien Feld; die Meldung nennt das Feld.
+- Kassenbericht: Zahlungen an Übungsleiter und Ehrenamtliche werden je Person und Jahr summiert und gegen den Freibetrag des Jahres geprüft (2026: 3.300 € bzw. 960 €; frühere Jahre mit den damaligen Werten). Warnung bei Überschreiten, bei unklarer Art über 960 € und ab 90 % des Freibetrags. Namen nur in PDFMy für den Kassenwart, im Bericht nur die Zahl der Personen.
+- tests/signaturfeld.test.js, tests/kassenbericht.test.js; beides in der App durchgespielt.
+
 ### Aufwandsentschädigung für Trainer und Ehrenamtliche, Signieren in vorhandene Signaturfelder (app-v322)
 - „Mehr → Vereinsvorlagen …“: neue Vorlage „Übungsleiter- bzw. Ehrenamtspauschale“ – Vereinbarung über eine Aufwandsentschädigung mit Erklärung zum Übungsleiterfreibetrag (§ 3 Nr. 26 EStG, bis 3.300 € im Jahr) bzw. zur Ehrenamtspauschale (§ 3 Nr. 26a EStG, bis 960 € im Jahr, Stand 2026), Steuer-ID, IBAN, Tätigkeit, Betrag, anderweitig genutzter Freibetrag, Hinweis auf § 27 Abs. 3 BGB, Unterschrift der engagierten Person und des Vorstands. Muster, eine Seite, ausfüllbar.
 - Digital signieren: Enthält die PDF ein leeres Signaturfeld (Vertrag, Behördenformular), signiert PDFMy wie Acrobat dort hinein und setzt den Stempel „Digital signiert von …“ in das Feld; die zweite Person kommt ins nächste freie Feld, frühere Signaturen bleiben gültig. Ausgefüllte Formularfelder bleiben dabei ausfüllbar (bisher wurde die Datei beim Signieren neu aufgebaut und das Feld ging verloren).

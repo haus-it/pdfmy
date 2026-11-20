@@ -4264,5 +4264,11 @@
  "z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand": "esim. videokokous – tunnistetiedot saatte ilmoittauduttuanne hallitukselle",
  "In das vorgesehene Signaturfeld „{0}“ signiert.": "Allekirjoitettu sille varattuun allekirjoituskenttään ”{0}”.",
  "In das vorgesehene Signaturfeld signiert.": "Allekirjoitettu sille varattuun allekirjoituskenttään.",
- "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Valmentajien tai vapaaehtoisten korvaus: sopimus ja selvitys (malli)"
+ "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Valmentajien tai vapaaehtoisten korvaus: sopimus ja selvitys (malli)",
+ "Freibetrag fast erreicht": "Verovapaa määrä lähes saavutettu",
+ "Grenze": "Raja",
+ "Signaturfeld wählen": "Valitse allekirjoituskenttä",
+ "über dem Freibetrag": "yli verovapaan määrän",
+ "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "yli vapaaehtoisten korvauksen – verovapaa vain valmentajana",
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Tarkista valmentajien ja vapaaehtoisten maksut:"
 }

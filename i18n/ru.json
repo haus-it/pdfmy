@@ -4264,5 +4264,11 @@
  "z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand": "напр., видеоконференция – данные для доступа вы получите после регистрации у правления",
  "In das vorgesehene Signaturfeld „{0}“ signiert.": "Подписано в предусмотренном поле подписи «{0}».",
  "In das vorgesehene Signaturfeld signiert.": "Подписано в предусмотренном поле подписи.",
- "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Необлагаемая выплата тренерам или волонтёрам: соглашение с заявлением (образец)"
+ "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Необлагаемая выплата тренерам или волонтёрам: соглашение с заявлением (образец)",
+ "Freibetrag fast erreicht": "Необлагаемая сумма почти исчерпана",
+ "Grenze": "Лимит",
+ "Signaturfeld wählen": "Выбрать поле подписи",
+ "über dem Freibetrag": "сверх необлагаемой суммы",
+ "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "сверх выплаты волонтёрам – без налога только для тренеров",
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Проверьте выплаты тренерам и волонтёрам:"
 }

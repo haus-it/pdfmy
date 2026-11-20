@@ -3338,10 +3338,19 @@ async function sigPageFacts(bytes, index) {
   const pg = await doc.getPage(i + 1), [x0, y0, x1, y1] = pg.view, W = x1 - x0, H = y1 - y0;
   const words = (await pg.getTextContent()).items.filter(t => t.str?.trim()).map(t => {
     const h = Math.abs(t.transform[3]) || t.height || 10;
-    return { x: (t.transform[4] - x0) / W, y: (y1 - t.transform[5] - h) / H, w: (t.width || h) / W, h: h * 1.25 / H };
+    return { t: t.str, x: (t.transform[4] - x0) / W, y: (y1 - t.transform[5] - h) / H, w: (t.width || h) / W, h: h * 1.25 / H };
   });
   doc.destroy?.();
   return { n, i, W, H, words, rotiert: pg.rotate % 360 !== 0 };
+}
+/* Mehrere freie Signaturfelder (Vertrag mit Auftraggeber und Auftragnehmer): das Feld wählen, an dem der Name der signierenden
+   Person steht – im Feldnamen oder im Text daneben (app-v323). Unklar → undefined, dann das erste freie Feld. */
+async function sigFieldFor(bytes, name) {
+  try {
+    const fs = await PdfSign.freeSigFields(bytes.slice()); if (fs.length < 2) return undefined;
+    const words = {}; for (const p of new Set(fs.map(f => f.page))) words[p] = (await sigPageFacts(bytes, p)).words;
+    return PdfSign.pickSigField(fs, name, words) ?? undefined;
+  } catch (e) { console.warn('Signaturfeld wählen', e); return undefined; }
 }
 async function sigLook({ name, reason, when = new Date(), bytes = null }) {
   const fk = await loadFontkit(), [r, b] = await Promise.all([asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf')]);
@@ -3454,6 +3463,7 @@ async function signFlow(bytes, extra = {}) {
     } };
     state.signer = signer;
     const so = { contact: S.author || '', tsa: tsaFetch(), ...extra };
+    so.field = await sigFieldFor(bytes, signCert.name);
     if ($('#x-sign-vis').checked) so.look = await sigLook({ name: signCert.name, reason: so.reason, bytes }).catch(e => { console.warn(e); return undefined; });
     if (so.tsa) await loadForge();   // Zeitstempel einbauen braucht den Signatur-Baustein
     try { const out = await withLtv(await PdfSign.signPdf(bytes, signer, so), so); tsNote(so); return out; }
@@ -3478,6 +3488,7 @@ async function signFlow(bytes, extra = {}) {
   status(`Signiere als ${state.signer.name} …`);
   if (tsaFetch()) await loadForge();
   const so = { reason: $('#pwSignReason').value.trim(), contact: S.author || '', tsa: tsaFetch(), ...extra };
+  so.field = await sigFieldFor(bytes, state.signer.name);
   if ($('#x-sign-vis').checked) so.look = await sigLook({ name: state.signer.name, reason: so.reason, bytes }).catch(e => { console.warn(e); return undefined; });
   const out = await withLtv(await PdfSign.signPdf(bytes, state.signer, so), so); tsNote(so); return out;
 }
@@ -3976,6 +3987,13 @@ $('#kbIn').onchange = async e => {
     $('#kbDlg').close();
     await importFiles([new File([bytes], `Kassenbericht ${a.jahr} ${d.verein.replace(/[\\/:*?"<>|]+/g, ' ').replace(/\.+$/, '')}.pdf`, { type: 'application/pdf' })]);
     status(`Kassenbericht ${a.jahr} erstellt: ${a.anzahl} Buchungen, Endbestand ${a.ende.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €.${t.fehler.length ? ` ${t.fehler.length} Zeilen übersprungen.` : ''} ${a.hinweise.find(h => /weicht|Freigrenze/.test(h)) || ''}`.trim());
+    // Übungsleiter- und Ehrenamtszahlungen je Person (app-v323): Namen nur hier für den Kassenwart, im PDF ohne Namen
+    const pp = a.pauschalen.filter(p => p.status !== 'ok');
+    if (pp.length) {
+      const eur = n => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      const lab = { ueber: I18N.t('über dem Freibetrag'), pruefen: I18N.t('über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei'), nah: I18N.t('Freibetrag fast erreicht') };
+      toast(I18N.t('Übungsleiter- und Ehrenamtszahlungen prüfen:') + ' ' + pp.slice(0, 6).map(p => `${p.name} ${p.jahr}: ${eur(p.summe)} (${lab[p.status]}, ${I18N.t('Grenze')} ${eur(p.art === 'offen' && p.status === 'ueber' ? Kassenbericht.freibetrag(p.jahr).ul : p.grenze)})`).join(' · ') + (pp.length > 6 ? ' …' : ''), 15000);
+    }
   } catch (err) { noteError(err, 'Kassenbericht'); fdMsg($('#kbMsg'), [`Abgebrochen: ${err.message}`]); }
 };
 $('#btnBewirt').onclick = () => {

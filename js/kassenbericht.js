@@ -14,6 +14,10 @@
   // § 64 Abs. 3 AO: Einnahmen einschließlich Umsatzsteuer aus wirtschaftlichen Geschäftsbetrieben – 50.000 € ab 2026
   // (Steueränderungsgesetz 2025), 45.000 € 2020–2025 (JStG 2020), davor 35.000 €
   const freigrenze = jahr => jahr >= 2026 ? 50000 : jahr >= 2020 ? 45000 : 35000;
+  // § 3 Nr. 26 EStG (Übungsleiter) und Nr. 26a (Ehrenamtspauschale) je Person und Kalenderjahr: ab 2026 3.300/960 €
+  // (Steueränderungsgesetz 2025), 2021–2025 3.000/840 € (JStG 2020), davor 2.400/720 € – gleiche Werte wie Vereinsvorlagen.PAUSCHALE
+  const freibetrag = jahr => jahr >= 2026 ? { ul: 3300, ea: 960 } : jahr >= 2021 ? { ul: 3000, ea: 840 } : { ul: 2400, ea: 720 };
+  const PAUSCH_KAT = 'Übungsleiter und Aufwandsentschädigungen';
 
   /* ---------- Kategorien (Vorschläge) ---------- */
   const REGELN_E = [
@@ -127,6 +131,27 @@
 
   /* ---------- Auswertung ---------- */
   const r2 = n => Math.round(n * 100) / 100;
+  /* Übungsleiter- und Ehrenamtszahlungen je Person und Jahr gegen den Freibetrag (app-v323): Vereinssoftware zeigt Summen, warnt aber
+     selten vor dem Überschreiten – bei Überschreiten wird der Rest steuer- und ggf. sozialversicherungspflichtig. Art aus dem
+     Buchungstext; unklar → gegen die kleinere Ehrenamtspauschale vorgewarnt. status: ueber | pruefen | nah | ok. */
+  const personKey = s => low(s).replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z]/g, '');
+  function pauschalen(buchungen) {
+    const m = new Map();
+    for (const b of buchungen) {
+      if (!(b.betrag < 0) || b.kategorie !== PAUSCH_KAT || !b.name?.trim()) continue;
+      const jahr = b.datum.getFullYear(), key = personKey(b.name) + '|' + jahr, s = low(b.name + ' ' + b.text);
+      const e = m.get(key) || { name: b.name.trim(), jahr, summe: 0, ul: false, ea: false, anzahl: 0 };
+      if (/[üu]bungsleit|trainer|betreuer|ausbilder|dirigent|chorleit|jugendleit|kursleit/.test(s)) e.ul = true;
+      if (/ehrenamtspausch|ehrenamt|vorstand|kassenwart|kassierer|platzwart|zeugwart|schriftf[üu]hr|aufwandspausch/.test(s)) e.ea = true;
+      e.summe -= b.betrag; e.anzahl++; m.set(key, e);
+    }
+    return [...m.values()].map(e => {
+      const f = freibetrag(e.jahr), art = e.ul && !e.ea ? 'ul' : e.ea && !e.ul ? 'ea' : 'offen', summe = r2(e.summe);
+      const grenze = art === 'ul' ? f.ul : art === 'ea' ? f.ea : f.ea;
+      const status = summe > (art === 'offen' ? f.ul : grenze) ? 'ueber' : summe > grenze ? 'pruefen' : summe > grenze * 0.9 ? 'nah' : 'ok';
+      return { name: e.name, jahr: e.jahr, summe, anzahl: e.anzahl, art, grenze, status };
+    }).sort((a, b) => b.summe - a.summe);
+  }
   function auswerten(buchungen, { anfang = 0, kontostand = null } = {}) {
     const ein = new Map(), aus = new Map(), ber = Object.fromEntries(Object.keys(BEREICHE).concat('').map(k => [k, { ein: 0, aus: 0 }]));
     let sE = 0, sA = 0; const jahre = {};
@@ -148,9 +173,13 @@
     else if (w > grenze * 0.8) hinweise.push(`Die Einnahmen im wirtschaftlichen Geschäftsbetrieb (${euro(w)}) liegen nahe an der Freigrenze von ${euro(grenze)} (§ 64 Abs. 3 AO).`);
     const offen = buchungen.filter(b => !(b.bereich in BEREICHE)).length;
     if (offen) hinweise.push(`${offen} Buchung(en) sind keinem steuerlichen Bereich zugeordnet – bitte in der Buchungsliste ergänzen.`);
+    // Pauschalen: im PDF ohne Namen (der Bericht geht an alle Mitglieder), Namen nur in PDFMy für den Kassenwart
+    const pausch = pauschalen(buchungen), fb = freibetrag(jahr), n = st => pausch.filter(p => p.status === st).length;
+    if (n('ueber')) hinweise.push(`Bei ${n('ueber')} Person(en) übersteigen die Übungsleiter- bzw. Ehrenamtszahlungen den steuerfreien Betrag (§ 3 Nr. 26 EStG: ${euro(fb.ul)}, § 3 Nr. 26a EStG: ${euro(fb.ea)} im Jahr). Der übersteigende Teil ist zu versteuern, z. B. als Minijob – bitte mit dem Kassenwart klären.`);
+    if (n('pruefen')) hinweise.push(`Bei ${n('pruefen')} Person(en) liegen die Zahlungen über der Ehrenamtspauschale (${euro(fb.ea)}); steuerfrei nur, wenn es eine Übungsleitertätigkeit ist (bis ${euro(fb.ul)}) – bitte prüfen.`);
     if (buchungen.some(b => b.vorschlag)) hinweise.push('Kategorien und Bereiche ohne eigene Angabe sind Vorschläge von PDFMy nach dem Buchungstext – bitte prüfen.');
     const sort = m => [...m.entries()].sort((a, b) => b[1] - a[1]);
-    return { einnahmen: sort(ein), ausgaben: sort(aus), summeE: sE, summeA: sA, anfang: r2(Number(anfang || 0)), ende, kontostand: differenz === null ? null : r2(kontostand), differenz, bereiche: ber, jahr, freigrenze: grenze, hinweise,
+    return { einnahmen: sort(ein), ausgaben: sort(aus), summeE: sE, summeA: sA, anfang: r2(Number(anfang || 0)), ende, kontostand: differenz === null ? null : r2(kontostand), differenz, bereiche: ber, jahr, freigrenze: grenze, hinweise, pauschalen: pausch,
       von: buchungen[0]?.datum || null, bis: buchungen[buchungen.length - 1]?.datum || null, anzahl: buchungen.length };
   }
 
@@ -272,6 +301,6 @@
     return doc.save();
   }
 
-  const api = { BEREICHE, freigrenze, vorschlag, ausTabelle, auswerten, toCsv, erzeugen, zahl, datum };
+  const api = { BEREICHE, freigrenze, freibetrag, pauschalen, vorschlag, ausTabelle, auswerten, toCsv, erzeugen, zahl, datum };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Kassenbericht = api;
 })(typeof self !== 'undefined' ? self : globalThis);

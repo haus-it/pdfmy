@@ -83,3 +83,31 @@ test('Oberfläche angebunden', () => {
   assert.match(src, /Kassenbericht\.ausTabelle\(rows \|\| await fdReadTable\(f\)\)/); assert.match(src, /Bank\.parseCamt\(/); assert.match(src, /await Kassenbericht\.erzeugen\(PDFLib,/);
   assert.match(fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8'), /js\/kassenbericht\.js/);
 });
+
+test('Pauschalen je Person gegen den Freibetrag (v323): über, prüfen, nah; im PDF-Hinweis ohne Namen', async () => {
+  const V = require('../js/vereinsvorlagen.js');
+  assert.deepEqual(K.freibetrag(2026), { ul: V.PAUSCHALE.uebungsleiter, ea: V.PAUSCHALE.ehrenamt }, 'gleiche Werte wie die Vorlage');
+  assert.deepEqual(K.freibetrag(2025), { ul: 3000, ea: 840 });
+  const rows = [['Datum', 'Name', 'Verwendungszweck', 'Betrag']];
+  for (let m = 1; m <= 12; m++) {
+    rows.push([`28.${String(m).padStart(2, '0')}.2026`, 'Max Berg', 'Übungsleiterpauschale Jugend', '-290,00']);   // 3.480 € > 3.300 €
+    rows.push([`28.${String(m).padStart(2, '0')}.2026`, 'Erika Kasse', 'Ehrenamtspauschale Kassenwartin', '-75,00']);   // 900 € = nah an 960 €
+    rows.push([`28.${String(m).padStart(2, '0')}.2026`, 'Paul Platz', 'Aufwandsentschädigung', '-100,00']);   // 1.200 €, Art unklar
+  }
+  rows.push(['10.03.2026', 'Lena Lauf', 'Trainerpauschale', '-500,00']);   // 500 €, ok
+  rows.push(['15.03.2026', 'Max Berg', 'Mitgliedsbeitrag zurück', '-10,00']);   // andere Kategorie
+  const t = K.ausTabelle(rows), a = K.auswerten(t.buchungen);
+  const by = Object.fromEntries(a.pauschalen.map(p => [p.name, p]));
+  assert.equal(by['Max Berg'].summe, 3480); assert.equal(by['Max Berg'].art, 'ul'); assert.equal(by['Max Berg'].status, 'ueber');
+  assert.equal(by['Erika Kasse'].art, 'ea'); assert.equal(by['Erika Kasse'].status, 'nah');
+  assert.equal(by['Paul Platz'].art, 'offen'); assert.equal(by['Paul Platz'].status, 'pruefen');
+  assert.equal(by['Lena Lauf'].status, 'ok');
+  const h = a.hinweise.join('\n');
+  assert.match(h, /Bei 1 Person\(en\) übersteigen .*3\.300,00 €.*960,00 €/);
+  assert.match(h, /Bei 1 Person\(en\) liegen die Zahlungen über der Ehrenamtspauschale/);
+  assert.doesNotMatch(h, /Max Berg|Erika|Paul Platz/, 'keine Namen im Bericht für alle Mitglieder');
+  const pdf = Buffer.from(await K.erzeugen(L, { verein: 'TV Test', buchungen: t.buchungen })).toString('latin1');
+  assert.ok(pdf.length > 1000);
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'pro.js'), 'utf8');
+  assert.match(src, /const pp = a\.pauschalen\.filter\(p => p\.status !== 'ok'\);/, 'Namen nur in der App');
+});

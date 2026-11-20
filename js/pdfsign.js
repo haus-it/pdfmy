@@ -224,7 +224,7 @@
     // neue Objekte nie unter einer Nummer, die die Vorfassung als frei führt (/Size der letzten Querverweistabelle)
     const prevSize = Math.max(0, ...[...bin(orig.subarray(Math.max(0, orig.length - 4096))).matchAll(/\/Size\s+(\d+)/g)].map(m => +m[1]));
     if (prevSize - 1 > ctx.largestObjectNumber) ctx.largestObjectNumber = prevSize - 1;
-    const ef = !o.docTs && o.useField !== false ? emptySigField(doc) : null;
+    const ef = !o.docTs && o.useField !== false ? emptySigField(doc, o) : null;
     if (ef) {   // in das vorgesehene leere Signaturfeld (mitunterzeichnen in Verträgen mit zwei Feldern)
       const changed = new Map(), touch = r => changed.set(r, ctx.lookup(r)), sigRef = ctx.register(sigDict(ctx, signer, o, now));
       changed.set(sigRef, ctx.lookup(sigRef));
@@ -283,12 +283,14 @@
     return outB;
   }
   /* Leeres Signaturfeld der Vorlage (app-v322; Vertrag, Behördenformular, „Hier signieren“): wie Acrobat dort hinein signieren statt
-     ein eigenes Feld anzulegen – sonst bliebe das vorgesehene Feld leer. Erstes Feld /FT /Sig ohne /V in Formularreihenfolge.
-     Liefert { field, fRef, widget, wRef, page, rect, name } oder null. */
-  function emptySigField(doc) {
+     ein eigenes Feld anzulegen – sonst bliebe das vorgesehene Feld leer. Alle Felder /FT /Sig ohne /V in Formularreihenfolge,
+     je { field, fRef, widget, wRef, page, pageIndex, rect, name }. Gewählt wird o.field (Name, von PDFMy passend zur Person
+     ermittelt – app-v323), sonst das erste freie Feld. */
+  function emptySigFields(doc) {
+    const out = [];
     const ctx = doc.context, N = PL.PDFName.of, form = doc.catalog.lookup(N('AcroForm'));
-    if (!(form instanceof PL.PDFDict)) return null;
-    const fields = form.lookup(N('Fields')); if (!(fields instanceof PL.PDFArray)) return null;
+    if (!(form instanceof PL.PDFDict)) return out;
+    const fields = form.lookup(N('Fields')); if (!(fields instanceof PL.PDFArray)) return out;
     const seen = new Set(), at = (ref) => ref instanceof PL.PDFRef ? ctx.lookup(ref) : ref;
     const pageOf = (widget, wRef) => {
       const p = widget.get(N('P')), pages = doc.getPages();
@@ -299,7 +301,7 @@
       const d = at(ref); if (!(d instanceof PL.PDFDict) || seen.has(d) || depth > 20) return null; seen.add(d);
       const t = d.get(N('FT')) || ft, kids = d.lookup(N('Kids')), kidArr = kids instanceof PL.PDFArray ? kids.asArray() : [];
       const sub = kidArr.filter(k => at(k)?.get?.(N('T'))), widgets = kidArr.filter(k => !at(k)?.get?.(N('T')));
-      for (const k of sub) { const r = walk(k, t, depth + 1); if (r) return r; }
+      for (const k of sub) walk(k, t, depth + 1);
       if (t !== N('Sig') && String(t) !== '/Sig') return null;
       if (d.get(N('V'))) return null;   // schon signiert
       const wRef = d.get(N('Subtype')) ? ref : widgets[0], widget = wRef ? at(wRef) : null;
@@ -308,10 +310,40 @@
       const R = widget.lookup(N('Rect')), v = R instanceof PL.PDFArray ? R.asArray().map(n => n.asNumber?.() ?? 0) : [0, 0, 0, 0];
       const rect = [Math.min(v[0], v[2]), Math.min(v[1], v[3]), Math.max(v[0], v[2]), Math.max(v[1], v[3])];
       const T = d.lookup(N('T')), name = T ? (T.decodeText?.() ?? String(T)) : '';
-      return { field: d, fRef: ref, widget, wRef, page, rect, name };
+      out.push({ field: d, fRef: ref, widget, wRef, page, pageIndex: doc.getPages().indexOf(page), rect, name });
+      return null;
     };
-    for (const f of fields.asArray()) { const r = walk(f, undefined, 0); if (r) return r; }
-    return null;
+    for (const f of fields.asArray()) walk(f, undefined, 0);
+    return out;
+  }
+  const emptySigField = (doc, o = {}) => { const l = emptySigFields(doc); return (o.field != null && l.find(f => f.name === o.field)) || l[0] || null; };
+  // Für die App: freie Signaturfelder einer PDF (Name, Seite ab 0, Rechteck in pt, Seitengröße) – zur Wahl des passenden Felds
+  async function freeSigFields(pdfBytes) {
+    libs(false);
+    const doc = await PL.PDFDocument.load(pdfBytes, { updateMetadata: false, ignoreEncryption: true });
+    return emptySigFields(doc).map(f => { const b = f.page.getCropBox(); return { name: f.name, page: f.pageIndex, rect: f.rect, box: [b.x, b.y, b.width, b.height] }; });
+  }
+  /* Passendes Feld zur Person (app-v323, besser als Acrobat: dort muss man das richtige Feld selbst anklicken): Teile des Namens
+     aus dem Zertifikat im Feldnamen („Unterschrift Müller“) oder im Text direkt über, unter oder neben dem Feld („Max Müller,
+     Geschäftsführer“). words: { [Seite]: [{ t, x, y, w, h }] } als Anteile der Seite, oben links. Liefert den Feldnamen oder null. */
+  const normName = s => String(s || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '');
+  function pickSigField(fields, signerName, words = {}) {
+    if (!fields?.length) return null;
+    const skip = new Set(['dr', 'prof', 'med', 'dipl', 'ing', 'herr', 'frau', 'von', 'van', 'der', 'den', 'und', 'gmbh', 'mbh', 'e.v']);
+    const toks = [...new Set(normName(signerName).split(/[^a-z0-9]+/).filter(t => t.length >= 3 && !skip.has(t)))];
+    if (!toks.length) return null;
+    const hits = (text, t) => new RegExp('(^|[^a-z0-9])' + t + '($|[^a-z0-9])').test(text);
+    let best = null, bestScore = 0, tie = false;
+    for (const f of fields) {
+      const [bx, by, bw, bh] = f.box || [0, 0, 595.28, 841.89];
+      const fx0 = (f.rect[0] - bx) / bw, fx1 = (f.rect[2] - bx) / bw, fy0 = 1 - (f.rect[3] - by) / bh, fy1 = 1 - (f.rect[1] - by) / bh;
+      const near = (words[f.page] || []).filter(w => w.x < fx1 + 0.03 && w.x + w.w > fx0 - 0.03 && w.y + w.h > fy0 - 0.07 && w.y < fy1 + 0.06).map(w => w.t).join(' ');
+      const fn = normName(f.name), nt = normName(near);
+      const score = toks.reduce((s, t) => s + (hits(fn, t) ? 2 : 0) + (hits(nt, t) ? 1 : 0), 0);
+      if (score > bestScore) { best = f.name; bestScore = score; tie = false; } else if (score && score === bestScore) tie = true;
+    }
+    return bestScore && !tie ? best : null;   // unklar (gleich gut) → wie bisher das erste freie Feld
   }
   // Signatur in das leere Feld eintragen; Stempel im Feldrechteck, wenn es groß genug ist und die Seite nicht gedreht ist
   function fillSigField(ctx, cat, ef, sigRef, o, touch) {
@@ -326,7 +358,7 @@
   async function newSigField(pdfBytes, signer, o, now) {
     const doc = await PL.PDFDocument.load(pdfBytes, { updateMetadata: false });
     const ctx = doc.context;
-    const ef = !o.docTs && o.useField !== false ? emptySigField(doc) : null;
+    const ef = !o.docTs && o.useField !== false ? emptySigField(doc, o) : null;
     if (ef) {
       fillSigField(ctx, doc.catalog, ef, ctx.register(sigDict(ctx, signer, o, now)), o, () => {});
       const form = doc.catalog.lookup(PL.PDFName.of('AcroForm')); form.set(PL.PDFName.of('SigFlags'), PL.PDFNumber.of(3));
@@ -471,6 +503,6 @@
     if (dssRef) changed.set(dssRef, dss); else { const r = ctx.register(dss); changed.set(r, dss); cat.set(N('DSS'), r); changed.set(catRef, cat); }
     return { bytes: appendObjects(orig, ctx, changed), ocsp: ocsps.length, crl: crls.length, certs: all.size, missing: missing.length };
   }
-  const api = { readP12, signPdf, addTimestamp, docTimestamp, addLtv, ocspRequest: (c, i) => (libs(), ocspRequest(c, i)), certParts: d => (libs(), certParts(d)), TSA };
+  const api = { readP12, signPdf, freeSigFields, pickSigField, addTimestamp, docTimestamp, addLtv, ocspRequest: (c, i) => (libs(), ocspRequest(c, i)), certParts: d => (libs(), certParts(d)), TSA };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfSign = api;
 })(typeof self !== 'undefined' ? self : globalThis);

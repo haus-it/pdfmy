@@ -4264,5 +4264,11 @@
  "z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand": "p.sh. videokonferencë – të dhënat e hyrjes i merrni pas regjistrimit te bordi",
  "In das vorgesehene Signaturfeld „{0}“ signiert.": "U nënshkrua në fushën e parashikuar të nënshkrimit „{0}“.",
  "In das vorgesehene Signaturfeld signiert.": "U nënshkrua në fushën e parashikuar të nënshkrimit.",
- "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Kompensim pa tatim për trajnerë ose vullnetarë: marrëveshje me deklaratë (model)"
+ "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Kompensim pa tatim për trajnerë ose vullnetarë: marrëveshje me deklaratë (model)",
+ "Freibetrag fast erreicht": "Shuma pa tatim pothuajse u arrit",
+ "Grenze": "Kufiri",
+ "Signaturfeld wählen": "Zgjidhni fushën e nënshkrimit",
+ "über dem Freibetrag": "mbi shumën pa tatim",
+ "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "mbi kompensimin për vullnetarë – pa tatim vetëm si trajner",
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Kontrolloni pagesat për trajnerë dhe vullnetarë:"
 }

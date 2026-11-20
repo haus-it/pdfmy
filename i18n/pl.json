@@ -4264,5 +4264,11 @@
  "z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand": "np. wideokonferencja – dane dostępu otrzymasz po zgłoszeniu do zarządu",
  "In das vorgesehene Signaturfeld „{0}“ signiert.": "Podpisano w przewidzianym polu podpisu „{0}”.",
  "In das vorgesehene Signaturfeld signiert.": "Podpisano w przewidzianym polu podpisu.",
- "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Ryczałt wolny od podatku dla trenerów lub wolontariuszy: umowa z oświadczeniem (wzór)"
+ "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Ryczałt wolny od podatku dla trenerów lub wolontariuszy: umowa z oświadczeniem (wzór)",
+ "Freibetrag fast erreicht": "Kwota wolna prawie wyczerpana",
+ "Grenze": "Limit",
+ "Signaturfeld wählen": "Wybierz pole podpisu",
+ "über dem Freibetrag": "powyżej kwoty wolnej",
+ "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "powyżej ryczałtu dla wolontariuszy – wolne od podatku tylko jako trener",
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Sprawdź wypłaty dla trenerów i wolontariuszy:"
 }

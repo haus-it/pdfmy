@@ -77,3 +77,26 @@ test('Ohne Stempel bzw. zu kleines Feld: trotzdem ins Feld signieren, Feld druck
   const oo = { useField: false }, own = await Sign.signPdf(await doc.save(), signer('Erika'), oo);
   assert.equal(oo.inField, undefined);
 });
+
+test('Passendes Feld zur Person (v323): Name im Feldnamen oder im Text am Feld; unklar → erstes Feld', async () => {
+  const box = [0, 0, 595, 842], A = { name: 'Auftraggeber', page: 1, rect: [50, 180, 260, 240], box }, B = { name: 'Auftragnehmer', page: 1, rect: [320, 180, 545, 240], box };
+  // Text unter den Feldern (Anteile der Seite, oben links): links „Erika Müller“, rechts „Max Beispiel, Geschäftsführer“
+  const words = { 1: [{ t: 'Erika Müller', x: 50 / 595, y: 1 - 175 / 842, w: 0.15, h: 0.015 }, { t: 'Max Beispiel, Geschäftsführer', x: 320 / 595, y: 1 - 175 / 842, w: 0.3, h: 0.015 }] };
+  assert.equal(Sign.pickSigField([A, B], 'Max Beispiel', words), 'Auftragnehmer');
+  assert.equal(Sign.pickSigField([A, B], 'Dr. Erika Mueller', words), 'Auftraggeber', 'ü = ue, Titel ignoriert');
+  assert.equal(Sign.pickSigField([A, B], 'Beispiel, Max', words), 'Auftragnehmer', 'Nachname, Vorname');
+  assert.equal(Sign.pickSigField([{ ...A, name: 'Unterschrift Schmidt' }, B], 'Anna Schmidt', {}), 'Unterschrift Schmidt', 'Name im Feldnamen');
+  assert.equal(Sign.pickSigField([A, B], 'Paul Fremd', words), null, 'kein Treffer');
+  assert.equal(Sign.pickSigField([{ ...A, name: 'Max 1' }, { ...B, name: 'Max 2' }], 'Max Beispiel', {}), null, 'gleich gut → unklar');
+  assert.equal(Sign.pickSigField([A, B], 'Moritz Beispielhaft', words), null, 'nur ganze Wörter');
+});
+
+test('signPdf mit o.field: zweite Person zuerst – landet trotzdem in ihrem Feld', async () => {
+  const src = await vertrag(), fs = await Sign.freeSigFields(src);
+  assert.deepEqual(fs.map(f => [f.name, f.page]), [['Auftraggeber', 1], ['Auftragnehmer', 1]]);
+  const o = { field: 'Auftragnehmer' }, out = await Sign.signPdf(src, signer('Max Beispiel'), o);
+  assert.equal(o.inField, 'Auftragnehmer');
+  assert.deepEqual((await sigs(out)).out.map(x => [x.name, x.signed]), [['Auftraggeber', false], ['Auftragnehmer', true]]);
+  assert.deepEqual((await Sign.freeSigFields(out)).map(f => f.name), ['Auftraggeber']);
+  const o2 = { field: 'gibt es nicht' }; await Sign.signPdf(src, signer('X'), o2); assert.equal(o2.inField, 'Auftraggeber', 'unbekannt → erstes freies');
+});

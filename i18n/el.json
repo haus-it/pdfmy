@@ -4264,5 +4264,11 @@
  "z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand": "π.χ. τηλεδιάσκεψη – τα στοιχεία πρόσβασης θα λάβετε μετά την εγγραφή σας στο διοικητικό συμβούλιο",
  "In das vorgesehene Signaturfeld „{0}“ signiert.": "Υπογράφηκε στο προβλεπόμενο πεδίο υπογραφής «{0}».",
  "In das vorgesehene Signaturfeld signiert.": "Υπογράφηκε στο προβλεπόμενο πεδίο υπογραφής.",
- "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Αποζημίωση προπονητών ή εθελοντών: συμφωνία με δήλωση (υπόδειγμα)"
+ "Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)": "Αποζημίωση προπονητών ή εθελοντών: συμφωνία με δήλωση (υπόδειγμα)",
+ "Freibetrag fast erreicht": "Το αφορολόγητο ποσό σχεδόν συμπληρώθηκε",
+ "Grenze": "Όριο",
+ "Signaturfeld wählen": "Επιλογή πεδίου υπογραφής",
+ "über dem Freibetrag": "πάνω από το αφορολόγητο ποσό",
+ "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "πάνω από την αποζημίωση εθελοντών – αφορολόγητο μόνο ως προπονητής",
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Ελέγξτε τις πληρωμές σε προπονητές και εθελοντές:"
 }
