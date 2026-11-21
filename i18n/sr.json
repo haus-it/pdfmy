@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Изаберите поље за потпис",
  "über dem Freibetrag": "изнад неопорезивог износа",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "изнад накнаде за волонтере – неопорезиво само као тренер",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Проверите исплате тренерима и волонтерима:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Проверите исплате тренерима и волонтерима:",
+ ", erhalten:": ", примљено:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Пренос је стигао са туђег веб-сајта и из безбедносних разлога није прихваћен.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ниједна датотека није предата – поново изаберите „Дели → PDFMy“. Ако не успе, изаберите датотеку у PDFMy преко „Отвори“.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Подељен је линк или текст, а не датотека. Поделите саму датотеку (нпр. дуго притисните датотеку → Дели → PDFMy) или у PDFMy изаберите „Отвори“.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Дељење без датотеке (разлог: {0}{1})"
 }

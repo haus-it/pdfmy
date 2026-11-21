@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Velg signaturfelt",
  "über dem Freibetrag": "over fribeløpet",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "over frivillighetsgodtgjørelsen – skattefritt bare som trener",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Kontroller trener- og frivillighetsutbetalinger:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Kontroller trener- og frivillighetsutbetalinger:",
+ ", erhalten:": ", mottatt:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Overføringen kom fra et fremmed nettsted og ble avvist av sikkerhetshensyn.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ingen fil ble overført – velg «Del → PDFMy» på nytt. Fungerer det ikke, velger du filen i PDFMy via «Åpne».",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Det ble delt en lenke eller tekst, ikke en fil. Del selve filen (f.eks. trykk lenge på filen → Del → PDFMy), eller velg «Åpne» i PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Deling uten fil (årsak: {0}{1})"
 }

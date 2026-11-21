@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Zgjidhni fushën e nënshkrimit",
  "über dem Freibetrag": "mbi shumën pa tatim",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "mbi kompensimin për vullnetarë – pa tatim vetëm si trajner",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Kontrolloni pagesat për trajnerë dhe vullnetarë:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Kontrolloni pagesat për trajnerë dhe vullnetarë:",
+ ", erhalten:": ", u mor:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Dorëzimi erdhi nga një sajt i huaj dhe nuk u pranua për arsye sigurie.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nuk u dorëzua asnjë skedar – zgjidhni sërish „Ndaj → PDFMy“. Nëse nuk funksionon, zgjidhni skedarin në PDFMy përmes „Hap“.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "U nda një lidhje ose tekst, jo një skedar. Ndani vetë skedarin (p.sh. shtypni gjatë mbi skedar → Ndaj → PDFMy) ose zgjidhni „Hap“ në PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Ndarje pa skedar (arsyeja: {0}{1})"
 }

@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Scegli campo firma",
  "über dem Freibetrag": "oltre l'importo esente",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "oltre il forfait per volontari – esente solo come allenatore",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Verificare i pagamenti ad allenatori e volontari:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Verificare i pagamenti ad allenatori e volontari:",
+ ", erhalten:": ", ricevuto:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Il trasferimento proveniva da un sito web esterno ed è stato rifiutato per motivi di sicurezza.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nessun file ricevuto – scegli di nuovo «Condividi → PDFMy». Se non funziona, scegli il file in PDFMy tramite «Apri».",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "È stato condiviso un link o un testo, non un file. Condividi il file stesso (ad es. tieni premuto sul file → Condividi → PDFMy) oppure scegli «Apri» in PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Condivisione senza file (motivo: {0}{1})"
 }

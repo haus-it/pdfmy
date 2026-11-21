@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Välj signaturfält",
  "über dem Freibetrag": "över det skattefria beloppet",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "över ersättningen för ideellt engagerade – skattefritt endast som tränare",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Kontrollera utbetalningar till tränare och ideellt engagerade:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Kontrollera utbetalningar till tränare och ideellt engagerade:",
+ ", erhalten:": ", mottaget:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Överföringen kom från en främmande webbplats och togs inte emot av säkerhetsskäl.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ingen fil överfördes – välj ”Dela → PDFMy” igen. Fungerar det inte väljer du filen i PDFMy via ”Öppna”.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "En länk eller text delades, inte en fil. Dela själva filen (t.ex. tryck länge på filen → Dela → PDFMy) eller välj ”Öppna” i PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Delning utan fil (orsak: {0}{1})"
 }

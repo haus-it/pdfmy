@@ -6,7 +6,7 @@
    Updates laden nur geänderte Dateien (Update-Strategie, KONZEPT.md): Der Offline-Speicher bleibt über Versionen bestehen; beim
    Installieren wird jede gespeicherte Datei mit ihrer Prüfsumme in pruefsummen.json verglichen und nur bei Abweichung neu geladen.
    Bei 100.000 Nutzern spart das je Veröffentlichung Terabytes (vorher: alle ~18 MB je Gerät bei jeder neuen VERSION). */
-const VERSION = 'app-v323';
+const VERSION = 'app-v324';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'js/app.js', 'js/config.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/fristen.js', 'js/formdaten.js', 'js/kommentare.js', 'js/qrstempel.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/pdfbild.js', 'js/fragen.js', 'js/zuwendung.js', 'js/vereinsvorlagen.js', 'js/kassenbericht.js', 'js/sepalastschrift.js', 'js/versammlung.js','js/preflight.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/slides.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js', 'js/laden.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-group.png'];
 const VENDOR = ['vendor/pdf-lib.min.js', 'vendor/fontkit.umd.min.js', 'vendor/pdfjs/loader.js', 'vendor/pdfjs/pdf.min.js', 'vendor/pdfjs/pdf.worker.min.js', 'vendor/pdfjs/wasm/openjpeg.wasm', 'vendor/pdfjs/wasm/jbig2.wasm', 'vendor/pdfjs/wasm/qcms_bg.wasm',
@@ -128,17 +128,23 @@ const SHARE = 'pdfmy-teilen';
 self.addEventListener('fetch', e => {
   const u = new URL(e.request.url);
   if (e.request.method !== 'POST' || u.origin !== location.origin || !u.pathname.endsWith('/teilen')) return;
-  // Ein echtes „Teilen“ vom Handy hat keine Herkunftsseite; ein Formular einer fremden Website schon – das nicht annehmen
-  const ref = e.request.referrer;
-  if (ref && ref !== 'about:client' && new URL(ref).origin !== location.origin) { e.respondWith(Response.redirect(new URL('./?geteilt=0', BASE).href, 303)); return; }
+  // Ein echtes „Teilen“ vom Handy hat keine Herkunftsseite (oder eine App-Herkunft wie android-app://…); ein Formular einer fremden
+  // Website hat eine http(s)-Herkunft – nur das abweisen (app-v324: vorher wurde jede fremde Herkunft abgewiesen, auch Apps)
+  const ref = e.request.referrer, back = (grund, inhalt = '') => Response.redirect(new URL(`./?geteilt=0&grund=${grund}${inhalt ? '&inhalt=' + encodeURIComponent(inhalt) : ''}`, BASE).href, 303);
+  let fremd = false; try { const r = ref && ref !== 'about:client' ? new URL(ref) : null; fremd = !!r && /^https?:$/.test(r.protocol) && r.origin !== location.origin; } catch { fremd = false; }
+  if (fremd) { e.respondWith(back('fremd')); return; }
   e.respondWith((async () => {
     try {
       const fd = await e.request.formData(), files = fd.getAll('dateien').filter(f => f && typeof f !== 'string' && f.size);
+      if (!files.length) {   // Grund für die App (ohne Inhalte – nur welche Felder ankamen), z. B. Link statt Datei geteilt
+        const da = [...new Set([...fd.entries()].filter(([, v]) => typeof v === 'string' ? v.trim() : v?.size >= 0).map(([k, v]) => typeof v === 'string' ? k : `${k}(${v.size} B, ${v.type || '?'})`))].join(',').slice(0, 120);
+        return back(['text', 'url', 'title'].some(k => (fd.get(k) || '').trim?.()) ? 'text' : 'leer', da);
+      }
       const c = await caches.open(SHARE);
       for (const k of await c.keys()) await c.delete(k);
       for (const [i, f] of files.entries()) await c.put(new Request(`__teilen__/${i}`), new Response(f, { headers: { 'content-type': f.type || 'application/octet-stream', 'x-name': encodeURIComponent(f.name || 'Datei') } }));
       return Response.redirect(new URL(`./?geteilt=${files.length}`, BASE).href, 303);
-    } catch { return Response.redirect(new URL('./?geteilt=0', BASE).href, 303); }
+    } catch (err) { return back('fehler', String(err?.name || 'Fehler').slice(0, 40)); }
   })());
 });
 const fromStore = req => caches.open(STORE).then(c => c.match(req, { ignoreSearch: true }));

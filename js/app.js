@@ -5278,7 +5278,15 @@ addEventListener('load', async () => {   // erst wenn alle Programmteile geladen
   try {
     const c = await caches.open('pdfmy-teilen'), files = [];
     for (const req of await c.keys()) { const res = await c.match(req); const name = decodeURIComponent(res.headers.get('x-name') || 'Datei'); files.push(new File([await res.blob()], name, { type: res.headers.get('content-type') || '' })); }
-    if (!files.length) { status('Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen.'); return; }
+    if (!files.length) {
+      // Grund vom Service Worker (app-v324, Fehlerbericht 20.11.2026 Android): Link/Text statt Datei, leere Übergabe, fremde Seite
+      const grund = q.get('grund') || '', was = q.get('inhalt') || '';
+      logLine(`Teilen ohne Datei (Grund: ${grund || 'unbekannt'}${was ? ', erhalten: ' + was : ''})`);
+      const msg = grund === 'text' ? 'Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.'
+        : grund === 'fremd' ? 'Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.'
+        : 'Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.';
+      status(msg); toast(msg, 9000); return;
+    }
     await importFiles(files);
     await caches.delete('pdfmy-teilen');   // erst nach dem Import löschen – scheitert er, liegt die Datei beim nächsten Start noch da
   } catch (e) { console.warn('Geteilte Datei', e); status(`Die geteilte Datei ließ sich nicht übernehmen: ${e.message}`); }

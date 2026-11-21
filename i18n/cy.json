@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Dewis maes llofnod",
  "über dem Freibetrag": "uwchben y swm di-dreth",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "uwchben lwfans gwirfoddolwyr – di-dreth fel hyfforddwr yn unig",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Gwirio taliadau hyfforddwyr a gwirfoddolwyr:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Gwirio taliadau hyfforddwyr a gwirfoddolwyr:",
+ ", erhalten:": ", derbyniwyd:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Daeth y trosglwyddiad o wefan arall ac ni chafodd ei dderbyn am resymau diogelwch.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ni throsglwyddwyd ffeil – dewiswch ‘Share → PDFMy’ eto. Os nad yw hynny’n gweithio, dewiswch y ffeil yn PDFMy drwy ‘Agor’.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Rhannwyd dolen neu destun, nid ffeil. Rhannwch y ffeil ei hun (e.e. pwyswch yn hir ar y ffeil → Share → PDFMy) neu dewiswch ‘Agor’ yn PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Rhannu heb ffeil (rheswm: {0}{1})"
 }

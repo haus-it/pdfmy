@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Odaberite polje za potpis",
  "über dem Freibetrag": "iznad neoporezivog iznosa",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "iznad paušala za volontere – neoporezivo samo kao trener",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Provjerite isplate trenerima i volonterima:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Provjerite isplate trenerima i volonterima:",
+ ", erhalten:": ", primljeno:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Prijenos je stigao s tuđe web-stranice i iz sigurnosnih razloga nije prihvaćen.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nijedna datoteka nije predana – ponovno odaberite „Dijeli → PDFMy“. Ako ne uspije, odaberite datoteku u PDFMy putem „Otvori“.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Podijeljena je poveznica ili tekst, a ne datoteka. Podijelite samu datoteku (npr. dugo pritisnite datoteku → Dijeli → PDFMy) ili u PDFMy odaberite „Otvori“.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Dijeljenje bez datoteke (razlog: {0}{1})"
 }

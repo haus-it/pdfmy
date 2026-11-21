@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Elegir campo de firma",
  "über dem Freibetrag": "por encima del importe exento",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "por encima de la compensación para voluntarios – exento solo como entrenador",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Revise los pagos a entrenadores y voluntarios:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Revise los pagos a entrenadores y voluntarios:",
+ ", erhalten:": ", recibido:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "La transferencia procedía de un sitio web ajeno y no se aceptó por motivos de seguridad.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "No se recibió ningún archivo; vuelva a elegir «Compartir → PDFMy». Si no funciona, elija el archivo en PDFMy mediante «Abrir».",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Se ha compartido un enlace o un texto, no un archivo. Comparta el propio archivo (p. ej., mantenga pulsado el archivo → Compartir → PDFMy) o elija «Abrir» en PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Compartir sin archivo (motivo: {0}{1})"
 }

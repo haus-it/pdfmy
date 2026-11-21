@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Вибрати поле підпису",
  "über dem Freibetrag": "понад неоподатковувану суму",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "понад виплату волонтерам – без податку лише для тренерів",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Перевірте виплати тренерам і волонтерам:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Перевірте виплати тренерам і волонтерам:",
+ ", erhalten:": ", отримано:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Передавання надійшло з чужого вебсайту й з міркувань безпеки не було прийняте.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Файл не передано – виберіть ще раз «Поділитися → PDFMy». Якщо не вдасться, виберіть файл у PDFMy через «Відкрити».",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Поширено посилання або текст, а не файл. Поділіться самим файлом (наприклад, довго натисніть на файл → Поділитися → PDFMy) або виберіть «Відкрити» у PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Поширення без файлу (причина: {0}{1})"
 }

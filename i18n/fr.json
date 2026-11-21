@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Choisir le champ de signature",
  "über dem Freibetrag": "au-dessus du montant exonéré",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "au-dessus du forfait bénévoles – exonéré uniquement en tant qu’entraîneur",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Vérifier les paiements aux entraîneurs et bénévoles :"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Vérifier les paiements aux entraîneurs et bénévoles :",
+ ", erhalten:": ", reçu :",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Le transfert provenait d’un site web tiers et a été refusé pour des raisons de sécurité.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Aucun fichier n’a été transmis – veuillez choisir à nouveau « Partager → PDFMy ». Si cela ne fonctionne pas, choisissez le fichier dans PDFMy via « Ouvrir ».",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Un lien ou un texte a été partagé, et non un fichier. Veuillez partager le fichier lui-même (p. ex. appui long sur le fichier → Partager → PDFMy) ou choisir « Ouvrir » dans PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Partage sans fichier (motif : {0}{1})"
 }

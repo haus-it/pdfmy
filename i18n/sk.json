@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Vybrať podpisové pole",
  "über dem Freibetrag": "nad nezdaniteľnou sumou",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "nad paušálom pre dobrovoľníkov – oslobodené od dane len ako tréner",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Skontrolujte platby trénerom a dobrovoľníkom:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Skontrolujte platby trénerom a dobrovoľníkom:",
+ ", erhalten:": ", prijaté:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Odovzdanie prišlo z cudzej webovej stránky a z bezpečnostných dôvodov nebolo prijaté.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nebol odovzdaný žiadny súbor – zvoľte znova „Zdieľať → PDFMy“. Ak to nefunguje, vyberte súbor v PDFMy cez „Otvoriť“.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Zdieľal sa odkaz alebo text, nie súbor. Zdieľajte priamo súbor (napr. dlho podržte súbor → Zdieľať → PDFMy) alebo v PDFMy zvoľte „Otvoriť“.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Zdieľanie bez súboru (dôvod: {0}{1})"
 }

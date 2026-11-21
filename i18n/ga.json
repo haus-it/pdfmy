@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Roghnaigh réimse sínithe",
  "über dem Freibetrag": "os cionn na suime saor ó cháin",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "os cionn liúntas an oibrí dheonaigh – saor ó cháin mar thraenálaí amháin",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Seiceáil íocaíochtaí le traenálaithe agus le hoibrithe deonacha:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Seiceáil íocaíochtaí le traenálaithe agus le hoibrithe deonacha:",
+ ", erhalten:": ", faighte:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Tháinig an t-aistriú ó shuíomh gréasáin eachtrach agus níor glacadh leis ar chúiseanna slándála.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Níor seachadadh aon chomhad – roghnaigh “Share → PDFMy” arís, le do thoil. Mura n-oibríonn sé sin, roghnaigh an comhad in PDFMy trí “Oscail”.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Roinneadh nasc nó téacs, ní comhad. Roinn an comhad féin (m.sh. brúigh go fada ar an gcomhad → Share → PDFMy) nó roghnaigh “Oscail” in PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Roinnt gan chomhad (cúis: {0}{1})"
 }

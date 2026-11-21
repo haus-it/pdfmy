@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Aláírási mező kiválasztása",
  "über dem Freibetrag": "az adómentes összeg felett",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "az önkéntes átalány felett – csak edzőként adómentes",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Edzői és önkéntes kifizetések ellenőrzése:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Edzői és önkéntes kifizetések ellenőrzése:",
+ ", erhalten:": ", érkezett:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Az átadás egy idegen webhelyről érkezett, és biztonsági okokból nem fogadtuk el.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nem érkezett fájl – válassza újra a(z) „Megosztás → PDFMy” lehetőséget. Ha nem sikerül, válassza ki a fájlt a PDFMy-ban a(z) „Megnyitás” paranccsal.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Link vagy szöveg lett megosztva, nem fájl. Ossza meg magát a fájlt (pl. nyomja hosszan a fájlt → Megosztás → PDFMy), vagy válassza a PDFMy-ban a(z) „Megnyitás” lehetőséget.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Megosztás fájl nélkül (ok: {0}{1})"
 }

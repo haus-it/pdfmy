@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Pasirinkti parašo lauką",
  "über dem Freibetrag": "viršija neapmokestinamą sumą",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "viršija savanorio išmoką – neapmokestinama tik kaip treneriui",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Patikrinkite išmokas treneriams ir savanoriams:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Patikrinkite išmokas treneriams ir savanoriams:",
+ ", erhalten:": ", gauta:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Perdavimas atėjo iš svetimos svetainės ir saugumo sumetimais nebuvo priimtas.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Failas nebuvo perduotas – dar kartą pasirinkite „Bendrinti → PDFMy“. Jei nepavyksta, pasirinkite failą PDFMy per „Atidaryti“.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Buvo bendrinama nuoroda arba tekstas, o ne failas. Bendrinkite patį failą (pvz., ilgai palaikykite failą → Bendrinti → PDFMy) arba PDFMy pasirinkite „Atidaryti“.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Bendrinimas be failo (priežastis: {0}{1})"
 }

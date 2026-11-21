@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Velja undirskriftarreit",
  "über dem Freibetrag": "yfir skattfrjálsri upphæð",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "yfir sjálfboðaliðagreiðslu – aðeins skattfrjálst sem þjálfari",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Athugið greiðslur til þjálfara og sjálfboðaliða:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Athugið greiðslur til þjálfara og sjálfboðaliða:",
+ ", erhalten:": ", móttekið:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Sendingin kom frá öðrum vef og var ekki samþykkt af öryggisástæðum.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Engin skrá var send – veljið aftur „Deila → PDFMy“. Ef það gengur ekki, veljið skrána í PDFMy með „Opna“.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Tengli eða texta var deilt, ekki skrá. Deilið skránni sjálfri (t.d. haldið fingri á skránni → Deila → PDFMy) eða veljið „Opna“ í PDFMy.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Deiling án skrár (ástæða: {0}{1})"
 }

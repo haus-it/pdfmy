@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-21
+
+### Android: Teilen an PDFMy aus anderen Apps (app-v324)
+- Fehlerbericht vom 20.11.2026 (Android 10, Chrome): „Teilen → PDFMy“ meldete „Es wurde keine Datei übergeben“. Der Schutz gegen Formulare fremder Webseiten wies jede Herkunft außer pdfmy.de ab – auch die einer Android-App (android-app://…). Jetzt wird nur eine fremde http(s)-Webseite abgewiesen.
+- Kommt keine Datei an, sagt PDFMy jetzt den Grund: Link oder Text statt Datei geteilt, leere Übergabe oder fremde Seite – mit Hinweis, was zu tun ist. Der Grund (nur welche Felder ankamen, keine Inhalte) steht im Protokoll und damit im nächsten Fehlerbericht.
+- tests/teilen.test.js: echter Service Worker mit nachgebildeten Übergaben (ohne Herkunft, App-Herkunft, eigene Seite, fremde Seite, Link, leere Datei); Gegenprobe mit dem alten Stand zeigt den Fehler.
+
 ## 2026-11-20
 
 ### Signaturfeld passend zur Person, Warnung bei Übungsleiter- und Ehrenamtspauschalen (app-v323)

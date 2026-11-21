@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "İmza alanını seçin",
  "über dem Freibetrag": "muafiyet tutarının üzerinde",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "gönüllü ödemesi sınırının üzerinde – yalnızca antrenör olarak vergiden muaf",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Antrenör ve gönüllü ödemelerini kontrol edin:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Antrenör ve gönüllü ödemelerini kontrol edin:",
+ ", erhalten:": ", alınan:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Aktarım yabancı bir web sitesinden geldi ve güvenlik nedeniyle kabul edilmedi.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Hiçbir dosya aktarılmadı – lütfen yeniden “Paylaş → PDFMy” seçin. Bu işe yaramazsa dosyayı PDFMy'de “Aç” ile seçin.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Dosya değil, bağlantı veya metin paylaşıldı. Lütfen dosyanın kendisini paylaşın (ör. dosyaya uzun basın → Paylaş → PDFMy) veya PDFMy'de “Aç” seçeneğini seçin.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Dosyasız paylaşım (neden: {0}{1})"
 }

@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Aukeratu sinadura-eremua",
  "über dem Freibetrag": "zerga-salbuespeneko zenbatekoaren gainetik",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "boluntarioen konpentsazioaren gainetik – entrenatzaile gisa soilik salbuetsita",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Egiaztatu entrenatzaile eta boluntarioei egindako ordainketak:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Egiaztatu entrenatzaile eta boluntarioei egindako ordainketak:",
+ ", erhalten:": ", jasoa:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Transferentzia beste webgune batetik zetorren, eta segurtasun-arrazoiengatik ez da onartu.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ez da fitxategirik jaso – aukeratu berriro «Partekatu → PDFMy». Ez badabil, aukeratu fitxategia PDFMy-n «Ireki» erabiliz.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Esteka edo testu bat partekatu da, ez fitxategi bat. Partekatu fitxategia bera (adib. sakatu luze fitxategia → Partekatu → PDFMy) edo aukeratu «Ireki» PDFMy-n.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Partekatzea fitxategirik gabe (arrazoia: {0}{1})"
 }

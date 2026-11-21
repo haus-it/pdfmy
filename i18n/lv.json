@@ -4270,5 +4270,10 @@
  "Signaturfeld wählen": "Izvēlēties paraksta lauku",
  "über dem Freibetrag": "pārsniedz neapliekamo summu",
  "über der Ehrenamtspauschale – nur als Übungsleiter steuerfrei": "pārsniedz brīvprātīgā kompensāciju – neapliekama tikai kā trenerim",
- "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Pārbaudiet maksājumus treneriem un brīvprātīgajiem:"
+ "Übungsleiter- und Ehrenamtszahlungen prüfen:": "Pārbaudiet maksājumus treneriem un brīvprātīgajiem:",
+ ", erhalten:": ", saņemts:",
+ "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Nodošana nāca no svešas tīmekļa vietnes un drošības apsvērumu dēļ netika pieņemta.",
+ "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Fails netika nodots – lūdzu, vēlreiz izvēlieties „Kopīgot → PDFMy”. Ja tas neizdodas, izvēlieties failu PDFMy, izmantojot „Atvērt”.",
+ "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Tika kopīgota saite vai teksts, nevis fails. Lūdzu, kopīgojiet pašu failu (piem., ilgi turiet failu → Kopīgot → PDFMy) vai PDFMy izvēlieties „Atvērt”.",
+ "Teilen ohne Datei (Grund: {0}{1})": "Kopīgošana bez faila (iemesls: {0}{1})"
 }
