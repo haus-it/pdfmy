@@ -3875,19 +3875,31 @@ $('#zuwIn').onchange = async e => {
   } catch (err) { noteError(err, 'Zuwendungsbestätigung'); fdMsg($('#zuwSerMsg'), [`Abgebrochen: ${err.message}`]); }
 };
 /* ---------- SEPA-Lastschrift für Beiträge: Mitgliederliste → pain.008.001.08 (js/sepalastschrift.js, app-v317) ---------- */
-const sepaPruef = () => { const f = SepaLastschrift.faelligkeitPruefen($('#sepaFaellig').value); $('#sepaHinweis').textContent = I18N.t(f.ok ? f.hinweis || '' : f.grund); return f.ok; };
+const sepaPruef = () => {
+  const f = SepaLastschrift.faelligkeitPruefen($('#sepaFaellig').value); let t = I18N.t(f.ok ? f.hinweis || '' : f.grund);
+  // Vorabankündigung (app-v326): reicht die Zeit für Brief bzw. E-Mail (14 Tage vor Fälligkeit)?
+  $('#sepaVorabF').hidden = !$('#sepaVorab').checked;
+  const v = f.ok && $('#sepaVorab').checked ? SepaLastschrift.vorabFrist($('#sepaFaellig').value) : null;
+  if (v) t = (v.brief ? I18N.t('Die Vorabankündigung kommt per Brief und per E-Mail rechtzeitig an (14 Tage vor dem Einzug).')
+    : v.mail ? I18N.t('Die Vorabankündigung kommt nur per E-Mail noch rechtzeitig an – für Briefe das Fälligkeitsdatum später wählen.')
+    : I18N.t('Für die Vorabankündigung ist es zu knapp (14 Tage vor dem Einzug) – bitte ein späteres Fälligkeitsdatum wählen, sofern Satzung oder Mandat keine kürzere Frist vorsehen.'));
+  $('#sepaHinweis').textContent = t; return f.ok;
+};
+$('#sepaVorab').addEventListener('change', sepaPruef);
 $('#sepaFaellig').addEventListener('input', sepaPruef);
 $('#btnSepa').onclick = () => {
   closeMenu?.();
   const v = LS.get('sepaVerein', null), vv = LS.get('vvVerein', null), z = LS.get('zuwVerein', null), kb = LS.get('kbVerein', null);
   $('#sepaName').value = v?.name || vv?.verein || z?.aussteller?.name || kb?.verein || ''; $('#sepaIban').value = v?.iban || ''; $('#sepaBic').value = v?.bic || '';
   $('#sepaGlId').value = v?.glaeubigerId || vv?.glaeubigerId || ''; $('#sepaZweck').value = v?.zweck || `Mitgliedsbeitrag ${new Date().getFullYear() + (new Date().getMonth() >= 10 ? 1 : 0)}`;
-  const f = new Date(); f.setDate(f.getDate() + 14); let d = f; while (!SepaLastschrift.bankarbeitstag(d)) d.setDate(d.getDate() + 1);   // Vorschlag: in 14 Tagen (Vorabankündigung)
+  $('#sepaKontakt').value = v?.kontakt || vv?.kontakt || '';
+  // Vorschlag: so, dass die Vorabankündigung auch per Brief rechtzeitig ankommt (drei Werktage Post + 14 Tage) – app-v326
+  const f = new Date(); f.setDate(f.getDate() + 18); let d = f; while (!SepaLastschrift.bankarbeitstag(d) || !SepaLastschrift.vorabFrist(d).brief) d.setDate(d.getDate() + 1);
   $('#sepaFaellig').value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   $('#sepaVergeben').checked = false; $('#sepaMsg').textContent = ''; sepaPruef(); $('#sepaDlg').showModal(); ($('#sepaName').value ? $('#sepaIban') : $('#sepaName')).focus();
 };
 $('#sepaCancel').onclick = () => $('#sepaDlg').close();
-const sepaVerein = () => ({ name: $('#sepaName').value.trim(), iban: $('#sepaIban').value.replace(/\s+/g, '').toUpperCase(), bic: $('#sepaBic').value.replace(/\s+/g, '').toUpperCase(), glaeubigerId: $('#sepaGlId').value.replace(/\s+/g, '').toUpperCase(), zweck: $('#sepaZweck').value.trim() });
+const sepaVerein = () => ({ name: $('#sepaName').value.trim(), iban: $('#sepaIban').value.replace(/\s+/g, '').toUpperCase(), bic: $('#sepaBic').value.replace(/\s+/g, '').toUpperCase(), glaeubigerId: $('#sepaGlId').value.replace(/\s+/g, '').toUpperCase(), zweck: $('#sepaZweck').value.trim(), kontakt: $('#sepaKontakt').value.trim() });
 $('#sepaForm').onsubmit = e => {
   e.preventDefault();
   const g = sepaVerein(), bad = (sel, msg) => { $('#sepaMsg').textContent = I18N.t(msg); $(sel).focus(); };
@@ -3906,11 +3918,18 @@ $('#sepaIn').onchange = async e => {
     const faellig = $('#sepaFaellig').value, xml = SepaLastschrift.xml({ ...g, faellig }, t.posten), tag = new Date().toISOString().slice(0, 10);
     download(new TextEncoder().encode(xml), `SEPA-Lastschrift-${faellig}.xml`, 'application/xml');
     if (t.vergeben.length) download(new TextEncoder().encode(SepaLastschrift.vergebenCsv(t.vergeben)), `Mandatsreferenzen-${tag}.csv`, 'text/csv');
+    // Vorabankündigung je Mitglied (app-v326): ein PDF, je Mitglied eine Seite – Anschrift des Vereins aus den anderen Vereinsdialogen
+    if ($('#sepaVorab').checked) {
+      const anschrift = LS.get('vvVerein', null)?.anschrift || LS.get('mvVerein', null)?.anschrift || '';
+      const vb = await SepaLastschrift.vorab(PDFLib, { ...g, anschrift, faellig }, t.posten, await zuwOpts());
+      await importFiles([new File([vb], `Vorabankündigung SEPA-Lastschrift ${faellig} ${g.name.replace(/[\\/:*?"<>|]+/g, ' ').replace(/\.+$/, '')}.pdf`, { type: 'application/pdf' })]);
+    }
     const summe = t.posten.reduce((s, p) => s + p.betrag, 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const n = t.posten.length, nf = t.fehler.length, nv = t.vergeben.length, fz = t.fehler.slice(0, 3).join(' ');
     fdMsg($('#sepaMsg'), [n === 1 ? `1 Lastschrift über ${summe} € in „SEPA-Lastschrift-${faellig}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.` : `${n} Lastschriften über ${summe} € in „SEPA-Lastschrift-${faellig}.xml“ gespeichert – im Online-Banking unter „SEPA-Datei hochladen“ einreichen.`,
       !nf ? '' : nf === 1 ? `1 Zeile nicht übernommen: ${fz}` : `${nf} Zeilen nicht übernommen: ${fz}`,
-      !nv ? '' : nv === 1 ? `1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).` : `${nv} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).`]);
+      !nv ? '' : nv === 1 ? `1 Mandatsreferenz neu vergeben – bitte dem Mitglied mitteilen (Liste gespeichert).` : `${nv} Mandatsreferenzen neu vergeben – bitte den Mitgliedern mitteilen (Liste gespeichert).`,
+      !$('#sepaVorab').checked ? '' : n === 1 ? 'Die Vorabankündigung ist geöffnet – drucken oder als PDF versenden.' : `${n} Vorabankündigungen sind geöffnet (je Mitglied eine Seite) – drucken, oder mit „PDF aufteilen …“ (1 Seite je Datei) einzeln per E-Mail versenden.`]);
     status(n === 1 ? `SEPA-Lastschrift erstellt: 1 Lastschrift, ${summe} €.` : `SEPA-Lastschrift erstellt: ${n} Lastschriften, ${summe} €.`);
   } catch (err) { noteError(err, 'SEPA-Lastschrift'); fdMsg($('#sepaMsg'), [`Abgebrochen: ${err.message}`]); }
 };

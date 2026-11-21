@@ -94,6 +94,18 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 21.11.2026: SEPA-Vorabankündigung je Mitglied (app-v326)
+**Inhalt:** Beim Beitragseinzug erstellt PDFMy neben der Bankdatei je Mitglied ein Ankündigungsschreiben (Pre-Notification): Betrag, Fälligkeitstag, Verwendungszweck, gekürzte IBAN, Mandatsreferenz, Gläubiger-ID, Anschriftfeld nach DIN 5008 Form B, wenn die Liste Straße/PLZ/Ort hat. Fristprüfung: reicht die Zeit (14 Tage vor Fälligkeit) für Brief (drei Werktage Laufzeit) oder nur noch für E-Mail; der Datumsvorschlag berücksichtigt die Briefpost. **Grund (Leitsatz: besser als die Mitbewerber):** Die Vorabankündigung ist Pflicht und war bisher nur ein Hinweis; Vereine schrieben sie von Hand. PDF-Programme bieten das nicht; Vereinssoftware im Abo versendet sie über eigene Server.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Mitgliederliste wird nur im Browser gelesen; im Schreiben nur die letzten vier Stellen der IBAN |
+| 2 Kein Server | passt |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: ein Haken im vorhandenen Dialog, voreingestellt; Fristhinweis sofort |
+| 5 Prüfbar | tests/sepalastschrift.test.js (Klartextnamen, Anschrift, gekürzte IBAN nicht als Ganzes im PDF, Frist Brief/E-Mail mit Samstag als Werktag); Durchlauf in der App; Seite als Bild geprüft |
+| 6 Wenig aktive Inhalte | passt: keine Skripte |
+
 ### Geprüft und umgesetzt 20.11.2026: Signaturfeld passend zur Person, Pauschalen-Warnung im Kassenbericht (app-v323)
 **Inhalt:** (1) Mehrere freie Signaturfelder: PDFMy wählt das Feld, an dem der Name aus dem Zertifikat steht (Feldname oder Text darüber, darunter, daneben; Umlaute, Titel und „Nachname, Vorname“ berücksichtigt); unklar → erstes freies Feld. (2) Kassenbericht: Zahlungen der Kategorie Übungsleiter/Aufwandsentschädigung je Person und Jahr gegen § 3 Nr. 26/26a EStG (Werte für 2013–2020, 2021–2025 und ab 2026), Warnung bei Überschreiten, unklarer Art über 960 € und ab 90 % des Freibetrags. **Grund (Leitsatz der GF: besser als die Mitbewerber):** In Acrobat muss man das richtige Feld selbst anklicken – wer es verwechselt, unterschreibt für die andere Partei. Vereinssoftware zeigt Summen, warnt aber nicht vor dem Überschreiten der Freibeträge (nicht nachgeprüft für alle Anbieter).
 

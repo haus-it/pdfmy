@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-21
 
+### SEPA-Beitragseinzug mit Vorabankündigung je Mitglied (app-v326)
+- „Mehr → SEPA-Lastschrift für Beiträge …“ erstellt jetzt neben der Bankdatei die vorgeschriebene Vorabankündigung: je Mitglied ein Schreiben mit Betrag, Fälligkeitstag, Verwendungszweck, Mandatsreferenz und Gläubiger-ID, mit Anschriftfeld (DIN 5008), wenn die Mitgliederliste Straße, PLZ und Ort enthält. Die IBAN steht nur gekürzt darin (z. B. DE02 **** 2051), Namen in der richtigen Schreibweise (in der Bankdatei weiter im SEPA-Zeichensatz).
+- Fristprüfung: PDFMy sagt, ob das Fälligkeitsdatum für die Vorabankündigung per Brief (drei Werktage Laufzeit + 14 Tage) noch reicht oder nur noch per E-Mail; der Datumsvorschlag berücksichtigt die Briefpost. Optional „Rückfragen an“ für Kassenwart oder Geschäftsstelle.
+- tests/sepalastschrift.test.js; Durchlauf in der App, Schreiben als Bild geprüft.
+
 ### Anzeige „Caller ID“ mit neuem Namen (app-v325)
 - Die Anzeige für die Anruferkennung heißt jetzt „Caller ID“ statt „Haus iT Caller ID“ und verlinkt auf caller-id.app statt hausit-portal.de; Datenschutzhinweis entsprechend. Übersetzungen in allen Sprachen übernommen (nur Name und Adresse ersetzt).
 

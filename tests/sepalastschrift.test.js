@@ -91,3 +91,29 @@ test('pain.008.001.08 gültig nach amtlichem ISO-20022-Schema (Python/lxml, sons
   fs.rmSync(dir, { recursive: true, force: true });
   assert.equal(r.status, 0, r.stdout + r.stderr);
 });
+
+test('Vorabankündigung (v326): je Mitglied ein Schreiben, Klartextname, gekürzte IBAN, Frist für Brief und E-Mail', async () => {
+  const L = require('../vendor/pdf-lib.min.js'), fontkit = require('../vendor/fontkit.umd.min.js');
+  const regular = fs.readFileSync(path.join(__dirname, '..', 'vendor', 'DejaVuSans.ttf')), bold = fs.readFileSync(path.join(__dirname, '..', 'vendor', 'dejavu', 'DejaVuSans-Bold.ttf'));
+  const liste = [['Vorname', 'Nachname', 'Straße', 'PLZ', 'Ort', 'E-Mail', 'IBAN', 'Betrag', 'Mandatsreferenz', 'Mandatsdatum'],
+    ['Ayşe', 'Yılmaz', 'Lindenweg 3', '33100', 'Paderborn', 'a@example.org', 'DE02 1203 0000 0000 2020 51', '60,00', 'M-0001', '15.03.2024'],
+    ['Jürgen', 'Groß', '', '', '', '', 'DE89370400440532013000', '30', 'M-0002', '01.02.2025']];
+  const t = S.ausTabelle(liste, { heute, zweck: 'Mitgliedsbeitrag 2027' });
+  assert.deepEqual(t.posten.map(p => [p.klar, p.strasse, p.plzOrt, p.email, p.zweckKlar]), [['Ayşe Yılmaz', 'Lindenweg 3', '33100 Paderborn', 'a@example.org', 'Mitgliedsbeitrag 2027'], ['Jürgen Groß', '', '', '', 'Mitgliedsbeitrag 2027']]);
+  assert.equal(t.posten[0].name, 'Ayse Yilmaz', 'in der Bankdatei weiter im SEPA-Zeichensatz');
+  assert.equal(S.ibanKurz('DE02 1203 0000 0000 2020 51'), 'DE02 **** 2051');
+  // Frist: 14 Tage vor Fälligkeit; Brief drei Werktage (ohne Sonntag) Laufzeit
+  assert.deepEqual(S.vorabFrist(new Date(2026, 11, 8), heute), { mail: true, brief: true, tageMail: 18, tageBrief: 14, tage: 14 }, 'Brief Fr → Di (Samstag zählt)');
+  assert.deepEqual(S.vorabFrist(new Date(2026, 11, 7), heute), { mail: true, brief: false, tageMail: 17, tageBrief: 13, tage: 14 });
+  assert.equal(S.vorabFrist(new Date(2026, 11, 1), heute).mail, false);
+  const b = await S.vorab(L, { ...verein, anschrift: 'Sportplatzweg 1\n33100 Musterdorf', faellig: new Date(2026, 11, 7), kontakt: 'kasse@example.org' }, t.posten, { fontkit, regular, bold, heute });
+  const d = await L.PDFDocument.load(b);
+  assert.equal(d.getPageCount(), 2);
+  assert.equal(d.getTitle(), 'Vorabankündigung SEPA-Lastschrift 07.12.2026 – TuS Musterdorf 1920 e.V.');
+  const raw = Buffer.from(b).toString('latin1');
+  assert.doesNotMatch(raw, /DE02120300000000202051|0000 2020/, 'volle IBAN steht nicht im Schreiben');
+  assert.doesNotMatch(raw, /\/JavaScript|\/JS\s/);
+  await assert.rejects(S.vorab(L, verein, []), /Keine Lastschriften/);
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'pro.js'), 'utf8'), html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.match(html, /id="sepaVorab" checked/); assert.match(src, /await SepaLastschrift\.vorab\(PDFLib, \{ \.\.\.g, anschrift, faellig \}, t\.posten, await zuwOpts\(\)\)/);
+});

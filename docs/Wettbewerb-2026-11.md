@@ -274,7 +274,7 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 | Zuwendungsbestätigung nach amtlichem Muster, auch als Serie und Sammelbestätigung | vorhanden (v314) | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |
 | Mitgliedsantrag mit SEPA-Mandat, Foto-Einwilligung, Fahrt-Einverständnis | vorhanden (v315) | fehlt; Vorlagen meist als Word-Datei verstreut im Netz |
 | Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug, mit steuerlichen Bereichen und Prüfvermerk | vorhanden (v316) | fehlt bei PDF-Werkzeugen; Vereinsbuchhaltung im Abo |
-| SEPA-Lastschrift-Datei für den Beitragseinzug (pain.008.001.08) | vorhanden (v317; seit v318 gegen das amtliche ISO-20022-Schema geprüft) | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |
+| SEPA-Lastschrift-Datei für den Beitragseinzug (pain.008.001.08) | vorhanden (v317; seit v318 gegen das amtliche ISO-20022-Schema geprüft; seit v326 mit Vorabankündigung je Mitglied und Fristprüfung Brief/E-Mail) | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |
 | Mitgliederversammlung: Einladung mit Fristrechnung (je Mitglied ein Brief), Anwesenheitsliste, ausfüllbares Protokoll | vorhanden (v321) | fehlt bei PDF-Werkzeugen; Word-Vorlagen im Netz, Vereinssoftware im Abo |
 | Übungsleiter- und Ehrenamtspauschale: Vereinbarung mit Erklärung zum Freibetrag (Stand 2026) | vorhanden (v322); seit v323 warnt der Kassenbericht je Person vor dem Überschreiten der Freibeträge | fehlt bei PDF-Werkzeugen; Word-Muster der Landessportbünde; Vereinssoftware im Abo summiert, Warnung nicht nachgeprüft |
 | Online-Mitgliederverwaltung | **bewusst nicht**: Mitgliederdatenbank auf einem Server (Leitplanken 1–2) | Vereinssoftware im Abo |

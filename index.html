@@ -2354,6 +2354,8 @@ html.i18n-wait body{visibility:hidden}
   <div class="anlrow"><div class="field"><label for="sepaFaellig">Fälligkeitsdatum (Einzug am)</label><input id="sepaFaellig" type="date" required></div>
     <div class="field"><label for="sepaZweck">Verwendungszweck (wenn die Liste keinen hat)</label><input id="sepaZweck" maxlength="140" placeholder="z. B. Mitgliedsbeitrag 2027"></div></div>
   <label><input type="checkbox" id="sepaVergeben"> Fehlende Mandatsreferenzen vergeben (Liste zum Mitteilen an die Mitglieder wird gespeichert)</label>
+  <label><input type="checkbox" id="sepaVorab" checked> Vorabankündigung je Mitglied als PDF (Betrag, Fälligkeit, Mandatsreferenz – zum Drucken oder Versenden)</label>
+  <div class="field" id="sepaVorabF"><label for="sepaKontakt">Rückfragen an (E-Mail oder Telefon, freiwillig)</label><input id="sepaKontakt" autocomplete="email" placeholder="z. B. kasse@meinverein.de"></div>
   <p id="sepaHinweis" class="hint" role="status"></p>
   <p id="sepaMsg" class="hint" role="status"></p>
   <input type="file" id="sepaIn" hidden accept=".csv,.txt,.xlsx">
