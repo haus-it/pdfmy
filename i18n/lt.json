@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Perdavimas atėjo iš svetimos svetainės ir saugumo sumetimais nebuvo priimtas.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Failas nebuvo perduotas – dar kartą pasirinkite „Bendrinti → PDFMy“. Jei nepavyksta, pasirinkite failą PDFMy per „Atidaryti“.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Buvo bendrinama nuoroda arba tekstas, o ne failas. Bendrinkite patį failą (pvz., ilgai palaikykite failą → Bendrinti → PDFMy) arba PDFMy pasirinkite „Atidaryti“.",
- "Teilen ohne Datei (Grund: {0}{1})": "Bendrinimas be failo (priežastis: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Bendrinimas be failo (priežastis: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b>, skirtas Webex Calling, rodo vardą, įmonę ir kliento numerį tiesiai iš Jūsų CRM ar ERP.",
+ "Anzeige: Caller ID": "Reklama: Caller ID",
+ "Mehr auf caller-id.app": "Daugiau caller-id.app"
 }

@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Il trasferimento proveniva da un sito web esterno ed è stato rifiutato per motivi di sicurezza.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nessun file ricevuto – scegli di nuovo «Condividi → PDFMy». Se non funziona, scegli il file in PDFMy tramite «Apri».",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "È stato condiviso un link o un testo, non un file. Condividi il file stesso (ad es. tieni premuto sul file → Condividi → PDFMy) oppure scegli «Apri» in PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Condivisione senza file (motivo: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Condivisione senza file (motivo: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> per Webex Calling mostra nome, azienda e numero cliente direttamente dal Suo CRM o ERP.",
+ "Anzeige: Caller ID": "Annuncio: Caller ID",
+ "Mehr auf caller-id.app": "Altre informazioni su caller-id.app"
 }

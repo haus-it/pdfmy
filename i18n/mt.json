@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "It-trasferiment ġie minn sit web barrani u ma ġiex aċċettat għal raġunijiet ta’ sigurtà.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ma ntbagħat l-ebda fajl – jekk jogħġbok erġa’ agħżel “Share → PDFMy”. Jekk ma jaħdimx, agħżel il-fajl f’PDFMy permezz ta’ “Iftaħ”.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Ġiet maqsuma link jew test, mhux fajl. Jekk jogħġbok aqsam il-fajl innifsu (eż. agħfas fit-tul fuq il-fajl → Share → PDFMy) jew agħżel “Iftaħ” f’PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Qsim mingħajr fajl (raġuni: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Qsim mingħajr fajl (raġuni: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> għal Webex Calling juri l-isem, il-kumpanija u n-numru tal-klijent direttament mis-CRM jew l-ERP tiegħek.",
+ "Anzeige: Caller ID": "Reklam: Caller ID",
+ "Mehr auf caller-id.app": "Aktar fuq caller-id.app"
 }

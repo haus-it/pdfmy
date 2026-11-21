@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Överföringen kom från en främmande webbplats och togs inte emot av säkerhetsskäl.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ingen fil överfördes – välj ”Dela → PDFMy” igen. Fungerar det inte väljer du filen i PDFMy via ”Öppna”.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "En länk eller text delades, inte en fil. Dela själva filen (t.ex. tryck länge på filen → Dela → PDFMy) eller välj ”Öppna” i PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Delning utan fil (orsak: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Delning utan fil (orsak: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> för Webex Calling visar namn, företag och kundnummer direkt från ditt CRM eller ERP.",
+ "Anzeige: Caller ID": "Annons: Caller ID",
+ "Mehr auf caller-id.app": "Mer på caller-id.app"
 }

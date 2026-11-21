@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Nodošana nāca no svešas tīmekļa vietnes un drošības apsvērumu dēļ netika pieņemta.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Fails netika nodots – lūdzu, vēlreiz izvēlieties „Kopīgot → PDFMy”. Ja tas neizdodas, izvēlieties failu PDFMy, izmantojot „Atvērt”.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Tika kopīgota saite vai teksts, nevis fails. Lūdzu, kopīgojiet pašu failu (piem., ilgi turiet failu → Kopīgot → PDFMy) vai PDFMy izvēlieties „Atvērt”.",
- "Teilen ohne Datei (Grund: {0}{1})": "Kopīgošana bez faila (iemesls: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Kopīgošana bez faila (iemesls: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> Webex Calling sistēmai parāda vārdu, uzņēmumu un klienta numuru tieši no Jūsu CRM vai ERP.",
+ "Anzeige: Caller ID": "Reklāma: Caller ID",
+ "Mehr auf caller-id.app": "Vairāk caller-id.app"
 }

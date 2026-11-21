@@ -4,6 +4,9 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-21
 
+### Anzeige „Caller ID“ mit neuem Namen (app-v325)
+- Die Anzeige für die Anruferkennung heißt jetzt „Caller ID“ statt „Haus iT Caller ID“ und verlinkt auf caller-id.app statt hausit-portal.de; Datenschutzhinweis entsprechend. Übersetzungen in allen Sprachen übernommen (nur Name und Adresse ersetzt).
+
 ### Android: Teilen an PDFMy aus anderen Apps (app-v324)
 - Fehlerbericht vom 20.11.2026 (Android 10, Chrome): „Teilen → PDFMy“ meldete „Es wurde keine Datei übergeben“. Der Schutz gegen Formulare fremder Webseiten wies jede Herkunft außer pdfmy.de ab – auch die einer Android-App (android-app://…). Jetzt wird nur eine fremde http(s)-Webseite abgewiesen.
 - Kommt keine Datei an, sagt PDFMy jetzt den Grund: Link oder Text statt Datei geteilt, leere Übergabe oder fremde Seite – mit Hinweis, was zu tun ist. Der Grund (nur welche Felder ankamen, keine Inhalte) steht im Protokoll und damit im nächsten Fehlerbericht.

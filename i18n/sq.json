@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Dorëzimi erdhi nga një sajt i huaj dhe nuk u pranua për arsye sigurie.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nuk u dorëzua asnjë skedar – zgjidhni sërish „Ndaj → PDFMy“. Nëse nuk funksionon, zgjidhni skedarin në PDFMy përmes „Hap“.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "U nda një lidhje ose tekst, jo një skedar. Ndani vetë skedarin (p.sh. shtypni gjatë mbi skedar → Ndaj → PDFMy) ose zgjidhni „Hap“ në PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Ndarje pa skedar (arsyeja: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Ndarje pa skedar (arsyeja: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> për Webex Calling shfaq emrin, firmën dhe numrin e klientit drejtpërdrejt nga CRM ose ERP-ja Juaj.",
+ "Anzeige: Caller ID": "Reklamë: Caller ID",
+ "Mehr auf caller-id.app": "Më shumë në caller-id.app"
 }

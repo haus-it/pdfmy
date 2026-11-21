@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "The transfer came from a third-party website and was not accepted for security reasons.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "No file was passed on – please choose “Share → PDFMy” again. If that doesn’t work, choose the file in PDFMy via “Open”.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "A link or text was shared, not a file. Please share the file itself (e.g., long-press the file → Share → PDFMy) or choose “Open” in PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Share without file (reason: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Share without file (reason: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> for Webex Calling shows the name, company, and customer number directly from your CRM or ERP.",
+ "Anzeige: Caller ID": "Advertisement: Caller ID",
+ "Mehr auf caller-id.app": "More at caller-id.app"
 }

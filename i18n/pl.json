@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Przekazanie pochodziło z obcej strony internetowej i ze względów bezpieczeństwa nie zostało przyjęte.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nie przekazano żadnego pliku – wybierz ponownie „Udostępnij → PDFMy”. Jeśli to nie zadziała, wybierz plik w PDFMy przez „Otwórz”.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Udostępniono link lub tekst, a nie plik. Udostępnij sam plik (np. przytrzymaj plik → Udostępnij → PDFMy) albo wybierz „Otwórz” w PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Udostępnianie bez pliku (powód: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Udostępnianie bez pliku (powód: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> dla Webex Calling pokazuje nazwisko, firmę i numer klienta bezpośrednio z Twojego CRM lub ERP.",
+ "Anzeige: Caller ID": "Reklama: Caller ID",
+ "Mehr auf caller-id.app": "Więcej na caller-id.app"
 }

@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Prijenos je došao s druge web-stranice i iz sigurnosnih razloga nije prihvaćen.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nijedan fajl nije predat – ponovo odaberite „Dijeli → PDFMy“. Ako ne uspije, odaberite fajl u PDFMy putem „Otvori“.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Podijeljen je link ili tekst, a ne fajl. Podijelite sam fajl (npr. dugo pritisnite fajl → Dijeli → PDFMy) ili u PDFMy odaberite „Otvori“.",
- "Teilen ohne Datei (Grund: {0}{1})": "Dijeljenje bez fajla (razlog: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Dijeljenje bez fajla (razlog: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> za Webex Calling prikazuje ime, firmu i broj kupca direktno iz vašeg CRM-a ili ERP-a.",
+ "Anzeige: Caller ID": "Oglas: Caller ID",
+ "Mehr auf caller-id.app": "Više na caller-id.app"
 }

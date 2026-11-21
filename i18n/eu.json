@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Transferentzia beste webgune batetik zetorren, eta segurtasun-arrazoiengatik ez da onartu.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Ez da fitxategirik jaso – aukeratu berriro «Partekatu → PDFMy». Ez badabil, aukeratu fitxategia PDFMy-n «Ireki» erabiliz.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Esteka edo testu bat partekatu da, ez fitxategi bat. Partekatu fitxategia bera (adib. sakatu luze fitxategia → Partekatu → PDFMy) edo aukeratu «Ireki» PDFMy-n.",
- "Teilen ohne Datei (Grund: {0}{1})": "Partekatzea fitxategirik gabe (arrazoia: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Partekatzea fitxategirik gabe (arrazoia: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "Webex Calling-erako <b>Caller ID</b>-k izena, enpresa eta bezero-zenbakia erakusten ditu zuzenean zure CRM edo ERPtik.",
+ "Anzeige: Caller ID": "Iragarkia: Caller ID",
+ "Mehr auf caller-id.app": "Gehiago hemen: caller-id.app"
 }

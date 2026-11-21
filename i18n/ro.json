@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Transferul a venit de pe un site web străin și nu a fost acceptat din motive de securitate.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Nu a fost transmis niciun fișier – alegeți din nou „Trimite → PDFMy”. Dacă nu funcționează, alegeți fișierul în PDFMy prin „Deschidere”.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "A fost partajat un link sau un text, nu un fișier. Partajați fișierul propriu-zis (de ex. apăsați lung pe fișier → Trimite → PDFMy) sau alegeți „Deschidere” în PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Partajare fără fișier (motiv: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Partajare fără fișier (motiv: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> pentru Webex Calling afișează numele, firma și numărul de client direct din CRM-ul sau ERP-ul dumneavoastră.",
+ "Anzeige: Caller ID": "Anunț: Caller ID",
+ "Mehr auf caller-id.app": "Mai multe pe caller-id.app"
 }

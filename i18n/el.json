@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "Η μεταβίβαση προήλθε από ξένο ιστότοπο και δεν έγινε δεκτή για λόγους ασφαλείας.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Δεν παραδόθηκε αρχείο – επιλέξτε ξανά «Κοινοποίηση → PDFMy». Αν δεν λειτουργήσει, επιλέξτε το αρχείο στο PDFMy μέσω του «Άνοιγμα».",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Κοινοποιήθηκε σύνδεσμος ή κείμενο, όχι αρχείο. Κοινοποιήστε το ίδιο το αρχείο (π.χ. πατήστε παρατεταμένα το αρχείο → Κοινοποίηση → PDFMy) ή επιλέξτε «Άνοιγμα» στο PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Κοινοποίηση χωρίς αρχείο (αιτία: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Κοινοποίηση χωρίς αρχείο (αιτία: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "Το <b>Caller ID</b> για Webex Calling εμφανίζει όνομα, εταιρεία και αριθμό πελάτη απευθείας από το CRM ή ERP σας.",
+ "Anzeige: Caller ID": "Διαφήμιση: Caller ID",
+ "Mehr auf caller-id.app": "Περισσότερα στο caller-id.app"
 }

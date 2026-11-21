@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "De overdracht kwam van een andere website en is om veiligheidsredenen niet geaccepteerd.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "Er is geen bestand doorgegeven – kies nogmaals „Delen → PDFMy”. Lukt dat niet, kies het bestand dan in PDFMy via „Openen”.",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "Er is een link of tekst gedeeld, geen bestand. Deel het bestand zelf (bijv. lang op het bestand tikken → Delen → PDFMy) of kies „Openen” in PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Delen zonder bestand (reden: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Delen zonder bestand (reden: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> voor Webex Calling toont naam, bedrijf en klantnummer rechtstreeks uit uw CRM of ERP.",
+ "Anzeige: Caller ID": "Advertentie: Caller ID",
+ "Mehr auf caller-id.app": "Meer op caller-id.app"
 }

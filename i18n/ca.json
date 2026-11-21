@@ -4275,5 +4275,8 @@
  "Die Übergabe kam von einer fremden Webseite und wurde aus Sicherheitsgründen nicht angenommen.": "La transferència provenia d'un lloc web aliè i no s'ha acceptat per motius de seguretat.",
  "Es wurde keine Datei übergeben – bitte noch einmal „Teilen → PDFMy“ wählen. Klappt es nicht, die Datei in PDFMy über „Öffnen“ wählen.": "No s'ha rebut cap fitxer – torneu a triar «Comparteix → PDFMy». Si no funciona, trieu el fitxer a PDFMy amb «Obre».",
  "Geteilt wurde ein Link oder Text, keine Datei. Bitte die Datei selbst teilen (z. B. lange auf die Datei tippen → Teilen → PDFMy) oder in PDFMy „Öffnen“ wählen.": "S'ha compartit un enllaç o un text, no un fitxer. Compartiu el fitxer mateix (p. ex. manteniu premut el fitxer → Comparteix → PDFMy) o trieu «Obre» a PDFMy.",
- "Teilen ohne Datei (Grund: {0}{1})": "Compartició sense fitxer (motiu: {0}{1})"
+ "Teilen ohne Datei (Grund: {0}{1})": "Compartició sense fitxer (motiu: {0}{1})",
+ "<b>Caller ID</b> für Webex Calling zeigt Name, Firma und Kundennummer direkt aus Ihrem CRM oder ERP.": "<b>Caller ID</b> per a Webex Calling mostra el nom, l'empresa i el número de client directament del vostre CRM o ERP.",
+ "Anzeige: Caller ID": "Anunci: Caller ID",
+ "Mehr auf caller-id.app": "Més a caller-id.app"
 }
