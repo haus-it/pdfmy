@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Ingen bilder eller grafikk valgt.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klikk på et bilde eller en grafikk (logo, form, linje – med lilla ramme) og dra for å flytte, dra i hjørnet for å gjøre større eller mindre (sideforholdet beholdes). Med tastatur: velg nederst, så flytter piltastene, + og − endrer størrelsen, Del sletter. «Farge» farger om en grafikk (hvite flater forblir hvite). Teksten på siden forblir uendret.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Farg om grafikken – hvite flater forblir hvite",
- "umgefärbt": "omfarget"
+ "umgefärbt": "omfarget",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} objekt(er) endret – alt annet på siden er uendret. Angre: «Rediger bilder og grafikk» → «Gjenopprett opprinnelige bilder».",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Klikk på et bilde (blått), en grafikk som logo, form eller linje (lilla) eller en tekstdel (grønn) og dra for å flytte, dra i hjørnet for å gjøre større eller mindre (sideforholdet beholdes). Med tastatur: velg nederst, så flytter piltastene, + og − endrer størrelsen, Del sletter. «Farge» farger om grafikk eller tekst (hvite flater forblir hvite). Ordlyden endrer du med «Endre tekst».",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Bilder, grafikk og tekster på denne siden",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Flytt, forstørr, forminsk, farg om og slett bilder, logoer, former, linjer og tekstdeler i PDF-en og erstatt bilder",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Farg om grafikk eller tekst – hvite flater forblir hvite",
+ "Nichts gewählt.": "Ingenting valgt.",
+ "Text {0}": "Tekst {0}"
 }

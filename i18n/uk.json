@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Зображення чи графіку не вибрано.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Клацніть зображення або графіку (логотип, фігура, лінія – з фіолетовою рамкою) і перетягніть, щоб перемістити; потягніть за кут, щоб збільшити або зменшити (пропорції зберігаються). З клавіатури: виберіть унизу, потім стрілки переміщують, + і − змінюють розмір, Del видаляє. «Колір» перефарбовує графіку (білі області залишаються білими). Текст сторінки залишається без змін.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Перефарбувати графіку – білі області залишаються білими",
- "umgefärbt": "перефарбовано"
+ "umgefärbt": "перефарбовано",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Змінено об’єктів: {0} – усе інше на сторінці не змінено. Скасування: «Редагувати зображення та графіку» → «Відновити початкові зображення».",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Клацніть зображення (синє), графіку – логотип, фігуру чи лінію (фіолетова) – або фрагмент тексту (зелений) і перетягніть, щоб перемістити; потягніть за кут, щоб збільшити або зменшити (пропорції зберігаються). З клавіатури: виберіть унизу, потім стрілки переміщують, + і − змінюють розмір, Del видаляє. «Колір» перефарбовує графіку або текст (білі області залишаються білими). Сам текст змінюється через «Змінити текст».",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Зображення, графіка й тексти на цій сторінці",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Переміщуйте, збільшуйте, зменшуйте, перефарбовуйте й видаляйте фотографії, логотипи, фігури, лінії та фрагменти тексту в PDF, замінюйте зображення",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Перефарбувати графіку або текст – білі області залишаються білими",
+ "Nichts gewählt.": "Нічого не вибрано.",
+ "Text {0}": "Текст {0}"
 }

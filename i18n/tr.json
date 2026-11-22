@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Görsel veya grafik seçilmedi.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Bir görsele veya grafiğe (logo, şekil, çizgi – mor çerçeveli) tıklayıp sürükleyerek taşıyın, köşeden sürükleyerek büyütün veya küçültün (en-boy oranı korunur). Klavyeyle: aşağıdan seçin, sonra ok tuşları taşır, + ve − boyutu değiştirir, Del siler. “Renk” bir grafiği yeniden renklendirir (beyaz alanlar beyaz kalır). Sayfanın metni değişmeden kalır.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Grafiği yeniden renklendir – beyaz alanlar beyaz kalır",
- "umgefärbt": "yeniden renklendirildi"
+ "umgefärbt": "yeniden renklendirildi",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} nesne değiştirildi – sayfadaki diğer her şey değişmedi. Geri alma: “Görselleri ve grafikleri düzenle” → “Özgün görselleri geri yükle”.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Bir görsele (mavi), logo, şekil veya çizgi gibi bir grafiğe (mor) ya da bir metin bölümüne (yeşil) tıklayıp sürükleyerek taşıyın, köşeden sürükleyerek büyütün veya küçültün (en-boy oranı korunur). Klavyeyle: aşağıdan seçin, sonra ok tuşları taşır, + ve − boyutu değiştirir, Del siler. “Renk” bir grafiği veya metni yeniden renklendirir (beyaz alanlar beyaz kalır). Metnin içeriğini “Metni değiştir” ile değiştirirsiniz.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Bu sayfadaki görseller, grafikler ve metinler",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "PDF’teki fotoğrafları, logoları, şekilleri, çizgileri ve metin bölümlerini taşıyın, büyütün, küçültün, yeniden renklendirin, silin ve görselleri değiştirin",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Grafiği veya metni yeniden renklendir – beyaz alanlar beyaz kalır",
+ "Nichts gewählt.": "Hiçbir şey seçilmedi.",
+ "Text {0}": "Metin {0}"
 }

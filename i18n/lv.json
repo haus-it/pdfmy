@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Nav izvēlēts neviens attēls vai grafika.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Noklikšķiniet uz attēla vai grafikas (logotips, forma, līnija – ar violetu rāmi) un velciet, lai pārvietotu; velciet aiz stūra, lai palielinātu vai samazinātu (proporcijas saglabājas). Ar tastatūru: izvēlieties apakšā, pēc tam bulttaustiņi pārvieto, + un − maina izmēru, Del dzēš. „Krāsa“ pārkrāso grafiku (baltie laukumi paliek balti). Lapas teksts paliek nemainīts.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Pārkrāsot grafiku – baltie laukumi paliek balti",
- "umgefärbt": "pārkrāsota"
+ "umgefärbt": "pārkrāsota",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Mainīti objekti: {0} – viss pārējais lapā nav mainīts. Atcelt: „Rediģēt attēlus un grafiku“ → „Atjaunot sākotnējos attēlus“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Noklikšķiniet uz attēla (zils), grafikas, piemēram, logotipa, formas vai līnijas (violets), vai teksta fragmenta (zaļš) un velciet, lai pārvietotu; velciet aiz stūra, lai palielinātu vai samazinātu (proporcijas saglabājas). Ar tastatūru: izvēlieties apakšā, pēc tam bulttaustiņi pārvieto, + un − maina izmēru, Del dzēš. „Krāsa“ pārkrāso grafiku vai tekstu (baltie laukumi paliek balti). Teksta saturu maina ar „Mainīt tekstu“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Attēli, grafika un teksti šajā lapā",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "PDF failā pārvietojiet, palielinājiet, samaziniet, pārkrāsojiet vai dzēsiet fotoattēlus, logotipus, formas, līnijas un teksta fragmentus un aizstājiet attēlus",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Pārkrāsot grafiku vai tekstu – baltie laukumi paliek balti",
+ "Nichts gewählt.": "Nekas nav izvēlēts.",
+ "Text {0}": "Teksts {0}"
 }

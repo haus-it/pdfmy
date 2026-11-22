@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Nepasirinktas joks vaizdas ar grafika.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Spustelėkite vaizdą ar grafiką (logotipą, formą, liniją – su violetiniu rėmeliu) ir vilkite, kad perkeltumėte; vilkite už kampo, kad padidintumėte ar sumažintumėte (proporcijos išlieka). Klaviatūra: apačioje pasirinkite, tada rodyklių klavišais perkelkite, + ir − keičia dydį, Del ištrina. „Spalva“ perdažo grafiką (balti plotai lieka balti). Puslapio tekstas lieka nepakeistas.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Perdažyti grafiką – balti plotai lieka balti",
- "umgefärbt": "perdažyta"
+ "umgefärbt": "perdažyta",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Pakeista objektų: {0} – visa kita puslapyje nepakeista. Atšaukti: „Redaguoti vaizdus ir grafiką“ → „Atkurti pradinius vaizdus“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Spustelėkite vaizdą (mėlynas), grafiką, pvz., logotipą, formą ar liniją (violetinis), arba teksto fragmentą (žalias) ir vilkite, kad perkeltumėte; vilkite už kampo, kad padidintumėte ar sumažintumėte (proporcijos išlieka). Klaviatūra: apačioje pasirinkite, tada rodyklių klavišais perkelkite, + ir − keičia dydį, Del ištrina. „Spalva“ perdažo grafiką ar tekstą (balti plotai lieka balti). Teksto turinį keiskite per „Keisti tekstą“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Vaizdai, grafika ir tekstai šiame puslapyje",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "PDF faile perkelkite, didinkite, mažinkite, perdažykite ar ištrinkite nuotraukas, logotipus, formas, linijas ir teksto fragmentus bei keiskite vaizdus",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Perdažyti grafiką ar tekstą – balti plotai lieka balti",
+ "Nichts gewählt.": "Nieko nepasirinkta.",
+ "Text {0}": "Tekstas {0}"
 }

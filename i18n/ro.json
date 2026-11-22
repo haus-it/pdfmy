@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Nicio imagine și niciun grafic selectat.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Faceți clic pe o imagine sau pe un grafic (logo, formă, linie – cu contur violet) și trageți pentru a-l muta; trageți de colț pentru a-l mări sau micșora (raportul de aspect se păstrează). De la tastatură: alegeți mai jos, apoi mutați cu tastele săgeți, + și − modifică dimensiunea, Del șterge. „Culoare” recolorează un grafic (zonele albe rămân albe). Textul paginii rămâne neschimbat.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Recolorează graficul – zonele albe rămân albe",
- "umgefärbt": "recolorat"
+ "umgefärbt": "recolorat",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} obiect(e) modificate – tot restul de pe pagină a rămas neschimbat. Înapoi: „Editare imagini și grafice” → „Restaurare imagini originale”.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Faceți clic pe o imagine (albastru), pe un grafic precum logo, formă sau linie (violet) sau pe o porțiune de text (verde) și trageți pentru a muta; trageți de colț pentru a mări sau micșora (raportul de aspect se păstrează). De la tastatură: alegeți mai jos, apoi mutați cu tastele săgeți, + și − modifică dimensiunea, Del șterge. „Culoare” recolorează un grafic sau un text (zonele albe rămân albe). Conținutul textului îl modificați cu „Modificare text”.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Imagini, grafice și texte pe această pagină",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Mutați, măriți, micșorați, recolorați și ștergeți fotografii, logo-uri, forme, linii și porțiuni de text din PDF și înlocuiți imagini",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Recolorează graficul sau textul – zonele albe rămân albe",
+ "Nichts gewählt.": "Nimic selectat.",
+ "Text {0}": "Text {0}"
 }

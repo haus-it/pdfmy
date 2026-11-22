@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Intet billede og ingen grafik valgt.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klik på et billede eller en grafik (logo, form, streg – med lilla ramme) og træk for at flytte; træk i hjørnet for at gøre det større eller mindre (formatet bevares). Med tastaturet: vælg nedenfor, flyt derefter med piletasterne, + og − ændrer størrelsen, Delete sletter. »Farve« farver en grafik om (hvide flader forbliver hvide). Sidens tekst forbliver uændret.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Omfarv grafikken – hvide flader forbliver hvide",
- "umgefärbt": "omfarvet"
+ "umgefärbt": "omfarvet",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} objekt(er) ændret – alt andet på siden er uændret. Tilbage: »Rediger billeder og grafik« → »Gendan oprindelige billeder«.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Klik på et billede, en grafik (logo, form, streg – med lilla ramme) eller et tekststykke (med grøn ramme) og træk for at flytte; træk i hjørnet for at gøre det større eller mindre (formatet bevares). Med tastaturet: vælg nedenfor, flyt derefter med piletasterne, + og − ændrer størrelsen, Delete sletter. »Farve« farver en grafik eller tekst om (hvide flader forbliver hvide). Selve ordlyden ændrer du med »Ændr tekst«.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Billeder, grafik og tekster på denne side",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Flyt, forstør, formindsk, omfarv eller slet fotos, logoer, former, streger og tekststykker i PDF'en, og erstat billeder",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Omfarv grafik eller tekst – hvide flader forbliver hvide",
+ "Nichts gewählt.": "Intet valgt.",
+ "Text {0}": "Tekst {0}"
 }

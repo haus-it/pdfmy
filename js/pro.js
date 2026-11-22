@@ -6444,19 +6444,20 @@ async function imageEdit() {
   const snap = () => { undo.push([page.p, new Map([...E()].map(([n, e]) => [n, { ...e }]))]); $('#biUndo').disabled = false; };
   // Lage eines Bilds: in Seitenkoordinaten (PDF) und in der Ansicht (Pixel bei Maßstab 1, oben links)
   const rectNow = n => E().get(n)?.to || page.imgs[n].rect;
-  const obj = n => page.imgs[n], label = n => I18N.t(obj(n).kind === 'vec' ? `Grafik ${obj(n).k}` : `Bild ${obj(n).k}`);
+  const obj = n => page.imgs[n], label = n => I18N.t(obj(n).kind === 'txt' ? `Text ${obj(n).k}` : obj(n).kind === 'vec' ? `Grafik ${obj(n).k}` : `Bild ${obj(n).k}`);
+  const KCOL = { img: '#2563eb', vec: '#7c3aed', txt: '#059669' };   // blau Bild, lila Grafik, grün Text (app-v335)
   const objsOf = new Map();   // Seite → Objektliste (Änderungen anderer Seiten beziehen sich auf deren Liste)
-  const asChange = p => ([n, e]) => { const o = (objsOf.get(p) || [])[n]; return o ? { ...e, n: o.n, vec: o.kind === 'vec' } : null; };
+  const asChange = p => ([n, e]) => { const o = (objsOf.get(p) || [])[n]; return o ? { ...e, n: o.n, vec: o.kind === 'vec', txt: o.kind === 'txt' } : null; };
   const toView = r => PdfBild.mapRect(r, page.vt), toPage = r => PdfBild.mapRect(r, page.vti);
   const loadPage = async p => {
     const d = state.docs[p.docIdx], lib = await libFor(d), one = await PDFDocument.create({ updateMetadata: false });
     const [cp] = await one.copyPages(lib, [p.pageIdx]); one.addPage(cp);
     const bytes = await one.save(), again = await PDFDocument.load(bytes, { updateMetadata: false });
     // Bilder und Vektorgrafiken (app-v333) in einer Liste; n = Platz in dieser Liste, o.n = Nummer innerhalb der Art
-    let imgs = []; try { const o = PdfBild.pageObjects(PDFLib, again.getPage(0)); imgs = [...o.imgs.map(x => ({ ...x, kind: 'img' })), ...o.vecs]; } catch (e) { console.warn('Bilder lesen', e); }
-    let ki = 0, kv = 0; for (const x of imgs) x.k = x.kind === 'vec' ? ++kv : ++ki;
+    let imgs = []; try { const o = PdfBild.pageObjects(PDFLib, again.getPage(0)); imgs = [...o.imgs.map(x => ({ ...x, kind: 'img' })), ...o.vecs, ...o.txts.map(x => ({ ...x, kind: 'txt' }))]; } catch (e) { console.warn('Bilder lesen', e); }
+    let ki = 0, kv = 0, kt = 0; for (const x of imgs) x.k = x.kind === 'vec' ? ++kv : x.kind === 'txt' ? ++kt : ++ki;
     objsOf.set(p, imgs);
-    return { p, bytes, imgs, nVec: kv };
+    return { p, bytes, imgs, nVec: kv + kt };
   };
   const draw = () => {
     if (!view) return;
@@ -6464,9 +6465,9 @@ async function imageEdit() {
     const many = page.nVec > 150;   // viele Linien (Tabellen, Pläne): nur gewählte und geänderte Grafiken umranden
     page.imgs.forEach((im, n) => {
       const e = E().get(n), on = n === sel;
-      if (im.kind === 'vec' && !on && !e && (many || im.bg)) return;
+      if (im.kind !== 'img' && !on && !e && (many || im.bg)) return;
       const r = toView(drag?.n === n ? drag.r : rectNow(n));
-      x.save(); x.lineWidth = on ? 3 : 1.5; x.strokeStyle = e?.del ? '#b42318' : im.kind === 'vec' ? '#7c3aed' : '#2563eb'; x.setLineDash(e?.del ? [6, 4] : on ? [] : [4, 3]);
+      x.save(); x.lineWidth = on ? 3 : 1.5; x.strokeStyle = e?.del ? '#b42318' : KCOL[im.kind] || KCOL.img; x.setLineDash(e?.del ? [6, 4] : on ? [] : [4, 3]);
       x.strokeRect(r.x * rs, r.y * rs, r.w * rs, r.h * rs);
       if (drag?.n === n) { x.globalAlpha = 0.15; x.fillStyle = '#2563eb'; x.fillRect(r.x * rs, r.y * rs, r.w * rs, r.h * rs); x.globalAlpha = 1; }
       if (e?.del) { x.beginPath(); x.moveTo(r.x * rs, r.y * rs); x.lineTo((r.x + r.w) * rs, (r.y + r.h) * rs); x.moveTo((r.x + r.w) * rs, r.y * rs); x.lineTo(r.x * rs, (r.y + r.h) * rs); x.stroke(); }
@@ -6493,11 +6494,11 @@ async function imageEdit() {
   const later = () => { clearTimeout(timer); timer = setTimeout(() => render().catch(e => console.warn(e)), 150); };
   const info = () => {
     const e = sel >= 0 ? E().get(sel) : null, r = sel >= 0 ? rectNow(sel) : null;
-    $('#biSel').textContent = sel < 0 ? I18N.t('Kein Bild und keine Grafik gewählt.') : e?.del ? I18N.t(`${label(sel)} wird gelöscht.`) : `${label(sel)}: ${mm(r.w)} × ${mm(r.h)} mm` + (e?.img ? ' – ' + I18N.t('ersetzt') : '') + (e?.color ? ' – ' + I18N.t('umgefärbt') : '');
+    $('#biSel').textContent = sel < 0 ? I18N.t('Nichts gewählt.') : e?.del ? I18N.t(`${label(sel)} wird gelöscht.`) : `${label(sel)}: ${mm(r.w)} × ${mm(r.h)} mm` + (e?.img ? ' – ' + I18N.t('ersetzt') : '') + (e?.color ? ' – ' + I18N.t('umgefärbt') : '');
     $('#biDel').disabled = sel < 0;
-    $('#biRep').disabled = sel < 0 || obj(sel).kind === 'vec';   // ersetzen nur für Bilder
-    $('#biColor').disabled = sel < 0 || obj(sel).kind !== 'vec' || !!e?.del;   // umfärben nur für Grafiken (app-v334)
-    if (sel >= 0 && obj(sel).kind === 'vec') $('#biColor').value = e?.color || '#000000';
+    $('#biRep').disabled = sel < 0 || obj(sel).kind !== 'img';   // ersetzen nur für Bilder
+    $('#biColor').disabled = sel < 0 || obj(sel).kind === 'img' || !!e?.del;   // umfärben für Grafiken (v334) und Text (v335)
+    if (sel >= 0 && obj(sel).kind !== 'img') $('#biColor').value = e?.color || '#000000';
     $('#biDel').textContent = I18N.t(e?.del ? 'Nicht löschen' : 'Löschen');
     list.querySelectorAll('button').forEach(b => { const n = +b.dataset.n; b.setAttribute('aria-pressed', String(n === sel)); b.classList.toggle('del', !!E().get(n)?.del); });
   };
@@ -6510,7 +6511,7 @@ async function imageEdit() {
     $('#biNone').hidden = page.imgs.length > 0;
     list.textContent = '';
     // Knöpfe: alle Bilder, Grafiken bis 80 (Tabellenlinien zuhauf wählt man auf der Seite), Hintergründe zuletzt
-    const order = page.imgs.map((im, n) => n).filter(n => obj(n).kind === 'img').concat(page.imgs.map((im, n) => n).filter(n => obj(n).kind === 'vec' && !obj(n).bg).slice(0, 80), page.imgs.map((im, n) => n).filter(n => obj(n).bg).slice(0, 5));
+    const order = page.imgs.map((im, n) => n).filter(n => obj(n).kind === 'img').concat(page.imgs.map((im, n) => n).filter(n => obj(n).kind === 'vec' && !obj(n).bg).slice(0, 80), page.imgs.map((im, n) => n).filter(n => obj(n).kind === 'txt' && !obj(n).bg).slice(0, 80),page.imgs.map((im, n) => n).filter(n => obj(n).bg).slice(0, 5));
     for (const n of order) { const b = document.createElement('button'); b.type = 'button'; b.dataset.n = n; b.textContent = label(n); b.onclick = () => { pick(n); b.focus(); }; list.append(b); }
     await render(); info(); status('');
   };
@@ -6549,7 +6550,7 @@ async function imageEdit() {
     if (ev.key === '+' || ev.key === '-') { ev.preventDefault(); const f = ev.key === '+' ? 1.05 : 1 / 1.05; setRect(sel, { x: r.x, y: r.y, w: r.w * f, h: r.h * f }); draw(); return; }
     if (ev.key === 'Delete') { ev.preventDefault(); $('#biDel').click(); }
   };
-  $('#biColor').onchange = () => { if (sel < 0 || obj(sel).kind !== 'vec') return; snap(); const e = E().get(sel) || {}; E().set(sel, { ...e, color: $('#biColor').value }); info(); later(); };
+  $('#biColor').onchange = () => { if (sel < 0 || obj(sel).kind === 'img') return; snap(); const e = E().get(sel) || {}; E().set(sel, { ...e, color: $('#biColor').value }); info(); later(); };
   $('#biDel').onclick = () => { if (sel < 0) return; snap(); const e = E().get(sel) || {}; if (e.del) { delete e.del; E().set(sel, e); } else E().set(sel, { ...e, del: true }); info(); draw(); later(); };
   $('#biRep').onclick = () => { if (sel >= 0) { $('#biFile').value = ''; $('#biFile').click(); } };
   $('#biFile').onchange = async () => {
@@ -6602,7 +6603,7 @@ async function imageEdit() {
     }
   } catch (e) { noteError?.(e, 'Bilder bearbeiten'); return status(I18N.t(`Bilder konnten nicht geändert werden: ${e.message}`)); }
   state.dirty = true; renderThumbs(); renderStage(); if (state.view === 'grid') renderGrid();
-  status(I18N.t(`${n} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.`));
+  status(I18N.t(`${n} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.`));
 }
 window.imageEdit = imageEdit;
 $('#btnImgEdit').onclick = () => imageEdit();

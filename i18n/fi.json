@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Kuvaa tai grafiikkaa ei ole valittu.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Napsauta kuvaa tai grafiikkaa (logo, muoto, viiva – violetilla kehyksellä) ja vedä siirtääksesi; vedä kulmasta suurentaaksesi tai pienentääksesi (kuvasuhde säilyy). Näppäimistöllä: valitse alta, sitten nuolinäppäimet siirtävät, + ja − muuttavat kokoa, Delete poistaa. ”Väri” värjää grafiikan uudelleen (valkoiset alueet pysyvät valkoisina). Sivun teksti ei muutu.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Värjää grafiikka uudelleen – valkoiset alueet pysyvät valkoisina",
- "umgefärbt": "värjätty uudelleen"
+ "umgefärbt": "värjätty uudelleen",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} kohdetta muutettu – kaikki muu sivulla on ennallaan. Peruuta: ”Muokkaa kuvia ja grafiikkaa” → ”Palauta alkuperäiset kuvat”.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Napsauta kuvaa, grafiikkaa (logo, muoto, viiva – violetilla kehyksellä) tai tekstikohtaa (vihreällä kehyksellä) ja vedä siirtääksesi; vedä kulmasta suurentaaksesi tai pienentääksesi (kuvasuhde säilyy). Näppäimistöllä: valitse alta, sitten nuolinäppäimet siirtävät, + ja − muuttavat kokoa, Delete poistaa. ”Väri” värjää grafiikan tai tekstin uudelleen (valkoiset alueet pysyvät valkoisina). Sanamuodon muutat toiminnolla ”Muuta tekstiä”.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Tämän sivun kuvat, grafiikka ja tekstit",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Siirrä, suurenna, pienennä, värjää uudelleen tai poista PDF:n valokuvia, logoja, muotoja, viivoja ja tekstikohtia sekä korvaa kuvia",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Värjää grafiikka tai teksti uudelleen – valkoiset alueet pysyvät valkoisina",
+ "Nichts gewählt.": "Mitään ei ole valittu.",
+ "Text {0}": "Teksti {0}"
 }

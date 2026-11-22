@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Nije odabrana slika ni grafika.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Kliknite sliku ili grafiku (logotip, oblik, linija – s ljubičastim okvirom) i povucite da je pomjerite; povucite ugao da je povećate ili smanjite (omjer stranica ostaje). Tastaturom: odaberite dolje, zatim strelice pomjeraju, + i − mijenjaju veličinu, Delete briše. „Boja“ mijenja boju grafike (bijele površine ostaju bijele). Tekst stranice ostaje nepromijenjen.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Promijeni boju grafike – bijele površine ostaju bijele",
- "umgefärbt": "promijenjena boja"
+ "umgefärbt": "promijenjena boja",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Promijenjeno: {0} objekata – sve ostalo na stranici je nepromijenjeno. Povratak: „Uredi slike i grafike“ → „Vrati originalne slike“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Kliknite sliku, grafiku (logotip, oblik, linija – s ljubičastim okvirom) ili tekstualni dio (sa zelenim okvirom) i povucite da ga pomjerite; povucite ugao da ga povećate ili smanjite (omjer stranica ostaje). Tastaturom: odaberite dolje, zatim strelice pomjeraju, + i − mijenjaju veličinu, Delete briše. „Boja“ mijenja boju grafike ili teksta (bijele površine ostaju bijele). Sadržaj teksta mijenjate pomoću „Promijeni tekst“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Slike, grafike i tekstovi na ovoj stranici",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Fotografije, logotipe, oblike, linije i tekstualne dijelove u PDF-u pomjerajte, povećavajte, smanjujte, mijenjajte im boju ili ih brišite, a slike zamjenjujte",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Promijeni boju grafike ili teksta – bijele površine ostaju bijele",
+ "Nichts gewählt.": "Ništa nije odabrano.",
+ "Text {0}": "Tekst {0}"
 }

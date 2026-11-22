@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Non hai ningunha imaxe nin gráfico seleccionado.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Faga clic nunha imaxe ou gráfico (logotipo, forma, liña; marcado con bordo lila) e arrastre para movelo; arrastre a esquina para aumentalo ou reducilo (mantense a proporción). Co teclado: escóllao abaixo, despois as frechas móvenno, + e − cambian o tamaño e Supr elimínao. «Cor» cambia a cor dun gráfico (as zonas brancas seguen sendo brancas). O texto da páxina non cambia.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Cambiar a cor do gráfico: as zonas brancas seguen en branco",
- "umgefärbt": "recoloreado"
+ "umgefärbt": "recoloreado",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} obxecto(s) modificado(s): o resto da páxina non cambiou. Para desfacer: «Editar imaxes e gráficos» → «Restaurar as imaxes orixinais».",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Faga clic nunha imaxe, nun gráfico (logotipo, forma, liña; bordo lila) ou nun fragmento de texto (bordo verde) e arrastre para movelo; arrastre a esquina para aumentalo ou reducilo (mantense a proporción). Co teclado: escóllao abaixo, despois as frechas móvenno, + e − cambian o tamaño e Supr elimínao. «Cor» cambia a cor dun gráfico ou dun texto (as zonas brancas seguen sendo brancas). O contido do texto cámbiase con «Cambiar texto».",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Imaxes, gráficos e textos desta páxina",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Mover, aumentar, reducir, recolorear ou eliminar fotos, logotipos, formas, liñas e fragmentos de texto do PDF, e substituír imaxes",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Cambiar a cor do gráfico ou do texto: as zonas brancas seguen en branco",
+ "Nichts gewählt.": "Non hai nada escollido.",
+ "Text {0}": "Texto {0}"
 }

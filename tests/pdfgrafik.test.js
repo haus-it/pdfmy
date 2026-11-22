@@ -129,7 +129,7 @@ test('App: Dialog bietet Grafiken an (Liste, Klick wählt kleinstes Objekt, Erse
   const pro = R('js/pro.js'), html = R('index.html');
   assert.match(pro, /PdfBild\.pageObjects\(PDFLib, again\.getPage\(0\)\)/);
   assert.match(pro, /vec: o\.kind === 'vec'/, 'Änderungen mit Art');
-  assert.match(pro, /\$\('#biRep'\)\.disabled = sel < 0 \|\| obj\(sel\)\.kind === 'vec'/);
+  assert.match(pro, /\$\('#biRep'\)\.disabled = sel < 0 \|\| obj\(sel\)\.kind !== 'img'/);
   assert.match(html, /Bilder und Grafiken bearbeiten/);
   assert.match(html, /<input type="color" id="biColor"/);
   assert.match(pro, /E\(\)\.set\(sel, \{ \.\.\.e, color: \$\('#biColor'\)\.value \}\)/, 'Farbe als Änderung');

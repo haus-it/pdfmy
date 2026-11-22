@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Ni izbrane slike ali grafike.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Kliknite sliko ali grafiko (logotip, oblika, črta – z vijoličnim robom) in povlecite, da jo premaknete; povlecite za vogal, da jo povečate ali pomanjšate (razmerje stranic ostane). S tipkovnico: izberite spodaj, nato puščice premikajo, + in − spreminjata velikost, Del izbriše. „Barva“ prebarva grafiko (bele površine ostanejo bele). Besedilo strani ostane nespremenjeno.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Prebarvaj grafiko – bele površine ostanejo bele",
- "umgefärbt": "prebarvano"
+ "umgefärbt": "prebarvano",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Spremenjenih predmetov: {0} – vse drugo na strani je nespremenjeno. Razveljavitev: „Urejanje slik in grafik“ → „Obnovi izvirne slike“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Kliknite sliko (modra), grafiko, kot so logotip, oblika ali črta (vijolična), ali odsek besedila (zelen) in povlecite za premik, povlecite za vogal za povečanje ali pomanjšanje (razmerje stranic ostane). S tipkovnico: izberite spodaj, nato puščice premikajo, + in − spreminjata velikost, Del izbriše. „Barva“ prebarva grafiko ali besedilo (bele površine ostanejo bele). Samo besedilo spremenite z „Spremeni besedilo“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Slike, grafike in besedila na tej strani",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Fotografije, logotipe, oblike, črte in odseke besedila v PDF premikajte, povečujte, pomanjšujte, prebarvajte in brišite ter zamenjajte slike",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Prebarvaj grafiko ali besedilo – bele površine ostanejo bele",
+ "Nichts gewählt.": "Nič ni izbrano.",
+ "Text {0}": "Besedilo {0}"
 }

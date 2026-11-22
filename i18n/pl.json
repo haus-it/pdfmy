@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Nie wybrano obrazu ani grafiki.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Kliknij obraz lub grafikę (logo, kształt, linię – z fioletową ramką) i przeciągnij, aby przesunąć, przeciągnij za róg, aby powiększyć lub pomniejszyć (proporcje zostają). Klawiaturą: wybierz na dole, potem strzałki przesuwają, + i − zmieniają rozmiar, Del usuwa. „Kolor” zmienia kolor grafiki (białe powierzchnie pozostają białe). Tekst strony pozostaje bez zmian.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Zmień kolor grafiki – białe powierzchnie pozostają białe",
- "umgefärbt": "przekolorowana"
+ "umgefärbt": "przekolorowana",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Zmieniono obiekty: {0} – reszta strony pozostała bez zmian. Cofnięcie: „Edytuj obrazy i grafiki” → „Przywróć oryginalne obrazy”.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Kliknij obraz (niebieski), grafikę, np. logo, kształt lub linię (fioletowa), albo fragment tekstu (zielony) i przeciągnij, aby przesunąć, przeciągnij za róg, aby powiększyć lub pomniejszyć (proporcje zostają). Klawiaturą: wybierz na dole, potem strzałki przesuwają, + i − zmieniają rozmiar, Del usuwa. „Kolor” zmienia kolor grafiki lub tekstu (białe powierzchnie pozostają białe). Treść tekstu zmienisz przez „Zmień tekst”.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Obrazy, grafiki i teksty na tej stronie",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Przesuwaj, powiększaj, pomniejszaj, zmieniaj kolor i usuwaj zdjęcia, logo, kształty, linie i fragmenty tekstu w PDF oraz zastępuj obrazy",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Zmień kolor grafiki lub tekstu – białe powierzchnie pozostają białe",
+ "Nichts gewählt.": "Nic nie wybrano.",
+ "Text {0}": "Tekst {0}"
 }

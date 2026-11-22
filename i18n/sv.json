@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Ingen bild och ingen grafik vald.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klicka på en bild eller grafik (logotyp, form, linje – med lila ram) och dra för att flytta, dra i hörnet för att förstora eller förminska (proportionerna behålls). Med tangentbord: välj nedan, flytta sedan med piltangenterna, + och − ändrar storleken, Del raderar. ”Färg” färgar om en grafik (vita ytor förblir vita). Sidans text förblir oförändrad.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Färga om grafiken – vita ytor förblir vita",
- "umgefärbt": "omfärgad"
+ "umgefärbt": "omfärgad",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} objekt ändrade – allt annat på sidan är oförändrat. Ångra: ”Redigera bilder och grafik” → ”Återställ ursprungliga bilder”.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Klicka på en bild (blå), en grafik som logotyp, form eller linje (lila) eller ett textavsnitt (grön) och dra för att flytta, dra i hörnet för att förstora eller förminska (proportionerna behålls). Med tangentbord: välj nedan, flytta sedan med piltangenterna, + och − ändrar storleken, Del raderar. ”Färg” färgar om grafik eller text (vita ytor förblir vita). Själva texten ändrar du med ”Ändra text”.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Bilder, grafik och texter på den här sidan",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Flytta, förstora, förminska, färga om och radera foton, logotyper, former, linjer och textavsnitt i PDF:en och ersätt bilder",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Färga om grafik eller text – vita ytor förblir vita",
+ "Nichts gewählt.": "Inget valt.",
+ "Text {0}": "Text {0}"
 }

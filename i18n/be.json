@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Ні выява, ні графіка не абраны.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Націсніце на выяву або графіку (лагатып, фігура, лінія – з фіялетавай рамкай) і перацягніце, каб перамясціць; цягніце за кут, каб павялічыць або паменшыць (прапорцыі захоўваюцца). З клавіятуры: абярыце ўнізе, потым стрэлкі перамяшчаюць, + і − змяняюць памер, Del выдаляе. «Колер» перафарбоўвае графіку (белыя ўчасткі застаюцца белымі). Тэкст старонкі застаецца без змен.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Перафарбаваць графіку – белыя ўчасткі застаюцца белымі",
- "umgefärbt": "перафарбавана"
+ "umgefärbt": "перафарбавана",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Зменена: {0} (аб'ектаў) – усё астатняе на старонцы не змянілася. Назад: «Рэдагаваць выявы і графіку» → «Аднавіць першапачатковыя выявы».",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Націсніце на выяву, графіку (лагатып, фігура, лінія – з фіялетавай рамкай) або тэкставы ўчастак (з зялёнай рамкай) і перацягніце, каб перамясціць; цягніце за кут, каб павялічыць або паменшыць (прапорцыі захоўваюцца). З клавіятуры: абярыце ўнізе, потым стрэлкі перамяшчаюць, + і − змяняюць памер, Del выдаляе. «Колер» перафарбоўвае графіку або тэкст (белыя ўчасткі застаюцца белымі). Змест тэксту змяняйце праз «Змяніць тэкст».",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Выявы, графіка і тэксты на гэтай старонцы",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Фатаграфіі, лагатыпы, фігуры, лініі і тэкставыя ўчасткі ў PDF – перамяшчаць, павялічваць, памяншаць, перафарбоўваць або выдаляць, а таксама замяняць выявы",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Перафарбаваць графіку або тэкст – белыя ўчасткі застаюцца белымі",
+ "Nichts gewählt.": "Нічога не абрана.",
+ "Text {0}": "Тэкст {0}"
 }

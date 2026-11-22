@@ -204,6 +204,129 @@
     return out;
   }
 
+  /* Textblöcke (app-v335): jeder Textabschnitt BT … ET ist ein Objekt – verschieben, skalieren, umfärben, löschen wie Grafiken
+     („q T cm BT … ET Q“; cm ist in BT … ET nicht erlaubt, darum wirkt die Verschiebung von außen). Den Umriss liefert eine eigene
+     Textlaufrechnung nach ISO 32000-1 9.4 (Tf, Tc, Tw, Tz, TL, Ts, Td, TD, Tm, T*, Tj, TJ, ', ") mit den Breiten aus der Schrift
+     (Widths/FirstChar, bei Type0 W/DW). Unsichtbarer Text (Tr 3/7, z. B. die Texterkennungs-Ebene über Scans) wird nie angeboten –
+     sonst passte der erkannte Text nicht mehr zum Bild. fontOf(name) → { two, w(code) } (Breite in 1/1000 em) oder null. */
+  function strBytes(t) {
+    if (t.t === 'hex') { const h = t.v.slice(1, -1).replace(/[^0-9a-f]/gi, ''); const out = []; for (let i = 0; i < h.length; i += 2) out.push(parseInt((h.slice(i, i + 2) + '0').slice(0, 2), 16)); return out; }
+    const s = t.v.slice(1, -1), out = [];
+    for (let i = 0; i < s.length; i++) {
+      let c = s[i];
+      if (c !== '\\') { out.push(c.charCodeAt(0) & 255); continue; }
+      c = s[++i];
+      if (c === undefined) break;
+      if (/[0-7]/.test(c)) { let o = c; while (o.length < 3 && /[0-7]/.test(s[i + 1] || '')) o += s[++i]; out.push(parseInt(o, 8) & 255); continue; }
+      if (c === '\r') { if (s[i + 1] === '\n') i++; continue; }
+      if (c === '\n') continue;
+      out.push(({ n: 10, r: 13, t: 9, b: 8, f: 12 })[c] ?? (c.charCodeAt(0) & 255));
+    }
+    return out;
+  }
+  const ASC = 0.9, DESC = -0.25;
+  function texts(ops, base = ID, formOf = null, fontOf = () => null) {
+    const out = [];
+    (function walk(ops, base, formOf, fontOf, path) {
+      const mc = new Array(ops.length + 1).fill(0);
+      for (let i = 0; i < ops.length; i++) { const o = ops[i].op; mc[i + 1] = mc[i] + (o === 'BDC' || o === 'BMC' ? 1 : o === 'EMC' ? -1 : 0); }
+      const mcOk = (a, b) => { if (mc[b + 1] !== mc[a]) return false; for (let k = a; k <= b; k++) if (mc[k + 1] < mc[a]) return false; return true; };
+      let ctm = ID, ts = { font: null, fs: 12, tc: 0, tw: 0, th: 1, tl: 0, rise: 0, tr: 0 }; const stack = [];
+      let bt = -1, tm = ID, tlm = ID, box = null, shown = false;
+      const nums = o => o.args.map(a => a.t === 'num' ? a.v : NaN);
+      const td = (x, y) => { tlm = mul([1, 0, 0, 1, x, y], tlm); tm = tlm; };
+      const show = strs => {   // strs: Zeichenketten und Zahlen (TJ)
+        const f = ts.font ? fontOf(ts.font) : null, two = !!f?.two;
+        let x = 0, any = false;
+        for (const it of strs) {
+          if (typeof it === 'number') { x += -it / 1000 * ts.fs * ts.th; continue; }
+          const b = it; if (!b.length) continue; any = true;
+          for (let i = 0; i < b.length; i += two ? 2 : 1) {
+            const code = two ? (b[i] << 8) | (b[i + 1] ?? 0) : b[i], w = f ? f.w(code) : 500;
+            x += ((w / 1000) * ts.fs + ts.tc + (!two && code === 32 ? ts.tw : 0)) * ts.th;
+          }
+        }
+        if (any && ts.tr !== 3 && ts.tr !== 7) {
+          const lo = ts.rise + DESC * Math.abs(ts.fs), hi = ts.rise + ASC * Math.abs(ts.fs), M = mul(tm, ctm);
+          const pts = [[0, lo], [x, lo], [0, hi], [x, hi]].map(([u, v]) => [u * M[0] + v * M[2] + M[4], u * M[1] + v * M[3] + M[5]]);
+          const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+          if ([...xs, ...ys].every(isFinite)) { box = union(box, { x: Math.min(...xs), y: Math.min(...ys), w: Math.max(...xs) - Math.min(...xs), h: Math.max(...ys) - Math.min(...ys) }); shown = true; }
+        }
+        tm = mul([1, 0, 0, 1, x, 0], tm);
+      };
+      for (let i = 0; i < ops.length; i++) {
+        const o = ops[i], a = nums(o);
+        switch (o.op) {
+          case 'q': stack.push([ctm, { ...ts }]); break;
+          case 'Q': [ctm, ts] = stack.pop() || [ID, { ...ts }]; break;
+          case 'cm': if (a.length === 6 && a.every(isFinite)) ctm = mul(a, ctm); break;
+          case 'BT': bt = i; tm = tlm = ID; box = null; shown = false; break;
+          case 'ET':
+            if (bt >= 0 && shown && box && mcOk(bt, i) && out.length < MAX_VEC) {
+              const rect = mapRect(box, base);
+              if (Math.max(rect.w, rect.h) >= 2 && [rect.x, rect.y, rect.w, rect.h].every(isFinite)) out.push({ kind: 'txt', n: out.length, m: mul(ctm, base), local: ctm, rect, lrect: box, start: ops[bt].start, end: o.end, path });
+            }
+            bt = -1; break;
+          case 'Tf': if (o.args[0]?.t === 'name') ts.font = o.args[0].v; if (isFinite(a[1])) ts.fs = a[1]; break;
+          case 'Tc': if (isFinite(a[0])) ts.tc = a[0]; break;
+          case 'Tw': if (isFinite(a[0])) ts.tw = a[0]; break;
+          case 'Tz': if (isFinite(a[0])) ts.th = a[0] / 100; break;
+          case 'TL': if (isFinite(a[0])) ts.tl = a[0]; break;
+          case 'Ts': if (isFinite(a[0])) ts.rise = a[0]; break;
+          case 'Tr': if (isFinite(a[0])) ts.tr = a[0]; break;
+          case 'Td': if (a.length === 2 && a.every(isFinite)) td(a[0], a[1]); break;
+          case 'TD': if (a.length === 2 && a.every(isFinite)) { ts.tl = -a[1]; td(a[0], a[1]); } break;
+          case 'Tm': if (a.length === 6 && a.every(isFinite)) tm = tlm = a; break;
+          case 'T*': td(0, -ts.tl); break;
+          case 'Tj': if (bt >= 0 && o.args[0]) show([strBytes(o.args[0])]); break;
+          case "'": if (bt >= 0 && o.args[0]) { td(0, -ts.tl); show([strBytes(o.args[0])]); } break;
+          case '"': if (bt >= 0 && o.args.length === 3) { ts.tw = a[0]; ts.tc = a[1]; td(0, -ts.tl); show([strBytes(o.args[2])]); } break;
+          case 'TJ': if (bt >= 0 && o.args[0]?.t === 'arr') {
+            const inner = tokenize(o.args[0].v.slice(1, -1) + ' X')[0]?.args || [];
+            show(inner.map(t => t.t === 'num' ? t.v : t.t === 'str' || t.t === 'hex' ? strBytes(t) : null).filter(v => v !== null));
+          } break;
+          case 'Do': if (bt < 0 && formOf && path.length < 4 && o.args[0]?.t === 'name') {
+            const f = formOf(o.args[0].v); if (!f) break;
+            walk(f.ops, mul(mul(f.matrix, ctm), base), f.formOf, f.fontOf || (() => null), [...path, { name: o.args[0].v, start: o.start, end: o.end, local: ctm, form: f }]);
+          } break;
+        }
+      }
+    })(ops, base, formOf, fontOf, []);
+    return out;
+  }
+  // Schriftbreiten aus den Ressourcen: einfache Schriften über FirstChar/Widths, Type0 über DescendantFonts W/DW
+  function fontFactory(L, res) {
+    const cache = new Map(), N = L.PDFName.of;
+    const numOf = v => { try { return v.asNumber(); } catch (e) { return NaN; } };
+    return name => {
+      if (cache.has(name)) return cache.get(name);
+      let r = null;
+      try {
+        const fd = res && res.lookupMaybe(N('Font'), L.PDFDict), f = fd && fd.lookup(N(name));
+        if (f instanceof L.PDFDict) {
+          const sub = f.get(N('Subtype'));
+          if (sub === N('Type0')) {
+            const dArr = f.lookupMaybe(N('DescendantFonts'), L.PDFArray), d = dArr && dArr.lookup(0);
+            const dw = d && d.get(N('DW')) ? numOf(d.lookup(N('DW'))) : 1000, W = new Map();
+            const w = d && d.lookupMaybe(N('W'), L.PDFArray), arr = w ? w.asArray().map(x => w.context.lookup(x)) : [];
+            for (let i = 0; i < arr.length;) {
+              const c0 = numOf(arr[i]), nx = arr[i + 1];
+              if (nx instanceof L.PDFArray) { nx.asArray().forEach((v, k) => W.set(c0 + k, numOf(nx.context.lookup(v)))); i += 2; }
+              else { const c1 = numOf(nx), wv = numOf(arr[i + 2]); if (c1 - c0 < 70000) for (let c = c0; c <= c1; c++) W.set(c, wv); i += 3; }
+            }
+            r = { two: true, w: c => W.get(c) ?? (isFinite(dw) ? dw : 1000) };
+          } else {
+            const fc = f.get(N('FirstChar')) ? numOf(f.lookup(N('FirstChar'))) : 0, wa = f.lookupMaybe(N('Widths'), L.PDFArray);
+            const ws = wa ? wa.asArray().map(v => numOf(wa.context.lookup(v))) : null;
+            const bf = String(f.get(N('BaseFont')) || ''), def = /Courier/i.test(bf) ? 600 : 520;   // Standardschriften ohne Breiten: Mittelwert
+            r = { two: false, w: c => { const v = ws ? ws[c - fc] : undefined; return isFinite(v) ? v : def; } };
+          }
+        }
+      } catch (e) { r = null; }
+      cache.set(name, r); return r;
+    };
+  }
+
   /* Grafik umfärben (app-v334): alle Füll- und Linienfarben im Objekt auf eine Farbe setzen – Weiß bleibt Weiß (ausgesparte Flächen
      in Logos). Jede Farbangabe wird zu „r g b rg“ bzw. „RG“ (Geräte-RGB); Farbraum-Wechsel (cs/CS) entfallen dadurch. Muster und
      Sonderfarben (Name als Operand, unbekannter Farbraum) gelten als „nicht weiß“. Vorn steht die neue Farbe für Pfade, die die Farbe
@@ -299,7 +422,7 @@
         const matrix = nums(mArr), bbox = nums(bArr), own = d.lookupMaybe(L.PDFName.of('Resources'), L.PDFDict), fres = own || res, src = streamText(L, x.o);
         const f = { ops: tokenize(src), src, matrix: matrix && matrix.length === 6 && matrix.every(isFinite) ? matrix : ID, bbox: bbox && bbox.length === 4 && bbox.every(isFinite) ? bbox : null,
           stream: x.o, res: fres, ownRes: !!own, isImage: imageTestRes(L, fres) };
-        f.formOf = formFactory(L, fres, cache);
+        f.formOf = formFactory(L, fres, cache); f.fontOf = fontFactory(L, fres);
         cache.set(key, f); return f;
       } catch (e) { return null; }
     };
@@ -316,7 +439,9 @@
     const imgs = images(ops, imageTestRes(L, res), ID, formFactory(L, res, cache)), vecs = graphics(ops, imageTestRes(L, res), ID, formFactory(L, res, new Map()));
     let area = 0; try { const s = page.getSize(); area = s.width * s.height; } catch (e) { /* ohne Größe kein Hintergrund-Merkmal */ }
     for (const v of vecs) v.bg = area > 0 && v.rect.w * v.rect.h >= 0.85 * area;
-    return { src, imgs, vecs, truncated: vecs.length >= MAX_VEC };
+    let txts = []; try { txts = texts(ops, ID, formFactory(L, res, new Map()), fontFactory(L, res)); } catch (e) { txts = []; }
+    for (const v of txts) v.bg = area > 0 && v.rect.w * v.rect.h >= 0.6 * area;   // ganze Seite in einem Textabschnitt: nur über die Liste
+    return { src, imgs, vecs, txts, truncated: vecs.length >= MAX_VEC };
   }
   // freier Ressourcenname im XObject-Wörterbuch
   function addXObject(L, ctx, res, prefix, ref) {
@@ -339,21 +464,21 @@
      kopiert und geändert (andere Seiten und Aufrufe, die es mitbenutzen, bleiben gleich); sein Begrenzungsrahmen (BBox) wächst mit,
      damit ein verschobenes Bild nicht abgeschnitten wird. Ergebnis: Zahl der geänderten Bilder. */
   async function editPage(L, lib, page, edits) {
-    const { src, imgs, vecs } = pageObjects(L, page), ctx = lib.context, N = L.PDFName.of;
+    const { src, imgs, vecs, txts } = pageObjects(L, page), ctx = lib.context, N = L.PDFName.of;
     // Baum der betroffenen Aufrufe: Wurzel = Seite, Kinder = Formular-Aufrufe (je Stelle im Inhalt), Blätter = Bild-Änderungen
     const root = { src, kids: new Map(), items: [] };
     for (const e of edits) {
-      const im = (e.vec ? vecs : imgs)[e.n]; if (!im) continue;
+      const im = (e.txt ? txts : e.vec ? vecs : imgs)[e.n]; if (!im) continue;
       let ed;
       if (e.del) ed = { del: true };
-      else if (e.vec) {   // Grafik: verschieben/skalieren und/oder umfärben
+      else if (e.vec || e.txt) {   // Grafik: verschieben/skalieren und/oder umfärben
         const T = e.to ? placement(im.m, im.rect, e.to, 0) : null, color = e.color ? hexRgb(e.color) : null;
         if (e.to && !(T && T.every(isFinite))) continue;
         if (!T && !color) continue;
         ed = { T, color };
       } else {
         let emb = null, fit = 0;
-        if (e.img && !e.vec) { emb = e.img.png ? await lib.embedPng(e.img.bytes) : await lib.embedJpg(e.img.bytes); fit = emb.width / emb.height; }
+        if (e.img) { emb = e.img.png ? await lib.embedPng(e.img.bytes) : await lib.embedJpg(e.img.bytes); fit = emb.width / emb.height; }
         const T = placement(im.m, im.rect, e.to || im.rect, fit); if (!T || !T.every(isFinite)) continue;
         ed = { T, emb };
       }
@@ -369,7 +494,7 @@
       for (const { im, ed } of node.items) {
         count++;
         if (ed.del) { parts.push({ start: im.start, end: im.end, text: '' }); continue; }
-        if (im.kind === 'vec') {   // Grafik: eigenes q … Q mit der Verschiebung, Inhalt unverändert
+        if (im.kind === 'vec' || im.kind === 'txt') {   // Grafik/Text: eigenes q … Q mit der Verschiebung, Inhalt unverändert
           const body = ed.color ? recolor(node.src.slice(im.start, im.end), ed.color) : node.src.slice(im.start, im.end);
           parts.push({ start: im.start, end: im.end, text: `q ${ed.T ? ed.T.map(num).join(' ') + ' cm' : ''}\n${body}\nQ` });
           const li = inv(im.local); if (li && ed.T) extent = union(extent, mapRect(im.lrect, mul(mul(li, ed.T), im.local)));
@@ -403,6 +528,6 @@
     return count;
   }
 
-  const api = { tokenize, images, graphics, pageObjects, recolor, hexRgb, placement, apply, rectOf, mapRect, mul, inv, toStr, toBytes, contentOf, pageImages, editPage };
+  const api = { tokenize, images, graphics, texts, strBytes, pageObjects, recolor, hexRgb, placement, apply, rectOf, mapRect, mul, inv, toStr, toBytes, contentOf, pageImages, editPage };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfBild = api;
 })(typeof self !== 'undefined' ? self : globalThis);

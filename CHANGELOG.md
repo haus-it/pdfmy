@@ -2,6 +2,14 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-23
+
+### Text als Objekt: Textabschnitte verschieben, skalieren, umfärben, löschen (app-v335)
+- „Bilder und Grafiken bearbeiten“ bietet jetzt auch Textabschnitte an (grün umrandet): eine Adresse, Überschrift oder ein Stempeltext lässt sich an eine andere Stelle ziehen, vergrößern, verkleinern, umfärben oder löschen – wie das Objektwerkzeug in Acrobat Pro. Den Wortlaut ändert weiterhin „Text ändern“.
+- Text bleibt echter Text (durchsuchbar, kopierbar, Schrift unverändert); geändert wird nur der gewählte Abschnitt. Der Umriss wird aus den Zeichenbreiten der Schrift berechnet (Textlauf nach ISO 32000-1 9.4).
+- Unsichtbarer Text der Texterkennung über Scans wird nicht angeboten – sonst passte er nicht mehr zum Bild. Abschnitte, die fast die ganze Seite füllen, nur über die Liste. Fälschungsschutz wie bei Bildern und Grafiken.
+- tests/pdftext-objekt.test.js; Durchlauf in der App (Text verschoben und umgefärbt, danach weiter auslesbar).
+
 ## 2026-11-22
 
 ### Grafiken umfärben (app-v334)

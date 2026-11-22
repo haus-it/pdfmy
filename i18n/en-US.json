@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "No image or graphic selected.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Click an image or graphic (logo, shape, line – outlined in purple) and drag to move it; drag the corner to enlarge or shrink it (the aspect ratio is kept). With the keyboard: choose below, then the arrow keys move it, + and − change the size, Delete deletes. “Color” recolors a graphic (white areas stay white). The page’s text stays unchanged.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Recolor graphic – white areas stay white",
- "umgefärbt": "recolored"
+ "umgefärbt": "recolored",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} object(s) changed – everything else on the page is unchanged. To go back: “Edit images and graphics” → “Restore original images”.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Click an image, a graphic (logo, shape, line – outlined in purple) or a text section (outlined in green) and drag to move it; drag the corner to enlarge or shrink it (the aspect ratio is kept). With the keyboard: choose below, then the arrow keys move it, + and − change the size, Delete deletes. “Color” recolors a graphic or text (white areas stay white). To change the wording, use “Edit text”.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Images, graphics and text on this page",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Move, enlarge, shrink, recolor or delete photos, logos, shapes, lines and text sections in the PDF, and replace images",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Recolor graphic or text – white areas stay white",
+ "Nichts gewählt.": "Nothing selected.",
+ "Text {0}": "Text {0}"
 }

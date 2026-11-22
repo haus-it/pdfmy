@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Ühtegi pilti ega joonist pole valitud.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klõpsake pildil või joonisel (logo, kujund, joon – lilla äärisega) ja lohistage liigutamiseks; nurgast lohistades suurendate või vähendate (külgsuhe säilib). Klaviatuuriga: valige all, siis nooleklahvid liigutavad, + ja − muudavad suurust, Delete kustutab. „Värv“ värvib joonise ümber (valged alad jäävad valgeks). Lehe tekst jääb muutmata.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Värvi joonis ümber – valged alad jäävad valgeks",
- "umgefärbt": "ümber värvitud"
+ "umgefärbt": "ümber värvitud",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} objekti muudetud – kõik muu lehel on muutmata. Tagasi: „Muuda pilte ja jooniseid“ → „Taasta algsed pildid“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Klõpsake pildil, joonisel (logo, kujund, joon – lilla äärisega) või tekstilõigul (rohelise äärisega) ja lohistage liigutamiseks; nurgast lohistades suurendate või vähendate (külgsuhe säilib). Klaviatuuriga: valige all, siis nooleklahvid liigutavad, + ja − muudavad suurust, Delete kustutab. „Värv“ värvib joonise või teksti ümber (valged alad jäävad valgeks). Sõnastust muudate käsuga „Muuda teksti“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Selle lehe pildid, joonised ja tekstid",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Liiguta, suurenda, vähenda, värvi ümber või kustuta PDF-i fotosid, logosid, kujundeid, jooni ja tekstilõike ning asenda pilte",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Värvi joonis või tekst ümber – valged alad jäävad valgeks",
+ "Nichts gewählt.": "Midagi pole valitud.",
+ "Text {0}": "Tekst {0}"
 }

@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Не е избрана слика ниту графика.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Кликнете на слика или графика (лого, форма, линија – со виолетова рамка) и влечете за поместување, влечете на аголот за зголемување или намалување (пропорциите остануваат). Со тастатура: изберете долу, потоа стрелките поместуваат, + и − ја менуваат големината, Del брише. „Боја“ ја пребојува графиката (белите површини остануваат бели). Текстот на страницата останува непроменет.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Пребојување на графиката – белите површини остануваат бели",
- "umgefärbt": "пребоена"
+ "umgefärbt": "пребоена",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Сменети објекти: {0} – сè друго на страницата е непроменето. Враќање: „Уредување слики и графики“ → „Врати ги оригиналните слики“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Кликнете на слика (сина), графика како лого, форма или линија (виолетова) или текстуален дел (зелен) и влечете за поместување, влечете на аголот за зголемување или намалување (пропорциите остануваат). Со тастатура: изберете долу, потоа стрелките поместуваат, + и − ја менуваат големината, Del брише. „Боја“ ја пребојува графиката или текстот (белите површини остануваат бели). Содржината на текстот ја менувате со „Промени текст“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Слики, графики и текстови на оваа страница",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Поместувајте, зголемувајте, намалувајте, пребојувајте и бришете фотографии, логоа, форми, линии и текстуални делови во PDF и заменувајте слики",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Пребојување на графика или текст – белите површини остануваат бели",
+ "Nichts gewählt.": "Ништо не е избрано.",
+ "Text {0}": "Текст {0}"
 }

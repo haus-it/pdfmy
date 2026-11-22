@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Ma ntgħażlet l-ebda stampa u l-ebda grafika.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Ikklikkja fuq stampa jew grafika (logo, forma, linja – b’qafas vjola) u kaxkar biex tiċċaqlaqha, kaxkar fil-kantuniera biex tkabbarha jew tnaqqasha (il-proporzjon jibqa’). Bil-keyboard: agħżel isfel, imbagħad iċ-ċwievet tal-vleġeġ iċaqilqu, + u − jibdlu d-daqs, Del ineħħi. “Kulur” terġa’ tpinġi grafika (iż-żoni bojod jibqgħu bojod). It-test tal-paġna jibqa’ bla tibdil.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Erġa’ pinġi l-grafika – iż-żoni bojod jibqgħu bojod",
- "umgefärbt": "ippinġuta mill-ġdid"
+ "umgefärbt": "ippinġuta mill-ġdid",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} oġġett/i nbidlu – kull ħaġa oħra fuq il-paġna ma nbidlitx. Biex terġa’ lura: “Editja stampi u grafika” → “Irkupra l-istampi oriġinali”.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Ikklikkja fuq stampa (blu), grafika bħal logo, forma jew linja (vjola) jew taqsima tat-test (ħadra) u kaxkar biex tiċċaqlaq, kaxkar fil-kantuniera biex tkabbar jew tnaqqas (il-proporzjon jibqa’). Bil-keyboard: agħżel isfel, imbagħad iċ-ċwievet tal-vleġeġ iċaqilqu, + u − jibdlu d-daqs, Del ineħħi. “Kulur” terġa’ tpinġi grafika jew test (iż-żoni bojod jibqgħu bojod). Il-kliem tat-test tibdlu b’“Biddel it-test”.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Stampi, grafika u testi f’din il-paġna",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Ċaqlaq, ikkabbar, naqqas, erġa’ pinġi jew ħassar ritratti, logos, forom, linji u taqsimiet tat-test fil-PDF u issostitwixxi stampi",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Erġa’ pinġi grafika jew test – iż-żoni bojod jibqgħu bojod",
+ "Nichts gewählt.": "Ma ntgħażel xejn.",
+ "Text {0}": "Test {0}"
 }

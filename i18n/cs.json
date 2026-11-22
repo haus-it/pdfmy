@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Není vybrán žádný obrázek ani grafika.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klikněte na obrázek nebo grafiku (logo, tvar, čára – s fialovým ohraničením) a tažením ji posuňte; tažením za roh ji zvětšíte nebo zmenšíte (poměr stran zůstane zachován). Klávesnicí: vyberte níže, poté šipky posouvají, + a − mění velikost, Delete maže. „Barva“ přebarví grafiku (bílé plochy zůstanou bílé). Text stránky zůstává beze změny.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Přebarvit grafiku – bílé plochy zůstanou bílé",
- "umgefärbt": "přebarveno"
+ "umgefärbt": "přebarveno",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Změněno: {0} objektů – vše ostatní na stránce zůstalo beze změny. Zpět: „Upravit obrázky a grafiku“ → „Obnovit původní obrázky“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Klikněte na obrázek, grafiku (logo, tvar, čára – s fialovým ohraničením) nebo textový úsek (se zeleným ohraničením) a tažením jej posuňte; tažením za roh jej zvětšíte nebo zmenšíte (poměr stran zůstane zachován). Klávesnicí: vyberte níže, poté šipky posouvají, + a − mění velikost, Delete maže. „Barva“ přebarví grafiku nebo text (bílé plochy zůstanou bílé). Znění textu změníte pomocí „Změnit text“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Obrázky, grafika a texty na této straně",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Fotografie, loga, tvary, čáry a textové úseky v PDF posouvejte, zvětšujte, zmenšujte, přebarvujte nebo mažte a obrázky nahrazujte",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Přebarvit grafiku nebo text – bílé plochy zůstanou bílé",
+ "Nichts gewählt.": "Nic není vybráno.",
+ "Text {0}": "Text {0}"
 }

@@ -4427,5 +4427,12 @@
  "Kein Bild und keine Grafik gewählt.": "Engin mynd eða grafík valin.",
  "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Smellið á mynd eða grafík (merki, form, línu – með fjólubláum ramma) og dragið til að færa; dragið í hornið til að stækka eða minnka (hlutföllin haldast). Með lyklaborði: veljið neðst, þá færa örvalyklar, + og − breyta stærð og Del eyðir. „Litur“ litar grafík upp á nýtt (hvít svæði haldast hvít). Texti síðunnar helst óbreyttur.",
  "Grafik umfärben – weiße Flächen bleiben weiß": "Lita grafík upp á nýtt – hvít svæði haldast hvít",
- "umgefärbt": "endurlitað"
+ "umgefärbt": "endurlitað",
+ "{0} Objekt(e) geändert – alles andere auf der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} hlut(um) breytt – allt annað á síðunni er óbreytt. Til baka: „Breyta myndum og grafík“ → „Endurheimta upprunalegar myndir“.",
+ "Bild (blau), Grafik wie Logo, Form oder Linie (lila) oder Textabschnitt (grün) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt Grafik oder Text um (weiße Flächen bleiben weiß). Den Wortlaut ändern Sie mit „Text ändern“.": "Smellið á mynd, grafík (merki, form, línu – með fjólubláum ramma) eða textahluta (með grænum ramma) og dragið til að færa; dragið í hornið til að stækka eða minnka (hlutföllin haldast). Með lyklaborði: veljið neðst, þá færa örvalyklar, + og − breyta stærð og Del eyðir. „Litur“ litar grafík eða texta upp á nýtt (hvít svæði haldast hvít). Orðalagi textans breytið þið með „Breyta texta“.",
+ "Bilder, Grafiken und Texte auf dieser Seite": "Myndir, grafík og textar á þessari síðu",
+ "Fotos, Logos, Formen, Linien und Textabschnitte in der PDF verschieben, vergrößern, verkleinern, umfärben oder löschen und Bilder ersetzen": "Færa, stækka, minnka, lita upp á nýtt eða eyða ljósmyndum, merkjum, formum, línum og textahlutum í PDF-skránni og skipta um myndir",
+ "Grafik oder Text umfärben – weiße Flächen bleiben weiß": "Lita grafík eða texta upp á nýtt – hvít svæði haldast hvít",
+ "Nichts gewählt.": "Ekkert valið.",
+ "Text {0}": "Texti {0}"
 }

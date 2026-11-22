@@ -94,6 +94,16 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 23.11.2026: Text als Objekt (app-v335)
+**Inhalt:** Textabschnitte (BT … ET) im Dialog „Bilder und Grafiken bearbeiten“ verschieben, skalieren, umfärben, löschen; Text bleibt Text. OCR-Ebenen ausgenommen. **Grund (Leitsatz: besser als die Mitbewerber):** Letzter offener Punkt aus Rang 8 („Objekte bearbeiten“): Acrobat Pro, Foxit und PDF-XChange können das im Abo bzw. kostenpflichtig; PDFMy kostenlos, lokal, mit Fälschungsschutz und Schutz der Texterkennungs-Ebene.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1–3 | gewahrt: alles im Browser |
+| 4 Einfach | passt: derselbe Dialog, Farbe je Art (blau Bild, lila Grafik, grün Text) |
+| 5 Prüfbar | tests/pdftext-objekt.test.js (Textlauf nach Norm, Schriftbreiten, Verschieben/Umfärben/Löschen, Grenzen); Durchlauf in der App |
+| 6 | nicht betroffen; Fälschungsschutz und Signaturwarnung greifen |
+
 ### Geprüft und umgesetzt 22.11.2026: Vektorgrafiken bearbeiten (app-v333)
 **Inhalt:** Im Dialog „Bilder und Grafiken bearbeiten“ auch Logos, Formen, Diagramme und Linien verschieben, skalieren und löschen – im Seiteninhalt, ohne Rastern. Objekt = reiner Grafik-Block (q … Q ohne Text/Bild) oder einzelner gezeichneter Pfad; Beschneidung und Markierungen werden nie getrennt. **Grund (Leitsatz: besser als die Mitbewerber):** Letzte offene Lücke aus Rang 8 der Wettbewerbsanalyse. Acrobat Pro, Foxit und PDF-XChange können Objekte bearbeiten (im Abo bzw. kostenpflichtig, Upload nicht nötig); kostenlose Online-Werkzeuge (Smallpdf, iLovePDF, PDF24 online) können vorhandene Vektorgrafiken nicht verschieben (nicht für alle Anbieter nachgeprüft). PDFMy kostenlos, lokal, mit Fälschungsschutz.
 
