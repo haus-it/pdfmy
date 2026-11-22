@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Editar imágenes y gráficos…",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mover, agrandar, reducir y eliminar fotos, logotipos, formas y líneas del PDF, y reemplazar imágenes; el texto no cambia",
  "Grafik {0}": "Gráfico {0}",
- "Kein Bild und keine Grafik gewählt.": "No hay ninguna imagen ni gráfico seleccionado."
+ "Kein Bild und keine Grafik gewählt.": "No hay ninguna imagen ni gráfico seleccionado.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Haga clic en una imagen o gráfico (logotipo, forma, línea; marcado con borde lila) y arrastre para moverlo; arrastre la esquina para agrandarlo o reducirlo (se mantiene la proporción). Con el teclado: elíjalo abajo, luego las flechas lo mueven, + y − cambian el tamaño y Supr lo elimina. «Color» cambia el color de un gráfico (las zonas blancas siguen siendo blancas). El texto de la página no cambia.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Cambiar el color del gráfico: las zonas blancas siguen en blanco",
+ "umgefärbt": "recoloreado"
 }

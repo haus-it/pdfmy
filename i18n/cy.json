@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Golygu delweddau a graffeg …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Symudwch, mwyhewch, lleihewch a dilëwch ffotograffau, logos, siapiau a llinellau yn y PDF, a disodli delweddau – mae’r testun yn aros heb newid",
  "Grafik {0}": "Graffig {0}",
- "Kein Bild und keine Grafik gewählt.": "Heb ddewis delwedd na graffig."
+ "Kein Bild und keine Grafik gewählt.": "Heb ddewis delwedd na graffig.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Cliciwch ar ddelwedd neu graffig (logo, siâp, llinell – gyda border porffor) a llusgwch i’w symud; llusgwch y gornel i’w mwyhau neu ei lleihau (cedwir y gymhareb agwedd). Gyda’r bysellfwrdd: dewiswch isod, yna mae’r bysellau saeth yn symud, mae + a − yn newid y maint, ac mae Del yn dileu. Mae ‘Lliw’ yn newid lliw graffig (mae’r ardaloedd gwyn yn aros yn wyn). Mae testun y dudalen yn aros heb newid.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Newid lliw’r graffig – mae’r ardaloedd gwyn yn aros yn wyn",
+ "umgefärbt": "wedi’i ailliwio"
 }

@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Edit images and graphics …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Move, enlarge, shrink and delete photos, logos, shapes and lines in the PDF, and replace images – text stays unchanged",
  "Grafik {0}": "Graphic {0}",
- "Kein Bild und keine Grafik gewählt.": "No image or graphic selected."
+ "Kein Bild und keine Grafik gewählt.": "No image or graphic selected.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Click an image or graphic (logo, shape, line – outlined in purple) and drag to move it; drag the corner to enlarge or shrink it (the aspect ratio is kept). With the keyboard: choose below, then the arrow keys move it, + and − change the size, Delete deletes. ‘Colour’ recolours a graphic (white areas stay white). The page’s text stays unchanged.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Recolour graphic – white areas stay white",
+ "umgefärbt": "recoloured"
 }

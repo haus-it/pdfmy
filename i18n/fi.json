@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Muokkaa kuvia ja grafiikkaa …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Siirrä, suurenna, pienennä ja poista PDF:n valokuvia, logoja, muotoja ja viivoja sekä korvaa kuvia – teksti ei muutu",
  "Grafik {0}": "Grafiikka {0}",
- "Kein Bild und keine Grafik gewählt.": "Kuvaa tai grafiikkaa ei ole valittu."
+ "Kein Bild und keine Grafik gewählt.": "Kuvaa tai grafiikkaa ei ole valittu.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Napsauta kuvaa tai grafiikkaa (logo, muoto, viiva – violetilla kehyksellä) ja vedä siirtääksesi; vedä kulmasta suurentaaksesi tai pienentääksesi (kuvasuhde säilyy). Näppäimistöllä: valitse alta, sitten nuolinäppäimet siirtävät, + ja − muuttavat kokoa, Delete poistaa. ”Väri” värjää grafiikan uudelleen (valkoiset alueet pysyvät valkoisina). Sivun teksti ei muutu.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Värjää grafiikka uudelleen – valkoiset alueet pysyvät valkoisina",
+ "umgefärbt": "värjätty uudelleen"
 }

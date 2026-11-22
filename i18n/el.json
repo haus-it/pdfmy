@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Επεξεργασία εικόνων και γραφικών …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Μετακινήστε, μεγεθύνετε, σμικρύνετε και διαγράψτε φωτογραφίες, λογότυπα, σχήματα και γραμμές στο PDF και αντικαταστήστε εικόνες – το κείμενο παραμένει αμετάβλητο",
  "Grafik {0}": "Γραφικό {0}",
- "Kein Bild und keine Grafik gewählt.": "Δεν επιλέχθηκε εικόνα ή γραφικό."
+ "Kein Bild und keine Grafik gewählt.": "Δεν επιλέχθηκε εικόνα ή γραφικό.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Κάντε κλικ σε μια εικόνα ή ένα γραφικό (λογότυπο, σχήμα, γραμμή – με μωβ περίγραμμα) και σύρετε για μετακίνηση· σύρετε τη γωνία για μεγέθυνση ή σμίκρυνση (η αναλογία διατηρείται). Με το πληκτρολόγιο: επιλέξτε από κάτω, μετά τα βέλη μετακινούν, τα + και − αλλάζουν το μέγεθος, το Delete διαγράφει. Το «Χρώμα» αλλάζει το χρώμα ενός γραφικού (οι λευκές επιφάνειες μένουν λευκές). Το κείμενο της σελίδας παραμένει αμετάβλητο.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Αλλαγή χρώματος γραφικού – οι λευκές επιφάνειες μένουν λευκές",
+ "umgefärbt": "με αλλαγμένο χρώμα"
 }

@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Editatu irudiak eta grafikoak …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mugitu, handitu, txikitu eta ezabatu PDFko argazkiak, logotipoak, formak eta marrak, eta ordeztu irudiak – testua aldatu gabe geratzen da",
  "Grafik {0}": "Grafikoa {0}",
- "Kein Bild und keine Grafik gewählt.": "Ez da irudirik edo grafikorik hautatu."
+ "Kein Bild und keine Grafik gewählt.": "Ez da irudirik edo grafikorik hautatu.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Egin klik irudi edo grafiko batean (logotipoa, forma, marra – ertz more batekin) eta arrastatu mugitzeko; arrastatu izkinatik handitzeko edo txikitzeko (proportzioa mantentzen da). Teklatuarekin: aukeratu behean, gero geziek mugitzen dute, + eta − teklek tamaina aldatzen dute eta Supr teklak ezabatzen du. «Kolorea» aukerak grafiko bat birkoloreztatzen du (eremu zuriak zuri geratzen dira). Orriaren testua aldatu gabe geratzen da.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Birkoloreztatu grafikoa – eremu zuriak zuri geratzen dira",
+ "umgefärbt": "birkoloreztatuta"
 }

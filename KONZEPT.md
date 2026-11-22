@@ -101,7 +101,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 |---|---|
 | 1–3 | gewahrt: alles im Browser |
 | 4 Einfach | passt: derselbe Dialog wie für Bilder, Klick wählt das kleinste Objekt, Hintergründe nicht versehentlich |
-| 5 Prüfbar | tests/pdfgrafik.test.js (Erkennung, Verschieben exakt, Löschen, Formular-XObject, Grenzen); Durchlauf in der App |
+| 5 Prüfbar | tests/pdfgrafik.test.js (Erkennung, Verschieben exakt, Löschen, Formular-XObject, Grenzen; seit v334 Umfärben mit Weiß-Ausnahme); Durchlauf in der App |
 | 6 Wenig aktive Inhalte | nicht betroffen; Fälschungsschutz und Signaturwarnung greifen |
 
 ### Geprüft und umgesetzt 22.11.2026: Spenden aus dem Kontoauszug für Zuwendungsbestätigungen (app-v330)

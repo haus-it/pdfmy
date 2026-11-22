@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Рэдагаваць выявы і графіку …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Фатаграфіі, лагатыпы, фігуры і лініі ў PDF – перамяшчаць, павялічваць, памяншаць, выдаляць і замяняць выявы; тэкст застаецца без змен",
  "Grafik {0}": "Графіка {0}",
- "Kein Bild und keine Grafik gewählt.": "Ні выява, ні графіка не абраны."
+ "Kein Bild und keine Grafik gewählt.": "Ні выява, ні графіка не абраны.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Націсніце на выяву або графіку (лагатып, фігура, лінія – з фіялетавай рамкай) і перацягніце, каб перамясціць; цягніце за кут, каб павялічыць або паменшыць (прапорцыі захоўваюцца). З клавіятуры: абярыце ўнізе, потым стрэлкі перамяшчаюць, + і − змяняюць памер, Del выдаляе. «Колер» перафарбоўвае графіку (белыя ўчасткі застаюцца белымі). Тэкст старонкі застаецца без змен.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Перафарбаваць графіку – белыя ўчасткі застаюцца белымі",
+ "umgefärbt": "перафарбавана"
 }

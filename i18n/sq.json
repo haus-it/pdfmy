@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Redakto imazhet dhe grafikat …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Zhvendosni, zmadhoni, zvogëloni dhe fshini foto, logo, forma dhe vija në PDF dhe zëvendësoni imazhe – teksti mbetet i pandryshuar",
  "Grafik {0}": "Grafika {0}",
- "Kein Bild und keine Grafik gewählt.": "Nuk është zgjedhur asnjë imazh dhe asnjë grafikë."
+ "Kein Bild und keine Grafik gewählt.": "Nuk është zgjedhur asnjë imazh dhe asnjë grafikë.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klikoni mbi një imazh ose grafikë (logo, formë, vijë – me kornizë vjollcë) dhe tërhiqeni për ta zhvendosur; tërhiqeni te këndi për ta zmadhuar ose zvogëluar (raporti i përmasave mbetet). Me tastierë: zgjidheni më poshtë, pastaj shigjetat e zhvendosin, + dhe − ndryshojnë madhësinë, Del e fshin. „Ngjyra“ e ringjyros grafikën (sipërfaqet e bardha mbeten të bardha). Teksti i faqes mbetet i pandryshuar.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Ringjyros grafikën – sipërfaqet e bardha mbeten të bardha",
+ "umgefärbt": "e ringjyrosur"
 }

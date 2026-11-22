@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Afbeeldingen en vectorafbeeldingen bewerken …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Foto’s, logo’s, vormen en lijnen in de pdf verplaatsen, vergroten, verkleinen, verwijderen en afbeeldingen vervangen – tekst blijft ongewijzigd",
  "Grafik {0}": "Vectorafbeelding {0}",
- "Kein Bild und keine Grafik gewählt.": "Geen afbeelding en geen vectorafbeelding gekozen."
+ "Kein Bild und keine Grafik gewählt.": "Geen afbeelding en geen vectorafbeelding gekozen.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klik op een afbeelding of vectorafbeelding (logo, vorm, lijn – met paars kader) en sleep om te verplaatsen, sleep aan de hoek om te vergroten of te verkleinen (de verhouding blijft behouden). Met het toetsenbord: onderaan kiezen, daarna verplaatsen de pijltjestoetsen, + en − wijzigen de grootte, Del verwijdert. “Kleur” kleurt een vectorafbeelding om (witte vlakken blijven wit). De tekst van de pagina blijft ongewijzigd.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Vectorafbeelding omkleuren – witte vlakken blijven wit",
+ "umgefärbt": "omgekleurd"
 }

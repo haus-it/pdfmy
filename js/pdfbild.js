@@ -204,6 +204,35 @@
     return out;
   }
 
+  /* Grafik umfärben (app-v334): alle Füll- und Linienfarben im Objekt auf eine Farbe setzen – Weiß bleibt Weiß (ausgesparte Flächen
+     in Logos). Jede Farbangabe wird zu „r g b rg“ bzw. „RG“ (Geräte-RGB); Farbraum-Wechsel (cs/CS) entfallen dadurch. Muster und
+     Sonderfarben (Name als Operand, unbekannter Farbraum) gelten als „nicht weiß“. Vorn steht die neue Farbe für Pfade, die die Farbe
+     von außen erben. rgb = [r, g, b] von 0 bis 1. */
+  const FILL = new Set(['rg', 'g', 'k', 'sc', 'scn']), STRK = new Set(['RG', 'G', 'K', 'SC', 'SCN']);
+  function recolor(src, rgb) {
+    const ops = tokenize(src), c = rgb.map(num).join(' ');
+    let out = '', at = 0, csF = '', csS = '';
+    const white = (o, cs) => {
+      const v = o.args.filter(a => a.t === 'num').map(a => a.v); if (o.args.some(a => a.t === 'name')) return false;   // Muster
+      const op = o.op.toLowerCase(), sp = op === 'g' ? 'DeviceGray' : op === 'rg' ? 'DeviceRGB' : op === 'k' ? 'DeviceCMYK' : cs;
+      if (sp === 'DeviceGray' && v.length === 1) return v[0] >= 0.95;
+      if (sp === 'DeviceRGB' && v.length === 3) return v.every(x => x >= 0.95);
+      if (sp === 'DeviceCMYK' && v.length === 4) return v.every(x => x <= 0.05);
+      return false;
+    };
+    for (const o of ops) {
+      let rep = null;
+      if (o.op === 'cs' || o.op === 'CS') { const nm = o.args[0]?.t === 'name' ? o.args[0].v : ''; if (o.op === 'cs') csF = nm; else csS = nm; rep = ''; }
+      else if (FILL.has(o.op)) rep = white(o, csF) ? '1 1 1 rg' : `${c} rg`;
+      else if (STRK.has(o.op)) rep = white(o, csS) ? '1 1 1 RG' : `${c} RG`;
+      if (rep === null) continue;
+      out += src.slice(at, o.start) + rep; at = o.end;
+    }
+    return `${c} rg ${c} RG\n` + out + src.slice(at);
+  }
+  // „#1a2b3c“ → [r, g, b] (0–1) oder null
+  const hexRgb = h => { const m = /^#?([0-9a-f]{6})$/i.exec(String(h || '')); return m ? [0, 2, 4].map(i => parseInt(m[1].slice(i, i + 2), 16) / 255) : null; };
+
   /* Neue Lage eines Bilds aus Seiten-Rechtecken: from = bisheriger Umriss, to = gewünschter Umriss (beide achsenparallel, Seitenkoordinaten).
      Ergebnis: Matrix T, die vor „Do“ als „T cm“ steht – (Einheitsquadrat × T × M) liegt dann in „to“.
      fit: Seitenverhältnis des neuen Bilds (Breite/Höhe in Pixeln) – das Bild wird mittig eingepasst statt verzerrt (beim Ersetzen). */
@@ -317,7 +346,12 @@
       const im = (e.vec ? vecs : imgs)[e.n]; if (!im) continue;
       let ed;
       if (e.del) ed = { del: true };
-      else {
+      else if (e.vec) {   // Grafik: verschieben/skalieren und/oder umfärben
+        const T = e.to ? placement(im.m, im.rect, e.to, 0) : null, color = e.color ? hexRgb(e.color) : null;
+        if (e.to && !(T && T.every(isFinite))) continue;
+        if (!T && !color) continue;
+        ed = { T, color };
+      } else {
         let emb = null, fit = 0;
         if (e.img && !e.vec) { emb = e.img.png ? await lib.embedPng(e.img.bytes) : await lib.embedJpg(e.img.bytes); fit = emb.width / emb.height; }
         const T = placement(im.m, im.rect, e.to || im.rect, fit); if (!T || !T.every(isFinite)) continue;
@@ -336,8 +370,9 @@
         count++;
         if (ed.del) { parts.push({ start: im.start, end: im.end, text: '' }); continue; }
         if (im.kind === 'vec') {   // Grafik: eigenes q … Q mit der Verschiebung, Inhalt unverändert
-          parts.push({ start: im.start, end: im.end, text: `q ${ed.T.map(num).join(' ')} cm\n${node.src.slice(im.start, im.end)}\nQ` });
-          const li = inv(im.local); if (li) extent = union(extent, mapRect(im.lrect, mul(mul(li, ed.T), im.local)));
+          const body = ed.color ? recolor(node.src.slice(im.start, im.end), ed.color) : node.src.slice(im.start, im.end);
+          parts.push({ start: im.start, end: im.end, text: `q ${ed.T ? ed.T.map(num).join(' ') + ' cm' : ''}\n${body}\nQ` });
+          const li = inv(im.local); if (li && ed.T) extent = union(extent, mapRect(im.lrect, mul(mul(li, ed.T), im.local)));
           continue;
         }
         const name = ed.emb ? addX(ed.emb.ref, 'PdfmyBild') : im.name;
@@ -368,6 +403,6 @@
     return count;
   }
 
-  const api = { tokenize, images, graphics, pageObjects, placement, apply, rectOf, mapRect, mul, inv, toStr, toBytes, contentOf, pageImages, editPage };
+  const api = { tokenize, images, graphics, pageObjects, recolor, hexRgb, placement, apply, rectOf, mapRect, mul, inv, toStr, toBytes, contentOf, pageImages, editPage };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfBild = api;
 })(typeof self !== 'undefined' ? self : globalThis);

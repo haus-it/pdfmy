@@ -6493,9 +6493,11 @@ async function imageEdit() {
   const later = () => { clearTimeout(timer); timer = setTimeout(() => render().catch(e => console.warn(e)), 150); };
   const info = () => {
     const e = sel >= 0 ? E().get(sel) : null, r = sel >= 0 ? rectNow(sel) : null;
-    $('#biSel').textContent = sel < 0 ? I18N.t('Kein Bild und keine Grafik gewählt.') : e?.del ? I18N.t(`${label(sel)} wird gelöscht.`) : `${label(sel)}: ${mm(r.w)} × ${mm(r.h)} mm` + (e?.img ? ' – ' + I18N.t('ersetzt') : '');
+    $('#biSel').textContent = sel < 0 ? I18N.t('Kein Bild und keine Grafik gewählt.') : e?.del ? I18N.t(`${label(sel)} wird gelöscht.`) : `${label(sel)}: ${mm(r.w)} × ${mm(r.h)} mm` + (e?.img ? ' – ' + I18N.t('ersetzt') : '') + (e?.color ? ' – ' + I18N.t('umgefärbt') : '');
     $('#biDel').disabled = sel < 0;
     $('#biRep').disabled = sel < 0 || obj(sel).kind === 'vec';   // ersetzen nur für Bilder
+    $('#biColor').disabled = sel < 0 || obj(sel).kind !== 'vec' || !!e?.del;   // umfärben nur für Grafiken (app-v334)
+    if (sel >= 0 && obj(sel).kind === 'vec') $('#biColor').value = e?.color || '#000000';
     $('#biDel').textContent = I18N.t(e?.del ? 'Nicht löschen' : 'Löschen');
     list.querySelectorAll('button').forEach(b => { const n = +b.dataset.n; b.setAttribute('aria-pressed', String(n === sel)); b.classList.toggle('del', !!E().get(n)?.del); });
   };
@@ -6547,6 +6549,7 @@ async function imageEdit() {
     if (ev.key === '+' || ev.key === '-') { ev.preventDefault(); const f = ev.key === '+' ? 1.05 : 1 / 1.05; setRect(sel, { x: r.x, y: r.y, w: r.w * f, h: r.h * f }); draw(); return; }
     if (ev.key === 'Delete') { ev.preventDefault(); $('#biDel').click(); }
   };
+  $('#biColor').onchange = () => { if (sel < 0 || obj(sel).kind !== 'vec') return; snap(); const e = E().get(sel) || {}; E().set(sel, { ...e, color: $('#biColor').value }); info(); later(); };
   $('#biDel').onclick = () => { if (sel < 0) return; snap(); const e = E().get(sel) || {}; if (e.del) { delete e.del; E().set(sel, e); } else E().set(sel, { ...e, del: true }); info(); draw(); later(); };
   $('#biRep').onclick = () => { if (sel >= 0) { $('#biFile').value = ''; $('#biFile').click(); } };
   $('#biFile').onchange = async () => {

@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Уреди слике и графике …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Померајте, увећавајте, умањујте и бришите фотографије, логое, облике и линије у PDF-у и замењујте слике – текст остаје непромењен",
  "Grafik {0}": "Графика {0}",
- "Kein Bild und keine Grafik gewählt.": "Није изабрана ни слика ни графика."
+ "Kein Bild und keine Grafik gewählt.": "Није изабрана ни слика ни графика.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Кликните на слику или графику (лого, облик, линија – са љубичастим оквиром) и превуците да бисте је померили; превуците за угао да бисте је увећали или умањили (однос страна остаје). Тастатуром: изаберите доле, затим стрелице померају, + и − мењају величину, Del брише. „Боја“ пребојава графику (беле површине остају беле). Текст странице остаје непромењен.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Пребој графику – беле површине остају беле",
+ "umgefärbt": "пребојено"
 }

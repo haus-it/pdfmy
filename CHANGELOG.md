@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-22
 
+### Grafiken umfärben (app-v334)
+- „Bilder und Grafiken bearbeiten“: Neues Feld „Farbe“ für gewählte Grafiken – z. B. ein Logo in die Hausfarbe oder Schwarz für den Druck. Alle Füll- und Linienfarben der Grafik werden zur gewählten Farbe, weiße Flächen darin bleiben weiß (ausgesparte Formen im Logo). Zusammen mit Verschieben und Skalieren, rückgängig wie jede Änderung.
+- Technisch: Farbangaben im Objekt werden zu Geräte-RGB; Farbraum-Wechsel und Muster im Objekt werden durch die neue Farbe ersetzt; der übrige Seiteninhalt bleibt Byte für Byte gleich. tests/pdfgrafik.test.js; Durchlauf in der App.
+
 ### Vektorgrafiken bearbeiten: Logos, Formen und Linien verschieben, skalieren, löschen (app-v333)
 - „Mehr → Bilder und Grafiken bearbeiten …“ (bisher „Bilder bearbeiten“): Neben Fotos sind jetzt auch Vektorgrafiken wählbar – Logos, Kästen, Kreise, Diagramme und Linien (lila umrandet). Verschieben, an der Ecke vergrößern/verkleinern, löschen, rückgängig; mit der Tastatur wie bei Bildern.
 - Ein Logo aus mehreren Teilen ist eine Grafik (zusammenhängender Grafik-Block ohne Text); Tabellenlinien sind einzeln wählbar. Ein Klick wählt das kleinste Objekt an der Stelle; Hintergründe über die ganze Seite nur über die Liste. Bei sehr vielen Linien (Pläne, große Tabellen) werden nur die gewählten umrandet.

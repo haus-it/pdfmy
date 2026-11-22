@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Editare imagini și grafice …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mutați, măriți, micșorați și ștergeți fotografii, logo-uri, forme și linii din PDF și înlocuiți imagini – textul rămâne neschimbat",
  "Grafik {0}": "Grafic {0}",
- "Kein Bild und keine Grafik gewählt.": "Nicio imagine și niciun grafic selectat."
+ "Kein Bild und keine Grafik gewählt.": "Nicio imagine și niciun grafic selectat.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Faceți clic pe o imagine sau pe un grafic (logo, formă, linie – cu contur violet) și trageți pentru a-l muta; trageți de colț pentru a-l mări sau micșora (raportul de aspect se păstrează). De la tastatură: alegeți mai jos, apoi mutați cu tastele săgeți, + și − modifică dimensiunea, Del șterge. „Culoare” recolorează un grafic (zonele albe rămân albe). Textul paginii rămâne neschimbat.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Recolorează graficul – zonele albe rămân albe",
+ "umgefärbt": "recolorat"
 }

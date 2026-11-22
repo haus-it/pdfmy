@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Breyta myndum og grafík …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Færa, stækka, minnka og eyða ljósmyndum, merkjum, formum og línum í PDF-skránni og skipta um myndir – textinn helst óbreyttur",
  "Grafik {0}": "Grafík {0}",
- "Kein Bild und keine Grafik gewählt.": "Engin mynd eða grafík valin."
+ "Kein Bild und keine Grafik gewählt.": "Engin mynd eða grafík valin.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Smellið á mynd eða grafík (merki, form, línu – með fjólubláum ramma) og dragið til að færa; dragið í hornið til að stækka eða minnka (hlutföllin haldast). Með lyklaborði: veljið neðst, þá færa örvalyklar, + og − breyta stærð og Del eyðir. „Litur“ litar grafík upp á nýtt (hvít svæði haldast hvít). Texti síðunnar helst óbreyttur.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Lita grafík upp á nýtt – hvít svæði haldast hvít",
+ "umgefärbt": "endurlitað"
 }

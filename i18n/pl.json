@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Edytuj obrazy i grafiki …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Przesuwaj, powiększaj, pomniejszaj i usuwaj zdjęcia, logo, kształty i linie w PDF oraz zastępuj obrazy – tekst pozostaje bez zmian",
  "Grafik {0}": "Grafika {0}",
- "Kein Bild und keine Grafik gewählt.": "Nie wybrano obrazu ani grafiki."
+ "Kein Bild und keine Grafik gewählt.": "Nie wybrano obrazu ani grafiki.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Kliknij obraz lub grafikę (logo, kształt, linię – z fioletową ramką) i przeciągnij, aby przesunąć, przeciągnij za róg, aby powiększyć lub pomniejszyć (proporcje zostają). Klawiaturą: wybierz na dole, potem strzałki przesuwają, + i − zmieniają rozmiar, Del usuwa. „Kolor” zmienia kolor grafiki (białe powierzchnie pozostają białe). Tekst strony pozostaje bez zmian.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Zmień kolor grafiki – białe powierzchnie pozostają białe",
+ "umgefärbt": "przekolorowana"
 }

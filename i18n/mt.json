@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Editja stampi u grafika …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Ċaqlaq, ikkabbar, naqqas u ħassar ritratti, logos, forom u linji fil-PDF u issostitwixxi stampi – it-test jibqa’ bla tibdil",
  "Grafik {0}": "Grafika {0}",
- "Kein Bild und keine Grafik gewählt.": "Ma ntgħażlet l-ebda stampa u l-ebda grafika."
+ "Kein Bild und keine Grafik gewählt.": "Ma ntgħażlet l-ebda stampa u l-ebda grafika.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Ikklikkja fuq stampa jew grafika (logo, forma, linja – b’qafas vjola) u kaxkar biex tiċċaqlaqha, kaxkar fil-kantuniera biex tkabbarha jew tnaqqasha (il-proporzjon jibqa’). Bil-keyboard: agħżel isfel, imbagħad iċ-ċwievet tal-vleġeġ iċaqilqu, + u − jibdlu d-daqs, Del ineħħi. “Kulur” terġa’ tpinġi grafika (iż-żoni bojod jibqgħu bojod). It-test tal-paġna jibqa’ bla tibdil.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Erġa’ pinġi l-grafika – iż-żoni bojod jibqgħu bojod",
+ "umgefärbt": "ippinġuta mill-ġdid"
 }

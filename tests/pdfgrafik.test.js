@@ -98,6 +98,32 @@ test('Grenzen: Inline-Bild, Schattierung und Text machen einen Block unrein; seh
   assert.equal(B.graphics(many, () => false).length, 2000);
 });
 
+test('Umfärben (v334): alle Farben → neue Farbe, Weiß bleibt, Farbraum-Wechsel entfallen, Muster werden mitgefärbt', () => {
+  assert.deepEqual(B.hexRgb('#ff8000').map(v => Math.round(v * 255)), [255, 128, 0]); assert.equal(B.hexRgb('rot'), null);
+  const r = B.recolor('0 0 1 rg 0 0 m 1 1 l f 1 1 1 rg 0 0 1 1 re f 0.2 G 1 w 0 0 m 2 2 l S /CS0 cs 0.5 sc 0 0 1 1 re f /Pattern cs /P1 scn 0 0 2 2 re f 0 0 0 0 k 0 0 1 1 re f', [1, 0, 0]);
+  assert.equal(r, '1 0 0 rg 1 0 0 RG\n1 0 0 rg 0 0 m 1 1 l f 1 1 1 rg 0 0 1 1 re f 1 0 0 RG 1 w 0 0 m 2 2 l S  1 0 0 rg 0 0 1 1 re f  1 0 0 rg 0 0 2 2 re f 1 1 1 rg 0 0 1 1 re f');
+});
+
+test('Logo umfärben und zugleich verschieben: Text und andere Grafiken unverändert, Lage stimmt', async () => {
+  const lib = await sample(), page = lib.getPage(0), logoN = B.pageObjects(L, page).vecs.find(v => v.paths === 2).n;
+  assert.equal(await B.editPage(L, lib, page, [{ n: logoN, vec: true, color: '#00ff00' }]), 1);
+  let after = B.pageObjects(L, (await L.PDFDocument.load(await lib.save())).getPage(0));
+  let logo = after.vecs.find(v => v.paths === 2), body = after.src.slice(logo.start, logo.end);
+  assert.match(after.src, /q \n0 1 0 rg 0 1 0 RG\nq 1 0 0 1 400 700 cm 0 1 0 rg 0 0 m/, 'nur Farbe, ohne Verschiebung');
+  assert.doesNotMatch(body, /0 0 1 rg|1 0 0 rg/, 'alte Farben weg');
+  near(logo.rect.x, 400, 'Lage unverändert');
+  assert.ok(after.src.includes('0 0 0 RG 2 w 50 600 m 550 600 l S'), 'Linie unverändert');
+  assert.ok(after.src.includes('BT /F1 12 Tf 50 750 Td (Text bleibt) Tj ET'), 'Text unverändert');
+  // zusammen mit Verschieben
+  const lib2 = await sample(), p2 = lib2.getPage(0);
+  assert.equal(await B.editPage(L, lib2, p2, [{ n: logoN, vec: true, color: '#123456', to: { x: 10, y: 10, w: 50, h: 40 } }]), 1);
+  after = B.pageObjects(L, (await L.PDFDocument.load(await lib2.save())).getPage(0)); logo = after.vecs.find(v => v.paths === 2);
+  near(logo.rect.x, 10, 'x'); near(logo.rect.y, 10, 'y');
+  assert.match(after.src.slice(logo.start, logo.end), /0\.07059 0\.20392 0\.33725 rg/);
+  // Farbe bei Bildern wird ignoriert, ungültige Farbe ebenso
+  assert.equal(await B.editPage(L, lib2, p2, [{ n: 0, vec: true, color: 'kein' }]), 0);
+});
+
 test('App: Dialog bietet Grafiken an (Liste, Klick wählt kleinstes Objekt, Ersetzen nur für Bilder)', () => {
   const R = p => fs.readFileSync(path.join(__dirname, '..', p), 'utf8');
   const pro = R('js/pro.js'), html = R('index.html');
@@ -105,4 +131,6 @@ test('App: Dialog bietet Grafiken an (Liste, Klick wählt kleinstes Objekt, Erse
   assert.match(pro, /vec: o\.kind === 'vec'/, 'Änderungen mit Art');
   assert.match(pro, /\$\('#biRep'\)\.disabled = sel < 0 \|\| obj\(sel\)\.kind === 'vec'/);
   assert.match(html, /Bilder und Grafiken bearbeiten/);
+  assert.match(html, /<input type="color" id="biColor"/);
+  assert.match(pro, /E\(\)\.set\(sel, \{ \.\.\.e, color: \$\('#biColor'\)\.value \}\)/, 'Farbe als Änderung');
 });

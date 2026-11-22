@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Biller a Grafiken änneren …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Fotoen, Logoen, Formen a Linnen am PDF verréckelen, vergréisseren, verklengeren, läschen a Biller ersetzen – Text bleift onverännert",
  "Grafik {0}": "Grafik {0}",
- "Kein Bild und keine Grafik gewählt.": "Kee Bild a keng Grafik ausgewielt."
+ "Kein Bild und keine Grafik gewählt.": "Kee Bild a keng Grafik ausgewielt.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Bild oder Grafik (Logo, Form, Linn – mat purpurem Rahmen) uklicken an zéien fir ze verréckelen, un der Eck zéien fir ze vergréisseren oder ze verklengeren (d’Säitenverhältnis bleift). Mat der Tastatur: ënnen auswielen, dann d’Pfeiltaste verréckelen, + a − änneren d’Gréisst, Del läscht. „Faarf“ fierft eng Grafik ëm (wäiss Flächen bleiwen wäiss). Den Text vun der Säit bleift onverännert.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Grafik ëmfierwen – wäiss Flächen bleiwen wäiss",
+ "umgefärbt": "ëmgefierft"
 }

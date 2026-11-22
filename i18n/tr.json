@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Görselleri ve grafikleri düzenle …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "PDF’teki fotoğrafları, logoları, şekilleri ve çizgileri taşıyın, büyütün, küçültün, silin ve görselleri değiştirin – metin değişmeden kalır",
  "Grafik {0}": "Grafik {0}",
- "Kein Bild und keine Grafik gewählt.": "Görsel veya grafik seçilmedi."
+ "Kein Bild und keine Grafik gewählt.": "Görsel veya grafik seçilmedi.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Bir görsele veya grafiğe (logo, şekil, çizgi – mor çerçeveli) tıklayıp sürükleyerek taşıyın, köşeden sürükleyerek büyütün veya küçültün (en-boy oranı korunur). Klavyeyle: aşağıdan seçin, sonra ok tuşları taşır, + ve − boyutu değiştirir, Del siler. “Renk” bir grafiği yeniden renklendirir (beyaz alanlar beyaz kalır). Sayfanın metni değişmeden kalır.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Grafiği yeniden renklendir – beyaz alanlar beyaz kalır",
+ "umgefärbt": "yeniden renklendirildi"
 }

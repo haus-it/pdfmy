@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Redigera bilder och grafik …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Flytta, förstora, förminska och radera foton, logotyper, former och linjer i PDF:en och ersätt bilder – texten förblir oförändrad",
  "Grafik {0}": "Grafik {0}",
- "Kein Bild und keine Grafik gewählt.": "Ingen bild och ingen grafik vald."
+ "Kein Bild und keine Grafik gewählt.": "Ingen bild och ingen grafik vald.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klicka på en bild eller grafik (logotyp, form, linje – med lila ram) och dra för att flytta, dra i hörnet för att förstora eller förminska (proportionerna behålls). Med tangentbord: välj nedan, flytta sedan med piltangenterna, + och − ändrar storleken, Del raderar. ”Färg” färgar om en grafik (vita ytor förblir vita). Sidans text förblir oförändrad.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Färga om grafiken – vita ytor förblir vita",
+ "umgefärbt": "omfärgad"
 }

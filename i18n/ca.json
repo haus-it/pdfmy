@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Edita les imatges i els gràfics…",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mou, amplia, redueix i elimina fotos, logotips, formes i línies del PDF i substitueix imatges; el text no canvia",
  "Grafik {0}": "Gràfic {0}",
- "Kein Bild und keine Grafik gewählt.": "Cap imatge ni gràfic triat."
+ "Kein Bild und keine Grafik gewählt.": "Cap imatge ni gràfic triat.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Feu clic en una imatge o un gràfic (logotip, forma, línia; amb vora lila) i arrossegueu per moure'l; arrossegueu la cantonada per ampliar-lo o reduir-lo (la proporció es manté). Amb el teclat: trieu a baix, després les fletxes el mouen, + i − en canvien la mida i Supr l'elimina. «Color» canvia el color d'un gràfic (les àrees blanques continuen blanques). El text de la pàgina no canvia.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Canvia el color del gràfic: les àrees blanques continuen blanques",
+ "umgefärbt": "amb el color canviat"
 }

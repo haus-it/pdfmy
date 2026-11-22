@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Upravit obrázky a grafiku …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Fotografie, loga, tvary a čáry v PDF posouvejte, zvětšujte, zmenšujte, mažte a obrázky nahrazujte – text zůstane beze změny",
  "Grafik {0}": "Grafika {0}",
- "Kein Bild und keine Grafik gewählt.": "Není vybrán žádný obrázek ani grafika."
+ "Kein Bild und keine Grafik gewählt.": "Není vybrán žádný obrázek ani grafika.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klikněte na obrázek nebo grafiku (logo, tvar, čára – s fialovým ohraničením) a tažením ji posuňte; tažením za roh ji zvětšíte nebo zmenšíte (poměr stran zůstane zachován). Klávesnicí: vyberte níže, poté šipky posouvají, + a − mění velikost, Delete maže. „Barva“ přebarví grafiku (bílé plochy zůstanou bílé). Text stránky zůstává beze změny.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Přebarvit grafiku – bílé plochy zůstanou bílé",
+ "umgefärbt": "přebarveno"
 }

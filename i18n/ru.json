@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Редактировать изображения и графику …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Перемещайте, увеличивайте, уменьшайте и удаляйте фотографии, логотипы, фигуры и линии в PDF, заменяйте изображения – текст не меняется",
  "Grafik {0}": "Графика {0}",
- "Kein Bild und keine Grafik gewählt.": "Изображение или графика не выбраны."
+ "Kein Bild und keine Grafik gewählt.": "Изображение или графика не выбраны.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Щёлкните изображение или графику (логотип, фигура, линия – с фиолетовой рамкой) и перетащите, чтобы переместить; потяните за угол, чтобы увеличить или уменьшить (пропорции сохраняются). С клавиатуры: выберите объект внизу, затем стрелки перемещают, + и − меняют размер, Del удаляет. «Цвет» перекрашивает графику (белые области остаются белыми). Текст страницы остаётся без изменений.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Перекрасить графику – белые области остаются белыми",
+ "umgefärbt": "перекрашено"
 }

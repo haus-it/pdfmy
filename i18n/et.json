@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Muuda pilte ja jooniseid …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Liiguta, suurenda, vähenda ja kustuta PDF-i fotosid, logosid, kujundeid ja jooni ning asenda pilte – tekst jääb muutmata",
  "Grafik {0}": "Joonis {0}",
- "Kein Bild und keine Grafik gewählt.": "Ühtegi pilti ega joonist pole valitud."
+ "Kein Bild und keine Grafik gewählt.": "Ühtegi pilti ega joonist pole valitud.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klõpsake pildil või joonisel (logo, kujund, joon – lilla äärisega) ja lohistage liigutamiseks; nurgast lohistades suurendate või vähendate (külgsuhe säilib). Klaviatuuriga: valige all, siis nooleklahvid liigutavad, + ja − muudavad suurust, Delete kustutab. „Värv“ värvib joonise ümber (valged alad jäävad valgeks). Lehe tekst jääb muutmata.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Värvi joonis ümber – valged alad jäävad valgeks",
+ "umgefärbt": "ümber värvitud"
 }

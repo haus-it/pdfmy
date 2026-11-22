@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Editar imagens e gráficos …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mova, amplie, reduza e elimine fotografias, logótipos, formas e linhas no PDF e substitua imagens – o texto fica inalterado",
  "Grafik {0}": "Elemento gráfico {0}",
- "Kein Bild und keine Grafik gewählt.": "Nenhuma imagem nem gráfico selecionado."
+ "Kein Bild und keine Grafik gewählt.": "Nenhuma imagem nem gráfico selecionado.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Clique numa imagem ou gráfico (logótipo, forma, linha – com moldura roxa) e arraste para mover; arraste no canto para ampliar ou reduzir (a proporção mantém-se). Com o teclado: escolha em baixo, depois as setas movem, + e − alteram o tamanho, Del elimina. “Cor” altera a cor de um elemento gráfico (as áreas brancas permanecem brancas). O texto da página fica inalterado.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Alterar a cor do elemento gráfico – as áreas brancas permanecem brancas",
+ "umgefärbt": "cor alterada"
 }

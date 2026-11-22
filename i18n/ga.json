@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Cuir íomhánna agus grafaicí in eagar …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Bog, méadaigh, laghdaigh agus scrios grianghraif, lógónna, cruthanna agus línte sa PDF, agus cuir íomhánna in ionad a chéile – ní athraíonn an téacs",
  "Grafik {0}": "Grafaic {0}",
- "Kein Bild und keine Grafik gewählt.": "Níor roghnaíodh íomhá ná grafaic."
+ "Kein Bild und keine Grafik gewählt.": "Níor roghnaíodh íomhá ná grafaic.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Cliceáil ar íomhá nó grafaic (lógó, cruth, líne – imlíne chorcra) agus tarraing chun é a bhogadh; tarraing ón gcúinne chun é a mhéadú nó a laghdú (coinnítear an cóimheas). Leis an méarchlár: roghnaigh thíos é, ansin bogann na heochracha saigheada é, athraíonn + agus − an méid, scriosann Delete é. Athraíonn “Dath” dath grafaice (fanann na limistéir bhána bán). Ní athraíonn téacs an leathanaigh.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Athdhathaigh an ghrafaic – fanann na limistéir bhána bán",
+ "umgefärbt": "athdhathaithe"
 }

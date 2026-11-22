@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Rediger billeder og grafik …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Flyt, forstør, formindsk og slet fotos, logoer, former og streger i PDF'en, og erstat billeder – teksten forbliver uændret",
  "Grafik {0}": "Grafik {0}",
- "Kein Bild und keine Grafik gewählt.": "Intet billede og ingen grafik valgt."
+ "Kein Bild und keine Grafik gewählt.": "Intet billede og ingen grafik valgt.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Klik på et billede eller en grafik (logo, form, streg – med lilla ramme) og træk for at flytte; træk i hjørnet for at gøre det større eller mindre (formatet bevares). Med tastaturet: vælg nedenfor, flyt derefter med piletasterne, + og − ændrer størrelsen, Delete sletter. »Farve« farver en grafik om (hvide flader forbliver hvide). Sidens tekst forbliver uændret.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Omfarv grafikken – hvide flader forbliver hvide",
+ "umgefärbt": "omfarvet"
 }

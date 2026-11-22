@@ -4424,5 +4424,8 @@
  "Bilder und Grafiken bearbeiten …": "Rediģēt attēlus un grafiku …",
  "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "PDF failā pārvietojiet, palielinājiet, samaziniet, dzēsiet fotoattēlus, logotipus, formas un līnijas un aizstājiet attēlus – teksts paliek nemainīts",
  "Grafik {0}": "Grafika {0}",
- "Kein Bild und keine Grafik gewählt.": "Nav izvēlēts neviens attēls vai grafika."
+ "Kein Bild und keine Grafik gewählt.": "Nav izvēlēts neviens attēls vai grafika.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. „Farbe“ färbt eine Grafik um (weiße Flächen bleiben weiß). Der Text der Seite bleibt unverändert.": "Noklikšķiniet uz attēla vai grafikas (logotips, forma, līnija – ar violetu rāmi) un velciet, lai pārvietotu; velciet aiz stūra, lai palielinātu vai samazinātu (proporcijas saglabājas). Ar tastatūru: izvēlieties apakšā, pēc tam bulttaustiņi pārvieto, + un − maina izmēru, Del dzēš. „Krāsa“ pārkrāso grafiku (baltie laukumi paliek balti). Lapas teksts paliek nemainīts.",
+ "Grafik umfärben – weiße Flächen bleiben weiß": "Pārkrāsot grafiku – baltie laukumi paliek balti",
+ "umgefärbt": "pārkrāsota"
 }
