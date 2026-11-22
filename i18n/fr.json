@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Consultation de l’état …",
  "wird geprüft": "en cours d’examen",
  "Wird gesendet …": "Envoi en cours …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donateurs avec {1} dons pour un total de {2} en {3} – enregistré sous « {4} ».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} donateurs sans adresse ignorés : {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Toutes les adresses sont complétées.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "L’adresse manque pour {0} donateur(s) (elle ne figure pas dans le relevé de compte) : veuillez la compléter dans la liste.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Le relevé de compte contient aussi {0} – pour une autre année, veuillez n’exporter que les opérations de cette année.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Trouve les dons dans le relevé de compte (CSV ou CAMT) et en fait la liste des donateurs – par donateur et par année. Sélectionnez en même temps la liste des membres (Ctrl+clic) et PDFMy complète les adresses.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Aucune opération trouvée dans le relevé de compte sélectionné – veuillez choisir l’export CSV ou CAMT (XML) de votre banque en ligne.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Aucun don trouvé dans le relevé de compte (recherche de « Spende », « Zuwendung », « Kollekte » dans le motif du paiement ; les cotisations de membre ne comptent pas).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Pas de liste des donateurs ? « Dons du relevé de compte … » trouve les dons d’une année dans l’export de votre banque en ligne. Sélectionnez en même temps la liste des membres (Ctrl+clic) : les adresses y figureront déjà.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Vérifiez la liste, puis « Choisir la liste des donateurs … » – PDFMy en crée les attestations.",
+ "Ohne Anschrift übersprungen: {0}.": "Ignoré(s) faute d’adresse : {0}.",
+ "Spenden aus dem Kontoauszug": "Dons du relevé de compte",
+ "Spenden aus dem Kontoauszug …": "Dons du relevé de compte …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

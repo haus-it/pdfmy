@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Проверява се състоянието …",
  "wird geprüft": "в проверка",
  "Wird gesendet …": "Изпращане …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} дарители с {1} дарения на обща стойност {2} през {3} г. – запазено като „{4}“.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Пропуснати дарители без адрес ({0}): {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Всички адреси са попълнени.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "При {0} дарител(и) липсва адрес (не е в банковото извлечение): моля, допълнете го в списъка.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Банковото извлечение съдържа и {0} – за друга година, моля, експортирайте само транзакциите за нея.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Намира даренията в банковото извлечение (CSV или CAMT) и прави от тях списък с дарители – по дарител и година. Изберете едновременно и списъка на членовете (Ctrl+клик), тогава PDFMy допълва адресите.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "В избраното банково извлечение не са намерени транзакции – моля, изберете експорт в CSV или CAMT (XML) от онлайн банкирането.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "В банковото извлечение не са намерени дарения (търсено: „Spende“, „Zuwendung“, „Kollekte“ в основанието за плащане; членските вноски не се броят).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Нямате списък с дарители? „Дарения от банково извлечение …“ намира даренията за една година в експорта от вашето онлайн банкиране. Изберете едновременно и списъка на членовете (Ctrl+клик), тогава адресите вече ще са вътре.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Проверете списъка, след това „Изберете списък с дарители …“ – PDFMy създава от него потвържденията.",
+ "Ohne Anschrift übersprungen: {0}.": "Пропуснати без адрес: {0}.",
+ "Spenden aus dem Kontoauszug": "Дарения от банково извлечение",
+ "Spenden aus dem Kontoauszug …": "Дарения от банково извлечение …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

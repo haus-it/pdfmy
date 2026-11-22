@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "S'està consultant l'estat …",
  "wird geprüft": "s'està revisant",
  "Wird gesendet …": "S'està enviant …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donants amb {1} donacions per un total de {2} el {3} – desat com a «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} donants sense adreça omesos: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Totes les adreces estan completes.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Falta l’adreça de {0} donant(s) (no consta a l’extracte bancari): completeu-la a la llista.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "L’extracte bancari també conté {0} – per a un altre any, exporteu només els moviments d’aquell any.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Troba les donacions a l’extracte bancari (CSV o CAMT) i en fa la llista de donants – per donant i any. Seleccioneu alhora la llista de socis (Ctrl+clic) i PDFMy completarà les adreces.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "No s’han trobat moviments a l’extracte bancari seleccionat – trieu l’exportació en CSV o CAMT (XML) de la banca en línia.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "No s’han trobat donacions a l’extracte bancari (s’ha cercat «Spende», «Zuwendung», «Kollekte» al concepte; les quotes de soci no compten).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "No teniu llista de donants? «Donacions de l’extracte bancari …» troba les donacions d’un any a l’exportació de la vostra banca en línia. Seleccioneu alhora la llista de socis (Ctrl+clic) i les adreces ja hi seran.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Reviseu la llista i després «Trieu la llista de donants …» – PDFMy en crea les confirmacions.",
+ "Ohne Anschrift übersprungen: {0}.": "Omesos sense adreça: {0}.",
+ "Spenden aus dem Kontoauszug": "Donacions de l’extracte bancari",
+ "Spenden aus dem Kontoauszug …": "Donacions de l’extracte bancari …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

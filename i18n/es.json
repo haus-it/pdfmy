@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Consultando el estado …",
  "wird geprüft": "en revisión",
  "Wird gesendet …": "Enviando …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donantes con {1} donaciones por un total de {2} en {3} – guardado como «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} donantes sin dirección omitidos: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Todas las direcciones están completas.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Falta la dirección de {0} donante(s) (no figura en el extracto bancario): complétela en la lista.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "El extracto bancario también contiene {0} – para otro año, exporte solo los movimientos de ese año.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Encuentra las donaciones en el extracto bancario (CSV o CAMT) y crea con ellas la lista de donantes – por donante y año. Seleccione a la vez la lista de socios (Ctrl+clic) y PDFMy completará las direcciones.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "No se han encontrado movimientos en el extracto bancario seleccionado – elija la exportación en CSV o CAMT (XML) de la banca en línea.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "No se han encontrado donaciones en el extracto bancario (se buscó «Spende», «Zuwendung», «Kollekte» en el concepto; las cuotas de socio no cuentan).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "¿No tiene lista de donantes? «Donaciones del extracto bancario …» encuentra las donaciones de un año en la exportación de su banca en línea. Seleccione a la vez la lista de socios (Ctrl+clic) y las direcciones ya estarán incluidas.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Revise la lista y luego «Elegir lista de donantes …» – PDFMy crea a partir de ella los certificados.",
+ "Ohne Anschrift übersprungen: {0}.": "Omitidos sin dirección: {0}.",
+ "Spenden aus dem Kontoauszug": "Donaciones del extracto bancario",
+ "Spenden aus dem Kontoauszug …": "Donaciones del extracto bancario …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

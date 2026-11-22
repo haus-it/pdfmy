@@ -1544,5 +1544,8 @@
  "Danke für Ihre Unterstützung!",
  "Ihre E-Mail-Adresse für die Rückmeldung (freiwillig)",
  "Meine Meldungen",
- "Direkt senden"
+ "Direkt senden",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.",
+ "Spenden aus dem Kontoauszug …",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin."
 ]

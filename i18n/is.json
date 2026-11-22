@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Sæki stöðu …",
  "wird geprüft": "í athugun",
  "Wird gesendet …": "Sendi …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} gefendur með {1} framlög, samtals {2} árið {3} – vistað sem „{4}“.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} gefendum án heimilisfangs sleppt: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Öll heimilisföng hafa verið fyllt út.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Hjá {0} gefanda/gefendum vantar heimilisfang (það er ekki á reikningsyfirlitinu): bættu því við í listanum.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Reikningsyfirlitið inniheldur einnig {0} – fyrir annað ár skaltu aðeins flytja út færslur þess árs.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Finnur framlögin á reikningsyfirlitinu (CSV eða CAMT) og býr til gefendalistann úr þeim – fyrir hvern gefanda og ár. Veldu félagaskrána um leið (Ctrl+smellur), þá bætir PDFMy heimilisföngunum við.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Engar færslur fundust á völdu reikningsyfirliti – veldu útflutning sem CSV eða CAMT (XML) úr netbankanum.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Engin framlög fundust á reikningsyfirlitinu (leitað að „Spende“, „Zuwendung“, „Kollekte“ í skýringu greiðslu; félagsgjöld teljast ekki með).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Enginn gefendalisti? „Framlög úr reikningsyfirliti …“ finnur framlög ársins í útflutningi úr netbankanum þínum. Veldu félagaskrána um leið (Ctrl+smellur), þá eru heimilisföngin þegar komin inn.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Farðu yfir listann og veldu svo „Veldu gefendalista …“ – PDFMy býr til staðfestingarnar úr honum.",
+ "Ohne Anschrift übersprungen: {0}.": "Sleppt án heimilisfangs: {0}.",
+ "Spenden aus dem Kontoauszug": "Framlög úr reikningsyfirliti",
+ "Spenden aus dem Kontoauszug …": "Framlög úr reikningsyfirliti …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

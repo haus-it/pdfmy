@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Hämtar status …",
  "wird geprüft": "granskas",
  "Wird gesendet …": "Skickar …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} givare med {1} gåvor på sammanlagt {2} år {3} – sparad som ”{4}”.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} givare utan adress hoppades över: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Alla adresser är kompletterade.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "För {0} givare saknas adressen (den finns inte i kontoutdraget): komplettera den i listan.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Kontoutdraget innehåller även {0} – för ett annat år, exportera bara det årets transaktioner.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Hittar gåvorna i kontoutdraget (CSV eller CAMT) och gör givarlistan av dem – per givare och år. Markera medlemslistan samtidigt (Ctrl+klick), så kompletterar PDFMy adresserna.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Inga transaktioner hittades i det valda kontoutdraget – välj export som CSV eller CAMT (XML) från internetbanken.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Inga gåvor hittades i kontoutdraget (sökt efter ”Spende”, ”Zuwendung”, ”Kollekte” i meddelandet; medlemsavgifter räknas inte).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Ingen givarlista? ”Gåvor från kontoutdrag …” hittar ett års gåvor i exporten från din internetbank. Markera medlemslistan samtidigt (Ctrl+klick), så finns adresserna redan med.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Kontrollera listan och välj sedan ”Välj givarlista …” – PDFMy skapar bekräftelserna av den.",
+ "Ohne Anschrift übersprungen: {0}.": "Hoppades över utan adress: {0}.",
+ "Spenden aus dem Kontoauszug": "Gåvor från kontoutdrag",
+ "Spenden aus dem Kontoauszug …": "Gåvor från kontoutdrag …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

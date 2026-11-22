@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Qed jintalab l-istat …",
  "wird geprüft": "qed jiġi ċċekkjat",
  "Wird gesendet …": "Qed jintbagħat …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donaturi b’{1} donazzjonijiet b’total ta’ {2} fis-sena {3} – issejvjat bħala “{4}”.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Inqabżu {0} donaturi mingħajr indirizz: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "L-indirizzi kollha ġew mimlija.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Għal {0} donatur(i) nieqes l-indirizz (mhuwiex fir-rendikont tal-bank): jekk jogħġbok imlieh fil-lista.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Ir-rendikont tal-bank fih ukoll {0} – għal sena oħra jekk jogħġbok esporta biss it-transazzjonijiet ta’ dik is-sena.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Isib id-donazzjonijiet fir-rendikont tal-bank (CSV jew CAMT) u minnhom jagħmel il-lista tad-donaturi – skont id-donatur u s-sena. Agħżel ukoll fl-istess ħin il-lista tal-membri (Ctrl+klikk), u PDFMy jimla l-indirizzi.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Ma nstabu l-ebda transazzjonijiet fir-rendikont tal-bank magħżul – jekk jogħġbok agħżel l-esportazzjoni bħala CSV jew CAMT (XML) mill-online banking.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Ma nstabu l-ebda donazzjonijiet fir-rendikont tal-bank (imfittex: “Spende”, “Zuwendung”, “Kollekte” fir-raġuni tal-ħlas; il-miżati tas-sħubija ma jgħoddux).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "M’għandekx lista tad-donaturi? “Donazzjonijiet mir-rendikont tal-bank …” isib id-donazzjonijiet ta’ sena fl-esportazzjoni tal-online banking tiegħek. Agħżel ukoll fl-istess ħin il-lista tal-membri (Ctrl+klikk), u l-indirizzi jkunu diġà fiha.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Iċċekkja l-lista, imbagħad “Agħżel il-lista tad-donaturi …” – PDFMy joħloq minnha l-konfermi.",
+ "Ohne Anschrift übersprungen: {0}.": "Inqabżu mingħajr indirizz: {0}.",
+ "Spenden aus dem Kontoauszug": "Donazzjonijiet mir-rendikont tal-bank",
+ "Spenden aus dem Kontoauszug …": "Donazzjonijiet mir-rendikont tal-bank …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

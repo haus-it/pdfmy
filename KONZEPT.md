@@ -94,6 +94,16 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 22.11.2026: Spenden aus dem Kontoauszug für Zuwendungsbestätigungen (app-v330)
+**Inhalt:** Kontoauszug (CSV/CAMT) und wahlweise Mitgliederliste → Spenderliste eines Jahres (Gutschriften mit „Spende/Zuwendung/Kollekte“, ohne Mitgliedsbeiträge und Rückbuchungen; je Spender an der IBAN zusammengefasst; Anschriften aus der Mitgliederliste, auch „Nachname, Vorname“) zum Prüfen; danach die vorhandene Serie. Die Serie überspringt Spender ohne Anschrift und meldet sie (amtliches Muster verlangt Name und Anschrift). **Grund (Leitsatz: besser als die Mitbewerber):** Der aufwendigste Schritt bei Spendenquittungen ist das Zusammensuchen der Spenden; PDF-Programme bieten das nicht, Vereinssoftware nur mit Kontoanbindung über eigene Server (nicht nachgeprüft).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1–3 | gewahrt: Kontoauszug und Mitgliederliste nur im Browser |
+| 4 Einfach | passt: ein Knopf, beide Dateien auf einmal wählbar |
+| 5 Prüfbar | tests/zuwendung.test.js (Erkennung, Zusammenfassung, Ausschlüsse, Anschriften, Rundlauf in die Serie); Durchlauf in der App |
+| 6 | nicht betroffen |
+
 ### Entschieden 22.11.2026 (GF): Meldungen direkt an pdfmy.de, Abarbeitung ohne Umweg (app-v329)
 **Anlass (GF 22.11.2026):** „Eine Lösung, dass es direkt für dich zum Abarbeiten bereitgestellt wird und nicht extra per E-Mail an mich – ohne Verzögerung erledigt, mit einer Rückmeldung und einem Danke für die Unterstützung.“ **Hebt die Festlegung vom 25.10.2026 („kein Meldeserver“) auf.**
 **Umsetzung:** (1) „Direkt senden“ im Meldedialog: Bericht wie in der Vorschau (unkenntlich gemacht, keine Dokumente) per HTTPS an pdfmy.de/melden.php; Meldungsnummer und Token nur im Browser; Mail-Weg bleibt als Rückfall. (2) Ablage je Meldung als Datei im gesperrten Ordner, ohne IP-Adresse; Missbrauchsschutz über ein täglich wechselndes, nicht umkehrbares Kürzel (24 h); höchstens 10 Meldungen je Stunde, 64 KB. (3) Abholen und Stand setzen nur mit dem Betreiberschlüssel (im Code nur dessen SHA-256-Hash; Schlüssel in .deploy, nicht im Repository) über tools/meldungen.js; Abruf alle 15 Minuten. Eindeutige kleine Fehler behebt Claude selbst und veröffentlicht, wenn alle Tests grün sind (Freigabe GF); Größeres wird vorgelegt. (4) Rückmeldung: Danke-Dialog sofort, „Meine Meldungen“ mit Stand, Hinweis beim Start, wenn erledigt; Danke-Mails nur bei freiwillig angegebener Adresse. (5) Erledigte Meldungen: Text und Adresse nach 90 Tagen gelöscht. Datenschutzerklärung Abschnitt 1 und 6b ergänzt.

@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Consultando o estado …",
  "wird geprüft": "en revisión",
  "Wird gesendet …": "Enviando …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} doantes con {1} doazóns por un total de {2} en {3} – gardado como «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} doantes sen enderezo omitidos: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Todos os enderezos están completos.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Falta o enderezo de {0} doante(s) (non figura no extracto bancario): complételo na lista.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "O extracto bancario tamén contén {0} – para outro ano, exporte só os movementos dese ano.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Atopa as doazóns no extracto bancario (CSV ou CAMT) e fai con elas a lista de doantes – por doante e ano. Seleccione á vez a lista de socios (Ctrl+clic) e PDFMy completará os enderezos.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Non se atoparon movementos no extracto bancario seleccionado – escolla a exportación en CSV ou CAMT (XML) da banca en liña.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Non se atoparon doazóns no extracto bancario (buscouse «Spende», «Zuwendung», «Kollekte» no concepto; as cotas de socio non contan).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Non ten lista de doantes? «Doazóns do extracto bancario …» atopa as doazóns dun ano na exportación da súa banca en liña. Seleccione á vez a lista de socios (Ctrl+clic) e os enderezos xa estarán incluídos.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Revise a lista e despois «Escoller a lista de doantes …» – PDFMy crea a partir dela as confirmacións.",
+ "Ohne Anschrift übersprungen: {0}.": "Omitidos sen enderezo: {0}.",
+ "Spenden aus dem Kontoauszug": "Doazóns do extracto bancario",
+ "Spenden aus dem Kontoauszug …": "Doazóns do extracto bancario …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

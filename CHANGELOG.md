@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-22
 
+### Zuwendungsbestätigungen: Spenden aus dem Kontoauszug (app-v330)
+- „Mehr → Zuwendungsbestätigung …“ hat „Spenden aus dem Kontoauszug …“: findet die Spenden eines Jahres im Export des Online-Bankings (CSV oder CAMT) – Mitgliedsbeiträge, Rechnungen und Rückbuchungen zählen nicht –, fasst sie je Spender zusammen (an der IBAN, auch bei unterschiedlicher Schreibweise des Namens) und speichert die Spenderliste zum Prüfen. Mit der Mitgliederliste zusammen gewählt, stehen die Anschriften schon drin.
+- Die Serie überspringt Spender ohne Anschrift und nennt sie, statt eine unvollständige Bestätigung zu erzeugen.
+- tests/zuwendung.test.js; Ablauf in der App geprüft.
+
 ### Meldungen direkt senden – mit Danke und Stand in der App (app-v329)
 - „Problem melden“ hat jetzt „Direkt senden“: Der Bericht (wie in der Vorschau, ohne Dokumente) geht ohne Mailprogramm an pdfmy.de. Sofort erscheint „Danke für Ihre Unterstützung!“ mit Meldungsnummer. Unter „Meine Meldungen“ steht der Stand (angekommen, in Arbeit, erledigt in Version …); beim Start sagt PDFMy Bescheid, wenn eine eigene Meldung erledigt ist. Mit freiwilliger E-Mail-Adresse kommen Eingangsbestätigung und Erledigt-Nachricht zusätzlich per Mail.
 - Auf pdfmy.de: Empfänger melden.php – Ablage ohne IP-Adresse im gesperrten Ordner, Begrenzung gegen Missbrauch, Abholen und Stand nur mit Betreiberschlüssel (tools/meldungen.js); erledigte Meldungen werden nach 90 Tagen bis auf den Stand gelöscht. Datenschutzerklärung ergänzt.

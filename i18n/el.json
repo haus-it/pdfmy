@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Ανάκτηση κατάστασης …",
  "wird geprüft": "υπό έλεγχο",
  "Wird gesendet …": "Αποστολή …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} δωρητές με {1} δωρεές συνολικού ποσού {2} το {3} – αποθηκεύτηκε ως «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Παραλείφθηκαν {0} δωρητές χωρίς διεύθυνση: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Όλες οι διευθύνσεις έχουν συμπληρωθεί.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Σε {0} δωρητή/-ές λείπει η διεύθυνση (δεν υπάρχει στο αντίγραφο κίνησης): συμπληρώστε τη στη λίστα.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Το αντίγραφο κίνησης περιέχει και {0} – για άλλο έτος εξαγάγετε μόνο τις κινήσεις εκείνου του έτους.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Βρίσκει τις δωρεές στο αντίγραφο κίνησης (CSV ή CAMT) και φτιάχνει από αυτές τη λίστα δωρητών – ανά δωρητή και έτος. Επιλέξτε ταυτόχρονα και τη λίστα μελών (Ctrl+κλικ) και το PDFMy συμπληρώνει τις διευθύνσεις.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Δεν βρέθηκαν κινήσεις στο επιλεγμένο αντίγραφο κίνησης – επιλέξτε την εξαγωγή σε CSV ή CAMT (XML) από το e-banking.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Δεν βρέθηκαν δωρεές στο αντίγραφο κίνησης (αναζητήθηκαν: «Spende», «Zuwendung», «Kollekte» στην αιτιολογία πληρωμής· οι συνδρομές μελών δεν μετρούν).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Δεν έχετε λίστα δωρητών; Το «Δωρεές από αντίγραφο κίνησης …» βρίσκει τις δωρεές ενός έτους στην εξαγωγή του e-banking σας. Επιλέξτε ταυτόχρονα και τη λίστα μελών (Ctrl+κλικ) και οι διευθύνσεις θα υπάρχουν ήδη.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Ελέγξτε τη λίστα και μετά «Επιλογή λίστας δωρητών …» – το PDFMy δημιουργεί από αυτήν τις βεβαιώσεις.",
+ "Ohne Anschrift übersprungen: {0}.": "Παραλείφθηκαν χωρίς διεύθυνση: {0}.",
+ "Spenden aus dem Kontoauszug": "Δωρεές από αντίγραφο κίνησης",
+ "Spenden aus dem Kontoauszug …": "Δωρεές από αντίγραφο κίνησης …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Statuss tiek pieprasīts …",
  "wird geprüft": "tiek pārbaudīts",
  "Wird gesendet …": "Tiek sūtīts …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} ziedotāji ar {1} ziedojumiem par kopsummu {2} {3}. gadā – saglabāts kā „{4}”.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Izlaisti {0} ziedotāji bez adreses: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Visas adreses ir papildinātas.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "{0} ziedotājam(-iem) trūkst adreses (tās nav konta izrakstā): lūdzu, papildiniet to sarakstā.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Konta izrakstā ir arī {0} – citam gadam lūdzu eksportējiet tikai tā gada darījumus.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Atrod ziedojumus konta izrakstā (CSV vai CAMT) un izveido no tiem ziedotāju sarakstu – pa ziedotājiem un gadiem. Vienlaikus atlasiet arī biedru sarakstu (Ctrl+klikšķis), tad PDFMy papildinās adreses.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Izvēlētajā konta izrakstā netika atrasti darījumi – lūdzu, izvēlieties eksportu CSV vai CAMT (XML) formātā no internetbankas.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Konta izrakstā netika atrasti ziedojumi (meklēts: „Spende”, „Zuwendung”, „Kollekte” maksājuma mērķī; biedru naudas netiek ņemtas vērā).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Nav ziedotāju saraksta? „Ziedojumi no konta izraksta …” atrod gada ziedojumus jūsu internetbankas eksportā. Vienlaikus atlasiet arī biedru sarakstu (Ctrl+klikšķis), tad adreses jau būs iekšā.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Pārbaudiet sarakstu, tad „Izvēlēties ziedotāju sarakstu …” – PDFMy no tā izveido apliecinājumus.",
+ "Ohne Anschrift übersprungen: {0}.": "Izlaisti bez adreses: {0}.",
+ "Spenden aus dem Kontoauszug": "Ziedojumi no konta izraksta",
+ "Spenden aus dem Kontoauszug …": "Ziedojumi no konta izraksta …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

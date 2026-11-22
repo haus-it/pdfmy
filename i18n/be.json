@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Запыт стану …",
  "wird geprüft": "правяраецца",
  "Wird gesendet …": "Адпраўка …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} ахвярадаўцаў, {1} ахвяраванняў на агульную суму {2} за {3} год – захавана як «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Прапушчана ахвярадаўцаў без адраса ({0}): {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Усе адрасы дапоўнены.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "У {0} ахвярадаўцы(-аў) няма адраса (яго няма ў банкаўскай выпісцы): дапоўніце яго ў спісе.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Банкаўская выпіска змяшчае таксама {0} – для іншага года экспартуйце толькі аперацыі гэтага года.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Знаходзіць ахвяраванні ў банкаўскай выпісцы (CSV або CAMT) і складае з іх спіс ахвярадаўцаў – па ахвярадаўцы і годзе. Выберыце адначасова і спіс членаў (Ctrl+клік), тады PDFMy дапоўніць адрасы.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "У выбранай банкаўскай выпісцы не знойдзена аперацый – выберыце экспарт у фармаце CSV або CAMT (XML) з онлайн-банкінгу.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "У банкаўскай выпісцы не знойдзена ахвяраванняў (шукалі: «Spende», «Zuwendung», «Kollekte» у прызначэнні плацяжу; членскія ўзносы не ўлічваюцца).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Няма спісу ахвярадаўцаў? «Ахвяраванні з банкаўскай выпіскі …» знаходзіць ахвяраванні за год у экспарце з вашага онлайн-банкінгу. Выберыце адначасова і спіс членаў (Ctrl+клік), тады адрасы ўжо будуць у ім.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Праверце спіс, затым «Выбраць спіс ахвярадаўцаў …» – PDFMy створыць па ім пацвярджэнні.",
+ "Ohne Anschrift übersprungen: {0}.": "Прапушчана без адраса: {0}.",
+ "Spenden aus dem Kontoauszug": "Ахвяраванні з банкаўскай выпіскі",
+ "Spenden aus dem Kontoauszug …": "Ахвяраванні з банкаўскай выпіскі …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

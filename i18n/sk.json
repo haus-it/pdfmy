@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Zisťuje sa stav …",
  "wird geprüft": "kontroluje sa",
  "Wird gesendet …": "Odosiela sa …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "Darcov: {0}, darov: {1}, spolu {2} v roku {3} – uložené ako „{4}“.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Preskočení darcovia bez adresy ({0}): {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Všetky adresy sú doplnené.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Pri {0} darcovi/darcoch chýba adresa (nie je vo výpise z účtu): doplňte ju v zozname.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Výpis z účtu obsahuje aj {0} – pre iný rok exportujte len pohyby z tohto roka.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Nájde dary vo výpise z účtu (CSV alebo CAMT) a vytvorí z nich zoznam darcov – podľa darcu a roka. Vyberte zároveň aj zoznam členov (Ctrl+klik), potom PDFMy doplní adresy.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Vo vybranom výpise z účtu sa nenašli žiadne pohyby – zvoľte export ako CSV alebo CAMT (XML) z internetového bankovníctva.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Vo výpise z účtu sa nenašli žiadne dary (hľadané: „Spende“, „Zuwendung“, „Kollekte“ v účele platby; členské príspevky sa nezapočítavajú).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Nemáte zoznam darcov? „Dary z výpisu z účtu …“ nájde dary za rok v exporte z vášho internetového bankovníctva. Vyberte zároveň aj zoznam členov (Ctrl+klik), adresy potom už budú uvedené.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Skontrolujte zoznam, potom „Vybrať zoznam darcov …“ – PDFMy z neho vytvorí potvrdenia.",
+ "Ohne Anschrift übersprungen: {0}.": "Preskočené bez adresy: {0}.",
+ "Spenden aus dem Kontoauszug": "Dary z výpisu z účtu",
+ "Spenden aus dem Kontoauszug …": "Dary z výpisu z účtu …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

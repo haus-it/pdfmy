@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Yn gwirio’r statws …",
  "wird geprüft": "yn cael ei wirio",
  "Wird gesendet …": "Yn anfon …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} rhoddwr gyda {1} rhodd, cyfanswm o {2} yn {3} – wedi’i gadw fel ‘{4}’.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Hepgorwyd {0} rhoddwr heb gyfeiriad: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Mae pob cyfeiriad wedi’i ychwanegu.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Mae {0} rhoddwr heb gyfeiriad (nid yw yn y gyfriflen banc): ychwanegwch ef yn y rhestr.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Mae’r gyfriflen banc hefyd yn cynnwys {0} – ar gyfer blwyddyn arall, allforiwch drafodion y flwyddyn honno yn unig.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Yn dod o hyd i’r rhoddion yn y gyfriflen banc (CSV neu CAMT) ac yn creu’r rhestr rhoddwyr ohonynt – fesul rhoddwr a blwyddyn. Dewiswch y rhestr aelodau ar yr un pryd (Ctrl+clic), ac mae PDFMy yn ychwanegu’r cyfeiriadau.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Ni chafwyd hyd i drafodion yn y gyfriflen banc a ddewiswyd – dewiswch yr allforiad CSV neu CAMT (XML) o’r bancio ar-lein.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Ni chafwyd hyd i roddion yn y gyfriflen banc (chwiliwyd am ‘Spende’, ‘Zuwendung’, ‘Kollekte’ yng nghyfeirnod y taliad; nid yw tâl aelodaeth yn cyfrif).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Dim rhestr rhoddwyr? Mae ‘Rhoddion o’r gyfriflen banc …’ yn dod o hyd i roddion blwyddyn yn allforiad eich bancio ar-lein. Dewiswch y rhestr aelodau ar yr un pryd (Ctrl+clic), a bydd y cyfeiriadau yno’n barod.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Gwiriwch y rhestr, yna ‘Dewiswch restr rhoddwyr …’ – mae PDFMy yn creu’r cadarnhadau ohoni.",
+ "Ohne Anschrift übersprungen: {0}.": "Hepgorwyd heb gyfeiriad: {0}.",
+ "Spenden aus dem Kontoauszug": "Rhoddion o’r gyfriflen banc",
+ "Spenden aus dem Kontoauszug …": "Rhoddion o’r gyfriflen banc …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

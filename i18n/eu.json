@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Egoera kontsultatzen …",
  "wird geprüft": "egiaztatzen",
  "Wird gesendet …": "Bidaltzen …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} dohaintza-egile, {1} dohaintza, guztira {2} {3}. urtean – honela gordeta: «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Helbiderik gabeko {0} dohaintza-egile saltatu dira: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Helbide guztiak osatuta daude.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "{0} dohaintza-egileri helbidea falta zaie (ez dago kontu-laburpenean): osatu zerrendan.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Kontu-laburpenak {0} ere badu – beste urte baterako, esportatu urte horretako mugimenduak soilik.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Kontu-laburpenean (CSV edo CAMT) dohaintzak aurkitzen ditu eta haiekin dohaintza-egileen zerrenda egiten du – dohaintza-egile eta urte bakoitzeko. Hautatu aldi berean bazkide-zerrenda ere (Ctrl+klik), eta PDFMy-k helbideak osatuko ditu.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Ez da mugimendurik aurkitu hautatutako kontu-laburpenean – aukeratu lineako bankuko esportazioa CSV edo CAMT (XML) formatuan.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Ez da dohaintzarik aurkitu kontu-laburpenean (bilatutakoa: «Spende», «Zuwendung», «Kollekte» kontzeptuan; bazkide-kuotak ez dira kontatzen).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Ez duzu dohaintza-egileen zerrendarik? «Dohaintzak kontu-laburpenetik …» aukerak urte bateko dohaintzak aurkitzen ditu zure lineako bankuaren esportazioan. Hautatu aldi berean bazkide-zerrenda ere (Ctrl+klik), eta helbideak dagoeneko bertan egongo dira.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Egiaztatu zerrenda, eta gero «Aukeratu dohaintza-egileen zerrenda …» – PDFMy-k berrespenak sortzen ditu hartatik.",
+ "Ohne Anschrift übersprungen: {0}.": "Helbiderik gabe saltatuak: {0}.",
+ "Spenden aus dem Kontoauszug": "Dohaintzak kontu-laburpenetik",
+ "Spenden aus dem Kontoauszug …": "Dohaintzak kontu-laburpenetik …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

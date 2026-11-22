@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Tikrinama būsena …",
  "wird geprüft": "tikrinama",
  "Wird gesendet …": "Siunčiama …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} aukotojai, {1} aukos, iš viso {2} {3} m. – išsaugota kaip „{4}“.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Praleista aukotojų be adreso: {0}: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Visi adresai papildyti.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "{0} aukotojo (-ų) adreso trūksta (jo nėra sąskaitos išraše): papildykite jį sąraše.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Sąskaitos išraše yra ir {0} – kitiems metams eksportuokite tik tų metų operacijas.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Randa aukas sąskaitos išraše (CSV arba CAMT) ir sudaro iš jų aukotojų sąrašą – pagal aukotoją ir metus. Kartu pažymėkite ir narių sąrašą (Ctrl+spustelėjimas), tada PDFMy papildys adresus.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Pasirinktame sąskaitos išraše operacijų nerasta – pasirinkite eksportą CSV arba CAMT (XML) formatu iš internetinės bankininkystės.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Sąskaitos išraše aukų nerasta (ieškota: „Spende“, „Zuwendung“, „Kollekte“ mokėjimo paskirtyje; nario mokesčiai neskaičiuojami).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Neturite aukotojų sąrašo? „Aukos iš sąskaitos išrašo …“ randa metų aukas jūsų internetinės bankininkystės eksporte. Kartu pažymėkite ir narių sąrašą (Ctrl+spustelėjimas), tada adresai jau bus įrašyti.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Patikrinkite sąrašą, tada „Pasirinkti aukotojų sąrašą …“ – PDFMy iš jo sukurs patvirtinimus.",
+ "Ohne Anschrift übersprungen: {0}.": "Praleista be adreso: {0}.",
+ "Spenden aus dem Kontoauszug": "Aukos iš sąskaitos išrašo",
+ "Spenden aus dem Kontoauszug …": "Aukos iš sąskaitos išrašo …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

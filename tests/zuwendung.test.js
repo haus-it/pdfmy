@@ -70,3 +70,20 @@ test('Unicode-Namen mit eingebetteter Schrift (Şahin, Yılmaz, Łukasz); Oberfl
   assert.match(src, /await Zuwendung\.erzeugen\(PDFLib, d, await zuwOpts\(\)\)/);
   assert.match(src, /Zuwendung\.fristOk\(zuwArt\(\), \$\('#zuwVom'\)\.value\)/);
 });
+
+test('Spenden aus dem Kontoauszug (v330): je Spender und Jahr, Mitgliedsbeiträge ausgenommen, Anschriften aus der Mitgliederliste, Rundlauf', () => {
+  const Zw = require('../js/zuwendung.js'), Bank = require('../js/bank.js'), { parseCsv } = require('../js/textpdf.js');
+  const csv = 'Buchungstag;Beguenstigter/Zahlungspflichtiger;IBAN;Verwendungszweck;Betrag\n10.03.2025;Erika Muster;DE02120300000000202051;Spende Jugendarbeit;50,00\n10.09.2025;ERIKA MUSTER;DE02120300000000202051;Spende;70,00\n'
+    + '12.04.2025;Max Müller;DE89370400440532013000;Mitgliedsbeitrag 2025 Spende;60,00\n01.05.2025;Firma X;DE44500105175407324931;Rechnung 4711;200,00\n02.06.2025;Hans Kollekte;;Kollekte Sommerfest;25,00\n'
+    + '03.06.2025;Erika Muster;DE02120300000000202051;Rücklastschrift Spende;-50,00\n05.01.2026;Erika Muster;DE02120300000000202051;Spende;30,00\n';
+  const r = Zw.ausKontoauszug(Bank.parse(csv, 'k.csv'), { jahr: 2025, mitglieder: [{ name: 'Muster, Erika', strasse: 'Lindenweg 3', plzOrt: '33100 Paderborn' }] });
+  assert.equal(r.jahr, 2025); assert.deepEqual(r.jahre, [2025, 2026]);
+  assert.deepEqual(r.personen.map(p => [p.name, p.zuwendungen.map(z => z.betrag)]), [['Erika Muster', [50, 70]], ['Hans Kollekte', [25]]], 'gleiche IBAN zusammengefasst, Beitrag/Rechnung/Abbuchung/Folgejahr nicht');
+  assert.equal(r.personen[0].anschrift, 'Lindenweg 3\n33100 Paderborn', '„Nachname, Vorname“ aus der Mitgliederliste erkannt');
+  assert.equal(r.ohneAnschrift, 1); assert.equal(r.summe, 145); assert.equal(r.anzahl, 3);
+  const back = Zw.ausTabelle(parseCsv(Zw.spenderCsv(r.personen).replace(/^﻿/, ''), ';'));
+  assert.deepEqual(back.personen.map(p => [p.name, p.anschrift, p.zuwendungen.length]), [['Erika Muster', 'Lindenweg 3\n33100 Paderborn', 2], ['Hans Kollekte', '', 1]]);
+  const src = require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'js', 'pro.js'), 'utf8');
+  assert.match(src, /Ohne Anschrift übersprungen/, 'Serie ohne Anschrift: übersprungen und gemeldet');
+  assert.match(src, /Zuwendung\.ausKontoauszug\(txs, \{ mitglieder \}\)/);
+});

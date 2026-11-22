@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Checking status …",
  "wird geprüft": "under review",
  "Wird gesendet …": "Sending …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donors with {1} donations totaling {2} in {3} – saved as “{4}”.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} donors without an address skipped: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "All addresses have been added.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "{0} donor(s) have no address (it is not in the bank statement): please add it in the list.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "The bank statement also contains {0} – for another year, please export only that year’s transactions.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Finds the donations in the bank statement (CSV or CAMT) and turns them into the donor list – per donor and year. Select the member list at the same time (Ctrl+click) and PDFMy adds the addresses.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "No transactions were found in the selected bank statement – please choose the CSV or CAMT (XML) export from online banking.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "No donations were found in the bank statement (searched for “Spende”, “Zuwendung”, “Kollekte” in the payment reference; membership fees do not count).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "No donor list? “Donations from bank statement …” finds a year’s donations in your online banking export. Select the member list at the same time (Ctrl+click) and the addresses will already be included.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Check the list, then “Choose donor list …” – PDFMy creates the receipts from it.",
+ "Ohne Anschrift übersprungen: {0}.": "Skipped without an address: {0}.",
+ "Spenden aus dem Kontoauszug": "Donations from bank statement",
+ "Spenden aus dem Kontoauszug …": "Donations from bank statement …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

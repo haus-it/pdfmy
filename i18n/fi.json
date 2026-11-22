@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Haetaan tilaa …",
  "wird geprüft": "tarkistettavana",
  "Wird gesendet …": "Lähetetään …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} lahjoittajaa, {1} lahjoitusta, yhteensä {2} vuonna {3} – tallennettu nimellä ”{4}”.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} lahjoittajaa ilman osoitetta ohitettiin: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Kaikki osoitteet on täydennetty.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "{0} lahjoittajalta puuttuu osoite (sitä ei ole tiliotteella): täydentäkää se luetteloon.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Tiliote sisältää myös vuoden {0} – toista vuotta varten viekää vain sen vuoden tapahtumat.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Etsii lahjoitukset tiliotteelta (CSV tai CAMT) ja tekee niistä lahjoittajaluettelon – lahjoittajittain ja vuosittain. Valitkaa jäsenluettelo samalla (Ctrl+napsautus), niin PDFMy täydentää osoitteet.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Valitulta tiliotteelta ei löytynyt tapahtumia – valitkaa verkkopankista vienti CSV- tai CAMT (XML) -muodossa.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Tiliotteelta ei löytynyt lahjoituksia (haettiin ”Spende”, ”Zuwendung”, ”Kollekte” maksun tiedoista; jäsenmaksuja ei lasketa).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Ei lahjoittajaluetteloa? ”Lahjoitukset tiliotteelta …” löytää vuoden lahjoitukset verkkopankkinne viennistä. Valitkaa jäsenluettelo samalla (Ctrl+napsautus), niin osoitteet ovat jo mukana.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Tarkistakaa luettelo ja valitkaa sitten ”Valitse lahjoittajaluettelo …” – PDFMy laatii siitä vahvistukset.",
+ "Ohne Anschrift übersprungen: {0}.": "Ohitettu ilman osoitetta: {0}.",
+ "Spenden aus dem Kontoauszug": "Lahjoitukset tiliotteelta",
+ "Spenden aus dem Kontoauszug …": "Lahjoitukset tiliotteelta …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

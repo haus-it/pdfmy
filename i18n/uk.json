@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Запит стану …",
  "wird geprüft": "перевіряється",
  "Wird gesendet …": "Надсилання …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} жертводавців, {1} пожертв на загальну суму {2} за {3} рік – збережено як «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Пропущено жертводавців без адреси ({0}): {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Усі адреси доповнено.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "У {0} жертводавця(-ів) немає адреси (її немає в банківській виписці): доповніть її у списку.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Банківська виписка містить також {0} – для іншого року експортуйте лише операції цього року.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Знаходить пожертви в банківській виписці (CSV або CAMT) і складає з них список жертводавців – за жертводавцем і роком. Виберіть одночасно і список членів (Ctrl+клік), тоді PDFMy доповнить адреси.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "У вибраній банківській виписці не знайдено операцій – виберіть експорт у форматі CSV або CAMT (XML) з онлайн-банкінгу.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "У банківській виписці не знайдено пожертв (шукали: «Spende», «Zuwendung», «Kollekte» у призначенні платежу; членські внески не враховуються).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Немає списку жертводавців? «Пожертви з банківської виписки …» знаходить пожертви за рік в експорті з вашого онлайн-банкінгу. Виберіть одночасно і список членів (Ctrl+клік), тоді адреси вже будуть у ньому.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Перевірте список, потім «Вибрати список жертводавців …» – PDFMy створить за ним підтвердження.",
+ "Ohne Anschrift übersprungen: {0}.": "Пропущено без адреси: {0}.",
+ "Spenden aus dem Kontoauszug": "Пожертви з банківської виписки",
+ "Spenden aus dem Kontoauszug …": "Пожертви з банківської виписки …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

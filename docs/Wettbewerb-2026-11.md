@@ -271,7 +271,7 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 | Bedarf im Verein | PDFMy | Wettbewerb |
 |---|---|---|
 | Ausgefüllte Formulare zu einer Liste zusammenführen | vorhanden (v313): viele PDFs → eine Excel-Liste | Acrobat Pro: „Formulardaten zusammenführen“ (kostenpflichtig); PDF24/Smallpdf: fehlt |
-| Zuwendungsbestätigung nach amtlichem Muster, auch als Serie und Sammelbestätigung | vorhanden (v314) | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |
+| Zuwendungsbestätigung nach amtlichem Muster, auch als Serie und Sammelbestätigung | vorhanden (v314); seit v330 Spenderliste direkt aus dem Kontoauszug | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |
 | Mitgliedsantrag mit SEPA-Mandat, Foto-Einwilligung, Fahrt-Einverständnis | vorhanden (v315) | fehlt; Vorlagen meist als Word-Datei verstreut im Netz |
 | Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug, mit steuerlichen Bereichen und Prüfvermerk | vorhanden (v316) | fehlt bei PDF-Werkzeugen; Vereinsbuchhaltung im Abo |
 | SEPA-Lastschrift-Datei für den Beitragseinzug (pain.008.001.08) | vorhanden (v317; seit v318 gegen das amtliche ISO-20022-Schema geprüft; seit v326 mit Vorabankündigung je Mitglied und Fristprüfung Brief/E-Mail) | fehlt bei PDF-Werkzeugen; Vereinssoftware im Abo |

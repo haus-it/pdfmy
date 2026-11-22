@@ -199,6 +199,43 @@
     return { ...base, zuwendungen: p.zuwendungen };
   }
 
-  const api = { zahlWort, betragWorte, fristOk, erzeugen, ausTabelle, fuerPerson, T };
+  /* ---------- Spenden aus dem Kontoauszug (app-v330) ----------
+     txs: Buchungen aus js/bank.js ({ date: 'JJJJ-MM-TT', amount, name, iban, purpose }). Gutschriften, deren Verwendungszweck oder
+     Name nach Spende klingt (Spende, Zuwendung, Kollekte, Donation), ohne Mitgliedsbeiträge und Rückbuchungen. Je Spender
+     zusammengefasst – an der IBAN, sonst am Namen –, nur für ein Kalenderjahr (Zuwendungsbestätigungen gelten je Jahr).
+     Anschriften stehen nicht im Kontoauszug: aus einer Mitgliederliste ergänzt, sonst leer zum Nachtragen. Ergebnis als
+     Spenderliste (CSV), die „Serie aus Liste“ direkt liest. */
+  const SPENDE = /spende|zuwendung|kollekte|donation|schenkung/i, KEINE = /mitgliedsbeitrag|beitrag \d{4}|jahresbeitrag|aufnahmegeb|r[üu]cklastschrift|r[üu]ckbuchung|storno/i;
+  const nk = s => String(s || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
+  function ausKontoauszug(txs, { jahr, mitglieder = [] } = {}) {
+    const kandidaten = (txs || []).filter(t => t.amount > 0 && t.date && SPENDE.test(`${t.purpose} ${t.name}`) && !KEINE.test(t.purpose || ''));
+    const jahre = [...new Set(kandidaten.map(t => +t.date.slice(0, 4)))].sort();
+    const j = jahr || (jahre.includes(new Date().getFullYear() - 1) && new Date().getMonth() < 6 ? new Date().getFullYear() - 1 : jahre[jahre.length - 1]);
+    // Anschriften aus der Mitgliederliste: Name (auch „Nachname, Vorname“ und ohne Umlaute) → Anschrift
+    const adr = new Map();
+    for (const m of mitglieder) { const a = [m.strasse, m.plzOrt].filter(Boolean).join('\n'); if (!a) continue; const w = String(m.name).split(/[\s,]+/).filter(Boolean); adr.set(nk(m.name), a); if (w.length > 1) adr.set(nk(w.slice(1).join(' ') + w[0]), a); }
+    const personen = new Map();
+    for (const t of kandidaten.filter(t => +t.date.slice(0, 4) === j)) {
+      const name = String(t.name || '').replace(/\s+/g, ' ').trim() || 'Unbekannt', key = t.iban ? 'iban:' + t.iban.replace(/\s/g, '').toUpperCase() : 'name:' + nk(name);
+      if (!personen.has(key)) personen.set(key, { name, anschrift: adr.get(nk(name)) || adr.get(nk(name.split(/[\s,]+/).reverse().join(' '))) || '', zuwendungen: [] });
+      personen.get(key).zuwendungen.push({ betrag: Math.round(t.amount * 100) / 100, datum: new Date(+t.date.slice(0, 4), +t.date.slice(5, 7) - 1, +t.date.slice(8, 10)), verzicht: false, art: 'geld' });
+    }
+    const list = [...personen.values()].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    for (const p of list) p.zuwendungen.sort((a, b) => a.datum - b.datum);
+    return { jahr: j, jahre, personen: list, ohneAnschrift: list.filter(p => !p.anschrift).length,
+      summe: Math.round(list.reduce((s, p) => s + p.zuwendungen.reduce((x, z) => x + z.betrag, 0), 0) * 100) / 100, anzahl: list.reduce((s, p) => s + p.zuwendungen.length, 0) };
+  }
+  // Spenderliste zum Prüfen in Excel (eine Zeile je Zuwendung) – wird von ausTabelle() wieder gelesen; Formel-Eingaben entschärft
+  const zelle = s => { s = String(s ?? ''); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[;"\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  function spenderCsv(personen) {
+    const rows = [['Name', 'Straße', 'PLZ', 'Ort', 'Betrag', 'Datum', 'Verzicht']];
+    for (const p of personen) {
+      const [str = '', plzOrt = ''] = String(p.anschrift || '').split('\n'), m = /^(\d{4,5})\s+(.*)$/.exec(plzOrt.trim());
+      for (const z of p.zuwendungen) rows.push([p.name, str, m ? m[1] : '', m ? m[2] : plzOrt, z.betrag.toFixed(2).replace('.', ','), dt(z.datum), z.verzicht ? 'ja' : '']);
+    }
+    return '﻿' + rows.map(r => r.map(zelle).join(';')).join('\r\n') + '\r\n';
+  }
+
+  const api = { zahlWort, betragWorte, fristOk, erzeugen, ausTabelle, fuerPerson, ausKontoauszug, spenderCsv, T };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Zuwendung = api;
 })(typeof self !== 'undefined' ? self : globalThis);

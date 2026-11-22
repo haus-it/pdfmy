@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Stand gëtt ofgefrot …",
  "wird geprüft": "gëtt gepréift",
  "Wird gesendet …": "Gëtt geschéckt …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} Spender mat {1} Spenden iwwer zesummen {2} am Joer {3} – gespäichert als „{4}“.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} Spender ouni Adress iwwersprongen: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "All Adresse sinn ergänzt.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Bei {0} Spender(en) feelt d’Adress (steet net am Kontoauszuch): w.e.g. an der Lëscht ergänzen.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "De Kontoauszuch enthält och {0} – fir en anert Joer w.e.g. nëmmen dem seng Buchungen exportéieren.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Fënnt d’Spenden am Kontoauszuch (CSV oder CAMT) a mécht doraus d’Spenderlëscht – pro Spender a Joer. D’Memberlëscht gläich mat auswielen (Ctrl+Klick), da füllt PDFMy d’Adressen aus.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Am gewielte Kontoauszuch goufe keng Buchunge fonnt – w.e.g. den Export als CSV oder CAMT (XML) aus dem Online-Banking wielen.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Am Kontoauszuch goufe keng Spenden fonnt (gesicht: „Spende“, „Zuwendung“, „Kollekte“ am Verwendungszweck; Memberbäiträg zielen net).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Keng Spenderlëscht? „Spenden aus dem Kontoauszuch …“ fënnt d’Spenden vun engem Joer am Export vun Ärem Online-Banking. Wielt d’Memberlëscht gläich mat aus (Ctrl+Klick), da sti d’Adressen schonn dran.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Lëscht préiwen, dann „Spenderlëscht wielen …“ – PDFMy mécht doraus d’Bestätegungen.",
+ "Ohne Anschrift übersprungen: {0}.": "Ouni Adress iwwersprongen: {0}.",
+ "Spenden aus dem Kontoauszug": "Spenden aus dem Kontoauszuch",
+ "Spenden aus dem Kontoauszug …": "Spenden aus dem Kontoauszuch …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

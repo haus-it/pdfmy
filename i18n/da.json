@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Henter status …",
  "wird geprüft": "under behandling",
  "Wird gesendet …": "Sender …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donorer med {1} donationer på i alt {2} i {3} – gemt som »{4}«.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} donorer uden adresse sprunget over: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Alle adresser er tilføjet.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Hos {0} donor(er) mangler adressen (den står ikke på kontoudtoget): tilføj den venligst i listen.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Kontoudtoget indeholder også {0} – for et andet år skal du kun eksportere det års posteringer.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Finder donationerne på kontoudtoget (CSV eller CAMT) og laver donorlisten ud fra dem – pr. donor og år. Vælg medlemslisten samtidig (Ctrl+klik), så tilføjer PDFMy adresserne.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Der blev ikke fundet nogen posteringer på det valgte kontoudtog – vælg venligst eksporten som CSV eller CAMT (XML) fra netbanken.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Der blev ikke fundet nogen donationer på kontoudtoget (søgt efter »Spende«, »Zuwendung«, »Kollekte« i betalingsformålet; kontingenter tæller ikke).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Ingen donorliste? »Donationer fra kontoudtog …« finder et års donationer i eksporten fra din netbank. Vælg medlemslisten samtidig (Ctrl+klik), så står adresserne der allerede.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Kontrollér listen, og vælg derefter »Vælg donorliste …« – PDFMy laver bekræftelserne ud fra den.",
+ "Ohne Anschrift übersprungen: {0}.": "Sprunget over uden adresse: {0}.",
+ "Spenden aus dem Kontoauszug": "Donationer fra kontoudtog",
+ "Spenden aus dem Kontoauszug …": "Donationer fra kontoudtog …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

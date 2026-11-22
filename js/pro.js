@@ -3948,10 +3948,37 @@ $('#zuwForm').onsubmit = async e => {
   status('Zuwendungsbestätigung erstellt – unterschreiben (Werkzeug „Unterschrift“) und speichern. Ein Doppel aufbewahren (§ 50 Abs. 4 EStDV).');
 };
 $('#zuwSerie').onclick = () => { if (zuwVereinOk()) $('#zuwIn').click(); };
+/* Spenden aus dem Kontoauszug (app-v330): Kontoauszug (CSV/CAMT) und wahlweise Mitgliederliste zusammen wählen → Spenderliste
+   eines Jahres (je Spender, Anschriften aus der Mitgliederliste) zum Prüfen; danach „Spenderliste wählen …“. Alles lokal. */
+$('#zuwKonto').onclick = () => $('#zuwKontoIn').click();
+$('#zuwKontoIn').onchange = async e => {
+  const files = [...e.target.files]; e.target.value = ''; if (!files.length) return;
+  try {
+    let txs = [], mitglieder = [];
+    for (const f of files) {
+      const t = /\.xml$/i.test(f.name) ? Bank.parse(await f.text(), f.name) : /\.(csv|txt)$/i.test(f.name) ? Bank.parse(await f.text(), f.name) : [];
+      if (t.length) { txs = txs.concat(t); continue; }
+      const m = Versammlung.ausTabelle(await fdReadTable(f)).mitglieder; if (m.length) mitglieder = mitglieder.concat(m);
+    }
+    if (!txs.length) { fdMsg($('#zuwSerMsg'), ['Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.']); return; }
+    const r = Zuwendung.ausKontoauszug(txs, { mitglieder });
+    if (!r.personen.length) { fdMsg($('#zuwSerMsg'), [`Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).`]); return; }
+    const name = `Spenderliste ${r.jahr}.csv`;
+    download(new TextEncoder().encode(Zuwendung.spenderCsv(r.personen)), name, 'text/csv');
+    const eur = n => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    fdMsg($('#zuwSerMsg'), [`${r.personen.length} Spender mit ${r.anzahl} Spenden über zusammen ${eur(r.summe)} im Jahr ${r.jahr} – gespeichert als „${name}“.`,
+      r.ohneAnschrift ? `Bei ${r.ohneAnschrift} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.` : 'Alle Anschriften sind ergänzt.',
+      r.jahre.length > 1 ? `Der Kontoauszug enthält auch ${r.jahre.filter(j => j !== r.jahr).join(', ')} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.` : '',
+      'Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.']);
+  } catch (err) { noteError(err, 'Spenden aus dem Kontoauszug'); fdMsg($('#zuwSerMsg'), [`Abgebrochen: ${err.message}`]); }
+};
 $('#zuwIn').onchange = async e => {
   const f = e.target.files[0]; e.target.value = ''; if (!f) return;
   try {
-    const { personen, fehler } = Zuwendung.ausTabelle(await fdReadTable(f));
+    const t = Zuwendung.ausTabelle(await fdReadTable(f)), fehler = t.fehler;
+    // amtliches Muster: „Name und Anschrift des Zuwendenden“ – ohne Anschrift keine Bestätigung (app-v330)
+    const ohne = t.personen.filter(p => !String(p.anschrift || '').trim()), personen = t.personen.filter(p => String(p.anschrift || '').trim());
+    if (ohne.length) fehler.push(ohne.length === 1 ? `Ohne Anschrift übersprungen: ${ohne[0].name}.` : `${ohne.length} Spender ohne Anschrift übersprungen: ${ohne.slice(0, 5).map(p => p.name).join(', ')}${ohne.length > 5 ? ' …' : ''}.`);
     if (!personen.length) { fdMsg($('#zuwSerMsg'), fehler.length ? fehler.slice(0, 3) : ['Keine Spender in der Liste gefunden.']); return; }
     const verein = zuwVerein(), opts = await zuwOpts(), files = [];
     for (const [i, p] of personen.entries()) {

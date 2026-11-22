@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Po kërkohet gjendja …",
  "wird geprüft": "po kontrollohet",
  "Wird gesendet …": "Po dërgohet …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donatorë me {1} dhurime gjithsej {2} në vitin {3} – u ruajt si „{4}“.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "U anashkaluan {0} donatorë pa adresë: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Të gjitha adresat janë plotësuar.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Te {0} donator(ë) mungon adresa (nuk është në pasqyrën e llogarisë): ju lutemi plotësojeni në listë.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Pasqyra e llogarisë përmban edhe {0} – për një vit tjetër ju lutemi eksportoni vetëm veprimet e atij viti.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Gjen dhurimet në pasqyrën e llogarisë (CSV ose CAMT) dhe prej tyre krijon listën e donatorëve – sipas donatorit dhe vitit. Zgjidhni njëkohësisht edhe listën e anëtarëve (Ctrl+klik), atëherë PDFMy plotëson adresat.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Në pasqyrën e zgjedhur të llogarisë nuk u gjetën veprime – ju lutemi zgjidhni eksportin si CSV ose CAMT (XML) nga banka online.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Në pasqyrën e llogarisë nuk u gjetën dhurime (u kërkua: „Spende“, „Zuwendung“, „Kollekte“ në qëllimin e pagesës; kuotat e anëtarësimit nuk llogariten).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Nuk keni listë donatorësh? „Dhurime nga pasqyra e llogarisë …“ gjen dhurimet e një viti në eksportin nga banka juaj online. Zgjidhni njëkohësisht edhe listën e anëtarëve (Ctrl+klik), atëherë adresat do të jenë tashmë brenda.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Kontrolloni listën, pastaj „Zgjidh listën e donatorëve …“ – PDFMy krijon prej saj vërtetimet.",
+ "Ohne Anschrift übersprungen: {0}.": "U anashkaluan pa adresë: {0}.",
+ "Spenden aus dem Kontoauszug": "Dhurime nga pasqyra e llogarisë",
+ "Spenden aus dem Kontoauszug …": "Dhurime nga pasqyra e llogarisë …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

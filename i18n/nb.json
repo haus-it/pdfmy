@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Henter status …",
  "wird geprüft": "kontrolleres",
  "Wird gesendet …": "Sender …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} givere med {1} gaver på til sammen {2} i {3} – lagret som «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} givere uten adresse hoppet over: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Alle adresser er lagt til.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "For {0} giver(e) mangler adressen (den står ikke i kontoutskriften): legg den til i listen.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Kontoutskriften inneholder også {0} – for et annet år må du bare eksportere posteringene for det året.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Finner gavene i kontoutskriften (CSV eller CAMT) og lager giverlisten av dem – per giver og år. Velg medlemslisten samtidig (Ctrl+klikk), så legger PDFMy til adressene.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Ingen posteringer ble funnet i den valgte kontoutskriften – velg eksport som CSV eller CAMT (XML) fra nettbanken.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Ingen gaver ble funnet i kontoutskriften (søkt etter «Spende», «Zuwendung», «Kollekte» i betalingsformålet; medlemskontingenter teller ikke).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Ingen giverliste? «Gaver fra kontoutskrift …» finner et års gaver i eksporten fra nettbanken din. Velg medlemslisten samtidig (Ctrl+klikk), så står adressene der allerede.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Kontroller listen, velg deretter «Velg giverliste …» – PDFMy lager bekreftelsene ut fra den.",
+ "Ohne Anschrift übersprungen: {0}.": "Hoppet over uten adresse: {0}.",
+ "Spenden aus dem Kontoauszug": "Gaver fra kontoutskrift",
+ "Spenden aus dem Kontoauszug …": "Gaver fra kontoutskrift …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

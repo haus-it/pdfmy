@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "A consultar o estado …",
  "wird geprüft": "em verificação",
  "Wird gesendet …": "A enviar …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} doadores com {1} donativos num total de {2} em {3} – guardado como «{4}».",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "{0} doadores sem morada ignorados: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Todas as moradas estão completas.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Falta a morada de {0} doador(es) (não consta do extrato bancário): complete-a na lista.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "O extrato bancário também contém {0} – para outro ano, exporte apenas os movimentos desse ano.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Encontra os donativos no extrato bancário (CSV ou CAMT) e cria com eles a lista de doadores – por doador e ano. Selecione ao mesmo tempo a lista de associados (Ctrl+clique) e o PDFMy completa as moradas.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Não foram encontrados movimentos no extrato bancário selecionado – escolha a exportação em CSV ou CAMT (XML) do homebanking.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Não foram encontrados donativos no extrato bancário (pesquisado: «Spende», «Zuwendung», «Kollekte» no descritivo; as quotas de associado não contam).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Não tem lista de doadores? «Donativos do extrato bancário …» encontra os donativos de um ano na exportação do seu homebanking. Selecione ao mesmo tempo a lista de associados (Ctrl+clique) e as moradas já estarão incluídas.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Verifique a lista e depois «Escolher lista de doadores …» – o PDFMy cria a partir dela os comprovativos.",
+ "Ohne Anschrift übersprungen: {0}.": "Ignorados sem morada: {0}.",
+ "Spenden aus dem Kontoauszug": "Donativos do extrato bancário",
+ "Spenden aus dem Kontoauszug …": "Donativos do extrato bancário …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }

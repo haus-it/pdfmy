@@ -4398,5 +4398,19 @@
  "Stand wird abgefragt …": "Provjerava se stanje …",
  "wird geprüft": "u provjeri",
  "Wird gesendet …": "Šalje se …",
- "zu viele": "zu viele"
+ "zu viele": "zu viele",
+ "{0} Spender mit {1} Spenden über zusammen {2} im Jahr {3} – gespeichert als „{4}“.": "{0} donatora s {1} donacija u ukupnom iznosu od {2} u {3}. – spremljeno kao „{4}“.",
+ "{0} Spender ohne Anschrift übersprungen: {1}{2}.": "Preskočeno donatora bez adrese: {0}: {1}{2}.",
+ "Alle Anschriften sind ergänzt.": "Sve su adrese dopunjene.",
+ "Bei {0} Spender(n) fehlt die Anschrift (steht nicht im Kontoauszug): bitte in der Liste ergänzen.": "Kod {0} donatora nedostaje adresa (nije na izvatku računa): molimo dopunite je u popisu.",
+ "Der Kontoauszug enthält auch {0} – für ein anderes Jahr bitte nur dessen Buchungen exportieren.": "Izvadak računa sadrži i {0} – za drugu godinu molimo izvezite samo transakcije te godine.",
+ "Findet die Spenden im Kontoauszug (CSV oder CAMT) und macht daraus die Spenderliste – je Spender und Jahr. Mitgliederliste gleich mit auswählen (Strg-Klick), dann ergänzt PDFMy die Anschriften.": "Pronalazi donacije na izvatku računa (CSV ili CAMT) i od njih izrađuje popis donatora – po donatoru i godini. Istodobno odaberite i popis članova (Ctrl+klik), tada PDFMy dopunjuje adrese.",
+ "Im gewählten Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.": "Na odabranom izvatku računa nisu pronađene transakcije – molimo odaberite izvoz kao CSV ili CAMT (XML) iz internetskog bankarstva.",
+ "Im Kontoauszug wurden keine Spenden gefunden (gesucht: „Spende“, „Zuwendung“, „Kollekte“ im Verwendungszweck; Mitgliedsbeiträge zählen nicht).": "Na izvatku računa nisu pronađene donacije (traženo: „Spende“, „Zuwendung“, „Kollekte“ u svrsi plaćanja; članarine se ne računaju).",
+ "Keine Spenderliste? „Spenden aus dem Kontoauszug …“ findet die Spenden eines Jahres im Export Ihres Online-Bankings. Wählen Sie die Mitgliederliste gleich mit aus (Strg-Klick), dann stehen die Anschriften schon drin.": "Nemate popis donatora? „Donacije iz izvatka računa …“ pronalazi donacije jedne godine u izvozu vašeg internetskog bankarstva. Istodobno odaberite i popis članova (Ctrl+klik), tada su adrese već unesene.",
+ "Liste prüfen, dann „Spenderliste wählen …“ – PDFMy erstellt daraus die Bestätigungen.": "Provjerite popis, zatim „Odaberi popis donatora …“ – PDFMy iz njega izrađuje potvrde.",
+ "Ohne Anschrift übersprungen: {0}.": "Preskočeno bez adrese: {0}.",
+ "Spenden aus dem Kontoauszug": "Donacije iz izvatka računa",
+ "Spenden aus dem Kontoauszug …": "Donacije iz izvatka računa …",
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv"
 }
