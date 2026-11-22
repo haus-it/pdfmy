@@ -2815,6 +2815,64 @@ $('#repMailto').onclick = async () => {
 };
 $('#repCancel').onclick = () => $('#reportDlg').close();
 $('#btnReport').onclick = () => openReport('');
+/* Direkt senden an pdfmy.de (app-v329, Entscheidung GF 22.11.2026): ohne Mailprogramm, gleicher Inhalt wie in der Vorschau, keine
+   Dokumente. Antwort: Meldungsnummer und Token (nur auf diesem Gerät gespeichert) für „Meine Meldungen“. Klappt es nicht (offline,
+   eigener Server ohne Empfänger), bleiben die Wege über das Mailprogramm. */
+const MELDE_URL = 'melden.php';
+const meineMeldungen = () => { const l = LS.get('meineMeldungen', []); return Array.isArray(l) ? l : []; };
+const MELDE_STAND = { neu: 'angekommen', 'in Arbeit': 'in Arbeit', 'in Prüfung': 'wird geprüft', erledigt: 'erledigt', 'kein Fehler': 'geprüft – kein Fehler gefunden', beantwortet: 'beantwortet' };
+const meldeStandText = s => I18N.t(MELDE_STAND[s.status] || s.status) + (s.status === 'erledigt' && s.version ? ' ' + I18N.t('(in Version {0})').replace('{0}', String(s.version).replace(/^app-/, '')) : '');
+async function meldeStand(m) {
+  const r = await fetch(`${MELDE_URL}?id=${encodeURIComponent(m.id)}&t=${encodeURIComponent(m.token)}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+async function meineMeldungenZeigen() {
+  const l = meineMeldungen(); $('#repMeine').hidden = !l.length; if (!l.length) return;
+  const ul = $('#repMeineListe'); ul.replaceChildren();
+  for (const m of [...l].reverse().slice(0, 10)) {
+    const li = document.createElement('li'); li.textContent = `${m.id} – ${m.betreff || ''} – ${I18N.t('Stand wird abgefragt …')}`; ul.append(li);
+    meldeStand(m).then(s => { li.textContent = `${m.id} – ${m.betreff || ''} – ${meldeStandText(s)}${s.antwort ? ': ' + s.antwort : ''}`; }).catch(() => { li.textContent = `${m.id} – ${m.betreff || ''} – ${I18N.t('Stand gerade nicht abrufbar')}`; });
+  }
+}
+$('#reportDlg').addEventListener('toggle', () => { if ($('#reportDlg').open) { $('#repDirektMsg').textContent = ''; meineMeldungenZeigen().catch(() => {}); } });
+$('#repDirekt').onclick = async () => {
+  if (!reportReady()) return;
+  const email = $('#repEmail').value.trim();
+  if (email && !$('#repEmail').checkValidity()) { $('#repDirektMsg').textContent = I18N.t('Bitte die E-Mail-Adresse prüfen oder das Feld leer lassen.'); $('#repEmail').focus(); return; }
+  const txt = reportText(), subject = reportSubject(), btn = $('#repDirekt');
+  btn.disabled = true; $('#repDirektMsg').textContent = I18N.t('Wird gesendet …');
+  try {
+    const r = await fetch(MELDE_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, cache: 'no-store',
+      body: JSON.stringify({ art: repKind === 'Verbesserungsvorschlag' ? 'idea' : 'bug', betreff: subject, text: txt, email, app: ((txt.match(/PDFMy: ([^\n,(]+)/) || [])[1] || '').trim(), sprache: document.documentElement.lang || '' }) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok || !d.id) throw new Error(d.fehler || 'HTTP ' + r.status);
+    LS.set('meineMeldungen', [...meineMeldungen(), { id: d.id, token: d.token, at: Date.now(), betreff: repKind === 'Verbesserungsvorschlag' ? I18N.t('Verbesserungsvorschlag') : I18N.t('Fehlerbericht'), status: 'neu' }].slice(-30));
+    $('#reportDlg').close();
+    $('#repDankText').textContent = (email ? I18N.t('Ihre Meldung Nr. {0} ist angekommen. Wir kümmern uns darum – meist noch am selben Tag – und schreiben Ihnen, sobald sie erledigt ist.') : I18N.t('Ihre Meldung Nr. {0} ist angekommen. Wir kümmern uns darum – meist noch am selben Tag.')).replace('{0}', d.id);
+    $('#repDankDlg').showModal();
+  } catch (e) {
+    console.warn('Direkt senden', e);
+    $('#repDirektMsg').textContent = e.message === 'zu viele' ? I18N.t('Gerade sind sehr viele Meldungen eingegangen – bitte später noch einmal oder per E-Mail senden.')
+      : I18N.t('Direkt senden ist gerade nicht möglich – bitte „E-Mail-Programm“ wählen; der Bericht geht dann über Ihr Mailprogramm.');
+  } finally { btn.disabled = false; }
+};
+$('#repDankOk').onclick = () => $('#repDankDlg').close();
+// Beim Start (höchstens einmal am Tag): ist eine eigene Meldung erledigt? Dann einmal Bescheid sagen – mit Dank.
+setTimeout(async () => {
+  try {
+    const l = meineMeldungen().filter(m => !['erledigt', 'kein Fehler', 'beantwortet'].includes(m.status) && Date.now() - m.at < 180 * 864e5);
+    if (!l.length || LS.get('meldeStandTag', '') === new Date().toISOString().slice(0, 10)) return;
+    LS.set('meldeStandTag', new Date().toISOString().slice(0, 10));
+    const alle = meineMeldungen();
+    for (const m of l) {
+      const s = await meldeStand(m).catch(() => null); if (!s) continue;
+      const e = alle.find(x => x.id === m.id); if (e) e.status = s.status;
+      if (['erledigt', 'kein Fehler', 'beantwortet'].includes(s.status)) toast(I18N.t('Danke für Ihre Unterstützung! Ihre Meldung {0}: {1}').replace('{0}', m.id).replace('{1}', meldeStandText(s) + (s.antwort ? ' – ' + s.antwort : '')), 12000);
+    }
+    LS.set('meineMeldungen', alle);
+  } catch {}
+}, 8000);
 
 /* ---------- PDFMy weiterempfehlen (07.11.2026) ----------
    Nur einfache Links bzw. das Teilen-Menü des Geräts – keine Teilen-Skripte von Facebook, LinkedIn & Co. (die senden schon beim

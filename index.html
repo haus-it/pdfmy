@@ -2241,6 +2241,12 @@ html.i18n-wait body{visibility:hidden}
   </div>
 </dialog>
 
+<dialog id="repDankDlg" class="sharedlg" aria-labelledby="repDankT">
+  <h3 class="dlgtitle" id="repDankT">Danke für Ihre Unterstützung!</h3>
+  <p id="repDankText"></p>
+  <p class="hint">Den Stand sehen Sie jederzeit unter <i>Problem melden → Meine Meldungen</i>. Ist sie erledigt, sagt PDFMy Ihnen Bescheid.</p>
+  <div class="dlgrow"><button type="button" class="primary" id="repDankOk">Schließen</button></div>
+</dialog>
 <dialog id="repSentDlg" class="sharedlg" aria-labelledby="repSentT">
   <h3 class="dlgtitle" id="repSentT">Ist Ihr Bericht unterwegs?</h3>
   <p class="hint" style="margin-top:0" id="repSentInfo">Hat sich Ihr E-Mail-Programm geöffnet und haben Sie auf „Senden“ geklickt? Bis Sie das bestätigen, hebt PDFMy den Bericht auf diesem Gerät auf – so geht nichts verloren.</p>
@@ -2261,8 +2267,11 @@ html.i18n-wait body{visibility:hidden}
   <div class="field"><label for="repDid">Was haben Sie gemacht? (optional)</label><textarea id="repDid" rows="2" placeholder="z. B. Brief gescannt, dann „Als PDF/A speichern“ gewählt."></textarea></div>
   <div class="field"><label for="repWhat" id="repWhatL">Was ist passiert? (optional)</label><textarea id="repWhat" rows="2" placeholder="z. B. Beim beidseitigen Scannen am Epson kommen nur Vorderseiten."></textarea></div>
   <div class="field" id="repExpectF"><label for="repExpect">Was hätten Sie erwartet? (optional)</label><textarea id="repExpect" rows="2" placeholder="z. B. Vorder- und Rückseiten in der richtigen Reihenfolge."></textarea></div>
+  <div class="field"><label for="repEmail">Ihre E-Mail-Adresse für die Rückmeldung (freiwillig)</label><input id="repEmail" type="email" autocomplete="email" placeholder="Leer lassen: Rückmeldung nur hier in PDFMy"></div>
   <details class="sec"><summary><b>Inhalt des Berichts</b></summary><pre id="repText" class="errdetail" style="max-height:220px"></pre></details>
-  <div class="dlgrow"><button type="button" id="repCancel">Abbrechen</button><button type="button" id="repMailto" title="Öffnet das Standard-Mailprogramm; das vollständige Protokoll liegt zusätzlich in der Zwischenablage">E-Mail-Programm</button><button type="button" class="primary" id="repOutlook"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>E-Mail mit Anhang (Outlook)</button></div>
+  <details class="sec" id="repMeine" hidden><summary><b>Meine Meldungen</b></summary><ul id="repMeineListe" class="hint" style="margin:6px 0 0 18px"></ul></details>
+  <p id="repDirektMsg" class="hint" role="status"></p>
+  <div class="dlgrow"><button type="button" id="repCancel">Abbrechen</button><button type="button" id="repMailto" title="Öffnet das Standard-Mailprogramm; das vollständige Protokoll liegt zusätzlich in der Zwischenablage">E-Mail-Programm</button><button type="button" id="repOutlook" title="E-Mail mit dem vollständigen Protokoll als Anhang (Outlook)">E-Mail mit Anhang (Outlook)</button><button type="button" class="primary" id="repDirekt" title="Schickt den Bericht direkt an PDFMy – ohne Mailprogramm. Gesendet wird genau der Inhalt oben, keine Dokumente."><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Direkt senden</button></div>
 </dialog>
 <button type="button" id="formJump" class="formjump primary" hidden>Formular ausfüllen</button>
 <div class="bannerstack">

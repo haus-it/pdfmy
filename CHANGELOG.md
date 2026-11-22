@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-22
 
+### Meldungen direkt senden – mit Danke und Stand in der App (app-v329)
+- „Problem melden“ hat jetzt „Direkt senden“: Der Bericht (wie in der Vorschau, ohne Dokumente) geht ohne Mailprogramm an pdfmy.de. Sofort erscheint „Danke für Ihre Unterstützung!“ mit Meldungsnummer. Unter „Meine Meldungen“ steht der Stand (angekommen, in Arbeit, erledigt in Version …); beim Start sagt PDFMy Bescheid, wenn eine eigene Meldung erledigt ist. Mit freiwilliger E-Mail-Adresse kommen Eingangsbestätigung und Erledigt-Nachricht zusätzlich per Mail.
+- Auf pdfmy.de: Empfänger melden.php – Ablage ohne IP-Adresse im gesperrten Ordner, Begrenzung gegen Missbrauch, Abholen und Stand nur mit Betreiberschlüssel (tools/meldungen.js); erledigte Meldungen werden nach 90 Tagen bis auf den Stand gelöscht. Datenschutzerklärung ergänzt.
+- Klappt das Senden nicht (offline, eigener Server), bleibt der Weg über das Mailprogramm. tests/melden.test.js; Ablauf in der App mit lokalem Empfänger geprüft.
+
 ### Fehlerberichte und Vorschläge gehen nicht mehr verloren (app-v328)
 - Nach „Problem melden“ fragt PDFMy nach, ob der Bericht wirklich rausgegangen ist, und hebt ihn bis zur Bestätigung auf dem Gerät auf (höchstens 14 Tage). Beim nächsten Start erinnert PDFMy einmal an unbestätigte Berichte.
 - Öffnet sich kein Mailprogramm (z. B. bei Webmail), bietet der Dialog andere Wege an: in Gmail oder Outlook im Browser öffnen (mit Empfänger, Betreff und Text), Text kopieren, als Datei speichern.

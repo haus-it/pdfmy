@@ -94,6 +94,19 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Entschieden 22.11.2026 (GF): Meldungen direkt an pdfmy.de, Abarbeitung ohne Umweg (app-v329)
+**Anlass (GF 22.11.2026):** „Eine Lösung, dass es direkt für dich zum Abarbeiten bereitgestellt wird und nicht extra per E-Mail an mich – ohne Verzögerung erledigt, mit einer Rückmeldung und einem Danke für die Unterstützung.“ **Hebt die Festlegung vom 25.10.2026 („kein Meldeserver“) auf.**
+**Umsetzung:** (1) „Direkt senden“ im Meldedialog: Bericht wie in der Vorschau (unkenntlich gemacht, keine Dokumente) per HTTPS an pdfmy.de/melden.php; Meldungsnummer und Token nur im Browser; Mail-Weg bleibt als Rückfall. (2) Ablage je Meldung als Datei im gesperrten Ordner, ohne IP-Adresse; Missbrauchsschutz über ein täglich wechselndes, nicht umkehrbares Kürzel (24 h); höchstens 10 Meldungen je Stunde, 64 KB. (3) Abholen und Stand setzen nur mit dem Betreiberschlüssel (im Code nur dessen SHA-256-Hash; Schlüssel in .deploy, nicht im Repository) über tools/meldungen.js; Abruf alle 15 Minuten. Eindeutige kleine Fehler behebt Claude selbst und veröffentlicht, wenn alle Tests grün sind (Freigabe GF); Größeres wird vorgelegt. (4) Rückmeldung: Danke-Dialog sofort, „Meine Meldungen“ mit Stand, Hinweis beim Start, wenn erledigt; Danke-Mails nur bei freiwillig angegebener Adresse. (5) Erledigte Meldungen: Text und Adresse nach 90 Tagen gelöscht. Datenschutzerklärung Abschnitt 1 und 6b ergänzt.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | gewahrt für Dokumente: es geht nur der sichtbare Bericht ohne Dokumente, nur auf Klick |
+| 2 Kein Server | bewusste Ausnahme (Entscheidung GF): kleiner Empfänger für Meldungen; keine Dokumente, keine Konten, kein Tracking |
+| 3 Ohne Tracking | gewahrt: keine IP-Adresse in Meldungen, Kürzel nur 24 h für die Begrenzung |
+| 4 Einfach | verbessert: ein Klick statt Mailprogramm, Danke und Stand in der App |
+| 5 Prüfbar | tests/melden.test.js (Empfänger mit PHP: Annahme, Token, Betreiberschlüssel, Grenzen, gesperrter Ordner), Durchlauf in der App mit lokalem Empfänger |
+| 6 Wenig aktive Inhalte | nicht betroffen |
+
 ### Ergänzt 22.11.2026: Rückmeldungen gehen nicht verloren (app-v328, Auftrag GF)
 **Anlass (GF 22.11.2026):** „Wie können wir die Übertragung der Verbesserungsvorschläge und Fehlermeldungen direkter machen, dass nichts verloren geht?“ Verlustquellen: (1) kein Mailprogramm eingerichtet (Webmail) – Klick ohne Wirkung, Bericht nur still in der Zwischenablage; (2) Mail geöffnet, aber nie gesendet; (3) Eingang im allgemeinen Posteingang übersehen.
 **Umsetzung ohne Meldeserver (Entscheidung 25.10.2026 bleibt):** (a) PDFMy hebt den Bericht lokal auf, bis der Nutzer „Ja, gesendet“ bestätigt (höchstens 14 Tage); beim nächsten Start einmal Erinnerung. (b) Ausweichwege im Nachfrage-Dialog: Gmail bzw. Outlook im Browser (nur auf Klick, mit dem eigenen Konto des Nutzers, ohne Herkunftsadresse), Text kopieren, als Datei speichern. (c) Beim Empfänger: Outlook-Ordner „PDFMy-Rückmeldungen“ mit Regel (Betreff „PDFMy Fehlerbericht“ / „PDFMy Verbesserungsvorschlag“). (d) Täglicher Abruf der neuen Rückmeldungen mit Liste in docs/Rueckmeldungen.md (nur lesend).
@@ -333,7 +346,7 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 ### Entschieden 25.10.2026: Bug-Melder ausbauen
 **Anlass (GF 25.10.2026):** „Bug-Melder einbauen“. Vorhanden war „Mehr → Problem melden“ (E-Mail mit Versionen und Protokoll, Unkenntlichmachen, Vorschau). Lücken: schwer zu finden (nur im Menü „Mehr“); Programmfehler werden nur still protokolliert, PDFMy bietet nie von sich aus das Melden an; nur ein Freitextfeld (keine Art, keine Schritte zum Nachstellen, kein erwartetes Ergebnis); bei Programmfehlern keine Aufrufkette; von Hilfe-, Scanner- und Werkzeugseiten aus kein Weg zum Melden.
 **Umfang:** (1) Knopf „Fehler melden“ dauerhaft in der Fußleiste. (2) Nach einem unerwarteten Programmfehler einmal je Sitzung ein Hinweis unten „Da ist etwas schiefgelaufen – Fehler melden / Schließen“; der Fehler ist im Bericht vorbelegt; harmlose Meldungen (Browser-Erweiterungen fremder Herkunft, abgebrochene Downloads, ResizeObserver) lösen ihn nicht aus. (3) Formular: Art (Fehler / Verbesserungsvorschlag), „Was haben Sie gemacht?“, „Was ist passiert?“, „Was hätten Sie erwartet?“ – alles freiwillig. (4) Technik im Bericht: Fehler mit gekürzter Aufrufkette (Pfade unkenntlich), Anzahl der Fehler seit dem Start. (5) Hilfe- und Webseiten: Link „Fehler melden“ öffnet PDFMy mit dem Melde-Fenster (`?melden`).
-**Versand unverändert:** E-Mail aus dem eigenen Mailprogramm des Nutzers (Outlook-Entwurf oder mailto); gesendet wird nur, wenn er selbst auf „Senden“ klickt. Kein Meldeserver, kein Fehlerdienst (Sentry o. Ä.), kein automatisches Senden, keine Bildschirmfotos (könnten Dokumentinhalte zeigen).
+**Versand unverändert (aufgehoben 22.11.2026, siehe „Meldungen direkt an pdfmy.de“):** E-Mail aus dem eigenen Mailprogramm des Nutzers (Outlook-Entwurf oder mailto); gesendet wird nur, wenn er selbst auf „Senden“ klickt. Kein Meldeserver, kein Fehlerdienst (Sentry o. Ä.), kein automatisches Senden, keine Bildschirmfotos (könnten Dokumentinhalte zeigen).
 
 | Leitplanke | Prüfung |
 |---|---|
