@@ -94,6 +94,20 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Ergänzt 22.11.2026: Rückmeldungen gehen nicht verloren (app-v328, Auftrag GF)
+**Anlass (GF 22.11.2026):** „Wie können wir die Übertragung der Verbesserungsvorschläge und Fehlermeldungen direkter machen, dass nichts verloren geht?“ Verlustquellen: (1) kein Mailprogramm eingerichtet (Webmail) – Klick ohne Wirkung, Bericht nur still in der Zwischenablage; (2) Mail geöffnet, aber nie gesendet; (3) Eingang im allgemeinen Posteingang übersehen.
+**Umsetzung ohne Meldeserver (Entscheidung 25.10.2026 bleibt):** (a) PDFMy hebt den Bericht lokal auf, bis der Nutzer „Ja, gesendet“ bestätigt (höchstens 14 Tage); beim nächsten Start einmal Erinnerung. (b) Ausweichwege im Nachfrage-Dialog: Gmail bzw. Outlook im Browser (nur auf Klick, mit dem eigenen Konto des Nutzers, ohne Herkunftsadresse), Text kopieren, als Datei speichern. (c) Beim Empfänger: Outlook-Ordner „PDFMy-Rückmeldungen“ mit Regel (Betreff „PDFMy Fehlerbericht“ / „PDFMy Verbesserungsvorschlag“). (d) Täglicher Abruf der neuen Rückmeldungen mit Liste in docs/Rueckmeldungen.md (nur lesend).
+**Verworfen bleibt:** eigenes Meldeformular auf pdfmy.de (Meldeserver) – nur nach neuer Entscheidung der GF.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Bericht nur lokal gespeichert, wie er gesendet werden sollte (unkenntlich gemacht, wenn gewählt); keine Dokumente |
+| 2 Kein Server | passt: kein Meldeserver; Webmail nur auf Klick des Nutzers mit seinem eigenen Konto |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: eine Rückfrage nach dem Senden, Ausweichwege mit je einem Klick |
+| 5 Prüfbar | tests/fehlerbericht.test.js; Durchlauf in der App (Senden, Rückfrage, Webmail-Links, Erinnerung nach Neustart) |
+| 6 Wenig aktive Inhalte | nicht betroffen |
+
 ### Geprüft und umgesetzt 22.11.2026: Beiträge per Überweisung mit GiroCode und Zahlungsabgleich (app-v327)
 **Inhalt:** Für Mitglieder ohne Lastschrift: Beitragsrechnung je Mitglied mit GiroCode (EPC-QR) und Zahlungsreferenz; Abgleich mit dem Kontoauszug (CSV/CAMT über js/bank.js): bezahlt, teilweise, offen (Referenz sicher, Name als Rückfall, Teilzahlungen addiert, gleiche Namen werden nicht geraten); Übersicht für die Kasse, Excel-Liste der Offenen, Zahlungserinnerungen mit offenem Betrag. **Grund (Leitsatz: besser als die Mitbewerber):** Nach dem SEPA-Einzug (v317/v326) fehlte der zweite Zahlweg; Kassenwarte haken Überweisungen bisher von Hand ab. PDF-Programme bieten das nicht; Vereinssoftware im Abo braucht dafür Kontozugriff über ihre Server (nicht nachgeprüft für alle Anbieter).
 

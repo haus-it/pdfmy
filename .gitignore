@@ -27,3 +27,6 @@ docs/presse/
 
 # Store-Mappe (erzeugt von tools/store-assets.js)
 store/
+
+# Eingegangene Fehlerberichte und Vorschläge (enthält Namen) – nur lokal
+docs/Rueckmeldungen.md

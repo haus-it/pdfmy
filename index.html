@@ -2241,6 +2241,18 @@ html.i18n-wait body{visibility:hidden}
   </div>
 </dialog>
 
+<dialog id="repSentDlg" class="sharedlg" aria-labelledby="repSentT">
+  <h3 class="dlgtitle" id="repSentT">Ist Ihr Bericht unterwegs?</h3>
+  <p class="hint" style="margin-top:0" id="repSentInfo">Hat sich Ihr E-Mail-Programm geöffnet und haben Sie auf „Senden“ geklickt? Bis Sie das bestätigen, hebt PDFMy den Bericht auf diesem Gerät auf – so geht nichts verloren.</p>
+  <fieldset><legend>Kein E-Mail-Programm geöffnet? So geht es auch:</legend>
+    <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap">
+      <a class="btn" id="repGmail" target="_blank" rel="noopener noreferrer">In Gmail öffnen</a>
+      <a class="btn" id="repOutlookWeb" target="_blank" rel="noopener noreferrer">In Outlook im Browser öffnen</a>
+      <button type="button" id="repCopy">Text kopieren</button>
+      <button type="button" id="repFile">Als Datei speichern</button></div>
+    <p class="hint" id="repSentTo"></p></fieldset>
+  <div class="dlgrow"><button type="button" id="repDrop">Verwerfen</button><button type="button" id="repLater">Später erinnern</button><button type="button" class="primary" id="repSentOk">Ja, gesendet</button></div>
+</dialog>
 <dialog id="reportDlg" class="sharedlg" aria-labelledby="reportDlgT">
   <h3 class="dlgtitle" id="reportDlgT">Problem melden</h3>
   <p class="hint" style="margin:-8px 0 10px">Der Bericht geht an <b id="repTo"></b>. Er enthält die Versionen, das Protokoll von pdfmy Scan und die letzten Meldungen – keine Dokumente. Unter „Inhalt des Berichts“ sehen Sie vorher genau, was gesendet wird.</p>

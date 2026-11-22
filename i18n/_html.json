@@ -1527,5 +1527,14 @@
  "Mitgliederliste (Excel oder CSV): Name bzw. Vorname/Nachname und Beitrag; wahlweise Mitgliedsnummer (wird Teil der Referenz), Straße, PLZ, Ort, E-Mail.",
  "Beim Abgleich Zahlungserinnerungen für alle Offenen erstellen",
  "Zahlungen abgleichen …",
- "Beitragsrechnungen erstellen …"
+ "Beitragsrechnungen erstellen …",
+ "Ist Ihr Bericht unterwegs?",
+ "Hat sich Ihr E-Mail-Programm geöffnet und haben Sie auf „Senden“ geklickt? Bis Sie das bestätigen, hebt PDFMy den Bericht auf diesem Gerät auf – so geht nichts verloren.",
+ "Kein E-Mail-Programm geöffnet? So geht es auch:",
+ "In Gmail öffnen",
+ "In Outlook im Browser öffnen",
+ "Als Datei speichern",
+ "Verwerfen",
+ "Später erinnern",
+ "Ja, gesendet"
 ]

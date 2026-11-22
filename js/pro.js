@@ -2754,12 +2754,45 @@ function reportMailBody(txt) {
   const [head, rest = ''] = txt.split('\n--- Letzte Meldungen'), msgs = rest.split('\n--- Protokoll')[0].split('\n').slice(1).filter(Boolean).slice(-10);
   return head + (msgs.length ? '\n--- Letzte Meldungen ---\n' + msgs.join('\n') + '\n' : '');
 }
+/* Bericht nicht verlieren (app-v328): Nach „Senden“ hebt PDFMy den Bericht lokal auf, bis der Nutzer „Ja, gesendet“ bestätigt –
+   öffnet sich kein Mailprogramm (Webmail-Nutzer), gibt es Ausweichwege: Gmail bzw. Outlook im Browser (nur auf Klick, mit dem
+   eigenen Konto des Nutzers), Text kopieren, als Datei speichern. Beim nächsten Start erinnert PDFMy einmal an unbestätigte Berichte.
+   Gespeichert wird nur der Bericht, wie er gesendet werden sollte (unkenntlich gemacht, wenn so gewählt) – nichts geht an uns. */
+const REP_KEEP_DAYS = 14;
+const repMerken = (subject, txt) => LS.set('repPending', { subject, txt, kind: repKind, at: Date.now() });
+const repOffen = () => { const p = LS.get('repPending', null); if (!p || !p.txt) return null; if (Date.now() - p.at > REP_KEEP_DAYS * 864e5) { LS.del('repPending'); return null; } return p; };
+const repKurz = txt => {   // für Webmail-Adressen (Länge begrenzt): Kopf + neueste Zeilen; vollständig über „Text kopieren“ / „Als Datei speichern“
+  if (txt.length <= 1800) return txt;
+  const head = txt.split('\n--- Letzte Meldungen')[0].slice(0, 700), tail = txt.slice(-(1750 - head.length));
+  return head + '\n…\n' + tail.slice(tail.indexOf('\n') + 1) + '\n\n' + I18N.t('(Vollständiger Bericht: in PDFMy über „Text kopieren“ bzw. „Als Datei speichern“.)');
+};
+function repNachfragen(p = repOffen(), { beimStart = false } = {}) {
+  if (!p) return;
+  const enc = encodeURIComponent, body = repKurz(p.txt);
+  $('#repGmail').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(SUPPORT)}&su=${enc(p.subject)}&body=${enc(body)}`;
+  $('#repOutlookWeb').href = `https://outlook.live.com/mail/0/deeplink/compose?to=${enc(SUPPORT)}&subject=${enc(p.subject)}&body=${enc(body)}`;
+  $('#repSentTo').textContent = I18N.t('Empfänger: {0} · Betreff: {1}').replace('{0}', SUPPORT).replace('{1}', p.subject);
+  $('#repSentInfo').textContent = beimStart
+    ? I18N.t('Ihr Bericht vom {0} ist noch nicht als gesendet bestätigt. Ist er angekommen? Sonst schicken Sie ihn hier auf einem anderen Weg.').replace('{0}', new Date(p.at).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' }))
+    : I18N.t('Hat sich Ihr E-Mail-Programm geöffnet und haben Sie auf „Senden“ geklickt? Bis Sie das bestätigen, hebt PDFMy den Bericht auf diesem Gerät auf – so geht nichts verloren.');
+  if (!$('#repSentDlg').open) $('#repSentDlg').showModal();
+}
+$('#repSentOk').onclick = () => { LS.del('repPending'); $('#repSentDlg').close(); toast('Danke! Wir kümmern uns darum.', 4000); };
+$('#repLater').onclick = () => { $('#repSentDlg').close(); status('Der Bericht bleibt aufgehoben – PDFMy erinnert beim nächsten Start daran.'); };
+$('#repDrop').onclick = () => { if (!confirm(I18N.t('Bericht wirklich verwerfen?'))) return; LS.del('repPending'); $('#repSentDlg').close(); };
+$('#repCopy').onclick = async () => { const p = repOffen(); if (!p) return; try { await navigator.clipboard.writeText(`${p.subject}\n${I18N.t('An')}: ${SUPPORT}\n\n${p.txt}`); toast('Bericht kopiert – in eine E-Mail an die angegebene Adresse einfügen.', 5000); } catch { toast('Kopieren nicht möglich – bitte „Als Datei speichern“ wählen.', 5000); } };
+$('#repFile').onclick = () => { const p = repOffen(); if (!p) return; download(new TextEncoder().encode(`${p.subject}\n${I18N.t('An')}: ${SUPPORT}\n\n${p.txt}`), `PDFMy-${p.kind}-${new Date(p.at).toISOString().slice(0, 10)}.txt`, 'text/plain'); };
+$('#repGmail').onclick = $('#repOutlookWeb').onclick = () => status('Webmail geöffnet – bitte dort auf „Senden“ klicken und danach hier „Ja, gesendet“ wählen.');
+// beim Start: einmal je Sitzung an unbestätigte Berichte erinnern (nicht sofort – erst wenn PDFMy bereit ist)
+setTimeout(() => { try { const p = repOffen(); if (!sessionStorage.getItem('repErinnert') && p && Date.now() - p.at > 120000 && !document.querySelector('dialog[open]')) { sessionStorage.setItem('repErinnert', '1'); repNachfragen(repOffen(), { beimStart: true }); } } catch {} }, 6000);
 $('#repOutlook').onclick = async () => {
   if (!reportReady()) return;
   const txt = reportText(), enc = new TextEncoder();
+  repMerken(reportSubject(), txt);
   const eml = Journal.emlDraft({ to: SUPPORT, subject: reportSubject(), body: reportMailBody(txt) + '\n\nDas vollständige Protokoll ist angehängt.\n\nViele Grüße' + (S.author ? '\n' + S.author : ''),
     attachments: [{ name: `Protokoll_${new Date().toISOString().slice(0, 16).replace(/\D/g, '')}.txt`, mime: 'text/plain', bytes: enc.encode(txt) }] });
   $('#reportDlg').close();
+  setTimeout(() => repNachfragen(), 2500);   // nachfragen, ob er wirklich rausging (sonst Ausweichwege)
   if (await openEml(enc.encode(eml), 'Fehlerbericht_PDFMy.eml')) return status(`Fehlerbericht ist in Ihrem Mail-Programm geöffnet – bitte auf „Senden“ klicken (an ${SUPPORT}).`);
   status(`Fehlerbericht als E-Mail vorbereitet – die heruntergeladene Datei öffnen, in Outlook auf „Senden“ klicken (an ${SUPPORT}).`);
   toast('E-Mail vorbereitet: Datei „Fehlerbericht_PDFMy.eml“ öffnen und senden.', 8000);
@@ -2767,6 +2800,7 @@ $('#repOutlook').onclick = async () => {
 $('#repMailto').onclick = async () => {
   if (!reportReady()) return;
   const txt = reportText();
+  repMerken(reportSubject(), txt); setTimeout(() => repNachfragen(), 2500);   // öffnet sich kein Mailprogramm, bleiben Ausweichwege
   try { await navigator.clipboard.writeText(txt); } catch {}
   // mailto-Links sind in der Länge begrenzt: Kopf (Versionen) + die NEUESTEN Protokollzeilen behalten, vollständig in der Zwischenablage
   let body = txt;

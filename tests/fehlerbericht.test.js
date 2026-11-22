@@ -49,3 +49,18 @@ test('Bekannte Dateinamen werden ganz ersetzt und überstehen ein Neuladen im Ta
   assert.match(app, /sessionStorage\.getItem\('mpdf\.names'\)/, 'gemerkte Namen werden nach dem Neuladen gelesen');
   assert.match(app, /rememberFileName\(f\.name\)/, 'jede importierte Datei wird gemerkt');
 });
+
+test('Bericht geht nicht verloren (v328): lokal aufheben bis „Ja, gesendet“, Ausweichwege ohne Mailprogramm, Erinnerung beim Start', () => {
+  const fs = require('node:fs'), path = require('node:path');
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'pro.js'), 'utf8'), html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  for (const id of ['repSentDlg', 'repGmail', 'repOutlookWeb', 'repCopy', 'repFile', 'repSentOk', 'repLater', 'repDrop']) assert.match(html, new RegExp(`id="${id}"`), id);
+  assert.match(html, /id="repGmail" target="_blank" rel="noopener noreferrer"/, 'Webmail nur auf Klick, ohne Herkunftsadresse');
+  // beide Sendewege merken den Bericht und fragen nach
+  assert.equal((src.match(/repMerken\(reportSubject\(\), txt\)/g) || []).length, 2);
+  assert.equal((src.match(/setTimeout\(\(\) => repNachfragen\(\), 2500\)/g) || []).length, 2);
+  assert.match(src, /\$\('#repSentOk'\)\.onclick = \(\) => \{ LS\.del\('repPending'\)/);
+  assert.match(src, /const REP_KEEP_DAYS = 14;/);
+  assert.match(src, /Date\.now\(\) - p\.at > 120000/, 'Erinnerung nicht für gerade eben erstellte Berichte');
+  assert.match(src, /https:\/\/mail\.google\.com\/mail\/\?view=cm&fs=1&to=\$\{enc\(SUPPORT\)\}/);
+  assert.match(src, /https:\/\/outlook\.live\.com\/mail\/0\/deeplink\/compose\?to=\$\{enc\(SUPPORT\)\}/);
+});
