@@ -4412,5 +4412,6 @@
  "Ohne Anschrift übersprungen: {0}.": "Skipped without an address: {0}.",
  "Spenden aus dem Kontoauszug": "Donations from bank statement",
  "Spenden aus dem Kontoauszug …": "Donations from bank statement …",
- "Spenderliste {0}.csv": "Spenderliste {0}.csv"
+ "Spenderliste {0}.csv": "Spenderliste {0}.csv",
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Coach timesheet (for reimbursement claims and grant applications, template)"
 }

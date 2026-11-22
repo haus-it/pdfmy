@@ -61,3 +61,13 @@ test('Oberfläche angebunden, Gläubiger-ID geprüft', () => {
   assert.equal(Q.ibanValid(id.slice(0, 4) + id.slice(7)), true);
   assert.equal(Q.ibanValid('DE99ZZZ09999999999'.slice(0, 4) + id.slice(7)), false);
 });
+
+test('Stundennachweis (v331): 18 Zeilen, Felder ohne Punkte im Namen, eine Seite, keine Skripte', async () => {
+  const b = await V.erzeugen(L, 'stunden', v), doc = await L.PDFDocument.load(b), names = doc.getForm().getFields().map(f => f.getName());
+  assert.equal(doc.getPageCount(), 1);
+  for (const n of ['Uebungsleiter', 'Monat', 'Abteilung', 'Gruppe', 'Zeile 1 Datum', 'Zeile 18 Teiln', 'Zeile 18 Std', 'Summe Stunden', 'Betrag', 'Uebungsleiter Ort Datum', 'Abteilung Ort Datum']) assert.ok(names.includes(n), n);
+  assert.ok(names.every(n => !n.includes('.')), 'Punkte würden Feldebenen bilden');
+  for (const f of doc.getForm().getFields()) assert.ok(f.acroField.getWidgets()[0].getRectangle().y > 30, f.getName());
+  assert.doesNotMatch(Buffer.from(b).toString('latin1'), /\/JavaScript|\/JS\s/);
+  assert.match(fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8'), /name="vvArt" value="stunden"/);
+});

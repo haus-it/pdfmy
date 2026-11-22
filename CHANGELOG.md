@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-22
 
+### Stundennachweis für Übungsleiter, Datenschutzerklärung vollständig übersetzt (app-v331)
+- „Mehr → Vereinsvorlagen …“: neuer „Stundennachweis für Übungsleiter“ – ausfüllbar mit 18 Zeilen (Datum, von, bis, Stunden, Inhalt, Teilnehmer), Summe, Satz und Betrag, Unterschrift von Übungsleiter/in und Abteilungsleitung. Für die Abrechnung der Aufwandsentschädigung und für Zuschussanträge; Muster, eine Seite, keine Skripte.
+- Datenschutzerklärung: Abschnitt 6e (Browser-Erweiterung, Add-ins für Microsoft 365, Thunderbird, LibreOffice, Nextcloud, ONLYOFFICE) war in den anderen Sprachen noch deutsch – jetzt in allen 40 Sprachen übersetzt.
+- tests/vereinsvorlagen.test.js.
+
 ### Zuwendungsbestätigungen: Spenden aus dem Kontoauszug (app-v330)
 - „Mehr → Zuwendungsbestätigung …“ hat „Spenden aus dem Kontoauszug …“: findet die Spenden eines Jahres im Export des Online-Bankings (CSV oder CAMT) – Mitgliedsbeiträge, Rechnungen und Rückbuchungen zählen nicht –, fasst sie je Spender zusammen (an der IBAN, auch bei unterschiedlicher Schreibweise des Namens) und speichert die Spenderliste zum Prüfen. Mit der Mitgliederliste zusammen gewählt, stehen die Anschriften schon drin.
 - Die Serie überspringt Spender ohne Anschrift und nennt sie, statt eine unvollständige Bestätigung zu erzeugen.

@@ -19,6 +19,7 @@
     foto: { titel: 'Einwilligung zu Fotos und Veröffentlichungen', datei: 'Einwilligung-Fotos' },
     fahrt: { titel: 'Einverständniserklärung für Fahrten und Ausflüge', datei: 'Einverstaendnis-Fahrt' },
     pauschale: { titel: 'Vereinbarung über eine Aufwandsentschädigung', datei: 'Vereinbarung-Aufwandsentschaedigung' },
+    stunden: { titel: 'Stundennachweis für Übungsleiter', datei: 'Stundennachweis-Uebungsleiter' },
   };
   // Freibeträge seit 01.01.2026 (Steueränderungsgesetz 2025, BGBl. I 2025 Nr. 363): § 3 Nr. 26 EStG 3.300 €, § 3 Nr. 26a EStG 960 €
   const PAUSCHALE = { jahr: 2026, uebungsleiter: 3300, ehrenamt: 960 };
@@ -149,6 +150,31 @@
       c.gap(10);
       c.unterschrift('Engagierte', 'Unterschrift der engagierten Person');
       c.unterschrift('Verein', `Unterschrift für den ${verein} (vertretungsberechtigter Vorstand)`);
+    } else if (art === 'stunden') {
+      // Stundennachweis (app-v331): Nachweis der Übungsstunden für Aufwandsentschädigung und Zuschussanträge (Sportbünde, Kommunen);
+      // eine Zeile je Übungsstunde, Summen von Hand (keine Skripte im PDF), zwei Unterschriften
+      c.text('Muster – bitte an Ihren Verein bzw. die Vorgaben Ihres Zuschussgebers anpassen.', { size: 8.5, color: L.rgb(0.64, 0.15, 0.16) }); c.gap(4);
+      c.felder([{ name: 'Uebungsleiter', label: 'Übungsleiter/in (Name)', req: true, w: 1.6 }, { name: 'Lizenz', label: 'Lizenz/Qualifikation (falls vorhanden)', w: 1.2 }, { name: 'Monat', label: 'Monat und Jahr', req: true, w: 0.8 }]);
+      c.felder([{ name: 'Abteilung', label: 'Abteilung / Sportart', w: 1 }, { name: 'Gruppe', label: 'Gruppe (z. B. Jugend U12)', w: 1 }, { name: 'Ort', label: 'Ort / Halle', w: 1 }]);
+      const form = doc.getForm(), grey = L.rgb(0.42, 0.45, 0.5), lc = L.rgb(0.6, 0.63, 0.68), fb = L.rgb(0.97, 0.98, 1);
+      const cols = [['Datum', 62], ['von', 44], ['bis', 44], ['Std.', 40], ['Inhalt der Übungsstunde', W - 62 - 44 - 44 - 40 - 60], ['Teiln.', 60]];
+      let x = M; for (const [t, w] of cols) { page.drawText(t, { x: x + 2, y: c.y, size: 8, font: B, color: grey }); x += w; }
+      c.y -= 6; const rowH = 21;
+      for (let r = 1; r <= 18; r++) {
+        let xx = M; const yy = c.y - rowH;
+        for (const [t, w] of cols) {
+          const f = form.createTextField(`Zeile ${r} ${t.replace(/\./g, '')}`); if (t === 'Datum') f.setMaxLength(10);   // Punkte trennen in PDF-Feldnamen Ebenen
+          f.addToPage(page, { x: xx, y: yy, width: w - 2, height: rowH - 3, borderColor: lc, borderWidth: 0.5, backgroundColor: fb, font: R });
+          try { f.acroField.dict.set(L.PDFName.of('TU'), L.PDFHexString.fromText(`${t}, Zeile ${r}`)); } catch (e) { /* Kurzinfo optional */ }
+          xx += w;
+        }
+        c.y -= rowH;
+      }
+      c.gap(10);
+      c.felder([{ name: 'Summe Stunden', label: 'Summe der Stunden', w: 0.8 }, { name: 'Satz', label: 'Satz je Stunde (Euro, falls vereinbart)', w: 1 }, { name: 'Betrag', label: 'Auszuzahlender Betrag (Euro)', w: 1 }]);
+      c.text('Ich bestätige, dass ich die Übungsstunden wie angegeben geleitet habe.', { size: 9 }); c.gap(8);
+      c.unterschrift('Uebungsleiter', 'Unterschrift Übungsleiter/in');
+      c.unterschrift('Abteilung', `Sachlich richtig – Abteilungsleitung / Vorstand ${verein}`);
     }
     if (v.kontakt) { c.gap(4); c.text(`Bitte zurück an: ${v.kontakt}`, { size: 8.5, color: L.rgb(0.42, 0.45, 0.5) }); }
     return doc.save();
