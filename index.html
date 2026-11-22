@@ -1209,7 +1209,8 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi" id="btnZuw" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
           <button class="mi" id="btnKb" title="Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Kassenbericht (Jahreshauptversammlung) …</span></button>
           <button class="mi" id="btnSepa" title="Mitgliedsbeiträge per Lastschrift einziehen: aus der Mitgliederliste (Excel/CSV) die SEPA-Datei für das Online-Banking erstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>SEPA-Lastschrift für Beiträge …</span></button>
-          <button class="mi" id="btnMv" title="Mitgliederversammlung vorbereiten: Einladung mit Tagesordnung und Fristen, Anwesenheitsliste und ausfüllbares Protokoll – auf Wunsch je Mitglied ein Brief aus der Mitgliederliste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Mitgliederversammlung …</span></button>
+          <button class="mi" id="btnBw" title="Für Mitglieder ohne Lastschrift: Beitragsrechnung mit GiroCode je Mitglied, danach Abgleich mit dem Kontoauszug – wer hat bezahlt, wer ist offen, Zahlungserinnerungen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Beiträge per Überweisung …</span></button>
+          <button class="mi" id="btnMv"title="Mitgliederversammlung vorbereiten: Einladung mit Tagesordnung und Fristen, Anwesenheitsliste und ausfüllbares Protokoll – auf Wunsch je Mitglied ein Brief aus der Mitgliederliste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Mitgliederversammlung …</span></button>
           <button class="mi doc" id="btnQrIns" title="GiroCode (Überweisung per Banking-App) oder QR-Code mit Link oder Text auf die Seite setzen – z. B. auf die eigene Rechnung"><svg class="ic" aria-hidden="true"><use href="#i-qr-code"/></svg><span>QR-Code einfügen …</span></button>
           <button class="mi doc" id="btnProps" title="Titel, Autor, Stichwörter, PDF-Version, Seitengröße, Erstellungsdatum …"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Dokumenteigenschaften …</span><kbd>Strg+D</kbd></button>
           <button class="mi doc" id="btnAttach" title="In der PDF eingebettete Dateien anzeigen, speichern, entfernen oder neue anhängen"><svg class="ic" aria-hidden="true"><use href="#i-paperclip"/></svg><span>Dateianhänge<span class="attn"></span> …</span></button>
@@ -2361,6 +2362,23 @@ html.i18n-wait body{visibility:hidden}
   <input type="file" id="sepaIn" hidden accept=".csv,.txt,.xlsx">
   <div class="dlgrow"><button type="button" id="sepaCancel">Schließen</button><button type="submit" class="primary">Mitgliederliste wählen …</button></div>
 </form></dialog>
+<dialog id="bwDlg" class="sharedlg propdlg" aria-labelledby="bwT"><form id="bwForm">
+  <h3 class="dlgtitle" id="bwT">Beiträge per Überweisung</h3>
+  <p class="hint" style="margin-top:0">Für Mitglieder ohne Lastschrift: je Mitglied eine Beitragsrechnung mit GiroCode (mit der Banking-App scannen). Später gleicht PDFMy die Zahlungen mit Ihrem Kontoauszug ab und zeigt, wer bezahlt hat – auf Wunsch mit Zahlungserinnerungen für die Offenen. Mitgliederliste und Kontoauszug bleiben auf Ihrem Gerät.</p>
+  <fieldset><legend>Ihr Verein (Zahlungsempfänger)</legend>
+    <div class="field"><label for="bwName">Name des Vereins</label><input id="bwName" required autocomplete="organization"></div>
+    <div class="field"><label for="bwAdr">Anschrift des Vereins</label><textarea id="bwAdr" rows="2"></textarea></div>
+    <div class="anlrow"><div class="field"><label for="bwIban">IBAN des Vereinskontos</label><input id="bwIban" required autocomplete="off" spellcheck="false"></div><div class="field"><label for="bwBic">BIC (freiwillig)</label><input id="bwBic" maxlength="11" autocomplete="off" spellcheck="false"></div></div></fieldset>
+  <div class="anlrow"><div class="field"><label for="bwZweck">Wofür?</label><input id="bwZweck" maxlength="60" placeholder="z. B. Beitrag 2027"></div>
+    <div class="field"><label for="bwFaellig">Zahlbar bis</label><input id="bwFaellig" type="date" required></div></div>
+  <div class="anlrow"><div class="field"><label for="bwPraefix">Kürzel für die Zahlungsreferenz</label><input id="bwPraefix" maxlength="8" placeholder="z. B. B27" spellcheck="false"></div>
+    <div class="field"><label for="bwKontakt">Rückfragen an (freiwillig)</label><input id="bwKontakt" autocomplete="email" placeholder="z. B. kasse@meinverein.de"></div></div>
+  <p class="hint">Mitgliederliste (Excel oder CSV): Name bzw. Vorname/Nachname und Beitrag; wahlweise Mitgliedsnummer (wird Teil der Referenz), Straße, PLZ, Ort, E-Mail.</p>
+  <label><input type="checkbox" id="bwErinn" checked> Beim Abgleich Zahlungserinnerungen für alle Offenen erstellen</label>
+  <p id="bwMsg" class="hint" role="status"></p>
+  <input type="file" id="bwListe" hidden accept=".csv,.txt,.xlsx"><input type="file" id="bwKonto" hidden accept=".csv,.txt,.xml">
+  <div class="dlgrow"><button type="button" id="bwCancel">Schließen</button><button type="button" id="bwAbgleich">Zahlungen abgleichen …</button><button type="submit" class="primary">Beitragsrechnungen erstellen …</button></div>
+</form></dialog>
 <dialog id="mvDlg" class="sharedlg propdlg" aria-labelledby="mvT"><form id="mvForm">
   <h3 class="dlgtitle" id="mvT">Mitgliederversammlung vorbereiten</h3>
   <p class="hint" style="margin-top:0">Ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste und ausfüllbarem Protokoll. PDFMy rechnet aus, bis wann die Einladung per E-Mail bzw. per Brief raus muss. Maßgeblich ist Ihre Satzung.</p>
@@ -2776,6 +2794,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/kassenbericht.js"></script>
 <script src="js/sepalastschrift.js"></script>
 <script src="js/versammlung.js"></script>
+<script src="js/beitrag.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>

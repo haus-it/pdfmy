@@ -94,6 +94,20 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 22.11.2026: Beiträge per Überweisung mit GiroCode und Zahlungsabgleich (app-v327)
+**Inhalt:** Für Mitglieder ohne Lastschrift: Beitragsrechnung je Mitglied mit GiroCode (EPC-QR) und Zahlungsreferenz; Abgleich mit dem Kontoauszug (CSV/CAMT über js/bank.js): bezahlt, teilweise, offen (Referenz sicher, Name als Rückfall, Teilzahlungen addiert, gleiche Namen werden nicht geraten); Übersicht für die Kasse, Excel-Liste der Offenen, Zahlungserinnerungen mit offenem Betrag. **Grund (Leitsatz: besser als die Mitbewerber):** Nach dem SEPA-Einzug (v317/v326) fehlte der zweite Zahlweg; Kassenwarte haken Überweisungen bisher von Hand ab. PDF-Programme bieten das nicht; Vereinssoftware im Abo braucht dafür Kontozugriff über ihre Server (nicht nachgeprüft für alle Anbieter).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Mitgliederliste und Kontoauszug nur im Browser; Liste nur im Arbeitsspeicher der Sitzung |
+| 2 Kein Server | passt |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: ein Dialog, zwei Knöpfe; Vorgaben (Zweck, Referenzkürzel, Datum) vorbelegt |
+| 5 Prüfbar | tests/beitrag.test.js (Referenzen, Abgleich inkl. Teilzahlung und Namensgleichheit, GiroCode-Inhalt, Erinnerung nur mit offenem Betrag); GiroCode im Browser mit jsQR gelesen; Durchlauf in der App; Seiten als Bild geprüft |
+| 6 Wenig aktive Inhalte | passt: keine Skripte |
+
+**Datenschutz:** Die Übersicht enthält Namen und ist als „nur für den Kassenwart“ gekennzeichnet; im Kassenbericht für die Mitgliederversammlung stehen weiter keine Namen.
+
 ### Geprüft und umgesetzt 21.11.2026: SEPA-Vorabankündigung je Mitglied (app-v326)
 **Inhalt:** Beim Beitragseinzug erstellt PDFMy neben der Bankdatei je Mitglied ein Ankündigungsschreiben (Pre-Notification): Betrag, Fälligkeitstag, Verwendungszweck, gekürzte IBAN, Mandatsreferenz, Gläubiger-ID, Anschriftfeld nach DIN 5008 Form B, wenn die Liste Straße/PLZ/Ort hat. Fristprüfung: reicht die Zeit (14 Tage vor Fälligkeit) für Brief (drei Werktage Laufzeit) oder nur noch für E-Mail; der Datumsvorschlag berücksichtigt die Briefpost. **Grund (Leitsatz: besser als die Mitbewerber):** Die Vorabankündigung ist Pflicht und war bisher nur ein Hinweis; Vereine schrieben sie von Hand. PDF-Programme bieten das nicht; Vereinssoftware im Abo versendet sie über eigene Server.
 

@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-22
+
+### Beiträge per Überweisung: Beitragsrechnung mit GiroCode und Zahlungsabgleich (app-v327)
+- Neu „Mehr → Beiträge per Überweisung …“: je Mitglied eine Beitragsrechnung mit GiroCode (Banking-App scannt Empfänger, Betrag und Verwendungszweck) und Zahlungsreferenz aus Kürzel und Mitgliedsnummer (z. B. B27-17); Anschriftfeld nach DIN 5008, wenn die Liste Straße, PLZ und Ort hat.
+- „Kontoauszug abgleichen …“ (CSV oder CAMT): bezahlt, teilweise, offen – erkannt an der Referenz, sonst am Namen (auch MUELLER statt Müller), Teilzahlungen addiert, bei gleichen Namen wird nicht geraten. Übersicht für die Kasse (PDF), Excel-Liste der Offenen und auf Wunsch Zahlungserinnerungen mit dem offenen Betrag und neuem GiroCode.
+- js/beitrag.js, tests/beitrag.test.js; GiroCode im Browser ausgelesen, Ablauf in der App geprüft, Seiten als Bild kontrolliert.
+
 ## 2026-11-21
 
 ### SEPA-Beitragseinzug mit Vorabankündigung je Mitglied (app-v326)

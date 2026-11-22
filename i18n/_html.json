@@ -1514,5 +1514,18 @@
  "Mehr auf caller-id.app",
  "z. B. kasse@meinverein.de",
  "Vorabankündigung je Mitglied als PDF (Betrag, Fälligkeit, Mandatsreferenz – zum Drucken oder Versenden)",
- "Rückfragen an (E-Mail oder Telefon, freiwillig)"
+ "Rückfragen an (E-Mail oder Telefon, freiwillig)",
+ "Für Mitglieder ohne Lastschrift: Beitragsrechnung mit GiroCode je Mitglied, danach Abgleich mit dem Kontoauszug – wer hat bezahlt, wer ist offen, Zahlungserinnerungen",
+ "z. B. Beitrag 2027",
+ "Beiträge per Überweisung …",
+ "Beiträge per Überweisung",
+ "Für Mitglieder ohne Lastschrift: je Mitglied eine Beitragsrechnung mit GiroCode (mit der Banking-App scannen). Später gleicht PDFMy die Zahlungen mit Ihrem Kontoauszug ab und zeigt, wer bezahlt hat – auf Wunsch mit Zahlungserinnerungen für die Offenen. Mitgliederliste und Kontoauszug bleiben auf Ihrem Gerät.",
+ "Wofür?",
+ "Zahlbar bis",
+ "Kürzel für die Zahlungsreferenz",
+ "Rückfragen an (freiwillig)",
+ "Mitgliederliste (Excel oder CSV): Name bzw. Vorname/Nachname und Beitrag; wahlweise Mitgliedsnummer (wird Teil der Referenz), Straße, PLZ, Ort, E-Mail.",
+ "Beim Abgleich Zahlungserinnerungen für alle Offenen erstellen",
+ "Zahlungen abgleichen …",
+ "Beitragsrechnungen erstellen …"
 ]

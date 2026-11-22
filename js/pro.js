@@ -3933,6 +3933,77 @@ $('#sepaIn').onchange = async e => {
     status(n === 1 ? `SEPA-Lastschrift erstellt: 1 Lastschrift, ${summe} €.` : `SEPA-Lastschrift erstellt: ${n} Lastschriften, ${summe} €.`);
   } catch (err) { noteError(err, 'SEPA-Lastschrift'); fdMsg($('#sepaMsg'), [`Abgebrochen: ${err.message}`]); }
 };
+/* ---------- Beiträge per Überweisung: Beitragsrechnung mit GiroCode, Abgleich mit dem Kontoauszug (js/beitrag.js, app-v327) ----------
+   Die Mitgliederliste bleibt nur im Arbeitsspeicher dieser Sitzung (für den Abgleich nach dem Erstellen), nicht im Gerätespeicher. */
+let bwListe = null, bwModus = 'rechnung';
+const bwQr = async () => { await loadQrcode(); return p => { const q = qrMatrix(p); return { n: q.getModuleCount(), dark: (r, c) => q.isDark(r, c) }; }; };
+const bwVerein = () => ({ verein: $('#bwName').value.trim(), anschrift: $('#bwAdr').value.trim(), iban: $('#bwIban').value.replace(/\s+/g, '').toUpperCase(), bic: $('#bwBic').value.replace(/\s+/g, '').toUpperCase(),
+  zweck: $('#bwZweck').value.trim() || 'Mitgliedsbeitrag', faellig: $('#bwFaellig').value, kontakt: $('#bwKontakt').value.trim(), praefix: $('#bwPraefix').value.trim() || 'B' });
+const bwSchritt = t => { $('#bwAbgleich').textContent = I18N.t(t); };
+$('#btnBw').onclick = () => {
+  closeMenu?.();
+  const b = LS.get('bwVerein', null), s = LS.get('sepaVerein', null), vv = LS.get('vvVerein', null), mv = LS.get('mvVerein', null), jahr = new Date().getFullYear() + (new Date().getMonth() >= 9 ? 1 : 0);
+  $('#bwName').value = b?.verein || s?.name || vv?.verein || mv?.verein || ''; $('#bwAdr').value = b?.anschrift || vv?.anschrift || mv?.anschrift || '';
+  $('#bwIban').value = b?.iban || s?.iban || ''; $('#bwBic').value = b?.bic || s?.bic || ''; $('#bwKontakt').value = b?.kontakt || s?.kontakt || vv?.kontakt || '';
+  $('#bwZweck').value = b?.zweck || `Beitrag ${jahr}`; $('#bwPraefix').value = b?.praefix || `B${String(jahr).slice(2)}`;
+  const f = new Date(); f.setDate(f.getDate() + 28); $('#bwFaellig').value = `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, '0')}-${String(f.getDate()).padStart(2, '0')}`;
+  $('#bwMsg').textContent = ''; bwModus = 'rechnung'; bwSchritt(bwListe ? 'Kontoauszug abgleichen …' : 'Zahlungen abgleichen …');
+  $('#bwDlg').showModal(); ($('#bwName').value ? $('#bwIban') : $('#bwName')).focus();
+};
+$('#bwCancel').onclick = () => $('#bwDlg').close();
+function bwPruef() {
+  const v = bwVerein(), bad = (sel, msg) => { $('#bwMsg').textContent = I18N.t(msg); $(sel).focus(); return null; };
+  if (!v.verein) return bad('#bwName', 'Bitte den Namen des Vereins angeben.');
+  if (!QrStempel.ibanValid(v.iban)) return bad('#bwIban', 'Die IBAN des Vereinskontos ist ungültig – bitte die Schreibweise prüfen.');
+  if (v.bic && !SepaLastschrift.bicOk(v.bic)) return bad('#bwBic', 'Die BIC ist ungültig – bitte prüfen oder leer lassen.');
+  if (!v.faellig) return bad('#bwFaellig', 'Bitte angeben, bis wann gezahlt werden soll.');
+  LS.set('bwVerein', { verein: v.verein, anschrift: v.anschrift, iban: v.iban, bic: v.bic, zweck: v.zweck, kontakt: v.kontakt, praefix: v.praefix });
+  return v;
+}
+const bwDateiname = (t, v) => `${t} ${v.zweck} ${v.verein}`.replace(/[\\/:*?"<>|]+/g, ' ').replace(/\.+$/, '').replace(/\s+/g, ' ').trim() + '.pdf';
+$('#bwForm').onsubmit = e => { e.preventDefault(); if (!bwPruef()) return; bwModus = 'rechnung'; $('#bwListe').click(); };
+$('#bwAbgleich').onclick = () => {
+  if (!bwPruef()) return;
+  if (bwListe) { $('#bwKonto').click(); return; }   // Liste schon da (z. B. gerade Rechnungen erstellt): gleich den Kontoauszug
+  bwModus = 'abgleich'; $('#bwListe').click();
+};
+$('#bwListe').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  try {
+    const v = bwVerein(), t = Beitrag.ausTabelle(await fdReadTable(f), { praefix: v.praefix });
+    if (!t.mitglieder.length) { fdMsg($('#bwMsg'), t.fehler.slice(0, 4)); return; }
+    bwListe = t.mitglieder;
+    const nf = t.fehler.length, fz = t.fehler.slice(0, 3).join(' '), n = t.mitglieder.length;
+    if (bwModus === 'abgleich') {
+      bwSchritt('Kontoauszug abgleichen …');
+      fdMsg($('#bwMsg'), [n === 1 ? '1 Mitglied gelesen. Jetzt „Kontoauszug abgleichen …“ wählen (CSV oder CAMT-XML aus dem Online-Banking).' : `${n} Mitglieder gelesen. Jetzt „Kontoauszug abgleichen …“ wählen (CSV oder CAMT-XML aus dem Online-Banking).`, !nf ? '' : `${nf} Zeile(n) nicht übernommen: ${fz}`]);
+      $('#bwAbgleich').focus(); return;
+    }
+    const bytes = await Beitrag.aufforderung(PDFLib, v, t.mitglieder, { ...(await zuwOpts()), qr: await bwQr(), epc: QrStempel.epc });
+    const summe = t.mitglieder.reduce((s, m) => s + m.betrag, 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    bwSchritt('Kontoauszug abgleichen …');
+    fdMsg($('#bwMsg'), [n === 1 ? `1 Beitragsrechnung über ${summe} € erstellt und geöffnet.` : `${n} Beitragsrechnungen über zusammen ${summe} € erstellt und geöffnet (je Mitglied eine Seite).`,
+      'Nach Eingang der Zahlungen hier „Kontoauszug abgleichen …“ wählen.', !nf ? '' : `${nf} Zeile(n) nicht übernommen: ${fz}`]);
+    await importFiles([new File([bytes], bwDateiname('Beitragsrechnungen', v), { type: 'application/pdf' })]);
+  } catch (err) { noteError(err, 'Beiträge'); fdMsg($('#bwMsg'), [`Abgebrochen: ${err.message}`]); }
+};
+$('#bwKonto').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f || !bwListe) return;
+  try {
+    const v = bwVerein(), txs = Bank.parse(await f.text(), f.name);
+    if (!txs.length) { fdMsg($('#bwMsg'), ['Im Kontoauszug wurden keine Buchungen gefunden – bitte den Export als CSV oder CAMT (XML) aus dem Online-Banking wählen.']); return; }
+    const a = Beitrag.abgleich(bwListe, txs), opts = await zuwOpts();
+    $('#bwDlg').close();
+    await importFiles([new File([await Beitrag.uebersicht(PDFLib, v, a, opts)], bwDateiname('Beitragsübersicht', v), { type: 'application/pdf' })]);
+    const offen = a.mitglieder.filter(m => m.status !== 'bezahlt');
+    if (offen.length) {
+      download(new TextEncoder().encode(Beitrag.offenCsv(a)), `Offene Beiträge ${v.zweck}.csv`.replace(/[\\/:*?"<>|]+/g, ' '), 'text/csv');
+      if ($('#bwErinn').checked) await importFiles([new File([await Beitrag.aufforderung(PDFLib, v, offen, { ...opts, qr: await bwQr(), epc: QrStempel.epc, erinnerung: true })], bwDateiname('Zahlungserinnerungen', v), { type: 'application/pdf' })]);
+    }
+    const eur = n => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    status(`Abgleich: ${a.anzahl.bezahlt} bezahlt, ${a.anzahl.teilweise} teilweise, ${a.anzahl.offen} offen – offen zusammen ${eur(a.summe.offen)}.${a.nichtZugeordnet ? ` ${a.nichtZugeordnet} Gutschrift(en) ohne Zuordnung.` : ''}`);
+  } catch (err) { noteError(err, 'Beiträge abgleichen'); fdMsg($('#bwMsg'), [`Abgebrochen: ${err.message}`]); }
+};
 /* ---------- Mitgliederversammlung: Einladung, Anwesenheitsliste, Protokoll (js/versammlung.js, app-v321) ---------- */
 const mvDatum = () => { const s = $('#mvDatum').value; if (!s) return null; const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
 const mvAngaben = () => ({ verein: $('#mvName').value.trim(), anschrift: $('#mvAdr').value.trim(), ort: $('#mvOrt').value.trim(), online: $('#mvOnline').value.trim(),
