@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-22
 
+### Webseiten vollständig übersetzt: Firmen-, Scanner-, Erweiterungs- und Werkzeugseiten (app-v332)
+- Systematische Prüfung aller Webseiten auf nicht übersetzte Texte: Auf „PDFMy in Firmen verteilen“ (Abschnitt eigener Server), der Scanner-Seite, der Erweiterungsseite und sieben Werkzeugseiten standen noch rund 50 Texte nur auf Deutsch – jetzt in allen 40 Sprachen.
+- Versionsnummern, Paketnamen und Paketgröße im Abschnitt „eigener Server“ sind im Wörterbuch Platzhalter; eine neue Fassung macht die Übersetzungen nicht mehr ungültig. tests/i18n-wechselwerte.test.js.
+
 ### Stundennachweis für Übungsleiter, Datenschutzerklärung vollständig übersetzt (app-v331)
 - „Mehr → Vereinsvorlagen …“: neuer „Stundennachweis für Übungsleiter“ – ausfüllbar mit 18 Zeilen (Datum, von, bis, Stunden, Inhalt, Teilnehmer), Summe, Satz und Betrag, Unterschrift von Übungsleiter/in und Abteilungsleitung. Für die Abrechnung der Aufwandsentschädigung und für Zuschussanträge; Muster, eine Seite, keine Skripte.
 - Datenschutzerklärung: Abschnitt 6e (Browser-Erweiterung, Add-ins für Microsoft 365, Thunderbird, LibreOffice, Nextcloud, ONLYOFFICE) war in den anderen Sprachen noch deutsch – jetzt in allen 40 Sprachen übersetzt.

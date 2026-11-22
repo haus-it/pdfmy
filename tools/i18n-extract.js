@@ -93,7 +93,9 @@ function volatile(k) {
   if (/\{\d+\}/.test(k)) return k;
   let n = 0; const ph = () => `{${n++}}`;
   // Prüfsummen und Versionen (nicht IP-Adressen wie 127.0.0.1 oder Datumsangaben wie 18.10.2026)
-  return k.replace(/\b[0-9a-f]{64}\b|(?<![\d.])\d{1,2}\.\d{1,2}\.\d{1,3}(?!\.?\d)/g, ph).replace(/\bca\. \d+ KB\b/g, () => `ca. ${ph()} KB`);
+  return k.replace(/\b[0-9a-f]{64}\b|(?<![\d.])\d{1,2}\.\d{1,2}\.\d{1,3}(?!\.?\d)/g, ph).replace(/\bca\. \d+ KB\b/g, () => `ca. ${ph()} KB`)
+    // Selbstbetrieb auf der Firmenseite (app-v332): App-Fassung („derzeit v331“, „pdfmy-selfhost-v331.tar.gz“) und Paketgröße vor der Prüfsumme
+    .replace(/(?<=derzeit )v\d{2,4}\b/g, ph).replace(/\bv\d{2,4}(?=\.tar\.gz\b)/g, ph).replace(/\(\d+ MB(?=, SHA-256)/g, () => `(${ph()} MB`);
 }
 function extractSite() {
   const SDIR = path.join(DIR, 'site'), keys = new Set();

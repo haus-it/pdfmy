@@ -435,3 +435,5 @@ Nachtrag 22.11.2026 (app-v329): Meldungen direkt an pdfmy.de (Entscheidung GF, h
 Nachtrag 22.11.2026 (app-v330): Spenden aus dem Kontoauszug für Zuwendungsbestätigungen; Serie ohne Anschrift wird übersprungen (Normtreue amtliches Muster, ISO 9001 8.5.1). Daten nur lokal (ISO 27001 A.8.12). Test: tests/zuwendung.test.js.
 
 Nachtrag 22.11.2026 (app-v331): Vereinsvorlage Stundennachweis für Übungsleiter (Leitplanken wie v315/v322: lokal, keine Skripte, Muster); Datenschutzerklärung Abschnitt 6e in allen Sprachen übersetzt (Transparenz, Art. 12 DSGVO: verständliche Sprache für alle angebotenen Sprachen). Test: tests/vereinsvorlagen.test.js.
+
+Nachtrag 22.11.2026 (app-v332): Webseiten auf fehlende Übersetzungen geprüft (Sammeln aller gebauten Seiten) und rund 50 Texte in allen Sprachen ergänzt; wechselnde Werte (Fassung, Paketname, Paketgröße) als Platzhalter, damit Übersetzungen über Versionen gültig bleiben (ISO 9001 8.5.1, gleichbleibende Qualität aller Sprachfassungen). Test: tests/i18n-wechselwerte.test.js. Offen: Seiten „Sicherheit“ und „Nutzungsbedingungen“ gibt es nur auf Deutsch.
