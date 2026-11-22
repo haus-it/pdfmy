@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Adományok a számlakivonatból",
  "Spenden aus dem Kontoauszug …": "Adományok a számlakivonatból …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Edzői óranyilvántartás (elszámoláshoz és támogatási kérelmekhez, minta)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Edzői óranyilvántartás (elszámoláshoz és támogatási kérelmekhez, minta)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} kép, illetve grafika módosítva – az oldal szövege változatlan. Visszavonás: „Képek és grafikák szerkesztése” → „Eredeti képek visszaállítása”.",
+ "{0} wird gelöscht.": "{0} törlésre kerül.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Ezen az oldalon nincs szerkeszthető kép vagy grafika. A beszkennelt oldalak maguk is képek – ott a „Kitakarás” és a „Szöveg” segít.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Kattintson egy képre vagy grafikára (logó, alakzat, vonal – lila kerettel jelölve), és húzza az áthelyezéshez; a sarkánál húzva nagyítható vagy kicsinyíthető (az oldalarány megmarad). Billentyűzettel: válassza ki lent, majd a nyílbillentyűk mozgatják, a + és − a méretet változtatja, a Del töröl. Az oldal szövege változatlan marad.",
+ "Bilder und Grafiken auf dieser Seite": "Az oldal képei és grafikái",
+ "Bilder und Grafiken bearbeiten": "Képek és grafikák szerkesztése",
+ "Bilder und Grafiken bearbeiten …": "Képek és grafikák szerkesztése …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Fotók, logók, alakzatok és vonalak áthelyezése, nagyítása, kicsinyítése és törlése a PDF-ben, képek cseréje – a szöveg változatlan marad",
+ "Grafik {0}": "{0}. grafika",
+ "Kein Bild und keine Grafik gewählt.": "Nincs kiválasztott kép vagy grafika."
 }

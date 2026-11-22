@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-22
 
+### Vektorgrafiken bearbeiten: Logos, Formen und Linien verschieben, skalieren, löschen (app-v333)
+- „Mehr → Bilder und Grafiken bearbeiten …“ (bisher „Bilder bearbeiten“): Neben Fotos sind jetzt auch Vektorgrafiken wählbar – Logos, Kästen, Kreise, Diagramme und Linien (lila umrandet). Verschieben, an der Ecke vergrößern/verkleinern, löschen, rückgängig; mit der Tastatur wie bei Bildern.
+- Ein Logo aus mehreren Teilen ist eine Grafik (zusammenhängender Grafik-Block ohne Text); Tabellenlinien sind einzeln wählbar. Ein Klick wählt das kleinste Objekt an der Stelle; Hintergründe über die ganze Seite nur über die Liste. Bei sehr vielen Linien (Pläne, große Tabellen) werden nur die gewählten umrandet.
+- Geändert wird nur das gewählte Objekt im Seiteninhalt; Text, Schriften und alle anderen Inhalte bleiben Byte für Byte gleich, die Seite wird nicht gerastert. Auch Grafiken in Formular-XObjects (z. B. PDFs aus Word und Druckertreibern) – geändert wird eine Kopie nur für diesen Aufruf. Beschneidungspfade und Markierungen der Barrierefreiheit bleiben unangetastet.
+- Fälschungsschutz wie bei Bildern: keine Änderung in Urkunden, Bescheiden und Belegen, bei signierten PDFs vorher eine Warnung.
+- tests/pdfgrafik.test.js; Durchlauf in der App (Kreis verschoben, Linie gelöscht, Text unverändert).
+
 ### Webseiten vollständig übersetzt: Firmen-, Scanner-, Erweiterungs- und Werkzeugseiten (app-v332)
 - Systematische Prüfung aller Webseiten auf nicht übersetzte Texte: Auf „PDFMy in Firmen verteilen“ (Abschnitt eigener Server), der Scanner-Seite, der Erweiterungsseite und sieben Werkzeugseiten standen noch rund 50 Texte nur auf Deutsch – jetzt in allen 40 Sprachen.
 - Versionsnummern, Paketnamen und Paketgröße im Abschnitt „eigener Server“ sind im Wörterbuch Platzhalter; eine neue Fassung macht die Übersetzungen nicht mehr ungültig. tests/i18n-wechselwerte.test.js.

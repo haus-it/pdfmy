@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Annetused pangaväljavõttest",
  "Spenden aus dem Kontoauszug …": "Annetused pangaväljavõttest …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Treeneri tunniarvestus (arveldamiseks ja toetustaotlusteks, näidis)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Treeneri tunniarvestus (arveldamiseks ja toetustaotlusteks, näidis)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} pilti või joonist muudetud – lehe tekst on muutmata. Tagasi: „Muuda pilte ja jooniseid“ → „Taasta algsed pildid“.",
+ "{0} wird gelöscht.": "{0} kustutatakse.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Sellel lehel pole muudetavaid pilte ega jooniseid. Skannitud leht on ise pilt – seal aitavad „Kata“ ja „Tekst“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Klõpsake pildil või joonisel (logo, kujund, joon – lilla äärisega) ja lohistage liigutamiseks; nurgast lohistades suurendate või vähendate (külgsuhe säilib). Klaviatuuriga: valige all, siis nooleklahvid liigutavad, + ja − muudavad suurust, Delete kustutab. Lehe tekst jääb muutmata.",
+ "Bilder und Grafiken auf dieser Seite": "Selle lehe pildid ja joonised",
+ "Bilder und Grafiken bearbeiten": "Muuda pilte ja jooniseid",
+ "Bilder und Grafiken bearbeiten …": "Muuda pilte ja jooniseid …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Liiguta, suurenda, vähenda ja kustuta PDF-i fotosid, logosid, kujundeid ja jooni ning asenda pilte – tekst jääb muutmata",
+ "Grafik {0}": "Joonis {0}",
+ "Kein Bild und keine Grafik gewählt.": "Ühtegi pilti ega joonist pole valitud."
 }

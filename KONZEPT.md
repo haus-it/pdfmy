@@ -94,6 +94,16 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 22.11.2026: Vektorgrafiken bearbeiten (app-v333)
+**Inhalt:** Im Dialog „Bilder und Grafiken bearbeiten“ auch Logos, Formen, Diagramme und Linien verschieben, skalieren und löschen – im Seiteninhalt, ohne Rastern. Objekt = reiner Grafik-Block (q … Q ohne Text/Bild) oder einzelner gezeichneter Pfad; Beschneidung und Markierungen werden nie getrennt. **Grund (Leitsatz: besser als die Mitbewerber):** Letzte offene Lücke aus Rang 8 der Wettbewerbsanalyse. Acrobat Pro, Foxit und PDF-XChange können Objekte bearbeiten (im Abo bzw. kostenpflichtig, Upload nicht nötig); kostenlose Online-Werkzeuge (Smallpdf, iLovePDF, PDF24 online) können vorhandene Vektorgrafiken nicht verschieben (nicht für alle Anbieter nachgeprüft). PDFMy kostenlos, lokal, mit Fälschungsschutz.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1–3 | gewahrt: alles im Browser |
+| 4 Einfach | passt: derselbe Dialog wie für Bilder, Klick wählt das kleinste Objekt, Hintergründe nicht versehentlich |
+| 5 Prüfbar | tests/pdfgrafik.test.js (Erkennung, Verschieben exakt, Löschen, Formular-XObject, Grenzen); Durchlauf in der App |
+| 6 Wenig aktive Inhalte | nicht betroffen; Fälschungsschutz und Signaturwarnung greifen |
+
 ### Geprüft und umgesetzt 22.11.2026: Spenden aus dem Kontoauszug für Zuwendungsbestätigungen (app-v330)
 **Inhalt:** Kontoauszug (CSV/CAMT) und wahlweise Mitgliederliste → Spenderliste eines Jahres (Gutschriften mit „Spende/Zuwendung/Kollekte“, ohne Mitgliedsbeiträge und Rückbuchungen; je Spender an der IBAN zusammengefasst; Anschriften aus der Mitgliederliste, auch „Nachname, Vorname“) zum Prüfen; danach die vorhandene Serie. Die Serie überspringt Spender ohne Anschrift und meldet sie (amtliches Muster verlangt Name und Anschrift). **Grund (Leitsatz: besser als die Mitbewerber):** Der aufwendigste Schritt bei Spendenquittungen ist das Zusammensuchen der Spenden; PDF-Programme bieten das nicht, Vereinssoftware nur mit Kontoanbindung über eigene Server (nicht nachgeprüft).
 

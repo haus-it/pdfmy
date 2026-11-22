@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Bronntanais ón ráiteas bainc",
  "Spenden aus dem Kontoauszug …": "Bronntanais ón ráiteas bainc …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Taifead uaireanta traenálaí (le haghaidh éilimh agus iarratais ar dheontais, teimpléad)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Taifead uaireanta traenálaí (le haghaidh éilimh agus iarratais ar dheontais, teimpléad)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Athraíodh {0} íomhá nó grafaic – níor athraigh téacs an leathanaigh. Chun cealú: “Cuir íomhánna agus grafaicí in eagar” → “Athchóirigh na híomhánna bunaidh”.",
+ "{0} wird gelöscht.": "Scriosfar {0}.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Níl aon íomhá ná grafaic in-eagarthóireachta ar an leathanach seo. Is íomhá iad leathanaigh scanta iad féin – cabhraíonn “Clúdaigh” agus “Téacs” ansin.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Cliceáil ar íomhá nó grafaic (lógó, cruth, líne – imlíne chorcra) agus tarraing chun é a bhogadh; tarraing ón gcúinne chun é a mhéadú nó a laghdú (coinnítear an cóimheas). Leis an méarchlár: roghnaigh thíos é, ansin bogann na heochracha saigheada é, athraíonn + agus − an méid, scriosann Delete é. Ní athraíonn téacs an leathanaigh.",
+ "Bilder und Grafiken auf dieser Seite": "Íomhánna agus grafaicí ar an leathanach seo",
+ "Bilder und Grafiken bearbeiten": "Cuir íomhánna agus grafaicí in eagar",
+ "Bilder und Grafiken bearbeiten …": "Cuir íomhánna agus grafaicí in eagar …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Bog, méadaigh, laghdaigh agus scrios grianghraif, lógónna, cruthanna agus línte sa PDF, agus cuir íomhánna in ionad a chéile – ní athraíonn an téacs",
+ "Grafik {0}": "Grafaic {0}",
+ "Kein Bild und keine Grafik gewählt.": "Níor roghnaíodh íomhá ná grafaic."
 }

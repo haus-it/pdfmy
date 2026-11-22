@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Donazzjonijiet mir-rendikont tal-bank",
  "Spenden aus dem Kontoauszug …": "Donazzjonijiet mir-rendikont tal-bank …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Reġistru tas-sigħat għall-kowċis (għall-ħlas lura u applikazzjonijiet għal għotjiet, mudell)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Reġistru tas-sigħat għall-kowċis (għall-ħlas lura u applikazzjonijiet għal għotjiet, mudell)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} stampa/i jew grafika/i nbidlu – it-test tal-paġna ma nbidilx. Biex terġa’ lura: “Editja stampi u grafika” → “Irkupra l-istampi oriġinali”.",
+ "{0} wird gelöscht.": "{0} se jinħasar.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "F’din il-paġna m’hemm l-ebda stampa jew grafika li tista’ tiġi editjata. Il-paġni skennjati huma stess stampa – hemm jgħinu “Għatti” u “Test”.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Ikklikkja fuq stampa jew grafika (logo, forma, linja – b’qafas vjola) u kaxkar biex tiċċaqlaqha, kaxkar fil-kantuniera biex tkabbarha jew tnaqqasha (il-proporzjon jibqa’). Bil-keyboard: agħżel isfel, imbagħad iċ-ċwievet tal-vleġeġ iċaqilqu, + u − jibdlu d-daqs, Del ineħħi. It-test tal-paġna jibqa’ bla tibdil.",
+ "Bilder und Grafiken auf dieser Seite": "Stampi u grafika f’din il-paġna",
+ "Bilder und Grafiken bearbeiten": "Editja stampi u grafika",
+ "Bilder und Grafiken bearbeiten …": "Editja stampi u grafika …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Ċaqlaq, ikkabbar, naqqas u ħassar ritratti, logos, forom u linji fil-PDF u issostitwixxi stampi – it-test jibqa’ bla tibdil",
+ "Grafik {0}": "Grafika {0}",
+ "Kein Bild und keine Grafik gewählt.": "Ma ntgħażlet l-ebda stampa u l-ebda grafika."
 }

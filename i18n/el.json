@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Δωρεές από αντίγραφο κίνησης",
  "Spenden aus dem Kontoauszug …": "Δωρεές από αντίγραφο κίνησης …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Φύλλο ωρών προπονητή (για εκκαθάριση και αιτήσεις επιχορήγησης, υπόδειγμα)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Φύλλο ωρών προπονητή (για εκκαθάριση και αιτήσεις επιχορήγησης, υπόδειγμα)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Άλλαξαν {0} εικόνες ή γραφικά – το κείμενο της σελίδας παραμένει αμετάβλητο. Επαναφορά: «Επεξεργασία εικόνων και γραφικών» → «Επαναφορά των αρχικών εικόνων».",
+ "{0} wird gelöscht.": "Το στοιχείο {0} θα διαγραφεί.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Σε αυτή τη σελίδα δεν υπάρχουν εικόνες ή γραφικά που να επεξεργάζονται. Οι σαρωμένες σελίδες είναι οι ίδιες μια εικόνα – εκεί βοηθούν τα «Κάλυψη» και «Κείμενο».",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Κάντε κλικ σε μια εικόνα ή ένα γραφικό (λογότυπο, σχήμα, γραμμή – με μωβ περίγραμμα) και σύρετε για μετακίνηση· σύρετε τη γωνία για μεγέθυνση ή σμίκρυνση (η αναλογία διατηρείται). Με το πληκτρολόγιο: επιλέξτε από κάτω, μετά τα βέλη μετακινούν, τα + και − αλλάζουν το μέγεθος, το Delete διαγράφει. Το κείμενο της σελίδας παραμένει αμετάβλητο.",
+ "Bilder und Grafiken auf dieser Seite": "Εικόνες και γραφικά σε αυτή τη σελίδα",
+ "Bilder und Grafiken bearbeiten": "Επεξεργασία εικόνων και γραφικών",
+ "Bilder und Grafiken bearbeiten …": "Επεξεργασία εικόνων και γραφικών …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Μετακινήστε, μεγεθύνετε, σμικρύνετε και διαγράψτε φωτογραφίες, λογότυπα, σχήματα και γραμμές στο PDF και αντικαταστήστε εικόνες – το κείμενο παραμένει αμετάβλητο",
+ "Grafik {0}": "Γραφικό {0}",
+ "Kein Bild und keine Grafik gewählt.": "Δεν επιλέχθηκε εικόνα ή γραφικό."
 }

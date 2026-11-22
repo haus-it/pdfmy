@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Darowizny z wyciągu bankowego",
  "Spenden aus dem Kontoauszug …": "Darowizny z wyciągu bankowego …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Ewidencja godzin trenera (do rozliczenia i wniosków o dotacje, wzór)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Ewidencja godzin trenera (do rozliczenia i wniosków o dotacje, wzór)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Zmieniono obrazy lub grafiki: {0} – tekst strony pozostał bez zmian. Cofnięcie: „Edytuj obrazy i grafiki” → „Przywróć oryginalne obrazy”.",
+ "{0} wird gelöscht.": "{0} zostanie usunięte.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Na tej stronie nie ma obrazów ani grafik do edycji. Zeskanowane strony same są obrazem – tam pomagają „Zakryj” i „Tekst”.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Kliknij obraz lub grafikę (logo, kształt, linię – z fioletową ramką) i przeciągnij, aby przesunąć, przeciągnij za róg, aby powiększyć lub pomniejszyć (proporcje zostają). Klawiaturą: wybierz na dole, potem strzałki przesuwają, + i − zmieniają rozmiar, Del usuwa. Tekst strony pozostaje bez zmian.",
+ "Bilder und Grafiken auf dieser Seite": "Obrazy i grafiki na tej stronie",
+ "Bilder und Grafiken bearbeiten": "Edytuj obrazy i grafiki",
+ "Bilder und Grafiken bearbeiten …": "Edytuj obrazy i grafiki …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Przesuwaj, powiększaj, pomniejszaj i usuwaj zdjęcia, logo, kształty i linie w PDF oraz zastępuj obrazy – tekst pozostaje bez zmian",
+ "Grafik {0}": "Grafika {0}",
+ "Kein Bild und keine Grafik gewählt.": "Nie wybrano obrazu ani grafiki."
 }

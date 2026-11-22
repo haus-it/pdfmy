@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Дарения от банково извлечение",
  "Spenden aus dem Kontoauszug …": "Дарения от банково извлечение …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Отчет на часовете на треньори (за отчитане и заявления за субсидии, образец)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Отчет на часовете на треньори (за отчитане и заявления за субсидии, образец)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Променени: {0} (изображения или графики) – текстът на страницата не е променен. Връщане: „Редактиране на изображения и графики“ → „Възстановяване на оригиналните изображения“.",
+ "{0} wird gelöscht.": "{0} ще бъде изтрито.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} мм",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "На тази страница няма изображения или графики за редактиране. Сканираните страници сами са изображение – там помагат „Покриване“ и „Текст“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Щракнете върху изображение или графика (лого, форма, линия – с лилава рамка) и плъзнете, за да я преместите; плъзнете ъгъла, за да я увеличите или намалите (пропорциите се запазват). С клавиатурата: изберете отдолу, после стрелките местят, + и − променят размера, Delete изтрива. Текстът на страницата остава непроменен.",
+ "Bilder und Grafiken auf dieser Seite": "Изображения и графики на тази страница",
+ "Bilder und Grafiken bearbeiten": "Редактиране на изображения и графики",
+ "Bilder und Grafiken bearbeiten …": "Редактиране на изображения и графики …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Снимки, лога, форми и линии в PDF – преместване, увеличаване, намаляване, изтриване и замяна на изображения; текстът остава непроменен",
+ "Grafik {0}": "Графика {0}",
+ "Kein Bild und keine Grafik gewählt.": "Не е избрано изображение или графика."
 }

@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Gåvor från kontoutdrag",
  "Spenden aus dem Kontoauszug …": "Gåvor från kontoutdrag …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Tidrapport för tränare (för redovisning och bidragsansökningar, mall)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Tidrapport för tränare (för redovisning och bidragsansökningar, mall)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} bild(er) resp. grafik ändrade – sidans text är oförändrad. Ångra: ”Redigera bilder och grafik” → ”Återställ ursprungliga bilder”.",
+ "{0} wird gelöscht.": "{0} raderas.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Det finns inga redigerbara bilder eller grafik på den här sidan. Skannade sidor är själva en bild – där hjälper ”Täck över” och ”Text”.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Klicka på en bild eller grafik (logotyp, form, linje – med lila ram) och dra för att flytta, dra i hörnet för att förstora eller förminska (proportionerna behålls). Med tangentbord: välj nedan, flytta sedan med piltangenterna, + och − ändrar storleken, Del raderar. Sidans text förblir oförändrad.",
+ "Bilder und Grafiken auf dieser Seite": "Bilder och grafik på den här sidan",
+ "Bilder und Grafiken bearbeiten": "Redigera bilder och grafik",
+ "Bilder und Grafiken bearbeiten …": "Redigera bilder och grafik …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Flytta, förstora, förminska och radera foton, logotyper, former och linjer i PDF:en och ersätt bilder – texten förblir oförändrad",
+ "Grafik {0}": "Grafik {0}",
+ "Kein Bild und keine Grafik gewählt.": "Ingen bild och ingen grafik vald."
 }

@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Donationer fra kontoudtog",
  "Spenden aus dem Kontoauszug …": "Donationer fra kontoudtog …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Timeregistrering for trænere (til afregning og tilskudsansøgninger, skabelon)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Timeregistrering for trænere (til afregning og tilskudsansøgninger, skabelon)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} billede(r) eller grafik(ker) ændret – sidens tekst er uændret. Tilbage: »Rediger billeder og grafik« → »Gendan oprindelige billeder«.",
+ "{0} wird gelöscht.": "{0} bliver slettet.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Der er ingen billeder eller grafik, der kan redigeres, på denne side. Scannede sider er selv et billede – her hjælper »Tildæk« og »Tekst«.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Klik på et billede eller en grafik (logo, form, streg – med lilla ramme) og træk for at flytte; træk i hjørnet for at gøre det større eller mindre (formatet bevares). Med tastaturet: vælg nedenfor, flyt derefter med piletasterne, + og − ændrer størrelsen, Delete sletter. Sidens tekst forbliver uændret.",
+ "Bilder und Grafiken auf dieser Seite": "Billeder og grafik på denne side",
+ "Bilder und Grafiken bearbeiten": "Rediger billeder og grafik",
+ "Bilder und Grafiken bearbeiten …": "Rediger billeder og grafik …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Flyt, forstør, formindsk og slet fotos, logoer, former og streger i PDF'en, og erstat billeder – teksten forbliver uændret",
+ "Grafik {0}": "Grafik {0}",
+ "Kein Bild und keine Grafik gewählt.": "Intet billede og ingen grafik valgt."
 }

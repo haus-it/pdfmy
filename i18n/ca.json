@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Donacions de l’extracte bancari",
  "Spenden aus dem Kontoauszug …": "Donacions de l’extracte bancari …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Registre d’hores per a entrenadors (per a liquidació i sol·licituds de subvenció, model)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Registre d’hores per a entrenadors (per a liquidació i sol·licituds de subvenció, model)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} imatge(s) o gràfic(s) modificat(s): el text de la pàgina no ha canviat. Per desfer-ho: «Edita les imatges i els gràfics» → «Restaura les imatges originals».",
+ "{0} wird gelöscht.": "{0} s'eliminarà.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "En aquesta pàgina no hi ha imatges ni gràfics editables. Les pàgines escanejades són una imatge en si mateixes: hi ajuden «Tapa» i «Text».",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Feu clic en una imatge o un gràfic (logotip, forma, línia; amb vora lila) i arrossegueu per moure'l; arrossegueu la cantonada per ampliar-lo o reduir-lo (la proporció es manté). Amb el teclat: trieu a baix, després les fletxes el mouen, + i − en canvien la mida i Supr l'elimina. El text de la pàgina no canvia.",
+ "Bilder und Grafiken auf dieser Seite": "Imatges i gràfics d'aquesta pàgina",
+ "Bilder und Grafiken bearbeiten": "Edita les imatges i els gràfics",
+ "Bilder und Grafiken bearbeiten …": "Edita les imatges i els gràfics…",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mou, amplia, redueix i elimina fotos, logotips, formes i línies del PDF i substitueix imatges; el text no canvia",
+ "Grafik {0}": "Gràfic {0}",
+ "Kein Bild und keine Grafik gewählt.": "Cap imatge ni gràfic triat."
 }

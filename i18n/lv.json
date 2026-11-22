@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Ziedojumi no konta izraksta",
  "Spenden aus dem Kontoauszug …": "Ziedojumi no konta izraksta …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Trenera stundu uzskaite (norēķiniem un dotāciju pieteikumiem, paraugs)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Trenera stundu uzskaite (norēķiniem un dotāciju pieteikumiem, paraugs)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Mainīti attēli vai grafikas objekti: {0} – lapas teksts nav mainīts. Atcelt: „Rediģēt attēlus un grafiku“ → „Atjaunot sākotnējos attēlus“.",
+ "{0} wird gelöscht.": "{0} tiks dzēsts.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Šajā lapā nav rediģējamu attēlu vai grafikas. Skenētas lapas pašas ir attēls – tur palīdz „Aizklāt“ un „Teksts“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Noklikšķiniet uz attēla vai grafikas (logotips, forma, līnija – ar violetu rāmi) un velciet, lai pārvietotu; velciet aiz stūra, lai palielinātu vai samazinātu (proporcijas saglabājas). Ar tastatūru: izvēlieties apakšā, pēc tam bulttaustiņi pārvieto, + un − maina izmēru, Del dzēš. Lapas teksts paliek nemainīts.",
+ "Bilder und Grafiken auf dieser Seite": "Attēli un grafika šajā lapā",
+ "Bilder und Grafiken bearbeiten": "Rediģēt attēlus un grafiku",
+ "Bilder und Grafiken bearbeiten …": "Rediģēt attēlus un grafiku …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "PDF failā pārvietojiet, palielinājiet, samaziniet, dzēsiet fotoattēlus, logotipus, formas un līnijas un aizstājiet attēlus – teksts paliek nemainīts",
+ "Grafik {0}": "Grafika {0}",
+ "Kein Bild und keine Grafik gewählt.": "Nav izvēlēts neviens attēls vai grafika."
 }

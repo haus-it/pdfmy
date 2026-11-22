@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Dary z výpisu z účtu",
  "Spenden aus dem Kontoauszug …": "Dary z výpisu z účtu …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Výkaz hodin pro trenéry (pro vyúčtování a žádosti o dotace, vzor)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Výkaz hodin pro trenéry (pro vyúčtování a žádosti o dotace, vzor)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Změněno: {0} (obrázků nebo grafik) – text stránky zůstal beze změny. Zpět: „Upravit obrázky a grafiku“ → „Obnovit původní obrázky“.",
+ "{0} wird gelöscht.": "{0} bude smazáno.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Na této stránce nejsou žádné upravitelné obrázky ani grafiky. Naskenované strany jsou samy obrázkem – tam pomohou „Zakrýt“ a „Text“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Klikněte na obrázek nebo grafiku (logo, tvar, čára – s fialovým ohraničením) a tažením ji posuňte; tažením za roh ji zvětšíte nebo zmenšíte (poměr stran zůstane zachován). Klávesnicí: vyberte níže, poté šipky posouvají, + a − mění velikost, Delete maže. Text stránky zůstává beze změny.",
+ "Bilder und Grafiken auf dieser Seite": "Obrázky a grafika na této straně",
+ "Bilder und Grafiken bearbeiten": "Upravit obrázky a grafiku",
+ "Bilder und Grafiken bearbeiten …": "Upravit obrázky a grafiku …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Fotografie, loga, tvary a čáry v PDF posouvejte, zvětšujte, zmenšujte, mažte a obrázky nahrazujte – text zůstane beze změny",
+ "Grafik {0}": "Grafika {0}",
+ "Kein Bild und keine Grafik gewählt.": "Není vybrán žádný obrázek ani grafika."
 }

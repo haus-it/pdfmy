@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Dhurime nga pasqyra e llogarisë",
  "Spenden aus dem Kontoauszug …": "Dhurime nga pasqyra e llogarisë …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Regjistri i orëve për trajnerët (për llogaritjen dhe kërkesat për grante, model)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Regjistri i orëve për trajnerët (për llogaritjen dhe kërkesat për grante, model)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} imazhe ose grafika u ndryshuan – teksti i faqes është i pandryshuar. Kthim mbrapa: „Redakto imazhet dhe grafikat“ → „Rikthe imazhet origjinale“.",
+ "{0} wird gelöscht.": "{0} do të fshihet.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Në këtë faqe nuk ka imazhe ose grafika të redaktueshme. Faqet e skanuara janë vetë një imazh – aty ndihmojnë „Mbulo“ dhe „Tekst“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Klikoni mbi një imazh ose grafikë (logo, formë, vijë – me kornizë vjollcë) dhe tërhiqeni për ta zhvendosur; tërhiqeni te këndi për ta zmadhuar ose zvogëluar (raporti i përmasave mbetet). Me tastierë: zgjidheni më poshtë, pastaj shigjetat e zhvendosin, + dhe − ndryshojnë madhësinë, Del e fshin. Teksti i faqes mbetet i pandryshuar.",
+ "Bilder und Grafiken auf dieser Seite": "Imazhet dhe grafikat në këtë faqe",
+ "Bilder und Grafiken bearbeiten": "Redakto imazhet dhe grafikat",
+ "Bilder und Grafiken bearbeiten …": "Redakto imazhet dhe grafikat …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Zhvendosni, zmadhoni, zvogëloni dhe fshini foto, logo, forma dhe vija në PDF dhe zëvendësoni imazhe – teksti mbetet i pandryshuar",
+ "Grafik {0}": "Grafika {0}",
+ "Kein Bild und keine Grafik gewählt.": "Nuk është zgjedhur asnjë imazh dhe asnjë grafikë."
 }

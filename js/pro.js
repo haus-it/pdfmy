@@ -6444,20 +6444,29 @@ async function imageEdit() {
   const snap = () => { undo.push([page.p, new Map([...E()].map(([n, e]) => [n, { ...e }]))]); $('#biUndo').disabled = false; };
   // Lage eines Bilds: in Seitenkoordinaten (PDF) und in der Ansicht (Pixel bei Maßstab 1, oben links)
   const rectNow = n => E().get(n)?.to || page.imgs[n].rect;
+  const obj = n => page.imgs[n], label = n => I18N.t(obj(n).kind === 'vec' ? `Grafik ${obj(n).k}` : `Bild ${obj(n).k}`);
+  const objsOf = new Map();   // Seite → Objektliste (Änderungen anderer Seiten beziehen sich auf deren Liste)
+  const asChange = p => ([n, e]) => { const o = (objsOf.get(p) || [])[n]; return o ? { ...e, n: o.n, vec: o.kind === 'vec' } : null; };
   const toView = r => PdfBild.mapRect(r, page.vt), toPage = r => PdfBild.mapRect(r, page.vti);
   const loadPage = async p => {
     const d = state.docs[p.docIdx], lib = await libFor(d), one = await PDFDocument.create({ updateMetadata: false });
     const [cp] = await one.copyPages(lib, [p.pageIdx]); one.addPage(cp);
     const bytes = await one.save(), again = await PDFDocument.load(bytes, { updateMetadata: false });
-    let imgs = []; try { imgs = PdfBild.pageImages(PDFLib, again.getPage(0)).imgs; } catch (e) { console.warn('Bilder lesen', e); }
-    return { p, bytes, imgs };
+    // Bilder und Vektorgrafiken (app-v333) in einer Liste; n = Platz in dieser Liste, o.n = Nummer innerhalb der Art
+    let imgs = []; try { const o = PdfBild.pageObjects(PDFLib, again.getPage(0)); imgs = [...o.imgs.map(x => ({ ...x, kind: 'img' })), ...o.vecs]; } catch (e) { console.warn('Bilder lesen', e); }
+    let ki = 0, kv = 0; for (const x of imgs) x.k = x.kind === 'vec' ? ++kv : ++ki;
+    objsOf.set(p, imgs);
+    return { p, bytes, imgs, nVec: kv };
   };
   const draw = () => {
     if (!view) return;
     const x = cv.getContext('2d'); x.drawImage(view, 0, 0);
+    const many = page.nVec > 150;   // viele Linien (Tabellen, Pläne): nur gewählte und geänderte Grafiken umranden
     page.imgs.forEach((im, n) => {
-      const e = E().get(n), r = toView(drag?.n === n ? drag.r : rectNow(n)), on = n === sel;
-      x.save(); x.lineWidth = on ? 3 : 1.5; x.strokeStyle = e?.del ? '#b42318' : '#2563eb'; x.setLineDash(e?.del ? [6, 4] : on ? [] : [4, 3]);
+      const e = E().get(n), on = n === sel;
+      if (im.kind === 'vec' && !on && !e && (many || im.bg)) return;
+      const r = toView(drag?.n === n ? drag.r : rectNow(n));
+      x.save(); x.lineWidth = on ? 3 : 1.5; x.strokeStyle = e?.del ? '#b42318' : im.kind === 'vec' ? '#7c3aed' : '#2563eb'; x.setLineDash(e?.del ? [6, 4] : on ? [] : [4, 3]);
       x.strokeRect(r.x * rs, r.y * rs, r.w * rs, r.h * rs);
       if (drag?.n === n) { x.globalAlpha = 0.15; x.fillStyle = '#2563eb'; x.fillRect(r.x * rs, r.y * rs, r.w * rs, r.h * rs); x.globalAlpha = 1; }
       if (e?.del) { x.beginPath(); x.moveTo(r.x * rs, r.y * rs); x.lineTo((r.x + r.w) * rs, (r.y + r.h) * rs); x.moveTo((r.x + r.w) * rs, r.y * rs); x.lineTo(r.x * rs, (r.y + r.h) * rs); x.stroke(); }
@@ -6467,7 +6476,7 @@ async function imageEdit() {
   };
   const render = async () => {
     const my = ++tok, lib1 = await PDFDocument.load(page.bytes, { updateMetadata: false });
-    const changes = [...E()].map(([n, e]) => ({ n, ...e }));
+    const changes = [...E()].map(asChange(page.p)).filter(Boolean);
     if (changes.length) await PdfBild.editPage(PDFLib, lib1, lib1.getPage(0), changes);
     const js = await openPdf(await lib1.save());
     try {
@@ -6484,10 +6493,11 @@ async function imageEdit() {
   const later = () => { clearTimeout(timer); timer = setTimeout(() => render().catch(e => console.warn(e)), 150); };
   const info = () => {
     const e = sel >= 0 ? E().get(sel) : null, r = sel >= 0 ? rectNow(sel) : null;
-    $('#biSel').textContent = sel < 0 ? I18N.t('Kein Bild gewählt.') : e?.del ? I18N.t(`Bild ${sel + 1} wird gelöscht.`) : I18N.t(`Bild ${sel + 1}: ${mm(r.w)} × ${mm(r.h)} mm`) + (e?.img ? ' – ' + I18N.t('ersetzt') : '');
-    $('#biRep').disabled = $('#biDel').disabled = sel < 0;
+    $('#biSel').textContent = sel < 0 ? I18N.t('Kein Bild und keine Grafik gewählt.') : e?.del ? I18N.t(`${label(sel)} wird gelöscht.`) : `${label(sel)}: ${mm(r.w)} × ${mm(r.h)} mm` + (e?.img ? ' – ' + I18N.t('ersetzt') : '');
+    $('#biDel').disabled = sel < 0;
+    $('#biRep').disabled = sel < 0 || obj(sel).kind === 'vec';   // ersetzen nur für Bilder
     $('#biDel').textContent = I18N.t(e?.del ? 'Nicht löschen' : 'Löschen');
-    list.querySelectorAll('button').forEach((b, n) => { b.setAttribute('aria-pressed', String(n === sel)); b.classList.toggle('del', !!E().get(n)?.del); });
+    list.querySelectorAll('button').forEach(b => { const n = +b.dataset.n; b.setAttribute('aria-pressed', String(n === sel)); b.classList.toggle('del', !!E().get(n)?.del); });
   };
   const pick = n => { sel = n; info(); draw(); };
   const show = async () => {
@@ -6497,7 +6507,9 @@ async function imageEdit() {
     $('#biPrev').disabled = at === 0; $('#biNext').disabled = at >= pdfPages.length - 1;
     $('#biNone').hidden = page.imgs.length > 0;
     list.textContent = '';
-    page.imgs.forEach((im, n) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = I18N.t(`Bild ${n + 1}`); b.onclick = () => { pick(n); b.focus(); }; list.append(b); });
+    // Knöpfe: alle Bilder, Grafiken bis 80 (Tabellenlinien zuhauf wählt man auf der Seite), Hintergründe zuletzt
+    const order = page.imgs.map((im, n) => n).filter(n => obj(n).kind === 'img').concat(page.imgs.map((im, n) => n).filter(n => obj(n).kind === 'vec' && !obj(n).bg).slice(0, 80), page.imgs.map((im, n) => n).filter(n => obj(n).bg).slice(0, 5));
+    for (const n of order) { const b = document.createElement('button'); b.type = 'button'; b.dataset.n = n; b.textContent = label(n); b.onclick = () => { pick(n); b.focus(); }; list.append(b); }
     await render(); info(); status('');
   };
   // Ziehen: verschieben, an der Ecke skalieren (Seitenverhältnis bleibt)
@@ -6507,18 +6519,21 @@ async function imageEdit() {
     if (!page?.imgs.length) return;
     const q = posOf(ev);
     if (sel >= 0 && !E().get(sel)?.del) { const r = toView(rectNow(sel)), g = cssPx(18) / rs; if (Math.abs(q.x - (r.x + r.w)) <= g && Math.abs(q.y - (r.y + r.h)) <= g) { drag = { n: sel, mode: 'size', q, r0: r, r }; cv.setPointerCapture(ev.pointerId); return; } }
-    for (let n = page.imgs.length - 1; n >= 0; n--) {   // oben liegendes Bild zuerst
-      const r = toView(rectNow(n)); if (!hit(q, r, 2 / rs)) continue;
-      pick(n); if (!E().get(n)?.del) { drag = { n, mode: 'move', q, r0: r, r }; cv.setPointerCapture(ev.pointerId); }
-      return;
+    // kleinstes getroffenes Objekt zuerst (eine Linie über einem Foto, ein Logo in einem Kasten); Hintergründe nur über die Liste
+    let best = -1, area = Infinity;
+    for (let n = page.imgs.length - 1; n >= 0; n--) {
+      if (obj(n).bg) continue;
+      const r = toView(rectNow(n)); if (!hit(q, r, Math.max(2, cssPx(4)) / rs)) continue;
+      const a = Math.max(r.w, 1) * Math.max(r.h, 1); if (a < area) { area = a; best = n; }
     }
-    pick(-1);
+    if (best < 0) return pick(-1);
+    const r = toView(rectNow(best)); pick(best); if (!E().get(best)?.del) { drag = { n: best, mode: 'move', q, r0: r, r }; cv.setPointerCapture(ev.pointerId); }
   };
   cv.onpointermove = ev => {
     if (!drag) { if (page && sel >= 0) { const q = posOf(ev), r = toView(rectNow(sel)), g = cssPx(18) / rs; cv.style.cursor = Math.abs(q.x - (r.x + r.w)) <= g && Math.abs(q.y - (r.y + r.h)) <= g ? 'nwse-resize' : hit(q, r) ? 'move' : 'default'; } return; }
     const q = posOf(ev), dx = q.x - drag.q.x, dy = q.y - drag.q.y, r0 = drag.r0;
     if (drag.mode === 'move') drag.r = { ...r0, x: r0.x + dx, y: r0.y + dy };
-    else { const w = Math.max(6, r0.w + Math.max(dx, dy * r0.w / r0.h)); drag.r = { ...r0, w, h: w * r0.h / r0.w }; }
+    else { const w = Math.max(6, r0.w + Math.max(dx, r0.h > 0.5 ? dy * r0.w / r0.h : dx)); drag.r = { ...r0, w, h: w * r0.h / r0.w }; }
     draw();
   };
   const setRect = (n, vr) => { snap(); const e = E().get(n) || {}; E().set(n, { ...e, to: toPage(vr) }); info(); later(); };
@@ -6571,7 +6586,7 @@ async function imageEdit() {
   let n = 0;
   try {
     const byDoc = new Map();
-    for (const [p, m] of todo) { const d = docOf(p); if (!byDoc.has(d)) byDoc.set(d, []); byDoc.get(d).push([p.pageIdx, [...m].map(([k, e]) => ({ n: k, ...e }))]); }
+    for (const [p, m] of todo) { const d = docOf(p); if (!byDoc.has(d)) byDoc.set(d, []); byDoc.get(d).push([p.pageIdx, [...m].map(asChange(p)).filter(Boolean)]); }
     for (const [d, pagesOf] of byDoc) {
       const lib2 = await plainLib(d.base || d.bytes); let k = 0;
       for (const [pi, ch] of pagesOf) k += await PdfBild.editPage(PDFLib, lib2, lib2.getPage(pi), ch);
@@ -6584,7 +6599,7 @@ async function imageEdit() {
     }
   } catch (e) { noteError?.(e, 'Bilder bearbeiten'); return status(I18N.t(`Bilder konnten nicht geändert werden: ${e.message}`)); }
   state.dirty = true; renderThumbs(); renderStage(); if (state.view === 'grid') renderGrid();
-  status(I18N.t(`${n} Bild(er) geändert – Text und Grafiken der Seite sind unverändert. Zurück: „Bilder bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.`));
+  status(I18N.t(`${n} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.`));
 }
 window.imageEdit = imageEdit;
 $('#btnImgEdit').onclick = () => imageEdit();

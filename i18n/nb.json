@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Gaver fra kontoutskrift",
  "Spenden aus dem Kontoauszug …": "Gaver fra kontoutskrift …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Timeliste for trenere (til avregning og tilskuddssøknader, mal)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Timeliste for trenere (til avregning og tilskuddssøknader, mal)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} bilde(r) eller grafikk endret – teksten på siden er uendret. Angre: «Rediger bilder og grafikk» → «Gjenopprett opprinnelige bilder».",
+ "{0} wird gelöscht.": "{0} blir slettet.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Det finnes ingen redigerbare bilder eller grafikk på denne siden. Skannede sider er selv et bilde – der hjelper «Dekk til» og «Tekst».",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Klikk på et bilde eller en grafikk (logo, form, linje – med lilla ramme) og dra for å flytte, dra i hjørnet for å gjøre større eller mindre (sideforholdet beholdes). Med tastatur: velg nederst, så flytter piltastene, + og − endrer størrelsen, Del sletter. Teksten på siden forblir uendret.",
+ "Bilder und Grafiken auf dieser Seite": "Bilder og grafikk på denne siden",
+ "Bilder und Grafiken bearbeiten": "Rediger bilder og grafikk",
+ "Bilder und Grafiken bearbeiten …": "Rediger bilder og grafikk …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Flytt, forstørr, forminsk og slett bilder, logoer, former og linjer i PDF-en og erstatt bilder – teksten forblir uendret",
+ "Grafik {0}": "Grafikk {0}",
+ "Kein Bild und keine Grafik gewählt.": "Ingen bilder eller grafikk valgt."
 }

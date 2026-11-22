@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Донације из извода са рачуна",
  "Spenden aus dem Kontoauszug …": "Донације из извода са рачуна …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Евиденција сати за тренере (за обрачун и захтеве за субвенције, узорак)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Евиденција сати за тренере (за обрачун и захтеве за субвенције, узорак)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Измењено слика односно графика: {0} – текст странице је непромењен. Враћање: „Уреди слике и графике“ → „Врати оригиналне слике“.",
+ "{0} wird gelöscht.": "{0} ће бити обрисано.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "На овој страници нема слика ни графика које се могу уређивати. Скениране странице су саме слика – ту помажу „Прекриј“ и „Текст“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Кликните на слику или графику (лого, облик, линија – са љубичастим оквиром) и превуците да бисте је померили; превуците за угао да бисте је увећали или умањили (однос страна остаје). Тастатуром: изаберите доле, затим стрелице померају, + и − мењају величину, Del брише. Текст странице остаје непромењен.",
+ "Bilder und Grafiken auf dieser Seite": "Слике и графике на овој страници",
+ "Bilder und Grafiken bearbeiten": "Уреди слике и графике",
+ "Bilder und Grafiken bearbeiten …": "Уреди слике и графике …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Померајте, увећавајте, умањујте и бришите фотографије, логое, облике и линије у PDF-у и замењујте слике – текст остаје непромењен",
+ "Grafik {0}": "Графика {0}",
+ "Kein Bild und keine Grafik gewählt.": "Није изабрана ни слика ни графика."
 }

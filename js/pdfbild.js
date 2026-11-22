@@ -112,6 +112,98 @@
     return out;
   }
 
+  /* Vektorgrafiken (app-v333, letzte offene Bearbeiten-Lücke aus Rang 8): Linien, Formen, Logos, Diagramme.
+     Ein Objekt ist entweder
+       – ein Block q … Q, der nur Grafik enthält (Pfade, Farben, Linienstil, cm, innere q/Q, Beschneidung), also kein Text (BT),
+         kein Bild/Formular (Do), kein Inline-Bild, keine Schattierung (sh) und ausgeglichene Markierungen (BDC/BMC … EMC) – typisch ein Logo
+         oder ein Diagramm; der äußerste solche Block zählt als ein Objekt;
+       – sonst jeder einzelne gezeichnete Pfad (m, l, c, v, y, h, re, dann S, s, f, F, f-Stern, B, B-Stern, b, b-Stern), z. B. Tabellenlinien aus Word.
+     Pfade mit Beschneidung (W/W*) oder nur „n“ sind unsichtbar bzw. begrenzen anderes – sie werden nie angeboten.
+     Ergebnis wie images(): [{ kind:'vec', n, m, local, rect, lrect, start, end, path, paths }]; m = Lage zu Beginn des Objekts auf der Seite
+     (für placement), local = dasselbe im eigenen Inhalt, lrect = Umriss im eigenen Inhalt (für den Begrenzungsrahmen von Formularen).
+     Änderungen: „q T cm <Objekt> Q“ (verschieben/skalieren) bzw. weglassen (löschen) – der übrige Inhalt bleibt Byte für Byte. */
+  const PATH = new Set(['m', 'l', 'c', 'v', 'y', 'h', 're']), PAINT = new Set(['S', 's', 'f', 'F', 'f*', 'B', 'B*', 'b', 'b*', 'n']);
+  const STROKE = new Set(['S', 's', 'B', 'B*', 'b', 'b*']), IMPURE = new Set(['BT', 'ET', 'Do', 'BI', 'sh', 'd0', 'd1', 'BX', 'EX']);
+  const MAX_VEC = 2000;
+  function graphics(ops, isImage, base = ID, formOf = null) {
+    const out = [];
+    (function walk(ops, isImage, base, formOf, path) {
+      // Paare q … Q und ob der Block reine Grafik ist
+      const match = new Array(ops.length).fill(-1), pure = new Array(ops.length).fill(false), st = [];
+      const bad = new Array(ops.length + 1).fill(0), mc = new Array(ops.length + 1).fill(0), painted = new Array(ops.length + 1).fill(0);
+      for (let i = 0; i < ops.length; i++) {   // Präfixsummen: unreine Operatoren, Markierungstiefe, sichtbar gemalte Pfade
+        const o = ops[i].op;
+        bad[i + 1] = bad[i] + (IMPURE.has(o) ? 1 : 0);
+        mc[i + 1] = mc[i] + (o === 'BDC' || o === 'BMC' ? 1 : o === 'EMC' ? -1 : 0);
+        painted[i + 1] = painted[i] + (PAINT.has(o) && o !== 'n' ? 1 : 0);
+        if (o === 'q') st.push(i);
+        else if (o === 'Q' && st.length) { const a = st.pop(); match[a] = i; }
+      }
+      const mcOk = (a, b) => { if (mc[b + 1] !== mc[a]) return false; for (let k = a; k <= b; k++) if (mc[k + 1] < mc[a]) return false; return true; };
+      for (let i = 0; i < ops.length; i++) if (match[i] > i) { const j = match[i]; pure[i] = bad[j + 1] === bad[i] && painted[j + 1] > painted[i] && mcOk(i, j); }
+      let ctm = ID, lw = 1; const stack = [];
+      let pts = [], pStart = -1, clip = false;
+      const scale = m => Math.sqrt(Math.abs(m[0] * m[3] - m[1] * m[2])) || 1;
+      const bboxPts = (p, m, pad) => {
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        for (const [u, v] of p) { const x = u * m[0] + v * m[2] + m[4], y = u * m[1] + v * m[3] + m[5]; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        return x0 === Infinity ? null : { x: x0 - pad, y: y0 - pad, w: x1 - x0 + 2 * pad, h: y1 - y0 + 2 * pad };
+      };
+      const addPts = o => {
+        const a = o.args.map(t => t.t === 'num' ? t.v : NaN); if (!a.every(isFinite)) return;
+        if (o.op === 're' && a.length === 4) pts.push([a[0], a[1]], [a[0] + a[2], a[1]], [a[0], a[1] + a[3]], [a[0] + a[2], a[1] + a[3]]);
+        else for (let k = 0; k + 1 < a.length; k += 2) pts.push([a[k], a[k + 1]]);   // Kontrollpunkte eingeschlossen – Umriss eher zu groß als zu klein
+      };
+      const emit = (start, end, lrect, mStart, localStart, paths) => {
+        if (!lrect || out.length >= MAX_VEC) return;
+        const rect = mapRect(lrect, base);
+        if (!(Math.max(rect.w, rect.h) >= 2) || ![rect.x, rect.y, rect.w, rect.h].every(isFinite)) return;   // unsichtbar klein
+        out.push({ kind: 'vec', n: out.length, m: mStart, local: localStart, rect, lrect, start, end, path, paths });
+      };
+      // Block i … j vollständig durchrechnen: Umriss aller sichtbar gemalten Pfade im eigenen Inhalt
+      const blockBox = (i, j) => {
+        let c = ctm, w = lw, p = [], cl = false, box = null, n = 0; const s2 = [];
+        for (let k = i; k <= j; k++) {
+          const o = ops[k];
+          if (o.op === 'q') s2.push([c, w]);
+          else if (o.op === 'Q') [c, w] = s2.pop() || [ID, 1];
+          else if (o.op === 'cm' && o.args.length === 6 && o.args.every(a => a.t === 'num')) c = mul(o.args.map(a => a.v), c);
+          else if (o.op === 'w' && o.args[0]?.t === 'num') w = o.args[0].v;
+          else if (PATH.has(o.op)) { const keep = pts; pts = p; addPts(o); p = pts; pts = keep; }
+          else if (o.op === 'W' || o.op === 'W*') cl = true;
+          else if (PAINT.has(o.op)) {
+            if (!cl && o.op !== 'n') { const r = bboxPts(p, c, STROKE.has(o.op) ? Math.max(w, 0.5) * scale(c) / 2 : 0); if (r) { box = union(box, r); n++; } }
+            p = []; cl = false;
+          }
+        }
+        return { box, n };
+      };
+      for (let i = 0; i < ops.length; i++) {
+        const o = ops[i];
+        if (o.op === 'q') {
+          if (pure[i] && pStart < 0) {
+            const j = match[i], b = blockBox(i, j);
+            emit(o.start, ops[j].end, b.box, mul(ctm, base), ctm, b.n);
+            i = j; continue;
+          }
+          stack.push([ctm, lw]);
+        } else if (o.op === 'Q') [ctm, lw] = stack.pop() || [ID, 1];
+        else if (o.op === 'cm' && o.args.length === 6 && o.args.every(a => a.t === 'num')) ctm = mul(o.args.map(a => a.v), ctm);
+        else if (o.op === 'w' && o.args[0]?.t === 'num') lw = o.args[0].v;
+        else if (PATH.has(o.op)) { if (pStart < 0) { pStart = i; pts = []; clip = false; } addPts(o); }
+        else if (o.op === 'W' || o.op === 'W*') clip = true;
+        else if (PAINT.has(o.op)) {
+          if (pStart >= 0 && !clip && o.op !== 'n') emit(ops[pStart].start, o.end, bboxPts(pts, ctm, STROKE.has(o.op) ? Math.max(lw, 0.5) * scale(ctm) / 2 : 0), mul(ctm, base), ctm, 1);
+          pStart = -1; pts = []; clip = false;
+        } else if (o.op === 'Do' && o.args.length === 1 && o.args[0].t === 'name' && formOf && path.length < 4 && !isImage(o.args[0].v)) {
+          const name = o.args[0].v, f = formOf(name); if (!f) continue;
+          walk(f.ops, f.isImage, mul(mul(f.matrix, ctm), base), f.formOf, [...path, { name, start: o.start, end: o.end, local: ctm, form: f }]);
+        }
+      }
+    })(ops, isImage, base, formOf, []);
+    return out;
+  }
+
   /* Neue Lage eines Bilds aus Seiten-Rechtecken: from = bisheriger Umriss, to = gewünschter Umriss (beide achsenparallel, Seitenkoordinaten).
      Ergebnis: Matrix T, die vor „Do“ als „T cm“ steht – (Einheitsquadrat × T × M) liegt dann in „to“.
      fit: Seitenverhältnis des neuen Bilds (Breite/Höhe in Pixeln) – das Bild wird mittig eingepasst statt verzerrt (beim Ersetzen). */
@@ -188,6 +280,15 @@
     const src = contentOf(L, page), res = page.node.Resources();
     return { src, imgs: images(tokenize(src), imageTestRes(L, res), ID, formFactory(L, res)) };
   }
+  /* Bilder und Vektorgrafiken einer Seite. bg = Grafik bedeckt fast die ganze Seite (Hintergrund, Rahmen) – die Oberfläche wählt sie
+     nicht per Klick, nur über die Liste. */
+  function pageObjects(L, page) {
+    const src = contentOf(L, page), res = page.node.Resources(), ops = tokenize(src), cache = new Map();
+    const imgs = images(ops, imageTestRes(L, res), ID, formFactory(L, res, cache)), vecs = graphics(ops, imageTestRes(L, res), ID, formFactory(L, res, new Map()));
+    let area = 0; try { const s = page.getSize(); area = s.width * s.height; } catch (e) { /* ohne Größe kein Hintergrund-Merkmal */ }
+    for (const v of vecs) v.bg = area > 0 && v.rect.w * v.rect.h >= 0.85 * area;
+    return { src, imgs, vecs, truncated: vecs.length >= MAX_VEC };
+  }
   // freier Ressourcenname im XObject-Wörterbuch
   function addXObject(L, ctx, res, prefix, ref) {
     const N = L.PDFName.of; let xo = res.lookupMaybe(N('XObject'), L.PDFDict);
@@ -209,16 +310,16 @@
      kopiert und geändert (andere Seiten und Aufrufe, die es mitbenutzen, bleiben gleich); sein Begrenzungsrahmen (BBox) wächst mit,
      damit ein verschobenes Bild nicht abgeschnitten wird. Ergebnis: Zahl der geänderten Bilder. */
   async function editPage(L, lib, page, edits) {
-    const { src, imgs } = pageImages(L, page), ctx = lib.context, N = L.PDFName.of;
+    const { src, imgs, vecs } = pageObjects(L, page), ctx = lib.context, N = L.PDFName.of;
     // Baum der betroffenen Aufrufe: Wurzel = Seite, Kinder = Formular-Aufrufe (je Stelle im Inhalt), Blätter = Bild-Änderungen
     const root = { src, kids: new Map(), items: [] };
     for (const e of edits) {
-      const im = imgs[e.n]; if (!im) continue;
+      const im = (e.vec ? vecs : imgs)[e.n]; if (!im) continue;
       let ed;
       if (e.del) ed = { del: true };
       else {
         let emb = null, fit = 0;
-        if (e.img) { emb = e.img.png ? await lib.embedPng(e.img.bytes) : await lib.embedJpg(e.img.bytes); fit = emb.width / emb.height; }
+        if (e.img && !e.vec) { emb = e.img.png ? await lib.embedPng(e.img.bytes) : await lib.embedJpg(e.img.bytes); fit = emb.width / emb.height; }
         const T = placement(im.m, im.rect, e.to || im.rect, fit); if (!T || !T.every(isFinite)) continue;
         ed = { T, emb };
       }
@@ -234,6 +335,11 @@
       for (const { im, ed } of node.items) {
         count++;
         if (ed.del) { parts.push({ start: im.start, end: im.end, text: '' }); continue; }
+        if (im.kind === 'vec') {   // Grafik: eigenes q … Q mit der Verschiebung, Inhalt unverändert
+          parts.push({ start: im.start, end: im.end, text: `q ${ed.T.map(num).join(' ')} cm\n${node.src.slice(im.start, im.end)}\nQ` });
+          const li = inv(im.local); if (li) extent = union(extent, mapRect(im.lrect, mul(mul(li, ed.T), im.local)));
+          continue;
+        }
         const name = ed.emb ? addX(ed.emb.ref, 'PdfmyBild') : im.name;
         parts.push({ start: im.start, end: im.end, text: `q ${ed.T.map(num).join(' ')} cm /${name} Do Q` });
         extent = union(extent, rectOf(mul(ed.T, im.local)));
@@ -262,6 +368,6 @@
     return count;
   }
 
-  const api = { tokenize, images, placement, apply, rectOf, mapRect, mul, inv, toStr, toBytes, contentOf, pageImages, editPage };
+  const api = { tokenize, images, graphics, pageObjects, placement, apply, rectOf, mapRect, mul, inv, toStr, toBytes, contentOf, pageImages, editPage };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfBild = api;
 })(typeof self !== 'undefined' ? self : globalThis);

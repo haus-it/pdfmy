@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Donații din extrasul de cont",
  "Spenden aus dem Kontoauszug …": "Donații din extrasul de cont …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Fișă de pontaj pentru antrenori (pentru decontare și cereri de finanțare, model)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Fișă de pontaj pentru antrenori (pentru decontare și cereri de finanțare, model)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} imagine/imagini sau grafic(e) modificate – textul paginii a rămas neschimbat. Înapoi: „Editare imagini și grafice” → „Restaurare imagini originale”.",
+ "{0} wird gelöscht.": "{0} va fi șters.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Pe această pagină nu există imagini sau grafice editabile. Paginile scanate sunt ele însele o imagine – acolo ajută „Acoperire” și „Text”.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Faceți clic pe o imagine sau pe un grafic (logo, formă, linie – cu contur violet) și trageți pentru a-l muta; trageți de colț pentru a-l mări sau micșora (raportul de aspect se păstrează). De la tastatură: alegeți mai jos, apoi mutați cu tastele săgeți, + și − modifică dimensiunea, Del șterge. Textul paginii rămâne neschimbat.",
+ "Bilder und Grafiken auf dieser Seite": "Imagini și grafice pe această pagină",
+ "Bilder und Grafiken bearbeiten": "Editare imagini și grafice",
+ "Bilder und Grafiken bearbeiten …": "Editare imagini și grafice …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mutați, măriți, micșorați și ștergeți fotografii, logo-uri, forme și linii din PDF și înlocuiți imagini – textul rămâne neschimbat",
+ "Grafik {0}": "Grafic {0}",
+ "Kein Bild und keine Grafik gewählt.": "Nicio imagine și niciun grafic selectat."
 }

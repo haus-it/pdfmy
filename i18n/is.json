@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Framlög úr reikningsyfirliti",
  "Spenden aus dem Kontoauszug …": "Framlög úr reikningsyfirliti …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Tímaskráning þjálfara (fyrir uppgjör og styrkumsóknir, sniðmát)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Tímaskráning þjálfara (fyrir uppgjör og styrkumsóknir, sniðmát)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} mynd(ir) eða grafík breytt – texti síðunnar er óbreyttur. Til baka: „Breyta myndum og grafík“ → „Endurheimta upprunalegar myndir“.",
+ "{0} wird gelöscht.": "{0} verður eytt.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Á þessari síðu eru engar myndir eða grafík sem hægt er að breyta. Skönnuð síða er sjálf mynd – þar hjálpa „Hylja“ og „Texti“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Smellið á mynd eða grafík (merki, form, línu – með fjólubláum ramma) og dragið til að færa; dragið í hornið til að stækka eða minnka (hlutföllin haldast). Með lyklaborði: veljið neðst, þá færa örvalyklar, + og − breyta stærð og Del eyðir. Texti síðunnar helst óbreyttur.",
+ "Bilder und Grafiken auf dieser Seite": "Myndir og grafík á þessari síðu",
+ "Bilder und Grafiken bearbeiten": "Breyta myndum og grafík",
+ "Bilder und Grafiken bearbeiten …": "Breyta myndum og grafík …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Færa, stækka, minnka og eyða ljósmyndum, merkjum, formum og línum í PDF-skránni og skipta um myndir – textinn helst óbreyttur",
+ "Grafik {0}": "Grafík {0}",
+ "Kein Bild und keine Grafik gewählt.": "Engin mynd eða grafík valin."
 }

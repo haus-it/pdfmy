@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Doazóns do extracto bancario",
  "Spenden aus dem Kontoauszug …": "Doazóns do extracto bancario …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Rexistro de horas para adestradores (para liquidación e solicitudes de subvención, modelo)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Rexistro de horas para adestradores (para liquidación e solicitudes de subvención, modelo)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Modificáronse {0} imaxe(s) ou gráfico(s): o texto da páxina non cambiou. Para desfacer: «Editar imaxes e gráficos» → «Restaurar as imaxes orixinais».",
+ "{0} wird gelöscht.": "Eliminarase {0}.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Nesta páxina non hai imaxes nin gráficos editables. As páxinas dixitalizadas son en si unha imaxe; aí axudan «Cubrir» e «Texto».",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Faga clic nunha imaxe ou gráfico (logotipo, forma, liña; marcado con bordo lila) e arrastre para movelo; arrastre a esquina para aumentalo ou reducilo (mantense a proporción). Co teclado: escóllao abaixo, despois as frechas móvenno, + e − cambian o tamaño e Supr elimínao. O texto da páxina non cambia.",
+ "Bilder und Grafiken auf dieser Seite": "Imaxes e gráficos desta páxina",
+ "Bilder und Grafiken bearbeiten": "Editar imaxes e gráficos",
+ "Bilder und Grafiken bearbeiten …": "Editar imaxes e gráficos…",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mover, aumentar, reducir e eliminar fotos, logotipos, formas e liñas do PDF, e substituír imaxes; o texto non cambia",
+ "Grafik {0}": "Gráfico {0}",
+ "Kein Bild und keine Grafik gewählt.": "Non hai ningunha imaxe nin gráfico seleccionado."
 }

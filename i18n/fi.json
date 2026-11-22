@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Lahjoitukset tiliotteelta",
  "Spenden aus dem Kontoauszug …": "Lahjoitukset tiliotteelta …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Valmentajan tuntikirjanpito (tilitystä ja avustushakemuksia varten, malli)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Valmentajan tuntikirjanpito (tilitystä ja avustushakemuksia varten, malli)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} kuvaa tai grafiikkaa muutettu – sivun teksti ei ole muuttunut. Peruuta: ”Muokkaa kuvia ja grafiikkaa” → ”Palauta alkuperäiset kuvat”.",
+ "{0} wird gelöscht.": "{0} poistetaan.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Tällä sivulla ei ole muokattavia kuvia tai grafiikkaa. Skannattu sivu on itse kuva – siinä auttavat ”Peitä” ja ”Teksti”.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Napsauta kuvaa tai grafiikkaa (logo, muoto, viiva – violetilla kehyksellä) ja vedä siirtääksesi; vedä kulmasta suurentaaksesi tai pienentääksesi (kuvasuhde säilyy). Näppäimistöllä: valitse alta, sitten nuolinäppäimet siirtävät, + ja − muuttavat kokoa, Delete poistaa. Sivun teksti ei muutu.",
+ "Bilder und Grafiken auf dieser Seite": "Tämän sivun kuvat ja grafiikka",
+ "Bilder und Grafiken bearbeiten": "Muokkaa kuvia ja grafiikkaa",
+ "Bilder und Grafiken bearbeiten …": "Muokkaa kuvia ja grafiikkaa …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Siirrä, suurenna, pienennä ja poista PDF:n valokuvia, logoja, muotoja ja viivoja sekä korvaa kuvia – teksti ei muutu",
+ "Grafik {0}": "Grafiikka {0}",
+ "Kein Bild und keine Grafik gewählt.": "Kuvaa tai grafiikkaa ei ole valittu."
 }

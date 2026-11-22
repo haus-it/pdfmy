@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Rhoddion o’r gyfriflen banc",
  "Spenden aus dem Kontoauszug …": "Rhoddion o’r gyfriflen banc …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Cofnod oriau hyfforddwyr (ar gyfer hawlio a cheisiadau am grantiau, templed)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Cofnod oriau hyfforddwyr (ar gyfer hawlio a cheisiadau am grantiau, templed)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Newidiwyd {0} delwedd neu graffig – mae testun y dudalen heb newid. I fynd yn ôl: ‘Golygu delweddau a graffeg’ → ‘Adfer y delweddau gwreiddiol’.",
+ "{0} wird gelöscht.": "Caiff {0} ei ddileu.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Nid oes delweddau na graffeg golygadwy ar y dudalen hon. Mae tudalennau wedi’u sganio yn ddelwedd eu hunain – mae ‘Cuddio’ a ‘Testun’ yn helpu yno.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Cliciwch ar ddelwedd neu graffig (logo, siâp, llinell – gyda border porffor) a llusgwch i’w symud; llusgwch y gornel i’w mwyhau neu ei lleihau (cedwir y gymhareb agwedd). Gyda’r bysellfwrdd: dewiswch isod, yna mae’r bysellau saeth yn symud, mae + a − yn newid y maint, ac mae Del yn dileu. Mae testun y dudalen yn aros heb newid.",
+ "Bilder und Grafiken auf dieser Seite": "Delweddau a graffeg ar y dudalen hon",
+ "Bilder und Grafiken bearbeiten": "Golygu delweddau a graffeg",
+ "Bilder und Grafiken bearbeiten …": "Golygu delweddau a graffeg …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Symudwch, mwyhewch, lleihewch a dilëwch ffotograffau, logos, siapiau a llinellau yn y PDF, a disodli delweddau – mae’r testun yn aros heb newid",
+ "Grafik {0}": "Graffig {0}",
+ "Kein Bild und keine Grafik gewählt.": "Heb ddewis delwedd na graffig."
 }

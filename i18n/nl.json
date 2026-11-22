@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Giften uit rekeningafschrift",
  "Spenden aus dem Kontoauszug …": "Giften uit rekeningafschrift …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Urenregistratie voor trainers (voor declaratie en subsidieaanvragen, voorbeeld)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Urenregistratie voor trainers (voor declaratie en subsidieaanvragen, voorbeeld)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} afbeelding(en) of vectorafbeelding(en) gewijzigd – de tekst van de pagina is ongewijzigd. Ongedaan maken: “Afbeeldingen en vectorafbeeldingen bewerken” → “Oorspronkelijke afbeeldingen herstellen”.",
+ "{0} wird gelöscht.": "{0} wordt verwijderd.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Op deze pagina staan geen bewerkbare afbeeldingen of vectorafbeeldingen. Gescande pagina’s zijn zelf een afbeelding – daar helpen “Afdekken” en “Tekst”.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Klik op een afbeelding of vectorafbeelding (logo, vorm, lijn – met paars kader) en sleep om te verplaatsen, sleep aan de hoek om te vergroten of te verkleinen (de verhouding blijft behouden). Met het toetsenbord: onderaan kiezen, daarna verplaatsen de pijltjestoetsen, + en − wijzigen de grootte, Del verwijdert. De tekst van de pagina blijft ongewijzigd.",
+ "Bilder und Grafiken auf dieser Seite": "Afbeeldingen en vectorafbeeldingen op deze pagina",
+ "Bilder und Grafiken bearbeiten": "Afbeeldingen en vectorafbeeldingen bewerken",
+ "Bilder und Grafiken bearbeiten …": "Afbeeldingen en vectorafbeeldingen bewerken …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Foto’s, logo’s, vormen en lijnen in de pdf verplaatsen, vergroten, verkleinen, verwijderen en afbeeldingen vervangen – tekst blijft ongewijzigd",
+ "Grafik {0}": "Vectorafbeelding {0}",
+ "Kein Bild und keine Grafik gewählt.": "Geen afbeelding en geen vectorafbeelding gekozen."
 }

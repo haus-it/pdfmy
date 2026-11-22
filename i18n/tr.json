@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Hesap özetinden bağışlar",
  "Spenden aus dem Kontoauszug …": "Hesap özetinden bağışlar …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Antrenör çalışma saati çizelgesi (masraf hesaplaması ve hibe başvuruları için, örnek)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Antrenör çalışma saati çizelgesi (masraf hesaplaması ve hibe başvuruları için, örnek)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} görsel veya grafik değiştirildi – sayfanın metni değişmedi. Geri alma: “Görselleri ve grafikleri düzenle” → “Özgün görselleri geri yükle”.",
+ "{0} wird gelöscht.": "{0} silinecek.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Bu sayfada düzenlenebilir görsel veya grafik yok. Taranmış sayfalar başlı başına bir görseldir – orada “Ört” ve “Metin” işe yarar.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Bir görsele veya grafiğe (logo, şekil, çizgi – mor çerçeveli) tıklayıp sürükleyerek taşıyın, köşeden sürükleyerek büyütün veya küçültün (en-boy oranı korunur). Klavyeyle: aşağıdan seçin, sonra ok tuşları taşır, + ve − boyutu değiştirir, Del siler. Sayfanın metni değişmeden kalır.",
+ "Bilder und Grafiken auf dieser Seite": "Bu sayfadaki görseller ve grafikler",
+ "Bilder und Grafiken bearbeiten": "Görselleri ve grafikleri düzenle",
+ "Bilder und Grafiken bearbeiten …": "Görselleri ve grafikleri düzenle …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "PDF’teki fotoğrafları, logoları, şekilleri ve çizgileri taşıyın, büyütün, küçültün, silin ve görselleri değiştirin – metin değişmeden kalır",
+ "Grafik {0}": "Grafik {0}",
+ "Kein Bild und keine Grafik gewählt.": "Görsel veya grafik seçilmedi."
 }

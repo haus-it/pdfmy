@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Donations from bank statement",
  "Spenden aus dem Kontoauszug …": "Donations from bank statement …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Coach timesheet (for reimbursement claims and grant applications, template)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Coach timesheet (for reimbursement claims and grant applications, template)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} image(s) or graphic(s) changed – the page’s text is unchanged. To go back: “Edit images and graphics” → “Restore original images”.",
+ "{0} wird gelöscht.": "{0} will be deleted.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "There are no editable images or graphics on this page. Scanned pages are themselves an image – “Cover” and “Text” help there.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Click an image or graphic (logo, shape, line – outlined in purple) and drag to move it; drag the corner to enlarge or shrink it (the aspect ratio is kept). With the keyboard: choose below, then the arrow keys move it, + and − change the size, Delete deletes. The page’s text stays unchanged.",
+ "Bilder und Grafiken auf dieser Seite": "Images and graphics on this page",
+ "Bilder und Grafiken bearbeiten": "Edit images and graphics",
+ "Bilder und Grafiken bearbeiten …": "Edit images and graphics …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Move, enlarge, shrink and delete photos, logos, shapes and lines in the PDF, and replace images – text stays unchanged",
+ "Grafik {0}": "Graphic {0}",
+ "Kein Bild und keine Grafik gewählt.": "No image or graphic selected."
 }

@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Aukos iš sąskaitos išrašo",
  "Spenden aus dem Kontoauszug …": "Aukos iš sąskaitos išrašo …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Trenerio darbo valandų apskaita (atsiskaitymui ir paraiškoms dėl subsidijų, pavyzdys)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Trenerio darbo valandų apskaita (atsiskaitymui ir paraiškoms dėl subsidijų, pavyzdys)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Pakeista vaizdų ar grafikos objektų: {0} – puslapio tekstas nepakeistas. Atšaukti: „Redaguoti vaizdus ir grafiką“ → „Atkurti pradinius vaizdus“.",
+ "{0} wird gelöscht.": "{0} bus ištrintas.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Šiame puslapyje nėra redaguojamų vaizdų ar grafikos. Nuskenuoti puslapiai patys yra vaizdas – ten padeda „Uždengti“ ir „Tekstas“.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Spustelėkite vaizdą ar grafiką (logotipą, formą, liniją – su violetiniu rėmeliu) ir vilkite, kad perkeltumėte; vilkite už kampo, kad padidintumėte ar sumažintumėte (proporcijos išlieka). Klaviatūra: apačioje pasirinkite, tada rodyklių klavišais perkelkite, + ir − keičia dydį, Del ištrina. Puslapio tekstas lieka nepakeistas.",
+ "Bilder und Grafiken auf dieser Seite": "Vaizdai ir grafika šiame puslapyje",
+ "Bilder und Grafiken bearbeiten": "Redaguoti vaizdus ir grafiką",
+ "Bilder und Grafiken bearbeiten …": "Redaguoti vaizdus ir grafiką …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "PDF faile perkelkite, didinkite, mažinkite, ištrinkite nuotraukas, logotipus, formas ir linijas bei keiskite vaizdus – tekstas lieka nepakeistas",
+ "Grafik {0}": "Grafika {0}",
+ "Kein Bild und keine Grafik gewählt.": "Nepasirinktas joks vaizdas ar grafika."
 }

@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Dohaintzak kontu-laburpenetik",
  "Spenden aus dem Kontoauszug …": "Dohaintzak kontu-laburpenetik …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Entrenatzaileen ordu-erregistroa (likidaziorako eta diru-laguntza eskaeretarako, eredua)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Entrenatzaileen ordu-erregistroa (likidaziorako eta diru-laguntza eskaeretarako, eredua)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} irudi edo grafiko aldatu dira – orriaren testua aldatu gabe dago. Atzera egiteko: «Editatu irudiak eta grafikoak» → «Berreskuratu jatorrizko irudiak».",
+ "{0} wird gelöscht.": "{0} ezabatuko da.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Orri honetan ez dago editatzeko moduko irudirik edo grafikorik. Eskaneatutako orriak berez irudi bat dira – horretarako «Estali» eta «Testua» erabili.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Egin klik irudi edo grafiko batean (logotipoa, forma, marra – ertz more batekin) eta arrastatu mugitzeko; arrastatu izkinatik handitzeko edo txikitzeko (proportzioa mantentzen da). Teklatuarekin: aukeratu behean, gero geziek mugitzen dute, + eta − teklek tamaina aldatzen dute eta Supr teklak ezabatzen du. Orriaren testua aldatu gabe geratzen da.",
+ "Bilder und Grafiken auf dieser Seite": "Orri honetako irudiak eta grafikoak",
+ "Bilder und Grafiken bearbeiten": "Editatu irudiak eta grafikoak",
+ "Bilder und Grafiken bearbeiten …": "Editatu irudiak eta grafikoak …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Mugitu, handitu, txikitu eta ezabatu PDFko argazkiak, logotipoak, formak eta marrak, eta ordeztu irudiak – testua aldatu gabe geratzen da",
+ "Grafik {0}": "Grafikoa {0}",
+ "Kein Bild und keine Grafik gewählt.": "Ez da irudirik edo grafikorik hautatu."
 }

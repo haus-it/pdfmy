@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Ахвяраванні з банкаўскай выпіскі",
  "Spenden aus dem Kontoauszug …": "Ахвяраванні з банкаўскай выпіскі …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Табель уліку гадзін для трэнераў (для разліку і заявак на субсідыі, узор)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Табель уліку гадзін для трэнераў (для разліку і заявак на субсідыі, узор)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "Зменена: {0} (выявы або графікі) – тэкст старонкі не змяніўся. Назад: «Рэдагаваць выявы і графіку» → «Аднавіць першапачатковыя выявы».",
+ "{0} wird gelöscht.": "{0} будзе выдалена.",
+ "{0}: {1} × {2} mm": "{0}: {1} × {2} мм",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "На гэтай старонцы няма выяў або графікі, якія можна рэдагаваць. Адсканаваныя старонкі самі з'яўляюцца выявай – тут дапамогуць «Закрыць» і «Тэкст».",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Націсніце на выяву або графіку (лагатып, фігура, лінія – з фіялетавай рамкай) і перацягніце, каб перамясціць; цягніце за кут, каб павялічыць або паменшыць (прапорцыі захоўваюцца). З клавіятуры: абярыце ўнізе, потым стрэлкі перамяшчаюць, + і − змяняюць памер, Del выдаляе. Тэкст старонкі застаецца без змен.",
+ "Bilder und Grafiken auf dieser Seite": "Выявы і графіка на гэтай старонцы",
+ "Bilder und Grafiken bearbeiten": "Рэдагаваць выявы і графіку",
+ "Bilder und Grafiken bearbeiten …": "Рэдагаваць выявы і графіку …",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Фатаграфіі, лагатыпы, фігуры і лініі ў PDF – перамяшчаць, павялічваць, памяншаць, выдаляць і замяняць выявы; тэкст застаецца без змен",
+ "Grafik {0}": "Графіка {0}",
+ "Kein Bild und keine Grafik gewählt.": "Ні выява, ні графіка не абраны."
 }

@@ -4413,5 +4413,16 @@
  "Spenden aus dem Kontoauszug": "Dons du relevé de compte",
  "Spenden aus dem Kontoauszug …": "Dons du relevé de compte …",
  "Spenderliste {0}.csv": "Spenderliste {0}.csv",
- "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Feuille d’heures des entraîneurs (pour le décompte et les demandes de subvention, modèle)"
+ "Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)": "Feuille d’heures des entraîneurs (pour le décompte et les demandes de subvention, modèle)",
+ "{0} Bild(er) bzw. Grafik(en) geändert – der Text der Seite ist unverändert. Zurück: „Bilder und Grafiken bearbeiten“ → „Ursprüngliche Bilder wiederherstellen“.": "{0} image(s) ou graphique(s) modifié(s) – le texte de la page est inchangé. Pour annuler : « Modifier les images et graphiques » → « Restaurer les images d’origine ».",
+ "{0} wird gelöscht.": "{0} sera supprimé.",
+ "{0}: {1} × {2} mm": "{0} : {1} × {2} mm",
+ "Auf dieser Seite gibt es keine bearbeitbaren Bilder oder Grafiken. Gescannte Seiten sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.": "Cette page ne contient aucune image ni aucun graphique modifiable. Les pages numérisées sont elles-mêmes une image – ici, « Masquer » et « Texte » vous aident.",
+ "Bild oder Grafik (Logo, Form, Linie – lila umrandet) anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern (das Seitenverhältnis bleibt). Mit der Tastatur: unten wählen, dann Pfeiltasten verschieben, + und − ändern die Größe, Entf löscht. Der Text der Seite bleibt unverändert.": "Cliquez sur une image ou un graphique (logo, forme, ligne – entouré en violet) et faites glisser pour le déplacer ; tirez par le coin pour l’agrandir ou le réduire (les proportions sont conservées). Au clavier : sélectionnez-le en bas, puis les flèches le déplacent, + et − modifient la taille, Suppr le supprime. Le texte de la page reste inchangé.",
+ "Bilder und Grafiken auf dieser Seite": "Images et graphiques de cette page",
+ "Bilder und Grafiken bearbeiten": "Modifier les images et graphiques",
+ "Bilder und Grafiken bearbeiten …": "Modifier les images et graphiques…",
+ "Fotos, Logos, Formen und Linien in der PDF verschieben, vergrößern, verkleinern, löschen und Bilder ersetzen – Text bleibt unverändert": "Déplacer, agrandir, réduire et supprimer les photos, logos, formes et lignes du PDF, et remplacer des images – le texte reste inchangé",
+ "Grafik {0}": "Graphique {0}",
+ "Kein Bild und keine Grafik gewählt.": "Aucune image ni aucun graphique sélectionné."
 }
