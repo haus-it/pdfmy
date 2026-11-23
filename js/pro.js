@@ -4834,6 +4834,18 @@ function trustLine(r) {
   if (r.trustChecked) return `<li><span class="m">?</span> Aussteller nicht in der EU-Vertrauensliste – das ist bei Firmen- und Behördenzertifikaten normal; die Signatur kann trotzdem gültig sein${stand}</li>`;
   return '';
 }
+/* Stufe der Signatur nach eIDAS (app-v336, PdfVerify.level): QES, qualifiziertes Siegel, fortgeschritten mit qualifiziertem Zertifikat.
+   Nur nach dem Abgleich mit der EU-Vertrauensliste – ohne Liste nie „qualifiziert“. */
+const LEVEL_SHORT = { qes: 'Qualifizierte elektronische Signatur (QES).', qeseal: 'Qualifiziertes elektronisches Siegel.' };
+function levelLine(r) {
+  if (r.usageRights || r.selfSigned || !r.trustChecked) return '';
+  const lv = PdfVerify.level(r);
+  if (lv === 'qes') return '<li><span class="y">✓</span> <b>Qualifizierte elektronische Signatur (QES)</b> – qualifiziertes Zertifikat, Schlüssel in einer qualifizierten Signaturerstellungseinheit, Aussteller zum Signaturzeitpunkt in der EU-Vertrauensliste. Rechtlich der handschriftlichen Unterschrift gleichgestellt (Art. 25 Abs. 2 eIDAS, § 126a BGB).</li>';
+  if (lv === 'qeseal') return '<li><span class="y">✓</span> <b>Qualifiziertes elektronisches Siegel</b> – Siegel einer Organisation; Herkunft und Unversehrtheit gelten als vermutet (Art. 35 Abs. 2 eIDAS).</li>';
+  if (lv === 'adesqc') return '<li><span class="m">i</span> Fortgeschrittene Signatur mit qualifiziertem Zertifikat – das Zertifikat weist keine qualifizierte Signaturerstellungseinheit aus, darum keine QES (für die Schriftform nach § 126a BGB nicht ausreichend).</li>';
+  if (lv === 'ades') return '<li><span class="m">i</span> Fortgeschrittene elektronische Signatur – keine qualifizierte Signatur nach eIDAS; ersetzt nicht die gesetzliche Schriftform (§ 126a BGB).</li>';
+  return '';
+}
 const sigOk = r => r.intact && r.valid && r.certValidAtTime !== false;
 const fmtWhen = d => d instanceof Date && !isNaN(d) ? I18N.fmtDateTime(d) : '';
 const sigWho = r => [r.signer?.cn || r.name, r.signer?.o].filter(Boolean).join(', ') || 'unbekannt';
@@ -4860,6 +4872,7 @@ function renderSigBar() {
   else if (all.length > 1) t = `${all.length} Signaturen, alle gültig: ${sigNames(all)}. Dokument seit der letzten Signatur unverändert.`;
   else t = `Signiert von ${sigWho(last)}${fmtWhen(last.time || last.m) ? ' am ' + fmtWhen(last.time || last.m) : ''}. Dokument seit der Signatur unverändert.`;
   if (!bad.length && trustOk(last)) t += ` Aussteller laut EU-Vertrauensliste qualifiziert (${last.trust.p}, ${last.trust.c}).`;
+  if (!bad.length && last.trustChecked) { const lv = PdfVerify.level(last); if (LEVEL_SHORT[lv]) t += ' ' + LEVEL_SHORT[lv]; }   // Stufe nach eIDAS (app-v336)
   // unverändert = dieselbe Prüfung wie beim Speichern (Original wird übernommen, Signatur angehängt)
   const unchanged = typeof signedOriginal === 'function' && !!signedOriginal(state.pages);
   if (!unchanged) t += ' Hinweis: Speichern mit Änderungen entfernt die Signatur – das Original bleibt gültig.';
@@ -4899,6 +4912,7 @@ function sigDetails(only, focusK = -1) {
       <li>Aussteller: ${esc([r.issuer?.cn, r.issuer?.o].filter(Boolean).join(', ') || '–')}${r.selfSigned ? ' <span class="m">(selbst ausgestellt – nur mit dem Unterzeichner abgleichen)</span>' : ''}</li>
       ${r.qualified ? '<li><span class="y">✓</span> Qualifiziertes Zertifikat (eIDAS-Kennzeichnung)</li>' : ''}
       ${trustLine(r)}
+      ${levelLine(r)}
       ${r.timestamp ? '<li><span class="y">✓</span> Mit Zeitstempel</li>' : ''}
       ${r.ltv ? '<li><span class="y">✓</span> Langzeitprüfdaten (LTV) eingebettet – bleibt auch nach Ablauf des Zertifikats prüfbar</li>' : ''}
       ${r.problems.length ? `<li class="hint">${esc(r.problems.join(' · '))}</li>` : ''}

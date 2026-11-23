@@ -443,3 +443,5 @@ Nachtrag 22.11.2026 (app-v333): Vorhandene Vektorgrafiken bearbeiten (js/pdfbild
 Nachtrag 22.11.2026 (app-v334): Grafiken umfärben (js/pdfbild.js recolor): Farboperatoren (rg/RG, g/G, k/K, sc/scn) nur im gewählten Objekt ersetzt, Weiß bleibt; übriger Inhalt byte-gleich (ISO 32000-1 8.6). Fälschungsschutz wie v333. Test: tests/pdfgrafik.test.js.
 
 Nachtrag 23.11.2026 (app-v335): Text als Objekt (js/pdfbild.js texts): Textabschnitte BT … ET verschieben, skalieren, umfärben, löschen; Textlauf nach ISO 32000-1 9.4 mit Schriftbreiten (Widths, W/DW); unsichtbarer Text (Tr 3/7, OCR-Ebene) und Abschnitte mit unausgeglichenen Markierungen (ISO 14289) ausgenommen; Fälschungsschutz wie v333. Test: tests/pdftext-objekt.test.js.
+
+Nachtrag 23.11.2026 (app-v336): Art der Signatur nach eIDAS (js/pdfverify.js level/qcStatements): QES, qualifiziertes Siegel, AdES/QC, AdES aus QCStatements (ETSI EN 319 412-5), Zertifikatsrichtlinien (EN 319 411-2) und Dienstverwendung der EU-Vertrauensliste; vereinfachte Fassung der Validierung nach ETSI TS 119 615 / EN 319 102-1 (keine Prüfung von Sperrstatus über die vorhandene LTV-Auswertung hinaus). Test: tests/qscd.test.js.

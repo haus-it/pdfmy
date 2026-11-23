@@ -94,6 +94,16 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 23.11.2026: Art der Signatur nach eIDAS (app-v336)
+**Inhalt:** Signaturprüfung nennt QES, qualifiziertes Siegel, fortgeschritten mit qualifiziertem Zertifikat oder fortgeschritten – aus den eIDAS-Kennzeichen des Zertifikats und der EU-Vertrauensliste. **Grund (Leitsatz: besser als die Mitbewerber):** Offener Punkt aus Rang 4. Acrobat zeigt „qualifiziert“ über EUTL/AATL; kostenlose Online-Werkzeuge prüfen Signaturen meist gar nicht oder nur „gültig/ungültig“ (nicht für alle nachgeprüft). PDFMy nennt zusätzlich, ob die gesetzliche Schriftform ersetzt wird – lokal, ohne Upload.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1–3 | gewahrt: Prüfung im Browser, Liste als statische Datei |
+| 4 Einfach | passt: eine Zeile in den Details, ein Satz in der Leiste |
+| 5 Prüfbar | tests/qscd.test.js; Durchlauf in der App |
+| 6 | nicht betroffen |
+
 ### Geprüft und umgesetzt 23.11.2026: Text als Objekt (app-v335)
 **Inhalt:** Textabschnitte (BT … ET) im Dialog „Bilder und Grafiken bearbeiten“ verschieben, skalieren, umfärben, löschen; Text bleibt Text. OCR-Ebenen ausgenommen. **Grund (Leitsatz: besser als die Mitbewerber):** Letzter offener Punkt aus Rang 8 („Objekte bearbeiten“): Acrobat Pro, Foxit und PDF-XChange können das im Abo bzw. kostenpflichtig; PDFMy kostenlos, lokal, mit Fälschungsschutz und Schutz der Texterkennungs-Ebene.
 

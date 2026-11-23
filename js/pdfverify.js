@@ -52,14 +52,57 @@
   function nameOf(forge, asn) { const o = {}; try { for (const a of forge.pki.RDNAttributesAsArray(asn)) o[a.type] = a.value; } catch {} return { cn: o[OID.cn] || '', o: o[OID.o] || '', email: o[OID.email] || '', c: o[OID.c] || '' }; }
   const timeOf = (forge, n) => n.type === forge.asn1.Type.UTCTIME ? forge.asn1.utcTimeToDate(n.value) : forge.asn1.generalizedTimeToDate(n.value);
   // Zertifikat ohne RSA-Beschränkung von forge lesen: Seriennummer, Aussteller, Inhaber, Gültigkeit, öffentlicher Schlüssel (SPKI)
+  /* eIDAS-Kennzeichen im Zertifikat (app-v336, ETSI EN 319 412-5 und 319 412-2):
+     QCStatements (1.3.6.1.5.5.7.1.3): QcCompliance 0.4.0.1862.1.1 (EU-qualifiziert), QcSSCD 0.4.0.1862.1.4 (Schlüssel in einer
+     qualifizierten Signaturerstellungseinheit, QSCD), QcType 0.4.0.1862.1.6 mit .1 Signatur / .2 Siegel / .3 Website;
+     Zertifikatsrichtlinien (2.5.29.32): QCP-n 0.4.0.194112.1.0, QCP-l .1.1, QCP-n-qscd .1.2, QCP-l-qscd .1.3.
+     Ergebnis: { compliance, qscd, type: 'esign'|'eseal'|'web'|null, policy: 'n'|'l'|null } */
+  const QC = { compliance: '0.4.0.1862.1.1', sscd: '0.4.0.1862.1.4', type: '0.4.0.1862.1.6', types: { '0.4.0.1862.1.6.1': 'esign', '0.4.0.1862.1.6.2': 'eseal', '0.4.0.1862.1.6.3': 'web' },
+    pol: { '0.4.0.194112.1.0': ['n', false], '0.4.0.194112.1.1': ['l', false], '0.4.0.194112.1.2': ['n', true], '0.4.0.194112.1.3': ['l', true] }, cp: '2.5.29.32' };
+  function qcStatements(forge, ext) {
+    const r = { compliance: false, qscd: false, type: null, policy: null };
+    if (!ext) return r;
+    try {
+      for (const e of ext.value[0].value) {
+        const id = forge.asn1.derToOid(e.value[0].value), oct = e.value[e.value.length - 1];
+        if (id !== OID.qc && id !== QC.cp) continue;
+        const inner = forge.asn1.fromDer(oct.value, { strict: false });
+        for (const st of inner.value) {
+          const sid = forge.asn1.derToOid(st.value[0].value);
+          if (id === QC.cp) { const p = QC.pol[sid]; if (p) { r.policy = p[0]; if (p[1]) r.qscd = true; } continue; }
+          if (sid === QC.compliance) r.compliance = true;
+          else if (sid === QC.sscd) r.qscd = true;
+          else if (sid === QC.type && st.value[1]) for (const t of st.value[1].value || []) { const k = QC.types[forge.asn1.derToOid(t.value)]; if (k && !r.type) r.type = k; }
+        }
+      }
+    } catch (e) { /* unlesbare Erweiterung: keine Kennzeichen */ }
+    return r;
+  }
+  /* Stufe der Signatur nach eIDAS (vereinfachte Fassung von ETSI TS 119 615 / EN 319 102-1), nur wenn die Signatur selbst gültig ist:
+     'qes'    qualifizierte elektronische Signatur: Aussteller zum Signaturzeitpunkt qualifiziert für Signaturen (EU-Liste), Zertifikat
+              EU-qualifiziert (QcCompliance oder QCP-n), Schlüssel in einer QSCD (QcSSCD oder QCP-*-qscd), Art Signatur;
+     'qeseal' qualifiziertes elektronisches Siegel (dasselbe für juristische Personen, QcType eseal bzw. QCP-l);
+     'adesqc' fortgeschritten mit qualifiziertem Zertifikat (ohne QSCD-Nachweis);
+     'ades'   fortgeschritten (gültig, aber kein qualifiziertes Zertifikat bzw. Aussteller nicht in der Liste); null = nicht gültig. */
+  function level(r) {
+    if (!r || !r.intact || !r.valid) return null;
+    const q = r.qcs || {}, t = r.trust, okAt = !!t && t.atTime !== false;
+    const seal = q.type === 'eseal' || (!q.type && q.policy === 'l');
+    const use = t && t.u && t.u.length ? t.u : ['s', 'e'];   // ältere Listen ohne Angabe: beides zulassen
+    const qualified = okAt && (q.compliance || !!q.policy) && use.includes(seal ? 'e' : 's');
+    if (qualified && q.qscd && q.type !== 'web') return seal ? 'qeseal' : 'qes';
+    if (qualified) return 'adesqc';
+    return 'ades';
+  }
   function certInfo(forge, c) {
     const tbs = c.value[0], v = tbs.value, k = v[0].tagClass === forge.asn1.Class.CONTEXT_SPECIFIC ? 1 : 0;
     const spki = v[k + 5], algo = spki.value[0].value, ext = v.find(x => x.tagClass === forge.asn1.Class.CONTEXT_SPECIFIC && x.type === 3);
     let qc = false; if (ext) { try { qc = latin1(fromBin(forge.asn1.toDer(ext).getBytes())).includes(latin1(fromBin(forge.asn1.oidToDer(OID.qc).getBytes()))); } catch {} }
+    const qcs = qcStatements(forge, ext);
     return {
       serial: forge.util.bytesToHex(v[k].value), issuer: nameOf(forge, v[k + 2]), subject: nameOf(forge, v[k + 4]),
       from: timeOf(forge, v[k + 3].value[0]), to: timeOf(forge, v[k + 3].value[1]),
-      spki: fromBin(forge.asn1.toDer(spki).getBytes()), keyAlg: forge.asn1.derToOid(algo[0].value), curve: algo[1] && algo[1].type === forge.asn1.Type.OID ? forge.asn1.derToOid(algo[1].value) : null, qc,
+      spki: fromBin(forge.asn1.toDer(spki).getBytes()), keyAlg: forge.asn1.derToOid(algo[0].value), curve: algo[1] && algo[1].type === forge.asn1.Type.OID ? forge.asn1.derToOid(algo[1].value) : null, qc, qcs,
       // für die Prüfung gegen die EU-Vertrauensliste: signierter Teil, Verfahren und Signatur des Ausstellers (BIT STRING ohne Füllbyte)
       ...issuerSig(forge, c, tbs),
     };
@@ -134,7 +177,7 @@
     const unsigned = sv.find((x, k) => k > i + 1 && x.tagClass === forge.asn1.Class.CONTEXT_SPECIFIC && x.type === 1);
     r.timestamp = !!unsigned && latin1(fromBin(forge.asn1.toDer(unsigned).getBytes())).includes(latin1(fromBin(forge.asn1.oidToDer(OID.tsa).getBytes())));
     r.algorithm = hash || '?';
-    if (cert) Object.assign(r, { signer: cert.subject, issuer: cert.issuer, certFrom: cert.from, certTo: cert.to, selfSigned: cert.issuer.cn === cert.subject.cn && cert.issuer.o === cert.subject.o, qualified: cert.qc });
+    if (cert) Object.assign(r, { signer: cert.subject, issuer: cert.issuer, certFrom: cert.from, certTo: cert.to, selfSigned: cert.issuer.cn === cert.subject.cn && cert.issuer.o === cert.subject.o, qualified: cert.qc, qcs: cert.qcs });
     if (cert) Object.defineProperty(r, '_path', { value: [cert, ...certs.filter(c => c !== cert)], enumerable: false });   // für trust() – nicht mitspeichern
     if (!hash) { r.problems.push('Unbekanntes Prüfsummenverfahren'); return r; }
     const S = subtle(); if (!S) { r.problems.push('Prüfung im Browser nicht möglich'); return r; }
@@ -258,6 +301,6 @@
   }
   const sameRange = (a, b) => !!a && !!b && a.length === 4 && a.every((n, k) => n === b[k]);
 
-  const api = { verify, trust, find, hasSignature, scanNames, fields, sameRange, drehen };
+  const api = { verify, trust, level, qcStatements, find, hasSignature, scanNames, fields, sameRange, drehen };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.PdfVerify = api;
 })(typeof self !== 'undefined' ? self : globalThis);

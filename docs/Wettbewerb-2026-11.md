@@ -56,7 +56,7 @@ Aufwand: **S** bis 2 Tage, **M** etwa 1–2 Wochen, **L** mehr als 2 Wochen oder
 - **Leitplanken:** gewahrt. L4: ein Werkzeug in der vorhandenen Leiste. Fälschungsschutz (docs/Faelschungsschutz.md) muss genauso greifen wie bei „Text ändern“.
 
 ### Rang 4: Signaturprüfung mit EU-Vertrauensliste und Langzeit-Signatur (PAdES B-LT/B-LTA)
-> **(a) umgesetzt 19.11.2026 (app-v310):** statischer EUTL-Schnappschuss (tools/eutl.js → vendor/eutl/eutl.json), kryptografische Prüfung des Ausstellers gegen den gelisteten Dienstschlüssel, Status zum Signaturzeitpunkt, Anzeige in Leiste und Details. Offen: XML-Signaturprüfung der Listen beim Abruf, QSCD-Auswertung.
+> **(a) umgesetzt 19.11.2026 (app-v310):** statischer EUTL-Schnappschuss (tools/eutl.js → vendor/eutl/eutl.json), kryptografische Prüfung des Ausstellers gegen den gelisteten Dienstschlüssel, Status zum Signaturzeitpunkt, Anzeige in Leiste und Details. QSCD-Auswertung und Art der Signatur (QES, qualifiziertes Siegel, AdES/QC) umgesetzt 23.11.2026 (app-v336). Offen: XML-Signaturprüfung der Listen beim Abruf.
 > **(b) umgesetzt 20.11.2026 (app-v311, pdfmy Scan 1.23.0/1.13.0):** PAdES B-LTA – OCSP bzw. CRL über pdfmy Scan (nur öffentliche Adressen), /DSS, Dokumentzeitstempel; gekoppelt an „mit Zeitstempel“.
 - **Wer hat es:** Acrobat validiert gegen die EUTL und AATL und kann LTV-Daten einbetten. Für Foxit wird das Gleiche vermutet (nicht nachgeprüft).
 - **Repo-Check:** `js/pdfverify.js:7` sagt selbst: „Vertrauensliste nicht geprüft – das wird ehrlich so angezeigt“. Nach „B-LT“ und „LTA“ gibt es keine Treffer. Vorhanden sind B-B und B-T (Zeitstempel).

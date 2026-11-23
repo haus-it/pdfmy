@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-23
 
+### Signaturprüfung: Art der Signatur nach eIDAS – QES, qualifiziertes Siegel, fortgeschritten (app-v336)
+- Die Signaturdetails und die Leiste nennen jetzt die Art: „Qualifizierte elektronische Signatur (QES)“ (qualifiziertes Zertifikat, Schlüssel in einer qualifizierten Signaturerstellungseinheit, Aussteller zum Signaturzeitpunkt für Signaturen in der EU-Vertrauensliste), „Qualifiziertes elektronisches Siegel“, „Fortgeschrittene Signatur mit qualifiziertem Zertifikat“ oder „Fortgeschrittene elektronische Signatur“ – mit Hinweis, was davon die gesetzliche Schriftform ersetzt.
+- Ausgewertet werden die eIDAS-Kennzeichen im Zertifikat (QCStatements nach ETSI EN 319 412-5: QcCompliance, QcSSCD, QcType; Zertifikatsrichtlinien QCP-n/-l/-qscd nach EN 319 411-2) und die Verwendung des Dienstes in der EU-Vertrauensliste (Signatur/Siegel). Ohne geladene Liste wird nie „qualifiziert“ angezeigt.
+- tests/qscd.test.js (Testzertifikate mit allen Kennzeichen-Kombinationen); Durchlauf in der App.
+
 ### Text als Objekt: Textabschnitte verschieben, skalieren, umfärben, löschen (app-v335)
 - „Bilder und Grafiken bearbeiten“ bietet jetzt auch Textabschnitte an (grün umrandet): eine Adresse, Überschrift oder ein Stempeltext lässt sich an eine andere Stelle ziehen, vergrößern, verkleinern, umfärben oder löschen – wie das Objektwerkzeug in Acrobat Pro. Den Wortlaut ändert weiterhin „Text ändern“.
 - Text bleibt echter Text (durchsuchbar, kopierbar, Schrift unverändert); geändert wird nur der gewählte Abschnitt. Der Umriss wird aus den Zeichenbreiten der Schrift berechnet (Textlauf nach ISO 32000-1 9.4).
