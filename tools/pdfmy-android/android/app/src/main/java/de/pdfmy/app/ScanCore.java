@@ -347,7 +347,7 @@ public final class ScanCore {
             return m.find() ? java.util.Base64.getMimeDecoder().decode(m.group(1)) : null;
         }
         @Override void scan(Request r, Pages out) throws Exception {
-            List<String> t = new ArrayList<>(), sources = new ArrayList<>(); boolean notAccepting = false; int count = 0;
+            List<String> t = new ArrayList<>(), sources = new ArrayList<>(); boolean notAccepting = false, adfRefused = false; int count = 0;
             if ("platen".equals(r.source)) sources.add("Platen"); else if ("feeder".equals(r.source)) sources.add("ADF");
             else { if (feeder) sources.add("ADF"); if (platen) sources.add("Platen"); }
             if (sources.isEmpty()) sources.add("Platen");
@@ -366,7 +366,8 @@ public final class ScanCore {
                     t.add(src + " " + fmt + " " + (simple == 1 ? "einfach" : "voll") + " " + dpi + "dpi " + mode + " → " + c.code);
                     String jid = str(tag(c.text, "JobId")).trim();
                     if (c.code == 200 && !jid.isEmpty() && !fault(c.text)) { id = jid; tok = str(tag(c.text, "JobToken")).trim(); break; }   // Lexmark/Xerox melden Fehler auch mit HTTP 200
-                    if (c.text.toLowerCase(Locale.ROOT).contains("notacceptingjobs")) notAccepting = true;
+                    // Glas abgelehnt: WSD-Scan am Gerät starten (Kyocera, Ricoh); nur Einzug abgelehnt: Brother & Co. melden so einen leeren Einzug
+                    if (c.text.toLowerCase(Locale.ROOT).contains("notacceptingjobs")) { if ("ADF".equals(src0)) { adfRefused = true; if (a >= 1) break; } else notAccepting = true; }
                     if (!retry.matcher(c.text).find()) break;
                     sleep(2000);
                 }
@@ -388,7 +389,8 @@ public final class ScanCore {
                 t.add(src + ": keine Seiten");
             }
             trace = String.join(" | ", t); log.line("Scan " + name + ": " + count + " Seite(n) · " + trace);
-            if (count == 0 && notAccepting) throw new Exception("Der Scanner nimmt gerade keine Aufträge an. Bei Kyocera, Ricoh und manchen anderen Geräten muss WSD-Scan am Gerät gestartet werden: am Bedienfeld „Senden“ bzw. „Scanner“ → „WSD-Scan“ → „Vom Computer“ wählen und dann hier erneut „Scannen“ tippen.");
+            if (count == 0 && adfRefused && !notAccepting && !sources.contains("Platen")) throw new Exception("Im Einzug liegt offenbar kein Papier – der Scanner nimmt den Auftrag für den Einzug nicht an. Bitte die Blätter in den Einzug legen und erneut „Scannen“ tippen (oder als Papierquelle „Glas“ wählen). Liegt Papier ein, ist das Gerät vermutlich gerade belegt (Kopieren, Fax, Menü am Bedienfeld) – kurz warten und erneut scannen.");
+            if (count == 0 && (notAccepting || adfRefused)) throw new Exception("Der Scanner nimmt gerade keine Aufträge an. Bei Kyocera, Ricoh und manchen anderen Geräten muss WSD-Scan am Gerät gestartet werden: am Bedienfeld „Senden“ bzw. „Scanner“ → „WSD-Scan“ → „Vom Computer“ wählen und dann hier erneut „Scannen“ tippen.");
             if (count == 0) throw new Exception(NO_PAGES);
         }
     }

@@ -37,7 +37,7 @@ namespace PdfmyScan
         public const int PortFirst = 52880, PortLast = 52889;
         public static int Port = PortFirst;   // tatsächlich belegter Port dieses Benutzers
         public static string PortFile => Path.Combine(DataDir, "port.txt");
-        public const string Version = "1.23.0";
+        public const string Version = "1.24.0";
         public static readonly string AppDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Programs", "pdfmy Scan");
         public static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pdfmy Scan");
 
@@ -84,6 +84,22 @@ namespace PdfmyScan
                 Log(string.Join(" | ", tr)); return;
             }   // aus „Installierte Apps“ – vor der Einzelinstanz-Prüfung
             if (args.Contains("--peer-test")) { Log("Peer-Test: " + Peer.SelfTest()); return; }   // Support: Besitzerprüfung gegen alle laufenden Prozesse (Terminalserver)
+            // Test (1.24.0): WSD-Scan gegen eine Dienstadresse, Ergebnis als Text in eine Datei – für tests/wsd-einzug.test.js (nachgebildeter Scanner)
+            // pdfmy-Scan.exe --wsd-test <Dienst-URL> <Ergebnisdatei> [--auto]   (--auto: Einzug und Glas, sonst nur Einzug)
+            int wi = Array.IndexOf(args, "--wsd-test");
+            if (wi >= 0 && wi + 2 < args.Length)
+            {
+                string res;
+                try
+                {
+                    var d = new WsdDevice { Svc = args[wi + 1], Name = "Brother Test", Feeder = true, Platen = args.Contains("--auto") };
+                    d.Formats.Add("jfif"); d.Modes.Add("RGB24"); d.Resolutions.Add(300);
+                    var pages = d.Scan(new ScanRequest { source = args.Contains("--auto") ? "auto" : "feeder", color = "color", dpi = 300 }, b => { }, CancellationToken.None);
+                    res = "OK " + pages.Count + "\n" + d.LastTrace;
+                }
+                catch (Exception e) { res = "FEHLER " + e.Message; }
+                File.WriteAllText(args[wi + 2], res, new UTF8Encoding(false)); return;
+            }
 
             // Doppelklick auf eine PDF im Explorer: "pdfmy-Scan.exe --open <Datei>"; „Senden an → PDFMy“ übergibt mehrere Dateien (1.18.0)
             int oi = Array.IndexOf(args, "--open");
@@ -873,7 +889,8 @@ namespace PdfmyScan
                             { attempts.Add(Tuple.Create(true, true, pg, mode)); attempts.Add(Tuple.Create(true, false, pg, mode)); }
                         attempts.Add(Tuple.Create(false, true, 1, 1)); attempts.Add(Tuple.Create(false, false, 1, 1));
                         // Einzug einseitig, Treiber meldet trotz Papier „leer“ (Samsung Universal Scan Driver): Umschalter auch an der Quelle, alle Seiten
-                        if (feeder && !r.duplex && feedItem == null) { attempts.Add(Tuple.Create(false, true, 0, 2)); attempts.Add(Tuple.Create(false, false, 0, 2)); }
+                        // Brother MFC-9142CDN (Meldung 2026-0002): „Seiten = 0“ an der Quelle → 0x80070057 – darum vorher mit einer Seite je Abruf
+                        if (feeder && !r.duplex && feedItem == null) { attempts.Add(Tuple.Create(false, true, 1, 2)); attempts.Add(Tuple.Create(false, true, 0, 2)); attempts.Add(Tuple.Create(false, false, 0, 2)); }
                         bool paperEmptyOnly = true;
                         foreach (var at in attempts)
                         {

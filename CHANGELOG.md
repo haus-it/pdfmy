@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-23
 
+### pdfmy Scan 1.24.0 (Windows) und 1.14.0 (Mac, Linux): leerer Einzug bei Netzwerk-Scannern richtig gemeldet (Meldung 2026-0002, app-v340)
+- Brother-Geräte (hier MFC-9142CDN) lehnen über WSD einen Einzugs-Auftrag mit „ServerErrorNotAcceptingJobs“ ab, wenn der Einzug leer ist oder das Gerät belegt ist. pdfmy Scan zeigte dann den Hinweis für Kyocera und Ricoh („WSD-Scan am Bedienfeld starten“) und wiederholte sechsmal mit je 2 Sekunden Pause.
+- Jetzt: Wird nur der Einzug abgelehnt, heißt es „Im Einzug liegt offenbar kein Papier … oder das Gerät ist gerade belegt“, nach höchstens vier statt sechs Versuchen; bei „Automatisch“ geht es wie bisher weiter zum Glas. Der Kyocera-Hinweis bleibt für Ablehnungen am Glas.
+- Windows-Treiber (WIA, eine gemeinsame Quelle für Glas und Einzug): zusätzlicher Versuch mit einer Seite je Abruf an der Quelle, nachdem der Brother-Treiber „Seiten = 0“ als ungültig abgelehnt hatte (am Gerät noch zu bestätigen).
+- Gleiche Unterscheidung im Quelltext der Android-App (noch nicht veröffentlicht; hier ohne Java nicht übersetzt). Geräteliste: Hinweis ergänzt.
+- tests/wsd-einzug.test.js: echte pdfmy-Scan.exe (neuer Prüfschalter --wsd-test) gegen einen nachgebildeten WSD-Scanner – leerer Einzug, automatisch zum Glas, Normalfall.
+
 ### Behoben (Meldung 2026-0002): Zweiter Scan während eines laufenden, „Es läuft bereits ein Scan“ als Fehler (app-v339)
 - Ein Netzwerk-Scanner ohne Treiber (WSD, hier Brother MFC-9142CDN) brauchte für den Einzug über 30 Sekunden; in der Zwischenzeit ließ die App einen zweiten Scan starten, pdfmy Scan lehnte ihn ab und die App zeigte das als Fehler mit Fehlerbericht.
 - Jetzt: Läuft noch ein Scan, startet die App keinen zweiten, sondern sagt, dass der Scanner noch arbeitet. Lehnt pdfmy Scan trotzdem ab (z. B. Scan aus einem anderen Fenster), kommt ein verständlicher Hinweis statt des Fehlerdialogs. Kommt nach 15 Sekunden noch keine Seite, zeigt die Statuszeile, dass der Scanner noch einzieht.

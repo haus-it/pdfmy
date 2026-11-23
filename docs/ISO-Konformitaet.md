@@ -451,3 +451,5 @@ Nachtrag 23.11.2026 (app-v337): Integrität des EUTL-Schnappschusses (ISO 27001 
 Nachtrag 23.11.2026 (app-v338): Leistung des Erstbesuchs gemessen (Handy-Drosselung wie Lighthouse, Messung in der Seite) und verbessert: Dialoge als <template>, Einsetzen vor dem ersten Programmteil (ISO 9001 8.5.1, gemessene statt vermutete Verbesserung; ISO 25010 Leistungseffizienz). Tests: tests/dialogvorlagen.test.js, tests/seo.test.js.
 
 Nachtrag 23.11.2026 (app-v339): Korrekturmaßnahme zu Meldung 2026-0002 (ISO 9001 10.2): kein zweiter Scanauftrag während eines laufenden, Ablehnung durch pdfmy Scan (409) als Hinweis statt Fehler, Zwischenstand bei langsamem Einzug. Test: tests/scan-laeuft.test.js. Offener Teil (WIA-Einzug Brother) in docs/Rueckmeldungen.md.
+
+Nachtrag 23.11.2026 (app-v340, pdfmy Scan 1.24.0/1.14.0): Korrekturmaßnahme zu Meldung 2026-0002 Teil 2 (ISO 9001 10.2): WSD-Ablehnung nur des Einzugs als „kein Papier/Gerät belegt“ statt Kyocera-Hinweis, weniger Wiederholungen; WIA-Versuch mit einer Seite je Abruf. Test gegen nachgebildeten Scanner mit der echten exe: tests/wsd-einzug.test.js.

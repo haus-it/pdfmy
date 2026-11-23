@@ -242,7 +242,9 @@ namespace PdfmyScan
 
         public override List<byte[]> Scan(ScanRequest r, Action<byte[]> onPage, CancellationToken ct)
         {
-            var trace = new List<string>(); var pages = new List<byte[]>(); bool notAccepting = false;
+            // notAccepting: am Glas abgelehnt (Kyocera, Ricoh: WSD-Scan muss am Gerät gestartet werden);
+            // adfRefused: nur der Einzug abgelehnt – Brother & Co. melden so einen leeren Einzug (Meldung 2026-0002, Brother MFC-9142CDN)
+            var trace = new List<string>(); var pages = new List<byte[]>(); bool notAccepting = false, adfRefused = false;
             var sources = r.source == "platen" ? new List<string> { "Platen" } : r.source == "feeder" ? new List<string> { "ADF" } : new List<string>();
             if (sources.Count == 0) { if (Feeder) sources.Add("ADF"); if (Platen) sources.Add("Platen"); }
             if (sources.Count == 0) sources.Add("Platen");
@@ -261,7 +263,9 @@ namespace PdfmyScan
                         // Lexmark/Xerox melden Fehler auch mit HTTP 200 – nur mit Auftragsnummer und ohne Fault ist es ein Erfolg
                         var jid = (Tag(c.Text, "JobId") ?? "").Trim();
                         if (c.Code == 200 && jid.Length > 0 && !IsFault(c.Text)) { id = jid; tok = (Tag(c.Text, "JobToken") ?? "").Trim(); break; }
-                        if (Regex.IsMatch(c.Text, "NotAcceptingJobs", RegexOptions.IgnoreCase)) notAccepting = true;
+                        bool refused = Regex.IsMatch(c.Text, "NotAcceptingJobs", RegexOptions.IgnoreCase);
+                        if (refused) { if (src0 == "ADF") adfRefused = true; else notAccepting = true; }
+                        if (refused && src0 == "ADF" && attempt >= 1) break;   // leerer Einzug: nicht lange wiederholen (vorher 6 × 2 s)
                         if (!Regex.IsMatch(c.Text, "Busy|NotAccepting|ServerErrorTemporary|Calibrating|LampWarming", RegexOptions.IgnoreCase)) break;
                         Thread.Sleep(2000);
                     }
@@ -286,7 +290,9 @@ namespace PdfmyScan
             }
             LastTrace = string.Join(" | ", trace);
             Program.Log($"Scan {Name}: {pages.Count} Seite(n) · {LastTrace}");
-            if (pages.Count == 0 && notAccepting) throw new Exception("Der Scanner nimmt gerade keine Aufträge an. Bei Kyocera, Ricoh und manchen anderen Geräten muss WSD-Scan am Gerät gestartet werden: am Bedienfeld „Senden“ bzw. „Scanner“ → „WSD-Scan“ → „Vom Computer“ wählen und dann hier erneut „Scannen“ klicken.");
+            if (pages.Count == 0 && adfRefused && !notAccepting && !sources.Contains("Platen"))
+                throw new Exception("Im Einzug liegt offenbar kein Papier – der Scanner nimmt den Auftrag für den Einzug nicht an. Bitte die Blätter in den Einzug legen und erneut „Scannen“ klicken (oder als Papierquelle „Glas“ wählen). Liegt Papier ein, ist das Gerät vermutlich gerade belegt (Kopieren, Fax, Menü am Bedienfeld) – kurz warten und erneut scannen.");
+            if (pages.Count == 0 && (notAccepting || adfRefused)) throw new Exception("Der Scanner nimmt gerade keine Aufträge an. Bei Kyocera, Ricoh und manchen anderen Geräten muss WSD-Scan am Gerät gestartet werden: am Bedienfeld „Senden“ bzw. „Scanner“ → „WSD-Scan“ → „Vom Computer“ wählen und dann hier erneut „Scannen“ klicken.");
             if (pages.Count == 0) throw new Exception("Der Scanner hat keine Seiten geliefert. Liegt Papier im Einzug oder auf dem Glas? Ist das Gerät gerade frei (kein Kopier- oder Druckauftrag)?");
             return pages;
         }

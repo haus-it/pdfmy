@@ -12,7 +12,7 @@ use strict; use warnings; use utf8; use Encode qw(decode);
 use IO::Socket::INET; use IO::Select; use Socket qw(sockaddr_in inet_aton AF_INET6 SOCK_DGRAM getaddrinfo unpack_sockaddr_in6); use JSON::PP; use MIME::Base64;
 use POSIX qw(strftime :sys_wait_h); use Time::HiRes qw(time); use File::Path qw(make_path remove_tree); use File::Temp qw(tempfile);
 
-our $VERSION = '1.13.0';
+our $VERSION = '1.14.0';
 my $IS_MAC = $^O eq 'darwin';
 my $OS = $IS_MAC ? 'Mac' : 'Linux';
 my $PORT = $ENV{PDFMY_PORT} || 52880;   # tatsächlich belegter Port steht nach dem Start in $DIR/port
@@ -371,7 +371,7 @@ sub wsd_scan {
   my $mime = $fmt =~ /pdf/ ? 'application/pdf' : $fmt eq 'png' ? 'image/png' : 'image/jpeg';
   my $mode = pick_mode($d->{modes} || [], $r->{color} || 'gray', 'RGB24', 'Grayscale8', 'BlackAndWhite1');
   my $dpi = pick_dpi($d, $r->{dpi} || 300);
-  my $n = 0; my $notacc = 0;
+  my $n = 0; my $notacc = 0; my $adfref = 0;
   SOURCE: for my $src0 (@sources) {
     my $src = $src0 eq 'ADF' && $r->{duplex} && $d->{duplex} ? 'ADFDuplex' : $src0;
     my ($id, $tok);
@@ -383,7 +383,8 @@ sub wsd_scan {
         # Lexmark/Xerox melden Fehler auch mit HTTP 200 – nur mit Auftragsnummer und ohne Fault ist es ein Erfolg
         my $jid = trim(tagv($x, 'JobId') // '');
         if ($c == 200 && length $jid && !wsd_fault($x)) { $id = $jid; $tok = trim(tagv($x, 'JobToken')); last; }
-        $notacc = 1 if $x =~ /NotAcceptingJobs/i;
+        # Glas abgelehnt: WSD-Scan am Gerät starten (Kyocera, Ricoh); nur Einzug abgelehnt: Brother & Co. melden so einen leeren Einzug
+        if ($x =~ /NotAcceptingJobs/i) { if ($src0 eq 'ADF') { $adfref = 1; last if $try >= 2; } else { $notacc = 1; } }
         last unless $x =~ /Busy|NotAccepting|ServerErrorTemporary|Calibrating|LampWarming/i; sleep 2;
       }
       last if $id;
@@ -406,7 +407,8 @@ sub wsd_scan {
     last SOURCE if $n;
     push @$trace, "$src: keine Seiten";
   }
-  die "Der Scanner nimmt gerade keine Aufträge an. Bei Kyocera, Ricoh und manchen anderen Geräten muss WSD-Scan am Gerät gestartet werden: am Bedienfeld „Senden“ bzw. „Scanner“ → „WSD-Scan“ → „Vom Computer“ wählen und dann erneut „Scannen“ klicken.\n" if !$n && $notacc;
+  die "Im Einzug liegt offenbar kein Papier – der Scanner nimmt den Auftrag für den Einzug nicht an. Bitte die Blätter in den Einzug legen und erneut „Scannen“ klicken (oder als Papierquelle „Glas“ wählen). Liegt Papier ein, ist das Gerät vermutlich gerade belegt (Kopieren, Fax, Menü am Bedienfeld) – kurz warten und erneut scannen.\n" if !$n && $adfref && !$notacc && !grep({ $_ eq 'Platen' } @sources);
+  die "Der Scanner nimmt gerade keine Aufträge an. Bei Kyocera, Ricoh und manchen anderen Geräten muss WSD-Scan am Gerät gestartet werden: am Bedienfeld „Senden“ bzw. „Scanner“ → „WSD-Scan“ → „Vom Computer“ wählen und dann erneut „Scannen“ klicken.\n" if !$n && ($notacc || $adfref);
   return $n;
 }
 sub wsd_fault { my $x = shift // ''; return $x =~ m{addressing/fault|<(?:[\w-]+:)?Fault\b} ? 1 : 0; }
