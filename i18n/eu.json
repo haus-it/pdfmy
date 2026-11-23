@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Sinadura elektroniko kualifikatua (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Sinadura elektroniko kualifikatua (QES).",
  "Qualifiziertes elektronisches Siegel": "Zigilu elektroniko kualifikatua",
- "Qualifiziertes elektronisches Siegel.": "Zigilu elektroniko kualifikatua."
+ "Qualifiziertes elektronisches Siegel.": "Zigilu elektroniko kualifikatua.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Eskanerra oraindik aurreko lanean ari da – orriak agertuko dira amaitu bezain laster. Kontrolatzailerik gabeko sareko eskanerrek (WSD) askotan 30 eta 60 segundo behar dituzte papera sartzeko.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Eskanerra oraindik papera sartzen ari da … Kontrolatzailerik gabeko sareko eskanerrek sarritan minutu bat behar dute horretarako.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan oraindik aurreko eskaneatze batean ari da (agian beste leiho batetik). Itxaron amaitu arte eta gero eskaneatu berriro."
 }

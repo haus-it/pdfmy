@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Firma elettronica qualificata (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Firma elettronica qualificata (QES).",
  "Qualifiziertes elektronisches Siegel": "Sigillo elettronico qualificato",
- "Qualifiziertes elektronisches Siegel.": "Sigillo elettronico qualificato."
+ "Qualifiziertes elektronisches Siegel.": "Sigillo elettronico qualificato.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Lo scanner sta ancora lavorando al processo precedente: le pagine compariranno appena avrà finito. Gli scanner di rete senza driver (WSD) spesso impiegano da 30 a 60 secondi per caricare la carta.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Lo scanner sta ancora caricando la carta … Gli scanner di rete senza driver spesso impiegano fino a un minuto.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan sta ancora lavorando a una scansione precedente (forse da un’altra finestra). Attenda che termini, quindi scansioni di nuovo."
 }

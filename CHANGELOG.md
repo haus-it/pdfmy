@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-23
 
+### Behoben (Meldung 2026-0002): Zweiter Scan während eines laufenden, „Es läuft bereits ein Scan“ als Fehler (app-v339)
+- Ein Netzwerk-Scanner ohne Treiber (WSD, hier Brother MFC-9142CDN) brauchte für den Einzug über 30 Sekunden; in der Zwischenzeit ließ die App einen zweiten Scan starten, pdfmy Scan lehnte ihn ab und die App zeigte das als Fehler mit Fehlerbericht.
+- Jetzt: Läuft noch ein Scan, startet die App keinen zweiten, sondern sagt, dass der Scanner noch arbeitet. Lehnt pdfmy Scan trotzdem ab (z. B. Scan aus einem anderen Fenster), kommt ein verständlicher Hinweis statt des Fehlerdialogs. Kommt nach 15 Sekunden noch keine Seite, zeigt die Statuszeile, dass der Scanner noch einzieht.
+- tests/scan-laeuft.test.js; Durchlauf in der App (laufender Scan, Ablehnung durch pdfmy Scan nachgestellt).
+- Noch offen aus derselben Meldung (pdfmy Scan, Windows-Treiber): Der WIA-Treiber des Brother MFC-9142CDN meldet „Papier im Einzug“, liefert beim Abruf aber „Einzug leer“; ein TWAIN-Treiber von Brother ist nicht installiert. Wird mit dem Gerät geprüft (siehe docs/Rueckmeldungen.md).
+
 ### Schnellerer Erstbesuch auf dem Handy: Dialoge erst nach dem ersten Bild aufbauen (app-v338)
 - Messung des Erstbesuchs auf pdfmy.de mit Handy-Drosselung wie Lighthouse (150 ms Latenz, 1,6 Mbit/s, CPU vierfach verlangsamt), in der Seite selbst gemessen (scratchpad-Werkzeug, Median aus 5 Durchläufen): Die rund 70 Dialoge (≈ 130 KB HTML) wurden vor dem ersten Bild als Elemente mit Stilen aufgebaut.
 - Jetzt liefert pdfmy.de sie als HTML-Vorlagen aus; js/laden.js setzt sie an derselben Stelle ein, unmittelbar bevor die Programmteile starten. Übersetzung und Programm finden sie wie vorher. Ergebnis (Median): erster Inhalt 4,8 → 3,9 s, größtes Element 6,8 → 5,6 s, Seite geparst 12,3 → 10,4 s, bedienbar 21,0 → 18,6 s.

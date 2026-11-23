@@ -5013,8 +5013,12 @@ document.querySelectorAll('#scanDlg [data-connect]').forEach(b => b.onclick = as
 });
 
 // Scannen: Auftrag starten, Seiten abholen, sobald sie fertig sind – sie erscheinen sofort im Dokument
+// Läuft noch ein Scan (z. B. Netzwerk-Scanner ohne Treiber, die für den Einzug 30–60 s brauchen), keinen zweiten starten –
+// pdfmy Scan würde ihn ohnehin mit „Es läuft bereits ein Scan“ ablehnen (Meldung 2026-0002).
+const SCAN_BUSY_MSG = 'Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.';
 $('#scanGo').onclick = async () => {
   const sel = document.querySelector('#scanList input:checked'); if (!sel) return;
+  if (state.scanning > 0) { $('#scanDlg').close(); toast(I18N.t(SCAN_BUSY_MSG), 9000); return; }
   const kind = $('#scanKind').value, photo = kind === 'photo';
   LS.set('scanner', sel.value); LS.set('scanKind', kind); LS.set({ auto: 'scanAutoColor', photo: 'scanPhotoColor' }[kind] || 'scanColor', $('#scanColor').value);
   if (!photo && !$('#scanSource').disabled) LS.set('scanSource', $('#scanSource').value);
@@ -5032,7 +5036,7 @@ $('#scanGo').onclick = async () => {
     if (!await askFlip(fronts.length)) { status(`${fronts.length} Vorderseite(n) gescannt – ohne Rückseiten.`); return; }
     const backs = await scanRun(req, 'Rückseite');
     flipMerge(fronts, backs);
-  } catch (e) { showScanError(e); } finally { state.scanPhoto = null; }
+  } catch (e) { if (e.busy) { status(e.message); toast(e.message, 9000); } else showScanError(e); } finally { state.scanPhoto = null; }
 };
 // Ein Scanauftrag: Seiten abholen, sobald sie fertig sind (sie erscheinen sofort im Dokument); liefert die neuen Seiten
 async function scanRun(req, word) {
@@ -5042,10 +5046,13 @@ async function scanRun(req, word) {
   state.scanning = (state.scanning || 0) + 1;
   try {
     const r = await scanApi('/scan', { method: 'POST', body: JSON.stringify(req) }), d = await r.json();
+    if (r.status === 409) { const err = new Error(I18N.t('pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.')); err.busy = true; throw err; }
     if (!r.ok) throw new Error(d.error || 'Scan nicht möglich');
-    let got = 0, st;
+    let got = 0, st; const t0 = Date.now(); let slowShown = false;
     for (;;) {
       st = await (await scanApi('/scan/' + d.job)).json();
+      // Noch keine Seite nach 15 s: Bescheid geben, dass der Scanner noch arbeitet (sonst wirkt es wie hängen geblieben)
+      if (!got && !st.pages && !slowShown && Date.now() - t0 > 15000) { slowShown = true; status(I18N.t('Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.'), 0.1); }
       while (got < st.pages) {
         const blob = await (await scanApi(`/scan/${d.job}/page/${got}`, {}, 60000)).blob();
         got++;

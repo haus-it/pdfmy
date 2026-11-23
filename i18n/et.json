@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Kvalifitseeritud elektrooniline allkiri (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Kvalifitseeritud elektrooniline allkiri (QES).",
  "Qualifiziertes elektronisches Siegel": "Kvalifitseeritud elektrooniline tempel",
- "Qualifiziertes elektronisches Siegel.": "Kvalifitseeritud elektrooniline tempel."
+ "Qualifiziertes elektronisches Siegel.": "Kvalifitseeritud elektrooniline tempel.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skanner töötab veel eelmise tööga – leheküljed ilmuvad niipea, kui see on valmis. Draiverita võrguskännerid (WSD) vajavad paberi sissetõmbamiseks sageli 30 kuni 60 sekundit.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skanner tõmbab paberit veel sisse … Draiverita võrguskännerid vajavad selleks sageli kuni minuti.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan töötab veel eelmise skannimisega (võib-olla mõnest teisest aknast). Oodake, kuni see on valmis, ja skannige siis uuesti."
 }

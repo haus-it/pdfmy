@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Kwalifikowany podpis elektroniczny (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Kwalifikowany podpis elektroniczny (QES).",
  "Qualifiziertes elektronisches Siegel": "Kwalifikowana pieczęć elektroniczna",
- "Qualifiziertes elektronisches Siegel.": "Kwalifikowana pieczęć elektroniczna."
+ "Qualifiziertes elektronisches Siegel.": "Kwalifikowana pieczęć elektroniczna.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skaner nadal pracuje nad poprzednim zadaniem – strony pojawią się, gdy tylko skończy. Skanery sieciowe bez sterownika (WSD) często potrzebują 30–60 sekund na pobranie papieru.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skaner nadal pobiera papier … Skanery sieciowe bez sterownika często potrzebują na to nawet minuty.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan nadal pracuje nad poprzednim skanowaniem (może z innego okna). Poczekaj, aż się zakończy, i zeskanuj ponownie."
 }

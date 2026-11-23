@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Minősített elektronikus aláírás (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Minősített elektronikus aláírás (QES).",
  "Qualifiziertes elektronisches Siegel": "Minősített elektronikus bélyegző",
- "Qualifiziertes elektronisches Siegel.": "Minősített elektronikus bélyegző."
+ "Qualifiziertes elektronisches Siegel.": "Minősített elektronikus bélyegző.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "A lapolvasó még az előző feladaton dolgozik – az oldalak megjelennek, amint végzett. A meghajtó nélküli hálózati lapolvasóknak (WSD) a papír behúzásához gyakran 30–60 másodpercre van szükségük.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "A lapolvasó még húzza be a papírt … A meghajtó nélküli hálózati lapolvasóknak ehhez gyakran akár egy percre is szükségük van.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "A pdfmy Scan még egy korábbi beolvasáson dolgozik (talán egy másik ablakból). Kérjük, várja meg, amíg befejezi, majd olvasson be újra."
 }

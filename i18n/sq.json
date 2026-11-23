@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Nënshkrim elektronik i kualifikuar (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Nënshkrim elektronik i kualifikuar (QES).",
  "Qualifiziertes elektronisches Siegel": "Vulë elektronike e kualifikuar",
- "Qualifiziertes elektronisches Siegel.": "Vulë elektronike e kualifikuar."
+ "Qualifiziertes elektronisches Siegel.": "Vulë elektronike e kualifikuar.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skaneri po punon ende në detyrën e mëparshme – faqet do të shfaqen sapo ta mbarojë. Skanerët e rrjetit pa drejtues (WSD) shpesh kanë nevojë për 30 deri në 60 sekonda për të tërhequr letrën.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skaneri po e tërheq ende letrën … Skanerët e rrjetit pa drejtues shpesh kanë nevojë për deri në një minutë për këtë.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan po punon ende në një skanim të mëparshëm (ndoshta nga një dritare tjetër). Prisni derisa të mbarojë dhe pastaj skanoni sërish."
 }

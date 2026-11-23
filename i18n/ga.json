@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Síniú leictreonach cáilithe (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Síniú leictreonach cáilithe (QES).",
  "Qualifiziertes elektronisches Siegel": "Séala leictreonach cáilithe",
- "Qualifiziertes elektronisches Siegel.": "Séala leictreonach cáilithe."
+ "Qualifiziertes elektronisches Siegel.": "Séala leictreonach cáilithe.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Tá an scanóir fós ag obair ar an tasc roimhe seo – beidh na leathanaigh le feiceáil chomh luath agus a bheidh sé críochnaithe. Is minic a bhíonn 30 go 60 soicind de dhíth ar scanóirí líonra gan tiománaí (WSD) chun an páipéar a fheistiú.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Tá an scanóir fós ag tarraingt an pháipéir isteach … Is minic a bhíonn suas le nóiméad de dhíth ar scanóirí líonra gan tiománaí chuige sin.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "Tá pdfmy Scan fós ag obair ar scanadh roimhe seo (b’fhéidir ó fhuinneog eile). Fan go mbeidh sé críochnaithe, agus ansin scan arís."
 }

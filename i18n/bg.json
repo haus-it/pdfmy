@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Квалифициран електронен подпис (КЕП / QES)",
  "Qualifizierte elektronische Signatur (QES).": "Квалифициран електронен подпис (КЕП / QES).",
  "Qualifiziertes elektronisches Siegel": "Квалифицирана електронна марка",
- "Qualifiziertes elektronisches Siegel.": "Квалифицирана електронна марка."
+ "Qualifiziertes elektronisches Siegel.": "Квалифицирана електронна марка.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Скенерът още обработва предишното задание – страниците се появяват, щом приключи. На мрежовите скенери без драйвер (WSD) често са нужни 30 до 60 секунди за поемането на хартията.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Скенерът още поема хартията … Мрежовите скенери без драйвер често се нуждаят от до една минута за това.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan още обработва предишно сканиране (може би от друг прозорец). Моля, изчакайте да приключи и сканирайте отново."
 }

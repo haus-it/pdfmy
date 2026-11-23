@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Llofnod electronig cymwysedig (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Llofnod electronig cymwysedig (QES).",
  "Qualifiziertes elektronisches Siegel": "Sêl electronig gymwysedig",
- "Qualifiziertes elektronisches Siegel.": "Sêl electronig gymwysedig."
+ "Qualifiziertes elektronisches Siegel.": "Sêl electronig gymwysedig.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Mae’r sganiwr yn dal i weithio ar y gwaith blaenorol – bydd y tudalennau’n ymddangos pan fydd wedi gorffen. Yn aml mae sganwyr rhwydwaith heb yrrwr (WSD) angen 30 i 60 eiliad i dynnu’r papur i mewn.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Mae’r sganiwr yn dal i dynnu’r papur i mewn … Yn aml mae sganwyr rhwydwaith heb yrrwr angen hyd at funud i wneud hyn.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "Mae pdfmy Scan yn dal i weithio ar sgan blaenorol (efallai o ffenestr arall). Arhoswch nes ei fod wedi gorffen, yna sganiwch eto."
 }

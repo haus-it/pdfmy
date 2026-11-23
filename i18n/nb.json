@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Kvalifisert elektronisk signatur (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Kvalifisert elektronisk signatur (QES).",
  "Qualifiziertes elektronisches Siegel": "Kvalifisert elektronisk segl",
- "Qualifiziertes elektronisches Siegel.": "Kvalifisert elektronisk segl."
+ "Qualifiziertes elektronisches Siegel.": "Kvalifisert elektronisk segl.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skanneren jobber fortsatt med forrige oppdrag – sidene vises så snart den er ferdig. Nettverksskannere uten driver (WSD) trenger ofte 30 til 60 sekunder for å trekke inn papiret.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skanneren trekker fortsatt inn papir … Nettverksskannere uten driver trenger ofte opptil ett minutt på dette.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan jobber fortsatt med en tidligere skanning (kanskje fra et annet vindu). Vent til den er ferdig, og skann deretter på nytt."
 }

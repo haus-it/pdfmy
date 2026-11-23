@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Hyväksytty sähköinen allekirjoitus (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Hyväksytty sähköinen allekirjoitus (QES).",
  "Qualifiziertes elektronisches Siegel": "Hyväksytty sähköinen leima",
- "Qualifiziertes elektronisches Siegel.": "Hyväksytty sähköinen leima."
+ "Qualifiziertes elektronisches Siegel.": "Hyväksytty sähköinen leima.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skanneri työstää vielä edellistä tehtävää – sivut ilmestyvät heti, kun se on valmis. Ajurittomilla verkkoskannereilla (WSD) paperin syöttö kestää usein 30–60 sekuntia.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skanneri syöttää vielä paperia … Ajurittomilla verkkoskannereilla siihen menee usein jopa minuutti.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan työstää vielä aiempaa skannausta (ehkä toisesta ikkunasta). Odota, kunnes se on valmis, ja skannaa sitten uudelleen."
 }

@@ -4450,5 +4450,8 @@
  "Qualifizierte elektronische Signatur (QES)": "Firma elettronika kwalifikata (QES)",
  "Qualifizierte elektronische Signatur (QES).": "Firma elettronika kwalifikata (QES).",
  "Qualifiziertes elektronisches Siegel": "Siġill elettroniku kwalifikat",
- "Qualifiziertes elektronisches Siegel.": "Siġill elettroniku kwalifikat."
+ "Qualifiziertes elektronisches Siegel.": "Siġill elettroniku kwalifikat.",
+ "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "L-iskanner għadu qed jaħdem fuq il-ħidma preċedenti – il-paġni se jidhru malli jkun spiċċa. L-iskanners tan-netwerk mingħajr sewwieq (WSD) ta’ spiss jeħtieġu 30 sa 60 sekonda biex jiġbdu l-karta.",
+ "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "L-iskanner għadu qed jiġbed il-karta … L-iskanners tan-netwerk mingħajr sewwieq ta’ spiss jeħtieġu sa minuta għal dan.",
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan għadu qed jaħdem fuq skanjar preċedenti (forsi minn tieqa oħra). Jekk jogħġbok stenna sakemm jispiċċa, imbagħad skennja mill-ġdid."
 }
