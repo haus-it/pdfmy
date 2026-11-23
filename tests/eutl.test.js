@@ -116,3 +116,11 @@ test('XML-Signatur echt prüfen (Windows, .NET): gültig, ganzes Dokument; ein g
     assert.equal(EUTL.accept(g, [g.cert]), true);
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('Anker mit dem Amtsblatt abgeglichen (C/2026/1944): jedes verankerte Zertifikat steht in der Mitteilung', () => {
+  const a = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'tools', 'eutl-anker.json'), 'utf8'));
+  assert.match(a.amtsblatt.fundstelle, /C\/2026\/1944/);
+  const oj = new Set(a.amtsblatt.sha256);
+  assert.equal(oj.size, 6);
+  assert.deepEqual(a.lotl.filter(h => !oj.has(h)), [], 'Zertifikat im Anker, das nicht im Amtsblatt steht – nur nach Pivot-LOTL zulässig, dann Abgleich erneuern');
+});
