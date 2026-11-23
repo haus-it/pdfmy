@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Nitelikli elektronik mühür.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Tarayıcı hâlâ önceki işle uğraşıyor – sayfalar işi bitirir bitirmez görünecek. Sürücüsüz ağ tarayıcılarının (WSD) kâğıdı çekmesi çoğu zaman 30 ila 60 saniye sürer.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Tarayıcı hâlâ kâğıdı çekiyor … Sürücüsüz ağ tarayıcıları bunun için çoğu zaman bir dakikaya kadar zaman ister.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan hâlâ önceki bir taramayla uğraşıyor (belki başka bir pencereden). Lütfen bitmesini bekleyin, ardından yeniden tarayın."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan hâlâ önceki bir taramayla uğraşıyor (belki başka bir pencereden). Lütfen bitmesini bekleyin, ardından yeniden tarayın.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Yön kontrol ediliyor {0} ({1}°, {2}) …"
 }

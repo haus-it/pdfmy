@@ -285,8 +285,13 @@
     return c;
   }
 
-  /* Schräglage in Grad schätzen (Projektionsprofil der dunklen Pixel; positiv = im Uhrzeigersinn gekippt) */
-  function estimateSkew(src) {
+  /* Schräglage schätzen (app-v341, Meldung 2026-0005): Projektionsprofil der dunklen Pixel, bewertet nach Postl (Energie der
+     Unterschiede benachbarter Profilwerte – scharfe Zeilenkanten zählen, nicht die bloße Menge). Geprüft werden waagerechte UND
+     senkrechte Zeilen (quer liegende Seiten, z. B. eine Urkunde im Querformat auf dem Glas). Zuverlässig ist der Winkel nur, wenn
+     beide Hälften des Blatts entlang der Zeilen denselben Winkel ergeben – Ränder, Ornamente, Stempel oder Fotos liefern zufällige
+     Spitzen und werden so nicht mehr „gerade gezogen“ (vorher wurde ein gerade aufgelegtes Blatt um 3° schief gedreht).
+     Ergebnis: { angle (positiv = im Uhrzeigersinn gekippt), vertical (Zeilen senkrecht = Seite quer), ok } */
+  function skewInfo(src) {
     const s = scaled(src, 1000), g = grayData(s), W = s.width, H = s.height;
     const hist = new Uint32Array(256); for (const v of g) hist[v]++;
     const t = Math.min(otsu(hist, g.length), 160);
@@ -295,19 +300,35 @@
     for (let y = Math.round(H * 0.03); y < H * 0.97; y += step) for (let x = Math.round(W * 0.03); x < W * 0.97; x += step) {
       if (g[y * W + x] < t) { xs.push(x); ys.push(y); }
     }
-    if (xs.length < 200 || xs.length > g.length / step / step * 0.45) return 0; // leer oder Foto ohne Text
-    const bins = new Float64Array(H * 2 + 2);
-    const score = deg => {
+    if (xs.length < 200 || xs.length > g.length / step / step * 0.45) return { angle: 0, vertical: false, ok: false };   // leer oder Foto ohne Text
+    const L = W + H + 2, bins = new Float64Array(L * 2);
+    let part = 0;   // 0 = alle Punkte, 1/2 = erste/zweite Hälfte entlang der Zeilen
+    const score = (deg, vert) => {
       const a = deg * Math.PI / 180, sn = Math.sin(a), cs = Math.cos(a);
       bins.fill(0);
-      for (let i = 0; i < xs.length; i++) { const k = Math.round(ys[i] * cs - xs[i] * sn) + H; if (k >= 0 && k < bins.length) bins[k]++; }
-      let s2 = 0; for (const b of bins) s2 += b * b; return s2;
+      for (let i = 0; i < xs.length; i++) {
+        if (part && ((vert ? ys[i] < H / 2 : xs[i] < W / 2) ? 1 : 2) !== part) continue;
+        bins[Math.round(vert ? xs[i] * cs + ys[i] * sn : ys[i] * cs - xs[i] * sn) + L]++;
+      }
+      let e = 0; for (let k = 1; k < bins.length; k++) { const df = bins[k] - bins[k - 1]; e += df * df; }
+      return e;
     };
-    let best = 0, bestS = -1;
-    for (let d = -6; d <= 6.001; d += 0.25) { const sc = score(d); if (sc > bestS) { bestS = sc; best = d; } }
-    const c0 = best;
-    for (let d = c0 - 0.25; d <= c0 + 0.25; d += 0.05) { const sc = score(d); if (sc > bestS) { bestS = sc; best = d; } }
-    return Math.round(best * 100) / 100;
+    const search = vert => {
+      let best = 0, bestS = -1;
+      for (let d = -6; d <= 6.001; d += 0.25) { const sc = score(d, vert); if (sc > bestS) { bestS = sc; best = d; } }
+      const c0 = best;
+      for (let d = c0 - 0.25; d <= c0 + 0.25; d += 0.05) { const sc = score(d, vert); if (sc > bestS) { bestS = sc; best = d; } }
+      return { deg: Math.round(best * 100) / 100, s: bestS };
+    };
+    const h = search(false), v = search(true), vertical = v.s > h.s * 1.1, r = vertical ? v : h;
+    part = 1; const a1 = search(vertical).deg; part = 2; const a2 = search(vertical).deg; part = 0;
+    const ok = Math.abs(a1 - a2) <= 0.35 && Math.abs(r.deg - (a1 + a2) / 2) <= 0.3;
+    return { angle: r.deg, vertical, ok };
+  }
+  /* Schräglage in Grad (positiv = im Uhrzeigersinn gekippt); 0, wenn nicht sicher messbar */
+  function estimateSkew(src) {
+    const r = skewInfo(src);
+    return r.ok ? r.angle : 0;
   }
 
   function rotateBy(src, deg) {
@@ -562,5 +583,5 @@
     return c;
   }
 
-  root.Imaging = { pixels, grain, smooth, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
+  root.Imaging = { pixels, grain, smooth, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, skewInfo, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
 })(self);

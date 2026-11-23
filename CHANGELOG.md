@@ -2,6 +2,14 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-24
+
+### Behoben (Meldung 2026-0005): Gerade aufgelegtes Blatt wurde schief „gerade gerichtet“, quer liegende Seite in kyrillischer Schrift nicht gedreht (app-v341)
+- Eine russische Urkunde im Querformat, gerade auf dem Glas, kam um rund 3–4° schief und quer im PDF an. Zwei Ursachen: (1) Das Geraderichten suchte nur waagerechte Textzeilen und nahm den „besten“ Winkel auch dann, wenn er kaum besser passte – bei senkrechten Zeilen, Zierrand und Siegel ein Zufallswert. (2) Die Prüfung „quer oder auf dem Kopf?“ las nur mit dem Modell der Dokumentsprache (Deutsch) und fand bei kyrillischem Text in keiner Lage etwas.
+- Jetzt: Schräglage nach dem Verfahren von Postl, für waagerechte und senkrechte Zeilen; gedreht wird nur, wenn linke und rechte Blatthälfte denselben Winkel ergeben. Liegen die Zeilen senkrecht, prüft PDFMy zuerst ±90° und – wenn die Dokumentsprache nichts liest – zusätzlich mit Kyrillisch und Griechisch.
+- Gemessen im Browser: Testbriefe gekippt um 0/±0,5/1/2/−3° und quer – Winkel wie vorher exakt; der gemeldete Scan bekommt keine Drehung mehr; eine russische Seite im Querformat wird gedreht und mit 95 % Sicherheit gelesen. Nebenbefund: bei Briefen mit sehr kleinen Winkeln (±0,5°) unterbleibt die Korrektur manchmal – unsichtbar klein, dafür keine Fehldrehungen.
+- tests/schraeglage.test.js; Hilfe ergänzt.
+
 ## 2026-11-23
 
 ### pdfmy Scan 1.24.0 (Windows) und 1.14.0 (Mac, Linux): leerer Einzug bei Netzwerk-Scannern richtig gemeldet (Meldung 2026-0002, app-v340)

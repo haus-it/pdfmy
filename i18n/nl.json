@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Gekwalificeerd elektronisch zegel.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "De scanner is nog bezig met de vorige opdracht – de pagina’s verschijnen zodra hij klaar is. Netwerkscanners zonder stuurprogramma (WSD) hebben voor de invoer vaak 30 tot 60 seconden nodig.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "De scanner trekt nog papier in … Netwerkscanners zonder stuurprogramma hebben daar vaak tot een minuut voor nodig.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan is nog bezig met een eerdere scan (misschien vanuit een ander venster). Wacht tot die klaar is en scan dan opnieuw."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan is nog bezig met een eerdere scan (misschien vanuit een ander venster). Wacht tot die klaar is en scan dan opnieuw.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Oriëntatie {0} ({1}°, {2}) wordt gecontroleerd …"
 }

@@ -2216,10 +2216,26 @@ async function ocrPage(p) {
       const small = Imaging.scaled(img, 1400), lbl = state.ocrLabel;
       state.ocrLabel = '';
       let best = { dir: 0, conf: res.conf };
-      for (const dir of [180, 90, -90]) {
+      // Zeilen senkrecht (Imaging.skewInfo) → die Seite liegt quer: zuerst ±90° prüfen
+      const sideways = (() => { try { return Imaging.skewInfo(small).vertical; } catch { return false; } })();
+      for (const dir of sideways ? [90, -90, 180] : [180, 90, -90]) {
         status(`Prüfe Ausrichtung ${lbl} (${dir}°) …`);
         const r = await recognize(turn(small, dir));
         if (r.conf > best.conf) best = { dir, conf: r.conf };
+      }
+      // Quer und in fremder Schrift (Meldung 2026-0005: russische Urkunde im Querformat): das Modell der Dokumentsprache liest in
+      // keiner Lage etwas – darum die Querlagen zusätzlich mit Kyrillisch/Griechisch prüfen; die Schrift selbst erkennt der Schritt danach
+      if (sideways && !(best.dir && best.conf > res.conf + 15 && best.conf >= 60)) {
+        for (const c of scriptProbes(ocrPrimary())) {
+          for (const dir of [90, -90]) {
+            try {
+              status(`Prüfe Ausrichtung ${lbl} (${dir}°, ${I18N.ocrName(c)}) …`);
+              const r = await recognizeLangs(turn(small, dir), c === 'rus' ? ['rus', 'ukr'] : [c]);
+              if (r.conf >= 60 && r.conf > res.conf + 15 && r.conf > best.conf) best = { dir, conf: r.conf };
+            } catch (e) { console.warn('orient', c, e); }
+          }
+          if (best.dir && best.conf >= 60) break;
+        }
       }
       state.ocrLabel = lbl;
       if (best.dir && best.conf > res.conf + 15 && best.conf >= 60) {   // nur bei wirklich lesbarem Ergebnis – Zeichensalat (z. B. chinesische Seite im lateinischen Modell) nicht drehen

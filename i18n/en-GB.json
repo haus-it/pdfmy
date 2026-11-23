@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Qualified electronic seal.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "The scanner is still working on the previous job – the pages will appear as soon as it has finished. Network scanners without a driver (WSD) often need 30 to 60 seconds to feed the paper.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "The scanner is still feeding the paper … Network scanners without a driver often need up to a minute for this.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan is still working on a previous scan (perhaps from another window). Please wait until it has finished, then scan again."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan is still working on a previous scan (perhaps from another window). Please wait until it has finished, then scan again.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Checking orientation {0} ({1}°, {2}) …"
 }

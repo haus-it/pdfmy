@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Kvalificēts elektroniskais zīmogs.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skeneris vēl strādā pie iepriekšējā uzdevuma – lapas parādīsies, tiklīdz tas būs gatavs. Tīkla skeneriem bez draivera (WSD) papīra ievilkšanai bieži vajag 30 līdz 60 sekundes.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skeneris vēl velk papīru … Tīkla skeneriem bez draivera tam bieži vajag līdz pat minūtei.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan vēl strādā pie iepriekšējās skenēšanas (iespējams, no cita loga). Lūdzu, uzgaidiet, līdz tā beigsies, un tad skenējiet vēlreiz."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan vēl strādā pie iepriekšējās skenēšanas (iespējams, no cita loga). Lūdzu, uzgaidiet, līdz tā beigsies, un tad skenējiet vēlreiz.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Pārbauda orientāciju {0} ({1}°, {2}) …"
 }

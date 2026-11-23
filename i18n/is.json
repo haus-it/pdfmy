@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Fullgilt rafrænt innsigli.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skanninn er enn að vinna í fyrra verkefni – síðurnar birtast um leið og hann er búinn. Netskannar án rekils (WSD) þurfa oft 30 til 60 sekúndur til að draga inn pappírinn.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skanninn er enn að draga inn pappírinn … Netskannar án rekils þurfa oft allt að mínútu til þess.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan er enn að vinna í fyrri skönnun (kannski úr öðrum glugga). Bíddu þar til henni lýkur og skannaðu síðan aftur."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan er enn að vinna í fyrri skönnun (kannski úr öðrum glugga). Bíddu þar til henni lýkur og skannaðu síðan aftur.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Athuga stefnu {0} ({1}°, {2}) …"
 }

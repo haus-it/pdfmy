@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Kvalifikuotas elektroninis spaudas.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skeneris vis dar dirba su ankstesne užduotimi – puslapiai atsiras, kai tik jis baigs. Tinklo skeneriams be tvarkyklės (WSD) popieriui įtraukti dažnai prireikia 30–60 sekundžių.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skeneris vis dar traukia popierių … Tinklo skeneriams be tvarkyklės tam dažnai prireikia iki minutės.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "„pdfmy Scan“ vis dar dirba su ankstesniu skenavimu (galbūt iš kito lango). Palaukite, kol jis baigs, ir tada skenuokite iš naujo."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "„pdfmy Scan“ vis dar dirba su ankstesniu skenavimu (galbūt iš kito lango). Palaukite, kol jis baigs, ir tada skenuokite iš naujo.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Tikrinama orientacija {0} ({1}°, {2}) …"
 }

@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Kvalificiran elektronski žig.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Optični bralnik še obdeluje prejšnje opravilo – strani se bodo prikazale, takoj ko bo končal. Omrežni bralniki brez gonilnika (WSD) za uvlek papirja pogosto potrebujejo 30 do 60 sekund.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Optični bralnik še uvlači papir … Omrežni bralniki brez gonilnika za to pogosto potrebujejo do minuto.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan še obdeluje prejšnje skeniranje (morda iz drugega okna). Počakajte, da se konča, nato znova skenirajte."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan še obdeluje prejšnje skeniranje (morda iz drugega okna). Počakajte, da se konča, nato znova skenirajte.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Preverjam usmerjenost {0} ({1}°, {2}) …"
 }

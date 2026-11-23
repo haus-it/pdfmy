@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Квалифицированная электронная печать.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Сканер ещё обрабатывает предыдущее задание – страницы появятся, как только он закончит. Сетевым сканерам без драйвера (WSD) для подачи бумаги часто требуется от 30 до 60 секунд.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Сканер ещё подаёт бумагу … Сетевым сканерам без драйвера для этого часто требуется до минуты.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan ещё обрабатывает предыдущее сканирование (возможно, из другого окна). Подождите, пока оно завершится, и затем отсканируйте снова."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan ещё обрабатывает предыдущее сканирование (возможно, из другого окна). Подождите, пока оно завершится, и затем отсканируйте снова.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Проверка ориентации {0} ({1}°, {2}) …"
 }

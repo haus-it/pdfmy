@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Segell electrònic qualificat.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "L’escàner encara treballa en la tasca anterior: les pàgines apareixeran quan acabi. Els escàners de xarxa sense controlador (WSD) sovint necessiten entre 30 i 60 segons per carregar el paper.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "L’escàner encara està carregant el paper … Els escàners de xarxa sense controlador sovint hi triguen fins a un minut.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan encara està treballant en un escaneig anterior (potser des d’una altra finestra). Espereu que acabi i torneu a escanejar."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan encara està treballant en un escaneig anterior (potser des d’una altra finestra). Espereu que acabi i torneu a escanejar.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "S'està comprovant l'orientació {0} ({1}°, {2})…"
 }

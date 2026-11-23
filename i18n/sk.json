@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Kvalifikovaná elektronická pečať.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skener ešte pracuje na predchádzajúcej úlohe – stránky sa zobrazia, hneď ako skončí. Sieťové skenery bez ovládača (WSD) potrebujú na zavedenie papiera často 30 až 60 sekúnd.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skener ešte zavádza papier … Sieťové skenery bez ovládača na to často potrebujú až minútu.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan ešte pracuje na predchádzajúcom skenovaní (možno z iného okna). Počkajte, prosím, kým skončí, a potom skenujte znova."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan ešte pracuje na predchádzajúcom skenovaní (možno z iného okna). Počkajte, prosím, kým skončí, a potom skenujte znova.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontrolujem orientáciu {0} ({1}°, {2}) …"
 }

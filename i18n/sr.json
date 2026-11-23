@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Квалификовани електронски печат.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Скенер још ради на претходном задатку – странице ће се појавити чим заврши. Мрежним скенерима без драјвера (WSD) често треба 30 до 60 секунди за увлачење папира.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Скенер још увлачи папир … Мрежним скенерима без драјвера за то често треба до једног минута.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan још ради на претходном скенирању (можда из другог прозора). Сачекајте да заврши, а затим поново скенирајте."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan још ради на претходном скенирању (можда из другог прозора). Сачекајте да заврши, а затим поново скенирајте.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Провера оријентације {0} ({1}°, {2}) …"
 }

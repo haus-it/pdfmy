@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Εγκεκριμένη ηλεκτρονική σφραγίδα.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Ο σαρωτής επεξεργάζεται ακόμη την προηγούμενη εργασία – οι σελίδες θα εμφανιστούν μόλις ολοκληρωθεί. Οι σαρωτές δικτύου χωρίς πρόγραμμα οδήγησης (WSD) συχνά χρειάζονται 30 έως 60 δευτερόλεπτα για την τροφοδοσία.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Ο σαρωτής τραβά ακόμη το χαρτί … Οι σαρωτές δικτύου χωρίς πρόγραμμα οδήγησης συχνά χρειάζονται έως και ένα λεπτό γι’ αυτό.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "Το pdfmy Scan επεξεργάζεται ακόμη μια προηγούμενη σάρωση (ίσως από άλλο παράθυρο). Περιμένετε να ολοκληρωθεί και σαρώστε ξανά."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "Το pdfmy Scan επεξεργάζεται ακόμη μια προηγούμενη σάρωση (ίσως από άλλο παράθυρο). Περιμένετε να ολοκληρωθεί και σαρώστε ξανά.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Έλεγχος προσανατολισμού {0} ({1}°, {2}) …"
 }

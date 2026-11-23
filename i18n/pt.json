@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Selo eletrónico qualificado.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "O scanner ainda está a trabalhar na tarefa anterior – as páginas aparecem assim que terminar. Os scanners de rede sem controlador (WSD) precisam muitas vezes de 30 a 60 segundos para puxar o papel.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "O scanner ainda está a puxar o papel … Os scanners de rede sem controlador precisam muitas vezes de até um minuto para isso.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "O pdfmy Scan ainda está a trabalhar numa digitalização anterior (talvez a partir de outra janela). Aguarde até terminar e digitalize novamente."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "O pdfmy Scan ainda está a trabalhar numa digitalização anterior (talvez a partir de outra janela). Aguarde até terminar e digitalize novamente.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "A verificar orientação {0} ({1}°, {2}) …"
 }

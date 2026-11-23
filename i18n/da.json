@@ -4453,5 +4453,6 @@
  "Qualifiziertes elektronisches Siegel.": "Kvalificeret elektronisk segl.",
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Scanneren arbejder stadig på det forrige job – siderne vises, så snart den er færdig. Netværksscannere uden driver (WSD) har ofte brug for 30 til 60 sekunder til indtrækningen.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Scanneren trækker stadig papir ind … Netværksscannere uden driver bruger ofte op til et minut på det.",
- "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan arbejder stadig på en tidligere scanning (måske fra et andet vindue). Vent, til den er færdig, og scan derefter igen."
+ "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan arbejder stadig på en tidligere scanning (måske fra et andet vindue). Vent, til den er færdig, og scan derefter igen.",
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontrollerer retning {0} ({1}°, {2}) …"
 }
