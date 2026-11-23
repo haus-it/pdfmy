@@ -10,6 +10,8 @@
   'use strict';
   var me = document.currentScript, list = ((me && me.getAttribute('data-src')) || '').split(/\s+/).filter(Boolean);
   function start() {
+    // Dialoge jetzt aufbauen (app-v338): bis hierher nur als <template> gelesen – kein Stil und Layout vor dem ersten Bild
+    var tp = document.querySelectorAll ? document.querySelectorAll('template.dlgtpl') : []; for (var i = 0; i < tp.length; i++) tp[i].replaceWith(tp[i].content);
     var late = document.readyState === 'complete', pending = [], orig = window.addEventListener, done = 0;
     if (late) window.addEventListener = function (type, fn, opt) { if (type === 'load') { pending.push(fn); return; } return orig.apply(this, arguments); };
     function finished() {

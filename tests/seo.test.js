@@ -138,6 +138,8 @@ test('laden.js: Programmteile nach dem ersten Bild, gleiche Reihenfolge, „load
       currentScript: { getAttribute: () => 'js/a.js js/b.js js/c.js' },
       createElement: () => ({}),
       body: { appendChild: s => inserted.push(s) },
+      // app-v338: Dialog-Vorlagen werden vor dem ersten Skript eingesetzt
+      querySelectorAll: sel => sel === 'template.dlgtpl' ? [{ content: 'D1', replaceWith: c => log.push('dialog:' + c + '@' + inserted.length) }] : [],
     };
     Object.assign(win, { window: win, document: doc, requestAnimationFrame: f => frames.push(f), setTimeout: (f, ms) => { if (!ms) f(); else win._fallback = f; return 0; } });
     vm.runInNewContext(code, win);
@@ -153,13 +155,13 @@ test('laden.js: Programmteile nach dem ersten Bild, gleiche Reihenfolge, „load
     resolve({ log, inserted, restored: win.addEventListener === realAdd });
   });
   const late = await run('complete');
-  assert.deepEqual(late.log, ['orig:resize', 'load-b'], '„load“ nach dem letzten Skript nachgereicht, andere Ereignisse normal');
+  assert.deepEqual(late.log, ['dialog:D1@0', 'orig:resize', 'load-b'], 'Dialoge vor dem ersten Skript eingesetzt; „load“ nach dem letzten Skript nachgereicht, andere Ereignisse normal');
   assert.ok(late.restored, 'addEventListener wieder im Original');
   assert.equal(late.inserted.length, 3, 'nicht doppelt gestartet');
   const early = await run('interactive');
-  assert.deepEqual(early.log, ['orig:load', 'orig:resize'], 'vor „load“: Browser löst „load“ selbst aus');
-  // Build: Skript-Tags am Seitenende → eine Liste für laden.js, die interne Fassung bleibt unverändert
-  assert.match(src, /html = deferScripts\(html\);\nwrite\('index\.html', html\);/);
+  assert.deepEqual(early.log, ['dialog:D1@0', 'orig:load', 'orig:resize'], 'vor „load“: Browser löst „load“ selbst aus');
+  // Build: Skript-Tags am Seitenende → eine Liste für laden.js, danach Dialoge als Vorlagen (v338); die interne Fassung bleibt unverändert
+  assert.match(src, /html = deferScripts\(html\);[\s\S]{0,1500}?html = templateDialogs\(html\);\r?\nwrite\('index\.html', html\);/);
   assert.match(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8'), /'js\/laden\.js'/, 'offline verfügbar');
 });
 

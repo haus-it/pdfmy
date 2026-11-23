@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-23
 
+### Schnellerer Erstbesuch auf dem Handy: Dialoge erst nach dem ersten Bild aufbauen (app-v338)
+- Messung des Erstbesuchs auf pdfmy.de mit Handy-Drosselung wie Lighthouse (150 ms Latenz, 1,6 Mbit/s, CPU vierfach verlangsamt), in der Seite selbst gemessen (scratchpad-Werkzeug, Median aus 5 Durchläufen): Die rund 70 Dialoge (≈ 130 KB HTML) wurden vor dem ersten Bild als Elemente mit Stilen aufgebaut.
+- Jetzt liefert pdfmy.de sie als HTML-Vorlagen aus; js/laden.js setzt sie an derselben Stelle ein, unmittelbar bevor die Programmteile starten. Übersetzung und Programm finden sie wie vorher. Ergebnis (Median): erster Inhalt 4,8 → 3,9 s, größtes Element 6,8 → 5,6 s, Seite geparst 12,3 → 10,4 s, bedienbar 21,0 → 18,6 s.
+- tests/dialogvorlagen.test.js, tests/seo.test.js (Reihenfolge: Dialoge vor dem ersten Skript).
+
 ### EU-Vertrauensliste nur mit geprüften Signaturen (app-v337)
 - Beim Erstellen des Schnappschusses (tools/eutl.js, läuft beim Veröffentlichen wöchentlich) werden jetzt die XML-Signaturen geprüft: die Liste der Listen der EU-Kommission gegen verankerte Zertifikate (tools/eutl-anker.json, mit automatischem Zertifikatswechsel), jede Länderliste gegen das Zertifikat, das die EU-Liste für dieses Land nennt, und immer über das ganze Dokument (Schutz vor „Signature Wrapping“). Eine veränderte oder falsch signierte Liste wird nicht übernommen.
 - Prüfung mit .NET SignedXml (tools/xmlsig.ps1, in Windows enthalten), ergänzt um ECDSA und RSA-PSS, die einige Länder verwenden (u. a. Deutschland, Griechenland, Ungarn, Slowenien). Ergebnis am 23.11.2026: 31 Länder, 1.869 Dienste, alle Signaturen gültig.

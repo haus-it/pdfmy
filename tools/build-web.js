@@ -133,6 +133,17 @@ const deferScripts = h => {
   return h.replace(first, `<script src="js/laden.js" data-src="${tags.map(m => m[1]).join(' ')}"></script>\n`);
 };
 html = deferScripts(html);
+/* Dialoge erst nach dem ersten Bild aufbauen (app-v338): Die rund 70 Dialoge (≈ 130 KB HTML) stehen als <template class="dlgtpl"> in der
+   Seite – der Browser liest sie, baut aber vor dem ersten Bild keine Elemente, Stile und Layouts dafür. js/laden.js setzt sie an derselben
+   Stelle ein, bevor die Programmteile laufen; Übersetzung und Programm finden sie wie vorher. Messung (Handy gedrosselt, Median aus 5):
+   erster Inhalt 4,8 → 3,9 s, Seite geparst 12,3 → 10,4 s, bedienbar 21,0 → 18,6 s. */
+const templateDialogs = h => {
+  let n = 0;
+  const out = h.replace(/<dialog\b[\s\S]*?<\/dialog>/g, d => { if ((d.match(/<dialog\b/g) || []).length > 1) throw new Error('index.html: verschachtelter Dialog'); n++; return `<template class="dlgtpl">${d}</template>`; });
+  if (n < 20) throw new Error(`index.html: nur ${n} Dialoge gefunden`);
+  return out;
+};
+html = templateDialogs(html);
 write('index.html', html);
 
 // Manifest und Service Worker
