@@ -19,7 +19,7 @@ test('Bauwerkzeug und Lader: Vorlagen beim Bauen, Einsetzen vor dem ersten Progr
   assert.match(b, /const templateDialogs = h =>/);
   assert.match(b, /html = templateDialogs\(html\);\s*\r?\n\s*write\('index\.html', html\);/);
   // Einsetzen steht am Anfang von start() – vor dem Anlegen der <script>-Elemente
-  const s = l.indexOf('function start()'), ins = l.indexOf("querySelectorAll('template.dlgtpl')"), scr = l.indexOf("createElement('script')");
+  const s = l.indexOf('function start()'), ins = l.indexOf("querySelectorAll('template.dlgtpl')", s), scr = l.indexOf("createElement('script')", s);
   assert.ok(s > 0 && ins > s && scr > ins, 'Reihenfolge: start → Dialoge einsetzen → Skripte');
   assert.match(l, /tp\[i\]\.replaceWith\(tp\[i\]\.content\)/, 'an derselben Stelle, Inhalt statt Vorlage');
 });

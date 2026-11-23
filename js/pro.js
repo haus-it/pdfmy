@@ -2409,6 +2409,7 @@ function askSources(answer) {
   $('#askSrcBox').hidden = !askItems.length;
 }
 async function askOpen(rel) {
+  await window.lateReady();   // Fragen an die Ablage: spätes Bündel (app-v342)
   try {
     let dir = state.outDir; const parts = rel.split('\\'), name = parts.pop();
     for (const p of parts) dir = await dir.getDirectoryHandle(p);
@@ -3888,8 +3889,8 @@ $('#belegAll').onclick = async () => {
 const vvArt = () => document.querySelector('input[name="vvArt"]:checked')?.value || 'mitglied';
 const vvShow = () => { $('#vvMitglied').hidden = vvArt() !== 'mitglied'; $('#vvFotoF').hidden = vvArt() !== 'foto'; };
 document.querySelectorAll('input[name="vvArt"]').forEach(r => r.addEventListener('change', vvShow));
-$('#btnVV').onclick = () => {
-  closeMenu?.();
+$('#btnVV').onclick = async () => {
+  closeMenu?.(); await window.lateReady();   // Vereinswerkzeuge im späten Bündel (app-v342)
   const v = LS.get('vvVerein', null), z = LS.get('zuwVerein', null);   // Vereinsangaben aus der Zuwendungsbestätigung übernehmen
   $('#vvName').value = v?.verein || z?.aussteller?.name || ''; $('#vvAdr').value = v?.anschrift || z?.aussteller?.anschrift || '';
   $('#vvGlId').value = v?.glaeubigerId || ''; $('#vvBeitr').value = v?.beitraege || ''; $('#vvZweck').value = v?.zweck || ''; $('#vvKontakt').value = v?.kontakt || '';
@@ -3919,8 +3920,8 @@ function zuwPruef() {   // Fristen nach § 63 Abs. 5 AO sofort zeigen
   $('#zuwFrist').textContent = f.ok ? '' : f.grund; return f.ok;
 }
 ['#zuwVom'].forEach(s => $(s).addEventListener('input', zuwPruef)); document.querySelectorAll('input[name="zuwArt"]').forEach(r => r.addEventListener('change', zuwPruef));
-$('#btnZuw').onclick = () => {
-  closeMenu?.();
+$('#btnZuw').onclick = async () => {
+  closeMenu?.(); await window.lateReady();
   const v = LS.get('zuwVerein', null), prof = LS.get('profile', {}) || {};
   $('#zuwVName').value = v?.aussteller?.name || prof.firma || ''; $('#zuwVAdr').value = v?.aussteller?.anschrift || ''; $('#zuwVOrt').value = v?.ort || prof.ort || '';
   $('#zuwZweck').value = v?.zwecke || ''; $('#zuwFA').value = v?.finanzamt || ''; $('#zuwStNr').value = v?.stnr || ''; $('#zuwVom').value = v?.bescheidVom || ''; $('#zuwVz').value = v?.vz || '';
@@ -4006,8 +4007,8 @@ const sepaPruef = () => {
 };
 $('#sepaVorab').addEventListener('change', sepaPruef);
 $('#sepaFaellig').addEventListener('input', sepaPruef);
-$('#btnSepa').onclick = () => {
-  closeMenu?.();
+$('#btnSepa').onclick = async () => {
+  closeMenu?.(); await window.lateReady();
   const v = LS.get('sepaVerein', null), vv = LS.get('vvVerein', null), z = LS.get('zuwVerein', null), kb = LS.get('kbVerein', null);
   $('#sepaName').value = v?.name || vv?.verein || z?.aussteller?.name || kb?.verein || ''; $('#sepaIban').value = v?.iban || ''; $('#sepaBic').value = v?.bic || '';
   $('#sepaGlId').value = v?.glaeubigerId || vv?.glaeubigerId || ''; $('#sepaZweck').value = v?.zweck || `Mitgliedsbeitrag ${new Date().getFullYear() + (new Date().getMonth() >= 10 ? 1 : 0)}`;
@@ -4059,8 +4060,8 @@ const bwQr = async () => { await loadQrcode(); return p => { const q = qrMatrix(
 const bwVerein = () => ({ verein: $('#bwName').value.trim(), anschrift: $('#bwAdr').value.trim(), iban: $('#bwIban').value.replace(/\s+/g, '').toUpperCase(), bic: $('#bwBic').value.replace(/\s+/g, '').toUpperCase(),
   zweck: $('#bwZweck').value.trim() || 'Mitgliedsbeitrag', faellig: $('#bwFaellig').value, kontakt: $('#bwKontakt').value.trim(), praefix: $('#bwPraefix').value.trim() || 'B' });
 const bwSchritt = t => { $('#bwAbgleich').textContent = I18N.t(t); };
-$('#btnBw').onclick = () => {
-  closeMenu?.();
+$('#btnBw').onclick = async () => {
+  closeMenu?.(); await window.lateReady();
   const b = LS.get('bwVerein', null), s = LS.get('sepaVerein', null), vv = LS.get('vvVerein', null), mv = LS.get('mvVerein', null), jahr = new Date().getFullYear() + (new Date().getMonth() >= 9 ? 1 : 0);
   $('#bwName').value = b?.verein || s?.name || vv?.verein || mv?.verein || ''; $('#bwAdr').value = b?.anschrift || vv?.anschrift || mv?.anschrift || '';
   $('#bwIban').value = b?.iban || s?.iban || ''; $('#bwBic').value = b?.bic || s?.bic || ''; $('#bwKontakt').value = b?.kontakt || s?.kontakt || vv?.kontakt || '';
@@ -4136,8 +4137,8 @@ function mvFristZeigen() {
   out.classList.toggle('warn', f.hinweise.length > 0);
 }
 ['#mvDatum', '#mvFrist', '#mvAntrag'].forEach(s => $(s).addEventListener('input', mvFristZeigen));
-$('#btnMv').onclick = () => {
-  closeMenu?.();
+$('#btnMv').onclick = async () => {
+  closeMenu?.(); await window.lateReady();
   const v = LS.get('mvVerein', null), alt = LS.get('vvVerein', null) || LS.get('kbVerein', null), z = LS.get('zuwVerein', null);   // Vereinsangaben aus anderen Vereinsdialogen übernehmen
   $('#mvName').value = v?.verein || alt?.verein || z?.aussteller?.name || ''; $('#mvAdr').value = v?.anschrift || alt?.anschrift || z?.aussteller?.anschrift || '';
   if (v) { $('#mvOrt').value = v.ort || ''; $('#mvOnline').value = v.online || ''; $('#mvTops').value = v.tops || ''; $('#mvUnt').value = v.unterzeichner || ''; $('#mvFunk').value = v.funktion || ''; $('#mvFrist').value = String(v.wochen || 2); $('#mvAntrag').value = String(v.antragsTage ?? 7); }
@@ -4170,8 +4171,8 @@ $('#mvIn').onchange = async e => {
   } catch (err) { noteError(err, 'Mitgliederversammlung'); $('#mvMsg').textContent = I18N.t('Abgebrochen:') + ' ' + err.message; }
 };
 /* ---------- Kassenbericht für die Mitgliederversammlung (js/kassenbericht.js, app-v316) ---------- */
-$('#btnKb').onclick = () => {
-  closeMenu?.();
+$('#btnKb').onclick = async () => {
+  closeMenu?.(); await window.lateReady();
   const v = LS.get('kbVerein', null), z = LS.get('zuwVerein', null), vv = LS.get('vvVerein', null), prof = LS.get('profile', {}) || {};
   $('#kbVerein').value = v?.verein || z?.aussteller?.name || vv?.verein || ''; $('#kbWart').value = v?.kassenwart || [prof.vorname, prof.nachname].filter(Boolean).join(' ');
   $('#kbOrt').value = v?.ort || z?.ort || prof.ort || ''; $('#kbAnfang').value = ''; $('#kbEnde').value = ''; $('#kbCsv').checked = !!v?.csv;
@@ -4451,7 +4452,8 @@ function einvRender() {
   [...$('#ei-lines').children].forEach(tr => { const q = +tr.querySelector('[data-k=qty]').value || 0, p = +tr.querySelector('[data-k=price]').value || 0; tr.querySelector('[data-sum]').textContent = eur(Math.round(q * p * 100) / 100); });
   $('#ei-sum').innerHTML = `Netto ${eur(t.net)}<br>${t.taxes.map(x => x.cat === 'E' ? 'Keine USt (§ 19 UStG)' : `USt ${x.rate} % auf ${eur(x.basis)}: ${eur(x.tax)}`).join('<br>')}<br><b>Gesamt ${eur(t.gross)}</b>`;
 }
-function openEinv() {
+async function openEinv() {
+  await window.lateReady();   // EInvoiceOut im späten Bündel
   closeMenu();
   const s = LS.get('einvSeller', null), today = todayStr();   // lokaler Kalendertag (nicht UTC)
   for (const k of EI_S) $('#ei-s-' + k).value = s?.[k] || '';
@@ -6100,6 +6102,7 @@ let fdTable = null;
 // Meldung aus ganzen Sätzen, je Satz ein eigenes Element – so wird jeder Satz für sich übersetzt
 const fdMsg = (el, parts) => el.replaceChildren(...parts.filter(Boolean).flatMap((t, i) => { const s = document.createElement('span'); s.textContent = t; return i ? [' ', s] : [s]; }));
 async function fdReadTable(file) {
+  await window.lateReady();   // Office.xlsx im späten Bündel
   const buf = new Uint8Array(await file.arrayBuffer());
   if (/\.xlsx$/i.test(file.name)) { const t = (await Office.xlsx(buf)).blocks.find(b => b.type === 'table'); return t ? t.rows : []; }
   let t; try { t = new TextDecoder('utf-8', { fatal: true }).decode(buf); } catch { t = new TextDecoder('windows-1252').decode(buf); }   // ältere Excel-CSV
@@ -6441,6 +6444,7 @@ $('#btnReadOrder').onclick = () => readingOrder();
    Direkt im Seiteninhalt der PDF – Text, Linien und Schriften bleiben, die Seite wird nicht gerastert. Vorschau: die Seite wird mit den
    Änderungen als Einzelseiten-PDF neu gezeichnet. Fälschungsschutz: Urkunden und Belege nie, digital signierte PDFs erst nach Warnung. */
 async function imageEdit() {
+  await window.lateReady();   // PdfBild im späten Bündel
   closeMenu?.();
   const pdfPages = state.pages.filter(q => q.kind === 'pdf');
   if (!pdfPages.length) return toast(I18N.t('Bilder bearbeiten geht in PDF-Dateien. Gescannte Seiten und Fotos sind selbst ein Bild – dort helfen „Abdecken“ und „Text“.'), 8000);
@@ -6642,6 +6646,7 @@ function preflightShow(res, name, after = false) {
   $('#pfBasis').textContent = I18N.t('Grundlage: ' + Preflight.PROFILES[profile].basis + '. Kurzprüfung der häufigsten Ablehnungsgründe – ersetzt keine vollständige Validierung.');
 }
 async function preflightRun() {
+  await window.lateReady();   // Preflight im späten Bündel
   const profile = $('#pfProfile').value; LS.set('pfProfile', profile);
   $('#pfList').innerHTML = ''; $('#pfBasis').textContent = ''; $('#pfFix').hidden = true;
   try {
@@ -6667,6 +6672,7 @@ async function preflightRun() {
 const pfName = profile => profile === 'bea' ? (() => { const v = $('#pfName').value.trim() || BeaCheck.checkName(filename()).suggestion; return /\.pdf$/i.test(v) ? v : v + '.pdf'; })() : baseName() + '.pdf';
 // profile: optional fest vorgeben (z. B. 'bea'); sonst die letzte Wahl
 async function preflightOpen(profile) {
+  await window.lateReady();
   closeMenu?.();
   if (!state.pages.length) { status('Zuerst eine PDF oder einen Scan öffnen – dann lässt sie sich prüfen.'); return; }
   const want = typeof profile === 'string' ? profile : LS.get('pfProfile', 'bea'); $('#pfProfile').value = Preflight.PROFILES[want] ? want : 'bea';

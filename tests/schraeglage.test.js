@@ -28,7 +28,24 @@ test('Ausrichtung: quer liegende Seiten zuerst ±90°, dann mit fremden Schrifte
   const app = R('js/app.js'), i = app.indexOf('async function ocrPage(p)'), body = app.slice(i, i + 6000);
   assert.match(body, /const sideways = \(\(\) => \{ try \{ return Imaging\.skewInfo\(small\)\.vertical; \} catch \{ return false; \} \}\)\(\);/);
   assert.match(body, /for \(const dir of sideways \? \[90, -90, 180\] : \[180, 90, -90\]\)/);
-  assert.match(body, /for \(const c of scriptProbes\(ocrPrimary\(\)\)\) \{\s*for \(const dir of \[90, -90\]\)/);
-  assert.match(body, /recognizeLangs\(turn\(small, dir\), c === 'rus' \? \['rus', 'ukr'\] : \[c\]\)/);
-  assert.match(body, /if \(r\.conf >= 60 && r\.conf > res\.conf \+ 15 && r\.conf > best\.conf\) best = \{ dir, conf: r\.conf \};/, 'nur bei wirklich lesbarem Ergebnis');
+  assert.match(body, /for \(const c of scriptProbes\(ocrPrimary\(\)\)\) \{/);
+  assert.match(body, /for \(const dir of \[0, 90, -90\]\)/);
+  assert.match(body, /if \(dir && r\.conf >= 60 && r\.conf > res\.conf \+ 15\) \{ turnTo = dir; break; \}/, 'klar lesbar');
+  // Meldung 2026-0007: blasse Urkunde – Wortzahl statt Sicherheit; Richtung aus Sicherheit + Wortzahl
+  assert.match(body, /return Math\.max\(a\.words, b\.words\) >= Math\.max\(8, 3 \* \(w0 \+ 1\)\) && hi\.words >= 8 && sc\(hi\) >= sc\(lo\) \+ 5 \? dir : 0;/);
+});
+
+test('Wortzählung: echte Wörter in lateinischer, kyrillischer und griechischer Schrift, Rauschen zählt nicht', () => {
+  const app = R('js/app.js'), m = app.match(/const ocrWords = [\s\S]*?\.length;/)[0];
+  const ocrWords = new Function(m.replace('const ocrWords =', 'return'))();
+  assert.equal(ocrWords('Уважаемый господин Иванов, настоящим подтверждаем'), 5);
+  assert.equal(ocrWords('Sehr geehrte Damen und Herren'), 4);
+  assert.equal(ocrWords('Αγαπητέ κύριε Παπαδόπουλε'), 3);
+  assert.equal(ocrWords('xx ;; |l1 Ii lll nnnn ст тт KM BE Fr'), 0);
+  // Messwerte der gemeldeten Urkunde (v341, Glas, WSD): 0° russisch 42 %/4 Wörter, +90° 21/24, −90° 25/31 → −90°
+  const sidePick = new Function('s', app.match(/const sidePick = s => \{([\s\S]*?)\n      \};/)[1]);
+  assert.equal(sidePick({ 0: { conf: 42, words: 4 }, 90: { conf: 21, words: 24 }, '-90': { conf: 25, words: 31 } }), -90);
+  assert.equal(sidePick({ 0: { conf: 52, words: 0 }, 90: { conf: 18, words: 42 }, '-90': { conf: 38, words: 45 } }), -90);
+  assert.equal(sidePick({ 0: { conf: 80, words: 40 }, 90: { conf: 30, words: 20 }, '-90': { conf: 35, words: 22 } }), 0, 'aufrecht lesbar: nicht drehen');
+  assert.equal(sidePick({ 0: { conf: 30, words: 1 }, 90: { conf: 22, words: 12 }, '-90': { conf: 21, words: 13 } }), 0, 'beide Querlagen gleich: nicht raten');
 });

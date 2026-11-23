@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 /* Hauptanwendung (Branding/Edition aus js/config.js) */
 'use strict';
+// Selten genutzte Module nachladen (app-v342, js/laden.js): ohne spätes Bündel (eigene Fassung, Selbstbetrieb ohne Bündel) sofort erfüllt
+window.lateReady = window.lateReady || (() => Promise.resolve());
 const { setCharacterSqueeze, PDFDocument, PDFName, PDFString, PDFHexString, PDFNumber, PDFOperator, PDFOperatorNames, degrees, pushGraphicsState, popGraphicsState, setTextRenderingMode, TextRenderingMode,
   concatTransformationMatrix, drawObject } = PDFLib;
 // Graustufen-Speichern (buildPdf gray): rgb() liefert dann Grauwerte nach ITU-R BT.601 (wie Schwarzweiß-Druck)
@@ -241,6 +243,7 @@ async function importFiles(files, { fromCamera = false } = {}) {
    in natürlicher Reihenfolge. Comic-Seiten bleiben, wie sie sind: kein Zuschneiden, kein Geraderichten, Modus „Original“. */
 let asIsImport = false;
 async function unpackArchive(f) {
+  await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   const comic = /\.cbz$/i.test(f.name) || /cbz/.test(f.type);
   status(`${f.name} wird ausgepackt …`);
   const items = await Office.archive(new Uint8Array(await f.arrayBuffer()), { comic });
@@ -486,6 +489,7 @@ function officeHint() {
     : 'Tipp: Installieren Sie LibreOffice (kostenlos, libreoffice.org) auf diesem Rechner – dann wandelt PDFMy PowerPoint-, Word- und Excel-Dateien über pdfmy Scan originalgetreu um, mit allen Schriften und Diagrammen.', 12000), 10500);
 }
 async function importOffice(file) {
+  await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   status(`${file.name} wird in PDF umgewandelt …`);
   const bytes = new Uint8Array(await file.arrayBuffer()), ext = file.name.toLowerCase().split('.').pop(), word = ext === 'docx' || ext === 'odt', loc = { locale: I18N.info.bcp || 'de-DE' };
   const r = ext === 'docx' ? await Office.docx(bytes) : ext === 'odt' ? await Office.odt(bytes) : ext === 'ods' ? await Office.ods(bytes, loc) : ext === 'epub' ? await Office.epub(bytes)
@@ -524,6 +528,7 @@ async function importText(file) {
 /* Gespeicherte Webseite (.html/.htm/.xhtml) und MHTML (.mht/.mhtml, „Webseite als einzelne Datei“) → PDF über den Textsatz.
    Nichts wird ausgeführt und nichts aus dem Netz geladen (CSP, Leitplanke 2): Bilder nur, wenn sie in der Datei stecken. */
 async function importHtml(file) {
+  await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   status(`${file.name} wird in PDF umgewandelt …`);
   const bytes = new Uint8Array(await file.arrayBuffer()), mhtml = /\.mht(ml)?$/i.test(file.name) || /^MIME-Version:|^From:|^Content-Type:\s*multipart\/related/im.test(new TextDecoder('latin1').decode(bytes.subarray(0, 600)));
   const src = mhtml ? Email.parseMhtml(bytes) : null;
@@ -538,12 +543,14 @@ async function importHtml(file) {
 }
 // RTF: nur der Text mit Absätzen, Formatierungen und Bilder übernimmt PDFMy nicht
 async function importRtf(file) {
+  await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   const text = Office.rtf(new Uint8Array(await file.arrayBuffer()));
   await importText(new File([text], file.name.replace(/\.[^.]+$/, '') + '.txt', { type: 'text/plain' }));
   status(`${file.name} umgewandelt. Aus RTF übernimmt PDFMy den Text, aber keine Formatierung und keine Bilder.`);
 }
 // XPS (Windows-Druckformat): Text an seiner Position und Bilder; Linien und Flächen übernimmt PDFMy nicht
 async function importXps(file) {
+  await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   status(`${file.name} wird in PDF umgewandelt …`);
   const pages = await Office.xps(new Uint8Array(await file.arrayBuffer())), L = PDFLib, doc = await PDFDocument.create();
   doc.registerFontkit(await loadFontkit());
@@ -564,6 +571,7 @@ async function importXps(file) {
 /* PowerPoint (.pptx, .ppsx, .potx) und Impress (.odp) → PDF mit fester Lage wie im Original (js/slides.js): Schriften mit gleicher
    Laufweite wie Calibri/Arial/Times (TEXT_FONTS), Bilder in GIF/BMP/WebP/SVG über den Browser in PNG. Danach wie eine PDF. */
 async function importSlides(file) {
+  await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   status(`${file.name} wird in PDF umgewandelt …`);
   const bytes = new Uint8Array(await file.arrayBuffer());
   const model = /\.odp$/i.test(file.name) ? await Slides.odp(bytes) : await Slides.pptx(bytes);
@@ -594,6 +602,7 @@ async function importSlides(file) {
 }
 // Photoshop (PSD/PSB): das gespeicherte Gesamtbild (js/office.js psd) – wie ein Bild, aber unverändert (Modus „Original“, kein Zuschneiden)
 async function importPsd(file) {
+  await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   status(`${file.name}: Photoshop-Bild wird gelesen …`);
   const im = Office.psd(new Uint8Array(await file.arrayBuffer())), k = Math.min(1, MAX_SIDE / Math.max(im.width, im.height));
   const full = Imaging.canvas(im.width, im.height); full.getContext('2d').putImageData(new ImageData(im.rgba, im.width, im.height), 0, 0);
@@ -2218,27 +2227,41 @@ async function ocrPage(p) {
       let best = { dir: 0, conf: res.conf };
       // Zeilen senkrecht (Imaging.skewInfo) → die Seite liegt quer: zuerst ±90° prüfen
       const sideways = (() => { try { return Imaging.skewInfo(small).vertical; } catch { return false; } })();
+      const seen = { 0: { conf: res.conf, words: ocrWords(res.text) } };   // je Lage: Sicherheit und Zahl echter Wörter (Modell der Dokumentsprache)
       for (const dir of sideways ? [90, -90, 180] : [180, 90, -90]) {
         status(`Prüfe Ausrichtung ${lbl} (${dir}°) …`);
         const r = await recognize(turn(small, dir));
+        seen[dir] = { conf: r.conf, words: ocrWords(r.text) };
         if (r.conf > best.conf) best = { dir, conf: r.conf };
       }
-      // Quer und in fremder Schrift (Meldung 2026-0005: russische Urkunde im Querformat): das Modell der Dokumentsprache liest in
-      // keiner Lage etwas – darum die Querlagen zusätzlich mit Kyrillisch/Griechisch prüfen; die Schrift selbst erkennt der Schritt danach
-      if (sideways && !(best.dir && best.conf > res.conf + 15 && best.conf >= 60)) {
+      let turnTo = best.dir && best.conf > res.conf + 15 && best.conf >= 60 ? best.dir : 0;   // klar lesbar – wie bisher
+      // Quer, aber kaum lesbar (blasse Urkunde mit Zierrand, fremde Schrift – Meldungen 2026-0005/0007): Die Sicherheit der Erkennung
+      // taugt hier nicht (Rauschen in der falschen Lage bekommt 40–50 %). Verlässlich ist die Zahl echter Wörter (≥ 4 Buchstaben mit
+      // Vokal): quer liegend fast 0, in den Querlagen ±90° dutzende. Welche der beiden richtig ist, entscheidet die höhere Sicherheit.
+      const sidePick = s => {
+        const a = s[90], b = s[-90], w0 = s[0]?.words ?? 0; if (!a || !b) return 0;
+        const sc = x => x.conf + x.words, [hi, lo, dir] = sc(a) >= sc(b) ? [a, b, 90] : [b, a, -90];   // Sicherheit + Wortzahl: beides spricht für die richtige Lage
+        return Math.max(a.words, b.words) >= Math.max(8, 3 * (w0 + 1)) && hi.words >= 8 && sc(hi) >= sc(lo) + 5 ? dir : 0;
+      };
+      if (sideways && !turnTo) turnTo = sidePick(seen);
+      if (sideways && !turnTo) {
         for (const c of scriptProbes(ocrPrimary())) {
-          for (const dir of [90, -90]) {
-            try {
-              status(`Prüfe Ausrichtung ${lbl} (${dir}°, ${I18N.ocrName(c)}) …`);
-              const r = await recognizeLangs(turn(small, dir), c === 'rus' ? ['rus', 'ukr'] : [c]);
-              if (r.conf >= 60 && r.conf > res.conf + 15 && r.conf > best.conf) best = { dir, conf: r.conf };
-            } catch (e) { console.warn('orient', c, e); }
-          }
-          if (best.dir && best.conf >= 60) break;
+          const langs = c === 'rus' ? ['rus', 'ukr'] : [c], s = {};
+          try {
+            for (const dir of [0, 90, -90]) {
+              status(dir ? `Prüfe Ausrichtung ${lbl} (${dir}°, ${I18N.ocrName(c)}) …` : `${lbl || 'Seite'}: prüfe ${I18N.ocrName(c)} …`);
+              const r = await recognizeLangs(dir ? turn(small, dir) : small, langs);
+              s[dir] = { conf: r.conf, words: ocrWords(r.text) };
+              if (dir && r.conf >= 60 && r.conf > res.conf + 15) { turnTo = dir; break; }   // klar lesbar
+            }
+          } catch (e) { console.warn('orient', c, e); }
+          if (!turnTo) turnTo = sidePick(s);
+          if (turnTo) break;
         }
       }
+      best = { dir: turnTo, conf: 100 };
       state.ocrLabel = lbl;
-      if (best.dir && best.conf > res.conf + 15 && best.conf >= 60) {   // nur bei wirklich lesbarem Ergebnis – Zeichensalat (z. B. chinesische Seite im lateinischen Modell) nicht drehen
+      if (best.dir) {   // nur bei wirklich lesbarem Ergebnis bzw. eindeutiger Wortzahl – Zeichensalat nicht drehen
         await rotatePage(p, best.dir); img = p.processed; res = await recognize(img);
         p.label += ` (${best.dir === 180 ? 'auf dem Kopf' : 'quer'} → gedreht)`;
       }
@@ -2303,6 +2326,9 @@ function spellLang(p, text) {
 }
 // Zuletzt gefundene nichtlateinische Sprache – die nächsten Seiten probieren sie zuerst (sonst die Sprache der Oberfläche)
 let ocrHint = NONLATIN_OCR.has(I18N.info.ocr) ? I18N.info.ocr : null;
+// Zahl „echter“ Wörter im erkannten Text: mindestens 4 Buchstaben einer Schrift mit mindestens einem Vokal (Rauschen erzeugt so etwas kaum)
+const ocrWords = t => (String(t || '').match(/[A-Za-zÀ-ÖØ-öø-ÿĀ-ž]{4,}|[А-Яа-яЁёІіЇїЄєЎўЈјЉљЊњЋћЏџ]{4,}|[Α-Ωα-ωάέήίόύώϊϋΐΰ]{4,}/g) || [])
+  .filter(w => /[aeiouyäöüàáâãåæèéêëìíîïòóôõøùúûýāēīōū]|[аеёиоуыэюяіїєў]|[αεηιουωάέήίόύώ]/i.test(w)).length;
 const scriptProbes = prim => NONLATIN_OCR.has(prim) ? ['deu'] : [...new Set([ocrHint === 'ell' ? 'ell' : ocrHint ? 'rus' : null, 'rus', 'ell'].filter(Boolean))];
 // Weitere Sprachen: eigener Rechenkern, Sprachdatei wird erst bei Bedarf geladen (je 1–4 MB)
 let langWorker = null, langCombo = '', langQueue = Promise.resolve();
@@ -4323,7 +4349,7 @@ async function doExport(o) {
       const wPt = p.kind === 'image' ? 595.28 : k.width * 72 / preset.dpi, hPt = p.kind === 'image' ? 595.28 * k.height / k.width : k.height * 72 / preset.dpi;
       slides.push({ jpeg: await canvasToJpeg(k, preset.q), w: wPt, h: hPt, lines, lang: docLang([p]) });
     }
-    data = Pptx.build(slides, { title: meta.subject || base, author: S.author || '' }); name = base + '.pptx'; mime = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+    await window.lateReady(); data = Pptx.build(slides, { title: meta.subject || base, author: S.author || '' }); name = base + '.pptx'; mime = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
   } else if (o.format === 'img') {
     await document.fonts.load('16px "DejaVu Sans"');
     const preset = SIZES[o.size] || SIZES.balanced, files = [];

@@ -88,7 +88,23 @@ if (stats.count >= 1000) {
    laden.js und fremde Bibliotheken (vendor/). Die Einzeldateien bleiben im Offline-Speicher (die Hintergrund-Worker laden einzelne Module nach). */
 const NO_BUNDLE = /^js\/(app|pro|config|i18n|laden)\.js$/;
 const bundles = new Map();   // Name → Liste der Dateien
+/* Spätes Bündel (app-v342): selten genutzte Module (nur über einen Klick erreichbar) aus der Startreihe nehmen und als
+   js/module-spaet.js nachladen (js/laden.js: im Leerlauf oder sofort, wenn ein Einstieg „await lateReady()“ ruft).
+   Kein anderes Modul der Startreihe darf sie beim Laden brauchen – tests/spaet-laden.test.js prüft das. */
+const LATE = ['js/office.js', 'js/pptx.js', 'js/slides.js', 'js/pdfbild.js', 'js/fragen.js', 'js/zuwendung.js', 'js/vereinsvorlagen.js', 'js/kassenbericht.js', 'js/sepalastschrift.js', 'js/versammlung.js', 'js/beitrag.js', 'js/preflight.js', 'js/einvoice-out.js'];
+const LATE_BUNDLE = 'js/module-spaet.js';
+const splitLate = h => {
+  const found = [];
+  for (const m of [...h.matchAll(/<script src="([^"]+)"><\/script>\n?/g)]) if (LATE.includes(m[1])) { found.push(m[1]); h = h.replace(m[0], ''); }
+  if (found.length !== LATE.length) throw new Error('Spätes Bündel: nicht gefunden ' + LATE.filter(f => !found.includes(f)).join(', '));
+  if (!bundles.has(LATE_BUNDLE)) {
+    bundles.set(LATE_BUNDLE, found);   // Reihenfolge wie in index.html (slides.js braucht office.js)
+    write(LATE_BUNDLE, found.map(f => `/* ---- ${f} ---- */\n` + fs.readFileSync(path.join(OUT, f), 'utf8').replace(/^﻿/, '') + '\n;\n').join(''));
+  }
+  return h;
+};
 const bundleScripts = h => {
+  h = splitLate(h);
   const tags = [...h.matchAll(/<script src="([^"]+)"><\/script>\n?/g)];
   const runs = []; let run = [];
   for (const m of tags) {
@@ -130,7 +146,7 @@ const deferScripts = h => {
   if (tags.length < 4) throw new Error('index.html: Skripte für laden.js nicht gefunden');   // nach dem Bündeln rund 6 Skripte
   const first = tags[0][0];
   for (const m of tags.slice(1)) h = h.replace(m[0], '');
-  return h.replace(first, `<script src="js/laden.js" data-src="${tags.map(m => m[1]).join(' ')}"></script>\n`);
+  return h.replace(first, `<script src="js/laden.js" data-src="${tags.map(m => m[1]).join(' ')}" data-late="${LATE_BUNDLE}"></script>\n`);
 };
 html = deferScripts(html);
 /* Dialoge erst nach dem ersten Bild aufbauen (app-v338): Die rund 70 Dialoge (≈ 130 KB HTML) stehen als <template class="dlgtpl"> in der

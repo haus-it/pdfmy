@@ -135,7 +135,7 @@ test('laden.js: Programmteile nach dem ersten Bild, gleiche Reihenfolge, „load
     const win = { addEventListener: realAdd, Event: class { constructor(t) { this.type = t; } } };
     const doc = {
       readyState, visibilityState: 'visible',
-      currentScript: { getAttribute: () => 'js/a.js js/b.js js/c.js' },
+      currentScript: { getAttribute: k => k === 'data-src' ? 'js/a.js js/b.js js/c.js' : null },   // ohne spätes Bündel (das prüft tests/spaet-laden.test.js)
       createElement: () => ({}),
       body: { appendChild: s => inserted.push(s) },
       // app-v338: Dialog-Vorlagen werden vor dem ersten Skript eingesetzt

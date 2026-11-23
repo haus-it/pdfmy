@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-24
 
+### Behoben (Meldung 2026-0007): Blasse Urkunde im Querformat wurde nicht gedreht; seltene Programmteile werden nachgeladen (app-v342)
+- Die Prüfung „quer?“ aus v341 erkannte die Lage, drehte aber nicht: Bei blasser Schrift auf Ornamentgrund erreicht die Texterkennung auch in der richtigen Lage keine 60 % Sicherheit, und quer liegendes Rauschen bekommt 40–50 %. Jetzt entscheidet bei quer liegenden Seiten die Zahl echter Wörter (mindestens 4 Buchstaben mit Vokal): quer fast keine, in den Querlagen dutzende; welche der beiden Querlagen richtig ist, entscheidet Sicherheit plus Wortzahl. Geprüft mit den drei gemeldeten Urkundenseiten (alle richtig herum) und Testbriefen (aufrecht nicht gedreht, quer gedreht).
+- Schnellerer Start: 13 selten genutzte Programmteile (Vereinswerkzeuge, Office/PowerPoint öffnen, Vorabprüfung, Fragen an die Ablage, Bilder und Grafiken bearbeiten, E-Rechnung schreiben – ≈ 125 KB komprimiert) lädt pdfmy.de erst, wenn die Seite bedienbar ist und der Browser Zeit hat, oder sofort beim ersten Klick auf eine dieser Funktionen. Offline unverändert (Service Worker).
+- tests/schraeglage.test.js (Wortzählung, Entscheidungsregel mit den Messwerten der Meldung), tests/spaet-laden.test.js.
+
 ### Behoben (Meldung 2026-0005): Gerade aufgelegtes Blatt wurde schief „gerade gerichtet“, quer liegende Seite in kyrillischer Schrift nicht gedreht (app-v341)
 - Eine russische Urkunde im Querformat, gerade auf dem Glas, kam um rund 3–4° schief und quer im PDF an. Zwei Ursachen: (1) Das Geraderichten suchte nur waagerechte Textzeilen und nahm den „besten“ Winkel auch dann, wenn er kaum besser passte – bei senkrechten Zeilen, Zierrand und Siegel ein Zufallswert. (2) Die Prüfung „quer oder auf dem Kopf?“ las nur mit dem Modell der Dokumentsprache (Deutsch) und fand bei kyrillischem Text in keiner Lage etwas.
 - Jetzt: Schräglage nach dem Verfahren von Postl, für waagerechte und senkrechte Zeilen; gedreht wird nur, wenn linke und rechte Blatthälfte denselben Winkel ergeben. Liegen die Zeilen senkrecht, prüft PDFMy zuerst ±90° und – wenn die Dokumentsprache nichts liest – zusätzlich mit Kyrillisch und Griechisch.
