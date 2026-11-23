@@ -1,0 +1,12 @@
+{
+ "hinweis": "SHA-256 der Zertifikate, mit denen die EU-Kommission die Liste der Vertrauenslisten (LOTL) signiert. Erstverankerung am 23.11.2026 aus der über HTTPS von ec.europa.eu geladenen LOTL (EU-Verweis, 6 Zertifikate; das signierende Zertifikat ist darunter). Die Kommission veröffentlicht diese Zertifikate zusätzlich im Amtsblatt der EU (Reihe C, Mitteilung zur LOTL) – der Abgleich damit ist Teil der Pflege (docs/ISO-Konformitaet.md). Neue Zertifikate, die eine bereits geprüfte LOTL ankündigt, übernimmt tools/eutl.js automatisch (Rollover).",
+ "stand": "2026-11-23",
+ "lotl": [
+  "d2064fdd70f6982dcc516b86d9d5c56aea939417c624b2e478c0b29de54f8474",
+  "e0a620fbb6747362bb933ac44169d676a553444716cf5f31605f12a22b8396b1",
+  "c0641c4f7d56c431b1c924742db7fce9c1eef7d7fd212113a2768486b3abcdc5",
+  "df7e29360c34b2b8d6d5f40325c1d4d12c9922cecd33b7407674a74b2b3ca1e5",
+  "b63d416744e7098bf9ec2caa596a93bc2468e37f8284ba65ecc061711bcbaa18",
+  "236103f03a8031ae8f47f9059bf8de38564cdbfebedde4a597d50f8980aa653b"
+ ]
+}

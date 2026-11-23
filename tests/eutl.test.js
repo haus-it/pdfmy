@@ -84,3 +84,35 @@ test('Schnappschuss liegt bei und ist plausibel', () => {
   assert.ok(j.dienste.some(d => d.c === 'DE' && d.st === 'g'));
   assert.ok(j.dienste.every(d => d.k && d.c && (d.st === 'g' || d.st === 'w')));
 });
+
+// Signaturen der Listen (app-v337): LOTL mit verankertem Zertifikat, Länderlisten mit dem Zertifikat aus der LOTL, ganzes Dokument signiert.
+test('Signaturprüfung der Listen: Entscheidungsregel und Zertifikate aus der LOTL', () => {
+  const ok = { ok: true, whole: true, cert: 'AB12' };
+  assert.equal(EUTL.accept(ok, ['ab12']), true);
+  assert.equal(EUTL.accept({ ...ok, whole: false }, ['ab12']), false, 'nur Teil signiert (Signature Wrapping)');
+  assert.equal(EUTL.accept({ ...ok, ok: false }, ['ab12']), false, 'Signatur ungültig');
+  assert.equal(EUTL.accept(ok, ['cd34']), false, 'Zertifikat nicht von der LOTL genannt');
+  assert.equal(EUTL.accept(undefined, ['ab12']), false);
+  const b64 = Buffer.from('zertifikat').toString('base64');
+  const lotl = `<OtherTSLPointer><ServiceDigitalIdentities><ServiceDigitalIdentity><DigitalId><X509Certificate>${b64}</X509Certificate></DigitalId></ServiceDigitalIdentity></ServiceDigitalIdentities><TSLLocation>https://x/tl.xml</TSLLocation><AdditionalInformation><SchemeTerritory>DE</SchemeTerritory><MimeType>application/vnd.etsi.tsl+xml</MimeType></AdditionalInformation></OtherTSLPointer>`;
+  const [p] = EUTL.pointers(lotl);
+  assert.deepEqual([p.terr, p.loc, p.certs], ['DE', 'https://x/tl.xml', [crypto.createHash('sha256').update('zertifikat').digest('hex')]]);
+  const anker = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'tools', 'eutl-anker.json'), 'utf8'));
+  assert.ok(anker.lotl.length >= 1 && anker.lotl.every(h => /^[0-9a-f]{64}$/.test(h)), 'Anker: SHA-256 der LOTL-Zertifikate');
+  const snap = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'vendor', 'eutl', 'eutl.json'), 'utf8'));
+  assert.equal(snap.signaturen, 'geprüft', 'Schnappschuss mit geprüften Signaturen erzeugt');
+});
+
+test('XML-Signatur echt prüfen (Windows, .NET): gültig, ganzes Dokument; ein geändertes Zeichen → ungültig', { skip: process.platform !== 'win32' }, () => {
+  const os = require('os'), { execFileSync } = require('child_process');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'xmlsig-')), good = path.join(dir, 'gut.xml'), bad = path.join(dir, 'boese.xml'), list = path.join(dir, 'l.txt');
+  const xml = fs.readFileSync(path.join(__dirname, 'fixtures', 'tl-signiert.xml'), 'utf8');
+  fs.writeFileSync(good, xml); fs.writeFileSync(bad, xml.replace('Vertrauen GmbH', 'Vertrauen GmbX')); fs.writeFileSync(list, good + '\n' + bad + '\n');
+  try {
+    const out = execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(__dirname, '..', 'tools', 'xmlsig.ps1'), '-List', list], { encoding: 'utf8', timeout: 120000 });
+    const [g, b] = out.trim().split(/\r?\n/).map(l => JSON.parse(l));
+    assert.deepEqual([g.ok, g.whole, /^[0-9a-f]{64}$/.test(g.cert)], [true, true, true]);
+    assert.equal(b.ok, false, 'Manipulation erkannt');
+    assert.equal(EUTL.accept(g, [g.cert]), true);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});

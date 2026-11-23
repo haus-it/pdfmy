@@ -94,6 +94,9 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 23.11.2026: Signaturen der EU-Vertrauensliste beim Erstellen prüfen (app-v337)
+**Inhalt:** tools/eutl.js prüft die XML-Signaturen der LOTL (verankerte Zertifikate) und aller Länderlisten (Zertifikat aus der LOTL), sonst keine Übernahme. **Grund:** Die Anzeige „QES“ (v336) darf nicht auf einer manipulierten Liste beruhen; schließt den letzten offenen Punkt aus Rang 4. Leitplanken: nicht berührt (Bauwerkzeug, keine Änderung in der App, kein neuer Dienst).
+
 ### Geprüft und umgesetzt 23.11.2026: Art der Signatur nach eIDAS (app-v336)
 **Inhalt:** Signaturprüfung nennt QES, qualifiziertes Siegel, fortgeschritten mit qualifiziertem Zertifikat oder fortgeschritten – aus den eIDAS-Kennzeichen des Zertifikats und der EU-Vertrauensliste. **Grund (Leitsatz: besser als die Mitbewerber):** Offener Punkt aus Rang 4. Acrobat zeigt „qualifiziert“ über EUTL/AATL; kostenlose Online-Werkzeuge prüfen Signaturen meist gar nicht oder nur „gültig/ungültig“ (nicht für alle nachgeprüft). PDFMy nennt zusätzlich, ob die gesetzliche Schriftform ersetzt wird – lokal, ohne Upload.
 

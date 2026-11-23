@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-23
 
+### EU-Vertrauensliste nur mit geprüften Signaturen (app-v337)
+- Beim Erstellen des Schnappschusses (tools/eutl.js, läuft beim Veröffentlichen wöchentlich) werden jetzt die XML-Signaturen geprüft: die Liste der Listen der EU-Kommission gegen verankerte Zertifikate (tools/eutl-anker.json, mit automatischem Zertifikatswechsel), jede Länderliste gegen das Zertifikat, das die EU-Liste für dieses Land nennt, und immer über das ganze Dokument (Schutz vor „Signature Wrapping“). Eine veränderte oder falsch signierte Liste wird nicht übernommen.
+- Prüfung mit .NET SignedXml (tools/xmlsig.ps1, in Windows enthalten), ergänzt um ECDSA und RSA-PSS, die einige Länder verwenden (u. a. Deutschland, Griechenland, Ungarn, Slowenien). Ergebnis am 23.11.2026: 31 Länder, 1.869 Dienste, alle Signaturen gültig.
+- Schützt die Anzeige „qualifiziert“ bzw. „QES“ (v336) gegen eine manipulierte Liste. tests/eutl.test.js (Regel, Zertifikate aus der LOTL, echte Prüfung mit signierter Testliste und Gegenprobe).
+
 ### Signaturprüfung: Art der Signatur nach eIDAS – QES, qualifiziertes Siegel, fortgeschritten (app-v336)
 - Die Signaturdetails und die Leiste nennen jetzt die Art: „Qualifizierte elektronische Signatur (QES)“ (qualifiziertes Zertifikat, Schlüssel in einer qualifizierten Signaturerstellungseinheit, Aussteller zum Signaturzeitpunkt für Signaturen in der EU-Vertrauensliste), „Qualifiziertes elektronisches Siegel“, „Fortgeschrittene Signatur mit qualifiziertem Zertifikat“ oder „Fortgeschrittene elektronische Signatur“ – mit Hinweis, was davon die gesetzliche Schriftform ersetzt.
 - Ausgewertet werden die eIDAS-Kennzeichen im Zertifikat (QCStatements nach ETSI EN 319 412-5: QcCompliance, QcSSCD, QcType; Zertifikatsrichtlinien QCP-n/-l/-qscd nach EN 319 411-2) und die Verwendung des Dienstes in der EU-Vertrauensliste (Signatur/Siegel). Ohne geladene Liste wird nie „qualifiziert“ angezeigt.
