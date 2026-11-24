@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "De scanner is nog bezig met de vorige opdracht – de pagina’s verschijnen zodra hij klaar is. Netwerkscanners zonder stuurprogramma (WSD) hebben voor de invoer vaak 30 tot 60 seconden nodig.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "De scanner trekt nog papier in … Netwerkscanners zonder stuurprogramma hebben daar vaak tot een minuut voor nodig.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan is nog bezig met een eerdere scan (misschien vanuit een ander venster). Wacht tot die klaar is en scan dan opnieuw.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Oriëntatie {0} ({1}°, {2}) wordt gecontroleerd …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Oriëntatie {0} ({1}°, {2}) wordt gecontroleerd …",
+ "({0}° gerade gerichtet)": "({0}° rechtgezet)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "De tekstregels laten geen duidelijke hoek zien – zet recht met de schuifregelaar.",
+ "Drehung": "Draaiing",
+ "Gerade ausrichten": "Rechtzetten",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Draai met de schuifregelaar tot de tekstregels of de paginarand evenwijdig lopen aan de hulplijnen (pijltjestoetsen: in stappen van 0,1°). “Automatisch” zet recht op basis van de tekstregels, “Zoals gescand” maakt het automatisch rechtzetten ongedaan.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Scan rechtzetten: onder een willekeurige hoek draaien of het automatisch rechtzetten ongedaan maken",
+ "Seite um {0}° gedreht.": "Pagina {0}° gedraaid.",
+ "Wie gescannt": "Zoals gescand"
 }

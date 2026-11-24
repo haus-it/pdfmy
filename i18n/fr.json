@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Le scanner travaille encore sur la tâche précédente – les pages apparaîtront dès qu’il aura terminé. Les scanners réseau sans pilote (WSD) ont souvent besoin de 30 à 60 secondes pour charger le papier.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Le scanner charge encore le papier … Les scanners réseau sans pilote mettent souvent jusqu’à une minute pour cela.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan travaille encore sur une numérisation précédente (peut-être depuis une autre fenêtre). Veuillez patienter jusqu’à la fin, puis numérisez à nouveau.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Vérification de l’orientation {0} ({1}°, {2})…"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Vérification de l’orientation {0} ({1}°, {2})…",
+ "({0}° gerade gerichtet)": "(redressé de {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Les lignes de texte n’indiquent pas d’angle net – veuillez redresser avec le curseur.",
+ "Drehung": "Rotation",
+ "Gerade ausrichten": "Redresser",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Faites pivoter avec le curseur jusqu’à ce que les lignes de texte ou le bord de la page soient parallèles aux repères (touches fléchées : par pas de 0,1°). « Automatique » redresse d’après les lignes de texte, « Tel que numérisé » annule le redressement automatique.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Redresser le scan : pivoter d’un angle quelconque ou annuler le redressement automatique",
+ "Seite um {0}° gedreht.": "Page pivotée de {0}°.",
+ "Wie gescannt": "Tel que numérisé"
 }

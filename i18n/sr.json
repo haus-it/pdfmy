@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Скенер још ради на претходном задатку – странице ће се појавити чим заврши. Мрежним скенерима без драјвера (WSD) често треба 30 до 60 секунди за увлачење папира.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Скенер још увлачи папир … Мрежним скенерима без драјвера за то често треба до једног минута.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan још ради на претходном скенирању (можда из другог прозора). Сачекајте да заврши, а затим поново скенирајте.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Провера оријентације {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Провера оријентације {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(исправљено за {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Редови текста не показују јасан угао – исправите клизачем.",
+ "Drehung": "Ротација",
+ "Gerade ausrichten": "Исправи",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Ротирајте клизачем док редови текста или ивица странице не буду паралелни са помоћним линијама (тастери са стрелицама: у корацима од 0,1°). „Аутоматски“ исправља према редовима текста, „Како је скенирано“ поништава аутоматско исправљање.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Исправљање скена: ротирати за произвољан угао или поништити аутоматско исправљање",
+ "Seite um {0}° gedreht.": "Страница је ротирана за {0}°.",
+ "Wie gescannt": "Како је скенирано"
 }

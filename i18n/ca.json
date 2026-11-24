@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "L’escàner encara treballa en la tasca anterior: les pàgines apareixeran quan acabi. Els escàners de xarxa sense controlador (WSD) sovint necessiten entre 30 i 60 segons per carregar el paper.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "L’escàner encara està carregant el paper … Els escàners de xarxa sense controlador sovint hi triguen fins a un minut.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan encara està treballant en un escaneig anterior (potser des d’una altra finestra). Espereu que acabi i torneu a escanejar.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "S'està comprovant l'orientació {0} ({1}°, {2})…"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "S'està comprovant l'orientació {0} ({1}°, {2})…",
+ "({0}° gerade gerichtet)": "(redreçat {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Les línies de text no mostren un angle clar; si us plau, alineeu amb el control lliscant.",
+ "Drehung": "Rotació",
+ "Gerade ausrichten": "Redreça",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Gireu amb el control lliscant fins que les línies de text o la vora de la pàgina quedin paral·leles a les línies guia (tecles de fletxa: en passos de 0,1°). «Automàtic» alinea segons les línies de text, «Tal com s’ha escanejat» desfà el redreçament automàtic.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Redreçar l’escaneig: girar un angle qualsevol o desfer el redreçament automàtic",
+ "Seite um {0}° gedreht.": "Pàgina girada {0}°.",
+ "Wie gescannt": "Tal com s’ha escanejat"
 }

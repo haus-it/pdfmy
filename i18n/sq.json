@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skaneri po punon ende në detyrën e mëparshme – faqet do të shfaqen sapo ta mbarojë. Skanerët e rrjetit pa drejtues (WSD) shpesh kanë nevojë për 30 deri në 60 sekonda për të tërhequr letrën.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skaneri po e tërheq ende letrën … Skanerët e rrjetit pa drejtues shpesh kanë nevojë për deri në një minutë për këtë.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan po punon ende në një skanim të mëparshëm (ndoshta nga një dritare tjetër). Prisni derisa të mbarojë dhe pastaj skanoni sërish.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Po kontrollohet orientimi {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Po kontrollohet orientimi {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(drejtuar me {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Rreshtat e tekstit nuk tregojnë kënd të qartë – ju lutemi drejtojeni me rrëshqitësin.",
+ "Drehung": "Rrotullimi",
+ "Gerade ausrichten": "Drejto",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rrotulloni me rrëshqitësin derisa rreshtat e tekstit ose buza e faqes të jenë paralele me vijat ndihmëse (tastet e shigjetave: me hapa prej 0,1°). «Automatik» drejton sipas rreshtave të tekstit, «Siç është skanuar» anulon drejtimin automatik.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Drejtimi i skanimit: rrotulloje me çdo kënd ose anuloje drejtimin automatik",
+ "Seite um {0}° gedreht.": "Faqja u rrotullua me {0}°.",
+ "Wie gescannt": "Siç është skanuar"
 }

@@ -57,3 +57,14 @@ test('Meldung 2026-0008: Import zählt neue Seiten an den Seitenobjekten (Lösch
   assert.doesNotMatch(body, /if \(state\.pages\.length === before\) return;/, 'nicht mehr über die Anzahl');
   assert.match(app, /if \(!dir && r\.conf >= 55 && s\[0\]\.words >= 8\) break;/);
 });
+
+test('Gerade ausrichten (app-v344): Dialog mit Regler, Automatisch und „Wie gescannt“ (nimmt die automatische Begradigung zurück)', () => {
+  const app = R('js/app.js'), html = R('index.html');
+  assert.match(html, /<button id="btnStraight"/); assert.match(html, /<dialog id="stDlg"/);
+  assert.match(html, /<input type="range" id="stRange" min="-10" max="10" step="0\.1"/);
+  assert.match(app, /if \(r\.angle\) p\.skew = r\.angle;/, 'automatischer Winkel wird gemerkt');
+  assert.match(app, /\$\('#stScan'\)\.onclick = \(\) => \{ rng\.value = p\.skew \|\| 0; draw\(\); \};/);
+  assert.match(app, /const s = Imaging\.skewInfo\(base\); rng\.value = s\.ok \? -s\.angle : 0;/);
+  assert.match(app, /p\.skew = Math\.round\(\(\(p\.skew \|\| 0\) - a\) \* 100\) \/ 100;/);
+  assert.match(app, /p\.ocr = null; p\.failed = false; p\.orientChecked = true;/, 'Texterkennung neu, nicht automatisch weiterdrehen');
+});

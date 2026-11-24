@@ -459,3 +459,5 @@ Nachtrag 24.11.2026 (app-v341): Korrekturmaßnahme zu Meldung 2026-0005 (ISO 900
 Nachtrag 24.11.2026 (app-v342): Korrekturmaßnahme zu Meldung 2026-0007 (ISO 9001 10.2): Lagebestimmung quer liegender Seiten über die Zahl erkannter Wörter statt der Erkennungssicherheit; Nachladen seltener Programmteile (ISO 25010 Leistungseffizienz), Einstiege warten auf das Bündel. Tests: tests/schraeglage.test.js, tests/spaet-laden.test.js.
 
 Nachtrag 24.11.2026 (app-v343): Korrekturmaßnahme zu Meldung 2026-0008 (ISO 9001 10.2): Importzählung an den Seitenobjekten; frühes Ende der Ausrichtungsprüfung. Test: tests/schraeglage.test.js.
+
+Nachtrag 24.11.2026 (app-v344): Feindrehung „Gerade ausrichten“ mit Rücknahme der automatischen Begradigung (Nutzerkontrolle über automatische Bildverarbeitung, ISO 9241-110 Steuerbarkeit). Test: tests/schraeglage.test.js.

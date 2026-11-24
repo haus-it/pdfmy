@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Скенерот сè уште работи на претходната задача – страниците ќе се појават штом ќе заврши. На мрежните скенери без драјвер (WSD) честопати им требаат 30 до 60 секунди за довлекување на хартијата.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Скенерот сè уште ја довлекува хартијата … На мрежните скенери без драјвер за тоа честопати им треба до една минута.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan сè уште работи на претходно скенирање (можеби од друг прозорец). Почекајте да заврши, па скенирајте повторно.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Се проверува ориентација {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Се проверува ориентација {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(израмнето за {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Редовите на текстот не покажуваат јасен агол – израмнете со лизгачот.",
+ "Drehung": "Ротација",
+ "Gerade ausrichten": "Израмни",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Вртете со лизгачот додека редовите на текстот или работ на страницата не станат паралелни со помошните линии (копчиња со стрелки: во чекори од 0,1°). „Автоматски“ израмнува според редовите на текстот, „Како скенирано“ ја враќа автоматската израмнетост.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Израмнување на скен: ротирај за произволен агол или врати го автоматското израмнување",
+ "Seite um {0}° gedreht.": "Страницата е ротирана за {0}°.",
+ "Wie gescannt": "Како скенирано"
 }

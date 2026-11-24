@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "O escáner aínda está traballando na tarefa anterior: as páxinas aparecerán en canto remate. Os escáneres de rede sen controlador (WSD) adoitan precisar entre 30 e 60 segundos para cargar o papel.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "O escáner aínda está cargando o papel … Os escáneres de rede sen controlador adoitan precisar ata un minuto para isto.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan aínda está traballando nun escaneado anterior (quizais desde outra xanela). Agarde a que remate e volva escanear.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Comprobando orientación {0} ({1}°, {2})…"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Comprobando orientación {0} ({1}°, {2})…",
+ "({0}° gerade gerichtet)": "({0}° endereitado)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "As liñas de texto non amosan un ángulo claro: endereite co control desprazable.",
+ "Drehung": "Rotación",
+ "Gerade ausrichten": "Endereitar",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Xire co control desprazable ata que as liñas de texto ou o bordo da páxina queden paralelos ás liñas guía (teclas de frecha: en pasos de 0,1°). «Automático» endereita segundo as liñas de texto e «Como se dixitalizou» desfai o endereitamento automático.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Endereitar a dixitalización: xirar en calquera ángulo ou desfacer o endereitamento automático",
+ "Seite um {0}° gedreht.": "Páxina xirada {0}°.",
+ "Wie gescannt": "Como se dixitalizou"
 }

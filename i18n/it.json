@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Lo scanner sta ancora lavorando al processo precedente: le pagine compariranno appena avrà finito. Gli scanner di rete senza driver (WSD) spesso impiegano da 30 a 60 secondi per caricare la carta.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Lo scanner sta ancora caricando la carta … Gli scanner di rete senza driver spesso impiegano fino a un minuto.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan sta ancora lavorando a una scansione precedente (forse da un’altra finestra). Attenda che termini, quindi scansioni di nuovo.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Verifica orientamento {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Verifica orientamento {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(raddrizzato di {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Le righe di testo non mostrano un angolo chiaro: raddrizza con il cursore.",
+ "Drehung": "Rotazione",
+ "Gerade ausrichten": "Raddrizza",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Ruota con il cursore finché le righe di testo o il bordo della pagina non sono paralleli alle linee guida (tasti freccia: a passi di 0,1°). «Automatico» raddrizza in base alle righe di testo, «Come scansionato» annulla il raddrizzamento automatico.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Raddrizza scansione: ruota di un angolo qualsiasi o annulla il raddrizzamento automatico",
+ "Seite um {0}° gedreht.": "Pagina ruotata di {0}°.",
+ "Wie gescannt": "Come scansionato"
 }

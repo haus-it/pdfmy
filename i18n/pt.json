@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "O scanner ainda está a trabalhar na tarefa anterior – as páginas aparecem assim que terminar. Os scanners de rede sem controlador (WSD) precisam muitas vezes de 30 a 60 segundos para puxar o papel.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "O scanner ainda está a puxar o papel … Os scanners de rede sem controlador precisam muitas vezes de até um minuto para isso.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "O pdfmy Scan ainda está a trabalhar numa digitalização anterior (talvez a partir de outra janela). Aguarde até terminar e digitalize novamente.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "A verificar orientação {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "A verificar orientação {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "({0}° endireitado)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "As linhas de texto não mostram um ângulo claro – endireite com o controlo deslizante.",
+ "Drehung": "Rotação",
+ "Gerade ausrichten": "Endireitar",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rode com o controlo deslizante até as linhas de texto ou a margem da página ficarem paralelas às linhas-guia (teclas de seta: em passos de 0,1°). «Automático» endireita de acordo com as linhas de texto, «Como digitalizado» anula o endireitamento automático.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Endireitar digitalização: rodar em qualquer ângulo ou anular o endireitamento automático",
+ "Seite um {0}° gedreht.": "Página rodada {0}°.",
+ "Wie gescannt": "Como digitalizado"
 }

@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skanneri työstää vielä edellistä tehtävää – sivut ilmestyvät heti, kun se on valmis. Ajurittomilla verkkoskannereilla (WSD) paperin syöttö kestää usein 30–60 sekuntia.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skanneri syöttää vielä paperia … Ajurittomilla verkkoskannereilla siihen menee usein jopa minuutti.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan työstää vielä aiempaa skannausta (ehkä toisesta ikkunasta). Odota, kunnes se on valmis, ja skannaa sitten uudelleen.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Tarkistetaan suuntaa {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Tarkistetaan suuntaa {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(suoristettu {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Tekstirivit eivät osoita selvää kulmaa – suorista liukusäätimellä.",
+ "Drehung": "Kierto",
+ "Gerade ausrichten": "Suorista",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Kierrä liukusäätimellä, kunnes tekstirivit tai sivun reuna ovat apuviivojen suuntaiset (nuolinäppäimet: 0,1°:n askelin). ”Automaattinen” suoristaa tekstirivien mukaan, ”Sellaisenaan skannattu” kumoaa automaattisen suoristuksen.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Suorista skannaus: käännä mihin kulmaan tahansa tai kumoa automaattinen suoristus",
+ "Seite um {0}° gedreht.": "Sivua käännetty {0}°.",
+ "Wie gescannt": "Sellaisenaan skannattu"
 }

@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Сканер ещё обрабатывает предыдущее задание – страницы появятся, как только он закончит. Сетевым сканерам без драйвера (WSD) для подачи бумаги часто требуется от 30 до 60 секунд.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Сканер ещё подаёт бумагу … Сетевым сканерам без драйвера для этого часто требуется до минуты.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan ещё обрабатывает предыдущее сканирование (возможно, из другого окна). Подождите, пока оно завершится, и затем отсканируйте снова.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Проверка ориентации {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Проверка ориентации {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(выровнено на {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Строки текста не показывают чёткого угла – выровняйте ползунком.",
+ "Drehung": "Поворот",
+ "Gerade ausrichten": "Выровнять",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Вращайте ползунком, пока строки текста или край страницы не станут параллельны вспомогательным линиям (клавиши со стрелками: шагами по 0,1°). «Автоматически» выравнивает по строкам текста, «Как отсканировано» отменяет автоматическое выравнивание.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Выровнять скан: повернуть на любой угол или отменить автоматическое выравнивание",
+ "Seite um {0}° gedreht.": "Страница повёрнута на {0}°.",
+ "Wie gescannt": "Как отсканировано"
 }

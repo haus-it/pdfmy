@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skeneris vis dar dirba su ankstesne užduotimi – puslapiai atsiras, kai tik jis baigs. Tinklo skeneriams be tvarkyklės (WSD) popieriui įtraukti dažnai prireikia 30–60 sekundžių.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skeneris vis dar traukia popierių … Tinklo skeneriams be tvarkyklės tam dažnai prireikia iki minutės.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "„pdfmy Scan“ vis dar dirba su ankstesniu skenavimu (galbūt iš kito lango). Palaukite, kol jis baigs, ir tada skenuokite iš naujo.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Tikrinama orientacija {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Tikrinama orientacija {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(ištiesinta {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Teksto eilutės nerodo aiškaus kampo – ištiesinkite slankikliu.",
+ "Drehung": "Pasukimas",
+ "Gerade ausrichten": "Ištiesinti",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Sukite slankikliu, kol teksto eilutės arba puslapio kraštas taps lygiagretūs pagalbinėms linijoms (rodyklių klavišai: 0,1° žingsniais). „Automatiškai“ ištiesina pagal teksto eilutes, „Kaip nuskaityta“ atšaukia automatinį ištiesinimą.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Ištiesinti nuskaitymą: pasukti bet kokiu kampu arba atšaukti automatinį ištiesinimą",
+ "Seite um {0}° gedreht.": "Puslapis pasuktas {0}°.",
+ "Wie gescannt": "Kaip nuskaityta"
 }

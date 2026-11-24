@@ -1352,6 +1352,7 @@ html.i18n-wait body{visibility:hidden}
           <option value="original">Original</option>
         </select>
         <button id="btnCrop" title="Scan oder Foto zuschneiden: die vier Ecken ziehen – auch schräg aufgenommene Blätter werden entzerrt"><svg class="ic" aria-hidden="true"><use href="#i-crop"/></svg><span>Zuschneiden</span></button>
+        <button id="btnStraight" title="Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen"><svg class="ic" aria-hidden="true"><use href="#i-rotate-cw"/></svg><span>Gerade ausrichten</span></button>
       </div>
       <div id="cropBar">
         <span class="hint">Die blauen Ecken auf die Blattecken ziehen.</span>
@@ -2048,6 +2049,13 @@ html.i18n-wait body{visibility:hidden}
   <div class="ronav"><button type="button" id="roPrev" aria-label="Vorige Seite">‹</button><span id="roPage" aria-live="polite"></span><button type="button" id="roNext" aria-label="Nächste Seite">›</button><button type="button" id="roReset">Automatisch</button></div>
   <div class="robody"><div class="roview"><canvas id="roCanvas" aria-hidden="true"></canvas></div><ol id="roList" class="rolist" aria-label="Blöcke in Lesereihenfolge"></ol></div>
   <div class="dlgrow"><button type="submit" value="cancel" id="roCancel">Abbrechen</button><button type="submit" value="ok" class="primary" id="roOk">Übernehmen</button></div>
+</form></dialog>
+<dialog id="stDlg" class="sharedlg" aria-labelledby="stT"><form method="dialog">
+  <h3 class="dlgtitle" id="stT">Gerade ausrichten</h3>
+  <p class="hint" style="margin:-6px 0 10px">Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.</p>
+  <canvas id="stCanvas" aria-hidden="true" style="width:auto;height:auto;max-width:100%;max-height:min(60vh,560px);object-fit:contain;display:block;margin:0 auto;border:1px solid var(--line, #cbd5e1)"></canvas>
+  <div class="dlgrow" style="justify-content:flex-start;flex-wrap:wrap;gap:8px"><label for="stRange">Drehung</label><input type="range" id="stRange" min="-10" max="10" step="0.1" value="0" style="flex:1;min-width:180px"><output id="stVal" for="stRange" aria-live="polite">0°</output><button type="button" id="stAuto">Automatisch</button><button type="button" id="stScan">Wie gescannt</button></div>
+  <div class="dlgrow"><button type="submit" value="cancel">Abbrechen</button><button type="submit" value="ok" class="primary" id="stOk">Übernehmen</button></div>
 </form></dialog>
 <dialog id="biDlg" class="sharedlg rodlg" aria-labelledby="biT"><form method="dialog">
   <h3 class="dlgtitle" id="biT">Bilder und Grafiken bearbeiten</h3>

@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "A lapolvasó még az előző feladaton dolgozik – az oldalak megjelennek, amint végzett. A meghajtó nélküli hálózati lapolvasóknak (WSD) a papír behúzásához gyakran 30–60 másodpercre van szükségük.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "A lapolvasó még húzza be a papírt … A meghajtó nélküli hálózati lapolvasóknak ehhez gyakran akár egy percre is szükségük van.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "A pdfmy Scan még egy korábbi beolvasáson dolgozik (talán egy másik ablakból). Kérjük, várja meg, amíg befejezi, majd olvasson be újra.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Tájolás ellenőrzése: {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Tájolás ellenőrzése: {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "({0}°-kal kiegyenesítve)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "A szövegsorok nem mutatnak egyértelmű szöget – kérjük, egyenesítse ki a csúszkával.",
+ "Drehung": "Elforgatás",
+ "Gerade ausrichten": "Kiegyenesítés",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Forgassa a csúszkával, amíg a szövegsorok vagy az oldal széle párhuzamos nem lesz a segédvonalakkal (nyílbillentyűk: 0,1°-os lépésekben). Az „Automatikus” a szövegsorok szerint egyenesít, a „Ahogy beolvasták” visszavonja az automatikus kiegyenesítést.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Beolvasás kiegyenesítése: elforgatás tetszőleges szöggel vagy az automatikus kiegyenesítés visszavonása",
+ "Seite um {0}° gedreht.": "Az oldal elforgatva {0}°-kal.",
+ "Wie gescannt": "Ahogy beolvasták"
 }

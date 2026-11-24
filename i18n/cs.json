@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skener ještě pracuje na předchozí úloze – stránky se objeví, jakmile dokončí. Síťové skenery bez ovladače (WSD) potřebují k zavedení papíru často 30 až 60 sekund.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skener ještě zavádí papír … Síťové skenery bez ovladače na to často potřebují až minutu.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan ještě pracuje na předchozím skenování (možná z jiného okna). Počkejte prosím, až skončí, a poté skenujte znovu.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontroluji orientaci {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontroluji orientaci {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(vyrovnáno o {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Řádky textu nevykazují jednoznačný úhel – vyrovnejte prosím posuvníkem.",
+ "Drehung": "Otočení",
+ "Gerade ausrichten": "Vyrovnat",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Otáčejte posuvníkem, dokud řádky textu nebo okraj stránky nebudou rovnoběžné s pomocnými čarami (šipky: po krocích 0,1°). „Automaticky“ vyrovná podle řádků textu, „Jak naskenováno“ vrátí automatické vyrovnání.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Vyrovnat sken: otočit o libovolný úhel nebo vrátit automatické vyrovnání",
+ "Seite um {0}° gedreht.": "Stránka otočena o {0}°.",
+ "Wie gescannt": "Jak naskenováno"
 }

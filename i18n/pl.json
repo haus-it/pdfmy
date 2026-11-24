@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skaner nadal pracuje nad poprzednim zadaniem – strony pojawią się, gdy tylko skończy. Skanery sieciowe bez sterownika (WSD) często potrzebują 30–60 sekund na pobranie papieru.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skaner nadal pobiera papier … Skanery sieciowe bez sterownika często potrzebują na to nawet minuty.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan nadal pracuje nad poprzednim skanowaniem (może z innego okna). Poczekaj, aż się zakończy, i zeskanuj ponownie.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Sprawdzanie orientacji {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Sprawdzanie orientacji {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(wyprostowano o {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Wiersze tekstu nie wskazują jednoznacznego kąta – wyprostuj suwakiem.",
+ "Drehung": "Obrót",
+ "Gerade ausrichten": "Wyprostuj",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Obracaj suwakiem, aż wiersze tekstu lub krawędź strony będą równoległe do linii pomocniczych (klawisze strzałek: co 0,1°). „Automatycznie” prostuje według wierszy tekstu, „Jak zeskanowano” cofa automatyczne prostowanie.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Wyprostuj skan: obróć o dowolny kąt lub cofnij automatyczne prostowanie",
+ "Seite um {0}° gedreht.": "Strona obrócona o {0}°.",
+ "Wie gescannt": "Jak zeskanowano"
 }

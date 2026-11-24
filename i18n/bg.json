@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Скенерът още обработва предишното задание – страниците се появяват, щом приключи. На мрежовите скенери без драйвер (WSD) често са нужни 30 до 60 секунди за поемането на хартията.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Скенерът още поема хартията … Мрежовите скенери без драйвер често се нуждаят от до една минута за това.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan още обработва предишно сканиране (може би от друг прозорец). Моля, изчакайте да приключи и сканирайте отново.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Проверка на ориентацията {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Проверка на ориентацията {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(изправено с {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Редовете текст не показват ясен ъгъл – моля, изправете с плъзгача.",
+ "Drehung": "Завъртане",
+ "Gerade ausrichten": "Изправяне",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Въртете с плъзгача, докато редовете текст или краят на страницата застанат успоредно на помощните линии (клавиши със стрелки: на стъпки от 0,1°). „Автоматично“ изправя по редовете текст, „Както е сканирано“ връща автоматичното изправяне.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Изправяне на скан: завъртане на произволен ъгъл или връщане на автоматичното изправяне",
+ "Seite um {0}° gedreht.": "Страницата е завъртяна на {0}°.",
+ "Wie gescannt": "Както е сканирано"
 }

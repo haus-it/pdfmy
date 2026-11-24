@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skanner töötab veel eelmise tööga – leheküljed ilmuvad niipea, kui see on valmis. Draiverita võrguskännerid (WSD) vajavad paberi sissetõmbamiseks sageli 30 kuni 60 sekundit.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skanner tõmbab paberit veel sisse … Draiverita võrguskännerid vajavad selleks sageli kuni minuti.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan töötab veel eelmise skannimisega (võib-olla mõnest teisest aknast). Oodake, kuni see on valmis, ja skannige siis uuesti.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontrollin suunda {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontrollin suunda {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(sirgeks seatud {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Tekstiread ei näita selget nurka – palun sirgendage liuguriga.",
+ "Drehung": "Pööramine",
+ "Gerade ausrichten": "Sirgenda",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Pöörake liuguriga, kuni tekstiread või lehe serv on abijoontega paralleelsed (nooleklahvid: sammudega 0,1°). „Automaatne“ sirgendab tekstiridade järgi, „Nagu skannitud“ võtab automaatse sirgendamise tagasi.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Skannitud lehe sirgendamine: pööra suvalise nurga võrra või võta automaatne sirgendamine tagasi",
+ "Seite um {0}° gedreht.": "Lehte pöörati {0}°.",
+ "Wie gescannt": "Nagu skannitud"
 }

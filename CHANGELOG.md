@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-24
 
+### Neu: „Gerade ausrichten“ – Scan um einen beliebigen Winkel drehen, automatische Begradigung zurücknehmen (app-v344)
+- Werkzeug neben „Zuschneiden“: Vorschau mit Hilfslinien, Regler von −10° bis +10° (Pfeiltasten: 0,1°-Schritte), „Automatisch“ (nach den Textzeilen) und „Wie gescannt“ (nimmt die automatische Begradigung zurück). Danach wird die Seite neu erkannt; die Lage gilt als vom Nutzer bestimmt und wird nicht automatisch weitergedreht.
+- Anlass: Meldungen 2026-0005/0007 – bei einer Urkunde sitzt der Druck minimal schräg zum Heftrand; PDFMy richtet nach der Schrift aus, wer am Rand ausrichten möchte, kann das jetzt selbst. Vorbild: Adobe Scan, PDF24 (Feindrehung); bisher gab es in PDFMy nur 90°-Schritte.
+- tests/schraeglage.test.js; Durchlauf in der App (2,5° automatisch begradigt → „Wie gescannt“ → exakt zurück; „Automatisch“ → wieder gerade).
+
 ### Behoben (Meldung 2026-0008): „−1 Seite(n) importiert“ beim Löschen während eines Scans; lange Ausrichtungsprüfung bei Tabellenseiten (app-v343)
 - Wurde während des Einlesens eines Scans eine Seite gelöscht, zählte PDFMy die Seiten über die Differenz der Seitenzahl: „−1 Seite(n) importiert“, und bei gleichbleibender Anzahl bekam die neue Seite keine Texterkennung. Jetzt zählen die neuen Seiten selbst.
 - Aufrechte Seiten mit Tabellenlinien (die Linien täuschen „quer“ vor) wurden in fremder Schrift über eine Minute in allen Lagen und Schriften geprüft. Liest die Seite aufrecht schon gut, endet die Prüfung jetzt sofort.

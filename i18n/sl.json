@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Optični bralnik še obdeluje prejšnje opravilo – strani se bodo prikazale, takoj ko bo končal. Omrežni bralniki brez gonilnika (WSD) za uvlek papirja pogosto potrebujejo 30 do 60 sekund.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Optični bralnik še uvlači papir … Omrežni bralniki brez gonilnika za to pogosto potrebujejo do minuto.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan še obdeluje prejšnje skeniranje (morda iz drugega okna). Počakajte, da se konča, nato znova skenirajte.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Preverjam usmerjenost {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Preverjam usmerjenost {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(poravnano za {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Vrstice besedila ne kažejo jasnega kota – poravnajte z drsnikom.",
+ "Drehung": "Zasuk",
+ "Gerade ausrichten": "Poravnaj",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Vrtite z drsnikom, dokler vrstice besedila ali rob strani niso vzporedni s pomožnimi črtami (smerne tipke: v korakih po 0,1°). „Samodejno“ poravna glede na vrstice besedila, „Kot skenirano“ razveljavi samodejno poravnavo.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Poravnava skena: zasukaj za poljuben kot ali razveljavi samodejno poravnavo",
+ "Seite um {0}° gedreht.": "Stran zasukana za {0}°.",
+ "Wie gescannt": "Kot skenirano"
 }

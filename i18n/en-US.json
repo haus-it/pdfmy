@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "The scanner is still working on the previous job – the pages will appear as soon as it has finished. Network scanners without a driver (WSD) often need 30 to 60 seconds to feed the paper.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "The scanner is still feeding the paper … Network scanners without a driver often need up to a minute for this.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan is still working on a previous scan (maybe from another window). Please wait until it has finished, then scan again.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Checking orientation {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Checking orientation {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "({0}° straightened)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "The text lines do not show a clear angle – please straighten using the slider.",
+ "Drehung": "Rotation",
+ "Gerade ausrichten": "Straighten",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rotate with the slider until the text lines or the page edge are parallel to the guide lines (arrow keys: in steps of 0.1°). “Automatic” straightens according to the text lines, “As scanned” undoes the automatic straightening.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Straighten scan: rotate by any angle or undo the automatic straightening",
+ "Seite um {0}° gedreht.": "Page rotated by {0}°.",
+ "Wie gescannt": "As scanned"
 }

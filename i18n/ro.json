@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Scanerul încă lucrează la sarcina anterioară – paginile vor apărea imediat ce termină. Scanerele de rețea fără driver (WSD) au adesea nevoie de 30 până la 60 de secunde pentru a trage hârtia.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Scanerul încă trage hârtia … Scanerele de rețea fără driver au adesea nevoie de până la un minut pentru aceasta.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan încă lucrează la o scanare anterioară (poate dintr-o altă fereastră). Așteptați să se termine, apoi scanați din nou.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Se verifică orientarea {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Se verifică orientarea {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(îndreptat cu {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Rândurile de text nu arată un unghi clar – îndreptați cu ajutorul cursorului.",
+ "Drehung": "Rotire",
+ "Gerade ausrichten": "Îndreptare",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rotiți cu cursorul până când rândurile de text sau marginea paginii sunt paralele cu liniile ajutătoare (tastele săgeți: în pași de 0,1°). „Automat” îndreaptă după rândurile de text, „Ca la scanare” anulează îndreptarea automată.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Îndreptarea scanării: rotiți cu orice unghi sau anulați îndreptarea automată",
+ "Seite um {0}° gedreht.": "Pagină rotită cu {0}°.",
+ "Wie gescannt": "Ca la scanare"
 }

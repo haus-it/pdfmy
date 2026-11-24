@@ -4454,5 +4454,13 @@
  "Der Scanner arbeitet noch am vorigen Auftrag – die Seiten erscheinen, sobald er fertig ist. Netzwerk-Scanner ohne Treiber (WSD) brauchen für den Einzug oft 30 bis 60 Sekunden.": "Skanneren jobber fortsatt med forrige oppdrag – sidene vises så snart den er ferdig. Nettverksskannere uten driver (WSD) trenger ofte 30 til 60 sekunder for å trekke inn papiret.",
  "Der Scanner zieht noch ein … Netzwerk-Scanner ohne Treiber brauchen dafür oft bis zu einer Minute.": "Skanneren trekker fortsatt inn papir … Nettverksskannere uten driver trenger ofte opptil ett minutt på dette.",
  "pdfmy Scan arbeitet noch an einem vorigen Scan (vielleicht aus einem anderen Fenster). Bitte warten, bis er fertig ist, und dann erneut scannen.": "pdfmy Scan jobber fortsatt med en tidligere skanning (kanskje fra et annet vindu). Vent til den er ferdig, og skann deretter på nytt.",
- "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontrollerer retning {0} ({1}°, {2}) …"
+ "Prüfe Ausrichtung {0} ({1}°, {2}) …": "Kontrollerer retning {0} ({1}°, {2}) …",
+ "({0}° gerade gerichtet)": "(rettet opp {0}°)",
+ "Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.": "Tekstlinjene viser ingen tydelig vinkel – rett opp med glidebryteren.",
+ "Drehung": "Rotasjon",
+ "Gerade ausrichten": "Rett opp",
+ "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Roter med glidebryteren til tekstlinjene eller sidekanten er parallelle med hjelpelinjene (piltaster: i trinn på 0,1°). «Automatisk» retter opp etter tekstlinjene, «Som skannet» angrer den automatiske opprettingen.",
+ "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Rett opp skanning: roter med en vilkårlig vinkel eller angre den automatiske opprettingen",
+ "Seite um {0}° gedreht.": "Siden er rotert {0}°.",
+ "Wie gescannt": "Som skannet"
 }

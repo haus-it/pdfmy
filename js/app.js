@@ -642,6 +642,7 @@ function scanPage(r, label, lowRes, mode) {
   const note = [r.cropped && 'zugeschnitten', r.angle && `${I18N.fmtNum(r.angle)}° gerade gerichtet`].filter(Boolean).join(', ');
   const p = { id: ++uid, kind: 'image', orig: r.orig, mode, rotation: 0, annots: [], ocr: null, native: null, label: label + (note ? ` (${note})` : ''), lowRes };
   if (r.autoMode) p.autoMode = r.autoMode;
+  if (r.angle) p.skew = r.angle;   // automatisch weggedrehter Winkel – „Gerade ausrichten“ → „Wie gescannt“ nimmt ihn zurück
   p.processed = r.processed; p.w = p.processed.width; p.h = p.processed.height; p.thumb = null; p.thumbL = null;   // wie reprocess()
   return p;
 }
@@ -1117,7 +1118,7 @@ function renderStage() {
   updateToolbar();
   if (p.kind === 'image') $('#mode').value = p.mode;
   $('#mode').disabled = p.kind !== 'image';
-  $('#btnCrop').disabled = p.kind !== 'image';
+  $('#btnCrop').disabled = p.kind !== 'image'; $('#btnStraight').disabled = p.kind !== 'image' || !!p.photo;
   let src = cropping ? p.orig : p.processed;
   if (!src) {   // Vorschau noch nicht gezeichnet (großes Dokument): weiße Seite im richtigen Format, gleich danach das Bild
     ensurePreview(p).then(() => { if (cur() === p && p.processed) renderStage(); });
@@ -1939,6 +1940,38 @@ $('#cropApply').onclick = () => {
   p.orig = c; p.autoMode = null; p.annots = []; p.ocr = null; p.failed = false; p.orientChecked = false;
   reprocess(p); state.crop = null; state.dirty = true; refresh();
   status(p.photo ? 'Foto zugeschnitten.' : 'Seite zugeschnitten.');
+  if (S.autoOcr) runOcrAll();
+};
+
+/* ---------- Gerade ausrichten (app-v344): Scan um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen ----------
+   Anlass Meldungen 2026-0005/0007: eine Urkunde, deren Druck minimal schräg zum Heftrand sitzt – PDFMy richtet nach den Textzeilen aus,
+   wer lieber am Rand ausrichtet oder die Automatik zurücknehmen will, braucht eine Feindrehung (wie Acrobat Scan, PDF24). */
+$('#btnStraight').onclick = async () => {
+  const p = cur(); if (!p || p.kind !== 'image') return;
+  const dlg = $('#stDlg'), cv = $('#stCanvas'), rng = $('#stRange'), base = Imaging.scaled(p.orig, 820);
+  const draw = () => {
+    const a = +rng.value; $('#stVal').textContent = `${I18N.fmtNum(Math.round(a * 10) / 10)}°`;
+    const r = a ? Imaging.rotateBy(base, a) : base; cv.width = r.width; cv.height = r.height;
+    const x = cv.getContext('2d'); x.drawImage(r, 0, 0); x.strokeStyle = 'rgba(37, 99, 235, .45)'; x.lineWidth = 1;
+    for (let gx = 40; gx < cv.width; gx += 40) { x.beginPath(); x.moveTo(gx + 0.5, 0); x.lineTo(gx + 0.5, cv.height); x.stroke(); }
+    for (let gy = 40; gy < cv.height; gy += 40) { x.beginPath(); x.moveTo(0, gy + 0.5); x.lineTo(cv.width, gy + 0.5); x.stroke(); }
+  };
+  rng.value = 0; rng.oninput = draw;
+  $('#stAuto').onclick = () => {
+    const s = Imaging.skewInfo(base); rng.value = s.ok ? -s.angle : 0; draw();
+    if (!s.ok) status(I18N.t('Die Textzeilen zeigen keinen eindeutigen Winkel – bitte mit dem Regler ausrichten.'));
+  };
+  $('#stScan').disabled = !p.skew; $('#stScan').onclick = () => { rng.value = p.skew || 0; draw(); };
+  draw(); dlg.returnValue = ''; dlg.showModal(); rng.focus();
+  await new Promise(r => dlg.addEventListener('close', r, { once: true }));
+  const a = Math.round(+rng.value * 100) / 100;
+  if (dlg.returnValue !== 'ok' || !a) return;
+  p.orig = Imaging.rotateBy(p.orig, a);
+  p.skew = Math.round(((p.skew || 0) - a) * 100) / 100;
+  p.label = p.label.replace(/-?[\d.,]+° gerade gerichtet/, '').replace(/\(, |, \)/g, m => m === '(, ' ? '(' : ')').replace(/ \(\)/, '') + (p.skew ? ` (${I18N.fmtNum(p.skew)}° gerade gerichtet)` : '');
+  p.ocr = null; p.failed = false; p.orientChecked = true;   // Lage hat der Nutzer bestimmt – nicht automatisch weiterdrehen
+  reprocess(p); state.dirty = true; refresh();
+  status(I18N.t(`Seite um ${I18N.fmtNum(a)}° gedreht.`));
   if (S.autoOcr) runOcrAll();
 };
 
