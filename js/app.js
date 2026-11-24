@@ -251,13 +251,15 @@ async function unpackArchive(f) {
   return items.map(it => Object.assign(new File([it.data], it.name, { type: it.type }), { fromArchive: true, asIs: comic, archiveName: f.name }));
 }
 async function importFilesRun(files, fromCamera) {
-  const before = state.pages.length, failed = [], queue = [...files];
+  // Neue Seiten an den Seitenobjekten erkennen, nicht an der Anzahl: Wird während des Imports (z. B. eines Scans) eine Seite gelöscht,
+  // ergab die Differenz „−1 Seite(n) importiert“ bzw. 0 – und die neue Seite bekam keine Texterkennung (Meldung 2026-0008)
+  const known = new Set(state.pages), before = state.pages.length, failed = [], queue = [...files];
   for (let i = 0; i < queue.length; i++) {
     const f = queue[i], n = f.name.toLowerCase(); rememberFileName(f.name);   // für das Unkenntlichmachen im Fehlerbericht
     try {
       status(`Importiere ${f.name} …`);
       if (!f.fromArchive && (/\.(zip|cbz)$/.test(n) || /^application\/(x-)?(zip|zip-compressed|cbz)$/.test(f.type))) { queue.splice(i + 1, 0, ...await unpackArchive(f)); continue; }
-      asIsImport = !!f.asIs; const mark = state.pages.length;
+      asIsImport = !!f.asIs; const knownF = new Set(state.pages);
       if (f.type === 'application/pdf' || n.endsWith('.pdf')) await importPdf(f);
       else if (OFFICE_FAITHFUL.test(n) && await officeViaHelper(f)) { /* originalgetreu über LibreOffice in pdfmy Scan */ }
       else if (/\.ps[db]$/.test(n) || f.type === 'image/vnd.adobe.photoshop') await importPsd(f);
@@ -276,7 +278,7 @@ async function importFilesRun(files, fromCamera) {
       state.inputBytes += f.size;
       // Name für den Vorschlag beim Speichern (ownName): Bilder und Seiten aus einem Archiv tragen den Namen ihrer Datei bzw. des Archivs
       // Nicht bei Scanner und Überwachtem Ordner: deren Namen („SKM_C258…“) sind nichtssagend, dort bleibt der Name aus den Briefdaten.
-      if (!state.fromScanner && !window.hotfolderImport) for (let k = mark; k < state.pages.length; k++) { const q = state.pages[k]; q.srcName ??= f.name; if (f.archiveName) q.archiveName ??= f.archiveName; }
+      if (!state.fromScanner && !window.hotfolderImport) for (const q of state.pages) { if (knownF.has(q)) continue; q.srcName ??= f.name; if (f.archiveName) q.archiveName ??= f.archiveName; }
     } catch (e) {
       noteError(e, 'Öffnen');
       status(e.name === 'AbortError' ? `${f.name}: Öffnen abgebrochen.` : unreadable(f.name, e));
@@ -285,10 +287,10 @@ async function importFilesRun(files, fromCamera) {
   }
   // Bei mehreren Dateien überschrieb die nächste Meldung den Fehler – am Ende zusammenfassen
   if (failed.length && queue.length > 1) toast(`Nicht geöffnet: ${failed.join(', ')}`, 10000);
-  if (state.pages.length === before) return;
+  const added = state.pages.filter(q => !known.has(q)).length;
+  if (!added) return;
   state.dirty = true;
   if (state.sel < 0) state.sel = 0;
-  const added = state.pages.length - before;
   refresh();
   status(`${added} Seite(n) importiert.` + (failed.length ? ` Nicht geöffnet: ${failed.length} Datei(en).` : ''));
   applyIntent();
@@ -2253,8 +2255,12 @@ async function ocrPage(p) {
               const r = await recognizeLangs(dir ? turn(small, dir) : small, langs);
               s[dir] = { conf: r.conf, words: ocrWords(r.text) };
               if (dir && r.conf >= 60 && r.conf > res.conf + 15) { turnTo = dir; break; }   // klar lesbar
+              // Aufrecht gut lesbar in dieser Schrift (z. B. russische Tabellenseite – die Tabellenlinien täuschen „quer“ vor):
+              // nicht weiter drehen und keine weiteren Schriften probieren (Meldung 2026-0008: über 80 s Prüfung)
+              if (!dir && r.conf >= 55 && s[0].words >= 8) break;
             }
           } catch (e) { console.warn('orient', c, e); }
+          if (!turnTo && s[0] && s[0].conf >= 55 && s[0].words >= 8 && !s[90]) break;
           if (!turnTo) turnTo = sidePick(s);
           if (turnTo) break;
         }

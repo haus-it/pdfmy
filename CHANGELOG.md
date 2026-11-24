@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-24
 
+### Behoben (Meldung 2026-0008): „−1 Seite(n) importiert“ beim Löschen während eines Scans; lange Ausrichtungsprüfung bei Tabellenseiten (app-v343)
+- Wurde während des Einlesens eines Scans eine Seite gelöscht, zählte PDFMy die Seiten über die Differenz der Seitenzahl: „−1 Seite(n) importiert“, und bei gleichbleibender Anzahl bekam die neue Seite keine Texterkennung. Jetzt zählen die neuen Seiten selbst.
+- Aufrechte Seiten mit Tabellenlinien (die Linien täuschen „quer“ vor) wurden in fremder Schrift über eine Minute in allen Lagen und Schriften geprüft. Liest die Seite aufrecht schon gut, endet die Prüfung jetzt sofort.
+- tests/schraeglage.test.js; Durchlauf in der App mit Urkunden, russischen Tabellenseiten und Testbriefen (alle richtig).
+
 ### Behoben (Meldung 2026-0007): Blasse Urkunde im Querformat wurde nicht gedreht; seltene Programmteile werden nachgeladen (app-v342)
 - Die Prüfung „quer?“ aus v341 erkannte die Lage, drehte aber nicht: Bei blasser Schrift auf Ornamentgrund erreicht die Texterkennung auch in der richtigen Lage keine 60 % Sicherheit, und quer liegendes Rauschen bekommt 40–50 %. Jetzt entscheidet bei quer liegenden Seiten die Zahl echter Wörter (mindestens 4 Buchstaben mit Vokal): quer fast keine, in den Querlagen dutzende; welche der beiden Querlagen richtig ist, entscheidet Sicherheit plus Wortzahl. Geprüft mit den drei gemeldeten Urkundenseiten (alle richtig herum) und Testbriefen (aufrecht nicht gedreht, quer gedreht).
 - Schnellerer Start: 13 selten genutzte Programmteile (Vereinswerkzeuge, Office/PowerPoint öffnen, Vorabprüfung, Fragen an die Ablage, Bilder und Grafiken bearbeiten, E-Rechnung schreiben – ≈ 125 KB komprimiert) lädt pdfmy.de erst, wenn die Seite bedienbar ist und der Browser Zeit hat, oder sofort beim ersten Klick auf eine dieser Funktionen. Offline unverändert (Service Worker).

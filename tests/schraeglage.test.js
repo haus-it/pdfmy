@@ -49,3 +49,11 @@ test('Wortzählung: echte Wörter in lateinischer, kyrillischer und griechischer
   assert.equal(sidePick({ 0: { conf: 80, words: 40 }, 90: { conf: 30, words: 20 }, '-90': { conf: 35, words: 22 } }), 0, 'aufrecht lesbar: nicht drehen');
   assert.equal(sidePick({ 0: { conf: 30, words: 1 }, 90: { conf: 22, words: 12 }, '-90': { conf: 21, words: 13 } }), 0, 'beide Querlagen gleich: nicht raten');
 });
+
+test('Meldung 2026-0008: Import zählt neue Seiten an den Seitenobjekten (Löschen während des Imports), Ausrichtung bricht bei aufrecht lesbarer Seite ab', () => {
+  const app = R('js/app.js'), i = app.indexOf('async function importFilesRun('), body = app.slice(i, i + 4500);
+  assert.match(body, /const known = new Set\(state\.pages\), before = state\.pages\.length/);
+  assert.match(body, /const added = state\.pages\.filter\(q => !known\.has\(q\)\)\.length;\s*if \(!added\) return;/);
+  assert.doesNotMatch(body, /if \(state\.pages\.length === before\) return;/, 'nicht mehr über die Anzahl');
+  assert.match(app, /if \(!dir && r\.conf >= 55 && s\[0\]\.words >= 8\) break;/);
+});

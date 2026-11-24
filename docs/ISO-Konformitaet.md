@@ -457,3 +457,5 @@ Nachtrag 23.11.2026 (app-v340, pdfmy Scan 1.24.0/1.14.0): Korrekturmaßnahme zu 
 Nachtrag 24.11.2026 (app-v341): Korrekturmaßnahme zu Meldung 2026-0005 (ISO 9001 10.2): Schräglage nur bei übereinstimmender Messung beider Blatthälften (keine Fehldrehung von Urkunden/Zierrändern), senkrechte Zeilen erkannt, Ausrichtungsprüfung quer liegender Seiten auch mit nicht lateinischen Schriften. Messung im Browser mit dem OCR-Korpus und dem gemeldeten Scan; Test: tests/schraeglage.test.js.
 
 Nachtrag 24.11.2026 (app-v342): Korrekturmaßnahme zu Meldung 2026-0007 (ISO 9001 10.2): Lagebestimmung quer liegender Seiten über die Zahl erkannter Wörter statt der Erkennungssicherheit; Nachladen seltener Programmteile (ISO 25010 Leistungseffizienz), Einstiege warten auf das Bündel. Tests: tests/schraeglage.test.js, tests/spaet-laden.test.js.
+
+Nachtrag 24.11.2026 (app-v343): Korrekturmaßnahme zu Meldung 2026-0008 (ISO 9001 10.2): Importzählung an den Seitenobjekten; frühes Ende der Ausrichtungsprüfung. Test: tests/schraeglage.test.js.
