@@ -280,3 +280,5 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 | Stundennachweis für Übungsleiter (Abrechnung, Zuschussanträge) | vorhanden (v331) | fehlt bei PDF-Werkzeugen; Word-/Excel-Muster der Sportbünde |
 | Übungsleiter- und Ehrenamtspauschale: Vereinbarung mit Erklärung zum Freibetrag (Stand 2026) | vorhanden (v322); seit v323 warnt der Kassenbericht je Person vor dem Überschreiten der Freibeträge | fehlt bei PDF-Werkzeugen; Word-Muster der Landessportbünde; Vereinssoftware im Abo summiert, Warnung nicht nachgeprüft |
 | Online-Mitgliederverwaltung | **bewusst nicht**: Mitgliederdatenbank auf einem Server (Leitplanken 1–2) | Vereinssoftware im Abo |
+
+**Nachtrag 24.11.2026 (app-v346) – Hilfe:** Acrobat, Foxit, PDF24, Smallpdf und iLovePDF haben bebilderte Online-Hilfen bzw. Werkzeugseiten (nicht systematisch gezählt). PDFMy hat jetzt 18 bebilderte Schritt-für-Schritt-Anleitungen nach Themen, mit Klick-Nummern, Sofortsuche und in 40 Sprachen – die Bilder werden bei jeder Änderung aus der App selbst erzeugt und veralten daher nicht. Die Texte stehen auf derselben Seite wie die Suche (ohne Wechsel in ein Hilfe-Portal).

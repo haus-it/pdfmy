@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-24
 
+### Hilfe-Center: 18 bebilderte Schritt-für-Schritt-Anleitungen in sechs Themen (app-v346)
+- Die Hilfe-Seite beginnt jetzt mit einem Hilfe-Center: Kacheln nach Themen (Erste Schritte, Scannen und Post, Bearbeiten, Speichern und umwandeln, Unterschreiben und Rechnungen, Für Vereine), jede führt zu einer Anleitung mit Bildschirmfoto, roten Klick-Nummern und nummerierten Schritten.
+- Neu bebildert (11): Einmal einrichten, Briefe ablegen, Scan gerade ausrichten, Frist berechnen, Seiten ordnen, Bilder/Grafiken/Text verschieben, Schwärzen, Speichern (PDF/A, Word, kleiner), Word und Excel in PDF, Mit Passwort schützen, E-Rechnung schreiben. Bisher 7.
+- Die Bilder entstehen automatisch aus der echten App (Deutsch und Englisch, fiktive Beispieldokumente); die Sofortsuche der Hilfe findet auch die Schritte der Anleitungen.
+- tests/hilfe-center.test.js: jede Kachel führt zu einer Anleitung, jedes Bild liegt in Deutsch und Englisch vor, die Bildmaße im HTML stimmen mit der Datei überein, Verweise zeigen auf vorhandene Abschnitte.
+
 ### Word und Excel in PDF: gemessen gegen LibreOffice – Seiten wie im Original, Excel-Zahlen wie in Excel (app-v345)
 - Neuer Messkorpus (tests/office-korpus): 10 Word-Dokumente (Brief, Angebot, Bericht, Protokoll, Rechnung, Lebenslauf, Vertrag, Newsletter mit Bildern, Formular, Sonderzeichen) und 3 Excel-Mappen, umgewandelt mit PDFMy und mit LibreOffice als Referenz. Ergebnis vorher: alle Wörter kommen an, aber 2 von 13 Seitenzahlen wichen ab, und Excel zeigte im Standardformat Tausenderpunkte („1.222“ statt „1222“).
 - Word: PDFMy erkennt die Hauptschrift des Dokuments (Standard-Absatz, direkte Formatierung, Designschrift) und setzt bei Arial, Times New Roman, Calibri, Cambria und Courier eine gleich breite freie Schrift ein (Liberation, Caladea, PDFMy Sans C) – Zeilen- und Seitenumbrüche wie im Original. Zeichen, die dieser Schrift fehlen (z. B. ☐ ☑), kommen aus DejaVu statt als „?“.

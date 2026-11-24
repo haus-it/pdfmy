@@ -913,3 +913,19 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 | 6 Wenig aktive Inhalte | passt: keine Skripte in der PDF |
 
 **Ehrliche Grenzen (so in der Hilfe):** Mit Zugangscode wird nur die Ablage-Kopie versiegelt (Verschlüsseln schreibt die Datei neu). Ohne Zertifikat und ohne pdfmy Scan kein Siegel (Zeitstempeldienste erlauben keine Browser-Anfragen). Ein selbst ausgestelltes Zertifikat belegt Unverändertheit, nicht die Identität. Prüfung gegen die EU-Vertrauensliste und B-LT/LTA bleiben Rang 6.
+
+### Hilfe-Center mit Bildern (24.11.2026, app-v346)
+
+**Anlass:** „Ausführliches Hilfe-Center mit Bildern und Texten“. Vorhanden: 7 bebilderte Anleitungen und eine durchsuchbare Textsammlung.
+**Umfang:** 18 Anleitungen in 6 Themengruppen auf der Hilfe-Seite; Bilder per Skript aus der App (Deutsch, Englisch; andere Sprachen sehen die englischen Bilder mit übersetztem Text).
+
+**Leitplanken vor dem Bau geprüft:**
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: statische Seite, Bilder mit fiktiven Beispieldaten |
+| 2 Kein Server | passt: statische Dateien auf pdfmy.de |
+| 3 Ohne Tracking | passt: keine Zählung, welche Anleitung gelesen wird |
+| 4 Einfach | passt: Kacheln nach Aufgaben, rote Nummern im Bild, kurze Schritte |
+| 5 Prüfbar | tests/hilfe-center.test.js |
+| 6 Wenig aktive Inhalte | passt: keine neuen Skripte |

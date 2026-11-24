@@ -41,6 +41,7 @@ kbd{font:13px/1 ui-monospace,Consolas,monospace;border:1px solid var(--line);bor
 .hcard{display:block;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);text-decoration:none;color:var(--text)}
 .hcard b{display:block;font-size:16px;color:var(--accent)}.hcard span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
 .hcard:hover,.hcard:focus-visible{border-color:var(--accent);box-shadow:0 1px 6px rgba(16,24,40,.12)}
+.hgroups{margin:8px 0 4px}.hgh{font-size:15px;margin:14px 0 0;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.hgroup .hguides{margin-top:6px}
 .hguide{border:1px solid var(--line);border-radius:12px;padding:4px 16px 12px;margin:16px 0;background:var(--bg);scroll-margin-top:90px}
 .hguide h3{font-size:18px;margin:12px 0 8px}
 .hguide figure{margin:0 0 10px}.hshot{display:block;border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:zoom-in}
@@ -78,16 +79,56 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 </ul></nav>
 
 <section class="hsec" id="anleitungen"><h2>Schritt für Schritt – mit Bildern</h2>
-<p>Die roten Zahlen im Bild zeigen, wo Sie klicken. Ein Klick aufs Bild vergrößert es.</p>
+<p>18 bebilderte Anleitungen für die wichtigsten Aufgaben, nach Themen geordnet. Die roten Zahlen im Bild zeigen, wo Sie klicken. Ein Klick aufs Bild vergrößert es.</p>
+<nav class="hgroups" aria-label="Anleitungen nach Themen">
+<div class="hgroup"><h3 class="hgh">Erste Schritte</h3>
 <div class="hguides">
+<a class="hcard" href="#a-einrichten"><b>Einmal einrichten</b><span>Name, Ablageordner, Scanner</span></a>
 <a class="hcard" href="#a-oeffnen"><b>PDF öffnen</b><span>Datei wählen oder ins Fenster ziehen</span></a>
-<a class="hcard" href="#a-scannen"><b>Scannen</b><span>Mit Scanner oder Handy</span></a>
-<a class="hcard" href="#a-bearbeiten"><b>Bearbeiten und ausfüllen</b><span>Text, Formulare, Seiten</span></a>
-<a class="hcard" href="#a-unterschreiben"><b>Unterschreiben</b><span>Zeichnen, tippen oder Bild</span></a>
-<a class="hcard" href="#a-zusammen"><b>Zusammenfügen</b><span>Mehrere Dateien zu einer</span></a>
 <a class="hcard" href="#a-mehr"><b>Alle Funktionen finden</b><span>Menü „Mehr“ und Suche</span></a>
-<a class="hcard" href="#a-verein"><b>Für Vereine</b><span>Kassenbericht, Spendenquittung, Vorlagen</span></a>
-</div>
+</div></div>
+<div class="hgroup"><h3 class="hgh">Scannen und Post</h3>
+<div class="hguides">
+<a class="hcard" href="#a-scannen"><b>Scannen</b><span>Mit Scanner oder Handy</span></a>
+<a class="hcard" href="#a-ablegen"><b>Briefe ablegen</b><span>Absender, Frist, Dateiname – automatisch</span></a>
+<a class="hcard" href="#a-gerade"><b>Gerade ausrichten</b><span>Schiefe Scans begradigen</span></a>
+<a class="hcard" href="#a-frist"><b>Frist berechnen</b><span>Mit Feiertagen und Kalendereintrag</span></a>
+</div></div>
+<div class="hgroup"><h3 class="hgh">Bearbeiten</h3>
+<div class="hguides">
+<a class="hcard" href="#a-bearbeiten"><b>Bearbeiten und ausfüllen</b><span>Text, Formulare, Seiten</span></a>
+<a class="hcard" href="#a-seiten"><b>Seiten ordnen</b><span>Sortieren, drehen, löschen</span></a>
+<a class="hcard" href="#a-bilder"><b>Bilder und Grafiken</b><span>Verschieben, umfärben, ersetzen</span></a>
+<a class="hcard" href="#a-schwaerzen"><b>Schwärzen</b><span>Persönliche Daten sicher entfernen</span></a>
+<a class="hcard" href="#a-zusammen"><b>Zusammenfügen</b><span>Mehrere Dateien zu einer</span></a>
+</div></div>
+<div class="hgroup"><h3 class="hgh">Speichern und umwandeln</h3>
+<div class="hguides">
+<a class="hcard" href="#a-speichern"><b>Speichern</b><span>PDF/A, Word, Excel, kleiner</span></a>
+<a class="hcard" href="#a-office"><b>Word und Excel in PDF</b><span>Ohne Office, ohne Upload</span></a>
+<a class="hcard" href="#a-schuetzen"><b>Mit Passwort schützen</b><span>Öffnen, Drucken, Kopieren</span></a>
+</div></div>
+<div class="hgroup"><h3 class="hgh">Unterschreiben und Rechnungen</h3>
+<div class="hguides">
+<a class="hcard" href="#a-unterschreiben"><b>Unterschreiben</b><span>Zeichnen, tippen oder Bild</span></a>
+<a class="hcard" href="#a-erechnung"><b>E-Rechnung schreiben</b><span>ZUGFeRD und XRechnung</span></a>
+</div></div>
+<div class="hgroup"><h3 class="hgh">Für Vereine</h3>
+<div class="hguides">
+<a class="hcard" href="#a-verein"><b>Kassenbericht und mehr</b><span>Spendenquittung, Beiträge, Vorlagen</span></a>
+</div></div>
+</nav>
+
+<article class="hguide" id="a-einrichten"><h3>Einmal einrichten</h3>
+<figure><a href="hilfe-bilder/de/einrichten.webp" class="hshot"><img src="hilfe-bilder/de/einrichten.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Einrichtung“ mit Name, Ablageordner, pdfmy Scan und Standard-PDF-Programm"></a></figure>
+<ol class="hsteps">
+<li><b>Ihr Name oder Kürzel</b> – steht später bei Notizen, Stempeln und in der Ablage.</li>
+<li><b>Ablageordner wählen</b> – dorthin legt PDFMy fertige Briefe mit sprechendem Dateinamen. Ein Ordner, den OneDrive, Nextcloud oder SharePoint abgleicht, funktioniert ebenso.</li>
+<li><b>pdfmy Scan</b> laden – das kleine Zusatzprogramm verbindet Ihren Scanner oder Ihr Multifunktionsgerät (Windows und Mac).</li>
+<li><b>Als Standard festlegen</b> – dann öffnet ein Doppelklick auf eine PDF-Datei direkt PDFMy.</li>
+</ol>
+<p class="hmore">Das Fenster erscheint beim ersten Start; später unter <i>Mehr → Einrichtung …</i>. Alles bleibt auf diesem Gerät. <a href="#app">Mehr zur App</a></p>
+</article>
 
 <article class="hguide" id="a-oeffnen"><h3>PDF öffnen</h3>
 <figure><a href="hilfe-bilder/de/oeffnen.webp" class="hshot"><img src="hilfe-bilder/de/oeffnen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Startseite von PDFMy mit den Feldern „Dateien wählen“, „Öffnen“ und „Funktion suchen“"></a></figure>
@@ -99,6 +140,15 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <p class="hmore">Nichts wird hochgeladen – die Datei bleibt auf Ihrem Gerät. <a href="#start">Mehr zum Schnellstart</a></p>
 </article>
 
+<article class="hguide" id="a-mehr"><h3>Alle Funktionen finden</h3>
+<figure><a href="hilfe-bilder/de/mehr.webp" class="hshot"><img src="hilfe-bilder/de/mehr.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Geöffnetes Menü „Mehr“ mit allen Funktionen, nach Gruppen geordnet"></a></figure>
+<ol class="hsteps">
+<li><b>Mehr</b> (die drei Punkte oben) öffnet alle Funktionen, nach Gruppen geordnet: Dokument, Prüfen &amp; Formulare, Büro, PDFMy.</li>
+<li>Darin z. B. die Funktionen für Vereine wie den <b>Kassenbericht</b>.</li>
+</ol>
+<p class="hmore">Schneller: <kbd>Strg</kbd>+<kbd>K</kbd> und ein Suchwort tippen.</p>
+</article>
+
 <article class="hguide" id="a-scannen"><h3>Scannen</h3>
 <figure><a href="hilfe-bilder/de/scannen.webp" class="hshot"><img src="hilfe-bilder/de/scannen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Kacheln „Scannen &amp; Text erkennen“ und „Mit dem Handy scannen“ sowie der Knopf „Scanner verbinden“"></a></figure>
 <ol class="hsteps">
@@ -107,6 +157,39 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Scanner verbinden:</b> für Scanner und Multifunktionsgeräte im Netzwerk – neue Scans erscheinen dann von selbst.</li>
 </ol>
 <p class="hmore"><a href="#scannen">Mehr zum Scannen</a></p>
+</article>
+
+<article class="hguide" id="a-ablegen"><h3>Briefe ablegen</h3>
+<figure><a href="hilfe-bilder/de/ablegen.webp" class="hshot"><img src="hilfe-bilder/de/ablegen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Gescannter Brief mit automatisch erkannten Briefdaten (Absender, Betreff, Datum), Fristfeld, Dateiname und dem Knopf „Ablegen &amp; nächster“"></a></figure>
+<ol class="hsteps">
+<li><b>Briefdaten</b> rechts: Nach dem Scannen liest PDFMy Absender, Datum, Dokumenttyp und Betreff selbst – bitte kurz prüfen.</li>
+<li><b>Frist / zahlbar bis:</b> wird erkannt, wenn sie im Brief steht; sonst eintragen oder <i>„Berechnen“</i>.</li>
+<li><b>Dateiname</b> entsteht automatisch, z. B. „2026-11-24_Angebot_Mustermann Haustechnik“.</li>
+<li><b>Ablegen &amp; nächster</b> (<kbd>Strg</kbd>+<kbd>Enter</kbd>) legt den Brief in den Ablageordner, trägt ihn ins Posteingangsbuch ein und macht Platz für den nächsten.</li>
+</ol>
+<p class="hmore"><a href="#ablegen">Mehr zu Ablage, Fristen und Posteingangsbuch</a></p>
+</article>
+
+<article class="hguide" id="a-gerade"><h3>Scan gerade ausrichten</h3>
+<figure><a href="hilfe-bilder/de/gerade.webp" class="hshot"><img src="hilfe-bilder/de/gerade.webp" width="1280" height="1000" loading="lazy" decoding="async" alt="Fenster „Gerade ausrichten“ mit Vorschau, Hilfslinien, Drehregler sowie den Knöpfen „Automatisch“, „Wie gescannt“ und „Übernehmen“"></a></figure>
+<ol class="hsteps">
+<li>PDFMy richtet schiefe Scans beim Einlesen selbst aus. Passt es nicht ganz, über der Seite <b>Gerade ausrichten</b> wählen. Mit dem <b>Regler</b> drehen, bis die Zeilen parallel zu den Hilfslinien stehen – in Schritten von 0,1° (Pfeiltasten).</li>
+<li><b>Automatisch</b> richtet erneut nach den Textzeilen aus; <i>„Wie gescannt“</i> nimmt die automatische Begradigung zurück.</li>
+<li><b>Übernehmen</b> – die Texterkennung läuft danach für diese Seite neu.</li>
+</ol>
+<p class="hmore">Liegt eine Seite auf dem Kopf oder quer, drehen die Pfeile in der Werkzeugleiste um 90°. <a href="#scannen">Mehr zum Scannen</a></p>
+</article>
+
+<article class="hguide" id="a-frist"><h3>Frist berechnen</h3>
+<figure><a href="hilfe-bilder/de/frist.webp" class="hshot"><img src="hilfe-bilder/de/frist.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Frist berechnen“ mit Fristart, Zustelldatum, Bundesland, Vorfrist, berechnetem Fristende mit Rechenweg und dem Knopf „In Kalender (.ics)“"></a></figure>
+<ol class="hsteps">
+<li><b>Fristart</b> wählen, z. B. Berufung, Einspruch gegen einen Bescheid, Widerspruch – oder eine eigene Frist in Tagen, Wochen oder Monaten.</li>
+<li><b>Zugestellt am</b> eintragen.</li>
+<li><b>Bundesland</b> wählen – dessen Feiertage werden berücksichtigt; dazu auf Wunsch eine <b>Vorfrist</b>.</li>
+<li>Das <b>Fristende</b> steht sofort da – mit Rechenweg zum Nachprüfen.</li>
+<li><b>In Kalender (.ics)</b> legt einen Termin für Outlook und andere Kalender an; <i>„Als Frist übernehmen“</i> trägt ihn beim Brief ein.</li>
+</ol>
+<p class="hmore">Unter <i>Mehr → Frist berechnen …</i>. Eine Rechenhilfe – die Fristenkontrolle bleibt bei Ihnen. <a href="#kanzlei">Mehr für Kanzleien</a></p>
 </article>
 
 <article class="hguide" id="a-bearbeiten"><h3>Bearbeiten und Formulare ausfüllen</h3>
@@ -120,14 +203,34 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <p class="hmore"><a href="#bearbeiten">Alle Bearbeitungsfunktionen</a></p>
 </article>
 
-<article class="hguide" id="a-unterschreiben"><h3>Unterschreiben</h3>
-<figure><a href="hilfe-bilder/de/unterschreiben.webp" class="hshot"><img src="hilfe-bilder/de/unterschreiben.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Werkzeug „Unterschrift“ mit dem Menü „Unterschrift anlegen“ und dem gelben Knopf „Nächste Stelle“"></a></figure>
+<article class="hguide" id="a-seiten"><h3>Seiten ordnen, drehen, löschen</h3>
+<figure><a href="hilfe-bilder/de/seiten.webp" class="hshot"><img src="hilfe-bilder/de/seiten.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Seitenübersicht mit allen Seiten als Raster und den Knöpfen Alle auswählen, Drehen, Duplizieren, Leerseite einfügen, Löschen"></a></figure>
 <ol class="hsteps">
-<li>Werkzeug <b>Unterschrift</b> wählen.</li>
-<li>Beim ersten Mal <b>Unterschrift anlegen</b>: mit Maus oder Finger zeichnen, Namen tippen oder ein Foto Ihrer Unterschrift nehmen. PDFMy merkt sie sich auf diesem Gerät.</li>
-<li><b>Nächste Stelle</b> springt zu jeder Stelle, an der unterschrieben werden soll – ein Klick auf „Hier unterschreiben“ setzt die Unterschrift genau dort.</li>
+<li><b>Seitenübersicht</b> (Taste <kbd>G</kbd>) zeigt alle Seiten als Raster.</li>
+<li>Seiten <b>anklicken</b> (mit <kbd>Strg</kbd> oder <kbd>Umschalt</kbd> mehrere) und per <b>Ziehen</b> sortieren. Darüber: drehen, duplizieren, Leerseite einfügen, löschen, weitere Dateien hinzufügen – oder nur die Auswahl bzw. jede Seite einzeln speichern.</li>
+<li><b>Speichern</b> – fertig.</li>
 </ol>
-<p class="hmore"><a href="#unterschreiben">Mehr zu Unterschrift, Kürzel und digitaler Signatur</a></p>
+<p class="hmore">Rückgängig geht immer mit <kbd>Strg</kbd>+<kbd>Z</kbd>. <a href="#bearbeiten">Mehr zu Seiten und Dateien</a></p>
+</article>
+
+<article class="hguide" id="a-bilder"><h3>Bilder, Grafiken und Text verschieben</h3>
+<figure><a href="hilfe-bilder/de/bilder.webp" class="hshot"><img src="hilfe-bilder/de/bilder.webp" width="1280" height="1000" loading="lazy" decoding="async" alt="Fenster „Bilder und Grafiken bearbeiten“ mit der Liste aller Bilder, Grafiken und Textabschnitte, der Seite mit farbigen Rahmen und dem Feld „Farbe“"></a></figure>
+<ol class="hsteps">
+<li><i>Mehr → Bilder und Grafiken bearbeiten …</i> listet alles Verschiebbare auf: <b>Bilder</b> (blau), <b>Grafiken</b> wie Logos, Formen und Linien (lila) und <b>Textabschnitte</b> (grün).</li>
+<li>Auf der <b>Seite</b> anklicken und ziehen zum Verschieben, an der Ecke ziehen zum Vergrößern oder Verkleinern. Mit der Tastatur: Pfeiltasten, <kbd>+</kbd> und <kbd>−</kbd>, <kbd>Entf</kbd> löscht.</li>
+<li><b>Farbe</b> färbt Grafik oder Text um; <i>„Ersetzen …“</i> tauscht ein Bild aus, z. B. ein neues Logo. Dann <i>„Übernehmen“</i>.</li>
+</ol>
+<p class="hmore">Den Wortlaut ändern Sie mit dem Werkzeug <i>„Text ändern“</i>. Bei Kontoauszügen, Rechnungen und Urkunden ist das zum Schutz vor Fälschung gesperrt. <a href="#bearbeiten">Mehr zum Bearbeiten</a></p>
+</article>
+
+<article class="hguide" id="a-schwaerzen"><h3>Schwärzen</h3>
+<figure><a href="hilfe-bilder/de/schwaerzen.webp" class="hshot"><img src="hilfe-bilder/de/schwaerzen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Brief mit geschwärzter Anschrift und Telefonnummer, Werkzeug „Schwärzen“ und die Knöpfe „Persönliche Daten finden“ und „Fertig &amp; speichern“"></a></figure>
+<ol class="hsteps">
+<li>Werkzeug <b>Schwärzen</b> wählen und Bereiche mit der Maus aufziehen.</li>
+<li><b>Persönliche Daten finden</b> schlägt Stellen vor: Namen, Anschrift, IBAN, E-Mail, Telefon, Steuer-ID, Geburtsdatum. Unpassendes anklicken und mit <kbd>Entf</kbd> löschen.</li>
+<li><b>Fertig &amp; speichern</b> – der Inhalt unter den Balken wird wirklich entfernt, auch aus der Textebene und aus Word-, Text- und Bild-Fassungen.</li>
+</ol>
+<p class="hmore">Einen Begriff überall schwärzen: in der Suche rechts eingeben und <i>„Alle Treffer schwärzen“</i>. <a href="#bearbeiten">Mehr zum Schwärzen</a></p>
 </article>
 
 <article class="hguide" id="a-zusammen"><h3>PDFs zusammenfügen</h3>
@@ -140,13 +243,57 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <p class="hmore"><a href="#bearbeiten">Mehr zu Seiten und Dateien</a></p>
 </article>
 
-<article class="hguide" id="a-mehr"><h3>Alle Funktionen finden</h3>
-<figure><a href="hilfe-bilder/de/mehr.webp" class="hshot"><img src="hilfe-bilder/de/mehr.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Geöffnetes Menü „Mehr“ mit allen Funktionen, nach Gruppen geordnet"></a></figure>
+<article class="hguide" id="a-speichern"><h3>Speichern: PDF, PDF/A, Word, kleiner</h3>
+<figure><a href="hilfe-bilder/de/speichern.webp" class="hshot"><img src="hilfe-bilder/de/speichern.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Speichern“ mit Dateiname, Formaten (PDF, PDF/A, Bilder, Word, PowerPoint, Excel, Text, Markdown, HTML), Seitenauswahl und Größe"></a></figure>
 <ol class="hsteps">
-<li><b>Mehr</b> (die drei Punkte oben) öffnet alle Funktionen, nach Gruppen geordnet: Dokument, Prüfen &amp; Formulare, Büro, PDFMy.</li>
-<li>Darin z. B. die Funktionen für Vereine wie den <b>Kassenbericht</b>.</li>
+<li><b>Format</b> wählen: PDF, <b>PDF/A</b> fürs Archiv, Bilder, Word, PowerPoint, Excel, Text, Markdown oder HTML.</li>
+<li><b>Dateiname</b> prüfen; bei <i>„Seiten“</i> lassen sich auch nur ausgewählte Seiten oder ein Bereich wie „1-3, 5“ speichern.</li>
+<li><b>Größe:</b> <i>„Klein“</i> verkleinert die Datei, z. B. für E-Mail oder Behördenportale – die erwartete Größe steht daneben.</li>
+<li><b>Speichern</b>. Unter dem aufklappbaren Bereich darüber gibt es Seitenzahlen, Kopf- und Fußzeile, Wasserzeichen, Bates-Nummern, Briefbogen und Passwort.</li>
 </ol>
-<p class="hmore">Schneller: <kbd>Strg</kbd>+<kbd>K</kbd> und ein Suchwort tippen.</p>
+<p class="hmore">Häufig gleiche Einstellungen? <i>„Als Ablauf speichern …“</i> merkt sie sich unter einem Namen.</p>
+</article>
+
+<article class="hguide" id="a-office"><h3>Word und Excel in PDF umwandeln</h3>
+<figure><a href="hilfe-bilder/de/office.webp" class="hshot"><img src="hilfe-bilder/de/office.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Excel-Preisliste, in PDFMy als PDF geöffnet: drei Seiten in der Seitenübersicht, die Tabelle mit Überschrift und der Knopf „Speichern“"></a></figure>
+<ol class="hsteps">
+<li>Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.</li>
+<li><b>Speichern</b> – fertig ist die PDF. Vorher können Sie wie gewohnt unterschreiben, schwärzen oder Seiten anfügen.</li>
+</ol>
+<p class="hmore">PDFMy nimmt Schriften mit denselben Laufweiten wie Arial, Calibri oder Times New Roman – Zeilen- und Seitenumbrüche bleiben so meist wie im Original. Zahlen erscheinen wie in Excel. Ohne Upload, ohne Office. <a href="#bearbeiten">Mehr dazu</a></p>
+</article>
+
+<article class="hguide" id="a-schuetzen"><h3>Mit Passwort schützen</h3>
+<figure><a href="hilfe-bilder/de/schuetzen.webp" class="hshot"><img src="hilfe-bilder/de/schuetzen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Speichern-Fenster mit aufgeklapptem Bereich: Felder „Passwort zum Öffnen“ und „Wiederholen“, Häkchen „Drucken erlauben“ und „Text kopieren erlauben“"></a></figure>
+<ol class="hsteps">
+<li><b>Speichern</b> und den Bereich <i>„Seitenzahlen, Kopf-/Fußzeile, … Passwort“</i> aufklappen. <b>Passwort zum Öffnen</b> eintragen …</li>
+<li>… und <b>wiederholen</b>.</li>
+<li>Festlegen, ob der Empfänger <b>drucken</b> und <b>Text kopieren</b> darf.</li>
+<li><b>Speichern</b> – verschlüsselt mit AES-256.</li>
+</ol>
+<p class="hmore">Schneller: auf der Startseite die Aufgabe <i>„Mit Passwort schützen“</i>. Das Passwort kann niemand wiederherstellen – bitte gut aufbewahren.</p>
+</article>
+
+<article class="hguide" id="a-unterschreiben"><h3>Unterschreiben</h3>
+<figure><a href="hilfe-bilder/de/unterschreiben.webp" class="hshot"><img src="hilfe-bilder/de/unterschreiben.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Werkzeug „Unterschrift“ mit dem Menü „Unterschrift anlegen“ und dem gelben Knopf „Nächste Stelle“"></a></figure>
+<ol class="hsteps">
+<li>Werkzeug <b>Unterschrift</b> wählen.</li>
+<li>Beim ersten Mal <b>Unterschrift anlegen</b>: mit Maus oder Finger zeichnen, Namen tippen oder ein Foto Ihrer Unterschrift nehmen. PDFMy merkt sie sich auf diesem Gerät.</li>
+<li><b>Nächste Stelle</b> springt zu jeder Stelle, an der unterschrieben werden soll – ein Klick auf „Hier unterschreiben“ setzt die Unterschrift genau dort.</li>
+</ol>
+<p class="hmore"><a href="#unterschreiben">Mehr zu Unterschrift, Kürzel und digitaler Signatur</a></p>
+</article>
+
+<article class="hguide" id="a-erechnung"><h3>E-Rechnung schreiben</h3>
+<figure><a href="hilfe-bilder/de/erechnung.webp" class="hshot"><img src="hilfe-bilder/de/erechnung.webp" width="1280" height="1000" loading="lazy" decoding="async" alt="Fenster „E-Rechnung schreiben“ mit eigener Firma, Rechnungsempfänger, einer Rechnungsposition, Summen und der Wahl zwischen ZUGFeRD-PDF und XRechnung"></a></figure>
+<ol class="hsteps">
+<li><b>Ihre Firma</b> mit Anschrift, USt-IdNr. oder Steuernummer und IBAN – PDFMy merkt sich das für die nächste Rechnung.</li>
+<li><b>Rechnungsempfänger</b> eintragen; für Behörden die Leitweg-ID.</li>
+<li><b>Positionen</b> mit Menge, Einzelpreis und Steuersatz – Netto, Umsatzsteuer und Gesamtbetrag rechnet PDFMy.</li>
+<li><b>Format:</b> ZUGFeRD-PDF für Firmen (lesbar und maschinenlesbar) oder XRechnung für Behörden.</li>
+<li><b>Rechnung erstellen</b> – geprüft nach EN 16931.</li>
+</ol>
+<p class="hmore">Unter <i>Mehr → E-Rechnung schreiben …</i>. Empfangene E-Rechnungen öffnen Sie einfach wie eine PDF; <i>„E-Rechnung prüfen“</i> kontrolliert Pflichtangaben und Rechenregeln. <a href="#erechnung">Mehr zur E-Rechnung</a></p>
 </article>
 
 <article class="hguide" id="a-verein"><h3>Für Vereine: Kassenbericht</h3>
