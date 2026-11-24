@@ -29,7 +29,7 @@ test('Excel 97 (.xls): Blätter, Zahlenformate, Datum, Formelergebnis, ausgeblen
   assert.equal(r.rows[2][1], '2.469,00', 'gespeichertes Formelergebnis im Zahlenformat');
   assert.equal(l.rows.length, 1200);
   assert.deepEqual(l.rows[0], ['Eintrag 1 äöü €', '1']);
-  assert.deepEqual(l.rows[1199], ['Eintrag 1200 äöü €', '1.200'], 'Zeichenketten über Blockgrenzen (CONTINUE) richtig');
+  assert.deepEqual(l.rows[1199], ['Eintrag 1200 äöü €', '1200'], 'Zeichenketten über Blockgrenzen (CONTINUE) richtig');
   assert.ok(l.rows.every((x, i) => x[0] === `Eintrag ${i + 1} äöü €`), 'keine verschobene oder kaputte Zeichenkette');
 });
 

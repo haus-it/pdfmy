@@ -1,0 +1,18 @@
+{
+ "quelle": "LibreOffice 24.11.2026 (soffice --convert-to pdf), Seitenzahl je Datei",
+ "seiten": {
+  "01-brief": 1,
+  "02-angebot": 1,
+  "03-bericht": 4,
+  "04-protokoll": 1,
+  "05-rechnung": 1,
+  "06-lebenslauf": 1,
+  "07-vertrag": 4,
+  "08-newsletter": 1,
+  "09-formular": 1,
+  "10-sonderzeichen": 1,
+  "11-kassenbuch": 2,
+  "12-preisliste": 3,
+  "13-breit": 2
+ }
+}

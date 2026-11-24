@@ -158,6 +158,26 @@
       const h = /^heading (\d)$/.exec(name)?.[1] || (name === 'title' ? '1' : name === 'subtitle' ? '2' : ol != null ? String(+ol + 1) : null);
       styles.set(s.attrs['w:styleId'], { h: h ? Math.min(6, +h) : 0, bold: on(kid(kid(s, 'w:rPr'), 'w:b')), list: /list/.test(name) });
     }
+    /* Hauptschrift des Dokuments (app-v345): Standard-Absatzformat, sonst Dokumentvorgaben; Designschrift (minorHAnsi …) aus theme1.xml.
+       Die App setzt damit eine laufweitengleiche Schrift ein (Arial → Liberation Sans, Calibri → Carlito-Art …) – Zeilen- und
+       Seitenumbrüche wie im Original statt der breiteren DejaVu (Messung 24.11.2026: Protokoll 2 statt 1 Seite). */
+    let font = '';
+    if (sx) {
+      const S = parseXml(sx), rf = rp => { const f = kid(rp, 'w:rFonts'); return !f ? '' : f.attrs['w:ascii'] || f.attrs['w:hAnsi'] || (f.attrs['w:asciiTheme'] || f.attrs['w:hAnsiTheme'] ? '@' + (f.attrs['w:asciiTheme'] || f.attrs['w:hAnsiTheme']) : ''); };
+      const paras = all(S, 'w:style').filter(s => s.attrs['w:type'] === 'paragraph');
+      const normal = paras.find(s => s.attrs['w:default'] === '1') || paras.find(s => /^(Normal|Standard)$/i.test(s.attrs['w:styleId'] || ''));
+      const dd = all(S, 'w:docDefaults')[0];
+      font = (normal && rf(kid(normal, 'w:rPr'))) || (dd && rf(kid(kid(dd, 'w:rPrDefault'), 'w:rPr'))) || '';
+      // direkt formatierte Schrift (häufigste an den Textstellen) geht vor – viele Dokumente setzen die Schrift nicht über die Vorlage
+      const cnt = new Map(); for (const m of docXml.matchAll(/<w:rFonts\b[^>]*\bw:ascii="([^"]+)"/g)) cnt.set(m[1], (cnt.get(m[1]) || 0) + 1);
+      const top = [...cnt].sort((a, b) => b[1] - a[1])[0], runs = (docXml.match(/<w:r>|<w:r /g) || []).length;
+      if (top && top[1] >= 3 && top[1] >= runs * 0.4) font = top[0];
+      if (font.startsWith('@')) {
+        const th = await z.text('word/theme/theme1.xml'), minor = /minor/i.test(font);
+        const m = th && new RegExp(`<a:${minor ? 'minor' : 'major'}Font>\\s*<a:latin typeface="([^"]*)"`).exec(th);
+        font = m ? m[1] : '';
+      }
+    }
     // Nummerierung: numId → Ebene → Format (bullet = Aufzählung)
     const nums = new Map(), abs = new Map();
     const nx = await z.text('word/numbering.xml');
@@ -322,7 +342,7 @@
     // aufeinanderfolgende Leerzeilen zusammenfassen, Leerzeilen am Ende weg
     const out = blocks.filter((b, i) => !(b.type === 'gap' && (i === 0 || blocks[i - 1].type === 'gap')));
     while (out.length && ['gap', 'pagebreak'].includes(out[out.length - 1].type)) out.pop();
-    return { blocks: out, page };
+    return { blocks: out, page, font };
   }
 
   // ---------- Excel ----------
@@ -341,12 +361,13 @@
       for (const xf of xfs) {
         const id = +xf.attrs.numFmtId, code = custom.get(id) || ({ 1: '0', 2: '0.00', 3: '#,##0', 4: '#,##0.00', 9: '0%', 10: '0.00%' })[id] || '';
         const dec = (/0[.,](0+)/.exec(code.split(';')[0]) || [, ''])[1].length;
-        numStyle.push(code ? { dec, pct: /%/.test(code), cur: /€|EUR/.test(code) } : null);
+        // Tausenderpunkt nur, wenn das Format ihn verlangt (#,##0 …) – wie Excel; „0.00“ und Standard zeigen 1222 statt 1.222 (Messung 24.11.2026)
+        numStyle.push(code ? { dec, pct: /%/.test(code), cur: /€|EUR/.test(code), grp: /[#0],[#0]/.test(code.split(';')[0].replace(/"[^"]*"/g, '')) } : null);
         dateStyle.push(DATE_FMT.has(id) || (custom.has(id) && /(^|[^"\\])[dmy]{1,4}/i.test(custom.get(id).replace(/\[[^\]]*\]/g, '')) && !/^[#0.,%]+$/.test(custom.get(id)))); }
     }
     const rels = new Map(); const rx = await z.text('xl/_rels/workbook.xml.rels');
     if (rx) for (const r of all(parseXml(rx), 'Relationship')) rels.set(r.attrs.Id, r.attrs.Target);
-    const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 10 }), df = new Intl.DateTimeFormat(locale);
+    const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 10, useGrouping: false }), df = new Intl.DateTimeFormat(locale);   // Standardformat: ohne Tausenderpunkt (wie Excel/Calc)
     const blocks = [], sheets = all(parseXml(wb), 'sheet').filter(s => s.attrs.state !== 'hidden');
     for (const s of sheets) {
       const target = rels.get(s.attrs['r:id']); if (!target) continue;
@@ -364,7 +385,7 @@
           else if (raw !== '') {
             const num = +raw, si = +c.attrs.s || 0, ns = numStyle[si];
             if (dateStyle[si] && num > 0 && num < 2958466) val = df.format(new Date(Math.round((num - 25569) * 864e5)));
-            else if (ns && !Number.isNaN(num)) val = new Intl.NumberFormat(locale, { minimumFractionDigits: ns.dec, maximumFractionDigits: ns.dec, style: ns.pct ? 'percent' : 'decimal' }).format(num) + (ns.cur ? ' €' : '');   // wie in Excel angezeigt
+            else if (ns && !Number.isNaN(num)) val = new Intl.NumberFormat(locale, { minimumFractionDigits: ns.dec, maximumFractionDigits: ns.dec, style: ns.pct ? 'percent' : 'decimal', useGrouping: ns.grp || ns.cur }).format(num) + (ns.cur ? ' €' : '');   // wie in Excel angezeigt
             else val = nf.format(num);
           }
           row[c.attrs.r ? colIdx(c.attrs.r) : row.length] = val;
@@ -839,7 +860,7 @@
       }
     }
     const DATE_IDS = new Set([14, 15, 16, 17, 22, 27, 30, 36, 45, 46, 47, 50, 57]), BUILTIN = { 1: '0', 2: '0.00', 3: '#,##0', 4: '#,##0.00', 9: '0%', 10: '0.00%', 7: '#,##0.00 €', 8: '#,##0.00 €' };
-    const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 10 }), df = new Intl.DateTimeFormat(locale);
+    const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 10, useGrouping: false }), df = new Intl.DateTimeFormat(locale);   // Standardformat: ohne Tausenderpunkt (wie Excel/Calc)
     const fmtNum = (num, xf) => {
       const id = xfFmt[xf] ?? 0, code = fmts.get(id) || BUILTIN[id] || '';
       const isDate = DATE_IDS.has(id) || (fmts.has(id) && /(^|[^"\\])[dmyj]{1,4}/i.test(code.replace(/\[[^\]]*\]|"[^"]*"/g, '')) && !/^[#0.,%\s€]+$/.test(code));

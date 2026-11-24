@@ -88,7 +88,7 @@ test('Excel: Text, Zahlen, Datum, mehrere Blätter', async () => {
   });
   const { blocks } = await Office.xlsx(x);
   assert.equal(blocks.length, 1);   // leeres und verstecktes Blatt entfallen, Überschrift nur bei mehreren Blättern
-  assert.deepEqual(blocks[0].rows, [['Kunde', 'Betrag', 'Datum', ''], ['Müller GmbH', '1.250,50 €', '30.10.2026', '19,00 %'], ['Schmidt', '2.501', '', '']]);
+  assert.deepEqual(blocks[0].rows, [['Kunde', 'Betrag', 'Datum', ''], ['Müller GmbH', '1.250,50 €', '30.10.2026', '19,00 %'], ['Schmidt', '2501', '', '']]);   // Standardformat: ohne Tausenderpunkt wie Excel (Messung 24.11.2026)
 });
 
 test('Keine Office-Datei: verständlicher Fehler', async () => {

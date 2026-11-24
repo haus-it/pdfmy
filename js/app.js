@@ -498,11 +498,28 @@ async function importOffice(file) {
     : ext === 'doc' ? Office.doc(bytes) : ext === 'xls' ? Office.xls(bytes, loc) : await Office.xlsx(bytes, loc);
   const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
   const [italic, boldItalic] = await Promise.all([asset('font:vendor/dejavu/DejaVuSans-Oblique.ttf', 'vendor/dejavu/DejaVuSans-Oblique.ttf'), asset('font:vendor/dejavu/DejaVuSans-BoldOblique.ttf', 'vendor/dejavu/DejaVuSans-BoldOblique.ttf')]);
-  const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts: { fontkit: fk, regular, bold, mono, italic, boldItalic } });
+  let fonts = { fontkit: fk, regular, bold, mono, italic, boldItalic };
+  // Laufweitengleiche Schrift zur Hauptschrift des Word-Dokuments (app-v345): Umbrüche und Seitenzahl wie im Original; fehlende Zeichen aus DejaVu
+  const fam = officeFontFamily(r.font);
+  if (fam) {
+    try { const ff = await Promise.all([0, 1, 2, 3].map(k => { const fp = 'vendor/' + TEXT_FONTS[fam][k]; return asset('font:' + fp, fp); })); fonts = { ...fonts, regular: ff[0], bold: ff[1], italic: ff[2], boldItalic: ff[3], fallback: regular }; }
+    catch (e) { console.warn('metric font', fam, e); }   // offline nicht geladen: DejaVu wie bisher
+  }
+  const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts });
   await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
   if (ext === 'doc') status(`${file.name} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.`);
   else if (word) status(`${file.name} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.`);
   if (OFFICE_FAITHFUL.test(file.name.toLowerCase())) officeHint();
+}
+// Schriftname aus Word (auch Listen „Liberation Sans;Arial“) → Familie in TEXT_FONTS mit gleicher Laufweite, sonst null (DejaVu)
+function officeFontFamily(name) {
+  const n = String(name || '').toLowerCase();
+  if (/\b(arial|helvetica|liberation sans|arimo)\b/.test(n)) return 'arial';
+  if (/\b(times|liberation serif|tinos)\b/.test(n)) return 'times';
+  if (/\b(calibri|carlito)\b/.test(n)) return 'calibri';
+  if (/\b(cambria|caladea)\b/.test(n)) return 'cambria';
+  if (/\b(courier|liberation mono|cousine)\b/.test(n)) return 'courier';
+  return null;
 }
 /* Alte Office-Dateien (.doc/.dot, .xls/.xlt, Word/Excel 97–2003): nach dem Inhalt entscheiden, nicht nach der Endung – viele
    „.xls“ aus Bank- und Behördenportalen sind HTML- oder XML-Tabellen, manche „.doc“ sind RTF oder eigentlich .docx/.xlsx. */

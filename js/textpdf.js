@@ -95,13 +95,22 @@
     const fehlt = [...new Set(all)].some(ch => CJK.test(ch) && !sets.r.has(ch.codePointAt(0)));
     const loadCjk = fonts.cjk || api.cjk || root.pdfmyCjkFont;
     if (fehlt && loadCjk) { try { F.x = await doc.embedFont(await loadCjk(), { subset: true }); sets.x = new Set(F.x.getCharacterSet()); } catch (e) { console.warn(e); } }
+    /* Allgemeine Ersatzschrift (app-v345): Laufweitengleiche Schriften (Liberation, Caladea …) haben nicht jedes Zeichen (☐ ☑, manche
+       Symbole) – was fehlt, kommt aus fonts.fallback (DejaVu Sans), nur eingebettet, wenn es gebraucht wird. */
+    if (fonts.fallback) {
+      const miss = [...new Set(all)].some(ch => !/\s/.test(ch) && !sets.r.has(ch.codePointAt(0)) && !(sets.x && sets.x.has(ch.codePointAt(0))));
+      if (miss) { try { F.y = await doc.embedFont(fonts.fallback, { subset: true }); sets.y = new Set(F.y.getCharacterSet()); } catch (e) { console.warn(e); } }
+    }
     const setOf = new Map(Object.keys(F).map(k => [F[k], sets[k]]));
-    const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => ch === '\n' || sets[k].has(ch.codePointAt(0)) || sets.x?.has(ch.codePointAt(0)) ? ch : '?').join('');
-    // Text in Stücke je Schrift: was die Hauptschrift nicht hat, kommt aus der Ersatzschrift
+    const safe = (s, k) => [...String(s).replace(/\t/g, '    ')].map(ch => ch === '\n' || sets[k].has(ch.codePointAt(0)) || sets.x?.has(ch.codePointAt(0)) || sets.y?.has(ch.codePointAt(0)) ? ch : '?').join('');
+    // Text in Stücke je Schrift: was die Hauptschrift nicht hat, kommt aus der Ersatzschrift (allgemein F.y, CJK F.x)
     const parts = (t, font) => {
-      if (!F.x) return [{ t, f: font }];
+      if (!F.x && !F.y) return [{ t, f: font }];
       const s = setOf.get(font) || sets.r, out = [];
-      for (const ch of t) { const cp = ch.codePointAt(0), f = s.has(cp) || !sets.x.has(cp) ? font : F.x, last = out[out.length - 1]; if (last && last.f === f) last.t += ch; else out.push({ t: ch, f }); }
+      for (const ch of t) {
+        const cp = ch.codePointAt(0), f = s.has(cp) ? font : sets.y?.has(cp) ? F.y : sets.x?.has(cp) ? F.x : font, last = out[out.length - 1];
+        if (last && last.f === f) last.t += ch; else out.push({ t: ch, f });
+      }
       return out;
     };
     const wOf = (font, t, size) => parts(t, font).reduce((n, p) => n + p.f.widthOfTextAtSize(p.t, size), 0);

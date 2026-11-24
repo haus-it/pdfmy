@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-24
 
+### Word und Excel in PDF: gemessen gegen LibreOffice – Seiten wie im Original, Excel-Zahlen wie in Excel (app-v345)
+- Neuer Messkorpus (tests/office-korpus): 10 Word-Dokumente (Brief, Angebot, Bericht, Protokoll, Rechnung, Lebenslauf, Vertrag, Newsletter mit Bildern, Formular, Sonderzeichen) und 3 Excel-Mappen, umgewandelt mit PDFMy und mit LibreOffice als Referenz. Ergebnis vorher: alle Wörter kommen an, aber 2 von 13 Seitenzahlen wichen ab, und Excel zeigte im Standardformat Tausenderpunkte („1.222“ statt „1222“).
+- Word: PDFMy erkennt die Hauptschrift des Dokuments (Standard-Absatz, direkte Formatierung, Designschrift) und setzt bei Arial, Times New Roman, Calibri, Cambria und Courier eine gleich breite freie Schrift ein (Liberation, Caladea, PDFMy Sans C) – Zeilen- und Seitenumbrüche wie im Original. Zeichen, die dieser Schrift fehlen (z. B. ☐ ☑), kommen aus DejaVu statt als „?“.
+- Excel und LibreOffice Calc: Tausendertrennung nur, wenn das Zahlenformat sie vorsieht (#,##0 …), wie in Excel.
+- Ergebnis jetzt: 12 von 13 Seitenzahlen wie LibreOffice (die breite Excel-Tabelle passt bei PDFMy quer auf eine Seite statt auf zwei), Wörter vollständig; bei Excel zeigt PDFMy lange Zellinhalte vollständig, LibreOffice schneidet sie ab.
+- tests/office-korpus.test.js (Seitenzahl gegen die Referenz, Schrifterkennung, Ersatzschrift, Excel-Format) als Test-Gate.
+
 ### Neu: „Gerade ausrichten“ – Scan um einen beliebigen Winkel drehen, automatische Begradigung zurücknehmen (app-v344)
 - Werkzeug neben „Zuschneiden“: Vorschau mit Hilfslinien, Regler von −10° bis +10° (Pfeiltasten: 0,1°-Schritte), „Automatisch“ (nach den Textzeilen) und „Wie gescannt“ (nimmt die automatische Begradigung zurück). Danach wird die Seite neu erkannt; die Lage gilt als vom Nutzer bestimmt und wird nicht automatisch weitergedreht.
 - Anlass: Meldungen 2026-0005/0007 – bei einer Urkunde sitzt der Druck minimal schräg zum Heftrand; PDFMy richtet nach der Schrift aus, wer am Rand ausrichten möchte, kann das jetzt selbst. Vorbild: Adobe Scan, PDF24 (Feindrehung); bisher gab es in PDFMy nur 90°-Schritte.

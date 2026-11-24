@@ -461,3 +461,5 @@ Nachtrag 24.11.2026 (app-v342): Korrekturmaßnahme zu Meldung 2026-0007 (ISO 900
 Nachtrag 24.11.2026 (app-v343): Korrekturmaßnahme zu Meldung 2026-0008 (ISO 9001 10.2): Importzählung an den Seitenobjekten; frühes Ende der Ausrichtungsprüfung. Test: tests/schraeglage.test.js.
 
 Nachtrag 24.11.2026 (app-v344): Feindrehung „Gerade ausrichten“ mit Rücknahme der automatischen Begradigung (Nutzerkontrolle über automatische Bildverarbeitung, ISO 9241-110 Steuerbarkeit). Test: tests/schraeglage.test.js.
+
+Nachtrag 24.11.2026 (app-v345): Office → PDF erstmals gegen eine Referenz gemessen (LibreOffice, 13 Dateien, tests/office-korpus): Seitenzahl und Wortvollständigkeit; Korrekturen Schrift (laufweitengleich) und Excel-Zahlenformat; Messung als Test-Gate (ISO 9001 9.1.1 Überwachung und Messung). Test: tests/office-korpus.test.js.
