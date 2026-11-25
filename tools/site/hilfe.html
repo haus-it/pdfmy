@@ -54,6 +54,9 @@ kbd{font:13px/1 ui-monospace,Consolas,monospace;border:1px solid var(--line);bor
 #hzoom img{display:block;max-width:96vw;max-height:88vh;border-radius:8px}#hzoom button{display:block;margin:8px auto 0;font:inherit;padding:6px 16px;border-radius:8px;border:0;cursor:pointer}
 @media (min-width:900px){.hguide{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:0 20px;align-items:start}.hguide h3{grid-column:1/-1}.hguide figure{grid-row:2/span 3}}
 mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
+.htop{position:fixed;right:18px;bottom:18px;z-index:50;display:flex;align-items:center;gap:6px;padding:10px 16px 10px 12px;border:0;border-radius:999px;background:var(--accent);color:#fff;font:600 15px/1 inherit;font-family:inherit;box-shadow:0 2px 10px rgba(16,24,40,.25);cursor:pointer;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}
+.htop.on{opacity:1;transform:none;pointer-events:auto}.htop:hover,.htop:focus-visible{filter:brightness(1.1)}.htop svg{width:20px;height:20px}
+@media (prefers-reduced-motion:reduce){.htop{transition:none}}@media print{.htop{display:none}}
 </style>
 <div class="hsearch" role="search"><label for="hq" style="position:absolute;left:-9999px">Hilfe durchsuchen</label><div class="hwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="hq" type="search" placeholder="Wobei brauchen Sie Hilfe? z. B. Scanner, unterschreiben, Mac" autocomplete="off" enterkeyhint="search" aria-describedby="hcount"><button type="button" id="hclear" hidden aria-label="Suche leeren" title="Suche leeren">✕</button><kbd class="hkey" aria-hidden="true">/</kbd></div>
 <p id="hcount" role="status" aria-live="polite"></p></div>
@@ -705,4 +708,5 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 </ul>
 </section>
 </div>
+<button type="button" class="htop" id="htop" title="Nach oben zur Suche und zu den Themen" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Nach oben</button>
 <script src="hilfe.js" defer></script>

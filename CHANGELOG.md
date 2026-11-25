@@ -2,6 +2,11 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-25
+
+### Hilfe: Knopf „Nach oben“ (app-v347)
+- Auf der Hilfe-Seite erscheint unten rechts ein Knopf „Nach oben“, sobald man eine Bildschirmhöhe weit gescrollt hat. Er springt zurück zur Suche und zu den Themen-Kacheln, der Cursor steht gleich im Suchfeld. Bei „Bewegung reduzieren“ ohne Animation, beim Drucken ausgeblendet. Test: tests/hilfe-center.test.js.
+
 ## 2026-11-24
 
 ### Hilfe-Center: 18 bebilderte Schritt-für-Schritt-Anleitungen in sechs Themen (app-v346)

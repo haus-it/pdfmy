@@ -179,3 +179,11 @@ const T = s => (window.I18N ? I18N.t(s) : s);
     dlg.showModal(); dlg.querySelector('button').focus();
   });
 });
+
+// Knopf „Nach oben“ (25.11.2026): erscheint, sobald man eine Bildschirmhöhe gescrollt hat; springt zur Suche und den Themen-Kacheln
+(() => {
+  const b = document.getElementById('htop'); if (!b) return;
+  const upd = () => { const on = window.scrollY > window.innerHeight; b.classList.toggle('on', on); b.tabIndex = on ? 0 : -1; };
+  addEventListener('scroll', upd, { passive: true }); upd();
+  b.onclick = () => { const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches; scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' }); document.getElementById('hq')?.focus({ preventScroll: true }); };
+})();

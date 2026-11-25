@@ -51,3 +51,9 @@ test('Hilfe-Center: Verweise „Mehr …“ zeigen auf vorhandene Abschnitte', (
   const ids = new Set([...H.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]));
   for (const a of arts) for (const m of a.body.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(m[1]), `${a.id}: #${m[1]} fehlt`);
 });
+
+test('Hilfe-Center: Knopf „Nach oben“ ist da, beschriftet und springt zur Suche', () => {
+  assert.match(H, /<button type="button" class="htop" id="htop" title="[^"]+"[^>]*>[\s\S]*?Nach oben<\/button>/);
+  const J = fs.readFileSync(path.join(SITE, 'hilfe.js'), 'utf8');
+  assert.match(J, /getElementById\('htop'\)/); assert.match(J, /scrollTo\(\{ top: 0/); assert.match(J, /getElementById\('hq'\)\?\.focus/);
+});
