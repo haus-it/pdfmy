@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Draai met de schuifregelaar tot de tekstregels of de paginarand evenwijdig lopen aan de hulplijnen (pijltjestoetsen: in stappen van 0,1°). “Automatisch” zet recht op basis van de tekstregels, “Zoals gescand” maakt het automatisch rechtzetten ongedaan.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Scan rechtzetten: onder een willekeurige hoek draaien of het automatisch rechtzetten ongedaan maken",
  "Seite um {0}° gedreht.": "Pagina {0}° gedraaid.",
- "Wie gescannt": "Zoals gescand"
+ "Wie gescannt": "Zoals gescand",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Het Word-bestand is beschadigd – open het in Word en sla het opnieuw op."
 }

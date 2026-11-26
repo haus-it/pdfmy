@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Xire co control desprazable ata que as liñas de texto ou o bordo da páxina queden paralelos ás liñas guía (teclas de frecha: en pasos de 0,1°). «Automático» endereita segundo as liñas de texto e «Como se dixitalizou» desfai o endereitamento automático.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Endereitar a dixitalización: xirar en calquera ángulo ou desfacer o endereitamento automático",
  "Seite um {0}° gedreht.": "Páxina xirada {0}°.",
- "Wie gescannt": "Como se dixitalizou"
+ "Wie gescannt": "Como se dixitalizou",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "O ficheiro de Word está danado; ábrao en Word e gárdeo de novo."
 }

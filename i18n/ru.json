@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Вращайте ползунком, пока строки текста или край страницы не станут параллельны вспомогательным линиям (клавиши со стрелками: шагами по 0,1°). «Автоматически» выравнивает по строкам текста, «Как отсканировано» отменяет автоматическое выравнивание.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Выровнять скан: повернуть на любой угол или отменить автоматическое выравнивание",
  "Seite um {0}° gedreht.": "Страница повёрнута на {0}°.",
- "Wie gescannt": "Как отсканировано"
+ "Wie gescannt": "Как отсканировано",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Файл Word повреждён – откройте его в Word и сохраните заново."
 }

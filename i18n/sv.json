@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rotera med reglaget tills textraderna eller sidkanten är parallella med hjälplinjerna (piltangenter: i steg om 0,1°). ”Automatiskt” rätar upp efter textraderna, ”Som skannad” ångrar den automatiska upprätningen.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Räta upp skanning: rotera i valfri vinkel eller ångra den automatiska upprätningen",
  "Seite um {0}° gedreht.": "Sidan roterad {0}°.",
- "Wie gescannt": "Som skannad"
+ "Wie gescannt": "Som skannad",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-filen är skadad – öppna den i Word och spara den igen."
 }

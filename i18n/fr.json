@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Faites pivoter avec le curseur jusqu’à ce que les lignes de texte ou le bord de la page soient parallèles aux repères (touches fléchées : par pas de 0,1°). « Automatique » redresse d’après les lignes de texte, « Tel que numérisé » annule le redressement automatique.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Redresser le scan : pivoter d’un angle quelconque ou annuler le redressement automatique",
  "Seite um {0}° gedreht.": "Page pivotée de {0}°.",
- "Wie gescannt": "Tel que numérisé"
+ "Wie gescannt": "Tel que numérisé",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Le fichier Word est endommagé – veuillez l’ouvrir dans Word et l’enregistrer à nouveau."
 }

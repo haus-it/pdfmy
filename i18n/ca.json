@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Gireu amb el control lliscant fins que les línies de text o la vora de la pàgina quedin paral·leles a les línies guia (tecles de fletxa: en passos de 0,1°). «Automàtic» alinea segons les línies de text, «Tal com s’ha escanejat» desfà el redreçament automàtic.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Redreçar l’escaneig: girar un angle qualsevol o desfer el redreçament automàtic",
  "Seite um {0}° gedreht.": "Pàgina girada {0}°.",
- "Wie gescannt": "Tal com s’ha escanejat"
+ "Wie gescannt": "Tal com s’ha escanejat",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "El fitxer de Word està malmès; obriu-lo al Word i torneu-lo a desar."
 }

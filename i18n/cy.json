@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Cylchdroi gyda’r llithrydd nes bod llinellau’r testun neu ymyl y dudalen yn gyfochrog â’r llinellau cymorth (bysellau saeth: mewn camau o 0.1°). Mae “Awtomatig” yn sythu yn ôl llinellau’r testun, ac mae “Fel y’i sganiwyd” yn dadwneud y sythu awtomatig.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Sythu sgan: cylchdroi i unrhyw ongl neu ddadwneud y sythu awtomatig",
  "Seite um {0}° gedreht.": "Tudalen wedi’i chylchdroi {0}°.",
- "Wie gescannt": "Fel y’i sganiwyd"
+ "Wie gescannt": "Fel y’i sganiwyd",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Mae’r ffeil Word wedi’i difrodi – agorwch hi yn Word a’i chadw eto."
 }

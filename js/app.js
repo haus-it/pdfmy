@@ -507,8 +507,7 @@ async function importOffice(file) {
   }
   const pdf = await TextPdf.build(PDFLib, { blocks: r.blocks, page: r.page, title: file.name.replace(/\.[^.]+$/, ''), fonts });
   await importPdf(new File([pdf], file.name.replace(/\.[^.]+$/, '') + '.pdf', { type: 'application/pdf' }));
-  if (ext === 'doc') status(`${file.name} umgewandelt: Text und Tabellen sind übernommen, Schriften, Bilder sowie Kopf- und Fußzeilen nicht – für ein exaktes Abbild in Word „Als PDF speichern“ oder über den Drucker „PDFMy“ drucken.`);
-  else if (word) status(`${file.name} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.`);
+  if (word || ext === 'doc') status(`${file.name} umgewandelt. Textfelder, Spalten und besondere Schriften übernimmt PDFMy vereinfacht – für ein exaktes Abbild über den Drucker „PDFMy“ drucken oder in Word „Als PDF speichern“.`);
   if (OFFICE_FAITHFUL.test(file.name.toLowerCase())) officeHint();
 }
 // Schriftname aus Word (auch Listen „Liberation Sans;Arial“) → Familie in TEXT_FONTS mit gleicher Laufweite, sonst null (DejaVu)

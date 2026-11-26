@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Biratu graduatzailearekin, testu-lerroak edo orriaren ertza gidalerroekin paraleloak izan arte (gezi-teklak: 0,1°-ko urratsetan). «Automatikoa» testu-lerroen arabera zuzentzen du, «Eskaneatu bezala» zuzenketa automatikoa desegiten du.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Eskaneatutakoa zuzendu: edozein angelutan biratu edo zuzenketa automatikoa desegin",
  "Seite um {0}° gedreht.": "Orria {0}° biratu da.",
- "Wie gescannt": "Eskaneatu bezala"
+ "Wie gescannt": "Eskaneatu bezala",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word fitxategia hondatuta dago; ireki Worden eta gorde berriro."
 }

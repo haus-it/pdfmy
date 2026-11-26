@@ -751,14 +751,20 @@
   }
   /* ---------- Alte Office-Formate (97–2003) aus der OLE-Verbunddatei (js/email.js readCfb) ----------
      Word .doc: Text über die Stückliste (Clx/PlcPcd, MS-DOC 2.4.1) – Absätze, Zeilen- und Seitenumbrüche, Tabellen (Zellmarken),
-     Feldergebnisse statt Feldcode. Nicht nachgebildet: Formatvorlagen, Schriften, Bilder, Kopf-/Fußzeilen, Fußnoten.
+     Feldergebnisse statt Feldcode. Seit app-v349 auch die Formatierung wie bei .docx: Überschriften (Formatvorlage bzw. Gliederungsebene),
+     Listen mit Nummernformat (LST/LFO), fett/kursiv, Ausrichtung, Bilder im Text (PICF) und schwebend (OfficeArt), Kopf-/Fußzeile mit
+     Seitenzahl, Seitenformat und Hauptschrift. Nicht nachgebildet: Fußnoten, Textfelder, Spalten.
      Excel .xls: BIFF8 (MS-XLS) – sichtbare Tabellenblätter mit Text, Zahlen, Datum (Zahlenformat), Wahrheitswerten und gespeicherten
      Formelergebnissen; ältere BIFF5-Dateien (Excel 95) mit Text in Windows-1252. Kennwortgeschützte Dateien werden erkannt. */
   const cfbOf = (bytes, what) => (root.Email || (typeof require === 'function' ? require('./email.js') : null)).readCfb(bytes, what);
   const cfbStream = (c, name) => { const e = c.dirs.find(d => d.type === 2 && d.name.toLowerCase() === name.toLowerCase()); return e ? c.stream(e) : null; };
   const cp1252 = b => new TextDecoder('windows-1252').decode(b);
 
+  // Beschädigte Datei (Verweise ins Leere): verständliche Meldung statt „Offset is outside the bounds“
   function doc(bytes) {
+    try { return docRead(bytes); } catch (e) { if (e instanceof RangeError) throw new Error('Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.'); throw e; }
+  }
+  function docRead(bytes) {
     const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
     const c = cfbOf(u8, 'Keine Word-Datei (.doc) – die Datei ist beschädigt oder hat ein anderes Format.');
     const wd = cfbStream(c, 'WordDocument'); if (!wd || wd.length < 0x1AA) throw new Error('Keine Word-Datei (.doc): Hauptteil „WordDocument“ fehlt.');
@@ -768,7 +774,10 @@
     const flags = dv.getUint16(0x0A, true);
     if (flags & 0x0100) throw new Error('Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.');
     const tbl = cfbStream(c, flags & 0x0200 ? '1Table' : '0Table'); if (!tbl) throw new Error('Word-Datei unvollständig (Tabellenteil fehlt).');
-    const ccpText = dv.getInt32(0x4C, true), fcClx = dv.getUint32(0x1A2, true), lcbClx = dv.getUint32(0x1A6, true);
+    const data = cfbStream(c, 'data');
+    const ccpText = dv.getInt32(0x4C, true), ccpFtn = dv.getInt32(0x50, true), ccpHdd = dv.getInt32(0x54, true);
+    const fcLcb = i => [dv.getUint32(0x9A + i * 8, true), dv.getUint32(0x9E + i * 8, true)];   // FibRgFcLcb97
+    const [fcClx, lcbClx] = fcLcb(33);
     if (!lcbClx || fcClx + lcbClx > tbl.length) throw new Error('Word-Datei unvollständig (Stückliste fehlt).');
     const tv = new DataView(tbl.buffer, tbl.byteOffset, tbl.byteLength);
     let p = fcClx, plc = null;
@@ -778,41 +787,262 @@
       break;
     }
     if (!plc) throw new Error('Word-Datei unvollständig (Stückliste fehlt).');
-    const n = (plc.len - 4) / 12; let text = '';
-    for (let i = 0; i < n && text.length < ccpText; i++) {
+    // Text aller Teile (Haupttext, Fußnoten, Kopf-/Fußzeilen) mit der Dateiposition (fc) jedes Zeichens – für die Formatierung
+    const total = ccpText + Math.max(0, ccpFtn) + Math.max(0, ccpHdd), n = (plc.len - 4) / 12, chars = [], fcs = [];
+    for (let i = 0; i < n && chars.length < total; i++) {
       const cp0 = tv.getUint32(plc.at + i * 4, true), cp1 = tv.getUint32(plc.at + (i + 1) * 4, true), fc = tv.getUint32(plc.at + (n + 1) * 4 + i * 8 + 2, true);
-      const len = Math.min(cp1 - cp0, ccpText - text.length); if (len <= 0) continue;
-      if (fc & 0x40000000) { const o = (fc & 0x3FFFFFFF) / 2; text += cp1252(wd.subarray(o, o + len)); }
-      else text += new TextDecoder('utf-16le').decode(wd.subarray(fc, fc + len * 2));
+      const len = Math.min(cp1 - cp0, total - chars.length); if (len <= 0) continue;
+      if (fc & 0x40000000) { const o = (fc & 0x3FFFFFFF) / 2, s = cp1252(wd.subarray(o, o + len)); for (let k = 0; k < len; k++) { chars.push(s[k] ?? ''); fcs.push(o + k); } }
+      else { const s = new TextDecoder('utf-16le').decode(wd.subarray(fc, fc + len * 2)); for (let k = 0; k < len; k++) { chars.push(s[k] ?? ''); fcs.push(fc + k * 2); } }
     }
-    // Felder: Code (zwischen 0x13 und 0x14) weg, Ergebnis (bis 0x15) behalten – auch verschachtelt
-    let out = '', st = [];
-    for (const ch of text) {
-      const k = ch.charCodeAt(0);
-      if (k === 0x13) { st.push(0); continue; } if (k === 0x14) { if (st.length) st[st.length - 1] = 1; continue; } if (k === 0x15) { st.pop(); continue; }
-      if (st.some(s => !s)) continue;
-      out += ch;
-    }
-    // Absätze (\r), Zellen (\x07; leere Zellmarke am Zeilenende = Zeilenende), Seitenumbruch (\x0c), Zeilenumbruch (\x0b)
-    const clean = s => s.replace(/\x0b/g, '\n').replace(/\x1e/g, '-').replace(/[\x1f\x01\x02\x05\x08]/g, '').replace(/\t/g, '    ').replace(/[ \u00a0]+\n/g, '\n').trim();
-    const blocks = []; let row = [], rows = [], cols = 0, buf = '';
-    const endTable = () => { if (row.length) rows.push(row); if (rows.length) { const w = rows.reduce((a, r) => Math.max(a, r.length), 0); blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: w }, (_, i) => r[i] ?? '')), head: false }); } rows = []; row = []; cols = 0; };
-    const para = s => { if (rows.length || row.length) endTable(); const t = clean(s); if (t) blocks.push({ type: 'p', text: t }); };
-    for (const ch of out) {
-      // Absatzende mitten in einer Tabellenzeile: mehrere Absätze in einer Zelle (nur der letzte endet mit der Zellmarke)
-      if (ch === '\r') { if (row.length) buf += '\n'; else { para(buf); buf = ''; } }
-      else if (ch === '\x0c') { para(buf); buf = ''; if (blocks.length && blocks[blocks.length - 1].type !== 'pagebreak') blocks.push({ type: 'pagebreak' }); }
-      else if (ch === '\x07') {
-        const t = clean(buf); buf = '';
-        // leere Zellmarke: Zeilenende – außer die Zeile hat noch nicht so viele Zellen wie die erste (dann leere Zelle)
-        if (!t && row.length && (!cols || row.length >= cols)) { if (!cols) cols = row.length; rows.push(row); row = []; }
-        else row.push(t);
-      } else buf += ch;
-    }
-    para(buf); endTable();
-    while (blocks.length && blocks[blocks.length - 1].type === 'pagebreak') blocks.pop();
+    /* ---- Formatierung (MS-DOC 2.4.6): Absatz- und Zeicheneigenschaften aus den FKP-Seiten; bei Fehlern einfach ohne ---- */
+    const sprms = (b, at, end, fn) => {   // Sprm-Liste durchgehen: fn(sprm, operandOffset)
+      for (let q = at; q + 2 <= end; ) {
+        const sp = b[q] | (b[q + 1] << 8), spra = sp >> 13; q += 2;
+        let sz = [1, 1, 2, 4, 2, 2, 0, 3][spra];
+        if (spra === 6) { if (sp === 0xD608) { sz = (b[q] | (b[q + 1] << 8)) + 1; } else if (sp === 0xC615 && b[q] === 255) { sz = 1 + b[q + 1] * 4 + 1; sz += b[q + sz - 1 + 1] * 3; } else sz = b[q] + 1; }
+        fn(sp, q); q += sz;
+      }
+    };
+    const fkpRuns = (i, chp) => {   // PlcBteChpx / PlcBtePapx → [{fc0, fc1, at, end}] mit Sprm-Bereich in wd
+      const [fc, lcb] = fcLcb(i), out = []; if (!lcb || fc + lcb > tbl.length) return out;
+      const m = (lcb - 4) / 8;
+      for (let k = 0; k < m; k++) {
+        const pn = tv.getUint32(fc + (m + 1) * 4 + k * 4, true) & 0x3FFFFF, base = pn * 512; if (base + 512 > wd.length) continue;
+        const crun = wd[base + 511];
+        for (let r = 0; r < crun; r++) {
+          const fc0 = dv.getUint32(base + r * 4, true), fc1 = dv.getUint32(base + (r + 1) * 4, true);
+          if (chp) { const o = wd[base + (crun + 1) * 4 + r] * 2; if (!o) { out.push({ fc0, fc1, at: 0, end: 0 }); continue; } const cb = wd[base + o]; out.push({ fc0, fc1, at: base + o + 1, end: base + o + 1 + cb }); }
+          else { const o = wd[base + (crun + 1) * 4 + r * 13] * 2; if (!o) { out.push({ fc0, fc1, istd: 0, at: 0, end: 0 }); continue; } let cb = wd[base + o], q = base + o + 1; if (!cb) { cb = wd[q] * 2; q++; } else cb = cb * 2 - 1;
+            out.push({ fc0, fc1, istd: dv.getUint16(q, true), at: q + 2, end: q + cb }); }
+        }
+      }
+      return out.sort((a, b) => a.fc0 - b.fc0);
+    };
+    const find = (runs, fc) => { let lo = 0, hi = runs.length - 1; while (lo <= hi) { const m = (lo + hi) >> 1, r = runs[m]; if (fc < r.fc0) hi = m - 1; else if (fc >= r.fc1) lo = m + 1; else return r; } return null; };
+    let chpx = [], papx = [], sti = [], base = [], defFtc = -1, normFtc = -1;
+    try { chpx = fkpRuns(12, true); papx = fkpRuns(13, false); } catch { chpx = []; papx = []; }
+    // Formatvorlagen: eingebaute Kennung (sti: 1–9 Überschrift, 62 Titel, 74 Untertitel) und Basisvorlage
+    try {
+      const [fcS, lcbS] = fcLcb(1);
+      if (lcbS && fcS + lcbS <= tbl.length) {
+        const cbStshi = tv.getUint16(fcS, true), cstd = tv.getUint16(fcS + 2, true); if (cbStshi >= 18) defFtc = tv.getUint16(fcS + 2 + 12, true);
+        let q = fcS + 2 + cbStshi;
+        const cbBase = tv.getUint16(fcS + 4, true);
+        for (let k = 0; k < cstd && q + 2 <= fcS + lcbS; k++) {
+          const cb = tv.getUint16(q, true);
+          if (cb >= 4) {
+            sti[k] = tv.getUint16(q + 2, true) & 0x0FFF; base[k] = tv.getUint16(q + 4, true) >> 4;
+            // Schrift der Vorlage „Standard“ (istd 0): Name überspringen, dann UPX Absatz (istd + Sprms) und UPX Zeichen
+            if (k === 0 && (tv.getUint16(q + 4, true) & 0x0F) === 1) {
+              let u = q + 2 + cbBase; u += 2 + (tv.getUint16(u, true) + 1) * 2;
+              const cbP = tv.getUint16(u, true); u += 2 + cbP + (cbP & 1);
+              const cbC = tv.getUint16(u, true); sprms(tbl, u + 2, u + 2 + cbC, (sp, o) => { if (sp === 0x4A4F) normFtc = tbl[o] | (tbl[o + 1] << 8); });
+            }
+          }
+          q += 2 + cb;
+        }
+      }
+    } catch { /* ohne Vorlagen */ }
+    const headOf = istd => { for (let k = 0, s = istd; k < 6 && s != null && s !== 0x0FFF; k++, s = base[s]) { const t = sti[s]; if (t >= 1 && t <= 9) return t; if (t === 62) return 1; if (t === 74) return 2; } return 0; };
+    // Listen: LST (Zahlenformat je Ebene) und LFO (ilfo → lsid)
+    const lists = new Map(), lfo = [];
+    try {
+      const [fcL, lcbL] = fcLcb(73), [fcF, lcbF] = fcLcb(74);
+      if (lcbL && fcL + lcbL <= tbl.length) {
+        const cLst = tv.getUint16(fcL, true), lsts = []; for (let k = 0; k < cLst; k++) { const o = fcL + 2 + k * 28; lsts.push({ lsid: tv.getInt32(o, true), simple: tbl[o + 26] & 1 }); }
+        let q = fcL + 2 + cLst * 28;
+        for (const l of lsts) { const lv = []; for (let k = 0; k < (l.simple ? 1 : 9) && q + 28 <= tbl.length; k++) { lv.push({ start: tv.getInt32(q, true), nfc: tbl[q + 4] }); q += 28 + tbl[q + 25] + tbl[q + 24]; q += 2 + tv.getUint16(q, true) * 2; } lists.set(l.lsid, lv); }
+      }
+      if (lcbF && fcF + lcbF <= tbl.length) { const m = tv.getUint32(fcF, true); for (let k = 0; k < m && fcF + 4 + k * 16 + 4 <= tbl.length; k++) lfo.push(tv.getInt32(fcF + 4 + k * 16, true)); }
+    } catch { /* ohne Listen */ }
+    const parOf = fc => {   // Absatzeigenschaften für das Absatzende an Dateiposition fc
+      const r = find(papx, fc), o = { h: 0, jc: null, ilfo: 0, ilvl: 0, pb: false }; if (!r) return o;
+      o.h = headOf(r.istd);
+      if (r.at) try { sprms(wd, r.at, r.end, (sp, q) => {
+        if (sp === 0x2461 || sp === 0x2403) o.jc = wd[q]; else if (sp === 0x460B) o.ilfo = wd[q] | (wd[q + 1] << 8); else if (sp === 0x260A) o.ilvl = wd[q];
+        else if (sp === 0x2640 && wd[q] < 9 && !o.h) o.h = wd[q] + 1; else if (sp === 0x2407) o.pb = wd[q] === 1;
+      }); } catch { /* beschädigte Angaben: ohne */ }
+      return o;
+    };
+    const chOf = fc => {   // Zeicheneigenschaften: fett, kursiv, Bild (Position im Data-Strom)
+      const r = find(chpx, fc), o = { b: false, i: false, pic: -1, spec: false, ftc: -1 }; if (!r || !r.at) return o;
+      try { sprms(wd, r.at, r.end, (sp, q) => {
+        if (sp === 0x0835) o.b = wd[q] === 1 || wd[q] === 0x81; else if (sp === 0x0836) o.i = wd[q] === 1 || wd[q] === 0x81;
+        else if (sp === 0x6A03) o.pic = dv.getInt32(q, true); else if (sp === 0x4A4F) o.ftc = wd[q] | (wd[q + 1] << 8); else if (sp === 0x0855) o.spec = wd[q] === 1;
+      }); } catch { /* beschädigte Angaben: ohne */ }
+      return o;
+    };
+    // Eingebettetes Bild (PICF im Data-Strom): PNG oder JPEG darin suchen, Größe aus dxaGoal/dyaGoal und Skalierung
+    const picture = fc => {
+      if (!data || fc < 0 || fc + 68 > data.length) return null;
+      const pv = new DataView(data.buffer, data.byteOffset, data.byteLength), lcb = pv.getInt32(fc, true), end = Math.min(data.length, fc + Math.max(68, lcb));
+      const w = pv.getInt16(fc + 28, true) * (pv.getUint16(fc + 32, true) || 1000) / 1000 / 20, h = pv.getInt16(fc + 30, true) * (pv.getUint16(fc + 34, true) || 1000) / 1000 / 20;
+      const img = (src, a, b) => {
+        for (let q = a; q + 8 < b; q++) {
+          if (src[q] === 0x89 && src[q + 1] === 0x50 && src[q + 2] === 0x4E && src[q + 3] === 0x47) {
+            for (let e = q + 8; e + 8 <= b; e++) if (src[e] === 0x49 && src[e + 1] === 0x45 && src[e + 2] === 0x4E && src[e + 3] === 0x44) return { type: 'img', bytes: src.slice(q, e + 8), mime: 'image/png', w: w > 0 ? w : 200, h: h > 0 ? h : 150 };
+            return null;
+          }
+          if (src[q] === 0xFF && src[q + 1] === 0xD8 && src[q + 2] === 0xFF) {
+            let e = b - 2; while (e > q && !(src[e] === 0xFF && src[e + 1] === 0xD9)) e--;
+            return e > q ? { type: 'img', bytes: src.slice(q, e + 2), mime: 'image/jpeg', w: w > 0 ? w : 200, h: h > 0 ? h : 150 } : null;
+          }
+        }
+        return null;
+      };
+      // Bild direkt im Data-Strom – oder (bei mehrfach verwendeten Bildern) nur ein Verweis OfficeArtFBSE (0xF007) auf den Hauptteil (foDelay)
+      for (let q = fc + 68; q + 44 < end; q++) if (data[q + 2] === 0x07 && data[q + 3] === 0xF0 && (data[q] & 0x0F) === 2) {
+        const len = pv.getUint32(q + 4, true), size = pv.getUint32(q + 28, true), delay = pv.getUint32(q + 36, true);
+        if (len === 36 && delay && delay + size <= wd.length) { const r = img(wd, delay, delay + size); if (r) return r; }
+      }
+      return img(data, fc + 68, end);
+    };
+    /* Schwebende Bilder (Zeichen 0x08 im Haupttext): PlcSpaMom (Form-ID und Rechteck je Zeichenposition) → Form im OfficeArt-Teil
+       (DggInfo) → Eigenschaft pib (Nummer im Bildspeicher) → OfficeArtFBSE → Bild im Hauptteil (foDelay) oder direkt dahinter */
+    const floating = new Map();
+    try {
+      const [fcS, lcbS] = fcLcb(40), [fcD, lcbD] = fcLcb(50);
+      if (lcbS >= 30 && lcbD && fcS + lcbS <= tbl.length && fcD + lcbD <= tbl.length) {
+        const m = (lcbS - 4) / 30, spa = new Map();
+        for (let k = 0; k < m; k++) { const o = fcS + (m + 1) * 4 + k * 26; spa.set(tv.getUint32(fcS + k * 4, true), { id: tv.getUint32(o, true), w: (tv.getInt32(o + 12, true) - tv.getInt32(o + 4, true)) / 20, h: (tv.getInt32(o + 16, true) - tv.getInt32(o + 8, true)) / 20 }); }
+        const bse = [], pibOf = new Map();
+        const walk = (a, b, depth) => {
+          for (let q = a; q + 8 <= b && depth < 8; ) {
+            if (tbl[q + 3] !== 0xF0) { q++; continue; }   // OfficeArtWordDrawing: 1 Byte dgglbl vor jeder Zeichnung
+            const vi = tv.getUint16(q, true), rt = tv.getUint16(q + 2, true), len = tv.getUint32(q + 4, true), body = q + 8, end = Math.min(b, body + len);
+            if ((vi & 0x0F) === 0x0F) {
+              if (rt === 0xF004) {   // Form: FSP (Form-ID) und FOPT (Eigenschaften)
+                let id = null, pib = null;
+                for (let r = body; r + 8 <= end; ) { const t = tv.getUint16(r + 2, true), l = tv.getUint32(r + 4, true);
+                  if (t === 0xF00A) id = tv.getUint32(r + 8, true);
+                  if (t === 0xF00B) { const cnt = tv.getUint16(r, true) >> 4; for (let k = 0; k < cnt; k++) { const op = tv.getUint16(r + 8 + k * 6, true); if ((op & 0x3FFF) === 0x0104) pib = tv.getUint32(r + 10 + k * 6, true); } }
+                  r += 8 + l; }
+                if (id != null && pib) pibOf.set(id, pib);
+              } else walk(body, end, depth + 1);
+            } else if (rt === 0xF007) bse.push(q);
+            q = body + len;
+          }
+        };
+        walk(fcD, fcD + lcbD, 0);
+        for (const [cp, a] of spa) {
+          const pib = pibOf.get(a.id), q = pib && bse[pib - 1]; if (q == null) continue;
+          const size = tv.getUint32(q + 28, true), delay = tv.getUint32(q + 36, true), cbName = tbl[q + 41];
+          floating.set(cp, { w: a.w, h: a.h, src: delay !== 0xFFFFFFFF && delay + size <= wd.length ? [wd, delay, delay + size] : [tbl, q + 44 + cbName, Math.min(tbl.length, q + 8 + tv.getUint32(q + 4, true))] });
+        }
+      }
+    } catch { /* ohne schwebende Bilder */ }
+    const floatImg = cp => { const f = floating.get(cp); if (!f) return null; const [src, a, b] = f.src;
+      for (let q = a; q + 8 < b; q++) {
+        if (src[q] === 0x89 && src[q + 1] === 0x50 && src[q + 2] === 0x4E && src[q + 3] === 0x47) { for (let e = q + 8; e + 8 <= b; e++) if (src[e] === 0x49 && src[e + 1] === 0x45 && src[e + 2] === 0x4E && src[e + 3] === 0x44) return { type: 'img', bytes: src.slice(q, e + 8), mime: 'image/png', w: f.w > 0 ? f.w : 200, h: f.h > 0 ? f.h : 150 }; return null; }
+        if (src[q] === 0xFF && src[q + 1] === 0xD8 && src[q + 2] === 0xFF) { let e = b - 2; while (e > q && !(src[e] === 0xFF && src[e + 1] === 0xD9)) e--; return e > q ? { type: 'img', bytes: src.slice(q, e + 2), mime: 'image/jpeg', w: f.w > 0 ? f.w : 200, h: f.h > 0 ? f.h : 150 } : null; }
+      }
+      return null; };
+    const nfcLabel = (nfc, k) => nfc === 0 ? k + '.' : nfc === 4 ? String.fromCharCode(96 + ((k - 1) % 26) + 1) + ')' : nfc === 3 ? String.fromCharCode(64 + ((k - 1) % 26) + 1) + ')' : nfc === 2 ? ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x'][(k - 1) % 10] + '.' : nfc === 1 ? ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][(k - 1) % 10] + '.' : null;
+    const counters = new Map();
+    // Felder: Code (0x13 … 0x14) weg, Ergebnis (bis 0x15) behalten – Seitenzahl-Felder als {PAGE}/{NUMPAGES} (Kopf-/Fußzeile)
+    const story = (c0, c1) => {
+      const out = []; const st = [];
+      for (let k = c0; k < c1 && k < chars.length; k++) {
+        const ch = chars[k], code = ch.charCodeAt(0);
+        if (code === 0x13) { st.push({ res: false, code: '' }); continue; }
+        if (code === 0x14) { if (st.length) st[st.length - 1].res = true; continue; }
+        if (code === 0x15) { const f = st.pop(); if (f && st.every(s => s.res)) { const t = /\bNUMPAGES\b/.test(f.code) ? '{NUMPAGES}' : /\bPAGE\b/.test(f.code) ? '{PAGE}' : null; if (t) { while (out.length && out[out.length - 1].field === f) out.pop(); out.push({ ch: t, fc: fcs[k] }); } } continue; }
+        if (st.length && !st[st.length - 1].res) { st[st.length - 1].code += ch; continue; }
+        if (st.some(s => !s.res)) continue;
+        out.push({ ch, fc: fcs[k], cp: k, field: st[st.length - 1] });
+      }
+      return out;
+    };
+    // Bausteine aus einer Zeichenfolge: Absätze (\r), Zellen (\x07), Seitenumbruch (\x0c), Zeilenumbruch (\x0b), Bilder (0x01)
+    const clean = s => s.replace(/\x0b/g, '\n').replace(/\x1e/g, '-').replace(/[\x1f\x01\x02\x05\x08]/g, '').replace(/\t/g, '    ').replace(/[  ]+\n/g, '\n').trim();
+    const build = items => {
+      const blocks = []; let row = [], rows = [], cols = 0, buf = [];
+      const endTable = () => { if (row.length) rows.push(row); if (rows.length) { const w = rows.reduce((a, r) => Math.max(a, r.length), 0); blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: w }, (_, i) => r[i] ?? '')), head: rows.length > 1 }); } rows = []; row = []; cols = 0; };
+      // Schwebende Bilder stehen hinter ihrem Absatz (wie bei .docx), Bilder im Text davor
+      const para = (list, endFc) => { const after = []; para1(list, endFc, after); for (const im of after) blocks.push({ ...im, align: 'center' }); };
+      const para1 = (list, endFc, after) => {
+        if (rows.length || row.length) endTable();
+        const imgs = []; for (const x of list) { if (x.ch === '\x01') { const f = chOf(x.fc); if (f.pic >= 0) { const im = picture(f.pic); if (im) imgs.push(im); } } else if (x.ch === '\x08' && x.cp < ccpText) { const im = floatImg(x.cp); if (im) after.push(im); } }
+        const t = clean(list.map(x => x.ch).join('')); const pr = endFc != null ? parOf(endFc) : { h: 0 };
+        if (pr.pb && blocks.length && blocks[blocks.length - 1].type !== 'pagebreak') blocks.push({ type: 'pagebreak' });   // „Seitenumbruch oberhalb“
+        const align = pr.jc === 1 ? 'center' : pr.jc === 2 ? 'right' : null;
+        for (const im of imgs) blocks.push({ ...im, align: align || 'left' });
+        if (!t) return;
+        if (pr.h) { blocks.push({ type: 'h', level: Math.min(6, pr.h), text: t }); return; }
+        if (pr.ilfo > 0 && pr.ilfo <= lfo.length) {
+          const lv = lists.get(lfo[pr.ilfo - 1])?.[Math.min(pr.ilvl, 8)] || { nfc: 23, start: 1 }, key = pr.ilfo + ':' + pr.ilvl;
+          const k = counters.has(key) ? counters.get(key) + 1 : (lv.start || 1); counters.set(key, k);
+          for (const [k2] of counters) if (k2.startsWith(pr.ilfo + ':') && +k2.split(':')[1] > pr.ilvl) counters.delete(k2);
+          const label = nfcLabel(lv.nfc, k);
+          blocks.push({ type: 'li', ordered: !!label, label: label || '•', depth: Math.min(3, pr.ilvl), text: t }); return;
+        }
+        // fett/kursiv: ganzer Absatz oder gemischte Stücke
+        const parts = []; let boldN = 0, n = 0;
+        for (const x of list) { if (x.ch === '\x01') continue; const f = chOf(x.fc), last = parts[parts.length - 1]; if (x.ch.trim()) { n++; if (f.b) boldN++; } if (last && last.b === f.b && last.i === f.i) last.t += x.ch; else parts.push({ t: x.ch, b: f.b, i: f.i }); }
+        const mixed = parts.some(x => x.i && x.t.trim()) || (boldN > 0 && boldN < n);
+        const runs = mixed ? parts.map(x => ({ ...x, t: clean(x.t.replace(/\r/g, '')) ? x.t.replace(/\x0b/g, '\n').replace(/\t/g, '    ').replace(/[\x1f\x01\x02\x05\x08]/g, '') : x.t.replace(/[\x1f\x01\x02\x05\x08\r]/g, '') })).filter(x => x.t) : null;
+        blocks.push({ type: 'p', text: t, ...(align ? { align } : {}), ...(n > 0 && boldN === n ? { bold: true } : {}), ...(runs ? { runs } : {}) });
+      };
+      for (const x of items) {
+        const ch = x.ch;
+        // Absatzende mitten in einer Tabellenzeile: mehrere Absätze in einer Zelle (nur der letzte endet mit der Zellmarke)
+        if (ch === '\r') { if (row.length) buf.push({ ch: '\n', fc: x.fc }); else { para(buf, x.fc); buf = []; } }
+        else if (ch === '\x0c') { para(buf, null); buf = []; if (blocks.length && blocks[blocks.length - 1].type !== 'pagebreak') blocks.push({ type: 'pagebreak' }); }
+        else if (ch === '\x07') {
+          const t = clean(buf.map(y => y.ch).join('')); buf = [];
+          if (!t && row.length && (!cols || row.length >= cols)) { if (!cols) cols = row.length; rows.push(row); row = []; }
+          else row.push(t);
+        } else buf.push(x);
+      }
+      para(buf, null); endTable();
+      while (blocks.length && blocks[blocks.length - 1].type === 'pagebreak') blocks.pop();
+      return blocks;
+    };
+    const blocks = build(story(0, ccpText));
     if (!blocks.length) throw new Error('Die Word-Datei enthält keinen Text.');
-    return { blocks };
+    // Kopf- und Fußzeile des ersten Abschnitts (PlcfHdd: 6 Trenner-Teile, dann je Abschnitt gerade/ungerade Kopf, gerade/ungerade Fuß, erste Seite)
+    const page = {};
+    // Seitenformat und Ränder des ersten Abschnitts (PlcfSed → Sepx im Hauptteil; Twips → pt)
+    try {
+      const [fcSed, lcbSed] = fcLcb(6);
+      if (lcbSed >= 16 && fcSed + lcbSed <= tbl.length) {
+        const fcSepx = tv.getInt32(fcSed + 8 + 2, true);
+        if (fcSepx > 0 && fcSepx + 2 <= wd.length) {
+          const cb = dv.getUint16(fcSepx, true), sv = {};
+          sprms(wd, fcSepx + 2, Math.min(wd.length, fcSepx + 2 + cb), (sp, q) => { if ([0xB01F, 0xB020, 0xB021, 0x9023, 0x9024, 0xB017, 0xB018].includes(sp)) sv[sp] = dv.getInt16(q, true); });
+          const tw = v => v / 20;
+          if (sv[0xB01F] > 0 && sv[0xB020] > 0) page.size = [tw(sv[0xB01F]), tw(sv[0xB020])];
+          if (sv[0xB021] != null) page.margin = Math.max(28, Math.min(85, tw(sv[0xB021]) || 56.7));
+          if (sv[0x9023] != null) page.top = Math.max(20, Math.min(200, Math.abs(tw(sv[0x9023])) || 56.7));
+          if (sv[0x9024] != null) page.bottom = Math.max(20, Math.min(200, Math.abs(tw(sv[0x9024])) || 56.7));
+          if (sv[0xB017] != null) page.headerY = tw(sv[0xB017]); if (sv[0xB018] != null) page.footerY = tw(sv[0xB018]);
+        }
+      }
+    } catch { /* Standardseite */ }
+    try {
+      const [fcH, lcbH] = fcLcb(11);
+      if (ccpHdd > 0 && lcbH >= 4 * 8 && fcH + lcbH <= tbl.length) {
+        const m = lcbH / 4, cp = k => k < m ? tv.getUint32(fcH + k * 4, true) : null, h0 = ccpText + Math.max(0, ccpFtn);
+        const part = k => { const a = cp(k), b = cp(k + 1); if (a == null || b == null || b <= a) return null; const bl = build(story(h0 + a, h0 + b)).filter(x => x.type !== 'pagebreak'); return bl.length ? bl : null; };
+        const hd = part(7) || part(6), ft = part(9) || part(8);
+        if (hd) page.header = hd; if (ft) page.footer = ft;
+      }
+    } catch { /* ohne Kopf-/Fußzeile */ }
+    // Hauptschrift (wie bei .docx): direkt gesetzte Schrift der meisten Zeichen, sonst Standardschrift der Vorlagen – Namen aus SttbfFfn
+    let font = null;
+    try {
+      const [fcF, lcbF] = fcLcb(15), names = [];
+      if (lcbF && fcF + lcbF <= tbl.length) {
+        let q = fcF; const cnt = tv.getUint16(q, true); q += 4;
+        for (let k = 0; k < cnt && q < fcF + lcbF; k++) { const len = tbl[q] + 1; let nm = '', o = q + 40; while (o + 1 < q + len) { const ch = tv.getUint16(o, true); if (!ch) break; nm += String.fromCharCode(ch); o += 2; } names.push(nm); q += len; }
+      }
+      const cnt = new Map(); let all = 0;
+      for (let k = 0; k < Math.min(ccpText, 20000); k += 7) { const ch = chars[k]; if (!ch || !ch.trim()) continue; all++; const f = chOf(fcs[k]).ftc; if (f >= 0) cnt.set(f, (cnt.get(f) || 0) + 1); }
+      const top = [...cnt].sort((a, b) => b[1] - a[1])[0], ftc = top && top[1] >= all * 0.4 ? top[0] : normFtc >= 0 ? normFtc : defFtc;
+      if (ftc >= 0 && names[ftc]) font = names[ftc];
+    } catch { /* ohne Schrift */ }
+    return { blocks, ...(Object.keys(page).length ? { page } : {}), ...(font ? { font } : {}) };
   }
 
   function xls(bytes, { locale = 'de-DE' } = {}) {

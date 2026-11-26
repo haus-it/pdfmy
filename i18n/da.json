@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Drej med skyderen, indtil tekstlinjerne eller sidekanten er parallelle med hjælpelinjerne (piletaster: i trin på 0,1°). »Automatisk« retter op efter tekstlinjerne, »Som scannet« fortryder den automatiske opretning.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Ret scanningen op: drej en vilkårlig vinkel eller fortryd den automatiske opretning",
  "Seite um {0}° gedreht.": "Siden er drejet {0}°.",
- "Wie gescannt": "Som scannet"
+ "Wie gescannt": "Som scannet",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-filen er beskadiget – åbn den i Word, og gem den igen."
 }

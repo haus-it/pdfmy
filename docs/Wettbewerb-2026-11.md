@@ -282,3 +282,5 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 | Online-Mitgliederverwaltung | **bewusst nicht**: Mitgliederdatenbank auf einem Server (Leitplanken 1–2) | Vereinssoftware im Abo |
 
 **Nachtrag 24.11.2026 (app-v346) – Hilfe:** Acrobat, Foxit, PDF24, Smallpdf und iLovePDF haben bebilderte Online-Hilfen bzw. Werkzeugseiten (nicht systematisch gezählt). PDFMy hat jetzt 18 bebilderte Schritt-für-Schritt-Anleitungen nach Themen, mit Klick-Nummern, Sofortsuche und in 40 Sprachen – die Bilder werden bei jeder Änderung aus der App selbst erzeugt und veralten daher nicht. Die Texte stehen auf derselben Seite wie die Suche (ohne Wechsel in ein Hilfe-Portal).
+
+**Nachtrag 26.11.2026 (app-v349) – .doc:** Alte Word-Dateien öffnet PDFMy jetzt mit Überschriften, Listen, Fett/Kursiv, Bildern, Kopf-/Fußzeile und laufweitengleicher Schrift – ohne Office und ohne Upload. Acrobat, PDF24 und Smallpdf wandeln .doc über Office-Komponenten bzw. ihren Server um (Upload bei Smallpdf/iLovePDF). Gemessen gegen die .docx-Fassung derselben 10 Dokumente: gleiche Bausteine und Seitenzahl.

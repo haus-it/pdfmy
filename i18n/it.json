@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Ruota con il cursore finché le righe di testo o il bordo della pagina non sono paralleli alle linee guida (tasti freccia: a passi di 0,1°). «Automatico» raddrizza in base alle righe di testo, «Come scansionato» annulla il raddrizzamento automatico.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Raddrizza scansione: ruota di un angolo qualsiasi o annulla il raddrizzamento automatico",
  "Seite um {0}° gedreht.": "Pagina ruotata di {0}°.",
- "Wie gescannt": "Come scansionato"
+ "Wie gescannt": "Come scansionato",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Il file Word è danneggiato: lo apra in Word e lo salvi di nuovo."
 }

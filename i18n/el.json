@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Περιστρέψτε με το ρυθμιστικό μέχρι οι γραμμές κειμένου ή το άκρο της σελίδας να γίνουν παράλληλα με τις βοηθητικές γραμμές (πλήκτρα βέλους: σε βήματα των 0,1°). Το «Αυτόματα» ευθυγραμμίζει με βάση τις γραμμές κειμένου, το «Όπως σαρώθηκε» αναιρεί την αυτόματη ευθυγράμμιση.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Ευθυγράμμιση σάρωσης: περιστροφή σε οποιαδήποτε γωνία ή αναίρεση της αυτόματης ευθυγράμμισης",
  "Seite um {0}° gedreht.": "Η σελίδα περιστράφηκε κατά {0}°.",
- "Wie gescannt": "Όπως σαρώθηκε"
+ "Wie gescannt": "Όπως σαρώθηκε",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Το αρχείο Word είναι κατεστραμμένο – ανοίξτε το στο Word και αποθηκεύστε το ξανά."
 }

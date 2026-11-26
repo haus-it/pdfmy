@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Gire con el control deslizante hasta que las líneas de texto o el borde de la página queden paralelos a las líneas guía (teclas de flecha: en pasos de 0,1°). «Automático» endereza según las líneas de texto y «Como se escaneó» deshace el enderezado automático.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Enderezar escaneo: girar en cualquier ángulo o deshacer el enderezado automático",
  "Seite um {0}° gedreht.": "Página girada {0}°.",
- "Wie gescannt": "Como se escaneó"
+ "Wie gescannt": "Como se escaneó",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "El archivo de Word está dañado; ábralo en Word y vuelva a guardarlo."
 }

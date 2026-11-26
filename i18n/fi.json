@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Kierrä liukusäätimellä, kunnes tekstirivit tai sivun reuna ovat apuviivojen suuntaiset (nuolinäppäimet: 0,1°:n askelin). ”Automaattinen” suoristaa tekstirivien mukaan, ”Sellaisenaan skannattu” kumoaa automaattisen suoristuksen.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Suorista skannaus: käännä mihin kulmaan tahansa tai kumoa automaattinen suoristus",
  "Seite um {0}° gedreht.": "Sivua käännetty {0}°.",
- "Wie gescannt": "Sellaisenaan skannattu"
+ "Wie gescannt": "Sellaisenaan skannattu",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-tiedosto on vioittunut – avaa se Wordissa ja tallenna uudelleen."
 }

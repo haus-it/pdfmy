@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rotate with the slider until the text lines or the page edge are parallel to the guide lines (arrow keys: in steps of 0.1°). “Automatic” straightens according to the text lines, “As scanned” undoes the automatic straightening.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Straighten scan: rotate by any angle or undo the automatic straightening",
  "Seite um {0}° gedreht.": "Page rotated by {0}°.",
- "Wie gescannt": "As scanned"
+ "Wie gescannt": "As scanned",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "The Word file is damaged – please open it in Word and save it again."
 }

@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rothlaigh leis an sleamhnán go dtí go mbeidh na línte téacs nó imeall an leathanaigh comhthreomhar leis na línte treorach (eochracha saighead: i gcéimeanna de 0.1°). Déanann “Uathoibríoch” díriú de réir na línte téacs, cealaíonn “Mar a scanadh é” an díriú uathoibríoch.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Scanadh a dhíriú: rothlaigh le huillinn ar bith nó cealaigh an díriú uathoibríoch",
  "Seite um {0}° gedreht.": "Rothlaíodh an leathanach {0}°.",
- "Wie gescannt": "Mar a scanadh é"
+ "Wie gescannt": "Mar a scanadh é",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Tá an comhad Word truaillithe – oscail i Word é agus sábháil arís é."
 }

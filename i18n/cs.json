@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Otáčejte posuvníkem, dokud řádky textu nebo okraj stránky nebudou rovnoběžné s pomocnými čarami (šipky: po krocích 0,1°). „Automaticky“ vyrovná podle řádků textu, „Jak naskenováno“ vrátí automatické vyrovnání.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Vyrovnat sken: otočit o libovolný úhel nebo vrátit automatické vyrovnání",
  "Seite um {0}° gedreht.": "Stránka otočena o {0}°.",
- "Wie gescannt": "Jak naskenováno"
+ "Wie gescannt": "Jak naskenováno",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Soubor Wordu je poškozený – otevřete ho ve Wordu a znovu uložte."
 }

@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Pöörake liuguriga, kuni tekstiread või lehe serv on abijoontega paralleelsed (nooleklahvid: sammudega 0,1°). „Automaatne“ sirgendab tekstiridade järgi, „Nagu skannitud“ võtab automaatse sirgendamise tagasi.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Skannitud lehe sirgendamine: pööra suvalise nurga võrra või võta automaatne sirgendamine tagasi",
  "Seite um {0}° gedreht.": "Lehte pöörati {0}°.",
- "Wie gescannt": "Nagu skannitud"
+ "Wie gescannt": "Nagu skannitud",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Wordi fail on rikutud – avage see Wordis ja salvestage uuesti."
 }

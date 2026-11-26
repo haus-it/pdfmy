@@ -12,7 +12,7 @@ const app = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
 test('Word 97 (.doc): Absätze, Zeilenumbruch, Unicode, Tabelle mit leerer Zelle', () => {
   const { blocks } = Office.doc(fs.readFileSync(path.join(dir, 'brief.doc')));
   const ps = blocks.filter(b => b.type === 'p').map(b => b.text);
-  assert.equal(ps[0], 'Wartungsvertrag');
+  assert.deepEqual(blocks[0], { type: 'h', level: 1, text: 'Wartungsvertrag' }, 'Überschrift erkannt (seit app-v349)');
   assert.ok(ps.includes('Zwischen der Müller GmbH und der Stadtwerke AG – Preis 120 € (北京).'), 'Umlaute, €, Gedankenstrich, Chinesisch');
   assert.ok(ps.includes('Zweiter Absatz mit Zeile\nund Umbruch.'), 'Zeilenumbruch bleibt');
   const t = blocks.find(b => b.type === 'table');

@@ -947,3 +947,18 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 | 6 Wenig aktive Inhalte | passt |
 
 **Ehrliche Grenze:** Störpunkte direkt an Buchstaben bleiben (sonst gingen echte Satzzeichen verloren); längere Striche werden nicht entfernt.
+
+### Word 97–2003 mit Formatierung (26.11.2026, app-v349)
+
+**Anlass:** Lücke aus dem Wettbewerbsvergleich (Rang 9): .doc nur als Text. Behörden und Vereine haben viele alte .doc-Vorlagen.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: eigener Leser im Browser |
+| 2 Kein Server | passt |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: Datei öffnen, keine Einstellung |
+| 5 Prüfbar | Korpus .doc gegen .docx, Robustheitstest |
+| 6 Wenig aktive Inhalte | passt: Makros und eingebettete Objekte werden nicht ausgeführt |
+
+**Ehrliche Grenze:** Fußnoten, Textfelder und Spalten aus .doc noch nicht; Formatvorlagen-Schriftgrößen werden über die Überschriften-Ebene abgebildet.

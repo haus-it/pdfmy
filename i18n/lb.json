@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Dréit mam Reegler, bis d’Textzeilen oder de Säiterand parallel zu den Hëllefslinne stinn (Feilentasten: a Schrëtt vun 0,1°). „Automatesch“ riicht no den Textzeilen aus, „Wéi gescannt“ hëlt déi automatesch Begradegung zeréck.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Scan riichten: em e beliebege Wénkel dréinen oder déi automatesch Begradegung zeréckhuelen",
  "Seite um {0}° gedreht.": "Säit em {0}° gedréint.",
- "Wie gescannt": "Wéi gescannt"
+ "Wie gescannt": "Wéi gescannt",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "De Word-Fichier ass beschiedegt – maacht en a Word op a späichert en nei."
 }

@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Metin satırları veya sayfa kenarı yardımcı çizgilere paralel olana kadar kaydırıcıyla döndürün (ok tuşları: 0,1° adımlarla). “Otomatik” metin satırlarına göre düzeltir, “Tarandığı gibi” otomatik düzeltmeyi geri alır.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Taramayı düzelt: istediğiniz açıda döndür veya otomatik düzeltmeyi geri al",
  "Seite um {0}° gedreht.": "Sayfa {0}° döndürüldü.",
- "Wie gescannt": "Tarandığı gibi"
+ "Wie gescannt": "Tarandığı gibi",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word dosyası bozuk – lütfen dosyayı Word’de açıp yeniden kaydedin."
 }

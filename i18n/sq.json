@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rrotulloni me rrëshqitësin derisa rreshtat e tekstit ose buza e faqes të jenë paralele me vijat ndihmëse (tastet e shigjetave: me hapa prej 0,1°). «Automatik» drejton sipas rreshtave të tekstit, «Siç është skanuar» anulon drejtimin automatik.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Drejtimi i skanimit: rrotulloje me çdo kënd ose anuloje drejtimin automatik",
  "Seite um {0}° gedreht.": "Faqja u rrotullua me {0}°.",
- "Wie gescannt": "Siç është skanuar"
+ "Wie gescannt": "Siç është skanuar",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Skedari Word është i dëmtuar – hapeni në Word dhe ruajeni përsëri."
 }

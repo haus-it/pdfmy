@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-26
 
+### Alte Word-Dateien (.doc, Word 97–2003) mit Formatierung wie .docx (app-v349)
+- Bisher übernahm PDFMy aus .doc nur Text und Tabellen. Jetzt liest js/office.js auch die Formatierung (MS-DOC): Überschriften aus Formatvorlage bzw. Gliederungsebene, Aufzählungen und nummerierte Listen mit Nummernformat, fett und kursiv (auch mitten im Satz), Ausrichtung, Seitenumbruch vor Absatz, Bilder im Text und frei platzierte Bilder (auch mehrfach verwendete aus dem Bildspeicher), Kopf- und Fußzeile mit Seitenzahl, Seitenformat und Ränder sowie die Hauptschrift – damit greift die laufweitengleiche Schrift (app-v345) auch bei .doc.
+- Gemessen: die 10 Word-Dokumente des Office-Korpus als „MS Word 97“ gespeichert. Vorher fehlten 54 Überschriften, 37 Listenpunkte, Fettdruck, 2 Bilder und die Schrift; jetzt stimmen Bausteine, Wortlaut, Schrift und Seitenzahl mit der .docx-Fassung überein.
+- Beschädigte .doc-Dateien melden „Die Word-Datei ist beschädigt“ statt eines technischen Fehlers; leicht beschädigte öffnen weiter.
+- tests/doc97.test.js mit tests/office-korpus/doc97 (11 Dateien) als Test-Gate.
+
 ### Texterkennung: Störpunkte bei Fax und Staub werden ausgeblendet (app-v348)
 - Kleine schwarze Punkte auf Schwarzweiß-Seiten (Fax-Leitungsstörungen, Staub auf dem Vorlagenglas) entfernt PDFMy jetzt in der Arbeitskopie für die Texterkennung (js/imaging.js `despeckle`); das Seitenbild bleibt unverändert. Ein Fleck gilt nur als Störung, wenn er klein ist und in seiner Zeile im Umkreis keine Schrift steht – i- und Umlaut-Punkte, Satzpunkte, Kommas, Trennpunkte „·“ und Bruchstücke schwacher Buchstaben bleiben. Andere Flecken schützen einen Fleck nicht (Störpunkte kommen in Gruppen). Graustufen-Seiten und körnige Fotos bleiben unberührt.
 - Gemessen im echten App-Weg mit den 6 Korpusbriefen als Fax: gestörte Faxe (1500 Punkte, 120 Kleckse, 20 Striche je Seite) 28 % → 5,8 % (fein) bzw. 6,0 % (normal) Zeichenfehler; saubere Faxe 2,1 % → 1,8 % (fein) bzw. 2,9 % → 2,6 % (normal), keine Seite schlechter; 300-dpi-Korpus unverändert 0,40 %. Rechenzeit rund 0,2 s je 300-dpi-Seite.

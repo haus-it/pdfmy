@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Ротирајте клизачем док редови текста или ивица странице не буду паралелни са помоћним линијама (тастери са стрелицама: у корацима од 0,1°). „Аутоматски“ исправља према редовима текста, „Како је скенирано“ поништава аутоматско исправљање.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Исправљање скена: ротирати за произвољан угао или поништити аутоматско исправљање",
  "Seite um {0}° gedreht.": "Страница је ротирана за {0}°.",
- "Wie gescannt": "Како је скенирано"
+ "Wie gescannt": "Како је скенирано",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word датотека је оштећена – отворите је у Word-у и поново сачувајте."
 }

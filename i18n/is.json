@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Snúðu með sleðanum þar til textalínurnar eða brún síðunnar eru samsíða hjálparlínunum (örvalyklar: í skrefum um 0,1°). „Sjálfvirkt“ réttir af eftir textalínunum, „Eins og skannað“ afturkallar sjálfvirka réttingu.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Rétta skönnun af: snúa um hvaða horn sem er eða afturkalla sjálfvirka réttingu",
  "Seite um {0}° gedreht.": "Síðunni var snúið um {0}°.",
- "Wie gescannt": "Eins og skannað"
+ "Wie gescannt": "Eins og skannað",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-skráin er skemmd – opnaðu hana í Word og vistaðu hana aftur."
 }

@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Sukite slankikliu, kol teksto eilutės arba puslapio kraštas taps lygiagretūs pagalbinėms linijoms (rodyklių klavišai: 0,1° žingsniais). „Automatiškai“ ištiesina pagal teksto eilutes, „Kaip nuskaityta“ atšaukia automatinį ištiesinimą.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Ištiesinti nuskaitymą: pasukti bet kokiu kampu arba atšaukti automatinį ištiesinimą",
  "Seite um {0}° gedreht.": "Puslapis pasuktas {0}°.",
- "Wie gescannt": "Kaip nuskaityta"
+ "Wie gescannt": "Kaip nuskaityta",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word failas sugadintas – atidarykite jį Word programoje ir įrašykite iš naujo."
 }

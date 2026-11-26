@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Rotiți cu cursorul până când rândurile de text sau marginea paginii sunt paralele cu liniile ajutătoare (tastele săgeți: în pași de 0,1°). „Automat” îndreaptă după rândurile de text, „Ca la scanare” anulează îndreptarea automată.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Îndreptarea scanării: rotiți cu orice unghi sau anulați îndreptarea automată",
  "Seite um {0}° gedreht.": "Pagină rotită cu {0}°.",
- "Wie gescannt": "Ca la scanare"
+ "Wie gescannt": "Ca la scanare",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Fișierul Word este deteriorat – deschideți-l în Word și salvați-l din nou."
 }

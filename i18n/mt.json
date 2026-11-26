@@ -4462,5 +4462,6 @@
  "Mit dem Regler drehen, bis Textzeilen oder Seitenrand parallel zu den Hilfslinien stehen (Pfeiltasten: in Schritten von 0,1°). „Automatisch“ richtet nach den Textzeilen aus, „Wie gescannt“ nimmt die automatische Begradigung zurück.": "Dawwar bl-iskrollatur sakemm il-linji tat-test jew il-ġenb tal-paġna jkunu paralleli mal-linji gwida (tasti tal-vleġeġ: f’passi ta’ 0,1°). “Awtomatiku” jiddritta skont il-linji tat-test, “Kif ġie skanjat” jneħħi d-drittar awtomatiku.",
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Iddritta l-iskan: dawwar b’angolu kwalunkwe jew neħħi d-drittar awtomatiku",
  "Seite um {0}° gedreht.": "Il-paġna ddawret bi {0}°.",
- "Wie gescannt": "Kif ġie skanjat"
+ "Wie gescannt": "Kif ġie skanjat",
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Il-fajl tal-Word huwa bil-ħsara – jekk jogħġbok iftħu f’Word u ssejvjah mill-ġdid."
 }
