@@ -558,7 +558,48 @@
   // Einstellungen für Tesseract: Sauvola-Schwellwert (örtlich statt global) – hält Lichtverlauf und Körnung aus (Messkorpus: Zeichenfehler 18 % → 0,4 %)
   const OCR_PARAMS = { thresholding_method: '2' };
 
-  // Arbeitskopie für die Texterkennung: ohne Tabellenlinien (DocDetect.removeLines), körnige Fotos geglättet; sonst das Original
+  /* Störpunkte entfernen (Fax, Staub auf dem Vorlagenglas) – nur für die Texterkennung, das Seitenbild bleibt unverändert.
+     Nur bei Schwarzweiß-Seiten (kaum Grautöne). Entfernt werden kleine dunkle Flecken, neben denen in der Zeile keine Schrift steht:
+     i-Punkte, Umlaut-Punkte, Satzpunkte, Kommas und Bruchstücke schwacher Buchstaben liegen nahe an größeren Formen und bleiben.
+     Andere Flecken schützen einen Fleck nicht (Störpunkte liegen oft in Gruppen). Gibt die Zahl der entfernten Flecken zurück. */
+  function despeckle(d, W, H, opt = {}) {
+    const N = W * H, ink = new Uint8Array(N);
+    let dark = 0, mid = 0;
+    for (let i = 0; i < N; i++) { const v = d[i * 4]; if (v < 128) { ink[i] = 1; dark++; } else if (v < 200) mid++; }
+    if (!dark || mid > dark * (opt.midMax ?? 0.35)) return 0;           // Graustufen-Seite: nichts tun
+    const s = Math.max(1, W / 1728), amax = Math.round((opt.area ?? 16) * s * s), box = Math.ceil((opt.box ?? 5) * s);
+    const RX = Math.ceil((opt.rx ?? 20) * s), RY = Math.ceil((opt.ry ?? 7) * s);
+    // 1. Zusammenhängende Flecken (8er-Nachbarschaft) beschriften, kleine merken
+    const lab = new Int32Array(N), stack = [], small = [], isSmall = [0];   // Stapel wächst nur bei Bedarf (Speicher auf Handys)
+    let id = 0;
+    for (let i0 = 0; i0 < N; i0++) {
+      if (!ink[i0] || lab[i0]) continue;
+      id++; let n = 0, x0 = W, x1 = 0, y0 = H, y1 = 0; stack.push(i0); lab[i0] = id; const pts = [];
+      while (stack.length) {
+        const i = stack.pop(), x = i % W, y = (i / W) | 0; n++; if (n <= amax) pts.push(i);
+        if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue;
+          const j = yy * W + xx; if (ink[j] && !lab[j]) { lab[j] = id; stack.push(j); }
+        }
+      }
+      const sm = n <= amax && x1 - x0 < box && y1 - y0 < box; isSmall[id] = sm ? 1 : 0;
+      if (sm) small.push({ x0, x1, y0, y1, pts });
+    }
+    // 2. Kleiner Fleck ohne Schrift (größere Form) im Fenster ±RX/±RY → weiß
+    let removed = 0;
+    for (const f of small) {
+      let alone = true;
+      for (let y = Math.max(0, f.y0 - RY); y <= Math.min(H - 1, f.y1 + RY) && alone; y++)
+        for (let x = Math.max(0, f.x0 - RX), e = Math.min(W - 1, f.x1 + RX); x <= e; x++) { const l = lab[y * W + x]; if (l && !isSmall[l]) { alone = false; break; } }
+      if (!alone) continue;
+      for (const i of f.pts) d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = 255;
+      removed++;
+    }
+    return removed;
+  }
+
+  // Arbeitskopie für die Texterkennung: ohne Tabellenlinien (DocDetect.removeLines), körnige Fotos geglättet, Schwarzweiß-Seiten ohne Störpunkte; sonst das Original
   function ocrCopy(src) {
     if (!src?.width) return src;
     const c = canvas(src.width, src.height), ctx = c.getContext('2d', { willReadFrequently: true });
@@ -567,7 +608,8 @@
     const lines = typeof DocDetect !== 'undefined' && DocDetect.removeLines ? DocDetect.removeLines(img.data, c.width, c.height) : false;
     const grainy = grain(img.data, c.width, c.height) > GRAIN_MAX;
     if (grainy) smooth(img.data, c.width, c.height);
-    if (!lines && !grainy) return src;
+    const specks = grainy ? 0 : despeckle(img.data, c.width, c.height);   // Fax/Staub (Messung 26.11.2026: verrauschte Faxe 23 % → 6 % Zeichenfehler)
+    if (!lines && !grainy && !specks) return src;
     ctx.putImageData(img, 0, 0);
     return c;
   }
@@ -583,5 +625,5 @@
     return c;
   }
 
-  root.Imaging = { pixels, grain, smooth, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, skewInfo, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
+  root.Imaging = { pixels, grain, smooth, despeckle, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, skewInfo, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
 })(self);

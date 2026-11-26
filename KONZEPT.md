@@ -929,3 +929,21 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 | 4 Einfach | passt: Kacheln nach Aufgaben, rote Nummern im Bild, kurze Schritte |
 | 5 Prüfbar | tests/hilfe-center.test.js |
 | 6 Wenig aktive Inhalte | passt: keine neuen Skripte |
+
+### Störpunkte bei Fax und Staub (26.11.2026, app-v348)
+
+**Anlass:** Lücke aus der Fax-Messung 24.11.2026 („Offen: Entfernen von Störpunkten“). ABBYY und Acrobat haben eine Fleckentfernung („Despeckle“) beim Scannen.
+**Umfang:** nur die Arbeitskopie der Texterkennung, keine sichtbare Änderung am Seitenbild (keine Gefahr, echte Inhalte im gespeicherten Dokument zu verlieren); keine neue Einstellung.
+
+**Leitplanken vor dem Bau geprüft:**
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1 Alles bleibt auf dem Rechner | passt: Bildverarbeitung im Browser |
+| 2 Kein Server | passt |
+| 3 Ohne Tracking | passt |
+| 4 Einfach | passt: automatisch, kein Schalter |
+| 5 Prüfbar | Messung vorher/nachher, Test-Gate mit 6 gestörten Fax-Seiten und Erhalt-Test für Punkte |
+| 6 Wenig aktive Inhalte | passt |
+
+**Ehrliche Grenze:** Störpunkte direkt an Buchstaben bleiben (sonst gingen echte Satzzeichen verloren); längere Striche werden nicht entfernt.

@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Απλώς <b>ανοίξτε</b> ένα αρχείο Word ή Excel ή σύρετέ το στο παράθυρο (επίσης OpenDocument, RTF, PowerPoint και email). Κάθε φύλλο εργασίας γίνεται ξεχωριστή ενότητα.",
  "ZUGFeRD und XRechnung": "ZUGFeRD και XRechnung",
  "Nach oben": "Επάνω",
- "Nach oben zur Suche und zu den Themen": "Επάνω στην αναζήτηση και στα θέματα"
+ "Nach oben zur Suche und zu den Themen": "Επάνω στην αναζήτηση και στα θέματα",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Κουκκίδες θορύβου από φαξ και σκόνη:</b> Τις μικρές μαύρες κουκκίδες σε μια ασπρόμαυρη σελίδα (γραμμή φαξ, σκόνη στο γυαλί του σαρωτή) το PDFMy τις αγνοεί μόνο του κατά την αναγνώριση κειμένου – οι τελείες πάνω από το i και τα διακριτικά, οι τελείες και τα κόμματα παραμένουν, και η εικόνα της σελίδας μένει αμετάβλητη. Σε ένα πολύ αλλοιωμένο φαξ, τα σφάλματα ανάγνωσης μειώνονται έτσι από περίπου 28% σε κάτω από 6%."
 }

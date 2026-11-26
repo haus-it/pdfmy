@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Yn syml, <b>agorwch</b> ffeil Word neu Excel neu ei llusgo i’r ffenestr (hefyd OpenDocument, RTF, PowerPoint ac e-byst). Mae pob taflen waith yn dod yn adran ei hun.",
  "ZUGFeRD und XRechnung": "ZUGFeRD ac XRechnung",
  "Nach oben": "I’r brig",
- "Nach oben zur Suche und zu den Themen": "I’r brig, i’r chwilio a’r pynciau"
+ "Nach oben zur Suche und zu den Themen": "I’r brig, i’r chwilio a’r pynciau",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Smotiau o ffacs a llwch:</b> Mae PDFMy yn anwybyddu smotiau du bach ar dudalen ddu a gwyn (llinell ffacs, llwch ar wydr y sganiwr) wrth adnabod testun – mae'r dotiau ar i ac ar lythrennau ag acenion, atalnodau llawn a choma yn aros, ac mae delwedd y dudalen yn aros heb ei newid. Gyda ffacs gwael iawn, mae'r gwallau darllen yn gostwng o tua 28% i lai na 6%."
 }

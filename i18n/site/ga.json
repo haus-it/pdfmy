@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Níl le déanamh ach comhad Word nó Excel a <b>oscailt</b> nó a tharraingt isteach san fhuinneog (OpenDocument, RTF, PowerPoint agus ríomhphoist freisin). Déantar cuid ar leith de gach bileog oibre.",
  "ZUGFeRD und XRechnung": "ZUGFeRD agus XRechnung",
  "Nach oben": "Go barr",
- "Nach oben zur Suche und zu den Themen": "Go barr, chuig an gcuardach agus na topaicí"
+ "Nach oben zur Suche und zu den Themen": "Go barr, chuig an gcuardach agus na topaicí",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Spotaí ó fhacs agus ó dheannach:</b> Déanann PDFMy neamhaird leis féin ar spotaí beaga dubha ar leathanach dubh agus bán (líne facs, deannach ar ghloine an scanóra) le haghaidh aithint téacs – fanann na poncanna ar i agus ar litreacha le síntí, lánstadanna agus camóga, agus ní athraítear íomhá an leathanaigh. I gcás facs an-truaillithe, titeann na hearráidí léite ó thart ar 28% go faoi 6%."
 }

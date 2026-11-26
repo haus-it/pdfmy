@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Просто <b>відкрийте</b> файл Word чи Excel або перетягніть його у вікно (також OpenDocument, RTF, PowerPoint та електронні листи). Кожен аркуш таблиці стає окремим розділом.",
  "ZUGFeRD und XRechnung": "ZUGFeRD і XRechnung",
  "Nach oben": "Угору",
- "Nach oben zur Suche und zu den Themen": "Угору до пошуку й тем"
+ "Nach oben zur Suche und zu den Themen": "Угору до пошуку й тем",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Перешкоди від факсу та пилу:</b> Дрібні чорні точки на чорно-білій сторінці (факсова лінія, пил на склі сканера) PDFMy сам ігнорує під час розпізнавання тексту – крапки над i та в літерах із діакритикою, крапки в кінці речень і коми залишаються, а зображення сторінки не змінюється. На сильно спотвореному факсі помилки читання так зменшуються приблизно з 28 % до менш ніж 6 %."
 }

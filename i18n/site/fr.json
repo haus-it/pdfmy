@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "<b>Ouvrez</b> simplement le fichier Word ou Excel ou faites-le glisser dans la fenêtre (également OpenDocument, RTF, PowerPoint et e-mails). Chaque feuille de calcul devient une section distincte.",
  "ZUGFeRD und XRechnung": "ZUGFeRD et XRechnung",
  "Nach oben": "Haut de page",
- "Nach oben zur Suche und zu den Themen": "Retour à la recherche et aux thèmes"
+ "Nach oben zur Suche und zu den Themen": "Retour à la recherche et aux thèmes",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Points parasites dus au fax et à la poussière :</b> PDFMy masque de lui-même, pour la reconnaissance de texte, les petits points noirs d'une page en noir et blanc (ligne de fax, poussière sur la vitre du scanner) – les points sur les i et les accents, les points de ponctuation et les virgules sont conservés, et l'image de la page reste inchangée. Sur un fax très perturbé, les erreurs de lecture passent ainsi d'environ 28 % à moins de 6 %."
 }

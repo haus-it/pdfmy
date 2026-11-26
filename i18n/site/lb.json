@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Word- oder Excel-Datei einfach <b>opmaachen</b> oder an d'Fënster zéien (och OpenDocument, RTF, PowerPoint an E-Mailen). All Tabelleblat gëtt en eegenen Ofschnitt.",
  "ZUGFeRD und XRechnung": "ZUGFeRD an XRechnung",
  "Nach oben": "No uewen",
- "Nach oben zur Suche und zu den Themen": "No uewen bei d’Sich an d’Themen"
+ "Nach oben zur Suche und zu den Themen": "No uewen bei d’Sich an d’Themen",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Stéierpunkten duerch Fax a Stëbs:</b> Kleng schwaarz Punkten op enger schwaarz-wäisser Säit (Fax-Leitung, Stëbs op der Glasplack vum Scanner) blennt PDFMy fir d'Texterkennung selwer aus – Punkten op i an Ëmlauter, Satzpunkten a Kommaen bleiwen, d'Säitebild bleift onverännert. Bei engem staark gestéierte Fax falen d'Liesfeeler esou vu ronn 28 % op ënner 6 %."
 }

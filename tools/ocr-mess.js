@@ -116,15 +116,16 @@ async function engine(langDir, langs, vars = {}, dir = '/td-' + path.basename(la
   };
 }
 // Ganzer Korpus: deutsche Texte mit deu, englische (…-en) mit eng
-async function measure(langDir = path.join(ROOT, 'vendor', 'tesseract', 'lang'), only, prep = true, vars) {
+// dir: anderer Bildordner (z. B. tests/ocr-korpus/fax-gestoert) – Grundwahrheit bleibt die .txt im Korpus (Endung -fein/-normal entfällt)
+async function measure(langDir = path.join(ROOT, 'vendor', 'tesseract', 'lang'), only, prep = true, vars, dir = KORPUS) {
   if (!vars) { appPrep({ width: 1, height: 1, data: new Uint8ClampedArray(4) }); vars = imaging.OCR_PARAMS; }   // wie die App
-  const files = fs.readdirSync(KORPUS).filter(f => /\.png$/.test(f) && (!only || only.test(f))).sort();
+  const files = fs.readdirSync(dir).filter(f => /\.png$/.test(f) && (!only || only.test(f))).sort();
   const eng = {}, out = [];
   for (const f of files) {
-    const lang = /-en\./.test(f) ? 'eng' : 'deu';
+    const lang = /-en[.-]/.test(f) ? 'eng' : 'deu';
     eng[lang] ||= await engine(langDir, lang, vars);
-    const r = eng[lang].read(path.join(KORPUS, f), prep);
-    out.push({ file: f, lang, ms: r.ms, conf: r.conf, text: r.text, ...rates(fs.readFileSync(path.join(KORPUS, f.replace(/\.\w+$/, '.txt')), 'utf8'), r.text) });
+    const r = eng[lang].read(path.join(dir, f), prep);
+    out.push({ file: f, lang, ms: r.ms, conf: r.conf, text: r.text, ...rates(fs.readFileSync(path.join(KORPUS, f.replace(/(-fein|-normal)?\.\w+$/, '.txt')), 'utf8'), r.text) });
   }
   Object.values(eng).forEach(e => e.end());
   const sum = k => out.reduce((s, r) => s + r[k], 0);

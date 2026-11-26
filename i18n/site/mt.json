@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Sempliċement <b>iftħu</b> fajl Word jew Excel jew kaxkruh fit-tieqa (anke OpenDocument, RTF, PowerPoint u emails). Kull worksheet issir taqsima għaliha.",
  "ZUGFeRD und XRechnung": "ZUGFeRD u XRechnung",
  "Nach oben": "Fuq nett",
- "Nach oben zur Suche und zu den Themen": "Lura għat-tfittxija u s-suġġetti"
+ "Nach oben zur Suche und zu den Themen": "Lura għat-tfittxija u s-suġġetti",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Tikek minn faks u trab:</b> PDFMy jinjora waħdu tikek suwed żgħar fuq paġna iswed u abjad (linja tal-faks, trab fuq il-ħġieġ tal-iskaner) għar-rikonoxximent tat-test – it-tikek fuq l-i u fuq l-ittri b'aċċenti, il-punti u l-virgoli jibqgħu, u l-immaġni tal-paġna tibqa' l-istess. F'faks imħassar ħafna, l-iżbalji tal-qari b'hekk jonqsu minn madwar 28% għal inqas minn 6%."
 }

@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Word vai Excel failu vienkārši <b>atveriet</b> vai ievelciet logā (arī OpenDocument, RTF, PowerPoint un e-pastus). Katra darblapa kļūst par atsevišķu sadaļu.",
  "ZUGFeRD und XRechnung": "ZUGFeRD un XRechnung",
  "Nach oben": "Uz augšu",
- "Nach oben zur Suche und zu den Themen": "Uz augšu pie meklēšanas un tēmām"
+ "Nach oben zur Suche und zu den Themen": "Uz augšu pie meklēšanas un tēmām",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Traucējumu punkti no faksa un putekļiem:</b> Sīkus melnus punktus melnbaltā lapā (faksa līnija, putekļi uz skenera stikla) PDFMy teksta atpazīšanai pats ignorē – punkti virs i un diakritiskās zīmes, teikuma beigu punkti un komati paliek, un lapas attēls netiek mainīts. Stipri traucētam faksam lasīšanas kļūdas tā samazinās no aptuveni 28% līdz mazāk nekā 6%."
 }

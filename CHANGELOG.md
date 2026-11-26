@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-26
+
+### Texterkennung: Störpunkte bei Fax und Staub werden ausgeblendet (app-v348)
+- Kleine schwarze Punkte auf Schwarzweiß-Seiten (Fax-Leitungsstörungen, Staub auf dem Vorlagenglas) entfernt PDFMy jetzt in der Arbeitskopie für die Texterkennung (js/imaging.js `despeckle`); das Seitenbild bleibt unverändert. Ein Fleck gilt nur als Störung, wenn er klein ist und in seiner Zeile im Umkreis keine Schrift steht – i- und Umlaut-Punkte, Satzpunkte, Kommas, Trennpunkte „·“ und Bruchstücke schwacher Buchstaben bleiben. Andere Flecken schützen einen Fleck nicht (Störpunkte kommen in Gruppen). Graustufen-Seiten und körnige Fotos bleiben unberührt.
+- Gemessen im echten App-Weg mit den 6 Korpusbriefen als Fax: gestörte Faxe (1500 Punkte, 120 Kleckse, 20 Striche je Seite) 28 % → 5,8 % (fein) bzw. 6,0 % (normal) Zeichenfehler; saubere Faxe 2,1 % → 1,8 % (fein) bzw. 2,9 % → 2,6 % (normal), keine Seite schlechter; 300-dpi-Korpus unverändert 0,40 %. Rechenzeit rund 0,2 s je 300-dpi-Seite.
+- Neues Test-Gate: tests/ocr-korpus/fax-gestoert (6 Seiten) in tests/ocr.test.js, dazu ein Test, dass i-Punkte, Satz- und Trennpunkte bleiben und Graustufen-Seiten unberührt sind. tools/ocr-mess.js misst auf Wunsch einen anderen Bildordner.
+
 ## 2026-11-25
 
 ### Hilfe: Knopf „Nach oben“ (app-v347)

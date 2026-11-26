@@ -1887,5 +1887,6 @@
  "Word- oder Excel-Datei einfach <b>öffnen</b> oder ins Fenster ziehen (auch OpenDocument, RTF, PowerPoint und E-Mails). Jedes Tabellenblatt wird ein eigener Abschnitt.": "Word edo Excel fitxategia <b>ireki</b> besterik ez duzu, edo arrastatu leihora (OpenDocument, RTF, PowerPoint eta mezu elektronikoak ere bai). Kalkulu-orri bakoitza atal bereizia bihurtzen da.",
  "ZUGFeRD und XRechnung": "ZUGFeRD eta XRechnung",
  "Nach oben": "Gora",
- "Nach oben zur Suche und zu den Themen": "Gora, bilaketara eta gaietara"
+ "Nach oben zur Suche und zu den Themen": "Gora, bilaketara eta gaietara",
+ "<b>Störpunkte bei Fax und Staub:</b> Kleine schwarze Punkte auf einer Schwarzweiß-Seite (Fax-Leitung, Staub auf dem Vorlagenglas) blendet PDFMy für die Texterkennung selbst aus – Punkte auf i und Umlauten, Satzpunkte und Kommas bleiben, das Seitenbild bleibt unverändert. Bei einem stark gestörten Fax sinken die Lesefehler so von rund 28 % auf unter 6 %.": "<b>Faxaren eta hautsaren orbanak:</b> PDFMy-k berak ezkutatzen ditu testua ezagutzeko orrialde zuri-beltz bateko puntu beltz txikiak (fax-lerroa, hautsa eskanerraren beiran): i-ren gaineko puntuak eta azentuak, puntuak eta komak mantentzen dira, eta orrialdearen irudia ez da aldatzen. Oso hondatutako fax batean, irakurketa-akatsak % 28 ingurutik % 6tik behera jaisten dira horrela."
 }
