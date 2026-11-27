@@ -287,4 +287,4 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 
 **Nachtrag 27.11.2026 (app-v351/v352) – .doc:** Fuß- und Endnoten, Textfelder und mehrspaltiger Satz kommen jetzt ebenfalls an. Damit ist die Vereinszeitung oder der Gemeindebrief als alte .doc-Datei ohne Office und ohne Upload lesbar; bei .docx beginnt ein „fortlaufender“ Abschnittswechsel keine neue Seite mehr.
 
-**Nachtrag 27.11.2026 (app-v353) – Word-Diagramme:** Abschnitt 4 nannte „keine … Diagramme“ bei Word → PDF. Jetzt werden Säulen-, Balken-, Linien-, Flächen-, Kreis- und Ringdiagramme als Vektorgrafik in den Dokumentfarben gezeichnet, ohne Upload (Smallpdf/iLovePDF wandeln über ihren Server).
+**Nachtrag 27.11.2026 (app-v353) – Word-Diagramme:** Abschnitt 4 nannte „keine … Diagramme“ bei Word → PDF. Jetzt werden Säulen-, Balken-, Linien-, Flächen-, Kreis- und Ringdiagramme als Vektorgrafik in den Dokumentfarben gezeichnet, ohne Upload (Smallpdf/iLovePDF wandeln über ihren Server). Seit app-v354 auch in .odt; in .doc ein sichtbarer Hinweis statt stiller Lücke.

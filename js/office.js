@@ -487,6 +487,18 @@
   async function odt(bytes) {
     const { z, doc, sty, lists, st } = await odfParts(bytes, 'text'), blocks = [], body = all(doc, 'office:text')[0];
     const image = async fr => {
+      // Diagramm (app-v354): eingebettetes Objekt mit eigener Datentabelle (Object N/content.xml) – wie bei Impress, statt nur „[Bild]“ aus dem Ersatzbild
+      const obj = kid(fr, 'draw:object');
+      if (obj) {
+        const S = root.Slides || (typeof require === 'function' ? require('./slides.js') : null), dir = String(obj.attrs['xlink:href'] || '').replace(/^\.\//, '');
+        let ch = null; try { ch = S?.odpChart && dir ? await S.odpChart(z, dir) : null; } catch { ch = null; }
+        if (ch) return { type: 'chart', chart: ch, w: len(fr.attrs['svg:width']) || 432, h: len(fr.attrs['svg:height']) || 252 };
+        const cx = dir ? await z.text(dir + '/content.xml').catch(() => null) : null;
+        if (/<chart:chart/.test(cx || '')) {   // Art, die PDFMy nicht zeichnet: Hinweis mit Titel statt Ersatzbild
+          let title = ''; try { title = all(kid(all(parseXml(cx), 'chart:chart')[0], 'chart:title') || { kids: [] }, 'text:p').map(txt).join(' ').trim(); } catch { /* ohne Titel */ }
+          const lab = root.I18N?.t ? String(root.I18N.t('Diagramm')) : 'Diagramm'; return { type: 'p', text: title ? `[${lab}: ${title}]` : `[${lab}]` };
+        }
+      }
       const im = kid(fr, 'draw:image'), href = im?.attrs['xlink:href']; if (!href || /^https?:/.test(href)) return null;
       const data = await z.get(href.replace(/^\.\//, '')); if (!data) return null;
       const mime = data[0] === 0x89 && data[1] === 0x50 ? 'image/png' : data[0] === 0xff && data[1] === 0xd8 ? 'image/jpeg' : null;
@@ -816,6 +828,20 @@
     if (flags & 0x0100) throw new Error('Die Word-Datei ist mit Kennwort geschützt – bitte in Word ohne Kennwort speichern und erneut öffnen.');
     const tbl = cfbStream(c, flags & 0x0200 ? '1Table' : '0Table'); if (!tbl) throw new Error('Word-Datei unvollständig (Tabellenteil fehlt).');
     const data = cfbStream(c, 'data');
+    /* Eingebettete Diagramme (app-v354): OLE-Objekte im ObjectPool (_<Nummer>), Klasse aus CompObj (MSGraph.Chart, Excel.Chart,
+       LibreOffice.ChartDocument). Ihre Werte stecken in einer eingebetteten Arbeitsmappe – PDFMy zeichnet sie (noch) nicht, zeigt aber
+       einen sichtbaren Hinweis statt einer stillen Lücke. */
+    const chartObjs = new Set(); let objCount = 0;
+    try {
+      const pool = c.dirs.findIndex(d => d.type === 1 && d.name === 'ObjectPool');
+      if (pool > 0 && c.children) for (const o of c.children(pool)) {
+        if (o.type !== 1 || !/^_\d+$/.test(o.name)) continue;
+        objCount++;
+        const co = c.children(c.dirs.indexOf(o)).find(d => d.type === 2 && /CompObj$/.test(d.name));
+        const s = co ? cp1252(c.stream(co).subarray(0, 512)) : '';
+        if (/Chart|MSGraph|Diagramm/i.test(s)) chartObjs.add(+o.name.slice(1));
+      }
+    } catch { /* ohne Objektliste */ }
     const ccpText = dv.getInt32(0x4C, true), ccpFtn = dv.getInt32(0x50, true), ccpHdd = dv.getInt32(0x54, true);
     const fcLcb = i => [dv.getUint32(0x9A + i * 8, true), dv.getUint32(0x9E + i * 8, true)];   // FibRgFcLcb97
     const [fcClx, lcbClx] = fcLcb(33);
@@ -913,7 +939,7 @@
       const r = find(chpx, fc), o = { b: false, i: false, pic: -1, spec: false, ftc: -1 }; if (!r || !r.at) return o;
       try { sprms(wd, r.at, r.end, (sp, q) => {
         if (sp === 0x0835) o.b = wd[q] === 1 || wd[q] === 0x81; else if (sp === 0x0836) o.i = wd[q] === 1 || wd[q] === 0x81;
-        else if (sp === 0x6A03) o.pic = dv.getInt32(q, true); else if (sp === 0x4A4F) o.ftc = wd[q] | (wd[q + 1] << 8); else if (sp === 0x0855) o.spec = wd[q] === 1;
+        else if (sp === 0x6A03) o.pic = dv.getInt32(q, true); else if (sp === 0x080A) o.ole = wd[q] === 1; else if (sp === 0x4A4F) o.ftc = wd[q] | (wd[q + 1] << 8); else if (sp === 0x0855) o.spec = wd[q] === 1;
       }); } catch { /* beschädigte Angaben: ohne */ }
       return o;
     };
@@ -1033,7 +1059,15 @@
         for (const im of after) if (im.box) blocks.push(...build(story(txbBase + im.box[0], txbBase + im.box[1])).filter(x => x.type !== 'pagebreak')); else blocks.push({ ...im, align: 'center' }); };
       const para1 = (list, endFc, after) => {
         if (rows.length || row.length) endTable();
-        const imgs = []; for (const x of list) { if (x.ch === '\x01') { const f = chOf(x.fc); if (f.pic >= 0) { const im = picture(f.pic); if (im) imgs.push(im); } } else if (x.ch === '\x08' && x.cp < ccpText) { const im = floatImg(x.cp); if (im) after.push(im); else if (boxOf.has(x.cp)) after.push({ box: boxOf.get(x.cp) }); } }
+        const imgs = []; for (const x of list) { if (x.ch === '\x01') { const f = chOf(x.fc);
+          // Diagramm-Objekt: Word kennzeichnet es (sprmCFOle2 + Objektnummer), LibreOffice nur über das Feld „EMBED“ mit Vorschaubild
+          const code = x.field?.code || '', embed = /^\s*EMBED\b/.test(code), cls = (/EMBED\s+(\S+)/.exec(code) || [])[1] || '';
+          const isChart = f.ole ? chartObjs.has(f.pic >>> 0) : embed && (cls ? /Chart|MSGraph/i.test(cls) : chartObjs.size > 0 && chartObjs.size === objCount);
+          const im = !f.ole && f.pic >= 0 ? picture(f.pic) : null;
+          if (im) { imgs.push(im); continue; }
+          if (isChart) { imgs.push({ type: 'p', text: `[${root.I18N?.t ? String(root.I18N.t('Diagramm')) : 'Diagramm'}]`, align: 'center' }); continue; }
+          if (f.ole) continue;
+          if (f.pic >= 0) { const im = picture(f.pic); if (im) imgs.push(im); } } else if (x.ch === '\x08' && x.cp < ccpText) { const im = floatImg(x.cp); if (im) after.push(im); else if (boxOf.has(x.cp)) after.push({ box: boxOf.get(x.cp) }); } }
         const t = clean(list.map(x => x.ch).join('')); const pr = endFc != null ? parOf(endFc) : { h: 0 };
         if (pr.pb && blocks.length && blocks[blocks.length - 1].type !== 'pagebreak') blocks.push({ type: 'pagebreak' });   // „Seitenumbruch oberhalb“
         const align = pr.jc === 1 ? 'center' : pr.jc === 2 ? 'right' : null;

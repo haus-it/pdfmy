@@ -910,6 +910,6 @@
     else page.drawLine({ start: { x: left, y: H - vy(zero) }, end: { x: right, y: H - vy(zero) }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
   }
 
-  const api = { pptx, odp, render, family, shapePath, autoNum, chartOf, drawChart };
+  const api = { pptx, odp, render, family, shapePath, autoNum, chartOf, drawChart, odpChart };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Slides = api;
 })(typeof self !== 'undefined' ? self : this);

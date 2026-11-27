@@ -41,3 +41,26 @@ test('Diagramm-Zeichner ist eigenständig und zeichnet auch auf fremde Seiten (W
   for (const type of ['line', 'area', 'bar', 'pie', 'doughnut']) Slides.drawChart(L, page, { x: 10, y: 10, w: 380, h: 280, chart: { ...chart, type, hole: type === 'doughnut' ? 0.5 : 0 } }, { f, fb });
   assert.ok((await doc.save()).length > 1000);
 });
+
+test('OpenDocument-Text (.odt): Diagramme aus der eingebetteten Datentabelle statt „[Bild]“ (app-v354)', async () => {
+  // Dieselbe Datei wie oben, mit LibreOffice als .odt gespeichert
+  const d = await Office.odt(new Uint8Array(fs.readFileSync(path.join(__dirname, 'office-korpus', 'diagramm', 'odt-diagramm.odt'))));
+  const t = d.blocks.map(b => b.type === 'chart' ? 'chart:' + b.chart.type : b.text);
+  assert.deepEqual(t.slice(1), ['Die Mitgliederzahl ist in jedem Quartal gestiegen.', 'chart:bar', 'So verteilen sich die Ausgaben:', 'chart:pie', 'Umfrage:', '[Diagramm: Zufriedenheit]', 'Ende des Berichts.']);
+  const [bar, pie] = d.blocks.filter(b => b.type === 'chart');
+  assert.equal(bar.chart.title, 'Mitglieder je Quartal'); assert.deepEqual(bar.chart.cats, ['Q1', 'Q2', 'Q3', 'Q4']);
+  assert.deepEqual(bar.chart.series.map(s => [s.name, s.vals]), [['2025', [120, 135, 150, 160]], ['2026', [165, 172, 180, 195]]]);
+  assert.deepEqual(pie.chart.series[0].vals, [40, 25, 20, 15]);
+  assert.deepEqual([Math.round(bar.w), Math.round(bar.h)], [432, 252], 'Größe aus svg:width/height');
+  assert.ok(!d.blocks.some(b => b.text === '[Bild]'), 'kein „[Bild]“ für Diagramme');
+  const pdf = await L.PDFDocument.load(await TP.build(L, { blocks: d.blocks, page: d.page, fonts }));
+  assert.equal(pdf.getPageCount(), 1);
+});
+
+test('Alte Word-Datei (.doc): eingebettete Diagramme als sichtbarer Hinweis statt stiller Lücke (app-v354)', () => {
+  // Dieselbe Datei, mit LibreOffice als Word 97 gespeichert: Diagramme als OLE-Objekte im ObjectPool (Feld EMBED)
+  const d = Office.doc(new Uint8Array(fs.readFileSync(path.join(__dirname, 'office-korpus', 'diagramm', 'doc-diagramm.doc'))));
+  assert.deepEqual(d.blocks.map(b => b.text), ['Jahresbericht 2026', 'Die Mitgliederzahl ist in jedem Quartal gestiegen.', '[Diagramm]', 'So verteilen sich die Ausgaben:', '[Diagramm]', 'Umfrage:', '[Diagramm]', 'Ende des Berichts.']);
+  // Dateien ohne Diagramme bekommen keinen Hinweis
+  for (const f of ['08-newsletter.doc', '13-textfeld.doc']) assert.ok(!Office.doc(new Uint8Array(fs.readFileSync(path.join(__dirname, 'office-korpus', 'doc97', f)))).blocks.some(b => /^\[Diagramm/.test(b.text || '')), f);
+});

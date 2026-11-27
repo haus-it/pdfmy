@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Diagramme in OpenDocument-Text (.odt) und Hinweis in alten Word-Dateien (app-v354)
+- .odt-Dateien (LibreOffice Writer): Diagramme kamen bisher nur als „[Bild]“ an (das Ersatzbild ist kein PNG/JPEG). Jetzt zeichnet PDFMy sie aus der eingebetteten Datentabelle wie bei Impress – Säulen, Balken, Linie, Fläche, Kreis, Ring; andere Arten mit Titel als Hinweis.
+- Alte Word-Dateien (.doc): Eingebettete Diagramme (MS Graph, Excel-Diagramm, LibreOffice-Diagramm im ObjectPool) fehlten still. Jetzt steht an ihrer Stelle der Hinweis „[Diagramm]“; liegt ein lesbares Vorschaubild bei, wird es gezeigt.
+- Gemessen: derselbe Jahresbericht als .docx, .odt und .doc – .odt mit denselben Werten wie .docx, .doc mit drei Hinweisen an den richtigen Stellen; .doc-Korpus ohne falsche Hinweise.
+- tests/word-diagramm.test.js erweitert (tests/office-korpus/diagramm).
+
 ### Diagramme in Word-Dateien (app-v353)
 - Diagramme in .docx-Dateien (Jahresbericht, Vereinsstatistik, Angebot) fehlten im PDF bisher ganz. Jetzt zeichnet PDFMy Säulen-, Balken-, Linien-, Flächen-, Kreis- und Ringdiagramme aus den im Dokument gespeicherten Werten – als Vektorgrafik (scharf beim Vergrößern und Drucken), in der Größe aus Word und in den Designfarben des Dokuments (theme1.xml, mit Helligkeitsstufen) bzw. den eigenen Farben einzelner Reihen und Kreisstücke.
 - Andere Diagrammarten (z. B. Netz, Punkt) erscheinen als sichtbarer Hinweis „[Diagramm: Titel]“ statt still zu fehlen.

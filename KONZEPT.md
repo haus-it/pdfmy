@@ -969,4 +969,4 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 
 **Umsetzung:** Werte aus dem im Diagramm gespeicherten Zwischenstand (wie bei PowerPoint, js/slides.js chartOf), Farben aus theme1.xml mit Helligkeitsstufen, Größe aus wp:extent. Der Folien-Zeichner wurde eigenständig (Slides.drawChart) und zeichnet nun auch in js/textpdf.js. Leitplanken gewahrt: lokal, ohne Upload, keine neue Bibliothek.
 
-**Ehrliche Grenze:** Netz-, Punkt-, Blasen- und Kombinationsdiagramme erscheinen als Hinweis „[Diagramm: Titel]“; Diagramme in .doc (OLE/MS Graph) und .odt noch nicht.
+**Ehrliche Grenze:** Netz-, Punkt-, Blasen- und Kombinationsdiagramme erscheinen als Hinweis „[Diagramm: Titel]“. Seit app-v354 auch .odt-Diagramme gezeichnet; .doc-Diagramme (OLE, Werte in eingebetteter BIFF-Arbeitsmappe) nur als Hinweis „[Diagramm]“.
