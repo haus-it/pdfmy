@@ -79,3 +79,23 @@ test('.doc: Fuß- und Endnoten wie bei .docx – Nummer im Text, Notentexte am E
   assert.ok(d.blocks.some(b => b.text === '¹ Palandt, BGB, 85. Aufl., § 280 Rn. 12.' && b.small), 'Fußnotentext klein am Ende');
   assert.ok(d.blocks.some(b => b.text === 'Endnoten'), 'Endnoten getrennt');
 });
+
+test('.doc: Textfelder und mehrspaltiger Satz wie bei .docx (app-v352)', async () => {
+  const s = r => r.blocks.map(b => b.type + (b.cols ? '/' + b.cols + ':' + Math.round(b.colGap) : '') + ':' + (b.text || '') + (b.bold ? '[b]' : ''));
+  for (const f of ['13-textfeld', '14-abschnitt']) {
+    const d = Office.doc(new Uint8Array(fs.readFileSync(path.join(D, f + '.doc')))), x = await Office.docx(new Uint8Array(fs.readFileSync(path.join(D, f + '.docx'))));
+    assert.deepEqual(s(d), s(x), f);
+  }
+  const d = Office.doc(new Uint8Array(fs.readFileSync(path.join(D, '13-textfeld.doc')))), t = d.blocks.map(b => b.text);
+  // Textfeld-Inhalt direkt hinter dem Absatz mit der Verankerung, nichts geht verloren
+  const i = t.indexOf('Bitte beachten Sie die Termine im Kasten.');
+  assert.deepEqual(t.slice(i + 1, i + 4), ['Termine im November', 'Mitgliederversammlung am 14. November um 19 Uhr', 'Laternenumzug am 21. November']);
+  assert.ok(t.includes('Geschäftsstelle, Marktplatz 3'), 'zweites Textfeld');
+  // „fortlaufender“ Abschnittswechsel: zwei Spalten ohne neue Seite; „nächste Seite“: Seitenumbruch und drei Spalten
+  assert.ok(!d.blocks.some(b => b.type === 'pagebreak'), 'kein Seitenumbruch bei fortlaufendem Abschnitt');
+  assert.equal(d.blocks.find(b => b.text === 'Bericht des Vorstands').cols, 2);
+  assert.equal(d.blocks.find(b => b.text === 'Vereinszeitung Herbst').cols, undefined, 'erster Abschnitt einspaltig');
+  const n = Office.doc(new Uint8Array(fs.readFileSync(path.join(D, '14-abschnitt.doc'))));
+  const k = n.blocks.findIndex(b => b.text === 'Bericht des Vorstands');
+  assert.equal(n.blocks[k - 1].type, 'pagebreak'); assert.equal(n.blocks[k].cols, 3);
+});

@@ -473,3 +473,5 @@ Nachtrag 26.11.2026 (app-v349): Word 97–2003 (.doc) mit Formatierung; Abgleich
 Nachtrag 27.11.2026 (app-v350): Benutzerdokumentation erweitert (27 bebilderte Anleitungen, Fehlerhilfe „Wenn es nicht klappt“ je Hauptaufgabe; ISO/IEC/IEEE 26514 Abschnitt zu Problemlösung). Aussagen gegen den Programmcode geprüft; Test-Gate tests/hilfe-center.test.js.
 
 Nachtrag 27.11.2026 (app-v351): .doc-Fuß- und Endnoten, Abgleich gegen dieselbe Datei als .docx als Test-Gate (tests/doc97.test.js).
+
+Nachtrag 27.11.2026 (app-v352): .doc-Textfelder und mehrspaltiger Satz je Abschnitt; Fehlerkorrektur .docx (Art des Abschnittswechsels gehört zum folgenden Abschnitt, ECMA-376 17.6.22). Abgleich .doc gegen .docx (13-textfeld, 14-abschnitt) als Test-Gate tests/doc97.test.js (ISO 9001 8.5.1/8.7: Fehler erkannt, korrigiert und durch Test abgesichert).

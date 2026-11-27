@@ -3,7 +3,7 @@
 /* Word (.docx), Excel (.xlsx) und OpenDocument (.odt, .ods) lesen – ohne Server und ohne Bibliothek: ZIP über DecompressionStream, XML mit kleinem eigenem Parser.
    Ergebnis: Bausteine für js/textpdf.js (Überschriften, Absätze mit Ausrichtung/fett, Listen, Tabellen, Bilder, Seitenumbrüche).
    Office.docx(bytes) → { blocks, page: { size: [w, h], margin } }   Office.xlsx(bytes) → { blocks }
-   Nicht nachgebildet: Textfelder, Spalten, Schriftarten und -größen im Einzelnen, Formeln (es zählt der gespeicherte Wert). */
+   Textfelder kommen als Absätze hinter ihren Anker, Spalten je Abschnitt. Nicht nachgebildet: freie Lage von Textfeldern, Schriftarten und -größen im Einzelnen, Formeln (es zählt der gespeicherte Wert). */
 (function (root) {
   'use strict';
 
@@ -269,7 +269,7 @@
           const mixed = parts.some(x => x.i && x.t.trim()) || (boldRuns > 0 && boldRuns < runs);
           blocks.push({ type: 'p', text, align, bold: runs > 0 && boldRuns === runs, ...(mixed ? { runs: parts.map(x => ({ ...x, t: x.t.replace(/[ \u00a0]+\n/g, '\n') })) } : {}) });
         }
-      } else if (!extra.length && !pageBreak) blocks.push({ type: 'gap' });   // leere Zeile im Dokument
+      } else if (!extra.length && !pageBreak && !boxes.length && !kid(pPr, 'w:sectPr')) blocks.push({ type: 'gap' });   // leere Zeile im Dokument (nicht: reiner Abschnittswechsel)
       for (const x of extra) blocks.push({ ...x, align: align || 'left' });
       // Textfelder: Inhalt als eigene Absätze (verschachtelte Textfelder werden dabei ebenfalls aufgelöst)
       for (const box of boxes.splice(0)) for (const k of els(box)) { if (k.name === 'w:p') await para(k); else if (k.name === 'w:tbl') await table(k); }
@@ -302,13 +302,14 @@
     /* Abschnitte (app-v304): Ein Abschnitt endet mit dem Absatz, der w:sectPr trägt; die Angaben gelten für alles davor.
        Mehrspaltiger Satz (w:cols, z. B. Vereinszeitung, Flyer) → cols je Baustein; Abschnittswechsel „nächste Seite“ (Voreinstellung
        in Word) → Seitenumbruch, „fortlaufend“ → keiner. */
-    let secStart = 0;
+    // w:type gehört zum Abschnitt, der damit beginnt (ECMA-376 17.6.22): „fortlaufend“ → kein Umbruch vor diesem Abschnitt (app-v352)
+    let secStart = 0, after = false;
     const endSection = (sp, last) => {
+      const ty = kid(sp, 'w:type')?.attrs['w:val'] || 'nextPage';
+      if (after && ty !== 'continuous' && secStart > 0 && secStart < blocks.length) { blocks.splice(secStart, 0, { type: 'pagebreak' }); secStart++; }
       const c = kid(sp, 'w:cols'), n = Math.max(1, Math.min(4, +(c?.attrs['w:num'] || 1) || 1)), gap = c?.attrs['w:space'] ? Math.max(6, Math.min(72, +c.attrs['w:space'] / 20)) : 36;
       if (n > 1) for (let i = secStart; i < blocks.length; i++) if (blocks[i].type !== 'pagebreak') { blocks[i].cols = n; blocks[i].colGap = gap; }
-      secStart = blocks.length;
-      const ty = kid(sp, 'w:type')?.attrs['w:val'] || 'nextPage';
-      if (!last && ty !== 'continuous') blocks.push({ type: 'pagebreak' });
+      secStart = blocks.length; after = !last;
     };
     for (const k of els(body)) {
       if (k.name === 'w:p') { await para(k); const sp = kid(kid(k, 'w:pPr'), 'w:sectPr'); if (sp) endSection(sp, false); }
@@ -753,7 +754,7 @@
      Word .doc: Text über die Stückliste (Clx/PlcPcd, MS-DOC 2.4.1) – Absätze, Zeilen- und Seitenumbrüche, Tabellen (Zellmarken),
      Feldergebnisse statt Feldcode. Seit app-v349 auch die Formatierung wie bei .docx: Überschriften (Formatvorlage bzw. Gliederungsebene),
      Listen mit Nummernformat (LST/LFO), fett/kursiv, Ausrichtung, Bilder im Text (PICF) und schwebend (OfficeArt), Kopf-/Fußzeile mit
-     Seitenzahl, Seitenformat und Hauptschrift; seit app-v351 Fuß- und Endnoten. Nicht nachgebildet: Textfelder, Spalten.
+     Seitenzahl, Seitenformat und Hauptschrift; seit app-v351 Fuß- und Endnoten, seit app-v352 Textfelder und Spalten je Abschnitt.
      Excel .xls: BIFF8 (MS-XLS) – sichtbare Tabellenblätter mit Text, Zahlen, Datum (Zahlenformat), Wahrheitswerten und gespeicherten
      Formelergebnissen; ältere BIFF5-Dateien (Excel 95) mit Text in Windows-1252. Kennwortgeschützte Dateien werden erkannt. */
   const cfbOf = (bytes, what) => (root.Email || (typeof require === 'function' ? require('./email.js') : null)).readCfb(bytes, what);
@@ -790,7 +791,8 @@
     // Text aller Teile (Haupttext, Fußnoten, Kopf-/Fußzeilen) mit der Dateiposition (fc) jedes Zeichens – für die Formatierung
     // Teile in fester Folge (MS-DOC 2.3.1): Haupttext, Fußnoten, Kopf-/Fußzeilen, (Makro), Kommentare, Endnoten
     const ccpAtn = Math.max(0, dv.getInt32(0x5C, true)), ccpEdn = Math.max(0, dv.getInt32(0x60, true)), ednBase = ccpText + Math.max(0, ccpFtn) + Math.max(0, ccpHdd) + Math.max(0, dv.getInt32(0x58, true)) + ccpAtn;
-    const total = ednBase + ccpEdn, n = (plc.len - 4) / 12, chars = [], fcs = [];
+    const txbBase = ednBase + ccpEdn, ccpTxbx = Math.max(0, dv.getInt32(0x64, true));   // danach: Textfelder (app-v352)
+    const total = txbBase + ccpTxbx, n = (plc.len - 4) / 12, chars = [], fcs = [];
     for (let i = 0; i < n && chars.length < total; i++) {
       const cp0 = tv.getUint32(plc.at + i * 4, true), cp1 = tv.getUint32(plc.at + (i + 1) * 4, true), fc = tv.getUint32(plc.at + (n + 1) * 4 + i * 8 + 2, true);
       const len = Math.min(cp1 - cp0, total - chars.length); if (len <= 0) continue;
@@ -934,6 +936,18 @@
         }
       }
     } catch { /* ohne schwebende Bilder */ }
+    /* Textfelder (app-v352, wie bei .docx): eigener Textteil hinter den Endnoten; PlcftxbxTxt (Abschnitt je Textfeld) mit FTXBXS,
+       dessen lid die Form-ID der Verankerung (PlcSpaMom) ist. Der Inhalt folgt hinter dem Absatz mit der Verankerung. */
+    const boxOf = new Map();
+    try {
+      const [fcT, lcbT] = fcLcb(56), [fcS, lcbS] = fcLcb(40);
+      if (ccpTxbx > 0 && lcbT >= 30 && lcbS >= 30 && fcT + lcbT <= tbl.length && fcS + lcbS <= tbl.length) {
+        const m = (lcbT - 4) / 26, byId = new Map();
+        for (let k = 0; k < m; k++) { const a = tv.getUint32(fcT + k * 4, true), b = tv.getUint32(fcT + (k + 1) * 4, true), lid = tv.getInt32(fcT + (m + 1) * 4 + k * 22 + 14, true); if (b > a + 1 && b <= ccpTxbx) byId.set(lid, [a, b]); }
+        const ms = (lcbS - 4) / 30;
+        for (let k = 0; k < ms; k++) { const r = byId.get(tv.getInt32(fcS + (ms + 1) * 4 + k * 26, true)); if (r) boxOf.set(tv.getUint32(fcS + k * 4, true), r); }
+      }
+    } catch { /* ohne Textfelder */ }
     const floatImg = cp => { const f = floating.get(cp); if (!f) return null; const [src, a, b] = f.src;
       for (let q = a; q + 8 < b; q++) {
         if (src[q] === 0x89 && src[q + 1] === 0x50 && src[q + 2] === 0x4E && src[q + 3] === 0x47) { for (let e = q + 8; e + 8 <= b; e++) if (src[e] === 0x49 && src[e + 1] === 0x45 && src[e + 2] === 0x4E && src[e + 3] === 0x44) return { type: 'img', bytes: src.slice(q, e + 8), mime: 'image/png', w: f.w > 0 ? f.w : 200, h: f.h > 0 ? f.h : 150 }; return null; }
@@ -964,7 +978,7 @@
         if (code === 0x15) { const f = st.pop(); if (f && st.every(s => s.res)) { const t = /\bNUMPAGES\b/.test(f.code) ? '{NUMPAGES}' : /\bPAGE\b/.test(f.code) ? '{PAGE}' : null; if (t) { while (out.length && out[out.length - 1].field === f) out.pop(); out.push({ ch: t, fc: fcs[k] }); } } continue; }
         if (st.length && !st[st.length - 1].res) { st[st.length - 1].code += ch; continue; }
         if (st.some(s => !s.res)) continue;
-        const nm = ch === '\x02' && c0 === 0 && k < ccpText ? noteMark(k) : null;
+        const nm = ch === '\x02' && k < ccpText ? noteMark(k) : null;
         out.push({ ch: nm || ch, fc: fcs[k], cp: k, field: st[st.length - 1] });
       }
       return out;
@@ -975,10 +989,11 @@
       const blocks = []; let row = [], rows = [], cols = 0, buf = [];
       const endTable = () => { if (row.length) rows.push(row); if (rows.length) { const w = rows.reduce((a, r) => Math.max(a, r.length), 0); blocks.push({ type: 'table', rows: rows.map(r => Array.from({ length: w }, (_, i) => r[i] ?? '')), head: rows.length > 1 }); } rows = []; row = []; cols = 0; };
       // Schwebende Bilder stehen hinter ihrem Absatz (wie bei .docx), Bilder im Text davor
-      const para = (list, endFc) => { const after = []; para1(list, endFc, after); for (const im of after) blocks.push({ ...im, align: 'center' }); };
+      const para = (list, endFc) => { const after = []; para1(list, endFc, after);
+        for (const im of after) if (im.box) blocks.push(...build(story(txbBase + im.box[0], txbBase + im.box[1])).filter(x => x.type !== 'pagebreak')); else blocks.push({ ...im, align: 'center' }); };
       const para1 = (list, endFc, after) => {
         if (rows.length || row.length) endTable();
-        const imgs = []; for (const x of list) { if (x.ch === '\x01') { const f = chOf(x.fc); if (f.pic >= 0) { const im = picture(f.pic); if (im) imgs.push(im); } } else if (x.ch === '\x08' && x.cp < ccpText) { const im = floatImg(x.cp); if (im) after.push(im); } }
+        const imgs = []; for (const x of list) { if (x.ch === '\x01') { const f = chOf(x.fc); if (f.pic >= 0) { const im = picture(f.pic); if (im) imgs.push(im); } } else if (x.ch === '\x08' && x.cp < ccpText) { const im = floatImg(x.cp); if (im) after.push(im); else if (boxOf.has(x.cp)) after.push({ box: boxOf.get(x.cp) }); } }
         const t = clean(list.map(x => x.ch).join('')); const pr = endFc != null ? parOf(endFc) : { h: 0 };
         if (pr.pb && blocks.length && blocks[blocks.length - 1].type !== 'pagebreak') blocks.push({ type: 'pagebreak' });   // „Seitenumbruch oberhalb“
         const align = pr.jc === 1 ? 'center' : pr.jc === 2 ? 'right' : null;
@@ -1014,7 +1029,29 @@
       while (blocks.length && blocks[blocks.length - 1].type === 'pagebreak') blocks.pop();
       return blocks;
     };
-    const blocks = build(story(0, ccpText));
+    /* Abschnitte (app-v352, wie bei .docx): PlcfSed → Sepx je Abschnitt. Spaltenzahl (sprmSCcolumns) und Abstand (sprmSDxaColumns)
+       → cols je Baustein; Abschnittsbeginn (sprmSBkc) „fortlaufend“ → kein Seitenumbruch, sonst neue Seite. */
+    const secs = [];
+    try {
+      const [fcSed, lcbSed] = fcLcb(6);
+      if (lcbSed >= 16 && fcSed + lcbSed <= tbl.length) {
+        const m = (lcbSed - 4) / 16;
+        for (let k = 0; k < m; k++) {
+          const a = tv.getUint32(fcSed + k * 4, true), b = tv.getUint32(fcSed + (k + 1) * 4, true), fcSepx = tv.getInt32(fcSed + (m + 1) * 4 + k * 12 + 2, true), s = { a, b, bkc: 2, cols: 1, gap: 36 };
+          if (fcSepx > 0 && fcSepx + 2 <= wd.length) { const cb = dv.getUint16(fcSepx, true); try { sprms(wd, fcSepx + 2, Math.min(wd.length, fcSepx + 2 + cb), (sp, q) => {
+            if (sp === 0x3009) s.bkc = wd[q]; else if (sp === 0x500B) s.cols = Math.max(1, Math.min(4, dv.getUint16(q, true) + 1)); else if (sp === 0x900C) s.gap = Math.max(6, Math.min(72, dv.getInt16(q, true) / 20));
+          }); } catch { /* ohne */ } }
+          secs.push(s);
+        }
+      }
+    } catch { secs.length = 0; }
+    const ok = secs.length > 1 && secs[0].a === 0 && secs.every((s, i) => s.b > s.a && (!i || s.a === secs[i - 1].b));
+    const blocks = [];
+    for (const [i, s] of (ok ? secs : [{ a: 0, b: ccpText, cols: secs[0]?.cols || 1, gap: secs[0]?.gap || 36 }]).entries()) {
+      const bl = build(story(s.a, Math.min(s.b, ccpText)));
+      if (i && s.bkc !== 0 && blocks.length && bl.length) blocks.push({ type: 'pagebreak' });
+      for (const x of bl) blocks.push(s.cols > 1 && x.type !== 'pagebreak' ? { ...x, cols: s.cols, colGap: s.gap } : x);
+    }
     for (const [kind, head] of [['fn', 'Fußnoten'], ['en', 'Endnoten']]) {
       const o = notes[kind]; if (!o.used.length) continue;
       const items = o.used.map((k, i) => { const a = o.txt[k], b = o.txt[k + 1]; if (a == null || b == null) return null; const t = clean(story(o.base + a, o.base + b).map(x => x.ch).join('').replace(/\r/g, '\n')).replace(/\n+/g, ' ').trim(); return t ? `${sup(i + 1)} ${t}` : null; }).filter(Boolean);

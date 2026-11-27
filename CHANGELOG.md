@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Alte Word-Dateien (.doc): Textfelder und mehrspaltiger Satz (app-v352)
+- Textfelder aus .doc-Dateien (Infokästen, Termine, Kontaktblöcke) gehen nicht mehr verloren: Ihr Inhalt steht wie bei .docx direkt hinter dem Absatz, an dem das Textfeld verankert ist.
+- Mehrspaltiger Satz (Vereinszeitung, Gemeindebrief, Flyer) wird je Abschnitt übernommen – Spaltenzahl und Spaltenabstand wie im Original.
+- Abschnittswechsel „fortlaufend“ beginnt jetzt keine neue Seite mehr – das galt auch für .docx: Dort wurde die Art des Wechsels bisher dem falschen Abschnitt zugeordnet (Word speichert sie beim Abschnitt, der damit beginnt). Ein Absatz, der nur den Abschnittswechsel trägt, erzeugt keine Leerzeile mehr.
+- Gemessen: zwei Testdokumente (Textfelder + fortlaufender Wechsel auf zwei Spalten; Seitenwechsel auf drei Spalten) als .doc und .docx – gleiche Bausteine, Spalten und Umbrüche; alle bisherigen Korpusdateien unverändert.
+- tests/doc97.test.js erweitert (tests/office-korpus/doc97/13-textfeld, 14-abschnitt).
+
 ### Alte Word-Dateien (.doc): Fuß- und Endnoten (app-v351)
 - Fuß- und Endnoten aus .doc-Dateien (Word 97–2003) kommen jetzt wie bei .docx an: hochgestellte Nummer an der Verweisstelle, die Notentexte am Ende unter „Fußnoten“ bzw. „Endnoten“ – wichtig für Schriftsätze, Gutachten und Abschlussarbeiten. Bisher fehlten sie ganz.
 - Gemessen: Testdokument mit zwei Fußnoten und einer Endnote, als .doc und .docx gespeichert – gleiche Bausteine und gleicher Wortlaut; die 10 Korpusdateien unverändert; Robustheitstest mit beschädigten Dateien ohne technischen Fehler.

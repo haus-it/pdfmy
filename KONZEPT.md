@@ -961,4 +961,4 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 | 5 Prüfbar | Korpus .doc gegen .docx, Robustheitstest |
 | 6 Wenig aktive Inhalte | passt: Makros und eingebettete Objekte werden nicht ausgeführt |
 
-**Ehrliche Grenze:** Textfelder und Spalten aus .doc noch nicht (Fuß- und Endnoten seit app-v351); Formatvorlagen-Schriftgrößen werden über die Überschriften-Ebene abgebildet.
+**Ehrliche Grenze:** Textfelder werden als Absätze hinter ihrem Anker übernommen, nicht frei platziert (wie bei .docx; Fuß- und Endnoten seit app-v351, Textfelder und Spalten seit app-v352); Formatvorlagen-Schriftgrößen werden über die Überschriften-Ebene abgebildet.
