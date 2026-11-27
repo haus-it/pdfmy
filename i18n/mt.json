@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Kif ġie skanjat",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Il-fajl tal-Word huwa bil-ħsara – jekk jogħġbok iftħu f’Word u ssejvjah mill-ġdid.",
  "Bildseite": "Paġna ta’ stampi",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Dan il-browser ma jistax jiftaħ fajls tal-Office – jekk jogħġbok aġġorna l-browser."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Dan il-browser ma jistax jiftaħ fajls tal-Office – jekk jogħġbok aġġorna l-browser.",
+ "(wird abgebucht)": "(debitu dirett)",
+ "(schon bezahlt)": "(diġà mħallas)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Miftakar: „{0}“ mhux se jidħol aktar fil-lista tal-iskadenzi. Biex tibdel dan, erġa’ immarka l-kaxxa.",
+ "Ohne Fristüberwachung": "Mingħajr monitoraġġ tal-iskadenza",
+ "In die Fristenliste aufnehmen": "Żid mal-lista tal-iskadenzi",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Neħħi l-marka jekk din l-iskadenza ma teħtieġx monitoraġġ (eż. debitu dirett). PDFMy jiftakar l-għażla għal dan it-tip ta’ dokument.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Tel que numérisé",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Le fichier Word est endommagé – veuillez l’ouvrir dans Word et l’enregistrer à nouveau.",
  "Bildseite": "Page d’image",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ce navigateur ne peut pas décompresser les fichiers Office – veuillez mettre à jour le navigateur."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ce navigateur ne peut pas décompresser les fichiers Office – veuillez mettre à jour le navigateur.",
+ "(wird abgebucht)": "(prélevé automatiquement)",
+ "(schon bezahlt)": "(déjà payé)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Mémorisé : « {0} » n’ira plus dans la liste des échéances. Pour changer, cochez de nouveau la case.",
+ "Ohne Fristüberwachung": "Sans suivi d’échéance",
+ "In die Fristenliste aufnehmen": "Ajouter à la liste des échéances",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Décochez si cette échéance n’a pas besoin d’être surveillée (p. ex. prélèvement). PDFMy mémorise le choix pour ce type de document.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

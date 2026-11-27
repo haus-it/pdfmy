@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Tal com s’ha escanejat",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "El fitxer de Word està malmès; obriu-lo al Word i torneu-lo a desar.",
  "Bildseite": "Pàgina d’imatge",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Aquest navegador no pot descomprimir fitxers d’Office; actualitzeu el navegador."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Aquest navegador no pot descomprimir fitxers d’Office; actualitzeu el navegador.",
+ "(wird abgebucht)": "(es carrega al compte)",
+ "(schon bezahlt)": "(ja pagat)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Desat: «{0}» ja no entrarà a la llista de terminis. Per canviar-ho, torneu a marcar la casella.",
+ "Ohne Fristüberwachung": "Sense seguiment del termini",
+ "In die Fristenliste aufnehmen": "Afegir a la llista de terminis",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Desmarqueu-ho si aquest termini no cal vigilar-lo (p. ex. domiciliació). PDFMy recorda l’elecció per a aquest tipus de document.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

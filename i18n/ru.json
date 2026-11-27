@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Как отсканировано",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Файл Word повреждён – откройте его в Word и сохраните заново.",
  "Bildseite": "Страница-изображение",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Этот браузер не может распаковать файлы Office – обновите браузер."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Этот браузер не может распаковать файлы Office – обновите браузер.",
+ "(wird abgebucht)": "(списывается автоматически)",
+ "(schon bezahlt)": "(уже оплачено)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Запомнено: «{0}» больше не будет попадать в список сроков. Чтобы изменить, снова поставьте флажок.",
+ "Ohne Fristüberwachung": "Без контроля срока",
+ "In die Fristenliste aufnehmen": "Добавить в список сроков",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Снимите флажок, если этот срок не нужно контролировать (напр., автосписание). PDFMy запомнит выбор для этого вида документа.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

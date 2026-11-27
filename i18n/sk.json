@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Ako naskenované",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Súbor Wordu je poškodený – otvorte ho vo Worde a znova uložte.",
  "Bildseite": "Obrázková strana",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Tento prehliadač nedokáže rozbaliť súbory Office – aktualizujte prehliadač."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Tento prehliadač nedokáže rozbaliť súbory Office – aktualizujte prehliadač.",
+ "(wird abgebucht)": "(strháva sa z účtu)",
+ "(schon bezahlt)": "(už zaplatené)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Zapamätané: „{0}“ sa už nebude zaraďovať do zoznamu lehôt. Ak to chcete zmeniť, znova začiarknite políčko.",
+ "Ohne Fristüberwachung": "Bez sledovania lehoty",
+ "In die Fristenliste aufnehmen": "Zaradiť do zoznamu lehôt",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Zrušte začiarknutie, ak túto lehotu netreba sledovať (napr. inkaso). PDFMy si zapamätá voľbu pre tento druh dokumentu.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

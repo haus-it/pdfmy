@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Kā skenēts",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word fails ir bojāts – atveriet to programmā Word un saglabājiet vēlreiz.",
  "Bildseite": "Attēlu lapa",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Šī pārlūkprogramma nevar atarhivēt Office failus – lūdzu, atjauniniet pārlūkprogrammu."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Šī pārlūkprogramma nevar atarhivēt Office failus – lūdzu, atjauniniet pārlūkprogrammu.",
+ "(wird abgebucht)": "(tiek noņemts tiešā debeta veidā)",
+ "(schon bezahlt)": "(jau samaksāts)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Atcerēts: “{0}” vairs netiks iekļauts termiņu sarakstā. Lai mainītu, vēlreiz atzīmējiet rūtiņu.",
+ "Ohne Fristüberwachung": "Bez termiņa uzraudzības",
+ "In die Fristenliste aufnehmen": "Iekļaut termiņu sarakstā",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Noņemiet atzīmi, ja šis termiņš nav jāuzrauga (piem., tiešais debets). PDFMy atceras izvēli šim dokumenta veidam.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

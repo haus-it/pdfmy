@@ -670,6 +670,7 @@ body:not(.has-doc) .menu-list hr.msep:first-of-type{display:none}
 .tile i .ic{width:20px;height:20px;stroke:var(--accent)}
 .tile b{font-size:15px;font-weight:700;letter-spacing:.1px;margin-bottom:3px}
 .tile span{font-size:13px;line-height:1.4}
+.fristtrack{display:flex;gap:6px;align-items:flex-start;margin-top:6px;font-size:13px;cursor:pointer}.fristtrack input{margin-top:2px}.fristtrack .muted{color:var(--muted)}
 .deadlines{border-radius:var(--r);box-shadow:var(--sh-sm);padding:14px 16px;margin:0 0 18px}
 .dl-head b{font-family:"Bricolage Grotesque",sans-serif;font-size:15px}
 .dl-badge{font-family:"Instrument Sans",sans-serif;font-weight:700;font-size:11.5px;padding:2px 8px;vertical-align:1px}
@@ -1559,7 +1560,8 @@ html.i18n-wait body{visibility:hidden}
       <p class="cfrow"><button type="button" id="cfEdit" class="linkbtn" title="Eigene Felder wie Mandant, Projekt oder Kostenstelle festlegen">Eigene Felder festlegen …</button></p>
       <div class="field"><label for="assignee">Zuständig</label><input id="assignee" list="teamList" autocomplete="off" placeholder="Kürzel, z. B. AB – erscheint dort unter „Meine Post“"></div>
       <div class="field"><label for="m-deadline">Frist / zahlbar bis</label>
-        <div class="withbtn"><input id="m-deadline" type="date"><button id="btnFristCalc" type="button" title="Frist berechnen: Berufung, Einspruch, Widerspruch, eigene Frist – mit Vorfrist">Berechnen</button><button id="btnIcs" disabled title="Kalendereintrag mit Erinnerung 3 Tage vorher (Outlook)">Termin</button></div></div>
+        <div class="withbtn"><input id="m-deadline" type="date"><button id="btnFristCalc" type="button" title="Frist berechnen: Berufung, Einspruch, Widerspruch, eigene Frist – mit Vorfrist">Berechnen</button><button id="btnIcs" disabled title="Kalendereintrag mit Erinnerung 3 Tage vorher (Outlook)">Termin</button></div>
+        <label class="fristtrack" id="fristTrackRow" hidden title="Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart."><input id="m-track" type="checkbox" checked><span>In die Fristenliste aufnehmen <span id="fristWhy" class="muted"></span></span></label></div>
         <div class="field"><label for="m-wv">Wiedervorlage</label><div class="withbtn"><input id="m-wv" type="date" title="An diesem Tag erscheint der Brief wieder auf der Startseite"><select id="m-wvq" aria-label="Wiedervorlage schnell wählen"><option value="">schnell …</option><option value="1">morgen</option><option value="7">in 1 Woche</option><option value="14">in 2 Wochen</option><option value="30">in 1 Monat</option></select></div></div>
       </div>
       <div class="field"><label for="fname">Dateiname</label><input id="fname" spellcheck="false"></div>

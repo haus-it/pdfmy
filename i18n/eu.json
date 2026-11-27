@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Eskaneatu bezala",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word fitxategia hondatuta dago; ireki Worden eta gorde berriro.",
  "Bildseite": "Irudi-orria",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Nabigatzaile honek ezin ditu Office fitxategiak deskonprimitu; eguneratu nabigatzailea."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Nabigatzaile honek ezin ditu Office fitxategiak deskonprimitu; eguneratu nabigatzailea.",
+ "(wird abgebucht)": "(helbideratuta)",
+ "(schon bezahlt)": "(dagoeneko ordainduta)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Gogoratuta: „{0}“ ez da gehiago epeen zerrendara joango. Aldatzeko, markatu berriro laukia.",
+ "Ohne Fristüberwachung": "Epearen jarraipenik gabe",
+ "In die Fristenliste aufnehmen": "Gehitu epeen zerrendara",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Kendu marka epe hori jarraitu behar ez bada (adib. helbideratzea). PDFMy-k dokumentu mota honetarako aukera gogoratzen du.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

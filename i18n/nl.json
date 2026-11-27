@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Zoals gescand",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Het Word-bestand is beschadigd – open het in Word en sla het opnieuw op.",
  "Bildseite": "Beeldpagina",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Deze browser kan Office-bestanden niet uitpakken – werk de browser bij."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Deze browser kan Office-bestanden niet uitpakken – werk de browser bij.",
+ "(wird abgebucht)": "(wordt automatisch afgeschreven)",
+ "(schon bezahlt)": "(al betaald)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Onthouden: ‘{0}’ komt niet meer in de termijnlijst. Vink het vakje opnieuw aan om dit te wijzigen.",
+ "Ohne Fristüberwachung": "Zonder termijnbewaking",
+ "In die Fristenliste aufnehmen": "Opnemen in de termijnlijst",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Vinkje weghalen als deze termijn niet bewaakt hoeft te worden (bijv. automatische incasso). PDFMy onthoudt de keuze voor dit documenttype.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

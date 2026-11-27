@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Come scansionato",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Il file Word è danneggiato: lo apra in Word e lo salvi di nuovo.",
  "Bildseite": "Pagina di immagini",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Questo browser non può decomprimere i file di Office: aggiornare il browser."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Questo browser non può decomprimere i file di Office: aggiornare il browser.",
+ "(wird abgebucht)": "(addebitato in conto)",
+ "(schon bezahlt)": "(già pagato)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Memorizzato: «{0}» non finirà più nell’elenco delle scadenze. Per cambiare, spuntare di nuovo la casella.",
+ "Ohne Fristüberwachung": "Senza controllo della scadenza",
+ "In die Fristenliste aufnehmen": "Aggiungi all’elenco delle scadenze",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Togliere la spunta se questa scadenza non va controllata (ad es. addebito diretto). PDFMy ricorda la scelta per questo tipo di documento.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

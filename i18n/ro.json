@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Ca la scanare",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Fișierul Word este deteriorat – deschideți-l în Word și salvați-l din nou.",
  "Bildseite": "Pagină cu imagini",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Acest browser nu poate dezarhiva fișiere Office – actualizați browserul."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Acest browser nu poate dezarhiva fișiere Office – actualizați browserul.",
+ "(wird abgebucht)": "(se debitează direct)",
+ "(schon bezahlt)": "(deja plătit)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Reținut: „{0}” nu va mai intra în lista de termene. Pentru a schimba, bifați din nou caseta.",
+ "Ohne Fristüberwachung": "Fără urmărirea termenului",
+ "In die Fristenliste aufnehmen": "Adaugă în lista de termene",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Debifați dacă acest termen nu trebuie urmărit (de ex. debit direct). PDFMy reține alegerea pentru acest tip de document.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

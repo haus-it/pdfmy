@@ -37,7 +37,7 @@ async function journalAdd(meta, where, pages, text = docPages().map(pageText).jo
   if (!meta || !(meta.sender || meta.type || meta.deadline || meta.subject)) return;
   learnRule(meta);
   const e = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), savedAt: stamp(), date: meta.date, sender: meta.sender, type: meta.type,
-    subject: meta.subject, deadline: meta.deadline, amount: meta.amount, reference: meta.reference || meta.customerNo, invoiceNo: meta.invoiceNo,
+    subject: meta.subject, deadline: meta.deadline, nofrist: meta.deadline && state.fristOff ? '1' : '', amount: meta.amount, reference: meta.reference || meta.customerNo, invoiceNo: meta.invoiceNo,
     file: rel || '', pages, done: false, by: S.author || '', sha256: state.hashes?.[rel] || '', inNo: meta.inNo || '',
     assignee: state.assignee || '', status: 'offen', upd: updStamp(), wv: state.wv || '', akte: state.akte || '', tags: Journal.tagList(state.tags).join(', '), fields: Journal.fieldsText(state.cf) };
   try {
@@ -45,7 +45,7 @@ async function journalAdd(meta, where, pages, text = docPages().map(pageText).jo
     const old = fa?.saved && fa.id ? all.find(x => x.id === fa.id) : null;
     if (old) {   // neue Version desselben Dokuments: Eintrag fortschreiben statt neuen anlegen
       const upd = { ...old, ...Object.fromEntries(['date', 'sender', 'type', 'subject', 'deadline', 'amount', 'reference', 'invoiceNo', 'akte', 'tags', 'fields'].map(k => [k, e[k] || old[k] || ''])),
-        file: old.file, sha256: e.sha256 || old.sha256, pages, ver: String((+old.ver || 1) + 1), upd: updStamp() };
+        nofrist: e.nofrist, file: old.file, sha256: e.sha256 || old.sha256, pages, ver: String((+old.ver || 1) + 1), upd: updStamp() };
       upd.seal = await sha256(new TextEncoder().encode(Journal.sealText(upd)));
       await journalSave(all.map(x => x.id === old.id ? upd : x));
       status(`Neue Version gespeichert (v${upd.ver}) – die bisherige Fassung liegt unverändert in „${fa.saved.prev}“.`);
@@ -3101,7 +3101,7 @@ $('#officeForm').addEventListener('submit', async e => {
     let bytes;
     // Fehler beim Erzeugen nicht als „pdfmy Scan antwortet nicht“ melden (wie beim Speichern im Cloud-Ordner)
     try {
-      if (docx) { await waitForOcr(state.pages); bytes = Tools.docx(await Promise.all(state.pages.map(pageBlocks)), { title: state.meta.subject || baseName(), author: state.meta.sender, lang: docLang(state.pages) }); }
+      if (docx) { await waitForOcr(state.pages); bytes = Tools.docx(await Promise.all(state.pages.map(pageRich)), { title: state.meta.subject || baseName(), author: state.meta.sender, lang: docLang(state.pages) }); }
       else bytes = await buildPdf(state.pages, state.meta, { onPage: () => {} });
     } catch (err) { console.error(err); status(`Dokument konnte nicht erzeugt werden: ${err.message}`); return; }
     const res = await scanFetch('/office', { method: 'POST', headers: { 'X-Pdfmy': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ id: sel.value, name: baseName() + (docx ? '.docx' : '.pdf'), data: b64Bytes(bytes) }) }).then(x => x.json());

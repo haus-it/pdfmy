@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Siç është skanuar",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Skedari Word është i dëmtuar – hapeni në Word dhe ruajeni përsëri.",
  "Bildseite": "Faqe me imazhe",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ky shfletues nuk mund të shpaketojë skedarë Office – ju lutemi përditësoni shfletuesin."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ky shfletues nuk mund të shpaketojë skedarë Office – ju lutemi përditësoni shfletuesin.",
+ "(wird abgebucht)": "(debitim direkt)",
+ "(schon bezahlt)": "(paguar tashmë)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "U mbajt mend: „{0}“ nuk do të hyjë më në listën e afateve. Për ta ndryshuar, shënojeni sërish kutinë.",
+ "Ohne Fristüberwachung": "Pa ndjekje afati",
+ "In die Fristenliste aufnehmen": "Shto në listën e afateve",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Hiqeni shenjën nëse ky afat nuk ka nevojë të ndiqet (p.sh. debitim direkt). PDFMy e mban mend zgjedhjen për këtë lloj dokumenti.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

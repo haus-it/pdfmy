@@ -4465,5 +4465,16 @@
  "Wie gescannt": "As scanned",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "The Word file is damaged – please open it in Word and save it again.",
  "Bildseite": "Picture page",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "This browser cannot unpack Office files – please update your browser."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "This browser cannot unpack Office files – please update your browser.",
+ "(wird abgebucht)": "(paid by direct debit)",
+ "(schon bezahlt)": "(already paid)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Remembered: “{0}” will no longer go into the deadline list. To change this, tick the box again.",
+ "Ohne Fristüberwachung": "No deadline monitoring",
+ "In die Fristenliste aufnehmen": "Add to the deadline list",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Untick if this deadline does not need monitoring (e.g. direct debit). PDFMy remembers the choice for this document type.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

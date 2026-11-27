@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Jak zeskanowano",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Plik programu Word jest uszkodzony – otwórz go w programie Word i zapisz ponownie.",
  "Bildseite": "Strona z obrazami",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ta przeglądarka nie potrafi rozpakować plików Office – zaktualizuj przeglądarkę."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ta przeglądarka nie potrafi rozpakować plików Office – zaktualizuj przeglądarkę.",
+ "(wird abgebucht)": "(pobierane z konta)",
+ "(schon bezahlt)": "(już zapłacone)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Zapamiętano: „{0}” nie będzie już trafiać na listę terminów. Aby to zmienić, ponownie zaznacz pole.",
+ "Ohne Fristüberwachung": "Bez monitorowania terminu",
+ "In die Fristenliste aufnehmen": "Dodaj do listy terminów",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Odznacz, jeśli tego terminu nie trzeba pilnować (np. polecenie zapłaty). PDFMy zapamiętuje wybór dla tego rodzaju dokumentu.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

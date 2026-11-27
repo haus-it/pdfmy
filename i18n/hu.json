@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Ahogy beolvasták",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "A Word-fájl sérült – nyissa meg a Wordben, és mentse újra.",
  "Bildseite": "Képoldal",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ez a böngésző nem tudja kicsomagolni az Office-fájlokat – frissítse a böngészőt."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ez a böngésző nem tudja kicsomagolni az Office-fájlokat – frissítse a böngészőt.",
+ "(wird abgebucht)": "(csoportos beszedéssel)",
+ "(schon bezahlt)": "(már kifizetve)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Megjegyezve: a(z) „{0}” többé nem kerül a határidőlistára. A módosításhoz jelölje be újra a négyzetet.",
+ "Ohne Fristüberwachung": "Határidő-figyelés nélkül",
+ "In die Fristenliste aufnehmen": "Felvétel a határidőlistára",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Vegye ki a pipát, ha ezt a határidőt nem kell figyelni (pl. csoportos beszedés). A PDFMy megjegyzi a választást ehhez a dokumentumtípushoz.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

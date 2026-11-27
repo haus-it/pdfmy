@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Sellaisenaan skannattu",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-tiedosto on vioittunut – avaa se Wordissa ja tallenna uudelleen.",
  "Bildseite": "Kuvasivu",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Tämä selain ei pysty purkamaan Office-tiedostoja – päivitä selain."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Tämä selain ei pysty purkamaan Office-tiedostoja – päivitä selain.",
+ "(wird abgebucht)": "(veloitetaan suoraan)",
+ "(schon bezahlt)": "(jo maksettu)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Muistettu: ”{0}” ei enää tule määräaikaluetteloon. Muuta asetusta merkitsemällä ruutu uudelleen.",
+ "Ohne Fristüberwachung": "Ei määräajan seurantaa",
+ "In die Fristenliste aufnehmen": "Lisää määräaikaluetteloon",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Poista valinta, jos määräaikaa ei tarvitse seurata (esim. suoramaksu). PDFMy muistaa valinnan tälle asiakirjatyypille.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

@@ -77,11 +77,69 @@
   /* Word-Dokument (.docx, Office Open XML), Seitenumbruch je Seite. Eine Seite ist entweder Text (ein Absatz je Zeile)
      oder gegliedert (js/reflow.js): [{ type: 'h', level } | 'p' | 'li' | { type: 'table', rows }] → Word-Überschriften
      (Formatvorlagen „Überschrift 1/2“, im Navigationsbereich und für Screenreader), Absätze, Aufzählung, Tabellen mit Rahmen. */
+  /* Mit Formatierung (app-v357, Meldung 2026-0012): Eine Seite darf auch { blocks, size: [Breite, Höhe] in pt, ocr } sein; Blöcke mit
+     Wörtern (Reflow.blocks(…, { words: true }): ws = [{ t, x, y, w, h, f: { font, bold, italic } }], Seitenmaße 0…1). Dann übernimmt
+     Word Schriftart, Größe, fett/kursiv, Ausrichtung (zentriert/rechts), Einzug sowie Seitenformat und Ränder des Originals. */
+  const FONT = { arial: 'Arial', sans: 'Arial', times: 'Times New Roman', serif: 'Times New Roman', calibri: 'Calibri', cambria: 'Cambria', courier: 'Courier New', mono: 'Courier New' };
+  function richPages(pages) {
+    const rich = pages.filter(p => p && !Array.isArray(p) && typeof p === 'object' && p.blocks);
+    if (!rich.length) return null;
+    // Größe je Wort in halben Punkten: Textebene = Wortbox (Höhe = Schriftgrad); Texterkennung: relativ zur üblichen Höhe, Grundschrift 11 pt
+    const all = [];
+    for (const p of rich) for (const b of p.blocks) for (const w of b.ws || []) all.push({ p, w });
+    const med = a => { const s = a.filter(Number.isFinite).sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
+    const medH = new Map(rich.map(p => [p, med(p.blocks.flatMap(b => (b.ws || []).map(w => w.h)))]));
+    const rawSz = (p, w) => (p = p.src || p, p.ocr || !w.f ? 22 * (w.h / (medH.get(p) || w.h || 1)) : w.h * (p.size?.[1] || 842) * 2);
+    const baseSz = Math.min(28, Math.max(16, Math.round(med(all.map(({ p, w }) => rawSz(p, w))) || 22)));
+    const fonts = {}; for (const { w } of all) if (w.f?.font) fonts[w.f.font] = (fonts[w.f.font] || 0) + 1;
+    const baseFont = FONT[Object.entries(fonts).sort((a, b) => b[1] - a[1])[0]?.[0]] || 'Calibri';
+    const sz = (p, w) => { const v = Math.round(rawSz(p, w)); return Math.abs(v - baseSz) <= Math.max(1, baseSz * (p.ocr || !w.f ? 0.15 : 0.05)) ? baseSz : Math.min(144, Math.max(10, v)); };
+    return { baseSz, baseFont, fmt: (p, w) => ({ font: FONT[w.f?.font] || '', b: !!w.f?.bold, i: !!w.f?.italic, sz: sz(p, w), known: !!w.f }) };   // known: Schriftangaben aus der Textebene (nicht Texterkennung)
+  }
   function docx(pages, { title = '', author = '', lang = 'de-DE' } = {}, date = new Date()) {
     const enc = new TextEncoder(), iso = date.toISOString().replace(/\.\d{3}Z$/, 'Z');
-    const run = (t, b) => `<w:r>${b ? '<w:rPr><w:b/></w:rPr>' : ''}${String(t).split('\n').map(s => `<w:t xml:space="preserve">${xml(s)}</w:t>`).join('<w:br/>')}</w:r>`;   // \n = Zeilenumbruch im Absatz
+    const R = richPages(pages), base = R ? { font: R.baseFont, sz: R.baseSz } : { font: 'Calibri', sz: 22 };
+    const rPr = (f, force) => {   // force: in Überschriften Größe und fett ausdrücklich (sonst gilt die Formatvorlage)
+      if (!f) return '';
+      const p = [];
+      if (f.font && f.font !== base.font) p.push(`<w:rFonts w:ascii="${f.font}" w:hAnsi="${f.font}" w:cs="${f.font}"/>`);
+      if (f.b) p.push('<w:b/>'); else if (force && f.known) p.push('<w:b w:val="0"/>'); if (f.i) p.push('<w:i/>');
+      if (f.sz && (force || f.sz !== base.sz)) p.push(`<w:sz w:val="${f.sz}"/><w:szCs w:val="${f.sz}"/>`);
+      return p.length ? `<w:rPr>${p.join('')}</w:rPr>` : '';
+    };
+    const run = (t, b, f, force) => `<w:r>${f ? rPr(f, force) : b ? '<w:rPr><w:b/></w:rPr>' : ''}${String(t).split('\n').map(s => `<w:t xml:space="preserve">${xml(s)}</w:t>`).join('<w:br/>')}</w:r>`;   // \n = Zeilenumbruch im Absatz
     const para = (t, style) => `<w:p>${style ? `<w:pPr><w:pStyle w:val="${style}"/></w:pPr>` : ''}${run(t)}</w:p>`;
-    const table = (rows, widths) => {
+    /* Läufe eines Blocks: jedes Wort im Blocktext wiederfinden (auch getrennt: „Woh-“ in „Wohnung“), Zeichen dazwischen erben die
+       Formatierung davor; gleiche Formatierung hintereinander = ein Lauf */
+    const runsOf = (b, pg, force) => {
+      const s = b.text, fm = new Array(s.length).fill(null); let pos = 0;
+      for (const w of b.ws || []) for (const t of [w.t, w.t.replace(/[-‐]$/, '')]) {
+        const i = t ? s.indexOf(t, pos) : -1;
+        if (i >= 0 && i - pos <= 3) { const f = R.fmt(pg, w); for (let j = i; j < i + t.length; j++) fm[j] = f; pos = i + t.length; break; }
+      }
+      const first = fm.find(Boolean) || null;
+      for (let j = 0; j < s.length; j++) if (!fm[j]) fm[j] = j ? fm[j - 1] : first;
+      const key = f => f ? `${f.font}|${f.b}|${f.i}|${f.sz}|${f.known}` : '';
+      let out = '', from = 0;
+      for (let j = 1; j <= s.length; j++) if (j === s.length || key(fm[j]) !== key(fm[from])) { out += run(s.slice(from, j), false, fm[from] || {}, force); from = j; }
+      return out;
+    };
+    // Ausrichtung und Einzug aus der Lage des Blocks zwischen den Rändern der Seite (L, Rr: äußerster Text links/rechts, 0…1)
+    const pPrOf = (b, pg, style) => {
+      const ws = b.ws || [], o = [];
+      if (style) o.push(`<w:pStyle w:val="${style}"/>`);
+      if (ws.length && pg.L != null) {
+        const x0 = Math.min(...ws.map(w => w.x)), x1 = Math.max(...ws.map(w => w.x + w.w)), span = pg.Rr - pg.L;
+        const center = Math.abs((x0 - pg.L) - (pg.Rr - x1)) < span * 0.025 && x0 - pg.L > span * 0.08;   // links und rechts fast gleich viel Platz
+        const right = !center && pg.Rr - x1 < span * 0.02 && x0 - pg.L > span * 0.35;
+        const ind = !center && !right && x0 - pg.L > span * 0.04 ? Math.round((x0 - pg.L) * pg.size[0] * 20) : 0;
+        if (ind) o.push(`<w:ind w:left="${ind}"/>`);
+        if (center) o.push('<w:jc w:val="center"/>'); else if (right) o.push('<w:jc w:val="right"/>');
+      }
+      return o.length ? `<w:pPr>${o.join('')}</w:pPr>` : '';
+    };
+    const richPara = (b, pg, style) => `<w:p>${pPrOf(b, pg, style)}${runsOf(b, pg, /^berschrift/.test(style || ''))}</w:p>`;
+    const table = (rows, widths, cws, pg) => {
       const n = Math.max(...rows.map(r => r.length)), ws = Array.from({ length: n }, (_, k) => Math.max(400, Math.round(9354 * (widths?.length === n ? widths[k] : 1 / n))));   // Breite wie im Original
       const isNum = v => /\d/.test(v) && /^[-+]?[\d.,]+\s?(€|EUR|%)?$/.test(v.trim());
       const numCol = ws.map((_, k) => { const body = rows.slice(1).map(r => String(r[k] ?? '').trim()).filter(Boolean); return body.length > 0 && body.filter(isNum).length / body.length >= 0.6; });
@@ -89,18 +147,39 @@
         `<w:tblGrid>${ws.map(w => `<w:gridCol w:w="${w}"/>`).join('')}</w:tblGrid>` +
         rows.map((r, i) => `<w:tr>${i === 0 ? '<w:trPr><w:tblHeader/></w:trPr>' : ''}` + Array.from({ length: n }, (_, k) => {
           const v = String(r[k] ?? ''), num = i === 0 ? numCol[k] : isNum(v);   // Zahlen und Beträge rechtsbündig, Kopfzelle wie ihre Spalte
-          return `<w:tc><w:tcPr><w:tcW w:w="${ws[k]}" w:type="dxa"/></w:tcPr><w:p><w:pPr><w:spacing w:after="0"/>${num ? '<w:jc w:val="right"/>' : ''}</w:pPr>${run(v, i === 0)}</w:p></w:tc>`;
+          // Mit Wörtern je Zelle: Formatierung wie im Original (fett, Schrift, Größe des ersten Worts); sonst Kopfzeile fett
+          const cw = cws?.[i]?.[k], f = cw?.length && R ? R.fmt(pg, cw[0]) : null;
+          if (f) f.b = cw.filter(w => w.f?.bold).length * 2 > cw.length;
+          return `<w:tc><w:tcPr><w:tcW w:w="${ws[k]}" w:type="dxa"/></w:tcPr><w:p><w:pPr><w:spacing w:after="0"/>${num ? '<w:jc w:val="right"/>' : ''}</w:pPr>${run(v, i === 0, f)}</w:p></w:tc>`;
         }).join('') + '</w:tr>').join('') + '</w:tbl><w:p/>';
     };
-    const page = t => Array.isArray(t)
-      ? t.map(b => b.type === 'table' ? table(b.rows, b.widths) : b.type === 'h' ? para(b.text, b.level === 1 ? 'berschrift1' : 'berschrift2')
-        : b.type === 'li' ? para('• ' + b.text.replace(/^[•·▪◦‣–\-*]\s*/, ''), 'Listenabsatz') : para(b.text)).join('')
+    const plain = t => t.map(b => b.type === 'table' ? table(b.rows, b.widths) : b.type === 'h' ? para(b.text, b.level === 1 ? 'berschrift1' : 'berschrift2')
+      : b.type === 'li' ? para('• ' + b.text.replace(/^[•·▪◦‣–\-*]\s*/, ''), 'Listenabsatz') : para(b.text)).join('');
+    // Seite mit Formatierung: Ränder aus dem äußersten Text der Seite
+    const rich = pg => {
+      const ws = pg.blocks.flatMap(b => b.ws || (b.cws ? b.cws.flat(2) : []));
+      const g = { ...pg, src: pg, size: pg.size || [595.3, 841.9], L: ws.length ? Math.min(...ws.map(w => w.x)) : null, Rr: ws.length ? Math.max(...ws.map(w => w.x + w.w)) : null };
+      return pg.blocks.map(b => b.type === 'table' ? table(b.rows, b.widths, b.cws, g)
+        : !b.ws ? plain([b])
+        : b.type === 'h' ? richPara(b, g, b.level === 1 ? 'berschrift1' : 'berschrift2')
+        : b.type === 'li' ? richPara(b, g, 'Listenabsatz') : richPara(b, g)).join('');
+    };
+    const page = t => Array.isArray(t) ? plain(t)
+      : t && typeof t === 'object' && t.blocks ? (R ? rich(t) : plain(t.blocks))
       : String(t || '').replace(/\r/g, '').split('\n').map(l => para(l)).join('');
     const body = pages.map((t, i) => (i ? '<w:p><w:r><w:br w:type="page"/></w:r></w:p>' : '') + page(t)).join('');
+    // Seitenformat und Ränder der ersten Seite mit Formatierung (sonst A4 mit üblichen Rändern); Ränder 0,5–3,5 cm
+    const first = pages.find(p => p && p.blocks && p.size), tw = v => Math.round(v * 20);
+    let sect = '<w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1418" w:header="709" w:footer="709" w:gutter="0"/>';
+    if (first && R) {
+      const [W, H] = first.size, ws = first.blocks.flatMap(b => b.ws || (b.cws ? b.cws.flat(2) : [])), cl = v => Math.min(1984, Math.max(283, v));
+      const m = ws.length ? { l: cl(tw(Math.min(...ws.map(w => w.x)) * W)), r: cl(tw((1 - Math.max(...ws.map(w => w.x + w.w))) * W)), t: cl(tw(Math.min(...ws.map(w => w.y)) * H)), b: cl(tw((1 - Math.max(...ws.map(w => w.y + w.h))) * H)) } : { l: 1418, r: 1134, t: 1134, b: 1134 };
+      sect = `<w:pgSz w:w="${tw(W)}" w:h="${tw(H)}"${W > H ? ' w:orient="landscape"' : ''}/><w:pgMar w:top="${m.t}" w:right="${m.r}" w:bottom="${m.b}" w:left="${m.l}" w:header="709" w:footer="709" w:gutter="0"/>`;
+    }
     const sty = (id, name, extra) => `<w:style w:type="paragraph" w:styleId="${id}"><w:name w:val="${name}"/><w:basedOn w:val="Standard"/><w:next w:val="Standard"/><w:qFormat/>${extra}</w:style>`;
     const border = k => `<w:${k} w:val="single" w:sz="4" w:space="0" w:color="auto"/>`;
     const styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
-      `<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:sz w:val="22"/><w:szCs w:val="22"/><w:lang w:val="${xml(lang)}"/></w:rPr></w:rPrDefault>` +
+      `<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="${base.font}" w:hAnsi="${base.font}" w:eastAsia="${base.font}" w:cs="${base.font}"/><w:sz w:val="${base.sz}"/><w:szCs w:val="${base.sz}"/><w:lang w:val="${xml(lang)}"/></w:rPr></w:rPrDefault>` +
       '<w:pPrDefault><w:pPr><w:spacing w:after="160" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>' +
       '<w:style w:type="paragraph" w:default="1" w:styleId="Standard"><w:name w:val="Normal"/><w:qFormat/></w:style>' +
       sty('berschrift1', 'heading 1', '<w:pPr><w:keepNext/><w:spacing w:before="360" w:after="120"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:sz w:val="32"/><w:szCs w:val="32"/></w:rPr>') +
@@ -122,7 +201,7 @@
         `<dc:title>${xml(title)}</dc:title><dc:creator>${xml(author)}</dc:creator><dc:language>${xml(lang)}</dc:language>` +
         `<dcterms:created xsi:type="dcterms:W3CDTF">${iso}</dcterms:created></cp:coreProperties>`,
       'word/document.xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
-        `<w:body>${body}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1418" w:header="709" w:footer="709" w:gutter="0"/></w:sectPr></w:body></w:document>`,
+        `<w:body>${body}<w:sectPr>${sect}</w:sectPr></w:body></w:document>`,
       'word/styles.xml': styles,
       'word/_rels/document.xml.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
         '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',

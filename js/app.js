@@ -2559,6 +2559,7 @@ function analyze() {
     }
     for (const k of META_KEYS) if (!state.touched[k]) state.meta[k] = r[k] || '';
     state.meta.appealRule = r.appealRule || '';   // Rechtsbehelfsbelehrung erkannt → Einspruchsfrist aus dem Bescheiddatum
+    fristDefault();
     window.routeForLetter?.();
     window.suggestAkte?.();   // Akte vorschlagen (gleiches Aktenzeichen bzw. letzter Absender)
     window.suggestFields?.();   // eigene Felder (Mandant, Projekt …) ebenso
@@ -2567,6 +2568,23 @@ function analyze() {
   }
   renderSide();
 }
+/* Frist in die Fristenliste aufnehmen? (Meldung 2026-0011) Vorgabe ja – nein, wenn der Nutzer das für diese Dokumentart abgewählt hat
+   (LS fristOffTypes) oder der Betrag abgebucht wird bzw. schon bezahlt ist (E-Rechnung: Zahlungsart 49/59, nichts mehr zu zahlen; sonst Text). */
+const fristOffTypes = () => { const v = LS.get('fristOffTypes', []); return Array.isArray(v) ? v : []; };
+function fristDefault() {
+  if (state.touched.frist) return;
+  const d = state.einv?.data, why = d?.debit ? 'Lastschrift' : d?.paid ? 'bezahlt' : Letter.noDeadlineReason(state.pages.map(pageText).join('\n'));
+  state.fristWhy = why; state.fristOff = !!(why || (state.meta.type && fristOffTypes().includes(state.meta.type)));
+}
+$('#m-track').addEventListener('change', e => {
+  state.fristOff = !e.target.checked; state.touched.frist = true; state.dirty = true;
+  const t = state.meta.type; if (!t || state.fristWhy) { renderSide(); return; }   // erkannte Lastschrift o. Ä.: nur dieses Dokument
+  const s = new Set(fristOffTypes()); const had = s.has(t);
+  if (state.fristOff) s.add(t); else s.delete(t);
+  LS.set('fristOffTypes', [...s]);
+  if (state.fristOff && !had) toast(I18N.t(`Gemerkt: „${t}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.`), 7000);
+  renderSide();
+});
 function scrubMeta(meta, red = redactedTokens(state.pages)) {
   if (!red.size) return meta;
   const m = { ...meta };
@@ -2607,6 +2625,8 @@ function renderSide() {
   const sub = targetPath(state.meta);
   $('#outHint').textContent = state.outDir ? `Ablage: ${state.outDir.name}${sub ? '\\' + sub : ''} (ohne Dialog)` : 'Ablage: Speichern-Dialog (Ablageordner wählen für automatische Ablage)';
   $('#btnIcs').disabled = !state.meta.deadline;
+  $('#fristTrackRow').hidden = !state.meta.deadline; $('#m-track').checked = !state.fristOff;
+  $('#fristWhy').textContent = state.fristOff && state.fristWhy ? I18N.t(state.fristWhy === 'Lastschrift' ? '(wird abgebucht)' : '(schon bezahlt)') : '';
   renderGiro();
   renderResults();
 }
@@ -3012,6 +3032,18 @@ const coveredWord = (p, w) => p.annots.some(a => a.type === 'wo' && overlaps(a, 
 async function pageBlocks(p) {
   const words = await pageWords(p).catch(() => null);
   return words?.length ? Reflow.blocks(textLines(words)) : Reflow.fromText(pageText(p));
+}
+/* Für „PDF → Word“ mit Formatierung (app-v357, Meldung 2026-0012): Blöcke mit ihren Wörtern (Schrift, fett/kursiv, Größe, Lage)
+   und Seitengröße in pt; ohne Wortpositionen wie bisher nur der gegliederte Text */
+async function pageRich(p) {
+  const words = await pageWords(p).catch(() => null);
+  let size = null;
+  try {
+    if (p.kind === 'pdf') { const vp = (await state.docs[p.docIdx].js.getPage(p.pageIdx + 1)).getViewport({ scale: 1, rotation: p.rotation }); size = [vp.width, vp.height]; }
+    else if (p.w && p.h) { const q = p.rotation % 180 ? p.w / p.h : p.h / p.w; size = q >= 1 ? [595.3, 595.3 * q] : [841.9, 841.9 * q]; }   // Scan: A4-Breite (quer: A4-Länge)
+  } catch {}
+  if (!words?.length) return Reflow.fromText(pageText(p));
+  return { blocks: Reflow.blocks(textLines(words), { words: true }), size: size || [595.3, 841.9], ocr: !words.some(w => w.f) };
 }
 async function pageWords(p) {
   if (p.ocr?.words) return unredacted(p, p.ocr.words);
@@ -4186,7 +4218,7 @@ async function saveToOutDir(bytes, name, meta) {
   let dir = state.outDir;
   for (const part of targetPath(meta).split('\\').filter(Boolean)) dir = await dir.getDirectoryHandle(part, { create: true });
   const fn = await writeUnique(dir, name, bytes);
-  if (S.saveIcs && meta.deadline) await writeUnique(dir, fn.replace(/\.pdf$/i, '') + '_Frist.ics', Letter.buildIcs(meta, fn));
+  if (S.saveIcs && meta.deadline && !state.fristOff) await writeUnique(dir, fn.replace(/\.pdf$/i, '') + '_Frist.ics', Letter.buildIcs(meta, fn));
   if (state.einv?.xml) await writeUnique(dir, fn.replace(/\.pdf$/i, '') + '.xml', state.einv.xml);   // E-Rechnung: Original-XML (GoBD)
   const rel = [targetPath(meta), fn].filter(Boolean).join('\\');
   (state.hashes ||= {})[rel] = await sha256(bytes);
@@ -4378,7 +4410,7 @@ async function doExport(o) {
   const st = stampOpts(o, base);
   if (o.format === 'docx') {
     await waitForOcr(pages);
-    data = Tools.docx(await Promise.all(pages.map(pageBlocks)), { title: meta.subject || base, author: meta.sender, lang: docLang(pages) });
+    data = Tools.docx(await Promise.all(pages.map(pageRich)), { title: meta.subject || base, author: meta.sender, lang: docLang(pages) });
     name = base + '.docx'; mime = DOCX;
   } else if (o.format === 'xlsx') {
     await waitForOcr(pages);
@@ -5303,7 +5335,7 @@ function resetDoc() {
   if ($('#taskBar')) $('#taskBar').hidden = true;   // Aufgabenleiste gehört zum vorigen Dokument
   $('#assignee').value = ''; $('#akte').value = ''; state.akteTouched = false; $('#tags').value = '';
   $('#formHint').hidden = true;
-  Object.assign(state, { files: [], filesDirty: false, marks: null, einv: null, assignee: '', akte: '', fromArchive: null, tags: '', cf: {}, cfTouched: false, pages: [], docs: [], sel: -1, annSel: null, editing: null, crop: null, undo: [], touched: {}, dirty: false, meta: emptyMeta(),
+  Object.assign(state, { files: [], filesDirty: false, marks: null, einv: null, assignee: '', akte: '', fromArchive: null, tags: '', cf: {}, cfTouched: false, pages: [], docs: [], sel: -1, annSel: null, editing: null, crop: null, undo: [], touched: {}, fristOff: false, fristWhy: '', dirty: false, meta: emptyMeta(),
     picked: new Set(), anchor: null, view: 'page', intent: null, inputBytes: 0, fromScanner: false, scanDone: false, autoArmed: null, wv: '', metaShown: false, letterLikeWas: undefined, formJumped: false });
   if ($('#m-wv')) $('#m-wv').value = '';
   window.cfRender?.(); window.reqReset?.();

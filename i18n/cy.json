@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Fel y’i sganiwyd",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Mae’r ffeil Word wedi’i difrodi – agorwch hi yn Word a’i chadw eto.",
  "Bildseite": "Tudalen lluniau",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ni all y porwr hwn ddadbacio ffeiliau Office – diweddarwch y porwr."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ni all y porwr hwn ddadbacio ffeiliau Office – diweddarwch y porwr.",
+ "(wird abgebucht)": "(debyd uniongyrchol)",
+ "(schon bezahlt)": "(wedi talu eisoes)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Wedi’i gofio: ni fydd „{0}“ yn mynd i’r rhestr dyddiadau cau mwyach. I newid hyn, ticiwch y blwch eto.",
+ "Ohne Fristüberwachung": "Heb fonitro dyddiad cau",
+ "In die Fristenliste aufnehmen": "Ychwanegu at y rhestr dyddiadau cau",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Dad-diciwch os nad oes angen monitro’r dyddiad cau hwn (e.e. debyd uniongyrchol). Mae PDFMy yn cofio’r dewis ar gyfer y math hwn o ddogfen.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

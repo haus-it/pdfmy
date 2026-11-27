@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Fristen selbst wählen, PDF in Word mit Formatierung (app-v357)
+- Meldung 2026-0011: Unter „Frist / zahlbar bis“ steht jetzt „In die Fristenliste aufnehmen“. Abgewählt kommt das Dokument ins Posteingangsbuch, aber nicht unter „Fristen“ (auch kein Fristtermin .ics); PDFMy merkt sich die Wahl je Dokumentart. Lastschrift oder schon bezahlt erkennt PDFMy selbst – bei E-Rechnungen aus der Zahlungsart (49/59) bzw. „nichts mehr zu zahlen“, sonst aus dem Text; fordert der Text zugleich zur Überweisung auf, bleibt die Frist. Team-Datei des Posteingangsbuchs: neue Spalte „Ohne Fristüberwachung“ (am Ende, ältere Fassungen lesen weiter).
+- Meldung 2026-0012: „PDF → Word“ übernimmt jetzt auch Schriftart, Schriftgröße, fett/kursiv, zentrierte und rechtsbündige Zeilen, Einzüge, Seitenformat (auch quer) und Ränder des Originals; bei Scans Größe nach der erkannten Zeichenhöhe. Gemessen an zwei Korpus-Dokumenten (Brief, Newsletter → PDF → Word): Ränder auf 2–30 Twips wie im Original, Überschriften in Originalschrift und -größe.
+- Neue Tests tests/frist-wahl.test.js und tests/word-export-format.test.js.
+
 ### Titelbilder und Grafiken unverändert, ältere Browser (app-v356)
 - Meldung 2026-0013: Ein gescanntes Titelbild mit Fotos und QR-Code wurde wie ein Brief aufbereitet („Papier weiß“) – Fotos ausgebleicht, QR-Code kontrastarm. PDFMy erkennt solche Seiten jetzt als **Bildseite** (kaum Papierfläche: Titelbild ~17 %, Plakat ~23 %, Briefe 50–100 %) und lässt sie unverändert; die Texterkennung läuft weiter. Ein Bild im Bild (Foto auf dunklem Plakat) wird nicht mehr als „Blatt auf dem Tisch“ ausgeschnitten.
 - Meldung 2026-0009: Fertige Grafiken und Bildschirmfotos (PNG, GIF, WebP, BMP mit glatten Farbflächen) werden nicht mehr wie Scans aufbereitet, die Farben bleiben.

@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Kaip nuskaityta",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word failas sugadintas – atidarykite jį Word programoje ir įrašykite iš naujo.",
  "Bildseite": "Vaizdų puslapis",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ši naršyklė negali išpakuoti „Office“ failų – atnaujinkite naršyklę."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ši naršyklė negali išpakuoti „Office“ failų – atnaujinkite naršyklę.",
+ "(wird abgebucht)": "(nuskaitoma automatiškai)",
+ "(schon bezahlt)": "(jau apmokėta)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Įsiminta: „{0}“ daugiau nebus įtraukiama į terminų sąrašą. Norėdami pakeisti, vėl pažymėkite langelį.",
+ "Ohne Fristüberwachung": "Be termino stebėjimo",
+ "In die Fristenliste aufnehmen": "Įtraukti į terminų sąrašą",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Nuimkite žymą, jei šio termino stebėti nereikia (pvz., tiesioginis debetas). PDFMy įsimena pasirinkimą šiai dokumento rūšiai.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

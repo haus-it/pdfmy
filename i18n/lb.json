@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Wéi gescannt",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "De Word-Fichier ass beschiedegt – maacht en a Word op a späichert en nei.",
  "Bildseite": "Bildsäit",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Dëse Browser kann Office-Fichieren net auspaken – w.e.g. de Browser aktualiséieren."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Dëse Browser kann Office-Fichieren net auspaken – w.e.g. de Browser aktualiséieren.",
+ "(wird abgebucht)": "(gëtt ofgebucht)",
+ "(schon bezahlt)": "(scho bezuelt)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Gemierkt: „{0}“ kënnt net méi an d’Fristelëscht. Fir dat z’änneren, d’Kräizchen erëm setzen.",
+ "Ohne Fristüberwachung": "Ouni Fristiwwerwaachung",
+ "In die Fristenliste aufnehmen": "An d’Fristelëscht ophuelen",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Ewechhuelen, wann dës Frist net iwwerwaacht muss ginn (z. B. Domiciliatioun). PDFMy mierkt sech d’Wiel fir dës Dokumentaart.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

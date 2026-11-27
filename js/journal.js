@@ -8,6 +8,7 @@
     ['deadline', 'Frist'], ['amount', 'Betrag'], ['reference', 'Aktenzeichen'], ['invoiceNo', 'Rechnungs-Nr.'], ['file', 'Datei'],
     ['pages', 'Seiten'], ['done', 'Erledigt'], ['by', 'Abgelegt von'], ['sha256', 'SHA-256'],
     ['assignee', 'Zuständig'], ['status', 'Status'], ['upd', 'Geändert'], ['inNo', 'Eingangs-Nr.'], ['retainMoved', 'Aussortiert'], ['wv', 'Wiedervorlage'], ['akte', 'Akte'], ['ver', 'Version'], ['seal', 'Siegel'], ['tags', 'Schlagwörter'], ['fields', 'Eigene Felder'], ['sigreq', 'Unterschriftsanfrage'], ['sigs', 'Unterschriften'],
+    ['nofrist', 'Ohne Fristüberwachung'],   // app-v357, Meldung 2026-0011 – am Ende, damit ältere Fassungen die Datei unverändert lesen
   ];
   // Fortlaufende Eingangsnummer je Jahr: 2026-0001, 2026-0002 … (höchste vergebene + 1, auch aus dem Team-Buch)
   function nextInNo(entries, year, last = '') {
@@ -73,7 +74,7 @@
   // Fristen: offene Einträge mit Frist, sortiert; Status überfällig / dringend (≤ 7 Tage) / später
   function deadlines(entries, today = new Date()) {
     const t = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());   // lokaler Kalendertag (nicht UTC)
-    return entries.filter(e => e.deadline && !isClosed(norm({ ...e }))).map(e => {
+    return entries.filter(e => e.deadline && !e.nofrist && !isClosed(norm({ ...e }))).map(e => {   // nofrist: beim Ablegen abgewählt (Meldung 2026-0011)
       const days = Math.round((new Date(e.deadline + 'T00:00:00Z') - t) / 86400000);
       return { ...e, days, state: days < 0 ? 'overdue' : days <= 7 ? 'soon' : 'later' };
     }).sort((a, b) => a.days - b.days);

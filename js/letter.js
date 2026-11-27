@@ -694,6 +694,15 @@
     return '';
   }
 
-  const api = { contractTerms, plusMonate, paragraphAround, protectedKind, parseDates, analyzeLetter, keyData, ibanValid, buildFilename, buildIcs, folderName, epcPayload, parsePaymentQr, pickRoute, senderAddress, replyDraft, TEMPLATES, fillTemplate, todoFor, appealDeadline, appealRule, holidays, autopilotCheck, detectLang, scriptOf, cyrLang, lineAround, findSensitive, splitPoints };
+  /* Keine Zahlungsfrist zu überwachen (Meldung 2026-0011): Betrag wird abgebucht oder ist schon bezahlt. → Grund (kurz) oder '' */
+  function noDeadlineReason(text) {
+    const t = String(text || '').replace(/\s+/g, ' ');
+    // Sicherheit vor Bequemlichkeit: wird zugleich zur Überweisung aufgefordert, bleibt die Frist (lieber einmal zu viel als eine verpasste Zahlung)
+    if (/\b(?:bitte\s+überweisen|überweisen\s+Sie|zahlen\s+Sie\s+(?:bitte|den)|Zahlungsziel|zahlbar\s+(?:bis|innerhalb)|Mahnung|Zahlungserinnerung)\b/i.test(t)) return '';
+    if (/\b(?:per|mittels|durch|im|via)\s+(?:SEPA[- ]?)?(?:Basis[- ]?|Firmen[- ]?)?Lastschrift(?:verfahren)?\b(?![^.]{0,30}\bmöglich)|\b(?:wird|werden)\b(?:[^.]|\.(?=\d)){0,80}\b(?:abgebucht|eingezogen)\b|\bbuchen\b(?:[^.]|\.(?=\d)){0,60}\bvon Ihrem Konto ab\b/i.test(t)) return 'Lastschrift';   // Punkte in Datum/Betrag (05.12.2026) beenden den Satz nicht
+    if (/\b(?:bereits|schon)\s+(?:bezahlt|beglichen|ausgeglichen)|\bBetrag\b[^.]{0,40}\bdankend erhalten|\b(?:Rechnung|Betrag)\s+(?:ist\s+)?(?:bezahlt|beglichen)\b|\bbar bezahlt\b|\bZahlung (?:per|mit) (?:Kreditkarte|PayPal|EC-Karte)\b/i.test(t)) return 'bezahlt';
+    return '';
+  }
+  const api = { noDeadlineReason, contractTerms, plusMonate, paragraphAround, protectedKind, parseDates, analyzeLetter, keyData, ibanValid, buildFilename, buildIcs, folderName, epcPayload, parsePaymentQr, pickRoute, senderAddress, replyDraft, TEMPLATES, fillTemplate, todoFor, appealDeadline, appealRule, holidays, autopilotCheck, detectLang, scriptOf, cyrLang, lineAround, findSensitive, splitPoints };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Letter = api;
 })(typeof self !== 'undefined' ? self : this);

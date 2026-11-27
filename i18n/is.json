@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Eins og skannað",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-skráin er skemmd – opnaðu hana í Word og vistaðu hana aftur.",
  "Bildseite": "Myndasíða",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Þessi vafri getur ekki afþjappað Office-skrár – uppfærðu vafrann."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Þessi vafri getur ekki afþjappað Office-skrár – uppfærðu vafrann.",
+ "(wird abgebucht)": "(skuldfært beint)",
+ "(schon bezahlt)": "(þegar greitt)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Munað: „{0}“ fer ekki lengur á frestalistann. Hakaðu aftur í reitinn til að breyta því.",
+ "Ohne Fristüberwachung": "Án frestavöktunar",
+ "In die Fristenliste aufnehmen": "Bæta á frestalistann",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Taktu hakið af ef ekki þarf að fylgjast með þessum fresti (t.d. beingreiðsla). PDFMy man valið fyrir þessa skjalategund.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

@@ -51,6 +51,8 @@
       iban: txt(set, 'PayeePartyCreditorFinancialAccount', 'IBANID').replace(/\s/g, ''),
       reference: txt(set, 'PaymentReference') || txt(agr, 'BuyerReference'),
       note: txt(doc, 'IncludedNote', 'Content'), lines,
+      // Lastschrift (Zahlungsart 59 SEPA / 49) oder nichts mehr zu zahlen: keine Zahlungsfrist zu überwachen (Meldung 2026-0011)
+      debit: /^(49|59)$/.test(txt(set, 'SpecifiedTradeSettlementPaymentMeans', 'TypeCode')), paid: txt(sum, 'DuePayableAmount') !== '' && +txt(sum, 'DuePayableAmount') === 0,
     };
   }
   function parseUbl(x) {
@@ -74,6 +76,7 @@
       iban: txt(x, 'PaymentMeans', 'PayeeFinancialAccount', 'ID').replace(/\s/g, ''),
       reference: txt(x, 'PaymentMeans', 'PaymentID') || txt(head, 'BuyerReference'),
       note: txt(head, 'Note'), lines,
+      debit: /^(49|59)$/.test(txt(x, 'PaymentMeans', 'PaymentMeansCode')), paid: txt(tot, 'PayableAmount') !== '' && +txt(tot, 'PayableAmount') === 0,
     };
   }
   // Lesbare Textfassung (für Ansicht, Suche und Ablage einer reinen XML-Rechnung)

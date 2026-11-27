@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Como se escaneó",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "El archivo de Word está dañado; ábralo en Word y vuelva a guardarlo.",
  "Bildseite": "Página de imagen",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Este navegador no puede descomprimir archivos de Office; actualice el navegador."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Este navegador no puede descomprimir archivos de Office; actualice el navegador.",
+ "(wird abgebucht)": "(se carga en cuenta)",
+ "(schon bezahlt)": "(ya pagado)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Guardado: «{0}» ya no entrará en la lista de plazos. Para cambiarlo, vuelva a marcar la casilla.",
+ "Ohne Fristüberwachung": "Sin seguimiento del plazo",
+ "In die Fristenliste aufnehmen": "Añadir a la lista de plazos",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Desmárquelo si este plazo no necesita seguimiento (p. ej., domiciliación). PDFMy recuerda la elección para este tipo de documento.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

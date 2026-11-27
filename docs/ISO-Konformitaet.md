@@ -480,6 +480,8 @@ Nachtrag 27.11.2026 (app-v355): Punkt-, Netz- und Kombinationsdiagramme (zweite 
 
 Nachtrag 27.11.2026 (app-v356): Meldungen 2026-0013/0009 behoben (Bildseiten und digitale Grafiken unverändert, ISO 9001 10.2 Korrekturmaßnahme mit Test); Browser-Kompatibilität mit fester Mindestbasis als Test-Gate tests/kompatibilitaet.test.js (ISO 9001 8.5.1, Barrierefreiheit: sichtbarer Fokus nach WCAG 2.4.7 auch ohne color-mix).
 
+Nachtrag 27.11.2026 (app-v357): Verbesserungsvorschläge 2026-0011 (Fristenliste wählbar, Lastschrift-Erkennung konservativ: Zahlungsaufforderung behält die Frist) und 2026-0012 (Word-Export mit Formatierung) umgesetzt, je mit Test im Test-Gate (ISO 9001 9.1.2 Kundenzufriedenheit, 10.3 fortlaufende Verbesserung).
+
 Nachtrag 27.11.2026 (app-v353): Diagramme in Word-Dateien (vorher Datenverlust ohne Hinweis); nicht unterstützte Arten mit sichtbarem Hinweis. Test-Gate tests/word-diagramm.test.js; gemeinsamer Zeichner mit der Folienausgabe, deren Tests unverändert grün (ISO 9001 8.5.1).
 
 Nachtrag 27.11.2026 (app-v352): .doc-Textfelder und mehrspaltiger Satz je Abschnitt; Fehlerkorrektur .docx (Art des Abschnittswechsels gehört zum folgenden Abschnitt, ECMA-376 17.6.22). Abgleich .doc gegen .docx (13-textfeld, 14-abschnitt) als Test-Gate tests/doc97.test.js (ISO 9001 8.5.1/8.7: Fehler erkannt, korrigiert und durch Test abgesichert).

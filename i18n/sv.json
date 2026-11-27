@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Som skannad",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-filen är skadad – öppna den i Word och spara den igen.",
  "Bildseite": "Bildsida",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Den här webbläsaren kan inte packa upp Office-filer – uppdatera webbläsaren."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Den här webbläsaren kan inte packa upp Office-filer – uppdatera webbläsaren.",
+ "(wird abgebucht)": "(dras via autogiro)",
+ "(schon bezahlt)": "(redan betald)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Ihågkommet: ”{0}” hamnar inte längre i fristlistan. Markera rutan igen för att ändra.",
+ "Ohne Fristüberwachung": "Utan fristbevakning",
+ "In die Fristenliste aufnehmen": "Lägg till i fristlistan",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Avmarkera om fristen inte behöver bevakas (t.ex. autogiro). PDFMy kommer ihåg valet för den här dokumenttypen.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

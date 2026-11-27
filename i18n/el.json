@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Όπως σαρώθηκε",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Το αρχείο Word είναι κατεστραμμένο – ανοίξτε το στο Word και αποθηκεύστε το ξανά.",
  "Bildseite": "Σελίδα εικόνας",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Αυτό το πρόγραμμα περιήγησης δεν μπορεί να αποσυμπιέσει αρχεία Office – ενημερώστε το πρόγραμμα περιήγησης."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Αυτό το πρόγραμμα περιήγησης δεν μπορεί να αποσυμπιέσει αρχεία Office – ενημερώστε το πρόγραμμα περιήγησης.",
+ "(wird abgebucht)": "(χρεώνεται αυτόματα)",
+ "(schon bezahlt)": "(ήδη πληρωμένο)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Αποθηκεύτηκε: το «{0}» δεν θα μπαίνει πλέον στη λίστα προθεσμιών. Για αλλαγή, τσεκάρετε ξανά το πλαίσιο.",
+ "Ohne Fristüberwachung": "Χωρίς παρακολούθηση προθεσμίας",
+ "In die Fristenliste aufnehmen": "Προσθήκη στη λίστα προθεσμιών",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Καταργήστε την επιλογή αν η προθεσμία δεν χρειάζεται παρακολούθηση (π.χ. πάγια εντολή). Το PDFMy θυμάται την επιλογή για αυτό το είδος εγγράφου.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

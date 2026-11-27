@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Nagu skannitud",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Wordi fail on rikutud – avage see Wordis ja salvestage uuesti.",
  "Bildseite": "Pildileht",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "See brauser ei saa Office’i faile lahti pakkida – palun uuendage brauserit."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "See brauser ei saa Office’i faile lahti pakkida – palun uuendage brauserit.",
+ "(wird abgebucht)": "(võetakse otsekorraldusega)",
+ "(schon bezahlt)": "(juba makstud)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Meelde jäetud: „{0}“ ei lähe enam tähtaegade loendisse. Muutmiseks märkige ruut uuesti.",
+ "Ohne Fristüberwachung": "Tähtaega ei jälgita",
+ "In die Fristenliste aufnehmen": "Lisa tähtaegade loendisse",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Eemaldage märge, kui seda tähtaega pole vaja jälgida (nt otsekorraldus). PDFMy jätab valiku selle dokumendiliigi jaoks meelde.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Som skannet",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-filen er skadet – åpne den i Word og lagre den på nytt.",
  "Bildseite": "Bildeside",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Denne nettleseren kan ikke pakke ut Office-filer – oppdater nettleseren."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Denne nettleseren kan ikke pakke ut Office-filer – oppdater nettleseren.",
+ "(wird abgebucht)": "(trekkes automatisk)",
+ "(schon bezahlt)": "(allerede betalt)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Husket: «{0}» kommer ikke lenger på fristlisten. Sett haken igjen for å endre det.",
+ "Ohne Fristüberwachung": "Uten fristovervåking",
+ "In die Fristenliste aufnehmen": "Legg til i fristlisten",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Fjern haken hvis fristen ikke trenger overvåking (f.eks. avtalegiro). PDFMy husker valget for denne dokumenttypen.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

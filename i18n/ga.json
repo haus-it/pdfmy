@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Mar a scanadh é",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Tá an comhad Word truaillithe – oscail i Word é agus sábháil arís é.",
  "Bildseite": "Leathanach pictiúr",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ní féidir leis an mbrabhsálaí seo comhaid Office a dhíphacáil – nuashonraigh an brabhsálaí."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ní féidir leis an mbrabhsálaí seo comhaid Office a dhíphacáil – nuashonraigh an brabhsálaí.",
+ "(wird abgebucht)": "(dochar díreach)",
+ "(schon bezahlt)": "(íoctha cheana)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Curtha i gcuimhne: ní rachaidh „{0}“ ar liosta na spriocdhátaí a thuilleadh. Chun é seo a athrú, cuir tic sa bhosca arís.",
+ "Ohne Fristüberwachung": "Gan faireachán ar spriocdháta",
+ "In die Fristenliste aufnehmen": "Cuir le liosta na spriocdhátaí",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Bain an tic mura gá faireachán a dhéanamh ar an spriocdháta seo (m.sh. dochar díreach). Cuimhníonn PDFMy ar an rogha don chineál cáipéise seo.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

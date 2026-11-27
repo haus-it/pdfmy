@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Tarandığı gibi",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word dosyası bozuk – lütfen dosyayı Word’de açıp yeniden kaydedin.",
  "Bildseite": "Resim sayfası",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Bu tarayıcı Office dosyalarını açamıyor – lütfen tarayıcıyı güncelleyin."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Bu tarayıcı Office dosyalarını açamıyor – lütfen tarayıcıyı güncelleyin.",
+ "(wird abgebucht)": "(otomatik ödeme)",
+ "(schon bezahlt)": "(zaten ödendi)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Hatırlandı: „{0}“ artık süre listesine girmeyecek. Değiştirmek için kutuyu yeniden işaretleyin.",
+ "Ohne Fristüberwachung": "Süre takibi olmadan",
+ "In die Fristenliste aufnehmen": "Süre listesine ekle",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Bu sürenin takip edilmesi gerekmiyorsa işareti kaldırın (ör. otomatik ödeme). PDFMy bu belge türü için seçimi hatırlar.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }

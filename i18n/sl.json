@@ -4465,5 +4465,16 @@
  "Wie gescannt": "Kot skenirano",
  "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Datoteka Word je poškodovana – odprite jo v Wordu in jo znova shranite.",
  "Bildseite": "Slikovna stran",
- "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ta brskalnik ne more razpakirati datotek Office – posodobite brskalnik."
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ta brskalnik ne more razpakirati datotek Office – posodobite brskalnik.",
+ "(wird abgebucht)": "(bremenitev računa)",
+ "(schon bezahlt)": "(že plačano)",
+ "Gemerkt: „{0}“ kommt künftig nicht mehr in die Fristenliste. Zum Ändern das Häkchen wieder setzen.": "Zapomnjeno: »{0}« ne bo več prišlo na seznam rokov. Za spremembo znova potrdite polje.",
+ "Ohne Fristüberwachung": "Brez spremljanja roka",
+ "In die Fristenliste aufnehmen": "Dodaj na seznam rokov",
+ "Abwählen, wenn diese Frist nicht überwacht werden muss (z. B. Lastschrift). PDFMy merkt sich die Wahl für diese Dokumentart.": "Počistite, če tega roka ni treba spremljati (npr. direktna obremenitev). PDFMy si zapomni izbiro za to vrsto dokumenta.",
+ "Arial": "Arial",
+ "Cambria": "Cambria",
+ "Courier New": "Courier New",
+ "Times New Roman": "Times New Roman",
+ "Lastschrift": "Lastschrift"
 }
