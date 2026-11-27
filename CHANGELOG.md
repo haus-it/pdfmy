@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Bewerbungen: Mappe, Prüfprofil, Nachweis der Eigenbemühungen (app-v359)
+- **Bewerbungsmappe** (Kachel auf der Startseite): Anschreiben, Lebenslauf und Zeugnisse als PDF, Word oder Foto wählen – PDFMy erkennt die Teile (Text und Dateiname), ordnet sie (Deckblatt, Anschreiben, Lebenslauf, Anlagen in Auswahlreihenfolge), setzt je Teil ein Lesezeichen und speichert mit „Fertig“ klein unter „Bewerbung_Vorname_Nachname.pdf“ (ASCII, wie Portale es verlangen; Name aus „Meine Angaben“). Arbeitgeber und Stelle werden aus dem Anschreiben vorgeschlagen.
+- **Prüfprofil „Bewerbung (Portal oder E-Mail)“** in der Vorabprüfung: höchstens 5 MB (Hinweis ab 2 MB), ohne Kennwort, ohne Skripte/Anhänge, Text maschinenlesbar, Dateiname, Titel und Autor zum Prüfen (nichts von einer früheren Bewerbung), Umfang; „Automatisch beheben“ speichert klein, ohne Kennwort, mit passendem Namen.
+- **Bewerbungen und Nachweis …** (Menü): Liste der Bewerbungen (Datum, Arbeitgeber, Ort, Stelle, Art, Quelle, Ergebnis, Bemerkung), nur im Browser; Nachweis der Eigenbemühungen für Jobcenter und Agentur für Arbeit als PDF für einen Zeitraum mit Name, Kunden-/BG-Nummer und Unterschriftszeile – immer auf Deutsch, auch bei anderer Oberflächensprache; Excel-Liste speichern und wieder laden.
+- Neuer Baustein js/bewerbung.js, Test tests/bewerbung.test.js (Erkennung, Reihenfolge, Lesezeichen, Dateiname, Arbeitgeber/Stelle, Nachweis, CSV-Rundlauf, Prüfprofil). In der App durchgespielt: drei Dateien in falscher Reihenfolge → Anschreiben, Lebenslauf, Zeugnis mit Lesezeichen; Liste und Nachweis-PDF.
+- Hilfe: neuer Abschnitt „Bewerbungen“; Satz zu Ausweisen und Karten auf dem Scannerglas (v358).
+
 ### Keine Fehlerkennung fremder Schrift auf Bildseiten, Ausweis-Scans in Originalfarben (app-v358)
 - Meldung 2026-0014: Beim Scan eines Hefts meldete PDFMy auf einer Seite „Ukrainisch erkannt“ und las sie kyrillisch. Ursache: Bei unsicherer deutscher Erkennung gewann eine andere Schrift schon, wenn sie 12 Punkte „sicherer“ war – auch Zeichensalat auf Fotos. Jetzt gewinnt eine andere Schrift nur, wenn sie für sich lesbar ist (≥ 60 %, mindestens 6 echte Wörter, mindestens 35 % der Bruchstücke echte Wörter; Letter.scriptWins). Bildseiten (Titelbild, Plakat) überspringen die Schriftproben ganz; eine unsicher erkannte Schrift wird nicht mehr Vorgabe für die folgenden Seiten.
 - Gemessen im Browser mit echter Texterkennung: nachgestelltes Titelbild bleibt Deutsch, zwei Bildseiten in 11 s statt rund 30 s je Seite; ukrainischer Brief weiterhin als Ukrainisch erkannt (95 %).

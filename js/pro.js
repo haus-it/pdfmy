@@ -6633,7 +6633,7 @@ async function preflightBytes() {
   const o = untouchedOriginal(state.pages) || einvOriginal(state.pages);
   return o ? o.slice() : await buildPdf(state.pages, state.meta, { noOcr: true, onPage: () => {} });
 }
-const pfInfo = name => ({ name, pages: state.pages.length, textPages: state.pages.filter(p => p.native || p.ocr?.text?.trim()).length, title: state.meta?.subject || '', einvoice: !!state.einv });
+const pfInfo = name => ({ name, pages: state.pages.length, textPages: state.pages.filter(p => p.native || p.ocr?.text?.trim()).length, title: state.meta?.subject || '', einvoice: !!state.einv, person: window.bwgPerson?.() || '' });
 function preflightShow(res, name, after = false) {
   const profile = res.profile; pfLast = { res, name };
   $('#pfList').innerHTML = res.items.map(x => `<li class="${x.ok === true ? 'ok' : x.ok === false ? 'bad' : 'info'}"><span class="st" aria-hidden="true">${x.ok === true ? '✓' : x.ok === false ? '✗' : 'i'}</span><span><b>${esc(I18N.t(x.title))}</b><span class="sr-only">: ${x.ok === true ? I18N.t('erfüllt') : x.ok === false ? I18N.t('nicht erfüllt') : I18N.t('Hinweis')}</span>${x.detail ? `<small>${esc(I18N.t(x.detail))}</small>` : ''}</span></li>`).join('');
@@ -6694,9 +6694,10 @@ $('#pfFix').onclick = async () => {
   try {
     if (p === 'bitv') { await a11yFigures().catch(e => console.warn(e)); await readingOrder({ flow: true }).catch(e => console.warn(e)); }   // Bilder beschreiben, Lesereihenfolge (optional)
     $('#pfSum').textContent = I18N.t('Erzeuge die korrigierte Datei …'); $('#pfList').innerHTML = '';
-    const name = p === 'bea' ? (n => n.ok ? pfName('bea') : n.suggestion)(BeaCheck.checkName(pfName('bea'))) : baseName() + '.pdf';
-    if (p === 'bea') $('#pfName').value = name;
-    let bytes = await buildPdf(state.pages, state.meta, { pdfa: true, bea: p === 'bea', size: p === 'epa' ? 'small' : 'balanced', onPage: () => {} });
+    const name = p === 'bea' ? (n => n.ok ? pfName('bea') : n.suggestion)(BeaCheck.checkName(pfName('bea'))) : p === 'bewerbung' ? Bewerbung.fileName(window.bwgPerson?.() || '') : baseName() + '.pdf';
+    if (p === 'bea' || p === 'bewerbung') $('#pfName').value = name;
+    // Bewerbung: klein, ohne Kennwort, kein PDF/A nötig (PDF/A bettet Schriften ein und macht die Datei größer)
+    let bytes = await buildPdf(state.pages, state.meta, { pdfa: p !== 'bewerbung', bea: p === 'bea', size: p === 'epa' || p === 'bewerbung' ? 'small' : 'balanced', onPage: () => {} });
     if (p === 'epa' && bytes.length > Preflight.EPA_MAX) bytes = await buildPdf(state.pages, state.meta, { pdfa: true, size: 'small', gray: true, onPage: () => {} });   // notfalls Graustufen
     const where = await deliver(bytes, name, 'application/pdf', state.meta, true);
     if (!where) { $('#pfSum').textContent = I18N.t('Speichern abgebrochen.'); btn.disabled = false; return preflightRun(); }
@@ -6737,6 +6738,7 @@ window.zipperPages = rev => {
 const TASKS = {
   zipper: { text: 'Abwechselnd zusammenfügen: Stehen die Rückseiten falsch herum, die zweite Datei umdrehen.', help: ['Zweite Datei umdrehen', () => window.zipperPages(!state.zipRev)] },
   mergesmall: { text: 'Zusammenfügen und verkleinern: Reihenfolge per Ziehen ändern, dann „Fertig“ – die Datei wird klein gespeichert.', help: ['Weitere Dateien hinzufügen', () => $('#fileIn').click()] },
+  bewerbung: { text: 'Bewerbungsmappe: Anschreiben, Lebenslauf und Anlagen sind geordnet, jeder Teil hat ein Lesezeichen. Reihenfolge per Ziehen ändern, dann „Fertig“ – die Datei wird klein und mit passendem Namen gespeichert.', help: ['In die Bewerbungsliste eintragen', () => window.bwgOpen({ arbeitgeber: state.bwg?.firma || '', stelle: state.bwg?.stelle || '', art: 'Online-Portal' })] },
   merge: { text: 'Zusammenfügen: Reihenfolge per Ziehen ändern – weitere Dateien lassen sich hinzufügen.', help: ['Weitere Dateien hinzufügen', () => $('#fileIn').click()] },
   organize: { text: 'Seiten organisieren: anklicken (Strg/Umschalt für mehrere), ziehen, drehen oder löschen.' },
   img2pdf: { text: 'Bilder in PDF: Reihenfolge prüfen – weitere Bilder lassen sich hinzufügen.', help: ['Weitere Bilder hinzufügen', () => $('#fileIn').click()] },
@@ -6752,5 +6754,5 @@ window.showTask = intent => {
   const h = $('#taskHelp'); h.hidden = !t.help; if (t.help) { h.textContent = I18N.t(t.help[0]); h.onclick = t.help[1]; }
   bar.hidden = false;
 };
-$('#taskDone').onclick = () => { $('#taskBar').hidden = true; openExport(state.intent === 'mergesmall' ? { size: 'small' } : undefined); };
+$('#taskDone').onclick = () => { $('#taskBar').hidden = true; if (state.intent === 'bewerbung') return window.bwgExport(); openExport(state.intent === 'mergesmall' ? { size: 'small' } : undefined); };
 $('#taskClose').onclick = () => { $('#taskBar').hidden = true; };

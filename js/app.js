@@ -5530,6 +5530,7 @@ const INTENTS = {
   stamp: 'application/pdf,.pdf', pdfa: 'application/pdf,.pdf,image/*', a11y: 'application/pdf,.pdf,image/*', preflight: 'application/pdf,.pdf,image/*', text: 'application/pdf,.pdf,image/*',
   docx: 'application/pdf,.pdf,image/*', bates: 'application/pdf,.pdf,image/*',
   booklet: 'application/pdf,.pdf,image/*', nup: 'application/pdf,.pdf,image/*', poster: 'application/pdf,.pdf,image/*', a4: 'application/pdf,.pdf,image/*', trim: 'application/pdf,.pdf,image/*', gray: 'application/pdf,.pdf,image/*', invert: 'application/pdf,.pdf,image/*', labels: 'application/pdf,.pdf,image/*', clean: 'application/pdf,.pdf,image/*', flat: 'application/pdf,.pdf,image/*', ai: 'application/pdf,.pdf,image/*',
+  bewerbung: 'application/pdf,.pdf,image/*,.docx,.doc,.odt,.rtf,.txt',
   compare: 'application/pdf,.pdf,image/*', split: 'application/pdf,.pdf', batch: 'application/pdf,.pdf,image/*', imgout: 'application/pdf,.pdf', repair: 'application/pdf,.pdf',
 };
 document.querySelectorAll('[data-intent]').forEach(b => b.onclick = () => {
@@ -5544,6 +5545,98 @@ $('#intentIn').onchange = e => {
 };
 $('#dropIn').onchange = e => { state.intent = null; importFiles([...e.target.files]); e.target.value = ''; };
 
+/* ---------- Bewerbungen (app-v359) ----------
+   Bewerbungsmappe: Teile erkennen (Anschreiben, Lebenslauf, Zeugnisse …), in die übliche Reihenfolge bringen, je Teil ein Lesezeichen,
+   Dateiname „Bewerbung_Vorname_Nachname“, klein speichern, danach Vorabprüfung „Bewerbung“. Liste der Bewerbungen als Nachweis der
+   Eigenbemühungen für Jobcenter und Agentur für Arbeit. Logik in js/bewerbung.js. */
+const bwgPerson = () => { const p = LS.get('profile', {}) || {}; return [p.vorname, p.nachname].filter(Boolean).join(' ') || S.author || ''; };
+function bwgMappe() {
+  const groups = []; let g = null;
+  for (const p of state.pages) { const k = p.kind === 'pdf' ? 'd' + p.docIdx : p.srcName || p.label; if (!g || g.key !== k) groups.push(g = { key: k, pages: [] }); g.pages.push(p); }
+  const teile = groups.map(gr => {
+    const first = gr.pages[0], doc = first.kind === 'pdf' ? state.docs[first.docIdx] : null, name = doc?.name || first.srcName || first.label || '';
+    return { ...gr, name, kind: Bewerbung.kindOf(gr.pages.slice(0, 2).map(pageText).join('\n'), name) };
+  });
+  const sorted = Bewerbung.order(teile), titles = Bewerbung.titles(sorted);
+  state.pages = sorted.flatMap(t => t.pages);
+  state.marks = sorted.map((t, i) => ({ pid: t.pages[0].id, title: titles[i], level: 0 }));
+  const an = sorted.find(t => t.kind === 'anschreiben'), txt = an ? an.pages.map(pageText).join('\n') : '';
+  state.bwg = { firma: Bewerbung.employer(txt), stelle: Bewerbung.position(txt) };
+  state.dirty = true; refresh(); setView('grid');
+  status(I18N.t(`Bewerbungsmappe: ${sorted.length} Teil(e) geordnet – ${titles.join(', ')}. Reihenfolge per Ziehen ändern, dann „Fertig“.`));
+}
+window.bwgMappe = bwgMappe; window.bwgPerson = bwgPerson;
+// „Fertig“ in der Aufgabenleiste: klein speichern, Dateiname für Portale
+window.bwgExport = () => {
+  openExport({ size: 'small' });
+  $('#x-name').value = Bewerbung.fileName(bwgPerson()).replace(/\.pdf$/, ''); $('#x-name').dataset.touched = '1';
+};
+const bwgEsc = v => String(v ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const BWG_KEY = 'bewerbungen';
+const bwgList = () => { const v = LS.get(BWG_KEY, []); return Array.isArray(v) ? v : []; };
+let bwgEdit = -1;
+function bwgRender() {
+  const l = bwgList(), de = d => /^\d{4}-\d{2}-\d{2}$/.test(d || '') ? d.split('-').reverse().join('.') : bwgEsc(d || '');
+  $('#bwgList').innerHTML = l.length ? `<thead><tr><th>${bwgEsc(I18N.t('Datum'))}</th><th>${bwgEsc(I18N.t('Arbeitgeber'))}</th><th>${bwgEsc(I18N.t('Stelle'))}</th><th>${bwgEsc(I18N.t('Ergebnis'))}</th><th></th></tr></thead><tbody>` +
+    l.map((e, i) => `<tr><td>${de(e.datum)}</td><td>${bwgEsc([e.arbeitgeber, e.ort].filter(Boolean).join(', '))}</td><td>${bwgEsc(e.stelle || '')}</td><td>${bwgEsc(I18N.t(e.ergebnis || ''))}</td><td style="white-space:nowrap"><button type="button" data-e="${i}" title="${bwgEsc(I18N.t('Ändern'))}" aria-label="${bwgEsc(I18N.t('Ändern'))}">✎</button> <button type="button" data-d="${i}" title="${bwgEsc(I18N.t('Löschen'))}" aria-label="${bwgEsc(I18N.t('Löschen'))}">✕</button></td></tr>`).join('') + '</tbody>'
+    : `<tbody><tr><td>${bwgEsc(I18N.t('Noch keine Bewerbung eingetragen.'))}</td></tr></tbody>`;
+  $('#bwgMsg').textContent = l.length ? I18N.t(`${l.length} Bewerbung(en) eingetragen.`) : '';
+}
+function bwgFill(e = {}) {
+  $('#bwgDatum').value = e.datum || new Date().toISOString().slice(0, 10); $('#bwgFirma').value = e.arbeitgeber || ''; $('#bwgOrt').value = e.ort || '';
+  $('#bwgStelle').value = e.stelle || ''; $('#bwgArt').value = e.art || 'Online-Portal'; $('#bwgQuelle').value = e.quelle || ''; $('#bwgErgebnis').value = e.ergebnis || 'offen'; $('#bwgNotiz').value = e.notiz || '';
+}
+window.bwgOpen = (pre = {}) => {
+  bwgEdit = -1; bwgFill(pre); $('#bwgAdd').textContent = I18N.t('Eintragen'); $('#bwgNeu').hidden = true;
+  const today = new Date(), iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  if (!$('#bwgVon').value) $('#bwgVon').value = iso(new Date(today.getFullYear(), today.getMonth(), 1));
+  if (!$('#bwgBis').value) $('#bwgBis').value = iso(today);
+  $('#bwgName').value = LS.get('bwgName', '') || bwgPerson(); $('#bwgNr').value = LS.get('bwgNr', '');
+  bwgRender(); $('#bwgDlg').showModal(); (pre.arbeitgeber ? $('#bwgStelle') : $('#bwgFirma')).focus();
+};
+$('#btnBwg').onclick = () => window.bwgOpen();
+$('#bwgClose').onclick = () => $('#bwgDlg').close();
+$('#bwgForm').onsubmit = ev => {
+  ev.preventDefault();
+  const e = { datum: $('#bwgDatum').value, arbeitgeber: $('#bwgFirma').value.trim(), ort: $('#bwgOrt').value.trim(), stelle: $('#bwgStelle').value.trim(), art: $('#bwgArt').value, quelle: $('#bwgQuelle').value.trim(), ergebnis: $('#bwgErgebnis').value, notiz: $('#bwgNotiz').value.trim() };
+  if (!e.arbeitgeber) return $('#bwgFirma').focus();
+  const l = bwgList(); if (bwgEdit >= 0) l[bwgEdit] = e; else l.push(e);
+  l.sort((a, b) => String(b.datum).localeCompare(String(a.datum))); LS.set(BWG_KEY, l);
+  bwgEdit = -1; bwgFill(); $('#bwgAdd').textContent = I18N.t('Eintragen'); $('#bwgNeu').hidden = true; bwgRender(); $('#bwgFirma').focus();
+};
+$('#bwgNeu').onclick = () => { bwgEdit = -1; bwgFill(); $('#bwgAdd').textContent = I18N.t('Eintragen'); $('#bwgNeu').hidden = true; };
+$('#bwgList').onclick = ev => {
+  const b = ev.target.closest('button'); if (!b) return;
+  const l = bwgList();
+  if (b.dataset.d != null) { if (!confirm(I18N.t('Diese Bewerbung aus der Liste löschen?'))) return; l.splice(+b.dataset.d, 1); LS.set(BWG_KEY, l); bwgRender(); }
+  else if (b.dataset.e != null) { bwgEdit = +b.dataset.e; bwgFill(l[bwgEdit]); $('#bwgAdd').textContent = I18N.t('Änderung übernehmen'); $('#bwgNeu').hidden = false; $('#bwgFirma').focus(); }
+};
+$('#bwgPdf').onclick = async () => {
+  const l = bwgList(); if (!l.length) { $('#bwgMsg').textContent = I18N.t('Noch keine Bewerbung eingetragen.'); return; }
+  LS.set('bwgName', $('#bwgName').value.trim()); LS.set('bwgNr', $('#bwgNr').value.trim());
+  try {
+    const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
+    // Der Nachweis geht an eine deutsche Behörde (Jobcenter, Agentur für Arbeit): immer auf Deutsch, unabhängig von der Oberflächensprache
+    const blocks = Bewerbung.nachweisBlocks(l, { von: $('#bwgVon').value, bis: $('#bwgBis').value, name: $('#bwgName').value.trim(), nummer: $('#bwgNr').value.trim() })
+    const pdf = await TextPdf.build(PDFLib, { blocks, title: 'Nachweis der Eigenbemühungen', fonts: { fontkit: fk, regular, bold, mono } });
+    const where = await deliver(pdf, 'Nachweis_Eigenbemuehungen_' + ($('#bwgBis').value || new Date().toISOString().slice(0, 10)) + '.pdf', 'application/pdf');
+    if (where) $('#bwgMsg').textContent = I18N.t(`Gespeichert: ${where}`);
+  } catch (e) { console.error(e); $('#bwgMsg').textContent = I18N.t('Nachweis nicht möglich: ') + e.message; }
+};
+$('#bwgCsv').onclick = async () => {
+  const l = bwgList(); if (!l.length) return;
+  const where = await deliver(new TextEncoder().encode(Bewerbung.toCsv(l)), 'Bewerbungen.csv', 'text/csv');
+  if (where) $('#bwgMsg').textContent = I18N.t(`Gespeichert: ${where}`);
+};
+$('#bwgCsvIn').onclick = () => $('#bwgIn').click();
+$('#bwgIn').onchange = async ev => {
+  const f = ev.target.files[0]; ev.target.value = ''; if (!f) return;
+  const neu = Bewerbung.parseCsv(await f.text()).filter(e => e.arbeitgeber || e.stelle);
+  const l = bwgList(), key = e => [e.datum, e.arbeitgeber, e.stelle].join('|'), have = new Set(l.map(key));
+  const add = neu.filter(e => !have.has(key(e))); l.push(...add); l.sort((a, b) => String(b.datum).localeCompare(String(a.datum))); LS.set(BWG_KEY, l);
+  bwgRender(); $('#bwgMsg').textContent = I18N.t(`${add.length} Bewerbung(en) übernommen.`);
+};
+
 // Aufgaben, die eine Einstellung im Speichern-Dialog sind: direkt mit dieser Einstellung öffnen
 const EXPORT_INTENTS = {
   booklet: { sheet: 'booklet' }, nup: { sheet: '2' }, poster: { sheet: 'poster4' }, a4: { a4: true }, trim: { trim: true }, gray: { gray: true }, invert: { invert: true }, labels: { roman: true },
@@ -5555,6 +5648,7 @@ function applyIntent() {
   window.showTask?.(state.intent);   // Aufgabenleiste: nächster Schritt, Hilfsknopf, „Fertig & speichern“ (js/pro.js)
   switch (state.intent) {
     case 'merge': setView('grid'); status(`${state.docs.length} Datei(en), ${state.pages.length} Seiten. Reihenfolge per Ziehen ändern, dann „Speichern“.`); break;
+    case 'bewerbung': bwgMappe(); break;
     case 'mergesmall': setView('grid'); status(`${state.docs.length} Datei(en), ${state.pages.length} Seiten. Reihenfolge prüfen, dann „Fertig“.`); break;
     case 'zipper': setView('grid'); window.zipperPages?.(false); break;
     case 'organize': setView('grid'); status('Seiten anklicken (Strg/Umschalt für mehrere), ziehen, drehen, löschen – dann „Speichern“.'); break;

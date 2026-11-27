@@ -94,6 +94,16 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 27.11.2026: Bewerbungen – Mappe, Prüfprofil, Nachweis (app-v359)
+**Inhalt:** Bewerbungsmappe (Teile erkennen, ordnen, Lesezeichen, kleiner Dateiname), Prüfprofil „Bewerbung“, Liste der Bewerbungen mit Nachweis der Eigenbemühungen als PDF. **Grund (GF 27.11.2026):** PDFMy Arbeitsuchenden, Jobcentern und Arbeitsagenturen kostenlos anbieten – zuerst die nötigen Funktionen, dann die Ansprache.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1–3 | gewahrt: Lebenslauf, Zeugnisse und Bewerbungsliste bleiben im Browser |
+| 4 Einfach | passt: eine Kachel, ein Menüpunkt, ein Prüfprofil; nichts Bestehendes verdeckt |
+| 5 Prüfbar | tests/bewerbung.test.js; Durchlauf in der App |
+| 6 | nicht betroffen |
+
 ### Geprüft und umgesetzt 23.11.2026: Signaturen der EU-Vertrauensliste beim Erstellen prüfen (app-v337)
 **Inhalt:** tools/eutl.js prüft die XML-Signaturen der LOTL (verankerte Zertifikate) und aller Länderlisten (Zertifikat aus der LOTL), sonst keine Übernahme. **Grund:** Die Anzeige „QES“ (v336) darf nicht auf einer manipulierten Liste beruhen; schließt den letzten offenen Punkt aus Rang 4. Leitplanken: nicht berührt (Bauwerkzeug, keine Änderung in der App, kein neuer Dienst).
 

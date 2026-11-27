@@ -671,6 +671,7 @@ body:not(.has-doc) .menu-list hr.msep:first-of-type{display:none}
 .tile b{font-size:15px;font-weight:700;letter-spacing:.1px;margin-bottom:3px}
 .tile span{font-size:13px;line-height:1.4}
 .fristtrack{display:flex;gap:6px;align-items:flex-start;margin-top:6px;font-size:13px;cursor:pointer}.fristtrack input{margin-top:2px}.fristtrack .muted{color:var(--muted)}
+.bwgtab{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:var(--r-sm);margin-top:8px}.bwgtab table{width:100%;border-collapse:collapse;font-size:13px}.bwgtab th,.bwgtab td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.bwgtab th{position:sticky;top:0;background:var(--panel-2)}.bwgtab button{padding:2px 6px;min-height:0}
 .deadlines{border-radius:var(--r);box-shadow:var(--sh-sm);padding:14px 16px;margin:0 0 18px}
 .dl-head b{font-family:"Bricolage Grotesque",sans-serif;font-size:15px}
 .dl-badge{font-family:"Instrument Sans",sans-serif;font-weight:700;font-size:11.5px;padding:2px 8px;vertical-align:1px}
@@ -1208,6 +1209,7 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi doc" id="btnTranslate" disabled title="Text des Dokuments in eine andere Sprache übersetzen – auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Übersetzen …</span></button>
           <button class="mi doc" id="btnSummary" disabled title="Kernpunkte des Dokuments zusammenfassen oder Fragen dazu stellen – mit der KI auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>Zusammenfassen und fragen …</span></button>
           <button class="mi doc" id="btnComments" title="Alle Notizen, Markierungen, Stempel, Unterschriften und Formularfelder auf einen Blick"><svg class="ic" aria-hidden="true"><use href="#i-sticky-note"/></svg><span>Kommentare und Markierungen …</span></button>
+          <button class="mi" id="btnBwg" title="Liste Ihrer Bewerbungen führen und als Nachweis der Eigenbemühungen für Jobcenter oder Agentur für Arbeit speichern"><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg><span>Bewerbungen und Nachweis …</span></button>
           <button class="mi" id="btnVV" title="Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Vereinsvorlagen …</span></button>
           <button class="mi" id="btnZuw" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
           <button class="mi" id="btnKb" title="Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Kassenbericht (Jahreshauptversammlung) …</span></button>
@@ -1392,6 +1394,7 @@ html.i18n-wait body{visibility:hidden}
       <div class="tiles">
         <button class="tile" data-intent="merge"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>PDFs zusammenfügen</b><span>Mehrere Dateien zu einer, Reihenfolge per Ziehen</span></button>
         <button class="tile" data-intent="mergesmall"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>Zusammenfügen und verkleinern</b><span>Mehrere Dateien zu einer, gleich klein zum Mailen</span></button>
+        <button class="tile" data-intent="bewerbung"><i><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg></i><b>Bewerbungsmappe</b><span>Anschreiben, Lebenslauf, Zeugnisse – eine kleine PDF für Portal und E-Mail</span></button>
         <button class="tile" data-intent="zipper"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>Abwechselnd zusammenfügen</b><span>Vorder- und Rückseiten aus zwei Dateien mischen</span></button>
         <button class="tile" data-intent="split"><i><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg></i><b>PDF aufteilen</b><span>Alle N Seiten, an Lesezeichen oder nach Dateigröße</span></button>
         <button class="tile" data-intent="organize"><i><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg></i><b>Seiten organisieren</b><span>Sortieren, drehen, löschen, einfügen, teilen</span></button>
@@ -2034,7 +2037,7 @@ html.i18n-wait body{visibility:hidden}
 <dialog id="pfDlg" class="sharedlg a11ydlg" aria-labelledby="pfT"><form method="dialog" id="pfForm">
   <h3 class="dlgtitle" id="pfT">Vorabprüfung</h3>
   <p class="hint" style="margin:-6px 0 10px">Prüft die Datei, wie sie gespeichert würde, gegen die Vorgaben des Empfängers – auf diesem Gerät, ohne Upload.</p>
-  <label class="pfsel" for="pfProfile">Empfänger bzw. Zweck <select id="pfProfile"><option value="bea">beA / Gericht (ERVB 2025)</option><option value="epa">ePA (elektronische Patientenakte)</option><option value="bitv">Barrierefrei (BITV 2.0 / PDF/UA)</option><option value="gobd">Archiv (GoBD, PDF/A)</option><option value="pdfa">PDF/A – alle Prüfpunkte</option><option value="druck">Druckerei (PDF/X-4, Kurzprüfung)</option></select></label>
+  <label class="pfsel" for="pfProfile">Empfänger bzw. Zweck <select id="pfProfile"><option value="bea">beA / Gericht (ERVB 2025)</option><option value="bewerbung">Bewerbung (Portal oder E-Mail)</option><option value="epa">ePA (elektronische Patientenakte)</option><option value="bitv">Barrierefrei (BITV 2.0 / PDF/UA)</option><option value="gobd">Archiv (GoBD, PDF/A)</option><option value="pdfa">PDF/A – alle Prüfpunkte</option><option value="druck">Druckerei (PDF/X-4, Kurzprüfung)</option></select></label>
   <div class="field" id="pfNameRow" hidden><label for="pfName">Dateiname für das Gericht</label><input id="pfName" autocomplete="off" spellcheck="false" aria-describedby="pfNameHint"><small class="hint" id="pfNameHint">Erlaubt: Buchstaben (auch ä, ö, ü, ß), Ziffern, _ und -, höchstens 90 Zeichen.</small></div>
   <p id="pfSum" class="pfsum" role="status" aria-live="polite"></p>
   <ul id="pfList" class="a11ylist"></ul>
@@ -2441,6 +2444,22 @@ html.i18n-wait body{visibility:hidden}
   <input type="file" id="mvIn" hidden accept=".csv,.txt,.xlsx">
   <div class="dlgrow"><button type="button" id="mvCancel">Abbrechen</button><button type="button" id="mvListe">Mit Mitgliederliste (je Mitglied ein Brief) …</button><button type="submit" class="primary">PDF erstellen</button></div>
 </form></dialog>
+<dialog id="bwgDlg" class="sharedlg propdlg" aria-labelledby="bwgT"><form id="bwgForm">
+  <h3 class="dlgtitle" id="bwgT">Bewerbungen und Nachweis der Eigenbemühungen</h3>
+  <p class="hint" style="margin-top:0">Tragen Sie jede Bewerbung ein. Für das Jobcenter oder die Agentur für Arbeit speichert PDFMy daraus den Nachweis Ihrer Eigenbemühungen als PDF – zum Ausdrucken, Unterschreiben oder Hochladen. Die Liste bleibt nur in diesem Browser.</p>
+  <div class="anlrow"><div class="field"><label for="bwgDatum">Datum</label><input id="bwgDatum" type="date" required></div><div class="field"><label for="bwgArt">Art der Bewerbung</label><select id="bwgArt"><option value="Online-Portal">Online-Portal</option><option value="E-Mail">E-Mail</option><option value="Post">Post</option><option value="Persönlich">Persönlich</option><option value="Telefonisch">Telefonisch</option></select></div></div>
+  <div class="anlrow"><div class="field"><label for="bwgFirma">Arbeitgeber</label><input id="bwgFirma" required autocomplete="organization"></div><div class="field"><label for="bwgOrt">Ort</label><input id="bwgOrt"></div></div>
+  <div class="anlrow"><div class="field"><label for="bwgStelle">Stelle</label><input id="bwgStelle"></div><div class="field"><label for="bwgQuelle">Stellenangebot gefunden über</label><input id="bwgQuelle" list="bwgQuellen" placeholder="z. B. Jobbörse der Agentur für Arbeit"><datalist id="bwgQuellen"><option value="Jobbörse der Agentur für Arbeit"><option value="Vermittlungsvorschlag Jobcenter/Agentur"><option value="Zeitung"><option value="Internet-Stellenbörse"><option value="Firmen-Website"><option value="Initiativbewerbung"><option value="Empfehlung"></datalist></div></div>
+  <div class="anlrow"><div class="field"><label for="bwgErgebnis">Ergebnis</label><select id="bwgErgebnis"><option value="offen">offen</option><option value="Einladung zum Gespräch">Einladung zum Gespräch</option><option value="Absage">Absage</option><option value="Zusage">Zusage</option><option value="keine Antwort">keine Antwort</option></select></div><div class="field"><label for="bwgNotiz">Bemerkung</label><input id="bwgNotiz"></div></div>
+  <div class="dlgrow" style="justify-content:flex-start"><button type="submit" class="primary" id="bwgAdd">Eintragen</button><button type="button" id="bwgNeu" hidden>Neu (nicht ändern)</button></div>
+  <div class="bwgtab" role="region" aria-label="Eingetragene Bewerbungen" tabindex="0"><table id="bwgList"></table></div>
+  <p id="bwgMsg" class="hint" role="status"></p>
+  <h4 style="margin:10px 0 4px">Nachweis speichern</h4>
+  <div class="anlrow"><div class="field"><label for="bwgVon">Zeitraum von</label><input id="bwgVon" type="date"></div><div class="field"><label for="bwgBis">bis</label><input id="bwgBis" type="date"></div></div>
+  <div class="anlrow"><div class="field"><label for="bwgName">Ihr Name</label><input id="bwgName" autocomplete="name"></div><div class="field"><label for="bwgNr">Kunden- oder BG-Nummer (freiwillig)</label><input id="bwgNr" autocomplete="off"></div></div>
+  <input type="file" id="bwgIn" hidden accept=".csv,.txt">
+  <div class="dlgrow"><button type="button" id="bwgClose">Schließen</button><button type="button" id="bwgCsvIn" title="Eine früher gespeicherte Liste (Excel/CSV) laden">Liste laden …</button><button type="button" id="bwgCsv">Als Excel-Liste</button><button type="button" class="primary" id="bwgPdf">Nachweis als PDF</button></div>
+</form></dialog>
 <dialog id="kbDlg"class="sharedlg propdlg" aria-labelledby="kbT"><form id="kbForm">
   <h3 class="dlgtitle" id="kbT">Kassenbericht für die Mitgliederversammlung</h3>
   <p class="hint" style="margin-top:0">Aus dem Umsatz-Export Ihres Vereinskontos (CSV, Excel oder CAMT-XML aus dem Online-Banking, z. B. Sparkasse, Volksbank, ING, DKB) oder aus Ihrem Kassenbuch (Spalten Datum, Text, Betrag bzw. Einnahme und Ausgabe; optional Kategorie und Bereich). Die Kontodaten verlassen das Gerät nicht.</p>
@@ -2832,6 +2851,7 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/versammlung.js"></script>
 <script src="js/beitrag.js"></script>
 <script src="js/preflight.js"></script>
+<script src="js/bewerbung.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/app.js"></script>

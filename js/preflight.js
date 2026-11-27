@@ -5,6 +5,7 @@
    – epa   elektronische Patientenakte: PDF/A, höchstens 25 MB, keine aktiven Inhalte (gematik, KBV)
    – bitv  barrierefreie PDF: PDF/UA-1, BITV 2.0 / EN 301 549 – Bausteine aus js/a11ycheck.js
    – gobd  Archiv nach GoBD: PDF/A, unverschlüsselt, maschinell auswertbar (Text), Fingerabdruck für die Verfahrensdokumentation
+   – bewerbung  Bewerbung über Portal oder E-Mail (app-v359): Größe, ohne Kennwort, ohne aktive Inhalte, durchsuchbar, Dateiname, Metadaten
    – druck Druckerei (PDF/X-4, Kurzprüfung): Schriften, Bildauflösung, Endformat/Beschnitt, Farbraum, aktive Inhalte – ehrlich als Kurzprüfung
    Ergebnis je Punkt: { ok: true | false | null (Hinweis), title, detail }. Rein lokal; braucht PDFLib, BeaCheck, PdfACheck, A11yCheck.
    Kurzprüfung – ersetzt keine vollständige Validierung (z. B. veraPDF). */
@@ -12,6 +13,7 @@
   'use strict';
   const PROFILES = {
     bea: { label: 'beA / Gericht (ERVB 2025)', basis: 'ERVB 2025 (BAnz AT 29.07.2025 B2) zu § 5 ERVV' },
+    bewerbung: { label: 'Bewerbung (Portal oder E-Mail)', basis: 'Übliche Vorgaben von Bewerbungsportalen und Personalabteilungen: eine PDF, höchstens 5 MB (oft 2 MB), ohne Kennwort, ohne aktive Inhalte, Text maschinenlesbar für Bewerbermanagement-Systeme' },
     epa: { label: 'ePA (elektronische Patientenakte)', basis: 'gematik „ePA für alle“, KBV-Praxisnachrichten: PDF/A, höchstens 25 MB je Dokument' },
     bitv: { label: 'Barrierefrei (BITV 2.0 / PDF/UA)', basis: 'PDF/UA-1 (ISO 14289-1), BITV 2.0, EN 301 549 Kap. 10, BFSG' },
     gobd: { label: 'Archiv (GoBD, PDF/A)', basis: 'GoBD Rz. 58 ff., 118 ff. (Unveränderbarkeit, maschinelle Auswertbarkeit), PDF/A (ISO 19005-2)' },
@@ -88,6 +90,19 @@
       add(info.title ? true : null, 'Titel/Beschreibung gesetzt', info.title || 'Titel erleichtert das Wiederfinden im Archiv (Hinweis).');
       if (f.signed) add(null, 'Digital signiert', 'Signierte Originale unverändert aufbewahren – jede Änderung macht die Signatur ungültig.');
       if (info.einvoice) add(null, 'E-Rechnung', 'Bei ZUGFeRD/XRechnung ist die XML-Datei das Original – unverändert mit aufbewahren (GoBD, § 14 UStG).');
+    }
+    if (profile === 'bewerbung') {
+      const MB = 1024 * 1024;
+      add(u8.length <= 5 * MB, 'Größe höchstens 5 MB', `${mb(u8.length)}${u8.length > 5 * MB ? ' – „Klein“ speichern; viele Portale lehnen größere Dateien ab' : ''}`);
+      if (u8.length > 2 * MB && u8.length <= 5 * MB) add(null, 'Unter 2 MB empfohlen', 'Manche Portale und E-Mail-Postfächer nehmen nur 2 MB je Datei – „Klein“ speichern (Hinweis).');
+      add(!f.encrypted, 'Ohne Kennwort', f.encrypted ? 'Personalabteilungen und Portale können geschützte Dateien oft nicht öffnen – ohne Kennwort speichern.' : '');
+      add(!f.js && !f.launch && !f.embedded && !f.media, 'Keine aktiven Inhalte oder Dateianhänge', f.js || f.launch || f.embedded || f.media ? 'Skripte und eingebettete Dateien werden von Virenscannern der Unternehmen oft abgewiesen – entfernen.' : '');
+      if (info.pages) add(info.textPages >= info.pages ? true : null, 'Text maschinenlesbar', info.textPages >= info.pages ? 'Text auf allen Seiten – Bewerbermanagement-Systeme können ihn auslesen.' : `${info.pages - info.textPages} von ${info.pages} Seite(n) ohne Text (Scans) – Texterkennung empfohlen, damit Systeme Zeugnisse und Lebenslauf lesen können (Hinweis).`);
+      const nm = String(info.name || ''), okName = /^[A-Za-z0-9_.-]{1,80}\.pdf$/i.test(nm);
+      if (nm) add(okName ? true : null, 'Dateiname ohne Umlaute und Leerzeichen', okName ? nm : `„${nm}“ – besser z. B. „${R.Bewerbung ? R.Bewerbung.fileName(info.person || '') : 'Bewerbung_Vorname_Nachname.pdf'}“ (Hinweis).`);
+      let author = ''; try { author = (await R.PDFLib.PDFDocument.load(u8, { ignoreEncryption: true, updateMetadata: false })).getAuthor() || ''; } catch {}
+      add(null, 'Titel und Autor in der Datei', `Titel: ${info.title || '–'} · Autor: ${author || '–'} – bitte prüfen, dass dort nichts von einer früheren Bewerbung oder einem anderen Arbeitgeber steht (Hinweis).`);
+      if (info.pages > 12) add(null, 'Umfang', `${info.pages} Seiten – üblich sind Anschreiben, Lebenslauf und die wichtigsten Zeugnisse (Hinweis).`);
     }
     if (profile === 'pdfa') {   // vollständige PDF/A-Kurzprüfung (früher „PDF/A prüfen“): jeder Punkt einzeln
       const pa = await R.PdfACheck.check(u8);
