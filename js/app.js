@@ -5595,6 +5595,12 @@ window.bwgOpen = (pre = {}) => {
   bwgRender(); $('#bwgDlg').showModal(); (pre.arbeitgeber ? $('#bwgStelle') : $('#bwgFirma')).focus();
 };
 $('#btnBwg').onclick = () => window.bwgOpen();
+// Menü „Bewerbungsmappe …“: ist schon ein Dokument offen, dieses ordnen – sonst Dateien wählen wie über die Kachel
+$('#btnBwgMappe').onclick = () => {
+  state.intent = 'bewerbung';
+  if (state.pages.length) { bwgMappe(); window.showTask?.('bewerbung'); return; }
+  const inp = $('#intentIn'); inp.accept = INTENTS.bewerbung; inp.multiple = true; inp.click();
+};
 $('#bwgClose').onclick = () => $('#bwgDlg').close();
 $('#bwgForm').onsubmit = ev => {
   ev.preventDefault();

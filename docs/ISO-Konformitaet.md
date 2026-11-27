@@ -486,6 +486,8 @@ Nachtrag 27.11.2026 (app-v358): Meldung 2026-0014 behoben – Schrifterkennung v
 
 Nachtrag 27.11.2026 (app-v359): Bewerbungsfunktionen (Mappe, Prüfprofil, Nachweis der Eigenbemühungen) – Datenverarbeitung nur im Browser (Leitplanke 1), Test-Gate tests/bewerbung.test.js (ISO 9001 8.3 Entwicklung, 8.5.1).
 
+Nachtrag 28.11.2026 (app-v360): Menü nach Arbeitsschritten gegliedert (Gebrauchstauglichkeit nach DIN EN ISO 9241-110: Aufgabenangemessenheit, Erwartungskonformität); Grundsatz „Menü übersichtlich“ für alle künftigen Funktionen festgelegt.
+
 Nachtrag 27.11.2026 (app-v353): Diagramme in Word-Dateien (vorher Datenverlust ohne Hinweis); nicht unterstützte Arten mit sichtbarem Hinweis. Test-Gate tests/word-diagramm.test.js; gemeinsamer Zeichner mit der Folienausgabe, deren Tests unverändert grün (ISO 9001 8.5.1).
 
 Nachtrag 27.11.2026 (app-v352): .doc-Textfelder und mehrspaltiger Satz je Abschnitt; Fehlerkorrektur .docx (Art des Abschnittswechsels gehört zum folgenden Abschnitt, ECMA-376 17.6.22). Abgleich .doc gegen .docx (13-textfeld, 14-abschnitt) als Test-Gate tests/doc97.test.js (ISO 9001 8.5.1/8.7: Fehler erkannt, korrigiert und durch Test abgesichert).

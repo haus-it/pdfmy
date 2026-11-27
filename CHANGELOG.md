@@ -2,6 +2,13 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-28
+
+### Menü „Mehr“ nach Arbeitsschritten gegliedert (app-v360)
+- Vorher 65 Einträge in 4 Gruppen, „Dokument“ allein mit 27 Einträgen (Dateiaktionen, KI, Bearbeiten und Vereinsvorlagen gemischt). Jetzt 11 beschriftete Gruppen in der Reihenfolge des Arbeitsablaufs – Dokument, Erfassen & lesen, Seiten & Inhalte, Prüfen & Formulare, Unterschreiben & antworten, Büro & Ablage, Rechnungen & Steuer, Verein & Ehrenamt, Bewerbung, Einstellungen, PDFMy – mit je 2 bis 8 Einträgen (Richtwert 7±2), die häufigsten zuerst. Gruppen, die nur mit geöffnetem Dokument Sinn ergeben, erscheinen erst dann.
+- Neu im Menü: „Bewerbungsmappe …“ (ordnet ein offenes Dokument oder fragt nach Dateien).
+- Alle Funktionen behalten Namen, Tastenkürzel und Hinweistexte; nur die Anordnung ist neu. Geprüft in der App am Rechner (drei Spalten) und am Handy (eine Spalte).
+
 ## 2026-11-27
 
 ### Bewerbungen: Mappe, Prüfprofil, Nachweis der Eigenbemühungen (app-v359)
