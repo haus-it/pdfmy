@@ -2,6 +2,14 @@
 
 Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwendung **PDFMy** trägt einen Build-Stand (Zeitstempel bzw. `app-vNN`). Jede Veröffentlichung ist zusätzlich in `docs/RELEASES.md` protokolliert.
 
+## 2026-11-27
+
+### Hilfe-Center: 27 bebilderte Anleitungen, „Wenn es nicht klappt“ (app-v350)
+- 9 neue Anleitungen mit Bildschirmfoto und Klick-Nummern: Suchen und ersetzen, Stempel setzen, PDF aufteilen, Drucken, Teilen und per E-Mail senden, Zur Unterschrift senden, Spendenquittung ausstellen, Anlagen für Gericht und Behörde, Datenschutz selbst prüfen (Deutsch und Englisch, aus der echten App erzeugt).
+- Genauere Erklärungen: Öffnen, Scannen, Unterschreiben, Speichern und Briefe ablegen haben jetzt einen aufklappbaren Abschnitt „Wenn es nicht klappt“ mit den häufigsten Stolpersteinen und ihrer Lösung (gegen den Programmcode geprüft).
+- Neue Themengruppe „Kanzlei, Behörde, Datenschutz“; „Speichern, drucken, teilen“ zusammengefasst – 7 Gruppen.
+- tests/hilfe-center.test.js prüft jetzt mindestens 27 Anleitungen und die Fehlerhilfe.
+
 ## 2026-11-26
 
 ### Alte Word-Dateien (.doc, Word 97–2003) mit Formatierung wie .docx (app-v349)

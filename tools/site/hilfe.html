@@ -41,6 +41,7 @@ kbd{font:13px/1 ui-monospace,Consolas,monospace;border:1px solid var(--line);bor
 .hcard{display:block;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);text-decoration:none;color:var(--text)}
 .hcard b{display:block;font-size:16px;color:var(--accent)}.hcard span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
 .hcard:hover,.hcard:focus-visible{border-color:var(--accent);box-shadow:0 1px 6px rgba(16,24,40,.12)}
+.hfix{grid-column:2;margin:4px 0 2px;border-top:1px solid var(--line);padding-top:6px}.hfix summary{cursor:pointer;font-weight:600;color:var(--accent)}.hfix ul{margin:6px 0 0;padding-left:20px}.hfix li{margin:4px 0}
 .hgroups{margin:8px 0 4px}.hgh{font-size:15px;margin:14px 0 0;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.hgroup .hguides{margin-top:6px}
 .hguide{border:1px solid var(--line);border-radius:12px;padding:4px 16px 12px;margin:16px 0;background:var(--bg);scroll-margin-top:90px}
 .hguide h3{font-size:18px;margin:12px 0 8px}
@@ -82,19 +83,21 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 </ul></nav>
 
 <section class="hsec" id="anleitungen"><h2>Schritt für Schritt – mit Bildern</h2>
-<p>18 bebilderte Anleitungen für die wichtigsten Aufgaben, nach Themen geordnet. Die roten Zahlen im Bild zeigen, wo Sie klicken. Ein Klick aufs Bild vergrößert es.</p>
+<p>27 bebilderte Anleitungen für die wichtigsten Aufgaben, nach Themen geordnet. Die roten Zahlen im Bild zeigen, wo Sie klicken. Ein Klick aufs Bild vergrößert es. Unter <i>„Wenn es nicht klappt“</i> stehen die häufigsten Stolpersteine mit Lösung.</p>
 <nav class="hgroups" aria-label="Anleitungen nach Themen">
 <div class="hgroup"><h3 class="hgh">Erste Schritte</h3>
 <div class="hguides">
 <a class="hcard" href="#a-einrichten"><b>Einmal einrichten</b><span>Name, Ablageordner, Scanner</span></a>
 <a class="hcard" href="#a-oeffnen"><b>PDF öffnen</b><span>Datei wählen oder ins Fenster ziehen</span></a>
 <a class="hcard" href="#a-mehr"><b>Alle Funktionen finden</b><span>Menü „Mehr“ und Suche</span></a>
+<a class="hcard" href="#a-suchen"><b>Suchen und ersetzen</b><span>Im Dokument, auch in Scans</span></a>
 </div></div>
 <div class="hgroup"><h3 class="hgh">Scannen und Post</h3>
 <div class="hguides">
 <a class="hcard" href="#a-scannen"><b>Scannen</b><span>Mit Scanner oder Handy</span></a>
 <a class="hcard" href="#a-ablegen"><b>Briefe ablegen</b><span>Absender, Frist, Dateiname – automatisch</span></a>
 <a class="hcard" href="#a-gerade"><b>Gerade ausrichten</b><span>Schiefe Scans begradigen</span></a>
+<a class="hcard" href="#a-stempel"><b>Stempel setzen</b><span>Eingegangen, bezahlt, Beleg-Nr.</span></a>
 <a class="hcard" href="#a-frist"><b>Frist berechnen</b><span>Mit Feiertagen und Kalendereintrag</span></a>
 </div></div>
 <div class="hgroup"><h3 class="hgh">Bearbeiten</h3>
@@ -104,21 +107,31 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <a class="hcard" href="#a-bilder"><b>Bilder und Grafiken</b><span>Verschieben, umfärben, ersetzen</span></a>
 <a class="hcard" href="#a-schwaerzen"><b>Schwärzen</b><span>Persönliche Daten sicher entfernen</span></a>
 <a class="hcard" href="#a-zusammen"><b>Zusammenfügen</b><span>Mehrere Dateien zu einer</span></a>
+<a class="hcard" href="#a-aufteilen"><b>PDF aufteilen</b><span>Nach Seiten, Größe oder Kapiteln</span></a>
 </div></div>
-<div class="hgroup"><h3 class="hgh">Speichern und umwandeln</h3>
+<div class="hgroup"><h3 class="hgh">Speichern, drucken, teilen</h3>
 <div class="hguides">
 <a class="hcard" href="#a-speichern"><b>Speichern</b><span>PDF/A, Word, Excel, kleiner</span></a>
 <a class="hcard" href="#a-office"><b>Word und Excel in PDF</b><span>Ohne Office, ohne Upload</span></a>
+<a class="hcard" href="#a-drucken"><b>Drucken</b><span>Bereiche, mehrere Seiten pro Blatt, Broschüre</span></a>
+<a class="hcard" href="#a-teilen"><b>Teilen</b><span>E-Mail, WhatsApp, Teams</span></a>
 <a class="hcard" href="#a-schuetzen"><b>Mit Passwort schützen</b><span>Öffnen, Drucken, Kopieren</span></a>
 </div></div>
 <div class="hgroup"><h3 class="hgh">Unterschreiben und Rechnungen</h3>
 <div class="hguides">
 <a class="hcard" href="#a-unterschreiben"><b>Unterschreiben</b><span>Zeichnen, tippen oder Bild</span></a>
+<a class="hcard" href="#a-senden"><b>Zur Unterschrift senden</b><span>Mehrere Personen, ohne Server</span></a>
 <a class="hcard" href="#a-erechnung"><b>E-Rechnung schreiben</b><span>ZUGFeRD und XRechnung</span></a>
 </div></div>
 <div class="hgroup"><h3 class="hgh">Für Vereine</h3>
 <div class="hguides">
-<a class="hcard" href="#a-verein"><b>Kassenbericht und mehr</b><span>Spendenquittung, Beiträge, Vorlagen</span></a>
+<a class="hcard" href="#a-verein"><b>Kassenbericht und mehr</b><span>Mitgliederversammlung, Beiträge, Vorlagen</span></a>
+<a class="hcard" href="#a-spende"><b>Spendenquittung</b><span>Amtliches Muster, auch für alle Spender</span></a>
+</div></div>
+<div class="hgroup"><h3 class="hgh">Kanzlei, Behörde, Datenschutz</h3>
+<div class="hguides">
+<a class="hcard" href="#a-anlagen"><b>Anlagen nummerieren</b><span>K 1, K 2 … mit Verzeichnis, beA-tauglich</span></a>
+<a class="hcard" href="#a-datenschutz"><b>Datenschutz selbst prüfen</b><span>Verbindungen und gesendete Daten</span></a>
 </div></div>
 </nav>
 
@@ -141,6 +154,11 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li>Sie wissen nicht, wo eine Funktion steckt? <b>Funktion suchen</b> (<kbd>Strg</kbd>+<kbd>K</kbd>) und ein Wort tippen, z. B. „schwärzen“.</li>
 </ol>
 <p class="hmore">Nichts wird hochgeladen – die Datei bleibt auf Ihrem Gerät. <a href="#start">Mehr zum Schnellstart</a></p>
+<details class="hfix"><summary>Wenn es nicht klappt</summary><ul>
+<li>Die Datei öffnet sich nicht oder meldet „beschädigt“: PDFMy versucht beschädigte PDFs selbst zu reparieren – erscheint trotzdem ein Fehler, die Datei im Original-Programm neu speichern oder als PDF drucken.</li>
+<li>Die PDF fragt nach einem Passwort: Ohne das Passwort zum Öffnen lässt sie sich nicht lesen – das ist der Sinn der Verschlüsselung. Mit Passwort entfernt die Aufgabe „PDF entsperren“ den Schutz.</li>
+<li>Doppelklick auf eine PDF öffnet ein anderes Programm: <i>Mehr → Einrichtung …</i> → <i>„Als Standard festlegen“</i>; Windows fragt dann einmal nach dem Programm.</li>
+</ul></details>
 </article>
 
 <article class="hguide" id="a-mehr"><h3>Alle Funktionen finden</h3>
@@ -152,6 +170,17 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <p class="hmore">Schneller: <kbd>Strg</kbd>+<kbd>K</kbd> und ein Suchwort tippen.</p>
 </article>
 
+<article class="hguide" id="a-suchen"><h3>Suchen und ersetzen</h3>
+<figure><a href="hilfe-bilder/de/suchen.webp" class="hshot"><img src="hilfe-bilder/de/suchen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Suchleiste über der Seite mit dem Suchwort „Leistungen“, der Anzeige „1 von 28“, den Pfeilen zum nächsten Treffer und dem Knopf „Ersetzen …“; Treffer sind auf der Seite farbig markiert"></a></figure>
+<ol class="hsteps">
+<li><kbd>Strg</kbd>+<kbd>F</kbd> öffnet über der Seite die <b>Suchleiste</b>. Suchwort eintippen – Groß- und Kleinschreibung spielen keine Rolle, „ss“ findet auch „ß“.</li>
+<li>Die Anzeige zeigt, <b>wie viele Treffer</b> es gibt und wo Sie gerade sind. Der aktuelle Treffer ist orange, alle anderen blau markiert; die Seitenübersicht links zählt die Treffer je Seite.</li>
+<li>Mit den <b>Pfeilen</b> (oder <kbd>Enter</kbd> bzw. <kbd>Umschalt</kbd>+<kbd>Enter</kbd>) springen Sie zum nächsten oder vorigen Treffer. <i>„Ganze Wörter“</i> findet „Test“ nicht mehr in „Testament“; im Feld „Seiten“ grenzen Sie die Suche ein, z. B. „2-5“.</li>
+<li><b>Ersetzen …</b> tauscht ein Wort an einer Stelle oder überall aus – z. B. einen Namen in einer Vorlage. <i>„Alle markieren“</i> setzt bei jedem Treffer eine Textmarkierung.</li>
+</ol>
+<p class="hmore">Gut zu wissen: Bei Scans und Fotos sucht PDFMy im erkannten Text – die Texterkennung läuft beim Öffnen von selbst. Rechts unter <i>„Suche im Dokument“</i> stehen alle Fundstellen als Liste, dort gibt es auch <i>„Alle Treffer schwärzen“</i>. <a href="#bearbeiten">Mehr zur Suche</a></p>
+</article>
+
 <article class="hguide" id="a-scannen"><h3>Scannen</h3>
 <figure><a href="hilfe-bilder/de/scannen.webp" class="hshot"><img src="hilfe-bilder/de/scannen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Kacheln „Scannen &amp; Text erkennen“ und „Mit dem Handy scannen“ sowie der Knopf „Scanner verbinden“"></a></figure>
 <ol class="hsteps">
@@ -160,6 +189,12 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Scanner verbinden:</b> für Scanner und Multifunktionsgeräte im Netzwerk – neue Scans erscheinen dann von selbst.</li>
 </ol>
 <p class="hmore"><a href="#scannen">Mehr zum Scannen</a></p>
+<details class="hfix"><summary>Wenn es nicht klappt</summary><ul>
+<li>Der Scanner wird nicht gefunden: Gerät und Computer im selben Netz? Dann im Scan-Fenster <i>„Gerät per IP-Adresse hinzufügen“</i> und die IP-Adresse oder den Gerätenamen eintragen (steht im Menü des Druckers).</li>
+<li>„Scanner verbinden“ fragt nach einem Programm: Für Scanner am PC braucht es einmalig das kleine Programm pdfmy Scan (Windows, Mac, Linux). Auf dem Chromebook und mit dem Handy geht es ohne.</li>
+<li>Nur die Vorderseiten kamen an: Bei Geräten ohne Duplex-Einzug <i>„Beidseitig durch Wenden“</i> wählen – erst die Vorderseiten, dann den Stapel als Ganzes umdrehen.</li>
+<li>Die Seite liegt schief oder quer: PDFMy richtet sie meist selbst aus; sonst <i>„Gerade ausrichten“</i> oder die Drehpfeile über der Seite.</li>
+</ul></details>
 </article>
 
 <article class="hguide" id="a-ablegen"><h3>Briefe ablegen</h3>
@@ -171,6 +206,10 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Ablegen &amp; nächster</b> (<kbd>Strg</kbd>+<kbd>Enter</kbd>) legt den Brief in den Ablageordner, trägt ihn ins Posteingangsbuch ein und macht Platz für den nächsten.</li>
 </ol>
 <p class="hmore"><a href="#ablegen">Mehr zu Ablage, Fristen und Posteingangsbuch</a></p>
+<details class="hfix"><summary>Wenn es nicht klappt</summary><ul>
+<li>Absender oder Datum falsch erkannt: einfach im Feld überschreiben – der Dateiname passt sich an.</li>
+<li>Kein Ablageordner gewählt: PDFMy fragt dann beim Ablegen nach dem Speicherort. Dauerhaft unter <i>Mehr → Einrichtung …</i> einrichten.</li>
+</ul></details>
 </article>
 
 <article class="hguide" id="a-gerade"><h3>Scan gerade ausrichten</h3>
@@ -181,6 +220,16 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Übernehmen</b> – die Texterkennung läuft danach für diese Seite neu.</li>
 </ol>
 <p class="hmore">Liegt eine Seite auf dem Kopf oder quer, drehen die Pfeile in der Werkzeugleiste um 90°. <a href="#scannen">Mehr zum Scannen</a></p>
+</article>
+
+<article class="hguide" id="a-stempel"><h3>Stempel setzen</h3>
+<figure><a href="hilfe-bilder/de/stempel.webp" class="hshot"><img src="hilfe-bilder/de/stempel.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Werkzeug „Stempel“ mit der Auswahl „EINGEGANGEN“ und dem Häkchen „Datum“; auf der Rechnung steht ein blauer Stempel „EINGEGANGEN 26.11.2026“"></a></figure>
+<ol class="hsteps">
+<li>Werkzeug <b>Stempel</b> wählen.</li>
+<li>Den <b>Stempeltext</b> aussuchen, EINGEGANGEN, BEZAHLT, ERLEDIGT, GEPRÜFT, GEBUCHT, KOPIE oder ENTWURF – oder <i>„Beleg-Nr. (fortlaufend)“</i>, das jeden Beleg mit der nächsten Nummer versieht.</li>
+<li><b>Datum</b> angehakt lassen, wenn das heutige Datum unter den Text soll. Dann auf die Seite klicken – der Stempel sitzt genau dort. Weitere Klicks setzen weitere Stempel, <kbd>Esc</kbd> beendet das Werkzeug.</li>
+</ol>
+<p class="hmore">Verschieben: Stempel anklicken und ziehen; an der Ecke ziehen ändert die Größe; <kbd>Entf</kbd> löscht. Ein Stempel ist eine Anmerkung – andere PDF-Programme zeigen ihn ebenso. Soll er fest in die Seite, beim Speichern unter <i>„Bereinigen“</i> <i>„Seiten als Bilder“</i> wählen.</p>
 </article>
 
 <article class="hguide" id="a-frist"><h3>Frist berechnen</h3>
@@ -246,6 +295,17 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <p class="hmore"><a href="#bearbeiten">Mehr zu Seiten und Dateien</a></p>
 </article>
 
+<article class="hguide" id="a-aufteilen"><h3>PDF aufteilen</h3>
+<figure><a href="hilfe-bilder/de/aufteilen.webp" class="hshot"><img src="hilfe-bilder/de/aufteilen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „PDF aufteilen“ mit den Möglichkeiten gleich große Teile, an den Lesezeichen, höchstens so viele MB je Datei und nach Seitenbereichen"></a></figure>
+<ol class="hsteps">
+<li><b>Gleich große Teile:</b> z. B. „2“ macht aus 10 Seiten fünf Dateien mit je 2 Seiten.</li>
+<li><b>Höchstens … MB je Datei:</b> teilt so, dass jede Datei unter die Grenze passt – praktisch für E-Mail-Anhänge oder Behördenportale.</li>
+<li><b>Nach Seitenbereichen:</b> z. B. „1-3, 4-7, 8“ ergibt drei Dateien. Hat die PDF Lesezeichen, geht auch „je Kapitel eine Datei“.</li>
+<li><b>Aufteilen</b> – die Dateien werden gespeichert (mehrere zusammen als ZIP oder in den Ablageordner).</li>
+</ol>
+<p class="hmore">Unter <i>Mehr → PDF aufteilen …</i>. Nur einzelne Seiten heraustrennen? Links an der Seite die Schere anklicken oder in der Seitenübersicht Seiten auswählen und <i>„Auswahl speichern …“</i>. Einen eingescannten Briefstapel trennt <i>„Stapel in einzelne Briefe trennen“</i> automatisch.</p>
+</article>
+
 <article class="hguide" id="a-speichern"><h3>Speichern: PDF, PDF/A, Word, kleiner</h3>
 <figure><a href="hilfe-bilder/de/speichern.webp" class="hshot"><img src="hilfe-bilder/de/speichern.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Speichern“ mit Dateiname, Formaten (PDF, PDF/A, Bilder, Word, PowerPoint, Excel, Text, Markdown, HTML), Seitenauswahl und Größe"></a></figure>
 <ol class="hsteps">
@@ -255,6 +315,11 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Speichern</b>. Unter dem aufklappbaren Bereich darüber gibt es Seitenzahlen, Kopf- und Fußzeile, Wasserzeichen, Bates-Nummern, Briefbogen und Passwort.</li>
 </ol>
 <p class="hmore">Häufig gleiche Einstellungen? <i>„Als Ablauf speichern …“</i> merkt sie sich unter einem Namen.</p>
+<details class="hfix"><summary>Wenn es nicht klappt</summary><ul>
+<li>„Speichern“ fragt jedes Mal nach dem Ort: Unter <i>Mehr → Einrichtung …</i> einen Ablageordner wählen – dann speichert PDFMy ohne Nachfrage dorthin.</li>
+<li>Die Datei ist zu groß für die E-Mail: Größe <i>„Klein“</i> wählen; reicht das nicht, <i>„PDF aufteilen“</i> mit einer MB-Grenze.</li>
+<li>Word-Datei sieht anders aus als die PDF: Beim Umwandeln nach Word bleiben Text, Absätze und Tabellen erhalten; Spalten und frei platzierte Elemente vereinfacht PDFMy.</li>
+</ul></details>
 </article>
 
 <article class="hguide" id="a-office"><h3>Word und Excel in PDF umwandeln</h3>
@@ -264,6 +329,28 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Speichern</b> – fertig ist die PDF. Vorher können Sie wie gewohnt unterschreiben, schwärzen oder Seiten anfügen.</li>
 </ol>
 <p class="hmore">PDFMy nimmt Schriften mit denselben Laufweiten wie Arial, Calibri oder Times New Roman – Zeilen- und Seitenumbrüche bleiben so meist wie im Original. Zahlen erscheinen wie in Excel. Ohne Upload, ohne Office. <a href="#bearbeiten">Mehr dazu</a></p>
+</article>
+
+<article class="hguide" id="a-drucken"><h3>Drucken</h3>
+<figure><a href="hilfe-bilder/de/drucken.webp" class="hshot"><img src="hilfe-bilder/de/drucken.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Drucken“ mit Alle Seiten, Diese Seite, einem Feld für Seitenbereiche, der Auswahl Seiten pro Blatt und dem Knopf „Drucken“"></a></figure>
+<ol class="hsteps">
+<li><b>Welche Seiten?</b> Alle, nur die angezeigte – …</li>
+<li>… oder <b>bestimmte Seiten</b>, z. B. „1-3, 5“.</li>
+<li><b>Seiten pro Blatt:</b> 1, 2 oder 4 Seiten verkleinert auf ein Blatt – oder <i>„Broschüre“</i>: A4-Blätter, in der Mitte gefaltet, ergeben ein Heft in der richtigen Reihenfolge.</li>
+<li><b>Drucken</b> – im nächsten Fenster des Browsers wählen Sie Drucker, Papier und beidseitigen Druck.</li>
+</ol>
+<p class="hmore">Notizen, Markierungen, Unterschriften und Stempel werden mitgedruckt. Schneller: <kbd>Strg</kbd>+<kbd>P</kbd>. Ein ausgefülltes Formular druckt so, wie es auf dem Bildschirm aussieht.</p>
+</article>
+
+<article class="hguide" id="a-teilen"><h3>Teilen und per E-Mail senden</h3>
+<figure><a href="hilfe-bilder/de/teilen.webp" class="hshot"><img src="hilfe-bilder/de/teilen.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Teilen“ mit dem Dateinamen und den Knöpfen „Teilen …“, „E-Mail mit Anhang (Outlook)“ und „Speichern unter …“"></a></figure>
+<ol class="hsteps">
+<li>Oben auf <b>Teilen</b> klicken und den <b>Dateinamen</b> prüfen – so heißt der Anhang beim Empfänger.</li>
+<li><b>Teilen …</b> öffnet das Teilen-Menü des Geräts: WhatsApp, Signal, Teams, Mail und andere Apps (auf dem Handy und unter Windows 11).</li>
+<li><b>E-Mail mit Anhang (Outlook):</b> öffnet eine neue Nachricht mit der PDF im Anhang – nur noch Empfänger eintragen und senden.</li>
+<li><b>Speichern unter …</b>, wenn Sie die Datei lieber selbst versenden oder hochladen.</li>
+</ol>
+<p class="hmore">Die PDF geht direkt von Ihrem Gerät an das gewählte Programm – PDFMy lädt nichts auf einen Server. Ist die Datei zu groß für E-Mail, vorher beim Speichern <i>„Klein“</i> wählen oder <i>„PDF aufteilen“</i> mit MB-Grenze.</p>
 </article>
 
 <article class="hguide" id="a-schuetzen"><h3>Mit Passwort schützen</h3>
@@ -285,6 +372,23 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Nächste Stelle</b> springt zu jeder Stelle, an der unterschrieben werden soll – ein Klick auf „Hier unterschreiben“ setzt die Unterschrift genau dort.</li>
 </ol>
 <p class="hmore"><a href="#unterschreiben">Mehr zu Unterschrift, Kürzel und digitaler Signatur</a></p>
+<details class="hfix"><summary>Wenn es nicht klappt</summary><ul>
+<li>Die gespeicherte Unterschrift ist weg: PDFMy merkt sie sich nur auf diesem Gerät und in diesem Browser. Auf einem anderen Gerät einmal neu anlegen.</li>
+<li>Die Unterschrift ist zu groß oder sitzt falsch: anklicken und ziehen; an der Ecke ziehen ändert die Größe, <kbd>Entf</kbd> löscht.</li>
+<li>Der Empfänger braucht eine digitale Signatur (z. B. für ein Gericht): Mit eigenem Zertifikat beim Speichern unter „Signatur“ <i>„Digital signieren“</i> wählen.</li>
+</ul></details>
+</article>
+
+<article class="hguide" id="a-senden"><h3>Zur Unterschrift senden</h3>
+<figure><a href="hilfe-bilder/de/senden.webp" class="hshot"><img src="hilfe-bilder/de/senden.webp" width="1280" height="1000" loading="lazy" decoding="async" alt="Fenster „Zur Unterschrift senden“ mit Dokumentname, Frist, zwei Personen in der Reihenfolge, dem Knopf „Weitere Person“ und „Weiter: Felder setzen“"></a></figure>
+<ol class="hsteps">
+<li><b>Dokument</b> benennen – der Name steht in den E-Mails und im Prüfprotokoll.</li>
+<li><b>Wer soll unterschreiben?</b> Name und E-Mail je Person, in der Reihenfolge, in der unterschrieben wird.</li>
+<li><b>+ Weitere Person</b> für mehr Unterzeichner; „Zur Kenntnis“ bekommt das Ergebnis in Kopie.</li>
+<li>Optional eine <b>Frist</b>. Unter „Mehr“: Gültigkeit, Zugangscode (AES-256), Zahlung per GiroCode, Kalender-Erinnerungen, beizufügende Nachweise.</li>
+<li><b>Weiter: Felder setzen</b> – auf der Seite markieren, wo jede Person unterschreibt (auch Kürzel, Datum, Ankreuzfelder). Dann geht die erste E-Mail als Entwurf auf.</li>
+</ol>
+<p class="hmore">Die Unterzeichner brauchen kein Konto: Sie öffnen die PDF in PDFMy (oder einem anderen PDF-Programm), unterschreiben im markierten Feld und senden weiter. Am Ende kommt die Datei mit Prüfprotokoll zurück – auf Wunsch versiegelt. Ohne Server. <a href="#unterschreiben">Mehr zum Signatur-Ablauf</a></p>
 </article>
 
 <article class="hguide" id="a-erechnung"><h3>E-Rechnung schreiben</h3>
@@ -307,6 +411,40 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li><b>Kontoauszug oder Kassenbuch wählen</b> – den Umsatz-Export aus dem Online-Banking (CSV, Excel oder CAMT). Der Bericht mit Prüfvermerk für die Kassenprüfer öffnet sich sofort.</li>
 </ol>
 <p class="hmore">Ebenfalls unter <i>Mehr</i>: <b>Mitgliederversammlung</b> (Einladung, Anwesenheitsliste, Protokoll), <b>SEPA-Lastschrift für Beiträge</b>, <b>Beiträge per Überweisung</b> mit Abgleich, <b>Zuwendungsbestätigung</b> nach amtlichem Muster und <b>Vereinsvorlagen</b> (Mitgliedsantrag mit SEPA-Mandat, Foto-Einwilligung, Fahrten, Übungsleiter- und Ehrenamtspauschale). <a href="#bearbeiten">Mehr dazu</a></p>
+</article>
+
+<article class="hguide" id="a-spende"><h3>Spendenquittung ausstellen</h3>
+<figure><a href="hilfe-bilder/de/spendenquittung.webp" class="hshot"><img src="hilfe-bilder/de/spendenquittung.webp" width="1280" height="1000" loading="lazy" decoding="async" alt="Fenster „Zuwendungsbestätigung (Spendenquittung)“ mit den Angaben zum Verein, Finanzamt und Steuernummer, Name und Anschrift des Spenders, Betrag und dem Bereich für alle Spender auf einmal"></a></figure>
+<ol class="hsteps">
+<li><i>Mehr → Zuwendungsbestätigung …</i>: <b>Ihr Verein</b> mit Name, Ort, Anschrift und begünstigtem Zweck – PDFMy merkt sich das auf diesem Gerät.</li>
+<li><b>Freistellungsbescheid:</b> Finanzamt, Steuernummer und Datum des Bescheids (bzw. Feststellung nach § 60a AO bei neuen Vereinen).</li>
+<li><b>Name und Anschrift des Spenders</b> …</li>
+<li>… sowie <b>Betrag</b> und Tag der Zuwendung – PDFMy schreibt den Betrag auch in Buchstaben. <i>„Bestätigung erstellen“</i>.</li>
+<li>Weiter unten im Fenster: <b>Für alle Spender auf einmal</b> – Excel- oder CSV-Liste wählen – oder <i>„Spenden aus dem Kontoauszug …“</i> findet die Spenden eines Jahres im Umsatz-Export. Mehrfachspender bekommen eine Sammelbestätigung mit Anlage.</li>
+</ol>
+<p class="hmore">Wortlaut nach dem amtlichen Muster des Bundesfinanzministeriums, unverändert. Aufwandsspenden (Verzicht auf Erstattung) sind ankreuzbar. <a href="#a-verein">Weitere Vereinsfunktionen</a></p>
+</article>
+
+<article class="hguide" id="a-anlagen"><h3>Anlagen für Gericht und Behörde</h3>
+<figure><a href="hilfe-bilder/de/anlagen.webp" class="hshot"><img src="hilfe-bilder/de/anlagen.webp" width="1280" height="900" loading="lazy" decoding="async" alt="Fenster „Anlagen nummerieren“ mit Kennbuchstabe, Liste der geöffneten Dateien als Anlagen, Häkchen für Stempel und Anlagenverzeichnis und dem Knopf „Übernehmen“"></a></figure>
+<ol class="hsteps">
+<li>Alle Anlagen öffnen (mehrere Dateien auf einmal), in der Seitenübersicht ordnen, dann <i>Mehr → Anlagen nummerieren …</i>. <b>Kennbuchstabe</b> wählen oder eintippen: K (Kläger), B (Beklagter), AS (Antragsteller), AG (Antragsgegner), BK, BB.</li>
+<li>Die <b>Liste</b> zeigt jede Datei als Anlage – K 1, K 2, K 3 – mit einer Bezeichnung, die Sie ändern können.</li>
+<li><b>Stempel „Anlage …“</b> oben rechts auf die erste Seite jeder Anlage.</li>
+<li><b>Anlagenverzeichnis</b> als erste Seite.</li>
+<li><b>Übernehmen</b>. Mit <i>„Jede Anlage als eigene Datei“</i> entstehen einzelne, beA-taugliche Dateien (als ZIP oder in den Ablageordner).</li>
+</ol>
+<p class="hmore">Vor dem Versand prüft <i>Mehr → Vorabprüfung</i> die Regeln für das beA (Dateiname, Größe, Schriften, keine aktiven Inhalte). <a href="#kanzlei">Mehr für Kanzleien</a></p>
+</article>
+
+<article class="hguide" id="a-datenschutz"><h3>Datenschutz selbst prüfen</h3>
+<figure><a href="hilfe-bilder/de/datenschutz.webp" class="hshot"><img src="hilfe-bilder/de/datenschutz.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Fenster „Datenschutz selbst prüfen“ mit dem Verbindungsstatus, der Menge gesendeter Daten und der Liste der Verbindungen dieses Fensters"></a></figure>
+<ol class="hsteps">
+<li><i>Mehr → Datenschutz selbst prüfen</i> zeigt, ob das Fenster <b>online</b> ist …</li>
+<li>… und wie viele Daten <b>gesendet</b> wurden – beim Bearbeiten Ihrer Dokumente: keine.</li>
+<li>Die <b>Liste</b> nennt jede Verbindung seit dem Öffnen, z. B. das Laden von Programmteilen oder Sprachdaten von pdfmy.de.</li>
+</ol>
+<p class="hmore">Der einfachste Test: WLAN ausschalten und weiterarbeiten – Öffnen, Bearbeiten, Texterkennung und Speichern funktionieren ohne Internet. <a href="#datenschutz">Mehr zu Datenschutz und Sicherheit</a></p>
 </article>
 </section>
 

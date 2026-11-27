@@ -469,3 +469,5 @@ Nachtrag 24.11.2026 (app-v346): Hilfe-Center mit 18 bebilderten Anleitungen (Nut
 Nachtrag 26.11.2026 (app-v348): Störpunkte-Entfernung für die Texterkennung bei Schwarzweiß-Seiten, wirksamkeitsgeprüft am Fax-Messkorpus (gestört 28 % → 5,8 % Zeichenfehler, sauber ohne Verschlechterung je Seite, 300-dpi-Korpus unverändert) – Messung vor und nach der Änderung als Nachweis (ISO 9001 9.1.1, 10.3 fortlaufende Verbesserung). Test-Gate: tests/ocr.test.js (Fax gestört, Erhalt von i-/Satz-/Trennpunkten).
 
 Nachtrag 26.11.2026 (app-v349): Word 97–2003 (.doc) mit Formatierung; Abgleich gegen dieselben Dokumente als .docx (10 Dateien, Bausteine/Wortlaut/Schrift/Seitenzahl gleich) und Robustheit gegen beschädigte Dateien (Zufallsfehler, verständliche Meldung) als Test-Gate tests/doc97.test.js (ISO 9001 8.6 Freigabe, ISO/IEC 25010 Zuverlässigkeit).
+
+Nachtrag 27.11.2026 (app-v350): Benutzerdokumentation erweitert (27 bebilderte Anleitungen, Fehlerhilfe „Wenn es nicht klappt“ je Hauptaufgabe; ISO/IEC/IEEE 26514 Abschnitt zu Problemlösung). Aussagen gegen den Programmcode geprüft; Test-Gate tests/hilfe-center.test.js.

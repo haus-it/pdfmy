@@ -22,8 +22,8 @@ function webpSize(b) {
 const arts = [...sec.matchAll(/<article class="hguide" id="([a-z-]+)"><h3>([^<]+)<\/h3>([\s\S]*?)<\/article>/g)].map(m => ({ id: m[1], title: m[2], body: m[3] }));
 const cards = [...sec.matchAll(/<a class="hcard" href="#([a-z-]+)">/g)].map(m => m[1]);
 
-test('Hilfe-Center: mindestens 18 Anleitungen in Themengruppen, jede Kachel führt zu einer Anleitung', () => {
-  assert.ok(arts.length >= 18, 'Anleitungen: ' + arts.length);
+test('Hilfe-Center: mindestens 27 Anleitungen in Themengruppen, jede Kachel führt zu einer Anleitung', () => {
+  assert.ok(arts.length >= 27, 'Anleitungen: ' + arts.length);
   assert.ok((sec.match(/class="hgroup"/g) || []).length >= 5, 'Themengruppen');
   assert.deepEqual([...cards].sort(), arts.map(a => a.id).sort(), 'Kacheln und Anleitungen passen zusammen');
   assert.equal(new Set(arts.map(a => a.id)).size, arts.length, 'IDs eindeutig');
@@ -56,4 +56,11 @@ test('Hilfe-Center: Knopf „Nach oben“ ist da, beschriftet und springt zur Su
   assert.match(H, /<button type="button" class="htop" id="htop" title="[^"]+"[^>]*>[\s\S]*?Nach oben<\/button>/);
   const J = fs.readFileSync(path.join(SITE, 'hilfe.js'), 'utf8');
   assert.match(J, /getElementById\('htop'\)/); assert.match(J, /scrollTo\(\{ top: 0/); assert.match(J, /getElementById\('hq'\)\?\.focus/);
+});
+
+test('Hilfe-Center: „Wenn es nicht klappt“ bei den wichtigsten Anleitungen, mit mindestens zwei Lösungen', () => {
+  const fixes = arts.filter(a => /<details class="hfix"><summary>Wenn es nicht klappt<\/summary>/.test(a.body));
+  assert.ok(fixes.length >= 5, 'Anleitungen mit Fehlerhilfe: ' + fixes.map(a => a.id));
+  for (const a of fixes) assert.ok((a.body.match(/<details class="hfix">[\s\S]*?<\/details>/)[0].match(/<li>/g) || []).length >= 2, a.id);
+  for (const id of ['a-oeffnen', 'a-scannen', 'a-unterschreiben', 'a-speichern']) assert.ok(fixes.some(a => a.id === id), id);
 });
