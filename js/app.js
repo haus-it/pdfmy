@@ -923,7 +923,7 @@ async function importPdf(file) {
 // (Graustufen, Papier weiß) aufbereitet
 function effMode(p) {
   if (p.mode !== 'auto') return p.mode;
-  return p.autoMode ||= Imaging.isPictorial(p.orig) ? 'original' : Imaging.isColorful(p.orig) ? 'colordoc' : 'document';
+  return p.autoMode ||= Imaging.isPictorial(p.orig) || Imaging.isCardOnGlass(p.orig) ? 'original' : Imaging.isColorful(p.orig) ? 'colordoc' : 'document';
 }
 function reprocess(p) {
   p.processed = Imaging.enhance(p.orig, effMode(p));
@@ -2337,14 +2337,16 @@ async function ocrPage(p) {
     const prim = ocrPrimary();
     let lang = Letter.detectLang(res.text, prim);
     // Kyrillisch oder Griechisch: Die erste Erkennung (lateinische Schrift) liefert dann nur Zeichensalat mit geringer Sicherheit
-    if (res.conf < 62 && (!(Letter.detectLang(res.text, 'xxx') === prim) || res.conf < 45)) {   // sehr unsicher: auch wenn der Zeichensalat „deutsch“ aussieht
+    // Bildseite (Titelbild, Plakat – Imaging.isPictorial): unsicher, weil kaum Text da ist, nicht wegen fremder Schrift → nichts probieren (Meldung 2026-0014)
+    const pictorial = p.autoMode === 'original';
+    if (!pictorial && res.conf < 62 && (!(Letter.detectLang(res.text, 'xxx') === prim) || res.conf < 45)) {   // sehr unsicher: auch wenn der Zeichensalat „deutsch“ aussieht
       const small = Imaging.scaled(img, 1400), lbl = state.ocrLabel; let best = null;
       state.ocrLabel = '';
       for (const c of scriptProbes(prim)) {
         try {
           status(`${lbl || 'Seite'}: prüfe ${I18N.ocrName(c)} …`);
           const r = await recognizeLangs(small, c === 'rus' ? ['rus', 'ukr'] : [c]);   // zusammen, damit і/є/ї (Ukrainisch) und ы/э (Russisch) erhalten bleiben
-          if (r.conf > res.conf + 12 && (!best || r.conf > best.conf)) best = { c, conf: r.conf, text: r.text };
+          if (Letter.scriptWins(res, r) && (!best || r.conf > best.conf)) best = { c, conf: r.conf, text: r.text };   // nur wirklich lesbar (Meldung 2026-0014)
           if (best && (c === ocrHint || (c === 'rus' && NONLATIN_OCR.has(ocrHint) && ocrHint !== 'ell'))) break;
         } catch (e) { console.warn('Schrift', c, e); }
       }
@@ -2367,7 +2369,7 @@ async function ocrPage(p) {
       try {
         status(`${state.ocrLabel || 'Seite'}: ${I18N.ocrName(lang)} erkannt – Texterkennung in dieser Sprache …`);
         const r2 = await recognizeLangs(img, LATIN_OCR.has(lang) === LATIN_OCR.has(prim) ? [prim, lang] : [lang, LATIN_OCR.has(lang) ? 'rus' : 'deu']);
-        if (r2.conf >= res.conf - 3 || !LATIN_OCR.has(lang)) { res = r2; p.lang = lang; if (!LATIN_OCR.has(lang)) ocrHint = lang; }
+        if (r2.conf >= res.conf - 3 || !LATIN_OCR.has(lang)) { res = r2; p.lang = lang; if (!LATIN_OCR.has(lang) && r2.conf >= 60) ocrHint = lang; }   // nur sicher erkannte Schrift als Vorgabe für die nächsten Seiten
       } catch (e) { console.warn('Sprache', lang, e); }
     } else if (prim !== 'deu') p.lang = prim;
     // Chinesisch/Japanisch: Tesseract liefert jedes Zeichen als Wort – im Text ohne Leerzeichen dazwischen
@@ -2394,8 +2396,7 @@ function spellLang(p, text) {
 // Zuletzt gefundene nichtlateinische Sprache – die nächsten Seiten probieren sie zuerst (sonst die Sprache der Oberfläche)
 let ocrHint = NONLATIN_OCR.has(I18N.info.ocr) ? I18N.info.ocr : null;
 // Zahl „echter“ Wörter im erkannten Text: mindestens 4 Buchstaben einer Schrift mit mindestens einem Vokal (Rauschen erzeugt so etwas kaum)
-const ocrWords = t => (String(t || '').match(/[A-Za-zÀ-ÖØ-öø-ÿĀ-ž]{4,}|[А-Яа-яЁёІіЇїЄєЎўЈјЉљЊњЋћЏџ]{4,}|[Α-Ωα-ωάέήίόύώϊϋΐΰ]{4,}/g) || [])
-  .filter(w => /[aeiouyäöüàáâãåæèéêëìíîïòóôõøùúûýāēīōū]|[аеёиоуыэюяіїєў]|[αεηιουωάέήίόύώ]/i.test(w)).length;
+const ocrWords = t => Letter.realWords(t);   // js/letter.js
 const scriptProbes = prim => NONLATIN_OCR.has(prim) ? ['deu'] : [...new Set([ocrHint === 'ell' ? 'ell' : ocrHint ? 'rus' : null, 'rus', 'ell'].filter(Boolean))];
 // Weitere Sprachen: eigener Rechenkern, Sprachdatei wird erst bei Bedarf geladen (je 1–4 MB)
 let langWorker = null, langCombo = '', langQueue = Promise.resolve();

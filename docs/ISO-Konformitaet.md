@@ -482,6 +482,8 @@ Nachtrag 27.11.2026 (app-v356): Meldungen 2026-0013/0009 behoben (Bildseiten und
 
 Nachtrag 27.11.2026 (app-v357): Verbesserungsvorschläge 2026-0011 (Fristenliste wählbar, Lastschrift-Erkennung konservativ: Zahlungsaufforderung behält die Frist) und 2026-0012 (Word-Export mit Formatierung) umgesetzt, je mit Test im Test-Gate (ISO 9001 9.1.2 Kundenzufriedenheit, 10.3 fortlaufende Verbesserung).
 
+Nachtrag 27.11.2026 (app-v358): Meldung 2026-0014 behoben – Schrifterkennung verlangt Lesbarkeit statt bloß höherer Sicherheit, Bildseiten ohne Schriftproben; Korrekturmaßnahme mit Test und Gegenprobe (echter ukrainischer Brief) (ISO 9001 10.2). Ebenso Meldung 2026-0015 (Karten/Ausweise auf dem Scannerglas in Originalfarben, Gegenprobe mit Briefen).
+
 Nachtrag 27.11.2026 (app-v353): Diagramme in Word-Dateien (vorher Datenverlust ohne Hinweis); nicht unterstützte Arten mit sichtbarem Hinweis. Test-Gate tests/word-diagramm.test.js; gemeinsamer Zeichner mit der Folienausgabe, deren Tests unverändert grün (ISO 9001 8.5.1).
 
 Nachtrag 27.11.2026 (app-v352): .doc-Textfelder und mehrspaltiger Satz je Abschnitt; Fehlerkorrektur .docx (Art des Abschnittswechsels gehört zum folgenden Abschnitt, ECMA-376 17.6.22). Abgleich .doc gegen .docx (13-textfeld, 14-abschnitt) als Test-Gate tests/doc97.test.js (ISO 9001 8.5.1/8.7: Fehler erkannt, korrigiert und durch Test abgesichert).

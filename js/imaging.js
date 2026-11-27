@@ -71,6 +71,19 @@
     for (let v = Math.max(0, P - 30); v < 256; v++) paper += hist[v];
     return paper / n < 0.35 && med < P - 40;
   }
+  /* Farbige Karte allein auf dem Scannerglas (Führerschein, Ausweis, Versichertenkarte, Foto – Meldung 2026-0015): Die Seite ist fast nur
+     Deckel-Weiß, deshalb sah sie wie ein Brief aus, und „Papier weiß“ bleichte die zarten Sicherheitsfarben aus. Erkannt über die
+     Foto-Suche (rechteckige Fläche, die sich vom Deckel abhebt, außerhalb keine Schrift), höchstens 60 % der Seite, innen Mitteltöne
+     (Pastell-Sicherheitsdruck, Passbild) oder farbig – ein fast weißer Kassenbon wird weiter aufbereitet. */
+  function isCardOnGlass(src) {
+    if (typeof DocDetect === 'undefined' || !DocDetect.findPhoto) return false;
+    const { d, W, H } = pixels(src, 600);
+    return cardData(d, W, H);
+  }
+  function cardData(d, W, H) {
+    const f = DocDetect.findPhoto(d, W, H);
+    return !!(f.found && f.clean && f.area < 0.6 && (f.photoLike || colorfulData(d, W, H)));   // Mitteltöne statt Papierweiß, oder farbig
+  }
   /* Digital erzeugtes Bild (Grafik, Logo, Bildschirmfoto – Meldung 2026-0009)? Glatte Farbflächen: In den Mitteltönen gleicht ein Punkt
      meist exakt seinem rechten Nachbarn (Grafik 0,99, Bildschirmfoto 0,92), bei Scans und Fotos verhindert das Rauschen das (0,01–0,17).
      d: RGBA-Zeilen in Originalauflösung (jede 8. Zeile genügt). */
@@ -564,7 +577,7 @@
     if (straighten) { const r = deskew(c); c = r.canvas; angle = r.angle; }
     // Automatisch: Bildseite unverändert (nicht bei Kamerafotos – dort braucht es die Aufhellung), Farbdokument, sonst Graustufen-Dokument;
     // beim Scan „Automatisch“ reiner Text als Schwarzweiß-Dokument
-    const autoMode = mode === 'auto' ? (!fromCamera && isPictorial(c) ? 'original' : isColorful(c) ? 'colordoc' : detectPhoto && isBilevel(c) ? 'bw' : 'document') : null;
+    const autoMode = mode === 'auto' ? (!fromCamera && (isPictorial(c) || isCardOnGlass(c)) ? 'original' : isColorful(c) ? 'colordoc' : detectPhoto && isBilevel(c) ? 'bw' : 'document') : null;
     return { orig: c, processed: enhance(c, autoMode || mode), cropped, angle, autoMode };
   }
 
@@ -659,5 +672,5 @@
     return c;
   }
 
-  root.Imaging = { pixels, isPictorial, pictorialData, isDigital, digitalData, grain, smooth, despeckle, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, skewInfo, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
+  root.Imaging = { pixels, isPictorial, pictorialData, isCardOnGlass, cardData, isDigital, digitalData, grain, smooth, despeckle, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, skewInfo, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
 })(self);

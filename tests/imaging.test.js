@@ -134,3 +134,23 @@ test('Digitale Grafik und Bildschirmfoto werden erkannt, Scans mit Rauschen nich
   assert.equal(I.digitalData(scan, W, H), false, 'Scan mit Rauschen');
   assert.equal(I.digitalData(sheet(() => [255, 255, 255]), W, H), false, 'weiße Seite: zu wenig Mitteltöne');
 });
+
+// Meldung 2026-0015: Führerschein auf dem Scannerglas – Seite fast nur Deckel-Weiß, Karte mit zarten Sicherheitsfarben wurde ausgebleicht
+test('Farbige Karte allein auf dem Glas bleibt unverändert; Kassenbon und Brief mit Foto nicht (Meldung 2026-0015)', () => {
+  globalThis.DocDetect = require('../js/docdetect.js');
+  const inCard = (x, y) => x >= 200 && x < 520 && y >= 150 && y < 352;   // Scheckkarte ~ 85,6 × 54 mm auf A4
+  const card = sheet((x, y) => {
+    if (!inCard(x, y)) return [250, 250, 250];
+    if (x >= 215 && x < 290 && y >= 200 && y < 300) return [120 + (x % 7), 95, 80 + (y % 5)];   // Passbild
+    if (y >= 170 && y < 185 && x > 300 && x < 480) return [30, 30, 40];                         // Schrift auf der Karte
+    return [225 - ((x + y) % 20), 205 + ((x * 3) % 25), 215 - (y % 15)];                          // Pastell-Sicherheitsdruck rosa/grün
+  });
+  assert.equal(I.cardData(card, W, H), true, 'Führerschein auf dem Glas');
+  // grauer Kassenbon (Thermopapier) mit Schrift: wird weiter aufbereitet
+  const bon = sheet((x, y) => x >= 300 && x < 460 && y >= 100 && y < 900 ? (y % 24 < 6 && x % 9 ? [90, 90, 90] : [228, 228, 226]) : [250, 250, 250]);
+  assert.equal(I.cardData(bon, W, H), false, 'Kassenbon');
+  // Brief mit farbigem Foto und Text drumherum: Dokument
+  const brief = sheet((x, y) => inCard(x, y) ? [150, 110, 90] : y > 450 && y < 1000 && y % 30 < 9 && x > 80 && x < 760 && (x >> 3) % 4 ? [30, 30, 30] : [245, 245, 245]);
+  assert.equal(I.cardData(brief, W, H), false, 'Brief mit Foto');
+  assert.equal(I.cardData(sheet(), W, H), false, 'leere Seite');
+});

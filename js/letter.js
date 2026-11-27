@@ -694,6 +694,18 @@
     return '';
   }
 
+  // Zahl „echter“ Wörter im erkannten Text: mindestens 4 Buchstaben einer Schrift mit mindestens einem Vokal (Rauschen erzeugt so etwas kaum)
+  const realWords = t => (String(t || '').match(/[A-Za-zÀ-ÖØ-öø-ÿĀ-ž]{4,}|[А-Яа-яЁёІіЇїЄєЎўЈјЉљЊњЋћЏџ]{4,}|[Α-Ωα-ωάέήίόύώϊϋΐΰ]{4,}/g) || [])
+    .filter(w => /[aeiouyäöüàáâãåæèéêëìíîïòóôõøùúûýāēīōū]|[аеёиоуыэюяіїєў]|[αεηιουωάέήίόύώ]/i.test(w)).length;
+  /* Gewinnt eine andere Schrift (Kyrillisch, Griechisch …) gegen die erste Erkennung? (Meldung 2026-0014) Nicht schon, wenn sie nur etwas
+     „sicherer“ ist – auf Bildseiten liefern beide Zeichensalat (z. B. 25 % gegen 40 %), und dann hieß es „Ukrainisch erkannt“.
+     Verlangt: deutlich sicherer, für sich lesbar (≥ 60 %), mindestens 6 echte Wörter und mindestens 35 % der Bruchstücke mit Buchstaben
+     sind echte Wörter (Zeichensalat auf Fotos: ~20 %, echte Briefe: 50–80 %). base/cand = { conf, text } */
+  function scriptWins(base, cand) {
+    if (!cand || !(cand.conf > base.conf + 12 && cand.conf >= 60)) return false;
+    const n = realWords(cand.text), toks = String(cand.text || '').split(/\s+/).filter(t => /\p{L}/u.test(t)).length;
+    return n >= 6 && n >= toks * 0.35;
+  }
   /* Keine Zahlungsfrist zu überwachen (Meldung 2026-0011): Betrag wird abgebucht oder ist schon bezahlt. → Grund (kurz) oder '' */
   function noDeadlineReason(text) {
     const t = String(text || '').replace(/\s+/g, ' ');
@@ -703,6 +715,6 @@
     if (/\b(?:bereits|schon)\s+(?:bezahlt|beglichen|ausgeglichen)|\bBetrag\b[^.]{0,40}\bdankend erhalten|\b(?:Rechnung|Betrag)\s+(?:ist\s+)?(?:bezahlt|beglichen)\b|\bbar bezahlt\b|\bZahlung (?:per|mit) (?:Kreditkarte|PayPal|EC-Karte)\b/i.test(t)) return 'bezahlt';
     return '';
   }
-  const api = { noDeadlineReason, contractTerms, plusMonate, paragraphAround, protectedKind, parseDates, analyzeLetter, keyData, ibanValid, buildFilename, buildIcs, folderName, epcPayload, parsePaymentQr, pickRoute, senderAddress, replyDraft, TEMPLATES, fillTemplate, todoFor, appealDeadline, appealRule, holidays, autopilotCheck, detectLang, scriptOf, cyrLang, lineAround, findSensitive, splitPoints };
+  const api = { realWords, scriptWins, noDeadlineReason, contractTerms, plusMonate, paragraphAround, protectedKind, parseDates, analyzeLetter, keyData, ibanValid, buildFilename, buildIcs, folderName, epcPayload, parsePaymentQr, pickRoute, senderAddress, replyDraft, TEMPLATES, fillTemplate, todoFor, appealDeadline, appealRule, holidays, autopilotCheck, detectLang, scriptOf, cyrLang, lineAround, findSensitive, splitPoints };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Letter = api;
 })(typeof self !== 'undefined' ? self : this);

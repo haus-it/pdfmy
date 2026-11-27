@@ -361,3 +361,4 @@ Automatisch geschrieben von tools\deploy.ps1 bei jeder Veröffentlichung.
 | 2026-11-27 20:17 | pdfmy-202611271904-v355 | 1.24.0 | 065b86623c620288… | 563/563 Tests bestanden, Probelauf bestanden | 132 | Administrator | 9291b5fa596f19e2 |
 | 2026-11-27 21:42 | pdfmy-202611272028-v356 | 1.24.0 | 065b86623c620288… | 571/571 Tests bestanden, Probelauf bestanden | 180 | Administrator | 33b5c242500deee5 |
 | 2026-11-27 22:26 | pdfmy-202611272115-v357 | 1.24.0 | 065b86623c620288… | 577/577 Tests bestanden, Probelauf bestanden | 178 | Administrator | 6464bf1fc80e515c |
+| 2026-11-27 23:15 | pdfmy-202611272204-v358 | 1.24.0 | 065b86623c620288… | 581/581 Tests bestanden, Probelauf bestanden | 59 | Administrator | 9fc4451efc7d02af |

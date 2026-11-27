@@ -36,8 +36,10 @@ test('Ausrichtung: quer liegende Seiten zuerst ±90°, dann mit fremden Schrifte
 });
 
 test('Wortzählung: echte Wörter in lateinischer, kyrillischer und griechischer Schrift, Rauschen zählt nicht', () => {
-  const app = R('js/app.js'), m = app.match(/const ocrWords = [\s\S]*?\.length;/)[0];
-  const ocrWords = new Function(m.replace('const ocrWords =', 'return'))();
+  // seit app-v358 in js/letter.js (Letter.realWords), die App nutzt sie als ocrWords
+  const app = R('js/app.js');
+  assert.match(app, /const ocrWords = t => Letter\.realWords\(t\);/);
+  const ocrWords = require('../js/letter.js').realWords;
   assert.equal(ocrWords('Уважаемый господин Иванов, настоящим подтверждаем'), 5);
   assert.equal(ocrWords('Sehr geehrte Damen und Herren'), 4);
   assert.equal(ocrWords('Αγαπητέ κύριε Παπαδόπουλε'), 3);
