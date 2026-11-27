@@ -5,7 +5,7 @@
    Textrahmen (Umbruch, Ausrichtung, Aufzählung, Zeilenabstand, automatische Verkleinerung), Bilder (mit Zuschnitt), Formen
    (vordefiniert und frei), Linien mit Pfeilspitzen, Gruppen, Drehung/Spiegelung, Tabellen. Farben aus dem Design (Theme).
    Schriften mit gleicher Laufweite wie Calibri, Arial, Times, Cambria, Courier (vendor/fonts/metric), fehlende Zeichen aus DejaVu.
-   Diagramme (Säulen, Balken, Linie, Fläche, Kreis/Ring) aus den gespeicherten Werten. Nicht nachgebildet: andere Diagrammarten (Platzhalter mit Titel), SmartArt ohne gespeicherte Zeichnung, Effekte (Schatten, Spiegelung),
+   Diagramme (Säulen, Balken, Linie, Fläche, Kreis/Ring, Punkt, Netz, Kombination mit zweiter Achse) aus den gespeicherten Werten. Nicht nachgebildet: Blase, Kurs, Oberfläche (Platzhalter mit Titel), SmartArt ohne gespeicherte Zeichnung, Effekte (Schatten, Spiegelung),
    Animationen, EMF/WMF-Grafiken. Ausgeblendete Folien werden wie beim PDF-Export von PowerPoint weggelassen.
    Slides.pptx(bytes) / Slides.odp(bytes) → { w, h, slides: [{ bg, items }], skipped }
    Slides.render(PDFLib, model, { fontkit, font(fam, bold, italic) → bytes, image?(bytes, ext) → { png } | null, title, locale }) → { bytes, missing } */
@@ -373,34 +373,53 @@
   }
 
   /* Diagramm (DrawingML Chart) aus den im Diagramm gespeicherten Werten (numCache/strCache): Säulen, Balken (gruppiert, gestapelt,
-     100 %), Linie, Fläche, Kreis/Ring. Andere Arten (Punkt, Blase, Netz, Kombination mit zweiter Achse) → null (Platzhalter). */
+     100 %), Linie, Fläche, Kreis/Ring, Punkt (XY), Netz sowie Kombinationen aus Säulen/Linie/Fläche mit zweiter Größenachse
+     (app-v355). Blase, Kurs, Oberfläche → null (Platzhalter). */
   function chartOf(cx, color) {
     const plot = all(cx, 'c:plotArea')[0]; if (!plot) return null;
-    const kinds = els(plot).filter(k => /^c:(bar|bar3D|line|line3D|area|area3D|pie|pie3D|doughnut)Chart$/.test(k.name));
-    if (kinds.length !== 1 || els(plot).some(k => /^c:(scatter|bubble|radar|stock|surface|surface3D|ofPie)Chart$/.test(k.name))) return null;
-    const k = kinds[0], type = k.name.replace(/^c:|3D|Chart$/g, '');
+    const kinds = els(plot).filter(k => /^c:(bar|bar3D|line|line3D|area|area3D|pie|pie3D|doughnut|scatter|radar)Chart$/.test(k.name));
+    if (!kinds.length || els(plot).some(k => /^c:(bubble|stock|surface|surface3D|ofPie)Chart$/.test(k.name))) return null;
+    const tyOf = k => k.name.replace(/^c:|3D|Chart$/g, ''), types = kinds.map(tyOf);
+    if (kinds.length > 1 && types.some(t => !/^(bar|line|area)$/.test(t))) return null;   // Kreis, Punkt und Netz nur allein
+    const k = kinds[0], type = types[0];
     const val = (el, n) => kid(el, n)?.attrs.val;
     const pts = el => { const c = all(el || { kids: [] }, 'c:pt'), out = []; for (const p of c) out[num(p.attrs.idx)] = txt(kid(p, 'c:v') || { kids: [] }); return out; };
     const accent = i => color({ kids: [{ name: 'a:schemeClr', attrs: { val: 'accent' + (i % 6 + 1) }, kids: [] }] }) || { r: 0.3, g: 0.45, b: 0.75, a: 1 };
-    const series = kids(k, 'c:ser').map((s, i) => {
-      const sp = kid(s, 'c:spPr'), fill = color(kid(sp, 'a:solidFill')), ln = color(kid(kid(sp, 'a:ln'), 'a:solidFill'));
-      return {
-        name: pts(kid(s, 'c:tx')).filter(v => v != null).join(' ') || `Reihe ${i + 1}`,
-        vals: pts(kid(s, 'c:val')).map(v => v == null || v === '' ? null : num(v, null)),
-        cats: pts(kid(s, 'c:cat')),
-        color: (type === 'line' ? ln || fill : fill || ln) || accent(num(val(s, 'c:idx'), i)),
-        points: kids(s, 'c:dPt').map(d => ({ i: num(val(d, 'c:idx')), color: color(kid(kid(d, 'c:spPr'), 'a:solidFill')) })),
-      };
+    // Größenachse je Diagrammart: weicht sie von der ersten ab, ist es die zweite (rechte) Achse
+    const valAx = kids(plot, 'c:valAx'), axOf = kk => { const ids = kids(kk, 'c:axId').map(a => a.attrs.val); return valAx.find(a => ids.includes(val(a, 'c:axId'))) || null; };
+    const prim = axOf(k);
+    const sty = type === 'scatter' ? val(k, 'c:scatterStyle') || 'lineMarker' : type === 'radar' ? val(k, 'c:radarStyle') || 'standard' : '';
+    let si = 0;
+    const series = kinds.flatMap(kk => {
+      const kt = tyOf(kk), ax = axOf(kk), axis = kinds.length > 1 && ax && prim && ax !== prim ? 1 : 0, grouping = val(kk, 'c:grouping') || 'clustered';
+      return kids(kk, 'c:ser').map(s => {
+        const i = si++, sp = kid(s, 'c:spPr'), fill = color(kid(sp, 'a:solidFill')), lnEl = kid(sp, 'a:ln'), ln = color(kid(lnEl, 'a:solidFill'));
+        const mk = kid(s, 'c:marker'), mfill = color(kid(kid(mk, 'c:spPr'), 'a:solidFill'));
+        const xy = kt === 'scatter', xr = pts(kid(s, 'c:xVal')), xnum = xr.length && xr.every(v => v == null || v === '' || isFinite(+v));
+        return {
+          name: pts(kid(s, 'c:tx')).filter(v => v != null).join(' ') || `Reihe ${i + 1}`,
+          vals: pts(kid(s, xy ? 'c:yVal' : 'c:val')).map(v => v == null || v === '' ? null : num(v, null)),
+          cats: xy ? (xnum ? [] : xr) : pts(kid(s, 'c:cat')),
+          xs: xy ? pts(kid(s, 'c:yVal')).map((_, j) => xnum ? (xr[j] == null || xr[j] === '' ? null : +xr[j]) : j + 1) : undefined,
+          color: (/^(line|scatter)$/.test(kt) || (kt === 'radar' && sty !== 'filled') ? ln || mfill || fill : fill || ln) || accent(num(val(s, 'c:idx'), i)),
+          points: kids(s, 'c:dPt').map(d => ({ i: num(val(d, 'c:idx')), color: color(kid(kid(d, 'c:spPr'), 'a:solidFill')) })),
+          kind: kt, axis, grouping,
+          line: xy ? !kid(lnEl, 'a:noFill') && sty !== 'marker' : true,
+          marker: val(mk, 'c:symbol') !== 'none' && !(xy && /^(line|smoothLine)$/.test(sty) && !mk) && !(kt === 'line' && val(kk, 'c:marker') === '0' && !mk),
+        };
+      });
     });
     if (!series.length || !series.some(s => s.vals.some(v => v != null))) return null;
     const n = Math.max(...series.map(s => s.vals.length)), cats = Array.from({ length: n }, (_, i) => series.find(s => s.cats[i] != null)?.cats[i] ?? String(i + 1));
     const tEl = all(cx, 'c:title')[0], delTitle = val(all(cx, 'c:chart')[0], 'c:autoTitleDeleted') === '1';
     const title = tEl ? all(tEl, 'a:t').map(txt).join('') || (series.length === 1 ? series[0].name : '') : (!delTitle && series.length === 1 && /pie|doughnut/.test(type) ? series[0].name : '');
-    const fmt = all(kid(kid(kids(k, 'c:ser')[0], 'c:val') || { kids: [] }, 'c:numRef') || { kids: [] }, 'c:formatCode')[0];
+    const fmtOf = kk => { const f = all(kid(kid(kids(kk, 'c:ser')[0], type === 'scatter' ? 'c:yVal' : 'c:val') || { kids: [] }, 'c:numRef') || { kids: [] }, 'c:formatCode')[0]; return /%/.test(f ? txt(f) : ''); };
+    const k2 = kinds.find(kk => series.some(s => s.axis) && axOf(kk) !== prim);
     return {
-      type, dir: val(k, 'c:barDir') || 'col', grouping: val(k, 'c:grouping') || 'clustered', title, cats, series,
-      legend: !!all(cx, 'c:legend')[0], legendPos: val(all(cx, 'c:legend')[0], 'c:legendPos') || 'r', percent: /%/.test(fmt ? txt(fmt) : ''),
-      vary: val(k, 'c:varyColors') === '1' || /pie|doughnut/.test(type), hole: type === 'doughnut' ? num(val(k, 'c:holeSize'), 50) / 100 : 0,
+      type, dir: val(kinds.find(kk => tyOf(kk) === 'bar'), 'c:barDir') || 'col', grouping: val(k, 'c:grouping') || 'clustered', title, cats, series,
+      legend: !!all(cx, 'c:legend')[0], legendPos: val(all(cx, 'c:legend')[0], 'c:legendPos') || 'r', percent: fmtOf(k), percent2: k2 ? fmtOf(k2) : false,
+      vary: kinds.length === 1 && (val(k, 'c:varyColors') === '1' || /pie|doughnut/.test(type)), hole: type === 'doughnut' ? num(val(k, 'c:holeSize'), 50) / 100 : 0,
+      radarStyle: type === 'radar' ? sty : undefined,
       accents: Array.from({ length: Math.max(6, n) }, (_, i) => accent(i)),
       size: num(all(kid(cx.kids.find(e => typeof e === 'object') || cx, 'c:txPr') || { kids: [] }, 'a:defRPr')[0]?.attrs.sz, 1000) / 100,   // Schriftgröße des Diagramms (Vorgabe 10 pt)
     };
@@ -438,7 +457,7 @@
     const t = dir && await z.text(dir + '/content.xml'); if (!t) return null;
     const x = Office.parseXml(t), ch = all(x, 'chart:chart')[0]; if (!ch) return null;
     const cls = String(ch.attrs['chart:class'] || '').replace(/^chart:/, '');
-    const type = { bar: 'bar', line: 'line', area: 'area', circle: 'pie', ring: 'doughnut' }[cls]; if (!type) return null;
+    const type = { bar: 'bar', line: 'line', area: 'area', circle: 'pie', ring: 'doughnut', scatter: 'scatter', radar: 'radar', 'filled-radar': 'radar' }[cls]; if (!type) return null;
     const st = new Map(all(x, 'style:style').map(s => [s.attrs['style:name'], s]));
     const cp = name => kid(st.get(name), 'style:chart-properties')?.attrs || {}, gp = name => kid(st.get(name), 'style:graphic-properties')?.attrs || {};
     const tbl = all(ch, 'table:table')[0]; if (!tbl) return null;
@@ -449,20 +468,34 @@
     const plot = all(ch, 'chart:plot-area')[0], pst = cp(plot?.attrs['chart:style-name']);
     const LO = ['004586', 'ff420e', 'ffd320', '579d1c', '7e0021', '83caff', '314004', 'aecf00', '4b1f6f', 'ff950e'].map(hex);
     const serEls = all(plot || { kids: [] }, 'chart:series');
-    const nSer = Math.max(0, ...rows.map(r => r.length - 1));
-    const series = Array.from({ length: nSer }, (_, i) => ({
-      name: names[i] || `Reihe ${i + 1}`, cats,
-      vals: rows.map(r => { const c = r[i + 1]; if (!c) return null; const v = c.attrs['office:value'] ?? txt(c).replace(',', '.'); return v === '' ? null : num(v, null); }),
-      color: hex(gp(serEls[i]?.attrs['chart:style-name'])['draw:fill-color'] || gp(serEls[i]?.attrs['chart:style-name'])['svg:stroke-color']) || LO[i % LO.length],
-      points: [],
-    }));
+    const cell = c => { if (!c) return null; const v = c.attrs['office:value'] ?? txt(c).replace(',', '.'); return v === '' ? null : num(v, null); };
+    /* Reihen über ihre Zellbereiche (chart:values-cell-range-address, x-Werte einer Punktreihe in chart:domain, Kategorien an der
+       x-Achse); ohne Bereichsangaben wie bisher Spalte für Spalte. Art und Achse je Reihe (chart:class, chart:attached-axis). */
+    const grid = head ? [cells(head), ...rows] : rows;
+    const col = t => [...t].reduce((n, c) => n * 26 + c.charCodeAt(0) - 64, 0) - 1;
+    const range = ad => { const m = /\.\$?([A-Z]+)\$?(\d+)(?::[^.]*\.\$?([A-Z]+)\$?(\d+))?/.exec(ad || ''); if (!m) return null; const out = []; for (let i = +m[2] - 1; i <= +(m[4] || m[2]) - 1; i++) for (let j = col(m[1]); j <= col(m[3] || m[1]); j++) out.push(grid[i]?.[j]); return out; };
+    const xy = type === 'scatter', byRef = serEls.length && serEls.every(e => e.attrs['chart:values-cell-range-address']);
+    const catR = byRef && range(all(plot, 'chart:categories')[0]?.attrs['table:cell-range-address']), catsR = catR ? catR.map(c => c ? txt(c).trim() : '') : cats;
+    const sKind = el => ({ bar: 'bar', line: 'line', area: 'area' })[String(el?.attrs['chart:class'] || '').replace(/^chart:/, '')];
+    const cols = byRef ? serEls.map(el => ({ el, vals: range(el.attrs['chart:values-cell-range-address']).map(cell), name: (range(el.attrs['chart:label-cell-address']) || [])[0], dom: range(all(el, 'chart:domain')[0]?.attrs['table:cell-range-address']) }))
+      : Array.from({ length: Math.max(0, ...rows.map(r => r.length - 1)) }, (_, i) => ({ el: serEls[i], vals: rows.map(r => cell(r[i + 1])), name: head ? cells(head)[i + 1] : null, dom: xy ? rows.map(r => r[0]) : null }));
+    const series = cols.map(({ el, vals, name, dom }, i) => {
+      const g = gp(el?.attrs['chart:style-name']), k = /^(bar|line|area)$/.test(type) ? sKind(el) || type : type, xs = dom && dom.map(cell);
+      return {
+        name: (name && txt(name).trim()) || names[i] || `Reihe ${i + 1}`, cats: xy ? [] : catsR, vals,
+        xs: xy ? (xs && xs.some(v => v != null) ? xs : vals.map((_, j) => j + 1)) : undefined,
+        color: hex((k === 'line' || xy || (type === 'radar' && cls !== 'filled-radar') ? g['svg:stroke-color'] || g['draw:fill-color'] : g['draw:fill-color'] || g['svg:stroke-color'])) || LO[i % LO.length],
+        points: [], kind: k, axis: /secondary/.test(el?.attrs['chart:attached-axis'] || '') ? 1 : 0, line: !(xy && g['draw:stroke'] === 'none'),
+      };
+    });
     if (!series.length || !series.some(s => s.vals.some(v => v != null))) return null;
     const title = all(kid(ch, 'chart:title') || { kids: [] }, 'text:p').map(txt).join(' ');
     const fsz = num(String(kid(st.get(kid(ch, 'chart:title')?.attrs['chart:style-name']), 'style:text-properties')?.attrs['fo:font-size'] || '').replace('pt', ''), 13) / 1.3;
     return {
       type, dir: pst['chart:vertical'] === 'true' ? 'bar' : 'col', grouping: pst['chart:percentage'] === 'true' ? 'percentStacked' : pst['chart:stacked'] === 'true' ? 'stacked' : 'clustered',
-      title, cats, series, legend: !!kid(ch, 'chart:legend'), legendPos: { bottom: 'b', top: 't' }[kid(ch, 'chart:legend')?.attrs['chart:legend-position']] || 'r', percent: false,
+      title, cats: catsR, series, legend: !!kid(ch, 'chart:legend'), legendPos: { bottom: 'b', top: 't' }[kid(ch, 'chart:legend')?.attrs['chart:legend-position']] || 'r', percent: false,
       vary: type === 'pie' || type === 'doughnut', hole: type === 'doughnut' ? 0.5 : 0, accents: LO, size: fsz,
+      radarStyle: type === 'radar' ? (cls === 'filled-radar' ? 'filled' : 'marker') : undefined,
     };
   }
 
@@ -818,7 +851,7 @@
   function drawChart(L, page, it, { f, fb, has = () => true, locale } = {}) {
     const c = it.chart, H = page.getHeight(), rgb = col => L.rgb(Math.min(1, Math.max(0, col.r)), Math.min(1, Math.max(0, col.g)), Math.min(1, Math.max(0, col.b)));
     const fs = Math.max(5, Math.min(c.size || 10, it.h / 14)), grey = L.rgb(0.35, 0.35, 0.35), gridC = L.rgb(0.85, 0.85, 0.85);
-    const loc = locale || 'de-DE', fmtN = v => c.percent ? (v * 100).toLocaleString(loc, { maximumFractionDigits: 1 }) + ' %' : v.toLocaleString(loc, { maximumFractionDigits: 2 });
+    const loc = locale || 'de-DE';
     const clean = s => [...String(s)].filter(ch => has(ch.codePointAt(0)) || ch === ' ').join('');
     let top = it.y + 4, bottom = it.y + it.h - 4, left = it.x + 4, right = it.x + it.w - 4;
     if (c.title) { const ts = fs * 1.35, t = clean(c.title), tw = fb.widthOfTextAtSize(t, ts); page.drawText(t, { x: it.x + (it.w - tw) / 2, y: H - top - ts, size: ts, font: fb, color: L.rgb(0.1, 0.1, 0.1) }); top += ts * 1.6; }
@@ -851,63 +884,138 @@
       });
       return;
     }
-    // Wertebereich (gestapelt: Summen; 100 %: Anteile)
-    const n = c.cats.length, stacked = /stacked/i.test(c.grouping), pct = c.grouping === 'percentStacked';
-    const totals = c.cats.map((_, i) => c.series.reduce((a, s) => a + Math.abs(s.vals[i] || 0), 0) || 1);
-    const v = (s, i) => { const x = s.vals[i]; return x == null ? null : pct ? x / totals[i] : x; };
-    let lo = 0, hi = 0;
-    c.cats.forEach((_, i) => { if (stacked) { let pos = 0, neg = 0; for (const s of c.series) { const x = v(s, i) || 0; if (x >= 0) pos += x; else neg += x; } hi = Math.max(hi, pos); lo = Math.min(lo, neg); } else for (const s of c.series) { const x = v(s, i); if (x != null) { hi = Math.max(hi, x); lo = Math.min(lo, x); } } });
-    if (hi === lo) hi = lo + 1;
-    const raw = (hi - lo) / 6, mag = 10 ** Math.floor(Math.log10(raw)), step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(m => m >= raw);
-    hi = Math.ceil(hi / step - 1e-9) * step; lo = Math.floor(lo / step + 1e-9) * step;
-    const horiz = c.type === 'bar' && c.dir === 'bar';
-    const labels = []; for (let t = lo; t <= hi + step / 2; t += step) labels.push(+t.toFixed(10));
-    const lw = Math.max(...labels.map(t => f.widthOfTextAtSize(fmtN(pct ? t : t).replace(/ %$/, pct ? ' %' : ''), fs)));
+    // „Runde“ Achsenschritte (1, 2, 2,5, 5 × 10 hoch n, etwa sechs Schritte)
+    const nice = (lo, hi) => {
+      if (hi === lo) hi = lo + 1;
+      const raw = (hi - lo) / 6, mag = 10 ** Math.floor(Math.log10(raw)), step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(m => m >= raw);
+      hi = Math.ceil(hi / step - 1e-9) * step; lo = Math.floor(lo / step + 1e-9) * step;
+      const labels = []; for (let t = lo; t <= hi + step / 2; t += step) labels.push(+t.toFixed(10));
+      return { lo, hi, step, labels };
+    };
+    const fmtA = (t, pc, grp = true) => pc ? (t * 100).toLocaleString(loc, { maximumFractionDigits: 1 }) + ' %' : t.toLocaleString(loc, { maximumFractionDigits: 2, useGrouping: grp });
+    const dot = (x, y, col) => page.drawCircle({ x, y, size: 2.5, color: rgb(col) });
+    const seg = (a, b, col) => page.drawLine({ start: { x: a[0], y: a[1] }, end: { x: b[0], y: b[1] }, thickness: 2.25, color: rgb(col) });
+    if (c.type === 'radar') {   // Netz: Speichen je Kategorie im Uhrzeigersinn ab oben, Ringe je Achsenschritt
+      const n = c.cats.length, vs = c.series.flatMap(s => s.vals).filter(x => x != null); if (n < 3 || !vs.length) return;
+      const sc = nice(Math.min(0, ...vs), Math.max(0, ...vs)), catW = Math.max(...c.cats.map(t => f.widthOfTextAtSize(clean(t), fs)));
+      const r = Math.min((right - left) / 2 - catW - 6, (bottom - top) / 2 - fs * 1.4); if (r < 8) return;
+      const cx = (left + right) / 2, cy = H - (top + bottom) / 2;
+      const P = (i, t) => { const a = 2 * Math.PI * i / n, R = (t - sc.lo) / (sc.hi - sc.lo) * r; return [cx + R * Math.sin(a), cy + R * Math.cos(a)]; };
+      for (const t of sc.labels) {
+        if (t === sc.lo) continue;
+        for (let i = 0; i < n; i++) { const a = P(i, t), b = P((i + 1) % n, t); page.drawLine({ start: { x: a[0], y: a[1] }, end: { x: b[0], y: b[1] }, thickness: 0.5, color: gridC }); }
+        const s = fmtA(t, c.percent), tw = f.widthOfTextAtSize(s, fs); page.drawText(s, { x: cx - tw - 3, y: P(0, t)[1] - fs * 0.35, size: fs, font: f, color: grey });
+      }
+      for (let i = 0; i < n; i++) {
+        const o = P(i, sc.hi), a = 2 * Math.PI * i / n, sx = Math.sin(a), sy = Math.cos(a), s = clean(c.cats[i]), tw = f.widthOfTextAtSize(s, fs);
+        page.drawLine({ start: { x: cx, y: cy }, end: { x: o[0], y: o[1] }, thickness: 0.5, color: gridC });
+        page.drawText(s, { x: cx + (r + 5) * sx - tw * (sx > 0.15 ? 0 : sx < -0.15 ? 1 : 0.5), y: cy + (r + 5) * sy - fs * (sy < -0.15 ? 0.9 : sy > 0.15 ? -0.3 : 0.35), size: fs, font: f, color: grey });
+      }
+      for (const s of c.series) {
+        const ptsR = c.cats.map((_, i) => s.vals[i] == null ? null : P(i, s.vals[i])), ok = ptsR.filter(Boolean); if (!ok.length) continue;
+        if (c.radarStyle === 'filled') {
+          const d = 'M' + ok.map(([x, y]) => `${(x - cx).toFixed(2)} ${(cy - y).toFixed(2)}`).join(' L') + ' Z';
+          page.drawSvgPath(d, { x: cx, y: cy, color: rgb(s.color), opacity: 0.45, borderColor: rgb(s.color), borderWidth: 1.5 });
+        } else {
+          for (let i = 0; i < n; i++) if (ptsR[i] && ptsR[(i + 1) % n]) seg(ptsR[i], ptsR[(i + 1) % n], s.color);
+          if (c.radarStyle === 'marker' && s.marker !== false) for (const p of ok) dot(p[0], p[1], s.color);
+        }
+      }
+      return;
+    }
+    if (c.type === 'scatter') {   // Punkt (XY): beide Achsen mit Zahlen; Bereich ab 0 wie bei Excel, wenn das Minimum nicht nah am Maximum liegt
+      const P = c.series.flatMap(s => s.vals.map((y, i) => y == null || s.xs[i] == null ? null : [s.xs[i], y]).filter(Boolean)); if (!P.length) return;
+      const rng = a => { let mn = Math.min(...a), mx = Math.max(...a); if (mn >= 0 && mn < mx * 5 / 6) mn = 0; if (mx <= 0 && mx > mn * 5 / 6) mx = 0; return nice(mn, mx); };
+      const X = rng(P.map(p => p[0])), Y = rng(P.map(p => p[1]));
+      left += Math.max(...Y.labels.map(t => f.widthOfTextAtSize(fmtA(t, c.percent), fs))) + 6; bottom -= fs * 1.6;
+      const W = right - left, Hh = bottom - top; if (W < 10 || Hh < 10) return;
+      const px = t => left + (t - X.lo) / (X.hi - X.lo) * W, py = t => bottom - (t - Y.lo) / (Y.hi - Y.lo) * Hh;
+      for (const t of Y.labels) { const y = py(t), s = fmtA(t, c.percent), tw = f.widthOfTextAtSize(s, fs); page.drawLine({ start: { x: left, y: H - y }, end: { x: right, y: H - y }, thickness: 0.5, color: gridC }); page.drawText(s, { x: left - tw - 4, y: H - y - fs * 0.35, size: fs, font: f, color: grey }); }
+      for (const t of X.labels) { const x = px(t), s = fmtA(t, false, false), tw = f.widthOfTextAtSize(s, fs); page.drawLine({ start: { x, y: H - bottom }, end: { x, y: H - bottom - 3 }, thickness: 0.5, color: grey }); page.drawText(s, { x: x - tw / 2, y: H - bottom - fs * 1.2, size: fs, font: f, color: grey }); }
+      const ax = L.rgb(0.6, 0.6, 0.6), y0 = py(Math.min(Math.max(0, Y.lo), Y.hi)), x0 = px(Math.min(Math.max(0, X.lo), X.hi));
+      page.drawLine({ start: { x: left, y: H - y0 }, end: { x: right, y: H - y0 }, thickness: 0.75, color: ax }); page.drawLine({ start: { x: x0, y: H - top }, end: { x: x0, y: H - bottom }, thickness: 0.75, color: ax });
+      for (const s of c.series) {
+        const q = s.vals.map((y, i) => y == null || s.xs[i] == null ? null : [px(s.xs[i]), H - py(y)]);
+        if (s.line !== false) for (let i = 1; i < q.length; i++) if (q[i] && q[i - 1]) seg(q[i - 1], q[i], s.color);
+        if (s.marker !== false) for (const p of q) if (p) dot(p[0], p[1], s.color);
+      }
+      return;
+    }
+    // Säulen/Balken, Linie, Fläche – auch kombiniert; Reihen auf der zweiten Größenachse rechts mit eigenem Maßstab
+    const kindOf = s => s.kind || c.type, n = c.cats.length;
+    const horiz = c.dir === 'bar' && c.series.every(s => kindOf(s) === 'bar');
+    const two = !horiz && c.series.some(s => s.axis) && c.series.some(s => !s.axis), axOf = s => two && s.axis ? 1 : 0;
+    const groups = new Map();
+    for (const s of c.series) { const key = kindOf(s) + axOf(s); if (!groups.has(key)) groups.set(key, { kind: kindOf(s), axis: axOf(s), grouping: s.grouping || c.grouping, series: [] }); groups.get(key).series.push(s); }
+    for (const g of groups.values()) { g.stacked = /stacked/i.test(g.grouping); g.pct = g.grouping === 'percentStacked'; g.totals = c.cats.map((_, i) => g.series.reduce((a, s) => a + Math.abs(s.vals[i] || 0), 0) || 1); }
+    const gOf = s => groups.get(kindOf(s) + axOf(s));
+    const v = (s, i) => { const x = s.vals[i]; return x == null ? null : gOf(s).pct ? x / gOf(s).totals[i] : x; };
+    const scales = [0, 1].map(ax => {   // Wertebereich je Achse (gestapelt: Summen; 100 %: Anteile)
+      let lo = 0, hi = 0, any = false, pc = false;
+      for (const g of groups.values()) {
+        if (g.axis !== ax) continue; any = true; pc = pc || g.pct;
+        c.cats.forEach((_, i) => {
+          if (g.stacked) { let pos = 0, neg = 0; for (const s of g.series) { const x = v(s, i) || 0; if (x >= 0) pos += x; else neg += x; } hi = Math.max(hi, pos); lo = Math.min(lo, neg); }
+          else for (const s of g.series) { const x = v(s, i); if (x != null) { hi = Math.max(hi, x); lo = Math.min(lo, x); } }
+        });
+      }
+      return any ? { ...nice(lo, hi), pc, percent: ax ? c.percent2 : c.percent } : null;
+    });
+    const S0 = scales[0], S1 = scales[1], lab = (sc, t) => sc.pc ? Math.round(t * 100) + ' %' : fmtA(t, sc.percent);
+    const lw = Math.max(...S0.labels.map(t => f.widthOfTextAtSize(lab(S0, t), fs))), rw = S1 ? Math.max(...S1.labels.map(t => f.widthOfTextAtSize(lab(S1, t), fs))) : 0;
     const catW = Math.max(...c.cats.map(t => f.widthOfTextAtSize(clean(t), fs)));
-    if (horiz) { left += catW + 6; bottom -= fs * 1.6; } else { left += lw + 6; bottom -= fs * 1.6; }
+    if (horiz) left += catW + 6; else { left += lw + 6; if (S1) right -= rw + 6; }
+    bottom -= fs * 1.6;
     const W = right - left, Hh = bottom - top; if (W < 10 || Hh < 10) return;
-    const vx = t => horiz ? left + (t - lo) / (hi - lo) * W : null, vy = t => bottom - (t - lo) / (hi - lo) * Hh;
-    for (const t of labels) {   // Gitterlinien und Achsenbeschriftung
-      const s = pct ? Math.round(t * 100) + ' %' : fmtN(t), tw = f.widthOfTextAtSize(s, fs);
+    const vx = t => left + (t - S0.lo) / (S0.hi - S0.lo) * W, vy = (t, ax = 0) => { const sc = scales[ax] || S0; return bottom - (t - sc.lo) / (sc.hi - sc.lo) * Hh; };
+    for (const t of S0.labels) {   // Gitterlinien und Achsenbeschriftung
+      const s = lab(S0, t), tw = f.widthOfTextAtSize(s, fs);
       if (horiz) { const x = vx(t); page.drawLine({ start: { x, y: H - top }, end: { x, y: H - bottom }, thickness: 0.5, color: gridC }); page.drawText(s, { x: x - tw / 2, y: H - bottom - fs * 1.2, size: fs, font: f, color: grey }); }
       else { const y = vy(t); page.drawLine({ start: { x: left, y: H - y }, end: { x: right, y: H - y }, thickness: 0.5, color: gridC }); page.drawText(s, { x: left - tw - 4, y: H - y - fs * 0.35, size: fs, font: f, color: grey }); }
     }
+    if (S1) for (const t of S1.labels) page.drawText(lab(S1, t), { x: right + 4, y: H - vy(t, 1) - fs * 0.35, size: fs, font: f, color: grey });
     const band = (horiz ? Hh : W) / n;
     c.cats.forEach((cat, i) => {   // Kategorien
       const s = clean(cat), tw = f.widthOfTextAtSize(s, fs);
       if (horiz) page.drawText(s, { x: left - tw - 4, y: H - (top + band * (i + 0.5)) - fs * 0.35, size: fs, font: f, color: grey });
       else if (tw < band * 1.6 || i % Math.ceil(tw / band) === 0) page.drawText(s, { x: left + band * (i + 0.5) - tw / 2, y: H - bottom - fs * 1.2, size: fs, font: f, color: grey });
     });
-    const zero = Math.min(Math.max(0, lo), hi);
-    if (c.type === 'bar') {
-      const groups = stacked ? 1 : c.series.length, gap = band * 0.3, bw = (band - gap) / groups;
-      c.cats.forEach((_, i) => {
-        let pos = 0, neg = 0;
-        c.series.forEach((s, si) => {
-          const x = v(s, i); if (x == null) return;
-          let a, b; if (stacked) { if (x >= 0) { a = pos; b = pos += x; } else { a = neg; b = neg += x; } } else { a = zero; b = x; }
-          const off = band * i + gap / 2 + (stacked ? 0 : si * bw), col = rgb(c.vary && c.series.length === 1 ? (s.points.find(p => p.i === i)?.color || c.accents[i % c.accents.length]) : s.points.find(p => p.i === i)?.color || s.color);
-          if (horiz) { const x0 = vx(Math.min(a, b)), x1 = vx(Math.max(a, b)); page.drawRectangle({ x: x0, y: H - (top + off + bw), width: Math.max(0.3, x1 - x0), height: bw, color: col }); }
-          else { const y0 = vy(Math.max(a, b)), y1 = vy(Math.min(a, b)); page.drawRectangle({ x: left + off, y: H - y1, width: bw, height: Math.max(0.3, y1 - y0), color: col }); }
-        });
-      });
-    } else {   // Linie bzw. Fläche
+    const zero = ax => { const sc = scales[ax] || S0; return Math.min(Math.max(0, sc.lo), sc.hi); };
+    const lineArea = g => {   // Linie bzw. Fläche einer Gruppe
       const base = c.cats.map(() => 0);
-      for (const s of c.series) {
-        const ptsL = c.cats.map((_, i) => { const x = v(s, i); if (x == null) return null; const y = stacked ? (base[i] += x) : x; return [left + band * (i + 0.5), vy(y)]; });
+      for (const s of g.series) {
+        const ptsL = c.cats.map((_, i) => { const x = v(s, i); if (x == null) return null; const y = g.stacked ? (base[i] += x) : x; return [left + band * (i + 0.5), vy(y, g.axis)]; });
         const ok = ptsL.filter(Boolean); if (!ok.length) continue;
-        if (c.type === 'area') {
-          const d = `M${ok[0][0]} ${H - vy(zero)} ` + ok.map(([x, y]) => `L${x.toFixed(2)} ${(H - y).toFixed(2)}`).join(' ') + ` L${ok[ok.length - 1][0]} ${H - vy(zero)} Z`;
+        if (g.kind === 'area') {
+          const z0 = vy(zero(g.axis), g.axis), d = `M${ok[0][0]} ${H - z0} ` + ok.map(([x, y]) => `L${x.toFixed(2)} ${(H - y).toFixed(2)}`).join(' ') + ` L${ok[ok.length - 1][0]} ${H - z0} Z`;
           page.drawSvgPath(d.replace(/(-?[\d.]+) (-?[\d.]+)/g, (m, x, y) => `${x} ${-y}`), { x: 0, y: 0, color: rgb(s.color), opacity: 0.85 });
         } else {
-          for (let i = 1; i < ptsL.length; i++) if (ptsL[i] && ptsL[i - 1]) page.drawLine({ start: { x: ptsL[i - 1][0], y: H - ptsL[i - 1][1] }, end: { x: ptsL[i][0], y: H - ptsL[i][1] }, thickness: 2.25, color: rgb(s.color) });
-          for (const p of ok) page.drawCircle({ x: p[0], y: H - p[1], size: 2.5, color: rgb(s.color) });
+          for (let i = 1; i < ptsL.length; i++) if (ptsL[i] && ptsL[i - 1]) seg([ptsL[i - 1][0], H - ptsL[i - 1][1]], [ptsL[i][0], H - ptsL[i][1]], s.color);
+          if (s.marker !== false) for (const p of ok) dot(p[0], H - p[1], s.color);
         }
       }
+    };
+    const gl = [...groups.values()], bars = gl.filter(g => g.kind === 'bar');
+    gl.filter(g => g.kind === 'area').forEach(lineArea);   // Reihenfolge wie Office: Flächen, Säulen, Linien
+    const slots = bars.reduce((a, g) => a + (g.stacked ? 1 : g.series.length), 0), gap = band * 0.3, bw = slots ? (band - gap) / slots : 0;
+    let slot0 = 0;
+    for (const g of bars) {
+      c.cats.forEach((_, i) => {
+        let pos = 0, neg = 0;
+        g.series.forEach((s, si) => {
+          const x = v(s, i); if (x == null) return;
+          let a, b; if (g.stacked) { if (x >= 0) { a = pos; b = pos += x; } else { a = neg; b = neg += x; } } else { a = zero(g.axis); b = x; }
+          const off = band * i + gap / 2 + (slot0 + (g.stacked ? 0 : si)) * bw, col = rgb(c.vary && c.series.length === 1 ? (s.points.find(p => p.i === i)?.color || c.accents[i % c.accents.length]) : s.points.find(p => p.i === i)?.color || s.color);
+          if (horiz) { const x0 = vx(Math.min(a, b)), x1 = vx(Math.max(a, b)); page.drawRectangle({ x: x0, y: H - (top + off + bw), width: Math.max(0.3, x1 - x0), height: bw, color: col }); }
+          else { const y0 = vy(Math.max(a, b), g.axis), y1 = vy(Math.min(a, b), g.axis); page.drawRectangle({ x: left + off, y: H - y1, width: bw, height: Math.max(0.3, y1 - y0), color: col }); }
+        });
+      });
+      slot0 += g.stacked ? 1 : g.series.length;
     }
+    gl.filter(g => g.kind === 'line').forEach(lineArea);
     // Achsenlinie bei null
-    if (horiz) page.drawLine({ start: { x: vx(zero), y: H - top }, end: { x: vx(zero), y: H - bottom }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
-    else page.drawLine({ start: { x: left, y: H - vy(zero) }, end: { x: right, y: H - vy(zero) }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
+    if (horiz) page.drawLine({ start: { x: vx(zero(0)), y: H - top }, end: { x: vx(zero(0)), y: H - bottom }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
+    else page.drawLine({ start: { x: left, y: H - vy(zero(0)) }, end: { x: right, y: H - vy(zero(0)) }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
   }
 
   const api = { pptx, odp, render, family, shapePath, autoNum, chartOf, drawChart, odpChart };

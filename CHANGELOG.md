@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Punkt-, Netz- und Kombinationsdiagramme (app-v355)
+- Word (.docx), OpenDocument (.odt, .odp) und PowerPoint (.pptx): Punktdiagramme (XY, mit oder ohne Verbindungslinie), Netzdiagramme (mit Linien, Markierungen oder gefüllt) und Kombinationen aus Säulen, Linien und Flächen werden jetzt gezeichnet statt als Hinweis „[Diagramm: Titel]“ zu erscheinen. Reihen auf der zweiten Größenachse bekommen rechts eine eigene Skala, auch im Prozentformat.
+- OpenDocument: Reihen werden über ihre Zellbereiche gelesen (x-Werte einer Punktreihe in chart:domain), nicht mehr nur Spalte für Spalte.
+- Weiterhin nur als Hinweis: Blasen-, Kurs- und Oberflächendiagramme.
+- Gemessen: Bericht mit Kombi-, Punkt- und Netzdiagramm als .docx und (mit LibreOffice gespeichert) als .odt – gleiche Werte, Achsen und Farben; LibreOffice selbst lässt in dieser Datei die Säulen weg.
+- tests/word-diagramm.test.js um drei Tests erweitert (tests/office-korpus/diagramm/word-kombi.docx, odt-kombi.odt).
+
 ### Diagramme in OpenDocument-Text (.odt) und Hinweis in alten Word-Dateien (app-v354)
 - .odt-Dateien (LibreOffice Writer): Diagramme kamen bisher nur als „[Bild]“ an (das Ersatzbild ist kein PNG/JPEG). Jetzt zeichnet PDFMy sie aus der eingebetteten Datentabelle wie bei Impress – Säulen, Balken, Linie, Fläche, Kreis, Ring; andere Arten mit Titel als Hinweis.
 - Alte Word-Dateien (.doc): Eingebettete Diagramme (MS Graph, Excel-Diagramm, LibreOffice-Diagramm im ObjectPool) fehlten still. Jetzt steht an ihrer Stelle der Hinweis „[Diagramm]“; liegt ein lesbares Vorschaubild bei, wird es gezeigt.
