@@ -2,6 +2,8 @@
 
 Stand 18.10.2026. Automatisch geprüft wird bisher **nur Chromium** (Chrome 155 / Edge 155, headless über CDP: Funktions-, Barrierefreiheits- und veraPDF-Tests). Alle anderen Browser sind **noch nicht geprüft**.
 
+**Mindestbasis seit app-v356 (automatisch geprüft, tests/kompatibilitaet.test.js):** Safari/iOS 15.4 (iPhone 6s/7 mit iOS 15), Firefox 115 ESR, Chrome/Edge 109 (Windows 7/8.1). Der eigene Code (js/, sw.js) enthält keine Sprachmittel jenseits dieser Basis; AbortSignal.timeout, DecompressionStream und color-mix() haben Ausweichwege. Bewusst offen: CSS `:has()` (Firefox < 121) nur für Hervorhebungen – ohne Funktionsverlust.
+
 ## Welche Browser müssen noch geprüft werden
 
 | Browser | Engine | Anteil (DE, grob) | Status | Priorität |

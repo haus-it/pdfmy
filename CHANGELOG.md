@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Titelbilder und Grafiken unverändert, ältere Browser (app-v356)
+- Meldung 2026-0013: Ein gescanntes Titelbild mit Fotos und QR-Code wurde wie ein Brief aufbereitet („Papier weiß“) – Fotos ausgebleicht, QR-Code kontrastarm. PDFMy erkennt solche Seiten jetzt als **Bildseite** (kaum Papierfläche: Titelbild ~17 %, Plakat ~23 %, Briefe 50–100 %) und lässt sie unverändert; die Texterkennung läuft weiter. Ein Bild im Bild (Foto auf dunklem Plakat) wird nicht mehr als „Blatt auf dem Tisch“ ausgeschnitten.
+- Meldung 2026-0009: Fertige Grafiken und Bildschirmfotos (PNG, GIF, WebP, BMP mit glatten Farbflächen) werden nicht mehr wie Scans aufbereitet, die Farben bleiben.
+- Kompatibilität (Mindestbasis Safari/iOS 15.4, Firefox 115 ESR, Chrome 109): Regex-Lookbehind ersetzt – auf Safari unter 16.4 luden js/slides.js und js/textpdf.js sonst gar nicht (keine Word-/PowerPoint-Umwandlung); Ausweichwege für AbortSignal.timeout (Safari < 16) und DecompressionStream (Safari < 16.4: Office-Dateien und CJK-Schrift mit pako); Tastatur-Fokusrahmen ohne color-mix() sichtbar (Safari < 16.2, Chrome < 111).
+- Neuer Test tests/kompatibilitaet.test.js (Sprachmittel und Schnittstellen jenseits der Mindestbasis, Word-Datei ohne DecompressionStream) im Test-Gate; tests/imaging.test.js um Bildseite und digitale Grafik erweitert.
+
 ### Punkt-, Netz- und Kombinationsdiagramme (app-v355)
 - Word (.docx), OpenDocument (.odt, .odp) und PowerPoint (.pptx): Punktdiagramme (XY, mit oder ohne Verbindungslinie), Netzdiagramme (mit Linien, Markierungen oder gefüllt) und Kombinationen aus Säulen, Linien und Flächen werden jetzt gezeichnet statt als Hinweis „[Diagramm: Titel]“ zu erscheinen. Reihen auf der zweiten Größenachse bekommen rechts eine eigene Skala, auch im Prozentformat.
 - OpenDocument: Reihen werden über ihre Zellbereiche gelesen (x-Werte einer Punktreihe in chart:domain), nicht mehr nur Spalte für Spalte.

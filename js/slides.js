@@ -743,7 +743,7 @@
           for (const r of p.runs) {
             const t = r.caps ? r.t.toUpperCase() : r.t;
             if (r.br) { tokens.push({ br: true, run: r }); continue; }
-            for (const part of t.replace(/\t/g, '    ').split(/(\s+)/).flatMap(w => /\s/.test(w) ? [w] : w.split(/(?<=[^\s-][-–])(?=[^\s\d-])/))) if (part) tokens.push({ t: part, run: r, space: /^\s+$/.test(part) });   // Umbruch auch nach Bindestrich
+            for (const part of t.replace(/\t/g, '    ').split(/(\s+)/).flatMap(w => /\s/.test(w) ? [w] : w.replace(/([^\s-][-–])(?=[^\s\d-])/g, '$1\u0001').split('\u0001'))) if (part) tokens.push({ t: part, run: r, space: /^\s+$/.test(part) });   // Umbruch auch nach Bindestrich
           }
           if (!tokens.length) { const lh = maxS * 1.2 * (spacing ?? 1); lines.push({ segs: [], width: 0, height: p.lnSpc?.pts || lh, asc: maxS * 0.9, para: p, x0: textX }); total += p.lnSpc?.pts || lh; continue; }
           let cur = { segs: [], width: 0, x0: firstX, bullet: bul, para: p }, avail = width - firstX;

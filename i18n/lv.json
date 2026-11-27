@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Iztaisnot skenējumu: pagriezt par jebkuru leņķi vai atcelt automātisko iztaisnošanu",
  "Seite um {0}° gedreht.": "Lapa pagriezta par {0}°.",
  "Wie gescannt": "Kā skenēts",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word fails ir bojāts – atveriet to programmā Word un saglabājiet vēlreiz."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word fails ir bojāts – atveriet to programmā Word un saglabājiet vēlreiz.",
+ "Bildseite": "Attēlu lapa",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Šī pārlūkprogramma nevar atarhivēt Office failus – lūdzu, atjauniniet pārlūkprogrammu."
 }

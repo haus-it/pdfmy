@@ -241,7 +241,7 @@ async function importFiles(files, { fromCamera = false } = {}) {
 }
 /* ZIP und Comic-Archiv (CBZ) im Browser auspacken (js/office.js archive). Die Dateien laufen danach wie einzeln geöffnet durch,
    in natürlicher Reihenfolge. Comic-Seiten bleiben, wie sie sind: kein Zuschneiden, kein Geraderichten, Modus „Original“. */
-let asIsImport = false;
+let asIsImport = false, digitalImport = false;   // digitalImport: fertige Grafik/Bildschirmfoto (Meldung 2026-0009) – Farben unverändert, Text wird trotzdem erkannt
 async function unpackArchive(f) {
   await window.lateReady();   // Office/Folien/Archive: spätes Bündel
   const comic = /\.cbz$/i.test(f.name) || /cbz/.test(f.type);
@@ -428,6 +428,10 @@ const loadHeif = () => heifLoading ||= (async () => {
   const wasmBinary = new Uint8Array(await (await fetch(abs('vendor/libheif/libheif.wasm'))).arrayBuffer());
   return await new Promise((res, rej) => { let m = null; m = libheif({ wasmBinary, onRuntimeInitialized: () => setTimeout(() => res(m)), onAbort: rej }); });   // Rückruf kann noch während libheif() kommen
 })().catch(e => { heifLoading = null; throw e; });
+/* Kompatibilität (app-v356): Safari unter 16 kennt AbortSignal.timeout nicht, Safari unter 16.4 kein DecompressionStream.
+   Ersatz: Zeitgeber über AbortController; Entpacken mit pako (vendor/utif/pako_inflate.min.js, erst bei Bedarf geladen). */
+if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout !== 'function') AbortSignal.timeout = ms => { const c = new AbortController(); setTimeout(() => c.abort(), ms); return c.signal; };
+self.loadPako = () => self.pako ? Promise.resolve(self.pako) : loadScript('vendor/utif/pako_inflate.min.js').then(() => self.pako);
 const loadTiff = () => tiffLoading ||= (async () => { if (!self.pako) await loadScript('vendor/utif/pako_inflate.min.js'); await loadScript('vendor/utif/UTIF.js'); return self.UTIF; })().catch(e => { tiffLoading = null; throw e; });
 // RGBA-Pixel → Leinwand (verkleinert auf MAX_SIDE)
 function rgbaCanvas(rgba, w, h, sy = 1) {   // sy: Höhenfaktor bei ungleicher Auflösung (Fax 204×98/196 dpi)
@@ -644,16 +648,21 @@ async function importImage(file, fromCamera) {
   const k = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
   const c = Imaging.canvas(Math.round(bmp.width * k), Math.round(bmp.height * k));
   c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
-  state.pages.push(await scanAsync(c, file.name, fromCamera));
+  // Verlustfreie Bilddateien (PNG, GIF, WebP, BMP) mit glatten Farbflächen sind keine Scans: nicht aufbereiten (Meldung 2026-0009)
+  const lossless = /^image\/(png|gif|webp|bmp)$/i.test(file.type) || /\.(png|gif|webp|bmp)$/i.test(file.name);
+  let digital = false; if (!fromCamera && !state.fromScanner && lossless) try { digital = Imaging.isDigital(c); } catch {}
+  const was = digitalImport; digitalImport = digital;
+  try { state.pages.push(await scanAsync(c, file.name, fromCamera)); } finally { digitalImport = was; }
 }
 /* Scan-Aufbereitung für Fotos, Bilddateien und gescannte PDF-Seiten: zuschneiden, gerade richten, aufbereiten (Imaging.prepScan) */
 // Foto-Scan (state.scanPhoto = 'color' | 'gray'): Foto ausschneiden, nicht geraderichten (das Geraderichten richtet sich nach Textzeilen),
 // Farben bzw. Grautöne unverändert lassen; Fotos werden nicht per Texterkennung gelesen
 const scanOpts = fromCamera => asIsImport ? { crop: false, straighten: false, fromCamera: false, mode: 'original', photo: true }
+  : digitalImport ? { crop: false, straighten: false, fromCamera: false, mode: 'original' }
   : state.scanPhoto && state.scanPhoto !== 'auto' ? { crop: true, straighten: false, fromCamera: false, mode: state.scanPhoto === 'gray' ? 'gray' : 'original', photo: true }
   : { crop: S.autoCrop, straighten: S.autoDeskew, fromCamera, mode: state.scanPhoto === 'auto' ? 'auto' : S.mode, detectPhoto: state.scanPhoto === 'auto' };
 // Erkannte Art beim Scan „Automatisch“ – steht in der Seitenbeschriftung
-const SCAN_KIND_LABEL = r => I18N.t(r.photo ? 'Foto' : r.autoMode === 'colordoc' ? 'Farbdokument' : r.autoMode === 'bw' ? 'Schwarzweiß-Dokument' : 'Graustufen-Dokument');   // „Automatisch“: Fotos selbst erkennen
+const SCAN_KIND_LABEL = r => I18N.t(r.photo ? 'Foto' : r.autoMode === 'original' ? 'Bildseite' : r.autoMode === 'colordoc' ? 'Farbdokument' : r.autoMode === 'bw' ? 'Schwarzweiß-Dokument' : 'Graustufen-Dokument');   // „Automatisch“: Fotos selbst erkennen
 function scanPage(r, label, lowRes, mode) {
   const note = [r.cropped && 'zugeschnitten', r.angle && `${I18N.fmtNum(r.angle)}° gerade gerichtet`].filter(Boolean).join(', ');
   const p = { id: ++uid, kind: 'image', orig: r.orig, mode, rotation: 0, annots: [], ocr: null, native: null, label: label + (note ? ` (${note})` : ''), lowRes };
@@ -910,10 +919,11 @@ async function importPdf(file) {
   try { window.reqAfterImport?.(docIdx); } catch (e) { noteError(e, 'Unterschriftsanfrage'); }
 }
 
-// "Automatisch": farbige Seiten behalten Farbe, alle anderen werden als Dokument (Graustufen, Papier weiß) aufbereitet
+// "Automatisch": Bildseiten (Titelbild, Plakat) bleiben unverändert, farbige Seiten behalten Farbe, alle anderen werden als Dokument
+// (Graustufen, Papier weiß) aufbereitet
 function effMode(p) {
   if (p.mode !== 'auto') return p.mode;
-  return p.autoMode ||= Imaging.isColorful(p.orig) ? 'colordoc' : 'document';
+  return p.autoMode ||= Imaging.isPictorial(p.orig) ? 'original' : Imaging.isColorful(p.orig) ? 'colordoc' : 'document';
 }
 function reprocess(p) {
   p.processed = Imaging.enhance(p.orig, effMode(p));
@@ -1850,8 +1860,10 @@ async function suggestRedactions() {
 // Suchmuster für alle Suchen (Liste, Markierung, Ersetzen, Schwärzen): Groß/klein egal, „ß“ = „ss“, Leerraum flexibel; optional nur ganze Wörter
 function searchRe(term, flags = 'giu', gap = '\\s+') {
   const body = term.trim().split(/\s+/).filter(Boolean).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join(gap).replace(/ss|ß/gi, '(?:ss|ß)');
-  return new RegExp(state.qWhole ? `(?<![\\p{L}\\p{N}])${body}(?![\\p{L}\\p{N}])` : body, flags);
+  // „Nur ganze Wörter“: Safari unter 16.4 kennt keinen Lookbehind – dort wird nur das Wortende geprüft statt mit einem Fehler abzubrechen
+  return new RegExp(state.qWhole ? `${LOOKBEHIND ? '(?<![\\p{L}\\p{N}])' : ''}${body}(?![\\p{L}\\p{N}])` : body, flags);
 }
+const LOOKBEHIND = (() => { try { return new RegExp('(?<!a)b').test('b'); } catch { return false; } })();
 // Trifft das Muster genau die Wortfolge (beginnt im ersten, endet im letzten Wort)?
 function wordsMatch(ws, re) {
   const s = ws.map(w => w.t).join(' '), m = re.exec(s); if (!m) return false;
@@ -2732,7 +2744,8 @@ const cjkFont = () => assets.cjk ||= (status('Lade die Schrift für chinesische,
   fetch(abs('vendor/cjk/PDFMyCJK-Regular.ttf.gz')).then(async r => {
     if (!r.ok) throw new Error('vendor/cjk fehlt');
     const b = new Uint8Array(await r.arrayBuffer());
-    return b[0] === 0x1f && b[1] === 0x8b ? new Uint8Array(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()) : b;
+    if (!(b[0] === 0x1f && b[1] === 0x8b)) return b;
+    return typeof DecompressionStream === 'undefined' ? (await self.loadPako()).ungzip(b) : new Uint8Array(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
   }).catch(e => {
     delete assets.cjk;
     // nicht still „?“ setzen: sagen, warum, und wie es offline künftig klappt

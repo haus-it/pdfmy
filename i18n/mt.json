@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Iddritta l-iskan: dawwar b’angolu kwalunkwe jew neħħi d-drittar awtomatiku",
  "Seite um {0}° gedreht.": "Il-paġna ddawret bi {0}°.",
  "Wie gescannt": "Kif ġie skanjat",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Il-fajl tal-Word huwa bil-ħsara – jekk jogħġbok iftħu f’Word u ssejvjah mill-ġdid."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Il-fajl tal-Word huwa bil-ħsara – jekk jogħġbok iftħu f’Word u ssejvjah mill-ġdid.",
+ "Bildseite": "Paġna ta’ stampi",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Dan il-browser ma jistax jiftaħ fajls tal-Office – jekk jogħġbok aġġorna l-browser."
 }

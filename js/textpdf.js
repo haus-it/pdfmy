@@ -32,7 +32,7 @@
     .replace(/(\*\*|__)(.+?)\1/g, '$2').replace(/(^|[^*\w])[*_]([^*_\s][^*_]*?)[*_](?=[^*\w]|$)/g, '$1$2').replace(/`([^`]+)`/g, '$1')
     .replace(/\\([\\`*_{}[\]()#+\-.!|<>])/g, '$1');
   const isRow = l => /^\s*\|.*\|\s*$/.test(l);
-  const cellsOf = l => l.trim().replace(/^\||\|$/g, '').split(/(?<!\\)\|/).map(c => inline(c.trim()));
+  const cellsOf = l => l.trim().replace(/^\||\|$/g, '').replace(/\\\|/g, '\u0001').split('|').map(c => inline(c.replace(/\u0001/g, '\\|').trim()));   // ohne Lookbehind (Safari < 16.4)
   function parseMarkdown(text) {
     const lines = String(text).replace(/^﻿/, '').replace(/\r\n?/g, '\n').split('\n'), out = [];
     let i = 0;

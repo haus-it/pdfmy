@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Израмнување на скен: ротирај за произволен агол или врати го автоматското израмнување",
  "Seite um {0}° gedreht.": "Страницата е ротирана за {0}°.",
  "Wie gescannt": "Како скенирано",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Датотеката на Word е оштетена – отворете ја во Word и зачувајте ја повторно."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Датотеката на Word е оштетена – отворете ја во Word и зачувајте ја повторно.",
+ "Bildseite": "Страница со слики",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Овој прелистувач не може да ги распакува датотеките на Office – ве молиме, ажурирајте го прелистувачот."
 }

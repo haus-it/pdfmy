@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Straighten scan: rotate by any angle or undo the automatic straightening",
  "Seite um {0}° gedreht.": "Page rotated by {0}°.",
  "Wie gescannt": "As scanned",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "The Word file is damaged – please open it in Word and save it again."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "The Word file is damaged – please open it in Word and save it again.",
+ "Bildseite": "Picture page",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "This browser cannot unpack Office files – please update your browser."
 }

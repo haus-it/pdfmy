@@ -2273,7 +2273,7 @@ async function aiDocText() {
 // Text in Abschnitte von höchstens n Zeichen – an Absatz-, Zeilen- oder Satzgrenzen; nichts geht verloren
 const aiChunks = (t, n) => {
   const out = []; let cur = '';
-  const pieces = t.split(/\n\n/).flatMap(p => { if (p.length <= n) return [p]; const r = []; let s = ''; for (const part of p.split(/(?<=[.!?\n])\s+/)) { if ((s + ' ' + part).length > n && s) { r.push(s); s = ''; } s = s ? s + ' ' + part : part; while (s.length > n) { r.push(s.slice(0, n)); s = s.slice(n); } } if (s) r.push(s); return r; });
+  const pieces = t.split(/\n\n/).flatMap(p => { if (p.length <= n) return [p]; const r = []; let s = ''; for (const part of p.replace(/([.!?\n])\s+/g, '$1\u0001').split('\u0001')) { if ((s + ' ' + part).length > n && s) { r.push(s); s = ''; } s = s ? s + ' ' + part : part; while (s.length > n) { r.push(s.slice(0, n)); s = s.slice(n); } } if (s) r.push(s); return r; });
   for (const p of pieces) { if ((cur + '\n\n' + p).length > n && cur) { out.push(cur); cur = ''; } cur = cur ? cur + '\n\n' + p : p; }
   if (cur) out.push(cur); return out;
 };

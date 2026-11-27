@@ -478,6 +478,8 @@ Nachtrag 27.11.2026 (app-v354): Diagramme in .odt gezeichnet, in .doc als sichtb
 
 Nachtrag 27.11.2026 (app-v355): Punkt-, Netz- und Kombinationsdiagramme (zweite Größenachse) in Word, OpenDocument und PowerPoint gezeichnet; Abgleich derselben Datei als .docx und .odt im Test-Gate tests/word-diagramm.test.js (ISO 9001 8.5.1).
 
+Nachtrag 27.11.2026 (app-v356): Meldungen 2026-0013/0009 behoben (Bildseiten und digitale Grafiken unverändert, ISO 9001 10.2 Korrekturmaßnahme mit Test); Browser-Kompatibilität mit fester Mindestbasis als Test-Gate tests/kompatibilitaet.test.js (ISO 9001 8.5.1, Barrierefreiheit: sichtbarer Fokus nach WCAG 2.4.7 auch ohne color-mix).
+
 Nachtrag 27.11.2026 (app-v353): Diagramme in Word-Dateien (vorher Datenverlust ohne Hinweis); nicht unterstützte Arten mit sichtbarem Hinweis. Test-Gate tests/word-diagramm.test.js; gemeinsamer Zeichner mit der Folienausgabe, deren Tests unverändert grün (ISO 9001 8.5.1).
 
 Nachtrag 27.11.2026 (app-v352): .doc-Textfelder und mehrspaltiger Satz je Abschnitt; Fehlerkorrektur .docx (Art des Abschnittswechsels gehört zum folgenden Abschnitt, ECMA-376 17.6.22). Abgleich .doc gegen .docx (13-textfeld, 14-abschnitt) als Test-Gate tests/doc97.test.js (ISO 9001 8.5.1/8.7: Fehler erkannt, korrigiert und durch Test abgesichert).

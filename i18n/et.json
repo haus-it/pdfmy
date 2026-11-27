@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Skannitud lehe sirgendamine: pööra suvalise nurga võrra või võta automaatne sirgendamine tagasi",
  "Seite um {0}° gedreht.": "Lehte pöörati {0}°.",
  "Wie gescannt": "Nagu skannitud",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Wordi fail on rikutud – avage see Wordis ja salvestage uuesti."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Wordi fail on rikutud – avage see Wordis ja salvestage uuesti.",
+ "Bildseite": "Pildileht",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "See brauser ei saa Office’i faile lahti pakkida – palun uuendage brauserit."
 }

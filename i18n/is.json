@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Rétta skönnun af: snúa um hvaða horn sem er eða afturkalla sjálfvirka réttingu",
  "Seite um {0}° gedreht.": "Síðunni var snúið um {0}°.",
  "Wie gescannt": "Eins og skannað",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-skráin er skemmd – opnaðu hana í Word og vistaðu hana aftur."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Word-skráin er skemmd – opnaðu hana í Word og vistaðu hana aftur.",
+ "Bildseite": "Myndasíða",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Þessi vafri getur ekki afþjappað Office-skrár – uppfærðu vafrann."
 }

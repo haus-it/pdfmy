@@ -26,6 +26,11 @@
       if (f.locked) throw new Error('Das Archiv ist mit Kennwort verschlüsselt – bitte zuerst auspacken und die Dateien einzeln öffnen.');
       if (f.method === 0) return data;
       if (f.method !== 8) throw new Error('Nicht unterstützte Komprimierung in der Office-Datei.');
+      if (typeof DecompressionStream === 'undefined') {   // Safari unter 16.4: pako, von der App bei Bedarf geladen (js/app.js loadPako)
+        const P = root.pako || (root.loadPako && await root.loadPako());
+        if (!P) throw new Error('Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.');
+        const r = P.inflateRaw(data); if (r.length > limit) throw Object.assign(new Error(), { tooBig: true }); return r;
+      }
       const ds = new DecompressionStream('deflate-raw'), out = new Blob([data]).stream().pipeThrough(ds);
       if (limit === Infinity) return new Uint8Array(await new Response(out).arrayBuffer());
       const rd = out.getReader(), parts = []; let n = 0;

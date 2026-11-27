@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Beolvasás kiegyenesítése: elforgatás tetszőleges szöggel vagy az automatikus kiegyenesítés visszavonása",
  "Seite um {0}° gedreht.": "Az oldal elforgatva {0}°-kal.",
  "Wie gescannt": "Ahogy beolvasták",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "A Word-fájl sérült – nyissa meg a Wordben, és mentse újra."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "A Word-fájl sérült – nyissa meg a Wordben, és mentse újra.",
+ "Bildseite": "Képoldal",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ez a böngésző nem tudja kicsomagolni az Office-fájlokat – frissítse a böngészőt."
 }

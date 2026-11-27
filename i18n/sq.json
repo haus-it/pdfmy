@@ -4463,5 +4463,7 @@
  "Scan gerade ausrichten: um einen beliebigen Winkel drehen oder die automatische Begradigung zurücknehmen": "Drejtimi i skanimit: rrotulloje me çdo kënd ose anuloje drejtimin automatik",
  "Seite um {0}° gedreht.": "Faqja u rrotullua me {0}°.",
  "Wie gescannt": "Siç është skanuar",
- "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Skedari Word është i dëmtuar – hapeni në Word dhe ruajeni përsëri."
+ "Die Word-Datei ist beschädigt – bitte in Word öffnen und neu speichern.": "Skedari Word është i dëmtuar – hapeni në Word dhe ruajeni përsëri.",
+ "Bildseite": "Faqe me imazhe",
+ "Dieser Browser kann Office-Dateien nicht entpacken – bitte den Browser aktualisieren.": "Ky shfletues nuk mund të shpaketojë skedarë Office – ju lutemi përditësoni shfletuesin."
 }

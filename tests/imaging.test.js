@@ -109,3 +109,28 @@ test('Farbseite: helles Logo bleibt farbig, graues Durchscheinen wird weiß', ()
   assert.deepEqual([...d.slice(8, 11)], [255, 255, 255], 'Durchscheinen wird weiß');
   assert.ok(d[12] < 30, 'Schrift bleibt dunkel');
 });
+
+// Meldung 2026-0013: Titelbild mit Fotos und QR-Code wurde als Brief „Papier weiß“ aufbereitet – Fotos ausgebleicht, QR-Code unlesbar
+const noise = (x, y) => ((x * 73856093) ^ (y * 19349663)) % 23 - 11;
+test('Bildseite: Titelbild mit großen Fotos und dunkles Plakat werden erkannt, Briefe nicht (Meldung 2026-0013)', () => {
+  const photo = (x, y) => { const v = 60 + ((x * 3 + y * 2) % 160) + noise(x, y); return [v, Math.max(0, v - 30), Math.min(255, v + 25)]; };
+  const cover = sheet((x, y) => y > 180 && y < 1000 ? photo(x, y) : [248, 248, 246]);
+  assert.equal(I.pictorialData(cover, W, H), true, 'Titelbild');
+  assert.equal(I.pictorialData(sheet((x, y) => x > 150 && x < 690 && y > 300 && y < 900 ? photo(x, y) : [25, 30, 60]), W, H), true, 'dunkles Plakat');
+  // Brief: Zeilen dunkler Schrift, kleines Foto im Briefkopf, QR-Code unten – bleibt Dokument
+  const letter = sheet((x, y) => x > 600 && x < 780 && y > 40 && y < 160 ? photo(x, y) : y > 300 && y < 1000 && y % 30 < 9 && x > 80 && x < 760 && (x >> 3) % 4 ? [30, 30, 30] : [240 + noise(x, y) % 4, 240, 238]);
+  assert.equal(I.pictorialData(letter, W, H), false, 'Brief');
+  assert.equal(I.pictorialData(sheet(() => [250, 235, 160]), W, H), false, 'farbiges Papier');
+  assert.equal(I.pictorialData(sheet(), W, H), false, 'leere Seite');
+  // Seite mit grauer Schattierung (Tabellenkopf über ein Drittel der Seite) bleibt Dokument
+  assert.equal(I.pictorialData(sheet((x, y) => y < 400 ? [205, 205, 205] : [245, 245, 245]), W, H), false, 'Schattierung');
+});
+
+test('Digitale Grafik und Bildschirmfoto werden erkannt, Scans mit Rauschen nicht (Meldung 2026-0009)', () => {
+  const grafik = sheet((x, y) => y < 120 ? [0, 90, 160] : (x - 300) ** 2 + (y - 500) ** 2 < 200 ** 2 ? [230, 120, 20] : x > 500 && y > 300 && y < 900 ? [60, 160, 80] : [255, 255, 255]);
+  assert.equal(I.digitalData(grafik, W, H), true, 'Grafik mit Farbflächen');
+  assert.equal(I.digitalData(sheet((x, y) => y < 50 ? [50, 50, 60] : y % 40 < 10 && x % 7 ? [20, 20, 20] : [240, 240, 240]), W, H), true, 'Bildschirmfoto');
+  const scan = sheet((x, y) => { const v = (y % 40 < 10 && x % 7 ? 40 : 200) + noise(x, y); return [v, v, v + 2]; });
+  assert.equal(I.digitalData(scan, W, H), false, 'Scan mit Rauschen');
+  assert.equal(I.digitalData(sheet(() => [255, 255, 255]), W, H), false, 'weiße Seite: zu wenig Mitteltöne');
+});

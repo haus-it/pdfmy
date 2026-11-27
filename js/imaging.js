@@ -59,6 +59,37 @@
     let dense = 0; for (const c of cells) if (c >= cs * cs * 0.5) dense++;
     return dense >= 4;
   }
+  /* Bildseite (Titelbild, Plakat, Fotoseite – Meldung 2026-0013): kaum Papierfläche. „Papier“ = so hell wie das 95. Perzentil der
+     Helligkeit (−30); bei Briefen sind das 50–100 % der Punkte (Messkorpus beispiel/, tests/ocr-korpus), beim Titelbild ~17 %, beim
+     dunklen Plakat ~23 %. Solche Seiten bleiben unverändert – die Papier-weiß-Aufbereitung würde Fotos ausbleichen und QR-Codes zerstören. */
+  function isPictorial(src) { const { d, W, H } = pixels(src, 400); return pictorialData(d, W, H); }
+  function pictorialData(d, W, H) {
+    const n = W * H, hist = new Uint32Array(256);
+    for (let j = 0; j < d.length; j += 4) hist[(d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114) | 0]++;
+    const pct = q => { let acc = 0; for (let v = 0; v < 256; v++) if ((acc += hist[v]) >= n * q) return v; return 255; };
+    const P = pct(0.95), med = pct(0.5); let paper = 0;
+    for (let v = Math.max(0, P - 30); v < 256; v++) paper += hist[v];
+    return paper / n < 0.35 && med < P - 40;
+  }
+  /* Digital erzeugtes Bild (Grafik, Logo, Bildschirmfoto – Meldung 2026-0009)? Glatte Farbflächen: In den Mitteltönen gleicht ein Punkt
+     meist exakt seinem rechten Nachbarn (Grafik 0,99, Bildschirmfoto 0,92), bei Scans und Fotos verhindert das Rauschen das (0,01–0,17).
+     d: RGBA-Zeilen in Originalauflösung (jede 8. Zeile genügt). */
+  function digitalData(d, W, H) {
+    let cnt = 0, eq = 0;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W - 1; x++) {
+      const j = (y * W + x) * 4, l = d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114;
+      if (l < 15 || l > 240) continue;
+      cnt++; if (d[j] === d[j + 4] && d[j + 1] === d[j + 5] && d[j + 2] === d[j + 6]) eq++;
+    }
+    return cnt >= 2000 && eq / cnt >= 0.6;
+  }
+  function isDigital(src) {
+    const ctx = src.getContext('2d', { willReadFrequently: true }), W = src.width, rows = [];
+    for (let y = 0; y < src.height; y += 8) rows.push(ctx.getImageData(0, y, W, 1).data);
+    const d = new Uint8ClampedArray(rows.length * W * 4); rows.forEach((r, i) => d.set(r, i * W * 4));
+    return digitalData(d, W, rows.length);
+  }
+
   /* Reiner Text (Schwarzweiß-Dokument)? Fast nur Papierweiß und dunkle Schrift – Grautöne nur an den Buchstabenkanten.
      Graue Flächen, Schattierungen oder Schwarzweiß-Bilder bringen viele Mitteltöne → Graustufen-Dokument. */
   function isBilevel(src) {
@@ -525,12 +556,15 @@
       // echte Scans und Seiten mit Rahmen/Tabellen bleiben unverändert
       let det = detectDocument(c);
       if (det.found && (fromCamera || (det.score > 0.6 && det.area < 0.93 && hasBackground(c, det.corners)))) {
-        det = detectDocument(c, 1400, det.corners); c = warp(c, det.corners, !photo); cropped = true;
+        det = detectDocument(c, 1400, det.corners); const w = warp(c, det.corners, !photo);
+        // Kein Blatt, sondern ein Bild im Bild (Foto auf dunklem Plakat, Titelbild): nicht ausschneiden – außer bei Kamerafotos
+        if (fromCamera || mode !== 'auto' || !isPictorial(w)) { c = w; cropped = true; }
       }
     }
     if (straighten) { const r = deskew(c); c = r.canvas; angle = r.angle; }
-    // Automatisch: Farbdokument, sonst Graustufen-Dokument; beim Scan „Automatisch“ reiner Text als Schwarzweiß-Dokument
-    const autoMode = mode === 'auto' ? (isColorful(c) ? 'colordoc' : detectPhoto && isBilevel(c) ? 'bw' : 'document') : null;
+    // Automatisch: Bildseite unverändert (nicht bei Kamerafotos – dort braucht es die Aufhellung), Farbdokument, sonst Graustufen-Dokument;
+    // beim Scan „Automatisch“ reiner Text als Schwarzweiß-Dokument
+    const autoMode = mode === 'auto' ? (!fromCamera && isPictorial(c) ? 'original' : isColorful(c) ? 'colordoc' : detectPhoto && isBilevel(c) ? 'bw' : 'document') : null;
     return { orig: c, processed: enhance(c, autoMode || mode), cropped, angle, autoMode };
   }
 
@@ -625,5 +659,5 @@
     return c;
   }
 
-  root.Imaging = { pixels, grain, smooth, despeckle, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, skewInfo, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
+  root.Imaging = { pixels, isPictorial, pictorialData, isDigital, digitalData, grain, smooth, despeckle, ocrCopy, OCR_PARAMS, colorFlatten, findHoles, fillHoles, cleanEdges, canvas, scaled, unline, enhance, hasBackground, average, isColorful, colorfulData, colorLut, isBilevel, compactLayers, rotate90, estimateSkew, skewInfo, rotateBy, deskew, detectDocument, homography, warp, inkRatio, isBlank, blankData, prepScan };
 })(self);
