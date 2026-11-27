@@ -678,7 +678,7 @@
             if (ln.tail) head(x2, y2, x1, y1);
             if (ln.head) head(x1, y1, x2, y2);
           } else if (it.kind === 'table') await drawTable(it);
-          else if (it.kind === 'chart') await drawChart(it);
+          else if (it.kind === 'chart') await drawChartIt(it);
           else if (it.kind === 'placeholder') {
             page.drawRectangle({ x: it.x, y: H - it.y - it.h, width: it.w, height: it.h, color: L.rgb(0.96, 0.96, 0.97), borderColor: L.rgb(0.75, 0.75, 0.8), borderWidth: 0.75 });
             const f = await getFont('arial', false, true), s = Math.min(14, it.h / 4, it.w / 12);
@@ -771,101 +771,8 @@
         }
       }
 
-      // Diagramm zeichnen: Titel, Legende, Achsen mit „runden“ Schritten, Gitterlinien, Säulen/Balken/Linien/Flächen/Kreis
-      async function drawChart(it) {
-        const c = it.chart, f = await getFont('calibri', false, false), fb = await getFont('calibri', true, false);
-        const fs = Math.max(5, Math.min(c.size || 10, it.h / 14)), grey = L.rgb(0.35, 0.35, 0.35), gridC = L.rgb(0.85, 0.85, 0.85);
-        const loc = locale || 'de-DE', fmtN = v => c.percent ? (v * 100).toLocaleString(loc, { maximumFractionDigits: 1 }) + ' %' : v.toLocaleString(loc, { maximumFractionDigits: 2 });
-        const clean = s => [...String(s)].filter(ch => sets.get(f).has(ch.codePointAt(0)) || ch === ' ').join('');
-        let top = it.y + 4, bottom = it.y + it.h - 4, left = it.x + 4, right = it.x + it.w - 4;
-        if (c.title) { const ts = fs * 1.35, t = clean(c.title), tw = fb.widthOfTextAtSize(t, ts); page.drawText(t, { x: it.x + (it.w - tw) / 2, y: H - top - ts, size: ts, font: fb, color: L.rgb(0.1, 0.1, 0.1) }); top += ts * 1.6; }
-        const pie = /pie|doughnut/.test(c.type);
-        const legendItems = pie ? c.cats.map((cat, i) => ({ name: cat, color: c.series[0].points.find(p => p.i === i)?.color || c.accents[i % c.accents.length] })) : c.series.map(s => ({ name: s.name, color: s.color }));
-        if (c.legend || pie || c.series.length > 1) {   // Legende rechts (bzw. unten, wenn so gespeichert)
-          const items = legendItems.map(l => ({ ...l, name: clean(l.name) })), sw = fs * 0.8;
-          if (c.legendPos === 'b' || c.legendPos === 't') {
-            const tot = items.reduce((a, l) => a + sw + 4 + f.widthOfTextAtSize(l.name, fs) + 12, 0); let lx = it.x + Math.max(4, (it.w - tot) / 2);
-            const ly = c.legendPos === 'b' ? bottom - fs : top; for (const l of items) { page.drawRectangle({ x: lx, y: H - ly - sw, width: sw, height: sw, color: rgb(l.color) }); page.drawText(l.name, { x: lx + sw + 4, y: H - ly - sw + 1, size: fs, font: f, color: grey }); lx += sw + 4 + f.widthOfTextAtSize(l.name, fs) + 12; }
-            if (c.legendPos === 'b') bottom -= fs * 1.8; else top += fs * 1.8;
-          } else {
-            const lw = Math.min(it.w * 0.35, Math.max(...items.map(l => f.widthOfTextAtSize(l.name, fs))) + sw + 10);
-            let ly = top + Math.max(0, (bottom - top - items.length * fs * 1.5) / 2);
-            for (const l of items) { page.drawRectangle({ x: right - lw, y: H - ly - sw, width: sw, height: sw, color: rgb(l.color) }); page.drawText(l.name, { x: right - lw + sw + 4, y: H - ly - sw + 1, size: fs, font: f, color: grey, maxWidth: lw - sw - 4 }); ly += fs * 1.5; }
-            right -= lw + 8;
-          }
-        }
-        if (pie) {
-          const s = c.series[0], vals = s.vals.map(v => Math.max(0, v || 0)), sum = vals.reduce((a, b) => a + b, 0) || 1;
-          const r = Math.max(4, Math.min(right - left, bottom - top) / 2), cx = (left + right) / 2, cy = H - (top + bottom) / 2;
-          let a0 = Math.PI / 2;
-          vals.forEach((v, i) => {
-            const a1 = a0 - v / sum * Math.PI * 2, steps = Math.max(2, Math.ceil((a0 - a1) / 0.1)), pts = [];
-            for (let k = 0; k <= steps; k++) { const t = a0 + (a1 - a0) * k / steps; pts.push([Math.cos(t) * r, -Math.sin(t) * r]); }
-            const inner = c.hole ? pts.slice().reverse().map(([x, y]) => [x * c.hole, y * c.hole]) : [[0, 0]];
-            const d = 'M' + [...pts, ...inner].map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`).join(' L') + ' Z';
-            if (v > 0) page.drawSvgPath(d, { x: cx, y: cy, color: rgb(s.points.find(p => p.i === i)?.color || c.accents[i % c.accents.length]), borderColor: L.rgb(1, 1, 1), borderWidth: 1 });
-            a0 = a1;
-          });
-          return;
-        }
-        // Wertebereich (gestapelt: Summen; 100 %: Anteile)
-        const n = c.cats.length, stacked = /stacked/i.test(c.grouping), pct = c.grouping === 'percentStacked';
-        const totals = c.cats.map((_, i) => c.series.reduce((a, s) => a + Math.abs(s.vals[i] || 0), 0) || 1);
-        const v = (s, i) => { const x = s.vals[i]; return x == null ? null : pct ? x / totals[i] : x; };
-        let lo = 0, hi = 0;
-        c.cats.forEach((_, i) => { if (stacked) { let pos = 0, neg = 0; for (const s of c.series) { const x = v(s, i) || 0; if (x >= 0) pos += x; else neg += x; } hi = Math.max(hi, pos); lo = Math.min(lo, neg); } else for (const s of c.series) { const x = v(s, i); if (x != null) { hi = Math.max(hi, x); lo = Math.min(lo, x); } } });
-        if (hi === lo) hi = lo + 1;
-        const raw = (hi - lo) / 6, mag = 10 ** Math.floor(Math.log10(raw)), step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(m => m >= raw);
-        hi = Math.ceil(hi / step - 1e-9) * step; lo = Math.floor(lo / step + 1e-9) * step;
-        const horiz = c.type === 'bar' && c.dir === 'bar';
-        const labels = []; for (let t = lo; t <= hi + step / 2; t += step) labels.push(+t.toFixed(10));
-        const lw = Math.max(...labels.map(t => f.widthOfTextAtSize(fmtN(pct ? t : t).replace(/ %$/, pct ? ' %' : ''), fs)));
-        const catW = Math.max(...c.cats.map(t => f.widthOfTextAtSize(clean(t), fs)));
-        if (horiz) { left += catW + 6; bottom -= fs * 1.6; } else { left += lw + 6; bottom -= fs * 1.6; }
-        const W = right - left, Hh = bottom - top; if (W < 10 || Hh < 10) return;
-        const vx = t => horiz ? left + (t - lo) / (hi - lo) * W : null, vy = t => bottom - (t - lo) / (hi - lo) * Hh;
-        for (const t of labels) {   // Gitterlinien und Achsenbeschriftung
-          const s = pct ? Math.round(t * 100) + ' %' : fmtN(t), tw = f.widthOfTextAtSize(s, fs);
-          if (horiz) { const x = vx(t); page.drawLine({ start: { x, y: H - top }, end: { x, y: H - bottom }, thickness: 0.5, color: gridC }); page.drawText(s, { x: x - tw / 2, y: H - bottom - fs * 1.2, size: fs, font: f, color: grey }); }
-          else { const y = vy(t); page.drawLine({ start: { x: left, y: H - y }, end: { x: right, y: H - y }, thickness: 0.5, color: gridC }); page.drawText(s, { x: left - tw - 4, y: H - y - fs * 0.35, size: fs, font: f, color: grey }); }
-        }
-        const band = (horiz ? Hh : W) / n;
-        c.cats.forEach((cat, i) => {   // Kategorien
-          const s = clean(cat), tw = f.widthOfTextAtSize(s, fs);
-          if (horiz) page.drawText(s, { x: left - tw - 4, y: H - (top + band * (i + 0.5)) - fs * 0.35, size: fs, font: f, color: grey });
-          else if (tw < band * 1.6 || i % Math.ceil(tw / band) === 0) page.drawText(s, { x: left + band * (i + 0.5) - tw / 2, y: H - bottom - fs * 1.2, size: fs, font: f, color: grey });
-        });
-        const zero = Math.min(Math.max(0, lo), hi);
-        if (c.type === 'bar') {
-          const groups = stacked ? 1 : c.series.length, gap = band * 0.3, bw = (band - gap) / groups;
-          c.cats.forEach((_, i) => {
-            let pos = 0, neg = 0;
-            c.series.forEach((s, si) => {
-              const x = v(s, i); if (x == null) return;
-              let a, b; if (stacked) { if (x >= 0) { a = pos; b = pos += x; } else { a = neg; b = neg += x; } } else { a = zero; b = x; }
-              const off = band * i + gap / 2 + (stacked ? 0 : si * bw), col = rgb(c.vary && c.series.length === 1 ? (s.points.find(p => p.i === i)?.color || c.accents[i % c.accents.length]) : s.points.find(p => p.i === i)?.color || s.color);
-              if (horiz) { const x0 = vx(Math.min(a, b)), x1 = vx(Math.max(a, b)); page.drawRectangle({ x: x0, y: H - (top + off + bw), width: Math.max(0.3, x1 - x0), height: bw, color: col }); }
-              else { const y0 = vy(Math.max(a, b)), y1 = vy(Math.min(a, b)); page.drawRectangle({ x: left + off, y: H - y1, width: bw, height: Math.max(0.3, y1 - y0), color: col }); }
-            });
-          });
-        } else {   // Linie bzw. Fläche
-          const base = c.cats.map(() => 0);
-          for (const s of c.series) {
-            const ptsL = c.cats.map((_, i) => { const x = v(s, i); if (x == null) return null; const y = stacked ? (base[i] += x) : x; return [left + band * (i + 0.5), vy(y)]; });
-            const ok = ptsL.filter(Boolean); if (!ok.length) continue;
-            if (c.type === 'area') {
-              const d = `M${ok[0][0]} ${H - vy(zero)} ` + ok.map(([x, y]) => `L${x.toFixed(2)} ${(H - y).toFixed(2)}`).join(' ') + ` L${ok[ok.length - 1][0]} ${H - vy(zero)} Z`;
-              page.drawSvgPath(d.replace(/(-?[\d.]+) (-?[\d.]+)/g, (m, x, y) => `${x} ${-y}`), { x: 0, y: 0, color: rgb(s.color), opacity: 0.85 });
-            } else {
-              for (let i = 1; i < ptsL.length; i++) if (ptsL[i] && ptsL[i - 1]) page.drawLine({ start: { x: ptsL[i - 1][0], y: H - ptsL[i - 1][1] }, end: { x: ptsL[i][0], y: H - ptsL[i][1] }, thickness: 2.25, color: rgb(s.color) });
-              for (const p of ok) page.drawCircle({ x: p[0], y: H - p[1], size: 2.5, color: rgb(s.color) });
-            }
-          }
-        }
-        // Achsenlinie bei null
-        if (horiz) page.drawLine({ start: { x: vx(zero), y: H - top }, end: { x: vx(zero), y: H - bottom }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
-        else page.drawLine({ start: { x: left, y: H - vy(zero) }, end: { x: right, y: H - vy(zero) }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
-      }
+      // Diagramm zeichnen (gemeinsamer Zeichner, siehe drawChart unten)
+      async function drawChartIt(it) { const f = await getFont('calibri', false, false), fb = await getFont('calibri', true, false); drawChart(L, page, it, { f, fb, has: cp => sets.get(f).has(cp), locale }); }
 
       async function drawTable(it) {
         const t = it.table, sumW = t.cols.reduce((a, b) => a + b, 0) || 1, kx = it.w / sumW;
@@ -905,6 +812,104 @@
     return m[2] === 'ParenR' ? v + ')' : m[2] === 'ParenBoth' ? `(${v})` : m[2] === 'Plain' ? v : v + '.';
   }
 
-  const api = { pptx, odp, render, family, shapePath, autoNum };
+  /* Diagramm zeichnen (app-v353 eigenständig, auch für Word-Dokumente in js/textpdf.js): Titel, Legende, Achsen mit „runden“ Schritten,
+     Gitterlinien, Säulen/Balken/Linien/Flächen/Kreis. it = { x, y, w, h, chart } in pt von oben links; f/fb = Schrift normal/fett,
+     has(codepoint) = Zeichen in der Schrift vorhanden. */
+  function drawChart(L, page, it, { f, fb, has = () => true, locale } = {}) {
+    const c = it.chart, H = page.getHeight(), rgb = col => L.rgb(Math.min(1, Math.max(0, col.r)), Math.min(1, Math.max(0, col.g)), Math.min(1, Math.max(0, col.b)));
+    const fs = Math.max(5, Math.min(c.size || 10, it.h / 14)), grey = L.rgb(0.35, 0.35, 0.35), gridC = L.rgb(0.85, 0.85, 0.85);
+    const loc = locale || 'de-DE', fmtN = v => c.percent ? (v * 100).toLocaleString(loc, { maximumFractionDigits: 1 }) + ' %' : v.toLocaleString(loc, { maximumFractionDigits: 2 });
+    const clean = s => [...String(s)].filter(ch => has(ch.codePointAt(0)) || ch === ' ').join('');
+    let top = it.y + 4, bottom = it.y + it.h - 4, left = it.x + 4, right = it.x + it.w - 4;
+    if (c.title) { const ts = fs * 1.35, t = clean(c.title), tw = fb.widthOfTextAtSize(t, ts); page.drawText(t, { x: it.x + (it.w - tw) / 2, y: H - top - ts, size: ts, font: fb, color: L.rgb(0.1, 0.1, 0.1) }); top += ts * 1.6; }
+    const pie = /pie|doughnut/.test(c.type);
+    const legendItems = pie ? c.cats.map((cat, i) => ({ name: cat, color: c.series[0].points.find(p => p.i === i)?.color || c.accents[i % c.accents.length] })) : c.series.map(s => ({ name: s.name, color: s.color }));
+    if (c.legend || pie || c.series.length > 1) {   // Legende rechts (bzw. unten, wenn so gespeichert)
+      const items = legendItems.map(l => ({ ...l, name: clean(l.name) })), sw = fs * 0.8;
+      if (c.legendPos === 'b' || c.legendPos === 't') {
+        const tot = items.reduce((a, l) => a + sw + 4 + f.widthOfTextAtSize(l.name, fs) + 12, 0); let lx = it.x + Math.max(4, (it.w - tot) / 2);
+        const ly = c.legendPos === 'b' ? bottom - fs : top; for (const l of items) { page.drawRectangle({ x: lx, y: H - ly - sw, width: sw, height: sw, color: rgb(l.color) }); page.drawText(l.name, { x: lx + sw + 4, y: H - ly - sw + 1, size: fs, font: f, color: grey }); lx += sw + 4 + f.widthOfTextAtSize(l.name, fs) + 12; }
+        if (c.legendPos === 'b') bottom -= fs * 1.8; else top += fs * 1.8;
+      } else {
+        const lw = Math.min(it.w * 0.35, Math.max(...items.map(l => f.widthOfTextAtSize(l.name, fs))) + sw + 10);
+        let ly = top + Math.max(0, (bottom - top - items.length * fs * 1.5) / 2);
+        for (const l of items) { page.drawRectangle({ x: right - lw, y: H - ly - sw, width: sw, height: sw, color: rgb(l.color) }); page.drawText(l.name, { x: right - lw + sw + 4, y: H - ly - sw + 1, size: fs, font: f, color: grey, maxWidth: lw - sw - 4 }); ly += fs * 1.5; }
+        right -= lw + 8;
+      }
+    }
+    if (pie) {
+      const s = c.series[0], vals = s.vals.map(v => Math.max(0, v || 0)), sum = vals.reduce((a, b) => a + b, 0) || 1;
+      const r = Math.max(4, Math.min(right - left, bottom - top) / 2), cx = (left + right) / 2, cy = H - (top + bottom) / 2;
+      let a0 = Math.PI / 2;
+      vals.forEach((v, i) => {
+        const a1 = a0 - v / sum * Math.PI * 2, steps = Math.max(2, Math.ceil((a0 - a1) / 0.1)), pts = [];
+        for (let k = 0; k <= steps; k++) { const t = a0 + (a1 - a0) * k / steps; pts.push([Math.cos(t) * r, -Math.sin(t) * r]); }
+        const inner = c.hole ? pts.slice().reverse().map(([x, y]) => [x * c.hole, y * c.hole]) : [[0, 0]];
+        const d = 'M' + [...pts, ...inner].map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`).join(' L') + ' Z';
+        if (v > 0) page.drawSvgPath(d, { x: cx, y: cy, color: rgb(s.points.find(p => p.i === i)?.color || c.accents[i % c.accents.length]), borderColor: L.rgb(1, 1, 1), borderWidth: 1 });
+        a0 = a1;
+      });
+      return;
+    }
+    // Wertebereich (gestapelt: Summen; 100 %: Anteile)
+    const n = c.cats.length, stacked = /stacked/i.test(c.grouping), pct = c.grouping === 'percentStacked';
+    const totals = c.cats.map((_, i) => c.series.reduce((a, s) => a + Math.abs(s.vals[i] || 0), 0) || 1);
+    const v = (s, i) => { const x = s.vals[i]; return x == null ? null : pct ? x / totals[i] : x; };
+    let lo = 0, hi = 0;
+    c.cats.forEach((_, i) => { if (stacked) { let pos = 0, neg = 0; for (const s of c.series) { const x = v(s, i) || 0; if (x >= 0) pos += x; else neg += x; } hi = Math.max(hi, pos); lo = Math.min(lo, neg); } else for (const s of c.series) { const x = v(s, i); if (x != null) { hi = Math.max(hi, x); lo = Math.min(lo, x); } } });
+    if (hi === lo) hi = lo + 1;
+    const raw = (hi - lo) / 6, mag = 10 ** Math.floor(Math.log10(raw)), step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(m => m >= raw);
+    hi = Math.ceil(hi / step - 1e-9) * step; lo = Math.floor(lo / step + 1e-9) * step;
+    const horiz = c.type === 'bar' && c.dir === 'bar';
+    const labels = []; for (let t = lo; t <= hi + step / 2; t += step) labels.push(+t.toFixed(10));
+    const lw = Math.max(...labels.map(t => f.widthOfTextAtSize(fmtN(pct ? t : t).replace(/ %$/, pct ? ' %' : ''), fs)));
+    const catW = Math.max(...c.cats.map(t => f.widthOfTextAtSize(clean(t), fs)));
+    if (horiz) { left += catW + 6; bottom -= fs * 1.6; } else { left += lw + 6; bottom -= fs * 1.6; }
+    const W = right - left, Hh = bottom - top; if (W < 10 || Hh < 10) return;
+    const vx = t => horiz ? left + (t - lo) / (hi - lo) * W : null, vy = t => bottom - (t - lo) / (hi - lo) * Hh;
+    for (const t of labels) {   // Gitterlinien und Achsenbeschriftung
+      const s = pct ? Math.round(t * 100) + ' %' : fmtN(t), tw = f.widthOfTextAtSize(s, fs);
+      if (horiz) { const x = vx(t); page.drawLine({ start: { x, y: H - top }, end: { x, y: H - bottom }, thickness: 0.5, color: gridC }); page.drawText(s, { x: x - tw / 2, y: H - bottom - fs * 1.2, size: fs, font: f, color: grey }); }
+      else { const y = vy(t); page.drawLine({ start: { x: left, y: H - y }, end: { x: right, y: H - y }, thickness: 0.5, color: gridC }); page.drawText(s, { x: left - tw - 4, y: H - y - fs * 0.35, size: fs, font: f, color: grey }); }
+    }
+    const band = (horiz ? Hh : W) / n;
+    c.cats.forEach((cat, i) => {   // Kategorien
+      const s = clean(cat), tw = f.widthOfTextAtSize(s, fs);
+      if (horiz) page.drawText(s, { x: left - tw - 4, y: H - (top + band * (i + 0.5)) - fs * 0.35, size: fs, font: f, color: grey });
+      else if (tw < band * 1.6 || i % Math.ceil(tw / band) === 0) page.drawText(s, { x: left + band * (i + 0.5) - tw / 2, y: H - bottom - fs * 1.2, size: fs, font: f, color: grey });
+    });
+    const zero = Math.min(Math.max(0, lo), hi);
+    if (c.type === 'bar') {
+      const groups = stacked ? 1 : c.series.length, gap = band * 0.3, bw = (band - gap) / groups;
+      c.cats.forEach((_, i) => {
+        let pos = 0, neg = 0;
+        c.series.forEach((s, si) => {
+          const x = v(s, i); if (x == null) return;
+          let a, b; if (stacked) { if (x >= 0) { a = pos; b = pos += x; } else { a = neg; b = neg += x; } } else { a = zero; b = x; }
+          const off = band * i + gap / 2 + (stacked ? 0 : si * bw), col = rgb(c.vary && c.series.length === 1 ? (s.points.find(p => p.i === i)?.color || c.accents[i % c.accents.length]) : s.points.find(p => p.i === i)?.color || s.color);
+          if (horiz) { const x0 = vx(Math.min(a, b)), x1 = vx(Math.max(a, b)); page.drawRectangle({ x: x0, y: H - (top + off + bw), width: Math.max(0.3, x1 - x0), height: bw, color: col }); }
+          else { const y0 = vy(Math.max(a, b)), y1 = vy(Math.min(a, b)); page.drawRectangle({ x: left + off, y: H - y1, width: bw, height: Math.max(0.3, y1 - y0), color: col }); }
+        });
+      });
+    } else {   // Linie bzw. Fläche
+      const base = c.cats.map(() => 0);
+      for (const s of c.series) {
+        const ptsL = c.cats.map((_, i) => { const x = v(s, i); if (x == null) return null; const y = stacked ? (base[i] += x) : x; return [left + band * (i + 0.5), vy(y)]; });
+        const ok = ptsL.filter(Boolean); if (!ok.length) continue;
+        if (c.type === 'area') {
+          const d = `M${ok[0][0]} ${H - vy(zero)} ` + ok.map(([x, y]) => `L${x.toFixed(2)} ${(H - y).toFixed(2)}`).join(' ') + ` L${ok[ok.length - 1][0]} ${H - vy(zero)} Z`;
+          page.drawSvgPath(d.replace(/(-?[\d.]+) (-?[\d.]+)/g, (m, x, y) => `${x} ${-y}`), { x: 0, y: 0, color: rgb(s.color), opacity: 0.85 });
+        } else {
+          for (let i = 1; i < ptsL.length; i++) if (ptsL[i] && ptsL[i - 1]) page.drawLine({ start: { x: ptsL[i - 1][0], y: H - ptsL[i - 1][1] }, end: { x: ptsL[i][0], y: H - ptsL[i][1] }, thickness: 2.25, color: rgb(s.color) });
+          for (const p of ok) page.drawCircle({ x: p[0], y: H - p[1], size: 2.5, color: rgb(s.color) });
+        }
+      }
+    }
+    // Achsenlinie bei null
+    if (horiz) page.drawLine({ start: { x: vx(zero), y: H - top }, end: { x: vx(zero), y: H - bottom }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
+    else page.drawLine({ start: { x: left, y: H - vy(zero) }, end: { x: right, y: H - vy(zero) }, thickness: 0.75, color: L.rgb(0.6, 0.6, 0.6) });
+  }
+
+  const api = { pptx, odp, render, family, shapePath, autoNum, chartOf, drawChart };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Slides = api;
 })(typeof self !== 'undefined' ? self : this);

@@ -234,6 +234,16 @@
         need(h + 4); y -= h + 2;
         page.drawImage(im, { x: b.align === 'center' ? M + (W - w) / 2 : b.align === 'right' ? M + W - w : M, y, width: w, height: h }); y -= 4;
       }
+      else if (b.type === 'chart') {
+        // Diagramm aus Word (app-v353): Vektorgrafik mit dem Zeichner der Folien (js/slides.js), Größe wie im Dokument, höchstens Satzbreite
+        const S = root.Slides || (typeof require === 'function' ? require('./slides.js') : null);
+        const k = Math.min(1, W / b.w, (PH - Mt - Mb) / b.h), w = b.w * k, h = b.h * k;
+        if (!S?.drawChart) { text1('[Diagramm]', { color: gray }); continue; }
+        need(h + 4); y -= h + 2;
+        const x = b.align === 'center' ? M + (W - w) / 2 : b.align === 'right' ? M + W - w : M;
+        try { S.drawChart(L, page, { x, y: PH - y - h, w, h, chart: b.chart }, { f: F.r, fb: F.b, has: cp => sets.r.has(cp), locale: (typeof document !== 'undefined' && document.documentElement.lang) || 'de-DE' }); } catch (e) { console.warn(e); }
+        y -= 4;
+      }
       else if (b.type === 'li') { const ind = 14 + b.depth * 16; need(16); drawT(page, safe(b.label, 'r'), { x: M + ind - (b.ordered ? 14 : 9), y: y - 10.5 * 1.38 + 10.5 * 0.25, size: 10.5, font: F.r }); if (b.runs?.length) runs1(b.runs, { x: M + ind, width: W - ind }); else text1(b.text, { x: M + ind, width: W - ind }); y -= 2; }   // Aufzählungszeichen zuerst (Lesereihenfolge)
       else if (b.type === 'quote') { const y0 = y, p0 = page; text1(b.text, { x: M + 14, width: W - 14, color: gray }); if (page === p0) page.drawLine({ start: { x: M + 4, y: y0 - 2 }, end: { x: M + 4, y: y + 2 }, thickness: 2, color: L.rgb(0.75, 0.75, 0.75) }); y -= 6; }
       else if (b.type === 'code' || b.type === 'pre') { text1(b.text, { k: 'm', size: b.type === 'pre' ? 9.5 : 9, lead: 1.3 }); y -= 6; }

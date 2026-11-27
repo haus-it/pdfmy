@@ -3,7 +3,7 @@
 /* Word (.docx), Excel (.xlsx) und OpenDocument (.odt, .ods) lesen – ohne Server und ohne Bibliothek: ZIP über DecompressionStream, XML mit kleinem eigenem Parser.
    Ergebnis: Bausteine für js/textpdf.js (Überschriften, Absätze mit Ausrichtung/fett, Listen, Tabellen, Bilder, Seitenumbrüche).
    Office.docx(bytes) → { blocks, page: { size: [w, h], margin } }   Office.xlsx(bytes) → { blocks }
-   Textfelder kommen als Absätze hinter ihren Anker, Spalten je Abschnitt. Nicht nachgebildet: freie Lage von Textfeldern, Schriftarten und -größen im Einzelnen, Formeln (es zählt der gespeicherte Wert). */
+   Textfelder kommen als Absätze hinter ihren Anker, Spalten je Abschnitt, Diagramme als Vektorgrafik (app-v353). Nicht nachgebildet: freie Lage von Textfeldern, Schriftarten und -größen im Einzelnen, Formeln (es zählt der gespeicherte Wert). */
 (function (root) {
   'use strict';
 
@@ -206,9 +206,49 @@
     const fnUsed = [], enUsed = [];   // [Nummer, Text] in der Reihenfolge der Verweise
     const noteRef = (c, used, texts) => { const t = texts.get(c.attrs['w:id']); if (!t) return ''; used.push([used.length + 1, t]); return sup(used.length); };
     const boxes = [];   // Textfelder (Formen mit Text) eines Absatzes – nach dem Absatz ausgegeben, damit kein Text verloren geht
+    /* Diagramme (app-v353): Werte aus dem im Diagramm gespeicherten Zwischenstand (wie bei PowerPoint, js/slides.js chartOf) – bisher
+       fehlten sie ganz. Farben: srgbClr bzw. Designfarben accent1–6 aus theme1.xml mit lumMod/lumOff/tint/shade. */
+    let accents = null;
+    const themeClr = async () => {
+      if (accents) return accents;
+      accents = { accent1: '4472C4', accent2: 'ED7D31', accent3: 'A5A5A5', accent4: 'FFC000', accent5: '5B9BD5', accent6: '70AD47', dk1: '000000', lt1: 'FFFFFF', dk2: '44546A', lt2: 'E7E6E6', tx1: '000000', bg1: 'FFFFFF', tx2: '44546A', bg2: 'E7E6E6' };
+      try { const th = await z.text('word/theme/theme1.xml'); const cs = th && all(parseXml(th), 'a:clrScheme')[0];
+        if (cs) for (const k of els(cs)) { const c = els(k)[0]; const v = c?.attrs.val && c.name === 'a:srgbClr' ? c.attrs.val : c?.attrs.lastClr; if (v) accents[k.name.replace(/^a:/, '')] = v; }
+        accents.tx1 = accents.dk1; accents.bg1 = accents.lt1; accents.tx2 = accents.dk2; accents.bg2 = accents.lt2; } catch { /* Standardfarben */ }
+      return accents;
+    };
+    const chartColor = el => {
+      const c = el && els(el).find(k => /^a:(srgbClr|schemeClr|sysClr|prstClr)$/.test(k.name)); if (!c) return null;
+      const hex = c.name === 'a:srgbClr' ? c.attrs.val : c.name === 'a:sysClr' ? c.attrs.lastClr : c.name === 'a:schemeClr' ? accents[c.attrs.val] : null;
+      if (!/^[0-9a-f]{6}$/i.test(hex || '')) return null;
+      let r = parseInt(hex.slice(0, 2), 16) / 255, g = parseInt(hex.slice(2, 4), 16) / 255, b = parseInt(hex.slice(4, 6), 16) / 255;
+      const m = n => { const e = kid(c, 'a:' + n); return e ? +e.attrs.val / 100000 : null; }, lm = m('lumMod'), lo = m('lumOff'), ti = m('tint'), sh = m('shade');
+      if (lm != null || lo != null) {   // Helligkeit im HSL-Raum
+        const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let l = (mx + mn) / 2, s = 0, h = 0;
+        if (mx !== mn) { const d = mx - mn; s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h /= 6; }
+        l = Math.min(1, Math.max(0, l * (lm ?? 1) + (lo ?? 0)));
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q, f = t => { t = (t + 1) % 1; return t < 1 / 6 ? p + (q - p) * 6 * t : t < 0.5 ? q : t < 2 / 3 ? p + (q - p) * (2 / 3 - t) * 6 : p; };
+        [r, g, b] = s ? [f(h + 1 / 3), f(h), f(h - 1 / 3)] : [l, l, l];
+      }
+      if (ti != null) [r, g, b] = [r, g, b].map(v => 1 - (1 - v) * ti);
+      if (sh != null) [r, g, b] = [r, g, b].map(v => v * sh);
+      return { r, g, b, a: 1 };
+    };
+    const chart = async d => {
+      const id = all(d, 'c:chart')[0]?.attrs['r:id'], target = id && rels.get(id), ext = all(d, 'wp:extent')[0]; if (!target) return null;
+      const S = root.Slides || (typeof require === 'function' ? require('./slides.js') : null); if (!S?.chartOf) return null;
+      const xml = await z.text((target.startsWith('/') ? target.slice(1) : 'word/' + target.replace(/^\.\//, '')).replace(/\/[^/]+\/\.\.\//g, '/')); if (!xml) return null;
+      await themeClr();
+      let ch = null; try { ch = S.chartOf(parseXml(xml), chartColor); } catch { ch = null; }
+      const w = ext ? +ext.attrs.cx / 12700 : 432, h = ext ? +ext.attrs.cy / 12700 : 252;
+      if (ch) return { type: 'chart', chart: ch, w, h };
+      const title = all(all(parseXml(xml), 'c:title')[0] || { kids: [] }, 'a:t').map(txt).join('');
+      const lab = root.I18N?.t ? String(root.I18N.t('Diagramm')) : 'Diagramm';
+      return { type: 'p', text: title ? `[${lab}: ${title}]` : `[${lab}]`, align: 'center' };   // Art, die PDFMy nicht zeichnet: sichtbarer Hinweis statt Lücke
+    };
     const image = async d => {
       const blip = all(d, 'a:blip')[0], ext = all(d, 'wp:extent')[0], id = blip?.attrs['r:embed'], target = id && rels.get(id);
-      if (!target) return null;
+      if (!target) return all(d, 'c:chart').length ? chart(d) : null;
       const path = target.startsWith('/') ? target.slice(1) : 'word/' + target.replace(/^\.\//, ''), data = await z.get(path.replace(/\/[^/]+\/\.\.\//g, '/'));
       if (!data) return null;
       const mime = data[0] === 0x89 && data[1] === 0x50 ? 'image/png' : data[0] === 0xff && data[1] === 0xd8 ? 'image/jpeg' : null;

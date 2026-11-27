@@ -4,6 +4,12 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Diagramme in Word-Dateien (app-v353)
+- Diagramme in .docx-Dateien (Jahresbericht, Vereinsstatistik, Angebot) fehlten im PDF bisher ganz. Jetzt zeichnet PDFMy Säulen-, Balken-, Linien-, Flächen-, Kreis- und Ringdiagramme aus den im Dokument gespeicherten Werten – als Vektorgrafik (scharf beim Vergrößern und Drucken), in der Größe aus Word und in den Designfarben des Dokuments (theme1.xml, mit Helligkeitsstufen) bzw. den eigenen Farben einzelner Reihen und Kreisstücke.
+- Andere Diagrammarten (z. B. Netz, Punkt) erscheinen als sichtbarer Hinweis „[Diagramm: Titel]“ statt still zu fehlen.
+- Derselbe Zeichner wie bei PowerPoint (js/slides.js drawChart, jetzt eigenständig) – PowerPoint-Ausgabe unverändert.
+- Neuer Test tests/word-diagramm.test.js (tests/office-korpus/diagramm/word-diagramm.docx); im Browser geprüft.
+
 ### Alte Word-Dateien (.doc): Textfelder und mehrspaltiger Satz (app-v352)
 - Textfelder aus .doc-Dateien (Infokästen, Termine, Kontaktblöcke) gehen nicht mehr verloren: Ihr Inhalt steht wie bei .docx direkt hinter dem Absatz, an dem das Textfeld verankert ist.
 - Mehrspaltiger Satz (Vereinszeitung, Gemeindebrief, Flyer) wird je Abschnitt übernommen – Spaltenzahl und Spaltenabstand wie im Original.

@@ -962,3 +962,11 @@ Grund für die Spalte rechts: Dort stehen die Seitenangaben komprimiert am Datei
 | 6 Wenig aktive Inhalte | passt: Makros und eingebettete Objekte werden nicht ausgeführt |
 
 **Ehrliche Grenze:** Textfelder werden als Absätze hinter ihrem Anker übernommen, nicht frei platziert (wie bei .docx; Fuß- und Endnoten seit app-v351, Textfelder und Spalten seit app-v352); Formatvorlagen-Schriftgrößen werden über die Überschriften-Ebene abgebildet.
+
+### Diagramme in Word-Dateien (27.11.2026, app-v353)
+
+**Anlass:** Wettbewerbsvergleich Abschnitt 4 („Word → PDF: keine … Diagramme“). Diagramme in .docx fehlten im PDF ohne Hinweis – Datenverlust bei Jahresberichten und Statistiken.
+
+**Umsetzung:** Werte aus dem im Diagramm gespeicherten Zwischenstand (wie bei PowerPoint, js/slides.js chartOf), Farben aus theme1.xml mit Helligkeitsstufen, Größe aus wp:extent. Der Folien-Zeichner wurde eigenständig (Slides.drawChart) und zeichnet nun auch in js/textpdf.js. Leitplanken gewahrt: lokal, ohne Upload, keine neue Bibliothek.
+
+**Ehrliche Grenze:** Netz-, Punkt-, Blasen- und Kombinationsdiagramme erscheinen als Hinweis „[Diagramm: Titel]“; Diagramme in .doc (OLE/MS Graph) und .odt noch nicht.

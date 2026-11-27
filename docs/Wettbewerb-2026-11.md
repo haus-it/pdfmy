@@ -286,3 +286,5 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 **Nachtrag 26.11.2026 (app-v349) – .doc:** Alte Word-Dateien öffnet PDFMy jetzt mit Überschriften, Listen, Fett/Kursiv, Bildern, Kopf-/Fußzeile und laufweitengleicher Schrift – ohne Office und ohne Upload. Acrobat, PDF24 und Smallpdf wandeln .doc über Office-Komponenten bzw. ihren Server um (Upload bei Smallpdf/iLovePDF). Gemessen gegen die .docx-Fassung derselben 10 Dokumente: gleiche Bausteine und Seitenzahl.
 
 **Nachtrag 27.11.2026 (app-v351/v352) – .doc:** Fuß- und Endnoten, Textfelder und mehrspaltiger Satz kommen jetzt ebenfalls an. Damit ist die Vereinszeitung oder der Gemeindebrief als alte .doc-Datei ohne Office und ohne Upload lesbar; bei .docx beginnt ein „fortlaufender“ Abschnittswechsel keine neue Seite mehr.
+
+**Nachtrag 27.11.2026 (app-v353) – Word-Diagramme:** Abschnitt 4 nannte „keine … Diagramme“ bei Word → PDF. Jetzt werden Säulen-, Balken-, Linien-, Flächen-, Kreis- und Ringdiagramme als Vektorgrafik in den Dokumentfarben gezeichnet, ohne Upload (Smallpdf/iLovePDF wandeln über ihren Server).
