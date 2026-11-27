@@ -471,3 +471,5 @@ Nachtrag 26.11.2026 (app-v348): Störpunkte-Entfernung für die Texterkennung be
 Nachtrag 26.11.2026 (app-v349): Word 97–2003 (.doc) mit Formatierung; Abgleich gegen dieselben Dokumente als .docx (10 Dateien, Bausteine/Wortlaut/Schrift/Seitenzahl gleich) und Robustheit gegen beschädigte Dateien (Zufallsfehler, verständliche Meldung) als Test-Gate tests/doc97.test.js (ISO 9001 8.6 Freigabe, ISO/IEC 25010 Zuverlässigkeit).
 
 Nachtrag 27.11.2026 (app-v350): Benutzerdokumentation erweitert (27 bebilderte Anleitungen, Fehlerhilfe „Wenn es nicht klappt“ je Hauptaufgabe; ISO/IEC/IEEE 26514 Abschnitt zu Problemlösung). Aussagen gegen den Programmcode geprüft; Test-Gate tests/hilfe-center.test.js.
+
+Nachtrag 27.11.2026 (app-v351): .doc-Fuß- und Endnoten, Abgleich gegen dieselbe Datei als .docx als Test-Gate (tests/doc97.test.js).

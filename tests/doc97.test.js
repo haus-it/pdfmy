@@ -69,3 +69,13 @@ test('.doc: beschädigte Dateien ergeben eine verständliche Meldung, nie einen 
   }
   assert.ok(opened > 100, 'leicht beschädigte Dateien öffnen trotzdem: ' + opened);
 });
+
+test('.doc: Fuß- und Endnoten wie bei .docx – Nummer im Text, Notentexte am Ende (app-v351)', async () => {
+  const d = Office.doc(new Uint8Array(fs.readFileSync(path.join(D, '12-fussnoten.doc'))));
+  const x = await Office.docx(new Uint8Array(fs.readFileSync(path.join(D, '12-fussnoten.docx'))));
+  const s = r => r.blocks.map(b => b.type + ':' + (b.text || ''));
+  assert.deepEqual(s(d), s(x));
+  assert.equal(d.blocks[0].text, 'Der Anspruch ergibt sich aus § 280 BGB¹ und ist fällig.');
+  assert.ok(d.blocks.some(b => b.text === '¹ Palandt, BGB, 85. Aufl., § 280 Rn. 12.' && b.small), 'Fußnotentext klein am Ende');
+  assert.ok(d.blocks.some(b => b.text === 'Endnoten'), 'Endnoten getrennt');
+});

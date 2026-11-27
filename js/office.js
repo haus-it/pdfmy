@@ -753,7 +753,7 @@
      Word .doc: Text über die Stückliste (Clx/PlcPcd, MS-DOC 2.4.1) – Absätze, Zeilen- und Seitenumbrüche, Tabellen (Zellmarken),
      Feldergebnisse statt Feldcode. Seit app-v349 auch die Formatierung wie bei .docx: Überschriften (Formatvorlage bzw. Gliederungsebene),
      Listen mit Nummernformat (LST/LFO), fett/kursiv, Ausrichtung, Bilder im Text (PICF) und schwebend (OfficeArt), Kopf-/Fußzeile mit
-     Seitenzahl, Seitenformat und Hauptschrift. Nicht nachgebildet: Fußnoten, Textfelder, Spalten.
+     Seitenzahl, Seitenformat und Hauptschrift; seit app-v351 Fuß- und Endnoten. Nicht nachgebildet: Textfelder, Spalten.
      Excel .xls: BIFF8 (MS-XLS) – sichtbare Tabellenblätter mit Text, Zahlen, Datum (Zahlenformat), Wahrheitswerten und gespeicherten
      Formelergebnissen; ältere BIFF5-Dateien (Excel 95) mit Text in Windows-1252. Kennwortgeschützte Dateien werden erkannt. */
   const cfbOf = (bytes, what) => (root.Email || (typeof require === 'function' ? require('./email.js') : null)).readCfb(bytes, what);
@@ -788,7 +788,9 @@
     }
     if (!plc) throw new Error('Word-Datei unvollständig (Stückliste fehlt).');
     // Text aller Teile (Haupttext, Fußnoten, Kopf-/Fußzeilen) mit der Dateiposition (fc) jedes Zeichens – für die Formatierung
-    const total = ccpText + Math.max(0, ccpFtn) + Math.max(0, ccpHdd), n = (plc.len - 4) / 12, chars = [], fcs = [];
+    // Teile in fester Folge (MS-DOC 2.3.1): Haupttext, Fußnoten, Kopf-/Fußzeilen, (Makro), Kommentare, Endnoten
+    const ccpAtn = Math.max(0, dv.getInt32(0x5C, true)), ccpEdn = Math.max(0, dv.getInt32(0x60, true)), ednBase = ccpText + Math.max(0, ccpFtn) + Math.max(0, ccpHdd) + Math.max(0, dv.getInt32(0x58, true)) + ccpAtn;
+    const total = ednBase + ccpEdn, n = (plc.len - 4) / 12, chars = [], fcs = [];
     for (let i = 0; i < n && chars.length < total; i++) {
       const cp0 = tv.getUint32(plc.at + i * 4, true), cp1 = tv.getUint32(plc.at + (i + 1) * 4, true), fc = tv.getUint32(plc.at + (n + 1) * 4 + i * 8 + 2, true);
       const len = Math.min(cp1 - cp0, total - chars.length); if (len <= 0) continue;
@@ -941,6 +943,18 @@
     const nfcLabel = (nfc, k) => nfc === 0 ? k + '.' : nfc === 4 ? String.fromCharCode(96 + ((k - 1) % 26) + 1) + ')' : nfc === 3 ? String.fromCharCode(64 + ((k - 1) % 26) + 1) + ')' : nfc === 2 ? ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x'][(k - 1) % 10] + '.' : nfc === 1 ? ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][(k - 1) % 10] + '.' : null;
     const counters = new Map();
     // Felder: Code (0x13 … 0x14) weg, Ergebnis (bis 0x15) behalten – Seitenzahl-Felder als {PAGE}/{NUMPAGES} (Kopf-/Fußzeile)
+    /* Fuß- und Endnoten (wie bei .docx): Verweis im Text als hochgestellte Nummer, Notentexte am Ende unter „Fußnoten“ bzw. „Endnoten“ */
+    const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹', sup = k => String(k).split('').map(d => SUP[+d]).join('');
+    const notes = { fn: { base: ccpText, refs: new Map(), txt: [], used: [] }, en: { base: ednBase, refs: new Map(), txt: [], used: [] } };
+    try {
+      for (const [kind, iRef, iTxt] of [['fn', 2, 3], ['en', 46, 47]]) {
+        const [fr, lr] = fcLcb(iRef), [ft, lt] = fcLcb(iTxt), o = notes[kind];
+        if (!lr || !lt || fr + lr > tbl.length || ft + lt > tbl.length) continue;
+        const m = (lr - 4) / 6; for (let k = 0; k < m; k++) o.refs.set(tv.getUint32(fr + k * 4, true), k);
+        for (let k = 0; k < lt / 4; k++) o.txt.push(tv.getUint32(ft + k * 4, true));
+      }
+    } catch { /* ohne Noten */ }
+    const noteMark = cp => { for (const kind of ['fn', 'en']) { const o = notes[kind], k = o.refs.get(cp); if (k != null) { o.used.push(k); return sup(o.used.length); } } return null; };
     const story = (c0, c1) => {
       const out = []; const st = [];
       for (let k = c0; k < c1 && k < chars.length; k++) {
@@ -950,7 +964,8 @@
         if (code === 0x15) { const f = st.pop(); if (f && st.every(s => s.res)) { const t = /\bNUMPAGES\b/.test(f.code) ? '{NUMPAGES}' : /\bPAGE\b/.test(f.code) ? '{PAGE}' : null; if (t) { while (out.length && out[out.length - 1].field === f) out.pop(); out.push({ ch: t, fc: fcs[k] }); } } continue; }
         if (st.length && !st[st.length - 1].res) { st[st.length - 1].code += ch; continue; }
         if (st.some(s => !s.res)) continue;
-        out.push({ ch, fc: fcs[k], cp: k, field: st[st.length - 1] });
+        const nm = ch === '\x02' && c0 === 0 && k < ccpText ? noteMark(k) : null;
+        out.push({ ch: nm || ch, fc: fcs[k], cp: k, field: st[st.length - 1] });
       }
       return out;
     };
@@ -1000,6 +1015,13 @@
       return blocks;
     };
     const blocks = build(story(0, ccpText));
+    for (const [kind, head] of [['fn', 'Fußnoten'], ['en', 'Endnoten']]) {
+      const o = notes[kind]; if (!o.used.length) continue;
+      const items = o.used.map((k, i) => { const a = o.txt[k], b = o.txt[k + 1]; if (a == null || b == null) return null; const t = clean(story(o.base + a, o.base + b).map(x => x.ch).join('').replace(/\r/g, '\n')).replace(/\n+/g, ' ').trim(); return t ? `${sup(i + 1)} ${t}` : null; }).filter(Boolean);
+      if (!items.length) continue;
+      blocks.push({ type: 'hr' }, { type: 'p', text: root.I18N?.t ? String(root.I18N.t(head)) : head, bold: true, small: true });   // Überschrift in der Oberflächensprache
+      for (const t of items) blocks.push({ type: 'p', text: t, small: true, tight: true });
+    }
     if (!blocks.length) throw new Error('Die Word-Datei enthält keinen Text.');
     // Kopf- und Fußzeile des ersten Abschnitts (PlcfHdd: 6 Trenner-Teile, dann je Abschnitt gerade/ungerade Kopf, gerade/ungerade Fuß, erste Seite)
     const page = {};

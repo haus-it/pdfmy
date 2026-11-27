@@ -4,6 +4,11 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-27
 
+### Alte Word-Dateien (.doc): Fuß- und Endnoten (app-v351)
+- Fuß- und Endnoten aus .doc-Dateien (Word 97–2003) kommen jetzt wie bei .docx an: hochgestellte Nummer an der Verweisstelle, die Notentexte am Ende unter „Fußnoten“ bzw. „Endnoten“ – wichtig für Schriftsätze, Gutachten und Abschlussarbeiten. Bisher fehlten sie ganz.
+- Gemessen: Testdokument mit zwei Fußnoten und einer Endnote, als .doc und .docx gespeichert – gleiche Bausteine und gleicher Wortlaut; die 10 Korpusdateien unverändert; Robustheitstest mit beschädigten Dateien ohne technischen Fehler.
+- tests/doc97.test.js erweitert (tests/office-korpus/doc97/12-fussnoten).
+
 ### Hilfe-Center: 27 bebilderte Anleitungen, „Wenn es nicht klappt“ (app-v350)
 - 9 neue Anleitungen mit Bildschirmfoto und Klick-Nummern: Suchen und ersetzen, Stempel setzen, PDF aufteilen, Drucken, Teilen und per E-Mail senden, Zur Unterschrift senden, Spendenquittung ausstellen, Anlagen für Gericht und Behörde, Datenschutz selbst prüfen (Deutsch und Englisch, aus der echten App erzeugt).
 - Genauere Erklärungen: Öffnen, Scannen, Unterschreiben, Speichern und Briefe ablegen haben jetzt einen aufklappbaren Abschnitt „Wenn es nicht klappt“ mit den häufigsten Stolpersteinen und ihrer Lösung (gegen den Programmcode geprüft).
