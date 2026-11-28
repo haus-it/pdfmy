@@ -112,7 +112,8 @@ body:not(.has-doc) .paneltgl{display:none}
 .grp{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
 .grp label{color:var(--muted);font-size:12px}
 select{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:5px 6px}
-#viewer{flex:1;overflow:auto;padding:16px;display:flex;justify-content:center;align-items:flex-start}
+#viewer{flex:1;overflow:auto;padding:16px;display:flex;justify-content:flex-start;align-items:flex-start}
+#viewer>*{margin-left:auto;margin-right:auto}   /* mittig, aber breiter als das Fenster: links bündig und erreichbar (kein Abschneiden links) */
 #stage{position:relative;box-shadow:0 4px 18px rgba(0,0,0,.18);background:#fff;user-select:none;flex:0 0 auto}
 /* Fortlaufende Ansicht: alle Seiten untereinander, die Seite im Blick ist die aktive (#stage) */
 #flow{display:flex;flex-direction:column;align-items:center;gap:20px}

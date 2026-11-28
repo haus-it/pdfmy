@@ -4,6 +4,10 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-28
 
+### Seite in schmalen Fenstern ganz sichtbar; Menüwege in Rechts-nach-links-Sprachen (app-v364)
+- Behoben: War die Seite breiter als das Fenster (kleines Fenster, Tablet hochkant, starkes Vergrößern), ragte sie links über den Rand und dieser Teil war auch durch Scrollen nicht zu erreichen. Jetzt beginnt sie am linken Rand und lässt sich vollständig scrollen; schmalere Seiten bleiben mittig.
+- Arabisch, Persisch, Paschtu und Sorani: Menüwege zeigen den Pfeil in Leserichtung („المزيد ← اللغة“ statt „→“); deutsche Menünamen in Klammern behalten „→“ (558 Stellen).
+
 ### Georgisch (app-v363)
 - Neue Oberflächensprache Georgisch (ქართული, Mchedruli-Schrift, von links nach rechts) – App und Website mit Hilfe vollständig übersetzt, Knöpfe aus einem Grundwortschatz. Jetzt 48 Sprachen. Texterkennung für georgische Briefe: keine Erkennungsdaten; die Oberfläche funktioniert vollständig.
 
