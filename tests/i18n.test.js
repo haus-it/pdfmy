@@ -45,11 +45,11 @@ test('Sprachliste: Oberfläche, Texterkennung, Sprachdaten vorhanden', () => {
   for (const l of [...I18N.LANGS, ...I18N.OCR_EXTRA].filter(l => l.ocr)) assert.ok(fs.existsSync(path.join(__dirname, '..', 'vendor', 'tesseract', 'lang', l.ocr + '.traineddata.gz')), 'Sprachdaten ' + l.ocr);
   assert.strictEqual(I18N.ocrName('ukr'), 'Ukrainisch');
   // app-v362: Sprachen vieler Arbeitsuchender; Arabisch, Persisch, Paschtu, Sorani von rechts nach links
-  for (const c of ['ar', 'fa', 'ps', 'ckb', 'kmr', 'so', 'ti']) assert.ok(codes.includes(c), c);
+  for (const c of ['ar', 'fa', 'ps', 'ckb', 'kmr', 'so', 'ti', 'ka']) assert.ok(codes.includes(c), c);
   for (const c of ['ar', 'fa', 'ps', 'ckb']) assert.strictEqual(I18N.byCode(c).dir, 'rtl', c);
-  for (const c of ['de', 'kmr', 'so', 'ti', 'tr']) assert.strictEqual(I18N.byCode(c).dir, 'ltr', c);
+  for (const c of ['de', 'kmr', 'so', 'ti', 'ka', 'tr']) assert.strictEqual(I18N.byCode(c).dir, 'ltr', c);
   assert.strictEqual(I18N.pick(['prs-AF']), 'fa'); assert.strictEqual(I18N.pick(['ku']), 'kmr'); assert.strictEqual(I18N.pick(['ku-Arab-IQ']), 'ckb');
-  assert.strictEqual(I18N.pick(['ar-SY']), 'ar'); assert.strictEqual(I18N.pick(['ti-ER']), 'ti');
+  assert.strictEqual(I18N.pick(['ar-SY']), 'ar'); assert.strictEqual(I18N.pick(['ti-ER']), 'ti'); assert.strictEqual(I18N.pick(['ka-GE']), 'ka');
 });
 
 test('Sprachwahl aus der Browsersprache', () => {

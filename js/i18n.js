@@ -58,6 +58,7 @@
     ['kmr', 'Kurdî (Kurmancî)', 'Kurdisch (Kurmanci)', null, 'kmr'],
     ['so', 'Soomaali', 'Somali', null, 'so'],
     ['ti', 'ትግርኛ', 'Tigrinya', null, 'ti'],
+    ['ka', 'ქართული', 'Georgisch', null, 'ka-GE'],
   ].map(([code, name, de, ocr, bcp]) => ({ code, name, de, ocr, bcp, dir: RTL.has(code) ? 'rtl' : 'ltr' }));
   // Texterkennung: zusätzlich Serbisch in lateinischer Schrift
   // weitere Sprachen nur für die Texterkennung (keine Oberflächensprache); Sprachdaten werden erst bei Bedarf geladen

@@ -4,6 +4,9 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-28
 
+### Georgisch (app-v363)
+- Neue Oberflächensprache Georgisch (ქართული, Mchedruli-Schrift, von links nach rechts) – App und Website mit Hilfe vollständig übersetzt, Knöpfe aus einem Grundwortschatz. Jetzt 48 Sprachen. Texterkennung für georgische Briefe: keine Erkennungsdaten; die Oberfläche funktioniert vollständig.
+
 ### Sieben neue Sprachen: Arabisch, Persisch (Dari), Paschtu, Kurdisch (Sorani, Kurmanci), Somali, Tigrinya (app-v362)
 - Grundlage: Statistik der Bundesagentur für Arbeit (Arbeitslose nach Staatsangehörigkeit, 11/2026) – nach Ukrainisch/Russisch und Türkisch sind Arabisch und Dari/Paschtu die größten Sprachgruppen bei Jobcenter und Agentur für Arbeit; sie fehlten bisher. Jetzt 47 Sprachen.
 - App (4 542 Texte) und Website mit Hilfe (2 570 Texte) vollständig übersetzt; Knöpfe und Menüs aus einem Grundwortschatz je Sprache, damit Hilfe und App gleich heißen. Deutsche Behördenbegriffe (Jobcenter, Bescheid …) stehen in Klammern dabei.
