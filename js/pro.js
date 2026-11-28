@@ -3600,7 +3600,7 @@ function openReply() {
   $('#rpBody').value = `${d.salutation}\n\n\n\n${d.closing}`;
   $('#rpFrom').value = LS.get('ownAddress', '');
   $('#rpName').value = LS.get('signName', '') || S.author || '';
-  $('#rpTpl').value = ''; renderLh(); $('#replyDlg').showModal();
+  $('#rpTpl').value = ''; rpTplText = ''; renderLh(); window.leseSelectFill?.($('#rpLese')); $('#replyDlg').showModal();
   // Cursor in die Leerzeile nach der Anrede
   const ta = $('#rpBody'), pos = d.salutation.length + 2; ta.focus(); ta.setSelectionRange(pos, pos);
 }
@@ -3666,10 +3666,12 @@ $('#replyForm').onsubmit = async e => {
   $('#replyDlg').close();
   const where = await deliver(bytes, replyName(v), 'application/pdf', null, true);
   status(where ? `Antwortbrief gespeichert: ${where}` : 'Speichern abgebrochen.');
+  if (where) { try { const w2 = await replyLesefassung(v, replyName(v)); if (w2) status(I18N.t(`Antwortbrief gespeichert: ${where} (Deutsch). Für Sie zum Lesen: ${w2}`)); } catch (e) { toast(e.message, 6000); } }
 };
 $('#rpOpen').onclick = async () => {
   const v = replyValues(), bytes = await buildLetterPdf(v);
   if (state.dirty && state.pages.length && !confirm('Der aktuelle Brief ist noch nicht gespeichert. Trotzdem den Antwortbrief öffnen?')) return;
+  try { await replyLesefassung(v, replyName(v)); } catch (e) { toast(e.message, 6000); }   // Lesefassung vorher sichern – danach wird das Fenster geschlossen
   $('#replyDlg').close(); resetDoc();
   await importFiles([new File([bytes], replyName(v), { type: 'application/pdf' })]);
   status('Antwortbrief geöffnet – jetzt unterschreiben, digital signieren, teilen oder speichern.');
@@ -3703,8 +3705,21 @@ $('#rpTpl').onchange = () => {
   // Kündigung, Widerspruch → Betreff passend ergänzen
   const label = Letter.TEMPLATES[k].label;
   if (['objection', 'cancel', 'install', 'extend'].includes(k) && !$('#rpSubject').value.startsWith(label)) $('#rpSubject').value = `${label} – ${d.subject}`;
-  $('#rpBody').value = `${d.salutation}\n\n${Letter.fillTemplate(k, state.meta)}\n\n${d.closing}`;
+  $('#rpBody').value = rpTplText = `${d.salutation}\n\n${Letter.fillTemplate(k, state.meta)}\n\n${d.closing}`;
 };
+/* Lesefassung des Antwortbriefs (app-v366): nur für einen unveränderten Textbaustein – dessen Übersetzung ist geprüft. Eigener Text würde
+   eine Maschinenübersetzung brauchen; dann gibt es keine Lesefassung, und PDFMy sagt das. */
+let rpTplText = '';
+async function replyLesefassung(v, base) {
+  const lang = $('#rpLese').value; if (!lang) return '';
+  const k = $('#rpTpl').value;
+  if (!k || $('#rpBody').value !== rpTplText) { toast(I18N.t('Eine Lesefassung gibt es nur für einen unveränderten Textbaustein. Der deutsche Brief ist gespeichert.'), 6000); return ''; }
+  const t = await window.leseUebersetzer(lang), d = Letter.replyDraft(state.meta);
+  const body = `${t(d.salutation)}\n\n${Letter.fillTemplate(k, state.meta, new Date(), t)}\n\n${t(d.closing)}${v.name ? '\n\n' + v.name : ''}`;
+  const blocks = [{ type: 'p', text: v.to }, { type: 'h', level: 1, text: `${t(Letter.TEMPLATES[k].label)} – ${v.subject}` }, { type: 'p', text: body }];
+  const pdf = await window.lesefassungPdf(blocks, { lang, title: t(Letter.TEMPLATES[k].label), note: t('Lesefassung in Ihrer Sprache – nur zum Verstehen. Abgeschickt wird der deutsche Brief.') });
+  return deliver(pdf, base.replace(/\.pdf$/, `_${lang}.pdf`), 'application/pdf');
+}
 
 
 /* ---------- Formularfelder erkennen: aus einem „flachen“ Formular (Scan/PDF) ein ausfüllbares machen ---------- */
@@ -3803,15 +3818,24 @@ function anlRender() {
   $('#anlRows').querySelectorAll('input').forEach(inp => inp.oninput = () => { anlList[+inp.dataset.i].title = inp.value; });
 }
 /* ---------- Frist berechnen (js/fristen.js): Gerichts- und Behördenfristen mit Vorfrist ---------- */
-{
-  const grp = {};
-  for (const a of Fristen.ARTEN) (grp[a.grp] ||= []).push(a);
+// Fristarten passend zum Land (app-v367): Deutschland, Österreich, Schweiz
+function fristArten() {
+  const grp = {}, cur = $('#frArt').value;
+  for (const a of Fristen.artenFuer($('#frLand').value)) (grp[a.grp] ||= []).push(a);
   $('#frArt').innerHTML = Object.entries(grp).map(([g, l]) => `<optgroup label="${esc(g)}">${l.map(a => `<option value="${a.id}">${esc(a.label)}${a.law ? ' – ' + esc(a.law) : ''}</option>`).join('')}</optgroup>`).join('');
-  $('#frLand').innerHTML = '<option value="">– nur bundesweite Feiertage –</option>' + Fristen.LAENDER.map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('');
+  const opts = [...$('#frArt').options];
+  if (opts.some(o => o.value === cur)) $('#frArt').value = cur;
+  else $('#frArt').value = (opts.find(o => o.value !== 'eigen') || opts[0])?.value || '';   // nicht „Eigene Frist“ vorwählen
+}
+{
+  $('#frLand').innerHTML = `<optgroup label="${esc(I18N.t('Deutschland'))}"><option value="">– nur bundesweite Feiertage –</option>` + Fristen.LAENDER.map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('') + '</optgroup>'
+    + Fristen.STAATEN.map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('');
+  fristArten();
 }
 let fristRes = null;
 function fristCalc() {
-  const art = Fristen.ARTEN.find(a => a.id === $('#frArt').value), bek = art.start === 'bekanntgabe';
+  if (!Fristen.artenFuer($('#frLand').value).some(a => a.id === $('#frArt').value)) fristArten();
+  const art = Fristen.ARTEN.find(a => a.id === $('#frArt').value) || Fristen.artenFuer($('#frLand').value)[0], bek = art.start === 'bekanntgabe';
   $('#frEigen').hidden = art.id !== 'eigen'; $('#frWegRow').hidden = !bek;
   $('#frDatumL').textContent = art.startLabel || (bek ? ($('#frWeg').value === 'abruf' ? 'Bereitgestellt am' : $('#frWeg').value === 'datum' ? 'Zugestellt am' : 'Datum des Bescheids') : art.start === 'zugang' ? 'Zugegangen am' : 'Zugestellt am');
   LS.set('frLand', $('#frLand').value); LS.set('frVor', $('#frVor').value);
@@ -3826,13 +3850,20 @@ function fristCalc() {
 function openFrist() {
   // Vorbelegung aus dem geöffneten Schreiben: Bescheid mit Rechtsbehelfsbelehrung → Einspruch/Widerspruch ab Bescheiddatum
   const m = state.meta || {};
-  $('#frArt').value = m.appealRule === 'widerspruch' ? 'widerspruch' : m.appealRule ? 'einspruchao' : LS.get('frArt', 'berufung');
+  // Erst das Land (gemerkte Auswahl nur, wenn sie zum eingestellten Land passt), dann die Fristarten dazu, dann die Fristart wählen
+  const gemerkt = LS.get('frLand', null), landJetzt = window.Land ? Land.get() : 'DE';
+  $('#frLand').value = gemerkt != null && Fristen.staat(gemerkt) === (landJetzt === 'XX' ? 'DE' : landJetzt) ? gemerkt : (window.Land ? Land.fristLand() : 'NW');
+  fristArten();
+  // Bescheid mit Rechtsbehelfsbelehrung → passende Frist des Landes ab Bescheiddatum; sonst die zuletzt gewählte Fristart
+  const st = Fristen.staat($('#frLand').value), MAP = { DE: ['widerspruch', 'einspruchao'], AT: ['at_bescheid', 'at_abgaben'], CH: ['ch_verfuegung', 'ch_steuer'] }[st];
+  const wunsch = m.appealRule ? MAP[m.appealRule === 'widerspruch' ? 0 : 1] : LS.get('frArt', 'berufung');
+  if ([...$('#frArt').options].some(o => o.value === wunsch)) $('#frArt').value = wunsch;
   $('#frWeg').value = 'post';
   $('#frDatum').value = m.appealRule && m.date ? m.date : new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
-  $('#frLand').value = LS.get('frLand', 'NW'); $('#frVor').value = LS.get('frVor', '7');
+  $('#frVor').value = LS.get('frVor', '7');
   fristCalc(); $('#fristDlg').showModal();
 }
-['frArt', 'frN', 'frUnit', 'frDatum', 'frWeg', 'frLand', 'frVor'].forEach(id => $('#' + id).addEventListener('input', () => { if (id === 'frArt') LS.set('frArt', $('#frArt').value); fristCalc(); }));
+['frArt', 'frN', 'frUnit', 'frDatum', 'frWeg', 'frLand', 'frVor'].forEach(id => $('#' + id).addEventListener('input', () => { if (id === 'frArt') LS.set('frArt', $('#frArt').value); if (id === 'frLand') fristArten(); fristCalc(); }));
 $('#btnFrist').onclick = () => { closeMenu?.(); openFrist(); };
 $('#btnFristCalc').onclick = openFrist;
 $('#frClose').onclick = () => $('#fristDlg').close();
@@ -5478,7 +5509,7 @@ async function renderRescue() {
   box.hidden = false;
   box.innerHTML = `<div class="dl-head"><b id="rescueT">Nicht gespeicherte Arbeit</b>${show.length > 1 ? '<span><button type="button" class="linkbtn" data-rsall>Alle verwerfen</button></span>' : ''}</div>
     <p class="rs-hint">PDFMy wurde geschlossen, bevor gespeichert wurde. Ihre Änderungen sind hier sicher aufbewahrt – nur auf diesem Gerät.</p>
-    <div class="rc-list">${show.map((e, i) => `<div class="rc"><button type="button" class="rc-open" data-rs="${i}" title="${esc(e.name)} wiederherstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span class="rc-name">${esc(e.name)} <small>(${e.pages} ${e.pages === 1 ? 'Seite' : 'Seiten'})</small></span><span class="rc-when">${whenStr(e.at)}</span></button><button type="button" class="rs-go" data-rs="${i}">Wiederherstellen</button><button type="button" class="rc-del" data-rsdel="${i}" aria-label="${esc(e.name)} verwerfen" title="Verwerfen">✕</button></div>`).join('')}</div>`;
+    <div class="rc-list">${show.map((e, i) => `<div class="rc"><button type="button" class="rc-open" data-rs="${i}" title="${esc(e.name)} wiederherstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span class="rc-name">${esc(e.name)} <small>(${esc(I18N.t(e.pages === 1 ? '1 Seite' : `${e.pages} Seiten`))})</small></span><span class="rc-when">${whenStr(e.at)}</span></button><button type="button" class="rs-go" data-rs="${i}">Wiederherstellen</button><button type="button" class="rc-del" data-rsdel="${i}" aria-label="${esc(e.name)} verwerfen" title="Verwerfen">✕</button></div>`).join('')}</div>`;
 }
 $('#rescue').addEventListener('click', async ev => {
   const b = ev.target.closest('button'); if (!b) return;
@@ -5563,9 +5594,9 @@ window.rememberRecent = async handles => {
 };
 const whenStr = t => {
   const d = new Date(t), now = new Date(), hm = I18N.fmtTime(d);
-  if (d.toDateString() === now.toDateString()) return 'heute, ' + hm;
+  if (d.toDateString() === now.toDateString()) return I18N.t(`heute, ${hm}`);   // als Ganzes übersetzbar (vorher blieb „heute“ deutsch)
   const y = new Date(now); y.setDate(now.getDate() - 1);
-  if (d.toDateString() === y.toDateString()) return 'gestern, ' + hm;
+  if (d.toDateString() === y.toDateString()) return I18N.t(`gestern, ${hm}`);
   return I18N.fmtDate(d, { day: '2-digit', month: '2-digit', year: d.getFullYear() === now.getFullYear() ? undefined : 'numeric' });
 };
 const fileIcon = n => /\.pdf$/i.test(n) ? '#i-file-text' : /\.(eml|msg)$/i.test(n) ? '#i-send' : /\.xml$/i.test(n) ? '#i-file-type-2' : '#i-image';
@@ -6694,7 +6725,7 @@ $('#pfFix').onclick = async () => {
   try {
     if (p === 'bitv') { await a11yFigures().catch(e => console.warn(e)); await readingOrder({ flow: true }).catch(e => console.warn(e)); }   // Bilder beschreiben, Lesereihenfolge (optional)
     $('#pfSum').textContent = I18N.t('Erzeuge die korrigierte Datei …'); $('#pfList').innerHTML = '';
-    const name = p === 'bea' ? (n => n.ok ? pfName('bea') : n.suggestion)(BeaCheck.checkName(pfName('bea'))) : p === 'bewerbung' ? Bewerbung.fileName(window.bwgPerson?.() || '') : baseName() + '.pdf';
+    const name = p === 'bea' ? (n => n.ok ? pfName('bea') : n.suggestion)(BeaCheck.checkName(pfName('bea'))) : p === 'bewerbung' ? Bewerbung.fileName(window.bwgPerson?.() || '', '', window.ausgabeSprache?.() || 'de') : baseName() + '.pdf';
     if (p === 'bea' || p === 'bewerbung') $('#pfName').value = name;
     // Bewerbung: klein, ohne Kennwort, kein PDF/A nötig (PDF/A bettet Schriften ein und macht die Datei größer)
     let bytes = await buildPdf(state.pages, state.meta, { pdfa: p !== 'bewerbung', bea: p === 'bea', size: p === 'epa' || p === 'bewerbung' ? 'small' : 'balanced', onPage: () => {} });

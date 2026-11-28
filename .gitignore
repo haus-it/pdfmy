@@ -30,3 +30,11 @@ store/
 
 # Eingegangene Fehlerberichte und Vorschläge (enthält Namen) – nur lokal
 docs/Rueckmeldungen.md
+
+# Übersetzungspakete neuer Sprachen (Zwischenstände; nur die Skripte und der Auftrag gehören ins Repo)
+tools/neue-sprache/paket-*.json
+tools/neue-sprache/g/
+tools/neue-sprache/app-*/
+tools/neue-sprache/site-*/
+tools/neue-sprache/_*/
+tools/neue-sprache/fehlt-*.json

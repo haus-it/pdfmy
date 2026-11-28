@@ -134,3 +134,27 @@ test('Lebenslauf: laufende Station in jeder Sprache oben („heute“, „today�
   assert.ok(k({ von: '2010', bis: '2015' }) < k({ von: '2016', bis: '2018' }));
   assert.ok(k({ von: '03/2019', bis: '' }) > 0, 'nur Beginn');
 });
+
+test('Sprache der Dokumente: Lebenslauf und Mappe auf Deutsch (Standard) oder Englisch, unabhängig von der Oberfläche (app-v366)', async () => {
+  const L = require('../vendor/pdf-lib.min.js'), fontkit = require('../vendor/fontkit.umd.min.js'), fs = require('node:fs'), path = require('node:path');
+  const V = f => fs.readFileSync(path.join(__dirname, '..', 'vendor', f));
+  const d = { name: 'Amina Haddad', ort: '33104 Paderborn', telefon: '0151 123', abschnitte: [{ titel: 'Berufserfahrung', eintraege: [{ von: '2020', bis: 'heute', titel: 'Verkäuferin', wo: 'Muster GmbH' }] }],
+    kenntnisse: [{ art: 'Sprachen', wert: 'Arabisch, Deutsch (B1)' }, { art: 'Führerschein', wert: 'Klasse B' }], datum: '28.11.2026' };
+  const run = async lang => { const trace = []; const bytes = await B.lebenslaufPdf(L, d, { fontkit, regular: V('DejaVuSans.ttf'), bold: V('dejavu/DejaVuSans-Bold.ttf'), trace, lang }); return { t: trace.join(' | '), doc: await L.PDFDocument.load(bytes) }; };
+  const de = await run(), en = await run('en');
+  for (const s of ['Lebenslauf', 'Anschrift', 'Telefon', 'Berufserfahrung', 'Kenntnisse', 'Sprachen', 'Führerschein']) assert.ok(de.t.includes(s), 'de: ' + s);
+  for (const s of ['Curriculum Vitae', 'Address', 'Phone', 'Work experience', 'Skills', 'Languages', 'Driving licence']) assert.ok(en.t.includes(s), 'en: ' + s);
+  assert.ok(!/Berufserfahrung|Kenntnisse|Anschrift/.test(en.t), 'englisch ohne deutsche Überschriften');
+  assert.equal(en.doc.getTitle(), 'Curriculum Vitae Amina Haddad');
+  // Lesezeichen der Mappe und Dateiname
+  const teile = [{ kind: 'anschreiben' }, { kind: 'lebenslauf' }, { kind: 'anlage', name: 'Zeugnis.pdf' }];
+  assert.deepEqual(B.titles(teile), ['Anschreiben', 'Lebenslauf', 'Anlage 1: Zeugnis']);
+  assert.deepEqual(B.titles(teile, 'en'), ['Cover letter', 'CV', 'Attachment 1: Zeugnis']);
+  assert.equal(B.fileName('Amina Haddad'), 'Bewerbung_Amina_Haddad.pdf');
+  assert.equal(B.fileName('Amina Haddad', '', 'en'), 'Application_Amina_Haddad.pdf');
+  assert.equal(B.titles(teile, 'xx')[0], 'Anschreiben', 'unbekannte Sprache → Deutsch');
+  // Der Nachweis für Jobcenter/Agentur bleibt deutsch
+  const nb = B.nachweisBlocks([{ datum: '2026-11-20', arbeitgeber: 'Muster GmbH', stelle: 'Verkäuferin', art: 'E-Mail', ergebnis: 'Absage' }], { name: 'Amina Haddad' });
+  assert.equal(nb[0].text, 'Nachweis der Eigenbemühungen');
+  assert.ok(JSON.stringify(nb).includes('Absage'));
+});

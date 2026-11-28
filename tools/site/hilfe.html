@@ -1,13 +1,13 @@
 <style>
 .hsearch{position:sticky;top:0;z-index:5;background:var(--panel);padding:10px 0 8px;margin:0 0 4px;border-bottom:1px solid transparent}
 .hsearch .hwrap{position:relative;display:flex;align-items:center}
-.hsearch svg{position:absolute;left:14px;width:20px;height:20px;color:var(--muted);pointer-events:none}
+.hsearch svg{position:absolute;inset-inline-start:14px;width:20px;height:20px;color:var(--muted);pointer-events:none}
 .hsearch input{flex:1;min-width:0;font:inherit;font-size:17px;padding:13px 44px 13px 44px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text)}
 .hsearch input:focus-visible{outline:none;border-color:var(--accent)}
 .hsearch input::-webkit-search-cancel-button{display:none}
-#hclear{position:absolute;right:8px;border:0;background:transparent;color:var(--muted);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:16px}
+#hclear{position:absolute;inset-inline-end:8px;border:0;background:transparent;color:var(--muted);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:16px}
 #hclear:hover,#hclear:focus-visible{color:var(--text);background:var(--panel)}
-.hkey{position:absolute;right:12px;font:12px/1 ui-monospace,Consolas,monospace;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:3px 6px;pointer-events:none}
+.hkey{position:absolute;inset-inline-end:12px;font:12px/1 ui-monospace,Consolas,monospace;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:3px 6px;pointer-events:none}
 #hclear:not([hidden])+.hkey{display:none}
 #hcount{color:var(--muted);font-size:14px;min-height:1.4em;margin:4px 0 6px}
 .hchips[hidden]{display:none}
@@ -29,23 +29,23 @@
 .hsec{border-top:1px solid var(--line);padding-top:4px;margin-top:22px}
 .hsec h2{scroll-margin-top:12px}
 .hsec h3{font-size:15.5px;margin:16px 0 4px}
-.hsec ul,.hsec ol{padding-left:1.3em}
+.hsec ul,.hsec ol{padding-inline-start:1.3em}
 details.faq{border:1px solid var(--line);border-radius:6px;padding:8px 12px;margin:8px 0;background:var(--bg)}
 details.faq summary{cursor:pointer;font-weight:600}
 details.faq[open] summary{margin-bottom:6px}
 .keys{border-collapse:collapse;width:100%;font-size:15px}.keys td{border-top:1px solid var(--line);padding:6px 8px 6px 0;vertical-align:top}
 kbd{font:13px/1 ui-monospace,Consolas,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:2px 5px;background:var(--panel)}
-.tip{border-left:4px solid var(--accent);padding:6px 12px;margin:12px 0;background:var(--bg)}
+.tip{border-inline-start:4px solid var(--accent);padding:6px 12px;margin:12px 0;background:var(--bg)}
 .hidden-by-search{display:none!important}
-.hkurz{font-size:17px;line-height:1.5;margin:6px 0 10px;padding:10px 14px 10px 46px;border-radius:10px;background:var(--bg);border:1px solid var(--line);position:relative}
-.hkurz::before{content:"i";position:absolute;left:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font:700 15px/24px Georgia,serif;text-align:center}
-.htipp,.hachtung{margin:10px 0;padding:9px 14px 9px 46px;border-radius:10px;position:relative;line-height:1.5}
-.htipp{background:#e7f6ec;border:1px solid #a6d8b5;color:#14532d}.htipp::before{content:"✓";position:absolute;left:13px;top:8px;width:24px;height:24px;border-radius:50%;background:#16a34a;color:#fff;font-weight:700;text-align:center;line-height:24px}
-.hachtung{background:#fff6e0;border:1px solid #f1cf7a;color:#5b3d00}.hachtung::before{content:"!";position:absolute;left:13px;top:8px;width:24px;height:24px;border-radius:50%;background:#d97706;color:#fff;font-weight:700;text-align:center;line-height:24px}
+.hkurz{font-size:17px;line-height:1.5;margin:6px 0 10px;padding:10px 14px;padding-inline-start:46px;border-radius:10px;background:var(--bg);border:1px solid var(--line);position:relative}
+.hkurz::before{content:"i";position:absolute;inset-inline-start:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font:700 15px/24px Georgia,serif;text-align:center}
+.htipp,.hachtung{margin:10px 0;padding:9px 14px;padding-inline-start:46px;border-radius:10px;position:relative;line-height:1.5}
+.htipp{background:#e7f6ec;border:1px solid #a6d8b5;color:#14532d}.htipp::before{content:"✓";position:absolute;inset-inline-start:13px;top:8px;width:24px;height:24px;border-radius:50%;background:#16a34a;color:#fff;font-weight:700;text-align:center;line-height:24px}
+.hachtung{background:#fff6e0;border:1px solid #f1cf7a;color:#5b3d00}.hachtung::before{content:"!";position:absolute;inset-inline-start:13px;top:8px;width:24px;height:24px;border-radius:50%;background:#d97706;color:#fff;font-weight:700;text-align:center;line-height:24px}
 .htipp a,.hachtung a{color:inherit;text-decoration:underline}
 .hbild{margin:6px 0 10px;max-width:600px}.hbild figcaption{font-size:13.5px;color:var(--muted);margin-top:4px}
 @media (min-width:900px){.hguide figure.hzwei{grid-row:auto;grid-column:2;margin-top:6px}}
-details.hdeep{margin:8px 0 14px;border-left:3px solid var(--line);padding:2px 0 2px 12px}
+details.hdeep{margin:8px 0 14px;border-inline-start:3px solid var(--line);padding:2px 0;padding-inline-start:12px}
 details.hdeep>summary{cursor:pointer;font-weight:600;color:var(--accent);padding:4px 0;list-style-position:inside}
 details.hdeep>summary:hover,details.hdeep>summary:focus-visible{text-decoration:underline}
 details.hdeep[open]>summary{margin-bottom:4px}
@@ -56,15 +56,15 @@ details.hdeep[open]>summary{margin-bottom:4px}
 .hcard{display:block;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);text-decoration:none;color:var(--text)}
 .hcard b{display:block;font-size:16px;color:var(--accent)}.hcard span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
 .hcard:hover,.hcard:focus-visible{border-color:var(--accent);box-shadow:0 1px 6px rgba(16,24,40,.12)}
-.hfix{grid-column:2;margin:4px 0 2px;border-top:1px solid var(--line);padding-top:6px}.hfix summary{cursor:pointer;font-weight:600;color:var(--accent)}.hfix ul{margin:6px 0 0;padding-left:20px}.hfix li{margin:4px 0}
+.hfix{grid-column:2;margin:4px 0 2px;border-top:1px solid var(--line);padding-top:6px}.hfix summary{cursor:pointer;font-weight:600;color:var(--accent)}.hfix ul{margin:6px 0 0;padding-inline-start:20px}.hfix li{margin:4px 0}
 .hgroups{margin:8px 0 4px}.hgh{font-size:15px;margin:14px 0 0;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.hgroup .hguides{margin-top:6px}
 .hguide{border:1px solid var(--line);border-radius:12px;padding:4px 16px 12px;margin:16px 0;background:var(--bg);scroll-margin-top:90px}
 .hguide h3{font-size:18px;margin:12px 0 8px}
 .hguide figure{margin:0 0 10px}.hshot{display:block;border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:zoom-in}
 .hshot img{display:block;width:100%;height:auto}
-.hsteps{list-style:none;counter-reset:st;padding-left:0!important;margin:8px 0}
-.hsteps li{counter-increment:st;position:relative;padding-left:38px;margin:8px 0;min-height:28px}
-.hsteps li::before{content:counter(st);position:absolute;left:0;top:-2px;width:28px;height:28px;border-radius:50%;background:#d92d20;color:#fff;font-weight:700;text-align:center;line-height:28px}
+.hsteps{list-style:none;counter-reset:st;padding-inline-start:0!important;margin:8px 0}
+.hsteps li{counter-increment:st;position:relative;padding-inline-start:38px;margin:8px 0;min-height:28px}
+.hsteps li::before{content:counter(st);position:absolute;inset-inline-start:0;top:-2px;width:28px;height:28px;border-radius:50%;background:#d92d20;color:#fff;font-weight:700;text-align:center;line-height:28px}
 .hmore{color:var(--muted);font-size:14.5px}
 #hzoom{border:0;padding:0;background:transparent;max-width:96vw;max-height:94vh}#hzoom::backdrop{background:rgba(10,12,20,.82)}
 #hzoom img{display:block;max-width:96vw;max-height:88vh;border-radius:8px}#hzoom button{display:block;margin:8px auto 0;font:inherit;padding:6px 16px;border-radius:8px;border:0;cursor:pointer}
@@ -74,7 +74,7 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 .htop.on{opacity:1;transform:none;pointer-events:auto}.htop:hover,.htop:focus-visible{filter:brightness(1.1)}.htop svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){.htop{transition:none}}@media print{.htop{display:none}}
 </style>
-<div class="hsearch" role="search"><label for="hq" style="position:absolute;left:-9999px">Hilfe durchsuchen</label><div class="hwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="hq" type="search" placeholder="Wobei brauchen Sie Hilfe? z. B. Scanner, unterschreiben, Mac" autocomplete="off" enterkeyhint="search" aria-describedby="hcount"><button type="button" id="hclear" hidden aria-label="Suche leeren" title="Suche leeren">✕</button><kbd class="hkey" aria-hidden="true">/</kbd></div>
+<div class="hsearch" role="search"><label for="hq" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Hilfe durchsuchen</label><div class="hwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="hq" type="search" placeholder="Wobei brauchen Sie Hilfe? z. B. Scanner, unterschreiben, Mac" autocomplete="off" enterkeyhint="search" aria-describedby="hcount"><button type="button" id="hclear" hidden aria-label="Suche leeren" title="Suche leeren">✕</button><kbd class="hkey" aria-hidden="true">/</kbd></div>
 <p id="hcount" role="status" aria-live="polite"></p></div>
 <div class="hchips" id="hchips"><span>Oft gesucht:</span><button type="button" data-q="Scanner einrichten">Scanner einrichten</button><button type="button" data-q="unterschreiben">Unterschreiben</button><button type="button" data-q="zusammenfügen">Zusammenfügen</button><button type="button" data-q="verkleinern">Verkleinern</button><button type="button" data-q="Standard PDF">Als Standard-PDF-Programm</button><button type="button" data-q="Mac">Mac</button><button type="button" data-q="Handy">Mit dem Handy</button><button type="button" data-q="Passwort">Passwort</button></div>
 <ol class="hres" id="hres" hidden aria-label="Suchergebnisse"></ol>
@@ -702,6 +702,7 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 
 <section class="hsec" id="bewerbung"><h2>Bewerbungen</h2>
 <p class="hkurz">PDFMy hilft bei der Bewerbung: Lebenslauf schreiben, alle Unterlagen zu einer kleinen PDF zusammenstellen und den Nachweis für Jobcenter oder Agentur für Arbeit erstellen. Alles kostenlos, nichts wird hochgeladen.</p>
+<p class="htipp"><b>Sprache:</b> Die Oberfläche kann in Ihrer Sprache sein – Lebenslauf und Bewerbungsmappe erstellt PDFMy trotzdem auf Deutsch. Unter <i>Mehr → Sprache der Dokumente</i> geht auch Englisch. Der Nachweis für Jobcenter und Agentur für Arbeit ist immer deutsch.</p>
 <h3>Lebenslauf erstellen</h3>
 <p class="hkurz">Sie füllen ein Formular aus. PDFMy macht daraus einen sauberen, tabellarischen Lebenslauf als PDF.</p>
 <figure class="hbild"><a href="hilfe-bilder/de/lebenslauf.webp" class="hshot"><img src="hilfe-bilder/de/lebenslauf.webp" width="1280" height="1000" loading="lazy" decoding="async" alt="Fenster „Lebenslauf erstellen“ mit Name, Anschrift, Telefon, E-Mail, dem Knopf „Foto wählen …“ und zwei Stationen unter „Berufserfahrung“"></a><figcaption>Die roten Zahlen gehören zur Anleitung <a href="#a-lebenslauf">„Lebenslauf erstellen“</a>.</figcaption></figure>
@@ -739,6 +740,7 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <li>Ausdrucken und unterschreiben – oder hochladen, zum Beispiel bei jobcenter.digital.</li>
 </ol>
 <p class="hachtung"><b>Wichtig:</b> Die Liste bleibt nur in diesem Browser. Sichern Sie sie ab und zu mit <i>„Als Excel-Liste“</i>.</p>
+<p class="htipp"><b>In Ihrer Sprache:</b> Wählen Sie bei <i>„Zusätzlich eine Lesefassung in“</i> Ihre Sprache. Dann speichert PDFMy zwei Dateien: den deutschen Nachweis zum Abgeben und eine Lesefassung zum Verstehen. Beim Antwortbrief geht das genauso, wenn Sie einen Textbaustein unverändert nutzen.</p>
 <details class="hdeep"><summary>Genauer erklärt</summary>
 <p><b>Nachweis der Eigenbemühungen:</b> <i>Mehr → Bewerbungen und Nachweis …</i> führt die Liste Ihrer Bewerbungen mit Datum, Arbeitgeber, Stelle, Art und Ergebnis. Für das Jobcenter oder die Agentur für Arbeit speichert PDFMy daraus für einen Zeitraum den Nachweis als PDF mit Unterschriftszeile – zum Ausdrucken oder Hochladen, etwa bei jobcenter.digital. Die Liste bleibt nur in Ihrem Browser; als Excel-Liste lässt sie sich sichern und wieder laden. Aus der Bewerbungsmappe heraus trägt <i>„In die Bewerbungsliste eintragen“</i> Arbeitgeber und Stelle aus dem Anschreiben gleich ein.</p>
 </details>
@@ -1362,6 +1364,15 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <p><b>Prüfen:</b> Beim Öffnen prüft PDFMy die E-Rechnung gleich mit: Pflichtangaben (Rechnungsnummer, Datum, Verkäufer mit USt-IdNr. oder Steuernummer, Käufer, Positionen) und Rechenregeln (Positionen, Netto, Umsatzsteuer, Brutto, Zahlbetrag) nach EN 16931, bei XRechnung zusätzlich Leitweg-ID, Ansprechpartner und Zahlungsart. In den Briefdaten steht „✓ geprüft“ oder die Zahl der Fehler; ein Klick zeigt die Einzelheiten. Andere Dateien prüfen Sie über <i>Mehr → E-Rechnung prüfen …</i>, ohne sie zu öffnen. Die vollständige amtliche Prüfung mit allen Regeln bietet das kostenlose Prüfwerkzeug der KoSIT.</p>
 <p><b>Schreiben:</b> Kachel <i>„E-Rechnung schreiben“</i>: Ausgangsrechnung nach EN 16931 als ZUGFeRD-PDF oder als XRechnung (z. B. für Behörden mit Leitweg-ID). Ihre Firmendaten werden gemerkt, fehlende Pflichtangaben verständlich gemeldet.</p>
 </details>
+<h3 id="qr-rechnung">QR-Rechnung (Schweiz und Liechtenstein)</h3>
+<p class="hkurz">In der Schweiz zahlt man Rechnungen mit dem Zahlteil und dem Swiss QR Code. PDFMy erstellt ihn – als eigene Seite oder unten an Ihre Rechnung angehängt.</p>
+<ol class="hsteps"><li><b>Land Schweiz wählen</b> – unter <i>Mehr → Land</i>.</li><li><b>Rechnung öffnen</b> – wenn der Zahlteil angehängt werden soll.</li><li><b><i>Mehr → QR-Rechnung erstellen …</i></b> – IBAN, Name und Adresse eintragen, dazu Betrag und Mitteilung.</li><li><b><i>„QR-Rechnung erstellen“</i></b> – der Zahlteil steht als letzte Seite in der Rechnung. Dann speichern oder senden.</li></ol>
+<p class="htipp"><b>Tipp:</b> Mit <i>„Referenz bilden“</i> macht PDFMy aus Ihrer Rechnungsnummer die passende Referenz. Den Zahlteil gibt es auf Deutsch, Französisch, Italienisch oder Englisch.</p>
+<p class="hachtung"><b>Wichtig:</b> Eine QR-IBAN (erkennbar an 30 oder 31 an der 5. und 6. Stelle) braucht immer eine QR-Referenz. Mit einer normalen IBAN geht eine RF-Referenz oder keine.</p>
+<details class="hdeep"><summary>Genauer erklärt</summary>
+<p><b>Norm:</b> Der Zahlteil folgt den Swiss Implementation Guidelines QR-bill von SIX (Version 2.4, strukturierte Adressen): Empfangsschein links, Zahlteil rechts, QR-Code 46 × 46 mm mit Schweizer Kreuz. Ohne Betrag bleibt ein Feld zum Ausfüllen von Hand frei, ebenso ohne Zahlungspflichtigen.</p>
+<p><b>Prüfung:</b> PDFMy prüft die Prüfziffern von IBAN, QR-Referenz und RF-Referenz und meldet fehlende Angaben, bevor etwas erstellt wird. Ihre Angaben als Rechnungssteller merkt sich PDFMy nur auf diesem Gerät.</p>
+</details>
 </section>
 
 <section class="hsec" id="app"><h2>App und Standard-PDF-Programm</h2>
@@ -1565,6 +1576,7 @@ mark{background:#ffe58a;color:#1B1D23;border-radius:2px}
 <ul>
 <li><b>Sprache der Oberfläche:</b> PDFMy gibt es in 48 Sprachen – Deutsch, Englisch (britisch und amerikanisch), Französisch, Italienisch, Spanisch, Portugiesisch, Niederländisch, Polnisch, Tschechisch, Slowakisch, Ungarisch, Rumänisch, Bulgarisch, Griechisch, Kroatisch, Slowenisch, Serbisch, Bosnisch, Mazedonisch, Albanisch, Dänisch, Schwedisch, Norwegisch, Finnisch, Estnisch, Lettisch, Litauisch, Irisch, Maltesisch, Isländisch, Katalanisch, Baskisch, Galicisch, Luxemburgisch, Walisisch, Türkisch, Russisch, Ukrainisch und Belarussisch. PDFMy startet in der Sprache Ihres Browsers; ändern unter <i>Mehr → Sprache</i>. Die Übersetzungen sind maschinell erstellt – maßgeblich ist die deutsche Fassung.</li>
 <li><b>Auch in Arabisch, Persisch (Dari), Paschtu, Kurdisch (Sorani und Kurmanci), Somali, Tigrinya und Georgisch.</b> Bei Arabisch, Persisch, Paschtu und Sorani läuft die Oberfläche von rechts nach links. Das Dokument selbst bleibt so, wie es gedruckt ist.</li>
+<li><b>Land:</b> Unter <i>Mehr → Land</i> wählen Sie Deutschland, Österreich oder die Schweiz. PDFMy passt dann Funktionen und Namen an – zum Beispiel AMS statt Jobcenter in Österreich, RAV, Fristenstillstand und <a href="#qr-rechnung">QR-Rechnung</a> in der Schweiz. Das Land wird nur aus Zeitzone und Sprache vermutet, ohne Ortung.</li>
 <li><b>Alle Seiten von pdfmy.de:</b> Hilfe, Scanner-Anleitung, Geräteliste, Werkzeug-Seiten, Browser-Erweiterung, Presse, Barrierefreiheit, Impressum und Datenschutzerklärung gibt es ebenfalls in allen 40 Sprachen – umschalten oben rechts auf der Seite. Jede Sprachfassung hat eine eigene Adresse zum Teilen, z. B. <i>pdfmy.de/fr/hilfe.html</i> oder <i>pdfmy.de/en-GB/pdf-verkleinern.html</i>. Die Wahl gilt auch für PDFMy und umgekehrt. Bei Impressum und Datenschutzerklärung ist die deutsche Fassung rechtlich maßgeblich.</li>
 </ul>
 </details>

@@ -15,7 +15,7 @@
 'use strict';
 const fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, '..'), DIR = path.join(ROOT, 'i18n');
-const FILES = ['app.js', 'bea.js', 'pro.js', 'camera.js', 'journal.js', 'a11ycheck.js', 'pdfsign.js', 'pdfverify.js', 'einvoice.js', 'einvoice-out.js', 'email.js', 'bank.js', 'docdetect.js', 'formdetect.js', 'imaging.js', 'tools.js', 'qr.js', 'letter.js', 'fristen.js', 'formdaten.js', 'kommentare.js', 'qrstempel.js', 'sigreq.js', 'pdfinc.js', 'layout.js', 'pdfcrypt.js', 'pdfacheck.js', 'office.js', 'textpdf.js', 'pptx.js', 'slides.js', 'formcalc.js', 'formprofile.js', 'reflow.js', 'preflight.js', 'hotfolder.js', 'sepalastschrift.js', 'versammlung.js', 'beitrag.js'];
+const FILES = ['app.js', 'bea.js', 'pro.js', 'camera.js', 'journal.js', 'a11ycheck.js', 'pdfsign.js', 'pdfverify.js', 'einvoice.js', 'einvoice-out.js', 'email.js', 'bank.js', 'docdetect.js', 'formdetect.js', 'imaging.js', 'tools.js', 'qr.js', 'letter.js', 'fristen.js', 'formdaten.js', 'kommentare.js', 'qrstempel.js', 'sigreq.js', 'pdfinc.js', 'layout.js', 'pdfcrypt.js', 'pdfacheck.js', 'office.js', 'textpdf.js', 'pptx.js', 'slides.js', 'formcalc.js', 'formprofile.js', 'reflow.js', 'preflight.js', 'hotfolder.js', 'sepalastschrift.js', 'versammlung.js', 'beitrag.js', 'land.js', 'qrrechnung.js'];
 
 // Kleiner JS-Scanner: liefert alle Zeichenketten; Vorlagen als Text mit {n} für jeden ${…}-Ausdruck (Ausdrücke werden selbst gescannt)
 function scan(src) {
@@ -65,6 +65,8 @@ function german(s) {
   if (/^[\w.$-]+$/.test(p) && !/^[A-ZÄÖÜ][a-zäöüß]{2,}/.test(p)) return false;   // Bezeichner, CSS-Klassen, Schlüssel
   if (/^[A-Z0-9_]+$/.test(p) && p.length < 6) return false;
   if (/^[\w-]+(\s+[\w-]+)*$/.test(p) && !/[A-ZÄÖÜäöüß]/.test(p) && !/\b(und|oder|der|die|das|mit|für|von|bei|nicht|ist|zu|im|auf)\b/.test(p)) return false;   // CSS-Klassenlisten, Ereignisnamen
+  // „Name: {0}“, „Gespeichert: {0}“ – Bezeichnung mit Platzhalter (app-v366); nicht HTML-Bausteine und keine E-Mail-Kopfzeilen
+  if (/\{\d\}/.test(s) && !/[<>]/.test(s) && /^[A-ZÄÖÜ][a-zäöüß]/.test(p) && !/^(Subject|To|Cc|Bcc|Date|From|Reply-To|Disposition-Notification-To|Return-Receipt-To|MIME-Version|Content-[\w-]+):/.test(s)) return true;
   if (/^[a-z-]+:|^[a-z]+\/[a-z0-9.+-]+$/i.test(p) && !/\s/.test(p)) return false;   // MIME-Typen, Präfixe
   if (/^q [\d.{]/.test(p)) return false;   // PDF-Inhaltsströme („q 0.1 0.2 0.3 rg … Q“)
   if (/\(\?[:=!<]|\[\^\\d|\\[dsw][*+?{]/.test(s)) return false;   // Quelltext regulärer Ausdrücke (new RegExp(`(?:…)`))

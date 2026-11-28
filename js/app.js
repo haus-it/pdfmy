@@ -5549,6 +5549,69 @@ $('#dropIn').onchange = e => { state.intent = null; importFiles([...e.target.fil
    Bewerbungsmappe: Teile erkennen (Anschreiben, Lebenslauf, Zeugnisse …), in die übliche Reihenfolge bringen, je Teil ein Lesezeichen,
    Dateiname „Bewerbung_Vorname_Nachname“, klein speichern, danach Vorabprüfung „Bewerbung“. Liste der Bewerbungen als Nachweis der
    Eigenbemühungen für Jobcenter und Agentur für Arbeit. Logik in js/bewerbung.js. */
+/* Sprache der Dokumente (app-v366): Lebenslauf und Bewerbungsmappe auf Deutsch (Standard) oder Englisch – unabhängig von der Oberfläche.
+   Wer PDFMy auf Arabisch, Ukrainisch … bedient, bekommt seine Unterlagen trotzdem auf Deutsch für Arbeitgeber, Jobcenter und Agentur für Arbeit. */
+const ausgabeSprache = () => { const v = LS.get('docLang', 'de'); return Bewerbung.DOC_LANGS.includes(v) ? v : 'de'; };
+const docLangSync = () => {
+  for (const s of document.querySelectorAll('.docLangSel')) s.value = ausgabeSprache();
+  const notDe = !/^de\b/.test(I18N.lang);
+  for (const p of document.querySelectorAll('.lvNotDe, .bwgNotDe')) p.hidden = !notDe;
+};
+for (const s of document.querySelectorAll('.docLangSel')) s.addEventListener('change', e => { LS.set('docLang', e.target.value); docLangSync(); });
+docLangSync();
+/* Land (app-v367, js/land.js): Funktionen je Land ein-/ausblenden und benennen; Auswahl unter „Mehr → Land“ */
+{
+  const sel = $('#landSel'), cur = Land.get(), h = v => String(v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  sel.innerHTML = Land.LAENDER.map(([c, n]) => `<option value="${c}"${c === cur ? ' selected' : ''}>${h(I18N.t(n))}</option>`).join('');
+  sel.onclick = e => e.stopPropagation();
+  sel.onchange = () => { Land.set(sel.value); Land.apply(); status(I18N.t(`Land: ${I18N.t(Land.LAENDER.find(([c]) => c === sel.value)[1])} – Funktionen und Bezeichnungen sind angepasst.`)); };
+  Land.apply();
+}
+/* QR-Rechnung (Schweiz, js/qrrechnung.js – app-v367): Zahlteil mit Empfangsschein; eigene Seite oder an die geöffnete Rechnung angehängt */
+{
+  const F = { konto: 'qrrKonto', eName: 'qrrEName', eStr: 'qrrEStr', eNr: 'qrrENr', ePlz: 'qrrEPlz', eOrt: 'qrrEOrt', eLand: 'qrrELand', sprache: 'qrrSprache' };
+  const qrUtf8 = t => { qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8']; const q = qrcode(0, 'M'); q.addData(t, 'Byte'); q.make(); return q; };
+  const daten = () => {
+    const v = id => $('#' + id).value.trim(), betrag = v('qrrBetrag').replace(/['’\s]/g, '').replace(',', '.');
+    return { konto: v('qrrKonto'), empfaenger: { name: v('qrrEName'), strasse: v('qrrEStr'), nr: v('qrrENr'), plz: v('qrrEPlz'), ort: v('qrrEOrt'), land: v('qrrELand') },
+      betrag: betrag === '' ? '' : +betrag, waehrung: v('qrrWaehrung'), sprache: v('qrrSprache'), referenz: v('qrrRef'), mitteilung: v('qrrMitt'),
+      zahler: v('qrrZName') ? { name: v('qrrZName'), strasse: v('qrrZStr'), nr: v('qrrZNr'), plz: v('qrrZPlz'), ort: v('qrrZOrt'), land: v('qrrZLand') || 'CH' } : null };
+  };
+  window.qrrOpen = () => {
+    closeMenu?.();
+    const g = LS.get('qrrEmpf', {}) || {}; { const l = (I18N.lang || 'de').slice(0, 2); $('#qrrSprache').value = QrRechnung.SPRACHEN.includes(l) ? l : 'de'; } for (const [k, id] of Object.entries(F)) if (g[k] != null) $('#' + id).value = g[k];
+    if (!$('#qrrEName').value) { const p = LS.get('profile', {}) || {}; $('#qrrEName').value = p.firma || [p.vorname, p.nachname].filter(Boolean).join(' '); $('#qrrEStr').value = p.strasse || ''; $('#qrrENr').value = p.hausnr || ''; $('#qrrEPlz').value = p.plz || ''; $('#qrrEOrt').value = p.ort || ''; }
+    $('#qrrAnhangL').hidden = !state.pages.length; $('#qrrMsg').textContent = ''; $('#qrrDlg').showModal(); ($('#qrrKonto').value ? $('#qrrBetrag') : $('#qrrKonto')).focus();
+  };
+  $('#btnQrr').onclick = () => window.qrrOpen();
+  $('#qrrClose').onclick = () => $('#qrrDlg').close();
+  // Referenz aus der Rechnungsnummer: QR-Referenz bei QR-IBAN, sonst Creditor Reference (RF)
+  $('#qrrRefMach').onclick = () => {
+    const nr = $('#qrrNr').value.trim(); if (!nr) { $('#qrrNr').focus(); return; }
+    if (QrRechnung.ibanOk($('#qrrKonto').value) && QrRechnung.istQrIban($('#qrrKonto').value)) $('#qrrRef').value = QrRechnung.refAnzeige('QRR', QrRechnung.qrrAus(nr));
+    else { const s = nr.toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 21), r = (s + 'RF00').replace(/[A-Z]/g, c => String(c.charCodeAt(0) - 55)); let m = 0; for (const d of r) m = (m * 10 + +d) % 97; $('#qrrRef').value = 'RF' + String(98 - m).padStart(2, '0') + s; }
+    if (!$('#qrrMitt').value) $('#qrrMitt').value = I18N.t(`Rechnung ${nr}`);
+  };
+  $('#qrrForm').onsubmit = async ev => {
+    ev.preventDefault();
+    const d = daten(), fehler = QrRechnung.pruefe(d);
+    if (fehler.length) { $('#qrrMsg').textContent = fehler.map(f => I18N.t(f)).join(' '); return; }
+    LS.set('qrrEmpf', Object.fromEntries(Object.entries(F).map(([k, id]) => [k, $('#' + id).value.trim()])));
+    try {
+      await loadQrcode();
+      const titel = d.mitteilung || 'QR-Rechnung', bytes = await QrRechnung.pdf(PDFLib, d, { qr: qrUtf8, titel: state.pages.length && $('#qrrAnhang').checked ? '' : titel });
+      $('#qrrDlg').close();
+      if (state.pages.length && $('#qrrAnhang').checked) {
+        await importFiles([new File([bytes], 'QR-Zahlteil.pdf', { type: 'application/pdf' })]);
+        status(I18N.t('QR-Zahlteil als letzte Seite angehängt – jetzt speichern oder senden.'));
+      } else {
+        const where = await deliver(bytes, (titel.replace(/[\\/:*?"<>|]+/g, ' ').trim() || 'QR-Rechnung') + '.pdf', 'application/pdf');
+        if (where) status(I18N.t(`Gespeichert: ${where}`));
+      }
+    } catch (e) { console.error(e); $('#qrrMsg').textContent = I18N.t('QR-Rechnung nicht möglich: ') + e.message; }
+  };
+}
+window.ausgabeSprache = ausgabeSprache;
 const bwgPerson = () => { const p = LS.get('profile', {}) || {}; return [p.vorname, p.nachname].filter(Boolean).join(' ') || S.author || ''; };
 function bwgMappe() {
   const groups = []; let g = null;
@@ -5557,7 +5620,7 @@ function bwgMappe() {
     const first = gr.pages[0], doc = first.kind === 'pdf' ? state.docs[first.docIdx] : null, name = doc?.name || first.srcName || first.label || '';
     return { ...gr, name, kind: Bewerbung.kindOf(gr.pages.slice(0, 2).map(pageText).join('\n'), name) };
   });
-  const sorted = Bewerbung.order(teile), titles = Bewerbung.titles(sorted);
+  const sorted = Bewerbung.order(teile), titles = Bewerbung.titles(sorted, ausgabeSprache());
   state.pages = sorted.flatMap(t => t.pages);
   state.marks = sorted.map((t, i) => ({ pid: t.pages[0].id, title: titles[i], level: 0 }));
   const an = sorted.find(t => t.kind === 'anschreiben'), txt = an ? an.pages.map(pageText).join('\n') : '';
@@ -5569,7 +5632,7 @@ window.bwgMappe = bwgMappe; window.bwgPerson = bwgPerson;
 // „Fertig“ in der Aufgabenleiste: klein speichern, Dateiname für Portale
 window.bwgExport = () => {
   openExport({ size: 'small' });
-  $('#x-name').value = Bewerbung.fileName(bwgPerson()).replace(/\.pdf$/, ''); $('#x-name').dataset.touched = '1';
+  $('#x-name').value = Bewerbung.fileName(bwgPerson(), '', ausgabeSprache()).replace(/\.pdf$/, ''); $('#x-name').dataset.touched = '1';
 };
 const bwgEsc = v => String(v ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const BWG_KEY = 'bewerbungen';
@@ -5592,6 +5655,7 @@ window.bwgOpen = (pre = {}) => {
   if (!$('#bwgVon').value) $('#bwgVon').value = iso(new Date(today.getFullYear(), today.getMonth(), 1));
   if (!$('#bwgBis').value) $('#bwgBis').value = iso(today);
   $('#bwgName').value = LS.get('bwgName', '') || bwgPerson(); $('#bwgNr').value = LS.get('bwgNr', '');
+  leseSelectFill($('#bwgLese')); Land.apply();
   bwgRender(); $('#bwgDlg').showModal(); (pre.arbeitgeber ? $('#bwgStelle') : $('#bwgFirma')).focus();
 };
 $('#btnBwg').onclick = () => window.bwgOpen();
@@ -5617,16 +5681,124 @@ $('#bwgList').onclick = ev => {
   if (b.dataset.d != null) { if (!confirm(I18N.t('Diese Bewerbung aus der Liste löschen?'))) return; l.splice(+b.dataset.d, 1); LS.set(BWG_KEY, l); bwgRender(); }
   else if (b.dataset.e != null) { bwgEdit = +b.dataset.e; bwgFill(l[bwgEdit]); $('#bwgAdd').textContent = I18N.t('Änderung übernehmen'); $('#bwgNeu').hidden = false; $('#bwgFirma').focus(); }
 };
+/* ---------- Lesefassung in der Sprache des Nutzers (app-v366) ----------
+   Für Dokumente, die auf Deutsch an Behörden oder Arbeitgeber gehen (Nachweis der Eigenbemühungen, Antwortbrief aus Textbausteinen):
+   dazu eine Fassung in der Sprache der Oberfläche, nur zum Verstehen. Der Browser setzt jede Schrift richtig (Arabisch und Persisch
+   verbunden und von rechts nach links, Georgisch, Tigrinya …) – deshalb werden die Seiten im Canvas gezeichnet und als Bild in eine PDF
+   gelegt. Oben steht deutlich: nur zum Lesen, eingereicht wird die deutsche Fassung. blocks: wie js/textpdf.js (h, p, table). */
+async function lesefassungPdf(blocks, { title = '', note = '', lang = I18N.lang } = {}) {
+  const info = I18N.byCode(lang) || I18N.info;
+  const W = 1240, H = 1754, M = 96, dpr = 1, rtl = (info.dir || 'ltr') === 'rtl';
+  const FONT = 'system-ui, "Segoe UI", "Noto Sans", "Noto Sans Arabic", "Noto Sans Ethiopic", "Noto Sans Georgian", Nyala, Sylfaen, Tahoma, sans-serif';
+  const pages = []; let cv, cx, y;
+  const newPage = () => {
+    cv = document.createElement('canvas'); cv.width = W * dpr; cv.height = H * dpr; cx = cv.getContext('2d');
+    cx.fillStyle = '#fff'; cx.fillRect(0, 0, W, H); cx.direction = rtl ? 'rtl' : 'ltr'; cx.textBaseline = 'top'; pages.push(cv); y = M;
+  };
+  const font = (size, bold) => { cx.font = `${bold ? 700 : 400} ${size}px ${FONT}`; };
+  const wrap = (text, width) => {
+    const out = [];
+    for (const para of String(text ?? '').split('\n')) {
+      let line = '';
+      for (const w of para.split(/\s+/).filter(Boolean)) { const t = line ? line + ' ' + w : w; if (cx.measureText(t).width <= width || !line) line = t; else { out.push(line); line = w; } }
+      out.push(line);
+    }
+    return out;
+  };
+  // x0 = linker Rand der Spalte, w = Breite; bei Rechts-nach-links rechtsbündig gesetzt
+  const draw = (s, x0, w, size, bold, color = '#1d2939', align) => { font(size, bold); cx.fillStyle = color; const a = align || (rtl ? 'right' : 'left'); cx.textAlign = a; cx.fillText(s, a === 'right' ? x0 + w : a === 'center' ? x0 + w / 2 : x0, y); };
+  const ensure = h => { if (y + h > H - M) newPage(); };
+  newPage();
+  // Hinweis oben: gelber Kasten
+  if (note) {
+    font(22, true); const ls = wrap(note, W - 2 * M - 40), bh = ls.length * 31 + 28;
+    cx.fillStyle = '#fff6e0'; cx.strokeStyle = '#d97706'; cx.lineWidth = 3; cx.fillRect(M, y, W - 2 * M, bh); cx.strokeRect(M, y, W - 2 * M, bh);
+    y += 14; for (const l of ls) { draw(l, M + 20, W - 2 * M - 40, 22, true, '#5b3d00'); y += 31; } y += 30;
+  }
+  for (const b of blocks) {
+    if (b.type === 'h') { font(40, true); for (const l of wrap(b.text, W - 2 * M)) { ensure(54); draw(l, M, W - 2 * M, 40, true); y += 54; } y += 10; continue; }
+    if (b.type === 'p') {
+      const size = b.small ? 18 : 24, lh = b.small ? 26 : 34; font(size, false);
+      for (const l of wrap(b.text, W - 2 * M)) { ensure(lh); if (l.trim()) draw(l.replace(/\s{6,}/g, '     '), M, W - 2 * M, size, false, b.small ? '#667085' : '#1d2939'); y += lh; }
+      y += 16; continue;
+    }
+    if (b.type === 'table') {
+      const tw = W - 2 * M, ws = (b.widths || b.rows[0].map(() => 1 / b.rows[0].length)).map(f => f * tw), pad = 8;
+      const xs = []; let acc = 0; for (const w of ws) { xs.push(rtl ? M + tw - acc - w : M + acc); acc += w; }
+      b.rows.forEach((r, ri) => {
+        const head = b.head && ri === 0; font(20, head);
+        const cells = r.map((c, ci) => wrap(c, ws[ci] - 2 * pad)), rh = Math.max(1, ...cells.map(c => c.length)) * 28 + 2 * pad;
+        ensure(rh);
+        if (head) { cx.fillStyle = '#eef1f5'; cx.fillRect(M, y, tw, rh); }
+        cx.strokeStyle = '#c9ced6'; cx.lineWidth = 1.5; cx.strokeRect(M, y, tw, rh);
+        const y0 = y;
+        cells.forEach((ls, ci) => { y = y0 + pad; for (const l of ls) { draw(l, xs[ci] + pad, ws[ci] - 2 * pad, 20, head); y += 28; } });
+        y = y0 + rh;
+      });
+      y += 24;
+    }
+  }
+  // Seiten als JPEG in eine PDF (A4)
+  const doc = await PDFLib.PDFDocument.create();
+  for (const c of pages) {
+    const jpg = await doc.embedJpg(await new Promise(r => c.toBlob(b => b.arrayBuffer().then(r), 'image/jpeg', 0.9)));
+    doc.addPage([595.28, 841.89]).drawImage(jpg, { x: 0, y: 0, width: 595.28, height: 841.89 });
+  }
+  if (title) doc.setTitle(title);
+  doc.setLanguage(info.bcp); doc.setCreator('PDFMy (pdfmy.de)'); doc.setProducer('PDFMy');
+  return doc.save();
+}
+window.lesefassungPdf = lesefassungPdf;
+// Übersetzer für eine beliebige Sprache (nicht nur die der Oberfläche): Wörterbuch i18n/<code>.json laden, exakte Schlüssel nachschlagen
+const leseDicts = {};
+async function leseUebersetzer(code) {
+  if (code === I18N.lang) return s => I18N.t(s);
+  if (!leseDicts[code]) { const r = await fetch(`i18n/${code}.json`); if (!r.ok) throw new Error(I18N.t('Die Sprache ist offline noch nicht geladen. Bitte einmal mit Internet öffnen.')); leseDicts[code] = await r.json(); }
+  const d = leseDicts[code];
+  return s => { const k = String(s).replace(/\s+/g, ' ').trim(); return Object.prototype.hasOwnProperty.call(d, k) ? d[k] : s; };
+}
+window.leseUebersetzer = leseUebersetzer;
+// Auswahl „Lesefassung in …“: Voreinstellung ist die Sprache der Oberfläche, wenn sie nicht Deutsch ist; sonst „keine“
+function leseSelectFill(sel) {
+  const vor = LS.get('leseLang', null) ?? (/^de\b/.test(I18N.lang) ? '' : I18N.lang);
+  sel.innerHTML = `<option value="">${bwgEsc(I18N.t('keine'))}</option>` + I18N.LANGS.filter(l => l.code !== 'de').slice().sort((a, b) => a.name.localeCompare(b.name, 'de'))
+    .map(l => `<option value="${l.code}" lang="${l.code}" translate="no"${l.code === vor ? ' selected' : ''}>${bwgEsc(l.name)}</option>`).join('');
+  sel.onchange = () => LS.set('leseLang', sel.value);
+}
+window.leseSelectFill = leseSelectFill;
+// Feste Texte des Nachweises (js/bewerbung.js nachweisBlocks) – hier ausgeschrieben, damit tools/i18n-extract.js sie für die Lesefassung findet
+void ['Nachweis der Eigenbemühungen', 'Zeitraum: {0} bis {1}', 'Zeitraum: gesamt', 'Nr.', 'Datum', 'Arbeitgeber', 'Stelle', 'Art', 'Ergebnis', 'Name: {0}', 'Kunden-/BG-Nummer: {0}',
+  'Anzahl Bewerbungen: {0}', 'Ich versichere, dass die Angaben vollständig und richtig sind.', 'Ort, Datum', 'Unterschrift', 'Erstellt am {0} mit PDFMy (pdfmy.de) – die Angaben stammen vom Antragsteller.',
+  'Lesefassung in Ihrer Sprache – nur zum Verstehen. Abgeschickt wird der deutsche Brief.', 'Sehr geehrte Damen und Herren,', 'Mit freundlichen Grüßen'];
 $('#bwgPdf').onclick = async () => {
   const l = bwgList(); if (!l.length) { $('#bwgMsg').textContent = I18N.t('Noch keine Bewerbung eingetragen.'); return; }
   LS.set('bwgName', $('#bwgName').value.trim()); LS.set('bwgNr', $('#bwgNr').value.trim());
   try {
     const [fk, regular, bold, mono] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf'), asset('font:vendor/dejavu/DejaVuSansMono.ttf', 'vendor/dejavu/DejaVuSansMono.ttf')]);
     // Der Nachweis geht an eine deutsche Behörde (Jobcenter, Agentur für Arbeit): immer auf Deutsch, unabhängig von der Oberflächensprache
-    const blocks = Bewerbung.nachweisBlocks(l, { von: $('#bwgVon').value, bis: $('#bwgBis').value, name: $('#bwgName').value.trim(), nummer: $('#bwgNr').value.trim() })
-    const pdf = await TextPdf.build(PDFLib, { blocks, title: 'Nachweis der Eigenbemühungen', fonts: { fontkit: fk, regular, bold, mono } });
-    const where = await deliver(pdf, 'Nachweis_Eigenbemuehungen_' + ($('#bwgBis').value || new Date().toISOString().slice(0, 10)) + '.pdf', 'application/pdf');
-    if (where) $('#bwgMsg').textContent = I18N.t(`Gespeichert: ${where}`);
+    const NW = { von: $('#bwgVon').value, bis: $('#bwgBis').value, name: $('#bwgName').value.trim(), nummer: $('#bwgNr').value.trim(), titel: Land.text('nachweisTitel'), nummerText: Land.text('nummerText') };
+    const blocks = Bewerbung.nachweisBlocks(l, NW);
+    const pdf = await TextPdf.build(PDFLib, { blocks, title: NW.titel, fonts: { fontkit: fk, regular, bold, mono } });
+    const stamp = $('#bwgBis').value || new Date().toISOString().slice(0, 10);
+    const where = await deliver(pdf, Land.text('nachweisDatei') + '_' + stamp + '.pdf', 'application/pdf');
+    if (!where) return;
+    $('#bwgMsg').textContent = I18N.t(`Gespeichert: ${where}`);
+    // Zweite Fassung in der Sprache des Nutzers – zum Verstehen, nicht zum Einreichen
+    const leseLang = $('#bwgLese').value;
+    if (leseLang) {
+      // Eigener Fehlerzweig: scheitert die Lesefassung (z. B. offline ohne Wörterbuch), bleibt klar, dass der deutsche Nachweis gespeichert ist
+      try {
+        const t = await leseUebersetzer(leseLang);
+        const tb = Bewerbung.nachweisBlocks(l, { ...NW, t });
+        const lese = await lesefassungPdf(tb, { lang: leseLang, title: t(NW.titel), note: t(Land.text('lesefassungNachweis')) });
+        const w2 = await deliver(lese, `${Land.text('nachweisDatei')}_${stamp}_${leseLang}.pdf`, 'application/pdf');
+        $('#bwgMsg').textContent = w2 ? I18N.t(`Zum Abgeben: ${where} (Deutsch). Für Sie zum Lesen: ${w2}`) : I18N.t(`Gespeichert: ${where}`);
+      } catch (e) {
+        console.warn(e);
+        const grund = e instanceof TypeError ? I18N.t('Die Sprache ist offline noch nicht geladen. Bitte einmal mit Internet öffnen.') : e.message;
+        $('#bwgMsg').textContent = I18N.t(`Gespeichert: ${where}`) + ' – ' + I18N.t('Lesefassung nicht möglich: ') + grund;
+      }
+    }
   } catch (e) { console.error(e); $('#bwgMsg').textContent = I18N.t('Nachweis nicht möglich: ') + e.message; }
 };
 $('#bwgCsv').onclick = async () => {
@@ -5706,13 +5878,13 @@ async function lvBuild() {
   const [fk, regular, bold] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf')]);
   const foto = d.foto ? { bytes: Uint8Array.from(atob(d.foto.data.split(',')[1]), c => c.charCodeAt(0)), png: false } : null;
   const z = n => String(n).padStart(2, '0'), h = new Date();
-  // Der Lebenslauf geht an deutsche Arbeitgeber: Überschriften und Bezeichnungen bleiben deutsch
+  // Überschriften und Bezeichnungen in der Sprache der Dokumente (Standard Deutsch) – nie in der Sprache der Oberfläche
   return Bewerbung.lebenslaufPdf(PDFLib, { ...d, foto, unterschriftOrt: d.uort, datum: `${z(h.getDate())}.${z(h.getMonth() + 1)}.${h.getFullYear()}`,
-    kenntnisse: [{ art: 'Sprachen', wert: d.sprachen }, { art: 'Computer', wert: d.edv }, { art: 'Führerschein', wert: d.fs }, { art: 'Sonstiges', wert: d.sonst }] }, { fontkit: fk, regular, bold });
+    kenntnisse: [{ art: 'Sprachen', wert: d.sprachen }, { art: 'Computer', wert: d.edv }, { art: 'Führerschein', wert: d.fs }, { art: 'Sonstiges', wert: d.sonst }] }, { fontkit: fk, regular, bold, lang: ausgabeSprache(), unterschrift: Land.get() !== 'CH' });
 }
 $('#lvSave').onclick = async () => {
   lvStore();
-  try { const pdf = await lvBuild(); if (!pdf) return; const where = await deliver(pdf, 'Lebenslauf_' + Bewerbung.fileName(lvRead().name).replace(/^Bewerbung_|\.pdf$/g, '') + '.pdf', 'application/pdf'); if (where) $('#lvMsg').textContent = I18N.t(`Gespeichert: ${where}`); }
+  try { const pdf = await lvBuild(); if (!pdf) return; const where = await deliver(pdf, (ausgabeSprache() === 'en' ? 'CV_' : 'Lebenslauf_') + Bewerbung.fileName(lvRead().name).replace(/^Bewerbung_|\.pdf$/g, '') + '.pdf', 'application/pdf'); if (where) $('#lvMsg').textContent = I18N.t(`Gespeichert: ${where}`); }
   catch (e) { console.error(e); $('#lvMsg').textContent = I18N.t('Lebenslauf nicht möglich: ') + e.message; }
 };
 $('#lvForm').onsubmit = async ev => {
@@ -6167,6 +6339,7 @@ $('#quality').oninput = e => { S.quality = +e.target.value; saveSettings(); $('#
   $('#uiLang').innerHTML = byName(I18N.LANGS).map(l => opt(l.code, l.name, l.code === I18N.lang)).join('');
   $('#uiLang').onchange = e => I18N.setLang(e.target.value);
   $('#uiLang').onclick = e => e.stopPropagation();
+  $('#docLang').onclick = e => e.stopPropagation();
   const ocrL = [...I18N.LANGS.filter(l => l.ocr && !l.code.startsWith('en-')), { ocr: 'eng', name: 'English' }, ...I18N.OCR_EXTRA];
   $('#ocrLang').innerHTML = opt('auto', I18N.t('Automatisch (Deutsch + Erkennung)'), S.ocrLang === 'auto') + byName(ocrL).map(l => opt(l.ocr, l.name, S.ocrLang === l.ocr)).join('');
   $('#ocrLang').onchange = e => { S.ocrLang = e.target.value; saveSettings(); resetWorker('Dokumentsprache geändert'); };

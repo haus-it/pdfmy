@@ -4,6 +4,33 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-28
 
+### QR-Rechnung für die Schweiz und Liechtenstein (app-v367)
+- Neu bei Land Schweiz: *Mehr → QR-Rechnung erstellen …* – Zahlteil mit Empfangsschein und Swiss QR Code nach den Swiss Implementation Guidelines QR-bill (SIX, Version 2.4, strukturierte Adressen), als eigene A4-Seite oder als letzte Seite an die geöffnete Rechnung angehängt.
+- Prüfung vor dem Erstellen: IBAN aus CH/LI mit Prüfziffer, QR-IBAN nur mit QR-Referenz (Modulo 10 rekursiv), normale IBAN mit Creditor Reference (ISO 11649) oder ohne Referenz, Betrag, Währung CHF/EUR, Pflichtadressen, Längen. „Referenz bilden“ erzeugt die passende Referenz aus der Rechnungsnummer.
+- Zahlteil auf Deutsch, Französisch, Italienisch oder Englisch (vorbelegt nach der Sprache der Oberfläche); ohne Betrag oder Zahlungspflichtigen bleiben Felder zum Ausfüllen von Hand.
+- Angaben des Rechnungsstellers bleiben nur auf dem Gerät. Dialog und Meldungen in allen 48 Sprachen, Hilfe-Abschnitt „QR-Rechnung“.
+- tests/qrrechnung.test.js mit den Beispielwerten aus den SIX-Richtlinien; QR-Inhalt im Browser mit dem eigenen QR-Leser zurückgelesen (31 Zeilen).
+
+### PDFMy passt sich dem Land an: Deutschland, Österreich, Schweiz (app-v366)
+- Neu: *Mehr → Land*. PDFMy vermutet das Land aus Zeitzone und Browsersprache – lokal, ohne Ortung, ohne Netzabfrage – und passt Funktionen und Bezeichnungen an; die eigene Wahl gilt immer.
+- **Österreich:** „Bewerbungen und Liste für das AMS“ (Liste der Eigenbewerbungen, Hinweis auf MeinAMS); „Belege für Steuerberater (DATEV/RZL)“; Zuwendungsbestätigung nach deutschem Muster ausgeblendet (Spenden meldet der Verein automatisch ans Finanzamt). Fristenrechner mit den 13 bundesweiten Feiertagen und den Fristen Beschwerde gegen Bescheid (4 Wochen, § 7 Abs. 4 VwGVG), Beschwerde gegen Abgabenbescheid (1 Monat, § 245 BAO), Einspruch gegen Strafverfügung, Berufung, Einspruch gegen Zahlungsbefehl.
+- **Schweiz:** „Bewerbungen und Nachweis für das RAV“ (Nachweis der persönlichen Arbeitsbemühungen, Abgabe bis zum 5. des Folgemonats); „Belege für den Treuhänder“; Zuwendungsbestätigung, SEPA-Lastschrift und Überweisung mit GiroCode ausgeblendet (in der Schweiz QR-Rechnung, LSV+ endet 2028); Lebenslauf ohne Unterschriftszeile. Fristenrechner mit Tagesfristen (30 bzw. 10 Tage) und Fristenstillstand nach Art. 145 ZPO / Art. 22a VwVG; berücksichtigt nur die Feiertage, die in allen Kantonen gelten (vorsichtig gerechnet, Hinweis).
+- Deutschland bleibt unverändert; gemerkte Fristenrechner-Einstellungen passen sich beim Wechsel des Landes an.
+- tests/fristen-land.test.js; Recherche mit Quellen (AMS, RAV/SECO, BMF, SIX QR-Rechnung, ZPO CH, VwGVG, BAO).
+
+### Sprache der Dokumente einstellbar (app-v366)
+- Neu: *Mehr → Sprache der Dokumente* (auch im Fenster „Lebenslauf erstellen“): Lebenslauf und Bewerbungsmappe (Überschriften, Lesezeichen, Dateiname) auf **Deutsch (Standard)** oder Englisch – unabhängig von der Sprache der Oberfläche. Wer PDFMy z. B. auf Arabisch bedient, bekommt seine Unterlagen für Arbeitgeber in Deutschland trotzdem auf Deutsch.
+- Der Nachweis der Eigenbemühungen bleibt immer deutsch (Jobcenter, Agentur für Arbeit); Art und Ergebnis der Bewerbungen stehen darin auf Deutsch, auch wenn sie in der eigenen Sprache ausgewählt wurden. Bei fremdsprachiger Oberfläche sagen Hinweise im Lebenslauf- und im Nachweis-Fenster das ausdrücklich.
+- Neu: **Lesefassung in der eigenen Sprache.** Beim Nachweis der Eigenbemühungen und beim Antwortbrief aus einem unveränderten Textbaustein (Widerspruch, Kündigung, Ratenzahlung, Fristverlängerung …) speichert PDFMy zusätzlich eine Fassung in einer wählbaren Sprache (Voreinstellung: Sprache der Oberfläche) – deutlich markiert „nur zum Verstehen, abgegeben wird die deutsche Fassung“. Der Browser setzt dabei jede Schrift richtig (Arabisch und Persisch von rechts nach links, Georgisch, Tigrinya …). Auch eine Beraterin mit deutscher Oberfläche kann so einem Bewerber eine Fassung auf Arabisch mitgeben.
+- Geprüft: Antwortbrief, Stempel, Spendenquittung, Kassenbericht, Beitragsbrief und E-Rechnung schreiben Text und Datum bereits fest auf Deutsch.
+- Bedienung: Die Knopfzeile langer Fenster (Nachweis, Lebenslauf …) bleibt unten sichtbar; im Menü „Mehr“ überlappen zweizeilige Einträge nicht mehr; „Sprache der Dokumente“ steht in der Gruppe „Bewerbung“. Im Antwortbrief zeigt das Feld „Ihre Anschrift“ eine neutrale Musteranschrift statt einer echten Firmenanschrift.
+- Behoben: Arabisch – „Funktion suchen“ las sich als „Arbeitsstelle suchen“ (31 Stellen berichtigt). In der Liste „Nicht gespeicherte Arbeit“ blieben „heute“, „gestern“ und „(2 Seiten)“ deutsch; „Version“ in neun Sprachen übersetzt.
+
+### Hilfe und Website von rechts nach links richtig gesetzt (app-v365)
+- Arabisch, Persisch, Paschtu, Sorani: Schrittnummern und die Zeichen der Kästen „Kurz gesagt“, „Tipp“ und „Wichtig“ stehen jetzt am Textanfang (rechts) statt am anderen Ende der Zeile; Einzüge und Randlinien folgen der Schreibrichtung (CSS-Logikeigenschaften, ab Safari 15.4/Firefox 115/Chrome 109).
+- Behoben: Hilfe und Geräteliste ließen sich in diesen Sprachen rund 10 000 Pixel seitwärts scrollen (verstecktes Suchfeld-Etikett mit `left:-9999px`); jetzt unsichtbar ohne Verschiebung.
+- Pfeile an Links in Leserichtung: „→ zurück zu PDFMy“, „… jetzt in PDFMy öffnen ←“ (162 Stellen).
+
 ### Seite in schmalen Fenstern ganz sichtbar; Menüwege in Rechts-nach-links-Sprachen (app-v364)
 - Behoben: War die Seite breiter als das Fenster (kleines Fenster, Tablet hochkant, starkes Vergrößern), ragte sie links über den Rand und dieser Teil war auch durch Scrollen nicht zu erreichen. Jetzt beginnt sie am linken Rand und lässt sich vollständig scrollen; schmalere Seiten bleiben mittig.
 - Arabisch, Persisch, Paschtu und Sorani: Menüwege zeigen den Pfeil in Leserichtung („المزيد ← اللغة“ statt „→“); deutsche Menünamen in Klammern behalten „→“ (558 Stellen).

@@ -13,6 +13,13 @@
   'use strict';
   const T = s => String(s || '').replace(/\s+/g, ' ').trim();
   const KIND_LABEL = { deckblatt: 'Deckblatt', anschreiben: 'Anschreiben', lebenslauf: 'Lebenslauf', anlage: 'Anlage' };
+  // Sprache der Dokumente (app-v366): Bewerbungsunterlagen auf Deutsch (Standard) oder Englisch – unabhängig von der Sprache der Oberfläche.
+  // Der Nachweis der Eigenbemühungen bleibt immer deutsch (Jobcenter, Agentur für Arbeit).
+  const DOC = {
+    de: { deckblatt: 'Deckblatt', anschreiben: 'Anschreiben', lebenslauf: 'Lebenslauf', anlage: 'Anlage', datei: 'Bewerbung', titel: 'Lebenslauf', Name: 'Name', Anschrift: 'Anschrift', Telefon: 'Telefon', 'E-Mail': 'E-Mail', Geburtsdatum: 'Geburtsdatum', 'Staatsangehörigkeit': 'Staatsangehörigkeit', Kenntnisse: 'Kenntnisse', Interessen: 'Interessen', Sprachen: 'Sprachen', Computer: 'Computer', 'Führerschein': 'Führerschein', Sonstiges: 'Sonstiges', Berufserfahrung: 'Berufserfahrung', 'Schule und Ausbildung': 'Schule und Ausbildung', Weiterbildung: 'Weiterbildung', Datum: 'Datum', heute: 'heute', lang: 'de-DE' },
+    en: { deckblatt: 'Cover page', anschreiben: 'Cover letter', lebenslauf: 'CV', anlage: 'Attachment', datei: 'Application', titel: 'Curriculum Vitae', Name: 'Name', Anschrift: 'Address', Telefon: 'Phone', 'E-Mail': 'Email', Geburtsdatum: 'Date of birth', 'Staatsangehörigkeit': 'Nationality', Kenntnisse: 'Skills', Interessen: 'Interests', Sprachen: 'Languages', Computer: 'IT skills', 'Führerschein': 'Driving licence', Sonstiges: 'Other', Berufserfahrung: 'Work experience', 'Schule und Ausbildung': 'Education and training', Weiterbildung: 'Further training', Datum: 'Date', heute: 'present', lang: 'en-GB' },
+  };
+  const DOC_LANGS = Object.keys(DOC), docT = (lang, k) => (DOC[lang] || DOC.de)[k] ?? k;
 
   // Art eines Teils aus Text (erste Seite) und Dateiname. Punkte je Merkmal, die meisten gewinnen; nichts Eindeutiges = Anlage.
   function kindOf(text, name = '') {
@@ -39,18 +46,18 @@
   // stabil: gleiche Art behält die Reihenfolge, in der die Dateien gewählt wurden
   const order = teile => teile.map((t, i) => ({ t, i })).sort((a, b) => RANK[a.t.kind] - RANK[b.t.kind] || a.i - b.i).map(x => x.t);
   // Lesezeichen-Titel: Deckblatt, Anschreiben, Lebenslauf; Anlagen mit ihrem eigenen Titel (Dateiname ohne Endung) bzw. „Anlage N“
-  function titles(teile) {
-    let n = 0;
+  function titles(teile, lang = 'de') {
+    let n = 0, A = docT(lang, 'anlage');
     return teile.map(t => {
-      if (t.kind !== 'anlage') return KIND_LABEL[t.kind];
+      if (t.kind !== 'anlage') return docT(lang, t.kind);
       n++; const own = String(t.name || '').replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
-      return own && !/^(scan|img|image|dok|dokument|document|unbenannt|untitled)[\s\d]*$/i.test(own) && !/^\d+$/.test(own) ? `Anlage ${n}: ${own}` : `Anlage ${n}`;
+      return own && !/^(scan|img|image|dok|dokument|document|unbenannt|untitled)[\s\d]*$/i.test(own) && !/^\d+$/.test(own) ? `${A} ${n}: ${own}` : `${A} ${n}`;
     });
   }
   // Dateiname für Portale: ASCII, Unterstriche, keine Leer-/Sonderzeichen
   const ascii = s => String(s || '').replace(/Ä/g, 'Ae').replace(/Ö/g, 'Oe').replace(/Ü/g, 'Ue').replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
     .normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
-  const fileName = (name, firma = '') => ['Bewerbung', ascii(name), ascii(firma)].filter(Boolean).join('_').slice(0, 80) + '.pdf';
+  const fileName = (name, firma = '', lang = 'de') => [docT(lang, 'datei'), ascii(name), ascii(firma)].filter(Boolean).join('_').slice(0, 80) + '.pdf';
   // Arbeitgeber: erste Zeile des Anschriftfelds mit Rechtsform oder „Firma/Personalabteilung“; sonst leer (Vorschlag, der Nutzer prüft)
   function employer(text) {
     const lines = String(text || '').split(/\n/).map(T).filter(Boolean).slice(0, 25);
@@ -75,17 +82,20 @@
   const de = iso => /^\d{4}-\d{2}-\d{2}$/.test(iso || '') ? iso.split('-').reverse().join('.') : String(iso || '');
   const inRange = (e, von, bis) => (!von || e.datum >= von) && (!bis || e.datum <= bis);
   // Bausteine für js/textpdf.js: Kopf mit Name/Nummer/Zeitraum, Tabelle, Summe, Unterschriftszeile
-  function nachweisBlocks(liste, { von = '', bis = '', name = '', nummer = '', heute = new Date() } = {}) {
+  // t: Übersetzer für die festen Texte (Standard: Deutsch, so wie Jobcenter und Agentur für Arbeit ihn brauchen). Für die Lesefassung in der
+  // Sprache des Nutzers (app-v366) übergibt js/app.js I18N.t – Muster mit {0} werden hier eingesetzt; Angaben des Nutzers bleiben unverändert.
+  function nachweisBlocks(liste, { von = '', bis = '', name = '', nummer = '', heute = new Date(), t = s => s, titel = 'Nachweis der Eigenbemühungen', nummerText = 'Kunden-/BG-Nummer: {0}' } = {}) {
+    const f = (k, ...v) => String(t(k)).replace(/\{(\d)\}/g, (m, i) => v[+i] ?? m);
     const rows = liste.filter(e => inRange(e, von, bis)).sort((a, b) => String(a.datum).localeCompare(String(b.datum)));
-    const zeit = von || bis ? `${von ? de(von) : '…'} bis ${bis ? de(bis) : '…'}` : 'gesamt';
+    const zeit = von || bis ? f('Zeitraum: {0} bis {1}', von ? de(von) : '…', bis ? de(bis) : '…') : f('Zeitraum: gesamt');
     const z = n => String(n).padStart(2, '0'), h = `${z(heute.getDate())}.${z(heute.getMonth() + 1)}.${heute.getFullYear()}`;
-    const tab = [['Nr.', 'Datum', 'Arbeitgeber', 'Stelle', 'Art', 'Ergebnis'], ...rows.map((e, i) => [String(i + 1), de(e.datum), [e.arbeitgeber, e.ort].filter(Boolean).join(', '), e.stelle || '', e.art || '', [e.ergebnis, e.notiz].filter(Boolean).join(' – ')])];
+    const tab = [[f('Nr.'), f('Datum'), f('Arbeitgeber'), f('Stelle'), f('Art'), f('Ergebnis')], ...rows.map((e, i) => [String(i + 1), de(e.datum), [e.arbeitgeber, e.ort].filter(Boolean).join(', '), e.stelle || '', e.art ? f(e.art) : '', [e.ergebnis && f(e.ergebnis), e.notiz].filter(Boolean).join(' – ')])];
     return [
-      { type: 'h', level: 1, text: 'Nachweis der Eigenbemühungen' },
-      { type: 'p', text: [name && `Name: ${name}`, nummer && `Kunden-/BG-Nummer: ${nummer}`, `Zeitraum: ${zeit}`, `Anzahl Bewerbungen: ${rows.length}`].filter(Boolean).join('\n') },
+      { type: 'h', level: 1, text: f(titel) },
+      { type: 'p', text: [name && f('Name: {0}', name), nummer && f(nummerText, nummer), zeit, f('Anzahl Bewerbungen: {0}', rows.length)].filter(Boolean).join('\n') },
       { type: 'table', head: true, widths: [0.05, 0.14, 0.27, 0.19, 0.15, 0.2], rows: tab, aligns: tab.map((r, i) => i ? ['right', 'left', 'left', 'left', 'left', 'left'] : []) },
-      { type: 'p', text: `Ich versichere, dass die Angaben vollständig und richtig sind.\n\n\n______________________________          ______________________________\nOrt, Datum                                              Unterschrift` },
-      { type: 'p', text: `Erstellt am ${h} mit PDFMy (pdfmy.de) – die Angaben stammen vom Antragsteller.`, small: true },
+      { type: 'p', text: `${f('Ich versichere, dass die Angaben vollständig und richtig sind.')}\n\n\n______________________________          ______________________________\n${f('Ort, Datum')}                                              ${f('Unterschrift')}`, sign: [f('Ort, Datum'), f('Unterschrift')] },
+      { type: 'p', text: f('Erstellt am {0} mit PDFMy (pdfmy.de) – die Angaben stammen vom Antragsteller.', h), small: true },
     ];
   }
   const q = v => { const s = String(v ?? ''); return /[;"\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
@@ -119,7 +129,8 @@
     const p = (s, ende) => { const t = String(s || '').trim(), m = /(\d{1,2})?\s*[./]?\s*(\d{4})/.exec(t); return m ? +m[2] * 100 + (+m[1] || 12) : ende && /[\p{L}]/u.test(t) ? 999999 : 0; };
     return p(e.bis, true) || p(e.von, false);
   };
-  async function lebenslaufPdf(L, d, { fontkit, regular, bold, trace } = {}) {   // trace: Array, nimmt die gezeichneten Texte in Reihenfolge auf (Tests)
+  async function lebenslaufPdf(L, d, { fontkit, regular, bold, trace, lang = 'de', unterschrift = true } = {}) {   // unterschrift: false in der Schweiz (dort nicht üblich)
+    const t = k => docT(lang, k);   // trace: Array, nimmt die gezeichneten Texte in Reihenfolge auf (Tests)
     const doc = await L.PDFDocument.create(); if (fontkit) doc.registerFontkit(fontkit);
     const R = regular ? await doc.embedFont(regular, { subset: true }) : await doc.embedFont(L.StandardFonts.Helvetica);
     const B = bold ? await doc.embedFont(bold, { subset: true }) : await doc.embedFont(L.StandardFonts.HelveticaBold);
@@ -141,10 +152,10 @@
     let photo = null;
     if (d.foto?.bytes) { try { photo = d.foto.png ? await doc.embedPng(d.foto.bytes) : await doc.embedJpg(d.foto.bytes); } catch { photo = null; } }
     const top = y;
-    text('Lebenslauf', ML, 24, B); y -= 34;
-    const daten = [['Name', d.name], ['Anschrift', [d.strasse, d.ort].filter(T).join(', ')], ['Telefon', d.telefon], ['E-Mail', d.email], ['Geburtsdatum', d.geburt], ['Staatsangehörigkeit', d.nationalitaet]].filter(([, v]) => T(v));
+    text(t('titel'), ML, 24, B); y -= 34;
+    const daten = [['Name', d.name], ['Anschrift', [d.strasse, d.ort].filter(T).join(', ')], ['Telefon', d.telefon], ['E-Mail', d.email], ['Geburtsdatum', d.geburt], ['Staatsangehörigkeit', d.nationalitaet]].filter(([, v]) => T(v)).map(([k, v]) => [k, v, t(k)]);
     const valW = W - MR - (ML + COL) - (photo ? photoW + 16 : 0);
-    for (const [k, v] of daten) { const ls = wrap(v, R, 10.5, valW); text(k, ML, 10.5, R, grey); for (const l of ls) { text(l, ML + COL, 10.5, k === 'Name' ? B : R); y -= 15; } }
+    for (const [k, v, lbl] of daten) { const ls = wrap(v, R, 10.5, valW); text(lbl, ML, 10.5, R, grey); for (const l of ls) { text(l, ML + COL, 10.5, k === 'Name' ? B : R); y -= 15; } }
     if (photo) { const s = Math.min(photoW / photo.width, photoH / photo.height), w = photo.width * s, h = photo.height * s; page.drawImage(photo, { x: W - MR - w, y: top - 8 - h, width: w, height: h }); y = Math.min(y, top - 8 - h - 6); }
     y -= 10;
     const heading = t => { ensure(40); y -= 8; text(t, ML, 13, B, acc); y -= 6; page.drawLine({ start: { x: ML, y }, end: { x: W - MR, y }, thickness: 0.8, color: acc }); y -= 16; };
@@ -152,7 +163,7 @@
     for (const ab of d.abschnitte || []) {
       const es = (ab.eintraege || []).filter(e => T(e.titel) || T(e.wo) || T(e.text)).sort((a, b) => sortKey(b) - sortKey(a));
       if (!es.length) continue;
-      heading(ab.titel);
+      heading(t(ab.titel));
       for (const e of es) {
         const tl = wrap(e.titel, B, 10.5, contentW), wl = wrap(e.wo, R, 10, contentW);
         const desc = String(e.text || '').split('\n').map(T).filter(Boolean).flatMap(l => { const bullet = /^[-•*–]\s*/.test(l), ls = wrap(l.replace(/^[-•*–]\s*/, ''), R, 10, contentW - (bullet ? 10 : 0)); return ls.map((x, i) => ({ x, bullet: bullet && i === 0, ind: bullet })); });
@@ -165,16 +176,18 @@
       }
     }
     const kn = (d.kenntnisse || []).filter(k => T(k.art) && T(k.wert));
-    if (kn.length) { heading('Kenntnisse'); for (const k of kn) { const ls = wrap(k.wert, R, 10, contentW); ensure(ls.length * 14 + 4); text(k.art, ML, 10, R, grey); for (const l of ls) { text(l, ML + COL, 10); y -= 14; } y -= 4; } }
-    if (T(d.interessen)) { heading('Interessen'); for (const l of wrap(d.interessen, R, 10, contentW)) { ensure(14); text(l, ML + COL, 10); y -= 14; } }
+    if (kn.length) { heading(t('Kenntnisse')); for (const k of kn) { const ls = wrap(k.wert, R, 10, contentW); ensure(ls.length * 14 + 4); text(t(k.art), ML, 10, R, grey); for (const l of ls) { text(l, ML + COL, 10); y -= 14; } y -= 4; } }
+    if (T(d.interessen)) { heading(t('Interessen')); for (const l of wrap(d.interessen, R, 10, contentW)) { ensure(14); text(l, ML + COL, 10); y -= 14; } }
     // Ort, Datum, Unterschriftslinie (unterschreiben später mit dem Werkzeug „Unterschrift“)
-    ensure(70); y -= 28;
-    text([T(d.unterschriftOrt), T(d.datum)].filter(Boolean).join(', '), ML, 10.5);
-    page.drawLine({ start: { x: ML + COL + 80, y: y - 2 }, end: { x: W - MR, y: y - 2 }, thickness: 0.6, color: grey });
-    y -= 14; text(T(d.name), ML + COL + 80, 9, R, grey);
-    doc.setTitle('Lebenslauf ' + T(d.name)); doc.setAuthor(T(d.name)); doc.setSubject('Lebenslauf'); doc.setCreator('PDFMy (pdfmy.de)'); doc.setProducer('PDFMy');
+    if (unterschrift) {
+      ensure(70); y -= 28;
+      text([T(d.unterschriftOrt), T(d.datum)].filter(Boolean).join(', '), ML, 10.5);
+      page.drawLine({ start: { x: ML + COL + 80, y: y - 2 }, end: { x: W - MR, y: y - 2 }, thickness: 0.6, color: grey });
+      y -= 14; text(T(d.name), ML + COL + 80, 9, R, grey);
+    }
+    doc.setTitle(t('titel') + ' ' + T(d.name)); doc.setAuthor(T(d.name)); doc.setSubject(t('titel')); doc.setLanguage(t('lang')); doc.setCreator('PDFMy (pdfmy.de)'); doc.setProducer('PDFMy');
     return doc.save();
   }
-  const api = { kindOf, order, titles, fileName, employer, position, nachweisBlocks, toCsv, parseCsv, lebenslaufPdf, sortKey, LV_ABSCHNITTE, ARTEN, ERGEBNISSE, COLS, KIND_LABEL };
+  const api = { kindOf, order, titles, fileName, employer, position, nachweisBlocks, toCsv, parseCsv, lebenslaufPdf, sortKey, DOC_LANGS, docT, LV_ABSCHNITTE, ARTEN, ERGEBNISSE, COLS, KIND_LABEL };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Bewerbung = api;
 })(typeof self !== 'undefined' ? self : this);

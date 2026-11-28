@@ -164,6 +164,14 @@ body.hotmode #hotPanel{position:fixed;inset:0;z-index:9000;overflow:auto;padding
 .propdl dd{margin:0;overflow-wrap:anywhere}
 .proph{margin:14px 0 6px;font-size:14px}
 .propdlg{width:min(560px,calc(100vw - 32px))}
+/* Bewerbungen, Nachweis, Lebenslauf (app-v367): breiter, Felder unten bündig, leere Liste als Hinweis statt Kasten, Knöpfe nach Wichtigkeit */
+#bwgDlg.sharedlg,#lvDlg.sharedlg,#qrrDlg.sharedlg{width:min(680px,calc(100vw - 32px))}
+.propdlg .anlrow{align-items:flex-end}
+@media (max-width:520px){.propdlg .anlrow{flex-direction:column;align-items:stretch;gap:0}}
+.bwgtab:has(td:only-child){border-style:dashed;background:transparent}.bwgtab td:only-child{color:var(--muted);font-style:italic;border:0;padding:10px}
+#bwgDlg form>.dlgrow:last-child>#bwgClose,#lvDlg form>.dlgrow:last-child>#lvClose,#qrrDlg form>.dlgrow:last-child>#qrrClose{margin-right:auto}
+#bwgDlg h4,#lvDlg h4.lvh{margin-top:16px}
+.propdlg>form>.dlgrow:last-child{position:sticky;bottom:-20px;z-index:2;background:var(--panel);margin-bottom:-20px;padding-bottom:16px}   /* Knöpfe bleiben sichtbar, auch bei langem Inhalt */
 .helpsearch{display:flex;gap:6px;margin:-4px 0 14px}
 .helpsearch input{flex:1;min-width:0}
 code.sel{user-select:all;-webkit-user-select:all}
@@ -612,7 +620,8 @@ header{height:64px;padding:0 20px!important;gap:20px;flex-wrap:nowrap;position:r
 #btnSave .ic{stroke:currentColor}
 body:not(.has-doc) .hsep{display:none}
 .menu-list{top:calc(100% + 8px);min-width:290px;padding:6px;border-radius:12px;box-shadow:var(--sh-lg);max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}.menu-list>*{flex-shrink:0}
-.mi{justify-content:flex-start;align-items:center;gap:12px;padding:0 10px;min-height:38px;white-space:normal;font-weight:500;color:var(--text)}
+.mi{justify-content:flex-start;align-items:center;gap:12px;padding:5px 10px;min-height:38px;white-space:normal;font-weight:500;color:var(--text);line-height:1.3}
+.mi>span{text-wrap:pretty}   /* zweizeilige Einträge mit Abstand zum nächsten, kein einzelnes „…“ in der zweiten Zeile (wo unterstützt) */
 .mi:hover{background:var(--hover)}
 .mi .ic{color:var(--muted)}
 .mi:hover .ic{color:var(--accent)}
@@ -1251,27 +1260,30 @@ html.i18n-wait body{visibility:hidden}
         <div class="mgrp" role="group" aria-labelledby="mgTax"><div class="mgh" id="mgTax">Rechnungen & Steuer</div>
           <button class="mi" id="btnEinvChk" title="Pflichtangaben und Rechenregeln einer empfangenen E-Rechnung prüfen (EN 16931, XRechnung)"><svg class="ic" aria-hidden="true"><use href="#i-clipboard-check"/></svg><span>E-Rechnung prüfen …</span></button>
           <button class="mi" id="btnEinv" title="Ausgangsrechnung als ZUGFeRD-PDF oder XRechnung (EN 16931)"><svg class="ic" aria-hidden="true"><use href="#i-file-plus"/></svg><span>E-Rechnung schreiben …</span></button>
-          <button class="mi" id="btnTax" title="Belege eines Monats als ZIP mit Belegliste (Excel) und DATEV-Importdatei"><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg><span>Belege für Steuerberater (DATEV) …</span></button>
+          <button class="mi" id="btnQrr" data-land-nur="CH" title="Rechnung mit Zahlteil und Swiss QR Code (QR-Rechnung nach den Richtlinien von SIX) – als eigene Seite oder an die geöffnete Rechnung angehängt"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>QR-Rechnung erstellen …</span></button>
+          <button class="mi" id="btnTax" data-land-text="steuerberater" title="Belege eines Monats als ZIP mit Belegliste (Excel) und DATEV-Importdatei"><svg class="ic" aria-hidden="true"><use href="#i-briefcase-business"/></svg><span>Belege für Steuerberater (DATEV) …</span></button>
           <button class="mi doc" id="btnBewirt" title="Angaben zur Bewirtung (Anlass, Teilnehmer, Betrag) als Seite an den Gaststättenbeleg anfügen – für Steuerberater und Finanzamt"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Bewirtungsbeleg ausfüllen …</span></button>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgClub"><div class="mgh" id="mgClub">Verein & Ehrenamt</div>
           <button class="mi" id="btnVV" title="Ausfüllbare Formulare für Vereine, Kitas und Elternbeiräte: Mitgliedsantrag mit SEPA-Mandat, Einwilligung zu Fotos, Einverständnis für Fahrten"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Vereinsvorlagen …</span></button>
           <button class="mi" id="btnMv"title="Mitgliederversammlung vorbereiten: Einladung mit Tagesordnung und Fristen, Anwesenheitsliste und ausfüllbares Protokoll – auf Wunsch je Mitglied ein Brief aus der Mitgliederliste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Mitgliederversammlung …</span></button>
-          <button class="mi" id="btnZuw" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
+          <button class="mi" id="btnZuw" data-land-nur="DE" title="Spendenquittung für gemeinnützige Vereine nach dem amtlichen Muster – einzeln oder für alle Spender aus einer Excel-Liste"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Zuwendungsbestätigung (Spendenquittung) …</span></button>
           <button class="mi" id="btnKb" title="Kassenbericht für die Mitgliederversammlung aus dem Kontoauszug (CSV/Excel) oder Kassenbuch – mit steuerlichen Bereichen, Abgleich und Prüfvermerk"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Kassenbericht (Jahreshauptversammlung) …</span></button>
-          <button class="mi" id="btnSepa" title="Mitgliedsbeiträge per Lastschrift einziehen: aus der Mitgliederliste (Excel/CSV) die SEPA-Datei für das Online-Banking erstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>SEPA-Lastschrift für Beiträge …</span></button>
-          <button class="mi" id="btnBw" title="Für Mitglieder ohne Lastschrift: Beitragsrechnung mit GiroCode je Mitglied, danach Abgleich mit dem Kontoauszug – wer hat bezahlt, wer ist offen, Zahlungserinnerungen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Beiträge per Überweisung …</span></button>
+          <button class="mi" id="btnSepa" data-land-nur="DE AT XX" title="Mitgliedsbeiträge per Lastschrift einziehen: aus der Mitgliederliste (Excel/CSV) die SEPA-Datei für das Online-Banking erstellen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>SEPA-Lastschrift für Beiträge …</span></button>
+          <button class="mi" id="btnBw" data-land-nur="DE AT XX" title="Für Mitglieder ohne Lastschrift: Beitragsrechnung mit GiroCode je Mitglied, danach Abgleich mit dem Kontoauszug – wer hat bezahlt, wer ist offen, Zahlungserinnerungen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Beiträge per Überweisung …</span></button>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgJob"><div class="mgh" id="mgJob">Bewerbung</div>
           <button class="mi" id="btnBwgMappe" title="Anschreiben, Lebenslauf und Zeugnisse wählen – PDFMy ordnet sie, setzt Lesezeichen und speichert eine kleine PDF für Portal und E-Mail"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Bewerbungsmappe …</span></button>
           <button class="mi" id="btnLv" title="Tabellarischen Lebenslauf ausfüllen – mit Foto, als PDF oder direkt in die Bewerbungsmappe"><svg class="ic" aria-hidden="true"><use href="#i-user-round"/></svg><span>Lebenslauf erstellen …</span></button>
-          <button class="mi" id="btnBwg" title="Liste Ihrer Bewerbungen führen und als Nachweis der Eigenbemühungen für Jobcenter oder Agentur für Arbeit speichern"><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg><span>Bewerbungen und Nachweis …</span></button>
+          <button class="mi" id="btnBwg" data-land-text="nachweisMenu" title="Liste Ihrer Bewerbungen führen und als Nachweis der Eigenbemühungen für Jobcenter oder Agentur für Arbeit speichern"><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg><span>Bewerbungen und Nachweis …</span></button>
+          <label class="mi langmi" for="docLang" title="In dieser Sprache erstellt PDFMy Lebenslauf und Bewerbungsmappe – unabhängig von der Sprache der Oberfläche. Der Nachweis für Jobcenter und Agentur für Arbeit ist immer deutsch."><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Sprache der Dokumente</span><select id="docLang" class="docLangSel" aria-label="Sprache der Dokumente"><option value="de">Deutsch</option><option value="en">English</option></select></label>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgSet"><div class="mgh" id="mgSet">Einstellungen</div>
           <button class="mi" id="btnSetup" title="Name, Ablageordner, Scanner und PDF-Standard einrichten"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einrichtung …</span></button>
           <button class="mi" id="btnProfile" title="Eigene Angaben für Formulare – nur in diesem Browser gespeichert, nie übertragen"><svg class="ic" aria-hidden="true"><use href="#i-user-round"/></svg><span>Meine Angaben …</span></button>
           <button class="mi" id="btnSettings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einstellungen</span></button>
           <label class="mi langmi" for="uiLang"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Sprache</span><select id="uiLang" translate="no" aria-label="Sprache der Oberfläche · Language"></select></label>
+          <label class="mi langmi" for="landSel" title="Manche Funktionen gibt es nur in einem Land oder sie heißen dort anders (z. B. AMS in Österreich, RAV in der Schweiz). PDFMy vermutet das Land aus Zeitzone und Sprache – ohne Ortung."><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span>Land</span><select id="landSel" aria-label="Land"></select></label>
           <button class="mi" id="btnPrinter" title="Drucker „PDFMy“: in jedem Programm drucken – das Dokument öffnet sich in PDFMy (über pdfmy Scan, die Datei bleibt auf diesem Rechner)"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg><span>Drucker „PDFMy“ einrichten …</span></button>
           <button class="mi" id="btnDefaultPdf" title="PDF-Dateien per Doppelklick (Explorer bzw. Finder) in PDFMy öffnen"><svg class="ic" aria-hidden="true"><use href="#i-file-input"/></svg><span>Als Standard für PDFs festlegen …</span></button>
           <button class="mi" id="btnAi" title="KI-Assistent einrichten: KI des Browsers auf diesem Gerät, ohne Upload"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>KI-Assistent …</span></button>
@@ -1718,12 +1730,13 @@ html.i18n-wait body{visibility:hidden}
       <div class="field"><label for="rpBody">Text</label><textarea id="rpBody" rows="12"></textarea></div>
     </div>
     <div>
-      <div class="field"><label for="rpFrom">Ihre Anschrift (Absender, wird gemerkt)</label><textarea id="rpFrom" rows="4" placeholder="Mentor GmbH&#10;Am Hoppenhof 30a&#10;33104 Paderborn"></textarea></div>
+      <div class="field"><label for="rpFrom">Ihre Anschrift (Absender, wird gemerkt)</label><textarea id="rpFrom" rows="4" placeholder="Erika Mustermann&#10;Musterstraße 1&#10;12345 Musterstadt"></textarea></div>
       <div class="field"><label for="rpName">Unterzeichner</label><input id="rpName" placeholder="Name unter dem Gruß"></div>
       <div class="field"><b>Briefbogen</b><p class="hint" id="rpLhInfo">Ohne Briefbogen schreibt PDFMy einen schlichten Briefkopf.</p>
         <button type="button" id="rpLh">Briefbogen (PDF) wählen …</button> <button type="button" id="rpLhOff" class="linkbtn" hidden>entfernen</button>
         <input id="rpLhFile" type="file" accept="application/pdf,.pdf" hidden></div>
       <p class="hint">Format: DIN 5008 Form B – passt in Fensterumschläge DL/C6/C5, mit Falz- und Lochmarke.</p>
+      <div class="field"><label for="rpLese">Zusätzlich eine Lesefassung in</label><select id="rpLese"></select><p class="hint">Der Brief geht auf Deutsch hinaus. Die Lesefassung zeigt Ihnen, was darin steht – möglich bei einem unveränderten Textbaustein.</p></div>
     </div>
   </div>
   <div class="dlgrow"><button type="button" id="rpCancel">Abbrechen</button><button type="button" id="rpOpen" title="Brief in PDFMy öffnen: unterschreiben, signieren, teilen, ablegen">In PDFMy öffnen</button><button type="submit" class="primary">Als PDF speichern</button></div>
@@ -2469,6 +2482,8 @@ html.i18n-wait body{visibility:hidden}
 </form></dialog>
 <dialog id="lvDlg" class="sharedlg propdlg" aria-labelledby="lvT"><form id="lvForm">
   <h3 class="dlgtitle" id="lvT">Lebenslauf erstellen</h3>
+  <div class="anlrow"><div class="field"><label for="lvLang">Sprache des Lebenslaufs</label><select id="lvLang" class="docLangSel"><option value="de">Deutsch</option><option value="en">English</option></select></div></div>
+  <p class="hint lvNotDe" hidden>Bitte schreiben Sie Ihre Angaben auf Deutsch (oder bei einem englischen Lebenslauf auf Englisch) – der Lebenslauf ist für Arbeitgeber in Deutschland.</p>
   <p class="hint" style="margin-top:0">Füllen Sie aus, was auf Sie zutrifft – leere Felder lässt PDFMy weg. Die neueste Station kommt automatisch nach oben. Ihre Eingaben bleiben nur in diesem Browser gespeichert.</p>
   <h4 class="lvh">Persönliche Daten</h4>
   <div class="anlrow"><div class="field"><label for="lvName">Vor- und Nachname</label><input id="lvName" autocomplete="name"></div><div class="field"><label for="lvGeburt">Geburtsdatum (freiwillig)</label><input id="lvGeburt" placeholder="TT.MM.JJJJ"></div></div>
@@ -2483,9 +2498,27 @@ html.i18n-wait body{visibility:hidden}
   <p id="lvMsg" class="hint" role="status"></p>
   <div class="dlgrow"><button type="button" id="lvClose">Schließen</button><button type="button" id="lvLeeren" title="Alle Eingaben dieses Lebenslaufs löschen">Neu beginnen</button><button type="button" id="lvSave">Als PDF speichern</button><button type="submit" class="primary" id="lvMappe">In die Bewerbungsmappe übernehmen</button></div>
 </form></dialog>
+<dialog id="qrrDlg" class="sharedlg propdlg" aria-labelledby="qrrT"><form id="qrrForm">
+  <h3 class="dlgtitle" id="qrrT">QR-Rechnung erstellen</h3>
+  <p class="hint" style="margin-top:0">Zahlteil mit Empfangsschein und Swiss QR Code – so zahlt man in der Schweiz und in Liechtenstein. Ihre Angaben als Rechnungssteller merkt sich PDFMy auf diesem Gerät.</p>
+  <h4>Konto und Zahlungsempfänger</h4>
+  <div class="anlrow"><div class="field"><label for="qrrKonto">IBAN oder QR-IBAN</label><input id="qrrKonto" translate="no" placeholder="CH.. .... .... .... .... ." autocomplete="off" spellcheck="false"></div><div class="field"><label for="qrrEName">Name oder Firma</label><input id="qrrEName" autocomplete="organization"></div></div>
+  <div class="anlrow"><div class="field"><label for="qrrEStr">Strasse</label><input id="qrrEStr"></div><div class="field"><label for="qrrENr">Nr.</label><input id="qrrENr"></div></div>
+  <div class="anlrow"><div class="field"><label for="qrrEPlz">PLZ</label><input id="qrrEPlz"></div><div class="field"><label for="qrrEOrt">Ort</label><input id="qrrEOrt"></div><div class="field"><label for="qrrELand">Land</label><select id="qrrELand" translate="no"><option value="CH">CH</option><option value="LI">LI</option></select></div></div>
+  <h4>Zahlung</h4>
+  <div class="anlrow"><div class="field"><label for="qrrBetrag">Betrag (leer = zum Ausfüllen)</label><input id="qrrBetrag" inputmode="decimal" placeholder="0.00"></div><div class="field"><label for="qrrWaehrung">Währung</label><select id="qrrWaehrung" translate="no"><option>CHF</option><option>EUR</option></select></div><div class="field"><label for="qrrSprache">Sprache des Zahlteils</label><select id="qrrSprache" translate="no"><option value="de">Deutsch</option><option value="fr">Français</option><option value="it">Italiano</option><option value="en">English</option></select></div></div>
+  <div class="anlrow"><div class="field"><label for="qrrRef">Referenz (bei QR-IBAN Pflicht)</label><input id="qrrRef" spellcheck="false"></div><div class="field"><label for="qrrNr">Aus Rechnungsnummer</label><div class="lvrow"><input id="qrrNr" placeholder="z. B. 2026-0042"><button type="button" id="qrrRefMach">Referenz bilden</button></div></div></div>
+  <div class="field"><label for="qrrMitt">Mitteilung (z. B. Rechnung 2026-0042)</label><input id="qrrMitt" maxlength="140"></div>
+  <h4>Zahlungspflichtiger (freiwillig)</h4>
+  <div class="anlrow"><div class="field"><label for="qrrZName">Name</label><input id="qrrZName"></div><div class="field"><label for="qrrZStr">Strasse</label><input id="qrrZStr"></div><div class="field"><label for="qrrZNr">Nr.</label><input id="qrrZNr"></div></div>
+  <div class="anlrow"><div class="field"><label for="qrrZPlz">PLZ</label><input id="qrrZPlz"></div><div class="field"><label for="qrrZOrt">Ort</label><input id="qrrZOrt"></div><div class="field"><label for="qrrZLand">Land</label><input id="qrrZLand" value="CH" maxlength="2"></div></div>
+  <label class="cb" id="qrrAnhangL"><input type="checkbox" id="qrrAnhang" checked> An die geöffnete Rechnung als letzte Seite anhängen</label>
+  <p id="qrrMsg" class="hint" role="status"></p>
+  <div class="dlgrow"><button type="button" id="qrrClose">Schließen</button><button type="submit" class="primary" id="qrrGo">QR-Rechnung erstellen</button></div>
+</form></dialog>
 <dialog id="bwgDlg" class="sharedlg propdlg" aria-labelledby="bwgT"><form id="bwgForm">
-  <h3 class="dlgtitle" id="bwgT">Bewerbungen und Nachweis der Eigenbemühungen</h3>
-  <p class="hint" style="margin-top:0">Tragen Sie jede Bewerbung ein. Für das Jobcenter oder die Agentur für Arbeit speichert PDFMy daraus den Nachweis Ihrer Eigenbemühungen als PDF – zum Ausdrucken, Unterschreiben oder Hochladen. Die Liste bleibt nur in diesem Browser.</p>
+  <h3 class="dlgtitle" id="bwgT" data-land-text="nachweisDlg">Bewerbungen und Nachweis der Eigenbemühungen</h3>
+  <p class="hint" style="margin-top:0" data-land-text="nachweisHinweis">Tragen Sie jede Bewerbung ein. Für das Jobcenter oder die Agentur für Arbeit speichert PDFMy daraus den Nachweis Ihrer Eigenbemühungen als PDF – zum Ausdrucken, Unterschreiben oder Hochladen. Die Liste bleibt nur in diesem Browser.</p>
   <div class="anlrow"><div class="field"><label for="bwgDatum">Datum</label><input id="bwgDatum" type="date" required></div><div class="field"><label for="bwgArt">Art der Bewerbung</label><select id="bwgArt"><option value="Online-Portal">Online-Portal</option><option value="E-Mail">E-Mail</option><option value="Post">Post</option><option value="Persönlich">Persönlich</option><option value="Telefonisch">Telefonisch</option></select></div></div>
   <div class="anlrow"><div class="field"><label for="bwgFirma">Arbeitgeber</label><input id="bwgFirma" required autocomplete="organization"></div><div class="field"><label for="bwgOrt">Ort</label><input id="bwgOrt"></div></div>
   <div class="anlrow"><div class="field"><label for="bwgStelle">Stelle</label><input id="bwgStelle"></div><div class="field"><label for="bwgQuelle">Stellenangebot gefunden über</label><input id="bwgQuelle" list="bwgQuellen" placeholder="z. B. Jobbörse der Agentur für Arbeit"><datalist id="bwgQuellen"><option value="Jobbörse der Agentur für Arbeit"><option value="Vermittlungsvorschlag Jobcenter/Agentur"><option value="Zeitung"><option value="Internet-Stellenbörse"><option value="Firmen-Website"><option value="Initiativbewerbung"><option value="Empfehlung"></datalist></div></div>
@@ -2494,8 +2527,10 @@ html.i18n-wait body{visibility:hidden}
   <div class="bwgtab" role="region" aria-label="Eingetragene Bewerbungen" tabindex="0"><table id="bwgList"></table></div>
   <p id="bwgMsg" class="hint" role="status"></p>
   <h4 style="margin:10px 0 4px">Nachweis speichern</h4>
+  <p class="hint bwgNotDe" hidden data-land-text="nachweisDeutsch">Der Nachweis wird immer auf Deutsch erstellt – so braucht ihn das Jobcenter bzw. die Agentur für Arbeit. Art und Ergebnis Ihrer Bewerbungen stehen darin automatisch auf Deutsch.</p>
   <div class="anlrow"><div class="field"><label for="bwgVon">Zeitraum von</label><input id="bwgVon" type="date"></div><div class="field"><label for="bwgBis">bis</label><input id="bwgBis" type="date"></div></div>
-  <div class="anlrow"><div class="field"><label for="bwgName">Ihr Name</label><input id="bwgName" autocomplete="name"></div><div class="field"><label for="bwgNr">Kunden- oder BG-Nummer (freiwillig)</label><input id="bwgNr" autocomplete="off"></div></div>
+  <div class="anlrow"><div class="field"><label for="bwgName">Ihr Name</label><input id="bwgName" autocomplete="name"></div><div class="field"><label for="bwgNr" data-land-text="nummerLabel">Kunden- oder BG-Nummer (freiwillig)</label><input id="bwgNr" autocomplete="off"></div></div>
+  <div class="anlrow"><div class="field"><label for="bwgLese">Zusätzlich eine Lesefassung in</label><select id="bwgLese"></select></div><p class="hint" style="align-self:end;margin:0 0 4px">Nur zum Verstehen – abgegeben wird immer die deutsche Fassung.</p></div>
   <input type="file" id="bwgIn" hidden accept=".csv,.txt">
   <div class="dlgrow"><button type="button" id="bwgClose">Schließen</button><button type="button" id="bwgCsvIn" title="Eine früher gespeicherte Liste (Excel/CSV) laden">Liste laden …</button><button type="button" id="bwgCsv">Als Excel-Liste</button><button type="button" class="primary" id="bwgPdf">Nachweis als PDF</button></div>
 </form></dialog>
@@ -2891,6 +2926,8 @@ html.i18n-wait body{visibility:hidden}
 <script src="js/beitrag.js"></script>
 <script src="js/preflight.js"></script>
 <script src="js/bewerbung.js"></script>
+<script src="js/land.js"></script>
+<script src="js/qrrechnung.js"></script>
 <script src="js/pdfinc.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/app.js"></script>

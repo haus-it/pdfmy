@@ -576,8 +576,10 @@
     receipt: { label: 'Eingang bestätigen', text: 'hiermit bestätigen wir den Eingang Ihres Schreibens vom {datum}{bezug_kurz}. Wir werden uns zeitnah mit Ihnen in Verbindung setzen.' },
     address: { label: 'Adressänderung', text: 'bitte ändern Sie meine Anschrift{bezug_kurz} ab sofort wie folgt:\n\n\n\nVielen Dank.' },
   };
-  function fillTemplate(key, m = {}, today = new Date()) {
-    const t = TEMPLATES[key]; if (!t) return '';
+  // tr: Übersetzer für die Lesefassung in der Sprache des Nutzers (app-v366); Platzhalter {datum} … bleiben in der Übersetzung erhalten
+  function fillTemplate(key, m = {}, today = new Date(), tr = null) {
+    const t0 = TEMPLATES[key]; if (!t0) return '';
+    const t = tr ? { ...t0, text: tr(t0.text) } : t0;
     const de = d => { if (!d) return '…'; const [y, mo, da] = d.split('-'); return `${da}.${mo}.${y}`; };
     const ref = [m.invoiceNo && `Rechnung ${m.invoiceNo}`, m.customerNo && `Kunden-Nr. ${m.customerNo}`, m.reference && !m.invoiceNo && `Zeichen ${m.reference}`].filter(Boolean).join(', ');
     return t.text.replace(/\{datum\}/g, de(m.date)).replace(/\{frist\}/g, de(m.deadline)).replace(/\{betrag\}/g, m.amount || '…')

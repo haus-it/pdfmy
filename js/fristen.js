@@ -25,6 +25,10 @@
     ['HE', 'Hessen'], ['MV', 'Mecklenburg-Vorpommern'], ['NI', 'Niedersachsen'], ['NW', 'Nordrhein-Westfalen'], ['RP', 'Rheinland-Pfalz'],
     ['SL', 'Saarland'], ['SN', 'Sachsen'], ['ST', 'Sachsen-Anhalt'], ['SH', 'Schleswig-Holstein'], ['TH', 'Thüringen']];
 
+  // Österreich und Schweiz (app-v367): eigene Feiertage, Fristarten und Regeln; staat('NW') = 'DE'
+  const STAATEN = [['AT', 'Österreich'], ['CH', 'Schweiz']];
+  const staat = land => land === 'AT' || land === 'CH' ? land : 'DE';
+
   function easter(y) {   // Gaußsche Osterformel (gregorianisch)
     const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
     const h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
@@ -36,6 +40,16 @@
   function holidays(y, land = '') {
     const key = y + land; if (cache.has(key)) return cache.get(key);
     const e = easter(y), o = n => add(e, n), has = (...l) => l.includes(land);
+    if (land === 'AT') {   // § 7 Abs. 2 ARG – bundesweit; Landespatrone sind keine gesetzlichen Feiertage, Karfreitag seit 2019 nicht mehr
+      const h = new Map([[`${y}-01-01`, 'Neujahr'], [`${y}-01-06`, 'Heilige Drei Könige'], [o(1), 'Ostermontag'], [`${y}-05-01`, 'Staatsfeiertag'], [o(39), 'Christi Himmelfahrt'],
+        [o(50), 'Pfingstmontag'], [o(60), 'Fronleichnam'], [`${y}-08-15`, 'Mariä Himmelfahrt'], [`${y}-10-26`, 'Nationalfeiertag'], [`${y}-11-01`, 'Allerheiligen'],
+        [`${y}-12-08`, 'Mariä Empfängnis'], [`${y}-12-25`, 'Christtag'], [`${y}-12-26`, 'Stefanitag']]);
+      cache.set(key, h); return h;
+    }
+    if (land === 'CH') {   // nur, was in allen Kantonen gilt (Neujahr, Auffahrt, Weihnachten), und die Bundesfeier (1. August)
+      const h = new Map([[`${y}-01-01`, 'Neujahr'], [o(39), 'Auffahrt'], [`${y}-08-01`, 'Bundesfeier'], [`${y}-12-25`, 'Weihnachten']]);
+      cache.set(key, h); return h;
+    }
     const h = new Map([[`${y}-01-01`, 'Neujahr'], [o(-2), 'Karfreitag'], [o(1), 'Ostermontag'], [`${y}-05-01`, 'Tag der Arbeit'],
       [o(39), 'Christi Himmelfahrt'], [o(50), 'Pfingstmontag'], [`${y}-10-03`, 'Tag der Deutschen Einheit'], [`${y}-12-25`, '1. Weihnachtstag'], [`${y}-12-26`, '2. Weihnachtstag']]);
     if (has('BW', 'BY', 'ST')) h.set(`${y}-01-06`, 'Heilige Drei Könige');
@@ -80,8 +94,29 @@
     { id: 'klagefg', grp: 'Steuern', label: 'Klage beim Finanzgericht', n: 1, unit: 'monate', law: '§ 47 Abs. 1 FGO', start: 'bekanntgabe', bekanntgabe: '§ 122 Abs. 2 AO', startLabel: 'Datum der Einspruchsentscheidung' },
     { id: 'widerspruch', grp: 'Verwaltung', label: 'Widerspruch gegen Verwaltungsakt', n: 1, unit: 'monate', law: '§ 70 Abs. 1 VwGO', start: 'bekanntgabe', bekanntgabe: '§ 41 Abs. 2 VwVfG' },
     { id: 'klagevg', grp: 'Verwaltung', label: 'Klage beim Verwaltungsgericht', n: 1, unit: 'monate', law: '§ 74 Abs. 1 VwGO', start: 'zustellung' },
-    { id: 'eigen', grp: 'Eigene Frist', label: 'Frist laut Schreiben (z. B. „binnen zwei Wochen“)', n: 2, unit: 'wochen', law: '', start: 'zustellung' }
+    { id: 'eigen', grp: 'Eigene Frist', label: 'Frist laut Schreiben (z. B. „binnen zwei Wochen“)', n: 2, unit: 'wochen', law: '', start: 'zustellung', staat: '*' },
+    // Österreich: Fristbeginn mit der Zustellung (der Tag zählt nicht, § 32 Abs. 1 AVG), Wochen und Monate wie in Deutschland
+    { id: 'at_bescheid', staat: 'AT', grp: 'Verwaltung', label: 'Beschwerde gegen Bescheid (Verwaltungsgericht)', n: 4, unit: 'wochen', law: '§ 7 Abs. 4 VwGVG', start: 'zustellung' },
+    { id: 'at_abgaben', staat: 'AT', grp: 'Steuern', label: 'Beschwerde gegen Abgabenbescheid (Finanzamt)', n: 1, unit: 'monate', law: '§ 245 Abs. 1 BAO', start: 'zustellung' },
+    { id: 'at_strafverf', staat: 'AT', grp: 'Verwaltung', label: 'Einspruch gegen Strafverfügung', n: 2, unit: 'wochen', law: '§ 49 Abs. 1 VStG', start: 'zustellung' },
+    { id: 'at_berufung', staat: 'AT', grp: 'Zivilprozess', label: 'Berufung', n: 4, unit: 'wochen', law: '§ 464 Abs. 1 ZPO', start: 'zustellung' },
+    { id: 'at_zahlungsbefehl', staat: 'AT', grp: 'Zivilprozess', label: 'Einspruch gegen Zahlungsbefehl', n: 4, unit: 'wochen', law: '§ 248 Abs. 1 ZPO', start: 'zustellung' },
+    // Schweiz: Tagesfristen ab dem Tag nach der Zustellung (Art. 142 Abs. 1 ZPO); Fristenstillstand nach Art. 145 ZPO bzw. Art. 22a VwVG
+    { id: 'ch_berufung', staat: 'CH', grp: 'Zivilprozess', label: 'Berufung', n: 30, unit: 'tage', law: 'Art. 311 Abs. 1 ZPO', start: 'zustellung', still: true },
+    { id: 'ch_beschwerde', staat: 'CH', grp: 'Zivilprozess', label: 'Beschwerde', n: 30, unit: 'tage', law: 'Art. 321 Abs. 1 ZPO', start: 'zustellung', still: true },
+    { id: 'ch_summarisch', staat: 'CH', grp: 'Zivilprozess', label: 'Berufung im summarischen Verfahren', n: 10, unit: 'tage', law: 'Art. 314 Abs. 1 ZPO', start: 'zustellung' },
+    { id: 'ch_verfuegung', staat: 'CH', grp: 'Verwaltung', label: 'Beschwerde gegen Verfügung einer Bundesbehörde', n: 30, unit: 'tage', law: 'Art. 50 Abs. 1 VwVG', start: 'zustellung', still: true, nicht: 'Art. 20 Abs. 1 VwVG', verschieb: 'Art. 20 Abs. 3 VwVG' },
+    { id: 'ch_steuer', staat: 'CH', grp: 'Steuern', label: 'Einsprache gegen Steuerveranlagung (direkte Bundessteuer)', n: 30, unit: 'tage', law: 'Art. 132 Abs. 1 DBG', start: 'zustellung', nicht: '', verschieb: '' },
+    { id: 'ch_strafbefehl', staat: 'CH', grp: 'Straf- und Bussgeldsachen', label: 'Einsprache gegen Strafbefehl', n: 10, unit: 'tage', law: 'Art. 354 Abs. 1 StPO', start: 'zustellung', nicht: 'Art. 90 Abs. 1 StPO', verschieb: 'Art. 90 Abs. 2 StPO' },
+    { id: 'ch_rechtsvorschlag', staat: 'CH', grp: 'Betreibung', label: 'Rechtsvorschlag gegen Zahlungsbefehl', n: 10, unit: 'tage', law: 'Art. 74 Abs. 1 SchKG', start: 'zustellung', nicht: 'Art. 31 SchKG', verschieb: 'Art. 31 SchKG' }
   ];
+  // Fristarten für ein Land: deutsche Arten haben kein staat-Feld
+  const artenFuer = land => ARTEN.filter(a => a.staat === '*' || (a.staat || 'DE') === staat(land));
+  // Fristenstillstand Schweiz (Art. 145 Abs. 1 ZPO, Art. 22a Abs. 1 VwVG): 7. Tag vor bis 7. Tag nach Ostern, 15.7.–15.8., 18.12.–2.1.
+  function stillstand(s) {
+    const e = easter(+s.slice(0, 4)), md = s.slice(5);
+    return (s >= add(e, -7) && s <= add(e, 7)) || (md >= '07-15' && md <= '08-15') || md >= '12-18' || md <= '01-02';
+  }
   const UNIT = { tage: ['Tag', 'Tage'], wochen: ['Woche', 'Wochen'], monate: ['Monat', 'Monate'], jahre: ['Jahr', 'Jahre'] };
   const span = (n, unit) => `${n} ${UNIT[unit][n === 1 ? 0 : 1]}`;
 
@@ -91,7 +126,11 @@
      'datum' = Datum ist bereits der Tag der Bekanntgabe/Zustellung (z. B. Zustellungsurkunde).
      Ergebnis: { ende, vorfrist, beginn, schritte: [Text …], hinweise: [Text …] } oder null bei ungültiger Eingabe */
   function berechne(o) {
-    const a = ARTEN.find(x => x.id === o.art) || null, n = +(o.n ?? a?.n), unit = o.unit || a?.unit, land = o.land || '';
+    const a = ARTEN.find(x => x.id === o.art) || null, n = +(o.n ?? a?.n), unit = o.unit || a?.unit, land = o.land || '', st = staat(land);
+    // Rechtsangaben im Rechenweg: je Land, abweichend je Fristart (Schweiz: VwVG, StPO, SchKG); leer = ohne Zitat
+    const NICHT = a?.nicht ?? { DE: '§ 187 Abs. 1 BGB', AT: '§ 32 Abs. 1 AVG', CH: 'Art. 142 Abs. 1 ZPO' }[st];
+    const VERSCHIEB = a?.verschieb ?? { DE: '§ 222 Abs. 2 ZPO, § 193 BGB, § 108 Abs. 3 AO', AT: '§ 33 Abs. 2 AVG, § 108 Abs. 3 BAO, § 126 Abs. 3 ZPO', CH: 'Art. 142 Abs. 3 ZPO' }[st];
+    const MONATSLETZT = { DE: '§ 188 Abs. 3 BGB', AT: '§ 32 Abs. 2 AVG, § 108 Abs. 2 BAO', CH: 'Art. 142 Abs. 2 ZPO' }[st];
     if (!/^\d{4}-\d{2}-\d{2}$/.test(o.datum || '') || !(n > 0) || !UNIT[unit]) return null;
     const schritte = [], hinweise = [];
     let beginn = o.datum;
@@ -102,16 +141,25 @@
       if (beginn !== raw) schritte.push(`${de(raw)} ist ${why(raw, land)} → Bekanntgabe am nächsten Werktag, ${weekday(beginn)}, ${de(beginn)}`);
       if (/VwVfG/.test(a.bekanntgabe) && beginn !== raw) hinweise.push('Ob sich die Bekanntgabe nach § 41 VwVfG bei Wochenende oder Feiertag verschiebt, ist umstritten – sicherer ist, die Frist ab dem vierten Tag zu berechnen.');
       hinweise.push('Ist der Bescheid nachweislich später zugegangen, gilt der spätere Tag – die Behörde muss den Zugang im Zweifel beweisen.');
-    } else schritte.push(`${a?.startLabel || (a?.start === 'bekanntgabe' ? 'Bekanntgabe' : a?.start === 'zugang' ? 'Zugang' : 'Zustellung')} am ${weekday(beginn)}, ${de(beginn)} (dieser Tag zählt nicht mit, § 187 Abs. 1 BGB)`);
-    const roh = addPeriod(beginn, n, unit);
-    schritte.push(`+ ${span(n, unit)}${a?.law ? ` (${a.law})` : ''} → ${weekday(roh)}, ${de(roh)}${unit === 'monate' && +roh.slice(8) < +beginn.slice(8) ? ' (Monatsletzter, § 188 Abs. 3 BGB)' : ''}`);
+    } else schritte.push(`${a?.startLabel || (a?.start === 'bekanntgabe' ? 'Bekanntgabe' : a?.start === 'zugang' ? 'Zugang' : 'Zustellung')} am ${weekday(beginn)}, ${de(beginn)} (dieser Tag zählt nicht mit${NICHT ? ', ' + NICHT : ''})`);
+    // Schweiz: Tage im Fristenstillstand zählen nicht mit; beginnt die Frist im Stillstand, läuft sie ab dem ersten Tag danach (Art. 146 ZPO)
+    let roh;
+    if (st === 'CH' && a?.still && unit === 'tage' && o.stillstand !== false) {
+      let d = beginn, k = 0, ruht = 0;
+      while (k < n) { d = add(d, 1); if (stillstand(d)) ruht++; else k++; }
+      roh = d;
+      if (ruht) schritte.push(`Fristenstillstand: ${ruht} Tag(e) zählen nicht mit (Art. 145 ZPO, Art. 22a VwVG)`);
+    } else roh = addPeriod(beginn, n, unit);
+    schritte.push(`+ ${span(n, unit)}${a?.law ? ` (${a.law})` : ''} → ${weekday(roh)}, ${de(roh)}${unit === 'monate' && +roh.slice(8) < +beginn.slice(8) ? ` (Monatsletzter, ${MONATSLETZT})` : ''}`);
     const ende = nextWorkday(roh, land);
-    if (ende !== roh) schritte.push(`${de(roh)} ist ${why(roh, land)} → Fristende am nächsten Werktag (§ 222 Abs. 2 ZPO, § 193 BGB, § 108 Abs. 3 AO)`);
+    if (ende !== roh) schritte.push(`${de(roh)} ist ${why(roh, land)} → Fristende am nächsten Werktag${VERSCHIEB ? ' (' + VERSCHIEB + ')' : ''}`);
     schritte.push(`Fristende: ${weekday(ende)}, ${de(ende)}, 24:00 Uhr`);
     // Vorfrist: so viele Tage vorher, auf den Werktag davor gelegt (nie später)
     const vf = +o.vorfrist || 0, vorfrist = vf > 0 ? prevWorkday(add(ende, -vf), land) : '';
     if (vorfrist && vorfrist <= beginn) hinweise.push('Die Vorfrist läge vor dem Fristbeginn – bitte sofort bearbeiten.');
     if (!land) hinweise.push('Ohne Bundesland zählen nur die bundesweiten Feiertage.');
+    if (st === 'AT') hinweise.push('Österreich: bundesweite Feiertage. Fällt das Fristende auf Karfreitag oder den 24. Dezember, endet die Frist am nächsten Werktag – PDFMy rechnet vorsichtig ohne diese Verschiebung. Die Tage des Postlaufs zählen nicht mit.');
+    if (st === 'CH') hinweise.push('Schweiz: berücksichtigt sind nur die Feiertage, die in allen Kantonen gelten. Ein kantonaler Feiertag am Gerichtsort kann die Frist verlängern – PDFMy rechnet vorsichtig. Für Betreibungen gelten eigene Betreibungsferien (Art. 56 SchKG).');
     return { ende, vorfrist: vorfrist > beginn ? vorfrist : '', beginn, roh, schritte, hinweise, art: a, n, unit };
   }
 
@@ -129,6 +177,6 @@
       ...ev(r.ende, `FRISTABLAUF: ${titel}`, true), ...(r.vorfrist ? ev(r.vorfrist, `Vorfrist: ${titel} (Frist ${de(r.ende)})`, true) : []), 'END:VCALENDAR'].join('\r\n') + '\r\n';
   }
 
-  const api = { LAENDER, ARTEN, holidays, isWorkday, nextWorkday, addPeriod, berechne, ics, de };
+  const api = { LAENDER, STAATEN, staat, artenFuer, stillstand, ARTEN, holidays, isWorkday, nextWorkday, addPeriod, berechne, ics, de };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Fristen = api;
 })(typeof self !== 'undefined' ? self : this);

@@ -99,7 +99,7 @@
       add(!f.js && !f.launch && !f.embedded && !f.media, 'Keine aktiven Inhalte oder Dateianhänge', f.js || f.launch || f.embedded || f.media ? 'Skripte und eingebettete Dateien werden von Virenscannern der Unternehmen oft abgewiesen – entfernen.' : '');
       if (info.pages) add(info.textPages >= info.pages ? true : null, 'Text maschinenlesbar', info.textPages >= info.pages ? 'Text auf allen Seiten – Bewerbermanagement-Systeme können ihn auslesen.' : `${info.pages - info.textPages} von ${info.pages} Seite(n) ohne Text (Scans) – Texterkennung empfohlen, damit Systeme Zeugnisse und Lebenslauf lesen können (Hinweis).`);
       const nm = String(info.name || ''), okName = /^[A-Za-z0-9_.-]{1,80}\.pdf$/i.test(nm);
-      if (nm) add(okName ? true : null, 'Dateiname ohne Umlaute und Leerzeichen', okName ? nm : `„${nm}“ – besser z. B. „${R.Bewerbung ? R.Bewerbung.fileName(info.person || '') : 'Bewerbung_Vorname_Nachname.pdf'}“ (Hinweis).`);
+      if (nm) add(okName ? true : null, 'Dateiname ohne Umlaute und Leerzeichen', okName ? nm : `„${nm}“ – besser z. B. „${R.Bewerbung ? R.Bewerbung.fileName(info.person || '', '', R.ausgabeSprache ? R.ausgabeSprache() : 'de') : 'Bewerbung_Vorname_Nachname.pdf'}“ (Hinweis).`);
       let author = ''; try { author = (await R.PDFLib.PDFDocument.load(u8, { ignoreEncryption: true, updateMetadata: false })).getAuthor() || ''; } catch {}
       add(null, 'Titel und Autor in der Datei', `Titel: ${info.title || '–'} · Autor: ${author || '–'} – bitte prüfen, dass dort nichts von einer früheren Bewerbung oder einem anderen Arbeitgeber steht (Hinweis).`);
       if (info.pages > 12) add(null, 'Umfang', `${info.pages} Seiten – üblich sind Anschreiben, Lebenslauf und die wichtigsten Zeugnisse (Hinweis).`);
