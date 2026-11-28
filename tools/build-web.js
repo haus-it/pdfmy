@@ -37,7 +37,7 @@ const write = (rel, text) => { fs.mkdirSync(path.dirname(path.join(OUT, rel)), {
 for (const f of ['js/app.js', 'js/i18n.js', 'js/bea.js', 'js/letter.js', 'js/fristen.js', 'js/formdaten.js', 'js/kommentare.js', 'js/qrstempel.js', 'js/qr.js', 'js/patchcode.js', 'js/formdetect.js', 'js/formcalc.js', 'js/formprofile.js', 'js/reflow.js', 'js/pdfbild.js', 'js/fragen.js', 'js/zuwendung.js', 'js/vereinsvorlagen.js', 'js/kassenbericht.js', 'js/sepalastschrift.js', 'js/versammlung.js', 'js/beitrag.js', 'js/preflight.js', 'js/bewerbung.js', 'js/hotfolder.js', 'js/a11ycheck.js', 'js/bank.js', 'js/pdfsign.js', 'js/pdfcrypt.js', 'js/sigreq.js', 'js/pdfinc.js', 'js/layout.js', 'js/textpdf.js', 'js/glyphless.js', 'js/office.js', 'js/pdfacheck.js', 'js/pptx.js', 'js/slides.js', 'js/pdfverify.js', 'js/docdetect.js', 'js/imaging.js', 'js/compactw.js', 'js/scanw.js', 'js/camera.js', 'js/tools.js', 'js/journal.js', 'js/einvoice.js', 'js/einvoice-out.js', 'js/email.js', 'js/pro.js', 'js/laden.js',
   'icons/mentor-192.png', 'icons/mentor-512.png', 'icons/mentor-maskable-512.png', 'icons/mentor-group.png', 'icons/file-pdf-256.png', 'icons/file-image-256.png', 'icons/app-192.png', 'icons/app-512.png', 'icons/app-maskable-512.png']) copy(f);
 // Wörterbücher der Oberfläche (nur fertige Sprachen, ohne Arbeitsdateien)
-for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) copy('i18n/' + f);
+for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f))) copy('i18n/' + f);   // auch ckb, kmr
 fs.cpSync(path.join(ROOT, 'vendor'), path.join(OUT, 'vendor'), {
   recursive: true, filter: src => !/tesseract-core(-simd)?-lstm\.wasm$|tesseract-core(-simd)?\.wasm/.test(path.basename(src)) || /\.wasm\.js$/.test(src),
 });
@@ -192,7 +192,7 @@ const SELF = (() => {
   (function walk(rel) {
     for (const e of fs.readdirSync(path.join(OUT, rel), { withFileTypes: true })) {
       const r2 = rel ? rel + '/' + e.name : e.name;
-      if (e.isDirectory()) walk(r2); else if (r2 !== 'js/config.js' && !(rel === 'i18n' && !/^[a-z]{2}(-[A-Z]{2})?\.json$/.test(e.name))) files.push({ path: r2, data: fs.readFileSync(path.join(OUT, r2)) });
+      if (e.isDirectory()) walk(r2); else if (r2 !== 'js/config.js' && !(rel === 'i18n' && !/^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(e.name))) files.push({ path: r2, data: fs.readFileSync(path.join(OUT, r2)) });
     }
   })('');
   return { h, sw, conf, nr, stand, files: files.filter(f => /^(js|vendor|icons|i18n)\//.test(f.path)) };
@@ -990,7 +990,7 @@ write('hilfe.html', page('Hilfe', hilfeSrc, ld({ '@context': 'https://schema.org
 copy('tools/site/hilfe.js', 'hilfe.js');
 copy('tools/site/sprache.js', 'sprache.js');
 // Wörterbücher der mehrsprachigen Webseiten (Hilfe, Scanner): i18n/site/<code>.json – erzeugt mit node tools/i18n-check.js --site merge <code>
-for (const f of fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) copy('i18n/site/' + f);
+for (const f of fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f))) copy('i18n/site/' + f);
 // Geräteliste: welche Drucker/Scanner mit PDFMy funktionieren (Brother, Epson, HP, Canon, Büro, Dell, Dokumentenscanner)
 write('presse.html', page('Presse', fs.readFileSync(path.join(ROOT, 'tools', 'site', 'presse.html'), 'utf8')));
 fs.cpSync(path.join(ROOT, 'tools', 'site', 'presse'), path.join(OUT, 'presse'), { recursive: true });   // Pressetexte (Word) und Bilder

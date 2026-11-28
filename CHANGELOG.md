@@ -4,6 +4,14 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-28
 
+### Sieben neue Sprachen: Arabisch, Persisch (Dari), Paschtu, Kurdisch (Sorani, Kurmanci), Somali, Tigrinya (app-v362)
+- Grundlage: Statistik der Bundesagentur für Arbeit (Arbeitslose nach Staatsangehörigkeit, 11/2026) – nach Ukrainisch/Russisch und Türkisch sind Arabisch und Dari/Paschtu die größten Sprachgruppen bei Jobcenter und Agentur für Arbeit; sie fehlten bisher. Jetzt 47 Sprachen.
+- App (4 542 Texte) und Website mit Hilfe (2 570 Texte) vollständig übersetzt; Knöpfe und Menüs aus einem Grundwortschatz je Sprache, damit Hilfe und App gleich heißen. Deutsche Behördenbegriffe (Jobcenter, Bescheid …) stehen in Klammern dabei.
+- Arabisch, Persisch, Paschtu und Sorani: Oberfläche von rechts nach links; das Dokument bleibt wie gedruckt; Eingaben und erkannter Text richten sich nach ihrem Inhalt (ein deutscher Brief bleibt linksbündig). Datum und Zahlen mit den Ziffern 0–9 wie in deutschen Formularen.
+- Browsersprache: Dari (prs) → Persisch, Kurdisch (ku) → Kurmanci bzw. Sorani (arabische Schrift, Irak/Iran).
+- Texterkennung: Arabisch und Persisch wie bisher; für die übrigen fünf gibt es keine Erkennungsdaten – die Oberfläche funktioniert vollständig, die Texterkennung nutzt dann Deutsch.
+- Behoben: Platzhalter „MM/JJJJ“ im Lebenslauf war in keiner Sprache übersetzt; Sprachdateien mit dreibuchstabigem Code (ckb, kmr) wurden von Build, Vorab-Übersetzung und Tests übersehen.
+
 ### Hilfe leicht verständlich und bebildert; Lebenslauf-Assistent (app-v361)
 - Hilfe komplett überarbeitet: Jedes Thema beginnt mit „Kurz gesagt“ (ein bis zwei kurze Sätze), danach nummerierte Schritte, wo passend ein Bild aus der echten App, ein grüner Tipp-Kasten und ein gelber Kasten „Wichtig“ bei echten Stolperfallen. Der bisherige ausführliche Text steht unverändert unter „Genauer erklärt“ zum Aufklappen. „PDFs bearbeiten“ ist von einer Liste mit 114 Punkten zu 31 Themen geworden; die häufigen Fragen sind nach 6 Themen gruppiert.
 - 30 bebilderte Anleitungen: neu „Lebenslauf erstellen“, „Bewerbungsmappe zusammenstellen“ und „Nachweis der Eigenbemühungen“ (neue Themengruppe „Bewerbung und Jobcenter“). Bilder in den Themenabschnitten sagen, zu welcher Anleitung ihre roten Zahlen gehören.

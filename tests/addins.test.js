@@ -165,7 +165,7 @@ test('pdfmy Scan: automatische Updates vom Benutzer abschaltbar, Meldung bleibt 
   assert.match(cs, /if \(auto && LocalServer\.Idle && !PdfPrinter\.Pending\)/, 'nur ohne laufende Arbeit');
   assert.match(cs, /updateItem\.Visible = true;/, 'verfügbare Updates werden weiter angeboten');
   assert.match(cs, /autoItem\.Visible = !Machine\.UpdatesManaged/, 'bei IT-Verteilung ausgeblendet');
-  for (const lang of fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f)))
+  for (const lang of fs.readdirSync(path.join(ROOT, 'i18n', 'site')).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f)))
     assert.ok(Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', 'site', lang), 'utf8'))).some(k => k.startsWith('<b>Automatische Updates abschalten:</b>')), 'Hilfe übersetzt: ' + lang);
 });
 

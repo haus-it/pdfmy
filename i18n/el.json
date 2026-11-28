@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Διαγραφή προτύπου",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Τοποθετήστε πρώτα πεδία – το πρότυπο αποθηκεύει άτομα, πεδία, μήνυμα και προθεσμία.",
  "Quellcode (GitHub)": "Πηγαίος κώδικας (GitHub)",
- "Verfügbar in 40 Sprachen": "Διαθέσιμο σε 40 γλώσσες",
+ "Verfügbar in 47 Sprachen": "Διαθέσιμο σε 47 γλώσσες",
  "{0} konnte nicht geladen werden": "Δεν ήταν δυνατή η φόρτωση του {0}",
  "– nicht nachweisbar": "– δεν αποδεικνύεται",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} από {1} εκδόσεις περιέχονται αμετάβλητες. Οι υπόλοιπες δεν μπορούν να αποδειχθούν – το αρχείο αποθηκεύτηκε εκ νέου στο μεταξύ (π.χ. σε άλλο πρόγραμμα PDF) ή τροποποιήθηκε.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Επαγγελματική εμπειρία",
  "Schule und Ausbildung": "Σχολείο και εκπαίδευση",
  "Weiterbildung": "Επιμόρφωση",
- "TT.MM.JJJJ": "ΗΗ.ΜΜ.ΕΕΕΕ"
+ "TT.MM.JJJJ": "ΗΗ.ΜΜ.ΕΕΕΕ",
+ "MM/JJJJ": "ΜΜ/ΕΕΕΕ"
 }

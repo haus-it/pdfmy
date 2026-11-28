@@ -94,6 +94,16 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 28.11.2026: Sprachen der Arbeitsuchenden (app-v362)
+**Inhalt:** Arabisch, Persisch (Dari), Paschtu, Kurdisch (Sorani, Kurmanci), Somali, Tigrinya; Oberfläche rechts→links. **Grund (GF 28.11.2026):** „bitte die Sprachen noch ergänzen“ nach Auswertung der BA-Statistik (Staatsangehörigkeiten der Arbeitslosen).
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1–3 | gewahrt: Wörterbücher als statische Dateien, nichts verlässt das Gerät |
+| 4 Einfach | passt: Sprache wie bisher unter Mehr → Sprache oder automatisch aus dem Browser |
+| 5 Prüfbar | tests/i18n.test.js (Vollständigkeit, Richtung, Browsersprache), tests/seo.test.js (Längen); Durchlauf auf Arabisch |
+| 6 | nicht betroffen |
+
 ### Geprüft und umgesetzt 28.11.2026: Lebenslauf-Assistent und leicht verständliche Hilfe (app-v361)
 **Inhalt:** Tabellarischer Lebenslauf aus einem Formular (mit Foto, als PDF oder in die Bewerbungsmappe); Hilfe überarbeitet: „Kurz gesagt“, nummerierte Schritte, Bilder, Tipp- und Wichtig-Kästen, alter Text unverändert unter „Genauer erklärt“. **Grund (GF 28.11.2026):** „Hilfe leicht verständlich und mit Bildern, nicht nur Fließtext“; Lebenslauf fehlte für Arbeitsuchende ohne Office.
 

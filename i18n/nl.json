@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Sjabloon verwijderen",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Plaats eerst velden – het sjabloon slaat personen, velden, bericht en termijn op.",
  "Quellcode (GitHub)": "Broncode (GitHub)",
- "Verfügbar in 40 Sprachen": "Beschikbaar in 40 talen",
+ "Verfügbar in 47 Sprachen": "Beschikbaar in 47 talen",
  "{0} konnte nicht geladen werden": "{0} kon niet worden geladen",
  "– nicht nachweisbar": "– niet aantoonbaar",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} van {1} versies zijn ongewijzigd aanwezig. De overige zijn niet aantoonbaar – het bestand is tussentijds opnieuw opgeslagen (bijv. in een ander pdf-programma) of gewijzigd.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Werkervaring",
  "Schule und Ausbildung": "School en opleiding",
  "Weiterbildung": "Bijscholing",
- "TT.MM.JJJJ": "DD-MM-JJJJ"
+ "TT.MM.JJJJ": "DD-MM-JJJJ",
+ "MM/JJJJ": "MM/JJJJ"
 }

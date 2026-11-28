@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Suprimeix la plantilla",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Primer col·loqueu els camps: la plantilla desa les persones, els camps, el missatge i el termini.",
  "Quellcode (GitHub)": "Codi font (GitHub)",
- "Verfügbar in 40 Sprachen": "Disponible en 40 idiomes",
+ "Verfügbar in 47 Sprachen": "Disponible en 47 idiomes",
  "{0} konnte nicht geladen werden": "No s’ha pogut carregar {0}",
  "– nicht nachweisbar": "– no verificable",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} de {1} versions es conserven sense canvis. Les altres no es poden verificar – el fitxer s'ha tornat a desar mentrestant (p. ex., en un altre programa PDF) o s'ha modificat.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Experiència laboral",
  "Schule und Ausbildung": "Escola i formació",
  "Weiterbildung": "Formació contínua",
- "TT.MM.JJJJ": "DD/MM/AAAA"
+ "TT.MM.JJJJ": "DD/MM/AAAA",
+ "MM/JJJJ": "MM/AAAA"
 }

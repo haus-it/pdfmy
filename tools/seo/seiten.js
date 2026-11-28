@@ -5,7 +5,7 @@
 (async () => {
   const sm = await (await fetch('https://pdfmy.de/sitemap.xml')).text();
   const all = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  const de = all.filter(u => !/pdfmy\.de\/[a-z]{2}(-[A-Z]{2})?\//.test(u));
+  const de = all.filter(u => !/pdfmy\.de\/[a-z]{2,3}(-[A-Z]{2})?\//.test(u));
   const sample = all.filter(u => /pdfmy\.de\/fr\//.test(u)).slice(0, 48);
   const rows = [];
   const pool = [...de, ...sample];

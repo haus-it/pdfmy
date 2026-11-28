@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Dileu’r templed",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Gosodwch feysydd yn gyntaf – mae’r templed yn cadw pobl, meysydd, neges a therfyn amser.",
  "Quellcode (GitHub)": "Cod ffynhonnell (GitHub)",
- "Verfügbar in 40 Sprachen": "Ar gael mewn 40 iaith",
+ "Verfügbar in 47 Sprachen": "Ar gael mewn 47 iaith",
  "{0} konnte nicht geladen werden": "Methwyd llwytho {0}",
  "– nicht nachweisbar": "– dim modd ei brofi",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "Mae {0} o {1} fersiwn wedi’u cynnwys heb newid. Does dim modd profi’r lleill – cafodd y ffeil ei chadw eto yn y cyfamser (e.e. mewn rhaglen PDF arall) neu ei newid.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Profiad gwaith",
  "Schule und Ausbildung": "Ysgol a hyfforddiant",
  "Weiterbildung": "Hyfforddiant pellach",
- "TT.MM.JJJJ": "DD/MM/BBBB"
+ "TT.MM.JJJJ": "DD/MM/BBBB",
+ "MM/JJJJ": "MM/BBBB"
 }

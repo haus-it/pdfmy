@@ -6167,7 +6167,7 @@ $('#quality').oninput = e => { S.quality = +e.target.value; saveSettings(); $('#
   $('#uiLang').innerHTML = byName(I18N.LANGS).map(l => opt(l.code, l.name, l.code === I18N.lang)).join('');
   $('#uiLang').onchange = e => I18N.setLang(e.target.value);
   $('#uiLang').onclick = e => e.stopPropagation();
-  const ocrL = [...I18N.LANGS.filter(l => !l.code.startsWith('en-')), { ocr: 'eng', name: 'English' }, ...I18N.OCR_EXTRA];
+  const ocrL = [...I18N.LANGS.filter(l => l.ocr && !l.code.startsWith('en-')), { ocr: 'eng', name: 'English' }, ...I18N.OCR_EXTRA];
   $('#ocrLang').innerHTML = opt('auto', I18N.t('Automatisch (Deutsch + Erkennung)'), S.ocrLang === 'auto') + byName(ocrL).map(l => opt(l.ocr, l.name, S.ocrLang === l.ocr)).join('');
   $('#ocrLang').onchange = e => { S.ocrLang = e.target.value; saveSettings(); resetWorker('Dokumentsprache geändert'); };
 }
@@ -6416,7 +6416,7 @@ async function offShow() {
 }
 function offOpen() {
   const v = offVorrat(), box = $('#offLangs'); box.textContent = '';
-  const ocrL = [...I18N.LANGS.filter(l => !l.code.startsWith('en-')), { ocr: 'eng', name: 'English' }, ...I18N.OCR_EXTRA].filter(l => l.ocr && l.ocr !== 'deu')
+  const ocrL = [...I18N.LANGS.filter(l => l.ocr && !l.code.startsWith('en-')), { ocr: 'eng', name: 'English' }, ...I18N.OCR_EXTRA].filter(l => l.ocr && l.ocr !== 'deu')
     .filter((l, i, a) => a.findIndex(x => x.ocr === l.ocr) === i).sort((x, y) => x.name.localeCompare(y.name, 'de'));
   for (const l of ocrL) {
     const lab = document.createElement('label'), c = document.createElement('input'); lab.className = 'cb'; lab.translate = false;

@@ -42,8 +42,14 @@ test('Sprachliste: Oberfläche, Texterkennung, Sprachdaten vorhanden', () => {
   const codes = I18N.LANGS.map(l => l.code);
   for (const c of ['de', 'en-GB', 'en-US', 'tr', 'ru', 'uk', 'fr', 'pl', 'el', 'ga', 'mt', 'is', 'lb']) assert.ok(codes.includes(c), c);
   assert.strictEqual(new Set(codes).size, codes.length, 'keine doppelten Codes');
-  for (const l of [...I18N.LANGS, ...I18N.OCR_EXTRA]) assert.ok(fs.existsSync(path.join(__dirname, '..', 'vendor', 'tesseract', 'lang', l.ocr + '.traineddata.gz')), 'Sprachdaten ' + l.ocr);
+  for (const l of [...I18N.LANGS, ...I18N.OCR_EXTRA].filter(l => l.ocr)) assert.ok(fs.existsSync(path.join(__dirname, '..', 'vendor', 'tesseract', 'lang', l.ocr + '.traineddata.gz')), 'Sprachdaten ' + l.ocr);
   assert.strictEqual(I18N.ocrName('ukr'), 'Ukrainisch');
+  // app-v362: Sprachen vieler Arbeitsuchender; Arabisch, Persisch, Paschtu, Sorani von rechts nach links
+  for (const c of ['ar', 'fa', 'ps', 'ckb', 'kmr', 'so', 'ti']) assert.ok(codes.includes(c), c);
+  for (const c of ['ar', 'fa', 'ps', 'ckb']) assert.strictEqual(I18N.byCode(c).dir, 'rtl', c);
+  for (const c of ['de', 'kmr', 'so', 'ti', 'tr']) assert.strictEqual(I18N.byCode(c).dir, 'ltr', c);
+  assert.strictEqual(I18N.pick(['prs-AF']), 'fa'); assert.strictEqual(I18N.pick(['ku']), 'kmr'); assert.strictEqual(I18N.pick(['ku-Arab-IQ']), 'ckb');
+  assert.strictEqual(I18N.pick(['ar-SY']), 'ar'); assert.strictEqual(I18N.pick(['ti-ER']), 'ti');
 });
 
 test('Sprachwahl aus der Browsersprache', () => {
@@ -69,7 +75,7 @@ test('Übersetzen: exakt, mit Platzhaltern und eingesetzten Teilen', () => {
 
 test('Wörterbücher: Platzhalter und HTML stimmen mit dem Deutschen überein', () => {
   const dir = path.join(__dirname, '..', 'i18n');
-  const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f)) : [];
+  const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f)) : [];
   const ph = s => (s.match(/\{\d+\}/g) || []).sort().join(',');
   for (const f of files) {
     const d = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
@@ -97,7 +103,7 @@ test('Webseiten-Wörterbücher (Hilfe, Scanner): Platzhalter, HTML, Vollständig
   const keys = JSON.parse(fs.readFileSync(path.join(dir, '_keys.json'), 'utf8'));
   const ph = s => (s.match(/\{\d+\}/g) || []).sort().join(',');
   const tags = s => (s.match(/<\/?[a-z][a-z0-9]*\b[^>]*>/gi) || []).map(t => t.replace(/\s(title|aria-label|alt|placeholder|aria-description)="[^"]*"/gi, '').replace(/\s+/g, ' ').toLowerCase()).sort().join('|');
-  const files = fs.readdirSync(dir).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f));
+  const files = fs.readdirSync(dir).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f));
   assert.strictEqual(files.length, I18N.LANGS.length - 1, 'alle Sprachen außer Deutsch');
   for (const f of files) {
     const d = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));

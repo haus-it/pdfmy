@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Izbriši predložak",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Prvo postavite polja – predložak sprema osobe, polja, poruku i rok.",
  "Quellcode (GitHub)": "Izvorni kod (GitHub)",
- "Verfügbar in 40 Sprachen": "Dostupno na 40 jezika",
+ "Verfügbar in 47 Sprachen": "Dostupno na 47 jezika",
  "{0} konnte nicht geladen werden": "{0} nije moguće učitati",
  "– nicht nachweisbar": "– nije dokazivo",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} od {1} verzija sadržano je nepromijenjeno. Ostale nije moguće dokazati – datoteka je u međuvremenu ponovo sačuvana (npr. u drugom PDF programu) ili izmijenjena.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Radno iskustvo",
  "Schule und Ausbildung": "Škola i obrazovanje",
  "Weiterbildung": "Dodatno usavršavanje",
- "TT.MM.JJJJ": "DD.MM.GGGG"
+ "TT.MM.JJJJ": "DD.MM.GGGG",
+ "MM/JJJJ": "MM/GGGG"
 }

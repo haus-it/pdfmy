@@ -55,7 +55,7 @@ if (cmd === 'split') {
   }
   process.exitCode = bad ? 1 : 0;
 } else {
-  const codes = cmd ? [cmd, ...rest] : fs.readdirSync(DIR).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f)).map(f => f.replace('.json', ''));
+  const codes = cmd ? [cmd, ...rest] : fs.readdirSync(DIR).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f)).map(f => f.replace('.json', ''));
   let bad = 0;
   for (const code of codes) {
     const f = fs.existsSync(path.join(DIR, `${code}.json`)) ? path.join(DIR, `${code}.json`) : null;

@@ -135,7 +135,7 @@ fs.mkdirSync(DIR, { recursive: true });
 fs.writeFileSync(path.join(DIR, '_keys.json'), JSON.stringify(list, null, 0).replace(/","/g, '",\n"') + '\n');
 console.log(`${list.length} Schlüssel (${fromJs} aus dem Programmcode), ${list.reduce((n, k) => n + k.length, 0)} Zeichen → i18n/_keys.json`);
 if (process.argv.includes('--missing')) {
-  for (const f of fs.readdirSync(DIR).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) {
+  for (const f of fs.readdirSync(DIR).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f))) {
     const d = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')), miss = list.filter(k => !(k in d));
     console.log(`${f}: ${Object.keys(d).length} übersetzt, ${miss.length} fehlen`);
   }

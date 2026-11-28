@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Şablonu sil",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Önce alanları yerleştirin – şablon kişileri, alanları, mesajı ve son tarihi kaydeder.",
  "Quellcode (GitHub)": "Kaynak kodu (GitHub)",
- "Verfügbar in 40 Sprachen": "40 dilde kullanılabilir",
+ "Verfügbar in 47 Sprachen": "47 dilde kullanılabilir",
  "{0} konnte nicht geladen werden": "{0} yüklenemedi",
  "– nicht nachweisbar": "– kanıtlanamıyor",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{1} sürümden {0} tanesi değişmeden mevcut. Diğerleri kanıtlanamıyor – dosya bu arada yeniden kaydedilmiş (ör. başka bir PDF programında) veya değiştirilmiş.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "İş deneyimi",
  "Schule und Ausbildung": "Okul ve eğitim",
  "Weiterbildung": "Mesleki gelişim",
- "TT.MM.JJJJ": "GG.AA.YYYY"
+ "TT.MM.JJJJ": "GG.AA.YYYY",
+ "MM/JJJJ": "AA/YYYY"
 }

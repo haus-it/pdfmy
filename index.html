@@ -570,6 +570,10 @@ body:not(.has-doc) #center{min-height:100%}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sh-sm:0 1px 2px rgba(0,0,0,.4);--sh-md:0 2px 10px rgba(0,0,0,.45);--sh-lg:0 24px 60px -12px rgba(0,0,0,.7);--hover:color-mix(in srgb,var(--accent) 14%,transparent);--ok:#4ade80;--warn:#fbbf24;--bad:#f87171}}
 /* Ältere Browser ohne color-mix() (Safari < 16.2, Chrome < 111): Fokusrahmen und Hover sonst unsichtbar (app-v356) */
 @supports not (color:color-mix(in srgb,red 50%,blue)){:root{--ring:0 0 0 3px var(--accent)!important;--hover:var(--accent-soft)!important}}
+/* Rechts-nach-links (Arabisch, Persisch, Paschtu, Sorani, app-v362): Oberfläche gespiegelt, das Dokument selbst bleibt wie gedruckt;
+   Eingaben und erkannter Text richten sich nach ihrem Inhalt (deutscher Brief links, arabischer Text rechts) */
+[dir=rtl] #viewer{direction:ltr}[dir=rtl] #viewer>:not(#flow){direction:rtl}
+[dir=rtl] textarea,[dir=rtl] input:not([type=checkbox]):not([type=radio]),[dir=rtl] [translate=no]{unicode-bidi:plaintext}
 .ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 
@@ -1395,7 +1399,7 @@ html.i18n-wait body{visibility:hidden}
       <button type="button" class="camstart mobonly" id="homeCam"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Mit der Kamera scannen</button>
       <label class="drop" role="button" tabindex="0" aria-label="Dateien wählen – PDF, JPG, PNG oder E-Rechnung"><input id="dropIn" type="file" multiple accept="image/*,.heic,.heif,.tif,.tiff,application/pdf,.pdf,.xml,.eml,.msg,.html,.htm,.xhtml,.mht,.mhtml,.txt,.md,.csv,text/plain,text/markdown,text/csv,.docx,.xlsx,.doc,.xls,.pptx,.ppsx,.potx,.odt,.ods,.odp,.epub,.rtf,.xps,.oxps,.zip,.cbz,.psd,.psb" hidden>
         <b>Dateien wählen</b><span>oder hierher ziehen · PDF, JPG, PNG, E-Mails (.eml/.msg) · beliebig viele</span></label>
-      <ul class="trust"><li><button type="button" class="linkbtn" id="trustNet" title="Selbst nachprüfen">Dateien bleiben auf Ihrem Gerät</button></li><li>Keine Anmeldung</li><li>Kein Abo, kein Tracking, keine versteckten Kosten</li><li>Funktioniert auch offline</li><li>Verfügbar in 40 Sprachen</li></ul>
+      <ul class="trust"><li><button type="button" class="linkbtn" id="trustNet" title="Selbst nachprüfen">Dateien bleiben auf Ihrem Gerät</button></li><li>Keine Anmeldung</li><li>Kein Abo, kein Tracking, keine versteckten Kosten</li><li>Funktioniert auch offline</li><li>Verfügbar in 47 Sprachen</li></ul>
       <div id="deadlines" class="deadlines" hidden></div>
       <section id="rescue" class="deadlines recent rescue" hidden aria-labelledby="rescueT"></section>
       <section id="recent" class="deadlines recent" hidden aria-labelledby="recentT"></section>

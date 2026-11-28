@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Fshi shabllonin",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Vendosni fillimisht fushat – shablloni ruan personat, fushat, mesazhin dhe afatin.",
  "Quellcode (GitHub)": "Kodi burimor (GitHub)",
- "Verfügbar in 40 Sprachen": "E disponueshme në 40 gjuhë",
+ "Verfügbar in 47 Sprachen": "E disponueshme në 47 gjuhë",
  "{0} konnte nicht geladen werden": "{0} nuk mund të ngarkohej",
  "– nicht nachweisbar": "– nuk vërtetohet",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} nga {1} versione përmbahen të pandryshuara. Të tjerat nuk mund të vërtetohen – skedari është ruajtur sërish ndërkohë (p.sh. në një program tjetër PDF) ose është ndryshuar.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Përvoja e punës",
  "Schule und Ausbildung": "Shkolla dhe arsimimi",
  "Weiterbildung": "Kualifikim i mëtejshëm",
- "TT.MM.JJJJ": "DD.MM.VVVV"
+ "TT.MM.JJJJ": "DD.MM.VVVV",
+ "MM/JJJJ": "MM/VVVV"
 }

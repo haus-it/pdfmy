@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Scrios an teimpléad",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Socraigh réimsí ar dtús – sábhálann an teimpléad daoine, réimsí, teachtaireacht agus spriocdháta.",
  "Quellcode (GitHub)": "Cód foinseach (GitHub)",
- "Verfügbar in 40 Sprachen": "Ar fáil i 40 teanga",
+ "Verfügbar in 47 Sprachen": "Ar fáil i 47 teanga",
  "{0} konnte nicht geladen werden": "Níorbh fhéidir {0} a lódáil",
  "– nicht nachweisbar": "– ní féidir a chruthú",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "Tá {0} as {1} leagan ann gan athrú. Ní féidir na cinn eile a chruthú – sábháladh an comhad arís idir an dá linn (m.sh. i ríomhchlár PDF eile) nó athraíodh é.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Taithí oibre",
  "Schule und Ausbildung": "Scoil agus oiliúint",
  "Weiterbildung": "Breisoiliúint",
- "TT.MM.JJJJ": "LL.MM.BBBB"
+ "TT.MM.JJJJ": "LL.MM.BBBB",
+ "MM/JJJJ": "MM/BBBB"
 }

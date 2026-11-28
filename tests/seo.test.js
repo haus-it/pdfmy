@@ -25,10 +25,12 @@ test('Beschreibungen der mehrsprachigen Seiten sind in allen Sprachen übersetzt
   const multi = Object.entries(SEO).filter(([p, d]) => d && p !== 'sicherheit.html').map(([, d]) => d);
   const keys = JSON.parse(fs.readFileSync(path.join(dir, '_keys.json'), 'utf8'));
   for (const d of multi) assert.ok(keys.includes(d), 'Schlüssel vorhanden: ' + d.slice(0, 40));
-  for (const f of fs.readdirSync(dir).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) {
+  const lang = [];
+  for (const f of fs.readdirSync(dir).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f))) {
     const dict = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
-    for (const d of multi) { assert.ok(dict[d], f + ': ' + d.slice(0, 40)); assert.ok(dict[d].length <= 160, f + ': zu lang'); }
+    for (const d of multi) { assert.ok(dict[d], f + ': ' + d.slice(0, 40)); if (dict[d].length > 160) lang.push(`${f} (${dict[d].length}): ${d.slice(0, 50)}`); }
   }
+  assert.deepEqual(lang, [], 'Beschreibungen über 160 Zeichen');
 });
 
 test('llms.txt: nur Seiten, die der Build erzeugt', () => {
@@ -47,7 +49,7 @@ test('Startseite: Tab-Titel ≤ 60 Zeichen mit Stichwort vorne, in allen Sprache
   assert.match(W.title, /^PDF /, 'Stichwort „PDF“ steht vorne');
   assert.match(W.title, /\| PDFMy$/, 'Marke am Ende');
   assert.match(W.ogTitle, /powered by Mentor Group/, 'Marke bleibt beim Teilen (og:title) sichtbar');
-  for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) {
+  for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f))) {
     const t = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', f), 'utf8'))[W.title];
     assert.ok(t, f + ': übersetzt');
     assert.ok(len(t) <= 60 && t.endsWith('| PDFMy'), f + ': ' + len(t) + ' Zeichen');
@@ -92,7 +94,7 @@ test('Startseite: Beschreibung ≤ 160 Zeichen in allen Sprachen', () => {
   const W = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', '_web.json'), 'utf8'));
   const len = s => [...s].length;
   assert.ok(len(W.description) <= 160, 'Deutsch ' + len(W.description));
-  for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2}(-[A-Z]{2})?\.json$/.test(f))) {
+  for (const f of fs.readdirSync(path.join(ROOT, 'i18n')).filter(f => /^[a-z]{2,3}(-[A-Z]{2})?\.json$/.test(f))) {
     const t = JSON.parse(fs.readFileSync(path.join(ROOT, 'i18n', f), 'utf8'))[W.description];
     assert.ok(t && len(t) <= 160, f + ': ' + (t ? len(t) : 'fehlt'));
   }

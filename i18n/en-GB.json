@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Delete template",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Set fields first – the template saves people, fields, message and deadline.",
  "Quellcode (GitHub)": "Source code (GitHub)",
- "Verfügbar in 40 Sprachen": "Available in 40 languages",
+ "Verfügbar in 47 Sprachen": "Available in 47 languages",
  "{0} konnte nicht geladen werden": "{0} could not be loaded",
  "– nicht nachweisbar": "– not verifiable",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} of {1} versions are contained unchanged. The others cannot be verified – the file was re-saved in between (e.g. in another PDF program) or modified.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Work experience",
  "Schule und Ausbildung": "School and training",
  "Weiterbildung": "Further training",
- "TT.MM.JJJJ": "DD/MM/YYYY"
+ "TT.MM.JJJJ": "DD/MM/YYYY",
+ "MM/JJJJ": "MM/YYYY"
 }

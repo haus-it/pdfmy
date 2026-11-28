@@ -2048,7 +2048,7 @@
  "Vorlage löschen": "Видалити шаблон",
  "Zuerst Felder setzen – die Vorlage speichert Personen, Felder, Nachricht und Frist.": "Спершу розмістіть поля – шаблон зберігає учасників, поля, повідомлення й термін.",
  "Quellcode (GitHub)": "Вихідний код (GitHub)",
- "Verfügbar in 40 Sprachen": "Доступно 40 мовами",
+ "Verfügbar in 47 Sprachen": "Доступно 47 мовами",
  "{0} konnte nicht geladen werden": "Не вдалося завантажити {0}",
  "– nicht nachweisbar": "– не підтверджується",
  "{0} von {1} Fassungen sind unverändert enthalten. Die übrigen lassen sich nicht nachweisen – die Datei wurde dazwischen neu gespeichert (z. B. in einem anderen PDF-Programm) oder verändert.": "{0} з {1} версій збережено без змін. Решту підтвердити неможливо – файл тим часом було повторно збережено (наприклад, в іншій PDF-програмі) або змінено.",
@@ -4588,5 +4588,6 @@
  "Berufserfahrung": "Досвід роботи",
  "Schule und Ausbildung": "Школа й освіта",
  "Weiterbildung": "Підвищення кваліфікації",
- "TT.MM.JJJJ": "ДД.ММ.РРРР"
+ "TT.MM.JJJJ": "ДД.ММ.РРРР",
+ "MM/JJJJ": "ММ/РРРР"
 }

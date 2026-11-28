@@ -7,7 +7,8 @@
    Bereiche mit Inhalten der Nutzer (Dokumenttext, Eingaben) tragen translate="no" und bleiben unverändert. */
 (function (root) {
   let dictMissing = false;   // Wörterbuch der gewählten Sprache nicht ladbar (offline erstmals gewählt)
-  // Code, Eigenname, deutscher Name, Tesseract-Sprache (Texterkennung), BCP-47 (PDF-Sprache, Vorlesen), Schrift
+  // Code, Eigenname, deutscher Name, Tesseract-Sprache (Texterkennung), BCP-47 (PDF-Sprache, Vorlesen), Schreibrichtung
+  const RTL = new Set(['ar', 'fa', 'ps', 'ckb']);   // von rechts nach links
   const LANGS = [
     ['de', 'Deutsch', 'Deutsch', 'deu', 'de-DE'],
     ['en-GB', 'English (UK)', 'Englisch (britisch)', 'eng', 'en-GB'],
@@ -49,11 +50,18 @@
     ['ru', 'Русский', 'Russisch', 'rus', 'ru-RU'],
     ['uk', 'Українська', 'Ukrainisch', 'ukr', 'uk-UA'],
     ['be', 'Беларуская', 'Belarussisch', 'bel', 'be-BY'],
-  ].map(([code, name, de, ocr, bcp]) => ({ code, name, de, ocr, bcp }));
+    // Sprachen vieler Arbeitsuchender in Deutschland (BA-Statistik 11/2026, app-v362); ohne eigene Texterkennungsdaten: ocr = null
+    ['ar', 'العربية', 'Arabisch', 'ara', 'ar'],
+    ['fa', 'فارسی / دری', 'Persisch (Dari)', 'fas', 'fa'],
+    ['ps', 'پښتو', 'Paschtu', null, 'ps'],
+    ['ckb', 'کوردی (سۆرانی)', 'Kurdisch (Sorani)', null, 'ckb'],
+    ['kmr', 'Kurdî (Kurmancî)', 'Kurdisch (Kurmanci)', null, 'kmr'],
+    ['so', 'Soomaali', 'Somali', null, 'so'],
+    ['ti', 'ትግርኛ', 'Tigrinya', null, 'ti'],
+  ].map(([code, name, de, ocr, bcp]) => ({ code, name, de, ocr, bcp, dir: RTL.has(code) ? 'rtl' : 'ltr' }));
   // Texterkennung: zusätzlich Serbisch in lateinischer Schrift
   // weitere Sprachen nur für die Texterkennung (keine Oberflächensprache); Sprachdaten werden erst bei Bedarf geladen
   const OCR_EXTRA = [{ code: 'sr-Latn', name: 'Srpski (latinica)', de: 'Serbisch (lateinisch)', ocr: 'srp_latn', bcp: 'sr-Latn-RS' },
-    { code: 'ar', name: 'العربية', de: 'Arabisch', ocr: 'ara', bcp: 'ar' }, { code: 'fa', name: 'فارسی', de: 'Persisch', ocr: 'fas', bcp: 'fa-IR' },
     { code: 'he', name: 'עברית', de: 'Hebräisch', ocr: 'heb', bcp: 'he-IL' }, { code: 'zh-Hans', name: '中文（简体）', de: 'Chinesisch (vereinfacht)', ocr: 'chi_sim', bcp: 'zh-CN' },
     { code: 'zh-Hant', name: '中文（繁體）', de: 'Chinesisch (traditionell)', ocr: 'chi_tra', bcp: 'zh-TW' }, { code: 'ja', name: '日本語', de: 'Japanisch', ocr: 'jpn', bcp: 'ja-JP' },
     { code: 'ko', name: '한국어', de: 'Koreanisch', ocr: 'kor', bcp: 'ko-KR' }];
@@ -70,6 +78,8 @@
       if (base === 'en') return 'en-GB';
       if (['nb', 'nn', 'no'].includes(base)) return 'nb';
       if (base === 'gsw') return 'de';
+      if (base === 'prs') return 'fa';
+      if (base === 'ku') return /arab|iq|ir/.test(lc) ? 'ckb' : 'kmr';
       const hit = LANGS.find(l => l.code.toLowerCase() === lc) || LANGS.find(l => l.code.split('-')[0] === base);
       if (hit) return hit.code;
     }
@@ -222,6 +232,7 @@
 
   if (typeof document !== 'undefined') {
     document.documentElement.lang = info.bcp.split('-')[0] === 'sr' ? 'sr' : info.code;
+    document.documentElement.dir = info.dir || 'ltr';   // Arabisch, Persisch, Paschtu, Sorani: Oberfläche gespiegelt
     if (lang !== 'de') {
       // Vorab übersetzte Seiten (pdfmy.de/<sprache>/…) stehen schon übersetzt im HTML – nicht ausblenden, bis das Wörterbuch (bis 500 KB)
       // geladen ist; das kostete bis zu 2,5 s bis zur ersten Anzeige (Messung 17.11.2026). Das Wörterbuch braucht es nur für Nachgeladenes.
@@ -256,7 +267,7 @@
     return [...keys];
   }
   // Datum und Zahlen in der Oberfläche im Format der gewählten Sprache (Dokumentinhalte und Dateinamen formatieren selbst)
-  const LOC = info.bcp;
+  const LOC = info.dir === 'rtl' ? info.bcp + '-u-nu-latn' : info.bcp;
   const asDate = d => {   // Date, Zeitstempel oder ISO-Datum JJJJ-MM-TT (als Ortsdatum, ohne Zeitzonenversatz)
     if (d instanceof Date) return d;
     const m = typeof d === 'string' && /^(\d{4})-(\d{2})-(\d{2})$/.exec(d);
