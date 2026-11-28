@@ -3826,6 +3826,8 @@ function fristArten() {
   const opts = [...$('#frArt').options];
   if (opts.some(o => o.value === cur)) $('#frArt').value = cur;
   else $('#frArt').value = (opts.find(o => o.value !== 'eigen') || opts[0])?.value || '';   // nicht „Eigene Frist“ vorwählen
+  // Rechtsgrundlagen im Hinweis passend zum gewählten Staat (app-v368)
+  if (window.Land && $('#frHinweis')) $('#frHinweis').textContent = I18N.t(Land.text('fristHinweis', Fristen.staat($('#frLand').value)));
 }
 {
   $('#frLand').innerHTML = `<optgroup label="${esc(I18N.t('Deutschland'))}"><option value="">– nur bundesweite Feiertage –</option>` + Fristen.LAENDER.map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('') + '</optgroup>'

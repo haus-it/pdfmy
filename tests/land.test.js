@@ -51,3 +51,34 @@ test('Nachweis je Land: Titel und Nummer angepasst, Inhalt bleibt deutsch', () =
   assert.match(ch[1].text, /Zeitraum: gesamt/);
   assert.ok(JSON.stringify(ch).includes('Absage'));
 });
+
+test('Verein und Fristen je Land: Statuten, Rechnungsprüfer/-revisoren, Rechtsgrundlagen; CH-Mitgliedsantrag ohne SEPA (app-v368)', async () => {
+  assert.equal(Land.verein('AT').satzung, 'Statuten');
+  assert.equal(Land.verein('CH').pruefer, 'Rechnungsrevisoren');
+  assert.equal(Land.verein('DE').pruefer, 'Kassenprüfer');
+  assert.match(Land.text('fristHinweis', 'AT'), /AVG/);
+  assert.match(Land.text('fristHinweis', 'CH'), /Art\. 142–145 ZPO/);
+  assert.match(Land.text('mvFristLabel', 'CH'), /Statuten/, 'CH übernimmt den Text für AT');
+  assert.equal(Land.text('mappeMenu', 'CH'), 'Bewerbungsdossier …');
+  assert.ok(!Land.gibt('pauschale', 'AT') && Land.gibt('pauschale', 'DE'));
+  const V = require('../js/versammlung.js');
+  assert.ok(V.tagesordnung('', 'AT').includes('Bericht der Rechnungsprüfer'));
+  assert.ok(V.tagesordnung('', 'DE').includes('Bericht der Kassenprüfer'));
+  const VV = require('../js/vereinsvorlagen.js'), L = require('../vendor/pdf-lib.min.js');
+  const de = await VV.erzeugen(L, 'mitglied', { verein: 'TV Muster' }, { land: 'DE' });
+  const ch = await VV.erzeugen(L, 'mitglied', { verein: 'TV Muster' }, { land: 'CH' });
+  const felder = async b => (await L.PDFDocument.load(b)).getForm().getFields().map(f => f.getName());
+  assert.ok((await felder(de)).includes('IBAN'));
+  assert.ok(!(await felder(ch)).includes('IBAN'), 'in der Schweiz kein SEPA-Mandat');
+});
+
+test('Hinweise, Platzhalter und Vorschläge je Land: AMS, Job-Room/RAV statt Jobcenter (app-v370)', () => {
+  assert.ok(Land.liste('bwgQuellen', 'AT').includes('Vermittlungsvorschlag AMS'));
+  assert.ok(Land.liste('bwgQuellen', 'CH').includes('Job-Room (arbeit.swiss)'));
+  assert.ok(!Land.liste('bwgQuellen', 'CH').some(v => /Jobcenter|Agentur für Arbeit/.test(v)));
+  assert.ok(Land.liste('bwgQuellen', 'XX').includes('Jobbörse der Agentur für Arbeit'));
+  for (const k of ['nachweisTip', 'docLangTip', 'fristTip']) for (const l of ['AT', 'CH']) assert.doesNotMatch(Land.text(k, l), /Jobcenter|Bundeslands/, k + ' ' + l);
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  for (const k of ['fristTip', 'nachweisTip', 'docLangTip']) assert.match(html, new RegExp(`data-land-title="${k}"`));
+  assert.match(html, /<datalist id="bwgQuellen" data-land-liste="bwgQuellen">/);
+});

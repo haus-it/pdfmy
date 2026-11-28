@@ -70,13 +70,61 @@
     if (sat > 0.03 && sat < 0.5 && p50 < 235) return 'glare';
     return '';
   }
-  const api = { quadArea, quadDelta, anglesOk, plausible, fpDiff, AutoShutter, smoothCorners, tooDark, lightStats, lightIssue };
+  /* Spiegelung entfernen (app-v369): zwei Aufnahmen desselben Blatts aus leicht verschiedenem Winkel, beide an den Blattkanten entzerrt.
+     Glanz wandert mit dem Winkel; die Schrift bleibt. Ausgebrannte Stellen der ersten Aufnahme (A) werden aus der zweiten (B) ersetzt –
+     Helligkeit von B an A angeglichen, weicher Übergang, Rest bleibt unverändert aus A. a, b: RGBA gleicher Größe (w × h). */
+  const lum = (d, i) => (d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11);
+  // kleine Verschiebung von B gegen A (Graustufen la/lb, w × h), die am besten passt – nur auf Stellen ohne Glanz in beiden
+  function bestShift(la, lb, w, h, r = 4) {
+    let best = { dx: 0, dy: 0, e: Infinity };
+    for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
+      let e = 0, n = 0;
+      for (let y = r; y < h - r; y += 2) for (let x = r; x < w - r; x += 2) {
+        const va = la[y * w + x], vb = lb[(y + dy) * w + x + dx];
+        if (va >= 245 || vb >= 245) continue;
+        e += Math.abs(va - vb); n++;
+      }
+      if (n && e / n < best.e) best = { dx, dy, e: e / n };
+    }
+    return best;
+  }
+  function glareMerge(a, b, w, h) {
+    const n = w * h, la = new Uint8Array(n), lb = new Uint8Array(n);
+    for (let p = 0; p < n; p++) { la[p] = lum(a, p * 4); lb[p] = lum(b, p * 4); }
+    // Helligkeit angleichen: Median des Papiers (ohne Glanz) in beiden Bildern
+    const med = (l, o) => { const h0 = new Uint32Array(256); let c = 0; for (let p = 0; p < n; p += 7) if (l[p] < 245 && o[p] < 245) { h0[l[p]]++; c++; } let v = 0; for (let s = 0; v < 255 && (s += h0[v]) < c / 2; v++); return v || 1; };
+    const pA = med(la, lb), k = Math.max(0.7, Math.min(1.4, pA / med(lb, la)));
+    /* Maske: A heller als das Papier (Glanz samt aufgehelltem Rand) UND B dort dunkler – Glanz hellt nur auf, darum stammt das Dunklere
+       aus B nur dort, wo A überstrahlt ist; Schrift außerhalb des Glanzes bleibt aus A (kein Doppelbild bei kleinem Versatz) */
+    const m = new Uint8Array(n); let glare = 0;
+    for (let p = 0; p < n; p++) {
+      const ex = la[p] - (pA + 2); if (la[p] >= 248) glare++;
+      if (ex <= 0) continue;
+      const d = (la[p] - lb[p] * k - 2) / 6;
+      if (d > 0) m[p] = Math.round(255 * Math.min(1, ex / 8) * Math.min(1, d));
+    }
+    // Maske weich ausdehnen (Rand des Glanzflecks ist ebenfalls aufgehellt): Kastenfilter waagerecht und senkrecht, Maximum mit Original
+    const r = Math.max(2, Math.round(Math.max(w, h) / 400)), t = new Uint16Array(n);
+    for (let y = 0; y < h; y++) { let s = 0; const o = y * w; for (let x = -r; x < w; x++) { if (x + r < w) s += m[o + x + r]; if (x - r - 1 >= 0) s -= m[o + x - r - 1]; if (x >= 0) t[o + x] = s; } }
+    const d = 2 * r + 1, out = new Uint8ClampedArray(a.length); let fixed = 0;
+    for (let x = 0; x < w; x++) { let s = 0; for (let y = -r; y < h; y++) { if (y + r < h) s += t[(y + r) * w + x]; if (y - r - 1 >= 0) s -= t[(y - r - 1) * w + x]; if (y >= 0) {
+      const p = y * w + x, q = p * 4, mm = Math.min(255, Math.max(m[p], (s / (d * d)) * 2)) / 255;
+      if (mm > 0.5) fixed++;
+      for (let c = 0; c < 3; c++) out[q + c] = a[q + c] * (1 - mm) + Math.min(255, b[q + c] * k) * mm;
+      out[q + 3] = 255; } } }
+    return { data: out, k, glare: glare / n, fixed: fixed / n };
+  }
+  const api = { quadArea, quadDelta, anglesOk, plausible, fpDiff, AutoShutter, smoothCorners, tooDark, lightStats, lightIssue, bestShift, glareMerge };
   if (typeof module === 'object' && module.exports) { module.exports = api; return; }
   root.CamLogic = api;
 
   /* ------------------------------ Kamera-Ansicht ------------------------------ */
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   const BLUR_LIMIT = 45;
+  /* Größte Seitenlänge einer Aufnahme: 3508 px = A4 mit 300 dpi auf Geräten mit mindestens 4 GB Arbeitsspeicher (Meldung 2026-0016),
+     sonst 2600 px (rund 220 dpi) – iPhone und kleine Android-Geräte schließen den Tab sonst bei langen Stapeln. */
+  const CAP = (navigator.deviceMemory || 0) >= 4 ? 3508 : 2600;
+  let glareFix = null;   // { idx, fp, corners, gone } – letzte Seite hat eine Spiegelung, zweite Aufnahme aus anderem Winkel erwartet
   let stream = null, raf = 0, shots = [], shutter = null, auto = true, lastDet = null, busy = false, onDone = null, lastTick = 0, smooth = null, searchSince = 0, reviewIdx = -1;
   const small = document.createElement('canvas');
   function fingerprint(cv, det) {
@@ -220,11 +268,15 @@
     lastDet = det;
     const ok = plausible(det), fp = ok ? fingerprint(small, det) : null;
     if (ok) searchSince = 0; else if (!searchSince) searchSince = t;
+    // Blatt verschwindet länger aus dem Bild → keine zweite Aufnahme mehr erwartet (das nächste Blatt ist eine neue Seite)
+    if (glareFix) { if (!ok) { glareFix.gone ??= t; if (t - glareFix.gone > 700) glareFix = null; } else glareFix.gone = null; }
+    if (glareFix && auto && ok && shutter.waiting && quadDelta(det.corners, glareFix.corners) > 0.035) shutter.waiting = false;   // Winkel geändert → erneut auslösen
     let st = auto ? shutter.update(det, t, fp) : { state: ok ? 'hold' : 'search', progress: 0 };
     if (st.state === 'fire' && sharpness(small) < 40) { shutter.waiting = false; st = { state: 'hold', progress: 0.9 }; setHint('Ruhig halten …'); }
     drawOverlay(det, st);
     $('#camRing').style.setProperty('--p', st.state === 'hold' ? st.progress : 0);
     if (st.state === 'fire') capture(det);
+    else if (glareFix && (st.state === 'wait' || st.state === 'hold')) setHint(st.state === 'hold' && quadDelta(det.corners, glareFix.corners) > 0.035 ? 'Ruhig halten – zweite Aufnahme gegen die Spiegelung …' : auto ? 'Spiegelung erkannt – Handy etwas kippen, dann nimmt PDFMy das Blatt noch einmal auf und entfernt sie' : 'Spiegelung erkannt – Handy etwas kippen und noch einmal auslösen, PDFMy entfernt sie');
     else if (st.state === 'wait') setHint(shotNote(shots.at(-1), shots.length) || `Seite ${shots.length} aufgenommen – nächstes Blatt hinlegen oder „Fertig“`);
     else if (st.state === 'hold') {
       const li = ok ? sheetLight(small, det) : '';
@@ -268,7 +320,7 @@
       } catch (e) { console.warn('Blatterkennung:', e); use = det && plausible(det) ? det : null; }
       // Ausgangsbild für „Ecken anpassen“ aufbewahren (als JPEG, höchstens 2600 px)
       let source = null;
-      try { const s = Imaging.scaled(full, 2600); source = await new Promise(res => s.toBlob(res, 'image/jpeg', 0.85)); if (s !== full) s.width = 0; } catch (e) { console.warn('Ausgangsbild:', e); }
+      try { const s = Imaging.scaled(full, Math.round(CAP * 1.25)); source = await new Promise(res => s.toBlob(res, 'image/jpeg', 0.85)); if (s !== full) s.width = 0; } catch (e) { console.warn('Ausgangsbild:', e); }
       const corners = use ? use.corners.map(p => p.slice()) : [[0.03, 0.03], [0.97, 0.03], [0.97, 0.97], [0.03, 0.97]];
       let page = use ? Imaging.warp(full, use.corners) : full;
       if (use && extra.length) {
@@ -283,10 +335,31 @@
         }
         if (pages.length > 1) { const avg = Imaging.average(pages); pages.forEach(x => { x.width = 0; }); page = avg; }
       } else extra.forEach(f => { f.width = 0; });
-      // Speicher sparen (wichtig auf dem iPhone): Seite auf max. 2600 px begrenzen, Vollbild sofort freigeben
-      if (Math.max(page.width, page.height) > 2600) { const s = Imaging.scaled(page, 2600); if (page !== full) { page.width = 0; page.height = 0; } page = s; }
+      // Speicher sparen (wichtig auf dem iPhone): Seite auf CAP begrenzen, Vollbild sofort freigeben
+      if (Math.max(page.width, page.height) > CAP) { const s = Imaging.scaled(page, CAP); if (page !== full) { page.width = 0; page.height = 0; } page = s; }
       if (page !== full) { full.width = 0; full.height = 0; }
+      const fp = lastDet && plausible(lastDet) ? fingerprint(small, lastDet) : null;
+      // Zweite Aufnahme desselben Blatts nach einer Spiegelung: beide zusammensetzen statt eine neue Seite anzulegen
+      const gi = glareFix ? glareFix.idx : -1;
+      if (glareFix && use && shots[gi] && (!fp || !glareFix.fp || fpDiff(fp, glareFix.fp) < 30)) {
+        glareFix = null;
+        let msg = '';
+        try {
+          const prev = shots[gi], a = await shotCanvas(prev), m = mergeGlare(a, page);
+          if (a !== prev.canvas) { a.width = 0; a.height = 0; }
+          page.width = 0; page.height = 0;
+          const n = await packShot(m.canvas, true); n.source = prev.source; n.corners = prev.corners; n.deglared = true;
+          shots[gi] = n; persist();
+          msg = n.glare ? `Seite ${gi + 1}: Spiegelung verringert – antippen zum Prüfen` : `Seite ${gi + 1}: Spiegelung entfernt`;
+        } catch (e) { console.warn('glareMerge:', e); msg = 'Spiegelung ließ sich nicht entfernen – die erste Aufnahme bleibt.'; }
+        $('#camFlash').classList.remove('go'); void $('#camFlash').offsetWidth; $('#camFlash').classList.add('go');
+        navigator.vibrate?.(35);
+        renderStrip(); window.toast?.(msg, 3500);
+        shutter.fire(performance.now(), fp);   // wartet danach auf das nächste Blatt
+        return;
+      }
       const sh = await packShot(page, !!use); sh.source = source; sh.corners = corners;
+      glareFix = sh.glare && use ? { idx: shots.length, fp, corners: use.corners.map(p => p.slice()), gone: null } : null;
       shots.push(sh);
       persist();
       $('#camFlash').classList.remove('go'); void $('#camFlash').offsetWidth; $('#camFlash').classList.add('go');
@@ -294,6 +367,18 @@
       renderStrip();
       if (!auto) shutter.fire(performance.now(), lastDet && plausible(lastDet) ? fingerprint(small, lastDet) : null);
     } finally { busy = false; }
+  }
+  function mergeGlare(a, b) {
+    const w = a.width, h = a.height, sw = Math.min(1, 480 / Math.max(w, h)), W2 = Math.max(1, Math.round(w * sw)), H2 = Math.max(1, Math.round(h * sw));
+    const gray = src => { const c = Imaging.canvas(W2, H2), x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(src, 0, 0, W2, H2);
+      const d = x.getImageData(0, 0, W2, H2).data, l = new Uint8Array(W2 * H2); for (let p = 0; p < l.length; p++) l[p] = d[p * 4] * 0.3 + d[p * 4 + 1] * 0.59 + d[p * 4 + 2] * 0.11; c.width = 0; return l; };
+    const s = bestShift(gray(a), gray(b), W2, H2, 6);
+    const bb = Imaging.canvas(w, h), x = bb.getContext('2d', { willReadFrequently: true });
+    x.fillStyle = '#fff'; x.fillRect(0, 0, w, h); x.drawImage(b, -s.dx / sw, -s.dy / sw, w, h);
+    const r = glareMerge(a.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, w, h).data, x.getImageData(0, 0, w, h).data, w, h);
+    bb.width = 0; bb.height = 0;
+    const out = Imaging.canvas(w, h); out.getContext('2d').putImageData(new ImageData(r.data, w, h), 0, 0);
+    return { canvas: out, fixed: r.fixed, glare: r.glare };
   }
   function renderStrip() {
     const s = $('#camStrip'); s.innerHTML = '';
@@ -346,7 +431,7 @@
     const src = await shotCanvas({ blob: sh.source });
     let page = Imaging.warp(src, c);
     src.width = 0; src.height = 0;
-    if (Math.max(page.width, page.height) > 2600) { const s = Imaging.scaled(page, 2600); if (s !== page) page.width = 0; page = s; }
+    if (Math.max(page.width, page.height) > CAP) { const s = Imaging.scaled(page, CAP); if (s !== page) page.width = 0; page = s; }
     const n = await packShot(page, true); n.source = sh.source; n.corners = c;
     shots[i] = n; persist(); cornClose(); renderStrip(); review(i);
   }
@@ -418,7 +503,7 @@
       if (e.name === 'NotAllowedError') alert('Der Kamerazugriff wurde nicht erlaubt. Bitte in den Browser-Einstellungen die Kamera für diese Seite freigeben – oder ein Foto aus der Galerie wählen.');
       fallback?.(); return;
     }
-    shots = []; cid = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); shutter = new AutoShutter(); auto =(() => { try { return localStorage.getItem('mpdf.camAuto') !== '0'; } catch { return true; } })();
+    shots = []; glareFix = null; cid = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); shutter = new AutoShutter(); auto =(() => { try { return localStorage.getItem('mpdf.camAuto') !== '0'; } catch { return true; } })();
     $('#camAuto').checked = auto;
     const v = $('#camVideo'); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); v.muted = true; v.playsInline = true; v.srcObject = stream;
     $('#camDlg').showModal(); guardOn(); wakeOn(); renderStrip();
@@ -451,7 +536,7 @@
       b.onpointermove = e => { if (!b.dataset.drag || !edit) return; const r = $('#camCornBox').getBoundingClientRect(); edit.c[k] = [Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (e.clientY - r.top) / r.height))]; cornDraw(); };
       b.onkeydown = e => { const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key]; if (!d || !edit) return; e.preventDefault(); const s = e.shiftKey ? 0.002 : 0.01; edit.c[k] = [Math.max(0, Math.min(1, edit.c[k][0] + d[0] * s)), Math.max(0, Math.min(1, edit.c[k][1] + d[1] * s))]; cornDraw(); };
     });
-    $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); persist(); renderStrip(); closeReview(); };
+    $('#camRevDel').onclick = () => { shots.splice(reviewIdx, 1); glareFix = null; persist(); renderStrip(); closeReview(); };
     $('#camRevRot').onclick = async () => { const i = reviewIdx, sh = shots[i]; if (!sh) return; const c = await shotCanvas(sh), r = Imaging.rotate90(c, 90); c.width = 0; const { blurry, glare } = sh; shots[i] = await packShot(r, sh.cropped); Object.assign(shots[i], { blurry, glare }); persist(); renderStrip(); review(i); };
     $('#camDone').onclick = () => close(true);
     // Anruf oder App-Wechsel: Das Handy kann die Seite im Hintergrund beenden – bisherige Aufnahmen ins Dokument übernehmen

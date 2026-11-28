@@ -4,6 +4,23 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-28
 
+### Österreich und Schweiz: Hinweise und Vorschläge (app-v370)
+- Bewerbungsliste: Vorschläge für „Stellenangebot gefunden über“ je Land – Österreich „Stellenangebot des AMS“, „Vermittlungsvorschlag AMS“; Schweiz „Job-Room (arbeit.swiss)“, „Zuweisung RAV“ statt Jobbörse der Agentur für Arbeit und Jobcenter. Die Werte bleiben deutsch, weil sie im deutschen Nachweis stehen.
+- Hinweise beim Überfahren (Bewerbungen und Nachweis, Sprache der Dokumente, Frist berechnen) und die Beschriftung „Bundesland“ im Fristenrechner passen sich dem Land an (neu: data-land-title, data-land-placeholder, data-land-liste in js/land.js).
+- Texte in allen 48 Sprachen; Test in tests/land.test.js.
+
+### Handy-Scan: Spiegelung entfernen und 300 dpi (app-v369, Meldung 2026-0016)
+- **Spiegelung entfernen:** Hat eine Kamera-Aufnahme einen Glanzfleck, bittet PDFMy darum, das Handy etwas zu kippen, und nimmt dasselbe Blatt noch einmal auf (automatisch, sobald sich der Winkel geändert hat, oder per Auslöser). Beide Aufnahmen werden an den Blattkanten entzerrt, um wenige Bildpunkte nachjustiert, in der Helligkeit angeglichen; nur die ausgebrannte Stelle wird mit weichem Übergang aus der zweiten Aufnahme ersetzt. Liegt stattdessen ein neues Blatt im Bild, entsteht wie gewohnt eine neue Seite.
+- **300 dpi:** Auf Geräten mit mindestens 4 GB Arbeitsspeicher bis 3508 Bildpunkte je Seite (A4 mit 300 dpi) statt 2600; iPhone und kleinere Geräte unverändert (Speicher).
+- Hilfe „Mit der Kamera scannen“ ergänzt; Test mit synthetischen Aufnahmen (Glanz an verschiedenen Stellen, Versatz, Helligkeit) in tests/camera.test.js.
+
+### Österreich und Schweiz: Vereine, Fristen, Bewerbung (app-v368)
+- Fristenrechner: Der Hinweis nennt die Rechtsgrundlagen des gewählten Staates (AT: AVG, BAO, ZPO; CH: ZPO, VwVG) statt immer BGB/ZPO/AO.
+- Verein in Österreich und der Schweiz: „Statuten“ statt „Satzung“ in Mitgliederversammlung, Protokoll und Mitgliedsantrag; Prüfer heißen „Rechnungsprüfer“ (AT, § 21 VerG) bzw. „Rechnungsrevisoren“ (CH) in Tagesordnung und Prüfvermerk des Kassenberichts; Online-Teilnahme ohne Verweis auf das BGB.
+- Vereinsvorlagen: Übungsleiter- und Ehrenamtspauschale (§ 3 Nr. 26/26a EStG) nur in Deutschland; Mitgliedsantrag in der Schweiz ohne SEPA-Lastschriftmandat (dort kein SEPA-Lastschriftverfahren für Beiträge).
+- Schweiz: „Bewerbungsdossier“ statt „Bewerbungsmappe“ im Menü und auf der Startseite.
+- Texte in allen 48 Sprachen; Hilfe (Land) ergänzt; Tests in tests/land.test.js.
+
 ### QR-Rechnung für die Schweiz und Liechtenstein (app-v367)
 - Neu bei Land Schweiz: *Mehr → QR-Rechnung erstellen …* – Zahlteil mit Empfangsschein und Swiss QR Code nach den Swiss Implementation Guidelines QR-bill (SIX, Version 2.4, strukturierte Adressen), als eigene A4-Seite oder als letzte Seite an die geöffnete Rechnung angehängt.
 - Prüfung vor dem Erstellen: IBAN aus CH/LI mit Prüfziffer, QR-IBAN nur mit QR-Referenz (Modulo 10 rekursiv), normale IBAN mit Creditor Reference (ISO 11649) oder ohne Referenz, Betrag, Währung CHF/EUR, Pflichtadressen, Längen. „Referenz bilden“ erzeugt die passende Referenz aus der Rechnungsnummer.

@@ -30,7 +30,7 @@
      zuwendung: amtliches Muster nur in DE; in AT melden Vereine Spenden automatisch ans Finanzamt, in CH gibt es kein amtliches Muster.
      sepa/ueberweisung: SEPA und GiroCode – in der Schweiz zahlt man mit QR-Rechnung, LSV+ endet 2028.
      nachweis: in DE Jobcenter/Agentur, in AT Liste für das AMS, in CH Nachweis für das RAV – überall, aber anders benannt. */
-  const NUR = { zuwendung: ['DE'], sepa: ['DE', 'AT', 'XX'], ueberweisung: ['DE', 'AT', 'XX'] };
+  const NUR = { zuwendung: ['DE'], pauschale: ['DE'], sepa: ['DE', 'AT', 'XX'], ueberweisung: ['DE', 'AT', 'XX'] };
   const gibt = (funktion, land = get()) => !NUR[funktion] || NUR[funktion].includes(land);
 
   // Bezeichnungen je Land (deutscher Text; die Oberfläche übersetzt ihn wie jeden anderen Text)
@@ -53,9 +53,47 @@
       AT: 'Lesefassung in Ihrer Sprache – nur zum Verstehen. Beim AMS geben Sie bitte die deutsche Fassung ab.',
       CH: 'Lesefassung in Ihrer Sprache – nur zum Verstehen. Beim RAV geben Sie bitte die deutsche Fassung ab.',
       XX: 'Lesefassung in Ihrer Sprache – nur zum Verstehen. Beim Jobcenter oder bei der Agentur für Arbeit geben Sie bitte die deutsche Fassung ab.' },
+    fristHinweis: {
+      DE: 'Rechenhilfe nach §§ 187 ff. BGB, § 222 ZPO und § 108 AO – die Fristenkontrolle bleibt bei Ihnen. Bitte Fristen immer zusätzlich im Fristenkalender eintragen und gegenprüfen.',
+      AT: 'Rechenhilfe nach §§ 32, 33 AVG, § 108 BAO und §§ 125, 126 ZPO – die Fristenkontrolle bleibt bei Ihnen. Bitte Fristen immer zusätzlich im Fristenkalender eintragen und gegenprüfen.',
+      CH: 'Rechenhilfe nach Art. 142–145 ZPO und Art. 20–22a VwVG – die Fristenkontrolle bleibt bei Ihnen. Bitte Fristen immer zusätzlich im Fristenkalender eintragen und gegenprüfen.' },
+    // Verein: in Österreich und der Schweiz „Statuten“ (fehlt CH, gilt der Wert für AT)
+    mvHinweis: { DE: 'Ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste und ausfüllbarem Protokoll. PDFMy rechnet aus, bis wann die Einladung per E-Mail bzw. per Brief raus muss. Maßgeblich ist Ihre Satzung.',
+      AT: 'Ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste und ausfüllbarem Protokoll. PDFMy rechnet aus, bis wann die Einladung per E-Mail bzw. per Brief raus muss. Maßgeblich sind Ihre Statuten.' },
+    mvFristLabel: { DE: 'Einladungsfrist laut Satzung', AT: 'Einladungsfrist laut Statuten' },
+    mvOnlineLabel: { DE: 'Online-Teilnahme (freiwillig, § 32 Abs. 2 BGB)', AT: 'Online-Teilnahme (freiwillig, wenn die Statuten es vorsehen)' },
+    vvMitglied: { DE: 'Mitgliedsantrag mit SEPA-Lastschriftmandat', AT: 'Mitgliedsantrag mit SEPA-Lastschriftmandat', CH: 'Mitgliedsantrag' },
+    mappeMenu: { DE: 'Bewerbungsmappe …', AT: 'Bewerbungsmappe …', CH: 'Bewerbungsdossier …' },
+    mappe: { DE: 'Bewerbungsmappe', AT: 'Bewerbungsmappe', CH: 'Bewerbungsdossier' },
+    // Hinweise beim Überfahren (title), Platzhalter und Vorschlagslisten (app-v370)
+    nachweisTip: { DE: 'Liste Ihrer Bewerbungen führen und als Nachweis der Eigenbemühungen für Jobcenter oder Agentur für Arbeit speichern',
+      AT: 'Liste Ihrer Bewerbungen führen und als Liste der Eigenbewerbungen für das AMS speichern',
+      CH: 'Liste Ihrer Bewerbungen führen und als Nachweis der persönlichen Arbeitsbemühungen für das RAV speichern' },
+    docLangTip: { DE: 'In dieser Sprache erstellt PDFMy Lebenslauf und Bewerbungsmappe – unabhängig von der Sprache der Oberfläche. Der Nachweis für Jobcenter und Agentur für Arbeit ist immer deutsch.',
+      AT: 'In dieser Sprache erstellt PDFMy Lebenslauf und Bewerbungsmappe – unabhängig von der Sprache der Oberfläche. Die Liste für das AMS ist immer deutsch.',
+      CH: 'In dieser Sprache erstellt PDFMy Lebenslauf und Bewerbungsdossier – unabhängig von der Sprache der Oberfläche. Der Nachweis für das RAV ist immer deutsch.' },
+    fristTip: { DE: 'Gerichts- und Behördenfristen berechnen – mit Vorfrist, Feiertagen des Bundeslands und Kalendereintrag',
+      AT: 'Gerichts- und Behördenfristen berechnen – mit Vorfrist, Feiertagen und Kalendereintrag',
+      CH: 'Gerichts- und Behördenfristen berechnen – mit Vorfrist, Feiertagen, Fristenstillstand und Kalendereintrag' },
+    frLandLabel: { DE: 'Bundesland (Gericht/Behörde)', AT: 'Staat oder Bundesland (Gericht/Behörde)' },
+    quelleBeispiel: { DE: 'z. B. Jobbörse der Agentur für Arbeit', AT: 'z. B. Stellenangebot des AMS', CH: 'z. B. Job-Room (arbeit.swiss)' },
     steuerberater: { DE: 'Belege für Steuerberater (DATEV) …', AT: 'Belege für Steuerberater (DATEV/RZL) …', CH: 'Belege für den Treuhänder …', XX: 'Belege für Steuerberater (DATEV) …' },
   };
-  const text = (k, land = get()) => (TEXT[k] && (TEXT[k][land] || TEXT[k].DE)) || '';
+  // Vorschlagslisten je Land (z. B. „Stellenangebot gefunden über“) – bleiben deutsch, denn sie stehen im deutschen Nachweis
+  // i18n-aus
+  const LISTE = {
+    bwgQuellen: { DE: ['Jobbörse der Agentur für Arbeit', 'Vermittlungsvorschlag Jobcenter/Agentur', 'Zeitung', 'Internet-Stellenbörse', 'Firmen-Website', 'Initiativbewerbung', 'Empfehlung'],
+      AT: ['Stellenangebot des AMS', 'Vermittlungsvorschlag AMS', 'Zeitung', 'Internet-Stellenbörse', 'Firmen-Website', 'Initiativbewerbung', 'Empfehlung'],
+      CH: ['Job-Room (arbeit.swiss)', 'Zuweisung RAV', 'Zeitung', 'Internet-Stellenbörse', 'Firmen-Website', 'Initiativbewerbung', 'Empfehlung'] }
+  };
+  // i18n-an
+  const liste = (k, land = get()) => (LISTE[k] && (LISTE[k][land] || LISTE[k].DE)) || [];
+  const text = (k, land = get()) => (TEXT[k] && (TEXT[k][land] || (land === 'CH' && TEXT[k].AT) || TEXT[k].DE)) || '';
+  // Wörter in Vereinsdokumenten je Land: Prüfer heißen in AT Rechnungsprüfer (§ 21 VerG), in CH Rechnungsrevisoren
+  // i18n-aus
+  const VEREIN = { DE: { satzung: 'Satzung', pruefer: 'Kassenprüfer' }, AT: { satzung: 'Statuten', pruefer: 'Rechnungsprüfer' }, CH: { satzung: 'Statuten', pruefer: 'Rechnungsrevisoren' } };
+  // i18n-an
+  const verein = (land = get()) => VEREIN[land] || VEREIN.DE;
   // Fristenrechner: DE → zuletzt gewähltes Bundesland (Vorgabe Nordrhein-Westfalen), AT/CH → eigene Regeln
   const fristLand = (land = get()) => land === 'AT' || land === 'CH' ? land : 'NW';
 
@@ -65,8 +103,12 @@
     if (!doc) return;
     const land = get();
     for (const el of doc.querySelectorAll('[data-land-nur]')) el.hidden = !el.dataset.landNur.split(/\s+/).includes(land);
+    const tr = t => root.I18N ? root.I18N.t(t) : t;
+    for (const el of doc.querySelectorAll('[data-land-title]')) { const t = text(el.dataset.landTitle, land); if (t) el.title = tr(t); }
+    for (const el of doc.querySelectorAll('[data-land-placeholder]')) { const t = text(el.dataset.landPlaceholder, land); if (t) el.placeholder = tr(t); }
+    for (const el of doc.querySelectorAll('datalist[data-land-liste]')) { el.textContent = ''; for (const v of liste(el.dataset.landListe, land)) { const o = doc.createElement('option'); o.value = v; el.append(o); } }
     for (const el of doc.querySelectorAll('[data-land-text]')) { const t = text(el.dataset.landText, land); if (!t) continue; const span = el.querySelector(':scope > span') || el; span.textContent = root.I18N ? root.I18N.t(t) : t; }
   }
-  const api = { LAENDER, vermute, get, set, gibt, text, fristLand, apply, gewaehlt };
+  const api = { LAENDER, vermute, get, set, gibt, text, liste, verein, fristLand, apply, gewaehlt };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Land = api;
 })(typeof self !== 'undefined' ? self : this);

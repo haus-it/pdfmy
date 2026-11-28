@@ -1251,7 +1251,7 @@ html.i18n-wait body{visibility:hidden}
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgOffice"><div class="mgh" id="mgOffice">Büro & Ablage</div>
           <button class="mi" id="btnJournal"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg><span>Posteingangsbuch, Akten &amp; Fristen</span></button>
-          <button class="mi" id="btnFrist" title="Gerichts- und Behördenfristen berechnen – mit Vorfrist, Feiertagen des Bundeslands und Kalendereintrag"><svg class="ic" aria-hidden="true"><use href="#i-calendar-plus"/></svg><span>Frist berechnen …</span></button>
+          <button class="mi" id="btnFrist" data-land-title="fristTip" title="Gerichts- und Behördenfristen berechnen – mit Vorfrist, Feiertagen des Bundeslands und Kalendereintrag"><svg class="ic" aria-hidden="true"><use href="#i-calendar-plus"/></svg><span>Frist berechnen …</span></button>
           <button class="mi" id="btnAsk" title="Eine Frage an viele abgelegte Briefe und Verträge – die KI auf diesem Gerät antwortet mit Quellen, nichts wird hochgeladen"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg><span>Fragen an die Ablage …</span></button>
           <button class="mi" id="btnOut" title="Zielordner (z. B. mit SharePoint/OneDrive synchronisiert). Danach speichert „Speichern“ ohne Nachfrage dorthin."><svg class="ic" aria-hidden="true"><use href="#i-folder-cog"/></svg><span class="lbl">Ablageordner wählen …</span></button>
           <button class="mi" id="btnSeparator" title="Blatt mit QR-Code zum Ausdrucken: zwischen die Briefe legen, dann einen ganzen Stapel scannen – PDFMy trennt automatisch"><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg><span>Trennblatt drucken …</span></button>
@@ -1273,10 +1273,10 @@ html.i18n-wait body{visibility:hidden}
           <button class="mi" id="btnBw" data-land-nur="DE AT XX" title="Für Mitglieder ohne Lastschrift: Beitragsrechnung mit GiroCode je Mitglied, danach Abgleich mit dem Kontoauszug – wer hat bezahlt, wer ist offen, Zahlungserinnerungen"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Beiträge per Überweisung …</span></button>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgJob"><div class="mgh" id="mgJob">Bewerbung</div>
-          <button class="mi" id="btnBwgMappe" title="Anschreiben, Lebenslauf und Zeugnisse wählen – PDFMy ordnet sie, setzt Lesezeichen und speichert eine kleine PDF für Portal und E-Mail"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Bewerbungsmappe …</span></button>
+          <button class="mi" id="btnBwgMappe" data-land-text="mappeMenu" title="Anschreiben, Lebenslauf und Zeugnisse wählen – PDFMy ordnet sie, setzt Lesezeichen und speichert eine kleine PDF für Portal und E-Mail"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Bewerbungsmappe …</span></button>
           <button class="mi" id="btnLv" title="Tabellarischen Lebenslauf ausfüllen – mit Foto, als PDF oder direkt in die Bewerbungsmappe"><svg class="ic" aria-hidden="true"><use href="#i-user-round"/></svg><span>Lebenslauf erstellen …</span></button>
-          <button class="mi" id="btnBwg" data-land-text="nachweisMenu" title="Liste Ihrer Bewerbungen führen und als Nachweis der Eigenbemühungen für Jobcenter oder Agentur für Arbeit speichern"><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg><span>Bewerbungen und Nachweis …</span></button>
-          <label class="mi langmi" for="docLang" title="In dieser Sprache erstellt PDFMy Lebenslauf und Bewerbungsmappe – unabhängig von der Sprache der Oberfläche. Der Nachweis für Jobcenter und Agentur für Arbeit ist immer deutsch."><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Sprache der Dokumente</span><select id="docLang" class="docLangSel" aria-label="Sprache der Dokumente"><option value="de">Deutsch</option><option value="en">English</option></select></label>
+          <button class="mi" id="btnBwg" data-land-text="nachweisMenu" data-land-title="nachweisTip" title="Liste Ihrer Bewerbungen führen und als Nachweis der Eigenbemühungen für Jobcenter oder Agentur für Arbeit speichern"><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg><span>Bewerbungen und Nachweis …</span></button>
+          <label class="mi langmi" for="docLang" data-land-title="docLangTip" title="In dieser Sprache erstellt PDFMy Lebenslauf und Bewerbungsmappe – unabhängig von der Sprache der Oberfläche. Der Nachweis für Jobcenter und Agentur für Arbeit ist immer deutsch."><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Sprache der Dokumente</span><select id="docLang" class="docLangSel" aria-label="Sprache der Dokumente"><option value="de">Deutsch</option><option value="en">English</option></select></label>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgSet"><div class="mgh" id="mgSet">Einstellungen</div>
           <button class="mi" id="btnSetup" title="Name, Ablageordner, Scanner und PDF-Standard einrichten"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Einrichtung …</span></button>
@@ -1429,7 +1429,7 @@ html.i18n-wait body{visibility:hidden}
       <div class="tiles">
         <button class="tile" data-intent="merge"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>PDFs zusammenfügen</b><span>Mehrere Dateien zu einer, Reihenfolge per Ziehen</span></button>
         <button class="tile" data-intent="mergesmall"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>Zusammenfügen und verkleinern</b><span>Mehrere Dateien zu einer, gleich klein zum Mailen</span></button>
-        <button class="tile" data-intent="bewerbung"><i><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg></i><b>Bewerbungsmappe</b><span>Anschreiben, Lebenslauf, Zeugnisse – eine kleine PDF für Portal und E-Mail</span></button>
+        <button class="tile" data-intent="bewerbung"><i><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg></i><b data-land-text="mappe">Bewerbungsmappe</b><span>Anschreiben, Lebenslauf, Zeugnisse – eine kleine PDF für Portal und E-Mail</span></button>
         <button class="tile" data-intent="zipper"><i><svg class="ic" aria-hidden="true"><use href="#i-combine"/></svg></i><b>Abwechselnd zusammenfügen</b><span>Vorder- und Rückseiten aus zwei Dateien mischen</span></button>
         <button class="tile" data-intent="split"><i><svg class="ic" aria-hidden="true"><use href="#i-scissors"/></svg></i><b>PDF aufteilen</b><span>Alle N Seiten, an Lesezeichen oder nach Dateigröße</span></button>
         <button class="tile" data-intent="organize"><i><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg></i><b>Seiten organisieren</b><span>Sortieren, drehen, löschen, einfügen, teilen</span></button>
@@ -2367,25 +2367,25 @@ html.i18n-wait body{visibility:hidden}
     <div class="field"><label for="frUnit">Einheit</label><select id="frUnit"><option value="tage">Tage</option><option value="wochen" selected>Wochen</option><option value="monate">Monate</option></select></div></div>
   <div class="anlrow"><div class="field"><label for="frDatum" id="frDatumL">Zugestellt am</label><input id="frDatum" type="date"></div>
     <div class="field" id="frWegRow" hidden><label for="frWeg">Bekanntgabe</label><select id="frWeg"><option value="post">per Post – Datum des Bescheids</option><option value="abruf">zum Abruf bereitgestellt (ELSTER, Portal)</option><option value="datum">Zustellung mit Datum (z. B. Zustellungsurkunde)</option></select></div></div>
-  <div class="anlrow"><div class="field"><label for="frLand">Bundesland (Gericht/Behörde)</label><select id="frLand"></select></div>
+  <div class="anlrow"><div class="field"><label for="frLand" data-land-text="frLandLabel">Bundesland (Gericht/Behörde)</label><select id="frLand"></select></div>
     <div class="field"><label for="frVor">Vorfrist</label><select id="frVor"><option value="0">keine</option><option value="3">3 Tage vorher</option><option value="7" selected>1 Woche vorher</option><option value="14">2 Wochen vorher</option></select></div></div>
   <div id="frOut" class="frout" aria-live="polite"></div>
-  <p class="hint">Rechenhilfe nach §§ 187 ff. BGB, § 222 ZPO und § 108 AO – die Fristenkontrolle bleibt bei Ihnen. Bitte Fristen immer zusätzlich im Fristenkalender eintragen und gegenprüfen.</p>
+  <p class="hint" id="frHinweis">Rechenhilfe nach §§ 187 ff. BGB, § 222 ZPO und § 108 AO – die Fristenkontrolle bleibt bei Ihnen. Bitte Fristen immer zusätzlich im Fristenkalender eintragen und gegenprüfen.</p>
   <div class="dlgrow"><button type="button" id="frClose">Schließen</button><button type="button" id="frIcs">In Kalender (.ics)</button><button type="submit" class="primary" id="frTake">Als Frist übernehmen</button></div>
 </form></dialog>
 <dialog id="vvDlg" class="sharedlg propdlg" aria-labelledby="vvT"><form id="vvForm">
   <h3 class="dlgtitle" id="vvT">Vereinsvorlagen</h3>
   <p class="hint" style="margin-top:0">Ausfüllbare Formulare mit dem Namen Ihres Vereins oder Ihrer Einrichtung – per E-Mail verschicken, am Handy ausfüllen und unterschreiben lassen. Kommen viele ausgefüllt zurück: „Formulardaten …“ → „Ausgefüllte PDFs wählen …“ macht daraus eine Excel-Liste.</p>
   <fieldset><legend>Vorlage</legend>
-    <label><input type="radio" name="vvArt" value="mitglied" checked> Mitgliedsantrag mit SEPA-Lastschriftmandat</label>
+    <label data-land-text="vvMitglied"><input type="radio" name="vvArt" value="mitglied" checked> <span>Mitgliedsantrag mit SEPA-Lastschriftmandat</span></label>
     <label><input type="radio" name="vvArt" value="foto"> Einwilligung zu Fotos und Veröffentlichungen (Muster)</label>
     <label><input type="radio" name="vvArt" value="fahrt"> Einverständniserklärung für Fahrten und Ausflüge (Muster)</label>
-    <label><input type="radio" name="vvArt" value="pauschale"> Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)</label>
+    <label data-land-nur="DE"><input type="radio" name="vvArt" value="pauschale"> Übungsleiter- bzw. Ehrenamtspauschale: Vereinbarung mit Erklärung (Muster)</label>
     <label><input type="radio" name="vvArt" value="stunden"> Stundennachweis für Übungsleiter (für Abrechnung und Zuschussanträge, Muster)</label></fieldset>
   <div class="field"><label for="vvName">Name des Vereins bzw. der Einrichtung</label><input id="vvName" required autocomplete="organization"></div>
   <div class="field"><label for="vvAdr">Anschrift</label><textarea id="vvAdr" rows="2"></textarea></div>
   <div id="vvMitglied">
-    <div class="field"><label for="vvGlId">Gläubiger-Identifikationsnummer (für das SEPA-Mandat)</label><input id="vvGlId" placeholder="z. B. DE98ZZZ09999999999" autocomplete="off" spellcheck="false"></div>
+    <div class="field" data-land-nur="DE AT XX"><label for="vvGlId">Gläubiger-Identifikationsnummer (für das SEPA-Mandat)</label><input id="vvGlId" placeholder="z. B. DE98ZZZ09999999999" autocomplete="off" spellcheck="false"></div>
     <div class="field"><label for="vvBeitr">Beiträge zum Ankreuzen (je Zeile einer)</label><textarea id="vvBeitr" rows="3" placeholder="Erwachsene 60 € im Jahr&#10;Jugendliche 30 € im Jahr"></textarea></div></div>
   <div class="field" id="vvFotoF" hidden><label for="vvZweck">Wofür werden Fotos veröffentlicht?</label><input id="vvZweck" placeholder="z. B. die Berichterstattung über Training, Turniere und Feste"></div>
   <div class="field"><label for="vvKontakt">Zurück an (E-Mail oder Anschrift, freiwillig)</label><input id="vvKontakt"></div>
@@ -2456,7 +2456,7 @@ html.i18n-wait body{visibility:hidden}
 </form></dialog>
 <dialog id="mvDlg" class="sharedlg propdlg" aria-labelledby="mvT"><form id="mvForm">
   <h3 class="dlgtitle" id="mvT">Mitgliederversammlung vorbereiten</h3>
-  <p class="hint" style="margin-top:0">Ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste und ausfüllbarem Protokoll. PDFMy rechnet aus, bis wann die Einladung per E-Mail bzw. per Brief raus muss. Maßgeblich ist Ihre Satzung.</p>
+  <p class="hint" style="margin-top:0" data-land-text="mvHinweis">Ein PDF mit Einladung und Tagesordnung, Anwesenheitsliste und ausfüllbarem Protokoll. PDFMy rechnet aus, bis wann die Einladung per E-Mail bzw. per Brief raus muss. Maßgeblich ist Ihre Satzung.</p>
   <div class="field"><label for="mvName">Name des Vereins</label><input id="mvName" required autocomplete="organization"></div>
   <div class="field"><label for="mvAdr">Anschrift des Vereins</label><textarea id="mvAdr" rows="2"></textarea></div>
   <fieldset><legend>Art</legend>
@@ -2465,8 +2465,8 @@ html.i18n-wait body{visibility:hidden}
   <div class="anlrow"><div class="field"><label for="mvDatum">Datum</label><input type="date" id="mvDatum" required></div>
     <div class="field"><label for="mvZeit">Beginn</label><input type="time" id="mvZeit" value="19:00"></div></div>
   <div class="field"><label for="mvOrt">Ort der Versammlung</label><input id="mvOrt" placeholder="z. B. Vereinsheim, Sportplatzweg 1"></div>
-  <div class="field"><label for="mvOnline">Online-Teilnahme (freiwillig, § 32 Abs. 2 BGB)</label><input id="mvOnline" placeholder="z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand"></div>
-  <div class="anlrow"><div class="field"><label for="mvFrist">Einladungsfrist laut Satzung</label><select id="mvFrist"><option value="1">1 Woche</option><option value="2" selected>2 Wochen</option><option value="3">3 Wochen</option><option value="4">4 Wochen</option><option value="6">6 Wochen</option></select></div>
+  <div class="field"><label for="mvOnline" data-land-text="mvOnlineLabel">Online-Teilnahme (freiwillig, § 32 Abs. 2 BGB)</label><input id="mvOnline" placeholder="z. B. Videokonferenz – Zugangsdaten erhalten Sie nach Anmeldung beim Vorstand"></div>
+  <div class="anlrow"><div class="field"><label for="mvFrist" data-land-text="mvFristLabel">Einladungsfrist laut Satzung</label><select id="mvFrist"><option value="1">1 Woche</option><option value="2" selected>2 Wochen</option><option value="3">3 Wochen</option><option value="4">4 Wochen</option><option value="6">6 Wochen</option></select></div>
     <div class="field"><label for="mvAntrag">Anträge bis</label><select id="mvAntrag"><option value="0">ohne Antragsfrist</option><option value="7" selected>1 Woche vorher</option><option value="14">2 Wochen vorher</option></select></div></div>
   <div class="field"><label for="mvTops">Tagesordnung (je Zeile ein Punkt; leer = übliche Punkte)</label><textarea id="mvTops" rows="5" placeholder="Begrüßung, Feststellung der ordnungsgemäßen Einberufung und der Beschlussfähigkeit&#10;Bericht des Vorstands&#10;Kassenbericht&#10;Entlastung des Vorstands&#10;Wahlen&#10;Verschiedenes"></textarea></div>
   <div class="anlrow"><div class="field"><label for="mvUnt">Unterschrift (Name)</label><input id="mvUnt" autocomplete="name"></div>
@@ -2521,7 +2521,7 @@ html.i18n-wait body{visibility:hidden}
   <p class="hint" style="margin-top:0" data-land-text="nachweisHinweis">Tragen Sie jede Bewerbung ein. Für das Jobcenter oder die Agentur für Arbeit speichert PDFMy daraus den Nachweis Ihrer Eigenbemühungen als PDF – zum Ausdrucken, Unterschreiben oder Hochladen. Die Liste bleibt nur in diesem Browser.</p>
   <div class="anlrow"><div class="field"><label for="bwgDatum">Datum</label><input id="bwgDatum" type="date" required></div><div class="field"><label for="bwgArt">Art der Bewerbung</label><select id="bwgArt"><option value="Online-Portal">Online-Portal</option><option value="E-Mail">E-Mail</option><option value="Post">Post</option><option value="Persönlich">Persönlich</option><option value="Telefonisch">Telefonisch</option></select></div></div>
   <div class="anlrow"><div class="field"><label for="bwgFirma">Arbeitgeber</label><input id="bwgFirma" required autocomplete="organization"></div><div class="field"><label for="bwgOrt">Ort</label><input id="bwgOrt"></div></div>
-  <div class="anlrow"><div class="field"><label for="bwgStelle">Stelle</label><input id="bwgStelle"></div><div class="field"><label for="bwgQuelle">Stellenangebot gefunden über</label><input id="bwgQuelle" list="bwgQuellen" placeholder="z. B. Jobbörse der Agentur für Arbeit"><datalist id="bwgQuellen"><option value="Jobbörse der Agentur für Arbeit"><option value="Vermittlungsvorschlag Jobcenter/Agentur"><option value="Zeitung"><option value="Internet-Stellenbörse"><option value="Firmen-Website"><option value="Initiativbewerbung"><option value="Empfehlung"></datalist></div></div>
+  <div class="anlrow"><div class="field"><label for="bwgStelle">Stelle</label><input id="bwgStelle"></div><div class="field"><label for="bwgQuelle">Stellenangebot gefunden über</label><input id="bwgQuelle" list="bwgQuellen" data-land-placeholder="quelleBeispiel" placeholder="z. B. Jobbörse der Agentur für Arbeit"><datalist id="bwgQuellen" data-land-liste="bwgQuellen"><option value="Jobbörse der Agentur für Arbeit"><option value="Vermittlungsvorschlag Jobcenter/Agentur"><option value="Zeitung"><option value="Internet-Stellenbörse"><option value="Firmen-Website"><option value="Initiativbewerbung"><option value="Empfehlung"></datalist></div></div>
   <div class="anlrow"><div class="field"><label for="bwgErgebnis">Ergebnis</label><select id="bwgErgebnis"><option value="offen">offen</option><option value="Einladung zum Gespräch">Einladung zum Gespräch</option><option value="Absage">Absage</option><option value="Zusage">Zusage</option><option value="keine Antwort">keine Antwort</option></select></div><div class="field"><label for="bwgNotiz">Bemerkung</label><input id="bwgNotiz"></div></div>
   <div class="dlgrow" style="justify-content:flex-start"><button type="submit" class="primary" id="bwgAdd">Eintragen</button><button type="button" id="bwgNeu" hidden>Neu (nicht ändern)</button></div>
   <div class="bwgtab" role="region" aria-label="Eingetragene Bewerbungen" tabindex="0"><table id="bwgList"></table></div>

@@ -299,6 +299,8 @@ Anlass: Weihnachtsaktion an Vereine, Kitas, Parteien, Service-Clubs in NRW. Acro
 
 **Nachtrag 28.11.2026 (app-v362) – Sprachen:** PDFMy jetzt in 47 Sprachen, darunter Arabisch, Persisch/Dari, Paschtu, Kurdisch (Sorani, Kurmanci), Somali und Tigrinya mit Oberfläche von rechts nach links. Acrobat bietet Arabisch und Hebräisch, aber kein Paschtu, Kurdisch, Somali oder Tigrinya; kostenlose Online-Werkzeuge meist nur die großen europäischen Sprachen (nicht systematisch gezählt).
 
+**Nachtrag 28.11.2026 (app-v369) – Spiegelung entfernen:** Beim Handy-Scan setzt PDFMy zwei Aufnahmen aus leicht verschiedenem Winkel so zusammen, dass Glanzflecken verschwinden, und nimmt auf leistungsfähigen Handys mit 300 dpi auf. Adobe Scan, Microsoft Lens und Genius Scan bieten keine solche Glanzentfernung, sie warnen höchstens (nicht systematisch geprüft).
+
 **Nachtrag 28.11.2026 (app-v367) – QR-Rechnung Schweiz:** PDFMy erstellt den Zahlteil mit Swiss QR Code direkt an der eigenen Rechnung, im Browser und ohne Upload, mit Prüfung von QR-IBAN und Referenz. Acrobat, Smallpdf, iLovePDF und PDF24 bieten dafür keine eigene Funktion; in der Schweiz übernehmen das sonst Buchhaltungsprogramme oder Online-Generatoren mit Datenübertragung (nicht systematisch geprüft).
 
 **Nachtrag 28.11.2026 (app-v366) – Länder und Lesefassung:** PDFMy passt sich Deutschland, Österreich und der Schweiz an (AMS, RAV, Treuhänder, Fristen mit Stillstand) und erzeugt zu deutschen Unterlagen eine Lesefassung in 47 Sprachen (auch Arabisch, Persisch, Tigrinya). Acrobat, Smallpdf, iLovePDF und PDF24 bieten weder länderbezogene Behördenfunktionen noch eine solche Lesefassung (nicht systematisch geprüft).

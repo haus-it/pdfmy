@@ -32,14 +32,18 @@
   const mitTag = d => `${WT[d.getDay()]}, ${datum(d)}`;
 
   // Tagesordnung: je Zeile ein Punkt; Nummern wie „1.“, „TOP 3:“, „3)“ werden entfernt; leer → übliche Punkte
-  function tagesordnung(text) {
+  const LAND = l => l || (root.Land && root.Land.get()) || 'DE';
+  // i18n-aus
+  const WL = l => ({ AT: ['Statuten', 'Rechnungsprüfer'], CH: ['Statuten', 'Rechnungsrevisoren'] })[LAND(l)] || ['Satzung', 'Kassenprüfer'];
+  // i18n-an
+  function tagesordnung(text, land) {
     const tops = String(text || '').split(/\r?\n/).map(s => s.replace(/^\s*(?:TOP\s*)?\d+\s*[.):-]?\s*/i, '').replace(/^\s*[-•*]\s*/, '').trim()).filter(Boolean);
-    return tops.length ? tops : STANDARD_TOPS.slice();
+    return tops.length ? tops : STANDARD_TOPS.map(t => t === 'Bericht der Kassenprüfer' ? { AT: 'Bericht der Rechnungsprüfer', CH: 'Bericht der Rechnungsrevisoren' }[LAND(land)] || t : t);
   }
 
   /* Fristen rückwärts von der Versammlung: Die Einladung muss bei „zwei Wochen vorher“ spätestens am Tag vor Beginn der Frist zugehen
      (vorsichtige Rechnung, §§ 187, 188 BGB entsprechend). E-Mail geht am selben Tag zu; ein Brief braucht bis zu 4 Tage, Sonntage zählen nicht als Einwurftag. */
-  function fristen(versammlung, { wochen = 2, antragsTage = 7, heute = new Date() } = {}) {
+  function fristen(versammlung, { wochen = 2, antragsTage = 7, heute = new Date(), land } = {}) {
     const v = tag0(versammlung), h = tag0(heute);
     const zugang = minus(v, wochen * 7 + 1);
     let brief = minus(zugang, 4); if (brief.getDay() === 0) brief = minus(brief, 1);
@@ -47,7 +51,7 @@
     const hinweise = [];
     if (v <= h) hinweise.push('Das Datum der Versammlung liegt nicht in der Zukunft.');
     else if (zugang < h) hinweise.push(`Die Einladungsfrist von ${wochen} Woche(n) ist nicht mehr einzuhalten – die Einladung hätte bis ${datum(zugang)} zugehen müssen. Bitte einen späteren Termin wählen.`);
-    else if (brief < h) hinweise.push(`Per Brief ist die Frist nicht mehr sicher einzuhalten – bitte per E-Mail einladen, wenn die Satzung das erlaubt (spätestens ${datum(zugang)}).`);
+    else if (brief < h) hinweise.push(WL(land)[0] === 'Statuten' ? `Per Brief ist die Frist nicht mehr sicher einzuhalten – bitte per E-Mail einladen, wenn die Statuten das erlauben (spätestens ${datum(zugang)}).` : `Per Brief ist die Frist nicht mehr sicher einzuhalten – bitte per E-Mail einladen, wenn die Satzung das erlaubt (spätestens ${datum(zugang)}).`);
     return { zugang, email: zugang, brief, antrag, hinweise, spaet: zugang < h };
   }
 
@@ -171,7 +175,7 @@
         c.strich(M, M + W, c.y);
       }
       c.gap(26); c.text('Anwesende stimmberechtigte Mitglieder: ________', { size: 9.5 }); c.gap(4);
-      c.text('Vertretene Stimmen (nur, wenn die Satzung Vollmachten zulässt): ________', { size: 9.5 });
+      c.text(WL(opts.land)[0] === 'Statuten' ? 'Vertretene Stimmen (nur, wenn die Statuten Vollmachten zulassen): ________' : 'Vertretene Stimmen (nur, wenn die Satzung Vollmachten zulässt): ________', { size: 9.5 });
     }
 
     // 3) Protokoll als ausfüllbares Formular
@@ -200,7 +204,7 @@
       c.strich(M, M + half, c.y, 0.7); c.strich(M + W - half, M + W, c.y, 0.7);
       c.page.drawText('Versammlungsleitung', { x: M, y: c.y - 11, size: 8, font: R, color: c.grey });
       c.page.drawText('Protokollführung', { x: M + W - half, y: c.y - 11, size: 8, font: R, color: c.grey });
-      c.y -= 26; c.text('Muster – maßgeblich ist die Satzung des Vereins (z. B. wer das Protokoll unterschreibt, Mehrheiten, Vollmachten).', { size: 8, color: c.grey });
+      c.y -= 26; c.text(WL(opts.land)[0] === 'Statuten' ? 'Muster – maßgeblich sind die Statuten des Vereins (z. B. wer das Protokoll unterschreibt, Mehrheiten, Vollmachten).' : 'Muster – maßgeblich ist die Satzung des Vereins (z. B. wer das Protokoll unterschreibt, Mehrheiten, Vollmachten).', { size: 8, color: c.grey });
     }
     if (!doc.getPageCount()) throw new Error('Bitte mindestens einen Teil auswählen.');
     return { bytes: await doc.save(), fristen: f, briefe: empf.filter(Boolean).length, tops };

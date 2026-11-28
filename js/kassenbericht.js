@@ -271,7 +271,8 @@
     T('Die Buchungen sind vollständig erfasst; die Belege liegen vor.', M, y, { size: 9.5 }); y -= 38;
     page.drawLine({ start: { x: M, y }, end: { x: M + W, y }, thickness: 0.6, color: ink });
     T([d.ort, d.kassenwart].filter(Boolean).length ? `${d.ort ? d.ort + ', ' : ''}Datum, Unterschrift${d.kassenwart ? ' – ' + d.kassenwart : ''}` : 'Ort, Datum, Unterschrift', M, y - 11, { size: 8.5, color: grey }); y -= 30;
-    ueber('Prüfvermerk der Kassenprüfer');
+    const PR = ({ AT: ['Rechnungsprüfer', 'Rechnungsprüfer/in'], CH: ['Rechnungsrevisoren', 'Rechnungsrevisor/in'] })[opts.land || (root.Land && root.Land.get()) || 'DE'] || ['Kassenprüfer', 'Kassenprüfer/in'];   // app-v368
+    ueber(`Prüfvermerk der ${PR[0]}`);
     for (const l of wrap(R, 'Wir haben die Kasse und die Bücher am ____________ geprüft. Die Einnahmen und Ausgaben sind durch Belege nachgewiesen, die Bestände stimmen mit den Kontoauszügen überein.', 9.5, W)) { T(l, M, y, { size: 9.5 }); y -= 12; }
     y -= 6; T('Beanstandungen:', M, y, { size: 9.5 }); page.drawLine({ start: { x: M + 80, y: y - 2 }, end: { x: M + W, y: y - 2 }, thickness: 0.4, color: line }); y -= 18;
     page.drawLine({ start: { x: M, y: y - 2 }, end: { x: M + W, y: y - 2 }, thickness: 0.4, color: line }); y -= 20;
@@ -279,7 +280,7 @@
     T('Wir empfehlen der Mitgliederversammlung die Entlastung des Vorstands:', M, y, { size: 9.5 }); y -= 16;
     box(M, y); T('ja', M + 14, y, { size: 9.5 }); box(M + 50, y); T('nein', M + 64, y, { size: 9.5 }); y -= 44;
     const half = (W - 24) / 2;
-    for (const x of [M, M + half + 24]) { page.drawLine({ start: { x, y }, end: { x: x + half, y }, thickness: 0.6, color: ink }); T('Datum, Unterschrift Kassenprüfer/in', x, y - 11, { size: 8.5, color: grey }); }
+    for (const x of [M, M + half + 24]) { page.drawLine({ start: { x, y }, end: { x: x + half, y }, thickness: 0.6, color: ink }); T(`Datum, Unterschrift ${PR[1]}`, x, y - 11, { size: 8.5, color: grey }); }
 
     // Anlage: Buchungsliste
     neu(); T('Anlage: Buchungsliste', M, y, { size: 13, f: B }); y -= 22;

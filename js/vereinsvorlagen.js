@@ -86,12 +86,13 @@
     if (opts.fontkit && opts.regular) { doc.registerFontkit(opts.fontkit); R = await doc.embedFont(opts.regular, { subset: false }); B = opts.bold ? await doc.embedFont(opts.bold, { subset: true }) : R; }
     else { R = await doc.embedFont(L.StandardFonts.Helvetica); B = await doc.embedFont(L.StandardFonts.HelveticaBold); }
     const page = doc.addPage(A4), c = ctxOf(L, doc, page, R, B), verein = v.verein || 'Verein';
+    const land = opts.land || (root.Land && root.Land.get()) || 'DE';   // app-v368: Statuten in AT/CH, kein SEPA-Mandat in CH
     doc.setTitle(`${vor.titel} – ${verein}`); doc.setLanguage('de-DE'); doc.setProducer('PDFMy (pdfmy.de)'); doc.setSubject(vor.titel);
     c.text(verein, { size: 9, color: L.rgb(0.42, 0.45, 0.5) }); if (v.anschrift) c.text(String(v.anschrift).replace(/\s*\n\s*/g, ' · '), { size: 8.5, color: L.rgb(0.42, 0.45, 0.5) });
     c.gap(10); c.text(vor.titel, { size: 17, bold: true }); c.gap(6);
 
     if (art === 'mitglied') {
-      c.text(`Hiermit beantrage ich die Mitgliedschaft im ${verein}${/\.$/.test(verein) ? '' : '.'} Die Satzung erkenne ich an.`, { size: 10 }); c.gap(6);
+      c.text(`Hiermit beantrage ich die Mitgliedschaft im ${verein}${/\.$/.test(verein) ? '' : '.'} ${land === 'AT' || land === 'CH' ? 'Die Statuten erkenne ich an.' : 'Die Satzung erkenne ich an.'}`, { size: 10 }); c.gap(6);
       c.felder([{ name: 'Vorname', label: 'Vorname', req: true }, { name: 'Nachname', label: 'Nachname', req: true }, { name: 'Geburtsdatum', label: 'Geburtsdatum', w: 0.6 }]);
       c.felder([{ name: 'Strasse', label: 'Straße und Hausnummer', w: 2 }, { name: 'PLZ', label: 'PLZ', w: 0.5, max: 5 }, { name: 'Ort', label: 'Ort', w: 1.2 }]);
       c.felder([{ name: 'E-Mail', label: 'E-Mail' }, { name: 'Telefon', label: 'Telefon' }, { name: 'Eintritt', label: 'Eintritt zum', w: 0.6 }]);
@@ -99,6 +100,7 @@
         for (const [i, b] of String(v.beitraege).split(/\r?\n/).map(s => s.trim()).filter(Boolean).slice(0, 5).entries()) c.ankreuz(`Beitrag ${i + 1}`, b); }
       c.ankreuz('Datenschutz', `Ich habe die Datenschutzhinweise des ${verein} zur Kenntnis genommen. Meine Daten werden nur für die Vereinsverwaltung verwendet.`, { req: true });
       c.unterschrift('Antrag', 'Unterschrift (bei Minderjährigen: Erziehungsberechtigte)');
+      if (land !== 'CH') {
       c.gap(10); c.text('SEPA-Lastschriftmandat', { size: 12, bold: true }); c.gap(2);
       c.text(`Zahlungsempfänger: ${verein}${v.anschrift ? ', ' + String(v.anschrift).replace(/\s*\n\s*/g, ', ') : ''}`, { size: 9 });
       c.text(`Gläubiger-Identifikationsnummer: ${v.glaeubigerId || '…………………………'}   ·   Mandatsreferenz: wird separat mitgeteilt`, { size: 9 }); c.gap(4);
@@ -107,6 +109,7 @@
       c.felder([{ name: 'Kontoinhaber', label: 'Kontoinhaber (Vorname, Name)', req: true }, { name: 'Kreditinstitut', label: 'Kreditinstitut' }]);
       c.felder([{ name: 'IBAN', label: 'IBAN', req: true, w: 2, max: 34 }, { name: 'BIC', label: 'BIC', max: 11 }]);
       c.unterschrift('Mandat', 'Unterschrift Kontoinhaber');
+      }
     } else if (art === 'foto') {
       c.text('Muster – bitte an Ihren Verein anpassen.', { size: 8.5, color: L.rgb(0.64, 0.15, 0.16) }); c.gap(4);
       c.felder([{ name: 'Name', label: 'Name der abgebildeten Person', req: true, w: 2 }, { name: 'Geburtsdatum', label: 'Geburtsdatum' }]);
