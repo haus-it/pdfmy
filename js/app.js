@@ -5643,6 +5643,91 @@ $('#bwgIn').onchange = async ev => {
   bwgRender(); $('#bwgMsg').textContent = I18N.t(`${add.length} Bewerbung(en) übernommen.`);
 };
 
+/* ---------- Lebenslauf (app-v361) ----------
+   Tabellarischer Lebenslauf: Dialog → Bewerbung.lebenslaufPdf (js/bewerbung.js). Entwurf in LS 'lebenslauf' (nur dieser Browser),
+   Foto verkleinert (max. 600 px, JPEG) im Entwurf. „In die Bewerbungsmappe übernehmen“ fügt die PDF dem Dokument hinzu und ordnet neu. */
+const LV_KEY = 'lebenslauf';
+const lvEsc = v => String(v ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+let lvFoto = null;   // { data: 'data:image/jpeg;base64,…' }
+const LV_FIELDS = { name: 'lvName', geburt: 'lvGeburt', strasse: 'lvStrasse', ort: 'lvOrt', telefon: 'lvTel', email: 'lvMail', nationalitaet: 'lvNat', sprachen: 'lvSprachen', edv: 'lvEdv', fs: 'lvFs', sonst: 'lvSonst', interessen: 'lvInteressen', uort: 'lvUOrt' };
+// „Von“ ist in diesen Sprachen als Absender/Quelle übersetzt (E-Mail) – im Lebenslauf dort das Wort für „Beginn“
+const LV_VON_BEGINN = new Set(["tr", "fi", "et", "hu"]);
+function lvEntryHtml(e = {}) {
+  return `<div class="lvent"><div class="anlrow"><div class="field"><label>${lvEsc(I18N.t(LV_VON_BEGINN.has(I18N.lang) ? 'Beginn' : 'Von'))}<input data-k="von" value="${lvEsc(e.von)}" placeholder="${lvEsc(I18N.t('MM/JJJJ'))}"></label></div><div class="field"><label>${lvEsc(I18N.t('Bis'))}<input data-k="bis" value="${lvEsc(e.bis)}" placeholder="${lvEsc(I18N.t('MM/JJJJ oder heute'))}"></label></div></div>
+    <div class="anlrow"><div class="field"><label>${lvEsc(I18N.t('Tätigkeit, Abschluss oder Kurs'))}<input data-k="titel" value="${lvEsc(e.titel)}"></label></div><div class="field"><label>${lvEsc(I18N.t('Firma, Schule oder Anbieter und Ort'))}<input data-k="wo" value="${lvEsc(e.wo)}"></label></div></div>
+    <label>${lvEsc(I18N.t('Aufgaben oder Schwerpunkte (je Zeile ein Punkt, freiwillig)'))}<textarea data-k="text" rows="2">${lvEsc(e.text)}</textarea></label>
+    <div class="lvrow"><span></span><button type="button" data-del="1">${lvEsc(I18N.t('Eintrag entfernen'))}</button></div></div>`;
+}
+function lvRenderSecs(secs) {
+  // Überschriften der Abschnitte (Bewerbung.LV_ABSCHNITTE) – hier ausgeschrieben, damit tools/i18n-extract.js sie fürs Wörterbuch findet
+  void ['Berufserfahrung', 'Schule und Ausbildung', 'Weiterbildung'];
+  $('#lvSecs').innerHTML = Bewerbung.LV_ABSCHNITTE.map((t, i) => {
+    const es = (secs?.[i]?.eintraege?.length ? secs[i].eintraege : [{}]);
+    return `<h4 class="lvh">${lvEsc(I18N.t(t))}</h4><div class="lvsec" data-sec="${i}">${es.map(lvEntryHtml).join('')}<div class="lvrow"><span></span><button type="button" data-add="${i}">${lvEsc(I18N.t('Eintrag hinzufügen'))}</button></div></div>`;
+  }).join('');
+}
+function lvRead() {
+  const d = {}; for (const [k, id] of Object.entries(LV_FIELDS)) d[k] = $('#' + id).value.trim();
+  d.abschnitte = Bewerbung.LV_ABSCHNITTE.map((titel, i) => ({ titel, eintraege: [...document.querySelectorAll(`#lvSecs .lvsec[data-sec="${i}"] .lvent`)].map(el => Object.fromEntries([...el.querySelectorAll('[data-k]')].map(x => [x.dataset.k, x.value.trim()]))) }));
+  d.foto = lvFoto; return d;
+}
+const lvStore = () => { try { LS.set(LV_KEY, lvRead()); } catch (e) { console.warn('Lebenslauf merken:', e); } };
+function lvFill(d) {
+  const p = LS.get('profile', {}) || {};
+  const pre = { name: [p.vorname, p.nachname].filter(Boolean).join(' '), strasse: [p.strasse, p.hausnr].filter(Boolean).join(' '), ort: [p.plz, p.ort].filter(Boolean).join(' '), telefon: p.telefon || '', email: p.email || '', geburt: p.geburtsdatum || '', uort: p.ort || '' };
+  for (const [k, id] of Object.entries(LV_FIELDS)) $('#' + id).value = d?.[k] ?? pre[k] ?? '';
+  lvFoto = d?.foto || null; $('#lvFotoImg').hidden = !lvFoto; if (lvFoto) $('#lvFotoImg').src = lvFoto.data; $('#lvFotoDel').hidden = !lvFoto;
+  lvRenderSecs(d?.abschnitte);
+}
+window.lvOpen = () => { lvFill(LS.get(LV_KEY, null)); $('#lvMsg').textContent = ''; $('#lvDlg').showModal(); $('#lvName').focus(); };
+$('#btnLv').onclick = () => window.lvOpen();
+$('#lvClose').onclick = () => { lvStore(); $('#lvDlg').close(); };
+$('#lvForm').addEventListener('input', () => lvStore());
+$('#lvSecs').onclick = ev => {
+  const b = ev.target.closest('button'); if (!b) return;
+  if (b.dataset.add != null) { b.closest('.lvrow').insertAdjacentHTML('beforebegin', lvEntryHtml()); const n = b.closest('.lvsec').querySelectorAll('.lvent'); n[n.length - 1].querySelector('input').focus(); }
+  else if (b.dataset.del) { const sec = b.closest('.lvsec'); b.closest('.lvent').remove(); if (!sec.querySelector('.lvent')) sec.querySelector('.lvrow:last-child').insertAdjacentHTML('beforebegin', lvEntryHtml()); }
+  lvStore();
+};
+$('#lvLeeren').onclick = () => { if (!confirm(I18N.t('Alle Eingaben dieses Lebenslaufs löschen und neu beginnen?'))) return; LS.set(LV_KEY, null); lvFill(null); lvStore(); };
+$('#lvFotoBtn').onclick = () => $('#lvFotoIn').click();
+$('#lvFotoDel').onclick = () => { lvFoto = null; $('#lvFotoImg').hidden = true; $('#lvFotoDel').hidden = true; lvStore(); };
+$('#lvFotoIn').onchange = async ev => {
+  const f = ev.target.files[0]; ev.target.value = ''; if (!f) return;
+  try {
+    const bmp = await loadBitmap(f), k = Math.min(1, 600 / Math.max(bmp.width, bmp.height)), c = Imaging.canvas(Math.round(bmp.width * k), Math.round(bmp.height * k));
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    lvFoto = { data: c.toDataURL('image/jpeg', 0.85) }; $('#lvFotoImg').src = lvFoto.data; $('#lvFotoImg').hidden = false; $('#lvFotoDel').hidden = false; lvStore();
+  } catch (e) { console.warn(e); $('#lvMsg').textContent = I18N.t('Dieses Bild lässt sich nicht verwenden.'); }
+};
+async function lvBuild() {
+  const d = lvRead();
+  if (!d.name) { $('#lvMsg').textContent = I18N.t('Bitte zuerst Ihren Namen eintragen.'); $('#lvName').focus(); return null; }
+  const [fk, regular, bold] = await Promise.all([loadFontkit(), asset('font', 'vendor/DejaVuSans.ttf'), asset('font:vendor/dejavu/DejaVuSans-Bold.ttf', 'vendor/dejavu/DejaVuSans-Bold.ttf')]);
+  const foto = d.foto ? { bytes: Uint8Array.from(atob(d.foto.data.split(',')[1]), c => c.charCodeAt(0)), png: false } : null;
+  const z = n => String(n).padStart(2, '0'), h = new Date();
+  // Der Lebenslauf geht an deutsche Arbeitgeber: Überschriften und Bezeichnungen bleiben deutsch
+  return Bewerbung.lebenslaufPdf(PDFLib, { ...d, foto, unterschriftOrt: d.uort, datum: `${z(h.getDate())}.${z(h.getMonth() + 1)}.${h.getFullYear()}`,
+    kenntnisse: [{ art: 'Sprachen', wert: d.sprachen }, { art: 'Computer', wert: d.edv }, { art: 'Führerschein', wert: d.fs }, { art: 'Sonstiges', wert: d.sonst }] }, { fontkit: fk, regular, bold });
+}
+$('#lvSave').onclick = async () => {
+  lvStore();
+  try { const pdf = await lvBuild(); if (!pdf) return; const where = await deliver(pdf, 'Lebenslauf_' + Bewerbung.fileName(lvRead().name).replace(/^Bewerbung_|\.pdf$/g, '') + '.pdf', 'application/pdf'); if (where) $('#lvMsg').textContent = I18N.t(`Gespeichert: ${where}`); }
+  catch (e) { console.error(e); $('#lvMsg').textContent = I18N.t('Lebenslauf nicht möglich: ') + e.message; }
+};
+$('#lvForm').onsubmit = async ev => {
+  ev.preventDefault(); lvStore();
+  try {
+    const pdf = await lvBuild(); if (!pdf) return;
+    $('#lvDlg').close();
+    // vorhandenen Lebenslauf aus dieser Hilfe ersetzen, dann neu ordnen
+    const alt = state.pages.filter(p => p.kind === 'pdf' && state.docs[p.docIdx]?.name === 'Lebenslauf.pdf');
+    if (alt.length) { state.pages = state.pages.filter(p => !alt.includes(p)); }
+    state.intent = 'bewerbung';
+    await importFiles([new File([pdf], 'Lebenslauf.pdf', { type: 'application/pdf' })]);
+  } catch (e) { console.error(e); $('#lvMsg').textContent = I18N.t('Lebenslauf nicht möglich: ') + e.message; }
+};
+
 // Aufgaben, die eine Einstellung im Speichern-Dialog sind: direkt mit dieser Einstellung öffnen
 const EXPORT_INTENTS = {
   booklet: { sheet: 'booklet' }, nup: { sheet: '2' }, poster: { sheet: 'poster4' }, a4: { a4: true }, trim: { trim: true }, gray: { gray: true }, invert: { invert: true }, labels: { roman: true },
@@ -5831,10 +5916,16 @@ const FORM_LABEL = /^(firma|firmenname|name|nachname|vorname|straße|strasse|str
 async function formHint(docIdx, tries = 0) {
   const pages = state.pages.filter(p => p.kind === 'pdf' && p.docIdx === docIdx).slice(0, 3), found = new Set();
   if (!pages.length) { if (tries < 10) setTimeout(() => formHint(docIdx, tries + 1), 400); return; }   // Seiten werden gerade angelegt
+  const all = [];
   for (const p of pages) for (const w of (await pageWords(p).catch(() => null)) || []) {
-    const t = (w.t || '').trim(); if (t.length <= 40 && FORM_LABEL.test(t)) found.add(t.toLowerCase().replace(/[^a-zäöüß]/g, '').slice(0, 8));
+    const t = (w.t || '').trim(); all.push(t); if (t.length <= 40 && FORM_LABEL.test(t)) found.add(t.toLowerCase().replace(/[^a-zäöüß]/g, '').slice(0, 8));
   }
   if (found.size < 3 || state.docs[docIdx]?.fields?.length) return;
+  // Lebenslauf, Anschreiben, Zeugnis: Beschriftungen wie „Geburtsdatum“, „Telefon“ stehen dort mit ausgefüllten Angaben – kein leeres Formular
+  if (state.intent === 'bewerbung') return;
+  const txt = all.join(' '), doc = state.docs[docIdx];
+  if (/Arbeitszeugnis|Zwischenzeugnis|stets zu unserer (vollsten )?Zufriedenheit/i.test(txt)) return;
+  if (window.Bewerbung && /Lebenslauf|Curriculum Vitae|Sehr geehrte/i.test(txt) && ['lebenslauf', 'anschreiben'].includes(Bewerbung.kindOf(txt, doc?.name))) return;
   $('#formHintText').textContent = 'Dieses Formular ist nicht ausfüllbar. PDFMy kann die Felder (z. B. Name, Straße, Telefon) erkennen und daraus ein ausfüllbares Formular machen.';
   $('#formHint').hidden = false;
 }

@@ -671,7 +671,9 @@ body:not(.has-doc) .menu-list hr.msep:first-of-type{display:none}
 .tile b{font-size:15px;font-weight:700;letter-spacing:.1px;margin-bottom:3px}
 .tile span{font-size:13px;line-height:1.4}
 .fristtrack{display:flex;gap:6px;align-items:flex-start;margin-top:6px;font-size:13px;cursor:pointer}.fristtrack input{margin-top:2px}.fristtrack .muted{color:var(--muted)}
-.bwgtab{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:var(--r-sm);margin-top:8px}.bwgtab table{width:100%;border-collapse:collapse;font-size:13px}.bwgtab th,.bwgtab td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.bwgtab th{position:sticky;top:0;background:var(--panel-2)}.bwgtab button{padding:2px 6px;min-height:0}
+.lvh{margin:12px 0 4px;font-size:14px}.lvlbl{display:block;font-size:13px;margin-bottom:4px}.lvfoto{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lvfoto img{width:48px;height:62px;object-fit:cover;border-radius:4px;border:1px solid var(--line)}
+.lvsec{border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 10px;margin:6px 0}.lvent{border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}.lvent:first-of-type{border-top:0;margin-top:0;padding-top:0}.lvent textarea{width:100%;min-height:52px}.lvrow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bwgtab{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:var(--r-sm);margin-top:8px}.bwgtab table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}.bwgtab td{overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}.bwgtab th:first-child{width:78px}.bwgtab td:first-child{white-space:nowrap}.bwgtab th:last-child{width:64px}.bwgtab th,.bwgtab td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.bwgtab th{position:sticky;top:0;background:var(--panel-2)}.bwgtab button{padding:2px 6px;min-height:0}
 .deadlines{border-radius:var(--r);box-shadow:var(--sh-sm);padding:14px 16px;margin:0 0 18px}
 .dl-head b{font-family:"Bricolage Grotesque",sans-serif;font-size:15px}
 .dl-badge{font-family:"Instrument Sans",sans-serif;font-weight:700;font-size:11.5px;padding:2px 8px;vertical-align:1px}
@@ -1257,6 +1259,7 @@ html.i18n-wait body{visibility:hidden}
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgJob"><div class="mgh" id="mgJob">Bewerbung</div>
           <button class="mi" id="btnBwgMappe" title="Anschreiben, Lebenslauf und Zeugnisse wählen – PDFMy ordnet sie, setzt Lesezeichen und speichert eine kleine PDF für Portal und E-Mail"><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><span>Bewerbungsmappe …</span></button>
+          <button class="mi" id="btnLv" title="Tabellarischen Lebenslauf ausfüllen – mit Foto, als PDF oder direkt in die Bewerbungsmappe"><svg class="ic" aria-hidden="true"><use href="#i-user-round"/></svg><span>Lebenslauf erstellen …</span></button>
           <button class="mi" id="btnBwg" title="Liste Ihrer Bewerbungen führen und als Nachweis der Eigenbemühungen für Jobcenter oder Agentur für Arbeit speichern"><svg class="ic" aria-hidden="true"><use href="#i-list-ordered"/></svg><span>Bewerbungen und Nachweis …</span></button>
         </div>
         <div class="mgrp" role="group" aria-labelledby="mgSet"><div class="mgh" id="mgSet">Einstellungen</div>
@@ -2458,6 +2461,22 @@ html.i18n-wait body{visibility:hidden}
   <p id="mvMsg" class="hint" role="status"></p>
   <input type="file" id="mvIn" hidden accept=".csv,.txt,.xlsx">
   <div class="dlgrow"><button type="button" id="mvCancel">Abbrechen</button><button type="button" id="mvListe">Mit Mitgliederliste (je Mitglied ein Brief) …</button><button type="submit" class="primary">PDF erstellen</button></div>
+</form></dialog>
+<dialog id="lvDlg" class="sharedlg propdlg" aria-labelledby="lvT"><form id="lvForm">
+  <h3 class="dlgtitle" id="lvT">Lebenslauf erstellen</h3>
+  <p class="hint" style="margin-top:0">Füllen Sie aus, was auf Sie zutrifft – leere Felder lässt PDFMy weg. Die neueste Station kommt automatisch nach oben. Ihre Eingaben bleiben nur in diesem Browser gespeichert.</p>
+  <h4 class="lvh">Persönliche Daten</h4>
+  <div class="anlrow"><div class="field"><label for="lvName">Vor- und Nachname</label><input id="lvName" autocomplete="name"></div><div class="field"><label for="lvGeburt">Geburtsdatum (freiwillig)</label><input id="lvGeburt" placeholder="TT.MM.JJJJ"></div></div>
+  <div class="anlrow"><div class="field"><label for="lvStrasse">Straße und Hausnummer</label><input id="lvStrasse" autocomplete="street-address"></div><div class="field"><label for="lvOrt">PLZ und Ort</label><input id="lvOrt"></div></div>
+  <div class="anlrow"><div class="field"><label for="lvTel">Telefon</label><input id="lvTel" type="tel" autocomplete="tel"></div><div class="field"><label for="lvMail">E-Mail</label><input id="lvMail" type="email" autocomplete="email"></div></div>
+  <div class="anlrow"><div class="field"><label for="lvNat">Staatsangehörigkeit (freiwillig)</label><input id="lvNat"></div><div class="field"><span class="lvlbl">Foto (freiwillig)</span><div class="lvfoto"><img id="lvFotoImg" alt="Foto für den Lebenslauf" hidden><button type="button" id="lvFotoBtn">Foto wählen …</button><button type="button" id="lvFotoDel" hidden>Entfernen</button><input type="file" id="lvFotoIn" accept="image/*" hidden></div></div></div>
+  <div id="lvSecs"></div>
+  <h4 class="lvh">Kenntnisse</h4>
+  <div class="anlrow"><div class="field"><label for="lvSprachen">Sprachen</label><input id="lvSprachen" placeholder="z. B. Deutsch (Muttersprache), Englisch (gut)"></div><div class="field"><label for="lvEdv">Computer</label><input id="lvEdv" placeholder="z. B. Word, Excel, E-Mail"></div></div>
+  <div class="anlrow"><div class="field"><label for="lvFs">Führerschein</label><input id="lvFs" placeholder="z. B. Klasse B"></div><div class="field"><label for="lvSonst">Sonstiges</label><input id="lvSonst" placeholder="z. B. Staplerschein, Erste Hilfe"></div></div>
+  <div class="anlrow"><div class="field"><label for="lvInteressen">Interessen (freiwillig)</label><input id="lvInteressen"></div><div class="field"><label for="lvUOrt">Ort für die Unterschrift</label><input id="lvUOrt"></div></div>
+  <p id="lvMsg" class="hint" role="status"></p>
+  <div class="dlgrow"><button type="button" id="lvClose">Schließen</button><button type="button" id="lvLeeren" title="Alle Eingaben dieses Lebenslaufs löschen">Neu beginnen</button><button type="button" id="lvSave">Als PDF speichern</button><button type="submit" class="primary" id="lvMappe">In die Bewerbungsmappe übernehmen</button></div>
 </form></dialog>
 <dialog id="bwgDlg" class="sharedlg propdlg" aria-labelledby="bwgT"><form id="bwgForm">
   <h3 class="dlgtitle" id="bwgT">Bewerbungen und Nachweis der Eigenbemühungen</h3>

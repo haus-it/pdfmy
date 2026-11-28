@@ -95,3 +95,42 @@ test('Prüfprofil „Bewerbung“: kleine PDF ohne Kennwort besteht; Skript, Gr�
   const gross = await P.run('bewerbung', await pdf({ big: 5.5 * 1024 * 1024 }), { name: 'Bewerbung.pdf', pages: 1, textPages: 1 });
   assert.ok(t(gross).includes('✗ Größe höchstens 5 MB'));
 });
+
+test('Lebenslauf als PDF: persönliche Daten, Abschnitte neueste zuerst, Kenntnisse, Unterschriftszeile; leere Teile entfallen (app-v361)', async () => {
+  const L = require('../vendor/pdf-lib.min.js'), fontkit = require('../vendor/fontkit.umd.min.js'), fs = require('node:fs'), path = require('node:path');
+  const V = f => fs.readFileSync(path.join(__dirname, '..', 'vendor', f));
+  const d = {
+    name: 'Erika Mustermann', strasse: 'Lindenweg 3', ort: '33104 Paderborn', telefon: '05251 123456', email: 'erika@example.org', geburt: '', nationalitaet: '',
+    abschnitte: [
+      { titel: 'Berufserfahrung', eintraege: [
+        { von: '08/2010', bis: '07/2015', titel: 'Verkäuferin', wo: 'Beispiel Markt, Bielefeld', text: '' },
+        { von: '08/2015', bis: 'heute', titel: 'Sachbearbeiterin', wo: 'Muster GmbH, Paderborn', text: '- Auftragsbearbeitung\n- Kundenkontakt am Telefon und per E-Mail' },
+      ] },
+      { titel: 'Schule und Ausbildung', eintraege: [{ von: '2006', bis: '2008', titel: 'Ausbildung zur Kauffrau im Einzelhandel', wo: 'IHK Ostwestfalen', text: '' }] },
+      { titel: 'Weiterbildung', eintraege: [{ von: '', bis: '', titel: '', wo: '', text: '' }] },
+    ],
+    kenntnisse: [{ art: 'Sprachen', wert: 'Deutsch (Muttersprache), Englisch (gut)' }, { art: 'EDV', wert: 'Word, Excel, Warenwirtschaft' }, { art: 'Führerschein', wert: '' }],
+    interessen: 'Wandern, Ehrenamt im Sportverein', unterschriftOrt: 'Paderborn', datum: '28.11.2026',
+  };
+  const trace = [], bytes = await B.lebenslaufPdf(L, d, { fontkit, regular: V('DejaVuSans.ttf'), bold: V('dejavu/DejaVuSans-Bold.ttf'), trace });
+  const doc = await L.PDFDocument.load(bytes);
+  assert.equal(doc.getPageCount(), 1);
+  assert.equal(doc.getTitle(), 'Lebenslauf Erika Mustermann');
+  const t = trace.join(' ');
+  for (const s of ['Lebenslauf', 'Erika Mustermann', 'Lindenweg 3, 33104 Paderborn', 'Berufserfahrung', 'Sachbearbeiterin', 'Kundenkontakt', 'Schule und Ausbildung', 'Kenntnisse', 'Englisch (gut)', 'Interessen', 'Paderborn, 28.11.2026']) assert.ok(t.includes(s), s);
+  assert.ok(t.indexOf('Sachbearbeiterin') < t.indexOf('Verkäuferin'), 'neueste Stelle zuerst');
+  assert.ok(!t.includes('Weiterbildung'), 'leerer Abschnitt entfällt');
+  assert.ok(!t.includes('Führerschein'), 'leere Kenntnis entfällt');
+  assert.ok(!t.includes('Geburtsdatum'), 'leere persönliche Angabe entfällt');
+  // langer Lebenslauf: Seitenumbruch
+  const lang = { ...d, abschnitte: [{ titel: 'Berufserfahrung', eintraege: Array.from({ length: 30 }, (_, i) => ({ von: '01/' + (1990 + i), bis: '12/' + (1990 + i), titel: 'Stelle ' + i, wo: 'Firma ' + i, text: '- Aufgabe eins\n- Aufgabe zwei' })) }] };
+  const d2 = await L.PDFDocument.load(await B.lebenslaufPdf(L, lang, { fontkit, regular: V('DejaVuSans.ttf'), bold: V('dejavu/DejaVuSans-Bold.ttf') }));
+  assert.ok(d2.getPageCount() >= 3);
+});
+
+test('Lebenslauf: laufende Station in jeder Sprache oben („heute“, „today“, „danes“, „الآن“), sonst nach Jahr (app-v361)', () => {
+  const k = B.sortKey;
+  for (const w of ['heute', 'today', 'danes', 'الآن', 'сейчас']) assert.ok(k({ von: '08/2015', bis: w }) > k({ von: '01/2020', bis: '12/2024' }), w);
+  assert.ok(k({ von: '2010', bis: '2015' }) < k({ von: '2016', bis: '2018' }));
+  assert.ok(k({ von: '03/2019', bis: '' }) > 0, 'nur Beginn');
+});

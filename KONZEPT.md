@@ -94,6 +94,16 @@ Das Tool soll schnell, kostenlos und DSGVO-konform sein: Keine Datei verlässt d
 6. **So wenig aktive Inhalte wie möglich:** Skripte in erzeugten PDFs nur, wenn eine Funktion es zwingend braucht und der Nutzer sie gewählt hat (z. B. Rechenfeld im Formular), nie in PDF/A.
 7. **Besser als der Wettbewerb – ohne Punkt 1–6 aufzugeben.**
 
+### Geprüft und umgesetzt 28.11.2026: Lebenslauf-Assistent und leicht verständliche Hilfe (app-v361)
+**Inhalt:** Tabellarischer Lebenslauf aus einem Formular (mit Foto, als PDF oder in die Bewerbungsmappe); Hilfe überarbeitet: „Kurz gesagt“, nummerierte Schritte, Bilder, Tipp- und Wichtig-Kästen, alter Text unverändert unter „Genauer erklärt“. **Grund (GF 28.11.2026):** „Hilfe leicht verständlich und mit Bildern, nicht nur Fließtext“; Lebenslauf fehlte für Arbeitsuchende ohne Office.
+
+| Leitplanke | Prüfung |
+|---|---|
+| 1–3 | gewahrt: Lebenslauf und Foto bleiben im Browser, PDF entsteht lokal |
+| 4 Einfach | passt: ein Menüpunkt in der Gruppe „Bewerbung“; Hilfe kürzer im ersten Blick, Details zum Aufklappen |
+| 5 Prüfbar | tests/bewerbung.test.js (Lebenslauf-PDF), tests/hilfe-center.test.js (30 Anleitungen, Bilder de/en); Durchlauf in der App |
+| 6 | nicht betroffen |
+
 ### Geprüft und umgesetzt 27.11.2026: Bewerbungen – Mappe, Prüfprofil, Nachweis (app-v359)
 **Inhalt:** Bewerbungsmappe (Teile erkennen, ordnen, Lesezeichen, kleiner Dateiname), Prüfprofil „Bewerbung“, Liste der Bewerbungen mit Nachweis der Eigenbemühungen als PDF. **Grund (GF 27.11.2026):** PDFMy Arbeitsuchenden, Jobcentern und Arbeitsagenturen kostenlos anbieten – zuerst die nötigen Funktionen, dann die Ansprache.
 

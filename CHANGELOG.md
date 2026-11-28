@@ -4,6 +4,13 @@ Versionen von **pdfmy Scan** folgen der Semantischen Versionierung. Die Web-Anwe
 
 ## 2026-11-28
 
+### Hilfe leicht verständlich und bebildert; Lebenslauf-Assistent (app-v361)
+- Hilfe komplett überarbeitet: Jedes Thema beginnt mit „Kurz gesagt“ (ein bis zwei kurze Sätze), danach nummerierte Schritte, wo passend ein Bild aus der echten App, ein grüner Tipp-Kasten und ein gelber Kasten „Wichtig“ bei echten Stolperfallen. Der bisherige ausführliche Text steht unverändert unter „Genauer erklärt“ zum Aufklappen. „PDFs bearbeiten“ ist von einer Liste mit 114 Punkten zu 31 Themen geworden; die häufigen Fragen sind nach 6 Themen gruppiert.
+- 30 bebilderte Anleitungen: neu „Lebenslauf erstellen“, „Bewerbungsmappe zusammenstellen“ und „Nachweis der Eigenbemühungen“ (neue Themengruppe „Bewerbung und Jobcenter“). Bilder in den Themenabschnitten sagen, zu welcher Anleitung ihre roten Zahlen gehören.
+- Die Hilfe-Suche findet auch Text unter „Genauer erklärt“ und klappt ihn beim Sprung auf. Alle neuen Texte in allen 39 Sprachen.
+- Neu: *Mehr → Lebenslauf erstellen …* – tabellarischer Lebenslauf aus einem Formular (Persönliches, Berufserfahrung, Schule und Ausbildung, Weiterbildung, Kenntnisse), optional mit Foto, neueste Station oben, Ort/Datum und Unterschriftslinie; als PDF speichern oder direkt in die Bewerbungsmappe übernehmen. Eingaben bleiben nur im Browser.
+- Behoben: Lebenslauf, Anschreiben und Arbeitszeugnis lösten den Hinweis „Dieses Formular ist nicht ausfüllbar … Felder erkennen“ aus (Beschriftungen wie „Geburtsdatum“, „Telefon“). In der Bewerbungsliste liefen lange Einträge über den Fensterrand; jetzt umbrochen, Bearbeiten-Knöpfe immer sichtbar. Im Lebenslauf gilt „Bis“ mit einem Wort statt Jahr („heute“, „today“, „danes“ …) in jeder Sprache als laufend und kommt nach oben; auf Türkisch, Finnisch, Estnisch und Ungarisch heißt das Feld „Beginn“ statt des dort als „Quelle/Absender“ übersetzten „Von“. Kaputtes Zeichen in der Hilfe („ד“ statt „✕“) in allen Sprachen berichtigt.
+
 ### Menü „Mehr“ nach Arbeitsschritten gegliedert (app-v360)
 - Vorher 65 Einträge in 4 Gruppen, „Dokument“ allein mit 27 Einträgen (Dateiaktionen, KI, Bearbeiten und Vereinsvorlagen gemischt). Jetzt 11 beschriftete Gruppen in der Reihenfolge des Arbeitsablaufs – Dokument, Erfassen & lesen, Seiten & Inhalte, Prüfen & Formulare, Unterschreiben & antworten, Büro & Ablage, Rechnungen & Steuer, Verein & Ehrenamt, Bewerbung, Einstellungen, PDFMy – mit je 2 bis 8 Einträgen (Richtwert 7±2), die häufigsten zuerst. Gruppen, die nur mit geöffnetem Dokument Sinn ergeben, erscheinen erst dann.
 - Neu im Menü: „Bewerbungsmappe …“ (ordnet ein offenes Dokument oder fragt nach Dateien).

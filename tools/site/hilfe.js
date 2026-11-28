@@ -60,7 +60,7 @@ const T = s => (window.I18N ? I18N.t(s) : s);
   for (const sec of document.querySelectorAll('.hsec')) {
     const h2 = sec.querySelector('h2')?.textContent || '';
     let h3 = '';
-    for (const el of sec.querySelectorAll('h3, :scope > p, li, details.faq, .keys tr')) {
+    for (const el of sec.querySelectorAll('h3, :scope > p, .hdeep > p, li, details.faq, .keys tr')) {
       if (el.tagName === 'H3') { h3 = el.textContent; continue; }
       if (el.closest('details.faq') && el.tagName !== 'DETAILS') continue;
       el.id ||= 'h-' + (++n);
@@ -140,6 +140,7 @@ const T = s => (window.I18N ? I18N.t(s) : s);
     const el = document.getElementById(a.dataset.go);
     q.value = ''; run();
     if (el.tagName === 'DETAILS') el.open = true;
+    for (let d = el.parentElement.closest('details'); d; d = d.parentElement.closest('details')) d.open = true;   // Treffer in „Genauer erklärt“: aufklappen
     el.scrollIntoView({ block: 'center' }); el.classList.add('hflash'); setTimeout(() => el.classList.remove('hflash'), 2500);
     try { history.replaceState(null, '', '#' + el.id); } catch {}
   });

@@ -487,6 +487,7 @@ Nachtrag 27.11.2026 (app-v358): Meldung 2026-0014 behoben – Schrifterkennung v
 Nachtrag 27.11.2026 (app-v359): Bewerbungsfunktionen (Mappe, Prüfprofil, Nachweis der Eigenbemühungen) – Datenverarbeitung nur im Browser (Leitplanke 1), Test-Gate tests/bewerbung.test.js (ISO 9001 8.3 Entwicklung, 8.5.1).
 
 Nachtrag 28.11.2026 (app-v360): Menü nach Arbeitsschritten gegliedert (Gebrauchstauglichkeit nach DIN EN ISO 9241-110: Aufgabenangemessenheit, Erwartungskonformität); Grundsatz „Menü übersichtlich“ für alle künftigen Funktionen festgelegt.
+Nachtrag 28.11.2026 (app-v361): Hilfe in leichter Sprache mit Bildern (Gebrauchstauglichkeit DIN EN ISO 9241-110/-112: Selbstbeschreibungsfähigkeit, Erlernbarkeit; Barrierefreiheit EN 301 549 Kap. 12 Dokumentation); alter Text vollständig erhalten (per Skript geprüft), Übersetzung in 39 Sprachen geprüft (Tags, Links, Platzhalter). Lebenslauf-Assistent: Daten nur lokal (ISO 27001 A.8.10/A.5.34, DSGVO Art. 25). Fehlerkorrektur: Formular-Hinweis bei Bewerbungsunterlagen, Tabellenumbruch.
 
 Nachtrag 27.11.2026 (app-v353): Diagramme in Word-Dateien (vorher Datenverlust ohne Hinweis); nicht unterstützte Arten mit sichtbarem Hinweis. Test-Gate tests/word-diagramm.test.js; gemeinsamer Zeichner mit der Folienausgabe, deren Tests unverändert grün (ISO 9001 8.5.1).
 

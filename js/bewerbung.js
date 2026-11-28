@@ -105,6 +105,76 @@
       return e;
     });
   }
-  const api = { kindOf, order, titles, fileName, employer, position, nachweisBlocks, toCsv, parseCsv, ARTEN, ERGEBNISSE, COLS, KIND_LABEL };
+  /* ---------- Lebenslauf (app-v361) ----------
+     Tabellarischer Lebenslauf als PDF: oben Titel und persönliche Daten, rechts daneben optional ein Foto (35 × 45 mm), darunter Abschnitte
+     mit Zeitraum links und Inhalt rechts (Titel fett, Einrichtung und Ort, Beschreibung; Zeilen mit „-“ werden Aufzählungspunkte),
+     Kenntnisse als Bezeichnung und Wert, unten Ort, Datum und Unterschriftslinie. Seitenumbruch automatisch, nie mitten in einem Eintrag.
+     daten = { name, strasse, ort, telefon, email, geburt, nationalitaet, foto: { bytes, png }, abschnitte: [{ titel, eintraege: [{ von, bis, titel, wo, text }] }],
+               kenntnisse: [{ art, wert }], interessen, unterschriftOrt, datum } – leere Felder und Abschnitte entfallen */
+  const LV_ABSCHNITTE = ['Berufserfahrung', 'Schule und Ausbildung', 'Weiterbildung'];
+  const zeitraum = (von, bis) => [T(von), T(bis)].filter(Boolean).join(' – ') || '';
+  // Einträge sortieren: neueste zuerst (Bewerbungsstandard), nach dem Ende, sonst nach dem Beginn. „Bis“ mit einem Wort statt Jahr
+  // („heute“, „today“, „danes“, „الآن“ – in jeder Sprache) gilt als laufend und kommt nach oben
+  const sortKey = e => {
+    const p = (s, ende) => { const t = String(s || '').trim(), m = /(\d{1,2})?\s*[./]?\s*(\d{4})/.exec(t); return m ? +m[2] * 100 + (+m[1] || 12) : ende && /[\p{L}]/u.test(t) ? 999999 : 0; };
+    return p(e.bis, true) || p(e.von, false);
+  };
+  async function lebenslaufPdf(L, d, { fontkit, regular, bold, trace } = {}) {   // trace: Array, nimmt die gezeichneten Texte in Reihenfolge auf (Tests)
+    const doc = await L.PDFDocument.create(); if (fontkit) doc.registerFontkit(fontkit);
+    const R = regular ? await doc.embedFont(regular, { subset: true }) : await doc.embedFont(L.StandardFonts.Helvetica);
+    const B = bold ? await doc.embedFont(bold, { subset: true }) : await doc.embedFont(L.StandardFonts.HelveticaBold);
+    const W = 595.28, H = 841.89, ML = 62, MR = 56, MT = 56, MB = 60, COL = 128, ink = L.rgb(0.1, 0.12, 0.16), grey = L.rgb(0.38, 0.41, 0.46), acc = L.rgb(0.06, 0.43, 0.55);
+    let page = doc.addPage([W, H]), y = H - MT;
+    const wrap = (text, font, size, width) => {
+      const out = [];
+      for (const para of String(text || '').split('\n')) {
+        let line = '';
+        for (const w of para.split(/\s+/).filter(Boolean)) { const t = line ? line + ' ' + w : w; if (font.widthOfTextAtSize(t, size) <= width || !line) line = t; else { out.push(line); line = w; } }
+        out.push(line);
+      }
+      return out;
+    };
+    const ensure = h => { if (y - h < MB) { page = doc.addPage([W, H]); y = H - MT; } };
+    const text = (s, x, size, font = R, color = ink) => { if (trace) trace.push(String(s)); page.drawText(String(s), { x, y, size, font, color }); };
+    // Kopf: Titel, persönliche Daten, Foto
+    const photoW = 99, photoH = 128;
+    let photo = null;
+    if (d.foto?.bytes) { try { photo = d.foto.png ? await doc.embedPng(d.foto.bytes) : await doc.embedJpg(d.foto.bytes); } catch { photo = null; } }
+    const top = y;
+    text('Lebenslauf', ML, 24, B); y -= 34;
+    const daten = [['Name', d.name], ['Anschrift', [d.strasse, d.ort].filter(T).join(', ')], ['Telefon', d.telefon], ['E-Mail', d.email], ['Geburtsdatum', d.geburt], ['Staatsangehörigkeit', d.nationalitaet]].filter(([, v]) => T(v));
+    const valW = W - MR - (ML + COL) - (photo ? photoW + 16 : 0);
+    for (const [k, v] of daten) { const ls = wrap(v, R, 10.5, valW); text(k, ML, 10.5, R, grey); for (const l of ls) { text(l, ML + COL, 10.5, k === 'Name' ? B : R); y -= 15; } }
+    if (photo) { const s = Math.min(photoW / photo.width, photoH / photo.height), w = photo.width * s, h = photo.height * s; page.drawImage(photo, { x: W - MR - w, y: top - 8 - h, width: w, height: h }); y = Math.min(y, top - 8 - h - 6); }
+    y -= 10;
+    const heading = t => { ensure(40); y -= 8; text(t, ML, 13, B, acc); y -= 6; page.drawLine({ start: { x: ML, y }, end: { x: W - MR, y }, thickness: 0.8, color: acc }); y -= 16; };
+    const contentW = W - MR - (ML + COL);
+    for (const ab of d.abschnitte || []) {
+      const es = (ab.eintraege || []).filter(e => T(e.titel) || T(e.wo) || T(e.text)).sort((a, b) => sortKey(b) - sortKey(a));
+      if (!es.length) continue;
+      heading(ab.titel);
+      for (const e of es) {
+        const tl = wrap(e.titel, B, 10.5, contentW), wl = wrap(e.wo, R, 10, contentW);
+        const desc = String(e.text || '').split('\n').map(T).filter(Boolean).flatMap(l => { const bullet = /^[-•*–]\s*/.test(l), ls = wrap(l.replace(/^[-•*–]\s*/, ''), R, 10, contentW - (bullet ? 10 : 0)); return ls.map((x, i) => ({ x, bullet: bullet && i === 0, ind: bullet })); });
+        ensure((tl.length + wl.length + desc.length) * 14 + 8);
+        text(zeitraum(e.von, e.bis), ML, 10, R, grey);
+        for (const l of tl) { text(l, ML + COL, 10.5, B); y -= 14; }
+        for (const l of wl) { text(l, ML + COL, 10, R, grey); y -= 13.5; }
+        for (const l of desc) { if (l.bullet) text('•', ML + COL, 10); text(l.x, ML + COL + (l.ind ? 10 : 0), 10); y -= 13.5; }
+        y -= 8;
+      }
+    }
+    const kn = (d.kenntnisse || []).filter(k => T(k.art) && T(k.wert));
+    if (kn.length) { heading('Kenntnisse'); for (const k of kn) { const ls = wrap(k.wert, R, 10, contentW); ensure(ls.length * 14 + 4); text(k.art, ML, 10, R, grey); for (const l of ls) { text(l, ML + COL, 10); y -= 14; } y -= 4; } }
+    if (T(d.interessen)) { heading('Interessen'); for (const l of wrap(d.interessen, R, 10, contentW)) { ensure(14); text(l, ML + COL, 10); y -= 14; } }
+    // Ort, Datum, Unterschriftslinie (unterschreiben später mit dem Werkzeug „Unterschrift“)
+    ensure(70); y -= 28;
+    text([T(d.unterschriftOrt), T(d.datum)].filter(Boolean).join(', '), ML, 10.5);
+    page.drawLine({ start: { x: ML + COL + 80, y: y - 2 }, end: { x: W - MR, y: y - 2 }, thickness: 0.6, color: grey });
+    y -= 14; text(T(d.name), ML + COL + 80, 9, R, grey);
+    doc.setTitle('Lebenslauf ' + T(d.name)); doc.setAuthor(T(d.name)); doc.setSubject('Lebenslauf'); doc.setCreator('PDFMy (pdfmy.de)'); doc.setProducer('PDFMy');
+    return doc.save();
+  }
+  const api = { kindOf, order, titles, fileName, employer, position, nachweisBlocks, toCsv, parseCsv, lebenslaufPdf, sortKey, LV_ABSCHNITTE, ARTEN, ERGEBNISSE, COLS, KIND_LABEL };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Bewerbung = api;
 })(typeof self !== 'undefined' ? self : this);
